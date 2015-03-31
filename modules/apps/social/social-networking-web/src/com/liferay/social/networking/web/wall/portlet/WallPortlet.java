@@ -44,18 +44,17 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-wall",
 		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.icon=/icons/wall.png",
-		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-wall",
-		"javax.portlet.display-name=Wall",
+		"javax.portlet.display-name=Wall", "javax.portlet.expiration-cache=0",
+		"javax.portlet.info.short-title=Wall", "javax.portlet.info.title=Wall",
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.view-template=/wall/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.supports.mime-type=text/html",
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Wall", "javax.portlet.info.short-title=Wall",
 		"javax.portlet.keywords=Wall",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )

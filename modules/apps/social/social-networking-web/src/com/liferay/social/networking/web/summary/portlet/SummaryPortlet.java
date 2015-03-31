@@ -61,20 +61,20 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
+		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-summary",
 		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.header-portlet-css=/summary/css/main.css",
-		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-summary",
 		"javax.portlet.display-name=Summary",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Summary",
+		"javax.portlet.info.short-title=Summary",
+		"javax.portlet.info.title=Summary",
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.config-template=/summary/configuration.jsp",
 		"javax.portlet.init-param.view-template=/summary/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.supports.mime-type=text/html",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Summary",
-		"javax.portlet.info.short-title=Summary",
-		"javax.portlet.info.keywords=Summary",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )

@@ -49,8 +49,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"enabled=true", "format=html",
-		"edit.page=/html/portlet/wiki/edit/html.jsp"
+		"edit.page=/html/portlet/wiki/edit/html.jsp", "enabled=true",
+		"format=html"
 	},
 	service = WikiEngine.class
 )

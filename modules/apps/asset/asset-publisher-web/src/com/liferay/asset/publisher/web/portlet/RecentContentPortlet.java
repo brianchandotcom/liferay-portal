@@ -26,9 +26,9 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.active=false",
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.css-class-wrapper=portlet-asset-publisher",
 		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
 		"com.liferay.portlet.control-panel-entry-weight=1.0",
+		"com.liferay.portlet.css-class-wrapper=portlet-asset-publisher",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/recent_content.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",

@@ -25,22 +25,22 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.display-category=category.social",
-		"com.liferay.portlet.icon=/icons/members.png",
-		"com.liferay.portlet.header-portlet-css=/members/css/main.css",
 		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-members",
+		"com.liferay.portlet.display-category=category.social",
+		"com.liferay.portlet.header-portlet-css=/members/css/main.css",
+		"com.liferay.portlet.icon=/icons/members.png",
 		"javax.portlet.display-name=Members",
-		"javax.portlet.init-param.view-template=/members/view.jsp",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.supports.mime-type=text/html",
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Members",
-		"javax.portlet.info.short-title=Members",
 		"javax.portlet.info.keywords=Members",
+		"javax.portlet.info.short-title=Members",
+		"javax.portlet.info.title=Members",
+		"javax.portlet.init-param.view-template=/members/view.jsp",
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref.role-name=administrator",
 		"javax.portlet.security-role-ref.role-name=guest",
 		"javax.portlet.security-role-ref.role-name=power-user",
-		"javax.portlet.security-role-ref.role-name=user"
+		"javax.portlet.security-role-ref.role-name=user",
+		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )

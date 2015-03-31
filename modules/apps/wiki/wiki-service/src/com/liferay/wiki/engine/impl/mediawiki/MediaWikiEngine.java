@@ -48,9 +48,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"enabled=true", "format=mediawiki",
-		"edit.page=/html/portlet/wiki/edit/wiki.jsp",
-		"help.page=/html/portlet/wiki/help/mediawiki.jsp",
+		"edit.page=/html/portlet/wiki/edit/wiki.jsp", "enabled=true",
+		"format=mediawiki", "help.page=/html/portlet/wiki/help/mediawiki.jsp",
 		"help.url=http://www.mediawiki.org/wiki/Help:Formatting"
 	},
 	service = WikiEngine.class

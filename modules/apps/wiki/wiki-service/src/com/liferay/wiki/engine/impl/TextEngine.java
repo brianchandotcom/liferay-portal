@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"enabled=false", "format=text",
-		"edit.page=/html/portlet/wiki/edit/plain_text.jsp"
+		"edit.page=/html/portlet/wiki/edit/plain_text.jsp", "enabled=false",
+		"format=text"
 	},
 	service = WikiEngine.class
 )

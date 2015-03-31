@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>DocumentsAndMediaSelectFolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaSelectFolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DocumentsAndMediaSelectFolder</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_IFRAME</td>
+	<td>//iframe[contains(@id,'selectFolder_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FOLDER_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_THIS_FOLDER_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Choose This Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER</td>
+	<td>//tbody[@class='table-data']//a[contains(.,'${key_dmFolderName}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_GENERIC</td>
+	<td>//tbody[@class='table-data']/tr/td/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_BUTTON</td>
+	<td>//tbody[@class='table-data']//button[contains(@data-foldername,'${key_dmFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_BUTTON_GENERIC</td>
+	<td>//tbody[@class='table-data']/tr/td/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

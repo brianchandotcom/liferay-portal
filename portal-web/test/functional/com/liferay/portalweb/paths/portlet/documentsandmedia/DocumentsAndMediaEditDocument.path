@@ -19,18 +19,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>DocumentsAndMediaSelectDocument</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
+	<td>FOLDER</td>
+	<td>//input[contains(@id,'folderName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILE_FIELD</td>
 	<td>//input[contains(@id,'file')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[contains(@id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPE_SELECT</td>
+	<td>//select[contains(@id,'_fileEntryTypeId')]</td>
 	<td></td>
 </tr>
 </tbody>

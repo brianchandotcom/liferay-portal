@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>Panel</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Panel</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Panel</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_TITLE</td>
+	<td>//div[contains(@class,'panel-page-category')]//span[contains(.,'${key_componentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_PAGE_TITLE</td>
+	<td>//div[contains(@class,'panel-page-body')]/h2[contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU-->
+<tr>
+	<td>MENU_ITEM</td>
+	<td>//div[contains(@class,'toggler-content-expanded')]//a[contains(.,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<html>
+<head>
+<title>SitePagesExport</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SitePagesExport</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SitePagesExport</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_EXPORT_PROCESS_NAVIGATION</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'New Export Process')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_NAVIGATION</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Current and Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_FILE_NAME</td>
+	<td>//input[@id='_156_exportFileName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_BUTTON</td>
+	<td>//button[contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_EXPORT_BUTTON</td>
+	<td>//ul[@id='_156_exportConfigurationButtons']//li/a[@title='Custom']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_TEMPLATE_BUTTON</td>
+	<td>//ul[@id='_156_exportConfigurationButtons']//li/a[@title='Export Templates']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGES-->
+<tr>
+	<td>PAGES_CHANGE_LINK</td>
+	<td>//div/a[@id='_156_pagesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
+	<td>//div[contains(.,'Public Pages')]//i[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_SPECIFIC_PAGE_CHECKBOX</td>
+	<td>//li/div[contains(.,'${key_pageName}')]/i[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_SITE_PAGES_SETTINGS_CHECKBOX</td>
+	<td>//input[@id='_156_LAYOUT_SET_SETTINGS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_THEME_SETTINGS_CHECKBOX</td>
+	<td>//input[@id='_156_THEME_REFERENCE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_LOGO_CHECKBOX</td>
+	<td>//input[@id='_156_LOGO']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--APPLICATION-->
+<tr>
+	<td>APPLICATION_ALL_APPLICATIONS_RADIO</td>
+	<td>//input[@id='_156_allApplications']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_CHOOSE_APPLICATIONS_RADIO</td>
+	<td>//input[@id='_156_chooseApplications']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_CHANGE_LINK</td>
+	<td>//a[@id='_156_globalConfigurationLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_NAME_CHECKBOX</td>
+	<td>//ul[@id='_156_selectApplications']//label[contains(.,'${key_applicationName}')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_NAME</td>
+	<td>//ul[@id='_156_selectApplications']//label[contains(.,'${key_applicationName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT-->
+<tr>
+	<td>CONTENT_ALL_CONTENT_RADIO</td>
+	<td>//input[@id='_156_allContent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_RADIO</td>
+	<td>//input[@id='_156_chooseContent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
+	<td>//ul[@class='portlet-list']//label[contains(.,'${key_contentName}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CURRENT_AND_PREVIOUS-->
+<tr>
+	<td>CURRENT_AND_PREVIOUS_INFO_MESSAGE</td>
+	<td>//div[@class='incomplete-process-message']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_STATUS</td>
+	<td>//div[@id='_156_exportProcesses']//table//tr/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_CREATE_DATE</td>
+	<td>//div[@id='_156_exportProcesses']//table//tr/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_COMPLETION_DATE</td>
+	<td>//div[@id='_156_exportProcesses']//table//tr/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_DOWNLOAD</td>
+	<td>//div[@id='_156_exportProcesses']//table//tr/td[5]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_ACTIONS</td>
+	<td>//div[@id='_156_exportProcesses']//table//tr/td[6]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CURRENT_AND_PREVIOUS_ACTIONS_MENULIST-->
+<tr>
+	<td>CURRENT_AND_PREVIOUS_ACTIONS_MENULIST_CLEAR</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Clear')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_ACTIONS_MENULIST_RELAUNCH</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Relaunch')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EXPORT_TEMPLATES-->
+<tr>
+	<td>EXPORT_TEMPLATES_NEW_BUTTON</td>
+	<td>//a[@role='menuitem' and contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EXPORT_TEMPLATES_TABLE-->
+<tr>
+	<td>EXPORT_TEMPLATES_TABLE_NAME</td>
+	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_TEMPLATES_TABLE_DESCRIPTION</td>
+	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON</td>
+	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]/td/span/a[contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON</td>
+	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]//a[contains(.,'Recycle Bin')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

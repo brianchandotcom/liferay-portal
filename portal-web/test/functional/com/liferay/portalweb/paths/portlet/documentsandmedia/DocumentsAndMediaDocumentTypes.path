@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>DocumentsAndMediaDocumentTypes</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaDocumentTypes</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DocumentsAndMediaDocumentTypes</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPES_IFRAME</td>
+	<td>//iframe[contains(@id,'_openFileEntryTypeView_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//div[contains(@id,'Navbar')]/ul[@aria-label='Documents and Media']/li/a/span[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_TYPES_TABLE-->
+<tr>
+	<td>DOCUMENT_TYPES_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPES_TABLE_SCOPE</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPES_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_TYPES_TABLE_ACTIONS_1</td>
+	<td>//tr[1]//div[contains(@class,'lfr-icon-menu')]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

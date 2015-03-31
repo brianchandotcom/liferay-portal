@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>DocumentsAndMediaEditRepository</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaEditRepository</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>DocumentsAndMediaEditRepository</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[contains(@id,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPOSITORY_TYPE_SELECT</td>
+	<td>//select[contains(@id,'repositoryTypes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_FIELD</td>
+	<td>//input[contains(@id,'SITE_URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIBRARY_NAME_FIELD</td>
+	<td>//input[contains(@id,'LIBRARY_NAME')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

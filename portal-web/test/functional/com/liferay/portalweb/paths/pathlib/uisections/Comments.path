@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Comments</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Comments</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Comments</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>BE_THE_FIRST_LINK</td>
+	<td>link=Be the first.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_COMMENT_LINK</td>
+	<td>link=Add Comment</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE_TO_COMMENTS_LINK</td>
+	<td>link=Subscribe to Comments</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNSUBSCRIBE_FROM_COMMENTS_LINK</td>
+	<td>link=Unsubscribe from Comments</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POST_REPLY_BODY</td>
+	<td>//textarea[@class='field']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPLY_BODY</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'lfr-message-response') and contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

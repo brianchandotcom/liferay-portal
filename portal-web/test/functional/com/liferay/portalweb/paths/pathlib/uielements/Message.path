@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_3</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning'))])</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
@@ -61,6 +66,11 @@
 <tr>
 	<td>SUCCESS</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_RECYCLE_BIN</td>
+	<td>//form[contains(@id,'undoForm')]</td>
 	<td></td>
 </tr>
 </tbody>

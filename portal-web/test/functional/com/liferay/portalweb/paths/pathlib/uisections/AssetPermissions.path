@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>AssetPermissions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AssetPermissions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>AssetPermissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWABLE_AS_SELECT</td>
+	<td>//select[contains(@id,'_inputPermissionsViewRole')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MORE_OPTIONS_LINK</td>
+	<td>link=More Options »</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIDE_OPTIONS_LINK</td>
+	<td>link=« Hide Options</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_ACCESS_DISCUSSION_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='ACCESS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_ADD_DISCUSSION_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='ADD_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_ADD_DOCUMENT_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='ADD_DOCUMENT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_ADD_SHORTCUT_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='ADD_SHORTCUT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_ADD_SUBFOLDER_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='ADD_SUBFOLDER']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_DELETE_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='DELETE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_DELETE_DISCUSSION_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='DELETE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_OVERRIDE_CHECKOUT_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='OVERRIDE_CHECKOUT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_PERMISSIONS_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='PERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_UPDATE_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='UPDATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_UPDATE_DISCUSSION_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='UPDATE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_ADD_DISCUSSION_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_DELETE_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='DELETE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_DELETE_DISCUSSION_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='DELETE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_OVERRIDE_CHECKOUT_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='OVERRIDE_CHECKOUT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_PERMISSIONS_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='PERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_UPDATE_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='UPDATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_UPDATE_DISCUSSION_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='UPDATE_DISCUSSION']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

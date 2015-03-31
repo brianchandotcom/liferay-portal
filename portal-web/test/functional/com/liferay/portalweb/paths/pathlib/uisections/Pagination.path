@@ -38,6 +38,16 @@
 	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'Last')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CURRENT_PAGE_SELECT</td>
+	<td>//div[contains(@class,'current-page-menu')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEMS_PER_PAGE_SELECT</td>
+	<td>//a[contains(@title,'Items per Page')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

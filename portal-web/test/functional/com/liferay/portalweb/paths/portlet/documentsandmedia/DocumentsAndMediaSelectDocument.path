@@ -20,22 +20,12 @@
 </tr>
 <tr>
 	<td>SELECT_DOCUMENT_IFRAME</td>
-	<td>//iframe[contains(@id,'_selectDocumentLibrary_iframe_')]</td>
+	<td>//iframe[contains(@id,'_selectDocumentLibrary_iframe_')]|//iframe[contains(@id,'fileEntryTypeSelector')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_MESSAGE_1</td>
-	<td>xPath=(//div[@class='alert alert-info'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_MESSAGE_2</td>
-	<td>xPath=(//div[@class='alert alert-info'])[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,12 +77,12 @@
 <!--DOCUMENTS_TABLE-->
 <tr>
 	<td>DOCUMENTS_TABLE_DOCUMENT</td>
-	<td>//tr[contains(.,'${key_documentTitle}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[1]/a|//tr[contains(.,'${key_documentTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENTS_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_documentTitle}')]/td/button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td/button[contains(.,'Choose')]|//tr[contains(.,'${key_documentTitle}')]/td/button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

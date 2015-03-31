@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GEOLOCATION_SHARE_LOCATION_BUTTON_PNG</td>
 	<td>/firefox/buttons/geolocation_share_location_button.png</td>
 	<td></td>
@@ -72,6 +77,11 @@
 <tr>
 	<td>FIELD_DELETE</td>
 	<td>xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-delete-button')])[${key_fieldNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_FIELDSET</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/fieldset/legend</td>
 	<td></td>
 </tr>
 <tr>

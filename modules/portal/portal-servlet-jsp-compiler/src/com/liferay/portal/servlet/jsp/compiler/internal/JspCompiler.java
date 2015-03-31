@@ -48,6 +48,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import org.apache.felix.utils.log.Logger;
 import org.apache.jasper.Constants;
 import org.apache.jasper.JspCompilationContext;
@@ -250,20 +251,29 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	protected String getTldUri(SAXParser saxParser, URL url) {
 		try (InputStream inputStream = url.openStream()) {
-			XMLReader xmlReader = saxParser.getXMLReader();
 
-			URIHandler uriHandler = new URIHandler();
+			StringBundler sb = new StringBundler();
+			byte[] buffer = new byte[4096];
+			int length = 0;
 
-			xmlReader.setContentHandler(uriHandler);
-			xmlReader.setDTDHandler(uriHandler);
-			xmlReader.setEntityResolver(uriHandler);
+			while((length = inputStream.read(buffer)) > 0) {
 
-			xmlReader.parse(new InputSource(inputStream));
+				String xml = new String(buffer, 0, length);
+				sb.append(xml);
+
+				if (xml.indexOf("</uri>") > -1) {
+					break;
+				}
+			}
+
+			String xml = sb.toString();
+
+			int uriStartPos = xml.indexOf("<uri>");
+			int uriEndPos = xml.indexOf("</uri>", uriStartPos);
+
+			return xml.substring(uriStartPos + 5, uriEndPos);
 		}
-		catch (URISAXException use) {
-			return use.getMessage();
-		}
-		catch (IOException | SAXException e) {
+		catch (IOException e) {
 		}
 
 		return null;

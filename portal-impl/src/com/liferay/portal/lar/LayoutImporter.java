@@ -165,7 +165,7 @@ public class LayoutImporter {
 		ZipReader zipReader = null;
 
 		try {
-			ExportImportThreadLocal.setLayoutsDataDeletionImportInProcess(true);
+			ExportImportThreadLocal.setLayoutDataDeletionImportInProcess(true);
 
 			// LAR validation
 
@@ -197,8 +197,7 @@ public class LayoutImporter {
 				portletDataContext);
 		}
 		finally {
-			ExportImportThreadLocal.setLayoutsDataDeletionImportInProcess(
-				false);
+			ExportImportThreadLocal.setLayoutDataDeletionImportInProcess(false);
 
 			if (zipReader != null) {
 				zipReader.close();

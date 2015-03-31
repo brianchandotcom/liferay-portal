@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 public class ExportImportThreadLocal {
 
 	public static boolean isDataDeletionImportInProcess() {
-		if (isLayoutsDataDeletionImportInProcess() ||
+		if (isLayoutDataDeletionImportInProcess() ||
 			isPortletDataDeletionImportInProcess()) {
 
 			return true;
@@ -50,16 +50,16 @@ public class ExportImportThreadLocal {
 		return false;
 	}
 
+	public static boolean isLayoutDataDeletionImportInProcess() {
+		return _layoutDataDeletionImportInProcess.get();
+	}
+
 	public static boolean isLayoutExportInProcess() {
 		return _layoutExportInProcess.get();
 	}
 
 	public static boolean isLayoutImportInProcess() {
 		return _layoutImportInProcess.get();
-	}
-
-	public static boolean isLayoutsDataDeletionImportInProcess() {
-		return _layoutsDataDeletionImportInProcess.get();
 	}
 
 	public static boolean isLayoutStagingInProcess() {
@@ -98,19 +98,19 @@ public class ExportImportThreadLocal {
 		return false;
 	}
 
+	public static void setLayoutDataDeletionImportInProcess(
+		boolean layoutDataDeletionImportInProcess) {
+
+		_layoutDataDeletionImportInProcess.set(
+			layoutDataDeletionImportInProcess);
+	}
+
 	public static void setLayoutExportInProcess(boolean layoutExportInProcess) {
 		_layoutExportInProcess.set(layoutExportInProcess);
 	}
 
 	public static void setLayoutImportInProcess(boolean layoutImportInProcess) {
 		_layoutImportInProcess.set(layoutImportInProcess);
-	}
-
-	public static void setLayoutsDataDeletionImportInProcess(
-		boolean layoutsDataDeletionImportInProcess) {
-
-		_layoutsDataDeletionImportInProcess.set(
-			layoutsDataDeletionImportInProcess);
 	}
 
 	public static void setLayoutStagingInProcess(
@@ -156,17 +156,17 @@ public class ExportImportThreadLocal {
 		_portletValidationInProcess.set(portletValidationInProcess);
 	}
 
+	private static final ThreadLocal<Boolean>
+		_layoutDataDeletionImportInProcess = new AutoResetThreadLocal<>(
+			ExportImportThreadLocal.class +
+				"._layoutDataDeletionImportInProcess",
+			false);
 	private static final ThreadLocal<Boolean> _layoutExportInProcess =
 		new AutoResetThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutExportInProcess", false);
 	private static final ThreadLocal<Boolean> _layoutImportInProcess =
 		new AutoResetThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutImportInProcess", false);
-	private static final ThreadLocal<Boolean>
-		_layoutsDataDeletionImportInProcess = new AutoResetThreadLocal<>(
-			ExportImportThreadLocal.class +
-				"._layoutsDataDeletionImportInProcess",
-			false);
 	private static final ThreadLocal<Boolean> _layoutStagingInProcess =
 		new AutoResetThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutStagingInProcess", false);

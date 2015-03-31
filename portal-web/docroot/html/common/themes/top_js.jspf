@@ -296,6 +296,9 @@
 			},
 			getPortletRootPath: function() {
 				return '<%= themeDisplay.getPathContext() %>/html/portlet';
+			},
+			getStaticResourceURLParams: function() {
+				return '<%= PortalUtil.getStaticResourceURL(request, StringPool.BLANK, "minifierType=", javaScriptLastModified) %>';
 			}
 		};
 

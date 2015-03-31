@@ -43,6 +43,10 @@
 			liferay: {
 				base: PATH_JAVASCRIPT + '/liferay/',
 				combine: COMBINE,
+				filter: {
+					searchExp: '\\.js',
+					replaceStr: '.js' + LiferayAUI.getStaticResourceURLParams()
+				},
 				modules: {
 					'liferay-alloy-editor': {
 						path: 'alloyeditor.js',

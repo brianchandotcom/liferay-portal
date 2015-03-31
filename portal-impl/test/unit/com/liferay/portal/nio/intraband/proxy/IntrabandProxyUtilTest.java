@@ -2644,11 +2644,6 @@ public class IntrabandProxyUtilTest {
 			return _clazz.equals(testGenerateTargetLocator._clazz);
 		}
 
-		@Override
-		public int hashCode() {
-			return super.hashCode();
-		}
-
 		@SuppressWarnings("unused")
 		public String getId() {
 			return _id;
@@ -2678,6 +2673,11 @@ public class IntrabandProxyUtilTest {
 					}
 
 				});
+		}
+
+		@Override
+		public int hashCode() {
+			return super.hashCode();
 		}
 
 		private final Class<?> _clazz;

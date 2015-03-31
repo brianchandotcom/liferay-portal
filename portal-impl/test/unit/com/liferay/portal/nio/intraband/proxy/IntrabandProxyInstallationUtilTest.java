@@ -262,13 +262,13 @@ public class IntrabandProxyInstallationUtilTest {
 		}
 
 		@Override
-		public int hashCode() {
-			return super.hashCode();
+		public Object getTarget(String id) {
+			return null;
 		}
 
 		@Override
-		public Object getTarget(String id) {
-			return null;
+		public int hashCode() {
+			return super.hashCode();
 		}
 
 		private final Class<?> _clazz;

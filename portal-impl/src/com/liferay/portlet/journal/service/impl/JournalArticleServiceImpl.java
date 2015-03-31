@@ -122,9 +122,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         UUID, creation date, modification date, expando bridge
 	 *         attributes, guest permissions, group permissions, asset category
-	 *         IDs, asset tag names, asset link entry IDs, the "urlTitle"
-	 *         attribute, and workflow actions for the web content article. Can
-	 *         also set whether to add the default guest and group permissions.
+	 *         IDs, asset tag names, asset link entry IDs, URL title, and
+	 *         workflow actions for the web content article. Can also set
+	 *         whether to add the default guest and group permissions.
 	 * @return the web content article
 	 * @throws PortalException if the user did not have permission to add the
 	 *         web content article or if a portal exception occurred
@@ -226,9 +226,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         UUID, creation date, modification date, expando bridge
 	 *         attributes, guest permissions, group permissions, asset category
-	 *         IDs, asset tag names, asset link entry IDs, the "urlTitle"
-	 *         attribute, and workflow actions for the web content article. Can
-	 *         also set whether to add the default guest and group permissions.
+	 *         IDs, asset tag names, asset link entry IDs, URL title, and
+	 *         workflow actions for the web content article. Can also set
+	 *         whether to add the default guest and group permissions.
 	 * @return the web content article
 	 * @throws PortalException if the user did not have permission to add the
 	 *         web content article or if a portal exception occurred
@@ -1992,13 +1992,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         article's display page
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
-	 *         asset tag names, asset link entry IDs, workflow actions, the and
-	 *         "urlTitle" attributes, and can set whether to add the default
-	 *         command update for the web content article. With respect to
-	 *         social activities, by setting the service context's command to
-	 *         {@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	 *         invocation is considered a web content update activity; otherwise
-	 *         it is considered a web content add activity.
+	 *         asset tag names, asset link entry IDs, workflow actions, URL
+	 *         title, and can set whether to add the default command update for
+	 *         the web content article. With respect to social activities, by
+	 *         setting the service context's command to {@link
+	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	 *         is considered a web content update activity; otherwise it is
+	 *         considered a web content add activity.
 	 * @return the updated web content article
 	 * @throws PortalException if a user with the primary key or a matching web
 	 *         content article could not be found, or if a portal exception
@@ -2083,13 +2083,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         <code>null</code>)
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
-	 *         asset tag names, asset link entry IDs, workflow actions, the and
-	 *         "urlTitle" attributes, and can set whether to add the default
-	 *         command update for the web content article. With respect to
-	 *         social activities, by setting the service context's command to
-	 *         {@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	 *         invocation is considered a web content update activity; otherwise
-	 *         it is considered a web content add activity.
+	 *         asset tag names, asset link entry IDs, workflow actions, URL
+	 *         title, and can set whether to add the default command update for
+	 *         the web content article. With respect to social activities, by
+	 *         setting the service context's command to {@link
+	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	 *         is considered a web content update activity; otherwise it is
+	 *         considered a web content add activity.
 	 * @return the updated web content article
 	 * @throws PortalException if the user did not have permission to update the
 	 *         web content article, if a user with the primary key or a matching
@@ -2159,13 +2159,13 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  content the HTML content wrapped in XML.
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
-	 *         asset tag names, asset link entry IDs, workflow actions, the and
-	 *         "urlTitle" attributes, and can set whether to add the default
-	 *         command update for the web content article. With respect to
-	 *         social activities, by setting the service context's command to
-	 *         {@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	 *         invocation is considered a web content update activity; otherwise
-	 *         it is considered a web content add activity.
+	 *         asset tag names, asset link entry IDs, workflow actions, URL
+	 *         title, and can set whether to add the default command update for
+	 *         the web content article. With respect to social activities, by
+	 *         setting the service context's command to {@link
+	 *         com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	 *         is considered a web content update activity; otherwise it is
+	 *         considered a web content add activity.
 	 * @return the updated web content article
 	 * @throws PortalException if the user did not have permission to update the
 	 *         web content article, if a user with the primary key or a matching
@@ -2219,8 +2219,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         String, double, String, ServiceContext)} description.
 	 * @param  images the web content's images
 	 * @param  serviceContext the service context to be applied. Can set the
-	 *         modification date and "urlTitle" attribute for the web content
-	 *         article.
+	 *         modification date and URL title for the web content article.
 	 * @return the updated web content article
 	 * @throws PortalException if the user did not have permission to update the
 	 *         web content article, if a user with the primary key or a matching

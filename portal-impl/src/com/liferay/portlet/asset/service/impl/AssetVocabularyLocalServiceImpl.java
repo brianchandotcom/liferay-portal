@@ -90,9 +90,9 @@ public class AssetVocabularyLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetVocabulary addVocabulary(
-			long userId, long groupId, String title, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings,
-			ServiceContext serviceContext)
+			long userId, long groupId, String title,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String settings, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Vocabulary

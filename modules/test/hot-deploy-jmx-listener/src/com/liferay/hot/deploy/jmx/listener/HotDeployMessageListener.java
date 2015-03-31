@@ -54,6 +54,8 @@ public class HotDeployMessageListener extends BaseMessageListener {
 				_pluginStatisticsManager.registerLegacyPlugin(
 					servletContextName);
 
+				break;
+
 			case "undeploy":
 				if (_log.isInfoEnabled()) {
 					_log.info(servletContextName + " was undeployed");
@@ -61,6 +63,8 @@ public class HotDeployMessageListener extends BaseMessageListener {
 
 				_pluginStatisticsManager.unregisterLegacyPlugin(
 					servletContextName);
+
+				break;
 
 			default:
 				if (_log.isInfoEnabled()) {

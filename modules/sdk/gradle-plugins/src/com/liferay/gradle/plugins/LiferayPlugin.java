@@ -139,7 +139,8 @@ public class LiferayPlugin extends BasePlugin {
 	}
 
 	protected void configureTaskClean() {
-		Task cleanTask = getTask(CLEAN_TASK_NAME);
+		Task cleanTask = getTask(
+			org.gradle.api.plugins.BasePlugin.CLEAN_TASK_NAME);
 
 		configureTaskCleanDependsOn(cleanTask);
 	}
@@ -147,7 +148,8 @@ public class LiferayPlugin extends BasePlugin {
 	protected void configureTaskCleanDependsOn(Task cleanTask) {
 		for (Task task : project.getTasks()) {
 			String taskName =
-				CLEAN_TASK_NAME + StringUtil.capitalize(task.getName());
+				org.gradle.api.plugins.BasePlugin.CLEAN_TASK_NAME +
+					StringUtil.capitalize(task.getName());
 
 			cleanTask.dependsOn(taskName);
 		}
@@ -170,7 +172,7 @@ public class LiferayPlugin extends BasePlugin {
 
 			String taskName =
 				dependencyProject.getPath() + Project.PATH_SEPARATOR +
-					CLEAN_TASK_NAME;
+					org.gradle.api.plugins.BasePlugin.CLEAN_TASK_NAME;
 
 			cleanTask.dependsOn(taskName);
 		}

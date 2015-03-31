@@ -15,6 +15,7 @@
 package com.liferay.portal.security.membershippolicy.util.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -167,7 +168,8 @@ public class MembershipPolicyTestUtil {
 		String reminderQueryQuestion = RandomTestUtil.randomString();
 		String reminderQueryAnswer = RandomTestUtil.randomString();
 
-		String screenName = RandomTestUtil.randomString();
+		String screenName = RandomTestUtil.randomString(
+			NumericStringRandomizerBumper.INSTANCE);
 		String emailAddress =
 			"UserServiceTest." + RandomTestUtil.nextLong() + "@liferay.com";
 		long facebookId = 0;

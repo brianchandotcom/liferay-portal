@@ -14,7 +14,10 @@
 
 package com.liferay.document.selector.impl;
 
+import com.liferay.document.selector.ItemSelectorRendering;
 import com.liferay.document.selector.ItemSelectorViewRenderer;
+
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -50,12 +53,18 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void testGetItemSelectorParameters() {
 		Map<String, String[]> parameters =
 			_itemSelectorImpl.getItemSelectorParameters(
-				_mediaItemSelectorCriterion, _flickrItemSelectorCriterion);
+				"itemSelectedCallback", _mediaItemSelectorCriterion,
+				_flickrItemSelectorCriterion);
+
+		Assert.assertEquals(
+			"itemSelectedCallback",
+			parameters.get(ItemSelectorImpl.PARAMETER_ITEM_SELECTED_CALLBACK)[0]
+		);
 
 		Assert.assertEquals(
 			MediaItemSelectorCriterion.class.getName() + "," +
 				FlickrItemSelectorCriterion.class.getName(),
-			parameters.get("criteria")[0]);
+			parameters.get(ItemSelectorImpl.PARAMETER_CRITERIA)[0]);
 		Assert.assertNull(parameters.get("0_desiredReturnTypes"));
 		Assert.assertEquals(
 			String.valueOf(_mediaItemSelectorCriterion.getMaxSize()),
@@ -68,19 +77,28 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(
 			_flickrItemSelectorCriterion.getUser(),
 			parameters.get("1_user")[0]);
-		Assert.assertEquals(5, parameters.size());
+
+		Assert.assertEquals(6, parameters.size());
 	}
 
 	@Test
-	public void testGetItemSelectorViewsWithCriteria() {
+	public void testGetItemSelectorRendering() throws IOException {
 		_setUpItemSelectionCriterionHandlers();
 
 		Map<String, String[]> parameters =
 			_itemSelectorImpl.getItemSelectorParameters(
-				_mediaItemSelectorCriterion, _flickrItemSelectorCriterion);
+				"itemSelectedCallback", _mediaItemSelectorCriterion,
+				_flickrItemSelectorCriterion);
+
+		ItemSelectorRendering itemSelectorRendering =
+			_itemSelectorImpl.getItemSelectorRendering(parameters);
+
+		Assert.assertEquals(
+			"itemSelectedCallback",
+			itemSelectorRendering.getItemSelectedCallback());
 
 		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
-			_itemSelectorImpl.getItemSelectorViewRenderers(parameters);
+			itemSelectorRendering.getItemSelectorViewRenderers();
 
 		ItemSelectorViewRenderer<MediaItemSelectorCriterion>
 			mediaItemSelectorViewRenderer =
@@ -96,9 +114,9 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(
 			_mediaItemSelectorCriterion.getMaxSize(),
 			mediaItemSelectorCriterion.getMaxSize());
-		Assert.assertEquals(
-			MediaItemSelectorView.HTML,
-			mediaItemSelectorViewRenderer.getHTML("itemSelectedCallback"));
+		Assert.assertTrue(
+			mediaItemSelectorViewRenderer.getItemSelectorView()
+				instanceof MediaItemSelectorView);
 
 		ItemSelectorViewRenderer<FlickrItemSelectorCriterion>
 			flickrItemSelectorViewRenderer =
@@ -111,9 +129,9 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(
 			_flickrItemSelectorCriterion.getUser(),
 			flickrItemSelectorCriterion.getUser());
-		Assert.assertEquals(
-			FlickrItemSelectorView.HTML,
-			flickrItemSelectorViewRenderer.getHTML("itemSelectedCallback"));
+		Assert.assertTrue(
+			flickrItemSelectorViewRenderer.getItemSelectorView()
+				instanceof FlickrItemSelectorView);
 
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
 	}

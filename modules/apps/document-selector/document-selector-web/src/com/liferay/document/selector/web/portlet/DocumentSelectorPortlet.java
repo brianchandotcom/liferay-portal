@@ -15,7 +15,7 @@
 package com.liferay.document.selector.web.portlet;
 
 import com.liferay.document.selector.ItemSelector;
-import com.liferay.document.selector.ItemSelectorViewRenderer;
+import com.liferay.document.selector.ItemSelectorRendering;
 import com.liferay.document.selector.web.util.DocumentSelectorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -54,8 +54,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 
 import java.io.InputStream;
-
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -139,15 +137,15 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 	public void showItemSelector(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderersList =
-			_itemSelector.getItemSelectorViewRenderers(
+		ItemSelectorRendering itemSelectorRendering =
+			_itemSelector.getItemSelectorRendering(
 				actionRequest.getParameterMap());
 
-		ItemSelectorViewRenderers itemSelectorViewRenderers =
-			new ItemSelectorViewRenderers(
-				actionRequest.getLocale(), itemSelectorViewRenderersList);
+		LocalizedItemSelectorRendering localizedItemSelectorRendering =
+			new LocalizedItemSelectorRendering(
+				actionRequest.getLocale(), itemSelectorRendering);
 
-		itemSelectorViewRenderers.store(actionRequest);
+		localizedItemSelectorRendering.store(actionRequest);
 
 		actionResponse.setRenderParameter("mvcPath", "/item_selector.jsp");
 	}

@@ -168,7 +168,8 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return AssetVocabularyServiceUtil.addVocabulary(
-			RandomTestUtil.randomString(), serviceContext);
+			serviceContext.getScopeGroupId(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	@Override

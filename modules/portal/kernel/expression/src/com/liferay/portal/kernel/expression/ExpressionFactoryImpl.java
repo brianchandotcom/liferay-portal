@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.expression;
-
-import com.liferay.portal.kernel.expression.Expression;
-import com.liferay.portal.kernel.expression.ExpressionFactory;
+package com.liferay.portal.kernel.expression;
 
 /**
  * @author Marcellus Tavares

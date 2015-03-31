@@ -15,14 +15,14 @@
 package com.liferay.portal.expression;
 
 import com.liferay.portal.kernel.expression.Expression;
-import com.liferay.portal.kernel.expression.ExpressionFactoryUtil;
+import com.liferay.portal.kernel.expression.ExpressionFactory;
+import com.liferay.portal.kernel.expression.ExpressionFactoryImpl;
 import com.liferay.portal.kernel.expression.VariableDependencies;
 
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -30,15 +30,10 @@ import org.junit.Test;
  */
 public class VariableDependenciesTest {
 
-	@Before
-	public void setUp() throws Exception {
-		setUpExpressionFactory();
-	}
-
 	@Test
 	public void testVariableDependenciesMap() {
-		Expression<Long> expression =
-			ExpressionFactoryUtil.createLongExpression("var1 + var2 + var3");
+		Expression<Long> expression = _expressionFactory.createLongExpression(
+			"var1 + var2 + var3");
 
 		expression.setLongVariableValue("var1", 5l);
 		expression.setExpressionStringVariableValue(
@@ -102,11 +97,7 @@ public class VariableDependenciesTest {
 		return requiredVariableNames.contains(variableName);
 	}
 
-	protected void setUpExpressionFactory() {
-		ExpressionFactoryUtil expressionFactoryUtil =
-			new ExpressionFactoryUtil();
-
-		expressionFactoryUtil.setExpressionFactory(new ExpressionFactoryImpl());
-	}
+	private final ExpressionFactory _expressionFactory =
+		new ExpressionFactoryImpl();
 
 }

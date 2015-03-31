@@ -16,11 +16,11 @@ package com.liferay.portal.expression;
 
 import com.liferay.portal.kernel.expression.Expression;
 import com.liferay.portal.kernel.expression.ExpressionEvaluationException;
-import com.liferay.portal.kernel.expression.ExpressionFactoryUtil;
+import com.liferay.portal.kernel.expression.ExpressionFactory;
+import com.liferay.portal.kernel.expression.ExpressionFactoryImpl;
 import com.liferay.portal.kernel.util.MathUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -28,15 +28,10 @@ import org.junit.Test;
  */
 public class ExpressionEvaluationTest {
 
-	@Before
-	public void setUp() throws Exception {
-		setUpExpressionFactory();
-	}
-
 	@Test(expected = ExpressionEvaluationException.class)
 	public void testEvaluateBlankExpression() throws Exception {
 		Expression<Boolean> expression =
-			ExpressionFactoryUtil.createBooleanExpression("");
+			_expressionFactory.createBooleanExpression("");
 
 		expression.setIntegerVariableValue("var1", 5);
 		expression.setIntegerVariableValue("var2", 6);
@@ -47,7 +42,7 @@ public class ExpressionEvaluationTest {
 	@Test
 	public void testEvaluateDoubleExpression() throws Exception {
 		Expression<Double> expression =
-			ExpressionFactoryUtil.createDoubleExpression("var1 + var2 + var3");
+			_expressionFactory.createDoubleExpression("var1 + var2 + var3");
 
 		double var1 = 5.5;
 
@@ -70,7 +65,7 @@ public class ExpressionEvaluationTest {
 	@Test
 	public void testEvaluateEqualsExpression() throws Exception {
 		Expression<Boolean> expression =
-			ExpressionFactoryUtil.createBooleanExpression("var1 = var2");
+			_expressionFactory.createBooleanExpression("var1 = var2");
 
 		expression.setBooleanVariableValue("var1", true);
 		expression.setBooleanVariableValue("var2", false);
@@ -80,8 +75,8 @@ public class ExpressionEvaluationTest {
 
 	@Test
 	public void testEvaluateFloatExpression() throws Exception {
-		Expression<Float> expression =
-			ExpressionFactoryUtil.createFloatExpression("var1 + var2 + var3");
+		Expression<Float> expression = _expressionFactory.createFloatExpression(
+			"var1 + var2 + var3");
 
 		float var1 = 5.5f;
 
@@ -103,7 +98,7 @@ public class ExpressionEvaluationTest {
 	@Test
 	public void testEvaluateGreaterThanExpression() throws Exception {
 		Expression<Boolean> expression =
-			ExpressionFactoryUtil.createBooleanExpression("var1 > var2");
+			_expressionFactory.createBooleanExpression("var1 > var2");
 
 		expression.setIntegerVariableValue("var1", 5);
 		expression.setIntegerVariableValue("var2", 6);
@@ -114,7 +109,7 @@ public class ExpressionEvaluationTest {
 	@Test
 	public void testEvaluateIntegerExpression() throws Exception {
 		Expression<Integer> expression =
-			ExpressionFactoryUtil.createIntegerExpression("var1 + var2 + var3");
+			_expressionFactory.createIntegerExpression("var1 + var2 + var3");
 
 		int var1 = 5;
 
@@ -136,7 +131,7 @@ public class ExpressionEvaluationTest {
 	@Test(expected = ExpressionEvaluationException.class)
 	public void testEvaluateInvalidExpression() throws Exception {
 		Expression<Boolean> expression =
-			ExpressionFactoryUtil.createBooleanExpression("var1 >=+P var2");
+			_expressionFactory.createBooleanExpression("var1 >=+P var2");
 
 		expression.setIntegerVariableValue("var1", 5);
 		expression.setIntegerVariableValue("var2", 6);
@@ -146,8 +141,8 @@ public class ExpressionEvaluationTest {
 
 	@Test
 	public void testEvaluateLongExpression() throws Exception {
-		Expression<Long> expression =
-			ExpressionFactoryUtil.createLongExpression("var1 + var2 + var3");
+		Expression<Long> expression = _expressionFactory.createLongExpression(
+			"var1 + var2 + var3");
 
 		long var1 = 5l;
 
@@ -168,7 +163,7 @@ public class ExpressionEvaluationTest {
 
 	@Test(expected = ExpressionEvaluationException.class)
 	public void testEvaluateNullExpression() throws Exception {
-		Expression<Boolean> expression = ExpressionFactoryUtil.createExpression(
+		Expression<Boolean> expression = _expressionFactory.createExpression(
 			null, Boolean.class);
 
 		expression.setIntegerVariableValue("var1", 5);
@@ -180,7 +175,7 @@ public class ExpressionEvaluationTest {
 	@Test
 	public void testEvaluateStringExpression() throws Exception {
 		Expression<String> expression =
-			ExpressionFactoryUtil.createStringExpression("var1 + var2");
+			_expressionFactory.createStringExpression("var1 + var2");
 
 		expression.setStringVariableValue("var1", "Life");
 		expression.setStringVariableValue("var2", "ray");
@@ -191,8 +186,7 @@ public class ExpressionEvaluationTest {
 	@Test
 	public void testSumWithDoubleValues() throws Exception {
 		Expression<Double> expression =
-			ExpressionFactoryUtil.createDoubleExpression(
-				"sum(var1, var2, var3)");
+			_expressionFactory.createDoubleExpression("sum(var1, var2, var3)");
 
 		double var1 = 5.5;
 
@@ -214,8 +208,8 @@ public class ExpressionEvaluationTest {
 
 	@Test
 	public void testSumWithLongValues() throws Exception {
-		Expression<Long> expression =
-			ExpressionFactoryUtil.createLongExpression("sum(var1, var2, var3)");
+		Expression<Long> expression = _expressionFactory.createLongExpression(
+			"sum(var1, var2, var3)");
 
 		long var1 = 5;
 
@@ -235,11 +229,7 @@ public class ExpressionEvaluationTest {
 			MathUtil.sum(var1, var2, var3), (long)expression.evaluate());
 	}
 
-	protected void setUpExpressionFactory() {
-		ExpressionFactoryUtil expressionFactoryUtil =
-			new ExpressionFactoryUtil();
-
-		expressionFactoryUtil.setExpressionFactory(new ExpressionFactoryImpl());
-	}
+	private final ExpressionFactory _expressionFactory =
+		new ExpressionFactoryImpl();
 
 }

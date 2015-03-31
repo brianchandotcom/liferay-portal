@@ -57,16 +57,14 @@ public class HotDeployMessageListener extends BaseMessageListener {
 				_log.info(servletContextName + " was deployed");
 			}
 
-			_pluginStatisticsManager.registerLegacyPlugin(
-				servletContextName);
+			_pluginStatisticsManager.registerLegacyPlugin(servletContextName);
 		}
 		else if ("undeploy".equals(command)) {
 			if (_log.isInfoEnabled()) {
 				_log.info(servletContextName + " was undeployed");
 			}
 
-			_pluginStatisticsManager.unregisterLegacyPlugin(
-				servletContextName);
+			_pluginStatisticsManager.unregisterLegacyPlugin(servletContextName);
 		}
 		else if (_log.isWarnEnabled()) {
 			_log.warn("Unknown command " + command);

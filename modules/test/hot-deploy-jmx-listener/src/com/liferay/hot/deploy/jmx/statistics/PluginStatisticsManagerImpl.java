@@ -30,20 +30,20 @@ public class PluginStatisticsManagerImpl implements PluginStatisticsManager {
 
 	@Override
 	public List<String> getRegisteredLegacyPlugins() {
-		return Collections.unmodifiableList(_registeredLegacyPlugins);
+		return Collections.unmodifiableList(_servletContextNames);
 	}
 
 	@Override
-	public void registerLegacyPlugin(String legacyPlugin) {
-		_registeredLegacyPlugins.add(legacyPlugin);
+	public void registerLegacyPlugin(String servletContextName) {
+		_servletContextNames.add(servletContextName);
 	}
 
 	@Override
-	public void unregisterLegacyPlugin(String legacyPlugin) {
-		_registeredLegacyPlugins.remove(legacyPlugin);
+	public void unregisterLegacyPlugin(String servletContextName) {
+		_servletContextNames.remove(servletContextName);
 	}
 
-	private final List<String> _registeredLegacyPlugins =
+	private final List<String> _servletContextNames =
 		new CopyOnWriteArrayList<>();
 
 }

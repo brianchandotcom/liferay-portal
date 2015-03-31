@@ -23,8 +23,8 @@ public interface PluginStatisticsManager {
 
 	public List<String> getRegisteredLegacyPlugins();
 
-	public void registerLegacyPlugin(String legacyPlugin);
+	public void registerLegacyPlugin(String servletContextName);
 
-	public void unregisterLegacyPlugin(String legacyPlugin);
+	public void unregisterLegacyPlugin(String servletContextName);
 
 }

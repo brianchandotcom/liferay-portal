@@ -1807,6 +1807,13 @@ go]]></replacevalue>
 					match="(&lt;/?)error"
 					replace="\1failure"
 				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="(&lt;failure\s*)type"
+					replace="\1message"
+				/>
 			</sequential>
 		</for>
 	</target>

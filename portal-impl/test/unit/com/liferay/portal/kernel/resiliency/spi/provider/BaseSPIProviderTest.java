@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPIProxy;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,6 +50,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 
 import org.junit.Assert;
@@ -120,6 +122,8 @@ public class BaseSPIProviderTest {
 			SPI spi = _testSPIProvider.createSPI(_spiConfiguration);
 
 			Assert.assertSame(RemoteSPIProxy.class, spi.getClass());
+
+			_mockProcessExecutor.sync();
 
 			// Reject
 
@@ -202,22 +206,20 @@ public class BaseSPIProviderTest {
 			if (_registerBack) {
 				final String spiUUID = ((RemoteSPI)processCallable).getUUID();
 
-				Thread notifyThread = new Thread() {
+				_syncThrowableThread = new SyncThrowableThread<>(
+					new Callable<Void>() {
 
-					@Override
-					public void run() {
-						try {
+						@Override
+						public Void call() throws InterruptedException {
 							SPISynchronousQueueUtil.notifySynchronousQueue(
 								spiUUID, mockSPI);
-						}
-						catch (InterruptedException ie) {
-							Assert.fail(ie.getMessage());
-						}
-					}
 
-				};
+							return null;
+						}
 
-				notifyThread.start();
+					});
+
+				_syncThrowableThread.start();
 			}
 
 			if (_throwException) {
@@ -252,8 +254,15 @@ public class BaseSPIProviderTest {
 			_throwException = throwException;
 		}
 
+		public void sync() {
+			_syncThrowableThread.sync();
+
+			_syncThrowableThread = null;
+		}
+
 		private boolean _interrupt;
 		private boolean _registerBack;
+		private SyncThrowableThread<Void> _syncThrowableThread;
 		private boolean _throwException;
 
 	}

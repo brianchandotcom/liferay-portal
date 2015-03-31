@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.lucene;
 
+import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -102,29 +103,28 @@ public class IndexSearcherManagerTest {
 
 		_indexSearcherManager.invalidate();
 
-		Thread thread = new Thread("Double Check Locking") {
+		SyncThrowableThread<Void> syncThrowableThread =
+			new SyncThrowableThread<>(
+				new Callable<Void>() {
 
-			@Override
-			public void run() {
-				try {
-					_assertHits(fieldValue, 1);
-				}
-				catch (Exception e) {
-					Assert.fail();
-				}
-			}
+					@Override
+					public Void call() throws Exception {
+						_assertHits(fieldValue, 1);
 
-		};
+						return null;
+					}
+
+				});
 
 		synchronized (_indexSearcherManager) {
-			thread.start();
+			syncThrowableThread.start();
 
-			while (thread.getState() != State.BLOCKED);
+			while (syncThrowableThread.getState() != State.BLOCKED);
 
 			_assertHits(fieldValue, 1);
 		}
 
-		thread.join();
+		syncThrowableThread.sync();
 
 		// Concurrent aquire, reopen
 
@@ -142,7 +142,7 @@ public class IndexSearcherManagerTest {
 
 			});
 
-		thread = new Thread(futureTask1, "Concurrent Reopen 1");
+		Thread thread = new Thread(futureTask1, "Concurrent Reopen 1");
 
 		thread.start();
 

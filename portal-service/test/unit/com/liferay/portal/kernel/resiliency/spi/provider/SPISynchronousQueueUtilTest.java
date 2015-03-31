@@ -17,9 +17,11 @@ package com.liferay.portal.kernel.resiliency.spi.provider;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.SynchronousQueue;
 
 import org.junit.Assert;
@@ -73,26 +75,25 @@ public class SPISynchronousQueueUtilTest {
 
 		final MockSPI mockSPI = new MockSPI();
 
-		Thread notifyThread = new Thread() {
+		SyncThrowableThread<Void> syncThrowableThread =
+			new SyncThrowableThread<>(
+				new Callable<Void>() {
 
-			@Override
-			public void run() {
-				try {
-					SPISynchronousQueueUtil.notifySynchronousQueue(
-						spiUUID, mockSPI);
-				}
-				catch (InterruptedException ie) {
-					Assert.fail(ie.getMessage());
-				}
-			}
+					@Override
+					public Void call() throws InterruptedException {
+						SPISynchronousQueueUtil.notifySynchronousQueue(
+							spiUUID, mockSPI);
 
-		};
+						return null;
+					}
 
-		notifyThread.start();
+				});
+
+		syncThrowableThread.start();
 
 		Assert.assertSame(mockSPI, synchronousQueue.take());
 
-		notifyThread.join();
+		syncThrowableThread.sync();
 
 		// Destroy
 

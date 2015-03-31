@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -38,6 +39,12 @@ public class HotDeployMessageListener extends BaseMessageListener {
 	@Activate
 	protected void activate() {
 		_messageBus.registerMessageListener(DestinationNames.HOT_DEPLOY, this);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_messageBus.unregisterMessageListener(
+			DestinationNames.HOT_DEPLOY, this);
 	}
 
 	@Override

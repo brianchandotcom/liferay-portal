@@ -66,7 +66,7 @@ public class LiferayExtension {
 	}
 
 	public boolean isOsgiPlugin() {
-		if (_bndProperties != null) {
+		if (!_bndProperties.isEmpty()) {
 			return true;
 		}
 

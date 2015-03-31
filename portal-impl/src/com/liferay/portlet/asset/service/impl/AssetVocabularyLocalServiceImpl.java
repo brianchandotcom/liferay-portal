@@ -83,8 +83,8 @@ public class AssetVocabularyLocalServiceImpl
 		serviceContext.setScopeGroupId(groupId);
 
 		return assetVocabularyLocalService.addVocabulary(
-			defaultUserId, StringPool.BLANK, titleMap, null, StringPool.BLANK,
-			serviceContext);
+			defaultUserId, groupId, StringPool.BLANK, titleMap, null,
+			StringPool.BLANK, serviceContext);
 	}
 
 	/**
@@ -99,14 +99,14 @@ public class AssetVocabularyLocalServiceImpl
 		throws PortalException {
 
 		return assetVocabularyLocalService.addVocabulary(
-			userId, StringPool.BLANK, titleMap, descriptionMap, settings,
-			serviceContext);
+			userId, serviceContext.getScopeGroupId(), StringPool.BLANK,
+			titleMap, descriptionMap, settings, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetVocabulary addVocabulary(
-			long userId, String title, Map<Locale, String> titleMap,
+			long userId, long groupId, String title, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String settings,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -114,7 +114,6 @@ public class AssetVocabularyLocalServiceImpl
 		// Vocabulary
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long groupId = serviceContext.getScopeGroupId();
 		String name = titleMap.get(LocaleUtil.getSiteDefault());
 
 		Date now = new Date();
@@ -167,7 +166,8 @@ public class AssetVocabularyLocalServiceImpl
 
 	@Override
 	public AssetVocabulary addVocabulary(
-			long userId, String title, ServiceContext serviceContext)
+			long userId, long groupId, String title,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<Locale, String> titleMap = new HashMap<>();
@@ -181,7 +181,8 @@ public class AssetVocabularyLocalServiceImpl
 		descriptionMap.put(locale, StringPool.BLANK);
 
 		return assetVocabularyLocalService.addVocabulary(
-			userId, title, titleMap, descriptionMap, null, serviceContext);
+			userId, groupId, title, titleMap, descriptionMap, null,
+			serviceContext);
 	}
 
 	@Override
@@ -428,14 +429,13 @@ public class AssetVocabularyLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		long groupId = serviceContext.getScopeGroupId();
 		String name = titleMap.get(LocaleUtil.getSiteDefault());
 
 		AssetVocabulary vocabulary =
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
 		if (!vocabulary.getName().equals(name)) {
-			validate(groupId, name);
+			validate(vocabulary.getGroupId(), name);
 		}
 
 		vocabulary.setModifiedDate(new Date());

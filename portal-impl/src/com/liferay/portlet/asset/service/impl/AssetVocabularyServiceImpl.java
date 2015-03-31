@@ -65,37 +65,35 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		throws PortalException {
 
 		return addVocabulary(
-			StringPool.BLANK, titleMap, descriptionMap, settings,
-			serviceContext);
+			serviceContext.getScopeGroupId(), StringPool.BLANK, titleMap,
+			descriptionMap, settings, serviceContext);
 	}
 
 	@Override
 	public AssetVocabulary addVocabulary(
-			String title, Map<Locale, String> titleMap,
+			long groupId, String title, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String settings,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.ADD_VOCABULARY);
+			getPermissionChecker(), groupId, ActionKeys.ADD_VOCABULARY);
 
 		return assetVocabularyLocalService.addVocabulary(
-			getUserId(), title, titleMap, descriptionMap, settings,
+			getUserId(), groupId, title, titleMap, descriptionMap, settings,
 			serviceContext);
 	}
 
 	@Override
 	public AssetVocabulary addVocabulary(
-			String title, ServiceContext serviceContext)
+			long groupId, String title, ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.ADD_VOCABULARY);
+			getPermissionChecker(), groupId, ActionKeys.ADD_VOCABULARY);
 
 		return assetVocabularyLocalService.addVocabulary(
-			getUserId(), title, serviceContext);
+			getUserId(), groupId, title, serviceContext);
 	}
 
 	/**

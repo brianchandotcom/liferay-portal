@@ -16,7 +16,13 @@ package com.liferay.document.selector.impl;
 
 import com.liferay.document.selector.ItemSelectorView;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.Locale;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * @author Iván Zaera
@@ -28,14 +34,6 @@ public class FlickrItemSelectorView
 		"<html>" + FlickrItemSelectorView.class.getName() + "</html>";
 
 	@Override
-	public String getHTML(
-		FlickrItemSelectorCriterion flickrItemSelectorCriterion,
-		String itemSelectedCallback) {
-
-		return HTML;
-	}
-
-	@Override
 	public Class<FlickrItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return FlickrItemSelectorCriterion.class;
 	}
@@ -43,6 +41,18 @@ public class FlickrItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return FlickrItemSelectorView.class.getName();
+	}
+
+	@Override
+	public void renderHTML(
+			ServletRequest request, ServletResponse response,
+			FlickrItemSelectorCriterion flickrItemSelectorCriterion,
+			String itemSelectedCallback)
+		throws IOException {
+
+		PrintWriter writer = response.getWriter();
+
+		writer.print(HTML);
 	}
 
 }

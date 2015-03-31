@@ -17,6 +17,7 @@ package com.liferay.document.selector.impl;
 import com.liferay.document.selector.ItemSelector;
 import com.liferay.document.selector.ItemSelectorCriterion;
 import com.liferay.document.selector.ItemSelectorCriterionHandler;
+import com.liferay.document.selector.ItemSelectorRendering;
 import com.liferay.document.selector.ItemSelectorView;
 import com.liferay.document.selector.ItemSelectorViewRenderer;
 import com.liferay.document.selector.web.constants.DocumentSelectorPortletKeys;
@@ -61,13 +62,44 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	public static final String PARAMETER_CRITERIA = "criteria";
 
+	public static final String PARAMETER_ITEM_SELECTED_CALLBACK =
+		"itemSelectedCallback";
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public ItemSelectorRendering getItemSelectorRendering(
+		Map<String, String[]> parameters) {
+
+		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
+			new ArrayList<>();
+
+		List<Class<? extends ItemSelectorCriterion>>
+			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
+				parameters);
+
+		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
+			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
+				itemSelectorCriterionClasses.get(i);
+
+			String paramPrefix = i + "_";
+
+			addItemSelectorViewRenderers(
+				(List)itemSelectorViewRenderers, parameters, paramPrefix,
+				itemSelectorCriterionClass);
+		}
+
+		return new ItemSelectorRendering(
+			parameters.get(PARAMETER_ITEM_SELECTED_CALLBACK)[0],
+			itemSelectorViewRenderers);
+	}
+
 	@Override
 	public PortletURL getItemSelectorURL(
-		PortletRequest portletRequest,
+		PortletRequest portletRequest, String itemSelectedCallback,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
 		Map<String, String[]> parameters = getItemSelectorParameters(
-			itemSelectorCriteria);
+			itemSelectedCallback, itemSelectorCriteria);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -97,32 +129,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return portletURL;
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers(
-		Map<String, String[]> parameters) {
-
-		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
-			new ArrayList<>();
-
-		List<Class<? extends ItemSelectorCriterion>>
-			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
-				parameters);
-
-		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
-			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
-				itemSelectorCriterionClasses.get(i);
-
-			String paramPrefix = i + "_";
-
-			addItemSelectorViewRenderers(
-				(List)itemSelectorViewRenderers, parameters, paramPrefix,
-				itemSelectorCriterionClass);
-		}
-
-		return itemSelectorViewRenderers;
 	}
 
 	protected <T extends ItemSelectorCriterion>
@@ -212,9 +218,14 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	protected Map<String, String[]> getItemSelectorParameters(
+		String itemSelectedCallback,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
 		Map<String, String[]> parameters = new HashMap<>();
+
+		parameters.put(
+			PARAMETER_ITEM_SELECTED_CALLBACK,
+			new String[] {itemSelectedCallback});
 
 		populateCriteria(parameters, itemSelectorCriteria);
 

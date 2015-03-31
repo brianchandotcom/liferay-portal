@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.rss.web.configuration.RSSWebConfiguration;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
@@ -34,7 +35,10 @@ import java.util.List;
  */
 public class RSSFeed {
 
-	public RSSFeed(String url, String title) {
+	public RSSFeed(
+		RSSWebConfiguration rssWebConfiguration, String url, String title) {
+
+		_rssWebConfiguration = rssWebConfiguration;
 		_url = url;
 
 		SyndFeed syndFeed = getSyndFeed();
@@ -132,7 +136,7 @@ public class RSSFeed {
 			return _syndFeed;
 		}
 
-		WebCacheItem wci = new RSSWebCacheItem(_url);
+		WebCacheItem wci = new RSSWebCacheItem(_rssWebConfiguration, _url);
 
 		_syndFeed = (SyndFeed)WebCachePoolUtil.get(
 			RSSFeed.class.getName() + StringPool.PERIOD + _url, wci);
@@ -162,6 +166,7 @@ public class RSSFeed {
 
 	private final String _baseURL;
 	private List<RSSFeedEntry> _rssFeedEntries;
+	private final RSSWebConfiguration _rssWebConfiguration;
 	private SyndFeed _syndFeed;
 	private final String _syndFeedImageLink;
 	private final String _syndFeedImageURL;

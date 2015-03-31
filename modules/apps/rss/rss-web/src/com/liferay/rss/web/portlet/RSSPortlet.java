@@ -78,6 +78,9 @@ public class RSSPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		renderRequest.setAttribute(
+			RSSWebConfiguration.class.getName(), _rssWebConfiguration);
+
 		try {
 			RSSPortletInstanceSettings rssPortletInstanceSettings =
 				_portletInstanceSettingsProvider.getPortletInstanceSettings(
@@ -92,6 +95,13 @@ public class RSSPortlet extends MVCPortlet {
 		}
 
 		super.doView(renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_rssWebConfiguration = Configurable.createConfigurable(
+			RSSWebConfiguration.class, properties);
 	}
 
 	@Reference(
@@ -110,5 +120,6 @@ public class RSSPortlet extends MVCPortlet {
 
 	private PortletInstanceSettingsProvider<RSSPortletInstanceSettings>
 		_portletInstanceSettingsProvider;
+	private volatile RSSWebConfiguration _rssWebConfiguration;
 
 }

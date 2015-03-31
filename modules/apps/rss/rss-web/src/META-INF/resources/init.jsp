@@ -51,7 +51,9 @@ page import="java.util.List" %>
 <%
 RSSPortletInstanceSettings rssPortletInstanceSettings = (RSSPortletInstanceSettings)renderRequest.getAttribute(RSSPortletInstanceSettings.class.getName());
 
-RSSDisplayContext rssDisplayContext = new RSSDisplayContext(rssPortletInstanceSettings);
+RSSWebConfiguration rssWebConfiguration = (RSSWebConfiguration)renderRequest.getAttribute(RSSWebConfiguration.class.getName());
+
+RSSDisplayContext rssDisplayContext = new RSSDisplayContext(rssPortletInstanceSettings, rssWebConfiguration);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

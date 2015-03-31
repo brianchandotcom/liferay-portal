@@ -15,15 +15,12 @@
 package com.liferay.rss.web.display.context;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.rss.web.configuration.RSSWebConfiguration;
 import com.liferay.rss.web.settings.RSSPortletInstanceSettings;
 import com.liferay.rss.web.util.RSSFeed;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.portlet.PortletPreferences;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -31,9 +28,11 @@ import javax.servlet.http.HttpServletRequest;
 public class RSSDisplayContext {
 
 	public RSSDisplayContext(
-		RSSPortletInstanceSettings rssPortletInstanceSettings) {
+		RSSPortletInstanceSettings rssPortletInstanceSettings,
+		RSSWebConfiguration rssWebConfiguration) {
 
 		_rssPortletInstanceSettings = rssPortletInstanceSettings;
+		_rssWebConfiguration = rssWebConfiguration;
 	}
 
 	public List<RSSFeed> getRSSFeeds() {
@@ -52,12 +51,13 @@ public class RSSDisplayContext {
 				title = titles[i];
 			}
 
-			rssFeeds.add(new RSSFeed(url, title));
+			rssFeeds.add(new RSSFeed(_rssWebConfiguration, url, title));
 		}
 
 		return rssFeeds;
 	}
 
 	private final RSSPortletInstanceSettings _rssPortletInstanceSettings;
+	private final RSSWebConfiguration _rssWebConfiguration;
 
 }

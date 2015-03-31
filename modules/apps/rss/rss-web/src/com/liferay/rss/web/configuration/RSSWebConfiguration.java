@@ -14,14 +14,19 @@
 
 package com.liferay.rss.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class RSSWebConfigurationValues {
+@Meta.OCD(
+	id = "com.liferay.rss.web.configuration.RSSWebConfiguration"
+)
+public interface RSSWebConfiguration {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		RSSWebConfigurationUtil.get("display.templates.config"));
+	@Meta.AD(
+		deflt = "20", required = false
+	)
+	public int rssFeedTime();
 
 }

@@ -56,15 +56,15 @@ import com.liferay.portlet.asset.service.AssetTagServiceUtil;
 @ProviderType
 public class AssetTagServiceHttp {
 	public static com.liferay.portlet.asset.model.AssetTag addTag(
-		HttpPrincipal httpPrincipal, java.lang.String name,
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetTagServiceUtil.class,
 					"addTag", _addTagParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					name, serviceContext);
 
 			Object returnObj = null;
 
@@ -713,7 +713,7 @@ public class AssetTagServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(AssetTagServiceHttp.class);
 	private static final Class<?>[] _addTagParameterTypes0 = new Class[] {
-			java.lang.String.class,
+			long.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteTagParameterTypes1 = new Class[] {

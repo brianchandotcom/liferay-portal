@@ -70,7 +70,8 @@ import java.util.Map;
 @ProviderType
 public class AssetCategoryServiceSoap {
 	public static com.liferay.portlet.asset.model.AssetCategorySoap addCategory(
-		long parentCategoryId, java.lang.String[] titleMapLanguageIds,
+		long groupId, long parentCategoryId,
+		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, long vocabularyId,
@@ -83,9 +84,9 @@ public class AssetCategoryServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.portlet.asset.model.AssetCategory returnValue = AssetCategoryServiceUtil.addCategory(parentCategoryId,
-					titleMap, descriptionMap, vocabularyId, categoryProperties,
-					serviceContext);
+			com.liferay.portlet.asset.model.AssetCategory returnValue = AssetCategoryServiceUtil.addCategory(groupId,
+					parentCategoryId, titleMap, descriptionMap, vocabularyId,
+					categoryProperties, serviceContext);
 
 			return com.liferay.portlet.asset.model.AssetCategorySoap.toSoapModel(returnValue);
 		}
@@ -97,12 +98,12 @@ public class AssetCategoryServiceSoap {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategorySoap addCategory(
-		java.lang.String title, long vocabularyId,
+		long groupId, java.lang.String title, long vocabularyId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.asset.model.AssetCategory returnValue = AssetCategoryServiceUtil.addCategory(title,
-					vocabularyId, serviceContext);
+			com.liferay.portlet.asset.model.AssetCategory returnValue = AssetCategoryServiceUtil.addCategory(groupId,
+					title, vocabularyId, serviceContext);
 
 			return com.liferay.portlet.asset.model.AssetCategorySoap.toSoapModel(returnValue);
 		}

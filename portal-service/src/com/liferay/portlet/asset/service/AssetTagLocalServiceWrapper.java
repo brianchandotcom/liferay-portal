@@ -69,10 +69,11 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag addTag(long userId,
-		java.lang.String name,
+		long groupId, java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetTagLocalService.addTag(userId, name, serviceContext);
+		return _assetTagLocalService.addTag(userId, groupId, name,
+			serviceContext);
 	}
 
 	@Override

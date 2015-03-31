@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
@@ -68,7 +69,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 		com.liferay.portlet.asset.model.AssetTag assetTag);
 
 	public com.liferay.portlet.asset.model.AssetTag addTag(long userId,
-		java.lang.String name,
+		long groupId, java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -163,6 +164,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 		com.liferay.portal.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteTag(com.liferay.portlet.asset.model.AssetTag tag)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

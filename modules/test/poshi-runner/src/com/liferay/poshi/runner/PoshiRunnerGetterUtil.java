@@ -99,11 +99,11 @@ public class PoshiRunnerGetterUtil {
 	}
 
 	public static String getFileNameFromClassKey(String classKey) {
-		int hash = classKey.indexOf("#");
-		int hash2 = classKey.length();
+		int x = classKey.indexOf("#");
+		int y = classKey.length();
 
-		String classType = classKey.substring(0, hash);
-		String className = classKey.substring(hash + 1, hash2);
+		String classType = classKey.substring(0, x);
+		String className = classKey.substring(x + 1, y);
 
 		return className + "." + classType;
 	}

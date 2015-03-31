@@ -1148,12 +1148,14 @@
 								</and>
 							</not>
 							<then>
-								<tstamp />
+								<tstamp>
+									<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+								</tstamp>
 
 								<copy
 									file="${app.server.tomcat.dir}/conf/tomcat-users.xml"
 									overwrite="true"
-									tofile="${app.server.tomcat.dir}/conf/tomcat-users.xml.${DSTAMP}${TSTAMP}"
+									tofile="${app.server.tomcat.dir}/conf/tomcat-users.xml.${tstamp.value}"
 								/>
 							</then>
 						</if>

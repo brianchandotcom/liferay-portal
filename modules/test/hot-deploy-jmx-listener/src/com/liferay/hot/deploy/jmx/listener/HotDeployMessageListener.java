@@ -48,7 +48,7 @@ public class HotDeployMessageListener extends BaseMessageListener {
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
+	protected void doReceive(Message message) {
 		String command = message.getString("command");
 		String servletContextName = message.getString("servletContextName");
 

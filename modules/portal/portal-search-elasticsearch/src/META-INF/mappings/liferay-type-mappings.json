@@ -63,6 +63,11 @@
 				"store": "yes",
 				"type": "date"
 			},
+			"emailAddress": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"endTime": {
 				"index": "not_analyzed",
 				"store": "yes",

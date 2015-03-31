@@ -254,8 +254,8 @@ public class MembershipPolicyTestUtil {
 
 		if (includeCategorization) {
 			AssetTag tag = AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				new ServiceContext());
+				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				RandomTestUtil.randomString(), new ServiceContext());
 
 			serviceContext.setAssetTagNames(new String[] {tag.getName()});
 
@@ -266,12 +266,13 @@ public class MembershipPolicyTestUtil {
 
 			AssetVocabulary vocabulary =
 				AssetVocabularyLocalServiceUtil.addVocabulary(
-					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-					serviceContext);
+					TestPropsValues.getUserId(), company.getGroupId(),
+					RandomTestUtil.randomString(), serviceContext);
 
 			AssetCategory category = AssetCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				vocabulary.getVocabularyId(), serviceContext);
+				TestPropsValues.getUserId(), company.getGroupId(),
+				RandomTestUtil.randomString(), vocabulary.getVocabularyId(),
+				serviceContext);
 
 			serviceContext.setAssetCategoryIds(
 				new long[] {category.getCategoryId()});

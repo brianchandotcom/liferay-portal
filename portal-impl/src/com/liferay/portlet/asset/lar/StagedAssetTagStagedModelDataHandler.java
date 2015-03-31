@@ -148,7 +148,8 @@ public class StagedAssetTagStagedModelDataHandler
 
 		if (existingAssetTag == null) {
 			importedAssetTag = AssetTagLocalServiceUtil.addTag(
-				userId, stagedAssetTag.getName(), serviceContext);
+				userId, portletDataContext.getScopeGroupId(),
+				stagedAssetTag.getName(), serviceContext);
 		}
 		else {
 			importedAssetTag = AssetTagLocalServiceUtil.updateTag(

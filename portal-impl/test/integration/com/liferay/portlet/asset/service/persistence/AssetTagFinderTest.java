@@ -212,7 +212,7 @@ public class AssetTagFinderTest {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), name, serviceContext);
+			TestPropsValues.getUserId(), groupId, name, serviceContext);
 	}
 
 	protected void addBlogsEntry(long groupId, String assetTagName)

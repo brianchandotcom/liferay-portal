@@ -747,7 +747,8 @@ public class AssetPublisherExportImportTest
 
 		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId(), groupId,
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(groupId));
 
 		Map<String, String[]> preferenceMap = new HashMap<>();

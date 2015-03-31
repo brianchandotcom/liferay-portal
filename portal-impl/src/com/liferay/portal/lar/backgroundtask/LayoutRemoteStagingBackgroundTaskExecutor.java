@@ -305,24 +305,12 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					parameterMap);
 			}
 			catch (IOException ioe) {
-				if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_FAILURE) {
-					FileUtil.delete(file);
-				}
-				else if ((file != null) && _log.isErrorEnabled()) {
-					_log.error(
-						"Kept temporary LAR file " + file.getAbsolutePath());
-				}
+				deleteTempLarOnFailure(file);
 
 				throw new SystemException(ioe);
 			}
 			catch (Throwable t) {
-				if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_FAILURE) {
-					FileUtil.delete(file);
-				}
-				else if ((file != null) && _log.isErrorEnabled()) {
-					_log.error(
-						"Kept temporary LAR file " + file.getAbsolutePath());
-				}
+				deleteTempLarOnFailure(file);
 
 				throw t;
 			}
@@ -335,14 +323,27 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				}
 			}
 
+			deleteTempLarOnSuccess(file);
+
+			return missingReferences;
+		}
+
+		private void deleteTempLarOnFailure(File file) {
+			if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_FAILURE) {
+				FileUtil.delete(file);
+			}
+			else if ((file != null) && _log.isErrorEnabled()) {
+				_log.error("Kept temporary LAR file " + file.getAbsolutePath());
+			}
+		}
+
+		private void deleteTempLarOnSuccess(File file) {
 			if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS) {
 				FileUtil.delete(file);
 			}
 			else if ((file != null) && _log.isDebugEnabled()) {
 				_log.debug("Kept temporary LAR file " + file.getAbsolutePath());
 			}
-
-			return missingReferences;
 		}
 
 		private final long _backgroundTaskId;

@@ -16,9 +16,6 @@
 	<bean id="liferayDataSourceWrapper" class="com.liferay.portal.dao.jdbc.util.DataSourceWrapper">
 		<constructor-arg ref="liferayDataSourceImpl" />
 	</bean>
-	<bean class="com.liferay.portal.dao.jdbc.util.DataSourceSwapper">
-		<property name="liferayDataSourceWrapper" ref="liferayDataSourceWrapper" />
-	</bean>
 	<bean id="mailSession" class="com.liferay.mail.util.MailSessionFactoryBean">
 		<property name="propertyPrefix" value="mail.session." />
 	</bean>

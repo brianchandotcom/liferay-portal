@@ -33,6 +33,8 @@ public interface ModuleFramework {
 
 	public String getState(long bundleId) throws PortalException;
 
+	public void initFramework() throws Exception;
+
 	public void registerContext(Object context);
 
 	public void setBundleStartLevel(long bundleId, int startLevel)

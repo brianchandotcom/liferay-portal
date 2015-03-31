@@ -1,0 +1,104 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.service.persistence;
+
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
+
+import java.util.LinkedHashMap;
+
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+public class OrganizationFinderTest {
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_group = GroupTestUtil.addGroup();
+		_organization = OrganizationTestUtil.addOrganization();
+		_user = UserTestUtil.addUser();
+
+		GroupLocalServiceUtil.addUserGroup(_user.getUserId(), _group);
+
+		OrganizationLocalServiceUtil.addGroupOrganization(
+			_group.getGroupId(), _organization);
+
+		OrganizationLocalServiceUtil.addUserOrganization(
+			_user.getUserId(), _organization);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		UserLocalServiceUtil.deleteUser(_user);
+
+		OrganizationLocalServiceUtil.deleteOrganization(_organization);
+
+		GroupLocalServiceUtil.deleteGroup(_group);
+	}
+
+	@Test
+	public void testCountByKeywordsWithVaryingParameterOrder() {
+		LinkedHashMap<String, Object> params1 = new LinkedHashMap<>();
+
+		params1.put("usersOrgs", _user.getUserId());
+		params1.put("groupOrganization", _group.getGroupId());
+
+		int count1 = OrganizationFinderUtil.countByKeywords(
+			_user.getCompanyId(),
+			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+			StringPool.NOT_EQUAL, null, null, null, null, params1);
+
+		Assert.assertEquals(1, count1);
+
+		LinkedHashMap<String, Object> params2 = new LinkedHashMap<>();
+
+		params2.put("groupOrganization", _group.getGroupId());
+		params2.put("usersOrgs", _user.getUserId());
+
+		int count2 = OrganizationFinderUtil.countByKeywords(
+			_user.getCompanyId(),
+			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+			StringPool.NOT_EQUAL, null, null, null, null, params2);
+
+		Assert.assertEquals(count1, count2);
+	}
+
+	private static Group _group;
+	private static Organization _organization;
+	private static User _user;
+
+}

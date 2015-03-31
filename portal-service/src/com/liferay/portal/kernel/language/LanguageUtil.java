@@ -225,6 +225,10 @@ public class LanguageUtil {
 		return getLanguage().getLanguageId(portletRequest);
 	}
 
+	public static Locale getLocale(long groupId, String languageCode) {
+		return getLanguage().getLocale(groupId, languageCode);
+	}
+
 	public static Locale getLocale(String languageCode) {
 		return getLanguage().getLocale(languageCode);
 	}

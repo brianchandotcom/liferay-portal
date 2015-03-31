@@ -14,17 +14,26 @@
 
 package com.liferay.document.selector;
 
+import java.io.IOException;
+
 import java.util.Locale;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * @author Iván Zaera
  */
 public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 
-	public String getHTML(T itemSelectorCriterion, String itemSelectedCallback);
-
 	public Class<T> getItemSelectorCriterionClass();
 
 	public String getTitle(Locale locale);
+
+	public void renderHTML(
+			ServletRequest request, ServletResponse response,
+			T itemSelectorCriterion, String itemSelectedCallback)
+		throws IOException, ServletException;
 
 }

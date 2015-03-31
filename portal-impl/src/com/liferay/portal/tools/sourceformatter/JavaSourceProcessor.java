@@ -112,6 +112,77 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected static String checkAnnotationParameterProperties(
+		String content, String annotation) {
+
+		int x = annotation.indexOf("property = {");
+
+		if (x == -1) {
+			return null;
+		}
+
+		int y = x;
+
+		while (true) {
+			y = annotation.indexOf(StringPool.CLOSE_CURLY_BRACE, y + 1);
+
+			if (!isInsideQuotes(annotation, y)) {
+				break;
+			}
+		}
+
+		String parameterProperties = annotation.substring(x + 12, y);
+
+		parameterProperties = StringUtil.replace(
+			parameterProperties, StringPool.NEW_LINE, StringPool.SPACE);
+
+		String[] parameterPropertiesArray = StringUtil.split(
+			parameterProperties, StringPool.COMMA_AND_SPACE);
+
+		String previousPropertyName = null;
+		String previousPropertyNameAndValue = null;
+
+		for (String parameterProperty : parameterPropertiesArray) {
+			x = parameterProperty.indexOf(StringPool.QUOTE);
+			y = parameterProperty.indexOf(StringPool.EQUAL, x);
+
+			int z = x;
+
+			while (true) {
+				z = parameterProperty.indexOf(StringPool.QUOTE, z + 1);
+
+				if ((z == -1) || !isInsideQuotes(parameterProperty, z)) {
+					break;
+				}
+			}
+
+			if ((x == -1) || (y == -1) || (z == -1)) {
+				return null;
+			}
+
+			String propertyName = parameterProperty.substring(x + 1, y);
+			String propertyNameAndValue = parameterProperty.substring(x + 1, z);
+
+			if (Validator.isNotNull(previousPropertyName) &&
+				(previousPropertyName.compareTo(propertyName) > 0)) {
+
+				content = StringUtil.replaceFirst(
+					content, previousPropertyNameAndValue,
+					propertyNameAndValue);
+				content = StringUtil.replaceLast(
+					content, propertyNameAndValue,
+					previousPropertyNameAndValue);
+
+				return content;
+			}
+
+			previousPropertyName = propertyName;
+			previousPropertyNameAndValue = propertyNameAndValue;
+		}
+
+		return null;
+	}
+
 	protected static void checkAnnotationParameters(
 		String fileName, String javaTermName, String annotation) {
 
@@ -224,6 +295,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							return StringUtil.replace(
 								content, match, replacement);
 						}
+					}
+
+					String newContent = checkAnnotationParameterProperties(
+						content, annotation);
+
+					if (newContent != null) {
+						return formatAnnotations(
+							fileName, javaTermName, newContent, indent);
 					}
 
 					checkAnnotationParameters(
@@ -3001,7 +3080,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected boolean isInsideQuotes(String s, int pos) {
+	protected static boolean isInsideQuotes(String s, int pos) {
 		boolean insideQuotes = false;
 
 		for (int i = 0; i < s.length(); i++) {

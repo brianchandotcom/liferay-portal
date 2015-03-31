@@ -1,0 +1,228 @@
+<html>
+<head>
+<title>KBConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">KBConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>KBConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME</td>
+	<td>//iframe[contains(@id,'knowledgebaseportlet_configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION_TAB-->
+<tr>
+	<td>NAVIGATION_TAB_DISPLAY_SETTINGS</td>
+	<td>//a[contains(.,'Display Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_EMAIL_FROM</td>
+	<td>//a[contains(.,'Email From')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_GENERAL</td>
+	<td>//a[contains(.,'General')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_SUGGESTION_RECEIVED</td>
+	<td>//a[contains(.,'Suggestion Received')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_SUGGESTION_IN_PROGRESS</td>
+	<td>//a[contains(.,'Suggestion in Progress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_SUGGESTION_RESOLVED</td>
+	<td>//a[contains(.,'Suggestion Resolved')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_SETTINGS-->
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_DESCRIPTION_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleDescription')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_RATINGS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleRatings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_SHOW_ASSET_ENTRIES_CHECKBOX</td>
+	<td>//input[contains(@id,'showKBArticleAssetEntries')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleAssetLinks')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleViewCountIncrement')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_SUBSCRIPTIONS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleSubscriptions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_HISTORY_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticleHistory')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_PRINT_CHECKBOX</td>
+	<td>//input[contains(@id,'enableKBArticlePrint')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableSocialBookmarks')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_CONTENT_ROOT_PREFIX_FIELD</td>
+	<td>//input[contains(@id,'RootPrefix')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_USE_STAR_RATINGS_RADIO</td>
+	<td>//div[contains(@id,'ratingsType')]/label[contains(.,'Use Star Ratings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_USE_THUMBS_RATINGS_RADIO</td>
+	<td>//div[contains(@id,'ratingsType')]/label[contains(.,'Use Thumbs Up/Thumbs Down')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EMAIL_FROM-->
+<tr>
+	<td>EMAIL_FROM_NAME_FIELD</td>
+	<td>//input[contains(@id,'emailFromName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_FROM_ADDRESS_FIELD</td>
+	<td>//input[contains(@id,'emailFromAddress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GENERAL-->
+<tr>
+	<td>GENERAL_ARTICLE_OR_FOLDER_FIELD</td>
+	<td>//input[contains(@id,'configurationKBObject')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SECTION-->
+<tr>
+	<td>SECTION_SETUP</td>
+	<td>//ul/li/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECTION_SCOPE</td>
+	<td>//ul/li[4]/a[contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCOPE-->
+<tr>
+	<td>SCOPE_LABEL</td>
+	<td>//label[contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_MENU_BUTTON</td>
+	<td>//div[contains(@class,'btn-group')]//span[contains(.,'${key_currentKBPageScope}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_SELECTION</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li//span[contains(.,'${key_newKBPageScope}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUGGESTION_RECEIVED_EMAIL-->
+<tr>
+	<td>SUGGESTION_RECEIVED_EMAIL_BODY_FIELD</td>
+	<td>//div/textarea[contains(@id,'emailKBArticleSuggestionReceivedBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUGGESTION_IN_PROGRESS_EMAIL-->
+<tr>
+	<td>SUGGESTION_IN_PROGRESS_EMAIL_BODY_FIELD</td>
+	<td>//div/textarea[contains(@id,'emailKBArticleSuggestionInProgress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUGGESTION_RESOLVED_EMAIL-->
+<tr>
+	<td>SUGGESTION_RESOLVED_EMAIL_BODY_FIELD</td>
+	<td>//div/textarea[contains(@id,'emailKBArticleSuggestionResolved')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

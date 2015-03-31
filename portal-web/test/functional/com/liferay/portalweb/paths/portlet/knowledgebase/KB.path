@@ -1,0 +1,374 @@
+<html>
+<head>
+<title>KB</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">KB</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>KB</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td>ADD_ARTICLE_VIA_TEMPLATE</td>
+	<td>//a[@role='menuitem' and contains(.,'$kbTemplateTitle')]</td>
+</tr>
+<tr>
+	<td>HEADER</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADMIN_TABS-->
+<tr>
+	<td>ADMIN_TABS_ARTICLES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Articles')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_TABS_SUGGESTIONS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Suggestions')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_TABS_TEMPLATES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Templates')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENUBAR-->
+<tr>
+	<td>MENUBAR_ACTIONS</td>
+	<td>//ul[@role='menubar']//a[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENUBAR_ADD</td>
+	<td>//ul[@role='menubar']//a[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENUBAR_PERMISSIONS</td>
+	<td>//ul[@role='menubar']//a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<!--ARTICLE_TABLE-->
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[9]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_AUTHOR</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_AUTHOR_LINK</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[1]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_CREATE_DATE</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_CREATE_DATE_POPUP</td>
+	<td>//div[contains(@class,'tooltip-inner')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_PRIORITY</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[2]//input[@title='Priority']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_STATUS</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_TITLE</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_ARTICLE_TITLE_LINK</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_KB_GENERIC</td>
+	<td>//tr[1]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TABLE_SELECT_ALL_CHECKBOX</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY-->
+<tr>
+	<td>DISPLAY_ACTIONS_BUTTON</td>
+	<td>//div[@class='kb-article-container']//div//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_CHILD_TITLE</td>
+	<td>//div[@class='kb-article-container']//h2[contains(.,'${key_kbChildArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_CHILD_CONTENT</td>
+	<td>//div[@class='kb-article-child']//div[@class='kb-element-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_CONTENT</td>
+	<td>//div[@class='kb-article-container']//div[@class='kb-article-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_TITLE</td>
+	<td>//div[@class='kb-article-container']//h1[@class='kb-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_VOTES</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'rating-content')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_VOTE_UP</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-up')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_VOTE_DOWN</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-down')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_READ_MORE_LINK</td>
+	<td>//div[@class='kb-article-child']//a[contains(.,'Read More')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER-->
+<tr>
+	<td>FOLDER_BREADCRUMBS</td>
+	<td>//li[contains(@class,'active last') and contains(.,'${kbFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_SELECT_DROPDOWN</td>
+	<td>//select[contains(@id,'rootKBFolderId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_SELECT_OPTION</td>
+	<td>//select[contains(@id,'rootKBFolderId')]/option[contains(.,'${key_kbFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_TABLE-->
+<tr>
+	<td>FOLDER_TABLE_ACTIONS_BUTTON_GENERIC</td>
+	<td>//td[5]//a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_FOLDER_NAME</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_FOLDER_AUTHOR</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td[2]/a[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_FOLDER_CREATE_DATE</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_FOLDER_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_FOLDER_ACTIONS</td>
+	<td>//tr[contains(.,'${kbFolderName}')]/td[5]//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_HEADER</td>
+	<td>//th[contains(.,'Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HIERARCHY_NAVIGATION-->
+<tr>
+	<td>HIERARCHY_NAVIGATION_PARENT</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'${key_kbArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIERARCHY_NAVIGATION_GENERIC</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIERARCHY_NAVIGATION_CHILD</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li[contains(.,'${key_kbArticleTitle}')]/ul/li/a[contains(.,'${key_kbChildArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIERARCHY_NAVIGATION_CHILD_GENERIC</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li/ul/li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIERARCHY_NAVIGATION_GRANDCHILD</td>
+	<td>//div[@class='kbarticle-navigation']//a[contains(.,'${key_kbGrandchildArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LINK-->
+<tr>
+	<td>LINK_RSS</td>
+	<td>//span[contains(.,'RSS')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_SUBSCRIBE</td>
+	<td>//span[contains(.,'Subscribe')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_UNSUBSCRIBE_BUTTON</td>
+	<td>//span[contains(.,'Unsubscribe')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_DO_YOU_HAVE_ANY_SUGGESTIONS</td>
+	<td>//div[@class='kb-article-container']//div/a[contains(.,'Do you have any suggestions?')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_THERE_ARE_SUGGESTIONS</td>
+	<td>//div[@class='kb-article-container']//div[@class='kb-article-suggestion-actions']/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MOVE-->
+<tr>
+	<td>MOVE_CURRENT_PARENT_TITLE_LABEL</td>
+	<td>//span[(@class='control-label') and contains (.,'Current Parent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_PARENT_TITLE_FIELD</td>
+	<td>//div[contains(.,'Current Parent')]/div/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_PARENT_PRIORITY_LABEL</td>
+	<td>//label[(@class='control-label') and contains(.,'Priority')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_PARENT_PRIORITY_FIELD</td>
+	<td>//div[contains(.,'Current Parent')]/div/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_NEW_PARENT_TITLE_LABEL</td>
+	<td>//span[(@class='control-label') and contains (.,'New Parent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_NEW_PARENT_TITLE_FIELD</td>
+	<td>//div[contains(@id,'knowledgebaseportlet_newParent')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_NEW_PARENT_PRIORITY_LABEL</td>
+	<td>//div[contains(@id,'knowledgebaseportlet_newParent')]//label[(@class='control-label') and contains(.,'Priority')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_NEW_PARENT_PRIORITY_FIELD</td>
+	<td>//div[contains(@id,'knowledgebaseportlet_newParent')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCOPE-->
+<tr>
+	<td>SCOPE_DROPDOWN</td>
+	<td>//div[contains(@class,'scope-selector') and contains(.,'Scope')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_kbPageScope}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<html>
+<head>
+<title>KBArticle</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">KBArticle</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>KBArticle</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CONTENT</td>
+	<td>//div[@class='kb-article-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_IMAGE</td>
+	<td>//p/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_IMAGE_CAPTION</td>
+	<td>//p[@class='caption']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_ON_GITHUB_LINK</td>
+	<td>//span[contains(.,'Edit on GitHub')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_LINKS</td>
+	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ATTACHMENTS-->
+<tr>
+	<td>ATTACHMENTS_ADD_LINK</td>
+	<td>//a[contains(.,'Add Attachments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_HEADER_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and contains(.,'Attachments')]/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_HEADER_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Attachments')]/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_SELECT_FILES_BUTTON</td>
+	<td>//button[contains(.,'Select Files')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER</td>
+	<td>//div[contains(@id,'AttachmentsContainer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EDIT-->
+<tr>
+	<td>EDIT_FRIENDLY_URL_FIELD</td>
+	<td>//input[contains(@id,'knowledgebaseportlet_urlTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_SELECT_RELATED_ASSETS</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_kbArticleRelatedAssetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_TITLE_FIELD_REQUIRED</td>
+	<td>//span[contains(.,'Required')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_TITLE_FIELD_REQUIRED_ALERT</td>
+	<td>//div[contains(@class,'required') and contains(.,'This field is required.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HISTORY-->
+<tr>
+	<td>HISTORY_CONTENT_ADDED_DIFF</td>
+	<td>//div[@class='kb-entity-body']/div/span[contains(@class,'diff-html-added')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HISTORY_CONTENT_REMOVED_DIFF</td>
+	<td>//div[@class='kn-entity-body']/div/span[contains(@class,'diff-html-removed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HISTORY_TITLE_ADDED_DIFF</td>
+	<td>//div[@class='kb-title']/div/span[contains(@class,'diff-html-added')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HISTORY_TITLE_REMOVED_DIFF</td>
+	<td>//div[@class='kb-title']/div/span[contains(@class,'diff-html-removed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HISTORY_VERSION_TABLE_SOURCE</td>
+	<td>//table[contains(@data-searchcontainerid,'knowledgebaseportlet')]//thead[contains(.,'Version')]/..//a[contains(.,'(Source)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HISTORY_VERSION_TABLE_TARGET</td>
+	<td>//table[contains(@data-searchcontainerid,'knowledgebaseportlet')]//thead[contains(.,'Version')]/..//a[contains(.,'(Target)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SECTIONS-->
+<tr>
+	<td>SECTIONS_SELECT</td>
+	<td>//select[contains(@id,'knowledgebaseportlet_sections')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TEMPLATE-->
+<tr>
+	<td>TEMPLATE_TITLE</td>
+	<td>//div[@class='kb-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_USE_THIS_TEMPLATE_LINK</td>
+	<td>//span[contains(.,'Use This Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_EDIT_LINK</td>
+	<td>//span[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_PERMISSIONS_LINK</td>
+	<td>//span[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_DELETE_LINK</td>
+	<td>//span[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_CONTENT</td>
+	<td>//div[@class='kb-entity-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TEMPLATE_COMMENTS-->
+<tr>
+	<td>TEMPLATE_COMMENTS_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_COMMENTS_DROPDOWN_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_COMMENTS_BODY</td>
+	<td>//div[@class='panel-body']//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_COMMENTS_YES_RADIO_BUTTON</td>
+	<td>//label[contains(@class,'radio') and contains(@class,'inline') and contains(.,'Yes')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_COMMENTS_NO_RADIO_BUTTON</td>
+	<td>//label[contains(@class,'radio') and contains(@class,'inline') and contains(.,'No')]/input</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

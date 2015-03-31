@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>KBTemplate</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">KBTemplate</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>KBTemplate</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENUBAR-->
+<tr>
+	<td>MENUBAR_ADD_TEMPLATE</td>
+	<td>//ul[@role='menubar']//a[contains(.,'Add Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENUBAR_PERMISSIONS</td>
+	<td>//ul[@role='menubar']//a[contains(.,Permissions)]</td>
+	<td></td>
+</tr>
+<!--TEMPLATE-->
+<tr>
+	<td>TEMPLATE_TITLE</td>
+	<td>//div[@class='kb-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_USE_THIS_TEMPLATE_LINK</td>
+	<td>//span[contains(.,'Use This Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_EDIT_LINK</td>
+	<td>//span[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_PERMISSIONS_LINK</td>
+	<td>//span[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_DELETE_LINK</td>
+	<td>//span[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_CONTENT</td>
+	<td>//div[@class='kb-entity-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TEMPLATE_COMMENTS-->
+<tr>
+	<td>TEMPLATE_COMMENTS_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_COMMENTS_DROPDOWN_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_COMMENTS_BODY</td>
+	<td>//div[@class='panel-body']//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_COMMENTS_YES_RADIO_BUTTON</td>
+	<td>//label[contains(@class,'radio') and contains(@class,'inline') and contains(.,'Yes')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_COMMENTS_NO_RADIO_BUTTON</td>
+	<td>//label[contains(@class,'radio') and contains(@class,'inline') and contains(.,'No')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TEMPLATE_TABLE-->
+<tr>
+	<td>TEMPLATE_TABLE_SELECT_ALL_CHECKBOX</td>
+	<td>//input[contains(@name,'_WAR_knowledgebaseportlet_allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_TEMPLATE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_kbTemplateTitle}')]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_TEMPLATE_TITLE</td>
+	<td>//tr[contains(.,'${key_kbTemplateTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_TEMPLATE_AUTHOR</td>
+	<td>//tr[contains(.,'${key_kbTemplateTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_TEMPLATE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_kbTemplateTitle}')]/td[6]//a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

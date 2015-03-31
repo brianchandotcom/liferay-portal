@@ -98,6 +98,16 @@ public class PoshiRunnerGetterUtil {
 		return classCommandName.substring(x + 1);
 	}
 
+	public static String getFileNameFromClassKey(String classKey) {
+		int x = classKey.indexOf("#");
+		int y = classKey.length();
+
+		String classType = classKey.substring(0, x);
+		String className = classKey.substring(x + 1, y);
+
+		return className + "." + classType;
+	}
+
 	public static String getProjectDir() {
 		File file = new File(StringPool.PERIOD);
 
@@ -149,7 +159,11 @@ public class PoshiRunnerGetterUtil {
 
 			Document document = saxReader.read(inputStream);
 
-			return document.getRootElement();
+			Element rootElement = document.getRootElement();
+
+			PoshiRunnerValidation.validate(rootElement, filePath);
+
+			return rootElement;
 		}
 		catch (Exception e) {
 			throw new PoshiRunnerException(e);

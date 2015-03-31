@@ -38,6 +38,8 @@ public class PoshiRunner {
 
 	@Parameters(name = "{0}")
 	public static List<String> getList() throws Exception {
+		PoshiRunnerContext.readFiles();
+
 		List<String> classCommandNames = new ArrayList<>();
 
 		String testName = PropsValues.TEST_NAME;

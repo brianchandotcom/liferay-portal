@@ -20,7 +20,10 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.FileNotFoundException;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
@@ -36,6 +39,24 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
  * @author Tomas Polesovsky
  */
 public class PortalApplicationContext extends XmlWebApplicationContext {
+
+	public static final String PARENT_CONTEXT_KEY =
+		PortalApplicationContext.class.getName() + "PARENT";
+
+	@Override
+	public ApplicationContext getParent() {
+		return _parentApplicationContext;
+	}
+
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+
+		_parentApplicationContext =
+			(ApplicationContext)servletContext.getAttribute(PARENT_CONTEXT_KEY);
+
+		this.setParent(_parentApplicationContext);
+	}
 
 	@Override
 	protected void loadBeanDefinitions(
@@ -78,5 +99,7 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalApplicationContext.class);
+
+	private ApplicationContext _parentApplicationContext;
 
 }

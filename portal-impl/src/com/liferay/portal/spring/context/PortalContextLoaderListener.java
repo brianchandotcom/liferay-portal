@@ -243,6 +243,16 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		try {
 			ModuleFrameworkUtilAdapter.initFramework();
 
+			ArrayApplicationContext applicationContext =
+				new ArrayApplicationContext(
+					PropsValues.SPRING_CONFIGS_INFRASTRUCTURE);
+
+			servletContext.setAttribute(
+				PortalApplicationContext.PARENT_CONTEXT_KEY,
+				applicationContext);
+
+			ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+
 			ModuleFrameworkUtilAdapter.startFramework();
 		}
 		catch (Exception e) {

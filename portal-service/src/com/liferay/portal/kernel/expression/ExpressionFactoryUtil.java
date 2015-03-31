@@ -68,15 +68,17 @@ public class ExpressionFactoryUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			ExpressionFactoryUtil.class);
 
-		return _expressionFactory;
+		return _expressionFactoryRegistry.getExpressionFactory();
 	}
 
-	public void setExpressionFactory(ExpressionFactory expressionFactory) {
+	public void setExpressionFactoryRegistry(
+		ExpressionFactoryRegistry expressionFactoryRegistry) {
+
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_expressionFactory = expressionFactory;
+		_expressionFactoryRegistry = expressionFactoryRegistry;
 	}
 
-	private static ExpressionFactory _expressionFactory;
+	private static ExpressionFactoryRegistry _expressionFactoryRegistry;
 
 }

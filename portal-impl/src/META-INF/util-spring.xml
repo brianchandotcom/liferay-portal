@@ -149,8 +149,8 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.expression.ExpressionFactoryUtil" class="com.liferay.portal.kernel.expression.ExpressionFactoryUtil">
-		<property name="expressionFactory">
-			<bean class="com.liferay.portal.expression.ExpressionFactoryImpl" />
+		<property name="expressionFactoryRegistry">
+			<bean class="com.liferay.portal.kernel.expression.ExpressionFactoryRegistryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.image.GhostscriptUtil" class="com.liferay.portal.kernel.image.GhostscriptUtil">

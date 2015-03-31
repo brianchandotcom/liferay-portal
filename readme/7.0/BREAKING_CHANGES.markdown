@@ -1259,3 +1259,36 @@ created programatically.
 
 ADTs allow you to change an application's look and feel without changing its JSP
 code.
+
+---------------------------------------
+
+### Added Required Parameter `groupId` for adding Tags, Categories or Vocabularies
+- **Date:** 2015-Mar-31
+- **JIRA Ticket:** LPS-54570
+
+#### What changed?
+
+The API for adding tags, categories or vocabularies requires now passing the
+ groupId parameter. Previously, it had to be included in the ServiceContext
+ parameter passed to the method.
+ 
+
+#### Who is affected?
+
+This affects developers who have direct calls to:
+ - `AssetTagService` or `AssetTagLocalService`: method addTag
+ - `AssetCategoryService` or `AssetCategoryLocalService`: method addCategory
+ - `AssetVocabularyService` or `AssetVocabularyLocalService`: method addVocabulary
+
+#### How should I update my code?
+
+You should add the `groupId` parameter to your calls. This parameter
+represents the site in which you are creating the tag, category or vocabulary.
+It can be obtained from the themeDisplay (themeDisplay.getScopeGroupId()) or 
+also from the ServiceContext (serviceContext.getScopeGroupId())
+
+#### Why was this change made?
+
+This change was made in order improve the API. The groupId parameter was always
+required but it was hidden by the ServiceContext object.
+

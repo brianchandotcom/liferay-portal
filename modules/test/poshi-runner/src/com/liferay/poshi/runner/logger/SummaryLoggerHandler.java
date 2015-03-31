@@ -16,7 +16,9 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerException;
+import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import org.dom4j.Element;
 
@@ -26,6 +28,10 @@ import org.dom4j.Element;
 public final class SummaryLoggerHandler {
 
 	public static void failSummary(Element element) {
+		failSummary(element, null);
+	}
+
+	public static void failSummary(Element element, String message) {
 		if (!_isLoggingElement(element)) {
 			return;
 		}
@@ -36,6 +42,19 @@ public final class SummaryLoggerHandler {
 		statusLoggerElement.setText(" --> FAILED");
 
 		_sentenceLoggerElement.addChildLoggerElement(statusLoggerElement);
+
+		LoggerElement errorLoggerElement = new LoggerElement();
+
+		String stackTrace = PoshiRunnerStackTraceUtil.getStackTrace(message);
+
+		stackTrace = StringUtil.replace(stackTrace, "\n", "<br />");
+		stackTrace = StringUtil.replace(stackTrace, "\"", "&quot;");
+
+		stackTrace += "<br /><br />";
+
+		errorLoggerElement.setText(stackTrace);
+
+		_summaryLoggerElement.addChildLoggerElement(errorLoggerElement);
 
 		_stopLogging();
 	}

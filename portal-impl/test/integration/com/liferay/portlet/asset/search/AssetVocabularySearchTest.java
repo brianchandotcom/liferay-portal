@@ -133,7 +133,8 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return AssetVocabularyServiceUtil.addVocabulary(
-			null, keywordsMap, null, null, serviceContext);
+			serviceContext.getScopeGroupId(), null, keywordsMap, null, null,
+			serviceContext);
 	}
 
 	@Override
@@ -143,7 +144,7 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 		throws Exception {
 
 		return AssetVocabularyServiceUtil.addVocabulary(
-			keywords, serviceContext);
+			serviceContext.getScopeGroupId(), keywords, serviceContext);
 	}
 
 	@Override

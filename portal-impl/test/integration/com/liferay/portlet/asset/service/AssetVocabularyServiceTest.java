@@ -180,7 +180,8 @@ public class AssetVocabularyServiceTest {
 
 		AssetVocabulary vocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), title, serviceContext);
+				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+				title, serviceContext);
 
 		Assert.assertEquals(title, vocabulary.getTitle(LocaleUtil.US, true));
 		Assert.assertEquals(title, vocabulary.getName());

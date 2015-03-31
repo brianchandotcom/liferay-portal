@@ -105,7 +105,8 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 
 			// Add tag
 
-			AssetTagServiceUtil.addTag(name, serviceContext);
+			AssetTagServiceUtil.addTag(
+				serviceContext.getScopeGroupId(), name, serviceContext);
 		}
 		else {
 

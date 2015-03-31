@@ -91,7 +91,7 @@
 
 								<aui:button cssClass="change-language" name="changeLanguageButton" value="change" />
 
-								<aui:input name="addSampleData" type="checkbox" value="<%= true %>" />
+								<aui:input label="add-sample-data" name='<%= "properties--" + PropsKeys.SETUP_WIZARD_ADD_SAMPLE_DATA + "--" %>' type="checkbox" value="<%= true %>" />
 							</aui:fieldset>
 
 							<aui:fieldset cssClass="col-md-6 column-last" label="administrator-user">
@@ -356,26 +356,11 @@
 				<c:otherwise>
 
 					<%
-					SetupWizardUtil.setSetupFinished(true);
-
 					boolean propertiesFileCreated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_FILE_CREATED));
 					%>
 
 					<c:choose>
 						<c:when test="<%= propertiesFileCreated %>">
-
-							<%
-							PortletURL loginURL = new PortletURLImpl(request, PortletKeys.LOGIN, plid, PortletRequest.ACTION_PHASE);
-
-							loginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-							loginURL.setParameter("struts_action", "/login/login");
-							loginURL.setPortletMode(PortletMode.VIEW);
-							loginURL.setWindowState(WindowState.NORMAL);
-							%>
-
-							<aui:form action="<%= loginURL %>" method="post" name="fm">
-								<aui:input name="login" type="hidden" value="<%= emailAddress %>" />
-								<aui:input name="password" type="hidden" value="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" />
 
 								<div class="alert alert-success">
 									<liferay-ui:message key="your-configuration-was-saved-sucessfully" />
@@ -400,8 +385,10 @@
 									</p>
 								</c:if>
 
-								<aui:button type="submit" value="go-to-my-portal" />
-							</aui:form>
+								<div class="alert alert-info">
+									<liferay-ui:message key="changes-will-take-effect-once-the-portal-is-restarted-please-restart-the-portal-now" />
+								</div>
+
 						</c:when>
 						<c:otherwise>
 							<p>

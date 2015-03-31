@@ -29,29 +29,15 @@ public class PoshiRunnerException extends Exception {
 	}
 
 	public PoshiRunnerException(String msg, Throwable cause) {
-		super(_getExceptionMessage(msg), cause);
+		super(msg, cause);
+
+		PoshiRunnerStackTraceUtil.printStackTrace(msg);
+
+		PoshiRunnerStackTraceUtil.emptyStackTrace();
 	}
 
 	public PoshiRunnerException(Throwable cause) {
 		this(null, cause);
-	}
-
-	private static String _getExceptionMessage(String msg) {
-		StringBuilder sb = new StringBuilder();
-
-		if (msg == null) {
-			sb.append("\nBUILD FAILED:");
-		}
-		else {
-			sb.append("\n");
-			sb.append(msg);
-		}
-
-		sb.append("\n");
-
-		sb.append(PoshiRunnerStackTraceUtil.getStackTrace());
-
-		return sb.toString();
 	}
 
 }

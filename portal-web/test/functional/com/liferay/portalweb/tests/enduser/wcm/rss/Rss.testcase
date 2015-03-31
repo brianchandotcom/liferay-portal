@@ -481,6 +481,70 @@
 		</execute>
 	</command>
 
+	<command name="DisabledFeedTitle" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="RSS" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="RSS" />
+		</execute>
+
+		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
+			<execute macro="Rss#viewDefaultDisplayFeedTitle">
+				<var name="feedTitle" value="${feedTitle}" />
+			</execute>
+		</for>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="RSS" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Rss#disabledShowFeedTitle" />
+
+		<execute macro="Rss#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
+			<execute macro="Rss#viewNoFeedTitle">
+				<var name="feedTitle" value="${feedTitle}" />
+			</execute>
+		</for>
+	</command>
+
 	<command known-issues="LPS-54683" name="EnableRssFeedFromAssetpublisher" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />

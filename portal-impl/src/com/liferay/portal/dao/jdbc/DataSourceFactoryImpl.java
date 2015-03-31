@@ -32,10 +32,13 @@ import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.JarUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-
-import java.lang.management.ManagementFactory;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -45,6 +48,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import javax.naming.Context;
@@ -82,6 +86,10 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		else if (dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
 			org.apache.tomcat.jdbc.pool.DataSource tomcatDataSource =
 				(org.apache.tomcat.jdbc.pool.DataSource)dataSource;
+
+			if (_serviceTracker != null) {
+				_serviceTracker.close();
+			}
 
 			tomcatDataSource.close();
 		}
@@ -382,18 +390,13 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			new org.apache.tomcat.jdbc.pool.DataSource(poolProperties);
 
 		if (poolProperties.isJmxEnabled()) {
-			org.apache.tomcat.jdbc.pool.ConnectionPool jdbcConnectionPool =
-				dataSource.createPool();
+			Registry registry = RegistryUtil.getRegistry();
 
-			ConnectionPool jmxConnectionPool = jdbcConnectionPool.getJmxPool();
+			_serviceTracker = registry.trackServices(
+				MBeanServer.class,
+				new MBeanServerServiceTrackerCustomizer(dataSource, poolName));
 
-			MBeanServer mBeanServer =
-				ManagementFactory.getPlatformMBeanServer();
-
-			ObjectName objectName = new ObjectName(
-				_TOMCAT_JDBC_POOL_OBJECT_NAME_PREFIX + poolName);
-
-			mBeanServer.registerMBean(jmxConnectionPool, objectName);
+			_serviceTracker.open();
 		}
 
 		return dataSource;
@@ -563,12 +566,79 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	private static final PACL _pacl = new NoPACL();
 
+	private ServiceTracker <MBeanServer, MBeanServer> _serviceTracker;
+
 	private static class NoPACL implements PACL {
 
 		@Override
 		public DataSource getDataSource(DataSource dataSource) {
 			return dataSource;
 		}
+
+	}
+
+	private class MBeanServerServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<MBeanServer, MBeanServer> {
+
+		public MBeanServerServiceTrackerCustomizer(
+				org.apache.tomcat.jdbc.pool.DataSource dataSource,
+				String poolName)
+			throws MalformedObjectNameException {
+
+			_dataSource = dataSource;
+			_objectName = new ObjectName(
+				_TOMCAT_JDBC_POOL_OBJECT_NAME_PREFIX + poolName);
+		}
+
+		@Override
+		public MBeanServer addingService(
+			ServiceReference<MBeanServer> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			MBeanServer mBeanServer = registry.getService(serviceReference);
+
+			try {
+				org.apache.tomcat.jdbc.pool.ConnectionPool jdbcConnectionPool =
+					_dataSource.createPool();
+
+				ConnectionPool jmxConnectionPool =
+					jdbcConnectionPool.getJmxPool();
+
+				mBeanServer.registerMBean(jmxConnectionPool, _objectName);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+
+			return mBeanServer;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<MBeanServer> serviceReference,
+			MBeanServer mBeanServer) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<MBeanServer> serviceReference,
+			MBeanServer mBeanServer) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			try {
+				mBeanServer.unregisterMBean(_objectName);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		private final org.apache.tomcat.jdbc.pool.DataSource _dataSource;
+		private final ObjectName _objectName;
 
 	}
 

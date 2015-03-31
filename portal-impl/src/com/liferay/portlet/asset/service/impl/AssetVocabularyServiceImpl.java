@@ -53,22 +53,6 @@ import java.util.Map;
  */
 public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
-	/**
-	 * @deprecated As of 6.1.0 {@link #addVocabulary(String, Map, Map, String,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public AssetVocabulary addVocabulary(
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String settings, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addVocabulary(
-			serviceContext.getScopeGroupId(), StringPool.BLANK, titleMap,
-			descriptionMap, settings, serviceContext);
-	}
-
 	@Override
 	public AssetVocabulary addVocabulary(
 			long groupId, String title, Map<Locale, String> titleMap,
@@ -436,23 +420,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		}
 
 		return new AssetVocabularyDisplay(vocabularies, total, start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, {@link #updateVocabulary(long, String, Map, Map,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public AssetVocabulary updateVocabulary(
-			long vocabularyId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return updateVocabulary(
-			vocabularyId, StringPool.BLANK, titleMap, descriptionMap, settings,
-			serviceContext);
 	}
 
 	@Override

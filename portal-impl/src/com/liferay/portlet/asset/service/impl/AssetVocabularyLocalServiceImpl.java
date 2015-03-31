@@ -87,22 +87,6 @@ public class AssetVocabularyLocalServiceImpl
 			StringPool.BLANK, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	public AssetVocabulary addVocabulary(
-			long userId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return assetVocabularyLocalService.addVocabulary(
-			userId, serviceContext.getScopeGroupId(), StringPool.BLANK,
-			titleMap, descriptionMap, settings, serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetVocabulary addVocabulary(
@@ -403,22 +387,6 @@ public class AssetVocabularyLocalServiceImpl
 			companyId, groupId, title, start, end);
 
 		return searchVocabularies(searchContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	public AssetVocabulary updateVocabulary(
-			long vocabularyId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return assetVocabularyLocalService.updateVocabulary(
-			vocabularyId, StringPool.BLANK, titleMap, descriptionMap, settings,
-			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

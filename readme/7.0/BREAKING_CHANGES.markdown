@@ -1279,6 +1279,7 @@ This affects developers who have direct calls to:
  - `AssetTagService` or `AssetTagLocalService`: method addTag
  - `AssetCategoryService` or `AssetCategoryLocalService`: method addCategory
  - `AssetVocabularyService` or `AssetVocabularyLocalService`: method addVocabulary
+ - `JournalFolderService` or `JournalFolderLocalService`: method updateFolder
 
 #### How should I update my code?
 

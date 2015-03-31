@@ -186,6 +186,10 @@ public class LayoutImporter {
 			// Portlet data deletion
 
 			if (deletePortletData) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Deleting portlet data");
+				}
+
 				deletePortletData(portletDataContext);
 			}
 

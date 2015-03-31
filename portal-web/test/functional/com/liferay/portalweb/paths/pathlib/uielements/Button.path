@@ -129,11 +129,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW</td>
-	<td>//button[contains(.,'Preview')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OK</td>
 	<td>//button[contains(.,'OK')]</td>
 	<td></td>
@@ -156,6 +151,11 @@
 <tr>
 	<td>PERMISSIONS</td>
 	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POST</td>
+	<td>//button[contains(.,'Post')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,8 +209,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_SCOPE</td>
+	<td>//div[contains (@class,'btn-group')]/a[@title='Default']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEND</td>
 	<td>//button[contains(.,'Send')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE</td>
+	<td>//a[@role='button' and (@title='Source')]</td>
 	<td></td>
 </tr>
 <tr>

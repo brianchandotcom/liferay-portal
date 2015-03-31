@@ -24,8 +24,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ARTICLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CHILD_ARTICLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Child Article')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CHILD_SITE</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Child Site')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FOLDER</td>
+	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BASIC_ARTICLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Basic Article')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BASIC_DOCUMENT</td>
 	<td>//a[@role='menuitem' and @title='Basic Document']</td>
 	<td></td>
@@ -105,7 +125,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION</td>
-	<td>//a[contains(@id, 'menu_configuration')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,12 +210,17 @@
 </tr>
 <tr>
 	<td>FOLDER</td>
-	<td>//a[@role='menuitem' and @title='Folder']</td>
+	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IMPERSONATE_USER</td>
 	<td>//a[@role='menuitem' and contains(.,'Impersonate User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT</td>
+	<td>//ul[@class='dropdown-menu']//a[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -336,6 +361,11 @@
 <tr>
 	<td>SALES_PRESENTATION</td>
 	<td>//a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

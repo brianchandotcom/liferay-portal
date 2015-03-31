@@ -2548,6 +2548,7 @@
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldFieldLabelEdit" value="Boolean Edit" />
 		<var name="fieldName" value="Boolean" />
+		<var name="fieldNameEdit" value="Boolean_Edit" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -2578,6 +2579,7 @@
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldFieldLabelEdit" value="${fieldFieldLabelEdit}" />
+			<var name="fieldNameEdit" value="${fieldNameEdit}" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
@@ -2593,7 +2595,7 @@
 
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldName" value="${fieldNameEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -2622,7 +2624,7 @@
 		<execute macro="DDLRecord#populateFieldBoolean">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldName" value="${fieldNameEdit}" />
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />

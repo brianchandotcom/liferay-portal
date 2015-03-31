@@ -65,10 +65,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"/common/referer_jsp.jsp=/common/referer_jsp.jsp",
 		"path=/login/facebook_connect_oauth",
 		"portlet.login.login=portlet.login.login",
-		"portlet.login.update_account=portlet.login.update_account",
-		"/common/referer_jsp.jsp=/common/referer_jsp.jsp"
+		"portlet.login.update_account=portlet.login.update_account"
 	},
 	service = StrutsAction.class
 )

@@ -47,9 +47,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"enabled=true", "format=creole",
-		"edit.page=/html/portlet/wiki/edit/wiki.jsp",
-		"help.page=/html/portlet/wiki/help/creole.jsp",
+		"edit.page=/html/portlet/wiki/edit/wiki.jsp", "enabled=true",
+		"format=creole", "help.page=/html/portlet/wiki/help/creole.jsp",
 		"help.url=http://www.wikicreole.org/wiki/Creole1.0"
 	},
 	service = WikiEngine.class

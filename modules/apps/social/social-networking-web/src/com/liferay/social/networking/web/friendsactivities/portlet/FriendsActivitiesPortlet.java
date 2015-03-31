@@ -25,18 +25,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-friends-activities",
+		"com.liferay.portlet.display-category=category.social",
 		"javax.portlet.display-name=Friends' Activities",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.info.keywords=Friends' activities",
+		"javax.portlet.info.short-title=Friends' Activities",
+		"javax.portlet.info.title=Friends' Activities",
 		"javax.portlet.init-param.config-template=/friends_activities/configuration.jsp",
 		"javax.portlet.init-param.view-template=/friends_activities/view.jsp",
-		"javax.portlet.expiration-cache=0",
-		"javax.portlet.supports.mime-type=text/html",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.info.title=Friends' Activities",
-		"javax.portlet.info.short-title=Friends' Activities",
-		"javax.portlet.info.keywords=Friends' activities",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )

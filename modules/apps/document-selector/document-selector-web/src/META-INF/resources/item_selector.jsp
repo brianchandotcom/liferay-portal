@@ -19,24 +19,25 @@
 <%
 String itemSelectedCallback = liferayPortletResponse.getNamespace() + "itemSelectedCallback";
 
-ItemSelectorViewRenderers itemSelectorViewRenderers = ItemSelectorViewRenderers.get(liferayPortletRequest);
+LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSelectorRendering.get(liferayPortletRequest);
 %>
 
 <aui:script>
 	function <%= itemSelectedCallback %>(type, item) {
+		<%= localizedItemSelectorRendering.getItemSelectedCallback() %>(type, item);
 	}
 </aui:script>
 
-<liferay-ui:tabs names="<%= StringUtil.merge(itemSelectorViewRenderers.getTitles()) %>" param="tabs1" refresh="<%= false %>" type="pills">
+<liferay-ui:tabs names="<%= StringUtil.merge(localizedItemSelectorRendering.getTitles()) %>" param="tabs1" refresh="<%= false %>" type="pills">
 
 	<%
-	for (String title : itemSelectorViewRenderers.getTitles()) {
-		ItemSelectorViewRenderer<?> itemSelectorViewRenderer = itemSelectorViewRenderers.getItemSelectorViewRenderer(title);
+	for (String title : localizedItemSelectorRendering.getTitles()) {
+		ItemSelectorViewRenderer<?> itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
 	%>
 
 		<liferay-ui:section>
-			<div class="tab-body">
-				<%= itemSelectorViewRenderer.getHTML(itemSelectedCallback) %>
+			<div>
+				<% itemSelectorViewRenderer.renderHTML(pageContext, itemSelectedCallback); %>
 			</div>
 		</liferay-ui:section>
 

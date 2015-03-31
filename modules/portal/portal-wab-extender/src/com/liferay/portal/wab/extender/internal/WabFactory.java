@@ -72,6 +72,7 @@ public class WabFactory extends AbstractExtender {
 		_saxParserFactory.setXIncludeAware(false);
 
 		try {
+			_saxParserFactory.setFeature(_FEATURES_DISALLOW_DOCTYPE_DECL, true);
 			_saxParserFactory.setFeature(_SAX_EXTERNAL_GENERAL_ENTITIES, false);
 			_saxParserFactory.setFeature(
 				_SAX_EXTERNAL_PARAMETER_ENTITIES, false);
@@ -136,6 +137,8 @@ public class WabFactory extends AbstractExtender {
 		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + message, t);
 	}
 
+	private static final String _FEATURES_DISALLOW_DOCTYPE_DECL =
+		"http://apache.org/xml/features/disallow-doctype-decl";
 	private static final String _SAX_EXTERNAL_GENERAL_ENTITIES =
 		"http://xml.org/sax/features/external-general-entities";
 	private static final String _SAX_EXTERNAL_PARAMETER_ENTITIES =

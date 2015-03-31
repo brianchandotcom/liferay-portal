@@ -75,7 +75,7 @@
 					</or>
 				</not>
 				<then>
-					<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie</fail>
+					<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie.</fail>
 				</then>
 			</if>
 
@@ -101,7 +101,7 @@
 					</or>
 				</not>
 				<then>
-					<fail>Please set "database.type" to one of the following:${line.separator}db2, hsql, mysql, oracle, postgresql, sql.server, sybase</fail>
+					<fail>Please set "database.type" to one of the following:${line.separator}db2, hsql, mysql, oracle, postgresql, sql.server, sybase.</fail>
 				</then>
 			</if>
 		</sequential>
@@ -345,7 +345,7 @@
 					</then>
 				</elseif>
 				<else>
-					<fail message="Please set the property ${ip.address}" />
+					<fail message="Please set the property ${ip.address}." />
 				</else>
 			</if>
 		</sequential>
@@ -353,7 +353,7 @@
 
 	<macrodef name="get-test-class-name">
 		<sequential>
-			<fail message="Please set the property ${test.class}" unless="test.class" />
+			<fail message="Please set the property ${test.class}." unless="test.class" />
 
 			<var name="test.class.name" unset="true" />
 
@@ -403,7 +403,7 @@
 
 	<macrodef name="get-test-method-name">
 		<sequential>
-			<fail message="Please set the property ${test.class}" unless="test.class" />
+			<fail message="Please set the property ${test.class}." unless="test.class" />
 
 			<var name="test.method.name" unset="true" />
 
@@ -429,7 +429,7 @@
 
 	<macrodef name="get-test-name">
 		<sequential>
-			<fail message="Please set the property ${test.class}" unless="test.class" />
+			<fail message="Please set the property ${test.class}." unless="test.class" />
 
 			<var name="test.name" unset="true" />
 
@@ -449,7 +449,7 @@
 
 	<macrodef name="get-test-simple-class-name">
 		<sequential>
-			<fail message="Please set the property ${test.class}" unless="test.class" />
+			<fail message="Please set the property ${test.class}." unless="test.class" />
 
 			<var name="test.simple.class.name" unset="true" />
 
@@ -4684,7 +4684,7 @@ if (ppstate.equals("normal")) {
 		<fail message="Please set the property ${token}." unless="token" />
 		<fail message="Please set the property ${value}." unless="value" />
 
-		<fail message="${token} not found in ${file}">
+		<fail message="${token} not found in ${file}.">
 			<condition>
 				<not>
 					<resourcecontains resource="${file}" substring="${token}" />
@@ -5222,7 +5222,7 @@ which can be downloaded from this website: http://code.google.com/p/chromedriver
 				<fail>
 .
 
-Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.31.0.zip" or "IEDriverServer_Win32_2.31.0.zip" which can be downloaded from this website: https://code.google.com/p/selenium/wiki/InternetExplorerDriver
+Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.31.0.zip" or "IEDriverServer_Win32_2.31.0.zip" which can be downloaded from this website: https://code.google.com/p/selenium/wiki/InternetExplorerDriver.
 				</fail>
 			</then>
 			<else>
@@ -5448,7 +5448,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="wait-for-plugins-deployment">
-		<fail message="Please set the property ${test.class}" unless="test.class" />
+		<fail message="Please set the property ${test.class}." unless="test.class" />
 
 		<condition property="required.plugins.includes" value="">
 			<not>
@@ -5461,7 +5461,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 				<available file="${liferay.home}/logs" type="dir" />
 			</not>
 			<then>
-				<fail message="${liferay.home}/logs is not available" />
+				<fail message="${liferay.home}/logs is not available." />
 			</then>
 		</if>
 

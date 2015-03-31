@@ -91,10 +91,13 @@ public class I18nServlet extends HttpServlet {
 					new NoSuchLayoutException(), request, response);
 			}
 			else {
-				String i18nLanguageId = i18nData[0];
-				String i18nPath = i18nData[1];
-				String redirect = i18nData[2];
+				String i18nLanguageCode = i18nData[0];
+				String i18nLanguageId = i18nData[1];
+				String i18nPath = i18nData[2];
+				String redirect = i18nData[3];
 
+				request.setAttribute(
+					WebKeys.I18N_LANGUAGE_CODE, i18nLanguageCode);
 				request.setAttribute(WebKeys.I18N_LANGUAGE_ID, i18nLanguageId);
 				request.setAttribute(WebKeys.I18N_PATH, i18nPath);
 
@@ -144,15 +147,15 @@ public class I18nServlet extends HttpServlet {
 			return null;
 		}
 
-		String i18nPath = StringPool.SLASH + i18nLanguageId;
-
 		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
+
+		String i18nLanguageCode = locale.getLanguage();
 
 		if (Validator.isNull(locale.getCountry())) {
 
 			// Locales must contain the country code
 
-			locale = LanguageUtil.getLocale(locale.getLanguage());
+			locale = LanguageUtil.getLocale(i18nLanguageCode);
 
 			i18nLanguageId = LocaleUtil.toLanguageId(locale);
 		}
@@ -163,7 +166,11 @@ public class I18nServlet extends HttpServlet {
 			_log.debug("Redirect " + redirect);
 		}
 
-		return new String[] {i18nLanguageId, i18nPath, redirect};
+		String i18nPath = StringPool.SLASH + i18nLanguageId;
+
+		return new String[] {
+			i18nLanguageCode, i18nLanguageId, i18nPath, redirect
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(I18nServlet.class);

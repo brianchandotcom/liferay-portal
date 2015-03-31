@@ -1260,11 +1260,13 @@
 			<parallel>
 				<daemons>
 					<exec executable="/bin/bash" os="${os.unix}">
+						<env key="PATH" value="${env.PATH}:${android.home}/tools:${android.home}/platform-tools" />
 						<arg value="-c" />
 						<arg value="${appium.unix.cmd}" />
 					</exec>
 
 					<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
+						<env key="Path" value="${env.Path}:${android.home}/tools:${android.home}/platform-tools" />
 						<arg value="/c" />
 						<arg value="${appium.win32.cmd}" />
 					</exec>

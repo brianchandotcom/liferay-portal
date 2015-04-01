@@ -43,7 +43,7 @@ else if (splitThread && Validator.isNull(body)) {
 }
 %>
 
-<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" configParams="<%= configParams %>" contents="<%= body %>" editorName="<%= EDITOR_NAME %>" toolbarSet="bbcode" />
+<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" configParams="<%= configParams %>" contents="<%= body %>" editorName="<%= BBCODE_EDITOR_EDITOR_NAME %>" toolbarSet="bbcode" />
 
 <aui:script>
 	function <portlet:namespace />getHTML() {
@@ -52,5 +52,5 @@ else if (splitThread && Validator.isNull(body)) {
 </aui:script>
 
 <%!
-public static final String EDITOR_NAME = PropsUtil.get(MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
+public static final String BBCODE_EDITOR_EDITOR_NAME = PropsUtil.get(MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 %>

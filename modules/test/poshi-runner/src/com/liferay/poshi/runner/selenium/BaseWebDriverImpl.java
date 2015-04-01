@@ -71,16 +71,14 @@ public abstract class BaseWebDriverImpl
 		_projectDirName = projectDirName;
 		_sikuliImagesDirName = sikuliImagesDirName;
 
-		if (!PropsValues.MOBILE_DEVICE_ENABLED) {
-			WebDriver.Options options = webDriver.manage();
+		WebDriver.Options options = webDriver.manage();
 
-			WebDriver.Window window = options.window();
+		WebDriver.Window window = options.window();
 
-			int x = 1280;
-			int y = 1040;
+		int x = 1280;
+		int y = 1040;
 
-			window.setSize(new Dimension(x, y));
-		}
+		window.setSize(new Dimension(x, y));
 
 		webDriver.get(browserURL);
 	}

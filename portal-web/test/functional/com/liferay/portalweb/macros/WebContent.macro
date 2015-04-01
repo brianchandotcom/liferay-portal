@@ -66,7 +66,6 @@
 		<if>
 			<isset var="abstractSummary" />
 			<then>
-				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_ABSTRACT" value1="Abstract" />
 				<execute function="Type" locator1="CPWebcontentAddwebcontent#SUMMARY_FIELD" value1="${abstractSummary}" />
 				<execute function="AssertClick#assertPartialTextClickAt" locator1="CPWebcontentAddwebcontent#MENU_CONTENT" value1="Content" />
 			</then>
@@ -816,7 +815,6 @@
 		<if>
 			<isset var="abstractSummary" />
 			<then>
-				<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_ABSTRACT" value1="Abstract" />
 				<execute function="Type" locator1="CPWebcontentAddwebcontent#SUMMARY_FIELD" value1="${abstractSummary}" />
 				<execute function="AssertClick#assertPartialTextClickAt" locator1="CPWebcontentAddwebcontent#MENU_CONTENT" value1="Content" />
 			</then>

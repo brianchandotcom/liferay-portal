@@ -47,6 +47,8 @@ public class LiferayExtension {
 		int index = projectName.lastIndexOf("-");
 
 		_pluginType = projectName.substring(index + 1);
+
+		_tmpDir = new File(project.getRootDir(), "tmp");
 	}
 
 	public String getBndProperty(String key) {
@@ -65,12 +67,20 @@ public class LiferayExtension {
 		return _pluginType;
 	}
 
+	public File getTmpDir() {
+		return _tmpDir;
+	}
+
 	public boolean isOsgiPlugin() {
 		if (!_bndProperties.isEmpty()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	public void setTmpDir(File tmpDir) {
+		_tmpDir = tmpDir;
 	}
 
 	private Properties _loadProperties(String fileName) throws IOException {
@@ -92,5 +102,6 @@ public class LiferayExtension {
 	private final File _pluginSrcDir;
 	private final String _pluginType;
 	private final Project _project;
+	private File _tmpDir;
 
 }

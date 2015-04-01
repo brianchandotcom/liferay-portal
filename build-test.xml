@@ -1123,29 +1123,73 @@
 					</unzip>
 
 					<delete file="tomcat.zip" />
-
-					<copy
-						file="${app.server.tomcat.dir}/conf/tomcat-users.xml"
-						overwrite="true"
-						tofile="${app.server.tomcat.dir}/conf/tomcat-users.xml.orig"
-					/>
-
-					<echo file="${app.server.tomcat.dir}/conf/tomcat-users.xml"><![CDATA[<?xml version="1.0"?>
-
-<tomcat-users>
-	<role rolename="tomcat" />
-	<role rolename="manager-gui" />
-	<role rolename="manager-script" />
-	<role rolename="manager-jmx" />
-	<role rolename="manager-status" />
-	<user
-		password="${app.server.tomcat.manager.password}"
-		roles="tomcat,manager-gui,manager-script,manager-jmx,manager-status"
-		username="${app.server.tomcat.manager.user}"
-	/>
-</tomcat-users>]]></echo>
 				</then>
 			</if>
+
+			<xmltask source="${app.server.tomcat.dir}/conf/tomcat-users.xml" dest="${app.server.tomcat.dir}/conf/tomcat-users.xml">
+				<copy path="/tomcat-users/role[@rolename='tomcat']/@rolename" property="role.tomcat.exists" />
+				<copy path="/tomcat-users/role[@rolename='manager-gui']/@rolename" property="role.manager-gui.exists" />
+				<copy path="/tomcat-users/role[@rolename='manager-script']/@rolename" property="role.manager-script.exists" />
+				<copy path="/tomcat-users/role[@rolename='manager-jmx']/@rolename" property="role.manager-jmx.exists" />
+				<copy path="/tomcat-users/role[@rolename='manager-status']/@rolename" property="role.manager-status.exists" />
+				<copy path="/tomcat-users/user[@username='${app.server.tomcat.manager.user}']/@username" property="user.exists" />
+
+				<call path="/">
+					<actions>
+						<if>
+							<not>
+								<and>
+									<isset property="role.tomcat.exists" />
+									<isset property="role.manager-gui.exists" />
+									<isset property="role.manager-script.exists" />
+									<isset property="role.manager-jmx.exists" />
+									<isset property="role.manager-status.exists" />
+									<isset property="user.exists" />
+								</and>
+							</not>
+							<then>
+								<tstamp>
+									<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+								</tstamp>
+
+								<copy
+									file="${app.server.tomcat.dir}/conf/tomcat-users.xml"
+									overwrite="true"
+									tofile="${app.server.tomcat.dir}/conf/tomcat-users.xml.${tstamp.value}"
+								/>
+							</then>
+						</if>
+					</actions>
+				</call>
+
+				<insert path="/tomcat-users" unless="role.tomcat.exists"><![CDATA[
+					<role rolename="tomcat" />
+				]]></insert>
+
+				<insert path="/tomcat-users" unless="role.manager-gui.exists"><![CDATA[
+					<role rolename="manager-gui" />
+				]]></insert>
+
+				<insert path="/tomcat-users" unless="role.manager-script.exists"><![CDATA[
+					<role rolename="manager-script" />
+				]]></insert>
+
+				<insert path="/tomcat-users" unless="role.manager-jmx.exists"><![CDATA[
+					<role rolename="manager-jmx" />
+				]]></insert>
+
+				<insert path="/tomcat-users" unless="role.manager-status.exists"><![CDATA[
+					<role rolename="manager-status" />
+				]]></insert>
+
+				<insert path="/tomcat-users" unless="user.exists"><![CDATA[
+					<user
+						password="${app.server.tomcat.manager.password}"
+						roles="tomcat,manager-gui,manager-script,manager-jmx,manager-status"
+						username="${app.server.tomcat.manager.user}"
+					/>
+				]]></insert>
+			</xmltask>
 		</sequential>
 	</macrodef>
 

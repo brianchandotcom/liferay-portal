@@ -511,21 +511,15 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			long startTime, float searchTime, int start, int end)
 		throws IOException, ParseException {
 
-		int total = browseResult.getNumHits();
-
-		if (total > PropsValues.INDEX_SEARCH_LIMIT) {
-			total = PropsValues.INDEX_SEARCH_LIMIT;
-		}
-
 		BrowseHit[] browseHits = browseResult.getHits();
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
 			start = 0;
-			end = total;
+			end = browseHits.length;
 		}
 
 		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-			start, end, total);
+			start, end, browseHits.length);
 
 		start = startAndEnd[0];
 		end = startAndEnd[1];
@@ -615,8 +609,14 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			queryTerms = getQueryTerms(query);
 		}
 
+		int totalHits = browseResult.getNumHits();
+
+		if (totalHits > PropsValues.INDEX_SEARCH_LIMIT) {
+			totalHits = PropsValues.INDEX_SEARCH_LIMIT;
+		}
+
 		hits.setDocs(subsetDocs.toArray(new Document[subsetDocs.size()]));
-		hits.setLength(total);
+		hits.setLength(totalHits);
 		hits.setQuery(query);
 		hits.setQueryTerms(queryTerms.toArray(new String[queryTerms.size()]));
 		hits.setScores(ArrayUtil.toFloatArray(subsetScores));

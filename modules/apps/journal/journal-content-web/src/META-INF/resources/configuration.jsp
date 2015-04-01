@@ -100,40 +100,31 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 	<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
 	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
-	<aui:input name="preferences--extensions--" type="hidden" value="<%= journalContentDisplayContext.getExtensions() %>" />
 
 	<aui:fieldset>
 		<aui:input name="portletId" type="resource" value="<%= journalContentDisplayContext.getPortletResource() %>" />
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:field-wrapper>
-			<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= journalContentDisplayContext.isShowAvailableLocales() %>" />
-		</aui:field-wrapper>
-
-		<aui:field-wrapper helpMessage='<%= !journalContentDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
-			<liferay-ui:input-move-boxes
-				leftBoxName="currentExtensions"
-				leftList="<%= journalContentDisplayContext.getCurrentExtensions() %>"
-				leftReorder="true"
-				leftTitle="current"
-				rightBoxName="availableExtensions"
-				rightList="<%= journalContentDisplayContext.getAvailableExtensions() %>"
-				rightTitle="available"
+		<aui:field-wrapper label="user-tools">
+			<liferay-ui:entry-selector
+				entries="<%= (List<SelectableEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolEntries() %>"
+				hiddenInput="preferences--userToolEntries--"
+				id="userToolsSelector"
+				selectedEntries="<%= (List<SelectableEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolEntries() %>"
+				title="select-user-tools"
 			/>
 		</aui:field-wrapper>
 
-		<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= journalContentDisplayContext.isEnablePrint() %>" />
-
-		<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRelatedAssets() %>" />
-
-		<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRatings() %>" />
-
-		<c:if test="<%= journalContentDisplayContext.isCommentsEnabled() %>">
-			<aui:input name="preferences--enableComments--" type="checkbox" value="<%= journalContentDisplayContext.isEnableComments() %>" />
-
-			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableCommentRatings() %>" />
-		</c:if>
+		<aui:field-wrapper label="content-metadata">
+			<liferay-ui:entry-selector
+				entries="<%= (List<SelectableEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataEntries() %>"
+				hiddenInput="preferences--contentMetadataEntries--"
+				id="contentMetadataSelector"
+				selectedEntries="<%= (List<SelectableEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataEntries() %>"
+				title="select-content-metadata"
+			/>
+		</aui:field-wrapper>
 
 		<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
 	</aui:fieldset>

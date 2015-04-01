@@ -219,25 +219,27 @@ public class JournalFolderServiceUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		int restrictionType, boolean mergeWithParentFolder,
+		long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, int restrictionType,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateFolder(folderId, parentFolderId, name, description,
-			ddmStructureIds, restrictionType, mergeWithParentFolder,
-			serviceContext);
+				   .updateFolder(groupId, folderId, parentFolderId, name,
+			description, ddmStructureIds, restrictionType,
+			mergeWithParentFolder, serviceContext);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
+		long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateFolder(folderId, parentFolderId, name, description,
-			mergeWithParentFolder, serviceContext);
+				   .updateFolder(groupId, folderId, parentFolderId, name,
+			description, mergeWithParentFolder, serviceContext);
 	}
 
 	public static JournalFolderService getService() {

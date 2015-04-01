@@ -79,12 +79,14 @@ public class AssetCategoryLocalServiceTest {
 
 		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				titleMap, null, null, serviceContext);
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), titleMap, null, null,
+				serviceContext);
 
 		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			assetVocabulary.getVocabularyId(), serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
 
 		serviceContext.setAssetCategoryIds(
 			new long[] {assetCategory.getCategoryId()});

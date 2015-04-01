@@ -83,7 +83,8 @@ public class JournalFolderActivityInterpreterTest
 		serviceContext.setCommand(Constants.UPDATE);
 
 		JournalFolderLocalServiceUtil.updateFolder(
-			TestPropsValues.getUserId(), _folder.getFolderId(),
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			_folder.getFolderId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);

@@ -48,7 +48,7 @@ public interface AssetCategoryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AssetCategoryServiceUtil} to access the asset category remote service. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portlet.asset.model.AssetCategory addCategory(
-		long parentCategoryId,
+		long groupId, long parentCategoryId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
@@ -56,7 +56,7 @@ public interface AssetCategoryService extends BaseService {
 		throws PortalException;
 
 	public com.liferay.portlet.asset.model.AssetCategory addCategory(
-		java.lang.String title, long vocabularyId,
+		long groupId, java.lang.String title, long vocabularyId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

@@ -174,11 +174,11 @@ public class StagingImplTest {
 
 		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
-				TestPropsValues.getUserId(), "TestVocabulary", titleMap,
-				descriptionMap, null, serviceContext);
+				TestPropsValues.getUserId(), groupId, "TestVocabulary",
+				titleMap, descriptionMap, null, serviceContext);
 
 		return AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), 0, titleMap, descriptionMap,
+			TestPropsValues.getUserId(), groupId, 0, titleMap, descriptionMap,
 			assetVocabulary.getVocabularyId(), new String[0], serviceContext);
 	}
 

@@ -145,8 +145,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			// Add category
 
 			AssetCategoryServiceUtil.addCategory(
-				parentCategoryId, titleMap, descriptionMap, vocabularyId,
-				categoryProperties, serviceContext);
+				serviceContext.getScopeGroupId(), parentCategoryId, titleMap,
+				descriptionMap, vocabularyId, categoryProperties,
+				serviceContext);
 		}
 		else {
 
@@ -177,8 +178,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			// Add vocabulary
 
 			AssetVocabularyServiceUtil.addVocabulary(
-				StringPool.BLANK, titleMap, descriptionMap,
-				getSettings(actionRequest), serviceContext);
+				serviceContext.getScopeGroupId(), StringPool.BLANK, titleMap,
+				descriptionMap, getSettings(actionRequest), serviceContext);
 		}
 		else {
 

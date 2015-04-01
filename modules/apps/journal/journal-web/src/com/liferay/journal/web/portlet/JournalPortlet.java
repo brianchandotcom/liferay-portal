@@ -853,8 +853,9 @@ public class JournalPortlet extends MVCPortlet {
 				actionRequest, "restrictionType");
 
 			_journalFolderService.updateFolder(
-				folderId, parentFolderId, name, description, ddmStructureIds,
-				restrinctionType, mergeWithParentFolder, serviceContext);
+				serviceContext.getScopeGroupId(), folderId, parentFolderId,
+				name, description, ddmStructureIds, restrinctionType,
+				mergeWithParentFolder, serviceContext);
 		}
 	}
 
@@ -874,6 +875,7 @@ public class JournalPortlet extends MVCPortlet {
 			JournalFolder.class.getName(), actionRequest);
 
 		_journalFolderService.updateFolder(
+			serviceContext.getScopeGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, null, null,
 			ddmStructureIds, restrinctionType, false, serviceContext);

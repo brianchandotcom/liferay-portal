@@ -69,7 +69,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 		com.liferay.portlet.asset.model.AssetTag assetTag);
 
 	public com.liferay.portlet.asset.model.AssetTag addTag(long userId,
-		java.lang.String name,
+		long groupId, java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

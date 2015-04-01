@@ -35,22 +35,23 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 
 	@Override
 	public com.liferay.portlet.asset.model.AssetCategory addCategory(
-		long parentCategoryId,
+		long groupId, long parentCategoryId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryService.addCategory(parentCategoryId, titleMap,
-			descriptionMap, vocabularyId, categoryProperties, serviceContext);
+		return _assetCategoryService.addCategory(groupId, parentCategoryId,
+			titleMap, descriptionMap, vocabularyId, categoryProperties,
+			serviceContext);
 	}
 
 	@Override
 	public com.liferay.portlet.asset.model.AssetCategory addCategory(
-		java.lang.String title, long vocabularyId,
+		long groupId, java.lang.String title, long vocabularyId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryService.addCategory(title, vocabularyId,
+		return _assetCategoryService.addCategory(groupId, title, vocabularyId,
 			serviceContext);
 	}
 

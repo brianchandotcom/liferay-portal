@@ -56,32 +56,33 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 	@Override
 	public AssetCategory addCategory(
-			long parentCategoryId, Map<Locale, String> titleMap,
+			long groupId, long parentCategoryId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, long vocabularyId,
 			String[] categoryProperties, ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetCategoryPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			parentCategoryId, ActionKeys.ADD_CATEGORY);
+			getPermissionChecker(), groupId, parentCategoryId,
+			ActionKeys.ADD_CATEGORY);
 
 		return assetCategoryLocalService.addCategory(
-			getUserId(), parentCategoryId, titleMap, descriptionMap,
+			getUserId(), groupId, parentCategoryId, titleMap, descriptionMap,
 			vocabularyId, categoryProperties, serviceContext);
 	}
 
 	@Override
 	public AssetCategory addCategory(
-			String title, long vocabularyId, ServiceContext serviceContext)
+			long groupId, String title, long vocabularyId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		AssetCategoryPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			getPermissionChecker(), groupId,
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			ActionKeys.ADD_CATEGORY);
 
 		return assetCategoryLocalService.addCategory(
-			getUserId(), title, vocabularyId, serviceContext);
+			getUserId(), groupId, title, vocabularyId, serviceContext);
 	}
 
 	@Override

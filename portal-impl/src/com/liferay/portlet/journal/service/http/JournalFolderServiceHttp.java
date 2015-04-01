@@ -828,16 +828,16 @@ public class JournalFolderServiceHttp {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		boolean mergeWithParentFolder,
+		HttpPrincipal httpPrincipal, long groupId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"updateFolder", _updateFolderParameterTypes27);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId, parentFolderId, name, description,
 					mergeWithParentFolder, serviceContext);
 
@@ -864,17 +864,17 @@ public class JournalFolderServiceHttp {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, int restrictionType,
-		boolean mergeWithParentFolder,
+		HttpPrincipal httpPrincipal, long groupId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		int restrictionType, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFolderServiceUtil.class,
 					"updateFolder", _updateFolderParameterTypes28);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					folderId, parentFolderId, name, description,
 					ddmStructureIds, restrictionType, mergeWithParentFolder,
 					serviceContext);
@@ -990,12 +990,12 @@ public class JournalFolderServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes27 = new Class[] {
-			long.class, long.class, java.lang.String.class,
+			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFolderParameterTypes28 = new Class[] {
-			long.class, long.class, java.lang.String.class,
+			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, long[].class, int.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};

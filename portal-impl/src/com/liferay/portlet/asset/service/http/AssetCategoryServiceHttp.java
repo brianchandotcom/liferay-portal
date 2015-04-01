@@ -56,7 +56,7 @@ import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
 @ProviderType
 public class AssetCategoryServiceHttp {
 	public static com.liferay.portlet.asset.model.AssetCategory addCategory(
-		HttpPrincipal httpPrincipal, long parentCategoryId,
+		HttpPrincipal httpPrincipal, long groupId, long parentCategoryId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
@@ -66,7 +66,7 @@ public class AssetCategoryServiceHttp {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"addCategory", _addCategoryParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentCategoryId, titleMap, descriptionMap, vocabularyId,
 					categoryProperties, serviceContext);
 
@@ -93,15 +93,16 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategory addCategory(
-		HttpPrincipal httpPrincipal, java.lang.String title, long vocabularyId,
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
+		long vocabularyId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetCategoryServiceUtil.class,
 					"addCategory", _addCategoryParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, title,
-					vocabularyId, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					title, vocabularyId, serviceContext);
 
 			Object returnObj = null;
 
@@ -1190,12 +1191,12 @@ public class AssetCategoryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryServiceHttp.class);
 	private static final Class<?>[] _addCategoryParameterTypes0 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class, long.class,
-			java.lang.String[].class,
+			long.class, long.class, java.util.Map.class, java.util.Map.class,
+			long.class, java.lang.String[].class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCategoryParameterTypes1 = new Class[] {
-			java.lang.String.class, long.class,
+			long.class, java.lang.String.class, long.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCategoriesParameterTypes2 = new Class[] {

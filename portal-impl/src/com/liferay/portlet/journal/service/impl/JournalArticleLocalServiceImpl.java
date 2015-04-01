@@ -377,7 +377,8 @@ public class JournalArticleLocalServiceImpl
 		article.setVersion(version);
 		article.setTitleMap(titleMap, locale);
 		article.setUrlTitle(
-			getUniqueUrlTitle(id, articleId, title, null, serviceContext));
+			getUniqueUrlTitle(
+				groupId, id, articleId, title, null, serviceContext));
 		article.setDescriptionMap(descriptionMap, locale);
 		article.setContent(content);
 		article.setDDMStructureKey(ddmStructureKey);
@@ -5193,7 +5194,7 @@ public class JournalArticleLocalServiceImpl
 		article.setTitleMap(titleMap, locale);
 		article.setUrlTitle(
 			getUniqueUrlTitle(
-				article.getId(), article.getArticleId(), title,
+				groupId, article.getId(), article.getArticleId(), title,
 				latestArticle.getUrlTitle(), serviceContext));
 		article.setDescriptionMap(descriptionMap, locale);
 		article.setContent(content);
@@ -5432,7 +5433,7 @@ public class JournalArticleLocalServiceImpl
 			article.setTitleMap(oldArticle.getTitleMap(), defaultLocale);
 			article.setUrlTitle(
 				getUniqueUrlTitle(
-					id, articleId, title, oldArticle.getUrlTitle(),
+					groupId, id, articleId, title, oldArticle.getUrlTitle(),
 					serviceContext));
 			article.setDescriptionMap(oldArticle.getDescriptionMap());
 			article.setDDMStructureKey(oldArticle.getDDMStructureKey());
@@ -6915,8 +6916,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected String getUniqueUrlTitle(
-			long id, String articleId, String title, String oldUrlTitle,
-			ServiceContext serviceContext)
+			long groupId, long id, String articleId, String title,
+			String oldUrlTitle, ServiceContext serviceContext)
 		throws PortalException {
 
 		String serviceContextUrlTitle = ParamUtil.getString(
@@ -6931,19 +6932,17 @@ public class JournalArticleLocalServiceImpl
 			return oldUrlTitle;
 		}
 		else {
-			urlTitle = getUniqueUrlTitle(
-				id, serviceContext.getScopeGroupId(), articleId, title);
+			urlTitle = getUniqueUrlTitle(id, groupId, articleId, title);
 		}
 
 		JournalArticle urlTitleArticle = fetchArticleByUrlTitle(
-			serviceContext.getScopeGroupId(), urlTitle);
+			groupId, urlTitle);
 
 		if ((urlTitleArticle != null) &&
 			!Validator.equals(
 				urlTitleArticle.getArticleId(), articleId)) {
 
-			urlTitle = getUniqueUrlTitle(
-				id, serviceContext.getScopeGroupId(), articleId, urlTitle);
+			urlTitle = getUniqueUrlTitle(id, groupId, articleId, urlTitle);
 		}
 
 		return urlTitle;
@@ -7310,7 +7309,7 @@ public class JournalArticleLocalServiceImpl
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL,
 			PortalUtil.getControlPanelFullURL(
-				serviceContext.getScopeGroupId(), portletId, null));
+				article.getGroupId(), portletId, null));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			article.getCompanyId(), article.getGroupId(), userId,

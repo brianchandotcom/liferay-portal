@@ -48,24 +48,12 @@ public interface AssetVocabularyService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AssetVocabularyServiceUtil} to access the asset vocabulary remote service. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
-		java.lang.String title,
+		long groupId, java.lang.String title,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
-		java.lang.String title,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 6.1.0 {@link #addVocabulary(String, Map, Map, String,
-	ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
+		long groupId, java.lang.String title,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,
@@ -206,19 +194,6 @@ public interface AssetVocabularyService extends BaseService {
 
 	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId, java.lang.String title,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String settings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 6.1.0, {@link #updateVocabulary(long, String, Map, Map,
-	String, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
-		long vocabularyId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String settings,

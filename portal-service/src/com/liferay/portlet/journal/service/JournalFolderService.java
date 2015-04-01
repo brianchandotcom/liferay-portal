@@ -170,15 +170,17 @@ public interface JournalFolderService extends BaseService {
 		throws PortalException;
 
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		int restrictionType, boolean mergeWithParentFolder,
+		long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, int restrictionType,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
+		long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 }

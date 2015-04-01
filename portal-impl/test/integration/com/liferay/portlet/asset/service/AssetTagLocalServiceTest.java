@@ -68,7 +68,8 @@ public class AssetTagLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
-			TestPropsValues.getUserId(), "Tag", serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(), "Tag",
+			serviceContext);
 
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 

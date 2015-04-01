@@ -482,16 +482,18 @@ public interface JournalFolderLocalService extends BaseLocalService,
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		int restrictionType, boolean mergeWithParentFolder,
+		long userId, long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, int restrictionType,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.journal.model.JournalFolder updateFolder(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
+		long userId, long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

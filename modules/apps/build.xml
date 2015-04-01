@@ -13,6 +13,7 @@
 		<dirset dir="dictionary" includes="*" />
 		<dirset dir="document-library" includes="*" />
 		<dirset dir="document-selector" includes="*" />
+		<dirset dir="dynamic-data-lists" includes="*" />
 		<dirset dir="dynamic-data-mapping" includes="*" />
 		<dirset dir="hello-velocity" includes="*" />
 		<dirset dir="iframe" includes="*" />

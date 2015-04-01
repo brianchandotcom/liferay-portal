@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.library;
+package com.liferay.portal.library;
 
 import java.io.File;
 import java.io.IOException;

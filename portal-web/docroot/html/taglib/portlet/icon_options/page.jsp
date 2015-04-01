@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/portlet/icon_options/init.jsp" %>
 
 <liferay-ui:icon-menu
 	cssClass="portlet-options"
@@ -25,110 +25,44 @@
 	showArrow="<%= true %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-portlet:icon-refresh />
-
-	<liferay-portlet:icon-portlet-css />
-
-	<liferay-portlet:icon-configuration />
-
-	<liferay-portlet:icon-edit />
-
-	<liferay-portlet:icon-edit-defaults />
-
-	<liferay-portlet:icon-edit-guest />
-
-	<liferay-portlet:icon-export-import />
-
-	<liferay-portlet:icon-staging />
-
-	<liferay-portlet:icon-help />
-
-	<liferay-portlet:icon-print />
-
-	<liferay-portlet:icon-maximize />
-
-	<liferay-portlet:icon-minimize />
-
-	<liferay-portlet:icon-close />
 
 	<%
-	Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+	List<PortletConfigurationIcon> portletConfigurationIcons = ListUtil.copy(PortletConfigurationIconTracker.getPortletConfigurationIcons());
+
+	portletConfigurationIcons = ListUtil.sort(portletConfigurationIcons, new PropertyComparator("weight", false, false));
+
+	for (PortletConfigurationIcon portletConfigurationIcon : portletConfigurationIcons) {
+		portletConfigurationIcon.setRequest(request);
 	%>
 
-	<c:if test="<%= portlet != null %>">
-
-		<%
-		PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletDisplay.getId());
-
-		boolean widgetShowAddAppLink = GetterUtil.getBoolean(portletSetup.getValue("lfrWidgetShowAddAppLink", null), PropsValues.THEME_PORTLET_SHARING_DEFAULT);
-
-		String facebookAPIKey = portletSetup.getValue("lfrFacebookApiKey", StringPool.BLANK);
-		String facebookCanvasPageURL = portletSetup.getValue("lfrFacebookCanvasPageUrl", StringPool.BLANK);
-		boolean facebookShowAddAppLink = GetterUtil.getBoolean(portletSetup.getValue("lfrFacebookShowAddAppLink", null), true);
-
-		if (Validator.isNull(facebookCanvasPageURL) || Validator.isNull(facebookAPIKey)) {
-			facebookShowAddAppLink = false;
-		}
-
-		boolean iGoogleShowAddAppLink = GetterUtil.getBoolean(portletSetup.getValue("lfrIgoogleShowAddAppLink", StringPool.BLANK));
-		boolean netvibesShowAddAppLinks = GetterUtil.getBoolean(portletSetup.getValue("lfrNetvibesShowAddAppLink", StringPool.BLANK));
-
-		PortletURL basePortletURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_SHARING, layout.getPlid(), PortletRequest.RESOURCE_PHASE);
-		%>
-
-		<c:if test="<%= widgetShowAddAppLink %>">
-
-			<%
-			String widgetHREF = "javascript:Liferay.PortletSharing.showWidgetInfo('" + PortalUtil.getWidgetURL(portlet, themeDisplay) + "', '" + basePortletURL + "');";
-			%>
-
+		<c:if test="<%= portletConfigurationIcon.isShow() %>">
 			<liferay-ui:icon
-				cssClass='<%= portletDisplay.getNamespace() + "expose-as-widget" %>'
-				iconCssClass="icon-plus-sign"
-				label="<%= true %>"
-				message="add-to-any-website"
-				url="<%= widgetHREF %>"
+				alt="<%= portletConfigurationIcon.getAlt() %>"
+				ariaRole="<%= portletConfigurationIcon.getAriaRole() %>"
+				cssClass="<%= portletConfigurationIcon.getCssClass() %>"
+				data="<%= portletConfigurationIcon.getData() %>"
+				iconCssClass="<%= portletConfigurationIcon.getIconCssClass() %>"
+				id="<%= portletConfigurationIcon.getId() %>"
+				image="<%= portletConfigurationIcon.getImage() %>"
+				imageHover="<%= portletConfigurationIcon.getImageHover() %>"
+				label="<%= portletConfigurationIcon.showLabel() %>"
+				lang="<%= portletConfigurationIcon.getLang() %>"
+				linkCssClass="<%= portletConfigurationIcon.getLinkCssClass() %>"
+				localizeMessage="<%= portletConfigurationIcon.isLocalizeMessage() %>"
+				message="<%= portletConfigurationIcon.getMessage() %>"
+				method="<%= portletConfigurationIcon.getMethod() %>"
+				onClick="<%= portletConfigurationIcon.getOnClick() %>"
+				src="<%= portletConfigurationIcon.getSrc() %>"
+				srcHover="<%= portletConfigurationIcon.getSrcHover() %>"
+				target="<%= portletConfigurationIcon.getTarget() %>"
+				toolTip="<%= portletConfigurationIcon.showToolTip() %>"
+				url="<%= portletConfigurationIcon.getURL() %>"
+				useDialog="<%= portletConfigurationIcon.showUseDialog() %>"
 			/>
 		</c:if>
 
-		<c:if test="<%= facebookShowAddAppLink %>">
-			<liferay-ui:icon
-				iconCssClass="icon-facebook"
-				label="<%= true %>"
-				message="add-to-facebook"
-				method="get"
-				url='<%= "http://www.facebook.com/add.php?api_key=" + facebookAPIKey + "&ref=pd" %>'
-			/>
-		</c:if>
+	<%
+	}
+	%>
 
-		<c:if test="<%= iGoogleShowAddAppLink %>">
-
-			<%
-			String googleGadgetHREF = "http://fusion.google.com/add?source=atgs&moduleurl=" + PortalUtil.getGoogleGadgetURL(portlet, themeDisplay);
-			%>
-
-			<liferay-ui:icon
-				cssClass='<%= portletDisplay.getNamespace() + "expose-as-widget" %>'
-				iconCssClass="icon-plus-sign"
-				label="<%= true %>"
-				message="add-to-igoogle"
-				url="<%= googleGadgetHREF %>"
-			/>
-		</c:if>
-
-		<c:if test="<%= netvibesShowAddAppLinks %>">
-
-			<%
-			String netvibesHREF = "javascript:Liferay.PortletSharing.showNetvibesInfo('" + PortalUtil.getNetvibesURL(portlet, themeDisplay) + "', '" + basePortletURL + "');";
-			%>
-
-			<liferay-ui:icon
-				iconCssClass="icon-plus-sign"
-				label="<%= true %>"
-				message="add-to-netvibes"
-				method="get"
-				url="<%= netvibesHREF %>"
-			/>
-		</c:if>
-	</c:if>
 </liferay-ui:icon-menu>

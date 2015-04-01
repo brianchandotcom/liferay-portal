@@ -31,19 +31,8 @@ import com.liferay.taglib.aui.ColumnTag;
 import com.liferay.taglib.aui.LayoutTag;
 import com.liferay.taglib.portlet.ActionURLTag;
 import com.liferay.taglib.portletext.IconBackTag;
-import com.liferay.taglib.portletext.IconCloseTag;
-import com.liferay.taglib.portletext.IconConfigurationTag;
-import com.liferay.taglib.portletext.IconEditDefaultsTag;
-import com.liferay.taglib.portletext.IconEditGuestTag;
-import com.liferay.taglib.portletext.IconEditTag;
-import com.liferay.taglib.portletext.IconHelpTag;
-import com.liferay.taglib.portletext.IconMaximizeTag;
-import com.liferay.taglib.portletext.IconMinimizeTag;
 import com.liferay.taglib.portletext.IconOptionsTag;
-import com.liferay.taglib.portletext.IconPortletCssTag;
 import com.liferay.taglib.portletext.IconPortletTag;
-import com.liferay.taglib.portletext.IconPrintTag;
-import com.liferay.taglib.portletext.IconRefreshTag;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.security.DoAsURLTag;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -540,60 +529,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		portletIconBack();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconClose}
-	 */
-	@Deprecated
-	@Override
-	public void iconClose() throws Exception {
-		portletIconClose();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconConfiguration}
-	 */
-	@Deprecated
-	@Override
-	public void iconConfiguration() throws Exception {
-		portletIconConfiguration();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEdit}
-	 */
-	@Deprecated
-	@Override
-	public void iconEdit() throws Exception {
-		portletIconEdit();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditDefaults}
-	 */
-	@Deprecated
-	@Override
-	public void iconEditDefaults() throws Exception {
-		portletIconEditDefaults();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditGuest}
-	 */
-	@Deprecated
-	@Override
-	public void iconEditGuest() throws Exception {
-		portletIconEditGuest();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconHelp}
-	 */
-	@Deprecated
-	@Override
-	public void iconHelp() throws Exception {
-		portletIconHelp();
-	}
-
 	@Override
 	public void iconHelp(String message) throws Exception {
 		com.liferay.taglib.ui.IconHelpTag iconHelpTag =
@@ -604,24 +539,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		iconHelpTag.setMessage(message);
 
 		iconHelpTag.runTag();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMaximize}
-	 */
-	@Deprecated
-	@Override
-	public void iconMaximize() throws Exception {
-		portletIconMaximize();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMinimize}
-	 */
-	@Deprecated
-	@Override
-	public void iconMinimize() throws Exception {
-		portletIconMinimize();
 	}
 
 	/**
@@ -649,33 +566,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	@Override
 	public void iconPortlet(Portlet portlet) throws Exception {
 		portletIconPortlet();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortletCss}
-	 */
-	@Deprecated
-	@Override
-	public void iconPortletCss() throws Exception {
-		portletIconPortletCss();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPrint}
-	 */
-	@Deprecated
-	@Override
-	public void iconPrint() throws Exception {
-		portletIconPrint();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconRefresh}
-	 */
-	@Deprecated
-	@Override
-	public void iconRefresh() throws Exception {
-		portletIconRefresh();
 	}
 
 	@Override
@@ -878,78 +768,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public void portletIconClose() throws Exception {
-		IconCloseTag iconCloseTag = new IconCloseTag();
-
-		setUp(iconCloseTag);
-
-		iconCloseTag.runTag();
-	}
-
-	@Override
-	public void portletIconConfiguration() throws Exception {
-		IconConfigurationTag iconConfigurationTag = new IconConfigurationTag();
-
-		setUp(iconConfigurationTag);
-
-		iconConfigurationTag.runTag();
-	}
-
-	@Override
-	public void portletIconEdit() throws Exception {
-		IconEditTag iconEditTag = new IconEditTag();
-
-		setUp(iconEditTag);
-
-		iconEditTag.runTag();
-	}
-
-	@Override
-	public void portletIconEditDefaults() throws Exception {
-		IconEditDefaultsTag iconEditDefaultsTag = new IconEditDefaultsTag();
-
-		setUp(iconEditDefaultsTag);
-
-		iconEditDefaultsTag.runTag();
-	}
-
-	@Override
-	public void portletIconEditGuest() throws Exception {
-		IconEditGuestTag iconEditGuestTag = new IconEditGuestTag();
-
-		setUp(iconEditGuestTag);
-
-		iconEditGuestTag.runTag();
-	}
-
-	@Override
-	public void portletIconHelp() throws Exception {
-		IconHelpTag iconHelpTag = new IconHelpTag();
-
-		setUp(iconHelpTag);
-
-		iconHelpTag.runTag();
-	}
-
-	@Override
-	public void portletIconMaximize() throws Exception {
-		IconMaximizeTag iconMaximizeTag = new IconMaximizeTag();
-
-		setUp(iconMaximizeTag);
-
-		iconMaximizeTag.runTag();
-	}
-
-	@Override
-	public void portletIconMinimize() throws Exception {
-		IconMinimizeTag iconMinimizeTag = new IconMinimizeTag();
-
-		setUp(iconMinimizeTag);
-
-		iconMinimizeTag.runTag();
-	}
-
-	@Override
 	public void portletIconOptions() throws Exception {
 		IconOptionsTag iconOptionsTag = new IconOptionsTag();
 
@@ -976,33 +794,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		iconPortletTag.setPortlet(portlet);
 
 		iconPortletTag.runTag();
-	}
-
-	@Override
-	public void portletIconPortletCss() throws Exception {
-		IconPortletCssTag iconPortletCssTag = new IconPortletCssTag();
-
-		setUp(iconPortletCssTag);
-
-		iconPortletCssTag.runTag();
-	}
-
-	@Override
-	public void portletIconPrint() throws Exception {
-		IconPrintTag iconPrintTag = new IconPrintTag();
-
-		setUp(iconPrintTag);
-
-		iconPrintTag.runTag();
-	}
-
-	@Override
-	public void portletIconRefresh() throws Exception {
-		IconRefreshTag iconRefreshTag = new IconRefreshTag();
-
-		setUp(iconRefreshTag);
-
-		iconRefreshTag.runTag();
 	}
 
 	@Override

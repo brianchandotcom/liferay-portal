@@ -43,6 +43,10 @@ import java.util.List;
  */
 public class StartupHelper {
 
+	public boolean isDBNew() {
+		return _dbNew;
+	}
+
 	public boolean isStartupFinished() {
 		return _startupFinished;
 	}
@@ -57,6 +61,10 @@ public class StartupHelper {
 
 	public boolean isVerified() {
 		return _verified;
+	}
+
+	public void setDbNew(boolean dbNew) {
+		_dbNew = dbNew;
 	}
 
 	public void setDropIndexes(boolean dropIndexes) {
@@ -184,6 +192,7 @@ public class StartupHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(StartupHelper.class);
 
+	private boolean _dbNew;
 	private boolean _dropIndexes;
 	private boolean _startupFinished;
 	private boolean _upgraded;

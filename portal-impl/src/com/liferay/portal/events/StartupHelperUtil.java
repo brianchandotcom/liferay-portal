@@ -31,6 +31,10 @@ public class StartupHelperUtil {
 		return _startupHelper;
 	}
 
+	public static boolean isDBNew() {
+		return getStartupHelper().isDBNew();
+	}
+
 	public static boolean isStartupFinished() {
 		return getStartupHelper().isStartupFinished();
 	}
@@ -45,6 +49,10 @@ public class StartupHelperUtil {
 
 	public static boolean isVerified() {
 		return getStartupHelper().isVerified();
+	}
+
+	public static void setDbNew(boolean dbNew) {
+		getStartupHelper().setDbNew(dbNew);
 	}
 
 	public static void setDropIndexes(boolean dropIndexes) {

@@ -62,7 +62,7 @@ public class LibraryTest {
 
 		_initNetBeansProjectJars(documentBuilder);
 
-		_getVersionsJars(documentBuilder);
+		_initVersionsJars(documentBuilder);
 	}
 
 	@Test
@@ -93,20 +93,6 @@ public class LibraryTest {
 	@Test
 	public void testVersionsJarsInLib() {
 		_doSearch(_versionsJars, _libJars, _VERSIONS_PATH);
-	}
-
-	private static void _getVersionsJars(DocumentBuilder documentBuilder)
-		throws Exception {
-
-		Document document = documentBuilder.parse(new File(_VERSIONS_PATH));
-
-		NodeList nodelist = document.getElementsByTagName("file-name");
-
-		for (int i = 0; i < nodelist.getLength(); i++) {
-			Node node = nodelist.item(i);
-
-			_versionsJars.add(node.getTextContent());
-		}
 	}
 
 	private static void _initEclipseProjectJars(DocumentBuilder documentBuilder)
@@ -179,6 +165,20 @@ public class LibraryTest {
 			Node node = nodelist.item(i);
 
 			_nbProjectJars.add(node.getTextContent());
+		}
+	}
+
+	private static void _initVersionsJars(DocumentBuilder documentBuilder)
+		throws Exception {
+
+		Document document = documentBuilder.parse(new File(_VERSIONS_PATH));
+
+		NodeList nodelist = document.getElementsByTagName("file-name");
+
+		for (int i = 0; i < nodelist.getLength(); i++) {
+			Node node = nodelist.item(i);
+
+			_versionsJars.add(node.getTextContent());
 		}
 	}
 

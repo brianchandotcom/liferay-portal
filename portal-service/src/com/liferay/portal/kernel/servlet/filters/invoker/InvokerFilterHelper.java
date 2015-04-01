@@ -378,17 +378,17 @@ public class InvokerFilterHelper {
 
 		Filter filter = getFilter(filterName);
 
-		FilterConfig filterConfig = _filterConfigs.get(filterName);
-
-		if (filterConfig == null) {
-			filterConfig = getFilterConfig(filterName);
-		}
-
 		if (filter == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("No filter exists with filter mapping " + filterName);
 			}
 
+			return;
+		}
+
+		FilterConfig filterConfig = _filterConfigs.get(filterName);
+
+		if (filterConfig == null) {
 			return;
 		}
 

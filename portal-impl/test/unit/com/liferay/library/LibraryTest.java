@@ -16,18 +16,22 @@ package com.liferay.library;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+
+import java.nio.charset.Charset;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.commons.io.FileUtils;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -114,23 +118,35 @@ public class LibraryTest {
 	}
 
 	private static void _getLibJars() throws IOException {
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new FileReader(new File(_LIB + "/versions-ignore.txt")))) {
+		for (String line : Files.readAllLines(
+			Paths.get(_LIB, "/versions-ignore.txt"),
+			Charset.forName("UTF-8"))) {
 
-			String line = bufferedReader.readLine();
+			line = line.trim();
 
-			while (line != null) {
-				_excludes.add(line.trim());
-
-				line = bufferedReader.readLine();
+			if (!line.isEmpty()) {
+				_excludes.add(line);
 			}
 		}
 
-		File file = new File(_LIB);
+		Files.walkFileTree(
+			Paths.get(_LIB),
+			new SimpleFileVisitor<Path>() {
 
-		for (File jar : FileUtils.listFiles(file, new String[] {"jar"}, true)) {
-			_libJars.add(jar.getPath());
-		}
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					String pathString = path.toString();
+
+					if (pathString.endsWith(".jar")) {
+						_libJars.add(pathString);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private static void _getNBProjectJars(DocumentBuilder documentBuilder)

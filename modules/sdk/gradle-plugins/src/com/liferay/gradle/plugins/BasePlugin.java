@@ -67,11 +67,11 @@ public abstract class BasePlugin implements Plugin<Project> {
 		return extensionContainer.create(name, clazz, project);
 	}
 
-	protected <T extends Task> void addTask(String name, Class<T> clazz) {
+	protected <T extends Task> Task addTask(String name, Class<T> clazz) {
 		Map<String, Class<T>> args = Collections.singletonMap(
 			Task.TASK_TYPE, clazz);
 
-		project.task(args, name);
+		return project.task(args, name);
 	}
 
 	protected <T extends Plugin<Project>> void applyPlugin(Class<T> clazz) {

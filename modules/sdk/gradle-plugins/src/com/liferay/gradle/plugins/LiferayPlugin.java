@@ -74,8 +74,16 @@ public class LiferayPlugin extends BasePlugin {
 		}
 	}
 
+	protected void addTaskInitGradle() {
+		Task task = addTask("initGradle", InitGradleTask.class);
+
+		task.setDescription(
+			"Initializes build.gradle by migrating information from legacy " +
+				"files");
+	}
+
 	protected void addTasks() {
-		addTask("initGradle", InitGradleTask.class);
+		addTaskInitGradle();
 	}
 
 	protected void configureDependencies() {

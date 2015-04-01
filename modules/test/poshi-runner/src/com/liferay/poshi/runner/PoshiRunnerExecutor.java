@@ -137,8 +137,16 @@ public class PoshiRunnerExecutor {
 
 				String message = childElement.attributeValue("message");
 
-				System.out.println(
-					PoshiRunnerVariablesUtil.replaceCommandVars(message));
+				if (message == null) {
+					message = childElement.getText();
+
+					System.out.println(
+						PoshiRunnerVariablesUtil.replaceCommandVars(message));
+				}
+				else {
+					System.out.println(
+						PoshiRunnerVariablesUtil.replaceCommandVars(message));
+				}
 			}
 			else if (childElementName.equals("execute")) {
 				if (childElement.attributeValue("action") != null) {

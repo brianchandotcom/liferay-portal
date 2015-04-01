@@ -102,18 +102,22 @@ public class LibraryTest {
 
 		NodeList nodelist = document.getElementsByTagName("classpathentry");
 
-		for (int i = 0; i<nodelist.getLength(); i++) {
+		for (int i = 0; i < nodelist.getLength(); i++) {
 			Node node = nodelist.item(i);
 
 			NamedNodeMap namedNodeMap = node.getAttributes();
 
+			Node kindNode = namedNodeMap.getNamedItem("kind");
+
+			String kind = kindNode.getNodeValue();
+
+			if (!kind.equals("lib")) {
+				continue;
+			}
+
 			Node pathNode = namedNodeMap.getNamedItem("path");
 
-			String path = pathNode.getNodeValue();
-
-			if (path.startsWith(_LIB)) {
-				_classpathJars.add(path);
-			}
+			_classpathJars.add(pathNode.getNodeValue());
 		}
 	}
 

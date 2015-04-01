@@ -3926,53 +3926,50 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					resourceName, resourceActionId);
 
 			if (resourceAction != null) {
-				Set<Long> rolePermissionsGroupIds = new HashSet<>();
+				Set<Group> rolePermissionsGroups = new HashSet<>();
 
 				if (resourceBlockLocalService.isSupported(resourceName)) {
-					List<ResourceTypePermission> resourceTypePermissions =
-						resourceTypePermissionPersistence.findByRoleId(
-							resourceRoleId);
+					for (ResourceTypePermission resourceTypePermission :
+							resourceTypePermissionPersistence.findByRoleId(
+								resourceRoleId)) {
 
-					for (ResourceTypePermission permission
-							: resourceTypePermissions) {
+						if ((resourceTypePermission.getCompanyId() ==
+								companyId) &&
+							resourceName.equals(
+								resourceTypePermission.getName()) &&
+							resourceTypePermission.hasAction(resourceAction)) {
 
-						if ((permission.getCompanyId() == companyId) &&
-							resourceName.equals(permission.getName()) &&
-							permission.hasAction(resourceAction)) {
+							Group group = groupPersistence.fetchByPrimaryKey(
+								resourceTypePermission.getGroupId());
 
-							long groupId = permission.getGroupId();
-
-							rolePermissionsGroupIds.add(groupId);
+							if (group != null) {
+								rolePermissionsGroups.add(group);
+							}
 						}
 					}
 				}
 				else {
-					List<ResourcePermission> resourcePermissions =
-						resourcePermissionPersistence.findByC_N_S(
-							companyId, resourceName, resourceScope);
+					for (ResourcePermission resourcePermission :
+							resourcePermissionPersistence.findByC_N_S(
+								companyId, resourceName, resourceScope)) {
 
-					for (ResourcePermission permission : resourcePermissions) {
-						if ((permission.getRoleId() == resourceRoleId) &&
-							permission.hasAction(resourceAction)) {
+						if ((resourcePermission.getRoleId() ==
+								resourceRoleId) &&
+							resourcePermission.hasAction(
+								resourceAction)) {
 
-							String primKey = permission.getPrimKey();
+							Group group = groupPersistence.fetchByPrimaryKey(
+								GetterUtil.getLong(
+									resourcePermission.getPrimKey()));
 
-							long groupId = GetterUtil.getLong(primKey);
-
-							rolePermissionsGroupIds.add(groupId);
+							if (group != null) {
+								rolePermissionsGroups.add(group);
+							}
 						}
 					}
 				}
 
-				iterator = groups.iterator();
-
-				while (iterator.hasNext()) {
-					Group group = iterator.next();
-
-					if (!rolePermissionsGroupIds.contains(group.getGroupId())) {
-						iterator.remove();
-					}
-				}
+				groups.retainAll(rolePermissionsGroups);
 			}
 		}
 

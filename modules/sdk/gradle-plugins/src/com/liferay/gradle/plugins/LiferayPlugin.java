@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
+import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.util.StringUtil;
 import com.liferay.gradle.plugins.util.Validator;
@@ -74,6 +75,12 @@ public class LiferayPlugin extends BasePlugin {
 		}
 	}
 
+	protected void addTaskFormatSource() {
+		Task task = addTask("formatSource", FormatSourceTask.class);
+
+		task.setDescription("Runs Liferay Source Formatter to format files.");
+	}
+
 	protected void addTaskInitGradle() {
 		Task task = addTask("initGradle", InitGradleTask.class);
 
@@ -83,6 +90,7 @@ public class LiferayPlugin extends BasePlugin {
 	}
 
 	protected void addTasks() {
+		addTaskFormatSource();
 		addTaskInitGradle();
 	}
 

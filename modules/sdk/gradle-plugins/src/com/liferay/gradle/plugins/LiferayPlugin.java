@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
+import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.util.StringUtil;
@@ -75,6 +76,13 @@ public class LiferayPlugin extends BasePlugin {
 		}
 	}
 
+	protected void addTaskBuildCss() {
+		Task task = addTask("buildCss", BuildCssTask.class);
+
+		task.setDescription("Compiles the Sass files in the project.");
+		task.setGroup(org.gradle.api.plugins.BasePlugin.BUILD_GROUP);
+	}
+
 	protected void addTaskFormatSource() {
 		Task task = addTask("formatSource", FormatSourceTask.class);
 
@@ -90,6 +98,7 @@ public class LiferayPlugin extends BasePlugin {
 	}
 
 	protected void addTasks() {
+		addTaskBuildCss();
 		addTaskFormatSource();
 		addTaskInitGradle();
 	}

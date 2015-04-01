@@ -790,10 +790,6 @@ public class LayoutExporter {
 		public Void call() throws PortalException {
 			Group group = GroupLocalServiceUtil.getGroup(_groupId);
 
-			if (group.isStagedRemotely()) {
-				return null;
-			}
-
 			Date endDate = null;
 
 			if (_dateRange != null) {

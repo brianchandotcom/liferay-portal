@@ -104,12 +104,12 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	@Override
-	public void publishStagingRequest(long userId, long stagingRequestId,
-		boolean privateLayout,
+	public com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+		long userId, long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingLocalService.publishStagingRequest(userId, stagingRequestId,
-			privateLayout, parameterMap);
+		return _stagingLocalService.publishStagingRequest(userId,
+			stagingRequestId, privateLayout, parameterMap);
 	}
 
 	/**
@@ -130,6 +130,11 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 			fileName, bytes);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
+	long, boolean, java.util.Map)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
 		long userId, long stagingRequestId, boolean privateLayout,

@@ -1054,6 +1054,12 @@ public interface LayoutLocalService extends BaseLocalService,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream is) throws PortalException;
 
+	public void importLayoutsDataDeletions(long userId, long groupId,
+		boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public long importLayoutsInBackground(long userId,
 		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file) throws PortalException;
@@ -1071,6 +1077,12 @@ public interface LayoutLocalService extends BaseLocalService,
 		java.lang.String taskName, long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream is) throws PortalException;
+
+	public void importPortletDataDeletions(long userId, long plid,
+		long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Imports the portlet information (categories, permissions, ... etc.) from

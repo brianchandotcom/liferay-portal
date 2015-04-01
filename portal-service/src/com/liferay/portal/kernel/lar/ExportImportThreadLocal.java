@@ -21,6 +21,16 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
  */
 public class ExportImportThreadLocal {
 
+	public static boolean isDataDeletionImportInProcess() {
+		if (isLayoutDataDeletionImportInProcess() ||
+			isPortletDataDeletionImportInProcess()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isExportInProcess() {
 		if (isLayoutExportInProcess() || isPortletExportInProcess()) {
 			return true;
@@ -30,13 +40,18 @@ public class ExportImportThreadLocal {
 	}
 
 	public static boolean isImportInProcess() {
-		if (isLayoutImportInProcess() || isLayoutValidationInProcess() ||
-			isPortletImportInProcess() || isPortletValidationInProcess()) {
+		if (isDataDeletionImportInProcess() || isLayoutImportInProcess() ||
+			isLayoutValidationInProcess() || isPortletImportInProcess() ||
+			isPortletValidationInProcess()) {
 
 			return true;
 		}
 
 		return false;
+	}
+
+	public static boolean isLayoutDataDeletionImportInProcess() {
+		return _layoutDataDeletionImportInProcess.get();
 	}
 
 	public static boolean isLayoutExportInProcess() {
@@ -53,6 +68,10 @@ public class ExportImportThreadLocal {
 
 	public static boolean isLayoutValidationInProcess() {
 		return _layoutValidationInProcess.get();
+	}
+
+	public static boolean isPortletDataDeletionImportInProcess() {
+		return _portletDataDeletionImportInProcess.get();
 	}
 
 	public static boolean isPortletExportInProcess() {
@@ -79,6 +98,13 @@ public class ExportImportThreadLocal {
 		return false;
 	}
 
+	public static void setLayoutDataDeletionImportInProcess(
+		boolean layoutDataDeletionImportInProcess) {
+
+		_layoutDataDeletionImportInProcess.set(
+			layoutDataDeletionImportInProcess);
+	}
+
 	public static void setLayoutExportInProcess(boolean layoutExportInProcess) {
 		_layoutExportInProcess.set(layoutExportInProcess);
 	}
@@ -97,6 +123,13 @@ public class ExportImportThreadLocal {
 		boolean layoutValidationInProcess) {
 
 		_layoutValidationInProcess.set(layoutValidationInProcess);
+	}
+
+	public static void setPortletDataDeletionImportInProcess(
+		boolean portletDataDeletionImportInProcess) {
+
+		_portletDataDeletionImportInProcess.set(
+			portletDataDeletionImportInProcess);
 	}
 
 	public static void setPortletExportInProcess(
@@ -123,6 +156,11 @@ public class ExportImportThreadLocal {
 		_portletValidationInProcess.set(portletValidationInProcess);
 	}
 
+	private static final ThreadLocal<Boolean>
+		_layoutDataDeletionImportInProcess = new AutoResetThreadLocal<>(
+			ExportImportThreadLocal.class +
+				"._layoutDataDeletionImportInProcess",
+			false);
 	private static final ThreadLocal<Boolean> _layoutExportInProcess =
 		new AutoResetThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutExportInProcess", false);
@@ -133,8 +171,13 @@ public class ExportImportThreadLocal {
 		new AutoResetThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutStagingInProcess", false);
 	private static final ThreadLocal<Boolean> _layoutValidationInProcess =
-		new AutoResetThreadLocal<Boolean>(
+		new AutoResetThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutValidationInProcess",
+			false);
+	private static final ThreadLocal<Boolean>
+		_portletDataDeletionImportInProcess = new AutoResetThreadLocal<>(
+			ExportImportThreadLocal.class +
+				"._portletDataDeletionImportInProcess",
 			false);
 	private static final ThreadLocal<Boolean> _portletExportInProcess =
 		new AutoResetThreadLocal<>(
@@ -146,7 +189,7 @@ public class ExportImportThreadLocal {
 		new AutoResetThreadLocal<>(
 			ExportImportThreadLocal.class + "._portletStagingInProcess", false);
 	private static final ThreadLocal<Boolean> _portletValidationInProcess =
-		new AutoResetThreadLocal<Boolean>(
+		new AutoResetThreadLocal<>(
 			ExportImportThreadLocal.class + "._portletValidationInProcess",
 			false);
 

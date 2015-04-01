@@ -1300,6 +1300,16 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	@Override
+	public void importLayoutsDataDeletions(long userId, long groupId,
+		boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_layoutLocalService.importLayoutsDataDeletions(userId, groupId,
+			privateLayout, parameterMap, file);
+	}
+
+	@Override
 	public long importLayoutsInBackground(long userId,
 		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file)
@@ -1334,6 +1344,16 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.importLayoutsInBackground(userId, taskName,
 			groupId, privateLayout, parameterMap, is);
+	}
+
+	@Override
+	public void importPortletDataDeletions(long userId, long plid,
+		long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_layoutLocalService.importPortletDataDeletions(userId, plid, groupId,
+			portletId, parameterMap, file);
 	}
 
 	/**

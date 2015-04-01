@@ -60,7 +60,7 @@ public class LibraryTest {
 
 		_initEclipseProjectJars(documentBuilder);
 
-		_getNBProjectJars(documentBuilder);
+		_initNetBeansProjectJars(documentBuilder);
 
 		_getVersionsJars(documentBuilder);
 	}
@@ -93,20 +93,6 @@ public class LibraryTest {
 	@Test
 	public void testVersionsJarsInLib() {
 		_doSearch(_versionsJars, _libJars, _VERSIONS_PATH);
-	}
-
-	private static void _getNBProjectJars(DocumentBuilder documentBuilder)
-		throws Exception {
-
-		Document document = documentBuilder.parse(new File(_NBPROJECT_PATH));
-
-		NodeList nodelist = document.getElementsByTagName("classpath");
-
-		for (int i = 0; i < nodelist.getLength(); i++) {
-			Node node = nodelist.item(i);
-
-			_nbProjectJars.add(node.getTextContent());
-		}
 	}
 
 	private static void _getVersionsJars(DocumentBuilder documentBuilder)
@@ -183,6 +169,21 @@ public class LibraryTest {
 				}
 
 			});
+	}
+
+	private static void _initNetBeansProjectJars(
+			DocumentBuilder documentBuilder)
+		throws Exception {
+
+		Document document = documentBuilder.parse(new File(_NBPROJECT_PATH));
+
+		NodeList nodelist = document.getElementsByTagName("classpath");
+
+		for (int i = 0; i < nodelist.getLength(); i++) {
+			Node node = nodelist.item(i);
+
+			_nbProjectJars.add(node.getTextContent());
+		}
 	}
 
 	private void _doSearch(

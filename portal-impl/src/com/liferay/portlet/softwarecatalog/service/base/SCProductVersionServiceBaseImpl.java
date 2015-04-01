@@ -78,7 +78,7 @@ public abstract class SCProductVersionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the s c product version remote service
 	 */
-	public com.liferay.portlet.softwarecatalog.service.SCProductVersionService getSCProductVersionService() {
+	public SCProductVersionService getSCProductVersionService() {
 		return scProductVersionService;
 	}
 
@@ -88,7 +88,7 @@ public abstract class SCProductVersionServiceBaseImpl extends BaseServiceImpl
 	 * @param scProductVersionService the s c product version remote service
 	 */
 	public void setSCProductVersionService(
-		com.liferay.portlet.softwarecatalog.service.SCProductVersionService scProductVersionService) {
+		SCProductVersionService scProductVersionService) {
 		this.scProductVersionService = scProductVersionService;
 	}
 
@@ -378,8 +378,8 @@ public abstract class SCProductVersionServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService scProductVersionLocalService;
-	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductVersionService.class)
-	protected com.liferay.portlet.softwarecatalog.service.SCProductVersionService scProductVersionService;
+	@BeanReference(type = SCProductVersionService.class)
+	protected SCProductVersionService scProductVersionService;
 	@BeanReference(type = SCProductVersionPersistence.class)
 	protected SCProductVersionPersistence scProductVersionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

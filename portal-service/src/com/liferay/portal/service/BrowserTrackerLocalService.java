@@ -84,8 +84,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.BrowserTracker deleteBrowserTracker(
-		long browserTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long browserTrackerId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -93,7 +92,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteUserBrowserTracker(long userId);
 
@@ -185,8 +184,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
-		long browserTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long browserTrackerId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
@@ -218,8 +216,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

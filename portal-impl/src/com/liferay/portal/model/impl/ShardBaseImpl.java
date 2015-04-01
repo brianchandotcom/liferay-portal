@@ -28,7 +28,7 @@ import com.liferay.portal.service.ShardLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ShardImpl
- * @see com.liferay.portal.model.Shard
+ * @see Shard
  * @generated
  */
 @ProviderType

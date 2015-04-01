@@ -145,7 +145,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	* @return the create date of this document library file rank
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _dlFileRank.getCreateDate();
 	}
 
@@ -285,7 +285,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	* @param createDate the create date of this document library file rank
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_dlFileRank.setCreateDate(createDate);
 	}
 

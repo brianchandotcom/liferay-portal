@@ -28,7 +28,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see UserImpl
- * @see com.liferay.portal.model.User
+ * @see User
  * @generated
  */
 @ProviderType

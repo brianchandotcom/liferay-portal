@@ -75,7 +75,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Company addCompany(java.lang.String webId,
 		java.lang.String virtualHostname, java.lang.String mx,
 		java.lang.String shardName, boolean system, int maxUsers, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the company with the web domain.
@@ -88,7 +88,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	public com.liferay.portal.model.Company checkCompany(java.lang.String webId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the company with the web domain, mail domain, and shard. If no
@@ -105,7 +105,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portal.model.Company checkCompany(
 		java.lang.String webId, java.lang.String mx, java.lang.String shardName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Checks if the company has an encryption key. It will create a key if one
@@ -115,8 +115,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @throws PortalException if a company with the primary key could not be
 	found
 	*/
-	public void checkCompanyKey(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void checkCompanyKey(long companyId) throws PortalException;
 
 	/**
 	* Creates a new company with the primary key. Does not add the company to the database.
@@ -135,8 +134,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Company deleteCompany(
-		com.liferay.portal.model.Company company)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.portal.model.Company company) throws PortalException;
 
 	/**
 	* Deletes the company with the primary key from the database. Also notifies the appropriate model listeners.
@@ -147,7 +145,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Company deleteCompany(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the company's logo.
@@ -158,7 +156,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	found or if the company's logo could not be found
 	*/
 	public com.liferay.portal.model.Company deleteLogo(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -166,7 +164,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -332,7 +330,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompany(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the company with the primary key.
@@ -344,7 +342,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyById(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the company with the logo.
@@ -355,7 +353,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyByLogoId(long logoId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the company with the mail domain.
@@ -367,7 +365,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyByMx(java.lang.String mx)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the company with the virtual host name.
@@ -380,8 +378,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyByVirtualHost(
-		java.lang.String virtualHostname)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String virtualHostname) throws PortalException;
 
 	/**
 	* Returns the company with the web domain.
@@ -393,8 +390,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompanyByWebId(
-		java.lang.String webId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String webId) throws PortalException;
 
 	/**
 	* Returns the user's company.
@@ -411,8 +407,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Removes the values that match the keys of the company's preferences.
@@ -522,7 +517,7 @@ public interface CompanyLocalService extends BaseLocalService,
 		java.lang.String legalId, java.lang.String legalType,
 		java.lang.String sicCode, java.lang.String tickerSymbol,
 		java.lang.String industry, java.lang.String type, java.lang.String size)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Update the company with additional account information.
@@ -562,8 +557,7 @@ public interface CompanyLocalService extends BaseLocalService,
 		java.lang.String legalName, java.lang.String legalId,
 		java.lang.String legalType, java.lang.String sicCode,
 		java.lang.String tickerSymbol, java.lang.String industry,
-		java.lang.String type, java.lang.String size)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String type, java.lang.String size) throws PortalException;
 
 	/**
 	* Updates the company.
@@ -580,8 +574,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHostname, java.lang.String mx, int maxUsers,
-		boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean active) throws PortalException;
 
 	/**
 	* Update the company's display.
@@ -592,8 +585,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @throws PortalException if the company's default user could not be found
 	*/
 	public void updateDisplay(long companyId, java.lang.String languageId,
-		java.lang.String timeZoneId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String timeZoneId) throws PortalException;
 
 	/**
 	* Updates the company's logo.
@@ -605,8 +597,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	the logo's image was corrupted
 	*/
 	public com.liferay.portal.model.Company updateLogo(long companyId,
-		byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		byte[] bytes) throws PortalException;
 
 	/**
 	* Updates the company's logo.
@@ -618,8 +609,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	the logo's image was corrupted
 	*/
 	public com.liferay.portal.model.Company updateLogo(long companyId,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.File file) throws PortalException;
 
 	/**
 	* Update the company's logo.
@@ -631,8 +621,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	the company's logo image was corrupted
 	*/
 	public com.liferay.portal.model.Company updateLogo(long companyId,
-		java.io.InputStream is)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.InputStream is) throws PortalException;
 
 	/**
 	* Updates the company's preferences. The company's default properties are
@@ -646,7 +635,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	public void updatePreferences(long companyId,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the company's security properties.

@@ -174,7 +174,7 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 	* @return the create date of this s c framework version
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _scFrameworkVersion.getCreateDate();
 	}
 
@@ -209,7 +209,7 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 	* @return the modified date of this s c framework version
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _scFrameworkVersion.getModifiedDate();
 	}
 
@@ -354,7 +354,7 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 	* @param createDate the create date of this s c framework version
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_scFrameworkVersion.setCreateDate(createDate);
 	}
 
@@ -402,7 +402,7 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 	* @param modifiedDate the modified date of this s c framework version
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_scFrameworkVersion.setModifiedDate(modifiedDate);
 	}
 

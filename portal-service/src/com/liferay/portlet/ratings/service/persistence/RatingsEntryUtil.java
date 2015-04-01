@@ -115,8 +115,7 @@ public class RatingsEntryUtil {
 	* @param uuid the uuid
 	* @return the matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByUuid(
-		java.lang.String uuid) {
+	public static List<RatingsEntry> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -124,7 +123,7 @@ public class RatingsEntryUtil {
 	* Returns a range of all the ratings entries where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -132,8 +131,8 @@ public class RatingsEntryUtil {
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<RatingsEntry> findByUuid(java.lang.String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -141,7 +140,7 @@ public class RatingsEntryUtil {
 	* Returns an ordered range of all the ratings entries where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -150,9 +149,8 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static List<RatingsEntry> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -162,11 +160,10 @@ public class RatingsEntryUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a matching ratings entry could not be found
+	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry findByUuid_First(java.lang.String uuid,
+		OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -178,9 +175,8 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static RatingsEntry fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -190,11 +186,10 @@ public class RatingsEntryUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a matching ratings entry could not be found
+	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -206,9 +201,8 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static RatingsEntry fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -219,11 +213,10 @@ public class RatingsEntryUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a ratings entry with the primary key could not be found
+	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry[] findByUuid_PrevAndNext(
-		long entryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry[] findByUuid_PrevAndNext(long entryId,
+		java.lang.String uuid, OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(entryId, uuid, orderByComparator);
@@ -255,8 +248,8 @@ public class RatingsEntryUtil {
 	* @param companyId the company ID
 	* @return the matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<RatingsEntry> findByUuid_C(java.lang.String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -264,7 +257,7 @@ public class RatingsEntryUtil {
 	* Returns a range of all the ratings entries where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -273,8 +266,8 @@ public class RatingsEntryUtil {
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<RatingsEntry> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -282,7 +275,7 @@ public class RatingsEntryUtil {
 	* Returns an ordered range of all the ratings entries where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -292,9 +285,9 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static List<RatingsEntry> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -306,11 +299,10 @@ public class RatingsEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a matching ratings entry could not be found
+	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -324,9 +316,8 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static RatingsEntry fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -338,11 +329,10 @@ public class RatingsEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a matching ratings entry could not be found
+	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -356,9 +346,8 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static RatingsEntry fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -371,11 +360,11 @@ public class RatingsEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a ratings entry with the primary key could not be found
+	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry[] findByUuid_C_PrevAndNext(
-		long entryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry[] findByUuid_C_PrevAndNext(long entryId,
+		java.lang.String uuid, long companyId,
+		OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(entryId, uuid, companyId,
@@ -410,8 +399,7 @@ public class RatingsEntryUtil {
 	* @param classPK the class p k
 	* @return the matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByC_C(
-		long classNameId, long classPK) {
+	public static List<RatingsEntry> findByC_C(long classNameId, long classPK) {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -419,7 +407,7 @@ public class RatingsEntryUtil {
 	* Returns a range of all the ratings entries where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -428,8 +416,8 @@ public class RatingsEntryUtil {
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByC_C(
-		long classNameId, long classPK, int start, int end) {
+	public static List<RatingsEntry> findByC_C(long classNameId, long classPK,
+		int start, int end) {
 		return getPersistence().findByC_C(classNameId, classPK, start, end);
 	}
 
@@ -437,7 +425,7 @@ public class RatingsEntryUtil {
 	* Returns an ordered range of all the ratings entries where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -447,9 +435,8 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static List<RatingsEntry> findByC_C(long classNameId, long classPK,
+		int start, int end, OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -462,11 +449,10 @@ public class RatingsEntryUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a matching ratings entry could not be found
+	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry findByC_C_First(long classNameId, long classPK,
+		OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
@@ -480,9 +466,8 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static RatingsEntry fetchByC_C_First(long classNameId, long classPK,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -494,11 +479,10 @@ public class RatingsEntryUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a matching ratings entry could not be found
+	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByC_C_Last(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry findByC_C_Last(long classNameId, long classPK,
+		OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
@@ -512,9 +496,8 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_Last(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static RatingsEntry fetchByC_C_Last(long classNameId, long classPK,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -527,11 +510,11 @@ public class RatingsEntryUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a ratings entry with the primary key could not be found
+	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry[] findByC_C_PrevAndNext(
-		long entryId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry[] findByC_C_PrevAndNext(long entryId,
+		long classNameId, long classPK,
+		OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(entryId, classNameId, classPK,
@@ -560,17 +543,16 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	* Returns the ratings entry where userId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portlet.ratings.NoSuchEntryException} if it could not be found.
+	* Returns the ratings entry where userId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a matching ratings entry could not be found
+	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByU_C_C(
-		long userId, long classNameId, long classPK)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+	public static RatingsEntry findByU_C_C(long userId, long classNameId,
+		long classPK) throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence().findByU_C_C(userId, classNameId, classPK);
 	}
 
@@ -582,8 +564,8 @@ public class RatingsEntryUtil {
 	* @param classPK the class p k
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByU_C_C(
-		long userId, long classNameId, long classPK) {
+	public static RatingsEntry fetchByU_C_C(long userId, long classNameId,
+		long classPK) {
 		return getPersistence().fetchByU_C_C(userId, classNameId, classPK);
 	}
 
@@ -596,8 +578,8 @@ public class RatingsEntryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByU_C_C(
-		long userId, long classNameId, long classPK, boolean retrieveFromCache) {
+	public static RatingsEntry fetchByU_C_C(long userId, long classNameId,
+		long classPK, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByU_C_C(userId, classNameId, classPK, retrieveFromCache);
 	}
@@ -610,9 +592,8 @@ public class RatingsEntryUtil {
 	* @param classPK the class p k
 	* @return the ratings entry that was removed
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry removeByU_C_C(
-		long userId, long classNameId, long classPK)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+	public static RatingsEntry removeByU_C_C(long userId, long classNameId,
+		long classPK) throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence().removeByU_C_C(userId, classNameId, classPK);
 	}
 
@@ -636,8 +617,8 @@ public class RatingsEntryUtil {
 	* @param score the score
 	* @return the matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByC_C_S(
-		long classNameId, long classPK, double score) {
+	public static List<RatingsEntry> findByC_C_S(long classNameId,
+		long classPK, double score) {
 		return getPersistence().findByC_C_S(classNameId, classPK, score);
 	}
 
@@ -645,7 +626,7 @@ public class RatingsEntryUtil {
 	* Returns a range of all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -655,8 +636,8 @@ public class RatingsEntryUtil {
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByC_C_S(
-		long classNameId, long classPK, double score, int start, int end) {
+	public static List<RatingsEntry> findByC_C_S(long classNameId,
+		long classPK, double score, int start, int end) {
 		return getPersistence()
 				   .findByC_C_S(classNameId, classPK, score, start, end);
 	}
@@ -665,7 +646,7 @@ public class RatingsEntryUtil {
 	* Returns an ordered range of all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -676,9 +657,9 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findByC_C_S(
-		long classNameId, long classPK, double score, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static List<RatingsEntry> findByC_C_S(long classNameId,
+		long classPK, double score, int start, int end,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByC_C_S(classNameId, classPK, score, start, end,
 			orderByComparator);
@@ -692,11 +673,11 @@ public class RatingsEntryUtil {
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a matching ratings entry could not be found
+	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByC_C_S_First(
-		long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry findByC_C_S_First(long classNameId,
+		long classPK, double score,
+		OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_S_First(classNameId, classPK, score,
@@ -712,9 +693,9 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_S_First(
-		long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static RatingsEntry fetchByC_C_S_First(long classNameId,
+		long classPK, double score,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_S_First(classNameId, classPK, score,
 			orderByComparator);
@@ -728,11 +709,10 @@ public class RatingsEntryUtil {
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a matching ratings entry could not be found
+	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByC_C_S_Last(
-		long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry findByC_C_S_Last(long classNameId, long classPK,
+		double score, OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_S_Last(classNameId, classPK, score,
@@ -748,9 +728,9 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByC_C_S_Last(
-		long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static RatingsEntry fetchByC_C_S_Last(long classNameId,
+		long classPK, double score,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_S_Last(classNameId, classPK, score,
 			orderByComparator);
@@ -765,11 +745,11 @@ public class RatingsEntryUtil {
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a ratings entry with the primary key could not be found
+	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry[] findByC_C_S_PrevAndNext(
-		long entryId, long classNameId, long classPK, double score,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator)
+	public static RatingsEntry[] findByC_C_S_PrevAndNext(long entryId,
+		long classNameId, long classPK, double score,
+		OrderByComparator<RatingsEntry> orderByComparator)
 		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_S_PrevAndNext(entryId, classNameId, classPK,
@@ -805,8 +785,7 @@ public class RatingsEntryUtil {
 	*
 	* @param ratingsEntry the ratings entry
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry) {
+	public static void cacheResult(RatingsEntry ratingsEntry) {
 		getPersistence().cacheResult(ratingsEntry);
 	}
 
@@ -815,8 +794,7 @@ public class RatingsEntryUtil {
 	*
 	* @param ratingsEntries the ratings entries
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> ratingsEntries) {
+	public static void cacheResult(List<RatingsEntry> ratingsEntries) {
 		getPersistence().cacheResult(ratingsEntries);
 	}
 
@@ -826,8 +804,7 @@ public class RatingsEntryUtil {
 	* @param entryId the primary key for the new ratings entry
 	* @return the new ratings entry
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry create(
-		long entryId) {
+	public static RatingsEntry create(long entryId) {
 		return getPersistence().create(entryId);
 	}
 
@@ -836,27 +813,26 @@ public class RatingsEntryUtil {
 	*
 	* @param entryId the primary key of the ratings entry
 	* @return the ratings entry that was removed
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a ratings entry with the primary key could not be found
+	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry remove(
-		long entryId) throws com.liferay.portlet.ratings.NoSuchEntryException {
+	public static RatingsEntry remove(long entryId)
+		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence().remove(entryId);
 	}
 
-	public static com.liferay.portlet.ratings.model.RatingsEntry updateImpl(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry) {
+	public static RatingsEntry updateImpl(RatingsEntry ratingsEntry) {
 		return getPersistence().updateImpl(ratingsEntry);
 	}
 
 	/**
-	* Returns the ratings entry with the primary key or throws a {@link com.liferay.portlet.ratings.NoSuchEntryException} if it could not be found.
+	* Returns the ratings entry with the primary key or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param entryId the primary key of the ratings entry
 	* @return the ratings entry
-	* @throws com.liferay.portlet.ratings.NoSuchEntryException if a ratings entry with the primary key could not be found
+	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry findByPrimaryKey(
-		long entryId) throws com.liferay.portlet.ratings.NoSuchEntryException {
+	public static RatingsEntry findByPrimaryKey(long entryId)
+		throws com.liferay.portlet.ratings.NoSuchEntryException {
 		return getPersistence().findByPrimaryKey(entryId);
 	}
 
@@ -866,12 +842,11 @@ public class RatingsEntryUtil {
 	* @param entryId the primary key of the ratings entry
 	* @return the ratings entry, or <code>null</code> if a ratings entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsEntry fetchByPrimaryKey(
-		long entryId) {
+	public static RatingsEntry fetchByPrimaryKey(long entryId) {
 		return getPersistence().fetchByPrimaryKey(entryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.ratings.model.RatingsEntry> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, RatingsEntry> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -881,7 +856,7 @@ public class RatingsEntryUtil {
 	*
 	* @return the ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findAll() {
+	public static List<RatingsEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -889,15 +864,14 @@ public class RatingsEntryUtil {
 	* Returns a range of all the ratings entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findAll(
-		int start, int end) {
+	public static List<RatingsEntry> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -905,7 +879,7 @@ public class RatingsEntryUtil {
 	* Returns an ordered range of all the ratings entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of ratings entries
@@ -913,9 +887,8 @@ public class RatingsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of ratings entries
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsEntry> orderByComparator) {
+	public static List<RatingsEntry> findAll(int start, int end,
+		OrderByComparator<RatingsEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -296,7 +296,7 @@ public abstract class ShardLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the shard local service
 	 */
-	public com.liferay.portal.service.ShardLocalService getShardLocalService() {
+	public ShardLocalService getShardLocalService() {
 		return shardLocalService;
 	}
 
@@ -305,8 +305,7 @@ public abstract class ShardLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param shardLocalService the shard local service
 	 */
-	public void setShardLocalService(
-		com.liferay.portal.service.ShardLocalService shardLocalService) {
+	public void setShardLocalService(ShardLocalService shardLocalService) {
 		this.shardLocalService = shardLocalService;
 	}
 
@@ -466,8 +465,8 @@ public abstract class ShardLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.ShardLocalService.class)
-	protected com.liferay.portal.service.ShardLocalService shardLocalService;
+	@BeanReference(type = ShardLocalService.class)
+	protected ShardLocalService shardLocalService;
 	@BeanReference(type = ShardPersistence.class)
 	protected ShardPersistence shardPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

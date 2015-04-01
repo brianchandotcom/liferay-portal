@@ -71,7 +71,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the service component from the database. Also notifies the appropriate model listeners.
@@ -92,8 +92,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ServiceComponent deleteServiceComponent(
-		long serviceComponentId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long serviceComponentId) throws PortalException;
 
 	public void destroyServiceComponent(
 		com.liferay.portal.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
@@ -181,8 +180,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the service component with the primary key.
@@ -193,8 +191,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ServiceComponent getServiceComponent(
-		long serviceComponentId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long serviceComponentId) throws PortalException;
 
 	/**
 	* Returns a range of all the service components.
@@ -223,7 +220,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 		com.liferay.portal.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
 		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
 		long buildNumber, long buildDate, boolean buildAutoUpgrade)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

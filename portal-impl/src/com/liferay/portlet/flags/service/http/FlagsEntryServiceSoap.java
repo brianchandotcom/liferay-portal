@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portlet.flags.service.FlagsEntryServiceUtil} service utility. The
+ * {@link FlagsEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -49,7 +49,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see FlagsEntryServiceHttp
- * @see com.liferay.portlet.flags.service.FlagsEntryServiceUtil
+ * @see FlagsEntryServiceUtil
  * @generated
  */
 @ProviderType

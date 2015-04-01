@@ -27,10 +27,10 @@ import com.liferay.portlet.social.service.SocialRequestServiceUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.portlet.social.service.SocialRequestServiceUtil} service utility. The
+ * {@link SocialRequestServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -49,8 +49,8 @@ import com.liferay.portlet.social.service.SocialRequestServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see SocialRequestServiceSoap
- * @see com.liferay.portal.security.auth.HttpPrincipal
- * @see com.liferay.portlet.social.service.SocialRequestServiceUtil
+ * @see HttpPrincipal
+ * @see SocialRequestServiceUtil
  * @generated
  */
 @ProviderType

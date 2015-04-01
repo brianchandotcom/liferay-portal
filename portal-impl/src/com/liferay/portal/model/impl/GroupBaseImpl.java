@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see GroupImpl
- * @see com.liferay.portal.model.Group
+ * @see Group
  * @generated
  */
 @ProviderType

@@ -115,8 +115,7 @@ public class JournalFeedUtil {
 	* @param uuid the uuid
 	* @return the matching journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByUuid(
-		java.lang.String uuid) {
+	public static List<JournalFeed> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -124,7 +123,7 @@ public class JournalFeedUtil {
 	* Returns a range of all the journal feeds where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -132,8 +131,8 @@ public class JournalFeedUtil {
 	* @param end the upper bound of the range of journal feeds (not inclusive)
 	* @return the range of matching journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<JournalFeed> findByUuid(java.lang.String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -141,7 +140,7 @@ public class JournalFeedUtil {
 	* Returns an ordered range of all the journal feeds where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -150,9 +149,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static List<JournalFeed> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -162,11 +160,10 @@ public class JournalFeedUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed findByUuid_First(java.lang.String uuid,
+		OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -178,9 +175,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static JournalFeed fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -190,11 +186,10 @@ public class JournalFeedUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -206,9 +201,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static JournalFeed fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -219,11 +213,10 @@ public class JournalFeedUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed[] findByUuid_PrevAndNext(
-		long id, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed[] findByUuid_PrevAndNext(long id,
+		java.lang.String uuid, OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(id, uuid, orderByComparator);
@@ -249,15 +242,14 @@ public class JournalFeedUtil {
 	}
 
 	/**
-	* Returns the journal feed where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchFeedException} if it could not be found.
+	* Returns the journal feed where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFeedException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed findByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static JournalFeed findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -269,8 +261,7 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByUUID_G(
-		java.lang.String uuid, long groupId) {
+	public static JournalFeed fetchByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -282,8 +273,8 @@ public class JournalFeedUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
+	public static JournalFeed fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -294,8 +285,7 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @return the journal feed that was removed
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static JournalFeed removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -318,8 +308,8 @@ public class JournalFeedUtil {
 	* @param companyId the company ID
 	* @return the matching journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<JournalFeed> findByUuid_C(java.lang.String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -327,7 +317,7 @@ public class JournalFeedUtil {
 	* Returns a range of all the journal feeds where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -336,8 +326,8 @@ public class JournalFeedUtil {
 	* @param end the upper bound of the range of journal feeds (not inclusive)
 	* @return the range of matching journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<JournalFeed> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -345,7 +335,7 @@ public class JournalFeedUtil {
 	* Returns an ordered range of all the journal feeds where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -355,9 +345,9 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static List<JournalFeed> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -369,11 +359,10 @@ public class JournalFeedUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -387,9 +376,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static JournalFeed fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -401,11 +389,10 @@ public class JournalFeedUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -419,9 +406,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static JournalFeed fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -434,11 +420,11 @@ public class JournalFeedUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed[] findByUuid_C_PrevAndNext(
-		long id, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed[] findByUuid_C_PrevAndNext(long id,
+		java.lang.String uuid, long companyId,
+		OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(id, uuid, companyId,
@@ -472,8 +458,7 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @return the matching journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByGroupId(
-		long groupId) {
+	public static List<JournalFeed> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -481,7 +466,7 @@ public class JournalFeedUtil {
 	* Returns a range of all the journal feeds where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -489,8 +474,8 @@ public class JournalFeedUtil {
 	* @param end the upper bound of the range of journal feeds (not inclusive)
 	* @return the range of matching journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByGroupId(
-		long groupId, int start, int end) {
+	public static List<JournalFeed> findByGroupId(long groupId, int start,
+		int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -498,7 +483,7 @@ public class JournalFeedUtil {
 	* Returns an ordered range of all the journal feeds where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -507,9 +492,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static List<JournalFeed> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -520,11 +504,10 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed findByGroupId_First(long groupId,
+		OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -536,9 +519,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static JournalFeed fetchByGroupId_First(long groupId,
+		OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -548,11 +530,10 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed findByGroupId_Last(long groupId,
+		OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -564,9 +545,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static JournalFeed fetchByGroupId_Last(long groupId,
+		OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -577,11 +557,10 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed[] findByGroupId_PrevAndNext(
-		long id, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed[] findByGroupId_PrevAndNext(long id,
+		long groupId, OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(id, groupId, orderByComparator);
@@ -593,8 +572,7 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @return the matching journal feeds that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> filterFindByGroupId(
-		long groupId) {
+	public static List<JournalFeed> filterFindByGroupId(long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -602,7 +580,7 @@ public class JournalFeedUtil {
 	* Returns a range of all the journal feeds that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -610,8 +588,8 @@ public class JournalFeedUtil {
 	* @param end the upper bound of the range of journal feeds (not inclusive)
 	* @return the range of matching journal feeds that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> filterFindByGroupId(
-		long groupId, int start, int end) {
+	public static List<JournalFeed> filterFindByGroupId(long groupId,
+		int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -619,7 +597,7 @@ public class JournalFeedUtil {
 	* Returns an ordered range of all the journal feeds that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -628,9 +606,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal feeds that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> filterFindByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static List<JournalFeed> filterFindByGroupId(long groupId,
+		int start, int end, OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -642,11 +619,10 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed[] filterFindByGroupId_PrevAndNext(
-		long id, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator)
+	public static JournalFeed[] filterFindByGroupId_PrevAndNext(long id,
+		long groupId, OrderByComparator<JournalFeed> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(id, groupId,
@@ -683,15 +659,14 @@ public class JournalFeedUtil {
 	}
 
 	/**
-	* Returns the journal feed where groupId = &#63; and feedId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchFeedException} if it could not be found.
+	* Returns the journal feed where groupId = &#63; and feedId = &#63; or throws a {@link NoSuchFeedException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param feedId the feed ID
 	* @return the matching journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed findByG_F(
-		long groupId, java.lang.String feedId)
+	public static JournalFeed findByG_F(long groupId, java.lang.String feedId)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().findByG_F(groupId, feedId);
 	}
@@ -703,8 +678,7 @@ public class JournalFeedUtil {
 	* @param feedId the feed ID
 	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByG_F(
-		long groupId, java.lang.String feedId) {
+	public static JournalFeed fetchByG_F(long groupId, java.lang.String feedId) {
 		return getPersistence().fetchByG_F(groupId, feedId);
 	}
 
@@ -716,8 +690,8 @@ public class JournalFeedUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByG_F(
-		long groupId, java.lang.String feedId, boolean retrieveFromCache) {
+	public static JournalFeed fetchByG_F(long groupId, java.lang.String feedId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByG_F(groupId, feedId, retrieveFromCache);
 	}
 
@@ -728,8 +702,7 @@ public class JournalFeedUtil {
 	* @param feedId the feed ID
 	* @return the journal feed that was removed
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed removeByG_F(
-		long groupId, java.lang.String feedId)
+	public static JournalFeed removeByG_F(long groupId, java.lang.String feedId)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().removeByG_F(groupId, feedId);
 	}
@@ -750,8 +723,7 @@ public class JournalFeedUtil {
 	*
 	* @param journalFeed the journal feed
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.journal.model.JournalFeed journalFeed) {
+	public static void cacheResult(JournalFeed journalFeed) {
 		getPersistence().cacheResult(journalFeed);
 	}
 
@@ -760,8 +732,7 @@ public class JournalFeedUtil {
 	*
 	* @param journalFeeds the journal feeds
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.journal.model.JournalFeed> journalFeeds) {
+	public static void cacheResult(List<JournalFeed> journalFeeds) {
 		getPersistence().cacheResult(journalFeeds);
 	}
 
@@ -771,7 +742,7 @@ public class JournalFeedUtil {
 	* @param id the primary key for the new journal feed
 	* @return the new journal feed
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed create(long id) {
+	public static JournalFeed create(long id) {
 		return getPersistence().create(id);
 	}
 
@@ -780,27 +751,26 @@ public class JournalFeedUtil {
 	*
 	* @param id the primary key of the journal feed
 	* @return the journal feed that was removed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed remove(long id)
+	public static JournalFeed remove(long id)
 		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().remove(id);
 	}
 
-	public static com.liferay.portlet.journal.model.JournalFeed updateImpl(
-		com.liferay.portlet.journal.model.JournalFeed journalFeed) {
+	public static JournalFeed updateImpl(JournalFeed journalFeed) {
 		return getPersistence().updateImpl(journalFeed);
 	}
 
 	/**
-	* Returns the journal feed with the primary key or throws a {@link com.liferay.portlet.journal.NoSuchFeedException} if it could not be found.
+	* Returns the journal feed with the primary key or throws a {@link NoSuchFeedException} if it could not be found.
 	*
 	* @param id the primary key of the journal feed
 	* @return the journal feed
-	* @throws com.liferay.portlet.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed findByPrimaryKey(
-		long id) throws com.liferay.portlet.journal.NoSuchFeedException {
+	public static JournalFeed findByPrimaryKey(long id)
+		throws com.liferay.portlet.journal.NoSuchFeedException {
 		return getPersistence().findByPrimaryKey(id);
 	}
 
@@ -810,12 +780,11 @@ public class JournalFeedUtil {
 	* @param id the primary key of the journal feed
 	* @return the journal feed, or <code>null</code> if a journal feed with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchByPrimaryKey(
-		long id) {
+	public static JournalFeed fetchByPrimaryKey(long id) {
 		return getPersistence().fetchByPrimaryKey(id);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.journal.model.JournalFeed> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, JournalFeed> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -825,7 +794,7 @@ public class JournalFeedUtil {
 	*
 	* @return the journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findAll() {
+	public static List<JournalFeed> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -833,15 +802,14 @@ public class JournalFeedUtil {
 	* Returns a range of all the journal feeds.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of journal feeds
 	* @param end the upper bound of the range of journal feeds (not inclusive)
 	* @return the range of journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findAll(
-		int start, int end) {
+	public static List<JournalFeed> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -849,7 +817,7 @@ public class JournalFeedUtil {
 	* Returns an ordered range of all the journal feeds.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalFeedModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of journal feeds
@@ -857,9 +825,8 @@ public class JournalFeedUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of journal feeds
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFeed> orderByComparator) {
+	public static List<JournalFeed> findAll(int start, int end,
+		OrderByComparator<JournalFeed> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

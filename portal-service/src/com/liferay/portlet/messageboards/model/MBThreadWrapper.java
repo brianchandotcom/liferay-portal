@@ -290,7 +290,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	* @return the create date of this message boards thread
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _mbThread.getCreateDate();
 	}
 
@@ -335,7 +335,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	* @return the last post date of this message boards thread
 	*/
 	@Override
-	public java.util.Date getLastPostDate() {
+	public Date getLastPostDate() {
 		return _mbThread.getLastPostDate();
 	}
 
@@ -360,7 +360,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	* @return the modified date of this message boards thread
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _mbThread.getModifiedDate();
 	}
 
@@ -490,7 +490,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	* @return the status date of this message boards thread
 	*/
 	@Override
-	public java.util.Date getStatusDate() {
+	public Date getStatusDate() {
 		return _mbThread.getStatusDate();
 	}
 
@@ -781,7 +781,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	* @param createDate the create date of this message boards thread
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_mbThread.setCreateDate(createDate);
 	}
 
@@ -839,7 +839,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	* @param lastPostDate the last post date of this message boards thread
 	*/
 	@Override
-	public void setLastPostDate(java.util.Date lastPostDate) {
+	public void setLastPostDate(Date lastPostDate) {
 		_mbThread.setLastPostDate(lastPostDate);
 	}
 
@@ -859,7 +859,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	* @param modifiedDate the modified date of this message boards thread
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_mbThread.setModifiedDate(modifiedDate);
 	}
 
@@ -989,7 +989,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	* @param statusDate the status date of this message boards thread
 	*/
 	@Override
-	public void setStatusDate(java.util.Date statusDate) {
+	public void setStatusDate(Date statusDate) {
 		_mbThread.setStatusDate(statusDate);
 	}
 

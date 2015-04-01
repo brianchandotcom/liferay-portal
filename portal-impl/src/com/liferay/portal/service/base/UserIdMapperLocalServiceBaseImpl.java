@@ -300,7 +300,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 *
 	 * @return the user ID mapper local service
 	 */
-	public com.liferay.portal.service.UserIdMapperLocalService getUserIdMapperLocalService() {
+	public UserIdMapperLocalService getUserIdMapperLocalService() {
 		return userIdMapperLocalService;
 	}
 
@@ -310,7 +310,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 * @param userIdMapperLocalService the user ID mapper local service
 	 */
 	public void setUserIdMapperLocalService(
-		com.liferay.portal.service.UserIdMapperLocalService userIdMapperLocalService) {
+		UserIdMapperLocalService userIdMapperLocalService) {
 		this.userIdMapperLocalService = userIdMapperLocalService;
 	}
 
@@ -414,8 +414,8 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.UserIdMapperLocalService.class)
-	protected com.liferay.portal.service.UserIdMapperLocalService userIdMapperLocalService;
+	@BeanReference(type = UserIdMapperLocalService.class)
+	protected UserIdMapperLocalService userIdMapperLocalService;
 	@BeanReference(type = UserIdMapperPersistence.class)
 	protected UserIdMapperPersistence userIdMapperPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

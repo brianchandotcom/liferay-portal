@@ -27,10 +27,10 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil} service utility. The
+ * {@link DLFileEntryTypeServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -49,8 +49,8 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DLFileEntryTypeServiceSoap
- * @see com.liferay.portal.security.auth.HttpPrincipal
- * @see com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil
+ * @see HttpPrincipal
+ * @see DLFileEntryTypeServiceUtil
  * @generated
  */
 @ProviderType

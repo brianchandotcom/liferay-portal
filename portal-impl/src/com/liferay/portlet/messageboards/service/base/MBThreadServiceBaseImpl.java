@@ -97,7 +97,7 @@ public abstract class MBThreadServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the message boards thread remote service
 	 */
-	public com.liferay.portlet.messageboards.service.MBThreadService getMBThreadService() {
+	public MBThreadService getMBThreadService() {
 		return mbThreadService;
 	}
 
@@ -106,8 +106,7 @@ public abstract class MBThreadServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param mbThreadService the message boards thread remote service
 	 */
-	public void setMBThreadService(
-		com.liferay.portlet.messageboards.service.MBThreadService mbThreadService) {
+	public void setMBThreadService(MBThreadService mbThreadService) {
 		this.mbThreadService = mbThreadService;
 	}
 
@@ -1052,8 +1051,8 @@ public abstract class MBThreadServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBThreadLocalService.class)
 	protected com.liferay.portlet.messageboards.service.MBThreadLocalService mbThreadLocalService;
-	@BeanReference(type = com.liferay.portlet.messageboards.service.MBThreadService.class)
-	protected com.liferay.portlet.messageboards.service.MBThreadService mbThreadService;
+	@BeanReference(type = MBThreadService.class)
+	protected MBThreadService mbThreadService;
 	@BeanReference(type = MBThreadPersistence.class)
 	protected MBThreadPersistence mbThreadPersistence;
 	@BeanReference(type = MBThreadFinder.class)

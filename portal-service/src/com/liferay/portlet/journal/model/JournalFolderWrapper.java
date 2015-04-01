@@ -254,7 +254,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the create date of this journal folder
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _journalFolder.getCreateDate();
 	}
 
@@ -299,7 +299,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the modified date of this journal folder
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _journalFolder.getModifiedDate();
 	}
 
@@ -410,7 +410,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the status date of this journal folder
 	*/
 	@Override
-	public java.util.Date getStatusDate() {
+	public Date getStatusDate() {
 		return _journalFolder.getStatusDate();
 	}
 
@@ -666,7 +666,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param createDate the create date of this journal folder
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_journalFolder.setCreateDate(createDate);
 	}
 
@@ -724,7 +724,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param modifiedDate the modified date of this journal folder
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_journalFolder.setModifiedDate(modifiedDate);
 	}
 
@@ -834,7 +834,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param statusDate the status date of this journal folder
 	*/
 	@Override
-	public void setStatusDate(java.util.Date statusDate) {
+	public void setStatusDate(Date statusDate) {
 		_journalFolder.setStatusDate(statusDate);
 	}
 

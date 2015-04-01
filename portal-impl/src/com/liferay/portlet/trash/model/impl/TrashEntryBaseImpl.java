@@ -28,7 +28,7 @@ import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see TrashEntryImpl
- * @see com.liferay.portlet.trash.model.TrashEntry
+ * @see TrashEntry
  * @generated
  */
 @ProviderType

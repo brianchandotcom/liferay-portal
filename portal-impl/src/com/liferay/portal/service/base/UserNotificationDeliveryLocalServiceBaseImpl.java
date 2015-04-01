@@ -310,7 +310,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	 *
 	 * @return the user notification delivery local service
 	 */
-	public com.liferay.portal.service.UserNotificationDeliveryLocalService getUserNotificationDeliveryLocalService() {
+	public UserNotificationDeliveryLocalService getUserNotificationDeliveryLocalService() {
 		return userNotificationDeliveryLocalService;
 	}
 
@@ -320,7 +320,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	 * @param userNotificationDeliveryLocalService the user notification delivery local service
 	 */
 	public void setUserNotificationDeliveryLocalService(
-		com.liferay.portal.service.UserNotificationDeliveryLocalService userNotificationDeliveryLocalService) {
+		UserNotificationDeliveryLocalService userNotificationDeliveryLocalService) {
 		this.userNotificationDeliveryLocalService = userNotificationDeliveryLocalService;
 	}
 
@@ -498,8 +498,8 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.UserNotificationDeliveryLocalService.class)
-	protected com.liferay.portal.service.UserNotificationDeliveryLocalService userNotificationDeliveryLocalService;
+	@BeanReference(type = UserNotificationDeliveryLocalService.class)
+	protected UserNotificationDeliveryLocalService userNotificationDeliveryLocalService;
 	@BeanReference(type = UserNotificationDeliveryPersistence.class)
 	protected UserNotificationDeliveryPersistence userNotificationDeliveryPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

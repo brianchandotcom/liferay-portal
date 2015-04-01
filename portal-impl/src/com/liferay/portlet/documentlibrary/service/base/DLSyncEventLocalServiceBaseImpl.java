@@ -301,7 +301,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 *
 	 * @return the d l sync event local service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService getDLSyncEventLocalService() {
+	public DLSyncEventLocalService getDLSyncEventLocalService() {
 		return dlSyncEventLocalService;
 	}
 
@@ -311,7 +311,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @param dlSyncEventLocalService the d l sync event local service
 	 */
 	public void setDLSyncEventLocalService(
-		com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService dlSyncEventLocalService) {
+		DLSyncEventLocalService dlSyncEventLocalService) {
 		this.dlSyncEventLocalService = dlSyncEventLocalService;
 	}
 
@@ -415,8 +415,8 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService dlSyncEventLocalService;
+	@BeanReference(type = DLSyncEventLocalService.class)
+	protected DLSyncEventLocalService dlSyncEventLocalService;
 	@BeanReference(type = DLSyncEventPersistence.class)
 	protected DLSyncEventPersistence dlSyncEventPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

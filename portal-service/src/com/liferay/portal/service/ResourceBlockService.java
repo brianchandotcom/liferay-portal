@@ -47,17 +47,15 @@ public interface ResourceBlockService extends BaseService {
 	 */
 	public void addCompanyScopePermission(long scopeGroupId, long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addGroupScopePermission(long scopeGroupId, long companyId,
 		long groupId, java.lang.String name, long roleId,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String actionId) throws PortalException;
 
 	public void addIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String actionId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -68,22 +66,19 @@ public interface ResourceBlockService extends BaseService {
 
 	public void removeAllGroupScopePermissions(long scopeGroupId,
 		long companyId, java.lang.String name, long roleId,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String actionId) throws PortalException;
 
 	public void removeCompanyScopePermission(long scopeGroupId, long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void removeGroupScopePermission(long scopeGroupId, long companyId,
 		long groupId, java.lang.String name, long roleId,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String actionId) throws PortalException;
 
 	public void removeIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String actionId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -94,21 +89,18 @@ public interface ResourceBlockService extends BaseService {
 
 	public void setCompanyScopePermissions(long scopeGroupId, long companyId,
 		java.lang.String name, long roleId,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.util.List<java.lang.String> actionIds) throws PortalException;
 
 	public void setGroupScopePermissions(long scopeGroupId, long companyId,
 		long groupId, java.lang.String name, long roleId,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.util.List<java.lang.String> actionIds) throws PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
-		java.util.List<java.lang.String> actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.util.List<java.lang.String> actionIds) throws PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey,
 		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

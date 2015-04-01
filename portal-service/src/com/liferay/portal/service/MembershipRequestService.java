@@ -49,10 +49,10 @@ public interface MembershipRequestService extends BaseService {
 	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
 		long groupId, java.lang.String comments,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteMembershipRequests(long groupId, long statusId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -63,8 +63,7 @@ public interface MembershipRequestService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.MembershipRequest getMembershipRequest(
-		long membershipRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long membershipRequestId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -76,5 +75,5 @@ public interface MembershipRequestService extends BaseService {
 	public void updateStatus(long membershipRequestId,
 		java.lang.String reviewComments, long statusId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

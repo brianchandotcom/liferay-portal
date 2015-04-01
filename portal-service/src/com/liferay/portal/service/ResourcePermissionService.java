@@ -88,8 +88,7 @@ public interface ResourcePermissionService extends BaseService {
 	*/
 	public void addResourcePermission(long groupId, long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long roleId, java.lang.String actionId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -123,8 +122,7 @@ public interface ResourcePermissionService extends BaseService {
 	*/
 	public void removeResourcePermission(long groupId, long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long roleId, java.lang.String actionId) throws PortalException;
 
 	/**
 	* Revokes all permissions at the scope from the role to perform the action
@@ -145,7 +143,7 @@ public interface ResourcePermissionService extends BaseService {
 	*/
 	public void removeResourcePermissions(long groupId, long companyId,
 		java.lang.String name, int scope, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -183,8 +181,7 @@ public interface ResourcePermissionService extends BaseService {
 	*/
 	public void setIndividualResourcePermissions(long groupId, long companyId,
 		java.lang.String name, java.lang.String primKey, long roleId,
-		java.lang.String[] actionIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String[] actionIds) throws PortalException;
 
 	/**
 	* Updates the role's permissions at the scope, setting the actions that can
@@ -215,5 +212,5 @@ public interface ResourcePermissionService extends BaseService {
 	public void setIndividualResourcePermissions(long groupId, long companyId,
 		java.lang.String name, java.lang.String primKey,
 		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

@@ -60,25 +60,24 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addItemResources(
 		com.liferay.portlet.shopping.model.ShoppingItem item,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addItemResources(
 		com.liferay.portlet.shopping.model.ShoppingItem item,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addItemResources(long itemId, boolean addGroupPermissions,
-		boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean addGuestPermissions) throws PortalException;
 
 	public void addItemResources(long itemId,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds the shopping item to the database. Also notifies the appropriate model listeners.
@@ -100,13 +99,12 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 		long itemId);
 
 	public void deleteItem(com.liferay.portlet.shopping.model.ShoppingItem item)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteItem(long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteItem(long itemId) throws PortalException;
 
 	public void deleteItems(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -114,7 +112,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the shopping item with the primary key from the database. Also notifies the appropriate model listeners.
@@ -125,7 +123,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.shopping.model.ShoppingItem deleteShoppingItem(
-		long itemId) throws com.liferay.portal.kernel.exception.PortalException;
+		long itemId) throws PortalException;
 
 	/**
 	* Deletes the shopping item from the database. Also notifies the appropriate model listeners.
@@ -226,27 +224,23 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingItem getItem(
-		long companyId, java.lang.String sku)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long companyId, java.lang.String sku) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingItem getItem(long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingItem getItemByLargeImageId(
-		long largeImageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long largeImageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingItem getItemByMediumImageId(
-		long mediumImageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long mediumImageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingItem getItemBySmallImageId(
-		long smallImageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long smallImageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> getItems(
@@ -264,13 +258,12 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	public com.liferay.portlet.shopping.model.ShoppingItem[] getItemsPrevAndNext(
 		long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> getSaleItems(
@@ -285,7 +278,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingItem getShoppingItem(
-		long itemId) throws com.liferay.portal.kernel.exception.PortalException;
+		long itemId) throws PortalException;
 
 	/**
 	* Returns a range of all the shopping items.
@@ -340,7 +333,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> itemFields,
 		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemPrice> itemPrices,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the shopping item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

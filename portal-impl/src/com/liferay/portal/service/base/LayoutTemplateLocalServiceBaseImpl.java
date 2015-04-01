@@ -58,7 +58,7 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 	 *
 	 * @return the layout template local service
 	 */
-	public com.liferay.portal.service.LayoutTemplateLocalService getLayoutTemplateLocalService() {
+	public LayoutTemplateLocalService getLayoutTemplateLocalService() {
 		return layoutTemplateLocalService;
 	}
 
@@ -68,7 +68,7 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 	 * @param layoutTemplateLocalService the layout template local service
 	 */
 	public void setLayoutTemplateLocalService(
-		com.liferay.portal.service.LayoutTemplateLocalService layoutTemplateLocalService) {
+		LayoutTemplateLocalService layoutTemplateLocalService) {
 		this.layoutTemplateLocalService = layoutTemplateLocalService;
 	}
 
@@ -198,8 +198,8 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.LayoutTemplateLocalService.class)
-	protected com.liferay.portal.service.LayoutTemplateLocalService layoutTemplateLocalService;
+	@BeanReference(type = LayoutTemplateLocalService.class)
+	protected LayoutTemplateLocalService layoutTemplateLocalService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.PluginSettingLocalService.class)

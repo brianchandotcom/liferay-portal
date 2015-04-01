@@ -80,7 +80,7 @@ public abstract class ResourceBlockServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource block remote service
 	 */
-	public com.liferay.portal.service.ResourceBlockService getResourceBlockService() {
+	public ResourceBlockService getResourceBlockService() {
 		return resourceBlockService;
 	}
 
@@ -90,7 +90,7 @@ public abstract class ResourceBlockServiceBaseImpl extends BaseServiceImpl
 	 * @param resourceBlockService the resource block remote service
 	 */
 	public void setResourceBlockService(
-		com.liferay.portal.service.ResourceBlockService resourceBlockService) {
+		ResourceBlockService resourceBlockService) {
 		this.resourceBlockService = resourceBlockService;
 	}
 
@@ -455,8 +455,8 @@ public abstract class ResourceBlockServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.ResourceBlockLocalService.class)
 	protected com.liferay.portal.service.ResourceBlockLocalService resourceBlockLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourceBlockService.class)
-	protected com.liferay.portal.service.ResourceBlockService resourceBlockService;
+	@BeanReference(type = ResourceBlockService.class)
+	protected ResourceBlockService resourceBlockService;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;
 	@BeanReference(type = ResourceBlockFinder.class)

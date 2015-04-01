@@ -28,7 +28,7 @@ import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MBStatsUserImpl
- * @see com.liferay.portlet.messageboards.model.MBStatsUser
+ * @see MBStatsUser
  * @generated
  */
 @ProviderType

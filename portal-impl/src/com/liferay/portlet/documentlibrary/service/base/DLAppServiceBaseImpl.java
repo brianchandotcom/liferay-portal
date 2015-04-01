@@ -85,7 +85,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the d l app remote service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLAppService getDLAppService() {
+	public DLAppService getDLAppService() {
 		return dlAppService;
 	}
 
@@ -94,8 +94,7 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param dlAppService the d l app remote service
 	 */
-	public void setDLAppService(
-		com.liferay.portlet.documentlibrary.service.DLAppService dlAppService) {
+	public void setDLAppService(DLAppService dlAppService) {
 		this.dlAppService = dlAppService;
 	}
 
@@ -621,8 +620,8 @@ public abstract class DLAppServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLAppLocalService dlAppLocalService;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLAppService dlAppService;
+	@BeanReference(type = DLAppService.class)
+	protected DLAppService dlAppService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.LockLocalService.class)

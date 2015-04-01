@@ -116,8 +116,7 @@ public class DDMStructureVersionUtil {
 	* @param structureId the structure ID
 	* @return the matching d d m structure versions
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> findByStructureId(
-		long structureId) {
+	public static List<DDMStructureVersion> findByStructureId(long structureId) {
 		return getPersistence().findByStructureId(structureId);
 	}
 
@@ -125,7 +124,7 @@ public class DDMStructureVersionUtil {
 	* Returns a range of all the d d m structure versions where structureId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param structureId the structure ID
@@ -133,7 +132,7 @@ public class DDMStructureVersionUtil {
 	* @param end the upper bound of the range of d d m structure versions (not inclusive)
 	* @return the range of matching d d m structure versions
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> findByStructureId(
+	public static List<DDMStructureVersion> findByStructureId(
 		long structureId, int start, int end) {
 		return getPersistence().findByStructureId(structureId, start, end);
 	}
@@ -142,7 +141,7 @@ public class DDMStructureVersionUtil {
 	* Returns an ordered range of all the d d m structure versions where structureId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param structureId the structure ID
@@ -151,9 +150,9 @@ public class DDMStructureVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m structure versions
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> findByStructureId(
+	public static List<DDMStructureVersion> findByStructureId(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator) {
+		OrderByComparator<DDMStructureVersion> orderByComparator) {
 		return getPersistence()
 				   .findByStructureId(structureId, start, end, orderByComparator);
 	}
@@ -164,11 +163,11 @@ public class DDMStructureVersionUtil {
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException if a matching d d m structure version could not be found
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion findByStructureId_First(
+	public static DDMStructureVersion findByStructureId_First(
 		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator)
+		OrderByComparator<DDMStructureVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
 		return getPersistence()
 				   .findByStructureId_First(structureId, orderByComparator);
@@ -181,9 +180,9 @@ public class DDMStructureVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion fetchByStructureId_First(
+	public static DDMStructureVersion fetchByStructureId_First(
 		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator) {
+		OrderByComparator<DDMStructureVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByStructureId_First(structureId, orderByComparator);
 	}
@@ -194,11 +193,10 @@ public class DDMStructureVersionUtil {
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException if a matching d d m structure version could not be found
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion findByStructureId_Last(
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator)
+	public static DDMStructureVersion findByStructureId_Last(long structureId,
+		OrderByComparator<DDMStructureVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
 		return getPersistence()
 				   .findByStructureId_Last(structureId, orderByComparator);
@@ -211,9 +209,9 @@ public class DDMStructureVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion fetchByStructureId_Last(
+	public static DDMStructureVersion fetchByStructureId_Last(
 		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator) {
+		OrderByComparator<DDMStructureVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByStructureId_Last(structureId, orderByComparator);
 	}
@@ -225,11 +223,11 @@ public class DDMStructureVersionUtil {
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m structure version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion[] findByStructureId_PrevAndNext(
+	public static DDMStructureVersion[] findByStructureId_PrevAndNext(
 		long structureVersionId, long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator)
+		OrderByComparator<DDMStructureVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
 		return getPersistence()
 				   .findByStructureId_PrevAndNext(structureVersionId,
@@ -256,15 +254,15 @@ public class DDMStructureVersionUtil {
 	}
 
 	/**
-	* Returns the d d m structure version where structureId = &#63; and version = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException} if it could not be found.
+	* Returns the d d m structure version where structureId = &#63; and version = &#63; or throws a {@link NoSuchStructureVersionException} if it could not be found.
 	*
 	* @param structureId the structure ID
 	* @param version the version
 	* @return the matching d d m structure version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException if a matching d d m structure version could not be found
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion findByS_V(
-		long structureId, java.lang.String version)
+	public static DDMStructureVersion findByS_V(long structureId,
+		java.lang.String version)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
 		return getPersistence().findByS_V(structureId, version);
 	}
@@ -276,8 +274,8 @@ public class DDMStructureVersionUtil {
 	* @param version the version
 	* @return the matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion fetchByS_V(
-		long structureId, java.lang.String version) {
+	public static DDMStructureVersion fetchByS_V(long structureId,
+		java.lang.String version) {
 		return getPersistence().fetchByS_V(structureId, version);
 	}
 
@@ -289,8 +287,8 @@ public class DDMStructureVersionUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion fetchByS_V(
-		long structureId, java.lang.String version, boolean retrieveFromCache) {
+	public static DDMStructureVersion fetchByS_V(long structureId,
+		java.lang.String version, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByS_V(structureId, version, retrieveFromCache);
 	}
@@ -302,8 +300,8 @@ public class DDMStructureVersionUtil {
 	* @param version the version
 	* @return the d d m structure version that was removed
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion removeByS_V(
-		long structureId, java.lang.String version)
+	public static DDMStructureVersion removeByS_V(long structureId,
+		java.lang.String version)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
 		return getPersistence().removeByS_V(structureId, version);
 	}
@@ -324,8 +322,7 @@ public class DDMStructureVersionUtil {
 	*
 	* @param ddmStructureVersion the d d m structure version
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion ddmStructureVersion) {
+	public static void cacheResult(DDMStructureVersion ddmStructureVersion) {
 		getPersistence().cacheResult(ddmStructureVersion);
 	}
 
@@ -335,7 +332,7 @@ public class DDMStructureVersionUtil {
 	* @param ddmStructureVersions the d d m structure versions
 	*/
 	public static void cacheResult(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> ddmStructureVersions) {
+		List<DDMStructureVersion> ddmStructureVersions) {
 		getPersistence().cacheResult(ddmStructureVersions);
 	}
 
@@ -345,8 +342,7 @@ public class DDMStructureVersionUtil {
 	* @param structureVersionId the primary key for the new d d m structure version
 	* @return the new d d m structure version
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion create(
-		long structureVersionId) {
+	public static DDMStructureVersion create(long structureVersionId) {
 		return getPersistence().create(structureVersionId);
 	}
 
@@ -355,28 +351,26 @@ public class DDMStructureVersionUtil {
 	*
 	* @param structureVersionId the primary key of the d d m structure version
 	* @return the d d m structure version that was removed
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion remove(
-		long structureVersionId)
+	public static DDMStructureVersion remove(long structureVersionId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
 		return getPersistence().remove(structureVersionId);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion ddmStructureVersion) {
+	public static DDMStructureVersion updateImpl(
+		DDMStructureVersion ddmStructureVersion) {
 		return getPersistence().updateImpl(ddmStructureVersion);
 	}
 
 	/**
-	* Returns the d d m structure version with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException} if it could not be found.
+	* Returns the d d m structure version with the primary key or throws a {@link NoSuchStructureVersionException} if it could not be found.
 	*
 	* @param structureVersionId the primary key of the d d m structure version
 	* @return the d d m structure version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion findByPrimaryKey(
-		long structureVersionId)
+	public static DDMStructureVersion findByPrimaryKey(long structureVersionId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
 		return getPersistence().findByPrimaryKey(structureVersionId);
 	}
@@ -387,12 +381,11 @@ public class DDMStructureVersionUtil {
 	* @param structureVersionId the primary key of the d d m structure version
 	* @return the d d m structure version, or <code>null</code> if a d d m structure version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion fetchByPrimaryKey(
-		long structureVersionId) {
+	public static DDMStructureVersion fetchByPrimaryKey(long structureVersionId) {
 		return getPersistence().fetchByPrimaryKey(structureVersionId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, DDMStructureVersion> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -402,7 +395,7 @@ public class DDMStructureVersionUtil {
 	*
 	* @return the d d m structure versions
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> findAll() {
+	public static List<DDMStructureVersion> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -410,15 +403,14 @@ public class DDMStructureVersionUtil {
 	* Returns a range of all the d d m structure versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m structure versions
 	* @param end the upper bound of the range of d d m structure versions (not inclusive)
 	* @return the range of d d m structure versions
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> findAll(
-		int start, int end) {
+	public static List<DDMStructureVersion> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -426,7 +418,7 @@ public class DDMStructureVersionUtil {
 	* Returns an ordered range of all the d d m structure versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m structure versions
@@ -434,9 +426,8 @@ public class DDMStructureVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d m structure versions
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator) {
+	public static List<DDMStructureVersion> findAll(int start, int end,
+		OrderByComparator<DDMStructureVersion> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

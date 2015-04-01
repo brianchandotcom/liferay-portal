@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see OrganizationImpl
- * @see com.liferay.portal.model.Organization
+ * @see Organization
  * @generated
  */
 @ProviderType

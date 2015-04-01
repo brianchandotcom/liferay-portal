@@ -28,7 +28,7 @@ import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see JournalContentSearchImpl
- * @see com.liferay.portlet.journal.model.JournalContentSearch
+ * @see JournalContentSearch
  * @generated
  */
 @ProviderType

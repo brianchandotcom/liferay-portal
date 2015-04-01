@@ -324,7 +324,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the lock local service
 	 */
-	public com.liferay.portal.service.LockLocalService getLockLocalService() {
+	public LockLocalService getLockLocalService() {
 		return lockLocalService;
 	}
 
@@ -333,8 +333,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param lockLocalService the lock local service
 	 */
-	public void setLockLocalService(
-		com.liferay.portal.service.LockLocalService lockLocalService) {
+	public void setLockLocalService(LockLocalService lockLocalService) {
 		this.lockLocalService = lockLocalService;
 	}
 
@@ -529,8 +528,8 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.LockLocalService.class)
-	protected com.liferay.portal.service.LockLocalService lockLocalService;
+	@BeanReference(type = LockLocalService.class)
+	protected LockLocalService lockLocalService;
 	@BeanReference(type = LockPersistence.class)
 	protected LockPersistence lockPersistence;
 	@BeanReference(type = LockFinder.class)

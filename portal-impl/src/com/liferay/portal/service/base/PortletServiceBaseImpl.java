@@ -82,7 +82,7 @@ public abstract class PortletServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the portlet remote service
 	 */
-	public com.liferay.portal.service.PortletService getPortletService() {
+	public PortletService getPortletService() {
 		return portletService;
 	}
 
@@ -91,8 +91,7 @@ public abstract class PortletServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param portletService the portlet remote service
 	 */
-	public void setPortletService(
-		com.liferay.portal.service.PortletService portletService) {
+	public void setPortletService(PortletService portletService) {
 		this.portletService = portletService;
 	}
 
@@ -551,8 +550,8 @@ public abstract class PortletServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.PortletLocalService.class)
 	protected com.liferay.portal.service.PortletLocalService portletLocalService;
-	@BeanReference(type = com.liferay.portal.service.PortletService.class)
-	protected com.liferay.portal.service.PortletService portletService;
+	@BeanReference(type = PortletService.class)
+	protected PortletService portletService;
 	@BeanReference(type = PortletPersistence.class)
 	protected PortletPersistence portletPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

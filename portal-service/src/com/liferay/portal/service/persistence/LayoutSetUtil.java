@@ -114,8 +114,7 @@ public class LayoutSetUtil {
 	* @param groupId the group ID
 	* @return the matching layout sets
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findByGroupId(
-		long groupId) {
+	public static List<LayoutSet> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -123,7 +122,7 @@ public class LayoutSetUtil {
 	* Returns a range of all the layout sets where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -131,8 +130,7 @@ public class LayoutSetUtil {
 	* @param end the upper bound of the range of layout sets (not inclusive)
 	* @return the range of matching layout sets
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findByGroupId(
-		long groupId, int start, int end) {
+	public static List<LayoutSet> findByGroupId(long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -140,7 +138,7 @@ public class LayoutSetUtil {
 	* Returns an ordered range of all the layout sets where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -149,9 +147,8 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout sets
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator) {
+	public static List<LayoutSet> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -162,11 +159,10 @@ public class LayoutSetUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set
-	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
+	* @throws NoSuchLayoutSetException if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator)
+	public static LayoutSet findByGroupId_First(long groupId,
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -178,9 +174,8 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator) {
+	public static LayoutSet fetchByGroupId_First(long groupId,
+		OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -190,11 +185,10 @@ public class LayoutSetUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set
-	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
+	* @throws NoSuchLayoutSetException if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator)
+	public static LayoutSet findByGroupId_Last(long groupId,
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -206,9 +200,8 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator) {
+	public static LayoutSet fetchByGroupId_Last(long groupId,
+		OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -219,11 +212,10 @@ public class LayoutSetUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set
-	* @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
+	* @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet[] findByGroupId_PrevAndNext(
-		long layoutSetId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator)
+	public static LayoutSet[] findByGroupId_PrevAndNext(long layoutSetId,
+		long groupId, OrderByComparator<LayoutSet> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(layoutSetId, groupId,
@@ -255,7 +247,7 @@ public class LayoutSetUtil {
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
 	* @return the matching layout sets
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findByLayoutSetPrototypeUuid(
+	public static List<LayoutSet> findByLayoutSetPrototypeUuid(
 		java.lang.String layoutSetPrototypeUuid) {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
@@ -265,7 +257,7 @@ public class LayoutSetUtil {
 	* Returns a range of all the layout sets where layoutSetPrototypeUuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
@@ -273,7 +265,7 @@ public class LayoutSetUtil {
 	* @param end the upper bound of the range of layout sets (not inclusive)
 	* @return the range of matching layout sets
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findByLayoutSetPrototypeUuid(
+	public static List<LayoutSet> findByLayoutSetPrototypeUuid(
 		java.lang.String layoutSetPrototypeUuid, int start, int end) {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start,
@@ -284,7 +276,7 @@ public class LayoutSetUtil {
 	* Returns an ordered range of all the layout sets where layoutSetPrototypeUuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
@@ -293,9 +285,9 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout sets
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findByLayoutSetPrototypeUuid(
+	public static List<LayoutSet> findByLayoutSetPrototypeUuid(
 		java.lang.String layoutSetPrototypeUuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator) {
+		OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start,
 			end, orderByComparator);
@@ -307,11 +299,11 @@ public class LayoutSetUtil {
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set
-	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
+	* @throws NoSuchLayoutSetException if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet findByLayoutSetPrototypeUuid_First(
+	public static LayoutSet findByLayoutSetPrototypeUuid_First(
 		java.lang.String layoutSetPrototypeUuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator)
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid_First(layoutSetPrototypeUuid,
@@ -325,9 +317,9 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet fetchByLayoutSetPrototypeUuid_First(
+	public static LayoutSet fetchByLayoutSetPrototypeUuid_First(
 		java.lang.String layoutSetPrototypeUuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator) {
+		OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutSetPrototypeUuid_First(layoutSetPrototypeUuid,
 			orderByComparator);
@@ -339,11 +331,11 @@ public class LayoutSetUtil {
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set
-	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
+	* @throws NoSuchLayoutSetException if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet findByLayoutSetPrototypeUuid_Last(
+	public static LayoutSet findByLayoutSetPrototypeUuid_Last(
 		java.lang.String layoutSetPrototypeUuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator)
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid_Last(layoutSetPrototypeUuid,
@@ -357,9 +349,9 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet fetchByLayoutSetPrototypeUuid_Last(
+	public static LayoutSet fetchByLayoutSetPrototypeUuid_Last(
 		java.lang.String layoutSetPrototypeUuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator) {
+		OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutSetPrototypeUuid_Last(layoutSetPrototypeUuid,
 			orderByComparator);
@@ -372,11 +364,11 @@ public class LayoutSetUtil {
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set
-	* @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
+	* @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet[] findByLayoutSetPrototypeUuid_PrevAndNext(
+	public static LayoutSet[] findByLayoutSetPrototypeUuid_PrevAndNext(
 		long layoutSetId, java.lang.String layoutSetPrototypeUuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator)
+		OrderByComparator<LayoutSet> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid_PrevAndNext(layoutSetId,
@@ -406,15 +398,14 @@ public class LayoutSetUtil {
 	}
 
 	/**
-	* Returns the layout set where groupId = &#63; and privateLayout = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutSetException} if it could not be found.
+	* Returns the layout set where groupId = &#63; and privateLayout = &#63; or throws a {@link NoSuchLayoutSetException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @return the matching layout set
-	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
+	* @throws NoSuchLayoutSetException if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet findByG_P(long groupId,
-		boolean privateLayout)
+	public static LayoutSet findByG_P(long groupId, boolean privateLayout)
 		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().findByG_P(groupId, privateLayout);
 	}
@@ -426,8 +417,7 @@ public class LayoutSetUtil {
 	* @param privateLayout the private layout
 	* @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet fetchByG_P(long groupId,
-		boolean privateLayout) {
+	public static LayoutSet fetchByG_P(long groupId, boolean privateLayout) {
 		return getPersistence().fetchByG_P(groupId, privateLayout);
 	}
 
@@ -439,8 +429,8 @@ public class LayoutSetUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet fetchByG_P(long groupId,
-		boolean privateLayout, boolean retrieveFromCache) {
+	public static LayoutSet fetchByG_P(long groupId, boolean privateLayout,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_P(groupId, privateLayout, retrieveFromCache);
 	}
@@ -452,8 +442,7 @@ public class LayoutSetUtil {
 	* @param privateLayout the private layout
 	* @return the layout set that was removed
 	*/
-	public static com.liferay.portal.model.LayoutSet removeByG_P(long groupId,
-		boolean privateLayout)
+	public static LayoutSet removeByG_P(long groupId, boolean privateLayout)
 		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().removeByG_P(groupId, privateLayout);
 	}
@@ -474,7 +463,7 @@ public class LayoutSetUtil {
 	*
 	* @param layoutSet the layout set
 	*/
-	public static void cacheResult(com.liferay.portal.model.LayoutSet layoutSet) {
+	public static void cacheResult(LayoutSet layoutSet) {
 		getPersistence().cacheResult(layoutSet);
 	}
 
@@ -483,8 +472,7 @@ public class LayoutSetUtil {
 	*
 	* @param layoutSets the layout sets
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.LayoutSet> layoutSets) {
+	public static void cacheResult(List<LayoutSet> layoutSets) {
 		getPersistence().cacheResult(layoutSets);
 	}
 
@@ -494,7 +482,7 @@ public class LayoutSetUtil {
 	* @param layoutSetId the primary key for the new layout set
 	* @return the new layout set
 	*/
-	public static com.liferay.portal.model.LayoutSet create(long layoutSetId) {
+	public static LayoutSet create(long layoutSetId) {
 		return getPersistence().create(layoutSetId);
 	}
 
@@ -503,27 +491,26 @@ public class LayoutSetUtil {
 	*
 	* @param layoutSetId the primary key of the layout set
 	* @return the layout set that was removed
-	* @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
+	* @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet remove(long layoutSetId)
+	public static LayoutSet remove(long layoutSetId)
 		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().remove(layoutSetId);
 	}
 
-	public static com.liferay.portal.model.LayoutSet updateImpl(
-		com.liferay.portal.model.LayoutSet layoutSet) {
+	public static LayoutSet updateImpl(LayoutSet layoutSet) {
 		return getPersistence().updateImpl(layoutSet);
 	}
 
 	/**
-	* Returns the layout set with the primary key or throws a {@link com.liferay.portal.NoSuchLayoutSetException} if it could not be found.
+	* Returns the layout set with the primary key or throws a {@link NoSuchLayoutSetException} if it could not be found.
 	*
 	* @param layoutSetId the primary key of the layout set
 	* @return the layout set
-	* @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
+	* @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet findByPrimaryKey(
-		long layoutSetId) throws com.liferay.portal.NoSuchLayoutSetException {
+	public static LayoutSet findByPrimaryKey(long layoutSetId)
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().findByPrimaryKey(layoutSetId);
 	}
 
@@ -533,12 +520,11 @@ public class LayoutSetUtil {
 	* @param layoutSetId the primary key of the layout set
 	* @return the layout set, or <code>null</code> if a layout set with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutSet fetchByPrimaryKey(
-		long layoutSetId) {
+	public static LayoutSet fetchByPrimaryKey(long layoutSetId) {
 		return getPersistence().fetchByPrimaryKey(layoutSetId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutSet> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, LayoutSet> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -548,7 +534,7 @@ public class LayoutSetUtil {
 	*
 	* @return the layout sets
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findAll() {
+	public static List<LayoutSet> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -556,15 +542,14 @@ public class LayoutSetUtil {
 	* Returns a range of all the layout sets.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of layout sets
 	* @param end the upper bound of the range of layout sets (not inclusive)
 	* @return the range of layout sets
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findAll(
-		int start, int end) {
+	public static List<LayoutSet> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -572,7 +557,7 @@ public class LayoutSetUtil {
 	* Returns an ordered range of all the layout sets.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of layout sets
@@ -580,9 +565,8 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of layout sets
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSet> orderByComparator) {
+	public static List<LayoutSet> findAll(int start, int end,
+		OrderByComparator<LayoutSet> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

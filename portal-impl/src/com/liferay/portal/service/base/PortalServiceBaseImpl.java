@@ -73,7 +73,7 @@ public abstract class PortalServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the portal remote service
 	 */
-	public com.liferay.portal.service.PortalService getPortalService() {
+	public PortalService getPortalService() {
 		return portalService;
 	}
 
@@ -82,8 +82,7 @@ public abstract class PortalServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param portalService the portal remote service
 	 */
-	public void setPortalService(
-		com.liferay.portal.service.PortalService portalService) {
+	public void setPortalService(PortalService portalService) {
 		this.portalService = portalService;
 	}
 
@@ -215,8 +214,8 @@ public abstract class PortalServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.PortalLocalService.class)
 	protected com.liferay.portal.service.PortalLocalService portalLocalService;
-	@BeanReference(type = com.liferay.portal.service.PortalService.class)
-	protected com.liferay.portal.service.PortalService portalService;
+	@BeanReference(type = PortalService.class)
+	protected PortalService portalService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)

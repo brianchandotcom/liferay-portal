@@ -303,7 +303,7 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the contact local service
 	 */
-	public com.liferay.portal.service.ContactLocalService getContactLocalService() {
+	public ContactLocalService getContactLocalService() {
 		return contactLocalService;
 	}
 
@@ -312,8 +312,7 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param contactLocalService the contact local service
 	 */
-	public void setContactLocalService(
-		com.liferay.portal.service.ContactLocalService contactLocalService) {
+	public void setContactLocalService(ContactLocalService contactLocalService) {
 		this.contactLocalService = contactLocalService;
 	}
 
@@ -809,8 +808,8 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.ContactLocalService.class)
-	protected com.liferay.portal.service.ContactLocalService contactLocalService;
+	@BeanReference(type = ContactLocalService.class)
+	protected ContactLocalService contactLocalService;
 	@BeanReference(type = com.liferay.portal.service.ContactService.class)
 	protected com.liferay.portal.service.ContactService contactService;
 	@BeanReference(type = ContactPersistence.class)

@@ -148,7 +148,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	* @return the create date of this asset link
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _assetLink.getCreateDate();
 	}
 
@@ -298,7 +298,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	* @param createDate the create date of this asset link
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_assetLink.setCreateDate(createDate);
 	}
 

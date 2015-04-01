@@ -28,7 +28,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalSe
  *
  * @author Edward C. Han
  * @see MDRRuleGroupInstanceImpl
- * @see com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance
+ * @see MDRRuleGroupInstance
  * @generated
  */
 @ProviderType

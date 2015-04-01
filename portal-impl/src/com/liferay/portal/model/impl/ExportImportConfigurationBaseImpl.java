@@ -28,7 +28,7 @@ import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ExportImportConfigurationImpl
- * @see com.liferay.portal.model.ExportImportConfiguration
+ * @see ExportImportConfiguration
  * @generated
  */
 @ProviderType

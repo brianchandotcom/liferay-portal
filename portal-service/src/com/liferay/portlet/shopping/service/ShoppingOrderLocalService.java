@@ -48,8 +48,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link ShoppingOrderLocalServiceUtil} to access the shopping order local service. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingOrderLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portlet.shopping.model.ShoppingOrder addLatestOrder(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long groupId) throws PortalException;
 
 	/**
 	* Adds the shopping order to the database. Also notifies the appropriate model listeners.
@@ -66,7 +65,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
 		java.lang.String ppPayerEmail, boolean updateInventory,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new shopping order with the primary key. Does not add the shopping order to the database.
@@ -79,13 +78,11 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 
 	public void deleteOrder(
 		com.liferay.portlet.shopping.model.ShoppingOrder order)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteOrder(long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteOrder(long orderId) throws PortalException;
 
-	public void deleteOrders(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteOrders(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -93,7 +90,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the shopping order with the primary key from the database. Also notifies the appropriate model listeners.
@@ -104,8 +101,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.shopping.model.ShoppingOrder deleteShoppingOrder(
-		long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long orderId) throws PortalException;
 
 	/**
 	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
@@ -198,29 +194,24 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingOrder getLatestOrder(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingOrder getOrder(
-		java.lang.String number)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String number) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingOrder getOrder(
-		long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long orderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingOrder getPayPalTxnIdOrder(
-		java.lang.String ppTxnId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String ppTxnId) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the shopping order with the primary key.
@@ -231,8 +222,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingOrder getShoppingOrder(
-		long orderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long orderId) throws PortalException;
 
 	/**
 	* Returns a range of all the shopping orders.
@@ -259,7 +249,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.shopping.model.ShoppingOrder saveLatestOrder(
 		com.liferay.portlet.shopping.model.ShoppingCart cart)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingOrder> search(
@@ -283,11 +273,11 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 		com.liferay.portlet.shopping.model.ShoppingOrder order,
 		java.lang.String emailType,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void sendEmail(long orderId, java.lang.String emailType,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -311,7 +301,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 		java.lang.String shippingPhone, java.lang.String ccName,
 		java.lang.String ccType, java.lang.String ccNumber, int ccExpMonth,
 		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
 		long orderId, java.lang.String billingFirstName,
@@ -328,13 +318,13 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 		java.lang.String shippingPhone, java.lang.String ccName,
 		java.lang.String ccType, java.lang.String ccNumber, int ccExpMonth,
 		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.shopping.model.ShoppingOrder updateOrder(
 		long orderId, java.lang.String ppTxnId,
 		java.lang.String ppPaymentStatus, double ppPaymentGross,
 		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the shopping order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

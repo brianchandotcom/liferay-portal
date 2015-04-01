@@ -426,7 +426,7 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	 *
 	 * @return the journal feed local service
 	 */
-	public com.liferay.portlet.journal.service.JournalFeedLocalService getJournalFeedLocalService() {
+	public JournalFeedLocalService getJournalFeedLocalService() {
 		return journalFeedLocalService;
 	}
 
@@ -436,7 +436,7 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	 * @param journalFeedLocalService the journal feed local service
 	 */
 	public void setJournalFeedLocalService(
-		com.liferay.portlet.journal.service.JournalFeedLocalService journalFeedLocalService) {
+		JournalFeedLocalService journalFeedLocalService) {
 		this.journalFeedLocalService = journalFeedLocalService;
 	}
 
@@ -897,8 +897,8 @@ public abstract class JournalFeedLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.journal.service.JournalFeedLocalService.class)
-	protected com.liferay.portlet.journal.service.JournalFeedLocalService journalFeedLocalService;
+	@BeanReference(type = JournalFeedLocalService.class)
+	protected JournalFeedLocalService journalFeedLocalService;
 	@BeanReference(type = com.liferay.portlet.journal.service.JournalFeedService.class)
 	protected com.liferay.portlet.journal.service.JournalFeedService journalFeedService;
 	@BeanReference(type = JournalFeedPersistence.class)

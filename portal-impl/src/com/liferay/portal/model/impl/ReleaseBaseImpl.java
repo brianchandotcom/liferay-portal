@@ -28,7 +28,7 @@ import com.liferay.portal.service.ReleaseLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ReleaseImpl
- * @see com.liferay.portal.model.Release
+ * @see Release
  * @generated
  */
 @ProviderType

@@ -28,7 +28,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MBMessageImpl
- * @see com.liferay.portlet.messageboards.model.MBMessage
+ * @see MBMessage
  * @generated
  */
 @ProviderType

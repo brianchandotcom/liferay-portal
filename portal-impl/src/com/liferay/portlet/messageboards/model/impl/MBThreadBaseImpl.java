@@ -28,7 +28,7 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadImpl
- * @see com.liferay.portlet.messageboards.model.MBThread
+ * @see MBThread
  * @generated
  */
 @ProviderType

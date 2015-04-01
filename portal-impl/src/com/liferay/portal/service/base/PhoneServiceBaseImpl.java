@@ -77,7 +77,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the phone remote service
 	 */
-	public com.liferay.portal.service.PhoneService getPhoneService() {
+	public PhoneService getPhoneService() {
 		return phoneService;
 	}
 
@@ -86,8 +86,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param phoneService the phone remote service
 	 */
-	public void setPhoneService(
-		com.liferay.portal.service.PhoneService phoneService) {
+	public void setPhoneService(PhoneService phoneService) {
 		this.phoneService = phoneService;
 	}
 
@@ -375,8 +374,8 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.PhoneLocalService.class)
 	protected com.liferay.portal.service.PhoneLocalService phoneLocalService;
-	@BeanReference(type = com.liferay.portal.service.PhoneService.class)
-	protected com.liferay.portal.service.PhoneService phoneService;
+	@BeanReference(type = PhoneService.class)
+	protected PhoneService phoneService;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -43,17 +43,25 @@ import java.util.regex.Pattern;
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
+	public static String getImports(String content) {
+		Matcher matcher = _importsPattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group();
+		}
+
+		return null;
+	}
+
 	public static String stripJavaImports(
 			String content, String packageDir, String className)
 		throws IOException {
 
-		Matcher matcher = _importsPattern.matcher(content);
+		String imports = getImports(content);
 
-		if (!matcher.find()) {
+		if (Validator.isNull(imports)) {
 			return content;
 		}
-
-		String imports = matcher.group();
 
 		Set<String> classes = ClassUtil.getClasses(
 			new UnsyncStringReader(content), className);
@@ -66,14 +74,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (!line.contains("import ")) {
+			int x = line.indexOf("import ");
+
+			if (x == -1) {
 				continue;
 			}
 
-			int importX = line.indexOf(" ");
-			int importY = line.lastIndexOf(".");
+			int y = line.lastIndexOf(StringPool.PERIOD);
 
-			String importPackage = line.substring(importX + 1, importY);
+			String importPackage = line.substring(x + 7, y);
 
 			if (importPackage.equals(packageDir) ||
 				importPackage.equals("java.lang")) {
@@ -81,7 +90,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			String importClass = line.substring(importY + 1, line.length() - 1);
+			String importClass = line.substring(y + 1, line.length() - 1);
 
 			if (importClass.equals("*") || classes.contains(importClass)) {
 				sb.append(line);
@@ -91,11 +100,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		ImportsFormatter importsFormatter = new JavaImportsFormatter();
 
-		imports = importsFormatter.format(sb.toString());
+		String newImports = importsFormatter.format(sb.toString());
 
-		content =
-			content.substring(0, matcher.start()) + imports +
-				content.substring(matcher.end());
+		if (!imports.equals(newImports)) {
+			content = StringUtil.replaceFirst(content, imports, newImports);
+		}
 
 		// Ensure a blank line exists between the package and the first import
 

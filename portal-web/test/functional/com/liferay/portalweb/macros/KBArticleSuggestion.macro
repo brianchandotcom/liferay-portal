@@ -110,11 +110,49 @@
 		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT_DUPLICATE" value1="${kbSuggestionBody}" />
 	</command>
 
+	<command name="viewNoSuggestionsPG">
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK" value1="Do you have any suggestions?" />
+		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" />
+	</command>
+
 	<command name="viewPG">
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUGGESTION_USER_NAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT" value1="${kbSuggestionBody}" />
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUGGESTION_STATUS" value1="Status: ${status}" />
+	</command>
+
+	<command name="viewSubmittedSuggestionCountNoPermissionPG">
+		<var name="kbSuggestionCount" value="${kbSuggestionCount}" />
+
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK" value1="Do you have any suggestions?" />
+		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_BAR" />
+
+		<if>
+			<equals arg1="${kbSuggestionCount}" arg2="1" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="You sent one suggestion for this article." />
+			</then>
+			<else>
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="You sent ${kbSuggestionCount} suggestions for this article." />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewSuggestionCountPG">
+		<var name="kbSuggestionCount" value="${kbSuggestionCount}" />
+
+		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK" value1="Do you have any suggestions?" />
+
+		<if>
+			<equals arg1="${kbSuggestionCount}" arg2="1" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="There is one suggestion." />
+			</then>
+			<else>
+				<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="There are ${kbSuggestionCount} suggestions." />
+			</else>
+		</if>
 	</command>
 </definition>

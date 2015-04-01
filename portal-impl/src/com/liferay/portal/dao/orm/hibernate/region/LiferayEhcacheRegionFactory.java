@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.orm.hibernate.region;
 
-import com.liferay.portal.cache.ehcache.ModifiableEhcacheWrapper;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.CacheManagerListener;

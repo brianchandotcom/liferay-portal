@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.dao.orm.hibernate.region;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,25 +22,32 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Properties;
 
-import net.sf.ehcache.event.CacheEventListener;
-import net.sf.ehcache.event.CacheEventListenerFactory;
+import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
+import net.sf.ehcache.bootstrap.BootstrapCacheLoaderFactory;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class LiferayCacheEventListenerFactory
-	extends CacheEventListenerFactory {
+public class LiferayBootstrapCacheLoaderFactory<T extends BootstrapCacheLoader>
+	extends BootstrapCacheLoaderFactory<T> {
 
-	public LiferayCacheEventListenerFactory() {
-		String className = PropsValues.EHCACHE_CACHE_EVENT_LISTENER_FACTORY;
+	public LiferayBootstrapCacheLoaderFactory() {
+		String className = PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_FACTORY;
+
+		if (PropsValues.CLUSTER_LINK_ENABLED &&
+			PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
+
+			className =
+				EhcacheStreamBootstrapCacheLoaderFactory.class.getName();
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Instantiating " + className + " " + hashCode());
 		}
 
 		try {
-			_cacheEventListenerFactory =
-				(CacheEventListenerFactory)InstanceFactory.newInstance(
+			_bootstrapCacheLoaderFactory =
+				(BootstrapCacheLoaderFactory<T>)InstanceFactory.newInstance(
 					PortalClassLoaderUtil.getClassLoader(), className);
 		}
 		catch (Exception e) {
@@ -49,13 +56,14 @@ public class LiferayCacheEventListenerFactory
 	}
 
 	@Override
-	public CacheEventListener createCacheEventListener(Properties properties) {
-		return _cacheEventListenerFactory.createCacheEventListener(properties);
+	public T createBootstrapCacheLoader(Properties properties) {
+		return _bootstrapCacheLoaderFactory.createBootstrapCacheLoader(
+			properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LiferayCacheEventListenerFactory.class);
+		LiferayBootstrapCacheLoaderFactory.class);
 
-	private final CacheEventListenerFactory _cacheEventListenerFactory;
+	private final BootstrapCacheLoaderFactory<T> _bootstrapCacheLoaderFactory;
 
 }

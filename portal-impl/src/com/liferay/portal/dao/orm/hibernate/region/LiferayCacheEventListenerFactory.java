@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.dao.orm.hibernate.region;
 
-import com.liferay.portal.dao.orm.hibernate.region.EhcacheStreamBootstrapCacheLoaderFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -23,32 +22,25 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Properties;
 
-import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
-import net.sf.ehcache.bootstrap.BootstrapCacheLoaderFactory;
+import net.sf.ehcache.event.CacheEventListener;
+import net.sf.ehcache.event.CacheEventListenerFactory;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class LiferayBootstrapCacheLoaderFactory<T extends BootstrapCacheLoader>
-	extends BootstrapCacheLoaderFactory<T> {
+public class LiferayCacheEventListenerFactory
+	extends CacheEventListenerFactory {
 
-	public LiferayBootstrapCacheLoaderFactory() {
-		String className = PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_FACTORY;
-
-		if (PropsValues.CLUSTER_LINK_ENABLED &&
-			PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
-
-			className =
-				EhcacheStreamBootstrapCacheLoaderFactory.class.getName();
-		}
+	public LiferayCacheEventListenerFactory() {
+		String className = PropsValues.EHCACHE_CACHE_EVENT_LISTENER_FACTORY;
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Instantiating " + className + " " + hashCode());
 		}
 
 		try {
-			_bootstrapCacheLoaderFactory =
-				(BootstrapCacheLoaderFactory<T>)InstanceFactory.newInstance(
+			_cacheEventListenerFactory =
+				(CacheEventListenerFactory)InstanceFactory.newInstance(
 					PortalClassLoaderUtil.getClassLoader(), className);
 		}
 		catch (Exception e) {
@@ -57,14 +49,13 @@ public class LiferayBootstrapCacheLoaderFactory<T extends BootstrapCacheLoader>
 	}
 
 	@Override
-	public T createBootstrapCacheLoader(Properties properties) {
-		return _bootstrapCacheLoaderFactory.createBootstrapCacheLoader(
-			properties);
+	public CacheEventListener createCacheEventListener(Properties properties) {
+		return _cacheEventListenerFactory.createCacheEventListener(properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LiferayBootstrapCacheLoaderFactory.class);
+		LiferayCacheEventListenerFactory.class);
 
-	private final BootstrapCacheLoaderFactory<T> _bootstrapCacheLoaderFactory;
+	private final CacheEventListenerFactory _cacheEventListenerFactory;
 
 }

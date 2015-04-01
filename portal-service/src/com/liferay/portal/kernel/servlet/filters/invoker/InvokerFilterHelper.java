@@ -276,25 +276,27 @@ public class InvokerFilterHelper {
 		_filters.put(filterName, filter);
 	}
 
-	protected void initFilterMapping(
+	protected FilterMapping initFilterMapping(
 		String filterName, List<String> urlPatterns, List<String> dispatchers) {
 
 		Filter filter = _filters.get(filterName);
 
 		if (filter == null) {
-			return;
+			if (_log.isWarnEnabled()) {
+				_log.warn("No filter exists with filter mapping " + filterName);
+			}
+
+			return null;
 		}
 
 		FilterConfig filterConfig = _filterConfigs.get(filterName);
 
 		if (filterConfig == null) {
-			return;
+			return null;
 		}
 
-		FilterMapping filterMapping = new FilterMapping(
+		return new FilterMapping(
 			filter, filterConfig, urlPatterns, dispatchers);
-
-		_filterMappings.add(filterMapping);
 	}
 
 	protected void readLiferayFilterWebXML(
@@ -360,7 +362,12 @@ public class InvokerFilterHelper {
 				dispatchers.add(dispatcher);
 			}
 
-			initFilterMapping(filterName, urlPatterns, dispatchers);
+			FilterMapping filterMapping = initFilterMapping(
+				filterName, urlPatterns, dispatchers);
+
+			if (filterMapping != null) {
+				_filterMappings.add(filterMapping);
+			}
 		}
 	}
 
@@ -368,24 +375,8 @@ public class InvokerFilterHelper {
 		String filterName, List<String> urlPatterns, List<String> dispatchers,
 		String positionFilterName, boolean after) {
 
-		Filter filter = _filters.get(filterName);
-
-		if (filter == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("No filter exists with filter mapping " + filterName);
-			}
-
-			return;
-		}
-
-		FilterConfig filterConfig = _filterConfigs.get(filterName);
-
-		if (filterConfig == null) {
-			return;
-		}
-
-		FilterMapping filterMapping = new FilterMapping(
-			filter, filterConfig, urlPatterns, dispatchers);
+		FilterMapping filterMapping = initFilterMapping(
+			filterName, urlPatterns, dispatchers);
 
 		registerFilterMapping(filterMapping, positionFilterName, after);
 	}

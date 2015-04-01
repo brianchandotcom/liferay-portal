@@ -469,7 +469,7 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testUpdateFileWithNewFileName() throws Exception {
-		String fileName = addFile(0);
+		String fileName = addFile(2);
 
 		String newFileName = RandomTestUtil.randomString();
 
@@ -477,6 +477,13 @@ public abstract class BaseStoreTestCase {
 
 		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
 		Assert.assertTrue(store.hasFile(companyId, repositoryId, newFileName));
+
+		Assert.assertTrue(
+			store.hasFile(companyId, repositoryId, newFileName, "1.0"));
+		Assert.assertTrue(
+			store.hasFile(companyId, repositoryId, newFileName, "1.1"));
+		Assert.assertTrue(
+			store.hasFile(companyId, repositoryId, newFileName, "1.2"));
 	}
 
 	@Test

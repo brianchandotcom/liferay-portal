@@ -12,12 +12,12 @@
 	-->
 
 	<cacheManagerPeerProviderFactory
-		class="com.liferay.portal.cache.ehcache.LiferayCacheManagerPeerProviderFactory"
+		class="portalPropertyKey=ehcache.cache.manager.peer.provider.factory"
 		properties="portalPropertyKey=ehcache.multi.vm.config.location.peerProviderProperties"
 		propertySeparator=","
 	/>
 	<cacheManagerPeerListenerFactory
-		class="com.liferay.portal.cache.ehcache.LiferayCacheManagerPeerListenerFactory"
+		class="portalPropertyKey=ehcache.cache.manager.peer.listener.factory"
 	/>
 	<defaultCache
 		eternal="false"
@@ -25,7 +25,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</defaultCache>
 
 	<!-- Entity cache -->
@@ -37,7 +37,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -46,7 +46,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -55,7 +55,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -64,7 +64,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -73,7 +73,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -82,7 +82,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -91,7 +91,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -100,7 +100,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -109,7 +109,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -118,7 +118,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 
 	<!-- FinderCache -->
@@ -130,7 +130,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -139,7 +139,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -148,7 +148,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -157,7 +157,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -166,7 +166,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -175,7 +175,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -184,7 +184,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -193,7 +193,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -202,7 +202,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -211,7 +211,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -220,7 +220,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -229,7 +229,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -238,7 +238,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -247,7 +247,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -256,7 +256,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -265,7 +265,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -274,7 +274,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -283,7 +283,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -292,7 +292,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -301,7 +301,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 	<cache
 		eternal="false"
@@ -310,7 +310,7 @@
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
-		<cacheEventListenerFactory class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory" />
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 
 	<!-- Other -->
@@ -323,7 +323,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -336,7 +336,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -349,7 +349,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -362,7 +362,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -375,7 +375,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -388,7 +388,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -401,7 +401,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -414,7 +414,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -427,7 +427,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -440,7 +440,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -453,7 +453,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>

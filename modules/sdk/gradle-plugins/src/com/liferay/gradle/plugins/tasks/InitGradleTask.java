@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.tasks;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.util.FileUtil;
+import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.StringUtil;
 import com.liferay.gradle.plugins.util.Validator;
 
@@ -35,7 +36,6 @@ import java.util.Map;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
-import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.TaskAction;
@@ -51,10 +51,8 @@ public class InitGradleTask extends DefaultTask {
 	public void initGradle() throws Exception {
 		_project = getProject();
 
-		ExtensionContainer extensionContainer = _project.getExtensions();
-
-		_liferayExtension = extensionContainer.getByType(
-			LiferayExtension.class);
+		_liferayExtension = GradleUtil.getExtension(
+			_project, LiferayExtension.class);
 
 		XmlParser xmlParser = new XmlParser();
 

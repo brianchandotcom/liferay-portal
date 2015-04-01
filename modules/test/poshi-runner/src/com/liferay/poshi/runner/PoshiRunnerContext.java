@@ -139,7 +139,7 @@ public class PoshiRunnerContext {
 		return _rootElements.get("testcase#" + className);
 	}
 
-	public static void readFiles() throws PoshiRunnerException {
+	public static void readFiles() throws Exception {
 		_readPoshiFiles();
 		_readSeleniumFiles();
 	}
@@ -191,7 +191,7 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _readPathFile(String filePath, String className)
-		throws PoshiRunnerException {
+		throws Exception {
 
 		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
 			filePath);
@@ -239,7 +239,7 @@ public class PoshiRunnerContext {
 		}
 	}
 
-	private static void _readPoshiFiles() throws PoshiRunnerException {
+	private static void _readPoshiFiles() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(_BASE_DIR);
@@ -345,7 +345,7 @@ public class PoshiRunnerContext {
 		}
 	}
 
-	private static void _readSeleniumFiles() throws PoshiRunnerException {
+	private static void _readSeleniumFiles() throws Exception {
 		String[] fileNames = {
 			"LiferaySelenium.java", "WebDriverToSeleniumBridge.java"
 		};

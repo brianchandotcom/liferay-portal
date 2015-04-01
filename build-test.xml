@@ -258,6 +258,15 @@
 
 	<macrodef name="get-env-liferay-portal">
 		<sequential>
+			<if>
+				<not>
+					<available file="git-commit-portal" />
+				</not>
+				<then>
+					<antcall target="record-git-commit-portal" inheritAll="false" />
+				</then>
+			</if>
+
 			<loadfile
 				property="liferay.plugins.git.id"
 				srcfile="git-commit-plugins"

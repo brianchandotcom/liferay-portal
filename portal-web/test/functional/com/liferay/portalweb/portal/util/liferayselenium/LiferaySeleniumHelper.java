@@ -1041,6 +1041,17 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-54680
+
+		if (line.matches(
+				".*The web application \\[\\] appears to have started a " +
+					"thread named.*")) {
+
+			if (line.contains("[/reports-portlet]")) {
+				return true;
+			}
+		}
+
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

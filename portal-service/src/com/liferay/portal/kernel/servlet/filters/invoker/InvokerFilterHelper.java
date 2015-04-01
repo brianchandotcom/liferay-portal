@@ -276,27 +276,32 @@ public class InvokerFilterHelper {
 		_filters.put(filterName, filter);
 	}
 
-	protected FilterMapping initFilterMapping(
+	protected void initFilterMapping(
 		String filterName, List<String> urlPatterns, List<String> dispatchers) {
 
 		Filter filter = _filters.get(filterName);
 
 		if (filter == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("No filter exists with filter mapping " + filterName);
+				_log.warn("No filter exists with filter name " + filterName);
 			}
 
-			return null;
+			return;
 		}
 
 		FilterConfig filterConfig = _filterConfigs.get(filterName);
 
 		if (filterConfig == null) {
-			return null;
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No filter config exists with filter name " + filterName);
+			}
+
+			return;
 		}
 
-		return new FilterMapping(
-			filter, filterConfig, urlPatterns, dispatchers);
+		_filterMappings.add(
+			new FilterMapping(filter, filterConfig, urlPatterns, dispatchers));
 	}
 
 	protected void readLiferayFilterWebXML(
@@ -362,12 +367,7 @@ public class InvokerFilterHelper {
 				dispatchers.add(dispatcher);
 			}
 
-			FilterMapping filterMapping = initFilterMapping(
-				filterName, urlPatterns, dispatchers);
-
-			if (filterMapping != null) {
-				_filterMappings.add(filterMapping);
-			}
+			initFilterMapping(filterName, urlPatterns, dispatchers);
 		}
 	}
 

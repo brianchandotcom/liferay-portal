@@ -47,7 +47,7 @@ public interface AssetTagService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetTagServiceUtil} to access the asset tag remote service. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetTagServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.asset.model.AssetTag addTag(
+	public com.liferay.portlet.asset.model.AssetTag addTag(long groupId,
 		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;

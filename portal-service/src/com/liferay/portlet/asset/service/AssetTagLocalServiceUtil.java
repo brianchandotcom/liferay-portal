@@ -70,10 +70,10 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetTag addTag(long userId,
-		java.lang.String name,
+		long groupId, java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addTag(userId, name, serviceContext);
+		return getService().addTag(userId, groupId, name, serviceContext);
 	}
 
 	public static void addTagResources(

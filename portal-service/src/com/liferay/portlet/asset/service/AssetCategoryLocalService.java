@@ -71,7 +71,7 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.asset.model.AssetCategory addCategory(
-		long userId, long parentCategoryId,
+		long userId, long groupId, long parentCategoryId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long vocabularyId, java.lang.String[] categoryProperties,
@@ -79,7 +79,7 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public com.liferay.portlet.asset.model.AssetCategory addCategory(
-		long userId, java.lang.String title, long vocabularyId,
+		long userId, long groupId, java.lang.String title, long vocabularyId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

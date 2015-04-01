@@ -66,12 +66,12 @@ import java.rmi.RemoteException;
 @ProviderType
 public class AssetTagServiceSoap {
 	public static com.liferay.portlet.asset.model.AssetTagSoap addTag(
-		java.lang.String name,
+		long groupId, java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.asset.model.AssetTag returnValue = AssetTagServiceUtil.addTag(name,
-					serviceContext);
+			com.liferay.portlet.asset.model.AssetTag returnValue = AssetTagServiceUtil.addTag(groupId,
+					name, serviceContext);
 
 			return com.liferay.portlet.asset.model.AssetTagSoap.toSoapModel(returnValue);
 		}

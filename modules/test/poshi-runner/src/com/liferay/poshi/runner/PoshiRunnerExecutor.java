@@ -182,6 +182,20 @@ public class PoshiRunnerExecutor {
 			else if (childElementName.equals("for")) {
 				runForElement(childElement);
 			}
+			else if (childElementName.equals("task")) {
+				try {
+					SummaryLoggerHandler.startSummary(childElement);
+
+					parseElement(childElement);
+				}
+				catch (Exception e) {
+					SummaryLoggerHandler.failSummary(childElement);
+
+					throw new PoshiRunnerException(e);
+				}
+
+				SummaryLoggerHandler.passSummary(childElement);
+			}
 			else if (childElementName.equals("var")) {
 				runVarElement(childElement, true);
 			}

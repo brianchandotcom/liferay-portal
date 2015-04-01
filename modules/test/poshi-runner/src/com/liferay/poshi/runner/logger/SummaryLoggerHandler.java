@@ -101,20 +101,35 @@ public final class SummaryLoggerHandler {
 
 		String summary = null;
 
-		if (element.attributeValue("action") != null) {
-			summary = PoshiRunnerContext.getActionCommandSummary(
-				element.attributeValue("action"));
-		}
-		else if (element.attributeValue("function") != null) {
-			summary = PoshiRunnerContext.getFunctionCommandSummary(
-				element.attributeValue("function"));
-		}
-		else if (element.attributeValue("macro") != null) {
-			summary = PoshiRunnerContext.getMacroCommandSummary(
-				element.attributeValue("macro"));
-		}
-		else if (element.attributeValue("summary") != null) {
+		if (element.attributeValue("summary") != null) {
 			summary = element.attributeValue("summary");
+		}
+
+		if (summary == null) {
+			if (element.attributeValue("action") != null) {
+				summary = PoshiRunnerContext.getActionCommandSummary(
+					element.attributeValue("action"));
+			}
+			else if (element.attributeValue("action-summary") != null) {
+				summary = PoshiRunnerContext.getActionCommandSummary(
+					element.attributeValue("action-summary"));
+			}
+			else if (element.attributeValue("function") != null) {
+				summary = PoshiRunnerContext.getFunctionCommandSummary(
+					element.attributeValue("function"));
+			}
+			else if (element.attributeValue("function-summary") != null) {
+				summary = PoshiRunnerContext.getFunctionCommandSummary(
+					element.attributeValue("function-summary"));
+			}
+			else if (element.attributeValue("macro") != null) {
+				summary = PoshiRunnerContext.getMacroCommandSummary(
+					element.attributeValue("macro"));
+			}
+			else if (element.attributeValue("macro-summary") != null) {
+				summary = PoshiRunnerContext.getMacroCommandSummary(
+					element.attributeValue("macro-summary"));
+			}
 		}
 
 		if (summary != null) {

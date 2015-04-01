@@ -634,7 +634,7 @@ public class PoshiRunnerExecutor {
 					sb.toString());
 			}
 			else {
-				varValue = element.elementText("var");
+				varValue = element.getText();
 			}
 		}
 

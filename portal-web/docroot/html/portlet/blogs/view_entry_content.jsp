@@ -221,7 +221,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							</portlet:actionURL>
 
 							<liferay-ui:input-editor
-								editorImpl="ckeditor"
+								editorName="ckeditor"
 								inlineEdit="<%= true %>"
 								inlineEditSaveURL="<%= updateEntryContent %>"
 								name="<%= entryContentId %>"

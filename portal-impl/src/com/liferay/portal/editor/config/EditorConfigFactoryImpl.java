@@ -40,14 +40,14 @@ public class EditorConfigFactoryImpl implements EditorConfigFactory {
 
 	@Override
 	public EditorConfig getEditorConfig(
-		String portletName, String editorConfigKey, String editorImpl,
+		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		List<EditorConfigContributor> editorConfigContributors =
 			getEditorConfigContributors(
-				portletName, editorConfigKey, editorImpl);
+				portletName, editorConfigKey, editorName);
 
 		return new EditorConfigImpl(
 			editorConfigContributors, inputEditorTaglibAttributes, themeDisplay,
@@ -55,14 +55,14 @@ public class EditorConfigFactoryImpl implements EditorConfigFactory {
 	}
 
 	protected List<EditorConfigContributor> getEditorConfigContributors(
-		String portletName, String editorConfigKey, String editorImpl) {
+		String portletName, String editorConfigKey, String editorName) {
 
 		List<EditorConfigContributor> editorConfigContributors =
 			new ArrayList<>();
 
 		populateEditorConfigContributor(
 			editorConfigContributors,
-			_getKey(portletName, editorConfigKey, editorImpl));
+			_getKey(portletName, editorConfigKey, editorName));
 
 		populateEditorConfigContributor(
 			editorConfigContributors,
@@ -70,10 +70,10 @@ public class EditorConfigFactoryImpl implements EditorConfigFactory {
 
 		populateEditorConfigContributor(
 			editorConfigContributors,
-			_getKey(null, editorConfigKey, editorImpl));
+			_getKey(null, editorConfigKey, editorName));
 
 		populateEditorConfigContributor(
-			editorConfigContributors, _getKey(portletName, null, editorImpl));
+			editorConfigContributors, _getKey(portletName, null, editorName));
 
 		populateEditorConfigContributor(
 			editorConfigContributors, _getKey(null, editorConfigKey, null));
@@ -82,7 +82,7 @@ public class EditorConfigFactoryImpl implements EditorConfigFactory {
 			editorConfigContributors, _getKey(portletName, null, null));
 
 		populateEditorConfigContributor(
-			editorConfigContributors, _getKey(null, null, editorImpl));
+			editorConfigContributors, _getKey(null, null, editorName));
 
 		return editorConfigContributors;
 	}
@@ -99,7 +99,7 @@ public class EditorConfigFactoryImpl implements EditorConfigFactory {
 	}
 
 	private static String _getKey(
-		String portletName, String editorConfigKey, String editorImpl) {
+		String portletName, String editorConfigKey, String editorName) {
 
 		if (Validator.isNull(portletName)) {
 			portletName = "null";
@@ -109,8 +109,8 @@ public class EditorConfigFactoryImpl implements EditorConfigFactory {
 			editorConfigKey = "null";
 		}
 
-		if (Validator.isNull(editorImpl)) {
-			editorImpl = "null";
+		if (Validator.isNull(editorName)) {
+			editorName = "null";
 		}
 
 		StringBundler sb = new StringBundler();
@@ -119,7 +119,7 @@ public class EditorConfigFactoryImpl implements EditorConfigFactory {
 		sb.append(StringPool.PERIOD);
 		sb.append(editorConfigKey);
 		sb.append(StringPool.PERIOD);
-		sb.append(editorImpl);
+		sb.append(editorName);
 
 		return sb.toString();
 	}
@@ -149,18 +149,18 @@ public class EditorConfigFactoryImpl implements EditorConfigFactory {
 						}
 
 						for (String editorConfigKey : editorConfigKeys) {
-							List<String> editorImpls = StringPlus.asList(
-								serviceReference.getProperty("editor.impl"));
+							List<String> editorNames = StringPlus.asList(
+								serviceReference.getProperty("editor.name"));
 
-							if (editorImpls.isEmpty()) {
-								editorImpls.add(StringPool.BLANK);
+							if (editorNames.isEmpty()) {
+								editorNames.add(StringPool.BLANK);
 							}
 
-							for (String editorImpl : editorImpls) {
+							for (String editorName : editorNames) {
 								emitter.emit(
 									_getKey(
 										portletName, editorConfigKey,
-										editorImpl));
+										editorName));
 							}
 						}
 					}
@@ -172,7 +172,7 @@ public class EditorConfigFactoryImpl implements EditorConfigFactory {
 		<String, List<EditorConfigContributor>> _serviceTrackerMap =
 			ServiceTrackerCollections.multiValueMap(
 				EditorConfigContributor.class,
-				"(|(editor.config.key=*)(editor.impl=*)(javax.portlet.name=*))",
+				"(|(editor.config.key=*)(editor.name=*)(javax.portlet.name=*))",
 				_serviceReferenceMapper);
 
 	static {

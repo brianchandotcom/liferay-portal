@@ -142,7 +142,7 @@ int messagesCount = messages.size();
 										</div>
 
 										<div class="lfr-discussion-body">
-											<liferay-ui:input-editor configKey="commentsEditor" contents="" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" />
+											<liferay-ui:input-editor contents="" editorName="<%= EDITOR_NAME %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
 											<aui:input name="postReplyBody0" type="hidden" />
 
@@ -535,5 +535,5 @@ int messagesCount = messages.size();
 </section>
 
 <%!
-public static final String EDITOR_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp";
+public static final String EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp");
 %>

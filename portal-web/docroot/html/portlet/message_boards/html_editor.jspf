@@ -41,7 +41,7 @@ if (Validator.isNull(body)) {
 }
 %>
 
-<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" contents="<%= body %>" editorImpl="<%= HTML_EDITOR_WYSIWYG_IMPL_KEY %>" />
+<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" contents="<%= body %>" editorName="<%= HTML_EDITOR_EDITOR_NAME %>" />
 
 <aui:script>
 	function <portlet:namespace />getHTML() {
@@ -50,5 +50,5 @@ if (Validator.isNull(body)) {
 </aui:script>
 
 <%!
-public static final String HTML_EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp";
+public static final String HTML_EDITOR_EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
 %>

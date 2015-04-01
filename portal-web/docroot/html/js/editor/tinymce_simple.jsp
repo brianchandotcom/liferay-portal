@@ -29,7 +29,7 @@ Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
-String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
+String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 
@@ -64,7 +64,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/tiny_mce/tinymce.min.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 		<script type="text/javascript">
-			Liferay.namespace('EDITORS')['<%= editorImpl %>'] = true;
+			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
 		</script>
 	</liferay-util:html-top>
 </c:if>

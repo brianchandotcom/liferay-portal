@@ -28,7 +28,7 @@ String format = "html";
 <liferay-ui:input-editor
 	configParams="<%= configParams %>"
 	contents="<%= content %>"
-	editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
+	editorName="<%= EDITOR_NAME %>"
 	fileBrowserParams="<%= fileBrowserParams %>"
 	name="content"
 	width="100%"
@@ -37,5 +37,5 @@ String format = "html";
 <aui:input name="content" type="hidden" />
 
 <%!
-public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.wiki.edit.html.jsp";
+public static final String EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.wiki.edit.html.jsp");
 %>

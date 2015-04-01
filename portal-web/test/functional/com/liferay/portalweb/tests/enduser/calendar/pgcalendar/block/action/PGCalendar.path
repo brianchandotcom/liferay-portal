@@ -122,8 +122,23 @@
 </tr>
 <!--SMALL_CALENDAR-->
 <tr>
+	<td>SMALL_CALENDAR_DATE</td>
+	<td>//div[contains(@class,'yui3-calendar-header-label')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SMALL_CALENDAR_PREVIOUS</td>
+	<td>//a[contains(@class,'yui3-calendarnav-prevmonth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SMALL_CALENDAR_NEXT</td>
+	<td>//a[contains(@class,'yui3-calendarnav-nextmonth')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SMALL_CALENDAR_BUSY_DAY</td>
-	<td>//td[contains(@class,'yui3-calendar-day-selected lfr-busy-day')]</td>
+	<td>//td[contains(@class,'yui3-calendar-day') and contains(@class,'lfr-busy-day') and contains(text(),'${key_dateNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

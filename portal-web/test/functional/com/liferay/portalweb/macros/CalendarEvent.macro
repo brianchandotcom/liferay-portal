@@ -210,58 +210,9 @@
 					<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
 					<var locator="PGCalendarAddevent#START_DATE_TIME" name="startDateTime" />
 
-					<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
-					<execute function="Select" locator1="PGCalendarAddevent#REPEAT_REPEATS_DROPDOWN" value1="${frequency}" />
-					<execute function="AssertSelectedLabel" locator1="PGCalendarAddevent#REPEAT_REPEATS_DROPDOWN" value1="${frequency}" />
-					<execute function="AssertSelectedLabel" locator1="PGCalendarAddevent#REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
-
-					<if>
-						<isset var="position" />
-						<then>
-							<execute function="Click" locator1="PGCalendarAddevent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO" />
-							<execute function="Select" locator1="PGCalendarAddevent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_POSITION_DROPDOWN" value1="${position}" />
-							<execute function="Select" locator1="PGCalendarAddevent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_DROPDOWN" value1="${weekday}" />
-						</then>
-					</if>
-
-					<if>
-						<isset var="numberOfOccurrences" />
-						<then>
-							<execute function="Click" locator1="PGCalendarAddevent#REPEAT_ENDS_AFTER_RADIO" />
-							<execute function="Pause" value1="1000" />
-							<execute function="Type" locator1="PGCalendarAddevent#REPEAT_ENDS_AFTER_FIELD" value1="${numberOfOccurrences}" />
-						</then>
-					</if>
-
-					<execute function="Pause" value1="1000" />
-					<execute function="Click" locator1="PGCalendarAddevent#REPEAT_SUMMARY_2" />
-					<execute function="Pause" value1="1000" />
-
-					<if>
-						<and>
-							<isset var="position" />
-							<isset var="numberOfOccurrences" />
-						</and>
-						<then>
-							<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency} On ${position} ${weekday}, ${numberOfOccurrences} Times" />
-						</then>
-						<elseif>
-							<isset var="position" />
-							<then>
-								<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency} On ${position} ${weekday}" />
-							</then>
-						</elseif>
-						<elseif>
-							<isset var="numberOfOccurrences" />
-							<then>
-								<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency}, ${numberOfOccurrences} Times" />
-							</then>
-						</elseif>
-					</if>
-
-					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
-					<execute function="Click" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
-					<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
+					<execute macro="CalendarEvent#setRepeating">
+						<var name="frequency" value="${frequency}" />
+					</execute>
 
 					<execute macro="CalendarEvent#selectCalendarPG" />
 
@@ -1141,6 +1092,77 @@
 		</if>
 	</command>
 
+	<command name="setDates">
+		<execute function="Type" locator1="PGCalendarAddevent#START_DATE" value1="${startDate}" />
+		<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
+		<execute function="Type" locator1="PGCalendarAddevent#START_DATE_TIME" value1="${startDateTime}" />
+		<execute function="Type" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${endDateTime}" />
+	</command>
+
+	<command name="setRepeating">
+		<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
+		<execute function="Select" locator1="PGCalendarAddevent#REPEAT_REPEATS_DROPDOWN" value1="${frequency}" />
+		<execute function="AssertSelectedLabel" locator1="PGCalendarAddevent#REPEAT_REPEATS_DROPDOWN" value1="${frequency}" />
+		<execute function="AssertSelectedLabel" locator1="PGCalendarAddevent#REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
+
+		<if>
+			<isset var="position" />
+			<then>
+				<execute function="Click" locator1="PGCalendarAddevent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO" />
+				<execute function="Select" locator1="PGCalendarAddevent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_POSITION_DROPDOWN" value1="${position}" />
+				<execute function="Select" locator1="PGCalendarAddevent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_DROPDOWN" value1="${weekday}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="numberOfOccurrences" />
+			<then>
+				<execute function="Click" locator1="PGCalendarAddevent#REPEAT_ENDS_AFTER_RADIO" />
+				<execute function="Pause" value1="1000" />
+				<execute function="Type" locator1="PGCalendarAddevent#REPEAT_ENDS_AFTER_FIELD" value1="${numberOfOccurrences}" />
+			</then>
+		</if>
+
+		<execute function="Pause" value1="1000" />
+		<execute function="Click" locator1="PGCalendarAddevent#REPEAT_SUMMARY_2" />
+		<execute function="Pause" value1="1000" />
+
+		<if>
+			<and>
+				<isset var="position" />
+				<isset var="month" />
+			</and>
+			<then>
+				<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency} On The ${position} ${weekday} Of ${month}" />
+			</then>
+			<elseif>
+				<and>
+					<isset var="position" />
+					<isset var="numberOfOccurrences" />
+				</and>
+				<then>
+					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency} On ${position} ${weekday}, ${numberOfOccurrences} Times" />
+				</then>
+			</elseif>
+			<elseif>
+				<isset var="position" />
+				<then>
+					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency} On ${position} ${weekday}" />
+				</then>
+			</elseif>
+			<elseif>
+				<isset var="numberOfOccurrences" />
+				<then>
+					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency}, ${numberOfOccurrences} Times" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
+		<execute function="Click" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
+		<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
+	</command>
+
 	<command name="tag">
 		<if>
 			<condition function="IsElementPresent" locator1="PGCalendarAddevent#CATEGORIZATION_PANEL_COLLAPSED" />
@@ -1222,8 +1244,6 @@
 			<var name="viewType" value="Agenda" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<var name="i" value="1" />
 		<var name="key_eventTitle" value="${eventTitle}" />
 
@@ -1296,7 +1316,6 @@
 			<var name="viewType" value="Day" />
 		</execute>
 
-		<execute function="Refresh" />
 		<execute function="Pause" value1="1000" />
 
 		<var name="i" value="1" />
@@ -1317,7 +1336,6 @@
 			<var name="viewType" value="Day" />
 		</execute>
 
-		<execute function="Refresh" />
 		<execute function="Pause" value1="1000" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
@@ -1333,7 +1351,6 @@
 			<var name="viewType" value="Day" />
 		</execute>
 
-		<execute function="Refresh" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendarDayView#SCHEDULER_EVENT_SPECIFIC" />
 
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
@@ -1373,8 +1390,6 @@
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
@@ -1453,8 +1468,6 @@
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Month" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<var name="i" value="1" />
 		<var name="key_eventTitle" value="${eventTitle}" />
@@ -1581,8 +1594,6 @@
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<var name="i" value="1" />
 		<var name="key_eventTitle" value="${eventTitle}" />

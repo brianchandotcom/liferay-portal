@@ -542,6 +542,13 @@
 		<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_EMPTY_MESSAGE" value1="No calendars selected." />
 	</command>
 
+	<command name="viewBusyDaySmallCalendar">
+		<var name="key_dateNumber" value="${dateNumber}" />
+
+		<execute function="AssertElementPresent" locator1="PGCalendar#SMALL_CALENDAR_BUSY_DAY" />
+		<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_BUSY_DAY" />
+	</command>
+
 	<command name="viewColorDefaultPG">
 		<var name="key_color" value="${myCalendarColor}" />
 
@@ -569,6 +576,22 @@
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
+	</command>
+
+	<command name="viewMonthSmallCalendar">
+		<while>
+			<condition function="IsTextNotEqual" locator1="PGCalendar#SMALL_CALENDAR_DATE" value1="February 2015" />
+			<then>
+				<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_PREVIOUS" />
+			</then>
+		</while>
+
+		<while>
+			<condition function="IsTextNotEqual" locator1="PGCalendar#SMALL_CALENDAR_DATE" value1="${dateMonth}" />
+			<then>
+				<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_NEXT" />
+			</then>
+		</while>
 	</command>
 
 	<command name="viewPG">

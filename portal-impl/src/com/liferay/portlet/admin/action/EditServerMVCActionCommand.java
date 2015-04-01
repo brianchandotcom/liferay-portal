@@ -63,7 +63,8 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
-import com.liferay.portal.search.backgroundtask.IndexBackgroundTaskExecutor;
+import com.liferay.portal.search.backgroundtask.ReindexIndexerBackgroundTaskExecutor;
+import com.liferay.portal.search.backgroundtask.ReindexPortalBackgroundTaskExecutor;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
@@ -386,10 +387,15 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		taskContextMap.put("companyIds", companyIds);
 		taskContextMap.put("className", className);
 
+		Class taskExecutorClass = ReindexPortalBackgroundTaskExecutor.class;
+
+		if (Validator.isNotNull(className)) {
+			taskExecutorClass = ReindexIndexerBackgroundTaskExecutor.class;
+		}
+
 		BackgroundTaskManagerUtil.addBackgroundTask(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), "reindex",
-			null, IndexBackgroundTaskExecutor.class, taskContextMap,
-			new ServiceContext());
+			null, taskExecutorClass, taskContextMap, new ServiceContext());
 	}
 
 	protected void reindexDictionaries(ActionRequest actionRequest)

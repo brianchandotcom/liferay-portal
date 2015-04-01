@@ -58,7 +58,7 @@ public class LibraryTest {
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();
 
-		_getClasspathJars(documentBuilder);
+		_initEclipseProjectJars(documentBuilder);
 
 		_getNBProjectJars(documentBuilder);
 
@@ -95,32 +95,6 @@ public class LibraryTest {
 		_doSearch(_versionsJars, _libJars, _VERSIONS_PATH);
 	}
 
-	private static void _getClasspathJars(DocumentBuilder documentBuilder)
-		throws Exception {
-
-		Document document = documentBuilder.parse(new File(_CLASSPATH_PATH));
-
-		NodeList nodelist = document.getElementsByTagName("classpathentry");
-
-		for (int i = 0; i < nodelist.getLength(); i++) {
-			Node node = nodelist.item(i);
-
-			NamedNodeMap namedNodeMap = node.getAttributes();
-
-			Node kindNode = namedNodeMap.getNamedItem("kind");
-
-			String kind = kindNode.getNodeValue();
-
-			if (!kind.equals("lib")) {
-				continue;
-			}
-
-			Node pathNode = namedNodeMap.getNamedItem("path");
-
-			_classpathJars.add(pathNode.getNodeValue());
-		}
-	}
-
 	private static void _getNBProjectJars(DocumentBuilder documentBuilder)
 		throws Exception {
 
@@ -154,6 +128,32 @@ public class LibraryTest {
 			if (path.startsWith(_LIB)) {
 				_versionsJars.add(path);
 			}
+		}
+	}
+
+	private static void _initEclipseProjectJars(DocumentBuilder documentBuilder)
+		throws Exception {
+
+		Document document = documentBuilder.parse(new File(_CLASSPATH_PATH));
+
+		NodeList nodelist = document.getElementsByTagName("classpathentry");
+
+		for (int i = 0; i < nodelist.getLength(); i++) {
+			Node node = nodelist.item(i);
+
+			NamedNodeMap namedNodeMap = node.getAttributes();
+
+			Node kindNode = namedNodeMap.getNamedItem("kind");
+
+			String kind = kindNode.getNodeValue();
+
+			if (!kind.equals("lib")) {
+				continue;
+			}
+
+			Node pathNode = namedNodeMap.getNamedItem("path");
+
+			_classpathJars.add(pathNode.getNodeValue());
 		}
 	}
 

@@ -76,14 +76,6 @@ public class InvokerFilterHelper {
 		}
 	}
 
-	public Filter getFilter(String filterName) {
-		return _filters.get(filterName);
-	}
-
-	public FilterConfig getFilterConfig(String filterName) {
-		return _filterConfigs.get(filterName);
-	}
-
 	public void init(FilterConfig filterConfig) throws ServletException {
 		try {
 			ServletContext servletContext = filterConfig.getServletContext();
@@ -376,7 +368,7 @@ public class InvokerFilterHelper {
 		String filterName, List<String> urlPatterns, List<String> dispatchers,
 		String positionFilterName, boolean after) {
 
-		Filter filter = getFilter(filterName);
+		Filter filter = _filters.get(filterName);
 
 		if (filter == null) {
 			if (_log.isWarnEnabled()) {

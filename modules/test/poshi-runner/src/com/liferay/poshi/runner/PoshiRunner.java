@@ -69,7 +69,11 @@ public class PoshiRunner {
 
 		SeleniumUtil.startSelenium();
 
-		System.out.println("\nRunning " + classCommandName);
+		System.out.println();
+		System.out.println("###");
+		System.out.println("### " + classCommandName);
+		System.out.println("###");
+		System.out.println();
 
 		_testClassCommandName = classCommandName;
 		_testClassName = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
@@ -83,8 +87,18 @@ public class PoshiRunner {
 
 			_runCommand();
 		}
+		catch (Exception e) {
+			throw new PoshiRunnerException(e.getMessage(), e);
+		}
 		finally {
-			_runTearDown();
+			try {
+				_runTearDown();
+			}
+			catch (Exception e) {
+				PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
+
+				PoshiRunnerStackTraceUtil.emptyStackTrace();
+			}
 		}
 	}
 

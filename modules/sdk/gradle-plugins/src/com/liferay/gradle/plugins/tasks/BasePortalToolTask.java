@@ -1,0 +1,132 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.gradle.plugins.tasks;
+
+import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.util.GradleUtil;
+
+import java.util.List;
+
+import org.gradle.api.Action;
+import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.JavaExec;
+import org.gradle.process.JavaExecSpec;
+
+/**
+ * @author Andrea Di Giorgi
+ */
+public abstract class BasePortalToolTask extends JavaExec {
+
+	public BasePortalToolTask() {
+		project = getProject();
+
+		liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, getConfigurationName());
+
+		configuration.setDescription(
+			"The " + getToolName() + " tool to be used in this project.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(configuration, new Action<Configuration>() {
+
+			@Override
+			public void execute(Configuration configuration) {
+				addDependencies();
+			}
+
+		});
+	}
+
+	@Override
+	public JavaExecSpec args(Iterable<?> args) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public JavaExec args(Object... args) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public JavaExec classpath(Object... paths) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void exec() {
+		super.setArgs(getArgs());
+		super.setClasspath(getClasspath());
+
+		super.exec();
+	}
+
+	@Override
+	public abstract List<String> getArgs();
+
+	@Override
+	public FileCollection getClasspath() {
+		return GradleUtil.getConfiguration(project, getConfigurationName());
+	}
+
+	@Override
+	public abstract String getMain();
+
+	@Override
+	public JavaExec setArgs(Iterable<?> applicationArgs) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public JavaExec setClasspath(FileCollection classpath) {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void addDependencies() {
+		addDependency("com.liferay.portal", "portal-impl", "7.0.0-SNAPSHOT");
+		addDependency("com.liferay.portal", "portal-service", "7.0.0-SNAPSHOT");
+		addDependency("com.liferay.portal", "util-java", "7.0.0-SNAPSHOT");
+		addDependency("com.thoughtworks.xstream", "xstream", "1.4.3");
+		addDependency("commons-configuration", "commons-configuration", "1.6");
+		addDependency("commons-lang", "commons-lang", "2.6");
+		addDependency("easyconf", "easyconf", "0.9.5", false);
+		addDependency("javax.servlet", "javax.servlet-api", "3.0.1");
+	}
+
+	protected void addDependency(String group, String name, String version) {
+		addDependency(group, name, version, true);
+	}
+
+	protected void addDependency(
+		String group, String name, String version, boolean transitive) {
+
+		GradleUtil.addDependency(
+			project, getConfigurationName(), group, name, version, transitive);
+	}
+
+	protected String getConfigurationName() {
+		return "portalTools" + getToolName();
+	}
+
+	protected abstract String getToolName();
+
+	protected final LiferayExtension liferayExtension;
+	protected final Project project;
+
+}

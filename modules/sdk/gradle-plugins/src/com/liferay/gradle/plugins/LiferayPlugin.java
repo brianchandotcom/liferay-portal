@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
+import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.util.StringUtil;
 import com.liferay.gradle.plugins.util.Validator;
@@ -74,8 +75,23 @@ public class LiferayPlugin extends BasePlugin {
 		}
 	}
 
+	protected void addTaskFormatSource() {
+		Task task = addTask("formatSource", FormatSourceTask.class);
+
+		task.setDescription("Runs Liferay Source Formatter to format files.");
+	}
+
+	protected void addTaskInitGradle() {
+		Task task = addTask("initGradle", InitGradleTask.class);
+
+		task.setDescription(
+			"Initializes build.gradle by migrating information from legacy " +
+				"files");
+	}
+
 	protected void addTasks() {
-		addTask("initGradle", InitGradleTask.class);
+		addTaskFormatSource();
+		addTaskInitGradle();
 	}
 
 	protected void configureDependencies() {
@@ -139,7 +155,8 @@ public class LiferayPlugin extends BasePlugin {
 	}
 
 	protected void configureTaskClean() {
-		Task cleanTask = getTask(CLEAN_TASK_NAME);
+		Task cleanTask = getTask(
+			org.gradle.api.plugins.BasePlugin.CLEAN_TASK_NAME);
 
 		configureTaskCleanDependsOn(cleanTask);
 	}
@@ -147,7 +164,8 @@ public class LiferayPlugin extends BasePlugin {
 	protected void configureTaskCleanDependsOn(Task cleanTask) {
 		for (Task task : project.getTasks()) {
 			String taskName =
-				CLEAN_TASK_NAME + StringUtil.capitalize(task.getName());
+				org.gradle.api.plugins.BasePlugin.CLEAN_TASK_NAME +
+					StringUtil.capitalize(task.getName());
 
 			cleanTask.dependsOn(taskName);
 		}
@@ -170,7 +188,7 @@ public class LiferayPlugin extends BasePlugin {
 
 			String taskName =
 				dependencyProject.getPath() + Project.PATH_SEPARATOR +
-					CLEAN_TASK_NAME;
+					org.gradle.api.plugins.BasePlugin.CLEAN_TASK_NAME;
 
 			cleanTask.dependsOn(taskName);
 		}

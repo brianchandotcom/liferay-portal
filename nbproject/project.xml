@@ -559,7 +559,6 @@
 				<classpath mode="compile">lib/portal/xstream.jar</classpath>
 				<classpath mode="compile">lib/portal/xuggle-xuggler-noarch.jar</classpath>
 				<classpath mode="compile">lib/portal/xz.jar</classpath>
-				<classpath mode="compile">modules/core/registry-impl/lib/org.eclipse.osgi.jar</classpath>
 				<source-level>1.5</source-level>
 			</compilation-unit>
 		</java-data>

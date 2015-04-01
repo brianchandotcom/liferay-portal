@@ -39,6 +39,17 @@
 		</sequential>
 	</macrodef>
 
+	<target name="clear-tck-dependencies">
+		<delete file="${liferay.home}/osgi/modules/com.liferay.portlet.tck.bridge.jar" />
+
+		<delete includeemptydirs="true">
+			<fileset
+				dir="${app.server.tomcat.dir}/webapps/"
+				includes="portlet_jp_*/**"
+			/>
+		</delete>
+	</target>
+
 	<target name="prepare-tck">
 		<delete dir="tools/tck" />
 
@@ -287,6 +298,8 @@ servletContextNames=${tck.servlet.context.names}</echo>
 				</java>
 			</sequential>
 		</for>
+
+		<antcall target="clear-tck-dependencies" />
 	</target>
 
 	<target name="test-class-group">

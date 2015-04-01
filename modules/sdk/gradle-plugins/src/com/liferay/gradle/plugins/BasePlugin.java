@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.util.GradleUtil;
+
 import java.util.Collections;
 import java.util.Map;
 
@@ -23,7 +25,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
@@ -99,10 +100,7 @@ public abstract class BasePlugin implements Plugin<Project> {
 	protected abstract void doApply() throws Exception;
 
 	protected Configuration getConfiguration(String name) {
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		return configurationContainer.getByName(name);
+		return GradleUtil.getConfiguration(project, name);
 	}
 
 	protected <T> T getPluginConvention(Class<T> clazz) {

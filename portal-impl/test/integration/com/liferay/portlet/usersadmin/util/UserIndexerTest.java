@@ -151,7 +151,7 @@ public class UserIndexerTest {
 			isCaseInsensitiveNameFieldsImplementedForSearchEngine());
 
 		String firstName = "Liferay7";
-		String lastName = "Ray'Augé";
+		String lastName = "dell'Apostrophe";
 		String middleName = "ALLOY_4";
 
 		testNameFields(firstName, lastName, middleName);
@@ -160,7 +160,7 @@ public class UserIndexerTest {
 	@Test
 	public void testNameFieldsNotTokenizedLowercase() throws Exception {
 		String firstName = "liferay7";
-		String lastName = "ray'augé";
+		String lastName = "dell'apostrophe";
 		String middleName = "alloy_4";
 
 		testNameFields(firstName, lastName, middleName);

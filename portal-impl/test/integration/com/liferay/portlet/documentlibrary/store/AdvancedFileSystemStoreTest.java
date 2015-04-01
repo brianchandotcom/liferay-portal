@@ -15,22 +15,16 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Vilmos Papp
  */
-public class AdvancedFileSystemStoreTest {
+public class AdvancedFileSystemStoreTest extends BaseStoreTestCase {
 
 	@ClassRule
 	@Rule
@@ -38,78 +32,9 @@ public class AdvancedFileSystemStoreTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
-	@Before
-	public void setUp() {
-		_store = new AdvancedFileSystemStore();
+	@Override
+	protected Store getStore() {
+		return new AdvancedFileSystemStore();
 	}
-
-	@Test
-	public void testUpdateFileWithMoveFiles() throws Exception {
-		Object[] data = initStoreData();
-
-		long companyId = (Long)data[0];
-		long repositoryId = (Long)data[1];
-		long newRepositoryId = RandomTestUtil.nextLong();
-
-		try {
-			String[] fileNames = _store.getFileNames(companyId, repositoryId);
-
-			for (String fileName : fileNames) {
-				_store.updateFile(
-					companyId, repositoryId, newRepositoryId, fileName);
-
-				Assert.assertTrue(
-					fileName + " was not found in " + newRepositoryId,
-					_store.hasFile(companyId, newRepositoryId, fileName));
-				Assert.assertFalse(
-					fileName + " was found in " + repositoryId,
-					_store.hasFile(companyId, repositoryId, fileName));
-			}
-		}
-		finally {
-			try {
-				_store.deleteDirectory(
-					companyId, repositoryId, StringPool.BLANK);
-			}
-			catch (NoSuchDirectoryException nsde) {
-			}
-
-			try {
-				_store.deleteDirectory(
-					companyId, newRepositoryId, StringPool.BLANK);
-			}
-			catch (NoSuchDirectoryException nsde) {
-			}
-		}
-	}
-
-	protected Object[] initStoreData() throws Exception {
-		long companyId = RandomTestUtil.nextLong();
-		long repositoryId = RandomTestUtil.nextLong();
-
-		for (int i = 0; i < _FILE_COUNT; i++) {
-			String fileName = String.valueOf(i) + _FILE_NAME_EXTENSION;
-
-			_store.addFile(companyId, repositoryId, fileName, _FILE_DATA);
-		}
-
-		return new Object[] {companyId, repositoryId};
-	}
-
-	private static final int _DATA_SIZE = 100;
-
-	private static final int _FILE_COUNT = 200;
-
-	private static final byte[] _FILE_DATA = new byte[_DATA_SIZE];
-
-	private static final String _FILE_NAME_EXTENSION = ".txt";
-
-	static {
-		for (int i = 0; i < _DATA_SIZE; i++) {
-			_FILE_DATA[i] = (byte)i;
-		}
-	}
-
-	private Store _store;
 
 }

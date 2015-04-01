@@ -39,7 +39,43 @@
 		</sequential>
 	</macrodef>
 
-	<target name="deploy-tck-wars">
+	<target name="prepare-tck">
+		<delete dir="tools/tck" />
+
+		<if>
+			<isset property="portlet.tck.url" />
+			<then>
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<mirrors-get dest="${tstamp.value}.zip" src="${portlet.tck.url}" />
+
+				<unzip src="${tstamp.value}.zip" dest="tools/tck" />
+
+				<delete file="${tstamp.value}.zip" />
+			</then>
+			<else>
+				<unzip src="${portlet.tck.zip}" dest="tools/tck" />
+			</else>
+		</if>
+
+		<chmod
+			dir="tools/tck/bin/"
+			includes="tsant*"
+			perm="744"
+		/>
+
+		<replace file="tools/tck/bin/ts.jte">
+			<replacefilter token="http://localhost:8080/pluto/tck" value="http://localhost:8080/c/portal/tck" />
+		</replace>
+
+		<echo file="tools/tck/bin/build.properties" append="true">
+
+work.dir=${basedir.unix}/tools/tck/work</echo>
+	</target>
+
+	<target name="prepare-tck-dependencies">
 		<if>
 			<not>
 				<isset property="test.packages" />
@@ -104,42 +140,6 @@
 servletContextNames=${tck.servlet.context.names}</echo>
 
 		<ant dir="modules/test/portlet-tck-bridge" target="deploy" />
-	</target>
-
-	<target name="prepare-tck">
-		<delete dir="tools/tck" />
-
-		<if>
-			<isset property="portlet.tck.url" />
-			<then>
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<mirrors-get dest="${tstamp.value}.zip" src="${portlet.tck.url}" />
-
-				<unzip src="${tstamp.value}.zip" dest="tools/tck" />
-
-				<delete file="${tstamp.value}.zip" />
-			</then>
-			<else>
-				<unzip src="${portlet.tck.zip}" dest="tools/tck" />
-			</else>
-		</if>
-
-		<chmod
-			dir="tools/tck/bin/"
-			includes="tsant*"
-			perm="744"
-		/>
-
-		<replace file="tools/tck/bin/ts.jte">
-			<replacefilter token="http://localhost:8080/pluto/tck" value="http://localhost:8080/c/portal/tck" />
-		</replace>
-
-		<echo file="tools/tck/bin/build.properties" append="true">
-
-work.dir=${basedir.unix}/tools/tck/work</echo>
 	</target>
 
 	<target name="record-test-tck-package-names">
@@ -240,7 +240,7 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 		<echo file="test.tck.package.names.properties">${test.tck.package.names}</echo>
 	</target>
 
-	<target name="run-tck-tomcat" depends="deploy-tck-wars">
+	<target name="run-tck-tomcat" depends="prepare-tck-dependencies">
 		<if>
 			<not>
 				<isset property="test.class.group" />

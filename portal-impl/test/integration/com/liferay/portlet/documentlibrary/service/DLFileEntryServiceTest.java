@@ -305,7 +305,7 @@ public class DLFileEntryServiceTest {
 		String sourceFileName = RandomTestUtil.randomString();
 
 		if (appendExtension) {
-			sourceFileName.concat(".pdf");
+			sourceFileName = sourceFileName.concat(".pdf");
 		}
 
 		String fileEntryTitle = RandomTestUtil.randomString();

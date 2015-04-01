@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.nio.intraband.blocking;
 
+import static java.lang.Thread.sleep;
+
 import com.liferay.portal.kernel.nio.intraband.BaseIntraband;
 import com.liferay.portal.kernel.nio.intraband.ChannelContext;
 import com.liferay.portal.kernel.nio.intraband.CompletionHandler;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband.Writin
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.Time;
 
@@ -50,6 +53,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.SynchronousQueue;
@@ -146,29 +150,28 @@ public class ExecutorIntrabandTest {
 				_executorIntraband.new ReadingCallable(
 					sourceChannel, channelContext);
 
-			Thread closeThread = new Thread() {
+			SyncThrowableThread<Void> syncThrowableThread =
+				new SyncThrowableThread<>(
+					new Callable<Void>() {
 
-				@Override
-				public void run() {
-					try {
-						sleep(100);
+						@Override
+						public Void call() throws Exception {
+							sleep(100);
 
-						sourceChannel.close();
-					}
-					catch (Exception e) {
-						Assert.fail(e.getMessage());
-					}
-				}
+							sourceChannel.close();
 
-			};
+							return null;
+						}
 
-			closeThread.start();
+					});
+
+			syncThrowableThread.start();
 
 			readingCallable.openLatch();
 
 			Void result = readingCallable.call();
 
-			closeThread.join();
+			syncThrowableThread.sync();
 
 			Assert.assertNull(result);
 			Assert.assertFalse(mockRegistrationReference.isValid());

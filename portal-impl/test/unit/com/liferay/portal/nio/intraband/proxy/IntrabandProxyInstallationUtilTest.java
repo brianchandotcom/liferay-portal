@@ -266,6 +266,11 @@ public class IntrabandProxyInstallationUtilTest {
 			return null;
 		}
 
+		@Override
+		public int hashCode() {
+			return super.hashCode();
+		}
+
 		private final Class<?> _clazz;
 
 	}

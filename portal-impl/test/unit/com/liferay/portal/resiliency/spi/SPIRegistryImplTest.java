@@ -142,6 +142,11 @@ public class SPIRegistryImplTest {
 				return super.hashCode();
 			}
 
+			@Override
+			public boolean equals(Object object) {
+				return super.equals(object);
+			}
+
 		};
 
 		mockSPI.spiConfiguration = spiConfiguration;

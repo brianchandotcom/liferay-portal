@@ -15,11 +15,13 @@
 package com.liferay.portal.kernel.concurrent;
 
 import com.liferay.portal.kernel.concurrent.test.TestUtil;
+import com.liferay.portal.kernel.test.SyncThrowableThread;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -290,30 +292,30 @@ public class TaskQueueTest {
 		Assert.assertTrue(taskQueue.offer(object, new boolean[1]));
 		Assert.assertSame(object, taskQueue.take());
 
-		Thread thread = new Thread() {
+		SyncThrowableThread<Void> syncThrowableThread =
+			new SyncThrowableThread<>(
+				new Callable<Void>() {
 
-			@Override
-			public void run() {
-				try {
-					for (int i = 0; i < 10; i++) {
-						Assert.assertEquals(i, taskQueue.take());
+					@Override
+					public Void call() throws Exception {
+						for (int i = 0; i < 10; i++) {
+							Assert.assertEquals(i, taskQueue.take());
+						}
+
+						try {
+							taskQueue.take();
+
+							Assert.fail();
+						}
+						catch (InterruptedException ie) {
+						}
+
+						return null;
 					}
-				}
-				catch (InterruptedException ie) {
-					Assert.fail();
-				}
 
-				try {
-					taskQueue.take();
-					Assert.fail();
-				}
-				catch (InterruptedException ie) {
-				}
-			}
+				});
 
-		};
-
-		thread.start();
+		syncThrowableThread.start();
 
 		for (int i = 0; i < 10; i++) {
 			Assert.assertTrue(taskQueue.offer(i, new boolean[1]));
@@ -321,8 +323,8 @@ public class TaskQueueTest {
 
 		Thread.sleep(TestUtil.SHORT_WAIT);
 
-		thread.interrupt();
-		thread.join();
+		syncThrowableThread.interrupt();
+		syncThrowableThread.sync();
 	}
 
 }

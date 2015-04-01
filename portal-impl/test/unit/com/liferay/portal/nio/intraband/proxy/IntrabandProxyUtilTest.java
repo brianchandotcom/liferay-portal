@@ -2675,6 +2675,11 @@ public class IntrabandProxyUtilTest {
 				});
 		}
 
+		@Override
+		public int hashCode() {
+			return super.hashCode();
+		}
+
 		private final Class<?> _clazz;
 		private String _id;
 

@@ -102,14 +102,10 @@ public class LibraryTest {
 
 		NodeList nodelist = document.getElementsByTagName("file-name");
 
-		for (int i = 0; i<nodelist.getLength(); i++) {
+		for (int i = 0; i < nodelist.getLength(); i++) {
 			Node node = nodelist.item(i);
 
-			String path = node.getTextContent();
-
-			if (path.startsWith(_LIB)) {
-				_versionsJars.add(path);
-			}
+			_versionsJars.add(node.getTextContent());
 		}
 	}
 

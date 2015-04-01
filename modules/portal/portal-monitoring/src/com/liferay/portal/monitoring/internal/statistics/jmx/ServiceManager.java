@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"object-name=com.liferay.portal.monitoring:classification=service_statistic,name=ServiceManager",
-		"object-name-cache-key=ServiceManager"
+		"jmx.objectname=com.liferay.portal.monitoring:classification=service_statistic,name=ServiceManager",
+		"jmx.objectname.cache.key=ServiceManager"
 	},
 	service = DynamicMBean.class
 )

@@ -12,38 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.internal.statistics.jmx;
-
-import com.liferay.portal.monitoring.internal.statistics.portlet.RenderRequestSummaryStatistics;
+package com.liferay.portal.jmx.bundle.jmxwhiteboard;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Raymond Augé
  */
 @Component(
-	immediate = true,
 	property = {
-		"jmx.objectname=com.liferay.portal.monitoring:classification=portlet_statistic,name=RenderRequestPortletManager",
-		"jmx.objectname.cache.key=RenderRequestPortletManager"
+		"jmx.objectname=" + JMXWhiteboardByDynamicMBean.OBJECT_NAME
 	},
 	service = DynamicMBean.class
 )
-public class RenderRequestPortletManager extends PortletManager {
+public class JMXWhiteboardByDynamicMBean extends StandardMBean
+	implements JMXWhiteboardByInterfaceMBean {
 
-	public RenderRequestPortletManager() throws NotCompliantMBeanException {
-		super(PortletManagerMBean.class);
+	public static final String OBJECT_NAME =
+		"JMXWhiteboard:name=com.liferay.portal.jmx.bundle.jmxwhiteboard." +
+			"JMXWhiteboardByDynamicMBean";
+
+	public JMXWhiteboardByDynamicMBean() throws NotCompliantMBeanException {
+		super(JMXWhiteboardByInterfaceMBean.class);
 	}
 
-	@Reference
-	protected void setRenderRequestSummaryStatistics(
-		RenderRequestSummaryStatistics renderRequestSummaryStatistics) {
-
-		super.setPortletSummaryStatistics(renderRequestSummaryStatistics);
+	@Override
+	public String returnValue(String value) {
+		return "{" + value + "}";
 	}
 
 }

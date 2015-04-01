@@ -117,8 +117,6 @@ public class LibraryTest {
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new FileReader(new File(_LIB + "/versions-ignore.txt")))) {
 
-			StringBundler sb = new StringBundler();
-
 			String line = bufferedReader.readLine();
 
 			while (line != null) {

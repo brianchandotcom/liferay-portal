@@ -100,13 +100,10 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 
 	@Override
 	public boolean hasAction(ResourceAction resourceAction) {
-		if (resourceAction != null) {
-			long actionIds = getActionIds();
-			long bitwiseValue = resourceAction.getBitwiseValue();
+		if ((resourceAction != null) &&
+			((getActionIds() & resourceAction.getBitwiseValue()) != 0)) {
 
-			if ((actionIds & bitwiseValue) == bitwiseValue) {
-				return true;
-			}
+			return true;
 		}
 
 		return false;

@@ -50,7 +50,7 @@ public class LibraryTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_getLibJars();
+		_initLibJars();
 
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();
@@ -117,38 +117,6 @@ public class LibraryTest {
 		}
 	}
 
-	private static void _getLibJars() throws IOException {
-		for (String line : Files.readAllLines(
-			Paths.get(_LIB, "/versions-ignore.txt"),
-			Charset.forName("UTF-8"))) {
-
-			line = line.trim();
-
-			if (!line.isEmpty()) {
-				_excludes.add(line);
-			}
-		}
-
-		Files.walkFileTree(
-			Paths.get(_LIB),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-					Path path, BasicFileAttributes basicFileAttributes) {
-
-					String pathString = path.toString();
-
-					if (pathString.endsWith(".jar")) {
-						_libJars.add(pathString);
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-	}
-
 	private static void _getNBProjectJars(DocumentBuilder documentBuilder)
 		throws Exception {
 
@@ -183,6 +151,38 @@ public class LibraryTest {
 				_versionsJars.add(path);
 			}
 		}
+	}
+
+	private static void _initLibJars() throws IOException {
+		for (String line : Files.readAllLines(
+			Paths.get(_LIB, "/versions-ignore.txt"),
+			Charset.forName("UTF-8"))) {
+
+			line = line.trim();
+
+			if (!line.isEmpty()) {
+				_excludes.add(line);
+			}
+		}
+
+		Files.walkFileTree(
+			Paths.get(_LIB),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					String pathString = path.toString();
+
+					if (pathString.endsWith(".jar")) {
+						_libJars.add(pathString);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private void _doSearch(

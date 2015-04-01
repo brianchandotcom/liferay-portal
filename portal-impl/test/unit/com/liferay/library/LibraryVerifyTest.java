@@ -41,10 +41,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- *
  * @author Matthew Tambara
+ * @author Shuyang Zhou
  */
-public class LibraryTest {
+public class LibraryVerifyTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

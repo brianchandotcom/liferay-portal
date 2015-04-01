@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_FIELD_REQUIRED</td>
-	<td>//span[@id='_15_titleBoundingBox']//div[contains(.,'This field is required.')]</td>
+	<td>//span[contains(@id,'titleBoundingBox')]//div[contains(.,'This field is required.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SELECTED_STRUCTURE</td>
-	<td>//span[@id='_15_structureNameLabel']</td>
+	<td>//span[contains(@id,'structureNameLabel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>SELECTED_TEMPLATE</td>
-	<td>//span[@id='_15_templateNameLabel']</td>
+	<td>//span[contains(@id,'templateNameLabel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[contains(@id,'_15_title')]</td>
+	<td>//input[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -170,22 +170,22 @@
 </tr>
 <tr>
 	<td>SEARCHABLE_CHECKBOX</td>
-	<td>//input[@id='_15_indexable']</td>
+	<td>//input[contains(@id,'indexable')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
-	<td>//button[@id='_15_saveButton']</td>
+	<td>//button[contains(@id,'saveButton')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_15_publishButton' and contains(.,'Publish')]</td>
+	<td>//button[contains(@id,'publishButton') and contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
-	<td>//button[@id='_15_publishButton' and contains(.,'Submit for Publication')]</td>
+	<td>//button[contains(@id,'publishButton') and contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -247,42 +247,37 @@
 <!--MENU-->
 <tr>
 	<td>MENU_CONTENT</td>
-	<td>//a[@id='_15_contentLink']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MENU_ABSTRACT</td>
-	<td>//a[@id='_15_abstractLink']</td>
+	<td>//a[contains(@id,'contentLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_CATEGORIZATION</td>
-	<td>//a[@id='_15_categorizationLink']</td>
+	<td>//a[contains(@id,'categorizationLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_SCHEDULE</td>
-	<td>//a[@id='_15_scheduleLink']</td>
+	<td>//a[contains(@id,'scheduleLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_DISPLAY_PAGE</td>
-	<td>//a[@id='_15_displayPageLink']</td>
+	<td>//a[contains(@id,'displayPageLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_RELATED_ASSETS</td>
-	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td>//a[contains(@id,'relatedAssetsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_PERMISSIONS</td>
-	<td>//a[@id='_15_permissionsLink']</td>
+	<td>//a[contains(@id,'permissionsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_CUSTOM_FIELDS</td>
-	<td>//a[@id='_15_customFieldsLink']</td>
+	<td>//a[contains(@id,'customFieldsLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -325,7 +320,7 @@
 <!--PERMISSIONS-->
 <tr>
 	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
-	<td>//select[@id='_15_inputPermissionsViewRole']</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
 	<td></td>
 </tr>
 </tbody>

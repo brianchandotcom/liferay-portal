@@ -55,7 +55,7 @@
 			</else>
 		</if>
 
-		<execute function="Type" locator1="CPSitesAdd#DETAILS_NAME" value1="${siteName}" />
+		<execute function="Type#mouseOverFocusType" locator1="CPSitesAdd#DETAILS_NAME" value1="${siteName}" />
 
 		<if>
 			<or>
@@ -485,8 +485,10 @@
 
 	<command name="editFriendlyURLCP">
 		<execute function="AssertClick" locator1="CPSitesettings#MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
-
 		<execute function="AssertTextEquals" locator1="CPSitesettingsSiteURL#SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
+
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="Type" locator1="CPSitesettingsSiteURL#SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLEdit}" />
 		<execute function="AssertClick" locator1="CPSitesettingsSiteURL#SAVE_BUTTON" value1="Save" />
 

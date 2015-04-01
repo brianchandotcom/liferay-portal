@@ -31,7 +31,7 @@
 		<execute function="Pause" locator1="5000" />
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
 
-		<execute function="Type#clickAtSendKeys" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
+		<execute function="Type#mouseOverFocusType" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
 		<execute function="AssertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
 		<execute function="AssertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -74,7 +74,7 @@
 		<execute function="Pause" locator1="5000" />
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
 
-		<execute function="Type#clickAtSendKeys" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
+		<execute function="Type#mouseOverFocusType" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 
 		<var name="key_pageType" value="${pageTemplateName}" />
 

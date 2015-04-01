@@ -746,14 +746,14 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	@Override
 	public void language(
 			String formName, String formAction, String name,
-			String displayStyle)
+			String ddmTemplateKey)
 		throws Exception {
 
 		LanguageTag languageTag = new LanguageTag();
 
 		setUp(languageTag);
 
-		languageTag.setDisplayStyle(displayStyle);
+		languageTag.setDdmTemplateKey(ddmTemplateKey);
 		languageTag.setFormAction(formAction);
 		languageTag.setFormName(formName);
 		languageTag.setName(name);
@@ -764,14 +764,14 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	@Override
 	public void language(
 			String formName, String formAction, String name,
-			String[] languageIds, String displayStyle)
+			String[] languageIds, String ddmTemplateKey)
 		throws Exception {
 
 		LanguageTag languageTag = new LanguageTag();
 
 		setUp(languageTag);
 
-		languageTag.setDisplayStyle(displayStyle);
+		languageTag.setDdmTemplateKey(ddmTemplateKey);
 		languageTag.setFormAction(formAction);
 		languageTag.setFormName(formName);
 		languageTag.setLanguageIds(languageIds);

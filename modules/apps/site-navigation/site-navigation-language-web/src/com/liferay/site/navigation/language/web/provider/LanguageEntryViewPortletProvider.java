@@ -12,19 +12,28 @@
  * details.
  */
 
-package com.liferay.site.navigation.language.web.configuration;
+package com.liferay.site.navigation.language.web.provider;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.provider.ViewPortletProvider;
+import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-public class LanguageWebConfigurationValues {
+@Component(
+	immediate = true,
+	property = {
+		"model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
+	},
+	service = ViewPortletProvider.class
+)
+public class LanguageEntryViewPortletProvider implements ViewPortletProvider {
 
-	public static final String DDM_TEMPLATE_KEY_DEFAULT = GetterUtil.getString(
-		LanguageWebConfigurationUtil.get("ddm.template.key.default"));
-
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		LanguageWebConfigurationUtil.get("display.templates.config"));
+	@Override
+	public String getPortletId() {
+		return LanguagePortletKeys.LANGUAGE;
+	}
 
 }

@@ -632,6 +632,10 @@ public class VerifyProperties extends VerifyProcess {
 		// Language
 
 		new String[] {
+			"language.display.style.default", "ddm.template.key.default",
+			"com.liferay.site.navigation.language.web"
+		},
+		new String[] {
 			"language.display.templates.config", "display.templates.config",
 			"com.liferay.site.navigation.language.web"
 		},
@@ -1063,8 +1067,8 @@ public class VerifyProperties extends VerifyProcess {
 		"jpa.provider", "jpa.provider.property.eclipselink.allow-zero-id",
 		"jpa.provider.property.eclipselink.logging.level",
 		"jpa.provider.property.eclipselink.logging.timestamp",
-		"layout.reset.portlet.ids", "layout.types", "lucene.analyzer",
-		"lucene.store.jdbc.auto.clean.up",
+		"language.display.style.options", "layout.reset.portlet.ids",
+		"layout.types", "lucene.analyzer", "lucene.store.jdbc.auto.clean.up",
 		"lucene.store.jdbc.auto.clean.up.enabled",
 		"lucene.store.jdbc.auto.clean.up.interval",
 		"lucene.store.jdbc.dialect.db2", "lucene.store.jdbc.dialect.derby",

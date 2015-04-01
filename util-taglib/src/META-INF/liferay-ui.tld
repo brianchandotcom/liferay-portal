@@ -3029,12 +3029,17 @@
 		<tag-class>com.liferay.taglib.ui.LanguageTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>displayCurrentLocale</name>
+			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>displayStyle</name>
+			<name>ddmTemplateKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>displayCurrentLocale</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -423,7 +423,7 @@ public class PoshiRunnerExecutor {
 			parseElement(commandElement);
 		}
 		catch (Exception e) {
-			SummaryLoggerHandler.failSummary(executeElement);
+			SummaryLoggerHandler.failSummary(executeElement, e.getMessage());
 
 			throw new PoshiRunnerException(e);
 		}
@@ -512,7 +512,7 @@ public class PoshiRunnerExecutor {
 			parseElement(commandElement);
 		}
 		catch (Exception e) {
-			SummaryLoggerHandler.failSummary(executeElement);
+			SummaryLoggerHandler.failSummary(executeElement, e.getMessage());
 
 			throw new PoshiRunnerException(e);
 		}

@@ -206,7 +206,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	* @return the create date of this website
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _website.getCreateDate();
 	}
 
@@ -221,7 +221,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	* @return the modified date of this website
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _website.getModifiedDate();
 	}
 
@@ -417,7 +417,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	* @param createDate the create date of this website
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_website.setCreateDate(createDate);
 	}
 
@@ -445,7 +445,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	* @param modifiedDate the modified date of this website
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_website.setModifiedDate(modifiedDate);
 	}
 

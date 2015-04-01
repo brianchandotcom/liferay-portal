@@ -75,7 +75,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the shopping cart with the primary key from the database. Also notifies the appropriate model listeners.
@@ -86,7 +86,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.shopping.model.ShoppingCart deleteShoppingCart(
-		long cartId) throws com.liferay.portal.kernel.exception.PortalException;
+		long cartId) throws PortalException;
 
 	/**
 	* Deletes the shopping cart from the database. Also notifies the appropriate model listeners.
@@ -181,8 +181,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCart getCart(
-		long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<com.liferay.portlet.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
@@ -191,8 +190,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the shopping cart with the primary key.
@@ -203,7 +201,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCart getShoppingCart(
-		long cartId) throws com.liferay.portal.kernel.exception.PortalException;
+		long cartId) throws PortalException;
 
 	/**
 	* Returns a range of all the shopping carts.
@@ -238,7 +236,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	public com.liferay.portlet.shopping.model.ShoppingCart updateCart(
 		long userId, long groupId, java.lang.String itemIds,
 		java.lang.String couponCodes, int altShipping, boolean insure)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the shopping cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

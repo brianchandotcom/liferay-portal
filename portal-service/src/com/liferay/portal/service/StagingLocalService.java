@@ -46,29 +46,28 @@ public interface StagingLocalService extends BaseLocalService {
 		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
 		boolean branchingPrivate, boolean remote,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void cleanUpStagingRequest(long stagingRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public long createStagingRequest(long userId, long groupId,
-		java.lang.String checksum)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String checksum) throws PortalException;
 
 	public void disableStaging(com.liferay.portal.model.Group liveGroup,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void disableStaging(javax.portlet.PortletRequest portletRequest,
 		com.liferay.portal.model.Group liveGroup,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void enableLocalStaging(long userId,
 		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
 		boolean branchingPrivate,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void enableRemoteStaging(long userId,
 		com.liferay.portal.model.Group stagingGroup, boolean branchingPublic,
@@ -76,7 +75,7 @@ public interface StagingLocalService extends BaseLocalService {
 		int remotePort, java.lang.String remotePathContext,
 		boolean secureConnection, long remoteGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -88,7 +87,7 @@ public interface StagingLocalService extends BaseLocalService {
 	public void publishStagingRequest(long userId, long stagingRequestId,
 		boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -98,11 +97,10 @@ public interface StagingLocalService extends BaseLocalService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void updateStagingRequest(long userId, long stagingRequestId,
-		java.lang.String fileName, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String fileName, byte[] bytes) throws PortalException;
 
 	public com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
 		long userId, long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

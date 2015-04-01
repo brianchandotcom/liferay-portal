@@ -78,7 +78,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the password policy remote service
 	 */
-	public com.liferay.portal.service.PasswordPolicyService getPasswordPolicyService() {
+	public PasswordPolicyService getPasswordPolicyService() {
 		return passwordPolicyService;
 	}
 
@@ -88,7 +88,7 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 	 * @param passwordPolicyService the password policy remote service
 	 */
 	public void setPasswordPolicyService(
-		com.liferay.portal.service.PasswordPolicyService passwordPolicyService) {
+		PasswordPolicyService passwordPolicyService) {
 		this.passwordPolicyService = passwordPolicyService;
 	}
 
@@ -397,8 +397,8 @@ public abstract class PasswordPolicyServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.PasswordPolicyLocalService.class)
 	protected com.liferay.portal.service.PasswordPolicyLocalService passwordPolicyLocalService;
-	@BeanReference(type = com.liferay.portal.service.PasswordPolicyService.class)
-	protected com.liferay.portal.service.PasswordPolicyService passwordPolicyService;
+	@BeanReference(type = PasswordPolicyService.class)
+	protected PasswordPolicyService passwordPolicyService;
 	@BeanReference(type = PasswordPolicyPersistence.class)
 	protected PasswordPolicyPersistence passwordPolicyPersistence;
 	@BeanReference(type = PasswordPolicyFinder.class)

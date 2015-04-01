@@ -55,7 +55,7 @@ public abstract class RegionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the region remote service
 	 */
-	public com.liferay.portal.service.RegionService getRegionService() {
+	public RegionService getRegionService() {
 		return regionService;
 	}
 
@@ -64,8 +64,7 @@ public abstract class RegionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param regionService the region remote service
 	 */
-	public void setRegionService(
-		com.liferay.portal.service.RegionService regionService) {
+	public void setRegionService(RegionService regionService) {
 		this.regionService = regionService;
 	}
 
@@ -201,8 +200,8 @@ public abstract class RegionServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.RegionService.class)
-	protected com.liferay.portal.service.RegionService regionService;
+	@BeanReference(type = RegionService.class)
+	protected RegionService regionService;
 	@BeanReference(type = RegionPersistence.class)
 	protected RegionPersistence regionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

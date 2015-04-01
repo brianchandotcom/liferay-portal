@@ -49,12 +49,11 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	 */
 	public com.liferay.portlet.expando.model.ExpandoColumn addColumn(
 		long tableId, java.lang.String name, int type)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.expando.model.ExpandoColumn addColumn(
 		long tableId, java.lang.String name, int type,
-		java.lang.Object defaultData)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.Object defaultData) throws PortalException;
 
 	/**
 	* Adds the expando column to the database. Also notifies the appropriate model listeners.
@@ -78,26 +77,23 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public void deleteColumn(
 		com.liferay.portlet.expando.model.ExpandoColumn column);
 
-	public void deleteColumn(long columnId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteColumn(long columnId) throws PortalException;
 
 	public void deleteColumn(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteColumn(long companyId, long classNameId,
 		java.lang.String tableName, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteColumn(long tableId, java.lang.String name);
 
 	public void deleteColumns(long companyId, java.lang.String className,
-		java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String tableName) throws PortalException;
 
 	public void deleteColumns(long companyId, long classNameId,
-		java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String tableName) throws PortalException;
 
 	public void deleteColumns(long tableId);
 
@@ -110,8 +106,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.expando.model.ExpandoColumn deleteExpandoColumn(
-		long columnId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long columnId) throws PortalException;
 
 	/**
 	* Deletes the expando column from the database. Also notifies the appropriate model listeners.
@@ -129,7 +124,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -212,8 +207,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoColumn getColumn(
-		long columnId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long columnId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoColumn getColumn(
@@ -298,8 +292,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoColumn getExpandoColumn(
-		long columnId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long columnId) throws PortalException;
 
 	/**
 	* Returns a range of all the expando columns.
@@ -327,8 +320,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -339,12 +331,11 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
 		long columnId, java.lang.String name, int type)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
 		long columnId, java.lang.String name, int type,
-		java.lang.Object defaultData)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.Object defaultData) throws PortalException;
 
 	/**
 	* Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -357,6 +348,5 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn);
 
 	public com.liferay.portlet.expando.model.ExpandoColumn updateTypeSettings(
-		long columnId, java.lang.String typeSettings)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long columnId, java.lang.String typeSettings) throws PortalException;
 }

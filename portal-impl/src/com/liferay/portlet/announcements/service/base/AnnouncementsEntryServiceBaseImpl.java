@@ -90,7 +90,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the announcements entry remote service
 	 */
-	public com.liferay.portlet.announcements.service.AnnouncementsEntryService getAnnouncementsEntryService() {
+	public AnnouncementsEntryService getAnnouncementsEntryService() {
 		return announcementsEntryService;
 	}
 
@@ -100,7 +100,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param announcementsEntryService the announcements entry remote service
 	 */
 	public void setAnnouncementsEntryService(
-		com.liferay.portlet.announcements.service.AnnouncementsEntryService announcementsEntryService) {
+		AnnouncementsEntryService announcementsEntryService) {
 		this.announcementsEntryService = announcementsEntryService;
 	}
 
@@ -874,8 +874,8 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService.class)
 	protected com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService announcementsEntryLocalService;
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsEntryService.class)
-	protected com.liferay.portlet.announcements.service.AnnouncementsEntryService announcementsEntryService;
+	@BeanReference(type = AnnouncementsEntryService.class)
+	protected AnnouncementsEntryService announcementsEntryService;
 	@BeanReference(type = AnnouncementsEntryPersistence.class)
 	protected AnnouncementsEntryPersistence announcementsEntryPersistence;
 	@BeanReference(type = AnnouncementsEntryFinder.class)

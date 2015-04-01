@@ -111,8 +111,7 @@ public class RegionUtil {
 	* @param countryId the country ID
 	* @return the matching regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findByCountryId(
-		long countryId) {
+	public static List<Region> findByCountryId(long countryId) {
 		return getPersistence().findByCountryId(countryId);
 	}
 
@@ -120,7 +119,7 @@ public class RegionUtil {
 	* Returns a range of all the regions where countryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param countryId the country ID
@@ -128,8 +127,8 @@ public class RegionUtil {
 	* @param end the upper bound of the range of regions (not inclusive)
 	* @return the range of matching regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findByCountryId(
-		long countryId, int start, int end) {
+	public static List<Region> findByCountryId(long countryId, int start,
+		int end) {
 		return getPersistence().findByCountryId(countryId, start, end);
 	}
 
@@ -137,7 +136,7 @@ public class RegionUtil {
 	* Returns an ordered range of all the regions where countryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param countryId the country ID
@@ -146,9 +145,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findByCountryId(
-		long countryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static List<Region> findByCountryId(long countryId, int start,
+		int end, OrderByComparator<Region> orderByComparator) {
 		return getPersistence()
 				   .findByCountryId(countryId, start, end, orderByComparator);
 	}
@@ -159,11 +157,10 @@ public class RegionUtil {
 	* @param countryId the country ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching region
-	* @throws com.liferay.portal.NoSuchRegionException if a matching region could not be found
+	* @throws NoSuchRegionException if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region findByCountryId_First(
-		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+	public static Region findByCountryId_First(long countryId,
+		OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByCountryId_First(countryId, orderByComparator);
@@ -176,9 +173,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region fetchByCountryId_First(
-		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static Region fetchByCountryId_First(long countryId,
+		OrderByComparator<Region> orderByComparator) {
 		return getPersistence()
 				   .fetchByCountryId_First(countryId, orderByComparator);
 	}
@@ -189,11 +185,10 @@ public class RegionUtil {
 	* @param countryId the country ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching region
-	* @throws com.liferay.portal.NoSuchRegionException if a matching region could not be found
+	* @throws NoSuchRegionException if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region findByCountryId_Last(
-		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+	public static Region findByCountryId_Last(long countryId,
+		OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByCountryId_Last(countryId, orderByComparator);
@@ -206,9 +201,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region fetchByCountryId_Last(
-		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static Region fetchByCountryId_Last(long countryId,
+		OrderByComparator<Region> orderByComparator) {
 		return getPersistence()
 				   .fetchByCountryId_Last(countryId, orderByComparator);
 	}
@@ -220,11 +214,10 @@ public class RegionUtil {
 	* @param countryId the country ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next region
-	* @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
+	* @throws NoSuchRegionException if a region with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Region[] findByCountryId_PrevAndNext(
-		long regionId, long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+	public static Region[] findByCountryId_PrevAndNext(long regionId,
+		long countryId, OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByCountryId_PrevAndNext(regionId, countryId,
@@ -256,8 +249,7 @@ public class RegionUtil {
 	* @param active the active
 	* @return the matching regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findByActive(
-		boolean active) {
+	public static List<Region> findByActive(boolean active) {
 		return getPersistence().findByActive(active);
 	}
 
@@ -265,7 +257,7 @@ public class RegionUtil {
 	* Returns a range of all the regions where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -273,8 +265,7 @@ public class RegionUtil {
 	* @param end the upper bound of the range of regions (not inclusive)
 	* @return the range of matching regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findByActive(
-		boolean active, int start, int end) {
+	public static List<Region> findByActive(boolean active, int start, int end) {
 		return getPersistence().findByActive(active, start, end);
 	}
 
@@ -282,7 +273,7 @@ public class RegionUtil {
 	* Returns an ordered range of all the regions where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -291,9 +282,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findByActive(
-		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static List<Region> findByActive(boolean active, int start, int end,
+		OrderByComparator<Region> orderByComparator) {
 		return getPersistence()
 				   .findByActive(active, start, end, orderByComparator);
 	}
@@ -304,11 +294,10 @@ public class RegionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching region
-	* @throws com.liferay.portal.NoSuchRegionException if a matching region could not be found
+	* @throws NoSuchRegionException if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region findByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+	public static Region findByActive_First(boolean active,
+		OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence().findByActive_First(active, orderByComparator);
 	}
@@ -320,9 +309,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region fetchByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static Region fetchByActive_First(boolean active,
+		OrderByComparator<Region> orderByComparator) {
 		return getPersistence().fetchByActive_First(active, orderByComparator);
 	}
 
@@ -332,11 +320,10 @@ public class RegionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching region
-	* @throws com.liferay.portal.NoSuchRegionException if a matching region could not be found
+	* @throws NoSuchRegionException if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region findByActive_Last(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+	public static Region findByActive_Last(boolean active,
+		OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
@@ -348,9 +335,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region fetchByActive_Last(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static Region fetchByActive_Last(boolean active,
+		OrderByComparator<Region> orderByComparator) {
 		return getPersistence().fetchByActive_Last(active, orderByComparator);
 	}
 
@@ -361,11 +347,10 @@ public class RegionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next region
-	* @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
+	* @throws NoSuchRegionException if a region with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Region[] findByActive_PrevAndNext(
-		long regionId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+	public static Region[] findByActive_PrevAndNext(long regionId,
+		boolean active, OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByActive_PrevAndNext(regionId, active, orderByComparator);
@@ -391,15 +376,14 @@ public class RegionUtil {
 	}
 
 	/**
-	* Returns the region where countryId = &#63; and regionCode = &#63; or throws a {@link com.liferay.portal.NoSuchRegionException} if it could not be found.
+	* Returns the region where countryId = &#63; and regionCode = &#63; or throws a {@link NoSuchRegionException} if it could not be found.
 	*
 	* @param countryId the country ID
 	* @param regionCode the region code
 	* @return the matching region
-	* @throws com.liferay.portal.NoSuchRegionException if a matching region could not be found
+	* @throws NoSuchRegionException if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region findByC_R(long countryId,
-		java.lang.String regionCode)
+	public static Region findByC_R(long countryId, java.lang.String regionCode)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence().findByC_R(countryId, regionCode);
 	}
@@ -411,8 +395,7 @@ public class RegionUtil {
 	* @param regionCode the region code
 	* @return the matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region fetchByC_R(long countryId,
-		java.lang.String regionCode) {
+	public static Region fetchByC_R(long countryId, java.lang.String regionCode) {
 		return getPersistence().fetchByC_R(countryId, regionCode);
 	}
 
@@ -424,7 +407,7 @@ public class RegionUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region fetchByC_R(long countryId,
+	public static Region fetchByC_R(long countryId,
 		java.lang.String regionCode, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_R(countryId, regionCode, retrieveFromCache);
@@ -437,8 +420,7 @@ public class RegionUtil {
 	* @param regionCode the region code
 	* @return the region that was removed
 	*/
-	public static com.liferay.portal.model.Region removeByC_R(long countryId,
-		java.lang.String regionCode)
+	public static Region removeByC_R(long countryId, java.lang.String regionCode)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence().removeByC_R(countryId, regionCode);
 	}
@@ -461,8 +443,7 @@ public class RegionUtil {
 	* @param active the active
 	* @return the matching regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findByC_A(
-		long countryId, boolean active) {
+	public static List<Region> findByC_A(long countryId, boolean active) {
 		return getPersistence().findByC_A(countryId, active);
 	}
 
@@ -470,7 +451,7 @@ public class RegionUtil {
 	* Returns a range of all the regions where countryId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param countryId the country ID
@@ -479,8 +460,8 @@ public class RegionUtil {
 	* @param end the upper bound of the range of regions (not inclusive)
 	* @return the range of matching regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findByC_A(
-		long countryId, boolean active, int start, int end) {
+	public static List<Region> findByC_A(long countryId, boolean active,
+		int start, int end) {
 		return getPersistence().findByC_A(countryId, active, start, end);
 	}
 
@@ -488,7 +469,7 @@ public class RegionUtil {
 	* Returns an ordered range of all the regions where countryId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param countryId the country ID
@@ -498,9 +479,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findByC_A(
-		long countryId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static List<Region> findByC_A(long countryId, boolean active,
+		int start, int end, OrderByComparator<Region> orderByComparator) {
 		return getPersistence()
 				   .findByC_A(countryId, active, start, end, orderByComparator);
 	}
@@ -512,11 +492,10 @@ public class RegionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching region
-	* @throws com.liferay.portal.NoSuchRegionException if a matching region could not be found
+	* @throws NoSuchRegionException if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region findByC_A_First(
-		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+	public static Region findByC_A_First(long countryId, boolean active,
+		OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByC_A_First(countryId, active, orderByComparator);
@@ -530,9 +509,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region fetchByC_A_First(
-		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static Region fetchByC_A_First(long countryId, boolean active,
+		OrderByComparator<Region> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_A_First(countryId, active, orderByComparator);
 	}
@@ -544,11 +522,10 @@ public class RegionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching region
-	* @throws com.liferay.portal.NoSuchRegionException if a matching region could not be found
+	* @throws NoSuchRegionException if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region findByC_A_Last(
-		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+	public static Region findByC_A_Last(long countryId, boolean active,
+		OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByC_A_Last(countryId, active, orderByComparator);
@@ -562,9 +539,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching region, or <code>null</code> if a matching region could not be found
 	*/
-	public static com.liferay.portal.model.Region fetchByC_A_Last(
-		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static Region fetchByC_A_Last(long countryId, boolean active,
+		OrderByComparator<Region> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_A_Last(countryId, active, orderByComparator);
 	}
@@ -577,11 +553,10 @@ public class RegionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next region
-	* @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
+	* @throws NoSuchRegionException if a region with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Region[] findByC_A_PrevAndNext(
-		long regionId, long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+	public static Region[] findByC_A_PrevAndNext(long regionId, long countryId,
+		boolean active, OrderByComparator<Region> orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByC_A_PrevAndNext(regionId, countryId, active,
@@ -614,7 +589,7 @@ public class RegionUtil {
 	*
 	* @param region the region
 	*/
-	public static void cacheResult(com.liferay.portal.model.Region region) {
+	public static void cacheResult(Region region) {
 		getPersistence().cacheResult(region);
 	}
 
@@ -623,8 +598,7 @@ public class RegionUtil {
 	*
 	* @param regions the regions
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.Region> regions) {
+	public static void cacheResult(List<Region> regions) {
 		getPersistence().cacheResult(regions);
 	}
 
@@ -634,7 +608,7 @@ public class RegionUtil {
 	* @param regionId the primary key for the new region
 	* @return the new region
 	*/
-	public static com.liferay.portal.model.Region create(long regionId) {
+	public static Region create(long regionId) {
 		return getPersistence().create(regionId);
 	}
 
@@ -643,27 +617,26 @@ public class RegionUtil {
 	*
 	* @param regionId the primary key of the region
 	* @return the region that was removed
-	* @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
+	* @throws NoSuchRegionException if a region with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Region remove(long regionId)
+	public static Region remove(long regionId)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence().remove(regionId);
 	}
 
-	public static com.liferay.portal.model.Region updateImpl(
-		com.liferay.portal.model.Region region) {
+	public static Region updateImpl(Region region) {
 		return getPersistence().updateImpl(region);
 	}
 
 	/**
-	* Returns the region with the primary key or throws a {@link com.liferay.portal.NoSuchRegionException} if it could not be found.
+	* Returns the region with the primary key or throws a {@link NoSuchRegionException} if it could not be found.
 	*
 	* @param regionId the primary key of the region
 	* @return the region
-	* @throws com.liferay.portal.NoSuchRegionException if a region with the primary key could not be found
+	* @throws NoSuchRegionException if a region with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Region findByPrimaryKey(
-		long regionId) throws com.liferay.portal.NoSuchRegionException {
+	public static Region findByPrimaryKey(long regionId)
+		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence().findByPrimaryKey(regionId);
 	}
 
@@ -673,12 +646,11 @@ public class RegionUtil {
 	* @param regionId the primary key of the region
 	* @return the region, or <code>null</code> if a region with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Region fetchByPrimaryKey(
-		long regionId) {
+	public static Region fetchByPrimaryKey(long regionId) {
 		return getPersistence().fetchByPrimaryKey(regionId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Region> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, Region> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -688,7 +660,7 @@ public class RegionUtil {
 	*
 	* @return the regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findAll() {
+	public static List<Region> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -696,15 +668,14 @@ public class RegionUtil {
 	* Returns a range of all the regions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of regions
 	* @param end the upper bound of the range of regions (not inclusive)
 	* @return the range of regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findAll(
-		int start, int end) {
+	public static List<Region> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -712,7 +683,7 @@ public class RegionUtil {
 	* Returns an ordered range of all the regions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RegionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of regions
@@ -720,9 +691,8 @@ public class RegionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of regions
 	*/
-	public static java.util.List<com.liferay.portal.model.Region> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+	public static List<Region> findAll(int start, int end,
+		OrderByComparator<Region> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

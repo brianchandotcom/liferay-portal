@@ -28,7 +28,7 @@ import com.liferay.portal.service.ClusterGroupLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ClusterGroupImpl
- * @see com.liferay.portal.model.ClusterGroup
+ * @see ClusterGroup
  * @generated
  */
 @ProviderType

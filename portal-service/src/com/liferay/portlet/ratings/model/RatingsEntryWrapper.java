@@ -188,7 +188,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @return the create date of this ratings entry
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _ratingsEntry.getCreateDate();
 	}
 
@@ -213,7 +213,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @return the modified date of this ratings entry
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _ratingsEntry.getModifiedDate();
 	}
 
@@ -353,7 +353,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @param createDate the create date of this ratings entry
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_ratingsEntry.setCreateDate(createDate);
 	}
 
@@ -391,7 +391,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	* @param modifiedDate the modified date of this ratings entry
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_ratingsEntry.setModifiedDate(modifiedDate);
 	}
 

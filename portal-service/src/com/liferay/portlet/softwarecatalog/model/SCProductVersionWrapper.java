@@ -181,7 +181,7 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	* @return the create date of this s c product version
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _scProductVersion.getCreateDate();
 	}
 
@@ -221,7 +221,7 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	* @return the modified date of this s c product version
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _scProductVersion.getModifiedDate();
 	}
 
@@ -381,7 +381,7 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	* @param createDate the create date of this s c product version
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_scProductVersion.setCreateDate(createDate);
 	}
 
@@ -429,7 +429,7 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	* @param modifiedDate the modified date of this s c product version
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_scProductVersion.setModifiedDate(modifiedDate);
 	}
 

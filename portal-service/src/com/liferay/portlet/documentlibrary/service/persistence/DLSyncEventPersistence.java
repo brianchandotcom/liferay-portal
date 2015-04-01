@@ -46,14 +46,13 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param modifiedTime the modified time
 	* @return the matching d l sync events
 	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findByModifiedTime(
-		long modifiedTime);
+	public java.util.List<DLSyncEvent> findByModifiedTime(long modifiedTime);
 
 	/**
 	* Returns a range of all the d l sync events where modifiedTime &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param modifiedTime the modified time
@@ -61,14 +60,14 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param end the upper bound of the range of d l sync events (not inclusive)
 	* @return the range of matching d l sync events
 	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findByModifiedTime(
-		long modifiedTime, int start, int end);
+	public java.util.List<DLSyncEvent> findByModifiedTime(long modifiedTime,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the d l sync events where modifiedTime &gt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param modifiedTime the modified time
@@ -77,9 +76,9 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d l sync events
 	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findByModifiedTime(
-		long modifiedTime, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator);
+	public java.util.List<DLSyncEvent> findByModifiedTime(long modifiedTime,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator);
 
 	/**
 	* Returns the first d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -87,11 +86,10 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d l sync event
-	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a matching d l sync event could not be found
+	* @throws NoSuchSyncEventException if a matching d l sync event could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByModifiedTime_First(
-		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator)
+	public DLSyncEvent findByModifiedTime_First(long modifiedTime,
+		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
@@ -101,9 +99,8 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByModifiedTime_First(
-		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator);
+	public DLSyncEvent fetchByModifiedTime_First(long modifiedTime,
+		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator);
 
 	/**
 	* Returns the last d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -111,11 +108,10 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d l sync event
-	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a matching d l sync event could not be found
+	* @throws NoSuchSyncEventException if a matching d l sync event could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByModifiedTime_Last(
-		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator)
+	public DLSyncEvent findByModifiedTime_Last(long modifiedTime,
+		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
@@ -125,9 +121,8 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByModifiedTime_Last(
-		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator);
+	public DLSyncEvent fetchByModifiedTime_Last(long modifiedTime,
+		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator);
 
 	/**
 	* Returns the d l sync events before and after the current d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -136,11 +131,11 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d l sync event
-	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a d l sync event with the primary key could not be found
+	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent[] findByModifiedTime_PrevAndNext(
-		long syncEventId, long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator)
+	public DLSyncEvent[] findByModifiedTime_PrevAndNext(long syncEventId,
+		long modifiedTime,
+		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
@@ -159,14 +154,13 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	public int countByModifiedTime(long modifiedTime);
 
 	/**
-	* Returns the d l sync event where typePK = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchSyncEventException} if it could not be found.
+	* Returns the d l sync event where typePK = &#63; or throws a {@link NoSuchSyncEventException} if it could not be found.
 	*
 	* @param typePK the type p k
 	* @return the matching d l sync event
-	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a matching d l sync event could not be found
+	* @throws NoSuchSyncEventException if a matching d l sync event could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByTypePK(
-		long typePK)
+	public DLSyncEvent findByTypePK(long typePK)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
@@ -175,8 +169,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param typePK the type p k
 	* @return the matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByTypePK(
-		long typePK);
+	public DLSyncEvent fetchByTypePK(long typePK);
 
 	/**
 	* Returns the d l sync event where typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -185,8 +178,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByTypePK(
-		long typePK, boolean retrieveFromCache);
+	public DLSyncEvent fetchByTypePK(long typePK, boolean retrieveFromCache);
 
 	/**
 	* Removes the d l sync event where typePK = &#63; from the database.
@@ -194,8 +186,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param typePK the type p k
 	* @return the d l sync event that was removed
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent removeByTypePK(
-		long typePK)
+	public DLSyncEvent removeByTypePK(long typePK)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
@@ -211,16 +202,14 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*
 	* @param dlSyncEvent the d l sync event
 	*/
-	public void cacheResult(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent);
+	public void cacheResult(DLSyncEvent dlSyncEvent);
 
 	/**
 	* Caches the d l sync events in the entity cache if it is enabled.
 	*
 	* @param dlSyncEvents the d l sync events
 	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> dlSyncEvents);
+	public void cacheResult(java.util.List<DLSyncEvent> dlSyncEvents);
 
 	/**
 	* Creates a new d l sync event with the primary key. Does not add the d l sync event to the database.
@@ -228,32 +217,28 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param syncEventId the primary key for the new d l sync event
 	* @return the new d l sync event
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent create(
-		long syncEventId);
+	public DLSyncEvent create(long syncEventId);
 
 	/**
 	* Removes the d l sync event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event that was removed
-	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a d l sync event with the primary key could not be found
+	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent remove(
-		long syncEventId)
+	public DLSyncEvent remove(long syncEventId)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent);
+	public DLSyncEvent updateImpl(DLSyncEvent dlSyncEvent);
 
 	/**
-	* Returns the d l sync event with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchSyncEventException} if it could not be found.
+	* Returns the d l sync event with the primary key or throws a {@link NoSuchSyncEventException} if it could not be found.
 	*
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event
-	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a d l sync event with the primary key could not be found
+	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByPrimaryKey(
-		long syncEventId)
+	public DLSyncEvent findByPrimaryKey(long syncEventId)
 		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
@@ -262,11 +247,10 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event, or <code>null</code> if a d l sync event with the primary key could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByPrimaryKey(
-		long syncEventId);
+	public DLSyncEvent fetchByPrimaryKey(long syncEventId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.documentlibrary.model.DLSyncEvent> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, DLSyncEvent> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -274,27 +258,26 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*
 	* @return the d l sync events
 	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findAll();
+	public java.util.List<DLSyncEvent> findAll();
 
 	/**
 	* Returns a range of all the d l sync events.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d l sync events
 	* @param end the upper bound of the range of d l sync events (not inclusive)
 	* @return the range of d l sync events
 	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findAll(
-		int start, int end);
+	public java.util.List<DLSyncEvent> findAll(int start, int end);
 
 	/**
 	* Returns an ordered range of all the d l sync events.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d l sync events
@@ -302,9 +285,8 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d l sync events
 	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLSyncEvent> orderByComparator);
+	public java.util.List<DLSyncEvent> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator);
 
 	/**
 	* Removes all the d l sync events from the database.

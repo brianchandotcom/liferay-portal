@@ -59,8 +59,7 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 		com.liferay.portlet.expando.model.ExpandoRow expandoRow);
 
 	public com.liferay.portlet.expando.model.ExpandoRow addRow(long tableId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long classPK) throws PortalException;
 
 	/**
 	* Creates a new expando row with the primary key. Does not add the expando row to the database.
@@ -90,7 +89,7 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.expando.model.ExpandoRow deleteExpandoRow(
-		long rowId) throws com.liferay.portal.kernel.exception.PortalException;
+		long rowId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -98,23 +97,19 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteRow(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String tableName, long classPK) throws PortalException;
 
 	public void deleteRow(long companyId, long classNameId,
-		java.lang.String tableName, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String tableName, long classPK) throws PortalException;
 
 	public void deleteRow(com.liferay.portlet.expando.model.ExpandoRow row);
 
-	public void deleteRow(long rowId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteRow(long rowId) throws PortalException;
 
-	public void deleteRow(long tableId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteRow(long tableId, long classPK) throws PortalException;
 
 	public void deleteRows(long classPK);
 
@@ -221,7 +216,7 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoRow getExpandoRow(
-		long rowId) throws com.liferay.portal.kernel.exception.PortalException;
+		long rowId) throws PortalException;
 
 	/**
 	* Returns a range of all the expando rows.
@@ -249,8 +244,7 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoRow getRow(long companyId,
@@ -262,12 +256,11 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoRow getRow(long rowId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoRow getRow(long tableId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long classPK) throws PortalException;
 
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #getRows(long, String,

@@ -81,7 +81,7 @@ public abstract class ContactServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the contact remote service
 	 */
-	public com.liferay.portal.service.ContactService getContactService() {
+	public ContactService getContactService() {
 		return contactService;
 	}
 
@@ -90,8 +90,7 @@ public abstract class ContactServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param contactService the contact remote service
 	 */
-	public void setContactService(
-		com.liferay.portal.service.ContactService contactService) {
+	public void setContactService(ContactService contactService) {
 		this.contactService = contactService;
 	}
 
@@ -566,8 +565,8 @@ public abstract class ContactServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.ContactLocalService.class)
 	protected com.liferay.portal.service.ContactLocalService contactLocalService;
-	@BeanReference(type = com.liferay.portal.service.ContactService.class)
-	protected com.liferay.portal.service.ContactService contactService;
+	@BeanReference(type = ContactService.class)
+	protected ContactService contactService;
 	@BeanReference(type = ContactPersistence.class)
 	protected ContactPersistence contactPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

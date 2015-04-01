@@ -56,7 +56,7 @@ public abstract class QuartzLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the quartz local service
 	 */
-	public com.liferay.portal.service.QuartzLocalService getQuartzLocalService() {
+	public QuartzLocalService getQuartzLocalService() {
 		return quartzLocalService;
 	}
 
@@ -65,8 +65,7 @@ public abstract class QuartzLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param quartzLocalService the quartz local service
 	 */
-	public void setQuartzLocalService(
-		com.liferay.portal.service.QuartzLocalService quartzLocalService) {
+	public void setQuartzLocalService(QuartzLocalService quartzLocalService) {
 		this.quartzLocalService = quartzLocalService;
 	}
 
@@ -139,8 +138,8 @@ public abstract class QuartzLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.QuartzLocalService.class)
-	protected com.liferay.portal.service.QuartzLocalService quartzLocalService;
+	@BeanReference(type = QuartzLocalService.class)
+	protected QuartzLocalService quartzLocalService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	private String _beanIdentifier;

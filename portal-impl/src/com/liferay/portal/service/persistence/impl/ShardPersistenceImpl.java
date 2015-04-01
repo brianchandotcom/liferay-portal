@@ -94,11 +94,11 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns the shard where name = &#63; or throws a {@link com.liferay.portal.NoSuchShardException} if it could not be found.
+	 * Returns the shard where name = &#63; or throws a {@link NoSuchShardException} if it could not be found.
 	 *
 	 * @param name the name
 	 * @return the matching shard
-	 * @throws com.liferay.portal.NoSuchShardException if a matching shard could not be found
+	 * @throws NoSuchShardException if a matching shard could not be found
 	 */
 	@Override
 	public Shard findByName(String name) throws NoSuchShardException {
@@ -335,12 +335,12 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the shard where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portal.NoSuchShardException} if it could not be found.
+	 * Returns the shard where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchShardException} if it could not be found.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching shard
-	 * @throws com.liferay.portal.NoSuchShardException if a matching shard could not be found
+	 * @throws NoSuchShardException if a matching shard could not be found
 	 */
 	@Override
 	public Shard findByC_C(long classNameId, long classPK)
@@ -741,7 +741,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 *
 	 * @param shardId the primary key of the shard
 	 * @return the shard that was removed
-	 * @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
+	 * @throws NoSuchShardException if a shard with the primary key could not be found
 	 */
 	@Override
 	public Shard remove(long shardId) throws NoSuchShardException {
@@ -753,7 +753,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 *
 	 * @param primaryKey the primary key of the shard
 	 * @return the shard that was removed
-	 * @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
+	 * @throws NoSuchShardException if a shard with the primary key could not be found
 	 */
 	@Override
 	public Shard remove(Serializable primaryKey) throws NoSuchShardException {
@@ -819,7 +819,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	}
 
 	@Override
-	public Shard updateImpl(com.liferay.portal.model.Shard shard) {
+	public Shard updateImpl(Shard shard) {
 		shard = toUnwrappedModel(shard);
 
 		boolean isNew = shard.isNew();
@@ -886,7 +886,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 *
 	 * @param primaryKey the primary key of the shard
 	 * @return the shard
-	 * @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
+	 * @throws NoSuchShardException if a shard with the primary key could not be found
 	 */
 	@Override
 	public Shard findByPrimaryKey(Serializable primaryKey)
@@ -906,11 +906,11 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	}
 
 	/**
-	 * Returns the shard with the primary key or throws a {@link com.liferay.portal.NoSuchShardException} if it could not be found.
+	 * Returns the shard with the primary key or throws a {@link NoSuchShardException} if it could not be found.
 	 *
 	 * @param shardId the primary key of the shard
 	 * @return the shard
-	 * @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
+	 * @throws NoSuchShardException if a shard with the primary key could not be found
 	 */
 	@Override
 	public Shard findByPrimaryKey(long shardId) throws NoSuchShardException {
@@ -1079,7 +1079,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 * Returns a range of all the shards.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ShardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of shards
@@ -1095,7 +1095,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 * Returns an ordered range of all the shards.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ShardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of shards

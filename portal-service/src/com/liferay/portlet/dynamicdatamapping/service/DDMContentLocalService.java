@@ -51,7 +51,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 		long userId, long groupId, java.lang.String name,
 		java.lang.String description, java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds the d d m content to the database. Also notifies the appropriate model listeners.
@@ -86,8 +86,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent deleteDDMContent(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long contentId) throws PortalException;
 
 	/**
 	* Deletes the d d m content from the database. Also notifies the appropriate model listeners.
@@ -105,7 +104,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -199,8 +198,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent getContent(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long contentId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getContents();
@@ -225,8 +223,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent getDDMContent(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long contentId) throws PortalException;
 
 	/**
 	* Returns the d d m content matching the UUID and group.
@@ -238,8 +235,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent getDDMContentByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the d d m contents.
@@ -297,8 +293,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -311,7 +306,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 		long contentId, java.lang.String name, java.lang.String description,
 		java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the d d m content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

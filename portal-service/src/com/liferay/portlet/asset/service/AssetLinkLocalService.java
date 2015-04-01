@@ -77,7 +77,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portlet.asset.model.AssetLink addLink(long userId,
 		long entryId1, long entryId2, int type, int weight)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new asset link with the primary key. Does not add the asset link to the database.
@@ -107,7 +107,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.asset.model.AssetLink deleteAssetLink(
-		long linkId) throws com.liferay.portal.kernel.exception.PortalException;
+		long linkId) throws PortalException;
 
 	/**
 	* Deletes the asset link.
@@ -122,8 +122,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	* @param linkId the primary key of the asset link
 	* @throws PortalException if the asset link could not be found
 	*/
-	public void deleteLink(long linkId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteLink(long linkId) throws PortalException;
 
 	/**
 	* Deletes all links associated with the asset entry.
@@ -146,7 +145,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -228,7 +227,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetLink getAssetLink(long linkId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns a range of all the asset links.
@@ -321,8 +320,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns all the asset links of the given link type whose second entry ID
@@ -361,7 +359,7 @@ public interface AssetLinkLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.asset.model.AssetLink updateLink(long userId,
 		long entryId1, long entryId2, int typeId, int weight)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates all links of the asset entry, replacing them with links
@@ -389,5 +387,5 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	* @throws PortalException if the user could not be found
 	*/
 	public void updateLinks(long userId, long entryId, long[] linkEntryIds,
-		int typeId) throws com.liferay.portal.kernel.exception.PortalException;
+		int typeId) throws PortalException;
 }

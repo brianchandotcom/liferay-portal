@@ -48,15 +48,13 @@ public interface ExpandoColumnService extends BaseService {
 	 */
 	public com.liferay.portlet.expando.model.ExpandoColumn addColumn(
 		long tableId, java.lang.String name, int type)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.expando.model.ExpandoColumn addColumn(
 		long tableId, java.lang.String name, int type,
-		java.lang.Object defaultData)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.Object defaultData) throws PortalException;
 
-	public void deleteColumn(long columnId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteColumn(long columnId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -74,14 +72,12 @@ public interface ExpandoColumnService extends BaseService {
 
 	public com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
 		long columnId, java.lang.String name, int type)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
 		long columnId, java.lang.String name, int type,
-		java.lang.Object defaultData)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.Object defaultData) throws PortalException;
 
 	public com.liferay.portlet.expando.model.ExpandoColumn updateTypeSettings(
-		long columnId, java.lang.String typeSettings)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long columnId, java.lang.String typeSettings) throws PortalException;
 }

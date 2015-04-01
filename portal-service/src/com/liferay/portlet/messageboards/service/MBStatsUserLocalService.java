@@ -89,8 +89,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.messageboards.model.MBStatsUser deleteMBStatsUser(
-		long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long statsUserId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -98,13 +97,12 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteStatsUser(
 		com.liferay.portlet.messageboards.model.MBStatsUser statsUser);
 
-	public void deleteStatsUser(long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteStatsUser(long statsUserId) throws PortalException;
 
 	public void deleteStatsUsersByGroupId(long groupId);
 
@@ -201,8 +199,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBStatsUser getMBStatsUser(
-		long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long statsUserId) throws PortalException;
 
 	/**
 	* Returns a range of all the message boards stats users.
@@ -236,8 +233,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBStatsUser getStatsUser(
@@ -245,12 +241,11 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> getStatsUsersByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long groupId, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStatsUsersByGroupIdCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> getStatsUsersByUserId(

@@ -28,7 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionLocalSer
  *
  * @author Brian Wing Shun Chan
  * @see DDMTemplateVersionImpl
- * @see com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion
+ * @see DDMTemplateVersion
  * @generated
  */
 @ProviderType

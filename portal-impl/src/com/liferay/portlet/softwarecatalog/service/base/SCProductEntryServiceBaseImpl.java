@@ -87,7 +87,7 @@ public abstract class SCProductEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the s c product entry remote service
 	 */
-	public com.liferay.portlet.softwarecatalog.service.SCProductEntryService getSCProductEntryService() {
+	public SCProductEntryService getSCProductEntryService() {
 		return scProductEntryService;
 	}
 
@@ -97,7 +97,7 @@ public abstract class SCProductEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param scProductEntryService the s c product entry remote service
 	 */
 	public void setSCProductEntryService(
-		com.liferay.portlet.softwarecatalog.service.SCProductEntryService scProductEntryService) {
+		SCProductEntryService scProductEntryService) {
 		this.scProductEntryService = scProductEntryService;
 	}
 
@@ -743,8 +743,8 @@ public abstract class SCProductEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService scProductEntryLocalService;
-	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductEntryService.class)
-	protected com.liferay.portlet.softwarecatalog.service.SCProductEntryService scProductEntryService;
+	@BeanReference(type = SCProductEntryService.class)
+	protected SCProductEntryService scProductEntryService;
 	@BeanReference(type = SCProductEntryPersistence.class)
 	protected SCProductEntryPersistence scProductEntryPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

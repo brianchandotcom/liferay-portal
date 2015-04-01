@@ -28,7 +28,7 @@ import com.liferay.portal.service.EmailAddressLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see EmailAddressImpl
- * @see com.liferay.portal.model.EmailAddress
+ * @see EmailAddress
  * @generated
  */
 @ProviderType

@@ -301,7 +301,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 *
 	 * @return the d d m storage link local service
 	 */
-	public com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService getDDMStorageLinkLocalService() {
+	public DDMStorageLinkLocalService getDDMStorageLinkLocalService() {
 		return ddmStorageLinkLocalService;
 	}
 
@@ -311,7 +311,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	 * @param ddmStorageLinkLocalService the d d m storage link local service
 	 */
 	public void setDDMStorageLinkLocalService(
-		com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService ddmStorageLinkLocalService) {
+		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
 		this.ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 	}
 
@@ -415,8 +415,8 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService.class)
-	protected com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService ddmStorageLinkLocalService;
+	@BeanReference(type = DDMStorageLinkLocalService.class)
+	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
 	@BeanReference(type = DDMStorageLinkPersistence.class)
 	protected DDMStorageLinkPersistence ddmStorageLinkPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

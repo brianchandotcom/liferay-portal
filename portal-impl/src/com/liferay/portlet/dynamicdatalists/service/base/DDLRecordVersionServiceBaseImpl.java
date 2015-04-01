@@ -74,7 +74,7 @@ public abstract class DDLRecordVersionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the d d l record version remote service
 	 */
-	public com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService getDDLRecordVersionService() {
+	public DDLRecordVersionService getDDLRecordVersionService() {
 		return ddlRecordVersionService;
 	}
 
@@ -84,7 +84,7 @@ public abstract class DDLRecordVersionServiceBaseImpl extends BaseServiceImpl
 	 * @param ddlRecordVersionService the d d l record version remote service
 	 */
 	public void setDDLRecordVersionService(
-		com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService ddlRecordVersionService) {
+		DDLRecordVersionService ddlRecordVersionService) {
 		this.ddlRecordVersionService = ddlRecordVersionService;
 	}
 
@@ -186,8 +186,8 @@ public abstract class DDLRecordVersionServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService.class)
 	protected com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService ddlRecordVersionLocalService;
-	@BeanReference(type = com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService.class)
-	protected com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService ddlRecordVersionService;
+	@BeanReference(type = DDLRecordVersionService.class)
+	protected DDLRecordVersionService ddlRecordVersionService;
 	@BeanReference(type = DDLRecordVersionPersistence.class)
 	protected DDLRecordVersionPersistence ddlRecordVersionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -306,7 +306,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 *
 	 * @return the background task local service
 	 */
-	public com.liferay.portal.service.BackgroundTaskLocalService getBackgroundTaskLocalService() {
+	public BackgroundTaskLocalService getBackgroundTaskLocalService() {
 		return backgroundTaskLocalService;
 	}
 
@@ -316,7 +316,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @param backgroundTaskLocalService the background task local service
 	 */
 	public void setBackgroundTaskLocalService(
-		com.liferay.portal.service.BackgroundTaskLocalService backgroundTaskLocalService) {
+		BackgroundTaskLocalService backgroundTaskLocalService) {
 		this.backgroundTaskLocalService = backgroundTaskLocalService;
 	}
 
@@ -568,8 +568,8 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.BackgroundTaskLocalService.class)
-	protected com.liferay.portal.service.BackgroundTaskLocalService backgroundTaskLocalService;
+	@BeanReference(type = BackgroundTaskLocalService.class)
+	protected BackgroundTaskLocalService backgroundTaskLocalService;
 	@BeanReference(type = com.liferay.portal.service.BackgroundTaskService.class)
 	protected com.liferay.portal.service.BackgroundTaskService backgroundTaskService;
 	@BeanReference(type = BackgroundTaskPersistence.class)

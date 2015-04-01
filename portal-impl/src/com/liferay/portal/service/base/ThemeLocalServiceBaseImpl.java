@@ -57,7 +57,7 @@ public abstract class ThemeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the theme local service
 	 */
-	public com.liferay.portal.service.ThemeLocalService getThemeLocalService() {
+	public ThemeLocalService getThemeLocalService() {
 		return themeLocalService;
 	}
 
@@ -66,8 +66,7 @@ public abstract class ThemeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param themeLocalService the theme local service
 	 */
-	public void setThemeLocalService(
-		com.liferay.portal.service.ThemeLocalService themeLocalService) {
+	public void setThemeLocalService(ThemeLocalService themeLocalService) {
 		this.themeLocalService = themeLocalService;
 	}
 
@@ -235,8 +234,8 @@ public abstract class ThemeLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.service.ThemeLocalService.class)
-	protected com.liferay.portal.service.ThemeLocalService themeLocalService;
+	@BeanReference(type = ThemeLocalService.class)
+	protected ThemeLocalService themeLocalService;
 	@BeanReference(type = com.liferay.portal.service.ThemeService.class)
 	protected com.liferay.portal.service.ThemeService themeService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

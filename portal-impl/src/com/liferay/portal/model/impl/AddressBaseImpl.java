@@ -28,7 +28,7 @@ import com.liferay.portal.service.AddressLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see AddressImpl
- * @see com.liferay.portal.model.Address
+ * @see Address
  * @generated
  */
 @ProviderType

@@ -191,7 +191,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	* @return the create date of this d d l record set
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _ddlRecordSet.getCreateDate();
 	}
 
@@ -297,7 +297,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	* @return the locales and localized descriptions of this d d l record set
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _ddlRecordSet.getDescriptionMap();
 	}
 
@@ -332,7 +332,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	* @return the modified date of this d d l record set
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _ddlRecordSet.getModifiedDate();
 	}
 
@@ -409,7 +409,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	* @return the locales and localized names of this d d l record set
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _ddlRecordSet.getNameMap();
 	}
 
@@ -562,7 +562,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	* @param createDate the create date of this d d l record set
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_ddlRecordSet.setCreateDate(createDate);
 	}
 
@@ -623,7 +623,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_ddlRecordSet.setDescriptionMap(descriptionMap);
 	}
 
@@ -635,7 +635,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_ddlRecordSet.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -684,7 +684,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	* @param modifiedDate the modified date of this d d l record set
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_ddlRecordSet.setModifiedDate(modifiedDate);
 	}
 
@@ -733,8 +733,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	* @param nameMap the locales and localized names of this d d l record set
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
 		_ddlRecordSet.setNameMap(nameMap);
 	}
 
@@ -745,8 +744,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Locale defaultLocale) {
 		_ddlRecordSet.setNameMap(nameMap, defaultLocale);
 	}

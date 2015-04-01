@@ -28,7 +28,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see RoleImpl
- * @see com.liferay.portal.model.Role
+ * @see Role
  * @generated
  */
 @ProviderType

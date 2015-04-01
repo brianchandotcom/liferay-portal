@@ -28,7 +28,7 @@ import com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceU
  *
  * @author Brian Wing Shun Chan
  * @see SocialActivityAchievementImpl
- * @see com.liferay.portlet.social.model.SocialActivityAchievement
+ * @see SocialActivityAchievement
  * @generated
  */
 @ProviderType

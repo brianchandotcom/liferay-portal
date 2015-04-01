@@ -117,8 +117,7 @@ public class JournalArticleResourceUtil {
 	* @param uuid the uuid
 	* @return the matching journal article resources
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByUuid(
-		java.lang.String uuid) {
+	public static List<JournalArticleResource> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -126,7 +125,7 @@ public class JournalArticleResourceUtil {
 	* Returns a range of all the journal article resources where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -134,7 +133,7 @@ public class JournalArticleResourceUtil {
 	* @param end the upper bound of the range of journal article resources (not inclusive)
 	* @return the range of matching journal article resources
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByUuid(
+	public static List<JournalArticleResource> findByUuid(
 		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
@@ -143,7 +142,7 @@ public class JournalArticleResourceUtil {
 	* Returns an ordered range of all the journal article resources where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -152,9 +151,9 @@ public class JournalArticleResourceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal article resources
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByUuid(
+	public static List<JournalArticleResource> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
+		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -164,11 +163,11 @@ public class JournalArticleResourceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource findByUuid_First(
+	public static JournalArticleResource findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
+		OrderByComparator<JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -180,9 +179,9 @@ public class JournalArticleResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByUuid_First(
+	public static JournalArticleResource fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
+		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -192,11 +191,11 @@ public class JournalArticleResourceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource findByUuid_Last(
+	public static JournalArticleResource findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
+		OrderByComparator<JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -208,9 +207,9 @@ public class JournalArticleResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByUuid_Last(
+	public static JournalArticleResource fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
+		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -221,11 +220,11 @@ public class JournalArticleResourceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource[] findByUuid_PrevAndNext(
+	public static JournalArticleResource[] findByUuid_PrevAndNext(
 		long resourcePrimKey, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
+		OrderByComparator<JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(resourcePrimKey, uuid,
@@ -252,15 +251,15 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	* Returns the journal article resource where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchArticleResourceException} if it could not be found.
+	* Returns the journal article resource where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchArticleResourceException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource findByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static JournalArticleResource findByUUID_G(java.lang.String uuid,
+		long groupId)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -272,8 +271,8 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByUUID_G(
-		java.lang.String uuid, long groupId) {
+	public static JournalArticleResource fetchByUUID_G(java.lang.String uuid,
+		long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -285,8 +284,8 @@ public class JournalArticleResourceUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
+	public static JournalArticleResource fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -297,8 +296,8 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @return the journal article resource that was removed
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static JournalArticleResource removeByUUID_G(java.lang.String uuid,
+		long groupId)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -320,8 +319,7 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @return the matching journal article resources
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByGroupId(
-		long groupId) {
+	public static List<JournalArticleResource> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -329,7 +327,7 @@ public class JournalArticleResourceUtil {
 	* Returns a range of all the journal article resources where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -337,8 +335,8 @@ public class JournalArticleResourceUtil {
 	* @param end the upper bound of the range of journal article resources (not inclusive)
 	* @return the range of matching journal article resources
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByGroupId(
-		long groupId, int start, int end) {
+	public static List<JournalArticleResource> findByGroupId(long groupId,
+		int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -346,7 +344,7 @@ public class JournalArticleResourceUtil {
 	* Returns an ordered range of all the journal article resources where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -355,9 +353,9 @@ public class JournalArticleResourceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal article resources
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
+	public static List<JournalArticleResource> findByGroupId(long groupId,
+		int start, int end,
+		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -368,11 +366,10 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
+	public static JournalArticleResource findByGroupId_First(long groupId,
+		OrderByComparator<JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -384,9 +381,8 @@ public class JournalArticleResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
+	public static JournalArticleResource fetchByGroupId_First(long groupId,
+		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -396,11 +392,10 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
+	public static JournalArticleResource findByGroupId_Last(long groupId,
+		OrderByComparator<JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -412,9 +407,8 @@ public class JournalArticleResourceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
+	public static JournalArticleResource fetchByGroupId_Last(long groupId,
+		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -425,11 +419,11 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource[] findByGroupId_PrevAndNext(
+	public static JournalArticleResource[] findByGroupId_PrevAndNext(
 		long resourcePrimKey, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator)
+		OrderByComparator<JournalArticleResource> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(resourcePrimKey, groupId,
@@ -456,15 +450,15 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	* Returns the journal article resource where groupId = &#63; and articleId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchArticleResourceException} if it could not be found.
+	* Returns the journal article resource where groupId = &#63; and articleId = &#63; or throws a {@link NoSuchArticleResourceException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param articleId the article ID
 	* @return the matching journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource findByG_A(
-		long groupId, java.lang.String articleId)
+	public static JournalArticleResource findByG_A(long groupId,
+		java.lang.String articleId)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByG_A(groupId, articleId);
 	}
@@ -476,8 +470,8 @@ public class JournalArticleResourceUtil {
 	* @param articleId the article ID
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByG_A(
-		long groupId, java.lang.String articleId) {
+	public static JournalArticleResource fetchByG_A(long groupId,
+		java.lang.String articleId) {
 		return getPersistence().fetchByG_A(groupId, articleId);
 	}
 
@@ -489,8 +483,8 @@ public class JournalArticleResourceUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByG_A(
-		long groupId, java.lang.String articleId, boolean retrieveFromCache) {
+	public static JournalArticleResource fetchByG_A(long groupId,
+		java.lang.String articleId, boolean retrieveFromCache) {
 		return getPersistence().fetchByG_A(groupId, articleId, retrieveFromCache);
 	}
 
@@ -501,8 +495,8 @@ public class JournalArticleResourceUtil {
 	* @param articleId the article ID
 	* @return the journal article resource that was removed
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource removeByG_A(
-		long groupId, java.lang.String articleId)
+	public static JournalArticleResource removeByG_A(long groupId,
+		java.lang.String articleId)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().removeByG_A(groupId, articleId);
 	}
@@ -524,7 +518,7 @@ public class JournalArticleResourceUtil {
 	* @param journalArticleResource the journal article resource
 	*/
 	public static void cacheResult(
-		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
+		JournalArticleResource journalArticleResource) {
 		getPersistence().cacheResult(journalArticleResource);
 	}
 
@@ -534,7 +528,7 @@ public class JournalArticleResourceUtil {
 	* @param journalArticleResources the journal article resources
 	*/
 	public static void cacheResult(
-		java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> journalArticleResources) {
+		List<JournalArticleResource> journalArticleResources) {
 		getPersistence().cacheResult(journalArticleResources);
 	}
 
@@ -544,8 +538,7 @@ public class JournalArticleResourceUtil {
 	* @param resourcePrimKey the primary key for the new journal article resource
 	* @return the new journal article resource
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource create(
-		long resourcePrimKey) {
+	public static JournalArticleResource create(long resourcePrimKey) {
 		return getPersistence().create(resourcePrimKey);
 	}
 
@@ -554,28 +547,26 @@ public class JournalArticleResourceUtil {
 	*
 	* @param resourcePrimKey the primary key of the journal article resource
 	* @return the journal article resource that was removed
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource remove(
-		long resourcePrimKey)
+	public static JournalArticleResource remove(long resourcePrimKey)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().remove(resourcePrimKey);
 	}
 
-	public static com.liferay.portlet.journal.model.JournalArticleResource updateImpl(
-		com.liferay.portlet.journal.model.JournalArticleResource journalArticleResource) {
+	public static JournalArticleResource updateImpl(
+		JournalArticleResource journalArticleResource) {
 		return getPersistence().updateImpl(journalArticleResource);
 	}
 
 	/**
-	* Returns the journal article resource with the primary key or throws a {@link com.liferay.portlet.journal.NoSuchArticleResourceException} if it could not be found.
+	* Returns the journal article resource with the primary key or throws a {@link NoSuchArticleResourceException} if it could not be found.
 	*
 	* @param resourcePrimKey the primary key of the journal article resource
 	* @return the journal article resource
-	* @throws com.liferay.portlet.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource findByPrimaryKey(
-		long resourcePrimKey)
+	public static JournalArticleResource findByPrimaryKey(long resourcePrimKey)
 		throws com.liferay.portlet.journal.NoSuchArticleResourceException {
 		return getPersistence().findByPrimaryKey(resourcePrimKey);
 	}
@@ -586,12 +577,11 @@ public class JournalArticleResourceUtil {
 	* @param resourcePrimKey the primary key of the journal article resource
 	* @return the journal article resource, or <code>null</code> if a journal article resource with the primary key could not be found
 	*/
-	public static com.liferay.portlet.journal.model.JournalArticleResource fetchByPrimaryKey(
-		long resourcePrimKey) {
+	public static JournalArticleResource fetchByPrimaryKey(long resourcePrimKey) {
 		return getPersistence().fetchByPrimaryKey(resourcePrimKey);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.journal.model.JournalArticleResource> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, JournalArticleResource> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -601,7 +591,7 @@ public class JournalArticleResourceUtil {
 	*
 	* @return the journal article resources
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findAll() {
+	public static List<JournalArticleResource> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -609,15 +599,14 @@ public class JournalArticleResourceUtil {
 	* Returns a range of all the journal article resources.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of journal article resources
 	* @param end the upper bound of the range of journal article resources (not inclusive)
 	* @return the range of journal article resources
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findAll(
-		int start, int end) {
+	public static List<JournalArticleResource> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -625,7 +614,7 @@ public class JournalArticleResourceUtil {
 	* Returns an ordered range of all the journal article resources.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleResourceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of journal article resources
@@ -633,9 +622,8 @@ public class JournalArticleResourceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of journal article resources
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleResource> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticleResource> orderByComparator) {
+	public static List<JournalArticleResource> findAll(int start, int end,
+		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

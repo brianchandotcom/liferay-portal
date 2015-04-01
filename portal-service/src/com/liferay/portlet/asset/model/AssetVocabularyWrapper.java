@@ -187,7 +187,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	* @return the create date of this asset vocabulary
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _assetVocabulary.getCreateDate();
 	}
 
@@ -270,7 +270,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	* @return the locales and localized descriptions of this asset vocabulary
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _assetVocabulary.getDescriptionMap();
 	}
 
@@ -295,7 +295,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	* @return the modified date of this asset vocabulary
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _assetVocabulary.getModifiedDate();
 	}
 
@@ -431,7 +431,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	* @return the locales and localized titles of this asset vocabulary
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
 		return _assetVocabulary.getTitleMap();
 	}
 
@@ -596,7 +596,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	* @param createDate the create date of this asset vocabulary
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_assetVocabulary.setCreateDate(createDate);
 	}
 
@@ -647,7 +647,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_assetVocabulary.setDescriptionMap(descriptionMap);
 	}
 
@@ -659,7 +659,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_assetVocabulary.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -698,7 +698,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	* @param modifiedDate the modified date of this asset vocabulary
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_assetVocabulary.setModifiedDate(modifiedDate);
 	}
 
@@ -797,8 +797,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	* @param titleMap the locales and localized titles of this asset vocabulary
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
 		_assetVocabulary.setTitleMap(titleMap);
 	}
 
@@ -809,8 +808,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Locale defaultLocale) {
 		_assetVocabulary.setTitleMap(titleMap, defaultLocale);
 	}

@@ -66,5 +66,5 @@ public interface PortletService extends BaseService {
 
 	public com.liferay.portal.model.Portlet updatePortlet(long companyId,
 		java.lang.String portletId, java.lang.String roles, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

@@ -307,7 +307,7 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	 *
 	 * @return the shopping coupon local service
 	 */
-	public com.liferay.portlet.shopping.service.ShoppingCouponLocalService getShoppingCouponLocalService() {
+	public ShoppingCouponLocalService getShoppingCouponLocalService() {
 		return shoppingCouponLocalService;
 	}
 
@@ -317,7 +317,7 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	 * @param shoppingCouponLocalService the shopping coupon local service
 	 */
 	public void setShoppingCouponLocalService(
-		com.liferay.portlet.shopping.service.ShoppingCouponLocalService shoppingCouponLocalService) {
+		ShoppingCouponLocalService shoppingCouponLocalService) {
 		this.shoppingCouponLocalService = shoppingCouponLocalService;
 	}
 
@@ -665,8 +665,8 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponLocalService.class)
-	protected com.liferay.portlet.shopping.service.ShoppingCouponLocalService shoppingCouponLocalService;
+	@BeanReference(type = ShoppingCouponLocalService.class)
+	protected ShoppingCouponLocalService shoppingCouponLocalService;
 	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponService.class)
 	protected com.liferay.portlet.shopping.service.ShoppingCouponService shoppingCouponService;
 	@BeanReference(type = ShoppingCouponPersistence.class)

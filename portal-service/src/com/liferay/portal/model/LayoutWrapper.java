@@ -417,7 +417,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the create date of this layout
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _layout.getCreateDate();
 	}
 
@@ -535,7 +535,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the locales and localized descriptions of this layout
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _layout.getDescriptionMap();
 	}
 
@@ -571,7 +571,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the friendly URLs for all configured locales
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap() {
+	public Map<java.util.Locale, java.lang.String> getFriendlyURLMap() {
 		return _layout.getFriendlyURLMap();
 	}
 
@@ -741,7 +741,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the locales and localized keywordses of this layout
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getKeywordsMap() {
+	public Map<java.util.Locale, java.lang.String> getKeywordsMap() {
 		return _layout.getKeywordsMap();
 	}
 
@@ -814,7 +814,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the modified date of this layout
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _layout.getModifiedDate();
 	}
 
@@ -901,7 +901,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the locales and localized names of this layout
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _layout.getNameMap();
 	}
 
@@ -1068,7 +1068,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the locales and localized robotses of this layout
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getRobotsMap() {
+	public Map<java.util.Locale, java.lang.String> getRobotsMap() {
 		return _layout.getRobotsMap();
 	}
 
@@ -1202,7 +1202,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the locales and localized titles of this layout
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
 		return _layout.getTitleMap();
 	}
 
@@ -1632,7 +1632,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @param createDate the create date of this layout
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_layout.setCreateDate(createDate);
 	}
 
@@ -1693,7 +1693,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_layout.setDescriptionMap(descriptionMap);
 	}
 
@@ -1705,7 +1705,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_layout.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -1814,7 +1814,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*/
 	@Override
 	public void setKeywordsMap(
-		java.util.Map<java.util.Locale, java.lang.String> keywordsMap) {
+		Map<java.util.Locale, java.lang.String> keywordsMap) {
 		_layout.setKeywordsMap(keywordsMap);
 	}
 
@@ -1826,7 +1826,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*/
 	@Override
 	public void setKeywordsMap(
-		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
+		Map<java.util.Locale, java.lang.String> keywordsMap,
 		java.util.Locale defaultLocale) {
 		_layout.setKeywordsMap(keywordsMap, defaultLocale);
 	}
@@ -1873,7 +1873,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @param modifiedDate the modified date of this layout
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_layout.setModifiedDate(modifiedDate);
 	}
 
@@ -1932,8 +1932,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @param nameMap the locales and localized names of this layout
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
 		_layout.setNameMap(nameMap);
 	}
 
@@ -1944,8 +1943,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Locale defaultLocale) {
 		_layout.setNameMap(nameMap, defaultLocale);
 	}
@@ -2055,8 +2053,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @param robotsMap the locales and localized robotses of this layout
 	*/
 	@Override
-	public void setRobotsMap(
-		java.util.Map<java.util.Locale, java.lang.String> robotsMap) {
+	public void setRobotsMap(Map<java.util.Locale, java.lang.String> robotsMap) {
 		_layout.setRobotsMap(robotsMap);
 	}
 
@@ -2068,7 +2065,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*/
 	@Override
 	public void setRobotsMap(
-		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
+		Map<java.util.Locale, java.lang.String> robotsMap,
 		java.util.Locale defaultLocale) {
 		_layout.setRobotsMap(robotsMap, defaultLocale);
 	}
@@ -2139,8 +2136,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @param titleMap the locales and localized titles of this layout
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
 		_layout.setTitleMap(titleMap);
 	}
 
@@ -2151,8 +2147,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Locale defaultLocale) {
 		_layout.setTitleMap(titleMap, defaultLocale);
 	}

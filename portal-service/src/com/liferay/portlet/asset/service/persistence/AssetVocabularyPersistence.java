@@ -46,14 +46,13 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param uuid the uuid
 	* @return the matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid(
-		java.lang.String uuid);
+	public java.util.List<AssetVocabulary> findByUuid(java.lang.String uuid);
 
 	/**
 	* Returns a range of all the asset vocabularies where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -61,14 +60,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<AssetVocabulary> findByUuid(java.lang.String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -77,9 +76,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public java.util.List<AssetVocabulary> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where uuid = &#63;.
@@ -87,11 +86,10 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -101,9 +99,8 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where uuid = &#63;.
@@ -111,11 +108,10 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -125,9 +121,8 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where uuid = &#63;.
@@ -136,11 +131,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary[] findByUuid_PrevAndNext(
-		long vocabularyId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary[] findByUuid_PrevAndNext(long vocabularyId,
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -159,15 +154,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the asset vocabulary where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.asset.NoSuchVocabularyException} if it could not be found.
+	* Returns the asset vocabulary where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchVocabularyException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByUUID_G(
-		java.lang.String uuid, long groupId)
+	public AssetVocabulary findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -177,8 +171,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param groupId the group ID
 	* @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUUID_G(
-		java.lang.String uuid, long groupId);
+	public AssetVocabulary fetchByUUID_G(java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the asset vocabulary where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -188,8 +181,8 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache);
+	public AssetVocabulary fetchByUUID_G(java.lang.String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the asset vocabulary where uuid = &#63; and groupId = &#63; from the database.
@@ -198,8 +191,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param groupId the group ID
 	* @return the asset vocabulary that was removed
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public AssetVocabulary removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -218,14 +210,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param companyId the company ID
 	* @return the matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<AssetVocabulary> findByUuid_C(java.lang.String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the asset vocabularies where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -234,14 +226,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<AssetVocabulary> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -251,9 +243,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public java.util.List<AssetVocabulary> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -262,11 +254,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -277,9 +269,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -288,11 +280,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -303,9 +295,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -315,11 +307,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary[] findByUuid_C_PrevAndNext(
-		long vocabularyId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary[] findByUuid_C_PrevAndNext(long vocabularyId,
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -345,14 +337,13 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param groupId the group ID
 	* @return the matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
-		long groupId);
+	public java.util.List<AssetVocabulary> findByGroupId(long groupId);
 
 	/**
 	* Returns a range of all the asset vocabularies where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -360,14 +351,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
-		long groupId, int start, int end);
+	public java.util.List<AssetVocabulary> findByGroupId(long groupId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -376,9 +367,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public java.util.List<AssetVocabulary> findByGroupId(long groupId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where groupId = &#63;.
@@ -386,11 +377,10 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -400,9 +390,8 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where groupId = &#63;.
@@ -410,11 +399,10 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -424,9 +412,8 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where groupId = &#63;.
@@ -435,11 +422,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary[] findByGroupId_PrevAndNext(
-		long vocabularyId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary[] findByGroupId_PrevAndNext(long vocabularyId,
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -448,14 +435,13 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param groupId the group ID
 	* @return the matching asset vocabularies that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
-		long groupId);
+	public java.util.List<AssetVocabulary> filterFindByGroupId(long groupId);
 
 	/**
 	* Returns a range of all the asset vocabularies that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -463,14 +449,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of matching asset vocabularies that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
-		long groupId, int start, int end);
+	public java.util.List<AssetVocabulary> filterFindByGroupId(long groupId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -479,9 +465,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset vocabularies that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public java.util.List<AssetVocabulary> filterFindByGroupId(long groupId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set of asset vocabularies that the user has permission to view where groupId = &#63;.
@@ -490,11 +476,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary[] filterFindByGroupId_PrevAndNext(
+	public AssetVocabulary[] filterFindByGroupId_PrevAndNext(
 		long vocabularyId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -503,14 +489,13 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param groupIds the group IDs
 	* @return the matching asset vocabularies that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
-		long[] groupIds);
+	public java.util.List<AssetVocabulary> filterFindByGroupId(long[] groupIds);
 
 	/**
 	* Returns a range of all the asset vocabularies that the user has permission to view where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -518,14 +503,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of matching asset vocabularies that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
+	public java.util.List<AssetVocabulary> filterFindByGroupId(
 		long[] groupIds, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies that the user has permission to view where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -534,28 +519,27 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset vocabularies that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByGroupId(
+	public java.util.List<AssetVocabulary> filterFindByGroupId(
 		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns all the asset vocabularies where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
 	* @return the matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
-		long[] groupIds);
+	public java.util.List<AssetVocabulary> findByGroupId(long[] groupIds);
 
 	/**
 	* Returns a range of all the asset vocabularies where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -563,14 +547,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
-		long[] groupIds, int start, int end);
+	public java.util.List<AssetVocabulary> findByGroupId(long[] groupIds,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -579,9 +563,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByGroupId(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public java.util.List<AssetVocabulary> findByGroupId(long[] groupIds,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Removes all the asset vocabularies where groupId = &#63; from the database.
@@ -628,14 +612,13 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param companyId the company ID
 	* @return the matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByCompanyId(
-		long companyId);
+	public java.util.List<AssetVocabulary> findByCompanyId(long companyId);
 
 	/**
 	* Returns a range of all the asset vocabularies where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -643,14 +626,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByCompanyId(
-		long companyId, int start, int end);
+	public java.util.List<AssetVocabulary> findByCompanyId(long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -659,9 +642,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public java.util.List<AssetVocabulary> findByCompanyId(long companyId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where companyId = &#63;.
@@ -669,11 +652,10 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -683,9 +665,8 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where companyId = &#63;.
@@ -693,11 +674,10 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -707,9 +687,8 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where companyId = &#63;.
@@ -718,11 +697,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary[] findByCompanyId_PrevAndNext(
-		long vocabularyId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary[] findByCompanyId_PrevAndNext(long vocabularyId,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -741,15 +720,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	public int countByCompanyId(long companyId);
 
 	/**
-	* Returns the asset vocabulary where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.asset.NoSuchVocabularyException} if it could not be found.
+	* Returns the asset vocabulary where groupId = &#63; and name = &#63; or throws a {@link NoSuchVocabularyException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param name the name
 	* @return the matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByG_N(
-		long groupId, java.lang.String name)
+	public AssetVocabulary findByG_N(long groupId, java.lang.String name)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -759,8 +737,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param name the name
 	* @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByG_N(
-		long groupId, java.lang.String name);
+	public AssetVocabulary fetchByG_N(long groupId, java.lang.String name);
 
 	/**
 	* Returns the asset vocabulary where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -770,8 +747,8 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByG_N(
-		long groupId, java.lang.String name, boolean retrieveFromCache);
+	public AssetVocabulary fetchByG_N(long groupId, java.lang.String name,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the asset vocabulary where groupId = &#63; and name = &#63; from the database.
@@ -780,8 +757,7 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param name the name
 	* @return the asset vocabulary that was removed
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary removeByG_N(
-		long groupId, java.lang.String name)
+	public AssetVocabulary removeByG_N(long groupId, java.lang.String name)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -800,14 +776,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param name the name
 	* @return the matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByG_LikeN(
-		long groupId, java.lang.String name);
+	public java.util.List<AssetVocabulary> findByG_LikeN(long groupId,
+		java.lang.String name);
 
 	/**
 	* Returns a range of all the asset vocabularies where groupId = &#63; and name LIKE &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -816,14 +792,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByG_LikeN(
-		long groupId, java.lang.String name, int start, int end);
+	public java.util.List<AssetVocabulary> findByG_LikeN(long groupId,
+		java.lang.String name, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies where groupId = &#63; and name LIKE &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -833,9 +809,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findByG_LikeN(
-		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public java.util.List<AssetVocabulary> findByG_LikeN(long groupId,
+		java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the first asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -844,11 +820,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByG_LikeN_First(
-		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByG_LikeN_First(long groupId,
+		java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -859,9 +835,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByG_LikeN_First(
-		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByG_LikeN_First(long groupId,
+		java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the last asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -870,11 +846,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a matching asset vocabulary could not be found
+	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByG_LikeN_Last(
-		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary findByG_LikeN_Last(long groupId,
+		java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -885,9 +861,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByG_LikeN_Last(
-		long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public AssetVocabulary fetchByG_LikeN_Last(long groupId,
+		java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -897,11 +873,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary[] findByG_LikeN_PrevAndNext(
-		long vocabularyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+	public AssetVocabulary[] findByG_LikeN_PrevAndNext(long vocabularyId,
+		long groupId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -911,14 +887,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param name the name
 	* @return the matching asset vocabularies that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByG_LikeN(
-		long groupId, java.lang.String name);
+	public java.util.List<AssetVocabulary> filterFindByG_LikeN(long groupId,
+		java.lang.String name);
 
 	/**
 	* Returns a range of all the asset vocabularies that the user has permission to view where groupId = &#63; and name LIKE &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -927,14 +903,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of matching asset vocabularies that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByG_LikeN(
-		long groupId, java.lang.String name, int start, int end);
+	public java.util.List<AssetVocabulary> filterFindByG_LikeN(long groupId,
+		java.lang.String name, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies that the user has permissions to view where groupId = &#63; and name LIKE &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -944,9 +920,9 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset vocabularies that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> filterFindByG_LikeN(
-		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public java.util.List<AssetVocabulary> filterFindByG_LikeN(long groupId,
+		java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Returns the asset vocabularies before and after the current asset vocabulary in the ordered set of asset vocabularies that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -956,11 +932,11 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary[] filterFindByG_LikeN_PrevAndNext(
+	public AssetVocabulary[] filterFindByG_LikeN_PrevAndNext(
 		long vocabularyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -994,16 +970,14 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*
 	* @param assetVocabulary the asset vocabulary
 	*/
-	public void cacheResult(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary);
+	public void cacheResult(AssetVocabulary assetVocabulary);
 
 	/**
 	* Caches the asset vocabularies in the entity cache if it is enabled.
 	*
 	* @param assetVocabularies the asset vocabularies
 	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> assetVocabularies);
+	public void cacheResult(java.util.List<AssetVocabulary> assetVocabularies);
 
 	/**
 	* Creates a new asset vocabulary with the primary key. Does not add the asset vocabulary to the database.
@@ -1011,32 +985,28 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param vocabularyId the primary key for the new asset vocabulary
 	* @return the new asset vocabulary
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary create(
-		long vocabularyId);
+	public AssetVocabulary create(long vocabularyId);
 
 	/**
 	* Removes the asset vocabulary with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param vocabularyId the primary key of the asset vocabulary
 	* @return the asset vocabulary that was removed
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary remove(
-		long vocabularyId)
+	public AssetVocabulary remove(long vocabularyId)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
-	public com.liferay.portlet.asset.model.AssetVocabulary updateImpl(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary);
+	public AssetVocabulary updateImpl(AssetVocabulary assetVocabulary);
 
 	/**
-	* Returns the asset vocabulary with the primary key or throws a {@link com.liferay.portlet.asset.NoSuchVocabularyException} if it could not be found.
+	* Returns the asset vocabulary with the primary key or throws a {@link NoSuchVocabularyException} if it could not be found.
 	*
 	* @param vocabularyId the primary key of the asset vocabulary
 	* @return the asset vocabulary
-	* @throws com.liferay.portlet.asset.NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
+	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary findByPrimaryKey(
-		long vocabularyId)
+	public AssetVocabulary findByPrimaryKey(long vocabularyId)
 		throws com.liferay.portlet.asset.NoSuchVocabularyException;
 
 	/**
@@ -1045,11 +1015,10 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param vocabularyId the primary key of the asset vocabulary
 	* @return the asset vocabulary, or <code>null</code> if a asset vocabulary with the primary key could not be found
 	*/
-	public com.liferay.portlet.asset.model.AssetVocabulary fetchByPrimaryKey(
-		long vocabularyId);
+	public AssetVocabulary fetchByPrimaryKey(long vocabularyId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.asset.model.AssetVocabulary> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, AssetVocabulary> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -1057,27 +1026,26 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	*
 	* @return the asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findAll();
+	public java.util.List<AssetVocabulary> findAll();
 
 	/**
 	* Returns a range of all the asset vocabularies.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of asset vocabularies
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findAll(
-		int start, int end);
+	public java.util.List<AssetVocabulary> findAll(int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset vocabularies.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetVocabularyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of asset vocabularies
@@ -1085,9 +1053,8 @@ public interface AssetVocabularyPersistence extends BasePersistence<AssetVocabul
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of asset vocabularies
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> orderByComparator);
+	public java.util.List<AssetVocabulary> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary> orderByComparator);
 
 	/**
 	* Removes all the asset vocabularies from the database.

@@ -28,7 +28,7 @@ import com.liferay.portal.service.ResourceActionLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceActionImpl
- * @see com.liferay.portal.model.ResourceAction
+ * @see ResourceAction
  * @generated
  */
 @ProviderType

@@ -57,7 +57,7 @@ public interface OrganizationService extends BaseService {
 	assign group members
 	*/
 	public void addGroupOrganizations(long groupId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds an organization with additional parameters.
@@ -108,7 +108,7 @@ public interface OrganizationService extends BaseService {
 		java.util.List<com.liferay.portal.model.Phone> phones,
 		java.util.List<com.liferay.portal.model.Website> websites,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds an organization.
@@ -148,7 +148,7 @@ public interface OrganizationService extends BaseService {
 		java.lang.String type, boolean recursable, long regionId,
 		long countryId, long statusId, java.lang.String comments, boolean site,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds an organization with additional parameters.
@@ -192,7 +192,7 @@ public interface OrganizationService extends BaseService {
 		java.util.List<com.liferay.portal.model.Phone> phones,
 		java.util.List<com.liferay.portal.model.Website> websites,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds an organization.
@@ -225,7 +225,7 @@ public interface OrganizationService extends BaseService {
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean site,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Assigns the password policy to the organizations, removing any other
@@ -237,8 +237,7 @@ public interface OrganizationService extends BaseService {
 	password policy
 	*/
 	public void addPasswordPolicyOrganizations(long passwordPolicyId,
-		long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long[] organizationIds) throws PortalException;
 
 	/**
 	* Deletes the organization's logo.
@@ -248,8 +247,7 @@ public interface OrganizationService extends BaseService {
 	be found, if the organization's logo could not be found, or if
 	the user did not have permission to update the organization
 	*/
-	public void deleteLogo(long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteLogo(long organizationId) throws PortalException;
 
 	/**
 	* Deletes the organization. The organization's associated resources and
@@ -262,7 +260,7 @@ public interface OrganizationService extends BaseService {
 	status, or if the organization was a parent organization
 	*/
 	public void deleteOrganization(long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -284,8 +282,7 @@ public interface OrganizationService extends BaseService {
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getManageableOrganizations(
-		java.lang.String actionId, int max)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String actionId, int max) throws PortalException;
 
 	/**
 	* Returns the organization with the primary key.
@@ -298,8 +295,7 @@ public interface OrganizationService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Organization getOrganization(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long organizationId) throws PortalException;
 
 	/**
 	* Returns the primary key of the organization with the name.
@@ -313,7 +309,7 @@ public interface OrganizationService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getOrganizationId(long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns all the organizations belonging to the parent organization.
@@ -380,7 +376,7 @@ public interface OrganizationService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId) throws com.liferay.portal.kernel.exception.PortalException;
+		long userId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -400,7 +396,7 @@ public interface OrganizationService extends BaseService {
 	assign group members
 	*/
 	public void setGroupOrganizations(long groupId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Removes the organizations from the group.
@@ -412,7 +408,7 @@ public interface OrganizationService extends BaseService {
 	assign group members
 	*/
 	public void unsetGroupOrganizations(long groupId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Removes the organizations from the password policy.
@@ -424,8 +420,7 @@ public interface OrganizationService extends BaseService {
 	permission to update the password policy
 	*/
 	public void unsetPasswordPolicyOrganizations(long passwordPolicyId,
-		long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long[] organizationIds) throws PortalException;
 
 	/**
 	* Updates the organization with additional parameters.
@@ -474,7 +469,7 @@ public interface OrganizationService extends BaseService {
 		java.util.List<com.liferay.portal.model.Phone> phones,
 		java.util.List<com.liferay.portal.model.Website> websites,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the organization.
@@ -511,7 +506,7 @@ public interface OrganizationService extends BaseService {
 		java.lang.String type, boolean recursable, long regionId,
 		long countryId, long statusId, java.lang.String comments, boolean site,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the organization with additional parameters.
@@ -555,7 +550,7 @@ public interface OrganizationService extends BaseService {
 		java.util.List<com.liferay.portal.model.Phone> phones,
 		java.util.List<com.liferay.portal.model.Website> websites,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the organization with additional parameters.
@@ -602,7 +597,7 @@ public interface OrganizationService extends BaseService {
 		java.util.List<com.liferay.portal.model.Phone> phones,
 		java.util.List<com.liferay.portal.model.Website> websites,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the organization.
@@ -633,5 +628,5 @@ public interface OrganizationService extends BaseService {
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean site,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

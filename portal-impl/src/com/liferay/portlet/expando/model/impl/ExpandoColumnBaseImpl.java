@@ -28,7 +28,7 @@ import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ExpandoColumnImpl
- * @see com.liferay.portlet.expando.model.ExpandoColumn
+ * @see ExpandoColumn
  * @generated
  */
 @ProviderType

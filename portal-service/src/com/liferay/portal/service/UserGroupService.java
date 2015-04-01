@@ -57,7 +57,7 @@ public interface UserGroupService extends BaseService {
 	assign group members
 	*/
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds the user groups to the team
@@ -69,7 +69,7 @@ public interface UserGroupService extends BaseService {
 	assign team members
 	*/
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds a user group.
@@ -90,7 +90,7 @@ public interface UserGroupService extends BaseService {
 	@java.lang.Deprecated
 	public com.liferay.portal.model.UserGroup addUserGroup(
 		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds a user group.
@@ -112,7 +112,7 @@ public interface UserGroupService extends BaseService {
 	public com.liferay.portal.model.UserGroup addUserGroup(
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the user group.
@@ -122,8 +122,7 @@ public interface UserGroupService extends BaseService {
 	found, if the user did not have permission to delete the user
 	group, or if the user group had a workflow in approved status
 	*/
-	public void deleteUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteUserGroup(long userGroupId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -142,8 +141,7 @@ public interface UserGroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroup(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String name) throws PortalException;
 
 	/**
 	* Returns the user group with the primary key.
@@ -156,7 +154,7 @@ public interface UserGroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns all the user groups to which the user belongs.
@@ -168,7 +166,7 @@ public interface UserGroupService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(
-		long userId) throws com.liferay.portal.kernel.exception.PortalException;
+		long userId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -186,7 +184,7 @@ public interface UserGroupService extends BaseService {
 	group members
 	*/
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Removes the user groups from the team.
@@ -197,7 +195,7 @@ public interface UserGroupService extends BaseService {
 	team members
 	*/
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the user group.
@@ -215,7 +213,7 @@ public interface UserGroupService extends BaseService {
 	@java.lang.Deprecated
 	public com.liferay.portal.model.UserGroup updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the user group.
@@ -234,5 +232,5 @@ public interface UserGroupService extends BaseService {
 	public com.liferay.portal.model.UserGroup updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

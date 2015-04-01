@@ -305,7 +305,7 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 	 *
 	 * @return the d d m structure version local service
 	 */
-	public com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalService getDDMStructureVersionLocalService() {
+	public DDMStructureVersionLocalService getDDMStructureVersionLocalService() {
 		return ddmStructureVersionLocalService;
 	}
 
@@ -315,7 +315,7 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 	 * @param ddmStructureVersionLocalService the d d m structure version local service
 	 */
 	public void setDDMStructureVersionLocalService(
-		com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService) {
+		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
 		this.ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
@@ -438,8 +438,8 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalService.class)
-	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionLocalService ddmStructureVersionLocalService;
+	@BeanReference(type = DDMStructureVersionLocalService.class)
+	protected DDMStructureVersionLocalService ddmStructureVersionLocalService;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionService ddmStructureVersionService;
 	@BeanReference(type = DDMStructureVersionPersistence.class)

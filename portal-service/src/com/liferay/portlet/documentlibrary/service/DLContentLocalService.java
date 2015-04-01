@@ -76,7 +76,7 @@ public interface DLContentLocalService extends BaseLocalService,
 
 	public void deleteContent(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteContents(long companyId, long repositoryId,
 		java.lang.String path);
@@ -93,8 +93,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLContent deleteDLContent(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long contentId) throws PortalException;
 
 	/**
 	* Deletes the document library content from the database. Also notifies the appropriate model listeners.
@@ -112,7 +111,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -225,8 +224,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLContent getDLContent(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long contentId) throws PortalException;
 
 	/**
 	* Returns a range of all the document library contents.
@@ -258,8 +256,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasContent(long companyId, long repositoryId,

@@ -28,7 +28,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUti
  *
  * @author Brian Wing Shun Chan
  * @see DLFileShortcutImpl
- * @see com.liferay.portlet.documentlibrary.model.DLFileShortcut
+ * @see DLFileShortcut
  * @generated
  */
 @ProviderType

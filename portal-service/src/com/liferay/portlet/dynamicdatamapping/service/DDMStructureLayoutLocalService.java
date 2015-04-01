@@ -63,7 +63,7 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 		long userId, long groupId, long structureVersionId,
 		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new d d m structure layout with the primary key. Does not add the d d m structure layout to the database.
@@ -93,8 +93,7 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout deleteDDMStructureLayout(
-		long structureLayoutId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long structureLayoutId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -102,14 +101,14 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructureLayout(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout structureLayout);
 
 	public void deleteStructureLayout(long structureLayoutId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -210,8 +209,7 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout getDDMStructureLayout(
-		long structureLayoutId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long structureLayoutId) throws PortalException;
 
 	/**
 	* Returns the d d m structure layout matching the UUID and group.
@@ -223,8 +221,7 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout getDDMStructureLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the d d m structure layouts.
@@ -282,18 +279,15 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout getStructureLayout(
-		long structureLayoutId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long structureLayoutId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout getStructureLayoutByStructureVersionId(
-		long structureVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long structureVersionId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -316,5 +310,5 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 		long structureLayoutId,
 		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

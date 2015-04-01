@@ -73,7 +73,7 @@ public interface ShoppingOrderItemLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the shopping order item with the primary key from the database. Also notifies the appropriate model listeners.
@@ -84,8 +84,7 @@ public interface ShoppingOrderItemLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.shopping.model.ShoppingOrderItem deleteShoppingOrderItem(
-		long orderItemId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long orderItemId) throws PortalException;
 
 	/**
 	* Deletes the shopping order item from the database. Also notifies the appropriate model listeners.
@@ -183,8 +182,7 @@ public interface ShoppingOrderItemLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the shopping order item with the primary key.
@@ -195,8 +193,7 @@ public interface ShoppingOrderItemLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingOrderItem getShoppingOrderItem(
-		long orderItemId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long orderItemId) throws PortalException;
 
 	/**
 	* Returns a range of all the shopping order items.

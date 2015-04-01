@@ -28,7 +28,7 @@ import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see BlogsStatsUserImpl
- * @see com.liferay.portlet.blogs.model.BlogsStatsUser
+ * @see BlogsStatsUser
  * @generated
  */
 @ProviderType

@@ -230,7 +230,7 @@ public class SystemEventWrapper implements SystemEvent,
 	* @return the create date of this system event
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _systemEvent.getCreateDate();
 	}
 
@@ -450,7 +450,7 @@ public class SystemEventWrapper implements SystemEvent,
 	* @param createDate the create date of this system event
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_systemEvent.setCreateDate(createDate);
 	}
 

@@ -127,7 +127,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	* @return the last post date of this message boards stats user
 	*/
 	@Override
-	public java.util.Date getLastPostDate() {
+	public Date getLastPostDate() {
 		return _mbStatsUser.getLastPostDate();
 	}
 
@@ -260,7 +260,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	* @param lastPostDate the last post date of this message boards stats user
 	*/
 	@Override
-	public void setLastPostDate(java.util.Date lastPostDate) {
+	public void setLastPostDate(Date lastPostDate) {
 		_mbStatsUser.setLastPostDate(lastPostDate);
 	}
 

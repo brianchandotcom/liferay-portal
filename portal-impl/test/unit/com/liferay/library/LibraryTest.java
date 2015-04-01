@@ -45,25 +45,20 @@ import org.w3c.dom.NodeList;
 public class LibraryTest {
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		_getLibJars();
 
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();
 
-		try {
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
 
-			_getClasspathJars(documentBuilder);
+		_getClasspathJars(documentBuilder);
 
-			_getNBProjectJars(documentBuilder);
+		_getNBProjectJars(documentBuilder);
 
-			_getVersionsJars(documentBuilder);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_getVersionsJars(documentBuilder);
 	}
 
 	@Test
@@ -96,33 +91,29 @@ public class LibraryTest {
 		_doSearch(_versionsJars, _libJars, _VERSIONS_PATH);
 	}
 
-	private static void _getClasspathJars(DocumentBuilder documentBuilder) {
-		try {
-			Document document = documentBuilder.parse(
-				new File(_CLASSPATH_PATH));
+	private static void _getClasspathJars(DocumentBuilder documentBuilder)
+		throws Exception {
 
-			NodeList nodelist = document.getElementsByTagName("classpathentry");
+		Document document = documentBuilder.parse(new File(_CLASSPATH_PATH));
 
-			for (int i = 0; i<nodelist.getLength(); i++) {
-				Node node = nodelist.item(i);
+		NodeList nodelist = document.getElementsByTagName("classpathentry");
 
-				NamedNodeMap namedNodeMap = node.getAttributes();
+		for (int i = 0; i<nodelist.getLength(); i++) {
+			Node node = nodelist.item(i);
 
-				Node pathNode = namedNodeMap.getNamedItem("path");
+			NamedNodeMap namedNodeMap = node.getAttributes();
 
-				String path = pathNode.getNodeValue();
+			Node pathNode = namedNodeMap.getNamedItem("path");
 
-				if (path.startsWith(_LIB)) {
-					_classpathJars.add(path);
-				}
+			String path = pathNode.getNodeValue();
+
+			if (path.startsWith(_LIB)) {
+				_classpathJars.add(path);
 			}
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
 		}
 	}
 
-	private static void _getLibJars() {
+	private static void _getLibJars() throws IOException {
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new FileReader(new File(_LIB + "/versions-ignore.txt")))) {
 
@@ -136,9 +127,6 @@ public class LibraryTest {
 				line = bufferedReader.readLine();
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
 
 		File file = new File(_LIB);
 
@@ -147,46 +135,39 @@ public class LibraryTest {
 		}
 	}
 
-	private static void _getNBProjectJars(DocumentBuilder documentBuilder) {
-		try {
-			Document document = documentBuilder.parse(
-				new File(_NBPROJECT_PATH));
+	private static void _getNBProjectJars(DocumentBuilder documentBuilder)
+		throws Exception {
 
-			NodeList nodelist = document.getElementsByTagName("classpath");
+		Document document = documentBuilder.parse(new File(_NBPROJECT_PATH));
 
-			for (int i = 0; i<nodelist.getLength(); i++) {
-				Node node = nodelist.item(i);
+		NodeList nodelist = document.getElementsByTagName("classpath");
 
-				String path = node.getTextContent();
+		for (int i = 0; i<nodelist.getLength(); i++) {
+			Node node = nodelist.item(i);
 
-				if (path.startsWith(_LIB)) {
-					_nbProjectJars.add(path);
-				}
+			String path = node.getTextContent();
+
+			if (path.startsWith(_LIB)) {
+				_nbProjectJars.add(path);
 			}
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
 		}
 	}
 
-	private static void _getVersionsJars(DocumentBuilder documentBuilder) {
-		try {
-			Document document = documentBuilder.parse(new File(_VERSIONS_PATH));
+	private static void _getVersionsJars(DocumentBuilder documentBuilder)
+		throws Exception {
 
-			NodeList nodelist = document.getElementsByTagName("file-name");
+		Document document = documentBuilder.parse(new File(_VERSIONS_PATH));
 
-			for (int i = 0; i<nodelist.getLength(); i++) {
-				Node node = nodelist.item(i);
+		NodeList nodelist = document.getElementsByTagName("file-name");
 
-				String path = node.getTextContent();
+		for (int i = 0; i<nodelist.getLength(); i++) {
+			Node node = nodelist.item(i);
 
-				if (path.startsWith(_LIB)) {
-					_versionsJars.add(path);
-				}
+			String path = node.getTextContent();
+
+			if (path.startsWith(_LIB)) {
+				_versionsJars.add(path);
 			}
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
 		}
 	}
 

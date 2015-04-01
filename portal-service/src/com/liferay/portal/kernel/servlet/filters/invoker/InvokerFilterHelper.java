@@ -371,16 +371,6 @@ public class InvokerFilterHelper {
 		}
 	}
 
-	protected void registerFilterMapping(
-		String filterName, List<String> urlPatterns, List<String> dispatchers,
-		String positionFilterName, boolean after) {
-
-		FilterMapping filterMapping = initFilterMapping(
-			filterName, urlPatterns, dispatchers);
-
-		registerFilterMapping(filterMapping, positionFilterName, after);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		InvokerFilterHelper.class);
 

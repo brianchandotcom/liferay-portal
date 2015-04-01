@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.util;
+package com.liferay.dynamic.data.lists.util;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -32,13 +34,18 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.util.DDLCSVExporter;
+import com.liferay.portlet.dynamicdatalists.util.DDLExporter;
+import com.liferay.portlet.dynamicdatalists.util.DDLXMLExporter;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
@@ -66,10 +73,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Renato Rego
  */
+@RunWith(Arquillian.class)
 @Sync
 public class DDLExporterTest {
 
@@ -77,7 +86,7 @@ public class DDLExporterTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
@@ -86,14 +95,20 @@ public class DDLExporterTest {
 		_defaultLocale = Locale.US;
 		_group = GroupTestUtil.addGroup();
 
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		setUpDDMFormFieldDataTypes();
 		setUpDDMFormFieldValues();
+		setUpPermissionChecker();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		FileUtil.delete("record-set.xml");
 		FileUtil.delete("record-set.csv");
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Test
@@ -278,7 +293,7 @@ public class DDLExporterTest {
 
 		return StringUtil.read(
 			clazz.getClassLoader(),
-			"com/liferay/portlet/dynamicdatalists/dependencies/" + fileName);
+			"com/liferay/dynamic/data/lists/dependencies/" + fileName);
 	}
 
 	protected void setDDMFormFieldOptions(
@@ -343,11 +358,30 @@ public class DDLExporterTest {
 		return _fieldValues;
 	}
 
+	protected void setUpPermissionChecker() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+		});
+	}
+
 	private Set<Locale> _availableLocales;
 	private Map<DDMFormFieldType, String> _ddmFormFieldDataTypes;
 	private Locale _defaultLocale;
 	private Map<DDMFormFieldType, String> _fieldValues;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
+	private PermissionChecker _originalPermissionChecker;
 
 	private enum DDMFormFieldType {
 

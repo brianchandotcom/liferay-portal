@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.search;
+package com.liferay.dynamic.data.lists.search;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
@@ -30,14 +31,17 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
@@ -50,11 +54,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Marcellus Tavares
  * @author André de Oliveira
  */
+@RunWith(Arquillian.class)
 @Sync
 public class DDLRecordSearchTest {
 
@@ -62,7 +68,7 @@ public class DDLRecordSearchTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
@@ -227,8 +233,10 @@ public class DDLRecordSearchTest {
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(_group);
 
-		return recordSetTestHelper.addRecordSet(
-			ddmStructureTestHelper.addStructureXsd(this.getClass()));
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			createDDMForm(), StorageType.JSON.toString());
+
+		return recordSetTestHelper.addRecordSet(ddmStructure);
 	}
 
 	protected void assertSearch(final String keywords, final int length)
@@ -251,6 +259,29 @@ public class DDLRecordSearchTest {
 				}
 
 			});
+	}
+
+	protected DDMForm createDDMForm() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
+
+		DDMFormField nameDDMFormField = DDMFormTestUtil.createTextDDMFormField(
+			"name", true, false, false);
+
+		nameDDMFormField.setIndexType("keyword");
+
+		ddmForm.addDDMFormField(nameDDMFormField);
+
+		DDMFormField descriptionDDMFormField =
+			DDMFormTestUtil.createTextDDMFormField(
+				"description", true, false, false);
+
+		descriptionDDMFormField.setIndexType("text");
+
+		ddmForm.addDDMFormField(descriptionDDMFormField);
+
+		return ddmForm;
 	}
 
 	protected DDMFormValues createDDMFormValues() throws Exception {

@@ -12,28 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service;
+package com.liferay.dynamic.data.lists.service;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestHelper;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -43,36 +46,39 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.skyscreamer.jsonassert.JSONAssert;
+import org.junit.runner.RunWith;
 
 /**
  * @author Marcellus Tavares
  */
+@RunWith(Arquillian.class)
 @Sync
-public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
+public class DDLRecordServiceTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
+		_group = GroupTestUtil.addGroup();
 
-		_recordSetTestHelper = new DDLRecordSetTestHelper(group);
+		_ddmStructureTestHelper = new DDMStructureTestHelper(_group);
+		_recordSetTestHelper = new DDLRecordSetTestHelper(_group);
 	}
 
 	@Test
@@ -202,7 +208,7 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 		DDLRecordSet recordSet = addRecordSet(ddmForm);
 
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
-			group, recordSet);
+			_group, recordSet);
 
 		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
 
@@ -231,26 +237,10 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 	}
 
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
-		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
 			ddmForm, StorageType.JSON.toString());
 
 		return _recordSetTestHelper.addRecordSet(ddmStructure);
-	}
-
-	protected void assertEquals(
-			DDMFormValues expectedDDMFormValues,
-			DDMFormValues actualDDMFormValues)
-		throws Exception {
-
-		String expectedSerializedDDMFormValues =
-			DDMFormValuesJSONSerializerUtil.serialize(expectedDDMFormValues);
-
-		String actualSerializedDDMFormValues =
-			DDMFormValuesJSONSerializerUtil.serialize(actualDDMFormValues);
-
-		JSONAssert.assertEquals(
-			expectedSerializedDDMFormValues, actualSerializedDDMFormValues,
-			false);
 	}
 
 	protected void assertRecordDDMFormValues(
@@ -260,7 +250,7 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 		DDLRecordSet recordSet = addRecordSet(ddmForm);
 
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
-			group, recordSet);
+			_group, recordSet);
 
 		DDLRecord record = recordTestHelper.addRecord(
 			expectedDDMFormValues, WorkflowConstants.ACTION_PUBLISH);
@@ -270,7 +260,7 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 
 		DDMFormValues actualDDMFormValues = actualRecord.getDDMFormValues();
 
-		assertEquals(expectedDDMFormValues, actualDDMFormValues);
+		Assert.assertEquals(expectedDDMFormValues, actualDDMFormValues);
 	}
 
 	protected DDMForm createDDMForm() {
@@ -363,6 +353,11 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
 			serviceContext);
 	}
+
+	private DDMStructureTestHelper _ddmStructureTestHelper;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	private DDLRecordSetTestHelper _recordSetTestHelper;
 

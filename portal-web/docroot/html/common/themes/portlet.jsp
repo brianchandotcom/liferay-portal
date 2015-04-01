@@ -152,35 +152,25 @@ boolean wsrp = ParamUtil.getBoolean(PortalUtil.getOriginalServletRequest(request
 				%>
 
 				<div class="portlet-borderless-container" <%= containerStyles %>>
-					<c:if test="<%= showPortletActions || portletDisplay.isShowBackIcon() %>">
+					<c:if test="<%= showPortletActions %>">
 						<div class="portlet-borderless-bar">
-							<c:if test="<%= showPortletActions %>">
-								<span class="portlet-title-default"><%= HtmlUtil.escape(portletDisplay.getTitle()) %></span>
+							<span class="portlet-title-default"><%= HtmlUtil.escape(portletDisplay.getTitle()) %></span>
 
-								<span class="portlet-actions">
-									<span class="portlet-action">
+							<span class="portlet-actions">
+								<span class="portlet-action">
+									<span class="portlet-action-separator">-</span>
+
+									<liferay-portlet:icon-options />
+								</span>
+
+								<c:if test="<%= portletDisplay.isShowBackIcon() %>">
+									<span class="portlet-action portlet-back">
 										<span class="portlet-action-separator">-</span>
 
-										<liferay-portlet:icon-options />
+										<a href="<%= HtmlUtil.escapeAttribute(portletDisplay.getURLBack()) %>" title="<liferay-ui:message key="back" />"><liferay-ui:message key="back" /></a>
 									</span>
-
-									<c:if test="<%= portletDisplay.isShowCloseIcon() %>">
-										<span class="portlet-action">
-											<span class="portlet-action-separator">-</span>
-
-											<liferay-portlet:icon-close />
-										</span>
-									</c:if>
-
-									<c:if test="<%= portletDisplay.isShowBackIcon() %>">
-										<span class="portlet-action portlet-back">
-											<span class="portlet-action-separator">-</span>
-
-											<a href="<%= HtmlUtil.escapeAttribute(portletDisplay.getURLBack()) %>" title="<liferay-ui:message key="back" />"><liferay-ui:message key="back" /></a>
-										</span>
-									</c:if>
-								</span>
-							</c:if>
+								</c:if>
+							</span>
 						</div>
 					</c:if>
 

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<path id="plugins.includes.path">
+		<dirset dir="portlet-configuration-icons" includes="*" />
+	</path>
+
+	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
+
+	<import file="../../tools/sdk/build-common-plugins.xml" />
+</project>

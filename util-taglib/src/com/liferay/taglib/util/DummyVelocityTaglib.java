@@ -258,80 +258,8 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 		portletIconBack();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconClose}
-	 */
-	@Deprecated
-	@Override
-	public void iconClose() {
-		portletIconClose();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconConfiguration}
-	 */
-	@Deprecated
-	@Override
-	public void iconConfiguration() {
-		portletIconConfiguration();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEdit}
-	 */
-	@Deprecated
-	@Override
-	public void iconEdit() {
-		portletIconEdit();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditDefaults}
-	 */
-	@Deprecated
-	@Override
-	public void iconEditDefaults() {
-		portletIconEditDefaults();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditGuest}
-	 */
-	@Deprecated
-	@Override
-	public void iconEditGuest() {
-		portletIconEditGuest();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconHelp}
-	 */
-	@Deprecated
-	@Override
-	public void iconHelp() {
-		portletIconHelp();
-	}
-
 	@Override
 	public void iconHelp(String message) {
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMaximize}
-	 */
-	@Deprecated
-	@Override
-	public void iconMaximize() {
-		portletIconMaximize();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMinimize}
-	 */
-	@Deprecated
-	@Override
-	public void iconMinimize() {
-		portletIconMinimize();
 	}
 
 	/**
@@ -359,33 +287,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	@Override
 	public void iconPortlet(Portlet portlet) {
 		portletIconPortlet();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortletCss}
-	 */
-	@Deprecated
-	@Override
-	public void iconPortletCss() {
-		portletIconPortletCss();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPrint}
-	 */
-	@Deprecated
-	@Override
-	public void iconPrint() {
-		portletIconPrint();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconRefresh}
-	 */
-	@Deprecated
-	@Override
-	public void iconRefresh() {
-		portletIconRefresh();
 	}
 
 	@Override
@@ -488,38 +389,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public void portletIconClose() {
-	}
-
-	@Override
-	public void portletIconConfiguration() {
-	}
-
-	@Override
-	public void portletIconEdit() {
-	}
-
-	@Override
-	public void portletIconEditDefaults() {
-	}
-
-	@Override
-	public void portletIconEditGuest() {
-	}
-
-	@Override
-	public void portletIconHelp() {
-	}
-
-	@Override
-	public void portletIconMaximize() {
-	}
-
-	@Override
-	public void portletIconMinimize() {
-	}
-
-	@Override
 	public void portletIconOptions() {
 	}
 
@@ -529,18 +398,6 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void portletIconPortlet(Portlet portlet) {
-	}
-
-	@Override
-	public void portletIconPortletCss() {
-	}
-
-	@Override
-	public void portletIconPrint() {
-	}
-
-	@Override
-	public void portletIconRefresh() {
 	}
 
 	@Override

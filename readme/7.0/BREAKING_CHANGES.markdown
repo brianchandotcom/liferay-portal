@@ -1230,3 +1230,35 @@ template. Here's an example of using the tag:
 This change simplifies using asset previews.
 
 ---------------------------------------
+
+### The taglibs portlet:icon-* have been removed
+- **Date:** 2015-Mar-31
+- **JIRA Ticket:** LPS-54620
+
+#### What changed?
+
+The following taglibs haven been removed: portlet:icon-close, 
+portlet:icon-configuration, portlet:icon-edit, portlet:icon-edit-defaults,
+portlet:icon-edit-guest, portlet:icon-export-import, portlet:icon-help,
+portlet:icon-maximize, portlet:icon-minimize, portlet:icon-portlet-css,
+portlet:icon-print, portlet:icon-refresh, portlet:icon-staging      
+
+#### Who is affected?
+
+This affects developers who have written code that uses these taglibs.
+
+#### How should I update my code?
+
+The taglib liferay-ui:icon can replace the call to the previous taglibs. 
+All the previous taglibs have been converted into Java classes that implement
+the methods that the icon taglib needs.
+
+See the modules portlet-configuration-icon-* in the portal-extensions folder.
+
+#### Why was this change made?
+
+These taglibs were used to generate the configuration icon of portlets and this
+functionaly will be managed from now with OSGI modules instead of taglibs since
+those provide more flexibility and can be included from any app.
+
+---------------------------------------

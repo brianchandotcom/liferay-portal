@@ -174,55 +174,7 @@ public interface VelocityTaglib {
 	@Deprecated
 	public void iconBack() throws Exception;
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconClose}
-	 */
-	@Deprecated
-	public void iconClose() throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconConfiguration}
-	 */
-	@Deprecated
-	public void iconConfiguration() throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEdit}
-	 */
-	@Deprecated
-	public void iconEdit() throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditDefaults}
-	 */
-	@Deprecated
-	public void iconEditDefaults() throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditGuest}
-	 */
-	@Deprecated
-	public void iconEditGuest() throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconHelp}
-	 */
-	@Deprecated
-	public void iconHelp() throws Exception;
-
 	public void iconHelp(String message) throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMaximize}
-	 */
-	@Deprecated
-	public void iconMaximize() throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMinimize}
-	 */
-	@Deprecated
-	public void iconMinimize() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconOptions}
@@ -241,24 +193,6 @@ public interface VelocityTaglib {
 	 */
 	@Deprecated
 	public void iconPortlet(Portlet portlet) throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortletCss}
-	 */
-	@Deprecated
-	public void iconPortletCss() throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPrint}
-	 */
-	@Deprecated
-	public void iconPrint() throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #portletIconRefresh}
-	 */
-	@Deprecated
-	public void iconRefresh() throws Exception;
 
 	public void include(ServletContext servletContext, String page)
 		throws Exception;
@@ -327,33 +261,11 @@ public interface VelocityTaglib {
 
 	public void portletIconBack() throws Exception;
 
-	public void portletIconClose() throws Exception;
-
-	public void portletIconConfiguration() throws Exception;
-
-	public void portletIconEdit() throws Exception;
-
-	public void portletIconEditDefaults() throws Exception;
-
-	public void portletIconEditGuest() throws Exception;
-
-	public void portletIconHelp() throws Exception;
-
-	public void portletIconMaximize() throws Exception;
-
-	public void portletIconMinimize() throws Exception;
-
 	public void portletIconOptions() throws Exception;
 
 	public void portletIconPortlet() throws Exception;
 
 	public void portletIconPortlet(Portlet portlet) throws Exception;
-
-	public void portletIconPortletCss() throws Exception;
-
-	public void portletIconPrint() throws Exception;
-
-	public void portletIconRefresh() throws Exception;
 
 	public void quickAccess() throws Exception;
 

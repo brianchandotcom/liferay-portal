@@ -14,7 +14,7 @@
 
 package com.liferay.poshi.runner.selenium;
 
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 
 import java.net.URL;
 
@@ -23,12 +23,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 /**
  * @author Kwang Lee
  */
-public class AppiumMobileDriverImpl extends BaseMobileDriverImpl {
+public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 
-	public AppiumMobileDriverImpl(String projectDirName, String browserURL) {
+	public AndroidMobileDriverImpl(String projectDirName, String browserURL) {
 		super(
 			projectDirName, browserURL,
-			new AppiumDriver(_url, _desiredCapabilities));
+			new AndroidDriver(_url, _desiredCapabilities));
 	}
 
 	private static final DesiredCapabilities _desiredCapabilities;

@@ -14,8 +14,6 @@
 
 package com.liferay.library;
 
-import com.liferay.portal.kernel.util.StringBundler;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -67,32 +65,32 @@ public class LibraryTest {
 
 	@Test
 	public void testEclipseProjectJarsInLib() {
-		_doSearch(_classpathJars, _libJars, _CLASSPATH_PATH);
+		_doSearchForReferencingNonExistJars(_classpathJars, _CLASSPATH_PATH);
 	}
 
 	@Test
 	public void testLibJarsInEclipseProject() {
-		_doSearch(_libJars, _classpathJars, _CLASSPATH_PATH);
+		_doSearchForMissingReferences(_classpathJars, _CLASSPATH_PATH);
 	}
 
 	@Test
 	public void testLibJarsInNetBeansProject() {
-		_doSearch(_libJars, _nbProjectJars, _NBPROJECT_PATH);
+		_doSearchForMissingReferences(_nbProjectJars, _NBPROJECT_PATH);
 	}
 
 	@Test
 	public void testLibJarsInVersions() {
-		_doSearch(_libJars, _versionsJars, _VERSIONS_PATH);
+		_doSearchForMissingReferences(_versionsJars, _VERSIONS_PATH);
 	}
 
 	@Test
 	public void testNetBeansProjectJarsInLib() {
-		_doSearch(_nbProjectJars, _libJars, _NBPROJECT_PATH);
+		_doSearchForReferencingNonExistJars(_nbProjectJars, _NBPROJECT_PATH);
 	}
 
 	@Test
 	public void testVersionsJarsInLib() {
-		_doSearch(_versionsJars, _libJars, _VERSIONS_PATH);
+		_doSearchForReferencingNonExistJars(_versionsJars, _VERSIONS_PATH);
 	}
 
 	private static void _initEclipseProjectJars(DocumentBuilder documentBuilder)
@@ -129,7 +127,7 @@ public class LibraryTest {
 			line = line.trim();
 
 			if (!line.isEmpty()) {
-				_excludes.add(line);
+				_excludeJars.add(line);
 			}
 		}
 
@@ -182,45 +180,30 @@ public class LibraryTest {
 		}
 	}
 
-	private void _doSearch(
-		Set<String> searchFor, Set<String> searchIn, String path) {
+	private void _doSearchForMissingReferences(
+		Set<String> searchInJars, String sourcePath) {
 
-		for (String jar : searchFor) {
-			if (searchIn.contains(jar)) {
+		for (String searchForJar : _libJars) {
+			if (sourcePath.equals(_VERSIONS_PATH) &&
+				_excludeJars.contains(searchForJar)) {
+
 				continue;
 			}
 
-			if (searchFor == _libJars) {
-				if (path.equals(_VERSIONS_PATH) && _excludes.contains(jar)) {
-					continue;
-				}
-
-				Assert.fail(_generateMissingReferenceMessage(jar, path));
-			}
-			else {
-				Assert.fail(_generateExtraReferenceMessage(jar, path));
-			}
+			Assert.assertTrue(
+				sourcePath + " is missing the reference to " + searchForJar,
+				searchInJars.contains(searchForJar));
 		}
 	}
 
-	private String _generateExtraReferenceMessage(String jar, String path) {
-		StringBundler sb = new StringBundler(3);
+	private void _doSearchForReferencingNonExistJars(
+		Set<String> searchForJars, String sourcePath) {
 
-		sb.append(path);
-		sb.append(" references non-existent jar: ");
-		sb.append(jar);
-
-		return sb.toString();
-	}
-
-	private String _generateMissingReferenceMessage(String jar, String path) {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(jar);
-		sb.append(" is not in ");
-		sb.append(path);
-
-		return sb.toString();
+		for (String searchForJar : searchForJars) {
+			Assert.assertTrue(
+				sourcePath + " is referencing a non-exist jar " + searchForJar,
+				_libJars.contains(searchForJar));
+		}
 	}
 
 	private static final String _CLASSPATH_PATH = ".classpath";
@@ -232,7 +215,7 @@ public class LibraryTest {
 	private static final String _VERSIONS_PATH = _LIB + "/versions.xml";
 
 	private static final Set<String> _classpathJars = new HashSet<>();
-	private static final Set<String> _excludes = new HashSet<>();
+	private static final Set<String> _excludeJars = new HashSet<>();
 	private static final Set<String> _libJars = new HashSet<>();
 	private static final Set<String> _nbProjectJars = new HashSet<>();
 	private static final Set<String> _versionsJars = new HashSet<>();

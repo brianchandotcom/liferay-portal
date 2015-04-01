@@ -1340,7 +1340,6 @@
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute function="Pause" value1="1000" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendarDayView#SCHEDULER_EVENT_SPECIFIC" />
 	</command>
 

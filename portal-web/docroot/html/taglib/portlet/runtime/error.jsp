@@ -22,5 +22,5 @@ PortletProvider.Action portletProviderAction = (PortletProvider.Action)request.g
 %>
 
 <div class="alert alert-warning lfr-configurator-visibility lfr-meta-actions">
-	<liferay-ui:message arguments="<%= new Object[] {portletProviderAction.name(), portletProviderClassName} %>" key="there-is-no-app-installed-that-can-x-x" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= new Object[] {portletProviderAction.name(), portletProviderClassName} %>" key="an-app-that-can-x-x-belongs-here" translateArguments="<%= false %>" />
 </div>

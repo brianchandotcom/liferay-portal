@@ -66,17 +66,17 @@ public class LibraryTest {
 	}
 
 	@Test
-	public void testClasspathJarsInLib() {
+	public void testEclipseProjectJarsInLib() {
 		_doSearch(_classpathJars, _libJars, _CLASSPATH_PATH);
 	}
 
 	@Test
-	public void testLibJarsInClasspath() {
+	public void testLibJarsInEclipseProject() {
 		_doSearch(_libJars, _classpathJars, _CLASSPATH_PATH);
 	}
 
 	@Test
-	public void testLibJarsInNBProject() {
+	public void testLibJarsInNetBeansProject() {
 		_doSearch(_libJars, _nbProjectJars, _NBPROJECT_PATH);
 	}
 
@@ -86,7 +86,7 @@ public class LibraryTest {
 	}
 
 	@Test
-	public void testNBProjectJarsInLib() {
+	public void testNetBeansProjectJarsInLib() {
 		_doSearch(_nbProjectJars, _libJars, _NBPROJECT_PATH);
 	}
 

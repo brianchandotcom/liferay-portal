@@ -118,6 +118,9 @@ import org.dom4j.DocumentException;
  * @author Shuyang Zhou
  * @author James Lefeu
  * @author Miguel Pastor
+ * @author Cody Hoag
+ * @author James Hinkey
+ * @author Hugo Huijser
  */
 public class ServiceBuilder {
 
@@ -408,7 +411,7 @@ public class ServiceBuilder {
 		content = JavaSourceProcessor.stripJavaImports(
 			content, packagePath, className);
 
-		content = _stripFullyQualifiedClassNames(content, file);
+		content = _stripFullyQualifiedClassNames(content);
 
 		File tempFile = new File("ServiceBuilder.temp");
 
@@ -1848,60 +1851,55 @@ public class ServiceBuilder {
 		}
 	}
 
-	private static String _stripFullyQualifiedClassNames(
-			String content, File file)
+	private static String _stripFullyQualifiedClassNames(String content)
 		throws IOException {
 
-		Matcher matcher = _importsPattern.matcher(content);
+		String imports = JavaSourceProcessor.getImports(content);
 
-		if (!matcher.find()) {
+		if (Validator.isNull(imports)) {
 			return content;
 		}
 
-		String filePath = StringUtil.replace(
-			file.getCanonicalPath(), "\\", "/");
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(imports));
 
-		filePath = filePath.substring(filePath.lastIndexOf("/src/") + 5);
+		String line = null;
 
-		String fullyQualifiedClassName = StringUtil.replace(
-			filePath.substring(0, filePath.length() - 5), "/", ".");
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			int x = line.indexOf("import ");
 
-		JavaDocBuilder javadocBuilder = new JavaDocBuilder();
-		javadocBuilder.addSource(new UnsyncStringReader(content));
+			if (x == -1) {
+				continue;
+			}
 
-		JavaClass javaClass = javadocBuilder.getClassByName(
-			fullyQualifiedClassName);
+			String importPackageAndClassName = line.substring(
+				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
 
-		JavaSource javaSource = javaClass.getSource();
-		String[] imports = javaSource.getImports();
+			for (x = -1;;) {
+				x = content.indexOf(importPackageAndClassName, x + 1);
 
-		for (String importToExclude : imports) {
-			int fromIndex = 0;
-			int pos = content.indexOf(importToExclude, fromIndex);
-
-			for (; pos > -1; pos = content.indexOf(importToExclude, fromIndex))
-			{
-				int endPos = pos + importToExclude.length();
-				String charAfter = content.substring(endPos, endPos + 1);
-
-				String charBefore = StringPool.BLANK;
-
-				if (pos > 0) {
-					charBefore = content.substring(pos - 1, pos);
+				if (x == -1) {
+					break;
 				}
 
-				if ((content.length() > endPos) &&
-					!charAfter.matches("[a-zA-Z;\"]") &&
-					!charBefore.matches("[\"]")) {
+				char nextChar = content.charAt(
+					x + importPackageAndClassName.length());
+				char previousChar = content.charAt(x - 1);
 
-					String importClassName = importToExclude.substring(
-						importToExclude.lastIndexOf(StringPool.PERIOD) + 1);
+				if (Character.isAlphabetic(nextChar) ||
+					(nextChar == CharPool.QUOTE) ||
+					(nextChar == CharPool.SEMICOLON) ||
+					(previousChar == CharPool.QUOTE)) {
 
-					content = StringUtil.replaceFirst(
-						content, importToExclude, importClassName, pos);
+					continue;
 				}
 
-				fromIndex = pos + 1;
+				String importClassName = importPackageAndClassName.substring(
+					importPackageAndClassName.lastIndexOf(StringPool.PERIOD) +
+						1);
+
+				content = StringUtil.replaceFirst(
+					content, importPackageAndClassName, importClassName, x);
 			}
 		}
 
@@ -5242,8 +5240,6 @@ public class ServiceBuilder {
 	private static Pattern _getterPattern = Pattern.compile(
 		"public .* get.*" + Pattern.quote("(") + "|public boolean is.*" +
 			Pattern.quote("("));
-	private static Pattern _importsPattern = Pattern.compile(
-		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 	private static Pattern _setterPattern = Pattern.compile(
 		"public void set.*" + Pattern.quote("("));
 

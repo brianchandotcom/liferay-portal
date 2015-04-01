@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]//button[contains(.,'Choose')]</td>
+	<td>//button[@data-title='${key_kbArticleTitle}' and contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

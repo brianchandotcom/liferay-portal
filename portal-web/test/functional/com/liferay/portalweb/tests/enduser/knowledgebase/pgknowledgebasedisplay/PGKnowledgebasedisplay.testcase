@@ -1109,7 +1109,7 @@
 
 		<execute macro="KBArticle#addChildPGViaKBAdmin">
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbChildArticleContent" value="This is a child article. Lengthy articles are summarized on the KB Display portlet. When an article is summarized, a Read More link is present, which, when clicked, directs the reader to the rest of the article. This last sentence of the child article should only be visible after clicking on Read More." />
+			<var name="kbChildArticleContent" value="This is a child article. Lengthy articles are summarized on the KB Display portlet. When an article is summarized, a Read More link is present, which, when clicked, directs the reader to the rest of the article. Excerpt from Liferay.com: Modern portals include a full workflow enabled web content management system. Many portal websites include a great deal of content that requires regular updates. These updates are often accomplished by non-technical content contributors and need to be approved by content approvers in a workflow approval process. This last sentence of the child article should only be visible after clicking on Read More." />
 			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
 		</execute>
 
@@ -1119,15 +1119,6 @@
 
 		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
 		</execute>
 
 		<execute macro="KBArticle#viewViaReadMoreLinkPG">

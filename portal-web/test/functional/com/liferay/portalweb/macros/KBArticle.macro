@@ -1344,13 +1344,13 @@
 			<condition function="IsElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_GENERIC" />
 			<then>
 				<var name="count" value="${count?increment()}" />
-				<var name="kbArticleTitle" value="${kbArticleTitle} ${count}" />
-				<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+				<var name="kbParentTitle" value="${kbArticleTitle} ${count}" />
+				<var name="key_kbArticleTitle" value="${kbParentTitle}" />
 
 				<if>
 					<condition function="IsElementPresent" locator1="xpath=//div[@class='kbarticle-navigation']/ul[${count}]" />
 					<then>
-						<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
+						<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION" value1="${kbParentTitle}" />
 					</then>
 				</if>
 			</then>
@@ -1471,7 +1471,6 @@
 	</command>
 
 	<command name="viewViaReadMoreLinkPG">
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_CHILD_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More. " />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_READ_MORE" value1="Read More" />
 		<execute function="AssertTextPresent" locator1="PGKnowledgebasedisplay#ARTICLE_CONTENT" value1="This last sentence of the child article should only be visible after clicking on Read More." />

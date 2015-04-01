@@ -93,7 +93,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteImportedArticles" priority="5">
+	<command known-issues="LPS-54597" name="DeleteImportedArticles" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -871,7 +871,7 @@
 		<execute macro="KBArticle#viewDefaultViaKBDisplayPG" />
 	</command>
 
-	<command name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="5">
+	<command known-issues="LPS-54597" name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -936,7 +936,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewImportedKBArticlesWithMultiplePeerHierarchies" priority="5">
+	<command known-issues="LPS-54597" name="ViewImportedKBArticlesWithMultiplePeerHierarchies" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -991,7 +991,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewImportedKBArticleWithImagesAsKBAttachments" priority="5">
+	<command known-issues="LPS-54597" name="ViewImportedKBArticleWithImagesAsKBAttachments" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -1048,7 +1048,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewImportedKBArticleWithSourceURLMetadata" priority="5">
+	<command known-issues="LPS-54597" name="ViewImportedKBArticleWithSourceURLMetadata" priority="5">
 		<property name="portlet.properties.knowledge-base-portlet" value="knowledge.base.source.url.enabled=true" />
 
 		<execute macro="Page#addPG">
@@ -1952,6 +1952,8 @@
 	</command>
 
 	<command name="ViewKBArticlesWithTheSamePriorityViaNavigationLinks" priority="3">
+		<var name="kbArticleCounterList" value="1,2,3" />
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -1968,25 +1970,19 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 1" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-		</execute>
+		<for list="${kbArticleCounterList}" param="kbCount">
+			<execute macro="KBArticle#addCP">
+				<var name="kbArticleContent" value="Knowledge Base Article Parent Content ${kbCount}" />
+				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title ${kbCount}" />
+			</execute>
+		</for>
 
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 3" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 3" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbPriority" value="1.0" />
-		</execute>
+		<for list="${kbArticleCounterList}" param="kbCount">
+			<execute macro="KBArticle#viewKBArticlePriorityCP">
+				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title ${kbCount}" />
+				<var name="kbPriority" value="${kbCount}.0" />
+			</execute>
+		</for>
 
 		<execute macro="KBArticle#viewKBArticlePriorityCP">
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2" />
@@ -2070,7 +2066,7 @@
 		</execute>
 
 		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
 		</execute>
 
 		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
@@ -2232,6 +2228,8 @@
 	</command>
 
 	<command name="ViewUnchangedKBArticlePriorityAfterEdit" priority="5">
+		<var name="kbArticleCounterList" value="1,2,3" />
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -2253,43 +2251,25 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
-		<execute macro="KBArticle#addChildPGViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 1 Child 1" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
-		</execute>
-
-		<execute macro="KBArticle#addChildPGViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 1 Child 2" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
-		</execute>
-
-		<execute macro="KBArticle#addChildPGViaKBAdmin">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
-			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 1 Child 3" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 3" />
-		</execute>
+		<for list="${kbArticleCounterList}" param="kbCount">
+			<execute macro="KBArticle#addChildPGViaKBAdmin">
+				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+				<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 1 Child ${kbCount}" />
+				<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child ${kbCount}" />
+			</execute>
+		</for>
 
 		<execute macro="KBArticle#gotoViaKBAdminCP">
 			<var name="hasChildArticle" value="true" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
 		</execute>
 
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
-			<var name="kbPriority" value="1.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
-			<var name="kbPriority" value="2.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 3" />
-			<var name="kbPriority" value="3.0" />
-		</execute>
+		<for list="${kbArticleCounterList}" param="kbCount">
+			<execute macro="KBArticle#viewKBArticlePriorityCP">
+				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child ${kbCount}" />
+				<var name="kbPriority" value="${kbCount}.0" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
@@ -2313,25 +2293,17 @@
 		</execute>
 
 		<execute macro="KBArticle#editCP">
-			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit. This article should remain priority three." />
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 3" />
-			<var name="kbArticleTitleEdit" value="Knowledge Base Article Parent Title 1 Child 3" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 1" />
-			<var name="kbPriority" value="1.0" />
-		</execute>
-
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
+			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edit. This article should remain priority two." />
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
-			<var name="kbPriority" value="2.0" />
+			<var name="kbArticleTitleEdit" value="Knowledge Base Article Parent Title 1 Child 2" />
 		</execute>
 
-		<execute macro="KBArticle#viewKBArticlePriorityCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 3" />
-			<var name="kbPriority" value="3.0" />
-		</execute>
+		<for list="${kbArticleCounterList}" param="kbCount">
+			<execute macro="KBArticle#viewKBArticlePriorityCP">
+				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child ${kbCount}" />
+				<var name="kbPriority" value="${kbCount}.0" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
@@ -2343,6 +2315,16 @@
 
 		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+		</execute>
+
+		<execute macro="KBArticle#gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1" />
+			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
+		</execute>
+
+		<execute macro="KBArticle#viewPGViaKBDisplay">
+			<var name="kbArticleContent" value="Knowledge Base Article Content Edit. This article should remain priority two." />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 1 Child 2" />
 		</execute>
 	</command>
 

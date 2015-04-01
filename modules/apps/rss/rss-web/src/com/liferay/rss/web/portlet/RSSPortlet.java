@@ -14,19 +14,40 @@
 
 package com.liferay.rss.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.rss.web.configuration.RSSWebConfiguration;
+import com.liferay.rss.web.constants.RSSPortletKeys;
+import com.liferay.rss.web.settings.RSSPortletInstanceSettings;
 import com.liferay.rss.web.upgrade.RSSWebUpgrade;
 
-import javax.portlet.Portlet;
+import java.io.IOException;
 
+import java.util.Map;
+
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.rss.web.configuration.RSSWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-rss",
 		"com.liferay.portlet.display-category=category.news",
@@ -42,7 +63,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.config-template=/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
@@ -50,8 +70,56 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class RSSPortlet extends MVCPortlet {
 
+	@Override
+	public void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		renderRequest.setAttribute(
+			RSSWebConfiguration.class.getName(), _rssWebConfiguration);
+
+		try {
+			RSSPortletInstanceSettings rssPortletInstanceSettings =
+				_portletInstanceSettingsProvider.getPortletInstanceSettings(
+					themeDisplay.getLayout(), RSSPortletKeys.RSS);
+
+			renderRequest.setAttribute(
+				RSSPortletInstanceSettings.class.getName(),
+				rssPortletInstanceSettings);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+
+		super.doView(renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_rssWebConfiguration = Configurable.createConfigurable(
+			RSSWebConfiguration.class, properties);
+	}
+
+	@Reference(
+		target = "(class.name=com.liferay.rss.web.settings.RSSPortletInstanceSettings)"
+	)
+	protected void setPortletInstanceSettingsProvider(
+		PortletInstanceSettingsProvider<RSSPortletInstanceSettings>
+			portletInstanceSettingsProvider) {
+
+		_portletInstanceSettingsProvider = portletInstanceSettingsProvider;
+	}
+
 	@Reference(unbind = "-")
 	protected void setRSSWebUpgrade(RSSWebUpgrade rssWebUpgrade) {
 	}
+
+	private PortletInstanceSettingsProvider<RSSPortletInstanceSettings>
+		_portletInstanceSettingsProvider;
+	private volatile RSSWebConfiguration _rssWebConfiguration;
 
 }

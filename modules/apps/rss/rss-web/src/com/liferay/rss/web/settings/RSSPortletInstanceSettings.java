@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.rss.web.configuration;
+package com.liferay.rss.web.settings;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.settings.PortletInstanceSettings;
+import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class RSSWebConfigurationValues {
-
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		RSSWebConfigurationUtil.get("display.templates.config"));
-
+public interface RSSPortletInstanceSettings
+	extends PortletInstanceSettings, RSSPortletInstanceConfiguration {
 }

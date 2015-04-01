@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.rss.web.configuration.RSSWebConfigurationValues;
+import com.liferay.rss.web.configuration.RSSWebConfiguration;
 
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
@@ -37,7 +37,10 @@ import org.apache.commons.httpclient.params.HttpClientParams;
  */
 public class RSSWebCacheItem implements WebCacheItem {
 
-	public RSSWebCacheItem(String url) {
+	public RSSWebCacheItem(
+		RSSWebConfiguration rssWebConfiguration, String url) {
+
+		_rssWebConfiguration = rssWebConfiguration;
 		_url = url;
 	}
 
@@ -108,9 +111,10 @@ public class RSSWebCacheItem implements WebCacheItem {
 
 	@Override
 	public long getRefreshTime() {
-		return Time.MINUTE * RSSWebConfigurationValues.FEED_REFRESH_TIME;
+		return Time.MINUTE * _rssWebConfiguration.rssFeedTime();
 	}
 
+	private final RSSWebConfiguration _rssWebConfiguration;
 	private final String _url;
 
 }

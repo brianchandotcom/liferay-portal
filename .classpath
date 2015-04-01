@@ -62,9 +62,11 @@
 	<classpathentry kind="lib" path="lib/development/jsonassert.jar"/>
 	<classpathentry kind="lib" path="lib/development/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/jta.jar"/>
+	<classpathentry kind="lib" path="lib/development/jtds.jar"/>
 	<classpathentry kind="lib" path="lib/development/junit.jar"/>
 	<classpathentry kind="lib" path="lib/development/jutf7.jar"/>
 	<classpathentry kind="lib" path="lib/development/jymsg.jar"/>
+	<classpathentry kind="lib" path="lib/development/liferay-doclet.jar"/>
 	<classpathentry kind="lib" path="lib/development/mail.jar"/>
 	<classpathentry kind="lib" path="lib/development/maven-ant-tasks.jar"/>
 	<classpathentry kind="lib" path="lib/development/mockito.jar"/>
@@ -97,6 +99,7 @@
 	<classpathentry kind="lib" path="lib/development/spring-instrument.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-instrument-tomcat.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-test.jar"/>
+	<classpathentry kind="lib" path="lib/development/tlddoc.jar"/>
 	<classpathentry kind="lib" path="lib/development/tomcat-coyote.jar"/>
 	<classpathentry kind="lib" path="lib/development/velocity.jar"/>
 	<classpathentry kind="lib" path="lib/development/velocity-tools.jar"/>
@@ -234,6 +237,7 @@
 	<classpathentry kind="lib" path="lib/portal/liferay-icu4j.jar"/>
 	<classpathentry kind="lib" path="lib/portal/liferay-yui-compressor.jar"/>
 	<classpathentry kind="lib" path="lib/portal/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/portal/log4j-extras.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-analyzers.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-grouping.jar"/>

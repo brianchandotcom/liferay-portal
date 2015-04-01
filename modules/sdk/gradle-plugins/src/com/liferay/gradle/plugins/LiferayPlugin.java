@@ -15,6 +15,8 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
+import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.util.StringUtil;
 import com.liferay.gradle.plugins.util.Validator;
 
@@ -56,6 +58,25 @@ import org.gradle.api.tasks.bundling.War;
  * @author Andrea Di Giorgi
  */
 public class LiferayPlugin extends BasePlugin {
+
+	public static final String EXTENSION_NAME = "liferay";
+
+	protected void addLiferayExtension() {
+		String projectName = project.getName();
+
+		if (projectName.endsWith("-theme")) {
+			_liferayExtension = addExtension(
+				EXTENSION_NAME, LiferayThemeExtension.class);
+		}
+		else {
+			_liferayExtension = addExtension(
+				EXTENSION_NAME, LiferayExtension.class);
+		}
+	}
+
+	protected void addTasks() {
+		addTask("initGradle", InitGradleTask.class);
+	}
 
 	protected void configureDependencies() {
 		configureDependenciesCompile();
@@ -369,13 +390,15 @@ public class LiferayPlugin extends BasePlugin {
 	protected void doApply() throws Exception {
 		applyPlugin(WarPlugin.class);
 
-		_liferayExtension = createExtension("liferay", LiferayExtension.class);
+		addLiferayExtension();
 
 		configureDependencies();
 		configureRepositories();
 		configureSourceSets();
 		configureVersion();
 		configureWebAppDirName();
+
+		addTasks();
 
 		project.afterEvaluate(
 			new Action<Project>() {

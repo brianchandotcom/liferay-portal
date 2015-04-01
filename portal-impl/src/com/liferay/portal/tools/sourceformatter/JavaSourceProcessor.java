@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
 
 import java.io.File;
@@ -41,70 +40,8 @@ import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
- * @author Cody Hoag
- * @author James Hinkey
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
-
-	public static String stripFullyQualifiedClassNames(
-			String content, File file)
-		throws IOException {
-
-		Matcher matcher = _importsPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String filePath = StringUtil.replace(
-			file.getCanonicalPath(), "\\", "/");
-
-		filePath = filePath.substring(filePath.lastIndexOf("/src/") + 5);
-
-		String fullyQualifiedClassName = StringUtil.replace(
-			filePath.substring(0, filePath.length() - 5), "/", ".");
-
-		JavaDocBuilder javadocBuilder = new JavaDocBuilder();
-		javadocBuilder.addSource(new UnsyncStringReader(content));
-
-		JavaClass javaClass = javadocBuilder.getClassByName(
-			fullyQualifiedClassName);
-
-		JavaSource javaSource = javaClass.getSource();
-		String[] imports = javaSource.getImports();
-
-		for (String importToExclude : imports) {
-			int fromIndex = 0;
-			int pos = content.indexOf(importToExclude, fromIndex);
-
-			for (; pos > -1; pos = content.indexOf(importToExclude, fromIndex))
-			{
-				int endPos = pos + importToExclude.length();
-				String charAfter = content.substring(endPos, endPos + 1);
-
-				String charBefore = StringPool.BLANK;
-
-				if (pos > 0) {
-					charBefore = content.substring(pos - 1, pos);
-				}
-
-				if ((content.length() > endPos) &&
-					!charAfter.matches("[a-zA-Z;\"]") &&
-					!charBefore.matches("[\"]")) {
-
-					String importClassName = importToExclude.substring(
-						importToExclude.lastIndexOf(StringPool.PERIOD) + 1);
-
-					content = StringUtil.replaceFirst(
-						content, importToExclude, importClassName, pos);
-				}
-
-				fromIndex = pos + 1;
-			}
-		}
-
-		return content;
-	}
 
 	public static String stripJavaImports(
 			String content, String packageDir, String className)

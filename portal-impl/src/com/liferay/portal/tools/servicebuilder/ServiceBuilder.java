@@ -408,8 +408,7 @@ public class ServiceBuilder {
 		content = JavaSourceProcessor.stripJavaImports(
 			content, packagePath, className);
 
-		content = JavaSourceProcessor.stripFullyQualifiedClassNames(
-			content, file);
+		content = _stripFullyQualifiedClassNames(content, file);
 
 		File tempFile = new File("ServiceBuilder.temp");
 
@@ -1847,6 +1846,66 @@ public class ServiceBuilder {
 			throw new RuntimeException(
 				"Unable to load jalopy.xml from the class loader", e);
 		}
+	}
+
+	private static String _stripFullyQualifiedClassNames(
+			String content, File file)
+		throws IOException {
+
+		Matcher matcher = _importsPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String filePath = StringUtil.replace(
+			file.getCanonicalPath(), "\\", "/");
+
+		filePath = filePath.substring(filePath.lastIndexOf("/src/") + 5);
+
+		String fullyQualifiedClassName = StringUtil.replace(
+			filePath.substring(0, filePath.length() - 5), "/", ".");
+
+		JavaDocBuilder javadocBuilder = new JavaDocBuilder();
+		javadocBuilder.addSource(new UnsyncStringReader(content));
+
+		JavaClass javaClass = javadocBuilder.getClassByName(
+			fullyQualifiedClassName);
+
+		JavaSource javaSource = javaClass.getSource();
+		String[] imports = javaSource.getImports();
+
+		for (String importToExclude : imports) {
+			int fromIndex = 0;
+			int pos = content.indexOf(importToExclude, fromIndex);
+
+			for (; pos > -1; pos = content.indexOf(importToExclude, fromIndex))
+			{
+				int endPos = pos + importToExclude.length();
+				String charAfter = content.substring(endPos, endPos + 1);
+
+				String charBefore = StringPool.BLANK;
+
+				if (pos > 0) {
+					charBefore = content.substring(pos - 1, pos);
+				}
+
+				if ((content.length() > endPos) &&
+					!charAfter.matches("[a-zA-Z;\"]") &&
+					!charBefore.matches("[\"]")) {
+
+					String importClassName = importToExclude.substring(
+						importToExclude.lastIndexOf(StringPool.PERIOD) + 1);
+
+					content = StringUtil.replaceFirst(
+						content, importToExclude, importClassName, pos);
+				}
+
+				fromIndex = pos + 1;
+			}
+		}
+
+		return content;
 	}
 
 	private void _addIndexMetadata(
@@ -5183,6 +5242,8 @@ public class ServiceBuilder {
 	private static Pattern _getterPattern = Pattern.compile(
 		"public .* get.*" + Pattern.quote("(") + "|public boolean is.*" +
 			Pattern.quote("("));
+	private static Pattern _importsPattern = Pattern.compile(
+		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 	private static Pattern _setterPattern = Pattern.compile(
 		"public void set.*" + Pattern.quote("("));
 

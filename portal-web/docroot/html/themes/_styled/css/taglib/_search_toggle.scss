@@ -1,0 +1,29 @@
+.taglib-search-toggle .toggle-advanced {
+	color: inherit;
+
+	&, &:hover, &:focus {
+		text-decoration: none;
+	}
+}
+
+.taglib-search-toggle-advanced-wrapper .taglib-search-toggle-advanced {
+	background-color: #FCFCFC;
+	border-color: #DDD;
+
+	.btn.close {
+		margin-right: 5px;
+	}
+
+	.taglib-search-toggle-advanced-content {
+		position: relative;
+
+		.match-fields {
+			margin-bottom: 0;
+		}
+
+		.match-fields-legend {
+			color: #999;
+			font-size: 13px;
+		}
+	}
+}

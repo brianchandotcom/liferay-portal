@@ -1,0 +1,93 @@
+.taglib-image-selector {
+	&.drop-enabled, &.drop-active {
+		outline-color: rgba(176, 180, 187, 0.5)
+	}
+
+	.drop-here-info {
+		opacity: 0;
+
+		.drop-icons {
+			span:nth-of-type(1) {
+				background: #E8E6E8;
+				color: #A5A6AC;
+				opacity: 0;
+			}
+
+			span:nth-of-type(2) {
+				background: #00C2FF;
+				color: #FFF;
+			}
+
+			span:nth-of-type(3) {
+				background: #E8E6E8;
+				color: #A5A6AC;
+				opacity: 0;
+			}
+		}
+
+		.drop-text {
+			color: #FFF;
+		}
+	}
+
+	.glyphicon-ok {
+		background: #FFF;
+		opacity: 0;
+	}
+
+	.progress-wrapper {
+		.progressbar {
+			background: #B0B4BB;
+			opacity: 0.7;
+		}
+	}
+
+	&.check-active .glyphicon-ok {
+		opacity: 1;
+	}
+
+	&.drop-active {
+		.browse-image-controls {
+			opacity: 0;
+		}
+
+		.drop-here-info {
+			background-color: rgba(0, 0, 0, 0.4);
+			opacity: 1;
+
+			span:nth-of-type(1), span:nth-of-type(3) {
+				opacity: 1;
+			}
+		}
+
+		.glyphicon-ok {
+			opacity: 0;
+		}
+
+		.image-wrapper {
+			opacity: 0.15;
+		}
+
+		.error-wrapper {
+			opacity: 0;
+		}
+	}
+
+	&.progress-active {
+		.image-wrapper {
+			opacity: 0.15;
+		}
+
+		.browse-image-controls {
+			opacity: 0;
+		}
+
+		.drop-here-info {
+			opacity: 0;
+		}
+
+		.glyphicon-ok {
+			opacity: 0;
+		}
+	}
+}

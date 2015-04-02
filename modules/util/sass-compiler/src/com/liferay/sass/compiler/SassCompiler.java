@@ -14,7 +14,6 @@
 
 package com.liferay.sass.compiler;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sass.compiler.libsass.SassLibrary;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_Context;
 import com.liferay.sass.compiler.libsass.SassLibrary.Sass_Data_Context;
@@ -230,7 +229,7 @@ public class SassCompiler {
 
 	private void write(File file, String string) throws IOException {
 		try (Writer writer = new OutputStreamWriter(
-				new FileOutputStream(file, false), StringPool.UTF8)) {
+				new FileOutputStream(file, false), "UTF-8")) {
 
 			writer.write(string);
 		}

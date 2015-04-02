@@ -29,8 +29,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GUEST_ACCESS_DISCUSSION_CHECKBOX</td>
+	<td>GUEST_ACCESS_CHECKBOX</td>
 	<td>//tr[contains(.,'Guest')]//input[@value='ACCESS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_ACCESS_DISCUSSION_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='ACCESS_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_ADD_ARTICLE_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='ADD_ARTICLE']</td>
 	<td></td>
 </tr>
 <tr>
@@ -89,8 +99,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_MEMBER_ACCESS_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='ACCESS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_ADD_ARTICLE_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_ARTICLE']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_MEMBER_ADD_DISCUSSION_CHECKBOX</td>
 	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_ADD_SUBFOLDER_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_SUBFOLDER']</td>
 	<td></td>
 </tr>
 <tr>

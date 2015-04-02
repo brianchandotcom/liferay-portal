@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Toolbar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Toolbar</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Toolbar</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS</td>
+	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD</td>
+	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Add']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_BUTTON</td>
+	<td>//div[contains(@id,'displayStyleButtons')]/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE</td>
+	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Manage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_BY</td>
+	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Sort By']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

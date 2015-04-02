@@ -24,13 +24,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AVAILABLE_TRANSLATION</td>
+	<td>//div[contains(@class,'available-translations')]/span[contains(.,'${key_localizedLanguage}')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AVAILABLE_TRANSLATIONS_LABEL</td>
 	<td>//label[contains(.,'Available Translations:')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>AVAILABLE_TRANSLATION</td>
-	<td>//div[contains(@class,'available-translations')]/span[contains(.,'${key_localizedLanguage}')]/span</td>
+	<td>AVAILABLE_TRANSLATIONS_LINK</td>
+	<td>//span[contains(@class,'translation-editing') and contains(.,'${key_localizedLanguage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_LOCALE</td>
+	<td>//span[@locale='${key_translationLocale}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//span[contains(@class,'translation-manager') and contains(.,'${key_localizedLanguage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_NAME</td>
+	<td>//li[@data-value='${key_localizationName}']</td>
 	<td></td>
 </tr>
 </tbody>

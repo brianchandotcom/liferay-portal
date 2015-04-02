@@ -14,8 +14,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TYPE_SELECT</td>
+	<td>//select[contains(@id,'type')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PANEL_TOGGLE</td>
 	<td>//div[contains(@class,'panel-toggle') and contains(.,'Categorization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY</td>
+	<td>//div[contains(@class,'categoriesselector')]/ul/li/span[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_SELECT</td>
+	<td>//button[contains(@title,'Select') and contains(@title,'${key_vocabularyName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,6 +66,16 @@
 <tr>
 	<td>TAGS_ADD_BUTTON</td>
 	<td>//button[@title='Add Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_SELECT_BUTTON</td>
+	<td>//button[@title='Select Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_SUGGESTIONS_BUTTON</td>
+	<td>//button[@title='Suggestions']</td>
 	<td></td>
 </tr>
 <tr>

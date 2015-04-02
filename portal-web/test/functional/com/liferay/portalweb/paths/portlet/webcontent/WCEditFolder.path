@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>WCEditFolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WCEditFolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>WCEditFolder</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_SELECT</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE_WITH_PARENT_FOLDER_CHECKBOX</td>
+	<td>//input[@id='_15_mergeWithParentFolder']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW -->
+<tr>
+	<td>WORKFLOW_PARENT_FOLDER_RADIO</td>
+	<td>//input[contains(@id,'restrictionTypeInherit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO</td>
+	<td>//input[contains(@id,'restrictionTypeDefined')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_SPECIFIC_RESTRICTIONS_CHOOSE_STRUCTURE_BUTTON</td>
+  	<td>//span[contains(@class,'select-structure')]/a[contains(.,'Choose Structure')]</td>
+  	<td></td>
+</tr>
+<tr>
+  	<td>WORKFLOW_SPECIFIC_RESTRICTIONS_STRUCTURE_WORKFLOW_SELECT</td>
+  	<td>//tr[contains(.,'${key_structureName}')]/td[2]/div/select</td>
+  	<td></td>
+</tr>
+<tr>
+  	<td>WORKFLOW_DEFAULT_WORKFLOW_RADIO</td>
+  	<td>//input[contains(@id,'restrictionTypeWorkflow')]</td>
+  	<td></td>
+</tr>
+<tr>
+  	<td>WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT</td>
+  	<td>//select[contains(@id,'workflowDefinition-1')]</td>
+  	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

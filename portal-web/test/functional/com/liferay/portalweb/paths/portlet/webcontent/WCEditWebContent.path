@@ -1,0 +1,189 @@
+<html>
+<head>
+<title>WCEditWebContent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WCEditWebContent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>WCEditWebContent</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_LABEL</td>
+	<td>//span[contains(@class,'workflow-status')]/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_STRUCTURE</td>
+	<td>//span[@id='_15_structureNameLabel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_STRUCTURE</td>
+	<td>//a[contains(.,'Select')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_TEMPLATE</td>
+	<td>//span[@id='_15_templateNameLabel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_TEMPLATE</td>
+	<td>xpath=(//a[contains(.,'Select')]/span)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FIELD_WIDTH</td>
+	<td>//div[contains(@data-fieldname,'Text')]/input[contains(@class,'input-${key_widthSize}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_DETAIL_TITLE</td>
+	<td>//label[contains(.,'${key_userSegmentDetailTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIO_BUTTON</td>
+	<td>//a[contains(@title,'Audio')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIO_DIALOGBOX</td>
+	<td>//div/table[contains(@class,'dialog_content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIO_BROWSE_SERVER_BUTTON</td>
+	<td>//a[contains(@title,'Browse Server')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIO_OK_BUTTON</td>
+	<td>//a[contains(@title,'OK')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BROWSE_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIEW_HISTORY-->
+<tr>
+	<td>VIEW_HISTORY_VERSION_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY_VERSION_TITLE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY_VERSION_STATUS</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU-->
+<tr>
+	<td>MENU_CONTENT</td>
+	<td>//a[@id='_15_contentLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CATEGORIZATION</td>
+	<td>//a[@id='_15_categorizationLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_SCHEDULE</td>
+	<td>//a[@id='_15_scheduleLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_DISPLAY_PAGE</td>
+	<td>//a[@id='_15_displayPageLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_RELATED_ASSETS</td>
+	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_PERMISSIONS</td>
+	<td>//a[@id='_15_permissionsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CUSTOM_FIELDS</td>
+	<td>//a[@id='_15_customFieldsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_SELECT</td>
+	<td>//a[contains(@id,'inputAssetLinks')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_MENULIST_SELECTION</td>
+	<td>//li[contains(@class,'asset-selector')]/a/span[contains(.,'${key_assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_PAGE-->
+<tr>
+	<td>DISPLAY_PAGE_CHOOSE</td>
+	<td>//div[contains(@id,'displayPage')]/div/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_PAGE_SELECTION</td>
+	<td>//span[contains(@id,'displayPageNameInput')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEMPLATES_IFRAME</td>
+	<td>//iframe[contains(@src,'scopeTitle=Templates')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BACK_TAB</td>
 	<td>//a[contains(@id,'TabsBack')]</td>
 	<td></td>
@@ -57,6 +62,16 @@
 <tr>
 	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
 	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Add Display Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_TEMPLATE</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//span[@class='nav-item-label' and contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADVANCED_SEARCH_ICON</td>
+	<td>//div[@class='taglib-search-toggle']/div/a[contains(@id,'ddm_template')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,6 +148,11 @@
 <tr>
 	<td>TEMPLATE_TABLE_ACTIONS_1</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[9]/div/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_CHOOSE</td>
+	<td>//tr[contains(.,'${key_templateName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

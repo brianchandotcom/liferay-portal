@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>WCEditWebContentViewHistory</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WCEditWebContentViewHistory</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>WCEditWebContentViewHistory</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRE_BUTTON</td>
+	<td>//button[contains(.,'Expire')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_BUTTON</td>
+	<td>//button[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VERSIONS_TABLE-->
+<tr>
+	<td>VERSIONS_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'${key_webContentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_TABLE_VERSION_1.0</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'1.0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_TABLE_VERSION_1.1</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'1.1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_TABLE_VERSION_1.2</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'1.2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_TABLE_STATUS_EXPIRED</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'Expired')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_TABLE_STATUS_APPROVED</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'Approved')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_PREVIEW</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Preview')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_COPY</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -14,13 +14,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTION</td>
-	<td>//textarea[contains(@id,'description')]</td>
+	<td>BODY</td>
+	<td>//body</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOLEAN</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/label[@class='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/span/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DECIMAL</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,8 +64,58 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HTML</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input[contains(@type,'file')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INTEGER</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_TO_PAGE_SELECT</td>
+	<td>//div[contains(.,'Link to Page')]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME</td>
 	<td>//input[contains(@id,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RADIO</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/label[contains(.,'${key_radioValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUMMARY</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_INPUT</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldDefaultValue}')]/input</td>
 	<td></td>
 </tr>
 <tr>

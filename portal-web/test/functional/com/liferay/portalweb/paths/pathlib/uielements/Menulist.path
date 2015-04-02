@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BASIC_WEB_CONTENT</td>
+	<td>//a[@role='menuitem' and @title='Basic Web Content']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL_CHECKOUT</td>
 	<td>//a[@role='menuitem' and contains(.,'Cancel Checkout')]</td>
 	<td></td>
@@ -86,6 +91,11 @@
 <tr>
 	<td>CONTRACT</td>
 	<td>//a[@role='menuitem' and contains(.,'Contract')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY</td>
+	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,8 +149,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPIRE</td>
+	<td>//a[@role='menuitem' and contains(.,'Expire')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_IMPORT</td>
 	<td>//a[@role='menuitem' and contains(.,'Export / Import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FEEDS</td>
+	<td>//a[@role='menuitem' and @title='Feeds']</td>
 	<td></td>
 </tr>
 <tr>
@@ -229,6 +249,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW</td>
+	<td>//a[@role='menuitem' and contains(.,'Preview')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REGULAR_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
 	<td></td>
@@ -284,8 +309,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STRUCTURE_NAME</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_structureName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STRUCTURES</td>
 	<td>//a[@role='menuitem' and contains(.,'Structures')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -51,6 +51,11 @@
 </tr>
 <!--DDM_STRUCTURE_TABLE-->
 <tr>
+	<td>DDM_STRUCTURE_TABLE</td>
+	<td>//div[contains(@id,'_166_ddmStructuresSearchContainer')]/table/tbody/tr[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DDM_STRUCTURE_TABLE_ALL_CHECKBOX</td>
 	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//input[@name='_166_allRowIds']</td>
 	<td></td>
@@ -61,8 +66,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DDM_STRUCTURE_TABLE_ID</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DDM_STRUCTURE_TABLE_ID_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[2])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,12 +82,27 @@
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[2])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[3])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_STRUCTURE_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[3])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[4])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_STRUCTURE_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_STRUCTURE_TABLE_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_structureName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,6 +129,11 @@
 <tr>
 	<td>DDM_STRUCTURE_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit Default Values')]</td>
 	<td></td>
 </tr>
 <tr>

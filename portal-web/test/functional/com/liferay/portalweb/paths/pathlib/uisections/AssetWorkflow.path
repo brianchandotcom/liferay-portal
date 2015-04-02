@@ -18,6 +18,11 @@
 	<td>//select[contains(@id,'workflowDefinition-1')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

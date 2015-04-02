@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_FIELD_REQUIRED</td>
+	<td>//span[contains(@id,'title')]//div[contains(.,'This field is required.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>

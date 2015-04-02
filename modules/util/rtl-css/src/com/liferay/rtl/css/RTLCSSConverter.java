@@ -26,8 +26,6 @@ import com.helger.css.decl.ICSSExpressionMember;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriterSettings;
 
-import com.liferay.portal.kernel.util.StringBundler;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +53,7 @@ public class RTLCSSConverter {
 		List<CSSStyleRule> cssStyleRules =
 			cascadingStyleSheet.getAllStyleRules();
 
-		StringBundler sb = new StringBundler(cssStyleRules.size());
+		StringBuilder sb = new StringBuilder(cssStyleRules.size());
 
 		for (CSSStyleRule cssStyleRule : cssStyleRules) {
 			for (String property : _replacementStyles.keySet()) {

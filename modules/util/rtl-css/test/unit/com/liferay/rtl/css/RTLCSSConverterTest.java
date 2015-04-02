@@ -21,8 +21,6 @@ import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriterSettings;
 
-import com.liferay.portal.kernel.util.StringBundler;
-
 import java.io.InputStream;
 
 import java.util.List;
@@ -159,7 +157,7 @@ public class RTLCSSConverterTest {
 		List<CSSStyleRule> cssStyleRules =
 			cascadingStyleSheet.getAllStyleRules();
 
-		StringBundler sb = new StringBundler(cssStyleRules.size());
+		StringBuilder sb = new StringBuilder(cssStyleRules.size());
 
 		CSSWriterSettings cssWriterSettings = new CSSWriterSettings(
 			ECSSVersion.CSS30, true);

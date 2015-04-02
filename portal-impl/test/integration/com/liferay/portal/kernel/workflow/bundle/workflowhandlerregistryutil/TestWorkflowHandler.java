@@ -1,0 +1,179 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.kernel.workflow.bundle.workflowhandlerregistryutil;
+
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.StackTraceUtil;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.model.WorkflowDefinitionLink;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Peter Fellwock
+ */
+@Component(
+	immediate = true,
+	property = {"service.ranking:Integer=" + Integer.MAX_VALUE}
+)
+public class TestWorkflowHandler implements WorkflowHandler {
+
+	@Override
+	public AssetRenderer getAssetRenderer(long classPK) {
+		return null;
+	}
+
+	@Override
+	public AssetRendererFactory getAssetRendererFactory() {
+		return null;
+	}
+
+	@Override
+	public String getClassName() {
+		_atomicReference.set(StackTraceUtil.getCallerKey());
+
+		return TestWorkflowHandler.class.getName();
+	}
+
+	@Override
+	public String getIconCssClass() {
+		return null;
+	}
+
+	@Override
+	public String getIconPath(LiferayPortletRequest liferayPortletRequest) {
+		return null;
+	}
+
+	@Override
+	public String getSummary(long classPK, Locale locale) {
+		return null;
+	}
+
+	@Override
+	public String getSummary(
+		long classPK, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
+
+		return null;
+	}
+
+	@Override
+	public String getTitle(long classPK, Locale locale) {
+		return null;
+	}
+
+	@Override
+	public String getType(Locale locale) {
+		return null;
+	}
+
+	@Override
+	public PortletURL getURLEdit(
+		long classPK, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return null;
+	}
+
+	@Override
+	public String getURLEditWorkflowTask(
+		long workflowTaskId, ServiceContext serviceContext) {
+
+		return null;
+	}
+
+	@Override
+	public PortletURL getURLViewDiffs(
+		long classPK, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return null;
+	}
+
+	@Override
+	public String getURLViewInContext(
+		long classPK, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		String noSuchEntryRedirect) {
+
+		return null;
+	}
+
+	@Override
+	public WorkflowDefinitionLink getWorkflowDefinitionLink(
+		long companyId, long groupId, long classPK) {
+
+		return null;
+	}
+
+	@Override
+	public boolean isAssetTypeSearchable() {
+		return false;
+	}
+
+	@Override
+	public boolean isScopeable() {
+		return false;
+	}
+
+	@Override
+	public boolean isVisible() {
+		return false;
+	}
+
+	@Override
+	public String render(
+		long classPK, RenderRequest renderRequest,
+		RenderResponse renderResponse, String template) {
+
+		return null;
+	}
+
+	@Override
+	public void startWorkflowInstance(
+		long companyId, long groupId, long userId, long classPK, Object model,
+		Map workflowContext) {
+	}
+
+	@Override
+	public Object updateStatus(int status, Map workflowContext) {
+		_atomicReference.set(StackTraceUtil.getCallerKey());
+		return null;
+	}
+
+	@Reference(target = "(test=AtomicState)")
+	protected void getAtomicReference(AtomicReference<String> atomicReference) {
+		_atomicReference = atomicReference;
+	}
+
+	private AtomicReference<String> _atomicReference;
+
+}

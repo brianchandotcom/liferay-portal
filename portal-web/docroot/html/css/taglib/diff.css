@@ -3,17 +3,3 @@
 	border-spacing: 5pt;
 	width: 100%;
 }
-
-/* Skin */
-
-.taglib-diff-addedline, #taglib-diff-results ins {
-	background: #E6FFE6;
-}
-
-.taglib-diff-context {
-	background: #EEE;
-}
-
-.taglib-diff-deletedline, #taglib-diff-results del {
-	background: #FFE6E6;
-}

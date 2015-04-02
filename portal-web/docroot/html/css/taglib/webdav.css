@@ -22,15 +22,3 @@
 	height: 0;
 	visibility: hidden;
 }
-
-/* Skin */
-
-.js .taglib-webdav {
-	&.visible {
-		background: #F0F5F7;
-	}
-
-	table {
-		border-color: #828F95;
-	}
-}

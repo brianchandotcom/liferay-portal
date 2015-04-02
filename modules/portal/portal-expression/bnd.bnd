@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Portal Expression
+Bundle-SymbolicName: com.liferay.portal.expression
+Bundle-Version: 1.0.0
+Import-Package:\
+	!org.apache.tools.ant.taskdefs.*,\
+	!org.apache.tools.ant.taskdefs.compilers.*,\
+	!org.apache.tools.ant.types.*,\
+	*
+Export-Package: com.liferay.portal.expression
+Include-Resource:\
+	classes,\
+	@lib/commons-compiler.jar,\
+	@lib/janino.jar

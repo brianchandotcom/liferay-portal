@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <projectDescription>
-	<name>kernel-expression-master</name>
+	<name>portal-expression-master</name>
 	<comment></comment>
-	<projects>
-		<project>portal-master</project>
-	</projects>
+	<projects></projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
+			<arguments></arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>

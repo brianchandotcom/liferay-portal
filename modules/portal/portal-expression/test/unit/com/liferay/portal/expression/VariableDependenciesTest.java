@@ -14,16 +14,13 @@
 
 package com.liferay.portal.expression;
 
-import com.liferay.portal.kernel.expression.Expression;
-import com.liferay.portal.kernel.expression.ExpressionFactory;
-import com.liferay.portal.kernel.expression.ExpressionFactoryImpl;
-import com.liferay.portal.kernel.expression.VariableDependencies;
-
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.liferay.portal.expression.internal.ExpressionFactoryImpl;
 
 /**
  * @author Miguel Angelo Caldas Gallindo

@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Modified;
  * @author Shuyang Zhou
  */
 @Component(
-	immediate = true,
 	property = {
 		"allowCoreThreadTimeout=true", "corePoolSize=0", "keepAliveTime=60",
 		"maxPoolSize=10",

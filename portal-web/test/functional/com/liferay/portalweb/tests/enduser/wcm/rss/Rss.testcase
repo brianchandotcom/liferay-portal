@@ -481,7 +481,7 @@
 		</execute>
 	</command>
 
-	<command name="EnableRssFeedFromAssetpublisher" priority="5">
+	<command known-issues="LPS-54683" name="EnableRssFeedFromAssetpublisher" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

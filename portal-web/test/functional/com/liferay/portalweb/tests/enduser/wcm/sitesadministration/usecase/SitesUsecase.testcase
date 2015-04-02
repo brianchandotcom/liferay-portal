@@ -341,7 +341,7 @@
 		<execute function="AssertTextNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_READ_MORE" value1="Read More" />
 	</command>
 
-	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToLiferayAP" priority="4">
+	<command known-issues="LPS-54678" name="AddWebContentWithStructureAndGlobalScopeViaCPToLiferayAP" priority="4">
 		<var name="globalSiteType" value="Global" />
 		<var name="pageName" value="Test Page 1" />
 		<var name="portletName" value="Asset Publisher" />
@@ -437,7 +437,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentText}" />
 	</command>
 
-	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToSiteAP" priority="4">
+	<command known-issues="LPS-54678" name="AddWebContentWithStructureAndGlobalScopeViaCPToSiteAP" priority="4">
 		<var name="globalSiteType" value="Global" />
 		<var name="portletName" value="Asset Publisher" />
 		<var name="removeSiteScopeName" value="Site Name" />

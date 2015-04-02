@@ -21,6 +21,14 @@ String[] tabs1Names = DocumentSelectorUtil.getTabs1Names(request);
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
+Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+if ((group != null) && !group.isStagedRemotely() && group.isStagingGroup() && !group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) {
+	group = group.getLiveGroup();
+
+	groupId = group.getGroupId();
+}
+
 long repositoryId = groupId;
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);

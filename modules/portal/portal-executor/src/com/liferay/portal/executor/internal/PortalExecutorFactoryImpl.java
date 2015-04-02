@@ -96,6 +96,9 @@ public class PortalExecutorFactoryImpl implements PortalExecutorFactory {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_allowCoreThreadTimeout = GetterUtil.getBoolean(
+			properties.get("allowCoreThreadTimeout"), true);
+
 		_corePoolSize = GetterUtil.getInteger(properties.get("corePoolSize"));
 
 		if (_corePoolSize < 0) {

@@ -2341,7 +2341,7 @@
 
 		<execute macro="KBArticleSuggestion#addPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
+			<var name="kbSuggestionBody" value="Test Test Knowledge Base Article Suggestion" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2355,7 +2355,7 @@
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewPG">
-			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
+			<var name="kbSuggestionBody" value="Test Test Knowledge Base Article Suggestion" />
 			<var name="status" value="New" />
 			<var name="userName" value="Test Test" />
 		</execute>
@@ -2437,6 +2437,36 @@
 
 		<execute macro="KBArticleSuggestion#viewSuggestionCountPG">
 			<var name="kbSuggestionCount" value="4" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#viewPG">
+			<var name="kbSuggestionCount" value="4" />
+		</execute>
+
+		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
+
+		<execute macro="KBArticleSuggestion#viewPG">
+			<var name="kbSuggestionBody" value="User 2 Knowledge Base Article Suggestion 1" />
+			<var name="status" value="New" />
+			<var name="userName" value="userfn2 userln2" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#viewPG">
+			<var name="kbSuggestionBody" value="User 1 Knowledge Base Article Suggestion 2" />
+			<var name="status" value="New" />
+			<var name="userName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#viewPG">
+			<var name="kbSuggestionBody" value="User 1 Knowledge Base Article Suggestion 1" />
+			<var name="status" value="New" />
+			<var name="userName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="KBArticleSuggestion#viewPG">
+			<var name="kbSuggestionBody" value="Test Test Knowledge Base Article Suggestion" />
+			<var name="status" value="New" />
+			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 

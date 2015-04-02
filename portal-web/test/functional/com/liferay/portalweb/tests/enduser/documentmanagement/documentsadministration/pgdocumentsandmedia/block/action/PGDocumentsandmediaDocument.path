@@ -345,7 +345,7 @@
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_BE_THE_FIRST</td>
-	<td>link=Be the first.</td>
+	<td>//a[contains(.,'Be the first.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -375,7 +375,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_COMMENT_FIELD</td>
-	<td>//textarea[contains(@id,'postReplyBody')]</td>
+	<td>//div[contains(@data-placeholder,'Type your comment here.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -405,7 +405,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_REPLY_BUTTON</td>
-	<td>//div[@id='_20_discussion-container']//button[contains(.,'Reply')]</td>
+	<td>//button[contains(.,'Reply')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -8,13 +8,13 @@
 
 		<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request processed successfully." />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_BODY" value1="${commentBody}" />
-		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_USERNAME" value1="${commentUsername}" />
+		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 
 	<command name="addWithWorkflowPG">
 		<execute function="AssertClick" locator1="PGPagecomments#BE_THE_FIRST_LINK" value1="Be the first." />
 		<execute function="Type" locator1="PGPagecomments#COMMENT_FIELD" value1="${commentBody}" />
-		<execute function="AssertClick" locator1="PGPagecomments#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="PGPagecomments#REPLY_BUTTON" value1="Reply" />
 
 		<var name="key_commentBody" value="${commentBody}" />
 
@@ -33,7 +33,7 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_BODY" value1="${commentBody}" />
-		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_USERNAME" value1="${commentUsername}" />
+		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 
 	<command name="tearDownPG">
@@ -57,7 +57,7 @@
 
 		<execute function="AssertElementNotPresent" locator1="PGPagecomments#COMMENT_WORKFLOW_STATUS" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_BODY" value1="${commentBody}" />
-		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_USERNAME" value1="${commentUsername}" />
+		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 
 	<command name="viewWithWorkflowPG">
@@ -65,6 +65,6 @@
 
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_WORKFLOW_STATUS" value1="${commentStatus}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_BODY" value1="${commentBody}" />
-		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_USERNAME" value1="${commentUsername}" />
+		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 </definition>

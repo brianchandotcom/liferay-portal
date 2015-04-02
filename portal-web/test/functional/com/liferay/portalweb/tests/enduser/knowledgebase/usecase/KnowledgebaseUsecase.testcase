@@ -610,7 +610,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchKBArticleViaSearchPortlet" priority="5">
+	<command known-issues="LPS-54717" name="SearchKBArticleViaSearchPortlet" priority="5">
 		<var name="advancedSearchConfiguration">
 			<![CDATA[
 				{"facets": [

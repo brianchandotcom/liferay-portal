@@ -1,0 +1,1 @@
+{"defaultLanguageId":"en_US","availableLanguageIds":["en_US"],"fields":[{"localizable":true,"label":{"en_US":"Content"},"type":"ddm-text-html","fieldNamespace":"ddm","tip":{"en_US":""},"predefinedValue":{"en_US":""},"indexType":"keyword","dataType":"html","readOnly":false,"showLabel":true,"name":"content","repeatable":false,"required":false,"multiple":false}]}

@@ -251,9 +251,9 @@ public class DataFactory {
 		_sampleUserId = _counter.get();
 
 		_dlDDMStructureContent = StringUtil.read(
-			getResourceInputStream("ddm_structure_basic_document.xml"));
+			getResourceInputStream("ddm_structure_basic_document.json"));
 		_journalDDMStructureContent = StringUtil.read(
-			getResourceInputStream("ddm_structure_basic_web_content.xml"));
+			getResourceInputStream("ddm_structure_basic_web_content.json"));
 
 		String defaultAssetPublisherPreference = StringUtil.read(
 			getResourceInputStream("default_asset_publisher_preference.xml"));

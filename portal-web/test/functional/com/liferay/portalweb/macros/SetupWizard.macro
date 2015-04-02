@@ -43,25 +43,12 @@
 		<execute function="AssertTextEquals" locator1="SetupwizardFinishconfiguration#SUCCESS_MESSAGE" value1="Your configuration was saved successfully." />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
-		<execute function="AssertClick" locator1="SetupwizardFinishconfiguration#GO_TO_MY_PORTAL_BUTTON" value1="Go to My Portal" />
+		<execute function="AssertTextEquals" locator1="SetupwizardFinishconfiguration#CONFIGURATION_STATUS_MESSAGE" value1="Changes will take effect once the portal is restarted. Please restart the portal now." />
 
-		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
-			<then>
-				<execute function="AssertClick" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
-			</then>
-		</if>
+		<execute macro="Portlet#shutdownServer" />
 
-		<if>
-			<equals arg1="${setupWizardAddSampleData}" arg2="false" />
-			<then>
-				<execute function="Type" locator1="PGLoginNewpassword#PASSWORD_FIELD" value1="test" />
-				<execute function="Type" locator1="PGLoginNewpassword#ENTER_AGAIN_FIELD" value1="test" />
-				<execute function="AssertClick" locator1="PGLoginNewpassword#SAVE_BUTTON" value1="Save" />
-			</then>
-		</if>
+		<execute macro="Portlet#startServer" />
 
-		<execute function="Type" locator1="PGLoginPasswordreminder#ANSWER_FIELD" value1="test" />
-		<execute function="AssertClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />
+		<execute macro="User#firstLoginPG" />
 	</command>
 </definition>

@@ -34,8 +34,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GO_TO_MY_PORTAL_BUTTON</td>
-	<td>//button[contains(.,'Go to My Portal')]</td>
+	<td>CONFIGURATION_STATUS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 </tbody>

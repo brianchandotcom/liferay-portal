@@ -32,6 +32,30 @@ import org.junit.Test;
 public class DDMFormLayoutValidatorTest {
 
 	@Test(expected = DDMFormLayoutValidationException.class)
+	public void testDuplicateFieldName() throws Exception {
+		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
+			"field", 6);
+
+		DDMFormLayoutColumn ddmFormLayoutColumn2 = createDDMFormLayoutColumn(
+			"field", 6);
+
+		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
+			ddmFormLayoutColumn1);
+
+		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn2);
+
+		LocalizedValue title = createLocalizedValue("Page1", LocaleUtil.US);
+
+		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+			ddmFormLayoutRow, title);
+
+		DDMFormLayout ddmFormLayout = createDDMFormLayout(
+			ddmFormLayoutPage, LocaleUtil.US);
+
+		_ddmFormLayoutValidator.validate(ddmFormLayout);
+	}
+
+	@Test(expected = DDMFormLayoutValidationException.class)
 	public void testInvalidRowSize() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
 			"field1", 6);
@@ -44,56 +68,13 @@ public class DDMFormLayoutValidatorTest {
 
 		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn2);
 
-		LocalizedValue pageTitle = createPageTitle(LocaleUtil.US, "Page1");
+		LocalizedValue title = createLocalizedValue("Page1", LocaleUtil.US);
 
 		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
-			ddmFormLayoutRow, pageTitle);
+			ddmFormLayoutRow, title);
 
 		DDMFormLayout ddmFormLayout = createDDMFormLayout(
 			ddmFormLayoutPage, LocaleUtil.US);
-
-		_ddmFormLayoutValidator.validate(ddmFormLayout);
-	}
-
-	@Test(expected = DDMFormLayoutValidationException.class)
-	public void testRepeatedFieldName() throws Exception {
-		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
-			"field", 6);
-
-		DDMFormLayoutColumn ddmFormLayoutColumn2 = createDDMFormLayoutColumn(
-			"field", 6);
-
-		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
-			ddmFormLayoutColumn1);
-
-		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn2);
-
-		LocalizedValue pageTitle = createPageTitle(LocaleUtil.US, "Page1");
-
-		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
-			ddmFormLayoutRow, pageTitle);
-
-		DDMFormLayout ddmFormLayout = createDDMFormLayout(
-			ddmFormLayoutPage, LocaleUtil.US);
-
-		_ddmFormLayoutValidator.validate(ddmFormLayout);
-	}
-
-	@Test(expected = DDMFormLayoutValidationException.class)
-	public void testUnmatchedDefaultLocales() throws Exception {
-		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(
-			"field", 12);
-
-		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
-			ddmFormLayoutColumn);
-
-		LocalizedValue pageTitle = createPageTitle(LocaleUtil.US, "Page1");
-
-		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
-			ddmFormLayoutRow, pageTitle);
-
-		DDMFormLayout ddmFormLayout = createDDMFormLayout(
-			ddmFormLayoutPage, LocaleUtil.BRAZIL);
 
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
@@ -106,13 +87,32 @@ public class DDMFormLayoutValidatorTest {
 		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
 			ddmFormLayoutColumn);
 
-		LocalizedValue pageTitle = createPageTitle(LocaleUtil.US, "Page1");
+		LocalizedValue title = createLocalizedValue("Page1", LocaleUtil.US);
 
 		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
-			ddmFormLayoutRow, pageTitle);
+			ddmFormLayoutRow, title);
 
 		DDMFormLayout ddmFormLayout = createDDMFormLayout(
 			ddmFormLayoutPage, LocaleUtil.US);
+
+		_ddmFormLayoutValidator.validate(ddmFormLayout);
+	}
+
+	@Test(expected = DDMFormLayoutValidationException.class)
+	public void testWrongDefaultLocaleSetForPageTitle() throws Exception {
+		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(
+			"field", 12);
+
+		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
+			ddmFormLayoutColumn);
+
+		LocalizedValue title = createLocalizedValue("Page1", LocaleUtil.US);
+
+		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+			ddmFormLayoutRow, title);
+
+		DDMFormLayout ddmFormLayout = createDDMFormLayout(
+			ddmFormLayoutPage, LocaleUtil.BRAZIL);
 
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
@@ -160,10 +160,12 @@ public class DDMFormLayoutValidatorTest {
 		return ddmFormLayoutRow;
 	}
 
-	private LocalizedValue createPageTitle(Locale defaultLocale, String title) {
+	private LocalizedValue createLocalizedValue(
+		String value, Locale defaultLocale) {
+
 		LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
 
-		localizedValue.addString(defaultLocale, title);
+		localizedValue.addString(defaultLocale, value);
 
 		return localizedValue;
 	}

@@ -54,9 +54,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithDefaultLocaleMissingAsAvailableLocale()
-		throws Exception {
-
+	public void testDefaultLocaleMissingAsAvailableLocale() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setAvailableLocales(createAvailableLocales(LocaleUtil.BRAZIL));
@@ -66,7 +64,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithDuplicateFieldName() throws Exception {
+	public void testDuplicateFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -85,7 +83,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithInvalidFieldIndexType() throws Exception {
+	public void testInvalidFieldIndexType() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -100,7 +98,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithInvalidFieldName() throws Exception {
+	public void testInvalidFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -113,9 +111,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithNoOptionsSetForFieldOptions()
-		throws Exception {
-
+	public void testNoOptionsSetForFieldOptions() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -128,7 +124,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithNullAvailableLocales() throws Exception {
+	public void testNullAvailableLocales() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setAvailableLocales(null);
@@ -138,7 +134,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithNullDefaultLocale() throws Exception {
+	public void testNullDefaultLocale() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setDefaultLocale(null);
@@ -147,7 +143,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test
-	public void testValidationWithRegisteredTextFieldType() throws Exception {
+	public void testRegisteredTextFieldType() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -160,7 +156,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithUnregisteredFieldType() throws Exception {
+	public void testUnregisteredFieldType() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -173,7 +169,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test
-	public void testValidationWithValidFieldName() throws Exception {
+	public void testValidFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -186,9 +182,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithWrongAvailableLocalesSetForFieldOptions()
-		throws Exception {
-
+	public void testWrongAvailableLocalesSetForFieldOptions() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -207,9 +201,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithWrongAvailableLocalesSetForLabel()
-		throws Exception {
-
+	public void testWrongAvailableLocalesSetForLabel() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -226,9 +218,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithWrongDefaultLocaleSetForFieldOptions()
-		throws Exception {
-
+	public void testWrongDefaultLocaleSetForFieldOptions() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -249,9 +239,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testValidationWithWrongDefaultLocaleSetForLabel()
-		throws Exception {
-
+	public void testWrongDefaultLocaleSetForLabel() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 

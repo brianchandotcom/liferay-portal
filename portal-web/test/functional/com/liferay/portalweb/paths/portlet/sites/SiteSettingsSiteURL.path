@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>SiteSettingsSiteURL</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SiteSettingsSiteURL</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SiteSettingsSiteURL</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_HEADER</td>
+	<td>//div[contains(@id,'siteUrl')]/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_URL-->
+<tr>
+	<td>SITE_URL_FRIENDLY_URL_LABEL</td>
+	<td>//div[contains(@id,'siteUrl')]//span[contains(.,'Friendly URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_FRIENDLY_URL_FIELD</td>
+	<td>//input[@name='_165_friendlyURL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_VIRTUAL_HOSTS_LABEL</td>
+	<td>//div[contains(@id,'siteUrl')]//span[contains(.,'Virtual Hosts')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[contains(@for,'publicVirtualHost')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_FIELD</td>
+	<td>//input[@name='_165_publicVirtualHost']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[contains(@for,'privateVirtualHost')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_FIELD</td>
+	<td>//input[@name='_165_privateVirtualHost']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_DOCUMENTS_AND_MEDIA_LABEL</td>
+	<td>//div[contains(@id,'siteUrl')]//span[contains(.,'Documents and Media')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_URL_DOCUMENT_AND_MEDIA_DIRECTORY_INDEXING_ENABLED_CHECKBOX</td>
+	<td>//input[contains(@id,'directoryIndexingEnabled')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

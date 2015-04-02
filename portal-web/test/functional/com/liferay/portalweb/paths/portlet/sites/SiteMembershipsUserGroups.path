@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>SiteMembershipsUserGroups</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SiteMembershipsUserGroups</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SiteMembershipsUserGroups</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT</td>
+	<td>link=Current</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVAILABLE</td>
+	<td>link=Available</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUP_TABLE-->
+<tr>
+	<td>USER_GROUP_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]/input[@name='_174_rowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_SITE_ROLES</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_USER_NAME</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_SCREEN_NAME</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

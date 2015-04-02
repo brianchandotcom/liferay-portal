@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>SiteTeams</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SiteTeams</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SiteTeams</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_TEAM_BUTTON</td>
+	<td>//a[contains(.,'Add Team')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TEAM_TABLE-->
+<tr>
+	<td>TEAM_TABLE_NAME</td>
+	<td>//div[@id='_191_teamsSearchContainer']//tr[contains(.,'${key_teamName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEAM_TABLE_DESCRIPTION</td>
+	<td>//div[@id='_191_teamsSearchContainer']//tr[contains(.,'${key_teamName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEAM_TABLE_ACTIONS</td>
+	<td>//div[@id='_191_teamsSearchContainer']//tr[contains(.,'${key_teamName}')]/td[3]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEAM_TABLE_ACTIONS_GENERIC</td>
+	<td>//td[3]/div/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

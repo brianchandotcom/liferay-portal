@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>SiteSettingsSiteTemplate</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SiteSettingsSiteTemplate</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SiteSettingsSitetemplate</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE</td>
+	<td>//div[@id='_165_siteTemplate']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_CLONED_FROM_TEMPLATE_MESSAGE</td>
+	<td>//div[@id='_165_siteTemplate']//div//div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_SITE_CLONED_FROM</td>
+	<td>//div[@id='_165_siteTemplate']//div//div/em</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

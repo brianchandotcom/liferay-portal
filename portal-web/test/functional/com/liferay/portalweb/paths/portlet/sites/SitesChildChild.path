@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>SitesChildChild</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SitesChildChild</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SitesChildChild</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_NAME</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_childSiteName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_TABLE-->
+<tr>
+	<td>SITE_TABLE_CHECKBOX</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_NAME</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_TYPE</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_MEMBERS_USERS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[4]/div[@class='user-count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_MEMBERS_ORGS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[4]/div[@class='organization-count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_ACTIVE</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_PENDING_REQUESTS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_TAGS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_ACTIONS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[8]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_ACTIONS_GENERIC</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr/td[8]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_CHILD_SITE</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_childChildSiteName}')]/td[2]/div/a[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

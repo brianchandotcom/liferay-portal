@@ -13,6 +13,127 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>CONFIGURATION_FRAME</td>
+	<td>//iframe[contains(@id,'_156_exportDialog_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_EXPORT_BUTTON</td>
+	<td>//form[@class='form lfr-export-dialog ']/div[2]/button[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOWNLOAD_FILE</td>
+	<td>//tr/td/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT_FRAME</td>
+	<td>//iframe[contains(@id,'_156_importDialog_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILE</td>
+	<td>//button[@class='btn' and contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT_CONTINUE</td>
+	<td>//button[@id='_156_continueButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT_CONTINUE_2</td>
+	<td>//button[@id='_156_continue']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT</td>
+	<td>//div[@id='_156_importStrategy']/div/button[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_FILE_NAME</td>
+	<td>//input[@id='_156_exportFileName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TO_LIVE</td>
+	<td>//a[contains(@id,'publishGlobalLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_TABLE-->
+<tr>
+	<td>SITE_TABLE_CHECKBOX</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_CHECKBOX_DISABLED</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[1]/input[@disabled='']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_NAME</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_NAME_UNVIEWABLE</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_TYPE</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_MEMBERS_USERS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[4]/div[@class='user-count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_MEMBERS_ORGS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[4]/div[@class='organization-count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_ACTIVE</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_PENDING_REQUESTS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_TAGS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_ACTIONS</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td/div/a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_ACTIONS_GENERIC</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr/td/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_CHILD_SITE</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[2]/div/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

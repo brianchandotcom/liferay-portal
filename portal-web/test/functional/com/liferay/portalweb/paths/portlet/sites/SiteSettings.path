@@ -1,0 +1,214 @@
+<html>
+<head>
+<title>SiteSettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SiteSettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SiteSettings</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_ADAPTER_SELECT</td>
+	<td>//select[@id='_165_customJspServletContextName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIVE-->
+<tr>
+	<td>ACTIVE_LABEL</td>
+	<td>//label[@for='_165_active']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PARENT_SITE-->
+<tr>
+	<td>PARENT_SITE_SELECT</td>
+	<td>//a[@id='_165_selectParentSiteLink']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PARENT_SITE_TABLE-->
+<tr>
+	<td>PARENT_SITE_TABLE_NAME</td>
+	<td>//div[@id='_134_parentGroupSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_BASIC_INFORMATION-->
+<tr>
+	<td>MENU_BASIC_INFORMATION_DETAILS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_BASIC_INFORMATION_CATEGORIZATION</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Categorization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_BASIC_INFORMATION_SITE_URL</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Site URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_BASIC_INFORMATION_SITE_TEMPLATE</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Site Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_BASIC_INFORMATION_RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_SEARCH_ENGINE_OPTIMIZATION-->
+<tr>
+	<td>MENU_SEARCH_ENGINE_OPTIMIZATION_SITEMAP</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Sitemap')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_SEARCH_ENGINE_OPTIMIZATION_ROBOTS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Robots')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--MENU_ADVANCED-->
+<tr>
+	<td>MENU_ADVANCED_DEFAULT_USER_ASSOCIATIONS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Default User Associations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_ADVANCED_STAGING</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Staging')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_ADVANCED_ANALYTICS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Analytics')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_ADVANCED_CONTENT_SHARING</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Content Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_ADVANCED_RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_MISCELLANEOUS-->
+<tr>
+	<td>MENU_MISCELLANEOUS_CUSTOM_FIELDS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Custom Fields')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_MISCELLANEOUS_DISPLAY_SETTINGS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Display Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_MISCELLANEOUS_DISPLAY_SETTINGS_LOCALIZED</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'${key_displaySettings}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MEMBERSHIP_OPTIONS-->
+<tr>
+	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL</td>
+	<td>//div[contains(@class,'form-group')]/label[@for='_165_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE</td>
+	<td>//div[contains(@class,'form-group')]/select[@id='_165_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGES-->
+<tr>
+	<td>PAGES_LABEL</td>
+	<td>//h3[contains(.,'Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PUBLIC_PAGES_LABEL</td>
+	<td>//div[contains(@class,'panel-toggle')]/span[contains(.,'Public Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PUBLIC_PAGES_SITE_TEMPLATE_LABEL</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[@for='_165_publicLayoutSetPrototypeId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PUBLIC_PAGES_SITE_TEMPLATE_SELECT</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/select[@id='_165_publicLayoutSetPrototypeId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PRIVATE_PAGES_LABEL</td>
+	<td>//div[contains(@class,'panel-toggle')]/span[contains(.,'Private Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PRIVATE_PAGES_SITE_TEMPLATE_LABEL</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[@for='_165_privateLayoutSetPrototypeId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_PRIVATE_PAGES_SITE_TEMPLATE_SELECT</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/select[@id='_165_privateLayoutSetPrototypeId']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

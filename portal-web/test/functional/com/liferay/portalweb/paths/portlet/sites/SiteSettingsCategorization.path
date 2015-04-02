@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>SiteSettingsCategorization</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SiteSettingsCategorization</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SiteSettingsCategorization</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TAGS-->
+<tr>
+	<td>TAGS_NAME_FIELD</td>
+	<td>//input[contains(@class,'field-input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_ADD_BUTTON</td>
+	<td>//button[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_SELECT_BUTTON</td>
+	<td>//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_SUGGESTIONS_BUTTON</td>
+	<td>//button[contains(.,'Suggestions')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

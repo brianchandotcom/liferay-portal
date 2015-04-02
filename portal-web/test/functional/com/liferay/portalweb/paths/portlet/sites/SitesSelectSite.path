@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>SitesSelectSite</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SitesSelectSite</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SitesSelectSite</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_SITE-->
+<tr>
+	<td>SELECT_SITE_IFRAME</td>
+	<td>//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CHOOSE_BUTTON-->
+<tr>
+	<td>CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'Liferay')]/td/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITES_TABLE-->
+<tr>
+	<td>SITES_TABLE_NAME</td>
+	<td>//div[@id='_134_groupsSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE_TYPE</td>
+	<td>//div[@id='_134_groupsSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE_CHOOSE_BUTTON</td>
+	<td>//div[@id='_134_groupsSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[3]/button</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

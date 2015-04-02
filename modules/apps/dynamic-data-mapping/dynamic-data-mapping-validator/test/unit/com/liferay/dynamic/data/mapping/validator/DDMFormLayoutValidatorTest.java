@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.validator;
 
+import com.liferay.dynamic.data.mapping.validator.internal.DDMFormLayoutValidatorImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.StructureLayoutException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
@@ -31,8 +31,8 @@ import org.junit.Test;
  */
 public class DDMFormLayoutValidatorTest {
 
-	@Test(expected = StructureLayoutException.class)
-	public void testInvalidRowSize() throws StructureLayoutException {
+	@Test(expected = DDMFormLayoutValidationException.class)
+	public void testInvalidRowSize() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
 			"field1", 6);
 
@@ -55,8 +55,8 @@ public class DDMFormLayoutValidatorTest {
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
 
-	@Test(expected = StructureLayoutException.class)
-	public void testRepeatedFieldName() throws StructureLayoutException {
+	@Test(expected = DDMFormLayoutValidationException.class)
+	public void testRepeatedFieldName() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
 			"field", 6);
 
@@ -79,8 +79,8 @@ public class DDMFormLayoutValidatorTest {
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
 
-	@Test(expected = StructureLayoutException.class)
-	public void testUnmatchedDefaultLocales() throws StructureLayoutException {
+	@Test(expected = DDMFormLayoutValidationException.class)
+	public void testUnmatchedDefaultLocales() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(
 			"field", 12);
 
@@ -99,7 +99,7 @@ public class DDMFormLayoutValidatorTest {
 	}
 
 	@Test
-	public void testValidDDMFormLayout() throws StructureLayoutException {
+	public void testValidDDMFormLayout() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(
 			"field", 12);
 

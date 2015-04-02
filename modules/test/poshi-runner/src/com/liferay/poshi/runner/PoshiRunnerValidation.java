@@ -14,10 +14,13 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.dom4j.Attribute;
 import org.dom4j.Element;
 
 /**
@@ -34,6 +37,9 @@ public class PoshiRunnerValidation {
 
 		if (classType.equals("path")) {
 			_validatePathFile(element, filePath);
+		}
+		else {
+			_validateRootElement(element, filePath);
 		}
 	}
 
@@ -54,6 +60,61 @@ public class PoshiRunnerValidation {
 			throw new PoshiRunnerException(
 				"\nBUILD FAILED: Missing child elements\n" + filePath + ":" +
 					element.attributeValue("line-number"));
+		}
+	}
+
+	private static void _validateRootElement(Element element, String filePath)
+		throws PoshiRunnerException {
+
+		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
+			filePath);
+		String elementName = element.getName();
+
+		if (!StringUtils.equals(elementName, "definition")) {
+			throw new PoshiRunnerException(
+				"\nBUILD FAILED: Invalid " +
+					elementName + " element\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+
+		List<Attribute> attributes = element.attributes();
+
+		for (Attribute attribute : attributes) {
+			if (Validator.isNull(attribute.getValue())) {
+				throw new PoshiRunnerException(
+					"\nBUILD FAILED: Missing attribute value\n" + filePath +
+						":" + element.attributeValue("line-number"));
+			}
+
+			String attributeName = attribute.getName();
+
+			if ((attributeName.equals("component-name") ||
+				 attributeName.equals("ignore") ||
+				 attributeName.equals("ignore-command-names")) &&
+				classType.equals("testcase")) {
+
+				continue;
+			}
+			else if (attributeName.equals("extends") &&
+					 (classType.equals("macro") ||
+					  classType.equals("testcase"))) {
+
+				continue;
+			}
+			else if (attributeName.equals("default") &&
+					 classType.equals("function")) {
+
+				continue;
+			}
+			else if (attributeName.equals("line-number")) {
+				continue;
+			}
+			else {
+				throw new PoshiRunnerException(
+					"\nBUILD FAILED: Invalid \"" + attributeName +
+						"\" attribute\n" + filePath + ":" +
+						element.attributeValue("line-number"));
+			}
 		}
 	}
 

@@ -1998,7 +1998,7 @@ public class DataFactory {
 		layoutModels.add(
 			newLayoutModel(groupId, "document_library", "", "20,"));
 		layoutModels.add(newLayoutModel(groupId, "forums", "", "19,"));
-		layoutModels.add(newLayoutModel(groupId, "wiki", "", "36,"));
+		layoutModels.add(newLayoutModel(groupId, "wiki", "", "36_WAR_wikiweb,"));
 
 		return layoutModels;
 	}

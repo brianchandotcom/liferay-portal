@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[contains(@id,'_15_title')]</td>
+	<td>//input[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -80,12 +80,12 @@
 </tr>
 <tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
-	<td>//button[@id='_15_saveButton']</td>
+	<td>//button[contains(.,'Save as Draft')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_15_publishButton' and contains(.,'Publish')]</td>
+	<td>//button[contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
-	<td>//button[@id='_15_publishButton' and contains(.,'Submit for Publication')]</td>
+	<td>//button[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>

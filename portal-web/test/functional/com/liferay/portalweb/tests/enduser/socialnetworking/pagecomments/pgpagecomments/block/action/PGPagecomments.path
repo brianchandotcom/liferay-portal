@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@id='_107_discussion-status-messages']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
 <!--ADD_COMMENT-->
 <tr>
 	<td>COMMENT_FIELD</td>
-	<td>//textarea[@name='_107_postReplyBody0']</td>
+	<td>//div[contains(@name,'postReplyBody0')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,37 +72,37 @@
 <!--COMMENT-->
 <tr>
 	<td>COMMENT_WORKFLOW_STATUS</td>
-	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//span[contains(@class,'workflow-status')]/strong</td>
+	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_BODY</td>
-	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//div[@class='lfr-discussion-message']</td>
+	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//div[@class='lfr-discussion-message-body']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_USERNAME</td>
-	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//span[@class='user-name']</td>
+	<td>COMMENT_AUTHOR</td>
+	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//header[@class='lfr-discussion-message-author']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_RATING</td>
-	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//div[contains(@id,'ratingThumbContent')]/div</td>
+	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//div[contains(@id,'ratingThumbContent')]/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_POST_REPLY</td>
-	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Post Reply')]</td>
+	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//div[@class='lfr-discussion-controls']/span/a[contains(.,'Reply')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_EDIT</td>
-	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')]</td>
+	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENT_DELETE</td>
-	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]</td>
+	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

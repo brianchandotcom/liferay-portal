@@ -50,6 +50,31 @@
 	<td>//input[contains(@id,'description')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ADVANCED_SEARCH_FIRST_NAME_FIELD</td>
+	<td>//input[contains(@id,'firstName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_MIDDLE_NAME_FIELD</td>
+	<td>//input[contains(@id,'middleName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_LAST_NAME_FIELD</td>
+	<td>//input[contains(@id,'lastName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_SCREEN_NAME_FIELD</td>
+	<td>//input[contains(@id,'screenName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
+	<td>//input[contains(@id,'emailAddress')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

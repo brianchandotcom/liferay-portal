@@ -43,6 +43,11 @@
 	<td>//a[contains(@title,'Items per Page')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIVE_ITEMS_PER_PAGE</td>
+	<td>//a[contains(@id,'5')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

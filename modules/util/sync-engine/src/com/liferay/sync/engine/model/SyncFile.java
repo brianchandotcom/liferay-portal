@@ -212,6 +212,14 @@ public class SyncFile extends StateAwareModel {
 		return typeUuid;
 	}
 
+	public long getUserId() {
+		return userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
 	public String getVersion() {
 		return version;
 	}
@@ -333,6 +341,14 @@ public class SyncFile extends StateAwareModel {
 		this.typeUuid = typeUuid;
 	}
 
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public void setVersion(String version) {
 		this.version = version;
 	}
@@ -412,6 +428,12 @@ public class SyncFile extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true)
 	protected String typeUuid;
+
+	@DatabaseField(useGetSet = true)
+	protected long userId;
+
+	@DatabaseField(useGetSet = true)
+	protected String userName;
 
 	@DatabaseField(useGetSet = true)
 	protected String version;

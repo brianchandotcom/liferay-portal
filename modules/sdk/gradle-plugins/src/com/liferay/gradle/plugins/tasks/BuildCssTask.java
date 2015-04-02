@@ -169,7 +169,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 	protected void addPortalWebDependencies() {
 		GradleUtil.addDependency(
 			project, _PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
-			"portal-web", "7.0.0-SNAPSHOT");
+			"portal-web", "default");
 	}
 
 	protected void copySassPortalCommon() {

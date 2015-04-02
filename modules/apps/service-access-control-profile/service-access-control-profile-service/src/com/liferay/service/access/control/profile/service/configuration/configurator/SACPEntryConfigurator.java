@@ -18,6 +18,8 @@ import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
@@ -59,6 +61,10 @@ public class SACPEntryConfigurator {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		return new ModuleResourceLoader(bundle);
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private ServiceConfigurator _serviceConfigurator;

@@ -79,6 +79,15 @@ public class DDMFormLayoutValidatorTest {
 		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
 
+	@Test(expected = DDMFormLayoutValidationException.class)
+	public void testNullDefaultLocale() throws Exception {
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout.setDefaultLocale(null);
+
+		_ddmFormLayoutValidator.validate(ddmFormLayout);
+	}
+
 	@Test
 	public void testValidDDMFormLayout() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(

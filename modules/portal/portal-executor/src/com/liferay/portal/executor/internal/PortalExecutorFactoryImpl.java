@@ -59,40 +59,6 @@ public class PortalExecutorFactoryImpl implements PortalExecutorFactory {
 			threadFactory, _threadPoolHandler);
 	}
 
-	public void setAllowCoreThreadTimeout(boolean allowCoreThreadTimeout) {
-		_allowCoreThreadTimeout = allowCoreThreadTimeout;
-	}
-
-	public void setCorePoolSize(int corePoolSize) {
-		_corePoolSize = corePoolSize;
-	}
-
-	public void setKeepAliveTime(long keepAliveTime) {
-		_keepAliveTime = keepAliveTime;
-	}
-
-	public void setMaxPoolSize(int maxPoolSize) {
-		_maxPoolSize = maxPoolSize;
-	}
-
-	public void setMaxQueueSize(int maxQueueSize) {
-		_maxQueueSize = maxQueueSize;
-	}
-
-	public void setRejectedExecutionHandler(
-		RejectedExecutionHandler rejectedExecutionHandler) {
-
-		_rejectedExecutionHandler = rejectedExecutionHandler;
-	}
-
-	public void setThreadPoolHandler(ThreadPoolHandler threadPoolHandler) {
-		_threadPoolHandler = threadPoolHandler;
-	}
-
-	public void setTimeUnit(TimeUnit timeUnit) {
-		_timeUnit = timeUnit;
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

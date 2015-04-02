@@ -42,16 +42,16 @@
 	</tear-down>
 
 	<command name="ApprovePageCommentPG" priority="5">
+		<var name="commentAuthor" value="Test Test (You)" />
 		<var name="commentBody" value="Page Comment Comment" />
-		<var name="commentUsername" value="Test Test" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="PageComment#addWithWorkflowPG">
+			<var name="commentAuthor" value="${commentAuthor}" />
 			<var name="commentBody" value="${commentBody}" />
-			<var name="commentUsername" value="${commentUsername}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -59,9 +59,9 @@
 		</execute>
 
 		<execute macro="PageComment#viewWithWorkflowPG">
+			<var name="commentAuthor" value="${commentAuthor}" />
 			<var name="commentBody" value="${commentBody}" />
 			<var name="commentStatus" value="Pending (Review)" />
-			<var name="commentUsername" value="${commentUsername}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -79,9 +79,9 @@
 		</execute>
 
 		<execute macro="PageComment#viewWithWorkflowPG">
+			<var name="commentAuthor" value="${commentAuthor}" />
 			<var name="commentBody" value="${commentBody}" />
 			<var name="commentStatus" value="Pending (Review)" />
-			<var name="commentUsername" value="${commentUsername}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -99,22 +99,22 @@
 		</execute>
 
 		<execute macro="PageComment#viewPG">
+			<var name="commentAuthor" value="${commentAuthor}" />
 			<var name="commentBody" value="${commentBody}" />
-			<var name="commentUsername" value="${commentUsername}" />
 		</execute>
 	</command>
 
 	<command name="RejectPageCommentPG" priority="5">
+		<var name="commentAuthor" value="Test Test (You)" />
 		<var name="commentBody" value="Page Comment Comment" />
-		<var name="commentUsername" value="Test Test" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="PageComment#addWithWorkflowPG">
+			<var name="commentAuthor" value="${commentAuthor}" />
 			<var name="commentBody" value="${commentBody}" />
-			<var name="commentUsername" value="${commentUsername}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -122,9 +122,9 @@
 		</execute>
 
 		<execute macro="PageComment#viewWithWorkflowPG">
+			<var name="commentAuthor" value="${commentAuthor}" />
 			<var name="commentBody" value="${commentBody}" />
 			<var name="commentStatus" value="Pending (Review)" />
-			<var name="commentUsername" value="${commentUsername}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -161,9 +161,9 @@
 		</execute>
 
 		<execute macro="PageComment#viewWithWorkflowPG">
+			<var name="commentAuthor" value="${commentAuthor}" />
 			<var name="commentBody" value="${commentBody}" />
 			<var name="commentStatus" value="Pending (Update)" />
-			<var name="commentUsername" value="${commentUsername}" />
 		</execute>
 	</command>
 </definition>

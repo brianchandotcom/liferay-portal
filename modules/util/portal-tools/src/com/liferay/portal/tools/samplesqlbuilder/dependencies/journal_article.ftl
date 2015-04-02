@@ -15,7 +15,7 @@ insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.t
 </#list>
 
 <#list journalArticlePageCounts as journalArticlePageCount>
-	<#assign portletIdPrefix = "56_INSTANCE_TEST_" + journalArticlePageCount + "_">
+	<#assign portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + journalArticlePageCount + "_">
 
 	<#assign layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))>
 

@@ -1,7 +1,7 @@
 <#assign pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount)>
 
 <#list pageCounts as pageCount>
-	<#assign portletId = "101_INSTANCE_TEST_" + pageCount>
+	<#assign portletId = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_TEST_" + pageCount>
 
 	<#assign layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)>
 

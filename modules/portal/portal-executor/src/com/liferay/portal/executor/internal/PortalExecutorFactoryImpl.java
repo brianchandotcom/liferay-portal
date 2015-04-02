@@ -65,9 +65,6 @@ public class PortalExecutorFactoryImpl implements PortalExecutorFactory {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) throws Exception {
-		boolean allowCoreThreadTimeout = GetterUtil.getBoolean(
-			properties.get("allowCoreThreadTimeout"), true);
-
 		int corePoolSize = GetterUtil.getInteger(
 			properties.get("corePoolSize"));
 
@@ -103,22 +100,16 @@ public class PortalExecutorFactoryImpl implements PortalExecutorFactory {
 				"Max queue size is less than or equal to 0");
 		}
 
-		RejectedExecutionHandler rejectedExecutionHandler =
+		_config = new Config(
+			GetterUtil.getBoolean(
+				properties.get("allowCoreThreadTimeout"), true),
+			corePoolSize, keepAliveTime, maxPoolSize, maxQueueSize,
 			(RejectedExecutionHandler)InstanceFactory.newInstance(
 				GetterUtil.getString(
-					properties.get("rejectedExecutionHandler")));
-
-		ThreadPoolHandler threadPoolHandler =
+					properties.get("rejectedExecutionHandler"))),
 			(ThreadPoolHandler)InstanceFactory.newInstance(
-				GetterUtil.getString(properties.get("threadPoolHandler")));
-
-		TimeUnit timeUnit = TimeUnit.valueOf(
-			GetterUtil.getString(properties.get("timeUnit")));
-
-		_config = new Config(
-			allowCoreThreadTimeout, corePoolSize, keepAliveTime, maxPoolSize,
-			maxQueueSize, rejectedExecutionHandler, threadPoolHandler,
-			timeUnit);
+				GetterUtil.getString(properties.get("threadPoolHandler"))),
+			TimeUnit.valueOf(GetterUtil.getString(properties.get("timeUnit"))));
 	}
 
 	private volatile Config _config;

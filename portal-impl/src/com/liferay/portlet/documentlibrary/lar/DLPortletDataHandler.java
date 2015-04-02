@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -23,12 +24,9 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -46,7 +44,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.impl.RepositoryEntryImpl;
@@ -477,16 +474,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			DLFileEntryLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			exportActionableDynamicQuery.getAddCriteriaMethod();
-
 		exportActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					addCriteriaMethod.addCriteria(dynamicQuery);
-
 					DynamicQuery fileVersionDynamicQuery =
 						DynamicQueryFactoryUtil.forClass(
 							DLFileVersion.class, "dlFileVersion",
@@ -514,6 +506,23 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 						statusProperty.in(
 							stagedModelDataHandler.getExportableStatuses()));
 
+					Criterion modifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria("modifiedDate");
+					Criterion statusDateCriterion =
+						portletDataContext.getDateRangeCriteria("statusDate");
+
+					if ((modifiedDateCriterion != null) &&
+						(statusDateCriterion != null)) {
+
+						Disjunction disjunction =
+							RestrictionsFactoryUtil.disjunction();
+
+						disjunction.add(modifiedDateCriterion);
+						disjunction.add(statusDateCriterion);
+
+						fileVersionDynamicQuery.add(disjunction);
+					}
+
 					Property fileEntryIdProperty = PropertyFactoryUtil.forName(
 						"fileEntryId");
 
@@ -538,49 +547,12 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 					DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-					if (dlFileEntry.isInTrash()) {
-						return;
-					}
-
 					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 						dlFileEntry.getFileEntryId());
 
 					StagedModelDataHandlerUtil.exportStagedModel(
 						portletDataContext, fileEntry);
 				}
-			});
-		exportActionableDynamicQuery.setPerformCountMethod(
-			new ActionableDynamicQuery.PerformCountMethod() {
-
-				@Override
-				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
-
-					long modelAdditionCount =
-						DLFileEntryLocalServiceUtil.getFileEntriesCount(
-							portletDataContext.getScopeGroupId(),
-							portletDataContext.getDateRange(),
-							portletDataContext.getScopeGroupId(),
-							new QueryDefinition<DLFileEntry>(
-								WorkflowConstants.STATUS_APPROVED));
-
-					StagedModelType stagedModelType =
-						exportActionableDynamicQuery.getStagedModelType();
-
-					manifestSummary.addModelAdditionCount(
-						stagedModelType.toString(), modelAdditionCount);
-
-					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
-							portletDataContext, stagedModelType);
-
-					manifestSummary.addModelDeletionCount(
-						stagedModelType.toString(), modelDeletionCount);
-
-					return modelAdditionCount;
-				}
-
 			});
 		exportActionableDynamicQuery.setStagedModelType(
 			new StagedModelType(DLFileEntryConstants.getClassName()));

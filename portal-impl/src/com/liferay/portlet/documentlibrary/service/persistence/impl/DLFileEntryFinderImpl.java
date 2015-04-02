@@ -131,69 +131,16 @@ public class DLFileEntryFinderImpl
 			groupId, 0, repositoryIds, folderIds, null, queryDefinition, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public int countByG_M_R(
 		long groupId, DateRange dateRange, long repositoryId,
 		QueryDefinition<DLFileEntry> queryDefinition) {
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = getFileEntriesSQL(
-				COUNT_BY_G_M_R, groupId, null, null, null, queryDefinition,
-				false);
-
-			if ((dateRange == null) || (dateRange.getStartDate() == null)) {
-				sql = StringUtil.replace(
-					sql, "(DLFileEntry.modifiedDate >= ?) AND",
-					StringPool.BLANK);
-			}
-
-			if ((dateRange == null) || (dateRange.getEndDate() == null)) {
-				sql = StringUtil.replace(
-					sql, "(DLFileEntry.modifiedDate <= ?) AND",
-					StringPool.BLANK);
-			}
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			if ((dateRange != null) && (dateRange.getStartDate() != null)) {
-				qPos.add(dateRange.getStartDate());
-			}
-
-			if ((dateRange != null) && (dateRange.getEndDate() != null)) {
-				qPos.add(dateRange.getEndDate());
-			}
-
-			qPos.add(repositoryId);
-			qPos.add(queryDefinition.getStatus());
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+		return 0;
 	}
 
 	@Override

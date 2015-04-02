@@ -41,7 +41,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 		<aui:fieldset label="model.resource.com.liferay.portlet.asset">
 
 			<%
-			List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, assetPublisherDisplayContext.isEnablePermissions());
+			List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, assetPublisherDisplayContext.isEnablePermissions(), true);
 			%>
 
 			<liferay-ui:search-container
@@ -63,13 +63,22 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 					<%
 					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST_APPROVED, true);
 					%>
 
 					<liferay-ui:search-container-column-text name="title">
-						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+						<c:choose>
+							<c:when test="<%= assetEntry.isVisible() %>">
+									<i class="<%= assetRenderer.getIconCssClass() %>"></i>
 
-						<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+									<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+							</c:when>
+							<c:otherwise>
+									<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
+									<%= HtmlUtil.escape(assetRenderer.getTitle(locale) + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + LanguageUtil.get(request, WorkFlowConstants.getStatusLabel(assetEntry.getStatus())) + StringPool.CLOSE_PARENTHESIS) %>
+							</c:otherwise>
+						</c:choose>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

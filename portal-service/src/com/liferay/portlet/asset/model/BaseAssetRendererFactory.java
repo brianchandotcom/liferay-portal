@@ -66,6 +66,14 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
+	public AssetRenderer getAssetRenderer(
+			long classPK, int type, boolean includeNonVisibleAssets)
+		throws PortalException {
+
+		return getAssetRenderer(classPK, type);
+	}
+
+	@Override
 	@SuppressWarnings("unused")
 	public AssetRenderer getAssetRenderer(long groupId, String urlTitle)
 		throws PortalException {

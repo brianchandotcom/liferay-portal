@@ -76,14 +76,6 @@ public class InvokerFilterHelper {
 		}
 	}
 
-	public Filter getFilter(String filterName) {
-		return _filters.get(filterName);
-	}
-
-	public FilterConfig getFilterConfig(String filterName) {
-		return _filterConfigs.get(filterName);
-	}
-
 	public void init(FilterConfig filterConfig) throws ServletException {
 		try {
 			ServletContext servletContext = filterConfig.getServletContext();
@@ -290,19 +282,26 @@ public class InvokerFilterHelper {
 		Filter filter = _filters.get(filterName);
 
 		if (filter == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No filter exists with filter name " + filterName);
+			}
+
 			return;
 		}
 
 		FilterConfig filterConfig = _filterConfigs.get(filterName);
 
 		if (filterConfig == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No filter config exists with filter name " + filterName);
+			}
+
 			return;
 		}
 
-		FilterMapping filterMapping = new FilterMapping(
-			filter, filterConfig, urlPatterns, dispatchers);
-
-		_filterMappings.add(filterMapping);
+		_filterMappings.add(
+			new FilterMapping(filter, filterConfig, urlPatterns, dispatchers));
 	}
 
 	protected void readLiferayFilterWebXML(
@@ -370,32 +369,6 @@ public class InvokerFilterHelper {
 
 			initFilterMapping(filterName, urlPatterns, dispatchers);
 		}
-	}
-
-	protected void registerFilterMapping(
-		String filterName, List<String> urlPatterns, List<String> dispatchers,
-		String positionFilterName, boolean after) {
-
-		Filter filter = getFilter(filterName);
-
-		FilterConfig filterConfig = _filterConfigs.get(filterName);
-
-		if (filterConfig == null) {
-			filterConfig = getFilterConfig(filterName);
-		}
-
-		if (filter == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("No filter exists with filter mapping " + filterName);
-			}
-
-			return;
-		}
-
-		FilterMapping filterMapping = new FilterMapping(
-			filter, filterConfig, urlPatterns, dispatchers);
-
-		registerFilterMapping(filterMapping, positionFilterName, after);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

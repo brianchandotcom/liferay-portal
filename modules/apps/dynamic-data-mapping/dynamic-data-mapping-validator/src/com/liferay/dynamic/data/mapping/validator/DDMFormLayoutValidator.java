@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.validator;
 
-import com.liferay.portlet.dynamicdatamapping.StructureLayoutException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
 /**
@@ -23,6 +22,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 public interface DDMFormLayoutValidator {
 
 	public void validate(DDMFormLayout ddmFormLayout)
-		throws StructureLayoutException;
+		throws DDMFormLayoutValidationException;
 
 }

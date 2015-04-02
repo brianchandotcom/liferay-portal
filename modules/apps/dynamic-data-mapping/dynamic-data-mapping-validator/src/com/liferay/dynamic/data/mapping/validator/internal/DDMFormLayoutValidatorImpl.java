@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
-import com.liferay.portlet.dynamicdatamapping.StructureLayoutException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
@@ -38,7 +38,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 
 	@Override
 	public void validate(DDMFormLayout ddmFormLayout)
-		throws StructureLayoutException {
+		throws DDMFormLayoutValidationException {
 
 		validateFieldNames(ddmFormLayout);
 		validatePageTitleLocales(ddmFormLayout);
@@ -46,7 +46,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 	}
 
 	private void validateFieldNames(DDMFormLayout ddmFormLayout)
-		throws StructureLayoutException {
+		throws DDMFormLayoutValidationException {
 
 		Set<String> fieldNames = new HashSet<>();
 
@@ -63,7 +63,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 						ddmFormLayoutColumn.getDDMFormFieldName();
 
 					if (fieldNames.contains(fieldName)) {
-						throw new StructureLayoutException(
+						throw new DDMFormLayoutValidationException(
 							"Field " + fieldName + " is duplicated");
 					}
 
@@ -74,7 +74,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 	}
 
 	private void validatePageTitleLocales(DDMFormLayout ddmFormLayout)
-		throws StructureLayoutException {
+		throws DDMFormLayoutValidationException {
 
 		Locale defaultLocale = ddmFormLayout.getDefaultLocale();
 
@@ -86,7 +86,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 			Locale pageTitleDefaultLocale = pageTitle.getDefaultLocale();
 
 			if (!pageTitleDefaultLocale.equals(defaultLocale)) {
-				throw new StructureLayoutException(
+				throw new DDMFormLayoutValidationException(
 					"The default language of a page does not match " +
 					"the layout's default language");
 			}
@@ -94,7 +94,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 	}
 
 	private void validateRowsSizes(DDMFormLayout ddmFormLayout)
-		throws StructureLayoutException {
+		throws DDMFormLayoutValidationException {
 
 		for (DDMFormLayoutPage ddmFormLayoutPage
 			: ddmFormLayout.getDDMFormLayoutPages()) {
@@ -110,7 +110,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 					int columnSize = ddmFormLayoutColumn.getSize();
 
 					if ((columnSize <= 0) || (columnSize > MAX_ROW_SIZE)) {
-						throw new StructureLayoutException(
+						throw new DDMFormLayoutValidationException(
 							"Invalid column size: " + columnSize);
 					}
 
@@ -118,7 +118,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 				}
 
 				if (rowSize != MAX_ROW_SIZE) {
-					throw new StructureLayoutException(
+					throw new DDMFormLayoutValidationException(
 						"Invalid row size: " + rowSize);
 				}
 			}

@@ -58,6 +58,8 @@ public class ParallelDestination extends BaseAsyncDestination {
 	protected void dispatch(
 		Set<MessageListener> messageListeners, final Message message) {
 
+		final Thread dispatchThread = Thread.currentThread();
+
 		ThreadPoolExecutor threadPoolExecutor = getThreadPoolExecutor();
 
 		for (final MessageListener messageListener : messageListeners) {
@@ -74,9 +76,12 @@ public class ParallelDestination extends BaseAsyncDestination {
 						_log.error("Unable to process message " + message, mle);
 					}
 					finally {
-						ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
+						if (Thread.currentThread() != dispatchThread) {
+							ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
-						CentralizedThreadLocal.clearShortLivedThreadLocals();
+							CentralizedThreadLocal.
+								clearShortLivedThreadLocals();
+						}
 					}
 				}
 

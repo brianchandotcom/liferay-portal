@@ -31,98 +31,100 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pablo Carvalho
  */
-@Component
+@Component(immediate = true, service = DDMFormLayoutValidator.class)
 public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
-
-	public static int MAX_ROW_SIZE = 12;
 
 	@Override
 	public void validate(DDMFormLayout ddmFormLayout)
 		throws DDMFormLayoutValidationException {
 
-		validateFieldNames(ddmFormLayout);
-		validatePageTitleLocales(ddmFormLayout);
-		validateRowsSizes(ddmFormLayout);
+		validateDDMFormFieldNames(ddmFormLayout);
+		validateDDMFormLayoutPageTitles(ddmFormLayout);
+		validateDDMFormLayoutRowSizes(ddmFormLayout);
 	}
 
-	private void validateFieldNames(DDMFormLayout ddmFormLayout)
+	private void validateDDMFormFieldNames(DDMFormLayout ddmFormLayout)
 		throws DDMFormLayoutValidationException {
 
-		Set<String> fieldNames = new HashSet<>();
+		Set<String> ddmFormFieldNames = new HashSet<>();
 
-		for (DDMFormLayoutPage ddmFormLayoutPage
-			: ddmFormLayout.getDDMFormLayoutPages()) {
+		for (DDMFormLayoutPage ddmFormLayoutPage :
+				ddmFormLayout.getDDMFormLayoutPages()) {
 
-			for (DDMFormLayoutRow ddmFormLayoutRow
-				: ddmFormLayoutPage.getDDMFormLayoutRows()) {
+			for (DDMFormLayoutRow ddmFormLayoutRow :
+					ddmFormLayoutPage.getDDMFormLayoutRows()) {
 
-				for (DDMFormLayoutColumn ddmFormLayoutColumn
-					: ddmFormLayoutRow.getDDMFormLayoutColumns()) {
+				for (DDMFormLayoutColumn ddmFormLayoutColumn :
+						ddmFormLayoutRow.getDDMFormLayoutColumns()) {
 
-					String fieldName =
+					String ddmFormFieldName =
 						ddmFormLayoutColumn.getDDMFormFieldName();
 
-					if (fieldNames.contains(fieldName)) {
+					if (ddmFormFieldNames.contains(ddmFormFieldName)) {
 						throw new DDMFormLayoutValidationException(
-							"Field " + fieldName + " is duplicated");
+							"The field name " + ddmFormFieldName +
+								" was defined more than once");
 					}
 
-					fieldNames.add(fieldName);
+					ddmFormFieldNames.add(ddmFormFieldName);
 				}
 			}
 		}
 	}
 
-	private void validatePageTitleLocales(DDMFormLayout ddmFormLayout)
+	private void validateDDMFormLayoutPageTitles(DDMFormLayout ddmFormLayout)
 		throws DDMFormLayoutValidationException {
 
 		Locale defaultLocale = ddmFormLayout.getDefaultLocale();
 
-		for (DDMFormLayoutPage ddmFormLayoutPage
-			: ddmFormLayout.getDDMFormLayoutPages()) {
+		for (DDMFormLayoutPage ddmFormLayoutPage :
+				ddmFormLayout.getDDMFormLayoutPages()) {
 
-			LocalizedValue pageTitle = ddmFormLayoutPage.getTitle();
+			LocalizedValue title = ddmFormLayoutPage.getTitle();
 
-			Locale pageTitleDefaultLocale = pageTitle.getDefaultLocale();
-
-			if (!pageTitleDefaultLocale.equals(defaultLocale)) {
+			if (!defaultLocale.equals(title.getDefaultLocale())) {
 				throw new DDMFormLayoutValidationException(
-					"The default language of a page does not match " +
-					"the layout's default language");
+					"Invalid default locale set for page title. Page titles " +
+						"default locale should be equal to DDM Form Layout " +
+							"default locale");
 			}
 		}
 	}
 
-	private void validateRowsSizes(DDMFormLayout ddmFormLayout)
+	private void validateDDMFormLayoutRowSizes(DDMFormLayout ddmFormLayout)
 		throws DDMFormLayoutValidationException {
 
-		for (DDMFormLayoutPage ddmFormLayoutPage
-			: ddmFormLayout.getDDMFormLayoutPages()) {
+		for (DDMFormLayoutPage ddmFormLayoutPage :
+				ddmFormLayout.getDDMFormLayoutPages()) {
 
-			for (DDMFormLayoutRow ddmFormLayoutRow
-				: ddmFormLayoutPage.getDDMFormLayoutRows()) {
+			for (DDMFormLayoutRow ddmFormLayoutRow :
+					ddmFormLayoutPage.getDDMFormLayoutRows()) {
 
 				int rowSize = 0;
 
-				for (DDMFormLayoutColumn ddmFormLayoutColumn
-					: ddmFormLayoutRow.getDDMFormLayoutColumns()) {
+				for (DDMFormLayoutColumn ddmFormLayoutColumn :
+						ddmFormLayoutRow.getDDMFormLayoutColumns()) {
 
 					int columnSize = ddmFormLayoutColumn.getSize();
 
-					if ((columnSize <= 0) || (columnSize > MAX_ROW_SIZE)) {
+					if ((columnSize <= 0) || (columnSize > _MAX_ROW_SIZE)) {
 						throw new DDMFormLayoutValidationException(
-							"Invalid column size: " + columnSize);
+							"Invalid column size. Column size must be " +
+								"positive and less than maximum row size (12)");
 					}
 
 					rowSize += ddmFormLayoutColumn.getSize();
 				}
 
-				if (rowSize != MAX_ROW_SIZE) {
+				if (rowSize != _MAX_ROW_SIZE) {
 					throw new DDMFormLayoutValidationException(
-						"Invalid row size: " + rowSize);
+						"Invalid row size. The sum of all columns of a row " +
+							"must be less than maximum row size (12)");
 				}
 			}
 		}
 	}
+
+	private static final int _MAX_ROW_SIZE = 12;
 
 }

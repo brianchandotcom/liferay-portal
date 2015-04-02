@@ -249,6 +249,12 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
+	public boolean hasAction(
+		com.liferay.portal.model.ResourceAction resourceAction) {
+		return _resourcePermission.hasAction(resourceAction);
+	}
+
+	@Override
 	public boolean hasActionId(java.lang.String actionId) {
 		return _resourcePermission.hasActionId(actionId);
 	}

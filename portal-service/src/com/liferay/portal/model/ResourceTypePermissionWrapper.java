@@ -211,6 +211,12 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 	}
 
 	@Override
+	public boolean hasAction(
+		com.liferay.portal.model.ResourceAction resourceAction) {
+		return _resourceTypePermission.hasAction(resourceAction);
+	}
+
+	@Override
 	public int hashCode() {
 		return _resourceTypePermission.hashCode();
 	}

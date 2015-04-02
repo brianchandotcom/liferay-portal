@@ -99,21 +99,23 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 	}
 
 	@Override
+	public boolean hasAction(ResourceAction resourceAction) {
+		if ((resourceAction != null) &&
+			((getActionIds() & resourceAction.getBitwiseValue()) != 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean hasActionId(String actionId) {
 		ResourceAction resourceAction =
 			ResourceActionLocalServiceUtil.fetchResourceAction(
 				getName(), actionId);
 
-		if (resourceAction != null) {
-			long actionIds = getActionIds();
-			long bitwiseValue = resourceAction.getBitwiseValue();
-
-			if ((actionIds & bitwiseValue) == bitwiseValue) {
-				return true;
-			}
-		}
-
-		return false;
+		return hasAction(resourceAction);
 	}
 
 	@Override

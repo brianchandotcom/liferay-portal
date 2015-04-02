@@ -3757,16 +3757,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Boolean site = (Boolean)params.remove("site");
 		List<Integer> types = (List<Integer>)params.remove("types");
 
-		Collection<Group> groups = null;
+		Collection<Group> groups = new HashSet<>();
 
 		Long userId = (Long)params.remove("usersGroups");
-
-		if (userId == null) {
-			groups = new ArrayList<>();
-		}
-		else {
-			groups = new HashSet<>();
-		}
 
 		for (long classNameId : classNameIds) {
 			groups.addAll(groupPersistence.findByC_C(companyId, classNameId));
@@ -3933,47 +3926,50 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					resourceName, resourceActionId);
 
 			if (resourceAction != null) {
-				long bitwiseValue = resourceAction.getBitwiseValue();
+				Set<Group> rolePermissionsGroups = new HashSet<>();
 
 				if (resourceBlockLocalService.isSupported(resourceName)) {
-					iterator = groups.iterator();
+					for (ResourceTypePermission resourceTypePermission :
+							resourceTypePermissionPersistence.findByRoleId(
+								resourceRoleId)) {
 
-					while (iterator.hasNext()) {
-						Group group = iterator.next();
+						if ((resourceTypePermission.getCompanyId() ==
+								companyId) &&
+							resourceName.equals(
+								resourceTypePermission.getName()) &&
+							resourceTypePermission.hasAction(resourceAction)) {
 
-						ResourceTypePermission resourceTypePermission =
-							resourceTypePermissionPersistence.fetchByC_G_N_R(
-								companyId, group.getGroupId(), resourceName,
-								resourceRoleId);
+							Group group = groupPersistence.fetchByPrimaryKey(
+								resourceTypePermission.getGroupId());
 
-						if ((resourceTypePermission == null) ||
-							((resourceTypePermission.getActionIds() &
-							  bitwiseValue) == 0)) {
-
-							iterator.remove();
+							if (group != null) {
+								rolePermissionsGroups.add(group);
+							}
 						}
 					}
 				}
 				else {
-					iterator = groups.iterator();
+					for (ResourcePermission resourcePermission :
+							resourcePermissionPersistence.findByC_N_S(
+								companyId, resourceName, resourceScope)) {
 
-					while (iterator.hasNext()) {
-						Group group = iterator.next();
+						if ((resourcePermission.getRoleId() ==
+								resourceRoleId) &&
+							resourcePermission.hasAction(
+								resourceAction)) {
 
-						ResourcePermission resourcePermission =
-							resourcePermissionPersistence.fetchByC_N_S_P_R(
-								companyId, resourceName, resourceScope,
-									String.valueOf(group.getGroupId()),
-									resourceRoleId);
+							Group group = groupPersistence.fetchByPrimaryKey(
+								GetterUtil.getLong(
+									resourcePermission.getPrimKey()));
 
-						if ((resourcePermission == null) ||
-							((resourcePermission.getActionIds() &
-							  bitwiseValue) == 0)) {
-
-							iterator.remove();
+							if (group != null) {
+								rolePermissionsGroups.add(group);
+							}
 						}
 					}
 				}
+
+				groups.retainAll(rolePermissionsGroups);
 			}
 		}
 

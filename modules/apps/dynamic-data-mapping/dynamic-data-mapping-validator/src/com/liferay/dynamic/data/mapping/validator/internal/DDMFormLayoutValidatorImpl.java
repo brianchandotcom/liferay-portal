@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.validator;
+package com.liferay.dynamic.data.mapping.validator.internal;
 
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.portlet.dynamicdatamapping.StructureLayoutException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.validator.DDMFormLayoutValidator;
 
 import java.util.HashSet;
 import java.util.Locale;

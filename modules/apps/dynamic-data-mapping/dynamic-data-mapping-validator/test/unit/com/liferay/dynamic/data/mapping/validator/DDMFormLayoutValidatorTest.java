@@ -21,7 +21,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.validator.DDMFormLayoutValidator;
 
 import java.util.Locale;
 

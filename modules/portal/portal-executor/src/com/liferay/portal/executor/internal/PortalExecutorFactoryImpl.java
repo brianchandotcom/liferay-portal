@@ -53,75 +53,103 @@ public class PortalExecutorFactoryImpl implements PortalExecutorFactory {
 			executorName, Thread.NORM_PRIORITY,
 			PortalClassLoaderUtil.getClassLoader());
 
+		Config config = _config;
+
 		return new ThreadPoolExecutor(
-			_corePoolSize, _maxPoolSize, _keepAliveTime, _timeUnit,
-			_allowCoreThreadTimeout, _maxQueueSize, _rejectedExecutionHandler,
-			threadFactory, _threadPoolHandler);
+			config._corePoolSize, config._maxPoolSize, config._keepAliveTime,
+			config._timeUnit, config._allowCoreThreadTimeout,
+			config._maxQueueSize, config._rejectedExecutionHandler,
+			threadFactory, config._threadPoolHandler);
 	}
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_allowCoreThreadTimeout = GetterUtil.getBoolean(
+	protected void activate(Map<String, Object> properties) throws Exception {
+		boolean allowCoreThreadTimeout = GetterUtil.getBoolean(
 			properties.get("allowCoreThreadTimeout"), true);
 
-		_corePoolSize = GetterUtil.getInteger(properties.get("corePoolSize"));
+		int corePoolSize = GetterUtil.getInteger(
+			properties.get("corePoolSize"));
 
-		if (_corePoolSize < 0) {
+		if (corePoolSize < 0) {
 			throw new IllegalArgumentException("Core pool size is less than 0");
 		}
 
-		_keepAliveTime = GetterUtil.getLong(properties.get("keepAliveTime"));
+		long keepAliveTime = GetterUtil.getLong(
+			properties.get("keepAliveTime"));
 
-		if (_keepAliveTime < 0) {
+		if (keepAliveTime < 0) {
 			throw new IllegalArgumentException(
 				"Keep alive time is less than 0");
 		}
 
-		_maxPoolSize = GetterUtil.getInteger(properties.get("maxPoolSize"));
+		int maxPoolSize = GetterUtil.getInteger(properties.get("maxPoolSize"));
 
-		if (_maxPoolSize <= 0) {
+		if (maxPoolSize <= 0) {
 			throw new IllegalArgumentException(
 				"Max pool size is less than or equal to 0");
 		}
 
-		if (_maxPoolSize < _corePoolSize) {
+		if (maxPoolSize < corePoolSize) {
 			throw new IllegalArgumentException(
 				"Max pool size is less than core pool size");
 		}
 
-		_maxQueueSize = GetterUtil.getInteger(
+		int maxQueueSize = GetterUtil.getInteger(
 			properties.get("maxQueueSize"), Integer.MAX_VALUE);
 
-		if (_maxQueueSize <= 0) {
+		if (maxQueueSize <= 0) {
 			throw new IllegalArgumentException(
 				"Max queue size is less than or equal to 0");
 		}
 
-		try {
-			_rejectedExecutionHandler =
-				(RejectedExecutionHandler)InstanceFactory.newInstance(
-					GetterUtil.getString(
-						properties.get("rejectedExecutionHandler")));
+		RejectedExecutionHandler rejectedExecutionHandler =
+			(RejectedExecutionHandler)InstanceFactory.newInstance(
+				GetterUtil.getString(
+					properties.get("rejectedExecutionHandler")));
 
-			_threadPoolHandler = (ThreadPoolHandler)InstanceFactory.newInstance(
+		ThreadPoolHandler threadPoolHandler =
+			(ThreadPoolHandler)InstanceFactory.newInstance(
 				GetterUtil.getString(properties.get("threadPoolHandler")));
-		}
-		catch (Exception e) {
-			throw new IllegalStateException("Unable to instantiate objects", e);
-		}
 
-		_timeUnit = TimeUnit.valueOf(
+		TimeUnit timeUnit = TimeUnit.valueOf(
 			GetterUtil.getString(properties.get("timeUnit")));
+
+		_config = new Config(
+			allowCoreThreadTimeout, corePoolSize, keepAliveTime, maxPoolSize,
+			maxQueueSize, rejectedExecutionHandler, threadPoolHandler,
+			timeUnit);
 	}
 
-	private volatile boolean _allowCoreThreadTimeout;
-	private volatile int _corePoolSize;
-	private volatile long _keepAliveTime;
-	private volatile int _maxPoolSize;
-	private volatile int _maxQueueSize;
-	private volatile RejectedExecutionHandler _rejectedExecutionHandler;
-	private volatile ThreadPoolHandler _threadPoolHandler;
-	private volatile TimeUnit _timeUnit;
+	private volatile Config _config;
+
+	private static class Config {
+
+		private Config(
+			boolean allowCoreThreadTimeout, int corePoolSize,
+			long keepAliveTime, int maxPoolSize, int maxQueueSize,
+			RejectedExecutionHandler rejectedExecutionHandler,
+			ThreadPoolHandler threadPoolHandler, TimeUnit timeUnit) {
+
+			_allowCoreThreadTimeout = allowCoreThreadTimeout;
+			_corePoolSize = corePoolSize;
+			_keepAliveTime = keepAliveTime;
+			_maxPoolSize = maxPoolSize;
+			_maxQueueSize = maxQueueSize;
+			_rejectedExecutionHandler = rejectedExecutionHandler;
+			_threadPoolHandler = threadPoolHandler;
+			_timeUnit = timeUnit;
+		}
+
+		private final boolean _allowCoreThreadTimeout;
+		private final int _corePoolSize;
+		private final long _keepAliveTime;
+		private final int _maxPoolSize;
+		private final int _maxQueueSize;
+		private final RejectedExecutionHandler _rejectedExecutionHandler;
+		private final ThreadPoolHandler _threadPoolHandler;
+		private final TimeUnit _timeUnit;
+
+	}
 
 }

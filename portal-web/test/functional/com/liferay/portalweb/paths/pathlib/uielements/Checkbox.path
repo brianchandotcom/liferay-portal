@@ -19,8 +19,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT</td>
+	<td>//label[contains(.,'Allow Manual Membership Management')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALLOW_SITE_ADMIN_MODIFY_PAGES</td>
 	<td>//label[contains(.,'Allow site administrators to modify')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECK_ALL_NAME</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_PROPAGATION</td>
+	<td>//label[contains(.,'Enable propagation of changes')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RECYCLE_BIN</td>
+	<td>//label[contains(.,'Enable Recycle Bin')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,6 +71,16 @@
 <tr>
 	<td>SELECT_ALL</td>
 	<td>//input[contains(@id,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMINISTRATOR</td>
+	<td>xpath=(//input[contains(@name,'rowIds')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_OWNER</td>
+	<td>xpath=(//input[contains(@name,'rowIds')])[2]</td>
 	<td></td>
 </tr>
 </tbody>

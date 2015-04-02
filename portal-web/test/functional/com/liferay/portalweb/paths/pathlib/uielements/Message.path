@@ -74,8 +74,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REQUIRED_INFO</td>
+	<td>//div[contains(@class,'required') and contains(@role,'alert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-success')])[2]</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -31,6 +32,9 @@ import java.io.Serializable;
  * @author László Csontos
  */
 public class PermissionCacheUtil {
+
+	public static final String HAS_USER_ROLE_CACHE_NAME =
+		PermissionCacheUtil.class.getName() + "_HAS_USER_ROLE";
 
 	public static final String PERMISSION_CACHE_NAME =
 		PermissionCacheUtil.class.getName() + "_PERMISSION";
@@ -51,6 +55,7 @@ public class PermissionCacheUtil {
 			return;
 		}
 
+		_hasUserRolePortalCache.removeAll();
 		_permissionCheckerBagPortalCache.removeAll();
 		_permissionPortalCache.removeAll();
 		_resourceBlockIdsBagCache.removeAll();
@@ -61,6 +66,29 @@ public class PermissionCacheUtil {
 		BagKey bagKey = new BagKey(userId, groupId);
 
 		return _permissionCheckerBagPortalCache.get(bagKey);
+	}
+
+	public static Boolean getHasUserRole(long userId, Role role) {
+		String key = String.valueOf(role.getRoleId()).concat(
+			String.valueOf(userId));
+
+		Boolean hasUserRole = _hasUserRolePortalCache.get(key);
+
+		if (hasUserRole != null) {
+			return hasUserRole;
+		}
+
+		UserPermissionCheckerBag userPermissionCheckerBag = getUserBag(userId);
+
+		if (userPermissionCheckerBag == null) {
+			return null;
+		}
+
+		hasUserRole = userPermissionCheckerBag.hasRole(role);
+
+		_hasUserRolePortalCache.put(key, hasUserRole);
+
+		return hasUserRole;
 	}
 
 	public static Boolean getPermission(
@@ -98,6 +126,17 @@ public class PermissionCacheUtil {
 		_permissionCheckerBagPortalCache.put(bagKey, bag);
 	}
 
+	public static void putHasUserRole(long userId, Role role, Boolean value) {
+		if (value == null) {
+			return;
+		}
+
+		String key = String.valueOf(role.getRoleId()).concat(
+			String.valueOf(userId));
+
+		_hasUserRolePortalCache.put(key, value);
+	}
+
 	public static void putPermission(
 		long userId, boolean signedIn, long groupId, String name,
 		String primKey, String actionId, Boolean value) {
@@ -130,6 +169,10 @@ public class PermissionCacheUtil {
 			userId, userPermissionCheckerBag);
 	}
 
+	private static final PortalCache<String, Boolean>
+		_hasUserRolePortalCache = MultiVMPoolUtil.getCache(
+			HAS_USER_ROLE_CACHE_NAME,
+			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCache<BagKey, PermissionCheckerBag>
 		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
 			PERMISSION_CHECKER_BAG_CACHE_NAME,

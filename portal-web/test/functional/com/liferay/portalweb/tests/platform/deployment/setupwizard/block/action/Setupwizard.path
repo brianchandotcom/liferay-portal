@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>PORTAL_ADD_SAMPLE_DATA_CHECKBOX</td>
-	<td>//input[@id='addSampleData']</td>
+	<td>//input[@id='setup-wizard-add-sample-data']</td>
 	<td></td>
 </tr>
 <tr>

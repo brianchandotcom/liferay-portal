@@ -3148,7 +3148,7 @@ go]]></replacevalue>
 		<move file="extraapps.zip" todir="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads" />
 	</target>
 
-	<target name="prepare-lcs-bundle">
+	<target name="prepare-lcs-portlet-bundle">
 		<chmod perm="a+x">
 			<fileset dir="${app.server.parent.dir}/patching-tool">
 				<include name="*.sh" />

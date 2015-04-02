@@ -1000,33 +1000,33 @@ public class LiferaySeleniumHelper {
 		// LPS-52699
 
 		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
+				".*The web application \\[/saml-portlet\\] created a " +
+					"ThreadLocal with key of type.*")) {
 
-			if (line.contains(
-					"[org.apache.xml.security.algorithms." +
-						"MessageDigestAlgorithm$1]")) {
-
-				return true;
-			}
-
-			if (line.contains(
-					"[org.apache.xml.security.algorithms." +
-						"SignatureAlgorithm$1]")) {
+			if (line.matches(
+					".*\\[org.apache.xml.security.algorithms." +
+						"MessageDigestAlgorithm\\$[0-9]+\\].*")) {
 
 				return true;
 			}
 
-			if (line.contains(
-					"[org.apache.xml.security.utils." +
-						"UnsyncBufferedOutputStream$1]")) {
+			if (line.matches(
+					".*\\[org.apache.xml.security.algorithms." +
+						"SignatureAlgorithm\\$[0-9]+\\].*")) {
 
 				return true;
 			}
 
-			if (line.contains(
-					"[org.apache.xml.security.utils." +
-						"UnsyncByteArrayOutputStream$1]")) {
+			if (line.matches(
+					".*\\[org.apache.xml.security.utils." +
+						"UnsyncBufferedOutputStream\\$[0-9]+\\].*")) {
+
+				return true;
+			}
+
+			if (line.matches(
+					".*\\[org.apache.xml.security.utils." +
+						"UnsyncByteArrayOutputStream\\$[0-9]+\\].*")) {
 
 				return true;
 			}

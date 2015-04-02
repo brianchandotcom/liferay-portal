@@ -3148,6 +3148,43 @@ go]]></replacevalue>
 		<move file="extraapps.zip" todir="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads" />
 	</target>
 
+	<target name="prepare-lcs-gateway-bundle">
+		<ant antfile="build-dist.xml" target="unzip-tomcat" inheritAll="false">
+			<property name="app.server.parent.dir" value="${app.server.parent.dir}/gateway" />
+		</ant>
+
+		<replaceregexp
+			file="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/conf/server.xml"
+			flags="g"
+			match="=&quot;8(\d\d\d)&quot;"
+			replace="=&quot;7\1&quot;"
+		/>
+
+		<copy
+			file="${project.dir}/lib/portal/log4j.jar"
+			tofile="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/lib/log4j.jar"
+		/>
+
+		<copy
+			file="${lfrsite-lcs.dir}/jenkins/development/gateway/plugins/webs/osb-lcs-gateway-web/docroot/WEB-INF/src/gateway-ext.properties"
+			tofile="${lp.plugins.dir}/webs/osb-lcs-gateway-web/docroot/WEB-INF/src/gateway-ext.properties"
+		/>
+
+		<delete dir="${lp.plugins.dir}/dist" failonerror="false" />
+
+		<property file="${lfrsite-lcs.dir}/jenkins/build.development.properties" />
+
+		<ant dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
+
+		<ant dir="${lp.plugins.dir}" target="war" >
+			<property name="plugins.includes" value="${plugins.includes.gateway}" />
+		</ant>
+
+		<copy todir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/webapps">
+			<fileset dir="${lp.plugins.dir}/dist" />
+		</copy>
+	</target>
+
 	<target name="prepare-lcs-portal-bundle">
 		<antcall target="prepare-portal-ext-properties" />
 

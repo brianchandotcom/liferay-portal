@@ -12,11 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.expression;
+package com.liferay.portal.expression.internal;
+
+import com.liferay.portal.expression.Expression;
+import com.liferay.portal.expression.ExpressionFactory;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = ExpressionFactory.class)
 public class ExpressionFactoryImpl implements ExpressionFactory {
 
 	@Override

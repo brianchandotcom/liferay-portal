@@ -14,14 +14,11 @@
 
 package com.liferay.portal.expression;
 
-import com.liferay.portal.kernel.expression.Expression;
-import com.liferay.portal.kernel.expression.ExpressionEvaluationException;
-import com.liferay.portal.kernel.expression.ExpressionFactory;
-import com.liferay.portal.kernel.expression.ExpressionFactoryImpl;
-import com.liferay.portal.kernel.util.MathUtil;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.liferay.portal.expression.internal.ExpressionFactoryImpl;
+import com.liferay.portal.kernel.util.MathUtil;
 
 /**
  * @author Miguel Angelo Caldas Gallindo

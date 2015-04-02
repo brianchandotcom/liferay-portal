@@ -38,9 +38,24 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 	public void validate(DDMFormLayout ddmFormLayout)
 		throws DDMFormLayoutValidationException {
 
+		validateDDMFormLayoutDefaultLocale(ddmFormLayout);
+
 		validateDDMFormFieldNames(ddmFormLayout);
 		validateDDMFormLayoutPageTitles(ddmFormLayout);
 		validateDDMFormLayoutRowSizes(ddmFormLayout);
+	}
+
+	protected void validateDDMFormLayoutDefaultLocale(
+			DDMFormLayout ddmFormLayout)
+		throws DDMFormLayoutValidationException {
+
+		Locale defaultLocale = ddmFormLayout.getDefaultLocale();
+
+		if (defaultLocale == null) {
+			throw new DDMFormLayoutValidationException(
+				"The default locale property was never set for DDM form " +
+					"layout");
+		}
 	}
 
 	private void validateDDMFormFieldNames(DDMFormLayout ddmFormLayout)

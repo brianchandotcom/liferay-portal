@@ -3185,6 +3185,61 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" />
 	</target>
 
+	<target name="prepare-lcs-portal-bundle">
+		<antcall target="prepare-portal-ext-properties" />
+
+		<antcall target="rebuild-database" inheritAll="false" />
+
+		<loadfile property="lcs.portal.bundle.properties" srcFile="${lfrsite-lcs.dir}/jenkins/development/portal/artifacts/liferay/portal-ext.properties" />
+
+		<echo file="${app.server.classes.portal.dir}/portal-ext.properties" append="true">
+
+${lcs.portal.bundle.properties}</echo>
+
+		<copy
+			file="${lfrsite-lcs.dir}/jenkins/development/portal/artifacts/liferay/portal-log4j-ext.xml"
+			tofile="${app.server.classes.global.dir}/portal-log4j-ext.xml"
+		/>
+
+		<replace file="${app.server.bin.dir}/setenv${file.suffix.bat}">
+			<replacetoken><![CDATA[-Djava.net.preferIPv4Stack=true]]></replacetoken>
+			<replacevalue><![CDATA[-Djava.net.preferIPv4Stack=true -Dportal:ldap.auth.search.filter=\"(&(mail=@email_address@)(member=cn=Liferay\5C, Inc.,ou=Organizations,ou=liferay.com,o=Liferay))\" -Dportal:ldap.import.user.search.filter=\"(&(objectClass=inetOrgPerson)(member=cn=Liferay\5C, Inc.,ou=Organizations,ou=liferay.com,o=Liferay))\"]]></replacevalue>
+		</replace>
+
+		<copy
+			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/portlets/lcs-portlet/docroot/WEB-INF/src/META-INF/portal-log4j.xml"
+			tofile="${lp.plugins.dir}/portlets/lcs-portlet/docroot/WEB-INF/src/META-INF/portal-log4j.xml"
+		/>
+
+		<copy
+			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/portlets/lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties"
+			tofile="${lp.plugins.dir}/portlets/lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties"
+		/>
+
+		<copy
+			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/portlets/osb-lcs-portlet/docroot/WEB-INF/src/META-INF/portal-log4j.xml"
+			tofile="${lp.plugins.dir}/portlets/osb-lcs-portlet/docroot/WEB-INF/src/META-INF/portal-log4j.xml"
+		/>
+
+		<copy
+			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/portlets/osb-lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties"
+			tofile="${lp.plugins.dir}/portlets/osb-lcs-portlet/docroot/WEB-INF/src/portlet-ext.properties"
+		/>
+
+		<copy
+			file="${lfrsite-lcs.dir}/jenkins/development/portal/plugins/webs/file-repository-web/docroot/WEB-INF/web.xml"
+			tofile="${lp.plugins.dir}/webs/file-repository-web/docroot/WEB-INF/web.xml"
+		/>
+
+		<property file="${lfrsite-lcs.dir}/jenkins/build.development.properties" />
+
+		<ant dir="${lp.plugins.dir}" target="clean" />
+
+		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+			<property name="plugins.includes" value="${plugins.includes.portal}" />
+		</ant>
+	</target>
+
 	<target name="prepare-portal-ext-properties">
 		<prepare-fix-pack-bundle />
 

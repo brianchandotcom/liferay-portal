@@ -449,7 +449,7 @@ public class InitGradleTask extends DefaultTask {
 				"1.2.9.LIFERAY-PATCHED-1");
 			_put(
 				"util-slf4j.jar", "com.liferay.portal", "util-slf4j",
-				"7.0.0-SNAPSHOT");
+				"default");
 			_put("wsdl4j.jar", "wsdl4j", "wsdl4j", "1.6.1");
 			_put("xercesImpl.jar", "xerces", "xercesImpl", "2.11.0");
 			_put("xml-apis.jar", "xml-apis", "xml-apis", "1.4.01");

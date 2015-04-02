@@ -35,9 +35,13 @@ import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
+import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ProjectDependency;
+import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolvedArtifact;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
@@ -103,6 +107,46 @@ public class LiferayPlugin extends BasePlugin {
 		addTaskInitGradle();
 	}
 
+	protected void configureConfigurations() {
+		Action<Configuration> action = new Action<Configuration>() {
+
+			@Override
+			public void execute(Configuration configuration) {
+				ResolutionStrategy resolutionStrategy =
+					configuration.getResolutionStrategy();
+
+				resolutionStrategy.eachDependency(
+					new Action<DependencyResolveDetails>() {
+
+						@Override
+						public void execute(
+							DependencyResolveDetails dependencyResolveDetails) {
+								ModuleVersionSelector moduleVersionSelector =
+									dependencyResolveDetails.getRequested();
+
+								String group = moduleVersionSelector.getGroup();
+								String version =
+									moduleVersionSelector.getVersion();
+
+								if (group.equals("com.liferay.portal") &&
+									version.equals("default")) {
+
+									dependencyResolveDetails.useVersion(
+										_liferayExtension.getPortalVersion());
+								}
+						}
+
+					});
+			}
+
+		};
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		configurationContainer.all(action);
+	}
+
 	protected void configureDependencies() {
 		configureDependenciesCompile();
 		configureDependenciesProvidedCompile();
@@ -125,7 +169,7 @@ public class LiferayPlugin extends BasePlugin {
 		addDependencies(
 			WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
 			"biz.aQute.bnd:biz.aQute.bnd:2.4.1",
-			"com.liferay.portal:portal-service:7.0.0-SNAPSHOT",
+			"com.liferay.portal:portal-service:default",
 			"hsqldb:hsqldb:1.8.0.7", "javax.activation:activation:1.1",
 			"javax.ccpp:ccpp:1.0", "javax.jms:jms:1.1", "javax.mail:mail:1.4",
 			"javax.portlet:portlet-api:2.0", "javax.servlet.jsp:jsp-api:2.1",
@@ -140,9 +184,9 @@ public class LiferayPlugin extends BasePlugin {
 		if (!pluginType.equals("theme")) {
 			addDependencies(
 				WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
-				"com.liferay.portal:util-bridges:7.0.0-SNAPSHOT",
-				"com.liferay.portal:util-java:7.0.0-SNAPSHOT",
-				"com.liferay.portal:util-taglib:7.0.0-SNAPSHOT",
+				"com.liferay.portal:util-bridges:default",
+				"com.liferay.portal:util-java:default",
+				"com.liferay.portal:util-taglib:default",
 				"commons-logging:commons-logging:1.1.1", "log4j:log4j:1.2.16");
 		}
 	}
@@ -399,7 +443,15 @@ public class LiferayPlugin extends BasePlugin {
 					_liferayExtension.getPluginPackageProperty(
 						"module-incremental-version");
 
-				version = PORTAL_VERSION + "." + moduleIncrementalVersion;
+				String portalVersion = _liferayExtension.getPortalVersion();
+
+				int index = portalVersion.indexOf("-");
+
+				if (index != -1) {
+					portalVersion = portalVersion.substring(0, index);
+				}
+
+				version = portalVersion + "." + moduleIncrementalVersion;
 			}
 		}
 
@@ -419,6 +471,7 @@ public class LiferayPlugin extends BasePlugin {
 
 		addLiferayExtension();
 
+		configureConfigurations();
 		configureDependencies();
 		configureRepositories();
 		configureSourceSets();

@@ -125,8 +125,6 @@ public abstract class BasePlugin implements Plugin<Project> {
 		return taskContainer.getByName(name);
 	}
 
-	protected static final String PORTAL_VERSION = "7.0.0";
-
 	protected Project project;
 
 	private static final String _REPOSITORY_URL =

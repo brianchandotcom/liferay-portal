@@ -862,6 +862,13 @@ public class SeleniumBuilderFileUtil {
 			else if (elementName.equals("take-screenshot")) {
 				validateSimpleElement(fileName, element, new String[0]);
 			}
+			else if (elementName.equals("task")) {
+				validateBlockElement(
+					fileName, element, allowedBlockChildElementNames,
+					allowedExecuteAttributeNames,
+					allowedExecuteChildElementNames,
+					allowedIfConditionElementNames);
+			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
 			}
@@ -1434,7 +1441,7 @@ public class SeleniumBuilderFileUtil {
 					fileName, element,
 					new String[] {
 						"description", "echo", "execute", "fail", "for", "if",
-						"take-screenshot", "var", "while"
+						"take-screenshot", "task", "var", "while"
 					},
 					new String[] {"action", "function", "macro"},
 					new String[] {"var"},
@@ -1775,7 +1782,7 @@ public class SeleniumBuilderFileUtil {
 					fileName, element,
 					new String[] {
 						"description", "echo", "execute", "fail", "for", "if",
-						"property", "take-screenshot", "var", "while"
+						"property", "take-screenshot", "task", "var", "while"
 					},
 					new String[] {"action", "function", "macro", "test-case"},
 					new String[] {"var"},
@@ -1805,7 +1812,7 @@ public class SeleniumBuilderFileUtil {
 					fileName, element,
 					new String[] {
 						"description", "echo", "execute", "fail", "if",
-						"take-screenshot", "var", "while"
+						"take-screenshot", "task", "var", "while"
 					},
 					new String[] {"action", "function", "macro", "test-case"},
 					new String[] {"var"},
@@ -2067,8 +2074,8 @@ public class SeleniumBuilderFileUtil {
 			"and", "case", "command", "condition", "contains", "default",
 			"definition", "delimiter", "description", "echo", "else", "elseif",
 			"equals", "execute", "fail", "for", "if", "isset", "not", "or",
-			"property", "set-up", "take-screenshot", "td", "tear-down", "then",
-			"tr", "while", "var"
+			"property", "set-up", "take-screenshot", "task", "td", "tear-down",
+			"then", "tr", "while", "var"
 		});
 
 	private final String _baseDirName;

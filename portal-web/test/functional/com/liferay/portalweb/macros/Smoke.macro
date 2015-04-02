@@ -12,42 +12,53 @@
 			<var name="pageName" value="Test Page3" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page1" />
-		</execute>
+		<var name="pageName" value="Test Page1" />
+		<var name="portletBody" value="Welcome to Liferay Portal" />
+		<var name="portletName" value="Hello World" />
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Hello World" />
-		</execute>
+		<task summary="Add a '${portletName}' portlet to the page named '${pageName}'">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
 
-		<execute macro="Portlet#viewTitle">
-			<var name="portletName" value="Hello World" />
-		</execute>
+			<execute macro="Portlet#addPG">
+				<var name="portletName" value="${portletName}" />
+			</execute>
 
-		<execute macro="Portlet#viewBody">
-			<var name="portletBody" value="Welcome to Liferay Portal" />
-			<var name="portletName" value="Hello World" />
-		</execute>
+			<execute macro="Portlet#viewTitle">
+				<var name="portletName" value="${portletName}" />
+			</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page1" />
-		</execute>
+			<execute macro="Portlet#viewBody">
+				<var name="portletBody" value="${portletBody}" />
+				<var name="portletName" value="${portletName}" />
+			</execute>
 
-		<execute macro="Portlet#viewTitle">
-			<var name="portletName" value="Hello World" />
-		</execute>
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
 
-		<execute macro="Portlet#viewBody">
-			<var name="portletBody" value="Welcome to Liferay Portal" />
-			<var name="portletName" value="Hello World" />
-		</execute>
+			<execute macro="Portlet#viewTitle">
+				<var name="portletName" value="${portletName}" />
+			</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
+			<execute macro="Portlet#viewBody">
+				<var name="portletBody" value="${portletBody}" />
+				<var name="portletName" value="${portletName}" />
+			</execute>
+		</task>
 
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Blogs" />
-		</execute>
+		<var name="portletName" value="Blogs" />
+		<var name="portletTitle" value="Blogs" />
+
+		<task macro-summary="Page#gotoContentCP">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="${portletName}" />
+			</execute>
+
+			<execute macro="SiteAdmin#viewPortletTitle">
+				<var name="portletTitle" value="${portletTitle}" />
+			</execute>
+		</task>
 	</command>
 </definition>

@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.validator.impl;
+package com.liferay.dynamic.data.mapping.validator;
 
 import static org.mockito.Mockito.when;
 
-import com.liferay.dynamic.data.mapping.form.validator.DDMFormValidationException;
-import com.liferay.dynamic.data.mapping.form.validator.DDMFormValidator;
+import com.liferay.dynamic.data.mapping.validator.internal.DDMFormValidatorImpl;
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;

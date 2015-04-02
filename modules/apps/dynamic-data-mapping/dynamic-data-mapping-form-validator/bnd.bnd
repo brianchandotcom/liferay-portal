@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Dynamic Data Mapping Form Validator
-Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.validator
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.dynamic.data.mapping.form.validator

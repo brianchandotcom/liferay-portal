@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.validator;
+package com.liferay.dynamic.data.mapping.validator;
 
 import aQute.bnd.annotation.ProviderType;
 

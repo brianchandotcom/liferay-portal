@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.validator.impl;
+package com.liferay.dynamic.data.mapping.validator.internal;
 
-import com.liferay.dynamic.data.mapping.form.validator.DDMFormValidationException;
-import com.liferay.dynamic.data.mapping.form.validator.DDMFormValidator;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;

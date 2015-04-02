@@ -181,24 +181,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 												<li class="tree-item">
 													<aui:fieldset cssClass="portlet-type-data-section" label="content">
 														<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
-															<ul class="lfr-tree list-unstyled">
-																<li class="tree-item">
-																	<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
-
-																	<div id="<portlet:namespace />showDeleteContentWarning">
-																		<div class="alert alert-warning">
-																			<liferay-ui:message key="delete-content-before-importing-warning" />
-
-																			<liferay-ui:message key="delete-content-before-importing-suggestion" />
-																		</div>
-																	</div>
-																</li>
-															</ul>
-
-															<aui:script>
-																Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>', '<portlet:namespace />showDeleteContentWarning');
-															</aui:script>
-
 															<c:if test="<%= importControls != null %>">
 
 																<%
@@ -280,15 +262,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 												<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
 
 												<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
-
-												<c:if test="<%= modelDeletionCount != 0 %>">
-
-													<%
-													String deletionsLabel = LanguageUtil.get(request, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
-													%>
-
-													<aui:input data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" />
-												</c:if>
 											</li>
 										</ul>
 									</div>
@@ -380,7 +353,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 	new Liferay.ExportImport(
 		{
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
-			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>',
 			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 			form: document.<portlet:namespace />fm1,
 			namespace: '<portlet:namespace />',

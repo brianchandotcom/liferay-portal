@@ -23,38 +23,6 @@
 				<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />
 				<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" disabled="<%= disableInputs %>" helpMessage='<%= type.equals(Constants.EXPORT) ? "all-content-export-help" : "all-content-publish-help" %>' id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type='<%= disableInputs ? "hidden" : "radio" %>' value="<%= true %>" />
 
-				<c:if test="<%= type.equals(Constants.PUBLISH_TO_LIVE) && group.isStagingGroup() %>">
-					<div class="hide" id="<portlet:namespace />globalContent">
-						<aui:fieldset cssClass="portlet-data-section" label="all-content">
-							<aui:input disabled="<%= disableInputs %>" label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA, true) %>" />
-
-							<ul class="list-unstyled" id="<portlet:namespace />showDeleteContentWarning">
-								<li>
-									<div class="alert alert-warning">
-										<liferay-ui:message key="delete-content-before-importing-warning" />
-
-										<liferay-ui:message key="delete-content-before-importing-suggestion" />
-									</div>
-								</li>
-							</ul>
-
-							<aui:script>
-								Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>', '<portlet:namespace />showDeleteContentWarning');
-							</aui:script>
-						</aui:fieldset>
-					</div>
-
-					<ul class="hide" id="<portlet:namespace />showChangeGlobalContent">
-						<li>
-							<span class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></span>
-
-							<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
-								<aui:a cssClass="modify-link" href="javascript:;" id="globalContentLink" label="change" method="get" />
-							</span>
-						</li>
-					</ul>
-				</c:if>
-
 				<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true) %>" />
 				<aui:input checked="<%= !MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" disabled="<%= disableInputs %>" helpMessage='<%= type.equals(Constants.EXPORT) ? "choose-content-export-help" : "choose-content-publish-help" %>' id="chooseContent" label="choose-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type='<%= disableInputs ? "hidden" : "radio" %>' value="<%= false %>" />
 

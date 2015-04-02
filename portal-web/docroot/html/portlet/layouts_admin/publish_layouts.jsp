@@ -459,7 +459,6 @@ else if (!quickPublish) {
 		{
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
 			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>',
-			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>',
 			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 			form: document.<portlet:namespace />exportPagesFm,
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
@@ -475,7 +474,6 @@ else if (!quickPublish) {
 			rangeLastPublishNode: '#rangeLastPublish',
 			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
 			remoteAddressNode: '#<portlet:namespace />remoteAddress',
-			remoteDeletePortletDataNode: '#remoteDeletePortletData',
 			remoteGroupIdNode: '#<portlet:namespace />remoteGroupId',
 			remotePathContextNode: '#<portlet:namespace />remotePathContext',
 			remotePortNode: '#<portlet:namespace />remotePort',

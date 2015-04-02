@@ -148,11 +148,6 @@
 			<bean class="com.liferay.portal.editor.config.EditorConfigFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.expression.ExpressionFactoryUtil" class="com.liferay.portal.kernel.expression.ExpressionFactoryUtil">
-		<property name="expressionFactoryRegistry">
-			<bean class="com.liferay.portal.kernel.expression.ExpressionFactoryRegistryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.image.GhostscriptUtil" class="com.liferay.portal.kernel.image.GhostscriptUtil">
 		<property name="ghostscript">
 			<bean class="com.liferay.portal.image.GhostscriptImpl" />

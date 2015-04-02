@@ -34,6 +34,66 @@ public class TestPropsValues
 	public static final String CLUSTER_NODE_2 = TestPropsUtil.get(
 		"cluster.node2");
 
+	public static final String DATABASE_DB2_DRIVER = TestPropsUtil.get(
+		"database.db2.driver");
+
+	public static final String DATABASE_DB2_PASSWORD = TestPropsUtil.get(
+		"database.db2.password");
+
+	public static final String DATABASE_DB2_URL = TestPropsUtil.get(
+		"database.db2.url");
+
+	public static final String DATABASE_DB2_USERNAME = TestPropsUtil.get(
+		"database.db2.username");
+
+	public static final String DATABASE_MYSQL_DRIVER = TestPropsUtil.get(
+		"database.mysql.driver");
+
+	public static final String DATABASE_MYSQL_PASSWORD = TestPropsUtil.get(
+		"database.mysql.password");
+
+	public static final String DATABASE_MYSQL_URL = TestPropsUtil.get(
+		"database.mysql.url");
+
+	public static final String DATABASE_MYSQL_USERNAME = TestPropsUtil.get(
+		"database.mysql.username");
+
+	public static final String DATABASE_ORACLE_DRIVER = TestPropsUtil.get(
+		"database.oracle.driver");
+
+	public static final String DATABASE_ORACLE_PASSWORD = TestPropsUtil.get(
+		"database.oracle.password");
+
+	public static final String DATABASE_ORACLE_URL = TestPropsUtil.get(
+		"database.oracle.url");
+
+	public static final String DATABASE_ORACLE_USERNAME = TestPropsUtil.get(
+		"database.oracle.username");
+
+	public static final String DATABASE_POSTGRESQL_DRIVER = TestPropsUtil.get(
+		"database.postgresql.driver");
+
+	public static final String DATABASE_POSTGRESQL_PASSWORD = TestPropsUtil.get(
+		"database.postgresql.password");
+
+	public static final String DATABASE_POSTGRESQL_URL = TestPropsUtil.get(
+		"database.postgresql.url");
+
+	public static final String DATABASE_POSTGRESQL_USERNAME = TestPropsUtil.get(
+		"database.postgresql.username");
+
+	public static final String DATABASE_SYBASE_DRIVER = TestPropsUtil.get(
+		"database.sybase.driver");
+
+	public static final String DATABASE_SYBASE_PASSWORD = TestPropsUtil.get(
+		"database.sybase.password");
+
+	public static final String DATABASE_SYBASE_URL = TestPropsUtil.get(
+		"database.sybase.url");
+
+	public static final String DATABASE_SYBASE_USERNAME = TestPropsUtil.get(
+		"database.sybase.username");
+
 	public static final String EMAIL_ADDRESS_1 = TestPropsUtil.get(
 		"email.address.1");
 

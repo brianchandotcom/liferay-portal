@@ -31,8 +31,10 @@
 				color: #006076;
 			}
 
-			&.lfr-portlet-used {
-				color: #BBB;
+			.lfr-portlet-used {
+				&, &.drag-content-item {
+					color: #BBB;
+				}
 			}
 		}
 
@@ -69,6 +71,10 @@
 
 		.portal-add-content .portlet-msg-info {
 			color: #333;
+		}
+
+		.added-message {
+			opacity: 0;
 		}
 	}
 }

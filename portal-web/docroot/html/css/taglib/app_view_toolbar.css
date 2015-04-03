@@ -1,36 +1,9 @@
 @import "mixins";
 
 .app-view-taglib {
-	.display-style .icon {
-		background-image: url(@theme_image_path@/application/layouts.png);
-		background-repeat: no-repeat;
-	}
-
 	.form-search {
 		@include respond-to(phone, tablet) {
 			margin-top: 5px;
-		}
-	}
-
-	.icon-display-descriptive {
-		background-position: -32px 0;
-	}
-
-	.icon-display-icon {
-		background-position: -16px 0;
-	}
-
-	.icon-display-list {
-		background-position: 0 0;
-	}
-
-	.state-active {
-		.icon-display-descriptive {
-			background-position: -32px 100%;
-		}
-
-		.icon-display-icon {
-			background-position: -16px 100%;
 		}
 	}
 
@@ -68,11 +41,7 @@
 			> .dropdown {
 				@include respond-to(phone) {
 					> .dropdown-menu {
-						background-color: transparent;
 						border-width: 0;
-
-						box-shadow: none;
-
 						display: block;
 						float: none;
 						margin-top: 0;
@@ -85,11 +54,6 @@
 					}
 				}
 			}
-		}
-
-		.display-style-buttons-container .dropdown-toggle .caret {
-			border-bottom-color: #333;
-			border-top-color: #333;
 		}
 	}
 }

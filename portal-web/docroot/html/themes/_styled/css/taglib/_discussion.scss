@@ -25,6 +25,10 @@
 					text-decoration: underline;
 				}
 			}
+
+			.user-profile-image .avatar {
+				background-size: 50px;
+			}
 		}
 	}
 
@@ -43,5 +47,13 @@
 	.lfr-discussion-form-container .lfr-discussion-form {
 		background: #DDD;
 		border-radius: 4px;
+
+		.taglib-user-display .user-profile-image .avatar {
+			background-size: 40px;
+		}
 	}
+}
+
+.lfr-discussion-reply.popover .lfr-discussion-reply-user-name {
+	font-weight: bold;
 }

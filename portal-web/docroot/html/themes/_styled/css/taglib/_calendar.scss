@@ -23,11 +23,11 @@
 
 	.has-events {
 		a span {
-			background: url(@theme_image_path@/calendar/event_indicator.png) no-repeat 50% 95%;
+			background: url(../images/calendar/event_indicator.png) no-repeat 50% 95%;
 		}
 
 		&.calendar-current-day a span {
-			background-image: url(@theme_image_path@/calendar/event_indicator_current.png);
+			background-image: url(../images/calendar/event_indicator_current.png);
 		}
 	}
 }

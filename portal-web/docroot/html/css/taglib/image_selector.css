@@ -6,10 +6,6 @@
 	position: relative;
 	text-align: center;
 
-	&.drop-enabled {
-		outline: 2px dashed transparent;
-	}
-
 	.drop-here-info {
 		font-size: 25px;
 		height: 100%;
@@ -135,8 +131,6 @@
 	}
 
 	&.drop-active {
-		outline-width: 0;
-
 		.change-image-controls {
 			display: none;
 		}
@@ -150,13 +144,11 @@
 
 			span:nth-of-type(1) {
 				left: 0;
-				opacity: 1;
 				top: 10px;
 			}
 
 			span:nth-of-type(3) {
 				left: 90px;
-				opacity: 1;
 				top: 8px;
 			}
 		}

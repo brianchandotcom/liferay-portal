@@ -1,11 +1,13 @@
 .definition-of-terms dt {
 	color: #333;
 	font-weight: normal;
+	word-break: break-word;
 }
 
 .lfr-code {
 	background: #FFF;
 	border-color: #777;
+	font-family: monospace;
 
 	tr td.line-numbers {
 		background: #FAFAFA;
@@ -43,16 +45,4 @@
 
 .lfr-token-close:hover {
 	text-decoration: none;
-}
-
-@include respond-to(phone) {
-	.definition-of-terms {
-		dd {
-			margin-left: 10px;
-		}
-
-		dt {
-			float: none;
-		}
-	}
 }

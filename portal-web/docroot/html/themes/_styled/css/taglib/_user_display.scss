@@ -3,8 +3,13 @@
 		text-decoration: underline;
 	}
 
-	.avatar.author:after {
-		background: transparentize(#32A8E6, 0.5);
+	.avatar {
+		background: no-repeat center;
+		background-size: 60px;
+
+		&.author:after {
+			background: transparentize(#32A8E6, 0.5);
+		}
 	}
 
 	.user-name {

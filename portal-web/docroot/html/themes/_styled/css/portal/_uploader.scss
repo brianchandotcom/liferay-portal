@@ -101,6 +101,10 @@
 		font-weight: normal;
 	}
 
+	.upload-error {
+		opacity: 1;
+	}
+
 	.multiple-files .upload-error {
 		background-color: #FDD;
 		background-image: url(../images/messages/error.png);

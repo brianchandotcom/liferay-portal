@@ -1,11 +1,15 @@
 .taglib-diff-html {
 	div {
 		&.diff-removed-image {
-			background: #FDC6C6 url(@theme_image_path@/diff/minus.png);
+			background: #FDC6C6 url(../images/diff/minus.png);
 		}
 
 		&.diff-added-image {
-			background: #CFC url(@theme_image_path@/diff/plus.png) no-repeat;
+			background: #CFC url(../images/diff/plus.png) no-repeat;
+		}
+
+		&.diff-removed-image, &.diff-added-image {
+			opacity: 0.55;
 		}
 	}
 
@@ -20,7 +24,7 @@
 		}
 
 		&.diff-html-changed {
-			background: url(@theme_image_path@/diff/underline.png) bottom repeat-x;
+			background: url(../images/diff/underline.png) bottom repeat-x;
 
 			img {
 				border-color: #009;

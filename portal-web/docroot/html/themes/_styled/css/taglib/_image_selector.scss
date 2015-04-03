@@ -1,6 +1,6 @@
 .taglib-image-selector {
 	&.drop-enabled, &.drop-active {
-		outline-color: rgba(176, 180, 187, 0.5)
+		outline: 2px dashed rgba(176, 180, 187, 0.5);
 	}
 
 	.drop-here-info {
@@ -47,6 +47,8 @@
 	}
 
 	&.drop-active {
+		outline-width: 0;
+
 		.browse-image-controls {
 			opacity: 0;
 		}

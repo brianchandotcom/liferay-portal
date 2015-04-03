@@ -33,13 +33,11 @@ td {
 	dt {
 		float: left;
 		width: 25em;
-		word-break: break-word;
 	}
 }
 
 .lfr-code {
 	border: 1px solid transparent;
-	font-family: monospace;
 	overflow: hidden;
 	overflow-x: auto;
 	white-space: pre;
@@ -158,4 +156,16 @@ img.icon {
 
 .lfr-token-close {
 	margin-left: 0.3em;
+}
+
+@include respond-to(phone) {
+	.definition-of-terms {
+		dd {
+			margin-left: 10px;
+		}
+
+		dt {
+			float: none;
+		}
+	}
 }

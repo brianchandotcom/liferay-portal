@@ -1,12 +1,4 @@
 .input-localized {
-	.palette-item-inner img {
-		opacity: 0.5;
-	}
-
-	&.input-localized-focused .palette-item-inner img {
-		opacity: 1;
-	}
-
 	.input-localized-content {
 		margin-left: 6px;
 	}
@@ -43,7 +35,7 @@
 	}
 
 	.palette-item-inner {
-		border: 1px solid #666;
+		border: 1px solid;
 		margin-right: 4px;
 		width: 16px;
 
@@ -52,26 +44,10 @@
 		}
 	}
 
-	.palette-item, .palette-item-inner, .palette-item-hover, .palette-item-hover .palette-item-inner {
-		border-color: transparent;
-	}
-
 	.lfr-input-localized-state {
 		height: 4px;
 		margin: 3px 5px;
 		width: 4px;
-	}
-
-	.lfr-input-localized .lfr-input-localized-state {
-		background: #DDD;
-
-		&.lfr-input-localized-state-error {
-			background: #FF0047;
-		}
-	}
-
-	.palette-item-selected .lfr-input-localized-state {
-		background: #27C1F2;
 	}
 
 	&.input-localized-focused {

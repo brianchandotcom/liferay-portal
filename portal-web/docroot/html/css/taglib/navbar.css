@@ -10,12 +10,10 @@
 	}
 
 	.navbar-search {
-		background-color: #F3F3F3;
 		border-top-width: 0;
 		width: 100%;
 
 		@media (min-width: 768px) {
-			background-color: transparent;
 			border-top-width: 1px;
 			width: auto;
 		}
@@ -44,7 +42,6 @@
 	.navbar {
 		.container, .container-fluid {
 			.navbar-btn {
-				color: #000;
 				margin-bottom: 5px;
 				width: 45px;
 

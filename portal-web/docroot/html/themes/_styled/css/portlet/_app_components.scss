@@ -33,7 +33,7 @@
 	}
 
 	.divider {
-		background: url(@theme_image_path@/arrows/07_down.png) no-repeat 50% 100%;
+		background: url(../images/arrows/07_down.png) no-repeat 50% 100%;
 		display: block;
 
 		@include hide-text();

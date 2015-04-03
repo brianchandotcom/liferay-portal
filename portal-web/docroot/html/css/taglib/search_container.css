@@ -28,7 +28,6 @@
 		padding-left: 5px;
 
 		.date-info {
-			color: #8C8C8C;
 			font-size: 11px;
 			min-height: 0;
 		}
@@ -38,7 +37,6 @@
 		}
 
 		.user-name {
-			color: #009AE5;
 			font-size: 14px;
 			min-height: 0;
 		}

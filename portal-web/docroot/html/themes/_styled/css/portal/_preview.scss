@@ -8,6 +8,7 @@
 
 .lfr-preview-file-toolbar {
 	background: #333;
+	opacity: 0.5;
 
 	.icon-arrow-1-l {
 		background: url(../images/document_library/preview_left.png) no-repeat 0 50%;
@@ -22,9 +23,18 @@
 	}
 }
 
+.lfr-preview-file-image-current-column:hover .lfr-preview-file-toolbar {
+	opacity: 1;
+}
+
 .lfr-preview-file-info {
 	background: #333;
 	color: #FFF;
+	opacity: 0.5;
+
+	&:hover {
+		opacity: 1;
+	}
 }
 
 .lfr-preview-file-index {

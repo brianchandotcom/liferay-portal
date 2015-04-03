@@ -51,11 +51,6 @@
 
 		.lfr-theme-options, .lfr-inherit-theme-options {
 			padding: 10px 20px;
-
-			.lfr-current-theme {
-				background: inherit;
-				border-width: 0;
-			}
 		}
 	}
 }

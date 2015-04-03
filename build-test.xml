@@ -1201,6 +1201,61 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-android-device">
+		<sequential>
+			<execute>
+				echo no | android create avd -n deviceName -t android-19
+			</execute>
+
+			<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">
+	hw.keyboard=yes
+			</echo>
+
+			<exec executable="/bin/bash" os="${os.unix}" spawn="true">
+				<arg value="-c" />
+				<arg value="emulator -avd deviceName -no-boot-anim" />
+			</exec>
+
+			<exec executable="cmd.exe" os="${os.windows}">
+				<arg value="/c" />
+				<arg value="emulator -avd deviceName -no-boot-anim" />
+			</exec>
+
+			<sleep seconds="120" />
+
+			<execute>
+				adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local
+				adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local
+				adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/tap.sh /data/local
+
+				adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
+				adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
+				adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh
+
+				adb -s emulator-5554 shell settings put system pointer_location 1
+				adb -s emulator-5554 shell settings put system show_touches 1
+			</execute>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-appium">
+		<sequential>
+			<parallel>
+				<daemons>
+					<exec executable="/bin/bash" os="${os.unix}">
+						<arg value="-c" />
+						<arg value="${appium.unix.cmd}" />
+					</exec>
+
+					<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
+						<arg value="/c" />
+						<arg value="${appium.win32.cmd}" />
+					</exec>
+				</daemons>
+			</parallel>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="" name="testable.portal.started.marker.file" />
@@ -1332,6 +1387,15 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-android-device">
+		<sequential>
+			<execute>
+				adb emu kill
+				android delete avd -n deviceName
+			</execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
 
@@ -1355,6 +1419,25 @@
 					/>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-appium">
+		<sequential>
+			<exec executable="/bin/bash" os="${os.unix}" >
+				<arg value="-c" />
+				<arg value="killall node" />
+			</exec>
+
+			<exec executable="/bin/bash" os="${os.unix}" >
+				<arg value="-c" />
+				<arg value="fuser -k 9515/tcp" />
+			</exec>
+
+			<exec executable="cmd.exe" os="${os.windows}" >
+				<arg value="/c" />
+				<arg value="tskill node" />
+			</exec>
 		</sequential>
 	</macrodef>
 
@@ -1875,18 +1958,6 @@ go]]></replacevalue>
 				excludes=",*.dodeploy,*.rar,*.sar/**,*.xml,.autodeploystatus/**,liferay-portal/**,liferay-portal.war/**,marketplace-portlet/**,portal-compat-hook/**,security/**,root/**,ROOT/**,ROOT.war/**,tunnel-web/**,tunnel-web.war/**"
 			/>
 		</delete>
-	</target>
-
-	<target name="clean-up-android-device">
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="android delete avd -n deviceName" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="/c" />
-			<arg value="android delete avd -n deviceName" />
-		</exec>
 	</target>
 
 	<target name="clean-up-bundles">
@@ -2726,22 +2797,6 @@ ${marketplace.portlet.properties}</echo>
 				<echo message="File ${file} does not exist." />
 			</else>
 		</if>
-	</target>
-
-	<target name="prepare-android-device">
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="echo no | android create avd -n deviceName -t android-19" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="/c" />
-			<arg value="echo no | android create avd -n deviceName -t android-19" />
-		</exec>
-
-		<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">
-hw.keyboard=yes
-		</echo>
 	</target>
 
 	<target name="prepare-portal-ext-properties">
@@ -5108,11 +5163,9 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
-				<antcall target="prepare-android-device" />
+				<start-android-device />
 
-				<antcall target="start-android-device" />
-
-				<antcall target="start-appium" />
+				<start-appium />
 			</then>
 		</if>
 
@@ -5373,11 +5426,9 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
-				<antcall target="stop-android-device" />
+				<stop-android-device />
 
-				<antcall target="clean-up-android-device" />
-
-				<antcall target="stop-appium" />
+				<stop-appium />
 			</then>
 		</if>
 
@@ -5398,49 +5449,6 @@ if (ppstate.equals("normal")) {
 				<antcall target="stop-ie-driver" />
 			</then>
 		</if>
-	</target>
-
-	<target name="start-android-device">
-		<exec executable="/bin/bash" os="${os.unix}" spawn="true">
-			<arg value="-c" />
-			<arg value="emulator -avd deviceName -no-boot-anim" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="/c" />
-			<arg value="emulator -avd deviceName -no-boot-anim" />
-		</exec>
-
-		<sleep seconds="120" />
-
-		<execute>
-			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local
-			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local
-			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/tap.sh /data/local
-
-			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
-			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
-			adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh
-
-			adb -s emulator-5554 shell settings put system pointer_location 1
-			adb -s emulator-5554 shell settings put system show_touches 1
-		</execute>
-	</target>
-
-	<target name="start-appium">
-		<parallel>
-			<daemons>
-				<exec executable="/bin/bash" os="${os.unix}">
-					<arg value="-c" />
-					<arg value="${appium.unix.cmd}" />
-				</exec>
-
-				<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg value="/c" />
-					<arg value="${appium.win32.cmd}" />
-				</exec>
-			</daemons>
-		</parallel>
 	</target>
 
 	<target name="start-app-server">
@@ -5539,35 +5547,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		>
 			<arg line="-port 14444 -singleWindow" />
 		</java>
-	</target>
-
-	<target name="stop-android-device">
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="adb emu kill" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="/c" />
-			<arg value="adb emu kill" />
-		</exec>
-	</target>
-
-	<target name="stop-appium">
-		<exec executable="/bin/bash" os="${os.unix}" >
-			<arg value="-c" />
-			<arg value="killall node" />
-		</exec>
-
-		<exec executable="/bin/bash" os="${os.unix}" >
-			<arg value="-c" />
-			<arg value="fuser -k 9515/tcp" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}" >
-			<arg value="/c" />
-			<arg value="tskill node" />
-		</exec>
 	</target>
 
 	<target name="stop-app-server">

@@ -240,7 +240,7 @@ public class InitGradleTask extends DefaultTask {
 
 		if (!contents.isEmpty()) {
 			contents = wrapContents(
-				contents, 0, " {", LiferayPlugin.EXTENSION_NAME, "}");
+				contents, 0, " {", LiferayPlugin.PLUGIN_NAME, "}");
 		}
 
 		return contents;

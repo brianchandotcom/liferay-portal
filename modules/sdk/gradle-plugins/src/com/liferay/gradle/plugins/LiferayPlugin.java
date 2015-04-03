@@ -65,18 +65,18 @@ import org.gradle.api.tasks.bundling.War;
  */
 public class LiferayPlugin extends BasePlugin {
 
-	public static final String EXTENSION_NAME = "liferay";
+	public static final String PLUGIN_NAME = "liferay";
 
 	protected void addLiferayExtension() {
 		String projectName = project.getName();
 
 		if (projectName.endsWith("-theme")) {
 			_liferayExtension = addExtension(
-				EXTENSION_NAME, LiferayThemeExtension.class);
+				PLUGIN_NAME, LiferayThemeExtension.class);
 		}
 		else {
 			_liferayExtension = addExtension(
-				EXTENSION_NAME, LiferayExtension.class);
+				PLUGIN_NAME, LiferayExtension.class);
 		}
 	}
 

@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[@id='_182_undoForm']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]</td>
 	<td></td>
 </tr>
 <tr>

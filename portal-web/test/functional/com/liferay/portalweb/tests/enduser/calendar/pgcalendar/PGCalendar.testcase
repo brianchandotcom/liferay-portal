@@ -2518,7 +2518,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewEventDetailsAllDayModifiedUserTimeZone" priority="4">
+	<command name="ViewCalendarEventDetailsAllDayWithModifiedUserTimeZone" priority="4">
 		<description message="This is a use case for LPS-51783." />
 
 		<execute macro="Page#gotoCP">

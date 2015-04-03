@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -22,6 +23,7 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import java.util.List;
+import java.util.Properties;
 
 import org.gradle.api.Project;
 
@@ -34,6 +36,22 @@ public class FileUtil {
 		File file = project.file(fileName);
 
 		return file.exists();
+	}
+
+	public static Properties readProperties(Project project, String fileName)
+		throws Exception {
+
+		Properties properties = new Properties();
+
+		File file = project.file(fileName);
+
+		if (file.exists()) {
+			try (FileInputStream fileInputStream = new FileInputStream(file)) {
+				properties.load(fileInputStream);
+			}
+		}
+
+		return properties;
 	}
 
 	public static void write(File file, List<String> lines) throws Exception {

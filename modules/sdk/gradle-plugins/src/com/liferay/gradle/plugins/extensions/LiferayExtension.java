@@ -14,9 +14,9 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import com.liferay.gradle.plugins.util.FileUtil;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 import java.util.Properties;
 
@@ -28,11 +28,9 @@ import org.gradle.api.Project;
 public class LiferayExtension {
 
 	public LiferayExtension(Project project) throws Exception {
-		_project = project;
-
-		_bndProperties = _loadProperties("bnd.bnd");
-		_pluginPackageProperties = _loadProperties(
-			"docroot/WEB-INF/liferay-plugin-package.properties");
+		_bndProperties = FileUtil.readProperties(project, "bnd.bnd");
+		_pluginPackageProperties = FileUtil.readProperties(
+			project, "docroot/WEB-INF/liferay-plugin-package.properties");
 
 		File pluginSrcDir = project.file("docroot/WEB-INF/src");
 
@@ -91,26 +89,11 @@ public class LiferayExtension {
 		_tmpDir = tmpDir;
 	}
 
-	private Properties _loadProperties(String fileName) throws IOException {
-		Properties properties = new Properties();
-
-		File file = _project.file(fileName);
-
-		if (file.exists()) {
-			try (FileInputStream fileInputStream = new FileInputStream(file)) {
-				properties.load(fileInputStream);
-			}
-		}
-
-		return properties;
-	}
-
 	private final Properties _bndProperties;
 	private final Properties _pluginPackageProperties;
 	private final File _pluginSrcDir;
 	private final String _pluginType;
 	private String _portalVersion = "7.0.0-SNAPSHOT";
-	private final Project _project;
 	private File _tmpDir;
 
 }

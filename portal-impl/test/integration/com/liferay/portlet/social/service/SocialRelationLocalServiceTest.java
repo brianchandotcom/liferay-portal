@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
@@ -196,6 +197,9 @@ public class SocialRelationLocalServiceTest {
 		User dlc3User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc3");
 
+		List<User> groupUsers = UserLocalServiceUtil.getGroupUsers(
+			TestPropsValues.getGroupId());
+
 		GroupLocalServiceUtil.addUserGroup(
 			dlc3User.getUserId(), TestPropsValues.getGroupId());
 
@@ -212,6 +216,8 @@ public class SocialRelationLocalServiceTest {
 			TestPropsValues.getCompanyId(),
 			ArrayUtil.toArray(groupIds.toArray(new Long[groupIds.size()])),
 			"dlc", QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		users = ListUtil.remove(users, groupUsers);
 
 		Assert.assertEquals(2, users.size());
 

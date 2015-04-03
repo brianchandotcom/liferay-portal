@@ -151,6 +151,36 @@ public class TestPropsValues
 	public static final String LIFERAY_PORTAL_BUNDLE = TestPropsUtil.get(
 		"liferay.portal.bundle");
 
+	public static final String MARKETPLACE_EMAIL_ADDRESS_1 = TestPropsUtil.get(
+		"marketplace.email.address.1");
+
+	public static final String MARKETPLACE_EMAIL_ADDRESS_2 = TestPropsUtil.get(
+		"marketplace.email.address.2");
+
+	public static final String MARKETPLACE_EMAIL_ADDRESS_3 = TestPropsUtil.get(
+		"marketplace.email.address.3");
+
+	public static final String MARKETPLACE_EMAIL_ADDRESS_4 = TestPropsUtil.get(
+		"marketplace.email.address.4");
+
+	public static final String MARKETPLACE_EMAIL_ADDRESS_5 = TestPropsUtil.get(
+		"marketplace.email.address.5");
+
+	public static final String MARKETPLACE_EMAIL_PASSWORD_1 = TestPropsUtil.get(
+		"marketplace.email.password.1");
+
+	public static final String MARKETPLACE_EMAIL_PASSWORD_2 = TestPropsUtil.get(
+		"marketplace.email.password.2");
+
+	public static final String MARKETPLACE_EMAIL_PASSWORD_3 = TestPropsUtil.get(
+		"marketplace.email.password.3");
+
+	public static final String MARKETPLACE_EMAIL_PASSWORD_4 = TestPropsUtil.get(
+		"marketplace.email.password.4");
+
+	public static final String MARKETPLACE_EMAIL_PASSWORD_5 = TestPropsUtil.get(
+		"marketplace.email.password.5");
+
 	public static final boolean MOBILE_DEVICE_ENABLED = GetterUtil.getBoolean(
 		TestPropsUtil.get("mobile.device.enabled"));
 

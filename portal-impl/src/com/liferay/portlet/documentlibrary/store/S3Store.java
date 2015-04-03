@@ -127,7 +127,12 @@ public class S3Store extends BaseStore {
 			}
 		}
 		catch (S3ServiceException s3se) {
-			throw new SystemException(s3se);
+			if (isS3NoSuchKeyException(s3se)) {
+				logFailedDeletion(companyId, repositoryId, dirName);
+			}
+			else {
+				throw new SystemException(s3se);
+			}
 		}
 	}
 
@@ -143,7 +148,12 @@ public class S3Store extends BaseStore {
 			}
 		}
 		catch (S3ServiceException s3se) {
-			throw new SystemException(s3se);
+			if (isS3NoSuchKeyException(s3se)) {
+				logFailedDeletion(companyId, repositoryId, fileName);
+			}
+			else {
+				throw new SystemException(s3se);
+			}
 		}
 	}
 
@@ -158,7 +168,12 @@ public class S3Store extends BaseStore {
 				getKey(companyId, repositoryId, fileName, versionLabel));
 		}
 		catch (S3ServiceException s3se) {
-			throw new SystemException(s3se);
+			if (isS3NoSuchKeyException(s3se)) {
+				logFailedDeletion(companyId, repositoryId, fileName);
+			}
+			else {
+				throw new SystemException(s3se);
+			}
 		}
 	}
 
@@ -224,6 +239,10 @@ public class S3Store extends BaseStore {
 			return getFileNames(s3Objects);
 		}
 		catch (S3ServiceException s3se) {
+			if (isS3NoSuchKeyException(s3se)) {
+				return new String[0];
+			}
+
 			throw new SystemException(s3se);
 		}
 	}
@@ -240,6 +259,10 @@ public class S3Store extends BaseStore {
 			return getFileNames(s3Objects);
 		}
 		catch (S3ServiceException s3se) {
+			if (isS3NoSuchKeyException(s3se)) {
+				return new String[0];
+			}
+
 			throw new SystemException(s3se);
 		}
 	}
@@ -288,6 +311,10 @@ public class S3Store extends BaseStore {
 			}
 		}
 		catch (S3ServiceException s3se) {
+			if (isS3NoSuchKeyException(s3se)) {
+				return false;
+			}
+
 			throw new SystemException(s3se);
 		}
 	}
@@ -684,6 +711,18 @@ public class S3Store extends BaseStore {
 		}
 
 		return tempFile;
+	}
+
+	protected boolean isS3NoSuchKeyException(Exception e) {
+		if (e instanceof S3ServiceException) {
+			S3ServiceException s3se = (S3ServiceException)e;
+
+			if (Validator.equals("NoSuchKey", s3se.getS3ErrorCode())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _ACCESS_KEY = PropsUtil.get(

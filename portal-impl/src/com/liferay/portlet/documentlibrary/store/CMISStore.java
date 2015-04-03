@@ -147,14 +147,14 @@ public class CMISStore extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
 
 		if (versioningFolder == null) {
-			throw new NoSuchFileException();
+			logFailedDeletion(companyId, repositoryId, fileName);
+
+			return;
 		}
 
 		versioningFolder.deleteTree(true, UnfileObject.DELETE, false);
@@ -162,12 +162,20 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
-		Document document = getVersionedDocument(
-			companyId, repositoryId, fileName, versionLabel);
+		Document document = null;
+
+		try {
+			document = getVersionedDocument(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+		catch (NoSuchFileException nsfe) {
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+
+			return;
+		}
 
 		document.delete(true);
 	}

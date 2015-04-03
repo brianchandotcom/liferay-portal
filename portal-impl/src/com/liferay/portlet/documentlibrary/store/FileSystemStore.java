@@ -128,13 +128,14 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
 
 		if (!dirNameDir.exists()) {
-			throw new NoSuchDirectoryException(dirNameDir.getPath());
+			logFailedDeletion(companyId, repositoryId, dirName);
+
+			return;
 		}
 
 		File parentFile = dirNameDir.getParentFile();
@@ -150,13 +151,13 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 
 		if (!fileNameDir.exists()) {
-			throw new NoSuchFileException(fileNameDir.getPath());
+			logFailedDeletion(companyId, repositoryId, fileName);
+
+			return;
 		}
 
 		File parentFile = fileNameDir.getParentFile();
@@ -168,15 +169,16 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		File fileNameVersionFile = getFileNameVersionFile(
 			companyId, repositoryId, fileName, versionLabel);
 
 		if (!fileNameVersionFile.exists()) {
-			throw new NoSuchFileException(fileNameVersionFile.getPath());
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+
+			return;
 		}
 
 		File parentFile = fileNameVersionFile.getParentFile();
@@ -248,13 +250,12 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
 
 		if (!dirNameDir.exists()) {
-			throw new NoSuchDirectoryException(dirNameDir.getPath());
+			return new String[0];
 		}
 
 		List<String> fileNames = new ArrayList<>();

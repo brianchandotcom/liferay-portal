@@ -101,12 +101,20 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
-		DLContentLocalServiceUtil.deleteContent(
-			companyId, repositoryId, fileName, versionLabel);
+		try {
+			DLContentLocalServiceUtil.deleteContent(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+		catch (PortalException pe) {
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe);
+			}
+		}
 	}
 
 	@Override

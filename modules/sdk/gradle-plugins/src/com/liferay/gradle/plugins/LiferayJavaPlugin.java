@@ -249,6 +249,13 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
+	protected void configureTaskClasses(Project project) {
+		Task classesTask = GradleUtil.getTask(
+			project, JavaPlugin.CLASSES_TASK_NAME);
+
+		classesTask.dependsOn(_BUILD_CSS_TASK_NAME);
+	}
+
 	protected void configureTaskClean(Project project) {
 		Task cleanTask = GradleUtil.getTask(
 			project, BasePlugin.CLEAN_TASK_NAME);
@@ -295,6 +302,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		configureTaskBuildCss(project);
+		configureTaskClasses(project);
 		configureTaskClean(project);
 	}
 

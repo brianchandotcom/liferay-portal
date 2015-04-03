@@ -429,6 +429,8 @@ portletURL.setParameter("tabs3", "current-and-previous");
 								</aui:fieldset>
 							</c:if>
 
+							<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
+
 							<aui:fieldset cssClass="options-group" label="permissions">
 
 								<%

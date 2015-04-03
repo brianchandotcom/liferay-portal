@@ -176,7 +176,7 @@
 
 <c:if test="<%= !disableInputs %>">
 	<aui:script>
-		Liferay.Util.toggleRadio('<portlet:namespace />chooseContent', '<portlet:namespace />selectContents', ['<portlet:namespace />showChangeGlobalContent']);
-		Liferay.Util.toggleRadio('<portlet:namespace />allContent', '<portlet:namespace />showChangeGlobalContent', ['<portlet:namespace />selectContents']);
+		Liferay.Util.toggleRadio('<portlet:namespace />chooseContent', '<portlet:namespace />selectContents');
+		Liferay.Util.toggleRadio('<portlet:namespace />allContent', null, ['<portlet:namespace />selectContents']);
 	</aui:script>
 </c:if>

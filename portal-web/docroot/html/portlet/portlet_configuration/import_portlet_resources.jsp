@@ -271,6 +271,8 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 					</ul>
 				</aui:fieldset>
 
+				<liferay-staging:deletions cmd="<%= Constants.IMPORT %>" />
+
 				<aui:fieldset cssClass="options-group" label="permissions">
 					<ul class="lfr-tree list-unstyled">
 						<li class="tree-item">

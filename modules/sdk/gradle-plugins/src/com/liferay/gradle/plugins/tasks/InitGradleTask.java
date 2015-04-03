@@ -28,6 +28,7 @@ import groovy.util.XmlParser;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -143,7 +144,7 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return wrapContents(
-			contents, 1, "(", JavaPlugin.COMPILE_CONFIGURATION_NAME, ")");
+			contents, 1, "(", JavaPlugin.COMPILE_CONFIGURATION_NAME, ")", true);
 	}
 
 	protected List<String> getBuildDependenciesProvidedCompile() {
@@ -177,7 +178,7 @@ public class InitGradleTask extends DefaultTask {
 
 		return wrapContents(
 			contents, 1, "(", WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
-			")");
+			")", true);
 	}
 
 	protected List<String> getBuildDependenciesTestCompile() {
@@ -208,7 +209,8 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return wrapContents(
-			contents, 1, "(", JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, ")");
+			contents, 1, "(", JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, ")",
+			true);
 	}
 
 	protected List<String> getBuildGradleDependencies() {
@@ -218,7 +220,7 @@ public class InitGradleTask extends DefaultTask {
 		contents.addAll(getBuildDependenciesProvidedCompile());
 		contents.addAll(getBuildDependenciesTestCompile());
 
-		return wrapContents(contents, 0, " {", "dependencies", "}");
+		return wrapContents(contents, 0, " {", "dependencies", "}", false);
 	}
 
 	protected List<String> getBuildGradleLiferay() {
@@ -240,7 +242,7 @@ public class InitGradleTask extends DefaultTask {
 
 		if (!contents.isEmpty()) {
 			contents = wrapContents(
-				contents, 0, " {", LiferayPlugin.PLUGIN_NAME, "}");
+				contents, 0, " {", LiferayPlugin.PLUGIN_NAME, "}", true);
 		}
 
 		return contents;
@@ -306,10 +308,14 @@ public class InitGradleTask extends DefaultTask {
 
 	protected List<String> wrapContents(
 		List<String> contents, int indentCount, String leftClose, String name,
-		String rightClose) {
+		String rightClose, boolean sort) {
 
 		if (contents.isEmpty()) {
 			return contents;
+		}
+
+		if (sort) {
+			Collections.sort(contents);
 		}
 
 		String indent = StringUtil.repeat('\t', indentCount);

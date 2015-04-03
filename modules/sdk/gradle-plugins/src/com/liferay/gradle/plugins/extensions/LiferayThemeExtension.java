@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import java.io.File;
+
 import org.gradle.api.Project;
 
 /**
@@ -25,12 +27,24 @@ public class LiferayThemeExtension extends LiferayExtension {
 		super(project);
 	}
 
+	public File getDiffsDir() {
+		return project.file(getDiffsDirName());
+	}
+
+	public String getDiffsDirName() {
+		return _diffsDirName;
+	}
+
 	public String getThemeParent() {
 		return _themeParent;
 	}
 
 	public String getThemeType() {
 		return _themeType;
+	}
+
+	public void setDiffsDirName(String diffsDirName) {
+		_diffsDirName = diffsDirName;
 	}
 
 	public void setThemeParent(String themeParent) {
@@ -41,7 +55,8 @@ public class LiferayThemeExtension extends LiferayExtension {
 		_themeType = themeType;
 	}
 
+	private String _diffsDirName = "docroot/_diffs";
 	private String _themeParent;
-	private String _themeType;
+	private String _themeType = "vm";
 
 }

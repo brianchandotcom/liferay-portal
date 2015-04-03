@@ -24,6 +24,8 @@ import org.gradle.api.Project;
 public class LiferayExtension {
 
 	public LiferayExtension(Project project) throws Exception {
+		this.project = project;
+
 		_tmpDir = new File(project.getRootDir(), "tmp");
 	}
 
@@ -54,6 +56,8 @@ public class LiferayExtension {
 	public void setTmpDir(File tmpDir) {
 		_tmpDir = tmpDir;
 	}
+
+	protected final Project project;
 
 	private String _portalVersion = "7.0.0-SNAPSHOT";
 	private File _tmpDir;

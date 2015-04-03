@@ -28,7 +28,7 @@ import com.liferay.service.access.control.profile.service.SACPEntryLocalServiceU
  *
  * @author Brian Wing Shun Chan
  * @see SACPEntryImpl
- * @see com.liferay.service.access.control.profile.model.SACPEntry
+ * @see SACPEntry
  * @generated
  */
 @ProviderType

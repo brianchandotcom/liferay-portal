@@ -453,7 +453,7 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the wiki node local service
 	 */
-	public com.liferay.wiki.service.WikiNodeLocalService getWikiNodeLocalService() {
+	public WikiNodeLocalService getWikiNodeLocalService() {
 		return wikiNodeLocalService;
 	}
 
@@ -463,7 +463,7 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param wikiNodeLocalService the wiki node local service
 	 */
 	public void setWikiNodeLocalService(
-		com.liferay.wiki.service.WikiNodeLocalService wikiNodeLocalService) {
+		WikiNodeLocalService wikiNodeLocalService) {
 		this.wikiNodeLocalService = wikiNodeLocalService;
 	}
 
@@ -1056,8 +1056,8 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.wiki.service.WikiNodeLocalService.class)
-	protected com.liferay.wiki.service.WikiNodeLocalService wikiNodeLocalService;
+	@BeanReference(type = WikiNodeLocalService.class)
+	protected WikiNodeLocalService wikiNodeLocalService;
 	@BeanReference(type = com.liferay.wiki.service.WikiNodeService.class)
 	protected com.liferay.wiki.service.WikiNodeService wikiNodeService;
 	@BeanReference(type = WikiNodePersistence.class)

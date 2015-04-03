@@ -539,7 +539,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 *
 	 * @return the bookmarks folder local service
 	 */
-	public com.liferay.bookmarks.service.BookmarksFolderLocalService getBookmarksFolderLocalService() {
+	public BookmarksFolderLocalService getBookmarksFolderLocalService() {
 		return bookmarksFolderLocalService;
 	}
 
@@ -549,7 +549,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param bookmarksFolderLocalService the bookmarks folder local service
 	 */
 	public void setBookmarksFolderLocalService(
-		com.liferay.bookmarks.service.BookmarksFolderLocalService bookmarksFolderLocalService) {
+		BookmarksFolderLocalService bookmarksFolderLocalService) {
 		this.bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
@@ -1210,8 +1210,8 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	protected BookmarksEntryPersistence bookmarksEntryPersistence;
 	@BeanReference(type = BookmarksEntryFinder.class)
 	protected BookmarksEntryFinder bookmarksEntryFinder;
-	@BeanReference(type = com.liferay.bookmarks.service.BookmarksFolderLocalService.class)
-	protected com.liferay.bookmarks.service.BookmarksFolderLocalService bookmarksFolderLocalService;
+	@BeanReference(type = BookmarksFolderLocalService.class)
+	protected BookmarksFolderLocalService bookmarksFolderLocalService;
 	@BeanReference(type = com.liferay.bookmarks.service.BookmarksFolderService.class)
 	protected com.liferay.bookmarks.service.BookmarksFolderService bookmarksFolderService;
 	@BeanReference(type = BookmarksFolderPersistence.class)

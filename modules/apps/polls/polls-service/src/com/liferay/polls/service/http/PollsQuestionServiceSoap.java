@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.polls.service.PollsQuestionServiceUtil} service utility. The
+ * {@link PollsQuestionServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -64,7 +64,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @see PollsQuestionServiceHttp
  * @see com.liferay.polls.model.PollsQuestionSoap
- * @see com.liferay.polls.service.PollsQuestionServiceUtil
+ * @see PollsQuestionServiceUtil
  * @generated
  */
 @ProviderType

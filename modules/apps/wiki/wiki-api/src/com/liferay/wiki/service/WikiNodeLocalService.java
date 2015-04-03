@@ -50,28 +50,27 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	 */
 	public com.liferay.wiki.model.WikiNode addDefaultNode(long userId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiNode addNode(long userId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addNodeResources(long nodeId, boolean addGroupPermissions,
-		boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean addGuestPermissions) throws PortalException;
 
 	public void addNodeResources(long nodeId,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds the wiki node to the database. Also notifies the appropriate model listeners.
@@ -93,13 +92,11 @@ public interface WikiNodeLocalService extends BaseLocalService,
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteNode(com.liferay.wiki.model.WikiNode node)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteNode(long nodeId) throws PortalException;
 
-	public void deleteNodes(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteNodes(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -107,7 +104,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
@@ -118,7 +115,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.wiki.model.WikiNode deleteWikiNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
@@ -247,32 +244,27 @@ public interface WikiNodeLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiNode getNode(long groupId,
-		java.lang.String nodeName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String nodeName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiNode getNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long groupId, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long groupId, int status) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long groupId, int status, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getNodesCount(long groupId);
@@ -283,8 +275,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the wiki node with the primary key.
@@ -295,7 +286,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiNode getWikiNode(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the wiki node matching the UUID and group.
@@ -307,8 +298,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiNode getWikiNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the wiki nodes.
@@ -362,18 +352,16 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	public void importPages(long userId, long nodeId,
 		java.lang.String importer, java.io.InputStream[] inputStreams,
 		java.util.Map<java.lang.String, java.lang.String[]> options)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
-		com.liferay.wiki.model.WikiNode node)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.wiki.model.WikiNode node) throws PortalException;
 
 	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
-		long nodeId) throws com.liferay.portal.kernel.exception.PortalException;
+		long nodeId) throws PortalException;
 
 	public void restoreNodeFromTrash(long userId,
-		com.liferay.wiki.model.WikiNode node)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.wiki.model.WikiNode node) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -383,20 +371,20 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribeNode(long userId, long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void unsubscribeNode(long userId, long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiNode updateStatus(long userId,
 		com.liferay.wiki.model.WikiNode node, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

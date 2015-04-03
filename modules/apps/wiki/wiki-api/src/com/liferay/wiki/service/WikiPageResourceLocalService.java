@@ -70,7 +70,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 		long resourcePrimKey);
 
 	public void deletePageResource(long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -78,7 +78,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the wiki page resource with the primary key from the database. Also notifies the appropriate model listeners.
@@ -89,8 +89,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.wiki.model.WikiPageResource deleteWikiPageResource(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long resourcePrimKey) throws PortalException;
 
 	/**
 	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
@@ -191,13 +190,11 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPageResource getPageResource(
-		long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long nodeId, java.lang.String title) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPageResource getPageResource(
-		long pageResourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long pageResourcePrimKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getPageResourcePrimKey(long nodeId, java.lang.String title);
@@ -205,8 +202,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the wiki page resource with the primary key.
@@ -217,8 +213,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPageResource getWikiPageResource(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long resourcePrimKey) throws PortalException;
 
 	/**
 	* Returns a range of all the wiki page resources.

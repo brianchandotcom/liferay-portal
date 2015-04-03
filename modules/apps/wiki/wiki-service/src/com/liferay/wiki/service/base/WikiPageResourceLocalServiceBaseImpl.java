@@ -304,7 +304,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	 *
 	 * @return the wiki page resource local service
 	 */
-	public com.liferay.wiki.service.WikiPageResourceLocalService getWikiPageResourceLocalService() {
+	public WikiPageResourceLocalService getWikiPageResourceLocalService() {
 		return wikiPageResourceLocalService;
 	}
 
@@ -314,7 +314,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	 * @param wikiPageResourceLocalService the wiki page resource local service
 	 */
 	public void setWikiPageResourceLocalService(
-		com.liferay.wiki.service.WikiPageResourceLocalService wikiPageResourceLocalService) {
+		WikiPageResourceLocalService wikiPageResourceLocalService) {
 		this.wikiPageResourceLocalService = wikiPageResourceLocalService;
 	}
 
@@ -418,8 +418,8 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.wiki.service.WikiPageResourceLocalService.class)
-	protected com.liferay.wiki.service.WikiPageResourceLocalService wikiPageResourceLocalService;
+	@BeanReference(type = WikiPageResourceLocalService.class)
+	protected WikiPageResourceLocalService wikiPageResourceLocalService;
 	@BeanReference(type = WikiPageResourcePersistence.class)
 	protected WikiPageResourcePersistence wikiPageResourcePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

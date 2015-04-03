@@ -64,7 +64,7 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 		long groupId, long folderId, java.lang.String name,
 		java.lang.String url, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new bookmarks entry with the primary key. Does not add the bookmarks entry to the database.
@@ -94,25 +94,23 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.bookmarks.model.BookmarksEntry deleteBookmarksEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long entryId) throws PortalException;
 
 	public void deleteEntries(long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteEntries(long groupId, long folderId,
-		boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeTrashedEntries) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.bookmarks.model.BookmarksEntry deleteEntry(
 		com.liferay.bookmarks.model.BookmarksEntry entry)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.bookmarks.model.BookmarksEntry deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -120,7 +118,7 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -270,8 +268,7 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.bookmarks.model.BookmarksEntry getBookmarksEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long entryId) throws PortalException;
 
 	/**
 	* Returns the bookmarks entry matching the UUID and group.
@@ -283,8 +280,7 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.bookmarks.model.BookmarksEntry getBookmarksEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
@@ -312,7 +308,7 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.bookmarks.model.BookmarksEntry getEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -342,47 +338,41 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.bookmarks.model.BookmarksEntry moveEntry(long entryId,
-		long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long parentFolderId) throws PortalException;
 
 	public com.liferay.bookmarks.model.BookmarksEntry moveEntryFromTrash(
 		long userId, long entryId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.bookmarks.model.BookmarksEntry moveEntryToTrash(
 		long userId, com.liferay.bookmarks.model.BookmarksEntry entry)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.bookmarks.model.BookmarksEntry moveEntryToTrash(
-		long userId, long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long entryId) throws PortalException;
 
 	public com.liferay.bookmarks.model.BookmarksEntry openEntry(long userId,
 		com.liferay.bookmarks.model.BookmarksEntry entry);
 
 	public com.liferay.bookmarks.model.BookmarksEntry openEntry(long userId,
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long entryId) throws PortalException;
 
-	public void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void rebuildTree(long companyId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.bookmarks.model.BookmarksEntry restoreEntryFromTrash(
-		long userId, long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long userId, long creatorUserId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -392,20 +382,18 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void setTreePaths(long folderId, java.lang.String treePath,
-		boolean reindex)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean reindex) throws PortalException;
 
 	public void subscribeEntry(long userId, long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void unsubscribeEntry(long userId, long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void updateAsset(long userId,
 		com.liferay.bookmarks.model.BookmarksEntry entry,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long[] assetLinkEntryIds) throws PortalException;
 
 	/**
 	* Updates the bookmarks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -422,9 +410,9 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 		long entryId, long groupId, long folderId, java.lang.String name,
 		java.lang.String url, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.bookmarks.model.BookmarksEntry updateStatus(
 		long userId, com.liferay.bookmarks.model.BookmarksEntry entry,
-		int status) throws com.liferay.portal.kernel.exception.PortalException;
+		int status) throws PortalException;
 }

@@ -164,7 +164,7 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the bookmarks folder remote service
 	 */
-	public com.liferay.bookmarks.service.BookmarksFolderService getBookmarksFolderService() {
+	public BookmarksFolderService getBookmarksFolderService() {
 		return bookmarksFolderService;
 	}
 
@@ -174,7 +174,7 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	 * @param bookmarksFolderService the bookmarks folder remote service
 	 */
 	public void setBookmarksFolderService(
-		com.liferay.bookmarks.service.BookmarksFolderService bookmarksFolderService) {
+		BookmarksFolderService bookmarksFolderService) {
 		this.bookmarksFolderService = bookmarksFolderService;
 	}
 
@@ -814,8 +814,8 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	protected BookmarksEntryFinder bookmarksEntryFinder;
 	@BeanReference(type = com.liferay.bookmarks.service.BookmarksFolderLocalService.class)
 	protected com.liferay.bookmarks.service.BookmarksFolderLocalService bookmarksFolderLocalService;
-	@BeanReference(type = com.liferay.bookmarks.service.BookmarksFolderService.class)
-	protected com.liferay.bookmarks.service.BookmarksFolderService bookmarksFolderService;
+	@BeanReference(type = BookmarksFolderService.class)
+	protected BookmarksFolderService bookmarksFolderService;
 	@BeanReference(type = BookmarksFolderPersistence.class)
 	protected BookmarksFolderPersistence bookmarksFolderPersistence;
 	@BeanReference(type = BookmarksFolderFinder.class)

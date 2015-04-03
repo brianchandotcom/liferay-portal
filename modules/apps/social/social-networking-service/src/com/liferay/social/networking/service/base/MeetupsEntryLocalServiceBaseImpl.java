@@ -307,7 +307,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	 *
 	 * @return the meetups entry local service
 	 */
-	public com.liferay.social.networking.service.MeetupsEntryLocalService getMeetupsEntryLocalService() {
+	public MeetupsEntryLocalService getMeetupsEntryLocalService() {
 		return meetupsEntryLocalService;
 	}
 
@@ -317,7 +317,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 	 * @param meetupsEntryLocalService the meetups entry local service
 	 */
 	public void setMeetupsEntryLocalService(
-		com.liferay.social.networking.service.MeetupsEntryLocalService meetupsEntryLocalService) {
+		MeetupsEntryLocalService meetupsEntryLocalService) {
 		this.meetupsEntryLocalService = meetupsEntryLocalService;
 	}
 
@@ -703,8 +703,8 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.social.networking.service.MeetupsEntryLocalService.class)
-	protected com.liferay.social.networking.service.MeetupsEntryLocalService meetupsEntryLocalService;
+	@BeanReference(type = MeetupsEntryLocalService.class)
+	protected MeetupsEntryLocalService meetupsEntryLocalService;
 	@BeanReference(type = MeetupsEntryPersistence.class)
 	protected MeetupsEntryPersistence meetupsEntryPersistence;
 	@BeanReference(type = com.liferay.social.networking.service.MeetupsRegistrationLocalService.class)

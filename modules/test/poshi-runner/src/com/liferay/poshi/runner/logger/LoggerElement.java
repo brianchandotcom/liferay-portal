@@ -50,6 +50,26 @@ public class LoggerElement {
 
 	public LoggerElement(String id) {
 		_id = id;
+
+		if (_isWrittenToLogger()) {
+			String className = LoggerUtil.getClassName(this);
+
+			if (Validator.isNotNull(className)) {
+				_className = className;
+			}
+
+			String name = LoggerUtil.getName(this);
+
+			if (Validator.isNotNull(name)) {
+				_name = name;
+			}
+
+			String text = LoggerUtil.getText(this);
+
+			if (Validator.isNotNull(text)) {
+				_text = text;
+			}
+		}
 	}
 
 	public void addChildLoggerElement(LoggerElement childLoggerElement) {

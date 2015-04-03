@@ -368,6 +368,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncFile syncFile = SyncFileService.fetchSyncFile(filePath.toString());
 
 		if ((syncFile == null) ||
+			(syncFile.getState() == SyncFile.STATE_IN_PROGRESS) ||
 			Files.exists(Paths.get(syncFile.getFilePathName()))) {
 
 			return;

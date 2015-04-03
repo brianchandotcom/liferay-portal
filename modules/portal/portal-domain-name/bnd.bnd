@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Domain Name
+Bundle-SymbolicName: com.liferay.portal.domainname
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	@lib/guava.jar

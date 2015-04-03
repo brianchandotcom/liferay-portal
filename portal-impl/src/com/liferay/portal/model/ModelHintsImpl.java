@@ -17,8 +17,14 @@ package com.liferay.portal.model;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.xml.SecureXMLFactoryProvider;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.xml.SAXReaderFactory;
+
+import org.dom4j.io.SAXReader;
 
 /**
  * @author Raymond Augé
@@ -34,6 +40,16 @@ public class ModelHintsImpl extends BaseModelHintsImpl {
 	@Override
 	public String[] getModelHintsConfigs() {
 		return _modelHintsConfigs;
+	}
+
+	@Override
+	public SAXReader getSAXReader() {
+		SecureXMLFactoryProvider secureXMLFactoryProvider =
+			SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider();
+
+		return SAXReaderFactory.getSAXReader(
+			secureXMLFactoryProvider.newXMLReader(),
+			PropsValues.XML_VALIDATION_ENABLED, true);
 	}
 
 	public class RuntimeModelHintsCallback implements ModelHintsCallback {

@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReader;
 
 import java.io.InputStream;
 
@@ -41,9 +38,14 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
+ * @author Raymond Augé
  */
 public abstract class BaseModelHintsImpl implements ModelHints {
 
@@ -193,6 +195,8 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 		return sanitizeTuples;
 	}
 
+	public abstract SAXReader getSAXReader();
+
 	@Override
 	public String getType(String model, String field) {
 		Map<String, Object> fields = (Map<String, Object>)_modelFields.get(
@@ -303,7 +307,9 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 			}
 		}
 
-		Document document = _saxReader.read(inputStream);
+		SAXReader saxReader = getSAXReader();
+
+		Document document = saxReader.read(inputStream);
 
 		Element rootElement = document.getRootElement();
 
@@ -458,10 +464,6 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 		}
 	}
 
-	public void setSAXReader(SAXReader saxReader) {
-		_saxReader = saxReader;
-	}
-
 	@Override
 	public String trimString(String model, String field, String value) {
 		if (value == null) {
@@ -497,6 +499,5 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 	private Map<String, Map<String, String>> _hintCollections;
 	private Map<String, Object> _modelFields;
 	private Set<String> _models;
-	private SAXReader _saxReader;
 
 }

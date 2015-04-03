@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
-import com.liferay.portal.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.util.PropsUtil;
 
 import java.io.InputStream;
 
@@ -50,7 +47,7 @@ import java.util.TreeSet;
  * @author Tomas Polesovsky
  */
 @DoPrivileged
-public class BaseModelHintsImpl implements ModelHints {
+public abstract class BaseModelHintsImpl implements ModelHints {
 
 	public void afterPropertiesSet() {
 		_hintCollections = new HashMap<>();
@@ -61,10 +58,7 @@ public class BaseModelHintsImpl implements ModelHints {
 		try {
 			ClassLoader classLoader = getClass().getClassLoader();
 
-			String[] configs = StringUtil.split(
-				PropsUtil.get(PropsKeys.MODEL_HINTS_CONFIGS));
-
-			for (String config : configs) {
+			for (String config : getModelHintsConfigs()) {
 				if (config.startsWith("classpath*:")) {
 					String name = config.substring("classpath*:".length());
 
@@ -156,6 +150,10 @@ public class BaseModelHintsImpl implements ModelHints {
 
 		return maxLength;
 	}
+
+	public abstract ModelHintsCallback getModelHintsCallback();
+
+	public abstract String[] getModelHintsConfigs();
 
 	@Override
 	public List<String> getModels() {
@@ -341,9 +339,9 @@ public class BaseModelHintsImpl implements ModelHints {
 		for (Element modelElement : rootElements) {
 			String name = modelElement.attributeValue("name");
 
-			if (classLoader != BaseModelHintsImpl.class.getClassLoader()) {
-				ClassNameLocalServiceUtil.getClassName(name);
-			}
+			ModelHintsCallback modelHintsCallback = getModelHintsCallback();
+
+			modelHintsCallback.execute(classLoader, name);
 
 			Map<String, String> defaultHints = new HashMap<>();
 

@@ -57,7 +57,7 @@ public final class SummaryLoggerHandler {
 
 		_majorStepsLoggerElement.addChildLoggerElement(errorLoggerElement);
 
-		_stopLogging();
+		_stopMajorStep();
 	}
 
 	public static void passSummary(Element element) {
@@ -72,7 +72,7 @@ public final class SummaryLoggerHandler {
 
 		_majorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
 
-		_stopLogging();
+		_stopMajorStep();
 	}
 
 	public static void startSummary(Element element) throws Exception {
@@ -80,7 +80,7 @@ public final class SummaryLoggerHandler {
 			return;
 		}
 
-		_startLogging(element);
+		_startMajorStep(element);
 
 		_majorStepLoggerElement = _getStepLoggerElement(element);
 
@@ -178,12 +178,13 @@ public final class SummaryLoggerHandler {
 		return true;
 	}
 
-	private static void _startLogging(Element element) {
+	private static void _startMajorStep(Element element) {
 		_majorStepElement = element;
 	}
 
-	private static void _stopLogging() {
+	private static void _stopMajorStep() {
 		_majorStepElement = null;
+		_majorStepLoggerElement = null;
 	}
 
 	private static Element _majorStepElement = null;

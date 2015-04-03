@@ -1,4 +1,11 @@
 <definition>
+	<command name="acceptRequest">
+		<var name="key_requestsContent" value="${requestsContent}" />
+
+		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#REQUESTS_CONTENT" value1="${requestsContent}" />
+		<execute function="AssertClick" locator1="PGNotificationsdockbar#REQUESTS_CONFIRM_BUTTON" value1="Confirm" />
+	</command>
+
 	<command name="gotoDockbar">
 		<execute function="Click" locator1="PGNotificationsdockbar#DOCKBAR" />
 	</command>
@@ -66,9 +73,26 @@
 		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
+	<command name="viewNoRequest">
+		<execute function="AssertElementNotPresent" locator1="PGNotificationsdockbar#REQUESTS_CONFIRM_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="PGNotificationsdockbar#REQUESTS_IGNORE_BUTTON" />
+	</command>
+
 	<command name="viewNotification">
 		<execute function="AssertClick" locator1="PGNotificationsdockbar#COUNT_ALERT" value1="${notificationCount}" />
 		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
+	</command>
+
+	<command name="viewRequest">
+		<var name="key_requestsContent" value="${requestsContent}" />
+
+		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#REQUESTS_CONTENT" value1="${requestsContent}" />
+	</command>
+
+	<command name="viewRequestCount">
+		<var name="key_requestsLink" value="${requestsLink}" />
+
+		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#REQUESTS_LINK" value1="${requestsLink}" />
 	</command>
 
 	<command name="viewUpdatedComment">

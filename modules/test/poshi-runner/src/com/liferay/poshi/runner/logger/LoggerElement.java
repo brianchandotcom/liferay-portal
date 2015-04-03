@@ -94,6 +94,10 @@ public class LoggerElement {
 
 	public void setName(String name) {
 		_name = name;
+
+		if (_isWrittenToLogger()) {
+			LoggerUtil.setName(this);
+		}
 	}
 
 	public void setText(String text) {

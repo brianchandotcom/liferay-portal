@@ -652,6 +652,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT_DIALOG_BOX_USERS_LABEL</td>
+	<td>//tr/td[contains(.,'Users:')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD</td>
+	<td>//tr/td/label[@class='calendar-portlet-invitees']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON</td>
 	<td>//form[@id='schedulerEventRecorderForm']//button[@id='saveBtn']</td>
 	<td></td>

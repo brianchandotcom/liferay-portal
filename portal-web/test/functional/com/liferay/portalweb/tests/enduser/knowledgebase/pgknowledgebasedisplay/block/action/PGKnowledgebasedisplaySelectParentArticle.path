@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>BREADCRUMB_HOME</td>
-	<td>//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]</td>
+	<td>//div[contains(@class,'breadcrumb')]//a[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>

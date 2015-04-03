@@ -1288,7 +1288,21 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public String getPortletDataHandlerClass() {
-		return _portletDataHandlerClass;
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		if (portletBag == null) {
+			return _portletDataHandlerClass;
+		}
+
+		PortletDataHandler portletDataHandler = getPortletDataHandlerInstance();
+
+		if (portletDataHandler == null) {
+			return _portletDataHandlerClass;
+		}
+
+		Class portletDataHandlerClass = portletDataHandler.getClass();
+
+		return portletDataHandlerClass.getName();
 	}
 
 	/**

@@ -137,6 +137,10 @@ public class PoshiRunnerExecutor {
 
 				String message = childElement.attributeValue("message");
 
+				if (message == null) {
+					message = childElement.getText();
+				}
+
 				System.out.println(
 					PoshiRunnerVariablesUtil.replaceCommandVars(message));
 			}
@@ -634,7 +638,7 @@ public class PoshiRunnerExecutor {
 					sb.toString());
 			}
 			else {
-				varValue = element.elementText("var");
+				varValue = element.getText();
 			}
 		}
 

@@ -74,6 +74,54 @@ public final class LoggerUtil {
 		_javascriptExecutor.executeScript(sb.toString());
 	}
 
+	public static String getClassName(LoggerElement loggerElement) {
+		if (!isLoggerStarted()) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var node = document.getElementById('");
+		sb.append(loggerElement.getID());
+		sb.append("');");
+
+		sb.append("return node.getAttribute('class');");
+
+		return (String)_javascriptExecutor.executeScript(sb.toString());
+	}
+
+	public static String getName(LoggerElement loggerElement) {
+		if (!isLoggerStarted()) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var node = document.getElementById('");
+		sb.append(loggerElement.getID());
+		sb.append("');");
+
+		sb.append("return node.nodeName;");
+
+		return (String)_javascriptExecutor.executeScript(sb.toString());
+	}
+
+	public static String getText(LoggerElement loggerElement) {
+		if (!isLoggerStarted()) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var node = document.getElementById('");
+		sb.append(loggerElement.getID());
+		sb.append("');");
+
+		sb.append("return node.innerHTML;");
+
+		return (String)_javascriptExecutor.executeScript(sb.toString());
+	}
+
 	public static boolean isLoggerStarted() {
 		if (_webDriver != null) {
 			return true;

@@ -27,33 +27,6 @@ import org.xml.sax.XMLReader;
 public class SAXReaderFactory {
 
 	public static final org.dom4j.io.SAXReader getSAXReader(
-		XMLReader xmlReader, XMLSchema xmlSchema, boolean validate,
-		boolean secure) {
-
-		org.dom4j.io.SAXReader saxReader = getSAXReader(
-			xmlReader, validate, secure);
-
-		if ((xmlSchema == null) || (validate == false)) {
-			return saxReader;
-		}
-
-		try {
-			saxReader.setProperty(
-				_PROPERTY_SCHEMA_LANGUAGE, xmlSchema.getSchemaLanguage());
-			saxReader.setProperty(
-				_PROPERTY_SCHEMA_SOURCE, xmlSchema.getSchemaSource());
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"XSD validation is disabled because " + e.getMessage());
-			}
-		}
-
-		return saxReader;
-	}
-
-	public static final org.dom4j.io.SAXReader getSAXReader(
 		XMLReader xmlReader, boolean validate, boolean secure) {
 
 		org.dom4j.io.SAXReader reader = null;
@@ -88,6 +61,33 @@ public class SAXReaderFactory {
 		return reader;
 	}
 
+	public static final org.dom4j.io.SAXReader getSAXReader(
+		XMLReader xmlReader, XMLSchema xmlSchema, boolean validate,
+		boolean secure) {
+
+		org.dom4j.io.SAXReader saxReader = getSAXReader(
+			xmlReader, validate, secure);
+
+		if ((xmlSchema == null) || (validate == false)) {
+			return saxReader;
+		}
+
+		try {
+			saxReader.setProperty(
+				_PROPERTY_SCHEMA_LANGUAGE, xmlSchema.getSchemaLanguage());
+			saxReader.setProperty(
+				_PROPERTY_SCHEMA_SOURCE, xmlSchema.getSchemaSource());
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"XSD validation is disabled because " + e.getMessage());
+			}
+		}
+
+		return saxReader;
+	}
+
 	private static final String _FEATURES_DISALLOW_DOCTYPE_DECL =
 		"http://apache.org/xml/features/disallow-doctype-decl";
 
@@ -115,6 +115,7 @@ public class SAXReaderFactory {
 	private static final String _PROPERTY_SCHEMA_SOURCE =
 		"http://java.sun.com/xml/jaxp/properties/schemaSource";
 
-	private static final Log _log = LogFactoryUtil.getLog(SAXReaderImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SAXReaderFactory.class);
 
 }

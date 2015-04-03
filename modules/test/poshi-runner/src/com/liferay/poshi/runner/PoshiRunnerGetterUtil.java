@@ -153,15 +153,9 @@ public class PoshiRunnerGetterUtil {
 						}
 					}
 				}
-
-				lineNumber++;
-
-				sb.append(line);
-
-				continue;
 			}
 			else if (matcher.find()) {
-				boolean tagFound = false;
+				boolean tagIsReservedTag = false;
 
 				for (String reservedTag : _reservedTags) {
 					if (line.contains("<" + reservedTag)) {
@@ -170,13 +164,13 @@ public class PoshiRunnerGetterUtil {
 							matcher.group() + " line-number=\"" +
 							lineNumber + "\"");
 
-						tagFound = true;
+						tagIsReservedTag = true;
 
 						break;
 					}
 				}
 
-				if (!tagFound) {
+				if (!tagIsReservedTag) {
 					int x = line.indexOf("<");
 					int y = line.indexOf(" ", x);
 
@@ -191,8 +185,8 @@ public class PoshiRunnerGetterUtil {
 					String tagName = line.substring(x + 1, y);
 
 					throw new PoshiRunnerException(
-						"\nBUILD FAILED: Invaild \"" + tagName + "\" tag\n" +
-							filePath + ":" + lineNumber);
+						"Invaild \"" + tagName + "\" tag\n" + filePath + ":" +
+							lineNumber);
 				}
 			}
 

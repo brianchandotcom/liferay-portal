@@ -82,11 +82,20 @@ public final class SummaryLoggerHandler {
 
 		_startLogging(element);
 
-		_majorStepLoggerElement = new LoggerElement();
-
-		_majorStepLoggerElement.setText(_getSummary(element));
+		_majorStepLoggerElement = _getStepLoggerElement(element);
 
 		_majorStepsLoggerElement.addChildLoggerElement(_majorStepLoggerElement);
+	}
+
+	private static LoggerElement _getStepLoggerElement(Element element)
+		throws Exception {
+
+		LoggerElement stepLoggerElement = new LoggerElement();
+
+		stepLoggerElement.setName("li");
+		stepLoggerElement.setText(_getSummary(element));
+
+		return stepLoggerElement;
 	}
 
 	private static String _getSummary(Element element)

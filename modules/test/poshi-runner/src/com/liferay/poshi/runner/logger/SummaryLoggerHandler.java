@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.PoshiRunnerException;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.poshi.runner.util.Validator;
 
 import org.dom4j.Element;
 
@@ -32,7 +33,7 @@ public final class SummaryLoggerHandler {
 	}
 
 	public static void failSummary(Element element, String message) {
-		if (!_isLoggingElement(element)) {
+		if (!_isCurrentMajorStep(element)) {
 			return;
 		}
 
@@ -60,7 +61,7 @@ public final class SummaryLoggerHandler {
 	}
 
 	public static void passSummary(Element element) {
-		if (!_isLoggingElement(element)) {
+		if (!_isCurrentMajorStep(element)) {
 			return;
 		}
 
@@ -74,16 +75,8 @@ public final class SummaryLoggerHandler {
 		_stopLogging();
 	}
 
-	public static void startSummary(Element element)
-		throws PoshiRunnerException {
-
-		String summary = _getSummary(element);
-
-		if (summary == null) {
-			return;
-		}
-
-		if (_isLogging()) {
+	public static void startSummary(Element element) throws Exception {
+		if (!_isMajorStep(element)) {
 			return;
 		}
 
@@ -91,7 +84,7 @@ public final class SummaryLoggerHandler {
 
 		_majorStepLoggerElement = new LoggerElement();
 
-		_majorStepLoggerElement.setText(summary);
+		_majorStepLoggerElement.setText(_getSummary(element));
 
 		_majorStepsLoggerElement.addChildLoggerElement(_majorStepLoggerElement);
 	}
@@ -139,20 +132,41 @@ public final class SummaryLoggerHandler {
 		return null;
 	}
 
-	private static boolean _isLogging() {
-		if (_majorStepElement == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private static boolean _isLoggingElement(Element element) {
-		if (_majorStepElement == element) {
+	private static boolean _isCurrentMajorStep(Element element) {
+		if (element == _majorStepElement) {
 			return true;
 		}
 
 		return false;
+	}
+
+	private static boolean _isMajorStep(Element element) throws Exception {
+		String summary = _getSummary(element);
+
+		if (summary == null) {
+			return false;
+		}
+
+		if (!Validator.equals(element.getName(), "execute") &&
+			!Validator.equals(element.getName(), "task")) {
+
+			return false;
+		}
+
+		if (Validator.isNull(element.attributeValue("function")) &&
+			Validator.isNull(element.attributeValue("function-summary")) &&
+			Validator.isNull(element.attributeValue("macro")) &&
+			Validator.isNull(element.attributeValue("macro-summary")) &&
+			Validator.isNull(element.attributeValue("summary"))) {
+
+			return false;
+		}
+
+		if (_majorStepElement != null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static void _startLogging(Element element) {

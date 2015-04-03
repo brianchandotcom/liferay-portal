@@ -38,6 +38,8 @@
 	</command>
 
 	<command name="gotoCP">
+		<var name="key_kbFolderName" value="${kbFolderName}" />
+
 		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#FOLDER_TABLE_FOLDER" value1="${kbFolderName}" />
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#FOLDER_BREADCRUMB" value1="${kbFolderName}" />
 	</command>

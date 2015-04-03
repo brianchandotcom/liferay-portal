@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.expression;
+package com.liferay.portal.expression.internal;
 
 /**
  * @author Miguel Angelo Caldas Gallindo

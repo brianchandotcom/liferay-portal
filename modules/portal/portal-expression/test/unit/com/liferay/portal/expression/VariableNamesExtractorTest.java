@@ -14,6 +14,8 @@
 
 package com.liferay.portal.expression;
 
+import com.liferay.portal.expression.internal.VariableNamesExtractor;
+
 import java.util.List;
 
 import org.junit.Assert;

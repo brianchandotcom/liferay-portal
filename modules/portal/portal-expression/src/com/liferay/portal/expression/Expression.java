@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.expression;
+package com.liferay.portal.expression;
 
 import java.util.Map;
 

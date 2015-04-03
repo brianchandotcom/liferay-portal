@@ -3305,6 +3305,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<delete file="portal-web/test/test-portal-web-ext.properties" />
 
 		<antcall target="prepare-selenium-browser-properties" />
+		<antcall target="prepare-selenium-database-properties" />
 
 		<if>
 			<isset property="selenium.output.dir" />
@@ -3316,186 +3317,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<else>
 				<property name="selenium.output.dir" value="H:\\selenium-output\\" />
 			</else>
-		</if>
-
-		<if>
-			<isset property="database.db2.driver" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.db2.driver=${database.db2.driver}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.db2.password" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.db2.password=${database.db2.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.db2.url" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.db2.url=${database.db2.url}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.db2.username" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.db2.username=${database.db2.username}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.mysql.driver" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.mysql.driver=${database.mysql.driver}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.mysql.password" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.mysql.password=${database.mysql.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.mysql.url" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.mysql.url=${database.mysql.url}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.mysql.username" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.mysql.username=${database.mysql.username}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.oracle.driver" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.oracle.driver=${database.oracle.driver}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.oracle.password" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.oracle.password=${database.oracle.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.oracle.url" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.oracle.url=${database.oracle.url}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.oracle.username" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.oracle.username=${database.oracle.username}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.postgresql.driver" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.postgresql.driver=${database.postgresql.driver}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.postgresql.password" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.postgresql.password=${database.postgresql.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.postgresql.url" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.postgresql.url=${database.postgresql.url}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.postgresql.username" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.postgresql.username=${database.postgresql.username}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.sybase.driver" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.sybase.driver=${database.sybase.driver}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.sybase.password" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.sybase.password=${database.sybase.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.sybase.url" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.sybase.url=${database.sybase.url}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.sybase.username" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					database.sybase.username=${database.sybase.username}
-				</echo>
-			</then>
 		</if>
 
 		<if>
@@ -3874,6 +3695,188 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 					</echo>
 				</then>
 			</elseif>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-database-properties">
+		<if>
+			<isset property="database.db2.driver" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.db2.driver=${database.db2.driver}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.db2.password" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.db2.password=${database.db2.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.db2.url" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.db2.url=${database.db2.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.db2.username" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.db2.username=${database.db2.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.mysql.driver" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.mysql.driver=${database.mysql.driver}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.mysql.password" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.mysql.password=${database.mysql.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.mysql.url" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.mysql.url=${database.mysql.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.mysql.username" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.mysql.username=${database.mysql.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.oracle.driver" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.oracle.driver=${database.oracle.driver}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.oracle.password" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.oracle.password=${database.oracle.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.oracle.url" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.oracle.url=${database.oracle.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.oracle.username" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.oracle.username=${database.oracle.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.postgresql.driver" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.postgresql.driver=${database.postgresql.driver}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.postgresql.password" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.postgresql.password=${database.postgresql.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.postgresql.url" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.postgresql.url=${database.postgresql.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.postgresql.username" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.postgresql.username=${database.postgresql.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.sybase.driver" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.sybase.driver=${database.sybase.driver}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.sybase.password" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.sybase.password=${database.sybase.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.sybase.url" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.sybase.url=${database.sybase.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.sybase.username" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.sybase.username=${database.sybase.username}
+				</echo>
+			</then>
 		</if>
 	</target>
 

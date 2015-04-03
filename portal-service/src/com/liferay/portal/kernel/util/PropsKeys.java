@@ -2429,6 +2429,8 @@ public interface PropsKeys {
 
 	public static final String SPRING_CONFIGS = "spring.configs";
 
+	public static final String SPRING_CONFIGS_INFRASTRUCTURE = "spring.configs.infrastructure";
+
 	public static final String SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES = "spring.hibernate.configuration.proxy.factory.preload.classloader.classes";
 
 	public static final String SPRING_HIBERNATE_DATA_SOURCE = "spring.hibernate.data.source";

@@ -19,6 +19,7 @@ import com.liferay.portal.cache.CacheRegistryImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.dao.db.DBFactoryImpl;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
+import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -37,7 +38,7 @@ import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
-import com.liferay.portal.spring.util.SpringUtil;
+import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.util.log4j.Log4JUtil;
 
 import com.sun.syndication.io.XmlReader;
@@ -45,6 +46,9 @@ import com.sun.syndication.io.XmlReader;
 import java.util.List;
 
 import org.apache.commons.lang.time.StopWatch;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -189,18 +193,28 @@ public class InitUtil {
 					System.getProperty(SystemProperties.TMP_DIR);
 
 				ModuleFrameworkUtilAdapter.initFramework();
+			}
+
+			ApplicationContext applicationContext = new ArrayApplicationContext(
+				PropsValues.SPRING_CONFIGS_INFRASTRUCTURE);
+
+			if (initModuleFramework) {
+				ModuleFrameworkUtilAdapter.registerContext(applicationContext);
 
 				ModuleFrameworkUtilAdapter.startFramework();
 			}
 
-			SpringUtil.loadContext(configLocations);
+			applicationContext = new ClassPathXmlApplicationContext(
+				configLocations.toArray(new String[configLocations.size()]),
+				applicationContext);
+
+			BeanLocator beanLocator = new BeanLocatorImpl(
+				ClassLoaderUtil.getPortalClassLoader(), applicationContext);
+
+			PortalBeanLocatorUtil.setBeanLocator(beanLocator);
 
 			if (initModuleFramework) {
-				BeanLocatorImpl beanLocatorImpl =
-					(BeanLocatorImpl)PortalBeanLocatorUtil.getBeanLocator();
-
-				ModuleFrameworkUtilAdapter.registerContext(
-					beanLocatorImpl.getApplicationContext());
+				ModuleFrameworkUtilAdapter.registerContext(applicationContext);
 
 				ModuleFrameworkUtilAdapter.startRuntime();
 			}

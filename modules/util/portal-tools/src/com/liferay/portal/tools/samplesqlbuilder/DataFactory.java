@@ -250,10 +250,22 @@ public class DataFactory {
 		_guestGroupId = _counter.get();
 		_sampleUserId = _counter.get();
 
-		_dlDDMStructureContent = StringUtil.read(
-			getResourceInputStream("ddm_structure_basic_document.json"));
-		_journalDDMStructureContent = StringUtil.read(
-			getResourceInputStream("ddm_structure_basic_web_content.json"));
+		List<String> lines = new ArrayList<>();
+
+		StringUtil.readLines(
+			getResourceInputStream("ddm_structure_basic_document.json"), lines);
+
+		_dlDDMStructureContent = StringUtil.merge(lines, StringPool.SPACE);
+
+		lines.clear();
+
+		StringUtil.readLines(
+			getResourceInputStream("ddm_structure_basic_web_content.json"),
+			lines);
+
+		_journalDDMStructureContent = StringUtil.merge(lines, StringPool.SPACE);
+
+		lines.clear();
 
 		String defaultAssetPublisherPreference = StringUtil.read(
 			getResourceInputStream("default_asset_publisher_preference.xml"));

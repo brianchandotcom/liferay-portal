@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -138,6 +140,20 @@ public abstract class BaseStoreTestCase {
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 	}
 
+	@Test(expected = DuplicateFileException.class)
+	public void testCopyFileVersionDuplicateFileException() throws Exception {
+		String fileName = addFile(1);
+
+		store.copyFileVersion(companyId, repositoryId, fileName, "1.0", "1.1");
+	}
+
+	@Test(expected = NoSuchFileException.class)
+	public void testCopyFileVersionNoSuchFileException() throws Exception {
+		store.copyFileVersion(
+			companyId, repositoryId, RandomTestUtil.randomString(), "1.0",
+			"1.1");
+	}
+
 	@Test
 	public void testDeleteDirectory() throws Exception {
 
@@ -241,6 +257,13 @@ public abstract class BaseStoreTestCase {
 
 		Assert.assertFalse(
 			store.hasFile(companyId, repositoryId, fileName, "1.1"));
+	}
+
+	@Test(expected = NoSuchFileException.class)
+	public void testGetFileAsBytesNoSuchFileException() throws Exception {
+		String fileName = RandomTestUtil.randomString();
+
+		store.getFileAsBytes(companyId, repositoryId, fileName);
 	}
 
 	@Test
@@ -380,6 +403,22 @@ public abstract class BaseStoreTestCase {
 		Assert.assertEquals(_DATA_SIZE, size);
 	}
 
+	@Test(expected = NoSuchFileException.class)
+	public void testGetFileSizeNoSuchFileException() throws Exception {
+		String fileName = RandomTestUtil.randomString();
+
+		store.getFileSize(companyId, repositoryId, fileName);
+	}
+
+	@Test(expected = NoSuchFileException.class)
+	public void testGetFileVersionAsBytesNoSuchFileException()
+		throws Exception {
+
+		String fileName = addFile(0);
+
+		store.getFileAsBytes(companyId, repositoryId, fileName, "1.1");
+	}
+
 	@Test
 	public void testHasFile() throws Exception {
 		String fileName = RandomTestUtil.randomString();
@@ -431,6 +470,22 @@ public abstract class BaseStoreTestCase {
 		store.deleteFile(
 			companyId, repositoryId, RandomTestUtil.randomString(),
 			Store.VERSION_DEFAULT);
+	}
+
+	@Test(expected = DuplicateFileException.class)
+	public void testUpdateFileVersionDuplicateFileException() throws Exception {
+		String fileName = addFile(0);
+
+		store.updateFileVersion(
+			companyId, repositoryId, fileName, "1.0", "1.0");
+	}
+
+	@Test(expected = NoSuchFileException.class)
+	public void testUpdateFileVersionNoSuchFileException() throws Exception {
+		String fileName = RandomTestUtil.randomString();
+
+		store.updateFileVersion(
+			companyId, repositoryId, fileName, "1.0", "1.1");
 	}
 
 	@Test
@@ -520,6 +575,25 @@ public abstract class BaseStoreTestCase {
 			store.hasFile(companyId, repositoryId, newFileName, "1.2"));
 	}
 
+	@Test(expected = DuplicateFileException.class)
+	public void testUpdateFileWithNewFileNameDuplicateFileException()
+		throws Exception {
+
+		String fileName = addFile(0);
+
+		store.updateFile(companyId, repositoryId, fileName, fileName);
+	}
+
+	@Test(expected = NoSuchFileException.class)
+	public void testUpdateFileWithNewFileNameNoSuchFileException()
+		throws Exception {
+
+		String fileName1 = RandomTestUtil.randomString();
+		String fileName2 = RandomTestUtil.randomString();
+
+		store.updateFile(companyId, repositoryId, fileName1, fileName2);
+	}
+
 	@Test
 	public void testUpdateFileWithNewRepositoryId() throws Exception {
 		String fileName = addFile(0);
@@ -530,6 +604,25 @@ public abstract class BaseStoreTestCase {
 
 		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
 		Assert.assertTrue(store.hasFile(companyId, newRepositoryId, fileName));
+	}
+
+	@Test(expected = DuplicateFileException.class)
+	public void testUpdateFileWithNewRepositoryIdDuplicateFileException()
+		throws Exception {
+
+		String fileName = addFile(0);
+
+		store.updateFile(companyId, repositoryId, repositoryId, fileName);
+	}
+
+	@Test(expected = NoSuchFileException.class)
+	public void testUpdateFileWithNewRepositoryIdNoSuchFileException()
+		throws Exception {
+
+		String fileName1 = RandomTestUtil.randomString();
+		String fileName2 = RandomTestUtil.randomString();
+
+		store.updateFile(companyId, repositoryId, fileName1, fileName2);
 	}
 
 	protected String addFile(int newVersionCount) throws Exception {

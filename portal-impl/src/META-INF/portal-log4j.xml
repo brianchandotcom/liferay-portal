@@ -940,7 +940,7 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.xml.SAXReaderImpl">
+	<category name="com.liferay.portal.xml.SAXReaderFactory">
 		<priority value="WARN" />
 	</category>
 

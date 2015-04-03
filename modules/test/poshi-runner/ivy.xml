@@ -20,7 +20,7 @@
 		<dependency name="commons-io" org="commons-io" rev="2.4" />
 		<dependency name="commons-lang" org="commons-lang" rev="2.6" />
 		<dependency name="dom4j" org="dom4j" rev="1.6.1" />
-		<dependency name="java-client" org="io.appium" rev="1.6.2" />
+		<dependency name="java-client" org="io.appium" rev="2.2.0" />
 		<dependency name="junit" org="junit" rev="4.12" />
 		<dependency name="net.jsourcerer.webdriver.JSErrorCollector" org="com.liferay" rev="0.5-atlassian-2" />
 		<dependency name="selenium-java" org="org.seleniumhq.selenium" rev="2.44.0" />

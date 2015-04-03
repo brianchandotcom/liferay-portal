@@ -14,21 +14,21 @@
 
 package com.liferay.poshi.runner.selenium;
 
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.ios.IOSDriver;
 
 import java.net.URL;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
- * @author Kwang Lee
+ * @author Kenji Heigel
  */
-public class AppiumMobileDriverImpl extends BaseMobileDriverImpl {
+public class IOSMobileDriverImpl extends BaseMobileDriverImpl {
 
-	public AppiumMobileDriverImpl(String projectDirName, String browserURL) {
+	public IOSMobileDriverImpl(String projectDirName, String browserURL) {
 		super(
 			projectDirName, browserURL,
-			new AppiumDriver(_url, _desiredCapabilities));
+			new IOSDriver(_url, _desiredCapabilities));
 	}
 
 	private static final DesiredCapabilities _desiredCapabilities;
@@ -37,10 +37,10 @@ public class AppiumMobileDriverImpl extends BaseMobileDriverImpl {
 	static {
 		_desiredCapabilities = DesiredCapabilities.android();
 
-		_desiredCapabilities.setCapability("browserName", "Browser");
-		_desiredCapabilities.setCapability("deviceName", "deviceName");
-		_desiredCapabilities.setCapability("platformName", "Android");
-		_desiredCapabilities.setCapability("platformVersion", "4.4");
+		_desiredCapabilities.setCapability("browserName", "Safari");
+		_desiredCapabilities.setCapability("deviceName", "iPhone 5s");
+		_desiredCapabilities.setCapability("platformName", "iOS");
+		_desiredCapabilities.setCapability("platformVersion", "8.2");
 
 		URL url = null;
 

@@ -52,7 +52,7 @@ public class SeleniumUtil extends PropsValues {
 		}
 
 		if (MOBILE_DEVICE_ENABLED) {
-			_selenium = new AppiumMobileDriverImpl(projectDir, portalURL);
+			_selenium = new AndroidMobileDriverImpl(projectDir, portalURL);
 		}
 		else {
 			if (BROWSER_TYPE.equals("*chrome") ||

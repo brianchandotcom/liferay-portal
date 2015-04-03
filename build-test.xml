@@ -3306,6 +3306,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 		<antcall target="prepare-selenium-browser-properties" />
 		<antcall target="prepare-selenium-database-properties" />
+		<antcall target="prepare-selenium-email-properties" />
 
 		<if>
 			<isset property="selenium.output.dir" />
@@ -3317,96 +3318,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<else>
 				<property name="selenium.output.dir" value="H:\\selenium-output\\" />
 			</else>
-		</if>
-
-		<if>
-			<isset property="email.address.1" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.address.1=${email.address.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.address.2" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.address.2=${email.address.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.address.3" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.address.3=${email.address.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.address.4" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.address.4=${email.address.4}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.address.5" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.address.5=${email.address.5}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.1" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.password.1=${email.password.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.2" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.password.2=${email.password.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.3" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.password.3=${email.password.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.4" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.password.4=${email.password.4}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="email.password.5" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					email.password.5=${email.password.5}
-				</echo>
-			</then>
 		</if>
 
 		<get-testcase-property property.name="ignore.errors" />
@@ -3425,42 +3336,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					ignore.errors.delimiter=${ignore.errors.delimiter}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.email.address.1" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					lcs.email.address.1=${lcs.email.address.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.email.address.2" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					lcs.email.address.2=${lcs.email.address.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.email.password.1" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					lcs.email.password.1=${lcs.email.password.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.email.password.2" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					lcs.email.password.2=${lcs.email.password.2}
 				</echo>
 			</then>
 		</if>
@@ -3875,6 +3750,134 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					database.sybase.username=${database.sybase.username}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-email-properties">
+		<if>
+			<isset property="email.address.1" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.address.1=${email.address.1}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.address.2" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.address.2=${email.address.2}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.address.3" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.address.3=${email.address.3}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.address.4" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.address.4=${email.address.4}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.address.5" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.address.5=${email.address.5}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.password.1" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.password.1=${email.password.1}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.password.2" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.password.2=${email.password.2}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.password.3" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.password.3=${email.password.3}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.password.4" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.password.4=${email.password.4}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.password.5" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.password.5=${email.password.5}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="lcs.email.address.1" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					lcs.email.address.1=${lcs.email.address.1}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="lcs.email.address.2" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					lcs.email.address.2=${lcs.email.address.2}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="lcs.email.password.1" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					lcs.email.password.1=${lcs.email.password.1}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="lcs.email.password.2" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					lcs.email.password.2=${lcs.email.password.2}
 				</echo>
 			</then>
 		</if>

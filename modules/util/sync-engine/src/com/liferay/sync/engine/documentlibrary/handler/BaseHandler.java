@@ -84,6 +84,9 @@ public class BaseHandler implements Handler<Void> {
 
 				SyncAccountService.update(syncAccount);
 
+				retryServerConnection(
+					SyncAccount.UI_EVENT_AUTHENTICATION_EXCEPTION, 1);
+
 				return;
 			}
 		}
@@ -96,7 +99,8 @@ public class BaseHandler implements Handler<Void> {
 			(e instanceof SocketTimeoutException) ||
 			(e instanceof UnknownHostException)) {
 
-			retryServerConnection(SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
+			retryServerConnection(
+				SyncAccount.UI_EVENT_CONNECTION_EXCEPTION, -1);
 		}
 		else if (e instanceof FileNotFoundException) {
 			SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
@@ -222,7 +226,7 @@ public class BaseHandler implements Handler<Void> {
 	protected void processFinally() {
 	}
 
-	protected void retryServerConnection(int uiEvent) {
+	protected void retryServerConnection(int uiEvent, int maxCount) {
 		if (!(_event instanceof GetSyncContextEvent) &&
 			ConnectionRetryUtil.retryInProgress(getSyncAccountId())) {
 
@@ -233,6 +237,12 @@ public class BaseHandler implements Handler<Void> {
 			getSyncAccountId());
 
 		int retryCount = ConnectionRetryUtil.getRetryCount(getSyncAccountId());
+
+		if ((maxCount != -1) && (retryCount >= maxCount)) {
+			ConnectionRetryUtil.resetRetry(getSyncAccountId());
+
+			return;
+		}
 
 		if (retryCount > 0) {
 			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);

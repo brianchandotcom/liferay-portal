@@ -146,8 +146,6 @@ public class DownloadFileHandler extends BaseHandler {
 		List<String> downloadedFilePathNames =
 			watcher.getDownloadedFilePathNames();
 
-		downloadedFilePathNames.add(filePath.toString());
-
 		try {
 			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 				getSyncAccountId());

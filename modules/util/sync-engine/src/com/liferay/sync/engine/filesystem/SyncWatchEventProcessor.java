@@ -101,6 +101,13 @@ public class SyncWatchEventProcessor implements Runnable {
 		}
 
 		count = SyncFileService.getSyncFilesCount(
+			_syncAccountId, SyncFile.UI_EVENT_DOWNLOADING);
+
+		if (count > 0) {
+			return true;
+		}
+
+		count = SyncFileService.getSyncFilesCount(
 			_syncAccountId, SyncFile.UI_EVENT_UPLOADING);
 
 		if (count > 0) {

@@ -20,21 +20,8 @@ package com.liferay.gradle.plugins.util;
  */
 public class Validator {
 
-	public static boolean isNotNull(Object[] array) {
-		return !isNull(array);
-	}
-
 	public static boolean isNotNull(String s) {
 		return !isNull(s);
-	}
-
-	public static boolean isNull(Object[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	public static boolean isNull(String s) {

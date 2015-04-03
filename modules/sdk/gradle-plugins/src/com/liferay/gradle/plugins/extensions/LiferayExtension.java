@@ -14,11 +14,7 @@
 
 package com.liferay.gradle.plugins.extensions;
 
-import com.liferay.gradle.plugins.util.FileUtil;
-
 import java.io.File;
-
-import java.util.Properties;
 
 import org.gradle.api.Project;
 
@@ -28,41 +24,7 @@ import org.gradle.api.Project;
 public class LiferayExtension {
 
 	public LiferayExtension(Project project) throws Exception {
-		_bndProperties = FileUtil.readProperties(project, "bnd.bnd");
-		_pluginPackageProperties = FileUtil.readProperties(
-			project, "docroot/WEB-INF/liferay-plugin-package.properties");
-
-		File pluginSrcDir = project.file("docroot/WEB-INF/src");
-
-		if (!pluginSrcDir.exists()) {
-			pluginSrcDir = project.file("src");
-		}
-
-		_pluginSrcDir = pluginSrcDir;
-
-		String projectName = project.getName();
-
-		int index = projectName.lastIndexOf("-");
-
-		_pluginType = projectName.substring(index + 1);
-
 		_tmpDir = new File(project.getRootDir(), "tmp");
-	}
-
-	public String getBndProperty(String key) {
-		return _bndProperties.getProperty(key);
-	}
-
-	public String getPluginPackageProperty(String key) {
-		return _pluginPackageProperties.getProperty(key);
-	}
-
-	public File getPluginSrcDir() {
-		return _pluginSrcDir;
-	}
-
-	public String getPluginType() {
-		return _pluginType;
 	}
 
 	public String getPortalVersion() {
@@ -73,12 +35,16 @@ public class LiferayExtension {
 		return _tmpDir;
 	}
 
-	public boolean isOsgiPlugin() {
-		if (!_bndProperties.isEmpty()) {
-			return true;
+	public String getVersionPrefix() {
+		String version = getPortalVersion();
+
+		int index = version.indexOf("-");
+
+		if (index != -1) {
+			version = version.substring(0, index);
 		}
 
-		return false;
+		return version;
 	}
 
 	public void setPortalVersion(String portalVersion) {
@@ -89,10 +55,6 @@ public class LiferayExtension {
 		_tmpDir = tmpDir;
 	}
 
-	private final Properties _bndProperties;
-	private final Properties _pluginPackageProperties;
-	private final File _pluginSrcDir;
-	private final String _pluginType;
 	private String _portalVersion = "7.0.0-SNAPSHOT";
 	private File _tmpDir;
 

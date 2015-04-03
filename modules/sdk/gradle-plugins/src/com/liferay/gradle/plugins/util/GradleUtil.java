@@ -61,6 +61,12 @@ public class GradleUtil {
 	}
 
 	public static Dependency addDependency(
+		Project project, String configurationName, String dependencyNotation) {
+
+		return _addDependency(project, configurationName, dependencyNotation);
+	}
+
+	public static Dependency addDependency(
 		Project project, String configurationName, String group, String name,
 		String version) {
 
@@ -157,11 +163,11 @@ public class GradleUtil {
 
 			@SuppressWarnings("unused")
 			public void doCall(PatternFilterable patternFilterable) {
-				if (Validator.isNotNull(excludes)) {
+				if (ArrayUtil.isNotEmpty(excludes)) {
 					patternFilterable.setExcludes(Arrays.asList(excludes));
 				}
 
-				if (Validator.isNotNull(includes)) {
+				if (ArrayUtil.isNotEmpty(includes)) {
 					patternFilterable.setIncludes(Arrays.asList(includes));
 				}
 			}

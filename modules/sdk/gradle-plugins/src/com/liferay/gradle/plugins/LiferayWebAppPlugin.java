@@ -17,9 +17,9 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
-import com.liferay.gradle.plugins.tasks.FormatSourceTask;
-import com.liferay.gradle.plugins.tasks.InitGradleTask;
-import com.liferay.gradle.plugins.util.StringUtil;
+import com.liferay.gradle.plugins.util.ArrayUtil;
+import com.liferay.gradle.plugins.util.FileUtil;
+import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.Validator;
 
 import groovy.lang.Closure;
@@ -28,31 +28,27 @@ import java.io.File;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
-import org.gradle.api.artifacts.ModuleVersionSelector;
-import org.gradle.api.artifacts.ProjectDependency;
-import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolvedArtifact;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCopyDetails;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.file.copy.CopySpecInternal;
 import org.gradle.api.internal.file.copy.CopySpecResolver;
-import org.gradle.api.java.archives.Manifest;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
@@ -63,141 +59,97 @@ import org.gradle.api.tasks.bundling.War;
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayWebAppPlugin extends BasePlugin {
+public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
-	public static final String EXTENSION_NAME = "liferay";
+	@Override
+	public void apply(Project project) {
+		super.apply(project);
 
-	protected void addLiferayExtension() {
-		String projectName = project.getName();
+		configureWebAppDirName(project);
+	}
 
-		if (projectName.endsWith("-theme")) {
-			_liferayExtension = addExtension(
-				EXTENSION_NAME, LiferayThemeExtension.class);
+	@Override
+	protected void addTaskWar(Project project) {
+	}
+
+	@Override
+	protected void applyPlugins(Project project) {
+		super.applyPlugins(project);
+
+		GradleUtil.applyPlugin(project, WarPlugin.class);
+	}
+
+	@Override
+	protected void configureDependencies(
+		Project project, LiferayExtension liferayExtension) {
+
+		super.configureDependencies(project, liferayExtension);
+
+		configureDependenciesProvidedCompile(project, liferayExtension);
+	}
+
+	@Override
+	protected void configureDependenciesCompile(
+		Project project, LiferayExtension liferayExtension) {
+
+		super.configureDependenciesCompile(project, liferayExtension);
+
+		if (liferayExtension instanceof LiferayThemeExtension) {
+			for (String dependencyNotation :
+					_THEME_COMPILE_DEPENDENCY_NOTATIONS) {
+
+				GradleUtil.addDependency(
+					project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+					dependencyNotation);
+			}
 		}
-		else {
-			_liferayExtension = addExtension(
-				EXTENSION_NAME, LiferayExtension.class);
-		}
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					File serviceJarFile = new File(
+						getWebAppDir(project),
+						"WEB-INF/lib/" + project.getName() + "-service.jar");
+
+					if (serviceJarFile.exists()) {
+						GradleUtil.addDependency(
+							project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+							serviceJarFile);
+					}
+				}
+
+			});
 	}
 
-	protected void addTaskBuildCss() {
-		Task task = addTask("buildCss", BuildCssTask.class);
+	protected void configureDependenciesProvidedCompile(
+		Project project, LiferayExtension liferayExtension) {
 
-		task.setDescription("Compiles CSS files.");
-		task.setGroup(org.gradle.api.plugins.BasePlugin.BUILD_GROUP);
-	}
+		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
+			if ((liferayExtension instanceof LiferayThemeExtension) &&
+				ArrayUtil.contains(
+					_THEME_COMPILE_DEPENDENCY_NOTATIONS, dependencyNotation)) {
 
-	protected void addTaskFormatSource() {
-		Task task = addTask("formatSource", FormatSourceTask.class);
-
-		task.setDescription("Runs Liferay Source Formatter to format files.");
-	}
-
-	protected void addTaskInitGradle() {
-		Task task = addTask("initGradle", InitGradleTask.class);
-
-		task.setDescription(
-			"Initializes build.gradle by migrating information from legacy " +
-				"files.");
-	}
-
-	protected void addTasks() {
-		addTaskBuildCss();
-		addTaskFormatSource();
-		addTaskInitGradle();
-	}
-
-	protected void configureConfigurations() {
-		Action<Configuration> action = new Action<Configuration>() {
-
-			@Override
-			public void execute(Configuration configuration) {
-				ResolutionStrategy resolutionStrategy =
-					configuration.getResolutionStrategy();
-
-				resolutionStrategy.eachDependency(
-					new Action<DependencyResolveDetails>() {
-
-						@Override
-						public void execute(
-							DependencyResolveDetails dependencyResolveDetails) {
-								ModuleVersionSelector moduleVersionSelector =
-									dependencyResolveDetails.getRequested();
-
-								String group = moduleVersionSelector.getGroup();
-								String version =
-									moduleVersionSelector.getVersion();
-
-								if (group.equals("com.liferay.portal") &&
-									version.equals("default")) {
-
-									dependencyResolveDetails.useVersion(
-										_liferayExtension.getPortalVersion());
-								}
-						}
-
-					});
+				continue;
 			}
 
-		};
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		configurationContainer.all(action);
-	}
-
-	protected void configureDependencies() {
-		configureDependenciesCompile();
-		configureDependenciesProvidedCompile();
-	}
-
-	protected void configureDependenciesCompile() {
-		File serviceJarFile = project.file(
-			"docroot/WEB-INF/lib/" + project.getName() + "-service.jar");
-
-		if (serviceJarFile.exists()) {
-			DependencyHandler dependencyHandler = project.getDependencies();
-
-			dependencyHandler.add(
-				JavaPlugin.COMPILE_CONFIGURATION_NAME,
-				project.files(serviceJarFile));
+			GradleUtil.addDependency(
+				project, WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
+				dependencyNotation);
 		}
 	}
 
-	protected void configureDependenciesProvidedCompile() {
-		addDependencies(
-			WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
-			"biz.aQute.bnd:biz.aQute.bnd:2.4.1",
-			"com.liferay.portal:portal-service:default",
-			"hsqldb:hsqldb:1.8.0.7", "javax.activation:activation:1.1",
-			"javax.ccpp:ccpp:1.0", "javax.jms:jms:1.1", "javax.mail:mail:1.4",
-			"javax.portlet:portlet-api:2.0", "javax.servlet.jsp:jsp-api:2.1",
-			"javax.servlet:javax.servlet-api:3.0.1",
-			"mysql:mysql-connector-java:5.1.23", "net.sf:jargs:1.0",
-			"net.sourceforge.jtds:jtds:1.2.6",
-			"org.eclipse.persistence:javax.persistence:2.0.0",
-			"postgresql:postgresql:9.2-1002.jdbc4");
-
-		String pluginType = _liferayExtension.getPluginType();
-
-		if (!pluginType.equals("theme")) {
-			addDependencies(
-				WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
-				"com.liferay.portal:util-bridges:default",
-				"com.liferay.portal:util-java:default",
-				"com.liferay.portal:util-taglib:default",
-				"commons-logging:commons-logging:1.1.1", "log4j:log4j:1.2.16");
-		}
-	}
-
-	protected void configureSourceSets() {
-		SourceSet sourceSet = getSourceSet(SourceSet.MAIN_SOURCE_SET_NAME);
+	@Override
+	protected void configureSourceSetMain(Project project) {
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 
-		Set<File> srcDirs = Collections.singleton(
-			_liferayExtension.getPluginSrcDir());
+		File srcDir = project.file("docroot/WEB-INF/src");
+
+		Set<File> srcDirs = Collections.singleton(srcDir);
 
 		javaSourceDirectorySet.setSrcDirs(srcDirs);
 
@@ -207,56 +159,37 @@ public class LiferayWebAppPlugin extends BasePlugin {
 		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
 	}
 
-	protected void configureTaskClean() {
-		Task cleanTask = getTask(
-			org.gradle.api.plugins.BasePlugin.CLEAN_TASK_NAME);
+	@Override
+	protected void configureTaskBuildCssDirNames(BuildCssTask buildCssTask) {
+		List<String> cssDirNames = buildCssTask.getCssDirNames();
 
-		configureTaskCleanDependsOn(cleanTask);
-	}
-
-	protected void configureTaskCleanDependsOn(Task cleanTask) {
-		for (Task task : project.getTasks()) {
-			String taskName =
-				org.gradle.api.plugins.BasePlugin.CLEAN_TASK_NAME +
-					StringUtil.capitalize(task.getName());
-
-			cleanTask.dependsOn(taskName);
+		if (!cssDirNames.isEmpty()) {
+			return;
 		}
 
-		Configuration compileConfiguration = getConfiguration(
-			JavaPlugin.COMPILE_CONFIGURATION_NAME);
+		Project project = buildCssTask.getProject();
 
-		Set<Dependency> compileDependencies =
-			compileConfiguration.getAllDependencies();
+		String cssDirName = project.relativePath(getWebAppDir(project));
 
-		for (Dependency dependency : compileDependencies) {
-			if (!(dependency instanceof ProjectDependency)) {
-				continue;
-			}
-
-			ProjectDependency projectDependency = (ProjectDependency)dependency;
-
-			Project dependencyProject =
-				projectDependency.getDependencyProject();
-
-			String taskName =
-				dependencyProject.getPath() + Project.PATH_SEPARATOR +
-					org.gradle.api.plugins.BasePlugin.CLEAN_TASK_NAME;
-
-			cleanTask.dependsOn(taskName);
-		}
+		cssDirNames.add(cssDirName);
 	}
 
-	protected void configureTasks() {
-		configureTaskClean();
-		configureTaskWar();
+	@Override
+	protected void configureTasks(
+		Project project, LiferayExtension liferayExtension) {
+
+		super.configureTasks(project, liferayExtension);
+
+		configureTaskWar(project, liferayExtension);
 	}
 
-	protected void configureTaskWar() {
-		War warTask = (War)getTask(WarPlugin.WAR_TASK_NAME);
+	protected void configureTaskWar(
+		Project project, LiferayExtension liferayExtension) {
+
+		War warTask = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 
 		configureTaskWarDuplicatesStrategy(warTask);
-		configureTaskWarExclude(warTask);
+		configureTaskWarExcludeManifest(warTask);
 		configureTaskWarFilesMatching(warTask);
 		configureTaskWarOutputs(warTask);
 		configureTaskWarRenameDependencies(warTask);
@@ -266,11 +199,30 @@ public class LiferayWebAppPlugin extends BasePlugin {
 		warTask.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 	}
 
-	protected void configureTaskWarExclude(War warTask) {
-		warTask.exclude("WEB-INF/lib");
+	protected void configureTaskWarExcludeManifest(War warTask) {
+		CopySpecInternal copySpecInternal = warTask.getRootSpec();
+
+		for (CopySpecInternal childCopySpecInternal :
+				copySpecInternal.getChildren()) {
+
+			CopySpecResolver copySpecResolver =
+				childCopySpecInternal.buildRootResolver();
+
+			RelativePath destRelativePath = copySpecResolver.getDestPath();
+
+			String destRelativePathString = destRelativePath.getPathString();
+
+			if (destRelativePathString.equals("META-INF")) {
+				childCopySpecInternal.exclude("**");
+
+				return;
+			}
+		}
 	}
 
 	protected void configureTaskWarFilesMatching(War warTask) {
+		final Project project = warTask.getProject();
+
 		final Closure<String> closure = new Closure<String>(null) {
 
 			@SuppressWarnings("unused")
@@ -281,21 +233,26 @@ public class LiferayWebAppPlugin extends BasePlugin {
 
 				StringBuilder sb = new StringBuilder();
 
-				File contentDir = new File(
-					_liferayExtension.getPluginSrcDir(), "content");
+				SourceSet sourceSet = GradleUtil.getSourceSet(
+					project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-				File[] files = contentDir.listFiles();
+				FileTree fileTree = GradleUtil.getFilteredFileTree(
+					sourceSet.getResources(),
+					new String[] {"content/Language*.properties"}, null);
 
-				for (int i = 0; i < files.length; i++) {
-					File file = files[i];
+				Iterator<File> iterator = fileTree.iterator();
+
+				while (iterator.hasNext()) {
+					File file = iterator.next();
 
 					sb.append("\t<language-properties>content/");
 					sb.append(file.getName());
 					sb.append("</language-properties>");
+					sb.append("\n");
+				}
 
-					if ((i + 1) < files.length) {
-						sb.append("\n");
-					}
+				if (sb.length() > 0) {
+					sb.setLength(sb.length() - 1);
 				}
 
 				return sb.toString();
@@ -315,42 +272,6 @@ public class LiferayWebAppPlugin extends BasePlugin {
 			});
 	}
 
-	protected void configureTaskWarManifest(War warTask) {
-		File manifestFile = null;
-
-		if (_liferayExtension.isOsgiPlugin()) {
-			manifestFile = project.file("src/META-INF/MANIFEST.MF");
-		}
-		else {
-			manifestFile = project.file("docroot/META-INF/MANIFEST.MF");
-		}
-
-		Manifest manifest = warTask.getManifest();
-
-		if (manifestFile.exists()) {
-			manifest.from(manifestFile);
-		}
-		else {
-			CopySpecInternal copySpecInternal = warTask.getRootSpec();
-
-			for (CopySpecInternal childCopySpecInternal :
-					copySpecInternal.getChildren()) {
-
-				CopySpecResolver copySpecResolver =
-					childCopySpecInternal.buildRootResolver();
-
-				RelativePath destRelativePath = copySpecResolver.getDestPath();
-
-				String destRelativePathString =
-					destRelativePath.getPathString();
-
-				if (destRelativePathString.equals("META-INF")) {
-					childCopySpecInternal.exclude("**");
-				}
-			}
-		}
-	}
-
 	protected void configureTaskWarOutputs(War warTask) {
 		TaskOutputs taskOutputs = warTask.getOutputs();
 
@@ -358,6 +279,8 @@ public class LiferayWebAppPlugin extends BasePlugin {
 	}
 
 	protected void configureTaskWarRenameDependencies(War warTask) {
+		final Project project = warTask.getProject();
+
 		Closure<String> closure = new Closure<String>(null) {
 
 			@SuppressWarnings("unused")
@@ -381,8 +304,9 @@ public class LiferayWebAppPlugin extends BasePlugin {
 
 				_newDependencyNames = new HashMap<>();
 
-				Configuration compileConfiguration = getConfiguration(
-					JavaPlugin.COMPILE_CONFIGURATION_NAME);
+				Configuration compileConfiguration =
+					GradleUtil.getConfiguration(
+						project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
 
 				ResolvedConfiguration resolvedConfiguration =
 					compileConfiguration.getResolvedConfiguration();
@@ -422,75 +346,62 @@ public class LiferayWebAppPlugin extends BasePlugin {
 		}
 	}
 
-	protected void configureVersion() {
-		String version = null;
+	@Override
+	protected void configureVersion(
+		Project project, LiferayExtension liferayExtension) {
 
-		String moduleFullVersion = _liferayExtension.getPluginPackageProperty(
+		Object versionObj = project.getVersion();
+
+		if (!versionObj.equals(Project.DEFAULT_VERSION)) {
+			return;
+		}
+
+		File pluginPackagePropertiesFile = new File(
+			getWebAppDir(project), "WEB-INF/liferay-plugin-package.properties");
+
+		Properties pluginPackageProperties;
+
+		try {
+			pluginPackageProperties = FileUtil.readProperties(
+				pluginPackagePropertiesFile);
+		}
+		catch (Exception e) {
+			throw new GradleException(
+				"Unable to read " + pluginPackagePropertiesFile, e);
+		}
+
+		String version = pluginPackageProperties.getProperty(
 			"module-full-version");
 
-		if (Validator.isNotNull(moduleFullVersion)) {
-			version = moduleFullVersion;
-		}
-		else {
-			String bundleVersion = _liferayExtension.getBndProperty(
-				"Bundle-Version");
+		if (Validator.isNull(version)) {
+			version = pluginPackageProperties.getProperty(
+				"module-incremental-version");
 
-			if (Validator.isNotNull(bundleVersion)) {
-				version = bundleVersion;
-			}
-			else {
-				String moduleIncrementalVersion =
-					_liferayExtension.getPluginPackageProperty(
-						"module-incremental-version");
-
-				String portalVersion = _liferayExtension.getPortalVersion();
-
-				int index = portalVersion.indexOf("-");
-
-				if (index != -1) {
-					portalVersion = portalVersion.substring(0, index);
-				}
-
-				version = portalVersion + "." + moduleIncrementalVersion;
-			}
+			version = liferayExtension.getVersionPrefix() + "." + version;
 		}
 
 		project.setVersion(version);
 	}
 
-	protected void configureWebAppDirName() {
-		WarPluginConvention warPluginConvention = getPluginConvention(
-			WarPluginConvention.class);
+	protected void configureWebAppDirName(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
 
 		warPluginConvention.setWebAppDirName("docroot");
 	}
 
-	@Override
-	protected void doApply() throws Exception {
-		applyPlugin(WarPlugin.class);
+	protected File getWebAppDir(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
 
-		addLiferayExtension();
-
-		configureConfigurations();
-		configureDependencies();
-		configureRepositories();
-		configureSourceSets();
-		configureVersion();
-		configureWebAppDirName();
-
-		addTasks();
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					configureTasks();
-				};
-
-			});
+		return warPluginConvention.getWebAppDir();
 	}
 
-	private LiferayExtension _liferayExtension;
+	private static final String[] _THEME_COMPILE_DEPENDENCY_NOTATIONS = {
+		"com.liferay.portal:util-bridges:default",
+		"com.liferay.portal:util-java:default",
+		"com.liferay.portal:util-taglib:default",
+		"commons-logging:commons-logging:1.1.1", "log4j:log4j:1.2.16"
+	};
 
 }

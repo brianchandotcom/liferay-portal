@@ -12,10 +12,37 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.util;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Brian Wing Shun Chan
  */
-public class LiferayOSGiPlugin extends LiferayJavaPlugin {
+public class ArrayUtil {
+
+	public static boolean contains(Object[] array, Object value) {
+		if (isEmpty(array) || (value == null)) {
+			return false;
+		}
+
+		for (int i = 0; i < array.length; i++) {
+			if (value.equals(array[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(Object[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isNotEmpty(Object[] array) {
+		return !isEmpty(array);
+	}
+
 }

@@ -16,7 +16,6 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -46,7 +45,6 @@ import java.util.TreeSet;
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
  */
-@DoPrivileged
 public abstract class BaseModelHintsImpl implements ModelHints {
 
 	public void afterPropertiesSet() {

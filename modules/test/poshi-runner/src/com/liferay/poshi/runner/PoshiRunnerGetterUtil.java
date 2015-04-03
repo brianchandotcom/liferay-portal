@@ -339,8 +339,8 @@ public class PoshiRunnerGetterUtil {
 			"default", "definition", "description", "echo", "else", "elseif",
 			"equals", "execute", "fail", "for", "if", "head", "html", "isset",
 			"not", "or", "property", "set-up", "table", "take-screenshot",
-			"tbody", "td", "tear-down", "thead", "then", "title", "tr", "var",
-			"while"
+			"task", "tbody", "td", "tear-down", "thead", "then", "title", "tr",
+			"var", "while"
 		});
 	private static final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
 

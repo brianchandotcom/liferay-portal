@@ -244,6 +244,14 @@ public class LayoutStagedModelDataHandler
 		return portletIds;
 	}
 
+	protected String checkFriendlyURL(String friendlyURL, long layoutId) {
+		if (!Validator.isNumber(friendlyURL.substring(1))) {
+			return friendlyURL;
+		}
+
+		return StringPool.SLASH + layoutId;
+	}
+
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Layout layout)
@@ -383,9 +391,7 @@ public class LayoutStagedModelDataHandler
 				layoutId = LayoutLocalServiceUtil.getNextLayoutId(
 					groupId, privateLayout);
 
-				if (Validator.isNumber(friendlyURL.substring(1))) {
-					friendlyURL = StringPool.SLASH + layoutId;
-				}
+				friendlyURL = checkFriendlyURL(friendlyURL, layoutId);
 			}
 		}
 		else if (layoutsImportMode.equals(
@@ -449,9 +455,7 @@ public class LayoutStagedModelDataHandler
 				layoutId = LayoutLocalServiceUtil.getNextLayoutId(
 					groupId, privateLayout);
 
-				if (Validator.isNumber(friendlyURL.substring(1))) {
-					friendlyURL = StringPool.SLASH + layoutId;
-				}
+				friendlyURL = checkFriendlyURL(friendlyURL, layoutId);
 			}
 		}
 
@@ -491,9 +495,7 @@ public class LayoutStagedModelDataHandler
 				layoutId = LayoutLocalServiceUtil.getNextLayoutId(
 					groupId, privateLayout);
 
-				if (Validator.isNumber(friendlyURL.substring(1))) {
-					friendlyURL = StringPool.SLASH + layoutId;
-				}
+				friendlyURL = checkFriendlyURL(friendlyURL, layoutId);
 			}
 			else {
 				importedLayout.setCreateDate(layout.getCreateDate());

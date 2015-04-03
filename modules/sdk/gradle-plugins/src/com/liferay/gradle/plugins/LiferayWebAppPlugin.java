@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
+import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask;
 import com.liferay.gradle.plugins.util.ArrayUtil;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -37,6 +38,7 @@ import java.util.Set;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ResolvedArtifact;
@@ -49,6 +51,7 @@ import org.gradle.api.file.RelativePath;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.file.copy.CopySpecInternal;
 import org.gradle.api.internal.file.copy.CopySpecResolver;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
@@ -66,6 +69,39 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureWebAppDirName(project);
+	}
+
+	@Override
+	protected LiferayExtension addLiferayExtension(Project project) {
+		Class<? extends LiferayExtension> clazz = LiferayExtension.class;
+
+		String projectName = project.getName();
+
+		if (projectName.endsWith("-theme")) {
+			clazz = LiferayThemeExtension.class;
+		}
+
+		return GradleUtil.addExtension(
+			project, LiferayPlugin.PLUGIN_NAME, clazz);
+	}
+
+	protected void addTaskBuildThumbnails(Project project) {
+		Task task = GradleUtil.addTask(
+			project, _BUILD_THUMBNAILS_TASK_NAME, BuildThumbnailsTask.class);
+
+		task.setDescription("Generates the theme thumbnails.");
+		task.setGroup(BasePlugin.BUILD_GROUP);
+	}
+
+	@Override
+	protected void addTasks(
+		Project project, LiferayExtension liferayExtension) {
+
+		super.addTasks(project, liferayExtension);
+
+		if (isTheme(liferayExtension)) {
+			addTaskBuildThumbnails(project);
+		}
 	}
 
 	@Override
@@ -94,7 +130,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		super.configureDependenciesCompile(project, liferayExtension);
 
-		if (liferayExtension instanceof LiferayThemeExtension) {
+		if (isTheme(liferayExtension)) {
 			for (String dependencyNotation :
 					_THEME_COMPILE_DEPENDENCY_NOTATIONS) {
 
@@ -127,7 +163,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		Project project, LiferayExtension liferayExtension) {
 
 		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
-			if ((liferayExtension instanceof LiferayThemeExtension) &&
+			if (isTheme(liferayExtension) &&
 				ArrayUtil.contains(
 					_THEME_COMPILE_DEPENDENCY_NOTATIONS, dependencyNotation)) {
 
@@ -174,11 +210,41 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		cssDirNames.add(cssDirName);
 	}
 
+	protected void configureTaskBuildThumbnails(
+		Project project, LiferayThemeExtension liferayThemeExtension) {
+
+		BuildThumbnailsTask buildThumbnailsTask =
+			(BuildThumbnailsTask)GradleUtil.getTask(
+				project, _BUILD_THUMBNAILS_TASK_NAME);
+
+		configureTaskBuildThumbnailsImagesDir(
+			buildThumbnailsTask, liferayThemeExtension);
+	}
+
+	protected void configureTaskBuildThumbnailsImagesDir(
+		BuildThumbnailsTask buildThumbnailsTask,
+		LiferayThemeExtension liferayThemeExtension) {
+
+		if (buildThumbnailsTask.getImagesDir() == null) {
+			File imagesDir = new File(
+				liferayThemeExtension.getDiffsDir(), "images");
+
+			buildThumbnailsTask.setImagesDir(imagesDir);
+		}
+	}
+
 	@Override
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
 		super.configureTasks(project, liferayExtension);
+
+		if (isTheme(liferayExtension)) {
+			LiferayThemeExtension liferayThemeExtension =
+				(LiferayThemeExtension)liferayExtension;
+
+			configureTaskBuildThumbnails(project, liferayThemeExtension);
+		}
 
 		configureTaskWar(project, liferayExtension);
 	}
@@ -396,6 +462,17 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		return warPluginConvention.getWebAppDir();
 	}
+
+	protected boolean isTheme(LiferayExtension liferayExtension) {
+		if (liferayExtension instanceof LiferayThemeExtension) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private static final String _BUILD_THUMBNAILS_TASK_NAME = "buildThumbnails";
 
 	private static final String[] _THEME_COMPILE_DEPENDENCY_NOTATIONS = {
 		"com.liferay.portal:util-bridges:default",

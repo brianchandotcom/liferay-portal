@@ -73,10 +73,7 @@ public abstract class BasePortalToolsTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
-		super.setClasspath(getClasspath());
-
-		super.exec();
+		doExec(getArgs());
 	}
 
 	@Override
@@ -120,6 +117,13 @@ public abstract class BasePortalToolsTask extends JavaExec {
 
 		GradleUtil.addDependency(
 			project, getConfigurationName(), group, name, version, transitive);
+	}
+
+	protected void doExec(List<String> args) {
+		super.setArgs(args);
+		super.setClasspath(getClasspath());
+
+		super.exec();
 	}
 
 	protected String getConfigurationName() {

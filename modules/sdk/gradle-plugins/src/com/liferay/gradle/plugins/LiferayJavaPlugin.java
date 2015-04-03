@@ -62,7 +62,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureRepositories(project);
 		configureSourceSets(project);
 
-		addTasks(project);
+		addTasks(project, liferayExtension);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -105,7 +105,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				"files.");
 	}
 
-	protected void addTasks(Project project) {
+	protected void addTasks(
+		Project project, LiferayExtension liferayExtension) {
+
 		addTaskBuildCss(project);
 		addTaskFormatSource(project);
 		addTaskInitGradle(project);

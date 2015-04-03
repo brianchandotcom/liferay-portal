@@ -77,6 +77,8 @@ public class LoggerElement {
 
 		if (_isWrittenToLogger()) {
 			LoggerUtil.addChildLoggerElement(this, childLoggerElement);
+
+			childLoggerElement.writeChildLoggerElements();
 		}
 	}
 
@@ -170,6 +172,16 @@ public class LoggerElement {
 		}
 
 		return sb.toString();
+	}
+
+	public void writeChildLoggerElements() {
+		if (_isWrittenToLogger()) {
+			for (LoggerElement childLoggerElement : _childLoggerElements) {
+				LoggerUtil.addChildLoggerElement(this, childLoggerElement);
+
+				childLoggerElement.writeChildLoggerElements();
+			}
+		}
 	}
 
 	private boolean _isWrittenToLogger() {

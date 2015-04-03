@@ -916,7 +916,7 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureAPPortletEnableRatings" priority="4">
+	<command known-issues="LPS-54683" name="ConfigureAPPortletEnableRatings" priority="4">
 		<var name="assetTitle" value="WC WebContent Title" />
 
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
@@ -1164,7 +1164,7 @@
 		</execute>
 	</command>
 
-	<command name="OrderContentByModifiedDateViaAP" priority="3">
+	<command known-issues="LPS-54683" name="OrderContentByModifiedDateViaAP" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -1228,7 +1228,7 @@
 		</execute>
 	</command>
 
-	<command name="OrderWCByModifiedDateViaAP" priority="3">
+	<command known-issues="LPS-54683" name="OrderWCByModifiedDateViaAP" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -1304,7 +1304,7 @@
 		</execute>
 	</command>
 
-	<command name="OrderWCByPublishDateViaAP" priority="3">
+	<command known-issues="LPS-54683" name="OrderWCByPublishDateViaAP" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>

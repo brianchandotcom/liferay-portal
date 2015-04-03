@@ -1141,7 +1141,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithGeolocationField" priority="5">
+	<command known-issues="LRQA-13522" name="AddListRecordWithGeolocationField" priority="5">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />

@@ -18,7 +18,7 @@
 		</execute>
 	</set-up>
 
-	<command name="CheckLocalizationChinese" priority="5">
+	<command known-issues="LPS-52724" name="CheckLocalizationChinese" priority="5">
 		<execute function="Click" locator1="PGTestlocalization#CHINESE_LOCALIZATION" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_1" value1="PASSED" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_2" value1="PASSED" />

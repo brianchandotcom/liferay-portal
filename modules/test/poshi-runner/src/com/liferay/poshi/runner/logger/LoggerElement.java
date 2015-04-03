@@ -50,17 +50,13 @@ public class LoggerElement {
 
 	public LoggerElement(String id) {
 		_id = id;
-
-		_writtenToLogger = true;
 	}
 
 	public void addChildLoggerElement(LoggerElement childLoggerElement) {
 		_childLoggerElements.add(childLoggerElement);
 
-		if (_writtenToLogger) {
+		if (_isWrittenToLogger()) {
 			LoggerUtil.addChildLoggerElement(this, childLoggerElement);
-
-			childLoggerElement.setWrittenToLogger(true);
 		}
 	}
 
@@ -83,7 +79,7 @@ public class LoggerElement {
 	public void setClassName(String className) {
 		_className = className;
 
-		if (_writtenToLogger) {
+		if (_isWrittenToLogger()) {
 			LoggerUtil.setClassName(this);
 		}
 	}
@@ -91,7 +87,7 @@ public class LoggerElement {
 	public void setID(String id) {
 		_id = id;
 
-		if (_writtenToLogger) {
+		if (_isWrittenToLogger()) {
 			LoggerUtil.setID(this);
 		}
 	}
@@ -103,13 +99,9 @@ public class LoggerElement {
 	public void setText(String text) {
 		_text = text;
 
-		if (_writtenToLogger) {
+		if (_isWrittenToLogger()) {
 			LoggerUtil.setText(this);
 		}
-	}
-
-	public void setWrittenToLogger(boolean writtenToLogger) {
-		_writtenToLogger = writtenToLogger;
 	}
 
 	@Override
@@ -158,11 +150,18 @@ public class LoggerElement {
 
 	private static final Set<String> _usedIds = new HashSet<>();
 
+	private boolean _isWrittenToLogger() {
+		if (LoggerUtil.isWrittenToLogger(this)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private final List<LoggerElement> _childLoggerElements = new ArrayList<>();
 	private String _className = "";
 	private String _id;
 	private String _name = "div";
 	private String _text = "";
-	private boolean _writtenToLogger = false;
 
 }

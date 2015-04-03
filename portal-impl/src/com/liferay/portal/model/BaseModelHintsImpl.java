@@ -50,7 +50,7 @@ import java.util.TreeSet;
  * @author Tomas Polesovsky
  */
 @DoPrivileged
-public class ModelHintsImpl implements ModelHints {
+public class BaseModelHintsImpl implements ModelHints {
 
 	public void afterPropertiesSet() {
 		_hintCollections = new HashMap<>();
@@ -341,7 +341,7 @@ public class ModelHintsImpl implements ModelHints {
 		for (Element modelElement : rootElements) {
 			String name = modelElement.attributeValue("name");
 
-			if (classLoader != ModelHintsImpl.class.getClassLoader()) {
+			if (classLoader != BaseModelHintsImpl.class.getClassLoader()) {
 				ClassNameLocalServiceUtil.getClassName(name);
 			}
 
@@ -496,7 +496,8 @@ public class ModelHintsImpl implements ModelHints {
 
 	private static final String _VALIDATORS_SUFFIX = "_VALIDATORS";
 
-	private static final Log _log = LogFactoryUtil.getLog(ModelHintsImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseModelHintsImpl.class);
 
 	private Map<String, Map<String, String>> _defaultHints;
 	private Map<String, Map<String, String>> _hintCollections;

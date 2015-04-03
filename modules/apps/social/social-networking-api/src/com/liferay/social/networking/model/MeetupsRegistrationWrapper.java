@@ -161,7 +161,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @return the create date of this meetups registration
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _meetupsRegistration.getCreateDate();
 	}
 
@@ -196,7 +196,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @return the modified date of this meetups registration
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _meetupsRegistration.getModifiedDate();
 	}
 
@@ -311,7 +311,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @param createDate the create date of this meetups registration
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_meetupsRegistration.setCreateDate(createDate);
 	}
 
@@ -359,7 +359,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 	* @param modifiedDate the modified date of this meetups registration
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_meetupsRegistration.setModifiedDate(modifiedDate);
 	}
 

@@ -77,7 +77,7 @@ public abstract class PollsVoteServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the polls vote remote service
 	 */
-	public com.liferay.polls.service.PollsVoteService getPollsVoteService() {
+	public PollsVoteService getPollsVoteService() {
 		return pollsVoteService;
 	}
 
@@ -86,8 +86,7 @@ public abstract class PollsVoteServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param pollsVoteService the polls vote remote service
 	 */
-	public void setPollsVoteService(
-		com.liferay.polls.service.PollsVoteService pollsVoteService) {
+	public void setPollsVoteService(PollsVoteService pollsVoteService) {
 		this.pollsVoteService = pollsVoteService;
 	}
 
@@ -359,8 +358,8 @@ public abstract class PollsVoteServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.polls.service.PollsVoteLocalService.class)
 	protected com.liferay.polls.service.PollsVoteLocalService pollsVoteLocalService;
-	@BeanReference(type = com.liferay.polls.service.PollsVoteService.class)
-	protected com.liferay.polls.service.PollsVoteService pollsVoteService;
+	@BeanReference(type = PollsVoteService.class)
+	protected PollsVoteService pollsVoteService;
 	@BeanReference(type = PollsVotePersistence.class)
 	protected PollsVotePersistence pollsVotePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

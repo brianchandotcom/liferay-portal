@@ -181,7 +181,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the create date of this polls question
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _pollsQuestion.getCreateDate();
 	}
 
@@ -264,7 +264,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the locales and localized descriptions of this polls question
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _pollsQuestion.getDescriptionMap();
 	}
 
@@ -279,7 +279,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the expiration date of this polls question
 	*/
 	@Override
-	public java.util.Date getExpirationDate() {
+	public Date getExpirationDate() {
 		return _pollsQuestion.getExpirationDate();
 	}
 
@@ -299,7 +299,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the last vote date of this polls question
 	*/
 	@Override
-	public java.util.Date getLastVoteDate() {
+	public Date getLastVoteDate() {
 		return _pollsQuestion.getLastVoteDate();
 	}
 
@@ -309,7 +309,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the modified date of this polls question
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _pollsQuestion.getModifiedDate();
 	}
 
@@ -411,7 +411,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @return the locales and localized titles of this polls question
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
 		return _pollsQuestion.getTitleMap();
 	}
 
@@ -494,7 +494,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	@Override
 	public boolean isExpired(
 		com.liferay.portal.service.ServiceContext serviceContext,
-		java.util.Date defaultCreateDate) {
+		Date defaultCreateDate) {
 		return _pollsQuestion.isExpired(serviceContext, defaultCreateDate);
 	}
 
@@ -542,7 +542,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param createDate the create date of this polls question
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_pollsQuestion.setCreateDate(createDate);
 	}
 
@@ -593,7 +593,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_pollsQuestion.setDescriptionMap(descriptionMap);
 	}
 
@@ -605,7 +605,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_pollsQuestion.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -634,7 +634,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param expirationDate the expiration date of this polls question
 	*/
 	@Override
-	public void setExpirationDate(java.util.Date expirationDate) {
+	public void setExpirationDate(Date expirationDate) {
 		_pollsQuestion.setExpirationDate(expirationDate);
 	}
 
@@ -654,7 +654,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param lastVoteDate the last vote date of this polls question
 	*/
 	@Override
-	public void setLastVoteDate(java.util.Date lastVoteDate) {
+	public void setLastVoteDate(Date lastVoteDate) {
 		_pollsQuestion.setLastVoteDate(lastVoteDate);
 	}
 
@@ -664,7 +664,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param modifiedDate the modified date of this polls question
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_pollsQuestion.setModifiedDate(modifiedDate);
 	}
 
@@ -743,8 +743,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param titleMap the locales and localized titles of this polls question
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
 		_pollsQuestion.setTitleMap(titleMap);
 	}
 
@@ -755,8 +754,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Locale defaultLocale) {
 		_pollsQuestion.setTitleMap(titleMap, defaultLocale);
 	}

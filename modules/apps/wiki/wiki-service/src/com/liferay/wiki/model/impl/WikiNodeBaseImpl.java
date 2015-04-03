@@ -28,7 +28,7 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see WikiNodeImpl
- * @see com.liferay.wiki.model.WikiNode
+ * @see WikiNode
  * @generated
  */
 @ProviderType

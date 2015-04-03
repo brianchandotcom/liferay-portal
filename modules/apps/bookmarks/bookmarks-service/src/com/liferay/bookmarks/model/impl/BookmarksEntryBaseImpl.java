@@ -28,7 +28,7 @@ import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see BookmarksEntryImpl
- * @see com.liferay.bookmarks.model.BookmarksEntry
+ * @see BookmarksEntry
  * @generated
  */
 @ProviderType

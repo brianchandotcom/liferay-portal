@@ -90,7 +90,7 @@ public abstract class BookmarksEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the bookmarks entry remote service
 	 */
-	public com.liferay.bookmarks.service.BookmarksEntryService getBookmarksEntryService() {
+	public BookmarksEntryService getBookmarksEntryService() {
 		return bookmarksEntryService;
 	}
 
@@ -100,7 +100,7 @@ public abstract class BookmarksEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param bookmarksEntryService the bookmarks entry remote service
 	 */
 	public void setBookmarksEntryService(
-		com.liferay.bookmarks.service.BookmarksEntryService bookmarksEntryService) {
+		BookmarksEntryService bookmarksEntryService) {
 		this.bookmarksEntryService = bookmarksEntryService;
 	}
 
@@ -921,8 +921,8 @@ public abstract class BookmarksEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.bookmarks.service.BookmarksEntryLocalService.class)
 	protected com.liferay.bookmarks.service.BookmarksEntryLocalService bookmarksEntryLocalService;
-	@BeanReference(type = com.liferay.bookmarks.service.BookmarksEntryService.class)
-	protected com.liferay.bookmarks.service.BookmarksEntryService bookmarksEntryService;
+	@BeanReference(type = BookmarksEntryService.class)
+	protected BookmarksEntryService bookmarksEntryService;
 	@BeanReference(type = BookmarksEntryPersistence.class)
 	protected BookmarksEntryPersistence bookmarksEntryPersistence;
 	@BeanReference(type = BookmarksEntryFinder.class)

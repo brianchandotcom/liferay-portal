@@ -172,7 +172,7 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	* @return the create date of this s a c p entry
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _sacpEntry.getCreateDate();
 	}
 
@@ -192,7 +192,7 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	* @return the modified date of this s a c p entry
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _sacpEntry.getModifiedDate();
 	}
 
@@ -304,7 +304,7 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	* @return the locales and localized titles of this s a c p entry
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
 		return _sacpEntry.getTitleMap();
 	}
 
@@ -417,7 +417,7 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	* @param createDate the create date of this s a c p entry
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_sacpEntry.setCreateDate(createDate);
 	}
 
@@ -445,7 +445,7 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	* @param modifiedDate the modified date of this s a c p entry
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_sacpEntry.setModifiedDate(modifiedDate);
 	}
 
@@ -534,8 +534,7 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	* @param titleMap the locales and localized titles of this s a c p entry
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
 		_sacpEntry.setTitleMap(titleMap);
 	}
 
@@ -546,8 +545,7 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Locale defaultLocale) {
 		_sacpEntry.setTitleMap(titleMap, defaultLocale);
 	}

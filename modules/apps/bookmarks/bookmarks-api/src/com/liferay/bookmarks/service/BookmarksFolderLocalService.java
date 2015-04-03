@@ -63,7 +63,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new bookmarks folder with the primary key. Does not add the bookmarks folder to the database.
@@ -93,34 +93,29 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.bookmarks.model.BookmarksFolder deleteBookmarksFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.bookmarks.model.BookmarksFolder deleteFolder(
 		com.liferay.bookmarks.model.BookmarksFolder folder)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.bookmarks.model.BookmarksFolder deleteFolder(
 		com.liferay.bookmarks.model.BookmarksFolder folder,
-		boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeTrashedEntries) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.bookmarks.model.BookmarksFolder deleteFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.bookmarks.model.BookmarksFolder deleteFolder(
-		long folderId, boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId, boolean includeTrashedEntries) throws PortalException;
 
-	public void deleteFolders(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteFolders(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -128,7 +123,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -229,8 +224,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.bookmarks.model.BookmarksFolder getBookmarksFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	/**
 	* Returns the bookmarks folder matching the UUID and group.
@@ -242,8 +236,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.bookmarks.model.BookmarksFolder getBookmarksFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the bookmarks folders.
@@ -307,7 +300,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.bookmarks.model.BookmarksFolder getFolder(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder> getFolders(
@@ -352,8 +345,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
@@ -361,28 +353,25 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.bookmarks.model.BookmarksFolder moveFolder(
-		long folderId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId, long parentFolderId) throws PortalException;
 
 	public com.liferay.bookmarks.model.BookmarksFolder moveFolderFromTrash(
 		long userId, long folderId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.bookmarks.model.BookmarksFolder moveFolderToTrash(
-		long userId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long folderId) throws PortalException;
 
-	public void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void rebuildTree(long companyId) throws PortalException;
 
 	public void rebuildTree(long companyId, long parentFolderId,
 		java.lang.String parentTreePath, boolean reindex)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public void restoreFolderFromTrash(long userId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -392,16 +381,15 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribeFolder(long userId, long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void unsubscribeFolder(long userId, long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void updateAsset(long userId,
 		com.liferay.bookmarks.model.BookmarksFolder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long[] assetLinkEntryIds) throws PortalException;
 
 	/**
 	* Updates the bookmarks folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -418,9 +406,9 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.bookmarks.model.BookmarksFolder updateStatus(
 		long userId, com.liferay.bookmarks.model.BookmarksFolder folder,
-		int status) throws com.liferay.portal.kernel.exception.PortalException;
+		int status) throws PortalException;
 }

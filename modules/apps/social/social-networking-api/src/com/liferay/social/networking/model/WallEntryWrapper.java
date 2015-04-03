@@ -152,7 +152,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @return the create date of this wall entry
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _wallEntry.getCreateDate();
 	}
 
@@ -177,7 +177,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @return the modified date of this wall entry
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _wallEntry.getModifiedDate();
 	}
 
@@ -292,7 +292,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @param createDate the create date of this wall entry
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_wallEntry.setCreateDate(createDate);
 	}
 
@@ -330,7 +330,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	* @param modifiedDate the modified date of this wall entry
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_wallEntry.setModifiedDate(modifiedDate);
 	}
 

@@ -385,7 +385,7 @@ public abstract class WallEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the wall entry local service
 	 */
-	public com.liferay.social.networking.service.WallEntryLocalService getWallEntryLocalService() {
+	public WallEntryLocalService getWallEntryLocalService() {
 		return wallEntryLocalService;
 	}
 
@@ -395,7 +395,7 @@ public abstract class WallEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param wallEntryLocalService the wall entry local service
 	 */
 	public void setWallEntryLocalService(
-		com.liferay.social.networking.service.WallEntryLocalService wallEntryLocalService) {
+		WallEntryLocalService wallEntryLocalService) {
 		this.wallEntryLocalService = wallEntryLocalService;
 	}
 
@@ -788,8 +788,8 @@ public abstract class WallEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.social.networking.service.MeetupsRegistrationLocalService meetupsRegistrationLocalService;
 	@BeanReference(type = MeetupsRegistrationPersistence.class)
 	protected MeetupsRegistrationPersistence meetupsRegistrationPersistence;
-	@BeanReference(type = com.liferay.social.networking.service.WallEntryLocalService.class)
-	protected com.liferay.social.networking.service.WallEntryLocalService wallEntryLocalService;
+	@BeanReference(type = WallEntryLocalService.class)
+	protected WallEntryLocalService wallEntryLocalService;
 	@BeanReference(type = WallEntryPersistence.class)
 	protected WallEntryPersistence wallEntryPersistence;
 	@BeanReference(type = WallEntryFinder.class)

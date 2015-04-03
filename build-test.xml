@@ -3308,6 +3308,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<antcall target="prepare-selenium-database-properties" />
 		<antcall target="prepare-selenium-email-properties" />
 		<antcall target="prepare-selenium-required-properties" />
+		<antcall target="prepare-selenium-testcase-properties" />
 
 		<if>
 			<isset property="selenium.output.dir" />
@@ -3319,17 +3320,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<else>
 				<property name="selenium.output.dir" value="H:\\selenium-output\\" />
 			</else>
-		</if>
-
-		<get-testcase-property property.name="ignore.errors" />
-
-		<if>
-			<isset property="ignore.errors" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					ignore.errors=${ignore.errors}
-				</echo>
-			</then>
 		</if>
 
 		<if>
@@ -3368,52 +3358,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.enabled" />
-
-		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					mobile.device.enabled=${mobile.device.enabled}
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="sharepoint.enabled" />
-
-		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
-			<then>
-				<if>
-					<os family="unix" />
-					<then>
-						<exec executable="/bin/bash" os="${os.unix}" outputproperty="sharepoint.vm.host.name">
-							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
-						</exec>
-					</then>
-					<else>
-						<exec executable="cmd" outputproperty="sharepoint.vm.host.name">
-							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
-						</exec>
-					</else>
-				</if>
-
-				<propertyregex
-					input="${sharepoint.vm.host.name}"
-					override="true"
-					property="sharepoint.vm.host.name"
-					regexp="&quot;(cloud.*?)&quot;"
-					select="\1"
-				/>
-
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					sharepoint.vm.host.name=${sharepoint.vm.host.name}
-				</echo>
-			</then>
-		</if>
-
 		<if>
 			<not>
 				<isset property="skip.delete-selenium-output" />
@@ -3438,17 +3382,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					tear.down.before.test=true
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="test.assert.javascript.errors" />
-
-		<if>
-			<equals arg1="${test.assert.javascript.errors}" arg2="false" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					test.assert.javascript.errors=false
 				</echo>
 			</then>
 		</if>
@@ -3517,17 +3450,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					test.skip.tear.down=true
-				</echo>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="timeout.explicit.wait" />
-
-		<if>
-			<isset property="timeout.explicit.wait" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					timeout.explicit.wait=${timeout.explicit.wait}
 				</echo>
 			</then>
 		</if>
@@ -3884,6 +3806,87 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 			portal.url=${test.url}
 		</echo>
+	</target>
+
+	<target name="prepare-selenium-testcase-properties">
+		<get-testcase-property property.name="ignore.errors" />
+
+		<if>
+			<isset property="ignore.errors" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					ignore.errors=${ignore.errors}
+				</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="mobile.device.enabled" />
+
+		<if>
+			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					mobile.device.enabled=${mobile.device.enabled}
+				</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="sharepoint.enabled" />
+
+		<if>
+			<equals arg1="${sharepoint.enabled}" arg2="true" />
+			<then>
+				<if>
+					<os family="unix" />
+					<then>
+						<exec executable="/bin/bash" os="${os.unix}" outputproperty="sharepoint.vm.host.name">
+							<arg value="-c" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
+						</exec>
+					</then>
+					<else>
+						<exec executable="cmd" outputproperty="sharepoint.vm.host.name">
+							<arg value="/c" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
+						</exec>
+					</else>
+				</if>
+
+				<propertyregex
+					input="${sharepoint.vm.host.name}"
+					override="true"
+					property="sharepoint.vm.host.name"
+					regexp="&quot;(cloud.*?)&quot;"
+					select="\1"
+				/>
+
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					sharepoint.vm.host.name=${sharepoint.vm.host.name}
+				</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="test.assert.javascript.errors" />
+
+		<if>
+			<equals arg1="${test.assert.javascript.errors}" arg2="false" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.assert.javascript.errors=false
+				</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="timeout.explicit.wait" />
+
+		<if>
+			<isset property="timeout.explicit.wait" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					timeout.explicit.wait=${timeout.explicit.wait}
+				</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-so-plugins">

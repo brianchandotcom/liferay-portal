@@ -310,7 +310,8 @@ public class DBStore extends BaseStore {
 		if (DLContentLocalServiceUtil.hasContent(
 				companyId, repositoryId, fileName, versionLabel)) {
 
-			throw new DuplicateFileException(fileName);
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		DLContentLocalServiceUtil.addContent(
@@ -321,12 +322,13 @@ public class DBStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, File file)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		if (DLContentLocalServiceUtil.hasContent(
 				companyId, repositoryId, fileName, versionLabel)) {
 
-			throw new DuplicateFileException(fileName);
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		InputStream inputStream = null;
@@ -352,7 +354,8 @@ public class DBStore extends BaseStore {
 		if (DLContentLocalServiceUtil.hasContent(
 				companyId, repositoryId, fileName, versionLabel)) {
 
-			throw new DuplicateFileException(fileName);
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		long length = -1;

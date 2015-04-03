@@ -543,7 +543,8 @@ public abstract class BaseStore implements Store {
 			updateFile(companyId, repositoryId, fileName, versionLabel, is);
 		}
 		catch (FileNotFoundException fnfe) {
-			throw new NoSuchFileException(fileName);
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, versionLabel, fnfe);
 		}
 		finally {
 			try {

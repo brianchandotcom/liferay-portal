@@ -133,7 +133,8 @@ public class JCRStore extends BaseStore {
 			}
 
 			if (repositoryNode.hasNode(fileName)) {
-				throw new DuplicateFileException(fileName);
+				throw new DuplicateFileException(
+					companyId, repositoryId, fileName);
 			}
 
 			Node fileNode = repositoryNode.addNode(
@@ -651,7 +652,8 @@ public class JCRStore extends BaseStore {
 			Node newRepositoryNode = getFolderNode(rootNode, newRepositoryId);
 
 			if (newRepositoryNode.hasNode(fileName)) {
-				throw new DuplicateFileException(fileName);
+				throw new DuplicateFileException(
+					companyId, newRepositoryId, fileName);
 			}
 
 			Node fileNode = repositoryNode.getNode(fileName);
@@ -673,7 +675,8 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchFileException(fileName);
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, pnfe);
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);
@@ -708,7 +711,8 @@ public class JCRStore extends BaseStore {
 			}
 
 			if (repositoryNode.hasNode(newFileName)) {
-				throw new DuplicateFileException(newFileName);
+				throw new DuplicateFileException(
+					companyId, repositoryId, newFileName);
 			}
 
 			Node fileNode = repositoryNode.getNode(fileName);
@@ -730,7 +734,8 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			throw new NoSuchFileException(fileName);
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, pnfe);
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);
@@ -799,8 +804,7 @@ public class JCRStore extends BaseStore {
 		}
 		catch (PathNotFoundException pnfe) {
 			throw new NoSuchFileException(
-				"{fileName=" + fileName + ", versionLabel=" + versionLabel +
-					"}");
+				companyId, repositoryId, fileName, versionLabel, pnfe);
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);
@@ -892,8 +896,7 @@ public class JCRStore extends BaseStore {
 
 				if (!versionHistory.hasVersionLabel(versionLabel)) {
 					throw new NoSuchFileException(
-						"{fileName=" + fileName + ", versionLabel=" +
-							versionLabel + "}");
+						companyId, repositoryId, fileName, versionLabel);
 				}
 
 				Version version = versionHistory.getVersionByLabel(
@@ -904,8 +907,7 @@ public class JCRStore extends BaseStore {
 		}
 		catch (PathNotFoundException pnfe) {
 			throw new NoSuchFileException(
-				"{fileName=" + fileName + ", versionLabel=" +
-					versionLabel + "}");
+				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);

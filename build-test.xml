@@ -3861,6 +3861,96 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 				</echo>
 			</then>
 		</if>
+
+		<if>
+			<isset property="marketplace.email.address.1" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.address.1=${marketplace.email.address.1}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.address.2" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.address.2=${marketplace.email.address.2}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.address.3" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.address.3=${marketplace.email.address.3}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.address.4" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.address.4=${marketplace.email.address.4}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.address.5" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.address.5=${marketplace.email.password.5}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.password.1" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.password.1=${marketplace.email.password.1}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.password.2" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.password.2=${marketplace.email.password.2}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.password.3" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.password.3=${marketplace.email.password.3}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.password.4" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.password.4=${marketplace.email.password.4}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.password.5" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					marketplace.email.password.5=${marketplace.email.password.5}
+				</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-selenium-required-properties">

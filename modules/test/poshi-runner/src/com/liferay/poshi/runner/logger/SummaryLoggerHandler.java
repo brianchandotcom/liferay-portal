@@ -41,7 +41,7 @@ public final class SummaryLoggerHandler {
 		statusLoggerElement.setName("span");
 		statusLoggerElement.setText(" --> FAILED");
 
-		_sentenceLoggerElement.addChildLoggerElement(statusLoggerElement);
+		_majorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
 
 		LoggerElement errorLoggerElement = new LoggerElement();
 
@@ -54,7 +54,7 @@ public final class SummaryLoggerHandler {
 
 		errorLoggerElement.setText(stackTrace);
 
-		_summaryLoggerElement.addChildLoggerElement(errorLoggerElement);
+		_majorStepsLoggerElement.addChildLoggerElement(errorLoggerElement);
 
 		_stopLogging();
 	}
@@ -69,7 +69,7 @@ public final class SummaryLoggerHandler {
 		statusLoggerElement.setName("span");
 		statusLoggerElement.setText(" --> PASSED");
 
-		_sentenceLoggerElement.addChildLoggerElement(statusLoggerElement);
+		_majorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
 
 		_stopLogging();
 	}
@@ -89,11 +89,11 @@ public final class SummaryLoggerHandler {
 
 		_startLogging(element);
 
-		_sentenceLoggerElement = new LoggerElement();
+		_majorStepLoggerElement = new LoggerElement();
 
-		_sentenceLoggerElement.setText(summary);
+		_majorStepLoggerElement.setText(summary);
 
-		_summaryLoggerElement.addChildLoggerElement(_sentenceLoggerElement);
+		_majorStepsLoggerElement.addChildLoggerElement(_majorStepLoggerElement);
 	}
 
 	private static String _getSummary(Element element)
@@ -140,7 +140,7 @@ public final class SummaryLoggerHandler {
 	}
 
 	private static boolean _isLogging() {
-		if (_currentElement == null) {
+		if (_majorStepElement == null) {
 			return false;
 		}
 
@@ -148,7 +148,7 @@ public final class SummaryLoggerHandler {
 	}
 
 	private static boolean _isLoggingElement(Element element) {
-		if (_currentElement == element) {
+		if (_majorStepElement == element) {
 			return true;
 		}
 
@@ -156,16 +156,16 @@ public final class SummaryLoggerHandler {
 	}
 
 	private static void _startLogging(Element element) {
-		_currentElement = element;
+		_majorStepElement = element;
 	}
 
 	private static void _stopLogging() {
-		_currentElement = null;
+		_majorStepElement = null;
 	}
 
-	private static Element _currentElement = null;
-	private static LoggerElement _sentenceLoggerElement = null;
-	private static final LoggerElement _summaryLoggerElement =
-		new LoggerElement("summary");
+	private static Element _majorStepElement = null;
+	private static LoggerElement _majorStepLoggerElement = null;
+	private static final LoggerElement _majorStepsLoggerElement =
+		new LoggerElement("major-steps");
 
 }

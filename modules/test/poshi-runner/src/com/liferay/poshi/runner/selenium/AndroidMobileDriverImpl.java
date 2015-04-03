@@ -21,6 +21,7 @@ import java.net.URL;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
+ * @author Kenji Heigel
  * @author Kwang Lee
  */
 public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {

@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.PoshiRunnerException;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.poshi.runner.util.Validator;
 
 import org.dom4j.Element;
 
@@ -32,7 +33,7 @@ public final class SummaryLoggerHandler {
 	}
 
 	public static void failSummary(Element element, String message) {
-		if (!_isLoggingElement(element)) {
+		if (!_isCurrentMajorStep(element)) {
 			return;
 		}
 
@@ -41,7 +42,7 @@ public final class SummaryLoggerHandler {
 		statusLoggerElement.setName("span");
 		statusLoggerElement.setText(" --> FAILED");
 
-		_sentenceLoggerElement.addChildLoggerElement(statusLoggerElement);
+		_majorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
 
 		LoggerElement errorLoggerElement = new LoggerElement();
 
@@ -54,13 +55,13 @@ public final class SummaryLoggerHandler {
 
 		errorLoggerElement.setText(stackTrace);
 
-		_summaryLoggerElement.addChildLoggerElement(errorLoggerElement);
+		_majorStepsLoggerElement.addChildLoggerElement(errorLoggerElement);
 
 		_stopLogging();
 	}
 
 	public static void passSummary(Element element) {
-		if (!_isLoggingElement(element)) {
+		if (!_isCurrentMajorStep(element)) {
 			return;
 		}
 
@@ -69,31 +70,23 @@ public final class SummaryLoggerHandler {
 		statusLoggerElement.setName("span");
 		statusLoggerElement.setText(" --> PASSED");
 
-		_sentenceLoggerElement.addChildLoggerElement(statusLoggerElement);
+		_majorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
 
 		_stopLogging();
 	}
 
-	public static void startSummary(Element element)
-		throws PoshiRunnerException {
-
-		String summary = _getSummary(element);
-
-		if (summary == null) {
-			return;
-		}
-
-		if (_isLogging()) {
+	public static void startSummary(Element element) throws Exception {
+		if (!_isMajorStep(element)) {
 			return;
 		}
 
 		_startLogging(element);
 
-		_sentenceLoggerElement = new LoggerElement();
+		_majorStepLoggerElement = new LoggerElement();
 
-		_sentenceLoggerElement.setText(summary);
+		_majorStepLoggerElement.setText(_getSummary(element));
 
-		_summaryLoggerElement.addChildLoggerElement(_sentenceLoggerElement);
+		_majorStepsLoggerElement.addChildLoggerElement(_majorStepLoggerElement);
 	}
 
 	private static String _getSummary(Element element)
@@ -139,33 +132,54 @@ public final class SummaryLoggerHandler {
 		return null;
 	}
 
-	private static boolean _isLogging() {
-		if (_currentElement == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private static boolean _isLoggingElement(Element element) {
-		if (_currentElement == element) {
+	private static boolean _isCurrentMajorStep(Element element) {
+		if (element == _majorStepElement) {
 			return true;
 		}
 
 		return false;
 	}
 
+	private static boolean _isMajorStep(Element element) throws Exception {
+		String summary = _getSummary(element);
+
+		if (summary == null) {
+			return false;
+		}
+
+		if (!Validator.equals(element.getName(), "execute") &&
+			!Validator.equals(element.getName(), "task")) {
+
+			return false;
+		}
+
+		if (Validator.isNull(element.attributeValue("function")) &&
+			Validator.isNull(element.attributeValue("function-summary")) &&
+			Validator.isNull(element.attributeValue("macro")) &&
+			Validator.isNull(element.attributeValue("macro-summary")) &&
+			Validator.isNull(element.attributeValue("summary"))) {
+
+			return false;
+		}
+
+		if (_majorStepElement != null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private static void _startLogging(Element element) {
-		_currentElement = element;
+		_majorStepElement = element;
 	}
 
 	private static void _stopLogging() {
-		_currentElement = null;
+		_majorStepElement = null;
 	}
 
-	private static Element _currentElement = null;
-	private static LoggerElement _sentenceLoggerElement = null;
-	private static final LoggerElement _summaryLoggerElement =
-		new LoggerElement("summary");
+	private static Element _majorStepElement = null;
+	private static LoggerElement _majorStepLoggerElement = null;
+	private static final LoggerElement _majorStepsLoggerElement =
+		new LoggerElement("major-steps");
 
 }

@@ -73,6 +73,7 @@ public class InitGradleTask extends DefaultTask {
 
 		contents.addAll(getBuildGradleDependencies());
 		contents.addAll(getBuildGradleLiferay());
+		contents.addAll(getBuildGradleProperties());
 
 		FileUtil.write(buildGradleFile, contents);
 	}
@@ -244,6 +245,18 @@ public class InitGradleTask extends DefaultTask {
 		if (!contents.isEmpty()) {
 			contents = wrapContents(
 				contents, 0, " {", LiferayPlugin.PLUGIN_NAME, "}", true);
+		}
+
+		return contents;
+	}
+
+	protected List<String> getBuildGradleProperties() {
+		List<String> contents = new ArrayList<>();
+
+		String pluginVersion = getBuildXmlProperty("plugin.version");
+
+		if (Validator.isNotNull(pluginVersion)) {
+			contents.add("version = \"" + pluginVersion + "\"");
 		}
 
 		return contents;

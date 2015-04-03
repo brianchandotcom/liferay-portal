@@ -100,9 +100,7 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.xml.Element getFieldsEl(
-		String model, String field) {
-
+	public Object getFieldsEl(String model, String field) {
 		Map<String, Object> fields = (Map<String, Object>)_modelFields.get(
 			model);
 

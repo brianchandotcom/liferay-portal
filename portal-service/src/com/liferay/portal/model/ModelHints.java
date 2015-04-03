@@ -15,7 +15,6 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.kernel.xml.Element;
 
 import java.io.InputStream;
 
@@ -31,7 +30,7 @@ public interface ModelHints {
 
 	public Map<String, String> getDefaultHints(String model);
 
-	public Element getFieldsEl(String model, String field);
+	public Object getFieldsEl(String model, String field);
 
 	public Map<String, String> getHints(String model, String field);
 

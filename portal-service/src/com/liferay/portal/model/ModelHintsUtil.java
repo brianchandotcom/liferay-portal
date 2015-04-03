@@ -16,7 +16,6 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.kernel.xml.Element;
 
 import java.io.InputStream;
 
@@ -36,7 +35,7 @@ public class ModelHintsUtil {
 		return getModelHints().getDefaultHints(model);
 	}
 
-	public static Element getFieldsEl(String model, String field) {
+	public static Object getFieldsEl(String model, String field) {
 		return getModelHints().getFieldsEl(model, field);
 	}
 

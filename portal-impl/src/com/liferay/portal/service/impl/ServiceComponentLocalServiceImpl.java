@@ -36,9 +36,9 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ServiceComponent;
+import com.liferay.portal.service.ServiceConstants;
 import com.liferay.portal.service.base.ServiceComponentLocalServiceBaseImpl;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
-import com.liferay.portal.tools.servicebuilder.Entity;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -483,7 +483,7 @@ public class ServiceComponentLocalServiceImpl
 			String tableSQLCreate = (String)tableSQLCreateField.get(null);
 			String dataSource = (String)dataSourceField.get(null);
 
-			if (!dataSource.equals(Entity.DEFAULT_DATA_SOURCE)) {
+			if (!dataSource.equals(ServiceConstants.DEFAULT_DATA_SOURCE)) {
 				continue;
 			}
 

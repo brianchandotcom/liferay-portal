@@ -46,7 +46,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.ToolDependencies;
-import com.liferay.portal.tools.sourceformatter.JavaSourceProcessor;
+import com.liferay.portal.tools.sourceformatter.JavaImportsFormatter;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.xml.XMLFormatter;
 
@@ -408,7 +408,7 @@ public class ServiceBuilder {
 
 		className = className.substring(0, className.length() - 5);
 
-		content = JavaSourceProcessor.stripJavaImports(
+		content = JavaImportsFormatter.stripJavaImports(
 			content, packagePath, className);
 
 		content = _stripFullyQualifiedClassNames(content);
@@ -1854,7 +1854,7 @@ public class ServiceBuilder {
 	private static String _stripFullyQualifiedClassNames(String content)
 		throws IOException {
 
-		String imports = JavaSourceProcessor.getImports(content);
+		String imports = JavaImportsFormatter.getImports(content);
 
 		if (Validator.isNull(imports)) {
 			return content;

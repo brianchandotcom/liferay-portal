@@ -13,7 +13,11 @@
 	<td></td>
 	<td>CPBookmarksSearch</td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
@@ -42,7 +46,7 @@
 <!--ENTRY_TABLE-->
 <tr>
 	<td>ENTRY_TABLE_BOOKMARK_ENTRY</td>
-	<td>//div[@id='_198_objectsSearchContainer']/div/table/tbody/tr[contains(.,'${key_bookmarkName}')]/td/span/a/span</td>
+	<td>//div[contains(@id,'objectsSearchContainer')]/div/table/tbody/tr[contains(.,'${key_bookmarkName}')]/td/span/a/span</td>
 	<td></td>
 </tr>
 </tbody>

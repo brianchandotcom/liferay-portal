@@ -253,12 +253,13 @@ public class Session {
 			HttpPost httpPost, Map<String, Object> parameters)
 		throws Exception {
 
-		httpPost.setHeader("Sync-JWT", _token);
-
 		_buildHttpPostBody(httpPost, parameters);
 
 		if (_oAuthEnabled) {
 			_oAuthConsumer.sign(httpPost);
+		}
+		else {
+			httpPost.setHeader("Sync-JWT", _token);
 		}
 
 		return _httpClient.execute(_httpHost, httpPost, _getBasicHttpContext());
@@ -269,12 +270,13 @@ public class Session {
 			Handler<? extends T> handler)
 		throws Exception {
 
-		httpPost.setHeader("Sync-JWT", _token);
-
 		_buildHttpPostBody(httpPost, parameters);
 
 		if (_oAuthEnabled) {
 			_oAuthConsumer.sign(httpPost);
+		}
+		else {
+			httpPost.setHeader("Sync-JWT", _token);
 		}
 
 		return _httpClient.execute(
@@ -296,10 +298,11 @@ public class Session {
 			HttpContext httpContext)
 		throws Exception {
 
-		httpRequest.setHeader("Sync-JWT", _token);
-
 		if (_oAuthEnabled) {
 			_oAuthConsumer.sign(httpRequest);
+		}
+		else {
+			httpRequest.setHeader("Sync-JWT", _token);
 		}
 
 		return _httpClient.execute(
@@ -310,10 +313,11 @@ public class Session {
 			HttpRequest httpRequest, HttpContext httpContext)
 		throws Exception {
 
-		httpRequest.setHeader("Sync-JWT", _token);
-
 		if (_oAuthEnabled) {
 			_oAuthConsumer.sign(httpRequest);
+		}
+		else {
+			httpRequest.setHeader("Sync-JWT", _token);
 		}
 
 		return _httpClient.execute(_httpHost, httpRequest, httpContext);

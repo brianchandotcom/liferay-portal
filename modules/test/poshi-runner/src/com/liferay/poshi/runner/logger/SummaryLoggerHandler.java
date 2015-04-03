@@ -41,6 +41,9 @@ public final class SummaryLoggerHandler {
 
 			_majorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
 
+			_majorStepsLoggerElement.addChildLoggerElement(
+				_minorStepsLoggerElement);
+
 			LoggerElement errorLoggerElement = new LoggerElement();
 
 			String stackTrace = PoshiRunnerStackTraceUtil.getStackTrace(
@@ -59,6 +62,13 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (_isCurrentMinorStep(element)) {
+			LoggerElement statusLoggerElement = new LoggerElement();
+
+			statusLoggerElement.setName("span");
+			statusLoggerElement.setText(" --> FAILED");
+
+			_minorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
+
 			_stopMinorStep();
 		}
 	}
@@ -76,6 +86,13 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (_isCurrentMinorStep(element)) {
+			LoggerElement statusLoggerElement = new LoggerElement();
+
+			statusLoggerElement.setName("span");
+			statusLoggerElement.setText(" --> PASSED");
+
+			_minorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
+
 			_stopMinorStep();
 		}
 	}
@@ -88,10 +105,19 @@ public final class SummaryLoggerHandler {
 
 			_majorStepsLoggerElement.addChildLoggerElement(
 				_majorStepLoggerElement);
+
+			_minorStepsLoggerElement = new LoggerElement();
+
+			_minorStepsLoggerElement.setName("ul");
 		}
 
 		if (_isMinorStep(element)) {
 			_startMinorStep(element);
+
+			_minorStepLoggerElement = _getStepLoggerElement(element);
+
+			_minorStepsLoggerElement.addChildLoggerElement(
+				_minorStepLoggerElement);
 		}
 	}
 

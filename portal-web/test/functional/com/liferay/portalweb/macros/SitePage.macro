@@ -527,7 +527,6 @@
 				<then>
 					<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_1" value1="Home" />
 					<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_2" value1="Documents and Media" />
-					<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_3" value1="News" />
 				</then>
 			</elseif>
 			<elseif>

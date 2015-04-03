@@ -214,6 +214,11 @@ public class SocialRelationLocalServiceTest {
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(2, users.size());
+
+		GroupLocalServiceUtil.deleteUserGroup(
+			dlc3User.getUserId(), TestPropsValues.getGroupId());
+		GroupLocalServiceUtil.deleteUserGroup(
+			dlc4User.getUserId(), TestPropsValues.getGroupId());
 	}
 
 	@Test
@@ -245,6 +250,11 @@ public class SocialRelationLocalServiceTest {
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(5, users.size());
+
+		GroupLocalServiceUtil.deleteUserGroup(
+			dlc3User.getUserId(), TestPropsValues.getGroupId());
+		GroupLocalServiceUtil.deleteUserGroup(
+			dlc4User.getUserId(), TestPropsValues.getGroupId());
 	}
 
 	@Test

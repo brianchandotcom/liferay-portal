@@ -142,7 +142,7 @@ public class DBStore extends BaseStore {
 
 		if (blobData == null) {
 			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(9);
+				StringBundler sb = new StringBundler(7);
 
 				sb.append("No blob data found for file {companyId=");
 				sb.append(companyId);
@@ -306,10 +306,6 @@ public class DBStore extends BaseStore {
 	}
 
 	@Override
-	public void move(String srcDir, String destDir) {
-	}
-
-	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
@@ -324,7 +320,8 @@ public class DBStore extends BaseStore {
 		if (DLContentLocalServiceUtil.hasContent(
 				companyId, newRepositoryId, fileName, VERSION_DEFAULT)) {
 
-			throw new DuplicateFileException();
+			throw new DuplicateFileException(
+				companyId, newRepositoryId, fileName);
 		}
 
 		DLContentLocalServiceUtil.updateDLContent(

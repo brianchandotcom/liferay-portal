@@ -81,14 +81,14 @@ public class JCRStore extends BaseStore {
 
 			Node dirNode = repositoryNode;
 
-			for (int i = 0; i < dirNameArray.length; i++) {
-				if (Validator.isNotNull(dirNameArray[i])) {
-					if (dirNode.hasNode(dirNameArray[i])) {
-						dirNode = dirNode.getNode(dirNameArray[i]);
+			for (String nodeName : dirNameArray) {
+				if (Validator.isNotNull(nodeName)) {
+					if (dirNode.hasNode(nodeName)) {
+						dirNode = dirNode.getNode(nodeName);
 					}
 					else {
 						dirNode = dirNode.addNode(
-							dirNameArray[i], JCRConstants.NT_FOLDER);
+							nodeName, JCRConstants.NT_FOLDER);
 					}
 				}
 			}
@@ -479,7 +479,7 @@ public class JCRStore extends BaseStore {
 			NodeIterator itr = repositoryNode.getNodes();
 
 			while (itr.hasNext()) {
-				Node node = (Node)itr.next();
+				Node node = itr.nextNode();
 
 				NodeType primaryNodeType = node.getPrimaryNodeType();
 
@@ -549,7 +549,9 @@ public class JCRStore extends BaseStore {
 			Node contentNode = getFileContentNode(
 				session, companyId, repositoryId, fileName, StringPool.BLANK);
 
-			size = contentNode.getProperty(JCRConstants.JCR_DATA).getLength();
+			Property property = contentNode.getProperty(JCRConstants.JCR_DATA);
+
+			size = property.getLength();
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);

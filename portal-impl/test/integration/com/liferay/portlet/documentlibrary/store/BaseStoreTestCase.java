@@ -663,7 +663,8 @@ public abstract class BaseStoreTestCase {
 
 	protected abstract Store getStore();
 
-	protected long companyId; protected long repositoryId;
+	protected long companyId;
+	protected long repositoryId;
 	protected Store store;
 
 	private static final int _DATA_SIZE = 1024 * 65;

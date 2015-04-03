@@ -332,10 +332,6 @@ public class S3Store extends BaseStore {
 	}
 
 	@Override
-	public void move(String srcDir, String destDir) {
-	}
-
-	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
@@ -581,7 +577,7 @@ public class S3Store extends BaseStore {
 	}
 
 	protected String[] getFileNames(S3Object[] s3Objects) {
-		List<String> fileNames = new ArrayList<>();
+		List<String> fileNames = new ArrayList<>(s3Objects.length);
 
 		for (S3Object s3Object : s3Objects) {
 			String fileName = getFileName(s3Object.getKey());
@@ -754,7 +750,7 @@ public class S3Store extends BaseStore {
 		if (e instanceof S3ServiceException) {
 			S3ServiceException s3se = (S3ServiceException)e;
 
-			if (Validator.equals("NoSuchKey", s3se.getS3ErrorCode())) {
+			if (_S3_NO_SUCH_KEY_ERROR_CODE.equals(s3se.getS3ErrorCode())) {
 				return true;
 			}
 		}
@@ -767,6 +763,8 @@ public class S3Store extends BaseStore {
 
 	private static final String _BUCKET_NAME = PropsUtil.get(
 		PropsKeys.DL_STORE_S3_BUCKET_NAME);
+
+	private static final String _S3_NO_SUCH_KEY_ERROR_CODE = "NoSuchKey";
 
 	private static final String _SECRET_KEY = PropsUtil.get(
 		PropsKeys.DL_STORE_S3_SECRET_KEY);

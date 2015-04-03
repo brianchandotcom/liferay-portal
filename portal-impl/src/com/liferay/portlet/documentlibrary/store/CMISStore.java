@@ -127,9 +127,7 @@ public class CMISStore extends BaseStore {
 
 		Map<String, Object> documentProperties = new HashMap<>();
 
-		String title = String.valueOf(toVersionLabel);
-
-		documentProperties.put(PropertyIds.NAME, title);
+		documentProperties.put(PropertyIds.NAME, toVersionLabel);
 
 		documentProperties.put(
 			PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_DOCUMENT.value());
@@ -162,11 +160,10 @@ public class CMISStore extends BaseStore {
 
 		if (versioningFolder == null) {
 			logFailedDeletion(companyId, repositoryId, fileName);
-
-			return;
 		}
-
-		versioningFolder.deleteTree(true, UnfileObject.DELETE, false);
+		else {
+			versioningFolder.deleteTree(true, UnfileObject.DELETE, false);
+		}
 	}
 
 	@Override
@@ -179,14 +176,12 @@ public class CMISStore extends BaseStore {
 		try {
 			document = getVersionedDocument(
 				companyId, repositoryId, fileName, versionLabel);
+
+			document.delete(true);
 		}
 		catch (NoSuchFileException nsfe) {
 			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
-
-			return;
 		}
-
-		document.delete(true);
 	}
 
 	@Override
@@ -315,10 +310,6 @@ public class CMISStore extends BaseStore {
 	}
 
 	@Override
-	public void move(String srcDir, String destDir) {
-	}
-
-	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
@@ -423,9 +414,7 @@ public class CMISStore extends BaseStore {
 				companyId, repositoryId, fileName, fromVersionLabel);
 		}
 
-		String title = String.valueOf(toVersionLabel);
-
-		Document document = getDocument(versioningFolder, title);
+		Document document = getDocument(versioningFolder, toVersionLabel);
 
 		if (document != null) {
 			throw new DuplicateFileException(
@@ -437,7 +426,7 @@ public class CMISStore extends BaseStore {
 
 		Map<String, Object> documentProperties = new HashMap<>();
 
-		documentProperties.put(PropertyIds.NAME, title);
+		documentProperties.put(PropertyIds.NAME, toVersionLabel);
 
 		document.updateProperties(documentProperties);
 	}

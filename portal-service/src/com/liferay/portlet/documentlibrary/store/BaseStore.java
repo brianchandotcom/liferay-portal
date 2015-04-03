@@ -108,7 +108,7 @@ public abstract class BaseStore implements Store {
 			addFile(companyId, repositoryId, fileName, is);
 		}
 		catch (FileNotFoundException fnfe) {
-			throw new NoSuchFileException(fileName);
+			throw new SystemException(fnfe);
 		}
 		finally {
 			try {
@@ -469,7 +469,8 @@ public abstract class BaseStore implements Store {
 	 * @param destDir the new directory's name
 	 */
 	@Override
-	public abstract void move(String srcDir, String destDir);
+	public void move(String srcDir, String destDir) {
+	}
 
 	/**
 	 * Moves a file to a new data repository.

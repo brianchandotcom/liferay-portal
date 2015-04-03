@@ -307,16 +307,7 @@ public class FileSystemStore extends BaseStore {
 		File fileNameVersionFile = getFileNameVersionFile(
 			companyId, repositoryId, fileName, versionLabel);
 
-		if (fileNameVersionFile.exists()) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public void move(String srcDir, String destDir) {
+		return fileNameVersionFile.exists();
 	}
 
 	@Override

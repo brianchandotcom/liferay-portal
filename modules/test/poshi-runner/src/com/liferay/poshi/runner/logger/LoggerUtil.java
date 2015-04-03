@@ -139,6 +139,36 @@ public final class LoggerUtil {
 		_javascriptExecutor.executeScript(sb.toString());
 	}
 
+	public static void setName(LoggerElement loggerElement) {
+		if (!isLoggerStarted()) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var oldNode = document.getElementById('");
+		sb.append(loggerElement.getID());
+		sb.append("');");
+
+		sb.append("var newNode = document.createElement('");
+		sb.append(StringEscapeUtils.escapeEcmaScript(loggerElement.getName()));
+		sb.append("');");
+
+		sb.append("newNode.innerHTML = oldNode.innerHTML;");
+		sb.append(
+			"newNode.setAttribute('class', oldNode.getAttribute('class'));");
+		sb.append("newNode.setAttribute('id', oldNode.getAttribute('id'));");
+
+		sb.append(
+			"oldNode.parentNode.insertBefore(newNode, oldNode.nextSibling);");
+
+		sb.append("var parentNode = oldNode.parentNode;");
+
+		sb.append("parentNode.removeChild(oldNode);");
+
+		_javascriptExecutor.executeScript(sb.toString());
+	}
+
 	public static void setText(LoggerElement loggerElement) {
 		if (!isLoggerStarted()) {
 			return;

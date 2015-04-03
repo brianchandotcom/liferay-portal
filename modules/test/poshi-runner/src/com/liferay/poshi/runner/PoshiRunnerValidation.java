@@ -76,6 +76,9 @@ public class PoshiRunnerValidation {
 			else if (elementName.equals("execute")) {
 				_validateExecuteElement(childElement, filePath);
 			}
+			else if (elementName.equals("take-screenshot")) {
+				_validateTakeScreenshotElement(childElement, filePath);
+			}
 		}
 	}
 
@@ -323,6 +326,24 @@ public class PoshiRunnerValidation {
 					"Invalid " + attributeName + " attribute\n" + filePath +
 						":" + element.attributeValue("line-number"));
 			}
+		}
+	}
+
+	private static void _validateTakeScreenshotElement(
+			Element element, String filePath)
+		throws PoshiRunnerException {
+
+		List<String> possibleAttributeNames = Arrays.asList("line-number");
+
+		_validatePossibleAttributeNames(
+			element, possibleAttributeNames, filePath);
+
+		List<Element> childElements = element.elements();
+
+		if (!childElements.isEmpty()) {
+			throw new PoshiRunnerException(
+				"Invalid child elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
 		}
 	}
 

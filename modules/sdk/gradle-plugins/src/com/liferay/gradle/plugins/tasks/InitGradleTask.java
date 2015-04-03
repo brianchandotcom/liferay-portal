@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.StringUtil;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
@@ -54,6 +56,8 @@ public class InitGradleTask extends DefaultTask {
 
 		_liferayExtension = GradleUtil.getExtension(
 			_project, LiferayExtension.class);
+		_pluginPackageProperties = FileUtil.readProperties(
+			_project, "docroot/WEB-INF/liferay-plugin-package.properties");
 
 		XmlParser xmlParser = new XmlParser();
 
@@ -101,7 +105,7 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		String requiredDeploymentContexts =
-			_liferayExtension.getPluginPackageProperty(
+			_pluginPackageProperties.getProperty(
 				"required-deployment-contexts");
 
 		if (Validator.isNotNull(requiredDeploymentContexts)) {
@@ -150,9 +154,8 @@ public class InitGradleTask extends DefaultTask {
 	protected List<String> getBuildDependenciesProvidedCompile() {
 		List<String> contents = new ArrayList<>();
 
-		String portalDependencyJars =
-			_liferayExtension.getPluginPackageProperty(
-				"portal-dependency-jars");
+		String portalDependencyJars = _pluginPackageProperties.getProperty(
+			"portal-dependency-jars");
 
 		if (Validator.isNotNull(portalDependencyJars)) {
 			String[] portalDependencyJarsArray = portalDependencyJars.split(
@@ -226,9 +229,7 @@ public class InitGradleTask extends DefaultTask {
 	protected List<String> getBuildGradleLiferay() {
 		List<String> contents = new ArrayList<>();
 
-		String pluginType = _liferayExtension.getPluginType();
-
-		if (pluginType.equals("theme")) {
+		if (_liferayExtension instanceof LiferayThemeExtension) {
 			String themeParent = getBuildXmlProperty("theme.parent");
 
 			if (Validator.isNotNull(themeParent)) {
@@ -375,6 +376,7 @@ public class InitGradleTask extends DefaultTask {
 	private Node _buildXmlNode;
 	private Node _ivyXmlNode;
 	private LiferayExtension _liferayExtension;
+	private Properties _pluginPackageProperties;
 	private Project _project;
 
 	private static class PortalDependencyNotations {

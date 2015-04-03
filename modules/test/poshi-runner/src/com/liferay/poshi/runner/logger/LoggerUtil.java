@@ -82,6 +82,26 @@ public final class LoggerUtil {
 		return false;
 	}
 
+	public static boolean isWrittenToLogger(LoggerElement loggerElement) {
+		if (!isLoggerStarted()) {
+			return false;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var node = document.getElementById('");
+		sb.append(loggerElement.getID());
+		sb.append("');");
+
+		sb.append("if (node == null) {");
+		sb.append("return false;");
+		sb.append("}");
+
+		sb.append("return true;");
+
+		return (boolean)_javascriptExecutor.executeScript(sb.toString());
+	}
+
 	public static void setClassName(LoggerElement loggerElement) {
 		if (!isLoggerStarted()) {
 			return;

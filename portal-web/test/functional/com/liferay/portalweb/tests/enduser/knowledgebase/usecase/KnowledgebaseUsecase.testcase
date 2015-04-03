@@ -873,7 +873,7 @@
 		<execute macro="KBArticle#viewDefaultViaKBDisplayPG" />
 	</command>
 
-	<command name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="5">
+	<command known-issues="LPS-54597" name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -1451,21 +1451,13 @@
 			<var name="pageName" value="Knowledge Base Display Page 1" />
 		</execute>
 
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 1" />
-		</execute>
-
-		<execute macro="KBArticle#viewPGViaKBArticle">
+		<execute macro="KBArticle#viewPGViaKBDisplay">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Knowledge Base Display Page 2" />
-		</execute>
-
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 2" />
 		</execute>
 
 		<execute macro="KBArticle#viewPGViaKBArticle">
@@ -1696,7 +1688,8 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
+		<execute macro="KBArticle#viewPGViaKBDisplay">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
@@ -1730,17 +1723,6 @@
 		<execute macro="KBArticleSuggestion#goToSuggestionStatusInProgress">
 			<var name="suggestionCount" value="1" />
 		</execute>
-
-		<execute macro="KBArticleSuggestion#gotoArticleCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute macro="KBArticle#goBackCP" />
 
 		<execute macro="KBArticleSuggestion#moveToResolvedStatus">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
@@ -1785,8 +1767,8 @@
 		<var name="kbArticleTitle" value="KB Article Title" />
 		<var name="kbSuggestionBody" value="KB Article Suggestion Content" />
 		<var name="pageName" value="Knowledge Base Display Page" />
-		<var name="userEmailAddress" property-value="email.address.2" />
-		<var name="userEmailPassword" property-value="email.password.2" />
+		<var name="userEmailAddress" property-value="email.address.4" />
+		<var name="userEmailPassword" property-value="email.password.4" />
 		<var name="userName" value="Test Test" />
 		<var name="userScreenName" value="usersn" />
 		<var name="virtualHost" value="localhost" />
@@ -1949,7 +1931,8 @@
 			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userName" value="${userName}" />
+			<var name="userEmailPassword" value="${userEmailPassword}" />
+			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 

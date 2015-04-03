@@ -63,7 +63,8 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
+		<execute macro="KBArticle#viewPGViaKBDisplay">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
@@ -213,7 +214,7 @@
 
 		<execute function="SelectFrame" locator1="PGKnowledgebasedisplaySelectParentArticle#SELECT_PARENT_IFRAME" />
 		<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplaySelectParentArticle#BREADCRUMB_HOME" />
-		<execute function="AssertElementNotPresent" locator1="//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
+		<execute function="AssertElementNotPresent" locator1="//div[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
 	</command>
 
 	<command known-issues="LPS-54435" name="ChangeSocialBookmarkSitesForKBArticle" priority="5">
@@ -919,7 +920,7 @@
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
-		<for list="${kbArticleCounterList}" param="articleCount" >
+		<for list="${kbArticleCounterList}" param="articleCount">
 			<execute macro="KBArticle#addCP">
 				<var name="kbArticleContent" value="Knowledge Base Article Parent Content ${articleCount}" />
 				<var name="kbArticleTitle" value="Knowledge Base Article Parent Title ${articleCount} " />
@@ -966,7 +967,7 @@
 		</execute>
 
 		<execute macro="KBArticle#viewParentArticleHierarchyViaKBDisplayPG">
-			<var name="kbArticleParentTitle" value="Knowledge Base Article Parent Title" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title" />
 		</execute>
 
 		<execute macro="KBArticle#viewChildArticleHierarchyViaKBDisplayPG">
@@ -987,8 +988,8 @@
 		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
-			<var name="kbChildArticleContent" value="Knowledge Base Article Parent Content 2 Child 2" />
-			<var name="kbChildArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
+			<var name="kbArticleContent" value="Knowledge Base Article Parent Content 2 Child 2" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Parent Title 2 Child 2" />
 		</execute>
 	</command>
 

@@ -74,12 +74,6 @@
 				<var name="portletName" value="Knowledge Base" />
 			</execute>
 
-			<execute macro="KBArticle#gotoCP">
-				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
-				<var name="kbAuthor" value="Test Test" />
-				<var name="kbPriority" value="${kbCount}.0" />
-			</execute>
-
 			<execute macro="KBArticle#viewCP">
 				<var name="kbArticleContent" value="Knowledge Base Article Content ${kbCount}" />
 				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
@@ -255,7 +249,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="requiredCheckbox" value="true" />
+			<var name="required" value="true" />
 			<var name="vocabularyAssociatedAssetType" value="Knowledge Base Article" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -665,12 +659,6 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#gotoCP">
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbAuthor" value="Test Test" />
-			<var name="kbPriority" value="1.0" />
 		</execute>
 
 		<execute macro="KBArticle#viewCP">

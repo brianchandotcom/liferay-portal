@@ -3304,6 +3304,48 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	<target name="prepare-selenium">
 		<delete file="portal-web/test/test-portal-web-ext.properties" />
 
+		<antcall target="prepare-selenium-browser-properties" />
+		<antcall target="prepare-selenium-database-properties" />
+		<antcall target="prepare-selenium-email-properties" />
+		<antcall target="prepare-selenium-required-properties" />
+		<antcall target="prepare-selenium-testcase-properties" />
+
+		<if>
+			<isset property="ignore.errors.delimiter" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					ignore.errors.delimiter=${ignore.errors.delimiter}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="liferay.portal.branch" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					liferay.portal.branch=${liferay.portal.branch}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="liferay.portal.bundle" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					liferay.portal.bundle=${liferay.portal.bundle}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="legacy.theme.ids" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					theme.ids=${legacy.theme.ids}
+				</echo>
+			</then>
+		</if>
+
 		<if>
 			<isset property="selenium.output.dir" />
 			<then>
@@ -3311,11 +3353,124 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 					output.dir=${selenium.output.dir}
 				</echo>
 			</then>
+		</if>
+
+		<if>
+			<equals arg1="${tcat.enabled}" arg2="true" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					tcat.admin.repository=${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}
+					tcat.enabled=true
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${tear.down.before.test}" arg2="true" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					tear.down.before.test=true
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.assert.liferay.errors}" arg2="false" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.assert.liferay.errors=false
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.basedir" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.basedir=${test.basedir}
+				</echo>
+			</then>
 			<else>
-				<property name="selenium.output.dir" value="H:\\selenium-output\\" />
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.basedir=${basedir.unix}/portal-web
+				</echo>
 			</else>
 		</if>
 
+		<if>
+			<contains string="${test.class}" substring="#" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					testing.class.method=true
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.save.screenshot}" arg2="true" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					save.screenshot=true
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					selenium.implementation=com.thoughtworks.selenium.Selenium
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.selenium.logger.enabled}" arg2="false" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					selenium.logger.enabled=false
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.skip.tear.down}" arg2="true" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.skip.tear.down=true
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-browser-properties">
+		<if>
+			<equals arg1="${browser.type}" arg2="firefox" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					browser.type=*chrome
+				</echo>
+			</then>
+			<elseif>
+				<equals arg1="${browser.type}" arg2="googlechrome" />
+				<then>
+					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+						browser.type=*googlechrome
+					</echo>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${browser.type}" arg2="ie" />
+				<then>
+					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+						browser.type=*iehta
+					</echo>
+				</then>
+			</elseif>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-database-properties">
 		<if>
 			<isset property="database.db2.driver" />
 			<then>
@@ -3495,7 +3650,9 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 				</echo>
 			</then>
 		</if>
+	</target>
 
+	<target name="prepare-selenium-email-properties">
 		<if>
 			<isset property="email.address.1" />
 			<then>
@@ -3586,26 +3743,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			</then>
 		</if>
 
-		<get-testcase-property property.name="ignore.errors" />
-
-		<if>
-			<isset property="ignore.errors" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					ignore.errors=${ignore.errors}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="ignore.errors.delimiter" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					ignore.errors.delimiter=${ignore.errors.delimiter}
-				</echo>
-			</then>
-		</if>
-
 		<if>
 			<isset property="lcs.email.address.1" />
 			<then>
@@ -3641,30 +3778,32 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 				</echo>
 			</then>
 		</if>
+	</target>
+
+	<target name="prepare-selenium-required-properties">
+		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+			selenium.executable.dir=${basedir.unix}/tools/selenium/
+		</echo>
+
+		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+			test.class.command.name=${test.class}
+		</echo>
+
+		<get-test-url />
+
+		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+			portal.url=${test.url}
+		</echo>
+	</target>
+
+	<target name="prepare-selenium-testcase-properties">
+		<get-testcase-property property.name="ignore.errors" />
 
 		<if>
-			<isset property="liferay.portal.branch" />
+			<isset property="ignore.errors" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					liferay.portal.branch=${liferay.portal.branch}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="liferay.portal.bundle" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					liferay.portal.bundle=${liferay.portal.bundle}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="legacy.theme.ids" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					theme.ids=${legacy.theme.ids}
+					ignore.errors=${ignore.errors}
 				</echo>
 			</then>
 		</if>
@@ -3685,60 +3824,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<if>
 			<equals arg1="${sharepoint.enabled}" arg2="true" />
 			<then>
-				<if>
-					<os family="unix" />
-					<then>
-						<exec executable="/bin/bash" os="${os.unix}" outputproperty="sharepoint.vm.host.name">
-							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
-						</exec>
-					</then>
-					<else>
-						<exec executable="cmd" outputproperty="sharepoint.vm.host.name">
-							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
-						</exec>
-					</else>
-				</if>
-
-				<propertyregex
-					input="${sharepoint.vm.host.name}"
-					override="true"
-					property="sharepoint.vm.host.name"
-					regexp="&quot;(cloud.*?)&quot;"
-					select="\1"
-				/>
-
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					sharepoint.vm.host.name=${sharepoint.vm.host.name}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="skip.delete-selenium-output" />
-			</not>
-			<then>
-				<remake-dir dir="${selenium.output.dir}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${tcat.enabled}" arg2="true" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					tcat.admin.repository=${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}
-					tcat.enabled=true
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${tear.down.before.test}" arg2="true" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					tear.down.before.test=true
 				</echo>
 			</then>
 		</if>
@@ -3750,113 +3837,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					test.assert.javascript.errors=false
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${test.assert.liferay.errors}" arg2="false" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					test.assert.liferay.errors=false
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="test.basedir" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					test.basedir=${test.basedir}
-				</echo>
-			</then>
-			<else>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					test.basedir=${basedir.unix}/portal-web
-				</echo>
-			</else>
-		</if>
-
-		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-			test.class.command.name=${test.class}
-		</echo>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="firefox" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					browser.type=*chrome
-				</echo>
-			</then>
-			<elseif>
-				<equals arg1="${browser.type}" arg2="googlechrome" />
-				<then>
-					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-						browser.type=*googlechrome
-					</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${browser.type}" arg2="ie" />
-				<then>
-					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-						browser.type=*iehta
-					</echo>
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<contains string="${test.class}" substring="#" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					testing.class.method=true
-				</echo>
-			</then>
-		</if>
-
-		<get-test-url />
-
-		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-			portal.url=${test.url}
-		</echo>
-
-		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-			selenium.executable.dir=${basedir.unix}/tools/selenium/
-		</echo>
-
-		<if>
-			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					selenium.implementation=com.thoughtworks.selenium.Selenium
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${test.selenium.logger.enabled}" arg2="false" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					selenium.logger.enabled=false
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${test.save.screenshot}" arg2="true" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					save.screenshot=true
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${test.skip.tear.down}" arg2="true" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					test.skip.tear.down=true
 				</echo>
 			</then>
 		</if>
@@ -5215,7 +5195,40 @@ if (ppstate.equals("normal")) {
 			</then>
 		</if>
 
+		<get-testcase-property property.name="sharepoint.enabled" />
+
+		<if>
+			<equals arg1="${sharepoint.enabled}" arg2="true" />
+			<then>
+				<if>
+					<os family="unix" />
+					<then>
+						<exec executable="/bin/bash" os="${os.unix}" outputproperty="sharepoint.vm.host.name">
+							<arg value="-c" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
+						</exec>
+					</then>
+					<else>
+						<exec executable="cmd" outputproperty="sharepoint.vm.host.name">
+							<arg value="/c" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
+						</exec>
+					</else>
+				</if>
+
+				<propertyregex
+					input="${sharepoint.vm.host.name}"
+					override="true"
+					property="sharepoint.vm.host.name"
+					regexp="&quot;(cloud.*?)&quot;"
+					select="\1"
+				/>
+			</then>
+		</if>
+
 		<antcall target="prepare-selenium" />
+
+		<remake-dir dir="${selenium.output.dir}" />
 
 		<if>
 			<equals arg1="${browser.type}" arg2="googlechrome" />

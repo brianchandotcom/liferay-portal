@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -55,6 +57,7 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -79,6 +82,44 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Test
+	public void testArticleIdCaseInsensitive() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		Map<Locale, String> keywordsMap = new HashMap<>();
+
+		String keywords = "keywords";
+
+		keywordsMap.put(LocaleUtil.getDefault(), keywords);
+		keywordsMap.put(LocaleUtil.GERMANY, keywords);
+		keywordsMap.put(LocaleUtil.SPAIN, keywords);
+
+		String articleId = "Article.Id";
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, articleId, false,
+			keywordsMap, keywordsMap, keywordsMap, null,
+			LocaleUtil.getDefault(), null, true, true, serviceContext);
+
+		updateBaseModel(article, keywords, serviceContext);
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		int initialBaseModelsSearchCount = 1;
+
+		assertBaseModelsCount(
+			initialBaseModelsSearchCount, "ARTICLE.ID", searchContext);
+
+		assertBaseModelsCount(
+			initialBaseModelsSearchCount, "article.id", searchContext);
+
+		assertBaseModelsCount(
+			initialBaseModelsSearchCount, "ArtiCle.Id", searchContext);
+	}
 
 	@Test
 	public void testMatchNotOnlyCompanyIdButAlsoQueryTerms() throws Exception {

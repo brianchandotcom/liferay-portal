@@ -140,6 +140,21 @@ public class JournalTestUtil {
 			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
+		return addArticle(
+			groupId, folderId, classNameId, StringPool.BLANK, true, titleMap,
+			descriptionMap, contentMap, layoutUuid, defaultLocale,
+			expirationDate, workflowEnabled, approved, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId, String articleId,
+			boolean autoArticleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> contentMap,
+			String layoutUuid, Locale defaultLocale, Date expirationDate,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			contentMap, LocaleUtil.toLanguageId(defaultLocale));
 
@@ -199,7 +214,7 @@ public class JournalTestUtil {
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
-			StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
+			articleId, autoArticleId, JournalArticleConstants.VERSION_DEFAULT,
 			titleMap, descriptionMap, content, ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey(), layoutUuid, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,

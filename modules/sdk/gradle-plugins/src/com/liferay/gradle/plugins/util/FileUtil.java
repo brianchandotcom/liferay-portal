@@ -38,12 +38,8 @@ public class FileUtil {
 		return file.exists();
 	}
 
-	public static Properties readProperties(Project project, String fileName)
-		throws Exception {
-
+	public static Properties readProperties(File file) throws Exception {
 		Properties properties = new Properties();
-
-		File file = project.file(fileName);
 
 		if (file.exists()) {
 			try (FileInputStream fileInputStream = new FileInputStream(file)) {
@@ -52,6 +48,14 @@ public class FileUtil {
 		}
 
 		return properties;
+	}
+
+	public static Properties readProperties(Project project, String fileName)
+		throws Exception {
+
+		File file = project.file(fileName);
+
+		return readProperties(file);
 	}
 
 	public static void write(File file, List<String> lines) throws Exception {

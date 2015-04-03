@@ -14,18 +14,33 @@
 
 package com.liferay.gradle.plugins.util;
 
+import groovy.lang.Closure;
+
+import java.io.File;
+
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.ResolvableDependencies;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
+import org.gradle.api.file.FileTree;
+import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
+import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.util.PatternFilterable;
 
 /**
  * @author Andrea Di Giorgi
@@ -40,6 +55,12 @@ public class GradleUtil {
 	}
 
 	public static Dependency addDependency(
+		Project project, String configurationName, File file) {
+
+		return _addDependency(project, configurationName, project.files(file));
+	}
+
+	public static Dependency addDependency(
 		Project project, String configurationName, String group, String name,
 		String version) {
 
@@ -51,8 +72,6 @@ public class GradleUtil {
 		Project project, String configurationName, String group, String name,
 		String version, boolean transitive) {
 
-		DependencyHandler dependencyHandler = project.getDependencies();
-
 		Map<String, Object> dependencyNotation = new HashMap<>();
 
 		dependencyNotation.put("group", group);
@@ -60,7 +79,32 @@ public class GradleUtil {
 		dependencyNotation.put("transitive", transitive);
 		dependencyNotation.put("version", version);
 
-		return dependencyHandler.add(configurationName, dependencyNotation);
+		return _addDependency(project, configurationName, dependencyNotation);
+	}
+
+	public static <T> T addExtension(
+		Project project, String name, Class<T> clazz) {
+
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		return extensionContainer.create(name, clazz, project);
+	}
+
+	public static <T extends Task> Task addTask(
+		Project project, String name, Class<T> clazz) {
+
+		Map<String, Class<T>> args = Collections.singletonMap(
+			Task.TASK_TYPE, clazz);
+
+		return project.task(args, name);
+	}
+
+	public static <T extends Plugin<? extends Project>> void applyPlugin(
+		Project project, Class<T> clazz) {
+
+		Map<String, Class<T>> args = Collections.singletonMap("plugin", clazz);
+
+		project.apply(args);
 	}
 
 	public static void executeIfEmpty(
@@ -94,10 +138,61 @@ public class GradleUtil {
 		return configurationContainer.getByName(name);
 	}
 
+	public static <T> T getConvention(Project project, Class<T> clazz) {
+		Convention convention = project.getConvention();
+
+		return convention.getPlugin(clazz);
+	}
+
 	public static <T> T getExtension(Project project, Class<T> clazz) {
 		ExtensionContainer extensionContainer = project.getExtensions();
 
 		return extensionContainer.getByType(clazz);
+	}
+
+	public static FileTree getFilteredFileTree(
+		FileTree fileTree, final String[] includes, final String[] excludes) {
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall(PatternFilterable patternFilterable) {
+				if (Validator.isNotNull(excludes)) {
+					patternFilterable.setExcludes(Arrays.asList(excludes));
+				}
+
+				if (Validator.isNotNull(includes)) {
+					patternFilterable.setIncludes(Arrays.asList(includes));
+				}
+			}
+
+		};
+
+		return fileTree.matching(closure);
+	}
+
+	public static SourceSet getSourceSet(Project project, String name) {
+		JavaPluginConvention javaPluginConvention = getConvention(
+			project, JavaPluginConvention.class);
+
+		SourceSetContainer sourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		return sourceSetContainer.getByName(name);
+	}
+
+	public static Task getTask(Project project, String name) {
+		TaskContainer taskContainer = project.getTasks();
+
+		return taskContainer.getByName(name);
+	}
+
+	private static Dependency _addDependency(
+		Project project, String configurationName, Object dependencyNotation) {
+
+		DependencyHandler dependencyHandler = project.getDependencies();
+
+		return dependencyHandler.add(configurationName, dependencyNotation);
 	}
 
 }

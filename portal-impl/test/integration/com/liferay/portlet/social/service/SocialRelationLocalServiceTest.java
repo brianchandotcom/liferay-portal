@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.util.comparator.UserScreenNameComparator;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -203,15 +205,13 @@ public class SocialRelationLocalServiceTest {
 		GroupLocalServiceUtil.addUserGroup(
 			dlc4User.getUserId(), TestPropsValues.getGroupId());
 
-		long[] groupIds = dlc4User.getGroupIds();
-
-		for (long groupId : dlc3User.getGroupIds()) {
-			ArrayUtil.remove(groupIds, groupId);
-		}
+		Set<Long> groupIds = SetUtil.intersect(
+			dlc3User.getGroupIds(), dlc4User.getGroupIds());
 
 		List<User> users = UserLocalServiceUtil.searchSocial(
-			TestPropsValues.getCompanyId(), groupIds, "dlc", QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			TestPropsValues.getCompanyId(),
+			ArrayUtil.toArray(groupIds.toArray(new Long[groupIds.size()])),
+			"dlc", QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(2, users.size());
 

@@ -21,6 +21,7 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +32,6 @@ import org.gradle.api.Action;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.OutputDirectory;
@@ -60,18 +60,11 @@ public class BuildCssTask extends BasePortalToolsTask {
 				}
 
 			});
-
-		if (liferayExtension.isOsgiPlugin()) {
-			_sassDocrootDir = project.file("src/META-INF/resources");
-		}
-		else {
-			_sassDocrootDir = project.file("docroot");
-		}
 	}
 
 	@Override
 	public void exec() {
-		copySassPortalCommon();
+		copyPortalCommon();
 
 		super.exec();
 	}
@@ -80,18 +73,58 @@ public class BuildCssTask extends BasePortalToolsTask {
 	public List<String> getArgs() {
 		List<String> args = new ArrayList<>(3);
 
-		args.add("sass.dir=/");
+		for (int i = 0; i < _cssDirNames.size(); i++) {
+			String cssDirName = _cssDirNames.get(i);
 
-		File sassDocrootDir = getSassDocrootDir();
+			args.add("sass.dir." + i + "=/" + cssDirName);
+		}
 
-		args.add("sass.docroot.dir=" + sassDocrootDir.toString());
+		args.add("sass.docroot.dir=" + project.getProjectDir());
 
-		File sassPortalCommonDir = new File(
+		File cssPortalCommonDir = new File(
 			getPortalWebDir(), "html/css/common");
 
-		args.add("sass.portal.common.dir=" + sassPortalCommonDir.toString());
+		args.add("sass.portal.common.dir=" + cssPortalCommonDir.toString());
 
 		return args;
+	}
+
+	@OutputDirectories
+	public Iterable<File> getCssCacheDirs() {
+		Set<File> cssCacheDirs = new HashSet<>();
+
+		Iterable<File> cssFiles = getCssFiles();
+
+		for (File cssFile : cssFiles) {
+			File cssCacheDir = project.file(cssFile + "/../.sass-cache");
+
+			cssCacheDirs.add(cssCacheDir);
+		}
+
+		return cssCacheDirs;
+	}
+
+	public List<String> getCssDirNames() {
+		return _cssDirNames;
+	}
+
+	@InputFiles
+	@SkipWhenEmpty
+	public Iterable<File> getCssFiles() {
+		if (_cssDirNames.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", project.getProjectDir());
+		args.put("exclude", "**/.sass-cache/**");
+
+		for (String cssDirName : _cssDirNames) {
+			args.put("include", cssDirName + "/**/*.css");
+		}
+
+		return project.fileTree(args);
 	}
 
 	@Override
@@ -104,48 +137,12 @@ public class BuildCssTask extends BasePortalToolsTask {
 		return new File(liferayExtension.getTmpDir(), "portal-web");
 	}
 
-	@OutputDirectories
-	public Iterable<File> getSassCacheDirs() {
-		Set<File> sassCacheDirs = new HashSet<>();
-
-		Iterable<File> sassFiles = getSassFiles();
-
-		for (File sassFile : sassFiles) {
-			File sassCacheDir = project.file(sassFile + "/../.sass-cache");
-
-			sassCacheDirs.add(sassCacheDir);
-		}
-
-		return sassCacheDirs;
-	}
-
-	@InputDirectory
-	public File getSassDocrootDir() {
-		return _sassDocrootDir;
-	}
-
-	@InputFiles
-	@SkipWhenEmpty
-	public Iterable<File> getSassFiles() {
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("dir", getSassDocrootDir());
-		args.put("exclude", "**/.sass-cache/**");
-		args.put("include", "**/*.css");
-
-		return project.fileTree(args);
-	}
-
 	public boolean isLegacy() {
 		return _legacy;
 	}
 
 	public void setLegacy(boolean legacy) {
 		_legacy = legacy;
-	}
-
-	public void setSassDocrootDir(File sassDocrootDir) {
-		_sassDocrootDir = sassDocrootDir;
 	}
 
 	@Override
@@ -159,6 +156,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 		addDependency("com.liferay", "com.liferay.rtl.css", "1.0.0-SNAPSHOT");
 		addDependency("com.liferay", "com.liferay.ruby.gems", "1.0.0-SNAPSHOT");
+		addDependency("com.liferay.portal", "util-slf4j", "default");
 		addDependency("javax.portlet", "portlet-api", "2.0");
 		addDependency("org.apache.ant", "ant", "1.8.2");
 		addDependency("org.jruby", "jruby-complete", "1.6.5");
@@ -172,7 +170,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 			"portal-web", "default");
 	}
 
-	protected void copySassPortalCommon() {
+	protected void copyPortalCommon() {
 		final File portalWebDir = getPortalWebDir();
 
 		File portalWebHtmlDir = new File(portalWebDir, "html");
@@ -207,8 +205,8 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 	private static final String _PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
 
+	private final List<String> _cssDirNames = new ArrayList<>();
 	private boolean _legacy;
 	private final Configuration _portalWebConfiguration;
-	private File _sassDocrootDir;
 
 }

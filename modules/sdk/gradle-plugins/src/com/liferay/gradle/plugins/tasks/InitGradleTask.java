@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.StringUtil;
@@ -28,10 +29,12 @@ import groovy.util.XmlParser;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
@@ -53,6 +56,8 @@ public class InitGradleTask extends DefaultTask {
 
 		_liferayExtension = GradleUtil.getExtension(
 			_project, LiferayExtension.class);
+		_pluginPackageProperties = FileUtil.readProperties(
+			_project, "docroot/WEB-INF/liferay-plugin-package.properties");
 
 		XmlParser xmlParser = new XmlParser();
 
@@ -68,6 +73,7 @@ public class InitGradleTask extends DefaultTask {
 
 		contents.addAll(getBuildGradleDependencies());
 		contents.addAll(getBuildGradleLiferay());
+		contents.addAll(getBuildGradleProperties());
 
 		FileUtil.write(buildGradleFile, contents);
 	}
@@ -100,7 +106,7 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		String requiredDeploymentContexts =
-			_liferayExtension.getPluginPackageProperty(
+			_pluginPackageProperties.getProperty(
 				"required-deployment-contexts");
 
 		if (Validator.isNotNull(requiredDeploymentContexts)) {
@@ -143,15 +149,14 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return wrapContents(
-			contents, 1, "(", JavaPlugin.COMPILE_CONFIGURATION_NAME, ")");
+			contents, 1, "(", JavaPlugin.COMPILE_CONFIGURATION_NAME, ")", true);
 	}
 
 	protected List<String> getBuildDependenciesProvidedCompile() {
 		List<String> contents = new ArrayList<>();
 
-		String portalDependencyJars =
-			_liferayExtension.getPluginPackageProperty(
-				"portal-dependency-jars");
+		String portalDependencyJars = _pluginPackageProperties.getProperty(
+			"portal-dependency-jars");
 
 		if (Validator.isNotNull(portalDependencyJars)) {
 			String[] portalDependencyJarsArray = portalDependencyJars.split(
@@ -177,7 +182,7 @@ public class InitGradleTask extends DefaultTask {
 
 		return wrapContents(
 			contents, 1, "(", WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
-			")");
+			")", true);
 	}
 
 	protected List<String> getBuildDependenciesTestCompile() {
@@ -208,7 +213,8 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return wrapContents(
-			contents, 1, "(", JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, ")");
+			contents, 1, "(", JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, ")",
+			true);
 	}
 
 	protected List<String> getBuildGradleDependencies() {
@@ -218,15 +224,13 @@ public class InitGradleTask extends DefaultTask {
 		contents.addAll(getBuildDependenciesProvidedCompile());
 		contents.addAll(getBuildDependenciesTestCompile());
 
-		return wrapContents(contents, 0, " {", "dependencies", "}");
+		return wrapContents(contents, 0, " {", "dependencies", "}", false);
 	}
 
 	protected List<String> getBuildGradleLiferay() {
 		List<String> contents = new ArrayList<>();
 
-		String pluginType = _liferayExtension.getPluginType();
-
-		if (pluginType.equals("theme")) {
+		if (_liferayExtension instanceof LiferayThemeExtension) {
 			String themeParent = getBuildXmlProperty("theme.parent");
 
 			if (Validator.isNotNull(themeParent)) {
@@ -240,7 +244,19 @@ public class InitGradleTask extends DefaultTask {
 
 		if (!contents.isEmpty()) {
 			contents = wrapContents(
-				contents, 0, " {", LiferayPlugin.EXTENSION_NAME, "}");
+				contents, 0, " {", LiferayPlugin.PLUGIN_NAME, "}", true);
+		}
+
+		return contents;
+	}
+
+	protected List<String> getBuildGradleProperties() {
+		List<String> contents = new ArrayList<>();
+
+		String pluginVersion = getBuildXmlProperty("plugin.version");
+
+		if (Validator.isNotNull(pluginVersion)) {
+			contents.add("version = \"" + pluginVersion + "\"");
 		}
 
 		return contents;
@@ -306,10 +322,14 @@ public class InitGradleTask extends DefaultTask {
 
 	protected List<String> wrapContents(
 		List<String> contents, int indentCount, String leftClose, String name,
-		String rightClose) {
+		String rightClose, boolean sort) {
 
 		if (contents.isEmpty()) {
 			return contents;
+		}
+
+		if (sort) {
+			Collections.sort(contents);
 		}
 
 		String indent = StringUtil.repeat('\t', indentCount);
@@ -369,6 +389,7 @@ public class InitGradleTask extends DefaultTask {
 	private Node _buildXmlNode;
 	private Node _ivyXmlNode;
 	private LiferayExtension _liferayExtension;
+	private Properties _pluginPackageProperties;
 	private Project _project;
 
 	private static class PortalDependencyNotations {

@@ -16,28 +16,33 @@ package com.liferay.gradle.plugins.util;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Andrea Di Giorgi
  */
-public class Validator {
+public class ArrayUtil {
 
-	public static boolean isNotNull(String s) {
-		return !isNull(s);
-	}
-
-	public static boolean isNull(String s) {
-		if (s == null) {
-			return true;
+	public static boolean contains(Object[] array, Object value) {
+		if (isEmpty(array) || (value == null)) {
+			return false;
 		}
 
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			if (!Character.isWhitespace(c)) {
-				return false;
+		for (int i = 0; i < array.length; i++) {
+			if (value.equals(array[i])) {
+				return true;
 			}
 		}
 
-		return true;
+		return false;
+	}
+
+	public static boolean isEmpty(Object[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isNotEmpty(Object[] array) {
+		return !isEmpty(array);
 	}
 
 }

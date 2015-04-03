@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.ide.dependencies" value="hibernate3.jar,spring-beans.jar,spring-context.jar,spring-core.jar,spring-orm.jar,spring-transaction.jar" />
+	<property name="osgi.ide.dependencies" value="hibernate-core.jar,spring-beans.jar,spring-context.jar,spring-core.jar,spring-orm.jar,spring-tx.jar" />
 	<property name="osgi.runtime.dependencies" value="org.eclipse.gemini.*.jar" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />

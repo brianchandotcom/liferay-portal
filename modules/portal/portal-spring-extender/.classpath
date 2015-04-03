@@ -23,13 +23,13 @@
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-io.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-lang.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
-	<classpathentry kind="lib" path="/portal-master/lib/portal/hibernate3.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/hibernate-core.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-beans.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-context.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-core.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-orm.jar" />
-	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-transaction.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-tx.jar" />
 	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />

@@ -17,7 +17,6 @@ package com.liferay.portal.tools.sourceformatter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,7 +32,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,84 +40,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
-
-	public static String getImports(String content) {
-		Matcher matcher = _importsPattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group();
-		}
-
-		return null;
-	}
-
-	public static String stripJavaImports(
-			String content, String packageDir, String className)
-		throws IOException {
-
-		String imports = getImports(content);
-
-		if (Validator.isNull(imports)) {
-			return content;
-		}
-
-		Set<String> classes = ClassUtil.getClasses(
-			new UnsyncStringReader(content), className);
-
-		StringBundler sb = new StringBundler();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			int x = line.indexOf("import ");
-
-			if (x == -1) {
-				continue;
-			}
-
-			int y = line.lastIndexOf(StringPool.PERIOD);
-
-			String importPackage = line.substring(x + 7, y);
-
-			if (importPackage.equals(packageDir) ||
-				importPackage.equals("java.lang")) {
-
-				continue;
-			}
-
-			String importClass = line.substring(y + 1, line.length() - 1);
-
-			if (importClass.equals("*") || classes.contains(importClass)) {
-				sb.append(line);
-				sb.append("\n");
-			}
-		}
-
-		ImportsFormatter importsFormatter = new JavaImportsFormatter();
-
-		String newImports = importsFormatter.format(sb.toString());
-
-		if (!imports.equals(newImports)) {
-			content = StringUtil.replaceFirst(content, imports, newImports);
-		}
-
-		// Ensure a blank line exists between the package and the first import
-
-		content = content.replaceFirst(
-			"(?m)^[ \t]*(package .*;)\\s*^[ \t]*import", "$1\n\nimport");
-
-		// Ensure a blank line exists between the last import (or package if
-		// there are no imports) and the class comment
-
-		content = content.replaceFirst(
-			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
-			"$1\n\n/**");
-
-		return content;
-	}
 
 	protected static String checkAnnotationParameterProperties(
 		String content, String annotation) {
@@ -769,7 +689,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
-		newContent = stripJavaImports(newContent, packagePath, className);
+		newContent = JavaImportsFormatter.stripJavaImports(
+			newContent, packagePath, className);
 
 		newContent = StringUtil.replace(
 			newContent, new String[] {";\n/**", "\t/*\n\t *", ";;\n"},
@@ -3204,8 +3125,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static Pattern _annotationPattern = Pattern.compile(
 		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
-	private static Pattern _importsPattern = Pattern.compile(
-		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;

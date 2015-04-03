@@ -67,6 +67,23 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>deletions</name>
+		<tag-class>com.liferay.taglib.staging.DeletionsTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>cmd</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>disableInputs</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+	<tag>
 		<name>menu</name>
 		<tag-class>com.liferay.taglib.staging.MenuTag</tag-class>
 		<body-content>JSP</body-content>

@@ -7,7 +7,7 @@
 				"type": "string"
 			},
 			"articleId": {
-				"index": "not_analyzed",
+				"analyzer": "keyword_lowercase",
 				"store": "yes",
 				"type": "string"
 			},

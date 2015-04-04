@@ -40,7 +40,6 @@ import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sourceformatter.JavaImportsFormatter;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.XMLFormatter;
@@ -296,8 +295,6 @@ public class ServiceBuilder {
 
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
-
-		ToolDependencies.wireServiceBuilder();
 
 		String apiDir = arguments.get("service.api.dir");
 		boolean autoImportDefaultReferences = GetterUtil.getBoolean(

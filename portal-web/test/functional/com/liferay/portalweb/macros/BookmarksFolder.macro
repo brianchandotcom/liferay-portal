@@ -11,7 +11,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute function="AssertTextEquals" locator1="CPBookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
 	</command>
 
 	<command name="addNullCP">
@@ -263,7 +263,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute function="AssertTextEquals" locator1="CPBookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPBookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
 	</command>
 
 	<command name="viewPG">

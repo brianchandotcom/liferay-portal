@@ -19,6 +19,8 @@ package com.liferay.poshi.runner.util;
  */
 public class PropsValues {
 
+	public static final String ANDROID_HOME = PropsUtil.get("android.home");
+
 	public static final String BROWSER_COMMANDS_DIR_NAME =
 		PropsUtil.get("browser.commands.dir");
 

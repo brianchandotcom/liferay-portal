@@ -2512,4 +2512,61 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
+
+	<command name="ViewSiteNameUpdate" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Calendar#viewCurrentSiteCalendarName">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#editCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteNameEdit" value="Site Name Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Calendar#viewCurrentSiteCalendarName">
+			<var name="site" value="Site Name Edit - Site Name" />
+		</execute>
+	</command>
 </definition>

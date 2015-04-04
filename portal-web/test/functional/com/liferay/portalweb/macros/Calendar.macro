@@ -582,7 +582,13 @@
 		</if>
 	</command>
 
-	<command name="viewDefaultPG">
+	<command name="viewCurrentSiteCalendarName">
+		<var name="key_site" value="${site}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY" value1="${site}" />
+	</command>
+
+	<command name="viewDefaultPG">:
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />

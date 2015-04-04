@@ -524,11 +524,7 @@
 	</bean>
 	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
 		<property name="modelHints">
-			<bean class="com.liferay.portal.model.ModelHintsImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil">
-				<property name="sAXReader">
-					<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" factory-method="getUnsecureSAXReader" />
-				</property>
-			</bean>
+			<bean class="com.liferay.portal.model.ModelHintsImpl" depends-on="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />

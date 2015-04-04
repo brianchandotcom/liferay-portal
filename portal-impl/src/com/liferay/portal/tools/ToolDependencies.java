@@ -110,18 +110,6 @@ public class ToolDependencies {
 		microsoftTranslatorFactoryUtil.setMicrosoftTranslatorFactory(
 			new MicrosoftTranslatorFactoryImpl());
 
-		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
-
-		ModelHintsImpl modelHintsImpl = new ModelHintsImpl();
-
-		SAXReader saxReader = new SAXReaderImpl();
-
-		modelHintsImpl.setSAXReader(saxReader);
-
-		modelHintsImpl.afterPropertiesSet();
-
-		modelHintsUtil.setModelHints(modelHintsImpl);
-
 		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
 
 		PortletPermissionUtil portletPermissionUtil =
@@ -137,6 +125,8 @@ public class ToolDependencies {
 
 		saxReaderUtil.setSecureSAXReader(secureSAXReader);
 
+		SAXReader saxReader = new SAXReaderImpl();
+
 		saxReaderUtil.setUnsecureSAXReader(saxReader);
 
 		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
@@ -144,6 +134,14 @@ public class ToolDependencies {
 
 		secureXMLFactoryProviderUtil.setSecureXMLFactoryProvider(
 			new SecureXMLFactoryProviderImpl());
+
+		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
+
+		ModelHintsImpl modelHintsImpl = new ModelHintsImpl();
+
+		modelHintsImpl.afterPropertiesSet();
+
+		modelHintsUtil.setModelHints(modelHintsImpl);
 
 		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
 

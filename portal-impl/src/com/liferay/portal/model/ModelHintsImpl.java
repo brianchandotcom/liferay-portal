@@ -49,7 +49,7 @@ public class ModelHintsImpl extends BaseModelHintsImpl {
 
 		return SAXReaderFactory.getSAXReader(
 			secureXMLFactoryProvider.newXMLReader(),
-			PropsValues.XML_VALIDATION_ENABLED, true);
+			PropsValues.XML_VALIDATION_ENABLED, false);
 	}
 
 	public class RuntimeModelHintsCallback implements ModelHintsCallback {

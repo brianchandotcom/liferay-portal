@@ -255,6 +255,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
 
+		configureTaskClassesDependsOn(classesTask);
+	}
+
+	protected void configureTaskClassesDependsOn(Task classesTask) {
 		classesTask.dependsOn(_BUILD_CSS_TASK_NAME);
 	}
 

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.model.CacheField;
@@ -1251,7 +1250,7 @@ public class ServiceBuilder {
 		boolean useTempFile = false;
 
 		if (!refFile.exists()) {
-			refFileName = Time.getTimestamp();
+			refFileName = String.valueOf(System.currentTimeMillis());
 			refFile = new File(refFileName);
 
 			ClassLoader classLoader = getClass().getClassLoader();

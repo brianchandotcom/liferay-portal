@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portalweb.util.TestPropsValues;
+
 import com.thoughtworks.selenium.Selenium;
 
 import io.appium.java_client.MobileDriver;
@@ -937,12 +939,20 @@ public class MobileDriverToSeleniumBridge
 
 			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
 
+			StringBuilder sb = new StringBuilder(3);
+
+			sb.append(TestPropsValues.ANDROID_HOME);
+
+			sb.append("/platform-tools/");
+
 			if (elementPositionCenterY >= viewportPositionBottom) {
 				try {
+					sb.append(
+						"adb -s emulator-5554 shell /data/local/swipe_up.sh");
+
 					Runtime runtime = Runtime.getRuntime();
 
-					runtime.exec(
-						"adb -s emulator-5554 shell /data/local/swipe_up.sh");
+					runtime.exec(sb.toString());
 				}
 				catch (IOException ioe) {
 					ioe.printStackTrace();
@@ -950,10 +960,12 @@ public class MobileDriverToSeleniumBridge
 			}
 			else if (elementPositionCenterY <= viewportPositionTop ) {
 				try {
+					sb.append(
+						"adb -s emulator-5554 shell /data/local/swipe_down.sh");
+
 					Runtime runtime = Runtime.getRuntime();
 
-					runtime.exec(
-						"adb -s emulator-5554 shell /data/local/swipe_down.sh");
+					runtime.exec(sb.toString());
 				}
 				catch (IOException ioe) {
 					ioe.printStackTrace();
@@ -975,7 +987,11 @@ public class MobileDriverToSeleniumBridge
 		try {
 			Runtime runtime = Runtime.getRuntime();
 
-			StringBuilder sb = new StringBuilder(4);
+			StringBuilder sb = new StringBuilder(6);
+
+			sb.append(TestPropsValues.ANDROID_HOME);
+
+			sb.append("/platform-tools/");
 
 			sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
 

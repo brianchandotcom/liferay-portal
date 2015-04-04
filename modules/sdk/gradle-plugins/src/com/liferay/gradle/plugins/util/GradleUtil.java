@@ -96,13 +96,13 @@ public class GradleUtil {
 		return extensionContainer.create(name, clazz, project);
 	}
 
-	public static <T extends Task> Task addTask(
+	public static <T extends Task> T addTask(
 		Project project, String name, Class<T> clazz) {
 
 		Map<String, Class<T>> args = Collections.singletonMap(
 			Task.TASK_TYPE, clazz);
 
-		return project.task(args, name);
+		return (T)project.task(args, name);
 	}
 
 	public static <T extends Plugin<? extends Project>> void applyPlugin(

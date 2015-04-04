@@ -85,12 +85,14 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 			project, LiferayPlugin.PLUGIN_NAME, clazz);
 	}
 
-	protected void addTaskBuildThumbnails(Project project) {
-		Task task = GradleUtil.addTask(
+	protected BuildThumbnailsTask addTaskBuildThumbnails(Project project) {
+		BuildThumbnailsTask buildThumbnailsTask = GradleUtil.addTask(
 			project, _BUILD_THUMBNAILS_TASK_NAME, BuildThumbnailsTask.class);
 
-		task.setDescription("Generates the theme thumbnails.");
-		task.setGroup(BasePlugin.BUILD_GROUP);
+		buildThumbnailsTask.setDescription("Generates the theme thumbnails.");
+		buildThumbnailsTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		return buildThumbnailsTask;
 	}
 
 	@Override
@@ -105,7 +107,8 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void addTaskWar(Project project) {
+	protected Task addTaskWar(Project project) {
+		return null;
 	}
 
 	@Override

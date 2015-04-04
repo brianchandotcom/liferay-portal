@@ -36,9 +36,6 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -47,6 +44,7 @@ import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sourceformatter.JavaImportsFormatter;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.XMLFormatter;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -105,7 +103,11 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
+import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -146,7 +148,9 @@ public class ServiceBuilder {
 		Map<String, Element> entityElements = new TreeMap<>();
 		Map<String, Element> exceptionElements = new TreeMap<>();
 
-		for (Element element : rootElement.elements()) {
+		List<Element> elements = rootElement.elements();
+
+		for (Element element : elements) {
 			String elementName = element.getName();
 
 			if (elementName.equals("author")) {
@@ -179,7 +183,9 @@ public class ServiceBuilder {
 			else if (elementName.equals("exceptions")) {
 				element.detach();
 
-				for (Element exceptionElement : element.elements("exception")) {
+				List<Element> matchingElements = element.elements("exception");
+
+				for (Element exceptionElement : matchingElements) {
 					exceptionElement.detach();
 
 					exceptionElements.put(
@@ -670,9 +676,9 @@ public class ServiceBuilder {
 			_beanLocatorUtilShortName = _beanLocatorUtil.substring(
 				_beanLocatorUtil.lastIndexOf(".") + 1);
 
-			String content = getContent(inputFileName);
+			SAXReader saxReader = _getSAXReader();
 
-			Document document = SAXReaderUtil.read(content, true);
+			Document document = saxReader.read(new File(inputFileName));
 
 			Element rootElement = document.getRootElement();
 
@@ -1814,13 +1820,15 @@ public class ServiceBuilder {
 	private static Document _getContentDocument(String fileName)
 		throws Exception {
 
-		String content = FileUtils.readFileToString(new File(fileName));
+		SAXReader saxReader = _getSAXReader();
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = saxReader.read(new File(fileName));
 
 		Element rootElement = document.getRootElement();
 
-		for (Element element : rootElement.elements()) {
+		List<Element> elements = rootElement.elements();
+
+		for (Element element : elements) {
 			String elementName = element.getName();
 
 			if (!elementName.equals("service-builder-import")) {
@@ -1840,9 +1848,10 @@ public class ServiceBuilder {
 			Element serviceBuilderImportRootElement =
 				serviceBuilderImportDocument.getRootElement();
 
-			for (Element serviceBuilderImportElement :
-					serviceBuilderImportRootElement.elements()) {
+			List<Element> childElements =
+				serviceBuilderImportRootElement.elements();
 
+			for (Element serviceBuilderImportElement : childElements) {
 				serviceBuilderImportElement.detach();
 
 				rootElement.add(serviceBuilderImportElement);
@@ -1866,6 +1875,10 @@ public class ServiceBuilder {
 		fileName = fileName.substring(x + 4, y);
 
 		return StringUtil.replace(fileName, "/", ".");
+	}
+
+	private static SAXReader _getSAXReader() {
+		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
 
 	private static File _readJalopyXmlFromClassLoader() {
@@ -2790,7 +2803,9 @@ public class ServiceBuilder {
 	private void _createRemotingXml() throws Exception {
 		StringBundler sb = new StringBundler();
 
-		Document document = SAXReaderUtil.read(new File(_springFileName));
+		SAXReader saxReader = _getSAXReader();
+
+		Document document = saxReader.read(new File(_springFileName));
 
 		Element rootElement = document.getRootElement();
 
@@ -4743,7 +4758,7 @@ public class ServiceBuilder {
 		List<Element> columnElements = entityElement.elements("column");
 
 		if (uuid) {
-			Element columnElement = SAXReaderUtil.createElement("column");
+			Element columnElement = DocumentHelper.createElement("column");
 
 			columnElement.addAttribute("name", "uuid");
 			columnElement.addAttribute("type", "String");
@@ -4752,7 +4767,7 @@ public class ServiceBuilder {
 		}
 
 		if (mvccEnabled && !columnElements.isEmpty()) {
-			Element columnElement = SAXReaderUtil.createElement("column");
+			Element columnElement = DocumentHelper.createElement("column");
 
 			columnElement.addAttribute("name", "mvccVersion");
 			columnElement.addAttribute("type", "long");
@@ -4907,7 +4922,7 @@ public class ServiceBuilder {
 
 		if (uuid) {
 			if (columnList.contains(new EntityColumn("companyId"))) {
-				Element finderElement = SAXReaderUtil.createElement("finder");
+				Element finderElement = DocumentHelper.createElement("finder");
 
 				finderElement.addAttribute("name", "Uuid_C");
 				finderElement.addAttribute("return-type", "Collection");
@@ -4925,7 +4940,7 @@ public class ServiceBuilder {
 			}
 
 			if (columnList.contains(new EntityColumn("groupId"))) {
-				Element finderElement = SAXReaderUtil.createElement("finder");
+				Element finderElement = DocumentHelper.createElement("finder");
 
 				if (ejbName.equals("Layout")) {
 					finderElement.addAttribute("name", "UUID_G_P");
@@ -4956,7 +4971,7 @@ public class ServiceBuilder {
 				finderElements.add(0, finderElement);
 			}
 
-			Element finderElement = SAXReaderUtil.createElement("finder");
+			Element finderElement = DocumentHelper.createElement("finder");
 
 			finderElement.addAttribute("name", "Uuid");
 			finderElement.addAttribute("return-type", "Collection");
@@ -4970,7 +4985,7 @@ public class ServiceBuilder {
 		}
 
 		if (permissionedModel) {
-			Element finderElement = SAXReaderUtil.createElement("finder");
+			Element finderElement = DocumentHelper.createElement("finder");
 
 			finderElement.addAttribute("name", "ResourceBlockId");
 			finderElement.addAttribute("return-type", "Collection");

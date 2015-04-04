@@ -127,6 +127,9 @@ public class ServiceBuilder {
 
 	public static final String AUTHOR = "Brian Wing Shun Chan";
 
+	public static final String READ_ONLY_PREFIXES =
+		"fetch,get,has,is,load,reindex,search";
+
 	public static String getContent(String fileName) throws Exception {
 		Document document = _getContentDocument(fileName);
 
@@ -247,6 +250,10 @@ public class ServiceBuilder {
 			arguments.get("service.osgi.module"));
 		String pluginName = arguments.get("service.plugin.name");
 		String propsUtil = arguments.get("service.props.util");
+		String[] readOnlyPrefixes = StringUtil.split(
+			GetterUtil.getString(
+				arguments.get("service.read.only.prefixes"),
+				READ_ONLY_PREFIXES));
 		String remotingFileName = arguments.get("service.remoting.file");
 		String resourcesDir = arguments.get("service.resources.dir");
 		String springFileName = arguments.get("service.spring.file");
@@ -265,7 +272,7 @@ public class ServiceBuilder {
 				apiDir, autoImportDefaultReferences, autoNamespaceTables,
 				beanLocatorUtil, buildNumber, buildNumberIncrement, hbmFileName,
 				implDir, inputFileName, modelHintsFileName, osgiModule,
-				pluginName, propsUtil, remotingFileName, resourcesDir,
+				pluginName, propsUtil, readOnlyPrefixes, remotingFileName, resourcesDir,
 				springFileName, springNamespaces, sqlDir, sqlFileName,
 				sqlIndexesFileName, sqlSequencesFileName, targetEntityName,
 				testDir, true);
@@ -287,6 +294,7 @@ public class ServiceBuilder {
 				"\tservice.osgi.module=false\n" +
 				"\tservice.plugin.name=\n" +
 				"\tservice.props.util=com.liferay.portal.util.PropsUtil\n" +
+				"\tservice.read.only.prefixes=" + READ_ONLY_PREFIXES + "\n" +
 				"\tservice.remoting.file=${basedir}/../portal-web/docroot/WEB-INF/remoting-servlet.xml\n" +
 				"\tservice.resources.dir=${basedir}/src\n" +
 				"\tservice.spring.file=${basedir}/src/META-INF/portal-spring.xml\n" +
@@ -538,7 +546,8 @@ public class ServiceBuilder {
 			long buildNumber, boolean buildNumberIncrement, String hbmFileName,
 			String implDir, String inputFileName, String modelHintsFileName,
 			boolean osgiModule, String pluginName, String propsUtil,
-			String remotingFileName, String resourcesDir, String springFileName,
+			String[] readOnlyPrefixes, String remotingFileName,
+			String resourcesDir, String springFileName,
 			String[] springNamespaces, String sqlDir, String sqlFileName,
 			String sqlIndexesFileName, String sqlSequencesFileName,
 			String targetEntityName, String testDir, boolean build)
@@ -612,6 +621,7 @@ public class ServiceBuilder {
 			_osgiModule = osgiModule;
 			_pluginName = GetterUtil.getString(pluginName);
 			_propsUtil = propsUtil;
+			_readOnlyPrefixes = readOnlyPrefixes;
 			_remotingFileName = remotingFileName;
 			_resourcesDir = resourcesDir;
 			_springFileName = springFileName;
@@ -914,18 +924,18 @@ public class ServiceBuilder {
 			boolean autoNamespaceTables, String beanLocatorUtil,
 			String hbmFileName, String implDir, String inputFileName,
 			String modelHintsFileName, boolean osgiModule, String pluginName,
-			String propsUtil, String remotingFileName, String resourcesDir,
-			String springFileName, String[] springNamespaces, String sqlDir,
-			String sqlFileName, String sqlIndexesFileName,
-			String sqlSequencesFileName, String targetEntityName,
-			String testDir)
+			String propsUtil, String[] readOnlyPrefixes, String remotingFileName,
+			String resourcesDir, String springFileName,
+			String[] springNamespaces, String sqlDir, String sqlFileName,
+			String sqlIndexesFileName, String sqlSequencesFileName,
+			String targetEntityName, String testDir)
 		throws Exception {
 
 		this(
 			apiDir, autoImportDefaultReferences, autoNamespaceTables,
 			beanLocatorUtil, 1, true, hbmFileName, implDir, inputFileName,
 			modelHintsFileName, osgiModule, pluginName, propsUtil,
-			remotingFileName, resourcesDir, springFileName, springNamespaces,
+			readOnlyPrefixes, remotingFileName, resourcesDir, springFileName, springNamespaces,
 			sqlDir, sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
 			targetEntityName, testDir, true);
 	}
@@ -1168,7 +1178,7 @@ public class ServiceBuilder {
 			_apiDir, _autoImportDefaultReferences, _autoNamespaceTables,
 			_beanLocatorUtil, _buildNumber, _buildNumberIncrement, _hbmFileName,
 			_implDir, refFileName, _modelHintsFileName, _osgiModule,
-			_pluginName, _propsUtil, _remotingFileName, _resourcesDir,
+			_pluginName, _propsUtil, _readOnlyPrefixes, _remotingFileName, _resourcesDir,
 			_springFileName, _springNamespaces, _sqlDir, _sqlFileName,
 			_sqlIndexesFileName, _sqlSequencesFileName, _targetEntityName,
 			_testDir, false);
@@ -1689,9 +1699,7 @@ public class ServiceBuilder {
 	public boolean isServiceReadOnlyMethod(
 		JavaMethod method, List<String> txRequiredList) {
 
-		return isReadOnlyMethod(
-			method, txRequiredList,
-			PropsValues.SERVICE_BUILDER_SERVICE_READ_ONLY_PREFIXES);
+		return isReadOnlyMethod(method, txRequiredList, _readOnlyPrefixes);
 	}
 
 	public boolean isSoapMethod(JavaMethod method) {
@@ -5280,6 +5288,7 @@ public class ServiceBuilder {
 	private String _portletPackageName = StringPool.BLANK;
 	private String _portletShortName = StringPool.BLANK;
 	private String _propsUtil;
+	private String[] _readOnlyPrefixes;
 	private String _remotingFileName;
 	private String _resourcesDir;
 	private String _serviceOutputPath;

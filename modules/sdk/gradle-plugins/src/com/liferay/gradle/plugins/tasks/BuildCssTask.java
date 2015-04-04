@@ -71,7 +71,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 	@Override
 	public List<String> getArgs() {
-		List<String> args = new ArrayList<>(3);
+		List<String> args = new ArrayList<>(_cssDirNames.size() + 2);
 
 		for (int i = 0; i < _cssDirNames.size(); i++) {
 			String cssDirName = _cssDirNames.get(i);
@@ -84,7 +84,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 		File cssPortalCommonDir = new File(
 			getPortalWebDir(), "html/css/common");
 
-		args.add("sass.portal.common.dir=" + cssPortalCommonDir.toString());
+		args.add("sass.portal.common.dir=" + cssPortalCommonDir);
 
 		return args;
 	}

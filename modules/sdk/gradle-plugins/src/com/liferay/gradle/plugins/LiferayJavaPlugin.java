@@ -62,7 +62,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureRepositories(project);
 		configureSourceSets(project);
 
-		addTasks(project);
+		addTasks(project, liferayExtension);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -81,44 +81,55 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
 	}
 
-	protected void addTaskBuildCss(Project project) {
-		Task task = GradleUtil.addTask(
+	protected BuildCssTask addTaskBuildCss(Project project) {
+		BuildCssTask buildCssTask = GradleUtil.addTask(
 			project, _BUILD_CSS_TASK_NAME, BuildCssTask.class);
 
-		task.setDescription("Compiles CSS files.");
-		task.setGroup(BasePlugin.BUILD_GROUP);
+		buildCssTask.setDescription("Compiles CSS files.");
+		buildCssTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		return buildCssTask;
 	}
 
-	protected void addTaskFormatSource(Project project) {
-		Task task = GradleUtil.addTask(
+	protected FormatSourceTask addTaskFormatSource(Project project) {
+		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, _FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
 
-		task.setDescription("Runs Liferay Source Formatter to format files.");
+		formatSourceTask.setDescription(
+			"Runs Liferay Source Formatter to format files.");
+
+		return formatSourceTask;
 	}
 
-	protected void addTaskInitGradle(Project project) {
-		Task task = GradleUtil.addTask(
+	protected InitGradleTask addTaskInitGradle(Project project) {
+		InitGradleTask initGradleTask = GradleUtil.addTask(
 			project, _INIT_GRADLE_TASK_NAME, InitGradleTask.class);
 
-		task.setDescription(
+		initGradleTask.setDescription(
 			"Initializes build.gradle by migrating information from legacy " +
 				"files.");
+
+		return initGradleTask;
 	}
 
-	protected void addTasks(Project project) {
+	protected void addTasks(
+		Project project, LiferayExtension liferayExtension) {
+
 		addTaskBuildCss(project);
 		addTaskFormatSource(project);
 		addTaskInitGradle(project);
 		addTaskWar(project);
 	}
 
-	protected void addTaskWar(Project project) {
+	protected Task addTaskWar(Project project) {
 		Task task = project.task(WarPlugin.WAR_TASK_NAME);
 
 		task.dependsOn(JavaPlugin.JAR_TASK_NAME);
 
 		task.setDescription("Alias for 'jar'.");
 		task.setGroup(BasePlugin.BUILD_GROUP);
+
+		return task;
 	}
 
 	protected void applyPlugins(Project project) {
@@ -253,6 +264,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
 
+		configureTaskClassesDependsOn(classesTask);
+	}
+
+	protected void configureTaskClassesDependsOn(Task classesTask) {
 		classesTask.dependsOn(_BUILD_CSS_TASK_NAME);
 	}
 

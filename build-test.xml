@@ -2816,6 +2816,10 @@ ${marketplace.portlet.properties}</echo>
 		</if>
 	</target>
 
+	<target name="prepare-system-ext-properties">
+		<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
+	</target>
+
 	<target name="prepare-portal-ext-properties">
 		<prepare-fix-pack-bundle />
 
@@ -4253,6 +4257,8 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 
 				<antcall target="prepare-portal-ext-properties" />
 
+				<antcall target="prepare-system-ext-properties" />
+
 				<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
 					<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
 					<replacevalue><![CDATA[-Xmx2048m -XX:MaxPermSize=512m]]></replacevalue>
@@ -5255,7 +5261,7 @@ if (ppstate.equals("normal")) {
 		</if>
 	</target>
 
-	<target name="run-simple-server" depends="prepare-portal-properties,prepare-portal-ext-properties">
+	<target name="run-simple-server" depends="prepare-portal-properties,prepare-portal-ext-properties,prepare-system-ext-properties">
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>

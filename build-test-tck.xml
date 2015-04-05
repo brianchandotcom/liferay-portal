@@ -261,17 +261,38 @@ servletContextNames=${tck.servlet.context.names}</echo>
 
 				<antcall target="prepare-portal-ext-properties" />
 
+				<antcall target="prepare-system-ext-properties" />
+
 				<antcall target="rebuild-database" inheritAll="false" />
 			</then>
 		</if>
 
 		<antcall target="start-app-server" />
 
-		<waitfor checkevery="100" checkeveryunit="millisecond" maxwait="5" maxwaitunit="minute" timeoutproperty="tck.wars.deployment.timeout">
+		<waitfor checkevery="100" checkeveryunit="millisecond" maxwait="10" maxwaitunit="minute" timeoutproperty="tck.wars.deployment.timeout">
 			<socket server="localhost" port="${portlet.tck.bridge.handshake.port}" />
 		</waitfor>
 
-		<fail message="Timeout while waiting for TCK wars to deploy." if="tck.wars.deployment.timeout" />
+		<if>
+			<isset property="tck.wars.deployment.timeout" />
+			<then>
+				<for param="logfile">
+					<path>
+						<fileset dir="${liferay.home}/logs" includes="*.log" />
+					</path>
+					<sequential>
+						<local name="logfile.content" />
+
+						<loadfile property="logfile.content" srcFile="@{logfile}" />
+
+						<echo>File content for ${liferay.home}/logs/@{logfile}
+${logfile.content}</echo>
+					</sequential>
+				</for>
+
+				<fail message="Timeout while waiting for TCK wars to deploy." />
+			</then>
+		</if>
 
 		<condition property="tsant.file.suffix.bat" value=".bat" else="">
 			<contains string="${os.name}" substring="Windows" casesensitive="false" />

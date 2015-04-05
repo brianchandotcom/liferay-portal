@@ -19,6 +19,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.struts.StrutsActionRegistryUtil;
 import com.liferay.portal.util.WebKeys;
@@ -163,6 +164,8 @@ public class PortletTCKBridge {
 			}
 
 			_log.error("Timeout on waiting " + servletContextName);
+
+			_log.error(ThreadUtil.threadDump());
 		}
 
 		private final PortletTCKBridgeConfiguration

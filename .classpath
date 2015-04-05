@@ -95,7 +95,6 @@
 	<classpathentry kind="lib" path="lib/development/sikuli-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/sikuli-script.jar"/>
 	<classpathentry kind="lib" path="lib/development/smtp.jar"/>
-	<classpathentry kind="lib" path="lib/development/sonar-ant-task.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-instrument.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-instrument-tomcat.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-test.jar"/>

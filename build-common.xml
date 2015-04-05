@@ -1421,9 +1421,21 @@ rerun your task.
 			</sequential>
 		</for>
 
-		<taskdef resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant">
-			<classpath path="lib/development/sonar-ant-task.jar" />
-		</taskdef>
+		<ivy:resolve log="quiet">
+			<dependency conf="default" name="sonar-ant-task" org="org.codehaus.sonar-plugins" rev="2.1" />
+		</ivy:resolve>
+
+		<ivy:cachepath
+			conf="default"
+			inline="true"
+			module="sonar-ant-task"
+			log="quiet"
+			organisation="org.codehaus.sonar-plugins"
+			pathid="sonar.ant.task.classpath"
+			revision="2.1"
+		/>
+
+		<taskdef classpathref="sonar.ant.task.classpath" resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant" />
 
 		<sonar:sonar />
 

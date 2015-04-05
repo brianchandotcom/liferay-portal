@@ -129,9 +129,9 @@ public class JournalArticleLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, expando bridge
 	attributes, guest permissions, group permissions, asset category
-	IDs, asset tag names, asset link entry IDs, the "urlTitle"
-	attribute, and workflow actions for the web content article. Can
-	also set whether to add the default guest and group permissions.
+	IDs, asset tag names, asset link entry IDs, URL title, and
+	workflow actions for the web content article. Can also set
+	whether to add the default guest and group permissions.
 	* @return the web content article
 	* @throws PortalException if a portal exception occurred
 	*/
@@ -191,9 +191,9 @@ public class JournalArticleLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, expando bridge
 	attributes, guest permissions, group permissions, asset category
-	IDs, asset tag names, asset link entry IDs, the "urlTitle"
-	attribute, and workflow actions for the web content article. Can
-	also set whether to add the default guest and group permissions.
+	IDs, asset tag names, asset link entry IDs, URL title, and
+	workflow actions for the web content article. Can also set
+	whether to add the default guest and group permissions.
 	* @return the web content article
 	* @throws PortalException if a portal exception occurred
 	*/
@@ -2348,6 +2348,14 @@ public class JournalArticleLocalServiceUtil {
 	* @param articleId the primary key of the web content article
 	* @param newFolderId the primary key of the web content article's new
 	folder
+	* @param serviceContext the service context to be applied. Can set the
+	user ID, language ID, portlet preferences, portlet request,
+	portlet response, theme display, and can set whether to add the
+	default command update for the web content article. With respect
+	to social activities, by setting the service context's command to
+	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
+	invocation is considered a web content update activity; otherwise
+	it is considered a web content add activity.
 	* @return the updated web content article, which was moved to a new folder
 	* @throws PortalException if a matching web content article could not be
 	found
@@ -3428,13 +3436,13 @@ public class JournalArticleLocalServiceUtil {
 	boolean, String, File, Map, String, ServiceContext)} description.
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, expando bridge attributes, asset category IDs,
-	asset tag names, asset link entry IDs, workflow actions, the and
-	"urlTitle" attributes, and can set whether to add the default
-	command update for the web content article. With respect to
-	social activities, by setting the service context's command to
-	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	invocation is considered a web content update activity; otherwise
-	it is considered a web content add activity.
+	asset tag names, asset link entry IDs, workflow actions, URL
+	title, and can set whether to add the default command update for
+	the web content article. With respect to social activities, by
+	setting the service context's command to {@link
+	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	is considered a web content update activity; otherwise it is
+	considered a web content add activity.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception
@@ -3521,13 +3529,13 @@ public class JournalArticleLocalServiceUtil {
 	<code>null</code>)
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, expando bridge attributes, asset category IDs,
-	asset tag names, asset link entry IDs, workflow actions, the and
-	"urlTitle" attributes, and can set whether to add the default
-	command update for the web content article. With respect to
-	social activities, by setting the service context's command to
-	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	invocation is considered a web content update activity; otherwise
-	it is considered a web content add activity.
+	asset tag names, asset link entry IDs, workflow actions, URL
+	title , and can set whether to add the default command update for
+	the web content article. With respect to social activities, by
+	setting the service context's command to {@link
+	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	is considered a web content update activity; otherwise it is
+	considered a web content add activity.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception
@@ -3587,13 +3595,13 @@ public class JournalArticleLocalServiceUtil {
 	article's display page
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, expando bridge attributes, asset category IDs,
-	asset tag names, asset link entry IDs, workflow actions, the and
-	"urlTitle" attributes, and can set whether to add the default
-	command update for the web content article. With respect to
-	social activities, by setting the service context's command to
-	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	invocation is considered a web content update activity; otherwise
-	it is considered a web content add activity.
+	asset tag names, asset link entry IDs, workflow actions, URL
+	title, and can set whether to add the default command update for
+	the web content article. With respect to social activities, by
+	setting the service context's command to {@link
+	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	is considered a web content update activity; otherwise it is
+	considered a web content add activity.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception
@@ -3647,8 +3655,7 @@ public class JournalArticleLocalServiceUtil {
 	boolean, String, File, Map, String, ServiceContext)} description.
 	* @param images the web content's images
 	* @param serviceContext the service context to be applied. Can set the
-	modification date and "urlTitle" attribute for the web content
-	article.
+	modification date and URL title for the web content article.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception

@@ -50,15 +50,15 @@ public class PoshiRunnerValidation {
 
 		if (!StringUtils.equals(rootElementName, "html")) {
 			throw new PoshiRunnerException(
-				"\nBUILD FAILED: Invalid " + rootElementName + " element\n" +
-					filePath + ":" + element.attributeValue("line-number"));
+				"Invalid " + rootElementName + " element\n" + filePath + ":" +
+					element.attributeValue("line-number"));
 		}
 
 		List<Element> childElements = element.elements();
 
 		if (childElements.isEmpty()) {
 			throw new PoshiRunnerException(
-				"\nBUILD FAILED: Missing child elements\n" + filePath + ":" +
+				"Missing child elements\n" + filePath + ":" +
 					element.attributeValue("line-number"));
 		}
 	}
@@ -66,55 +66,57 @@ public class PoshiRunnerValidation {
 	private static void _validateRootElement(Element element, String filePath)
 		throws PoshiRunnerException {
 
-		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
-			filePath);
 		String elementName = element.getName();
 
 		if (!StringUtils.equals(elementName, "definition")) {
 			throw new PoshiRunnerException(
-				"\nBUILD FAILED: Invalid " +
-					elementName + " element\n" + filePath + ":" +
+				"Invalid " + elementName + " element\n" + filePath + ":" +
 					element.attributeValue("line-number"));
 		}
+
+		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
+			filePath);
 
 		List<Attribute> attributes = element.attributes();
 
 		for (Attribute attribute : attributes) {
-			if (Validator.isNull(attribute.getValue())) {
-				throw new PoshiRunnerException(
-					"\nBUILD FAILED: Missing attribute value\n" + filePath +
-						":" + element.attributeValue("line-number"));
-			}
-
 			String attributeName = attribute.getName();
 
-			if ((attributeName.equals("component-name") ||
-				 attributeName.equals("ignore") ||
-				 attributeName.equals("ignore-command-names")) &&
-				classType.equals("testcase")) {
-
-				continue;
-			}
-			else if (attributeName.equals("extends") &&
-					 (classType.equals("macro") ||
-					  classType.equals("testcase"))) {
-
-				continue;
-			}
-			else if (attributeName.equals("default") &&
-					 classType.equals("function")) {
-
-				continue;
-			}
-			else if (attributeName.equals("line-number")) {
-				continue;
-			}
-			else {
+			if (Validator.isNull(attribute.getValue())) {
 				throw new PoshiRunnerException(
-					"\nBUILD FAILED: Invalid \"" + attributeName +
-						"\" attribute\n" + filePath + ":" +
-						element.attributeValue("line-number"));
+					"Missing " + attributeName + " attribute value\n" +
+						filePath + ":" + element.attributeValue("line-number"));
 			}
+
+			if (attributeName.equals("line-number")) {
+				continue;
+			}
+
+			if (classType.equals("function")) {
+				if (attributeName.equals("default")) {
+					continue;
+				}
+			}
+
+			if (classType.equals("macro")) {
+				if (attributeName.equals("extends")) {
+					continue;
+				}
+			}
+
+			if (classType.equals("testcase")) {
+				if (attributeName.equals("component-name") ||
+					attributeName.equals("extends") ||
+					attributeName.equals("ignore") ||
+					attributeName.equals("ignore-command-names")) {
+
+					continue;
+				}
+			}
+
+			throw new PoshiRunnerException(
+				"Invalid \"" + attributeName + "\" attribute\n" + filePath +
+					":" + element.attributeValue("line-number"));
 		}
 	}
 

@@ -696,7 +696,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						mbMessagePersistence.update(childMessage);
 					}
 				}
-				else {
+				else if (message.getStatus() ==
+							WorkflowConstants.STATUS_APPROVED) {
+
 					MessageCreateDateComparator comparator =
 						new MessageCreateDateComparator(true);
 

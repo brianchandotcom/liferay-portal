@@ -2414,6 +2414,110 @@
 		</execute>
 	</command>
 
+	<command name="ViewCorrectCalendarOnEventSwitch" priority="5">
+		<description message="This is a use case for LPS-51222." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoAdd" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Site Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectCalendar">
+			<var name="calendarName" value="Liferay" />
+		</execute>
+
+		<execute macro="CalendarEvent#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoAdd" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Personal Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectCalendar">
+			<var name="calendarName" value="Test Test" />
+		</execute>
+
+		<execute macro="CalendarEvent#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Month" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetails">
+			<var name="calendarName" value="Liferay" />
+			<var name="eventTitle" value="Site Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsResources">
+			<var name="calendarName" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Month" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetails">
+			<var name="calendarName" value="Test Test" />
+			<var name="eventTitle" value="Personal Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsResources">
+			<var name="calendarName" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Month" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetails">
+			<var name="calendarName" value="Liferay" />
+			<var name="eventTitle" value="Site Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsResources">
+			<var name="calendarName" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Month" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetails">
+			<var name="calendarName" value="Test Test" />
+			<var name="eventTitle" value="Personal Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsResources">
+			<var name="calendarName" value="Test Test" />
+		</execute>
+	</command>
+
 	<command name="ViewInvitedResourceAvailability" priority="5">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="eventNumber" value="2" />

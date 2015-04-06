@@ -14,8 +14,6 @@
 
 package com.liferay.gradle.plugins.tasks;
 
-import com.liferay.gradle.plugins.util.GradleUtil;
-
 import groovy.lang.Closure;
 
 import java.io.File;
@@ -28,10 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.gradle.api.Action;
-import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.OutputDirectory;
@@ -41,26 +38,6 @@ import org.gradle.api.tasks.SkipWhenEmpty;
  * @author Andrea Di Giorgi
  */
 public class BuildCssTask extends BasePortalToolsTask {
-
-	public BuildCssTask() {
-		_portalWebConfiguration = GradleUtil.addConfiguration(
-			project, _PORTAL_WEB_CONFIGURATION_NAME);
-
-		_portalWebConfiguration.setDescription(
-			"The portal-web configuration used for compiling CSS files.");
-		_portalWebConfiguration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			_portalWebConfiguration,
-			new Action<Configuration>() {
-
-				@Override
-				public void execute(Configuration configuration) {
-					addPortalWebDependencies();
-				}
-
-			});
-	}
 
 	@Override
 	public void exec() {
@@ -131,6 +108,11 @@ public class BuildCssTask extends BasePortalToolsTask {
 		return "com.liferay.portal.tools.SassToCssBuilder";
 	}
 
+	@InputFile
+	public File getPortalWebFile() {
+		return _portalWebFile;
+	}
+
 	@OutputDirectory
 	public File getTmpDir() {
 		return _tmpDir;
@@ -142,6 +124,10 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 	public void setLegacy(boolean legacy) {
 		_legacy = legacy;
+	}
+
+	public void setPortalWebFile(File portalWebFile) {
+		_portalWebFile = portalWebFile;
 	}
 
 	public void setTmpDir(File tmpDir) {
@@ -167,12 +153,6 @@ public class BuildCssTask extends BasePortalToolsTask {
 		addDependency("struts", "struts", "1.2.9");
 	}
 
-	protected void addPortalWebDependencies() {
-		GradleUtil.addDependency(
-			project, _PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
-			"portal-web", "default");
-	}
-
 	protected void copyPortalCommon() {
 		final File tmpDir = getTmpDir();
 
@@ -186,8 +166,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 			@SuppressWarnings("unused")
 			public void doCall(CopySpec copySpec) {
-				FileTree fileTree = project.zipTree(
-					_portalWebConfiguration.getSingleFile());
+				FileTree fileTree = project.zipTree(getPortalWebFile());
 
 				CopySpec fileTreeCopySpec = copySpec.from(fileTree);
 
@@ -206,11 +185,9 @@ public class BuildCssTask extends BasePortalToolsTask {
 		return "SassToCssBuilder";
 	}
 
-	private static final String _PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
-
 	private final List<String> _cssDirNames = new ArrayList<>();
 	private boolean _legacy;
-	private final Configuration _portalWebConfiguration;
+	private File _portalWebFile;
 	private File _tmpDir;
 
 }

@@ -941,7 +941,7 @@ public class MobileDriverToSeleniumBridge
 
 			StringBuilder sb = new StringBuilder(3);
 
-			sb.append(TestPropsValues.ANDROID_HOME);
+			sb.append(TestPropsValues.MOBILE_ANDROID_HOME);
 
 			sb.append("/platform-tools/");
 
@@ -989,7 +989,7 @@ public class MobileDriverToSeleniumBridge
 
 			StringBuilder sb = new StringBuilder(6);
 
-			sb.append(TestPropsValues.ANDROID_HOME);
+			sb.append(TestPropsValues.MOBILE_ANDROID_HOME);
 
 			sb.append("/platform-tools/");
 

@@ -6,7 +6,6 @@
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 
-	<property name="alloy.version" value="3.0.1" />
 	<property name="alloyeditor.version" value="0.2.6" />
 	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
 	<property name="html.js.dir" value="src/META-INF/resources/html/js" />
@@ -14,121 +13,6 @@
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 	<property name="tinymce.file" value="tinymce_4.1.7.zip" />
 	<property name="wsc.file" value="wsc_4.4.5.zip" />
-
-	<target name="build-alloy">
-		<path id="alloy.zip.path">
-			<fileset dir="${third.party.dir}">
-				<include name="alloy-${alloy.version}*.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloy.zip.path" refid="alloy.zip.path" />
-
-		<basename file="${alloy.zip.path}" property="alloy.file" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="${third.party.dir}/${alloy.file}"
-					targetfile="tmp/META-INF/resources/html/js/aui"
-				/>
-			</not>
-			<then>
-
-				<!-- Prepare -->
-
-				<delete dir="tmp/META-INF/resources/html/js/aui" />
-
-				<echo>${alloy.file}</echo>
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<unzip dest="${tstamp.value}" src="${third.party.dir}/${alloy.file}" />
-
-				<!-- CSS -->
-
-				<property name="alloy.build.dir" value="${tstamp.value}/build" />
-				<property name="alloy.temp.dir" value="${tstamp.value}/temp" />
-
-				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
-					<filelist
-						dir="${alloy.build.dir}/aui-skin-deprecated/css"
-						files="aui-skin-deprecated.css"
-					/>
-				</concat>
-
-				<for param="aui.dir">
-					<path>
-						<dirset
-							dir="${alloy.build.dir}"
-							includes="aui-*"
-						/>
-					</path>
-					<sequential>
-						<basename property="aui.dir.name" file="@{aui.dir}" />
-
-						<if>
-							<and>
-								<available file="${alloy.build.dir}/${aui.dir.name}/assets/skins/sam/${aui.dir.name}.css" />
-								<matches pattern="-deprecated" string="${aui.dir.name}" />
-							</and>
-							<then>
-								<concat append="true" destfile="${alloy.temp.dir}/aui_deprecated.css">
-									<filelist
-										dir="${alloy.build.dir}/${aui.dir.name}/assets/skins/sam"
-										files="${aui.dir.name}.css"
-									/>
-								</concat>
-							</then>
-						</if>
-
-						<var name="aui.dir.name" unset="true" />
-					</sequential>
-				</for>
-
-				<replaceregexp match="url\(([^)]+)\)" replace="url(@theme_image_path@/aui/\1)" flags="g" byline="false">
-					<fileset
-						dir="${alloy.temp.dir}"
-						includes="aui_deprecated.css"
-					/>
-				</replaceregexp>
-
-				<replace file="${alloy.temp.dir}/aui_deprecated.css">
-					<replacefilter token="../images/" value="" />
-				</replace>
-
-				<replace file="${alloy.temp.dir}/aui_deprecated.css">
-					<replacefilter token="../../../../../build/aui-skin-base/images/" value="" />
-				</replace>
-
-				<replace file="${alloy.temp.dir}/aui_deprecated.css">
-					<replacefilter token="../../../../../build/aui-skin-classic/images/" value="" />
-				</replace>
-
-				<replace file="${alloy.temp.dir}/aui_deprecated.css">
-					<replacefilter token="../../../../../build/aui-skin-deprecated/images/" value="" />
-				</replace>
-
- 				<copy
-					file="${alloy.temp.dir}/aui_deprecated.css"
-					tofile="tmp/META-INF/resources/html/js/aui/aui_deprecated.css"
-					overwrite="true"
-				/>
-
-				<!-- JavaScript -->
-
-				<copy todir="tmp/META-INF/resources/html/js/aui" overwrite="true" preservelastmodified="true">
-					<fileset dir="${alloy.build.dir}/" />
-				</copy>
-
-				<!-- Clean up -->
-
-				<delete dir="${tstamp.value}" />
-			</then>
-		</if>
-	</target>
 
 	<target name="build-alloy-editor">
 		<path id="alloyeditor.zip.path">
@@ -291,7 +175,7 @@
 		</if>
 	</target>
 
-	<target name="jar" depends="build-common.compile,build-alloy,build-alloy-editor,build-ckeditor,build-tinymce">
+	<target name="jar" depends="build-common.compile,build-alloy-editor,build-ckeditor,build-tinymce">
 		<jar-macro
 			module.dir="${basedir}"
 		/>

@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 
 /**
@@ -25,21 +24,6 @@ import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender
  */
 public abstract class BaseMessageStatusMessageListener
 	implements MessageListener {
-
-	public BaseMessageStatusMessageListener() {
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public BaseMessageStatusMessageListener(
-		SingleDestinationMessageSender statusSender,
-		MessageSender responseSender) {
-
-		_statusSender = statusSender;
-		_responseSender = responseSender;
-	}
 
 	@Override
 	public void receive(Message message) {
@@ -63,10 +47,6 @@ public abstract class BaseMessageStatusMessageListener
 		}
 	}
 
-	public void setResponseSender(MessageSender responseSender) {
-		_responseSender = responseSender;
-	}
-
 	public void setStatusSender(SingleDestinationMessageSender statusSender) {
 		_statusSender = statusSender;
 	}
@@ -75,14 +55,9 @@ public abstract class BaseMessageStatusMessageListener
 			Message message, MessageStatus messageStatus)
 		throws Exception;
 
-	protected MessageSender getResponseSender() {
-		return _responseSender;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseMessageStatusMessageListener.class);
 
-	private MessageSender _responseSender;
 	private SingleDestinationMessageSender _statusSender;
 
 }

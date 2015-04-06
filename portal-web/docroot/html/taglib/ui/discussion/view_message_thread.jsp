@@ -292,7 +292,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				</div>
 
 				<div class="lfr-discussion-body">
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents=""  editorName="<%= EDITOR_NAME %>" name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "OnChange" %>' placeholder="type-your-comment-here" />
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorName="<%= EDITOR_NAME %>" name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "OnChange" %>' placeholder="type-your-comment-here" />
 
 					<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 

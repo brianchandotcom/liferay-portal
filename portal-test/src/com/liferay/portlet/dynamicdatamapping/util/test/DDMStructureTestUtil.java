@@ -225,7 +225,13 @@ public class DDMStructureTestUtil {
 	public static String getSampleStructuredContent(
 		Map<Locale, String> contents, String defaultLocale) {
 
-		return getSampleStructuredContent("name", contents, defaultLocale);
+		Map<Locale, String[]> map = new HashMap<>(contents.size());
+
+		for (Map.Entry<Locale, String> content : contents.entrySet()) {
+			map.put(content.getKey(), new String[] {content.getValue()});
+		}
+
+		return getSampleStructuredContent("name", map, defaultLocale);
 	}
 
 	public static String getSampleStructuredContent(String keywords) {
@@ -233,13 +239,11 @@ public class DDMStructureTestUtil {
 	}
 
 	public static String getSampleStructuredContent(
-		String name, Map<Locale, String> contents, String defaultLocale) {
+		String name, Map<Locale, String[]> contents, String defaultLocale) {
 
 		StringBundler sb = new StringBundler(2 * contents.size());
 
-		for (Map.Entry<Locale, String> content : contents.entrySet()) {
-			Locale locale = content.getKey();
-
+		for (Locale locale : contents.keySet()) {
 			sb.append(LocaleUtil.toLanguageId(locale));
 			sb.append(StringPool.COMMA);
 		}
@@ -250,20 +254,23 @@ public class DDMStructureTestUtil {
 
 		Element rootElement = document.getRootElement();
 
-		Element dynamicElementElement = rootElement.addElement(
-			"dynamic-element");
+		for (Map.Entry<Locale, String[]> content : contents.entrySet()) {
+			String languageId = LocaleUtil.toLanguageId(content.getKey());
 
-		dynamicElementElement.addAttribute("index-type", "keyword");
-		dynamicElementElement.addAttribute("name", name);
-		dynamicElementElement.addAttribute("type", "text");
+			for (String value : content.getValue()) {
+				Element dynamicElementElement = rootElement.addElement(
+					"dynamic-element");
 
-		for (Map.Entry<Locale, String> content : contents.entrySet()) {
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
+				dynamicElementElement.addAttribute("index-type", "keyword");
+				dynamicElementElement.addAttribute("name", name);
+				dynamicElementElement.addAttribute("type", "text");
 
-			dynamicContentElement.addAttribute(
-				"language-id", LocaleUtil.toLanguageId(content.getKey()));
-			dynamicContentElement.addCDATA(content.getValue());
+				Element element = dynamicElementElement.addElement(
+					"dynamic-content");
+
+				element.addAttribute("language-id", languageId);
+				element.addCDATA(value);
+			}
 		}
 
 		return document.asXML();
@@ -272,7 +279,13 @@ public class DDMStructureTestUtil {
 	public static String getSampleStructuredContent(
 		String name, String keywords) {
 
-		Map<Locale, String> contents = new HashMap<>();
+		return getSampleStructuredContent(name, new String[] {keywords});
+	}
+
+	public static String getSampleStructuredContent(
+		String name, String[] keywords) {
+
+		Map<Locale, String[]> contents = new HashMap<>();
 
 		contents.put(Locale.US, keywords);
 

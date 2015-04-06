@@ -89,9 +89,7 @@ public class InputEditorTag extends IncludeTag {
 	 */
 	@Deprecated
 	public void setEditorImpl(String editorImpl) {
-		if (Validator.isNull(_editorName)) {
-			_editorName = PropsUtil.get(editorImpl);
-		}
+		_editorName = PropsUtil.get(editorImpl);
 	}
 
 	public void setEditorName(String editorType) {

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.rss.web.constants.RSSPortletKeys;
@@ -71,10 +72,13 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		try {
 			RSSPortletInstanceSettings rssPortletInstanceSettings =
 				_portletInstanceSettingsProvider.getPortletInstanceSettings(
-					themeDisplay.getLayout(), RSSPortletKeys.RSS,
+					themeDisplay.getLayout(),
+					portletDisplay.getPortletResource(),
 					renderRequest.getParameterMap());
 
 			renderRequest.setAttribute(

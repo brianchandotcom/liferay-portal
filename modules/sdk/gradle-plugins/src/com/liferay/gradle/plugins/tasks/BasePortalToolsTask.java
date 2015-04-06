@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.tasks;
 
-import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.util.GradleUtil;
 
 import java.io.InputStream;
@@ -35,9 +34,6 @@ public abstract class BasePortalToolsTask extends JavaExec {
 
 	public BasePortalToolsTask() {
 		project = getProject();
-
-		liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
 
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, getConfigurationName());
@@ -139,7 +135,6 @@ public abstract class BasePortalToolsTask extends JavaExec {
 
 	protected abstract String getToolName();
 
-	protected final LiferayExtension liferayExtension;
 	protected final Project project;
 
 }

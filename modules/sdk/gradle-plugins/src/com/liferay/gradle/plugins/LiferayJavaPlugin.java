@@ -232,11 +232,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureSourceSetMain(project);
 	}
 
-	protected void configureTaskBuildCss(Project project) {
+	protected void configureTaskBuildCss(
+		Project project, LiferayExtension liferayExtension) {
+
 		BuildCssTask buildCssTask = (BuildCssTask)GradleUtil.getTask(
 			project, _BUILD_CSS_TASK_NAME);
 
 		configureTaskBuildCssDirNames(buildCssTask);
+		configureTaskBuildCssTmpDir(buildCssTask, liferayExtension);
 	}
 
 	protected void configureTaskBuildCssDirNames(BuildCssTask buildCssTask) {
@@ -257,6 +260,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			String cssDirName = project.relativePath(file);
 
 			cssDirNames.add(cssDirName);
+		}
+	}
+
+	protected void configureTaskBuildCssTmpDir(
+		BuildCssTask buildCssTask, LiferayExtension liferayExtension) {
+
+		if (buildCssTask.getTmpDir() == null) {
+			File tmpDir = new File(liferayExtension.getTmpDir(), "portal-web");
+
+			buildCssTask.setTmpDir(tmpDir);
 		}
 	}
 
@@ -316,7 +329,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
-		configureTaskBuildCss(project);
+		configureTaskBuildCss(project, liferayExtension);
 		configureTaskClasses(project);
 		configureTaskClean(project);
 	}

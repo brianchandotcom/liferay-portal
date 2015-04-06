@@ -16,7 +16,6 @@ package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
-import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 
@@ -27,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = RepositoryDefiner.class)
-public class CMISAtomPubRepositoryDefiner extends BaseRepositoryDefiner {
+public class CMISAtomPubRepositoryDefiner extends BaseCMISRepositoryDefiner {
 
 	@Override
 	public String getClassName() {

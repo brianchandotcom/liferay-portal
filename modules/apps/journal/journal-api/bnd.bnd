@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Journal API
+Bundle-SymbolicName: com.liferay.journal.api
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes

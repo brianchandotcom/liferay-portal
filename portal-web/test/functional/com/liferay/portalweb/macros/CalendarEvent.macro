@@ -616,6 +616,8 @@
 				</then>
 			</elseif>
 		</if>
+
+		<execute function="Refresh" />
 	</command>
 
 	<command name="deleteViaAgendaViewPG">

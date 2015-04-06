@@ -3752,40 +3752,49 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a clickable link and/or icon to an rss feed document.</description>
 		<name>rss</name>
 		<tag-class>com.liferay.taglib.ui.RSSTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the default maximum number of items to display. The default value is <![CDATA[<code>20</code>.]]>.</description>
 			<name>delta</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the default style to display.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the default format for the rss feed. Options are <![CDATA[<code>atom_1.0</code>.]]>, <![CDATA[<code>rss_1.0</code>.]]>, and <![CDATA[<code>rss_2.0</code>.]]>.</description>
 			<name>feedType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the optional message displayed next to the RSS icon.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the RSS feed name.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the url to retrieve the feed information from.</description>
 			<name>resourceURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the url for the rss feed file.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

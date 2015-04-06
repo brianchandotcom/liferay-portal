@@ -20,50 +20,44 @@
 	</command>
 
 	<command name="AutomaticChangesToDisplayStyle" priority="3">
-		<property name="custom.properties" value="navigation.display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true${line.separator}navigation.display.style.default=" />
-
-		<var name="pageName" value="Navigation Display Test Page" />
-		<var name="portletName" value="Navigation" />
+		<property name="custom.properties" value="display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true${line.separator}display.style.default=" />
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Navigation Display Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Navigation Menu" />
 		</execute>
 
-		<var name="key_pageName" value="${pageName}" />
+		<var name="key_pageName" value="Navigation Display Test Page" />
 
-		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
 	</command>
 
 	<command name="ManualChangesToDisplayStyle" priority="3">
-		<property name="custom.properties" value="navigation.display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
-
-		<var name="pageName" value="Navigation Display Test Page" />
-		<var name="portletName" value="Navigation" />
+		<property name="custom.properties" value="display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Navigation Display Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Navigation" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Navigation Display Test Page" />
 		</execute>
 
-		<var name="key_pageName" value="${pageName}" />
+		<var name="key_pageName" value="Navigation Display Test Page" />
 
-		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
 		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_ICON" value1="Options" />
 		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="PGNavigationConfiguration#NAVIGATION_CONFIGURATION_IFRAME" />
-		<execute function="AssertTextEquals" locator1="PGNavigationConfiguration#PREVIEW_BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="PGNavigationConfiguration#PREVIEW_BREADCRUMB_HEADER2_ENTRY" value1="Navigation Display Test Page" />
 		<execute function="Select" locator1="PGNavigationConfiguration#SETUP_DISPLAY_STYLE_SELECT" value1="Custom" />
 		<execute function="AssertSelectedLabel" locator1="PGNavigationConfiguration#CUSTOM_HEADER_SELECT" value1="Root Page" />
 		<execute function="AssertSelectedLabel" locator1="PGNavigationConfiguration#CUSTOM_ROOT_PAGE_SELECT" value1="Parent at Level" />
@@ -75,10 +69,10 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Navigation Display Test Page" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_HEADER2_ENTRY" value1="Navigation Display Test Page" />
 	</command>
 
 	<command name="UserPersonalSiteUserGroupPrivatePage" priority="5">
@@ -157,26 +151,23 @@
 	</command>
 
 	<command name="ValidateReturnToDefaultStyle" priority="3">
-		<property name="custom.properties" value="navigation.display.style.default=from-level-1-with-title${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
-
-		<var name="pageName" value="Navigation Display Test Page" />
-		<var name="portletName" value="Navigation" />
+		<property name="custom.properties" value="display.style.default=from-level-1-with-title${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Navigation Display Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Navigation" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Navigation Display Test Page" />
 		</execute>
 
-		<var name="key_pageName" value="${pageName}" />
+		<var name="key_pageName" value="Navigation Display Test Page" />
 
-		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
 		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_ICON" value1="Options" />
 		<execute function="AssertClick" locator1="PGNavigation#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
@@ -187,10 +178,10 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Navigation Display Test Page" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
 	</command>
 
 	<command name="ViewNoAddPagePermissionsPG" priority="5">

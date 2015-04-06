@@ -1215,20 +1215,26 @@
 
 						<execute function="Click" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
 					</then>
+					<else>
+						<if>
+							<condition function="IsElementNotPresent" locator1="xpath=(//input[contains(@value,'Repeating')])" />
+							<then>
+								<execute function="Pause" value1="1000" />
+								<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+								<execute function="Pause" value1="1000" />
+								<execute function="Confirm#waitForConfirmation" locator1="PGCalendarAgendaView#CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+							</then>
+							<else>
+								<execute function="Pause" value1="1000" />
+								<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+								<execute function="Pause" value1="1000" />
+								<execute function="AssertClick" locator1="PGCalendarRecurringEventDialogBox#ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series"  />
+							</else>
+						</if>
+					</else>
 				</if>
 			</then>
 		</while>
-
-		<execute function="Pause" value1="1000" />
-		<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-		<execute function="Confirm" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="PGCalendarRecurringEventDialogBox#ALL_EVENTS_IN_THE_SERIES_BUTTON" />
-			<then>
-				<execute function="AssertClick" locator1="PGCalendarRecurringEventDialogBox#ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series"  />
-			</then>
-		</if>
 
 		<execute function="AssertTextEquals" locator1="PGCalendarAgendaView#EMPTY_MESSAGE" value1="No events." />
 		<execute function="AssertElementNotPresent" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_GENERIC" />

@@ -122,6 +122,7 @@
 		<var name="eventType1" value="Regular" />
 		<var name="eventType2" value="Repeating" />
 		<var name="eventType3" value="All Day" />
+		<var name="frequency" value="Weekly" />
 		<var name="mbCategoryName" value="MB Category Name" />
 		<var name="mbThreadBody" value="MB Category Thread Message Body" />
 		<var name="mbThreadSubject" value="MB Category Thread Message Subject" />

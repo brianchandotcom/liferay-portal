@@ -255,6 +255,7 @@
 		.entry-title {
 			@include ellipsis;
 
+			display: block;
 			position: relative;
 		}
 	}

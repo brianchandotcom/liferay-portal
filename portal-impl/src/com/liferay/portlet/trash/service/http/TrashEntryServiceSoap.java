@@ -239,16 +239,13 @@ public class TrashEntryServiceSoap {
 	trash entry, if a duplicate trash entry exists at the new
 	location, or if a portal exception occurred
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntrySoap moveEntry(
-		java.lang.String className, long classPK,
+	public static void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portlet.trash.model.TrashEntry returnValue = TrashEntryServiceUtil.moveEntry(className,
-					classPK, destinationContainerModelId, serviceContext);
-
-			return com.liferay.portlet.trash.model.TrashEntrySoap.toSoapModel(returnValue);
+			TrashEntryServiceUtil.moveEntry(className, classPK,
+				destinationContainerModelId, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

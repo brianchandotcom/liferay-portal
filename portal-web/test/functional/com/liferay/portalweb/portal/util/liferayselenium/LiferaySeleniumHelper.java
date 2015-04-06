@@ -1060,6 +1060,15 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-54765, temporary workaround until Raymond Auge fixes it
+
+		if (line.contains(
+				"The web application [] appears to have started a thread " +
+					"named [C3P0PooledConnectionPoolManager[identityToken")) {
+
+			return true;
+		}
+
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

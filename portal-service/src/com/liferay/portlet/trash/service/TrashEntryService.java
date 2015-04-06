@@ -179,8 +179,7 @@ public interface TrashEntryService extends BaseService {
 	trash entry, if a duplicate trash entry exists at the new
 	location, or if a portal exception occurred
 	*/
-	public com.liferay.portlet.trash.model.TrashEntry moveEntry(
-		java.lang.String className, long classPK,
+	public void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;

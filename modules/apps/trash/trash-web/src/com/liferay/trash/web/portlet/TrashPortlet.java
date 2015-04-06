@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -135,10 +136,10 @@ public class TrashPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			className, actionRequest);
 
-		TrashEntry entry = TrashEntryServiceUtil.moveEntry(
+		TrashEntryServiceUtil.moveEntry(
 			className, classPK, containerModelId, serviceContext);
 
-		TrashUndoUtil.addRestoreData(actionRequest, entry);
+		TrashUndoUtil.addRestoreData(actionRequest, className, classPK);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -147,14 +148,16 @@ public class TrashPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		List<TrashEntry> trashEntries = new ArrayList<>();
+		List<ObjectValuePair<String, Long>> entries = new ArrayList<>();
 
 		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
 		if (trashEntryId > 0) {
 			TrashEntry entry = TrashEntryServiceUtil.restoreEntry(trashEntryId);
 
-			trashEntries.add(entry);
+			entries.add(
+				new ObjectValuePair<>(
+					entry.getClassName(), entry.getClassPK()));
 		}
 		else {
 			long[] restoreEntryIds = StringUtil.split(
@@ -164,11 +167,13 @@ public class TrashPortlet extends MVCPortlet {
 				TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
 					restoreEntryId);
 
-				trashEntries.add(entry);
+				entries.add(
+					new ObjectValuePair<>(
+						entry.getClassName(), entry.getClassPK()));
 			}
 		}
 
-		TrashUndoUtil.addRestoreData(actionRequest, trashEntries);
+		TrashUndoUtil.addRestoreData(actionRequest, entries);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -199,7 +204,8 @@ public class TrashPortlet extends MVCPortlet {
 		TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
 			trashEntryId, duplicateEntryId, null);
 
-		TrashUndoUtil.addRestoreData(actionRequest, entry);
+		TrashUndoUtil.addRestoreData(
+			actionRequest, entry.getClassName(), entry.getClassPK());
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -224,7 +230,8 @@ public class TrashPortlet extends MVCPortlet {
 		TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
 			trashEntryId, 0, newName);
 
-		TrashUndoUtil.addRestoreData(actionRequest, entry);
+		TrashUndoUtil.addRestoreData(
+			actionRequest, entry.getClassName(), entry.getClassPK());
 
 		sendRedirect(actionRequest, actionResponse);
 	}

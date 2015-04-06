@@ -180,12 +180,11 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	location, or if a portal exception occurred
 	*/
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry moveEntry(
-		java.lang.String className, long classPK,
+	public void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryService.moveEntry(className, classPK,
+		_trashEntryService.moveEntry(className, classPK,
 			destinationContainerModelId, serviceContext);
 	}
 

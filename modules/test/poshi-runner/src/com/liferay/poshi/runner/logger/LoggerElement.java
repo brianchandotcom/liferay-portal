@@ -98,6 +98,32 @@ public class LoggerElement {
 		return _text;
 	}
 
+	public LoggerElement loggerElement(String name) {
+		List<LoggerElement> loggerElements = loggerElements(name);
+
+		if (loggerElements.size() > 0) {
+			return loggerElements.get(0);
+		}
+
+		return null;
+	}
+
+	public List<LoggerElement> loggerElements() {
+		return _childLoggerElements;
+	}
+
+	public List<LoggerElement> loggerElements(String name) {
+		List<LoggerElement> childLoggerElements = new ArrayList<>();
+
+		for (LoggerElement childLoggerElement : _childLoggerElements) {
+			if (Validator.equals(childLoggerElement.getName(), name)) {
+				childLoggerElements.add(childLoggerElement);
+			}
+		}
+
+		return childLoggerElements;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 

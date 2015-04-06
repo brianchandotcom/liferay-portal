@@ -17,6 +17,8 @@ package com.liferay.gradle.plugins.tasks;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.util.GradleUtil;
 
+import java.io.InputStream;
+
 import java.util.List;
 
 import org.gradle.api.Action;
@@ -94,6 +96,11 @@ public abstract class BasePortalToolsTask extends JavaExec {
 
 	@Override
 	public JavaExec setClasspath(FileCollection fileCollection) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public JavaExec setStandardInput(InputStream inputStream) {
 		throw new UnsupportedOperationException();
 	}
 

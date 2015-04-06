@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.tasks;
 
 import java.io.File;
+import java.io.OutputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SkipWhenEmpty;
+import org.gradle.process.internal.streams.SafeStreams;
 
 /**
  * @author Andrea Di Giorgi
@@ -35,6 +38,9 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		Iterable<File> files = getScreenshotFiles();
 
 		for (File file : files) {
+			super.setErrorOutput(SafeStreams.systemErr());
+			super.setStandardOutput(SafeStreams.systemOut());
+
 			doExec(getArgs(file));
 		}
 	}
@@ -86,6 +92,11 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		return _overwrite;
 	}
 
+	@Override
+	public JavaExec setErrorOutput(OutputStream outputStream) {
+		throw new UnsupportedOperationException();
+	}
+
 	public void setHeight(int height) {
 		_height = height;
 	}
@@ -96,6 +107,11 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 
 	public void setOverwrite(boolean overwrite) {
 		_overwrite = overwrite;
+	}
+
+	@Override
+	public JavaExec setStandardOutput(OutputStream outputStream) {
+		throw new UnsupportedOperationException();
 	}
 
 	public void setWidth(int width) {

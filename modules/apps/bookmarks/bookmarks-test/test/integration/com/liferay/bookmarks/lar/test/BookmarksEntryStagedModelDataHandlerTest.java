@@ -12,40 +12,57 @@
  * details.
  */
 
-package com.liferay.bookmarks.lar;
+package com.liferay.bookmarks.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.lar.test.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
- * @author Daniel Kocsis
+ * @author Mate Thurzo
  */
-public class BookmarksFolderStagedModelDataHandlerTest
-	extends BaseStagedModelDataHandlerTestCase {
+@RunWith(Arquillian.class)
+public class BookmarksEntryStagedModelDataHandlerTest
+	extends BaseWorkflowedStagedModelDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -75,16 +92,30 @@ public class BookmarksFolderStagedModelDataHandlerTest
 
 		BookmarksFolder folder = (BookmarksFolder)dependentStagedModels.get(0);
 
-		return BookmarksTestUtil.addFolder(
-			group.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		return BookmarksTestUtil.addEntry(
+			folder.getFolderId(), true, serviceContext);
+	}
+
+	@Override
+	protected List<StagedModel> addWorkflowedStagedModels(Group group)
+		throws Exception {
+
+		List<StagedModel> stagedModels = new ArrayList<>();
+
+		stagedModels.add(BookmarksTestUtil.addEntry(group.getGroupId(), true));
+		stagedModels.add(BookmarksTestUtil.addEntry(group.getGroupId(), false));
+
+		return stagedModels;
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return BookmarksFolderLocalServiceUtil.
-				getBookmarksFolderByUuidAndGroupId(uuid, group.getGroupId());
+			return BookmarksEntryLocalServiceUtil.
+				getBookmarksEntryByUuidAndGroupId(uuid, group.getGroupId());
 		}
 		catch (Exception e) {
 			return null;
@@ -93,7 +124,7 @@ public class BookmarksFolderStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return BookmarksFolder.class;
+		return BookmarksEntry.class;
 	}
 
 	@Override

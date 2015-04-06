@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,13 +37,14 @@ import javax.portlet.ActionRequest;
 public class TrashUndoUtil {
 
 	public static void addRestoreData(
-			ActionRequest actionRequest, List<TrashEntry> trashEntries)
+			ActionRequest actionRequest,
+			List<ObjectValuePair<String, Long>> entries)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if ((trashEntries == null) || trashEntries.isEmpty()) {
+		if ((entries == null) || entries.isEmpty()) {
 			return;
 		}
 
@@ -53,17 +54,16 @@ public class TrashUndoUtil {
 		List<String> restoreLinks = new ArrayList<>();
 		List<String> restoreMessages = new ArrayList<>();
 
-		for (TrashEntry trashEntry : trashEntries) {
+		for (ObjectValuePair<String, Long> entry : entries) {
 			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					trashEntry.getClassName());
+				TrashHandlerRegistryUtil.getTrashHandler(entry.getKey());
 
 			String restoreEntryLink = trashHandler.getRestoreContainedModelLink(
-				actionRequest, trashEntry.getClassPK());
+				actionRequest, entry.getValue());
 			String restoreLink = trashHandler.getRestoreContainerModelLink(
-				actionRequest, trashEntry.getClassPK());
+				actionRequest, entry.getValue());
 			String restoreMessage = trashHandler.getRestoreMessage(
-				actionRequest, trashEntry.getClassPK());
+				actionRequest, entry.getValue());
 
 			if (Validator.isNull(restoreLink) ||
 				Validator.isNull(restoreMessage)) {
@@ -75,7 +75,7 @@ public class TrashUndoUtil {
 			restoreEntryLinks.add(restoreEntryLink);
 
 			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				trashEntry.getClassPK());
+				entry.getValue());
 
 			String restoreEntryTitle = trashRenderer.getTitle(
 				themeDisplay.getLocale());
@@ -101,14 +101,17 @@ public class TrashUndoUtil {
 	}
 
 	public static void addRestoreData(
-			ActionRequest actionRequest, TrashEntry trashEntry)
+			ActionRequest actionRequest, String className, long classPK)
 		throws Exception {
 
-		List<TrashEntry> trashEntries = new ArrayList<>();
+		List<ObjectValuePair<String, Long>> entries = new ArrayList<>();
 
-		trashEntries.add(trashEntry);
+		ObjectValuePair<String, Long> objectValuePair = new ObjectValuePair<>(
+			className, classPK);
 
-		addRestoreData(actionRequest, trashEntries);
+		entries.add(objectValuePair);
+
+		addRestoreData(actionRequest, entries);
 	}
 
 }

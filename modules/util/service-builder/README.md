@@ -38,7 +38,38 @@ For the latest information on Service Builder please see the [Service Builder](h
 		/>
 	</target>
 
-The `service-builder` task has the following attributes and defaults:
+Executing the command line:
+
+	ant build-service
+
+## Maven
+
+	<plugins>
+		<plugin>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.tools.servicebuilder</artifactId>
+			<version>1.0.0</version>
+			<configuration>
+				<apiDir>../tmp/api</apiDir>
+				<hbmFileName>../tmp/src/META-INF/portal-hbm.xml</hbmFileName>
+				<implDir>../tmp/src</implDir>
+				<inputFileName>service.xml</inputFileName>
+				<modelHintsFileName>../tmp/src/META-INF/portal-model-hints.xml</modelHintsFileName>
+				<resourcesDir>../tmp/src</resourcesDir>
+				<springFileName>../tmp/src/META-INF/portal-spring.xml</springFileName>
+				<sqlDir>../tmp/sql</sqlDir>
+				<testDir>../tmp/test/integration</testDir>
+			</configuration>
+		</plugin>
+	</plugins>
+
+Executing the command line:
+
+	mvn com.liferay:com.liferay.tools.servicebuilder:build-service
+
+## Configuration
+
+The `service-builder` task|mojo have the following attributes and defaults:
 
 | attribute (all optional)    | default value                                  |
 |-----------------------------|:-----------------------------------------------|

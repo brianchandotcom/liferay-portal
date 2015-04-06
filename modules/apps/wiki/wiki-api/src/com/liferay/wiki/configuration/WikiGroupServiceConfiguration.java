@@ -104,7 +104,7 @@ public interface WikiGroupServiceConfiguration {
 	@Meta.AD(
 		deflt = "simple", required = false
 	)
-	public String getSimpleEditor();
+	public String getMediaWikiEditor();
 
 	/**
 	 * Set the name of the default node that will be automatically created when

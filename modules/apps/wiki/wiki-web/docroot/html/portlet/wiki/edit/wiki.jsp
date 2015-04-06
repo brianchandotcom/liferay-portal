@@ -59,7 +59,7 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 				<liferay-ui:input-editor
 					configParams="<%= configParams %>"
 					contents="<%= content %>"
-					editorName="<%= wikiGroupServiceConfiguration.getSimpleEditor() %>"
+					editorName="<%= wikiGroupServiceConfiguration.getMediaWikiEditor() %>"
 					fileBrowserParams="<%= fileBrowserParams %>"
 					name="content"
 					width="100%"

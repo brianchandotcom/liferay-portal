@@ -28,14 +28,10 @@ String format = "html";
 <liferay-ui:input-editor
 	configParams="<%= configParams %>"
 	contents="<%= content %>"
-	editorName="<%= EDITOR_NAME %>"
+	editorName="<%= wikiGroupServiceConfiguration.getHTMLEditor() %>"
 	fileBrowserParams="<%= fileBrowserParams %>"
 	name="content"
 	width="100%"
 />
 
 <aui:input name="content" type="hidden" />
-
-<%!
-public static final String EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.wiki.edit.html.jsp");
-%>

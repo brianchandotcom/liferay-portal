@@ -16,9 +16,7 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerException;
-import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
-import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import org.dom4j.Element;
@@ -41,19 +39,14 @@ public final class SummaryLoggerHandler {
 
 			_majorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
 
-			LoggerElement errorLoggerElement = new LoggerElement();
+			if (Validator.isNotNull(message)) {
+				LoggerElement errorLoggerElement = new LoggerElement();
 
-			String stackTrace = PoshiRunnerStackTraceUtil.getStackTrace(
-				message);
+				errorLoggerElement.setText("ERROR: " + message);
 
-			stackTrace = StringUtil.replace(stackTrace, "\n", "<br />");
-			stackTrace = StringUtil.replace(stackTrace, "\"", "&quot;");
-
-			stackTrace += "<br /><br />";
-
-			errorLoggerElement.setText(stackTrace);
-
-			_majorStepsLoggerElement.addChildLoggerElement(errorLoggerElement);
+				_causeBodyLoggerElement.addChildLoggerElement(
+					errorLoggerElement);
+			}
 
 			_stopMajorStep();
 		}
@@ -241,6 +234,8 @@ public final class SummaryLoggerHandler {
 		_minorStepLoggerElement = null;
 	}
 
+	private static final LoggerElement _causeBodyLoggerElement =
+		new LoggerElement("cause-body");
 	private static Element _majorStepElement = null;
 	private static LoggerElement _majorStepLoggerElement = null;
 	private static final LoggerElement _majorStepsLoggerElement =

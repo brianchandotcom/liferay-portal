@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.portal.events.test;
 
+import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.events.TestServicePreAction;
+import com.liferay.portal.events.test.TestServicePreAction;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;

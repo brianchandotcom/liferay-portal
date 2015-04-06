@@ -26,7 +26,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 /**
  * @author Preston Crary
  */
-public abstract class BaseResourcePermission
+public abstract class BaseResourcePermissionChecker
 	implements ResourcePermissionChecker {
 
 	public static boolean contains(
@@ -70,6 +70,6 @@ public abstract class BaseResourcePermission
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseResourcePermission.class);
+		BaseResourcePermissionChecker.class);
 
 }

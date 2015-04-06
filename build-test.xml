@@ -1212,10 +1212,10 @@
 
 	<macrodef name="start-android-device">
 		<sequential>
-			<fail message="Please set the property ${android.home}." unless="android.home" />
+			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
 
 			<execute>
-				echo no | ${android.home}/tools/android create avd -n deviceName -t android-19
+				echo no | ${mobile.android.home}/tools/android create avd -n deviceName -t android-19
 			</execute>
 
 			<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">
@@ -1224,45 +1224,45 @@
 
 			<exec executable="/bin/bash" os="${os.unix}" spawn="true">
 				<arg value="-c" />
-				<arg value="${android.home}/tools/emulator -avd deviceName -no-boot-anim" />
+				<arg value="${mobile.android.home}/tools/emulator -avd deviceName -no-boot-anim" />
 			</exec>
 
 			<exec executable="cmd.exe" os="${os.windows}">
 				<arg value="/c" />
-				<arg value="${android.home}/tools/emulator -avd deviceName -no-boot-anim" />
+				<arg value="${mobile.android.home}/tools/emulator -avd deviceName -no-boot-anim" />
 			</exec>
 
 			<sleep seconds="120" />
 
 			<execute>
-				${android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local
-				${android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local
-				${android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/tap.sh /data/local
+				${mobile.android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local
+				${mobile.android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local
+				${mobile.android.home}/platform-tools/adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/tap.sh /data/local
 
-				${android.home}/platform-tools/adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
-				${android.home}/platform-tools/adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
-				${android.home}/platform-tools/adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh
+				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
+				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
+				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh
 
-				${android.home}/platform-tools/adb -s emulator-5554 shell settings put system pointer_location 1
-				${android.home}/platform-tools/adb -s emulator-5554 shell settings put system show_touches 1
+				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell settings put system pointer_location 1
+				${mobile.android.home}/platform-tools/adb -s emulator-5554 shell settings put system show_touches 1
 			</execute>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="start-appium">
 		<sequential>
-			<fail message="Please set the property ${android.home}." unless="android.home" />
+			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
 
 			<parallel>
 				<daemons>
 					<exec executable="/bin/bash" os="${os.unix}">
-						<env key="PATH" value="${env.PATH}:${android.home}/tools:${android.home}/platform-tools" />
+						<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
 						<arg value="-c" />
 						<arg value="${appium.unix.cmd}" />
 					</exec>
 
 					<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
-						<env key="Path" value="${env.Path}:${android.home}/tools:${android.home}/platform-tools" />
+						<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
 						<arg value="/c" />
 						<arg value="${appium.win32.cmd}" />
 					</exec>
@@ -1404,11 +1404,11 @@
 
 	<macrodef name="stop-android-device">
 		<sequential>
-			<fail message="Please set the property ${android.home}." unless="android.home" />
+			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
 
 			<execute>
-				${android.home}/platform-tools/adb emu kill
-				${android.home}/tools/android delete avd -n deviceName
+				${mobile.android.home}/platform-tools/adb emu kill
+				${mobile.android.home}/tools/android delete avd -n deviceName
 			</execute>
 		</sequential>
 	</macrodef>
@@ -3402,10 +3402,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<antcall target="prepare-selenium-testcase-properties" />
 
 		<if>
-			<isset property="android.home" />
+			<isset property="mobile.android.home" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					android.home=${android.home}
+					mobile.android.home=${mobile.android.home}
 				</echo>
 			</then>
 		</if>

@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class TestPropsValues
 	extends com.liferay.portal.kernel.test.util.TestPropsValues {
 
-	public static final String ANDROID_HOME = TestPropsUtil.get("android.home");
-
 	public static final String BROWSER_COMMANDS_DIR_NAME = TestPropsUtil.get(
 		"browser.commands.dir");
 
@@ -182,6 +180,9 @@ public class TestPropsValues
 
 	public static final String MARKETPLACE_EMAIL_PASSWORD_5 = TestPropsUtil.get(
 		"marketplace.email.password.5");
+
+	public static final String MOBILE_ANDROID_HOME = TestPropsUtil.get(
+		"mobile.android.home");
 
 	public static final boolean MOBILE_DEVICE_ENABLED = GetterUtil.getBoolean(
 		TestPropsUtil.get("mobile.device.enabled"));

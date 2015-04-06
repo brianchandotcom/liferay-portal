@@ -1051,15 +1051,6 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
-		// LPS-54662, temporary workaround while Kenji Heigel investigates it
-
-		if (line.contains(
-				"The web application [] appears to have started a thread " +
-					"named [jscompiler]")) {
-
-			return true;
-		}
-
 		// LPS-54680
 
 		if (line.contains(

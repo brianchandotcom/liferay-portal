@@ -111,19 +111,15 @@ public class InvokerFilterHelper {
 		int y = 0;
 
 		if (Validator.isNotNull(filterName)) {
-			Filter filter = _filters.get(filterName);
+			for (; x < _filterMappings.size(); x++) {
+				FilterMapping currentFilterMapping = _filterMappings.get(x);
 
-			if (filter != null) {
-				for (; x < _filterMappings.size(); x++) {
-					FilterMapping currentFilterMapping = _filterMappings.get(x);
-
-					if (currentFilterMapping.getFilter() == filter) {
-						if (after) {
-							y = x;
-						}
-						else {
-							break;
-						}
+				if (filterName.equals(currentFilterMapping.getFilterName())) {
+					if (after) {
+						y = x;
+					}
+					else {
+						break;
 					}
 				}
 			}
@@ -174,16 +170,10 @@ public class InvokerFilterHelper {
 	}
 
 	public void updateFilterMappings(String filterName, Filter filter) {
-		Filter previousFilter = _filters.put(filterName, filter);
-
-		if (previousFilter == null) {
-			return;
-		}
-
 		for (int i = 0; i < _filterMappings.size(); i++) {
 			FilterMapping filterMapping = _filterMappings.get(i);
 
-			if (filterMapping.getFilter() == previousFilter) {
+			if (filterName.equals(filterMapping.getFilterName())) {
 				_filterMappings.set(i, filterMapping.replaceFilter(filter));
 			}
 		}
@@ -272,7 +262,8 @@ public class InvokerFilterHelper {
 		}
 
 		_filterMappings.add(
-			new FilterMapping(filter, filterConfig, urlPatterns, dispatchers));
+			new FilterMapping(
+				filter, filterConfig, urlPatterns, dispatchers, filterName));
 	}
 
 	protected void readLiferayFilterWebXML(
@@ -422,7 +413,8 @@ public class InvokerFilterHelper {
 			updateFilterMappings(servletFilterName, filter);
 
 			FilterMapping filterMapping = new FilterMapping(
-				filter, filterConfig, urlPatterns, dispatchers);
+				filter, filterConfig, urlPatterns, dispatchers,
+				servletFilterName);
 
 			registerFilterMapping(filterMapping, positionFilterName, after);
 

@@ -12,33 +12,35 @@
  * details.
  */
 
-package com.liferay.journal.notifications;
+package com.liferay.journal.subscriptions;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionRootContainerModelTestCase;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
+ * @author Zsolt Berentey
  * @author Roberto Díaz
- * @author Sergio González
  */
 @RunWith(Arquillian.class)
 @Sync
-public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
+public class JournalSubscriptionRootContainerModelTest
+	extends BaseSubscriptionRootContainerModelTestCase {
 
 	@ClassRule
 	@Rule
@@ -46,37 +48,51 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
+	@Before
 	@Override
-	protected BaseModel<?> addBaseModel() throws Exception {
-		return JournalTestUtil.addArticleWithWorkflow(
-			group.getGroupId(), _folder.getFolderId(), true);
+	public void setUp() throws Exception {
+		super.setUp();
+
+		user = UserTestUtil.addOmniAdminUser();
 	}
 
 	@Override
-	protected void addContainerModel() throws Exception {
-		_folder = JournalTestUtil.addFolder(
-			group.getGroupId(), RandomTestUtil.randomString());
-	}
-
-	@Override
-	protected String getPortletId() {
-		return PortletKeys.JOURNAL;
-	}
-
-	@Override
-	protected void subscribeToContainer() throws Exception {
-		JournalFolderLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId(), _folder.getFolderId());
-	}
-
-	@Override
-	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		return JournalTestUtil.updateArticleWithWorkflow(
-			(JournalArticle)baseModel, true);
+		JournalArticle article = JournalTestUtil.addArticle(
+			userId, group.getGroupId(), containerModelId);
+
+		return article.getResourcePrimKey();
 	}
 
-	private JournalFolder _folder;
+	@Override
+	protected long addContainerModel(long userId, long containerModelId)
+		throws Exception {
+
+		JournalFolder folder = JournalTestUtil.addFolder(
+			userId, group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString());
+
+		return folder.getFolderId();
+	}
+
+	@Override
+	protected void addSubscriptionContainerModel(long containerModelId)
+		throws Exception {
+
+		JournalFolderLocalServiceUtil.subscribe(
+			user.getUserId(), group.getGroupId(), containerModelId);
+	}
+
+	@Override
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
+
+		JournalTestUtil.updateArticleWithWorkflow(userId, article, true);
+	}
 
 }

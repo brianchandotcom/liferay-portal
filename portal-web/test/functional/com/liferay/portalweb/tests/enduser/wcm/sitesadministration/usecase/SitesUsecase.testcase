@@ -578,7 +578,7 @@
 		</execute>
 	</command>
 
-	<command name="WebContentAdministrationSitesTemplatePermissionPersistence" priority="5">
+	<command known-issues="LPS-51156" name="WebContentAdministrationSitesTemplatePermissionPersistence" priority="5">
 		<var name="password" value="test" />
 		<var name="pollsQuestion" value="What is the most important issue for this election?" />
 		<var name="pollsQuestionChoiceA" value="The Economy" />

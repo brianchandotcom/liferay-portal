@@ -152,6 +152,10 @@ public class InputEditorTag extends IncludeTag {
 		_width = width;
 	}
 
+	protected String buildPagePath(String editorName) {
+		return "/html/js/editor/" + editorName + ".jsp";
+	}
+
 	@Override
 	protected void cleanUp() {
 		_allowBrowseDocuments = true;
@@ -256,15 +260,23 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	protected String getEditorName(HttpServletRequest request) {
+		String editorName = _editorName;
+
 		if (!BrowserSnifferUtil.isRtf(request)) {
-			return "simple";
+			editorName = "simple";
 		}
 
-		if (Validator.isNull(_editorName)) {
-			return _EDITOR_WYSIWYG_DEFAULT;
+		if (Validator.isNull(editorName)) {
+			editorName = _EDITOR_WYSIWYG_DEFAULT;
 		}
 
-		return _editorName;
+		if (!FileAvailabilityUtil.isAvailable(
+				servletContext, buildPagePath(editorName))) {
+
+			editorName = _EDITOR_WYSIWYG_DEFAULT;
+		}
+
+		return editorName;
 	}
 
 	@Override
@@ -276,11 +288,7 @@ public class InputEditorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		String editorName = getEditorName(request);
 
-		_page = "/html/js/editor/" + editorName + ".jsp";
-
-		if (!FileAvailabilityUtil.isAvailable(servletContext, _page)) {
-			_page = "/html/js/editor/" + _EDITOR_WYSIWYG_DEFAULT + ".jsp";
-		}
+		_page = buildPagePath(editorName);
 
 		request.setAttribute(
 			"liferay-ui:input-editor:allowBrowseDocuments",

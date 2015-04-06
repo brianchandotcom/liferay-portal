@@ -62,6 +62,17 @@ public class MBMessageServiceUtil {
 
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String fileName, java.io.File file,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			java.io.FileNotFoundException {
+		return getService()
+				   .addMessage(groupId, categoryId, subject, body, fileName,
+			file, serviceContext);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
+		long groupId, long categoryId, java.lang.String subject,
 		java.lang.String body, java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,

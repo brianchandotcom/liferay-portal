@@ -34,7 +34,7 @@
 		<property name="singleDestinationMessageSender">
 			<bean class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationMessageSender">
 				<property name="destinationName" value="liferay/audit" />
-				<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
+				<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 			</bean>
 		</property>
 	</bean>

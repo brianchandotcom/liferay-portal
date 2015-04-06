@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.messaging.sender;
 
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 
 /**
  * @author Michael C. Han
@@ -22,23 +23,9 @@ import com.liferay.portal.kernel.messaging.Message;
 public class DefaultSingleDestinationMessageSender
 	implements SingleDestinationMessageSender {
 
-	public DefaultSingleDestinationMessageSender() {
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public DefaultSingleDestinationMessageSender(
-		String destinationName, MessageSender messageSender) {
-
-		_destinationName = destinationName;
-		_messageSender = messageSender;
-	}
-
 	@Override
 	public void send(Message message) {
-		_messageSender.send(_destinationName, message);
+		_messageBus.sendMessage(_destinationName, message);
 	}
 
 	@Override
@@ -54,11 +41,11 @@ public class DefaultSingleDestinationMessageSender
 		_destinationName = destinationName;
 	}
 
-	public void setMessageSender(MessageSender messageSender) {
-		_messageSender = messageSender;
+	public void setMessageBus(MessageBus messageBus) {
+		_messageBus = messageBus;
 	}
 
 	private String _destinationName;
-	private MessageSender _messageSender;
+	private MessageBus _messageBus;
 
 }

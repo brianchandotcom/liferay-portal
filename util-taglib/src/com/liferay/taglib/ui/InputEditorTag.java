@@ -40,18 +40,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputEditorTag extends IncludeTag {
 
-	public String getEditorType(HttpServletRequest request) {
-		if (!BrowserSnifferUtil.isRtf(request)) {
-			return "simple";
-		}
-
-		if (Validator.isNull(_editorName)) {
-			return _EDITOR_WYSIWYG_DEFAULT;
-		}
-
-		return _editorName;
-	}
-
 	public void setAllowBrowseDocuments(boolean allowBrowseDocuments) {
 		_allowBrowseDocuments = allowBrowseDocuments;
 	}
@@ -92,8 +80,8 @@ public class InputEditorTag extends IncludeTag {
 		_editorName = PropsUtil.get(editorImpl);
 	}
 
-	public void setEditorName(String editorType) {
-		_editorName = editorType;
+	public void setEditorName(String editorName) {
+		_editorName = editorName;
 	}
 
 	public void setFileBrowserParams(Map<String, String> fileBrowserParams) {
@@ -255,7 +243,7 @@ public class InputEditorTag extends IncludeTag {
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			portlet.getPortletId(), getConfigKey(), getEditorType(request),
+			portlet.getPortletId(), getConfigKey(), getEditorName(request),
 			attributes, themeDisplay, portletResponse);
 
 		Map<String, Object> data = editorConfig.getData();
@@ -267,6 +255,18 @@ public class InputEditorTag extends IncludeTag {
 		return data;
 	}
 
+	protected String getEditorName(HttpServletRequest request) {
+		if (!BrowserSnifferUtil.isRtf(request)) {
+			return "simple";
+		}
+
+		if (Validator.isNull(_editorName)) {
+			return _EDITOR_WYSIWYG_DEFAULT;
+		}
+
+		return _editorName;
+	}
+
 	@Override
 	protected String getPage() {
 		return _page;
@@ -274,7 +274,7 @@ public class InputEditorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		String editorName = getEditorType(request);
+		String editorName = getEditorName(request);
 
 		_page = "/html/js/editor/" + editorName + ".jsp";
 

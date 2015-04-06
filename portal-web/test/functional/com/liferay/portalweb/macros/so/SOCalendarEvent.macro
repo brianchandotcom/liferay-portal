@@ -31,7 +31,7 @@
 		<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="Daily, ${numberOfRepeats} Times" />
 
-		<execute macro="CalendarEvent#selectCalendarPG" />
+		<execute macro="CalendarEvent#selectCalendar" />
 
 		<execute function="Click" locator1="PGCalendarAddevent#SAVE_BUTTON" />
 		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#SUCCESS_MESSAGE" value1="Your request completed successfully." />

@@ -12,9 +12,6 @@
 	<!-- Message bus -->
 
 	<bean id="com.liferay.portal.kernel.messaging.MessageBus" class="com.liferay.portal.kernel.messaging.DefaultMessageBus" />
-	<bean id="com.liferay.portal.kernel.messaging.sender.MessageSender" class="com.liferay.portal.kernel.messaging.sender.DefaultMessageSender">
-		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" class="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender">
 		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 	</bean>
@@ -40,7 +37,7 @@
 
 	<bean id="messageSender.service_request_status" class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationMessageSender">
 		<property name="destinationName" value="liferay/message_bus/message_status" />
-		<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
+		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 	</bean>
 
 	<!-- Listeners -->
@@ -49,7 +46,7 @@
 		<property name="singleDestinationMessageSender">
 			<bean class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationMessageSender">
 				<property name="destinationName" value="liferay/global" />
-				<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
+				<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 			</bean>
 		</property>
 	</bean>

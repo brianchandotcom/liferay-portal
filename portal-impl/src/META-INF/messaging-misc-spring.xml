@@ -89,7 +89,6 @@
 	<bean id="messageListener.layouts_local_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
 		<property name="messageListener">
 			<bean class="com.liferay.portal.lar.messaging.LayoutsLocalPublisherMessageListener">
-				<property name="responseSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
 				<property name="statusSender" ref="messageSender.service_request_status" />
 			</bean>
 		</property>
@@ -97,7 +96,6 @@
 	<bean id="messageListener.layouts_remote_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
 		<property name="messageListener">
 			<bean class="com.liferay.portal.lar.messaging.LayoutsRemotePublisherMessageListener">
-				<property name="responseSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
 				<property name="statusSender" ref="messageSender.service_request_status" />
 			</bean>
 		</property>

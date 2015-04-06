@@ -72,7 +72,7 @@ public class IntrabandBridgeDestinationTest {
 	public void setUp() {
 		_messageBus = new DefaultMessageBus();
 
-		MessageBusUtil.init(_messageBus, null, null);
+		MessageBusUtil.init(_messageBus, null);
 
 		_baseDestination = new SynchronousDestination();
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -59,20 +58,15 @@ public class MessageBusUtil {
 		return getInstance()._messageBus;
 	}
 
-	public static MessageSender getMessageSender() {
-		return getInstance()._messageSender;
-	}
-
 	public static boolean hasMessageListener(String destination) {
 		return getInstance()._hasMessageListener(destination);
 	}
 
 	public static void init(
-		MessageBus messageBus, MessageSender messageSender,
+		MessageBus messageBus,
 		SynchronousMessageSender synchronousMessageSender) {
 
-		getInstance()._init(
-			messageBus, messageSender, synchronousMessageSender);
+		getInstance()._init(messageBus, synchronousMessageSender);
 	}
 
 	public static void registerMessageListener(
@@ -174,11 +168,10 @@ public class MessageBusUtil {
 	}
 
 	private void _init(
-		MessageBus messageBus, MessageSender messageSender,
+		MessageBus messageBus,
 		SynchronousMessageSender synchronousMessageSender) {
 
 		_messageBus = messageBus;
-		_messageSender = messageSender;
 		_synchronousMessageSender = synchronousMessageSender;
 	}
 
@@ -279,7 +272,6 @@ public class MessageBusUtil {
 	private static final MessageBusUtil _instance = new MessageBusUtil();
 
 	private MessageBus _messageBus;
-	private MessageSender _messageSender;
 	private SynchronousMessageSender _synchronousMessageSender;
 
 }

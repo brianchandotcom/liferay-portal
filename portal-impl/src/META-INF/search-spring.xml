@@ -26,11 +26,11 @@
 	<!-- Proxy -->
 
 	<bean id="com.liferay.portal.kernel.search.IndexSearcherProxyBean" class="com.liferay.portal.kernel.search.IndexSearcherProxyBean">
-		<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
+		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 		<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.IndexWriterProxyBean" class="com.liferay.portal.kernel.search.IndexWriterProxyBean">
-		<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
+		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 		<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
 	</bean>
 

@@ -46,6 +46,10 @@ public class GoogleDocsMetadataHelper {
 	public static DDMStructure getGoogleDocsDDMStructure(
 		DLFileEntryType dlFileEntryType) {
 
+		if (dlFileEntryType == null) {
+			return null;
+		}
+
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {

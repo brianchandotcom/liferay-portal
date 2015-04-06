@@ -980,6 +980,10 @@ public class VerifyProperties extends VerifyProcess {
 		// XSL Content
 
 		new String[] {
+			"xsl.content.valid.url.prefixes", "valid.url.prefixes",
+			"com.liferay.xsl.content.web"
+		},
+		new String[] {
 			"xsl.content.xml.doctype.declaration.allowed",
 			"xml.doctype.declaration.allowed", "com.liferay.xsl.content.web"
 		},

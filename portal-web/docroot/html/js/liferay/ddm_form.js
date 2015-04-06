@@ -292,6 +292,17 @@ AUI.add(
 						return instance.getFieldInfo(definition, 'name', name);
 					},
 
+					getFieldsByName: function(name) {
+						var instance = this;
+
+						return AArray.filter(
+							instance.get('fields'),
+							function(item) {
+								return item.get('name') === name;
+							}
+						);
+					},
+
 					getInputName: function() {
 						var instance = this;
 
@@ -551,6 +562,19 @@ AUI.add(
 								originalField: originalField
 							}
 						);
+
+						AArray.each(
+							newField.get('fields'),
+							function(item, index) {
+								var name = item.get('name');
+
+								var originalChildFields = originalField.getFieldsByName(name);
+
+								if (originalChildFields.length) {
+									instance._addFieldValidation(item, originalChildFields[0]);
+								}
+							}
+						);
 					},
 
 					_afterDeleteAvailableLocale: function(event) {
@@ -613,6 +637,13 @@ AUI.add(
 
 					_removeFieldValidation: function(field) {
 						var instance = this;
+
+						AArray.each(
+							field.get('fields'),
+							function(item, index) {
+								instance._removeFieldValidation(item);
+							}
+						);
 
 						instance.fire(
 							'remove',

@@ -2066,7 +2066,7 @@ public class ServiceBuilder {
 
 				content = StringUtil.replace(content, "\r\n", "\n");
 
-				FileUtils.write(exceptionFile, content);
+				writeFileRaw(exceptionFile, content);
 			}
 
 			if (exception.startsWith("NoSuch")) {
@@ -2079,7 +2079,7 @@ public class ServiceBuilder {
 						content, "kernel.exception.NoSuchModelException",
 						"NoSuchModelException");
 
-					FileUtils.write(exceptionFile, content);
+					writeFileRaw(exceptionFile, content);
 				}
 			}
 		}
@@ -2365,7 +2365,7 @@ public class ServiceBuilder {
 		newContent = _formatXml(newContent);
 
 		if (!oldContent.equals(newContent)) {
-			FileUtils.write(xmlFile, newContent);
+			writeFileRaw(xmlFile, newContent);
 		}
 	}
 
@@ -2508,7 +2508,7 @@ public class ServiceBuilder {
 		newContent = _formatXml(newContent);
 
 		if (!oldContent.equals(newContent)) {
-			FileUtils.write(xmlFile, newContent);
+			writeFileRaw(xmlFile, newContent);
 		}
 	}
 
@@ -2756,7 +2756,7 @@ public class ServiceBuilder {
 
 		// Write file
 
-		FileUtils.write(propsFile, content, true);
+		writeFileRaw(propsFile, content);
 	}
 
 	private void _createRemotingXml() throws Exception {
@@ -2842,9 +2842,7 @@ public class ServiceBuilder {
 		newContent = _formatXml(newContent);
 
 		if (!content.equals(newContent)) {
-			FileUtils.write(outputFile, newContent);
-
-			System.out.println(outputFile.toString());
+			writeFileRaw(outputFile, newContent);
 		}
 	}
 
@@ -3342,7 +3340,7 @@ public class ServiceBuilder {
 		newContent = _formatXml(newContent);
 
 		if (!oldContent.equals(newContent)) {
-			FileUtils.write(xmlFile, newContent);
+			writeFileRaw(xmlFile, newContent);
 		}
 	}
 
@@ -3462,7 +3460,7 @@ public class ServiceBuilder {
 			sb.setIndex(sb.index() - 2);
 		}
 
-		FileUtils.write(sqlFile, sb.toString());
+		writeFileRaw(sqlFile, sb.toString());
 
 		// indexes.properties
 
@@ -3494,7 +3492,7 @@ public class ServiceBuilder {
 					content.substring(0, x) + newCreateTableString +
 						content.substring(y + 2);
 
-				FileUtils.write(sqlFile, content);
+				writeFileRaw(sqlFile, content);
 			}
 		}
 		else if (addMissingTables) {
@@ -3530,7 +3528,7 @@ public class ServiceBuilder {
 					sb.append(newCreateTableString);
 				}
 
-				FileUtils.write(sqlFile, sb.toString(), true);
+				writeFileRaw(sqlFile, sb.toString());
 			}
 		}
 	}
@@ -3615,7 +3613,7 @@ public class ServiceBuilder {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		FileUtils.write(sqlFile, sb.toString(), true);
+		writeFileRaw(sqlFile, sb.toString());
 	}
 
 	private void _createSQLTables() throws Exception {
@@ -3668,7 +3666,7 @@ public class ServiceBuilder {
 
 		String content = FileUtils.readFileToString(sqlFile);
 
-		FileUtils.write(sqlFile, content.trim());
+		writeFileRaw(sqlFile, content.trim());
 	}
 
 	private void _createSQLTables(
@@ -3729,7 +3727,7 @@ public class ServiceBuilder {
 					sb.append(newCreateTableString);
 				}
 
-				FileUtils.write(sqlFile, sb.toString(), true);
+				writeFileRaw(sqlFile, sb.toString());
 			}
 		}
 	}
@@ -4679,7 +4677,7 @@ public class ServiceBuilder {
 				content, "package " + _packagePath + ".service.persistence;",
 				sb.toString());
 
-			FileUtils.write(newFinderImpl, content);
+			writeFileRaw(newFinderImpl, content);
 		}
 
 		if (newFinderImpl.exists()) {

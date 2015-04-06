@@ -35,35 +35,22 @@ public class PoshiRunnerValidation {
 		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
 			filePath);
 
-		if (classType.equals("path")) {
+		if (classType.equals("function")) {
+			_validateFunctionFile(element, filePath);
+		}
+		else if (classType.equals("macro")) {
+			_validateMacroFile(element, filePath);
+		}
+		else if (classType.equals("path")) {
 			_validatePathFile(element, filePath);
 		}
-		else {
-			_validateRootElement(element, filePath);
+		else if (classType.equals("testcase")) {
+			_validateTestcaseFile(element, filePath);
 		}
 	}
 
-	private static void _validatePathFile(Element element, String filePath)
-		throws PoshiRunnerException {
-
-		String rootElementName = element.getName();
-
-		if (!StringUtils.equals(rootElementName, "html")) {
-			throw new PoshiRunnerException(
-				"Invalid " + rootElementName + " element\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-
-		List<Element> childElements = element.elements();
-
-		if (childElements.isEmpty()) {
-			throw new PoshiRunnerException(
-				"Missing child elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-	}
-
-	private static void _validateRootElement(Element element, String filePath)
+	private static void _validateDefinitionElement(
+			Element element, String filePath)
 		throws PoshiRunnerException {
 
 		String elementName = element.getName();
@@ -118,6 +105,44 @@ public class PoshiRunnerValidation {
 				"Invalid \"" + attributeName + "\" attribute\n" + filePath +
 					":" + element.attributeValue("line-number"));
 		}
+	}
+
+	private static void _validateFunctionFile(Element element, String filePath)
+		throws PoshiRunnerException {
+
+		_validateDefinitionElement(element, filePath);
+	}
+
+	private static void _validateMacroFile(Element element, String filePath)
+		throws PoshiRunnerException {
+
+		_validateDefinitionElement(element, filePath);
+	}
+
+	private static void _validatePathFile(Element element, String filePath)
+		throws PoshiRunnerException {
+
+		String rootElementName = element.getName();
+
+		if (!StringUtils.equals(rootElementName, "html")) {
+			throw new PoshiRunnerException(
+				"Invalid " + rootElementName + " element\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			throw new PoshiRunnerException(
+				"Missing child elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+	}
+
+	private static void _validateTestcaseFile(Element element, String filePath)
+		throws PoshiRunnerException {
+
+		_validateDefinitionElement(element, filePath);
 	}
 
 }

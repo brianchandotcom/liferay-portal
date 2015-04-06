@@ -39,11 +39,9 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sourceformatter.JavaImportsFormatter;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.XMLFormatter;
 
@@ -87,6 +85,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -107,6 +106,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 
 /**
@@ -128,6 +129,57 @@ import org.dom4j.io.SAXReader;
 public class ServiceBuilder {
 
 	public static final String AUTHOR = "Brian Wing Shun Chan";
+
+	public static Set<String> collectPermissionModels(
+			String implDir, String[] resourceActionsConfigs)
+		throws Exception {
+
+		Set<String> permissionModels = new HashSet<>();
+
+		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
+
+		for (String config : resourceActionsConfigs) {
+			if (config.startsWith("classpath*:")) {
+				String name = config.substring("classpath*:".length());
+
+				Enumeration<URL> enu = classLoader.getResources(name);
+
+				while (enu.hasMoreElements()) {
+					URL url = enu.nextElement();
+
+					InputStream inputStream = url.openStream();
+
+					_readPermissionModels(
+						implDir, inputStream, permissionModels);
+				}
+			}
+			else {
+				InputStream inputStream = classLoader.getResourceAsStream(
+					config);
+
+				if (inputStream == null) {
+					File file = new File(config);
+
+					if (!file.exists()) {
+						file = new File(implDir, config);
+					}
+
+					if (!file.exists()) {
+						continue;
+					}
+
+					inputStream = new FileInputStream(file);
+				}
+
+				try (InputStream curInputStream = inputStream) {
+					_readPermissionModels(
+						implDir, inputStream, permissionModels);
+				}
+			}
+		}
+
+		return permissionModels;
+	}
 
 	public static String getContent(String fileName) throws Exception {
 		Document document = _getContentDocument(fileName);
@@ -262,6 +314,10 @@ public class ServiceBuilder {
 				arguments.get("service.read.only.prefixes"),
 				_READ_ONLY_PREFIXES));
 		String remotingFileName = arguments.get("service.remoting.file");
+		String[] resourceActionsConfigs = StringUtil.split(
+			GetterUtil.getString(
+				arguments.get("service.resource.actions.configs"),
+					_RESOURCE_ACTION_CONFIGS));
 		String resourcesDir = arguments.get("service.resources.dir");
 		String springFileName = arguments.get("service.spring.file");
 		String[] springNamespaces = StringUtil.split(
@@ -273,6 +329,9 @@ public class ServiceBuilder {
 			"service.sql.sequences.file");
 		String targetEntityName = arguments.get("service.target.entity.name");
 		String testDir = arguments.get("service.test.dir");
+
+		Set<String> permissionModels = collectPermissionModels(
+			implDir, resourceActionsConfigs);
 
 		ModelHintsImpl modelHintsImpl = new ModelHintsImpl();
 
@@ -288,10 +347,10 @@ public class ServiceBuilder {
 				apiDir, autoImportDefaultReferences, autoNamespaceTables,
 				beanLocatorUtil, buildNumber, buildNumberIncrement, hbmFileName,
 				implDir, inputFileName, modelHintsFileName, osgiModule,
-				pluginName, propsUtil, readOnlyPrefixes, remotingFileName, resourcesDir,
-				springFileName, springNamespaces, sqlDir, sqlFileName,
-				sqlIndexesFileName, sqlSequencesFileName, targetEntityName,
-				testDir, true);
+				permissionModels, pluginName, propsUtil, readOnlyPrefixes,
+				remotingFileName, resourcesDir, springFileName,
+				springNamespaces, sqlDir, sqlFileName, sqlIndexesFileName,
+				sqlSequencesFileName, targetEntityName, testDir, true);
 		}
 		catch (Exception e) {
 			System.out.println(
@@ -314,6 +373,7 @@ public class ServiceBuilder {
 				"\tservice.read.only.prefixes=" + _READ_ONLY_PREFIXES + "\n" +
 				"\tservice.remoting.file=${basedir}/../portal-web/docroot/WEB-INF/remoting-servlet.xml\n" +
 				"\tservice.resources.dir=${basedir}/src\n" +
+				"\tservice.resource.actions.configs=" + _RESOURCE_ACTION_CONFIGS + "\n" +
 				"\tservice.spring.file=${basedir}/src/META-INF/portal-spring.xml\n" +
 				"\tservice.spring.namespaces=beans\n" +
 				"\tservice.sql.dir=${basedir}/../sql\n" +
@@ -562,9 +622,9 @@ public class ServiceBuilder {
 			boolean autoNamespaceTables, String beanLocatorUtil,
 			long buildNumber, boolean buildNumberIncrement, String hbmFileName,
 			String implDir, String inputFileName, String modelHintsFileName,
-			boolean osgiModule, String pluginName, String propsUtil,
-			String[] readOnlyPrefixes, String remotingFileName,
-			String resourcesDir, String springFileName,
+			boolean osgiModule, Set<String> permissionModels, String pluginName,
+			String propsUtil, String[] readOnlyPrefixes,
+			String remotingFileName, String resourcesDir, String springFileName,
 			String[] springNamespaces, String sqlDir, String sqlFileName,
 			String sqlIndexesFileName, String sqlSequencesFileName,
 			String targetEntityName, String testDir, boolean build)
@@ -641,6 +701,7 @@ public class ServiceBuilder {
 			_readOnlyPrefixes = readOnlyPrefixes;
 			_remotingFileName = remotingFileName;
 			_resourcesDir = resourcesDir;
+			_permissionModels = permissionModels;
 			_springFileName = springFileName;
 
 			_springNamespaces = springNamespaces;
@@ -940,8 +1001,9 @@ public class ServiceBuilder {
 			String apiDir, boolean autoImportDefaultReferences,
 			boolean autoNamespaceTables, String beanLocatorUtil,
 			String hbmFileName, String implDir, String inputFileName,
-			String modelHintsFileName, boolean osgiModule, String pluginName,
-			String propsUtil, String[] readOnlyPrefixes, String remotingFileName,
+			String modelHintsFileName, boolean osgiModule,
+			Set<String> permissionModels, String pluginName, String propsUtil,
+			String[] readOnlyPrefixes, String remotingFileName,
 			String resourcesDir, String springFileName,
 			String[] springNamespaces, String sqlDir, String sqlFileName,
 			String sqlIndexesFileName, String sqlSequencesFileName,
@@ -951,10 +1013,11 @@ public class ServiceBuilder {
 		this(
 			apiDir, autoImportDefaultReferences, autoNamespaceTables,
 			beanLocatorUtil, 1, true, hbmFileName, implDir, inputFileName,
-			modelHintsFileName, osgiModule, pluginName, propsUtil,
-			readOnlyPrefixes, remotingFileName, resourcesDir, springFileName, springNamespaces,
-			sqlDir, sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
-			targetEntityName, testDir, true);
+			modelHintsFileName, osgiModule, permissionModels, pluginName,
+			propsUtil, readOnlyPrefixes, remotingFileName, resourcesDir,
+			springFileName, springNamespaces, sqlDir, sqlFileName,
+			sqlIndexesFileName, sqlSequencesFileName, targetEntityName, testDir,
+			true);
 	}
 
 	public String annotationToString(Annotation annotation) {
@@ -1195,10 +1258,10 @@ public class ServiceBuilder {
 			_apiDir, _autoImportDefaultReferences, _autoNamespaceTables,
 			_beanLocatorUtil, _buildNumber, _buildNumberIncrement, _hbmFileName,
 			_implDir, refFileName, _modelHintsFileName, _osgiModule,
-			_pluginName, _propsUtil, _readOnlyPrefixes, _remotingFileName, _resourcesDir,
-			_springFileName, _springNamespaces, _sqlDir, _sqlFileName,
-			_sqlIndexesFileName, _sqlSequencesFileName, _targetEntityName,
-			_testDir, false);
+			_permissionModels, _pluginName, _propsUtil, _readOnlyPrefixes,
+			_remotingFileName, _resourcesDir, _springFileName,
+			_springNamespaces, _sqlDir, _sqlFileName, _sqlIndexesFileName,
+			_sqlSequencesFileName, _targetEntityName, _testDir, false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -1883,6 +1946,36 @@ public class ServiceBuilder {
 		catch (Exception e) {
 			throw new RuntimeException(
 				"Unable to load jalopy.xml from the class loader", e);
+		}
+	}
+
+	private static void _readPermissionModels(
+			String implDir, InputStream inputStream,
+			Set<String> permissionModels)
+		throws Exception {
+
+		SAXReader saxReader = _getSAXReader();
+
+		Document document = saxReader.read(inputStream);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> resourceElements = rootElement.elements("resource");
+
+		for (Element resourceElement : resourceElements) {
+			permissionModels.addAll(
+				collectPermissionModels(
+					implDir,
+					new String[] {resourceElement.attributeValue("file")}));
+		}
+
+		XPath xPath = document.createXPath(
+			"//model-resource/model-name/text()");
+
+		List<Node> nodes = xPath.selectNodes(rootElement);
+
+		for (Node node : nodes) {
+			permissionModels.add(node.getText().trim());
 		}
 	}
 
@@ -3976,8 +4069,6 @@ public class ServiceBuilder {
 		context.put("portletPackageName", _portletPackageName);
 		context.put("portletShortName", _portletShortName);
 		context.put("propsUtil", _propsUtil);
-		context.put(
-			"resourceActionsUtil", ResourceActionsUtil.getResourceActions());
 		context.put("serviceBuilder", this);
 		context.put("serviceOutputPath", _serviceOutputPath);
 		context.put("springFileName", _springFileName);
@@ -5057,18 +5148,6 @@ public class ServiceBuilder {
 		List<String> unresolvedReferenceList = new ArrayList<>();
 
 		if (_build) {
-			if (Validator.isNotNull(_pluginName)) {
-				for (String config : PropsValues.RESOURCE_ACTIONS_CONFIGS) {
-					File file = new File(_implDir + "/" + config);
-
-					if (file.exists()) {
-						InputStream inputStream = new FileInputStream(file);
-
-						ResourceActionsUtil.read(_pluginName, inputStream);
-					}
-				}
-			}
-
 			List<Element> referenceElements = entityElement.elements(
 				"reference");
 
@@ -5114,6 +5193,9 @@ public class ServiceBuilder {
 			txRequiredList.add(txRequired);
 		}
 
+		boolean permissionModel = _permissionModels.contains(
+			_packagePath + ".model." + ejbName);
+
 		_ejbList.add(
 			new Entity(
 				_packagePath, _portletName, _portletShortName, ejbName,
@@ -5123,7 +5205,7 @@ public class ServiceBuilder {
 				jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
 				regularColList, blobList, collectionList, columnList, order,
 				finderList, referenceList, unresolvedReferenceList,
-				txRequiredList));
+				txRequiredList, permissionModel));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)
@@ -5277,6 +5359,9 @@ public class ServiceBuilder {
 	private static final String _READ_ONLY_PREFIXES =
 		"fetch,get,has,is,load,reindex,search";
 
+	private static final String _RESOURCE_ACTION_CONFIGS =
+		"META-INF/resource-actions/default.xml,resource-actions/default.xml";
+
 	private static final int _SESSION_TYPE_LOCAL = 1;
 
 	private static final int _SESSION_TYPE_REMOTE = 0;
@@ -5318,6 +5403,7 @@ public class ServiceBuilder {
 	private boolean _osgiModule;
 	private String _outputPath;
 	private String _packagePath;
+	private Set<String> _permissionModels = new HashSet<>();
 	private String _pluginName;
 	private String _portletName = StringPool.BLANK;
 	private String _portletPackageName = StringPool.BLANK;

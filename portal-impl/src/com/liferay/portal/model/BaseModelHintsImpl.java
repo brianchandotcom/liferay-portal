@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -81,7 +83,22 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 					}
 				}
 				else {
-					read(classLoader, config);
+					InputStream inputStream = classLoader.getResourceAsStream(
+						config);
+
+					if (inputStream == null) {
+						File file = new File(config);
+
+						if (!file.exists()) {
+							return;
+						}
+
+						inputStream = new FileInputStream(file);
+					}
+
+					try (InputStream curInputStream = inputStream) {
+						read(classLoader, config, curInputStream);
+					}
 				}
 			}
 		}

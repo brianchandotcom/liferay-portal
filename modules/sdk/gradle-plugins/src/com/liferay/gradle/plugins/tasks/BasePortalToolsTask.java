@@ -14,8 +14,9 @@
 
 package com.liferay.gradle.plugins.tasks;
 
-import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.util.GradleUtil;
+
+import java.io.InputStream;
 
 import java.util.List;
 
@@ -33,9 +34,6 @@ public abstract class BasePortalToolsTask extends JavaExec {
 
 	public BasePortalToolsTask() {
 		project = getProject();
-
-		liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
 
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, getConfigurationName());
@@ -97,6 +95,11 @@ public abstract class BasePortalToolsTask extends JavaExec {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public JavaExec setStandardInput(InputStream inputStream) {
+		throw new UnsupportedOperationException();
+	}
+
 	protected void addDependencies() {
 		addDependency("com.liferay.portal", "portal-impl", "default");
 		addDependency("com.liferay.portal", "portal-service", "default");
@@ -132,7 +135,6 @@ public abstract class BasePortalToolsTask extends JavaExec {
 
 	protected abstract String getToolName();
 
-	protected final LiferayExtension liferayExtension;
 	protected final Project project;
 
 }

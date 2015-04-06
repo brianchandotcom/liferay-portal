@@ -81,8 +81,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 		args.add("sass.docroot.dir=" + project.getProjectDir());
 
-		File cssPortalCommonDir = new File(
-			getPortalWebDir(), "html/css/common");
+		File cssPortalCommonDir = new File(getTmpDir(), "html/css/common");
 
 		args.add("sass.portal.common.dir=" + cssPortalCommonDir);
 
@@ -133,8 +132,8 @@ public class BuildCssTask extends BasePortalToolsTask {
 	}
 
 	@OutputDirectory
-	public File getPortalWebDir() {
-		return new File(liferayExtension.getTmpDir(), "portal-web");
+	public File getTmpDir() {
+		return _tmpDir;
 	}
 
 	public boolean isLegacy() {
@@ -143,6 +142,10 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 	public void setLegacy(boolean legacy) {
 		_legacy = legacy;
+	}
+
+	public void setTmpDir(File tmpDir) {
+		_tmpDir = tmpDir;
 	}
 
 	@Override
@@ -171,11 +174,11 @@ public class BuildCssTask extends BasePortalToolsTask {
 	}
 
 	protected void copyPortalCommon() {
-		final File portalWebDir = getPortalWebDir();
+		final File tmpDir = getTmpDir();
 
-		File portalWebHtmlDir = new File(portalWebDir, "html");
+		File htmlDir = new File(tmpDir, "html");
 
-		if (portalWebHtmlDir.exists()) {
+		if (htmlDir.exists()) {
 			return;
 		}
 
@@ -190,7 +193,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 				fileTreeCopySpec.include("html/css/**/*", "html/themes/**/*");
 
-				copySpec.into(portalWebDir);
+				copySpec.into(tmpDir);
 			}
 
 		};
@@ -208,5 +211,6 @@ public class BuildCssTask extends BasePortalToolsTask {
 	private final List<String> _cssDirNames = new ArrayList<>();
 	private boolean _legacy;
 	private final Configuration _portalWebConfiguration;
+	private File _tmpDir;
 
 }

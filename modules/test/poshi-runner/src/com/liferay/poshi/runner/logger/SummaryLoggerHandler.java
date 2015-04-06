@@ -15,7 +15,6 @@
 package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
-import com.liferay.poshi.runner.PoshiRunnerException;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.util.StringUtil;
@@ -132,9 +131,7 @@ public final class SummaryLoggerHandler {
 		return stepLoggerElement;
 	}
 
-	private static String _getSummary(Element element)
-		throws PoshiRunnerException {
-
+	private static String _getSummary(Element element) throws Exception {
 		String summary = null;
 
 		if (element.attributeValue("summary") != null) {

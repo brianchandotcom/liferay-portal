@@ -14,14 +14,11 @@
 
 package com.liferay.portal.executor.internal;
 
-import com.liferay.portal.executor.PortalExecutorFactory;
 import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Future;
@@ -29,9 +26,6 @@ import java.util.concurrent.Future;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Shuyang Zhou
@@ -111,31 +105,9 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addThreadPoolExecutor(
-		ThreadPoolExecutor threadPoolExecutor,
-		Map<String, Object> properties) {
-
-		String name = (String)properties.get("name");
-
-		if (Validator.isNull(name)) {
-			name = threadPoolExecutor.getName();
-		}
-
-		registerPortalExecutor(name, threadPoolExecutor);
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		shutdown(true);
-	}
-
-	protected void removeThreadPoolExecutor(
-		ThreadPoolExecutor threadPoolExecutor, Map<String, Object> properties) {
 	}
 
 	protected class UnregisterFutureListener implements FutureListener<Void> {

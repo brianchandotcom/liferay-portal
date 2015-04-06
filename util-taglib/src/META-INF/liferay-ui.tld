@@ -4449,12 +4449,12 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a page iterator to paginate through search results</description>
+		<description>Creates a page iterator to paginate through search results.</description>
 		<name>search-paginator</name>
 		<tag-class>com.liferay.taglib.ui.SearchPaginatorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Sets the id of the iterator container</description>
+			<description>Sets the id of the iterator container.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4488,25 +4488,31 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a search instance that can be toggled between a basic and advanced search.</description>
 		<name>search-toggle</name>
 		<tag-class>com.liferay.taglib.ui.SearchToggleTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets whether the search input field is automatically focused. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the label for the search button such as <![CDATA[<code>Search</code>]]> or <![CDATA[<code>Go</code>]]>.</description>
 			<name>buttonLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets terms to be used and displayed thought the search instance. Term examples include <![CDATA[<code>keywords</code>]]>, <![CDATA[<code>advancedSearch</code>]]>, and <![CDATA[<code>description</code>]]>.</description>
 			<name>displayTerms</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the base HTML id for all components of the search instance.</description>
 			<name>id</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

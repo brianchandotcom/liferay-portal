@@ -942,7 +942,7 @@ public class MobileDriverToSeleniumBridge
 
 			StringBuilder sb = new StringBuilder(3);
 
-			sb.append(PropsValues.ANDROID_HOME);
+			sb.append(PropsValues.MOBILE_ANDROID_HOME);
 			sb.append("/platform-tools/");
 
 			if (elementPositionCenterY >= viewportPositionBottom) {
@@ -989,7 +989,7 @@ public class MobileDriverToSeleniumBridge
 
 			StringBuilder sb = new StringBuilder(6);
 
-			sb.append(PropsValues.ANDROID_HOME);
+			sb.append(PropsValues.MOBILE_ANDROID_HOME);
 			sb.append("/platform-tools/");
 			sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
 

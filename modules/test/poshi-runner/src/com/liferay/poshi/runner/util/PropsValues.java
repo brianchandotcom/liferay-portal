@@ -19,8 +19,6 @@ package com.liferay.poshi.runner.util;
  */
 public class PropsValues {
 
-	public static final String ANDROID_HOME = PropsUtil.get("android.home");
-
 	public static final String BROWSER_COMMANDS_DIR_NAME =
 		PropsUtil.get("browser.commands.dir");
 
@@ -79,6 +77,9 @@ public class PropsValues {
 
 	public static final String LIFERAY_PORTAL_BUNDLE = PropsUtil.get(
 		"liferay.portal.bundle");
+
+	public static final String MOBILE_ANDROID_HOME = PropsUtil.get(
+		"mobile.android.home");
 
 	public static final boolean MOBILE_DEVICE_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get("mobile.device.enabled"));

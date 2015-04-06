@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
@@ -164,16 +163,12 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Initialize message bus");
 		}
 
-		MessageSender messageSender =
-			(MessageSender)PortalBeanLocatorUtil.locate(
-				MessageSender.class.getName());
 		SynchronousMessageSender synchronousMessageSender =
 			(SynchronousMessageSender)PortalBeanLocatorUtil.locate(
 				SynchronousMessageSender.class.getName());
 
 		MessageBusUtil.init(
 			DoPrivilegedUtil.wrap(messageBus),
-			DoPrivilegedUtil.wrap(messageSender),
 			DoPrivilegedUtil.wrap(synchronousMessageSender));
 
 		// Ehache bootstrap

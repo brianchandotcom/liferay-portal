@@ -47,6 +47,8 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 		setCompileOptions(compilerOptions);
 
+		compiler.disableThreads();
+
 		compiler.compile(
 			SourceFile.fromCode("extern", StringPool.BLANK), sourceFile,
 			compilerOptions);

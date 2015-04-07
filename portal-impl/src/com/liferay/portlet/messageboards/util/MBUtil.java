@@ -873,11 +873,11 @@ public class MBUtil {
 	}
 
 	public static boolean isValidMessageFormat(String messageFormat) {
-		String editorImpl = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
+		String editorName = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 
 		if (messageFormat.equals("bbcode") &&
-			!(editorImpl.equals("bbcode") ||
-			  editorImpl.equals("ckeditor_bbcode"))) {
+			!(editorName.equals("bbcode") ||
+			  editorName.equals("ckeditor_bbcode"))) {
 
 			return false;
 		}

@@ -31,14 +31,9 @@ public final class SummaryLoggerHandler {
 
 	public static void failSummary(Element element, String message) {
 		if (_isCurrentMajorStep(element)) {
-			LoggerElement statusLoggerElement = new LoggerElement();
+			_failStepLoggerElement(_majorStepLoggerElement);
 
-			statusLoggerElement.setName("span");
-			statusLoggerElement.setText(" --> FAILED");
-
-			_majorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
-
-			_majorStepsLoggerElement.addChildLoggerElement(
+			_majorStepLoggerElement.addChildLoggerElement(
 				_minorStepsLoggerElement);
 
 			if (Validator.isNotNull(message)) {
@@ -54,12 +49,7 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (_isCurrentMinorStep(element)) {
-			LoggerElement statusLoggerElement = new LoggerElement();
-
-			statusLoggerElement.setName("span");
-			statusLoggerElement.setText(" --> FAILED");
-
-			_minorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
+			_failStepLoggerElement(_minorStepLoggerElement);
 
 			_stopMinorStep();
 		}
@@ -67,23 +57,13 @@ public final class SummaryLoggerHandler {
 
 	public static void passSummary(Element element) {
 		if (_isCurrentMajorStep(element)) {
-			LoggerElement statusLoggerElement = new LoggerElement();
-
-			statusLoggerElement.setName("span");
-			statusLoggerElement.setText(" --> PASSED");
-
-			_majorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
+			_passStepLoggerElement(_majorStepLoggerElement);
 
 			_stopMajorStep();
 		}
 
 		if (_isCurrentMinorStep(element)) {
-			LoggerElement statusLoggerElement = new LoggerElement();
-
-			statusLoggerElement.setName("span");
-			statusLoggerElement.setText(" --> PASSED");
-
-			_minorStepLoggerElement.addChildLoggerElement(statusLoggerElement);
+			_passStepLoggerElement(_minorStepLoggerElement);
 
 			_stopMinorStep();
 		}
@@ -113,13 +93,38 @@ public final class SummaryLoggerHandler {
 		}
 	}
 
+	private static void _failStepLoggerElement(
+		LoggerElement stepLoggerElement) {
+
+		LoggerElement lineContainerLoggerElement =
+			stepLoggerElement.loggerElement("div");
+
+		lineContainerLoggerElement.addChildLoggerElement(
+			_getStatusLoggerElement("FAILED"));
+		lineContainerLoggerElement.setName("strong");
+	}
+
+	private static LoggerElement _getStatusLoggerElement(String status) {
+		LoggerElement statusLoggerElement = new LoggerElement();
+
+		statusLoggerElement.setName("span");
+		statusLoggerElement.setText(" --> " + status);
+
+		return statusLoggerElement;
+	}
+
 	private static LoggerElement _getStepLoggerElement(Element element)
 		throws Exception {
 
 		LoggerElement stepLoggerElement = new LoggerElement();
 
 		stepLoggerElement.setName("li");
-		stepLoggerElement.setText(_getSummary(element));
+
+		LoggerElement lineContainerLoggerElement = new LoggerElement();
+
+		lineContainerLoggerElement.setText(_getSummary(element));
+
+		stepLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
 
 		return stepLoggerElement;
 	}
@@ -234,6 +239,16 @@ public final class SummaryLoggerHandler {
 		}
 
 		return true;
+	}
+
+	private static void _passStepLoggerElement(
+		LoggerElement stepLoggerElement) {
+
+		LoggerElement lineContainerLoggerElement =
+			stepLoggerElement.loggerElement("div");
+
+		lineContainerLoggerElement.addChildLoggerElement(
+			_getStatusLoggerElement("PASSED"));
 	}
 
 	private static void _startMajorStep(Element element) {

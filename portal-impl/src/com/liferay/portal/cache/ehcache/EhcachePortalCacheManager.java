@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -73,8 +72,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		reconfigPortalCache(_configurationPair.getValue());
 	}
 
-	public void setConfigPropertyKey(String configPropertyKey) {
-		_configPropertyKey = configPropertyKey;
+	public void setConfigFile(String configFile) {
+		_configFile = configFile;
 	}
 
 	public void setDefaultConfigFile(String defaultConfigFile) {
@@ -140,16 +139,14 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected void initPortalCacheManager() {
-		String configurationPath = PropsUtil.get(_configPropertyKey);
-
-		if (Validator.isNull(configurationPath)) {
-			configurationPath = _defaultConfigFile;
+		if (Validator.isNull(_configFile)) {
+			_configFile = _defaultConfigFile;
 		}
 
-		_usingDefault = configurationPath.equals(_defaultConfigFile);
+		_usingDefault = _configFile.equals(_defaultConfigFile);
 
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
-			configurationPath, clusterAware, _usingDefault);
+			_configFile, clusterAware, _usingDefault);
 
 		_cacheManager = new CacheManager(_configurationPair.getKey());
 
@@ -250,7 +247,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		EhcachePortalCacheManager.class);
 
 	private CacheManager _cacheManager;
-	private String _configPropertyKey;
+	private String _configFile;
 	private ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 		_configurationPair;
 	private String _defaultConfigFile;

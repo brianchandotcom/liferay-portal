@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.bookmarks.service;
+package com.liferay.bookmarks.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -32,23 +35,28 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@RunWith(Arquillian.class)
 @Sync
 public class BookmarksFolderServiceTest {
 
@@ -56,12 +64,23 @@ public class BookmarksFolderServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalRunMode.setTestMode(_testMode);
 	}
 
 	@Test
@@ -221,5 +240,7 @@ public class BookmarksFolderServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private boolean _testMode;
 
 }

@@ -12,43 +12,55 @@
  * details.
  */
 
-package com.liferay.bookmarks.lar;
+package com.liferay.bookmarks.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.lar.BookmarksPortletDataHandler;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@RunWith(Arquillian.class)
 public class BookmarksPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
 
 	@Test
 	public void testDeleteAllFolders() throws Exception {

@@ -1517,7 +1517,11 @@ AUI.add(
 
 								var originalFieldInputName = originalField.getInputName();
 
-								validatorRules[field.getInputName()] = validatorRules[originalFieldInputName];
+								var originalFieldRules = validatorRules[originalFieldInputName];
+
+								if (originalFieldRules) {
+									validatorRules[field.getInputName()] = originalFieldRules;
+								}
 							}
 							else if (event.type === 'liferay-ddm-field:remove') {
 								delete validatorRules[field.getInputName()];

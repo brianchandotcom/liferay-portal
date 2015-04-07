@@ -4030,6 +4030,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the URL of the items in the column.</description>
 			<name>href</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4055,6 +4056,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the property to request from the row object.</description>
 			<name>property</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4065,16 +4067,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the value of the column.</description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
+		<description>Inserts a column with the contents of a JSP.</description>
 		<name>search-container-column-jsp</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnJSPTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the horizontal alignment of the column contents.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4100,6 +4105,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the location of the JSP.</description>
 			<name>path</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4111,10 +4117,12 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Inserts a column for the workflow status.</description>
 		<name>search-container-column-status</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnStatusTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the horizontal alignment of the column contents.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4165,6 +4173,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the workflow status of the item.</description>
 			<name>status</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4181,11 +4190,13 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Inserts a text column.</description>
 		<name>search-container-column-text</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnTextTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SearchContainerColumnTextTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the horizontal alignment of the column contents.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4327,11 +4338,13 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Sets the items to display in the Search Container.</description>
 		<name>search-container-results</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerResultsTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SearchContainerResultsTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the list of items to display in the Search Container.</description>
 			<name>results</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4355,6 +4368,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Sets the object to display in rows.</description>
 		<name>search-container-row</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerRowTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SearchContainerRowTei</tei-class>
@@ -4365,6 +4379,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the class name of the object to display in rows.</description>
 			<name>className</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4380,11 +4395,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the field of the object to use as the primary key.</description>
 			<name>keyProperty</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the variable name to use for the current iteration of the object.</description>
 			<name>modelVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

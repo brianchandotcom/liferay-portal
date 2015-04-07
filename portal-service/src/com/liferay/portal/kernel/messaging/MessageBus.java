@@ -23,10 +23,6 @@ public interface MessageBus {
 
 	public void addDestination(Destination destination);
 
-	public boolean addDestinationEventListener(
-		String destinationName,
-		DestinationEventListener destinationEventListener);
-
 	public boolean addMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener);
 
@@ -46,10 +42,6 @@ public interface MessageBus {
 		String destinationName, MessageListener messageListener);
 
 	public Destination removeDestination(String destinationName);
-
-	public boolean removeDestinationEventListener(
-		String destinationName,
-		DestinationEventListener destinationEventListener);
 
 	public boolean removeMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener);

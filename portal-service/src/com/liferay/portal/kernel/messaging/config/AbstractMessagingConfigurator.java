@@ -80,8 +80,13 @@ public abstract class AbstractMessagingConfigurator
 			for (DestinationEventListener destinationEventListener :
 					destinationEventListeners.getValue()) {
 
-				messageBus.addDestinationEventListener(
-					destinationName, destinationEventListener);
+				Destination destination = messageBus.getDestination(
+					destinationName);
+
+				if (destination != null) {
+					destination.addDestinationEventListener(
+						destinationEventListener);
+				}
 			}
 		}
 
@@ -180,8 +185,13 @@ public abstract class AbstractMessagingConfigurator
 			for (DestinationEventListener destinationEventListener :
 					destinationEventListeners.getValue()) {
 
-				messageBus.removeDestinationEventListener(
-					destinationName, destinationEventListener);
+				Destination destination = messageBus.getDestination(
+					destinationName);
+
+				if (destination != null) {
+					destination.removeDestinationEventListener(
+						destinationEventListener);
+				}
 			}
 		}
 

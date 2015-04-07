@@ -40,21 +40,6 @@ public class DefaultMessageBus implements MessageBus {
 	}
 
 	@Override
-	public boolean addDestinationEventListener(
-		String destinationName,
-		DestinationEventListener destinationEventListener) {
-
-		Destination destination = _destinations.get(destinationName);
-
-		if (destination == null) {
-			return false;
-		}
-
-		return destination.addDestinationEventListener(
-			destinationEventListener);
-	}
-
-	@Override
 	public boolean addMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener) {
 
@@ -128,21 +113,6 @@ public class DefaultMessageBus implements MessageBus {
 		}
 
 		return destination;
-	}
-
-	@Override
-	public boolean removeDestinationEventListener(
-		String destinationName,
-		DestinationEventListener destinationEventListener) {
-
-		Destination destination = _destinations.get(destinationName);
-
-		if (destination == null) {
-			return false;
-		}
-
-		return destination.removeDestinationEventListener(
-			destinationEventListener);
 	}
 
 	@Override

@@ -41,7 +41,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -100,7 +100,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -184,7 +184,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -243,7 +243,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="RSS" />
@@ -286,7 +286,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -370,7 +370,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -435,7 +435,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -527,7 +527,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="WebContent#addPGViaAP">
 			<var name="webContentContent" value="This is the web content test for rss feed" />
@@ -595,7 +595,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="RSS" />

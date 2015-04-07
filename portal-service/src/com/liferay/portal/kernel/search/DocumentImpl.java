@@ -548,6 +548,11 @@ public class DocumentImpl implements Document {
 	}
 
 	@Override
+	public void addNumber(String name, Number[] values) {
+		addNumber(name, ArrayUtil.toStringArray(values), Number.class);
+	}
+
+	@Override
 	public void addNumber(String name, String value) {
 		addNumber(name, value, Long.class);
 	}

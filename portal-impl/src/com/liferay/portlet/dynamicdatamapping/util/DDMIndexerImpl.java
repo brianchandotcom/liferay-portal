@@ -119,6 +119,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 					else if (value instanceof Float[]) {
 						document.addNumber(name, (Float[])value);
 					}
+					else if (value instanceof Number[]) {
+						document.addNumber(name, (Number[])value);
+					}
 					else if (value instanceof Object[]) {
 						String[] valuesString = ArrayUtil.toStringArray(
 							(Object[])value);
@@ -220,10 +223,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				Serializable value = field.getValue(locale);
 
-				if ((value instanceof Boolean) || (value instanceof Double) ||
-					(value instanceof Integer) || (value instanceof Long) ||
-					(value instanceof Float)) {
-
+				if ((value instanceof Boolean) || (value instanceof Number)) {
 					sb.append(value);
 					sb.append(StringPool.SPACE);
 				}

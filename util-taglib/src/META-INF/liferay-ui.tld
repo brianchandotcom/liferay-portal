@@ -858,28 +858,28 @@
 		<tag-class>com.liferay.taglib.ui.CalendarTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Takes the given set of integers, corresponding to a day of the chosen month, and marks them with a dot.</description>
+			<description>A given set of integers, corresponding to a day of the chosen month, and to mark with a dot.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.Set</type>
 		</attribute>
 		<attribute>
-			<description>The day of the month to highlight in the calendar.</description>
+			<description>A day of the month to highlight in the calendar.</description>
 			<name>day</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The format of the header.</description>
+			<description>A format for the header.</description>
 			<name>headerFormat</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.text.Format</type>
 		</attribute>
 		<attribute>
-			<description>The pattern for the calendar header. A possible value is <![CDATA[<code>MMM/dd/yyyy</code>]]>.</description>
+			<description>A pattern for the calendar header. A possible value is <![CDATA[<code>MMM/dd/yyyy</code>]]>.</description>
 			<name>headerPattern</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1322,19 +1322,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the field that the error message is focused on.</description>
+			<description>The name of a field on which to focus the error message.</description>
 			<name>focusField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A key to be placed in the <![CDATA[<code>SessionErrors</code>]]> object to trigger the error message.</description>
+			<description>A key to place in the <![CDATA[<code>SessionErrors</code>]]> object to trigger the error message.</description>
 			<name>key</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Explicit message text or sets the name of a language key from which to derive text for the message.</description>
+			<description>Explicit message text or a language key name from which to derive text for the message.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1403,7 +1403,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The text to be displayed next to the flag icon. The default text is <![CDATA[<code>Flag</code>]]>.</description>
+			<description>Text to display next to the flag icon. The default text is <![CDATA[<code>Flag</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1526,7 +1526,7 @@
 		<tag-class>com.liferay.taglib.ui.FormNavigatorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The URL for the form cancel button.</description>
+			<description>A URL for the form cancel button.</description>
 			<name>backURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1544,13 +1544,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The type of navigation to be used. Options are <![CDATA[<code>steps</code>]]> and <![CDATA[<code>panel</code>]]>. The default display style is side navigation.</description>
+			<description>A type of navigation to be used. Options are <![CDATA[<code>steps</code>]]> and <![CDATA[<code>panel</code>]]>. The default display style is side navigation.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The form's name.</description>
+			<description>A name for the form.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1568,7 +1568,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The path to the formSection.jsp files folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
+			<description>A path to the formSection.jsp files folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
 			<name>jspPath</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1607,7 +1607,7 @@
 		<tag-class>com.liferay.taglib.ui.HeaderTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The text to be displayed on mouse over of the back URL. The default value is <![CDATA[<code>Back</code>]]>.</description>
+			<description>Text to display on mouse over of the back URL. The default value is <![CDATA[<code>Back</code>]]>.</description>
 			<name>backLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1646,7 +1646,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The header's title to be displayed as the header text.</description>
+			<description>The header's title to display as the header text.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1658,7 +1658,7 @@
 		<tag-class>com.liferay.taglib.ui.IconTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The value of the <![CDATA[<code>alt</code>]]> attribute for the embedded <![CDATA[<code>img</code>]]> tag.</description>
+			<description>A value for the <![CDATA[<code>alt</code>]]> attribute of the embedded <![CDATA[<code>img</code>]]> tag.</description>
 			<name>alt</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1683,25 +1683,25 @@
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
-			<description>The icon from a Bootstrap icon CSS Class. Note that any image for the <![CDATA[<code>image</code>]]> attribute takes precedence. Icon CSS classes to specify for this attribute can be found at <![CDATA[<a href="http://marcoceppi.github.io/bootstrap-glyphicons/" >http://marcoceppi.github.io/bootstrap-glyphicons/</a>]]>.</description>
+			<description>An icon from a Bootstrap icon CSS Class. Note that any image for the <![CDATA[<code>image</code>]]> attribute takes precedence. Icon CSS classes to specify for this attribute can be found at <![CDATA[<a href="http://marcoceppi.github.io/bootstrap-glyphicons/" >http://marcoceppi.github.io/bootstrap-glyphicons/</a>]]>.</description>
 			<name>iconCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The component instance's ID.</description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The icon's image from the current theme. The value can be the filename prefix of any image file in the theme's <![CDATA[<code>common</code>]]> image folder. This image takes precedence over any icon value set via the <![CDATA[<code>iconCssClass</code>]]> attribute.</description>
+			<description>An image for the icon, from the current theme. The value can be the filename prefix of any image file in the theme's <![CDATA[<code>common</code>]]> image folder. This image takes precedence over any icon value set via the <![CDATA[<code>iconCssClass</code>]]> attribute.</description>
 			<name>image</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The icon to display on mouse over of the icon. The icon image comes from the current theme. The value can be the filename prefix of any image file in the theme's <![CDATA[<code>common</code>]]> image folder.</description>
+			<description>An icon to display on mouse over of the component. The icon image comes from the current theme. The value can be the filename prefix of any image file in the theme's <![CDATA[<code>common</code>]]> image folder.</description>
 			<name>imageHover</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1714,7 +1714,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The language of the icon, to assist search engines and web browsers in finding and rendering the icon appropriately.</description>
+			<description>A language to associate with the icon, to assist search engines and web browsers in finding and rendering the icon appropriately.</description>
 			<name>lang</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1751,19 +1751,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The location of the image file to use in the icon.</description>
+			<description>The location of an image file to use in the icon.</description>
 			<name>src</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The location of the image file to use on mouse over of the icon. This value takes precedence over the <![CDATA[<code>imageHover</code>]]> attribute. This image takes precedence over icons set with the <![CDATA[<code>imageHover</code>]]> attribute.</description>
+			<description>The location of an image file to use on mouse over of the icon. This value takes precedence over the <![CDATA[<code>imageHover</code>]]> attribute. This image takes precedence over icons set with the <![CDATA[<code>imageHover</code>]]> attribute.</description>
 			<name>srcHover</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The target window in which the URL is opened. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
+			<description>A target window in which to open the URL. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1776,7 +1776,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The URL navigated to when the icon is clicked.</description>
+			<description>A URL to navigate to when the icon is clicked.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1826,13 +1826,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The component instance's ID.</description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The icon's image from the current theme. The value can be the filename prefix of any image file in the theme's <![CDATA[<code>common</code>]]> image folder. The image takes precedence over any default icon images.</description>
+			<description>An image for the icon, from the current theme. The value can be the filename prefix of any image file in the theme's <![CDATA[<code>common</code>]]> image folder. The image takes precedence over any default icon images.</description>
 			<name>image</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1845,13 +1845,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The text to be displayed on mouse over of the icon.</description>
+			<description>Text to display on mouse over of the icon.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>An HTTP request method to be invoked. Possible values are <![CDATA[<code>get</code>]]> and <![CDATA[<code>post</code>]]>.</description>
+			<description>An HTTP request method to invoke. Possible values are <![CDATA[<code>get</code>]]> and <![CDATA[<code>post</code>]]>.</description>
 			<name>method</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1876,7 +1876,7 @@
 		<tag-class>com.liferay.taglib.ui.IconHelpTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The text to be displayed on mouse over of the icon.</description>
+			<description>Text to be displayed on mouse over of the icon.</description>
 			<name>message</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1907,7 +1907,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The position the icon menu dialog pops up in relation to the trigger. The default direction is <![CDATA[<code>left</code>]]>. Possible values are <![CDATA[<code>up</code>]]>, <![CDATA[<code>down</code>]]>, <![CDATA[<code>left</code>]]> or <![CDATA[<code>right</code>]]>.</description>
+			<description>A position from which to pop up the icon menu dialog in relation to the trigger. The default direction is <![CDATA[<code>left</code>]]>. Possible values are <![CDATA[<code>up</code>]]>, <![CDATA[<code>down</code>]]>, <![CDATA[<code>left</code>]]> or <![CDATA[<code>right</code>]]>.</description>
 			<name>direction</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1927,13 +1927,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The location of the image file to use in the icon.</description>
+			<description>The location of an image file to use in the icon.</description>
 			<name>icon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The component instance's ID.</description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1946,14 +1946,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The number of items shown in the icon menu before scrolling. The default value is 15.</description>
+			<description>The number of items to show in the icon menu before scrolling. The default value is 15.</description>
 			<name>maxDisplayItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The text to be displayed next to the icon menu trigger. The default value is <![CDATA[<code>actions</code>]]>.</description>
+			<description>Text to display next to the icon menu trigger. The default value is <![CDATA[<code>actions</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2081,13 +2081,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The name of the checkbox's form.</description>
+			<description>A name for the checkbox's form.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The component instance's ID.</description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2130,7 +2130,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The day value to display in the input field.</description>
+			<description>A day value to display in the input field.</description>
 			<name>dayValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2151,26 +2151,26 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The first day of the week. The default value is <![CDATA[<code>Calendar.SUNDAY - 1</code>]]>.</description>
+			<description>A day to set as the first day of the week. The default value is <![CDATA[<code>Calendar.SUNDAY - 1</code>]]>.</description>
 			<name>firstDayOfWeek</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The first date to be able to select in the datepicker.</description>
+			<description>A date to set as the first selectable date in the datepicker.</description>
 			<name>firstEnabledDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the date input's form.</description>
+			<description>A name for the date input's form.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The latest date to be able to select in the datepicker.</description>
+			<description>A date to set as the latest selectable date in the datepicker.</description>
 			<name>lastEnabledDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2188,14 +2188,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The numerical value of the month to display in the input field. Integer values for the month start with <![CDATA[<code>0</code>]]>.</description>
+			<description>The numerical value for a month to display in the input field. Integer values for the month start with <![CDATA[<code>0</code>]]>.</description>
 			<name>monthValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The date input's name.</description>
+			<description>A name for the date input.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2213,7 +2213,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The year value to display in the input field.</description>
+			<description>A year value to display in the input field.</description>
 			<name>yearValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2253,13 +2253,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The language ID of the input editor's text.</description>
+			<description>The ID of a language for the input editor's text.</description>
 			<name>contentsLanguageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The CSS class for styling this component.</description>
+			<description>A CSS class for styling this component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2309,7 +2309,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The input editor's name. The default value is <![CDATA[<code>editor</code>]]>.</description>
+			<description>A name for the input editor. The default value is <![CDATA[<code>editor</code>]]>.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2365,7 +2365,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The toolbar for the input editor. The default value is <![CDATA[<code>liferay</code>]]>. Possible values are <![CDATA[<code>bbcode</code>]]>, <![CDATA[<code>creole</code>]]>, <![CDATA[<code>editInPlace</code>]]>, <![CDATA[<code>email</code>]]>, <![CDATA[<code>liferay</code>]]>, <![CDATA[<code>liferayArticle</code>]]>, <![CDATA[<code>phone</code>]]>, <![CDATA[<code>simple</code>]]>, and <![CDATA[<code>tablet</code>]]>.</description>
+			<description>A toolbar for the input editor. The default value is <![CDATA[<code>liferay</code>]]>. Possible values are <![CDATA[<code>bbcode</code>]]>, <![CDATA[<code>creole</code>]]>, <![CDATA[<code>editInPlace</code>]]>, <![CDATA[<code>email</code>]]>, <![CDATA[<code>liferay</code>]]>, <![CDATA[<code>liferayArticle</code>]]>, <![CDATA[<code>phone</code>]]>, <![CDATA[<code>simple</code>]]>, and <![CDATA[<code>tablet</code>]]>.</description>
 			<name>toolbarSet</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2726,7 +2726,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The text value for the search button's label. The default value is <![CDATA[<code>Search</code>]]>.</description>
+			<description>A text value for the search button's label. The default value is <![CDATA[<code>Search</code>]]>.</description>
 			<name>buttonLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2738,13 +2738,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The component instance's ID. The default value is <![CDATA[<code>displayTerms.KEYWORDS</code>]]>.</description>
+			<description>An ID for the component instance. The default value is <![CDATA[<code>displayTerms.KEYWORDS</code>]]>.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The search box's name. The default value is <![CDATA[<code>displayTerms.KEYWORDS</code>]]>.</description>
+			<description>A name for the search box. The default value is <![CDATA[<code>displayTerms.KEYWORDS</code>]]>.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2802,13 +2802,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The name of the input select's form.</description>
+			<description>A name for the input select's form.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A variable name for this component.</description>
+			<description>The variable name for this component.</description>
 			<name>param</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2857,20 +2857,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The time to AM or PM. Acceptable values are <![CDATA[<code>0</code>]]> for AM and <![CDATA[<code>1</code>]]> for PM. The default value is <![CDATA[<code>0</code>]]>.</description>
+			<description>A time to AM or PM. Acceptable values are <![CDATA[<code>0</code>]]> for AM and <![CDATA[<code>1</code>]]> for PM. The default value is <![CDATA[<code>0</code>]]>.</description>
 			<name>amPmValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The CSS class for styling the time input.</description>
+			<description>A CSS class for styling the time input.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The date parameter for the time input. An acceptable value is <![CDATA[<code>date</code>]]>.</description>
+			<description>A date parameter for the time input. An acceptable value is <![CDATA[<code>date</code>]]>.</description>
 			<name>dateParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2896,14 +2896,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The hour for the time displayed. The default value is <![CDATA[<code>12</code>]]>.</description>
+			<description>An hour value for the time displayed. The default value is <![CDATA[<code>12</code>]]>.</description>
 			<name>hourValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The minute intervals displayed in the input. The default value is <![CDATA[<code>30</code>]]>.</description>
+			<description>A minute interval displayed in the input. The default value is <![CDATA[<code>30</code>]]>.</description>
 			<name>minuteInterval</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2916,14 +2916,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The minute for the time displayed. The default value is <![CDATA[<code>00</code>]]>.</description>
+			<description>A minute value for the time displayed. The default value is <![CDATA[<code>00</code>]]>.</description>
 			<name>minuteValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The time input's name.</description>
+			<description>A name for the time input.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2942,13 +2942,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The CSS styling for this component.</description>
+			<description>A CSS class for styling this component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether daylight savings is considered for the times. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<description>Whether to consider daylight savings for the times. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>daylight</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2962,7 +2962,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Corresponds to the time zone's full name, e.g. "Pacific Standard Time." A value of <![CDATA[<code>0</code>]]> displays the time zone's abbreviated name and a value of <![CDATA[<code>1</code>]]> displays its full name. The default value is <![CDATA[<code>0</code>]]>.</description>
+			<description>A style number corresponding to the time zone. A value of <![CDATA[<code>0</code>]]> displays the time zone's abbreviated name and a value of <![CDATA[<code>1</code>]]> displays its full name, e.g. "Pacific Standard Time." The default value is <![CDATA[<code>0</code>]]>.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2982,7 +2982,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the time zone to associate with the component. For example, setting the value to <![CDATA[<code>PST</code>]]> associates the component with the Pacific Standard Time zone.</description>
+			<description>The ID of a time zone to associate with the component. For example, setting the value to <![CDATA[<code>PST</code>]]> associates the component with the Pacific Standard Time zone.</description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3410,7 +3410,7 @@
 		<tag-class>com.liferay.taglib.ui.PageIteratorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Which page of items to display (first, second, third, etc.).</description>
+			<description>Which page of items to display (e.g., first, second, third, etc.).</description>
 			<name>cur</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3443,13 +3443,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The form's name.</description>
+			<description>A name for the form.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The component instance's ID.</description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3461,14 +3461,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The maximum number of pages to iterate through.</description>
+			<description>A maximum number of pages to iterate through.</description>
 			<name>maxPages</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The target of the <![CDATA[<code>first</code>]]>, <![CDATA[<code>previous</code>]]>, <![CDATA[<code>next</code>]]>, and <![CDATA[<code>last</code>]]> link buttons.</description>
+			<description>A target for the <![CDATA[<code>first</code>]]>, <![CDATA[<code>previous</code>]]>, <![CDATA[<code>next</code>]]>, and <![CDATA[<code>last</code>]]> link buttons.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3481,13 +3481,13 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The type of iterator to display. Options are <![CDATA[<code>approximate</code>]]>, <![CDATA[<code>article</code>]]>, <![CDATA[<code>more</code>]]>, and <![CDATA[<code>regular</code>]]>.</description>
+			<description>A type of iterator to display. Options are <![CDATA[<code>approximate</code>]]>, <![CDATA[<code>article</code>]]>, <![CDATA[<code>more</code>]]>, and <![CDATA[<code>regular</code>]]>.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The base URL of the iterator. Parameters are added and removed from this as the user navigates through pages.</description>
+			<description>A base URL for the iterator. Parameters are added to and removed from this URL as the user navigates through pages.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3512,7 +3512,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The default component's state. Possible values are <![CDATA[<code>open</code>]]> and any string other than open. Any string other than <![CDATA[<code>open</code>]]> collapses the panel. The default value is <![CDATA[<code>open</code>]]>.</description>
+			<description>A default state for the component. Possible values are <![CDATA[<code>open</code>]]> and any string other than open. Any string other than <![CDATA[<code>open</code>]]> collapses the panel. The default value is <![CDATA[<code>open</code>]]>.</description>
 			<name>defaultState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3531,13 +3531,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The icon to display next to the panel's title. The icon can be specified using the name of one of the Bootstrap icon CSS classes found at <![CDATA[<a href="http://marcoceppi.github.io/bootstrap-glyphicons/" >http://marcoceppi.github.io/bootstrap-glyphicons/</a>]]>.</description>
+			<description>An icon to display next to the panel's title. The icon can be specified using the name of one of the Bootstrap icon CSS classes found at <![CDATA[<a href="http://marcoceppi.github.io/bootstrap-glyphicons/" >http://marcoceppi.github.io/bootstrap-glyphicons/</a>]]>.</description>
 			<name>iconCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The component instance's ID.</description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3556,7 +3556,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The component's state. Possible values are <![CDATA[<code>open</code>]]> and any string other than open. Any string other than <![CDATA[<code>open</code>]]> collapses the panel.</description>
+			<description>A state for the component. Possible values are <![CDATA[<code>open</code>]]> and any string other than open. Any string other than <![CDATA[<code>open</code>]]> collapses the panel.</description>
 			<name>state</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3594,7 +3594,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The component instance's ID.</description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3766,87 +3766,87 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The default style to display.</description>
+			<description>A default style to display.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The default format for the RSS feed. Options are <![CDATA[<code>atom_1.0</code>]]>, <![CDATA[<code>rss_1.0</code>]]>, and <![CDATA[<code>rss_2.0</code>]]>.</description>
+			<description>A default format for the RSS feed. Options are <![CDATA[<code>atom_1.0</code>]]>, <![CDATA[<code>rss_1.0</code>]]>, and <![CDATA[<code>rss_2.0</code>]]>.</description>
 			<name>feedType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>An optional message to display next to the RSS icon.</description>
+			<description>A message to display next to the RSS icon.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The RSS feed name.</description>
+			<description>A name for the RSS feed.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL to retrieve the feed information from.</description>
+			<description>A URL from which to retrieve feed information.</description>
 			<name>resourceURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL for the RSS feed file.</description>
+			<description>The URL for an RSS feed file.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a configuration component for users to define RSS settings such as how many articles to display.</description>
+		<description>Creates a configuration component for users to define RSS settings, such as how many articles to display.</description>
 		<name>rss-settings</name>
 		<tag-class>com.liferay.taglib.ui.RSSSettingsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The default maximum number of items to display. The default value is <![CDATA[<code>20</code>]]>.</description>
+			<description>A default maximum number of items to display. The default value is <![CDATA[<code>20</code>]]>.</description>
 			<name>delta</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The default style to display.</description>
+			<description>A default style to display.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The available RSS display styles for the user to choose from. Options are <![CDATA[<code>abstract</code>]]>, <![CDATA[<code>full-content</code>]]>, and <![CDATA[<code>title</code>]]>.</description>
+			<description>Available RSS display styles from which the user can choose. Options are <![CDATA[<code>abstract</code>]]>, <![CDATA[<code>full-content</code>]]>, and <![CDATA[<code>title</code>]]>.</description>
 			<name>displayStyles</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether users are able to subscribe or not. Default value is  <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether users are able to subscribe. Default value is  <![CDATA[<code>false</code>]]>.</description>
 			<name>enabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The default format for the RSS feed. Options are <![CDATA[<code>atom_1.0</code>]]>, <![CDATA[<code>rss_1.0</code>]]>, and <![CDATA[<code>rss_2.0</code>]]>.</description>
+			<description>A default format for the RSS feed. Options are <![CDATA[<code>atom_1.0</code>]]>, <![CDATA[<code>rss_1.0</code>]]>, and <![CDATA[<code>rss_2.0</code>]]>.</description>
 			<name>feedType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The RSS feed name.</description>
+			<description>A name for the component.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the RSS feed has a name or not. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether the RSS feed has a name. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>nameEnabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3866,7 +3866,7 @@
 		<tei-class>com.liferay.taglib.ui.SearchContainerTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The search container's pagination variable. Different pagination variables ensure independent pagination when multiple search containers are on a JSP.</description>
+			<description>A variable for the search container's pagination. Different pagination variables ensure independent pagination when multiple search containers are on a JSP.</description>
 			<name>curParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3895,7 +3895,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The message displayed when the search container is empty.</description>
+			<description>A message displayed when the search container is empty.</description>
 			<name>emptyResultsMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3936,7 +3936,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The column ordering as ascending or descending. Values are <![CDATA[<code>asc</code>]]> or <![CDATA[<code>desc</code>]]>.</description>
+			<description>An order type for the columns, either ascending or descending. Values are <![CDATA[<code>asc</code>]]> or <![CDATA[<code>desc</code>]]>.</description>
 			<name>orderByType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3970,13 +3970,13 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The variable name for the results of the <![CDATA[<code>total</code>]]> attribute. The default is <![CDATA[<code>total</code>]]>.</description>
+			<description>A variable name for the results of the <![CDATA[<code>total</code>]]> attribute. The default is <![CDATA[<code>total</code>]]>.</description>
 			<name>totalVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The variable name for the <![CDATA[<code>SearchContainer</code>]]> object. The default is <![CDATA[<code>searchContainer</code>]]>.</description>
+			<description>A variable name for the <![CDATA[<code>SearchContainer</code>]]> object. The default is <![CDATA[<code>searchContainer</code>]]>.</description>
 			<name>var</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4028,7 +4028,7 @@
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnDateTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The horizontal alignment of the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
+			<description>A horizontal alignment for the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4047,7 +4047,7 @@
 			<rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>The URL of the items in the column.</description>
+            <description>A URL for the items in the column.</description>
 			<name>href</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4058,7 +4058,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The column's name.</description>
+			<description>A name for the column.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4071,25 +4071,25 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The object's property to sort the column by.</description>
+			<description>An object's property by which to sort the column.</description>
 			<name>orderableProperty</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-            <description>The property to request from the row object.</description>
+            <description>A property to request from the row object.</description>
 			<name>property</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The vertical alignment of the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
+			<description>A vertical alignment for the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-            <description>The value of the column.</description>
+            <description>A value for the column.</description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4101,7 +4101,7 @@
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnJSPTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The horizontal alignment of the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
+			<description>A horizontal alignment for the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4147,7 +4147,7 @@
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnStatusTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The horizontal alignment of the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
+			<description>A horizontal alignment for the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4166,7 +4166,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL for the column's contents.</description>
+			<description>A URL for the column's contents.</description>
 			<name>href</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4189,25 +4189,25 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The object's property to sort the column by.</description>
+			<description>An object's property by which to sort the column.</description>
 			<name>orderableProperty</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The object's property to use for the column.</description>
+			<description>An object's property to use for the column.</description>
 			<name>property</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The vertical alignment of the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
+			<description>A vertical alignment for the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The item's workflow status.</description>
+			<description>A workflow status for the item.</description>
 			<name>status</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4230,7 +4230,7 @@
 		<tei-class>com.liferay.taglib.ui.SearchContainerColumnTextTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The horizontal alignment of the column contents.</description>
+			<description>A horizontal alignment for the column contents.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4277,7 +4277,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The object's property to sort the column by.</description>
+			<description>An object's property by which to sort the column.</description>
 			<name>orderableProperty</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4305,7 +4305,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The vertical alignment of the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
+			<description>A vertical alignment for the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4388,13 +4388,13 @@
 		<tei-class>com.liferay.taglib.ui.SearchContainerResultsTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The list of objects to display in the search container.</description>
+			<description>A list of objects to display in the search container.</description>
 			<name>results</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The variable to use for the results.</description>
+			<description>A variable to use for the results.</description>
 			<name>resultsVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4436,31 +4436,31 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The variable name to use for the rows' index.</description>
+			<description>A variable name to use for the rows' index.</description>
 			<name>indexVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The property to use as the primary key for the object type in the <![CDATA[<code>className</code>]]> attribute.</description>
+			<description>A property to use as the primary key for the object type in the <![CDATA[<code>className</code>]]> attribute.</description>
 			<name>keyProperty</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The variable name to use for each object as the search container iterates through the objects returned by <![CDATA[<code>liferay-ui:search-container-results</code>]]>.</description>
+			<description>A variable name to use for each object as the search container iterates through the objects returned by <![CDATA[<code>liferay-ui:search-container-results</code>]]>.</description>
 			<name>modelVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The model property to use as the row ID.</description>
+			<description>A model property to use as the row ID.</description>
 			<name>rowIdProperty</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The variable name to use for the rows.</description>
+			<description>A variable name to use for the rows.</description>
 			<name>rowVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4532,13 +4532,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>All configurable properties of the search container such as <![CDATA[<code>cur</code>]]> and <![CDATA[<code>curParam</code>]]>. These properties are set with <![CDATA[<code>searchContainer.getCur()</code>]]> and <![CDATA[<code>searchContainer.getCurParam()</code>]]> respectively.</description>
+			<description>All configurable properties of the search container, such as <![CDATA[<code>cur</code>]]> and <![CDATA[<code>curParam</code>]]>. These properties are set with <![CDATA[<code>searchContainer.getCur()</code>]]> and <![CDATA[<code>searchContainer.getCurParam()</code>]]> respectively.</description>
 			<name>searchContainer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The type of iterator to display. Options are <![CDATA[<code>approximate</code>]]>, <![CDATA[<code>article</code>]]>, <![CDATA[<code>more</code>]]>, and <![CDATA[<code>regular</code>]]>.</description>
+			<description>A type of iterator to display. Options are <![CDATA[<code>approximate</code>]]>, <![CDATA[<code>article</code>]]>, <![CDATA[<code>more</code>]]>, and <![CDATA[<code>regular</code>]]>.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4550,19 +4550,19 @@
 		<tag-class>com.liferay.taglib.ui.SearchPaginatorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The component instance's ID.</description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets all configurable porperties of the search container such as <![CDATA[<code>cur</code>]]> and <![CDATA[<code>curParam</code>]]>. These properties are set with <![CDATA[<code>searchContainer.getCur()</code>]]> and <![CDATA[<code>searchContainer.getCurParam()</code>]]> respectively.</description>
+			<description>All configurable porperties of the search container, such as <![CDATA[<code>cur</code>]]> and <![CDATA[<code>curParam</code>]]>. These properties are set with <![CDATA[<code>searchContainer.getCur()</code>]]> and <![CDATA[<code>searchContainer.getCurParam()</code>]]> respectively.</description>
 			<name>searchContainer</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The type of iterator to display. Options are <![CDATA[<code>approximate</code>]]>, <![CDATA[<code>article</code>]]>, <![CDATA[<code>more</code>]]>, and <![CDATA[<code>regular</code>]]>.</description>
+			<description>A type of iterator to display. Options are <![CDATA[<code>approximate</code>]]>, <![CDATA[<code>article</code>]]>, <![CDATA[<code>more</code>]]>, and <![CDATA[<code>regular</code>]]>.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4584,7 +4584,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a search instance that can be toggled between a basic and advanced search.</description>
+		<description>Creates a search instance that can be toggled between basic and advanced search.</description>
 		<name>search-toggle</name>
 		<tag-class>com.liferay.taglib.ui.SearchToggleTag</tag-class>
 		<body-content>JSP</body-content>
@@ -4596,7 +4596,7 @@
 			<type>Boolean</type>
 		</attribute>
 		<attribute>
-			<description>The label for the search button such as <![CDATA[<code>Search</code>]]> or <![CDATA[<code>Go</code>]]>.</description>
+			<description>A label for the search button such as <![CDATA[<code>Search</code>]]> or <![CDATA[<code>Go</code>]]>.</description>
 			<name>buttonLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4887,7 +4887,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The tab's form name.</description>
+			<description>A name for the tab's form.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4924,19 +4924,19 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The tab values. Values must follow the same order as the <![CDATA[<code>names</code>]]> attribute. Each value must be separated by a comma with no spaces.</description>
+			<description>Tab values that must follow the same order as the <![CDATA[<code>names</code>]]> attribute. Each value must be separated by a comma with no spaces.</description>
 			<name>tabsValues</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The design type of tabs. Possible values are <![CDATA[<code>tabs</code>]]> and <![CDATA[<code>pills</code>.]]></description>
+			<description>A design type for the tabs. Possible values are <![CDATA[<code>tabs</code>]]> and <![CDATA[<code>pills</code>.]]></description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL to which all the tabs link to when clicked. You can also set each tab's URL individually using <![CDATA[<code>url[number]</code>]]> attribute.</description>
+			<description>A URL to which all the tabs are linked when clicked. You can also set each tab's URL individually using <![CDATA[<code>url[number]</code>]]> attribute.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5007,7 +5007,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The active tab to the value given from the <![CDATA[<code>tabsValues</code>]]> attribute. No matter which tab a user selects, the tab given for this value always remains active.</description>
+			<description>An active tab from the value given in the <![CDATA[<code>tabsValues</code>]]> attribute. No matter which tab a user selects, the tab given for this value always remains active.</description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5032,13 +5032,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The text to display as a link to hide the content. It overrides the <![CDATA[<code>hideImage</code>]]> attribute. Note that the <![CDATA[<code>showMessage</code>]]> attribute must also be configured in order for the hide message to render.</description>
+			<description>Text to display as a link for hiding the content. It overrides the <![CDATA[<code>hideImage</code>]]> attribute. Note that the <![CDATA[<code>showMessage</code>]]> attribute must also be configured in order for the hide message to render.</description>
 			<name>hideMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Identifies the component instance whose content to toggle.</description>
+			<description>The ID of the component instance whose content's visibility to toggle.</description>
 			<name>id</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5056,7 +5056,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to be prefixed to the <![CDATA[<code>Toggle()</code>]]> function that is called to toggle the content. If this is not configured, a random key is generated and prefixed to the <![CDATA[<code>Toggle()</code>]]>  function. For example, a value of <![CDATA[<code>run</code>]]> would result in a function named <![CDATA[<code>runToggle()</code>]]>.</description>
+			<description>Text to be prefixed to the <![CDATA[<code>Toggle()</code>]]> function that is called to toggle visibility of the content. If this is not configured, a random key is generated and prefixed to the <![CDATA[<code>Toggle()</code>]]>  function. For example, a value of <![CDATA[<code>run</code>]]> would result in a function named <![CDATA[<code>runToggle()</code>]]>.</description>
 			<name>stateVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

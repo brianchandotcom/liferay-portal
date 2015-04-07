@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalInetSocketAddressEventListener;
 
 import java.io.Serializable;
@@ -63,6 +63,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
@@ -343,6 +344,13 @@ public class ClusterExecutorImpl
 		}
 	}
 
+	protected String generateClusterNodeId() {
+		UUID uuid = new UUID(
+			SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
+
+		return uuid.toString();
+	}
+
 	protected ClusterChannel getClusterChannel() {
 		return _clusterChannel;
 	}
@@ -442,15 +450,17 @@ public class ClusterExecutorImpl
 		_clusterReceiver = new ClusterRequestReceiver(this);
 
 		String channelNamePrefix = GetterUtil.getString(
-			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_PREFIX,
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_PREFIX),
 			ClusterPropsKeys.CHANNEL_NAME_PREFIX_DEFAULT);
 
 		_clusterChannel = _clusterChannelFactory.createClusterChannel(
 			channelPropertiesControl, channelNamePrefix + "control",
 			_clusterReceiver);
 
+		String clusterNodeId = generateClusterNodeId();
+
 		ClusterNode localClusterNode = new ClusterNode(
-			PortalUUIDUtil.generate(), _clusterChannel.getBindInetAddress());
+			clusterNodeId, _clusterChannel.getBindInetAddress());
 
 		_localClusterNodeStatus = new ClusterNodeStatus(
 			localClusterNode, _clusterChannel.getLocalAddress());

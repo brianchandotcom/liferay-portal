@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.impl.LockImpl;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.impl.LockLocalServiceImpl;
 
 import java.io.Serializable;
@@ -59,9 +58,6 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 	@Override
 	public void setUp() {
 		super.setUp();
-
-		ReflectionTestUtil.setFieldValue(
-			LockLocalServiceUtil.class, "_service", _mockLockLocalService);
 	}
 
 	@Test
@@ -636,6 +632,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 				ClusterEventListener clusterEventListener) {
 			}
 		});
+
+		clusterMasterExecutorImpl.setLockLocalService(_mockLockLocalService);
+
 		return clusterMasterExecutorImpl;
 	}
 

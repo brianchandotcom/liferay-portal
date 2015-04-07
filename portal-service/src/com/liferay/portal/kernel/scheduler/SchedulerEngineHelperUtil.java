@@ -237,6 +237,12 @@ public class SchedulerEngineHelperUtil {
 		getSchedulerEngineHelper().initialize();
 	}
 
+	public static boolean isClusteredSchedulerEngine()
+		throws SchedulerException {
+
+		return getSchedulerEngineHelper().isClusteredSchedulerEngine();
+	}
+
 	public static void pause(String groupName, StorageType storageType)
 		throws SchedulerException {
 

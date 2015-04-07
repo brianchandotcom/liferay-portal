@@ -125,6 +125,8 @@ public interface SchedulerEngineHelper {
 
 	public void initialize() throws SchedulerException;
 
+	public boolean isClusteredSchedulerEngine();
+
 	public void pause(String groupName, StorageType storageType)
 		throws SchedulerException;
 

@@ -28,6 +28,7 @@ import java.util.Set;
 
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectories;
@@ -118,6 +119,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 		return _tmpDir;
 	}
 
+	@Input
 	public boolean isLegacy() {
 		return _legacy;
 	}

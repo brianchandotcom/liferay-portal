@@ -12,12 +12,15 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.user.tool.locales;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
 import com.liferay.portal.model.BaseSelectableEntry;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = UserToolEntry.class
 )
@@ -27,6 +30,11 @@ public class LocalesSelectableEntry
 	@Override
 	public String getIcon() {
 		return "flag";
+	}
+
+	@Override
+	public String getJSPPath() {
+		return _JSP_PATH;
 	}
 
 	@Override
@@ -41,7 +49,17 @@ public class LocalesSelectableEntry
 
 	@Override
 	public Double getWeight() {
-		return 2.0;
+		return 1.0;
 	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.user.tool.locales)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private static final String _JSP_PATH = "/META-INF/resources/locales.jsp";
 
 }

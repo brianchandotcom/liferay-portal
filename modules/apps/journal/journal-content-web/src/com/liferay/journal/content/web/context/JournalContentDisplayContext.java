@@ -627,18 +627,6 @@ public class JournalContentDisplayContext {
 		return _showAddArticleIcon;
 	}
 
-	public boolean isShowAvailableLocales() {
-		if (_showAvailableLocales != null) {
-			return _showAvailableLocales;
-		}
-
-		_showAvailableLocales = GetterUtil.getBoolean(
-			_portletPreferences.getValue(
-				"showAvailableLocales", StringPool.BLANK));
-
-		return _showAvailableLocales;
-	}
-
 	public boolean isShowEditArticleIcon() throws PortalException {
 		if (_showEditArticleIcon != null) {
 			return _showEditArticleIcon;
@@ -766,7 +754,6 @@ public class JournalContentDisplayContext {
 	private final HttpServletRequest _request;
 	private final HttpServletResponse _response;
 	private Boolean _showAddArticleIcon;
-	private Boolean _showAvailableLocales;
 	private Boolean _showEditArticleIcon;
 	private Boolean _showEditTemplateIcon;
 	private Boolean _showIconsActions;

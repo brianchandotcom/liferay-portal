@@ -208,6 +208,10 @@ public class ClusterExecutorImpl
 
 	@Override
 	public boolean isEnabled() {
+		if ((_clusterLink == null) || !_clusterLink.isEnabled()) {
+			return false;
+		}
+
 		return _clusterLink.isEnabled();
 	}
 
@@ -542,7 +546,10 @@ public class ClusterExecutorImpl
 		_clusterChannelFactory = clusterChannelFactory;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC
+	)
 	protected void setClusterLink(ClusterLink clusterLink) {
 		_clusterLink = clusterLink;
 	}
@@ -557,6 +564,10 @@ public class ClusterExecutorImpl
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
 		_props = props;
+	}
+
+	protected void unsetClusterLink(ClusterLink clusterLink) {
+		_clusterLink = null;
 	}
 
 	protected volatile ClusterExecutorConfiguration

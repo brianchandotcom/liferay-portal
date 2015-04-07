@@ -14,6 +14,18 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.io.IOException;
+
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Julio Camarero
  */
@@ -46,6 +58,10 @@ public abstract class BaseSelectableEntry implements SelectableEntry {
 		return _DEFAUTL_ICON;
 	}
 
+	public String getJSPPath() {
+		return null;
+	}
+
 	@Override
 	public String getKey() {
 		return getClass().getSimpleName();
@@ -57,10 +73,39 @@ public abstract class BaseSelectableEntry implements SelectableEntry {
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(getJSPPath());
+
+		try {
+			requestDispatcher.include(request, response);
+		}
+		catch (ServletException se) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to include JSP", se);
+			}
+
+			throw new IOException("Unable to include JSP", se);
+		}
+	}
+
+	@Override
 	public boolean isEnabled() {
 		return true;
 	}
 
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	private static final String _DEFAUTL_ICON = "circle-blank";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseSelectableEntry.class);
+
+	private ServletContext _servletContext;
 
 }

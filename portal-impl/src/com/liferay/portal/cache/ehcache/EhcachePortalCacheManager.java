@@ -98,6 +98,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_registerCacheStatistics = registerCacheStatistics;
 	}
 
+	public void setStopCacheManagerTimer(boolean stopCacheManagerTimer) {
+		_stopCacheManagerTimer = stopCacheManagerTimer;
+	}
+
 	@Override
 	protected PortalCache<K, V> createPortalCache(String cacheName) {
 		synchronized (_cacheManager) {
@@ -152,18 +156,20 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		_cacheManager.setName(name);
 
-		FailSafeTimer failSafeTimer = _cacheManager.getTimer();
+		if (_stopCacheManagerTimer) {
+			FailSafeTimer failSafeTimer = _cacheManager.getTimer();
 
-		failSafeTimer.cancel();
+			failSafeTimer.cancel();
 
-		try {
-			Field cacheManagerTimerField = ReflectionUtil.getDeclaredField(
-				CacheManager.class, "cacheManagerTimer");
+			try {
+				Field cacheManagerTimerField = ReflectionUtil.getDeclaredField(
+					CacheManager.class, "cacheManagerTimer");
 
-			cacheManagerTimerField.set(_cacheManager, null);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+				cacheManagerTimerField.set(_cacheManager, null);
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
@@ -256,6 +262,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private boolean _registerCaches = true;
 	private boolean _registerCacheStatistics = true;
 	private ServiceTracker <MBeanServer, ManagementService> _serviceTracker;
+	private boolean _stopCacheManagerTimer = true;
 	private boolean _usingDefault;
 
 	private class MBeanServerServiceTrackerCustomizer

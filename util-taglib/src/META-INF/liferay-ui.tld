@@ -853,7 +853,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a calendar UI with configurable events.</description>
+		<description>Creates a calendar with configurable events.</description>
 		<name>calendar</name>
 		<tag-class>com.liferay.taglib.ui.CalendarTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2106,7 +2106,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a date input field that displays a calendar UI for date selection.</description>
+		<description>Creates a date input field that displays a calendar for date selection.</description>
 		<name>input-date</name>
 		<tag-class>com.liferay.taglib.ui.InputDateTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2568,7 +2568,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description>Creates an input move boxes UI component comprised of two columns of key value pairs that can be rearranged.</description>
+		<description>Creates an input move boxes component comprised of two columns of key value pairs that can be rearranged.</description>
 		<name>input-move-boxes</name>
 		<tag-class>com.liferay.taglib.ui.InputMoveBoxesTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2714,7 +2714,7 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
-		<description>Creates a configurable search box UI component.</description>
+		<description>Creates a configurable search box.</description>
 		<name>input-search</name>
 		<tag-class>com.liferay.taglib.ui.InputSearchTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2777,7 +2777,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a select UI input component with yes or no options.</description>
+		<description>Creates a select input component with yes or no options.</description>
 		<name>input-select</name>
 		<tag-class>com.liferay.taglib.ui.InputSelectTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3498,7 +3498,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a collapsible panel UI for housing content.</description>
+		<description>Creates a collapsible panel for housing content.</description>
 		<name>panel</name>
 		<tag-class>com.liferay.taglib.ui.PanelTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3807,7 +3807,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a configuration UI component for users to define RSS settings such as how many articles to display.</description>
+		<description>Creates a configuration component for users to define RSS settings such as how many articles to display.</description>
 		<name>rss-settings</name>
 		<tag-class>com.liferay.taglib.ui.RSSSettingsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -5018,7 +5018,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a UI component that toggles the visibility of the content of the component matching the given <![CDATA[<code>id</code>]]>. Default icons are used as the component's default mechanism for showing and hiding the content.</description>
+		<description>Creates a component that toggles the visibility of the content of the component matching the given <![CDATA[<code>id</code>]]>. Default icons are used as the component's default mechanism for showing and hiding the content.</description>
 		<name>toggle</name>
 		<tag-class>com.liferay.taglib.ui.ToggleTag</tag-class>
 		<body-content>JSP</body-content>

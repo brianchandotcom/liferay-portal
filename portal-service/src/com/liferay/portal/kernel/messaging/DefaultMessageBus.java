@@ -102,13 +102,7 @@ public class DefaultMessageBus implements MessageBus {
 				"Destination " + destinationName + " is not configured");
 		}
 
-		boolean registered = destination.register(messageListener);
-
-		if (registered) {
-			fireMessageListenerRegisteredEvent(destination, messageListener);
-		}
-
-		return registered;
+		return destination.register(messageListener);
 	}
 
 	@Override
@@ -197,13 +191,7 @@ public class DefaultMessageBus implements MessageBus {
 			return false;
 		}
 
-		boolean unregistered = destination.unregister(messageListener);
-
-		if (unregistered) {
-			fireMessageListenerUnregisteredEvent(destination, messageListener);
-		}
-
-		return unregistered;
+		return destination.unregister(messageListener);
 	}
 
 	protected void fireDestinationAddedEvent(Destination destination) {
@@ -215,28 +203,6 @@ public class DefaultMessageBus implements MessageBus {
 	protected void fireDestinationRemovedEvent(Destination destination) {
 		for (DestinationEventListener listener : _destinationEventListeners) {
 			listener.destinationRemoved(destination);
-		}
-	}
-
-	protected void fireMessageListenerRegisteredEvent(
-		Destination destination, MessageListener messageListener) {
-
-		for (DestinationEventListener destinationEventListener :
-				_destinationEventListeners) {
-
-			destinationEventListener.messageListenerRegistered(
-				destination.getName(), messageListener);
-		}
-	}
-
-	protected void fireMessageListenerUnregisteredEvent(
-		Destination destination, MessageListener messageListener) {
-
-		for (DestinationEventListener destinationEventListener :
-				_destinationEventListeners) {
-
-			destinationEventListener.messageListenerUnregistered(
-				destination.getName(), messageListener);
 		}
 	}
 

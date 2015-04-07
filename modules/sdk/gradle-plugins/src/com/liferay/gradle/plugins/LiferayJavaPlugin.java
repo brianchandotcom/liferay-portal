@@ -51,6 +51,14 @@ import org.gradle.api.tasks.SourceSet;
  */
 public class LiferayJavaPlugin implements Plugin<Project> {
 
+	public static final String BUILD_CSS_TASK_NAME = "buildCss";
+
+	public static final String FORMAT_SOURCE_TASK_NAME = "formatSource";
+
+	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
+
+	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
+
 	@Override
 	public void apply(Project project) {
 		final LiferayExtension liferayExtension = addLiferayExtension(project);
@@ -83,7 +91,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void addDependenciesPortalWeb(Project project) {
 		GradleUtil.addDependency(
-			project, _PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
+			project, PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
 			"portal-web", "default");
 	}
 
@@ -94,7 +102,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void addPortalWebConfiguration(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
-			project, _PORTAL_WEB_CONFIGURATION_NAME);
+			project, PORTAL_WEB_CONFIGURATION_NAME);
 
 		configuration.setDescription(
 			"The portal-web configuration used for compiling themes and CSS " +
@@ -115,7 +123,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected BuildCssTask addTaskBuildCss(Project project) {
 		BuildCssTask buildCssTask = GradleUtil.addTask(
-			project, _BUILD_CSS_TASK_NAME, BuildCssTask.class);
+			project, BUILD_CSS_TASK_NAME, BuildCssTask.class);
 
 		buildCssTask.setDescription("Compiles CSS files.");
 		buildCssTask.setGroup(BasePlugin.BUILD_GROUP);
@@ -125,7 +133,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected FormatSourceTask addTaskFormatSource(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, _FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
+			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
 
 		formatSourceTask.setDescription(
 			"Runs Liferay Source Formatter to format files.");
@@ -135,7 +143,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected InitGradleTask addTaskInitGradle(Project project) {
 		InitGradleTask initGradleTask = GradleUtil.addTask(
-			project, _INIT_GRADLE_TASK_NAME, InitGradleTask.class);
+			project, INIT_GRADLE_TASK_NAME, InitGradleTask.class);
 
 		initGradleTask.setDescription(
 			"Initializes build.gradle by migrating information from legacy " +
@@ -268,7 +276,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		BuildCssTask buildCssTask = (BuildCssTask)GradleUtil.getTask(
-			project, _BUILD_CSS_TASK_NAME);
+			project, BUILD_CSS_TASK_NAME);
 
 		configureTaskBuildCssDirNames(buildCssTask);
 		configureTaskBuildCssPortalWebFile(buildCssTask);
@@ -304,7 +312,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 
 		Configuration configuration = GradleUtil.getConfiguration(
-			buildCssTask.getProject(), _PORTAL_WEB_CONFIGURATION_NAME);
+			buildCssTask.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
 
 		buildCssTask.setPortalWebFile(configuration.getSingleFile());
 	}
@@ -327,7 +335,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskClassesDependsOn(Task classesTask) {
-		classesTask.dependsOn(_BUILD_CSS_TASK_NAME);
+		classesTask.dependsOn(BUILD_CSS_TASK_NAME);
 	}
 
 	protected void configureTaskClean(Project project) {
@@ -403,14 +411,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"org.eclipse.persistence:javax.persistence:2.0.0",
 		"postgresql:postgresql:9.2-1002.jdbc4"
 	};
-
-	private static final String _BUILD_CSS_TASK_NAME = "buildCss";
-
-	private static final String _FORMAT_SOURCE_TASK_NAME = "formatSource";
-
-	private static final String _INIT_GRADLE_TASK_NAME = "initGradle";
-
-	private static final String _PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
 
 	private static final String _REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";

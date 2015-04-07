@@ -178,6 +178,16 @@ public class GradleUtil {
 		return fileTree.matching(closure);
 	}
 
+	public static Project getProject(Project rootProject, File projectDir) {
+		for (Project project : rootProject.getAllprojects()) {
+			if (projectDir.equals(project.getProjectDir())) {
+				return project;
+			}
+		}
+
+		return null;
+	}
+
 	public static SourceSet getSourceSet(Project project, String name) {
 		JavaPluginConvention javaPluginConvention = getConvention(
 			project, JavaPluginConvention.class);

@@ -82,6 +82,13 @@ public class PortletPreferencesFactoryUtil {
 			layout, portletId);
 	}
 
+	public static PortletPreferences getLayoutPortletSetup(
+		Layout layout, String portletId, String defaultPreferences) {
+
+		return getPortletPreferencesFactory().getLayoutPortletSetup(
+			layout, portletId, defaultPreferences);
+	}
+
 	public static PortalPreferences getPortalPreferences(
 		HttpServletRequest request) {
 

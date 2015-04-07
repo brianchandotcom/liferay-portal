@@ -171,6 +171,13 @@ public class PortletPreferencesFactoryImpl
 	public PortletPreferences getLayoutPortletSetup(
 		Layout layout, String portletId) {
 
+		return getLayoutPortletSetup(layout, portletId, null);
+	}
+
+	@Override
+	public PortletPreferences getLayoutPortletSetup(
+		Layout layout, String portletId, String defaultPreferences) {
+
 		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 
@@ -181,7 +188,7 @@ public class PortletPreferencesFactoryImpl
 
 		return PortletPreferencesLocalServiceUtil.getPreferences(
 			layout.getCompanyId(), ownerId, ownerType, layout.getPlid(),
-			portletId);
+			portletId, defaultPreferences);
 	}
 
 	@Override

@@ -1222,7 +1222,7 @@
 								<execute function="Pause" value1="1000" />
 								<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 								<execute function="Pause" value1="1000" />
-								<execute function="Confirm#waitForConfirmation" locator1="PGCalendarAgendaView#CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+								<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 							</then>
 							<else>
 								<execute function="Pause" value1="1000" />

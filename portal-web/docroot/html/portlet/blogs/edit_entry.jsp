@@ -141,7 +141,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					<aui:input name="subtitle" type="hidden" />
 
 					<div class="entry-body">
-						<liferay-ui:input-editor contents="<%= content %>" editorName="<%= CONTENT_EDITOR_NAME %>" name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
+						<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>' name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
 					</div>
 
 					<aui:input name="content" type="hidden" />
@@ -435,8 +435,4 @@ if (entry != null) {
 else {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-entry"), currentURL);
 }
-%>
-
-<%!
-public static final String CONTENT_EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp");
 %>

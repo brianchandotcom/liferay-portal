@@ -292,7 +292,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				</div>
 
 				<div class="lfr-discussion-body">
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorName="<%= EDITOR_NAME %>" name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "OnChange" %>' placeholder="type-your-comment-here" />
+					<liferay-ui:input-editor autoCreate="<%= false %>" contents="" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "postReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "OnChange" %>' placeholder="type-your-comment-here" />
 
 					<aui:input name='<%= "postReplyBody" + index %>' type="hidden" />
 
@@ -336,8 +336,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 </c:if>
 
 <%!
-public static final String EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp");
-
 private RatingsEntry _getRatingsEntry(List<RatingsEntry> ratingEntries, long classPK) {
 	for (RatingsEntry ratingsEntry : ratingEntries) {
 		if (ratingsEntry.getClassPK() == classPK) {

@@ -15,6 +15,7 @@
 package com.liferay.journal.web.portlet.action;
 
 import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PropsValues;
@@ -39,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ConfigurationAction.class
 )
-public class ConfigurationAction extends DefaultConfigurationAction {
+public class JournalConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public void postProcess(

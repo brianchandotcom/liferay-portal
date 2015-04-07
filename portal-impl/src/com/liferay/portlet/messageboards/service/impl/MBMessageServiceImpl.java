@@ -131,12 +131,10 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		inputStreamOVPs.add(inputStreamOVP);
 
-		MBMessage message = addMessage(
+		return addMessage(
 			groupId, categoryId, subject, body,
 			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
 			MBThreadConstants.PRIORITY_NOT_GIVEN, false, serviceContext);
-
-		return message;
 	}
 
 	@Override

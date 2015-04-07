@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Journal Content Conversions User Tool
+Bundle-SymbolicName: com.liferay.journal.content.user.tool.conversions
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /journal-content-conversions-user-tool

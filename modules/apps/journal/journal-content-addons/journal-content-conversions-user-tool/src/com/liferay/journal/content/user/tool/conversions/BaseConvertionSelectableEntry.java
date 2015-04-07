@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.user.tool.conversions;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -21,10 +21,30 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.BaseSelectableEntry;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 public abstract class BaseConvertionSelectableEntry
 	extends BaseSelectableEntry implements UserToolEntry {
 
 	public abstract String getExtension();
+
+	@Override
+	public String getJSPPath() {
+		return _JSP_PATH;
+	}
+
+	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute("extension", getExtension());
+
+		super.include(request, response);
+	}
 
 	@Override
 	public boolean isEnabled() {
@@ -44,5 +64,8 @@ public abstract class BaseConvertionSelectableEntry
 
 		return super.isEnabled();
 	}
+
+	private static final String _JSP_PATH =
+		"/META-INF/resources/conversions.jsp";
 
 }

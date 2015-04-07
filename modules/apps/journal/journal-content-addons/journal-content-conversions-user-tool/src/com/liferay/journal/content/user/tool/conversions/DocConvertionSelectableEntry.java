@@ -12,40 +12,51 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.user.tool.conversions;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = UserToolEntry.class
 )
-public class TXTConvertionSelectableEntry
+public class DocConvertionSelectableEntry
 	extends BaseConvertionSelectableEntry implements UserToolEntry {
 
 	@Override
 	public String getExtension() {
-		return "txt";
+		return "doc";
 	}
 
 	@Override
 	public String getIcon() {
-		return "file-alt";
+		return "font";
 	}
 
 	@Override
 	public String getKey() {
-		return "enableTXT";
+		return "enableDOC";
 	}
 
 	@Override
 	public String getLabel() {
-		return "download-as-txt";
+		return "download-as-doc";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 6.0;
+		return 4.0;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.user.tool.conversions)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

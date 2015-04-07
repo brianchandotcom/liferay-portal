@@ -12,20 +12,23 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.user.tool.conversions;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = UserToolEntry.class
 )
-public class DocConvertionSelectableEntry
+public class ODTConvertionSelectableEntry
 	extends BaseConvertionSelectableEntry implements UserToolEntry {
 
 	@Override
 	public String getExtension() {
-		return "doc";
+		return "odt";
 	}
 
 	@Override
@@ -35,17 +38,25 @@ public class DocConvertionSelectableEntry
 
 	@Override
 	public String getKey() {
-		return "enableDoc";
+		return "enableODT";
 	}
 
 	@Override
 	public String getLabel() {
-		return "download-as-doc";
+		return "download-as-odt";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 4.0;
+		return 5.0;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.user.tool.conversions)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

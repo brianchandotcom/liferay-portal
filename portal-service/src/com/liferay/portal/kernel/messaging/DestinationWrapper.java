@@ -26,10 +26,11 @@ public class DestinationWrapper implements Destination {
 	}
 
 	@Override
-	public void addDestinationEventListener(
+	public boolean addDestinationEventListener(
 		DestinationEventListener destinationEventListener) {
 
-		destination.addDestinationEventListener(destinationEventListener);
+		return destination.addDestinationEventListener(
+			destinationEventListener);
 	}
 
 	@Override
@@ -95,10 +96,11 @@ public class DestinationWrapper implements Destination {
 	}
 
 	@Override
-	public void removeDestinationEventListener(
+	public boolean removeDestinationEventListener(
 		DestinationEventListener destinationEventListener) {
 
-		destination.removeDestinationEventListener(destinationEventListener);
+		return destination.removeDestinationEventListener(
+			destinationEventListener);
 	}
 
 	@Override

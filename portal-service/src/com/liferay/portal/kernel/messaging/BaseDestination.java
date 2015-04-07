@@ -28,10 +28,10 @@ import java.util.Set;
 public abstract class BaseDestination implements Destination {
 
 	@Override
-	public void addDestinationEventListener(
+	public boolean addDestinationEventListener(
 		DestinationEventListener destinationEventListener) {
 
-		_destinationEventListeners.add(destinationEventListener);
+		return _destinationEventListeners.add(destinationEventListener);
 	}
 
 	public void afterPropertiesSet() {
@@ -120,10 +120,10 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	@Override
-	public void removeDestinationEventListener(
+	public boolean removeDestinationEventListener(
 		DestinationEventListener destinationEventListener) {
 
-		_destinationEventListeners.remove(destinationEventListener);
+		return _destinationEventListeners.remove(destinationEventListener);
 	}
 
 	@Override

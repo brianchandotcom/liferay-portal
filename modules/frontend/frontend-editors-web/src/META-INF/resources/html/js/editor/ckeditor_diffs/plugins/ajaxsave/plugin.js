@@ -20,7 +20,7 @@
 						'AjaxSave',
 						{
 							command: pluginName,
-							icon: themeDisplay.getPathJavaScript() + '/editor/ckeditor/plugins/ajaxsave/assets/save.png',
+							icon: themeDisplay.getPathEditors() + '/editor/ckeditor/plugins/ajaxsave/assets/save.png',
 							label: editor.lang.save.toolbar
 						}
 					);

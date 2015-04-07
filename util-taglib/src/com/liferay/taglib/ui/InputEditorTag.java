@@ -294,8 +294,7 @@ public class InputEditorTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return themeDisplay.getPathJavaScript() + "/editor/" +
-			editorName + ".jsp";
+		return themeDisplay.getPathEditors() + "/editor/" + editorName + ".jsp";
 	}
 
 	@Override

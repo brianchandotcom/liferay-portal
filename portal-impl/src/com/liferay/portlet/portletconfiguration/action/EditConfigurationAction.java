@@ -65,8 +65,7 @@ public class EditConfigurationAction extends PortletAction {
 			portlet = ActionUtil.getPortlet(actionRequest);
 		}
 		catch (PrincipalException pe) {
-			SessionErrors.add(
-				actionRequest, PrincipalException.class.getName());
+			SessionErrors.add(actionRequest, pe.getClass());
 
 			setForward(actionRequest, "portlet.portlet_configuration.error");
 
@@ -119,8 +118,7 @@ public class EditConfigurationAction extends PortletAction {
 			portlet = ActionUtil.getPortlet(renderRequest);
 		}
 		catch (PrincipalException pe) {
-			SessionErrors.add(
-				renderRequest, PrincipalException.class.getName());
+			SessionErrors.add(renderRequest, pe.getClass());
 
 			return actionMapping.findForward(
 				"portlet.portlet_configuration.error");
@@ -169,6 +167,10 @@ public class EditConfigurationAction extends PortletAction {
 			portlet = ActionUtil.getPortlet(resourceRequest);
 		}
 		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return;
 		}
 

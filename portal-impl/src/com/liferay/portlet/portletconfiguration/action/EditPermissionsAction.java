@@ -124,8 +124,7 @@ public class EditPermissionsAction extends PortletAction {
 				groupId, selResource, resourcePrimKey);
 		}
 		catch (PrincipalException pe) {
-			SessionErrors.add(
-				renderRequest, PrincipalException.class.getName());
+			SessionErrors.add(renderRequest, pe.getClass());
 
 			return actionMapping.findForward(
 				"portlet.portlet_configuration.error");

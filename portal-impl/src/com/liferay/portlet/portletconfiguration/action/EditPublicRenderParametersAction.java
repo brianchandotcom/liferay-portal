@@ -56,10 +56,11 @@ public class EditPublicRenderParametersAction extends PortletAction {
 			portlet = ActionUtil.getPortlet(actionRequest);
 		}
 		catch (PrincipalException pe) {
-			SessionErrors.add(
-				actionRequest, PrincipalException.class.getName());
+			SessionErrors.add(actionRequest, pe.getClass());
 
 			setForward(actionRequest, "portlet.portlet_configuration.error");
+
+			return;
 		}
 
 		PortletPreferences portletPreferences =
@@ -109,8 +110,7 @@ public class EditPublicRenderParametersAction extends PortletAction {
 			portlet = ActionUtil.getPortlet(renderRequest);
 		}
 		catch (PrincipalException pe) {
-			SessionErrors.add(
-				renderRequest, PrincipalException.class.getName());
+			SessionErrors.add(renderRequest, pe.getClass());
 
 			return actionMapping.findForward(
 				"portlet.portlet_configuration.error");

@@ -18,6 +18,7 @@ import com.liferay.portal.bean.IdentifiableBeanInvokerUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -31,8 +32,6 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Constructor;
 
 import java.util.Locale;
 import java.util.Map;
@@ -56,32 +55,28 @@ public class ClusterableInvokerUtil {
 
 		_populateContextFromThreadLocals(context);
 
+		String clusterInvokeAcceptorClassName =
+			clusterInvokeAcceptorClass.getName();
+
 		if (clusterInvokeAcceptorClass == ClusterInvokeAcceptor.class) {
-			clusterInvokeAcceptorClass = null;
+			clusterInvokeAcceptorClassName = null;
 		}
 
 		return new MethodHandler(
-			_invokeMethodKey, methodHandler, clusterInvokeAcceptorClass,
+			_invokeMethodKey, methodHandler, clusterInvokeAcceptorClassName,
 			context);
 	}
 
 	@SuppressWarnings("unused")
 	private static Object _invoke(
-			MethodHandler methodHandler,
-			Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
+			MethodHandler methodHandler, String clusterInvokeAcceptorClassName,
 			Map<String, Serializable> context)
 		throws Exception {
 
-		if (clusterInvokeAcceptorClass != null) {
-			Constructor<? extends ClusterInvokeAcceptor> constructor =
-				clusterInvokeAcceptorClass.getDeclaredConstructor();
-
-			if (!constructor.isAccessible()) {
-				constructor.setAccessible(true);
-			}
-
+		if (Validator.isNotNull(clusterInvokeAcceptorClassName)) {
 			ClusterInvokeAcceptor clusterInvokeAcceptor =
-				constructor.newInstance();
+				(ClusterInvokeAcceptor)InstanceFactory.newInstance(
+					clusterInvokeAcceptorClassName);
 
 			if (!clusterInvokeAcceptor.accept(context)) {
 				return null;
@@ -197,6 +192,6 @@ public class ClusterableInvokerUtil {
 
 	private static final MethodKey _invokeMethodKey = new MethodKey(
 		ClusterableInvokerUtil.class, "_invoke", MethodHandler.class,
-		Class.class, Map.class);
+		String.class, Map.class);
 
 }

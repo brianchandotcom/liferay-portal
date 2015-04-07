@@ -14,14 +14,15 @@
 
 package com.liferay.portal.kernel.cluster;
 
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Tina Tian
@@ -113,11 +114,18 @@ public class ClusterRequest implements Serializable {
 		_skipLocal = skipLocal;
 		_multicast = multicast;
 
-		_uuid = PortalUUIDUtil.generate();
+		_uuid = _generateUUID();
 
 		for (String targetClusterNodeId : targetClusterNodeIds) {
 			_targetClusterNodeIds.add(targetClusterNodeId);
 		}
+	}
+
+	private String _generateUUID() {
+		UUID uuid = new UUID(
+			SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
+
+		return uuid.toString();
 	}
 
 	private boolean _fireAndForget;

@@ -120,8 +120,7 @@ public class ClusterSchedulerEngineTest {
 
 		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass =
 			(Class<? extends ClusterInvokeAcceptor>)Class.forName(
-				ClusterSchedulerEngine.class.getName() +
-					"$SchedulerClusterInvokeAcceptor");
+				SchedulerClusterInvokeAcceptor.class.getName());
 
 		Constructor<? extends ClusterInvokeAcceptor> constructor =
 			clusterInvokeAcceptorClass.getDeclaredConstructor();
@@ -2052,6 +2051,10 @@ public class ClusterSchedulerEngineTest {
 			getClusterMasterTokenTransitionListener() {
 
 			return _clusterMasterTokenTransitionListener;
+		}
+
+		@Override
+		public void initialize() {
 		}
 
 		@Override

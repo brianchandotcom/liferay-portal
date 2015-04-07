@@ -33,12 +33,11 @@ import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
-import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.service.LockLocalService;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -118,6 +117,28 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Override
+	public void initialize() {
+		if (!_clusterExecutor.isEnabled() || SPIUtil.isSPI()) {
+			return;
+		}
+
+		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
+
+		_localClusterNodeId = localClusterNode.getClusterNodeId();
+
+		_clusterEventListener = new ClusterMasterTokenClusterEventListener();
+
+		_clusterExecutor.addClusterEventListener(_clusterEventListener);
+
+		String masterClusterNodeId = getMasterClusterNodeId();
+
+		_enabled = true;
+
+		notifyMasterTokenTransitionListeners(
+			_localClusterNodeId.equals(masterClusterNodeId));
+	}
+
+	@Override
 	public boolean isEnabled() {
 		return _enabled;
 	}
@@ -148,11 +169,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			clusterMasterTokenTransitionListeners);
 	}
 
-	@Activate
-	protected void activate() {
-		initialize();
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		if (_clusterEventListener != null) {
@@ -160,7 +176,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 				_clusterExecutor.removeClusterEventListener(
 					_clusterEventListener);
 
-				LockLocalServiceUtil.unlock(
+				_lockLocalService.unlock(
 					_LOCK_CLASS_NAME, _LOCK_CLASS_NAME, _localClusterNodeId);
 			}
 			catch (SystemException se) {
@@ -184,12 +200,12 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 				Lock lock = null;
 
 				if (owner == null) {
-					lock = LockLocalServiceUtil.lock(
+					lock = _lockLocalService.lock(
 						_LOCK_CLASS_NAME, _LOCK_CLASS_NAME,
 						_localClusterNodeId);
 				}
 				else {
-					lock = LockLocalServiceUtil.lock(
+					lock = _lockLocalService.lock(
 						_LOCK_CLASS_NAME, _LOCK_CLASS_NAME, owner,
 						_localClusterNodeId);
 				}
@@ -230,27 +246,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		return owner;
 	}
 
-	protected void initialize() {
-		if (!_clusterExecutor.isEnabled() || SPIUtil.isSPI()) {
-			return;
-		}
-
-		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
-
-		_localClusterNodeId = localClusterNode.getClusterNodeId();
-
-		_clusterEventListener = new ClusterMasterTokenClusterEventListener();
-
-		_clusterExecutor.addClusterEventListener(_clusterEventListener);
-
-		String masterClusterNodeId = getMasterClusterNodeId();
-
-		_enabled = true;
-
-		notifyMasterTokenTransitionListeners(
-			_localClusterNodeId.equals(masterClusterNodeId));
-	}
-
 	protected void notifyMasterTokenTransitionListeners(
 		boolean masterTokenAcquired) {
 
@@ -272,6 +267,11 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		_clusterExecutor = clusterExecutor;
 	}
 
+	@Reference(unbind = "-")
+	protected void setLockLocalService(LockLocalService localLocalService) {
+		_lockLocalService = localLocalService;
+	}
+
 	private static final String _LOCK_CLASS_NAME =
 		ClusterMasterExecutorImpl.class.getName();
 
@@ -286,6 +286,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		_clusterMasterTokenTransitionListeners = new HashSet<>();
 	private boolean _enabled;
 	private volatile String _localClusterNodeId;
+	private volatile LockLocalService _lockLocalService;
 
 	private class ClusterMasterTokenClusterEventListener
 		implements ClusterEventListener {

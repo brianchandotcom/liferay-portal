@@ -276,6 +276,9 @@
 			getComboPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", javaScriptLastModified) %>&';
 			},
+			getEditorsPath: function() {
+				return '<%= themeDisplay.getPathEditors() %>';
+			},
 			getFilter: function() {
 				var filter = 'raw';
 

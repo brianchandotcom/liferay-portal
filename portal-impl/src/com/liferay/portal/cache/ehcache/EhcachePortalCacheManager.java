@@ -77,6 +77,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_configPropertyKey = configPropertyKey;
 	}
 
+	public void setDefaultConfigFile(String defaultConfigFile) {
+		_defaultConfigFile = defaultConfigFile;
+	}
+
 	public void setRegisterCacheConfigurations(
 		boolean registerCacheConfigurations) {
 
@@ -139,11 +143,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		String configurationPath = PropsUtil.get(_configPropertyKey);
 
 		if (Validator.isNull(configurationPath)) {
-			configurationPath = _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE;
+			configurationPath = _defaultConfigFile;
 		}
 
-		_usingDefault = configurationPath.equals(
-			_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE);
+		_usingDefault = configurationPath.equals(_defaultConfigFile);
 
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
 			configurationPath, clusterAware, _usingDefault);
@@ -243,9 +246,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return null;
 	}
 
-	private static final String _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE =
-		"/ehcache/liferay-multi-vm-clustered.xml";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);
 
@@ -253,6 +253,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private String _configPropertyKey;
 	private ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 		_configurationPair;
+	private String _defaultConfigFile;
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;

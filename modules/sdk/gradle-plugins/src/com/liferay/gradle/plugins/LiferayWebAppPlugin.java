@@ -336,6 +336,8 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		Object versionObj = project.getVersion();
 
 		if (!versionObj.equals(Project.DEFAULT_VERSION)) {
+			super.configureVersion(project, liferayExtension);
+
 			return;
 		}
 

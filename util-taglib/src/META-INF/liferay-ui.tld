@@ -3827,7 +3827,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether users are able to subscribe. Default value is  <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether users are able to subscribe. Default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>enabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4045,9 +4045,9 @@
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <description>A URL for the items in the column.</description>
+		</attribute>
+		<attribute>
+			<description>A URL for the items in the column.</description>
 			<name>href</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4077,7 +4077,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-            <description>A property to request from the row object.</description>
+			<description>A property to request from the row object.</description>
 			<name>property</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4089,7 +4089,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-            <description>A value for the column.</description>
+			<description>A value for the column.</description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5056,7 +5056,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to be prefixed to the <![CDATA[<code>Toggle()</code>]]> function that is called to toggle visibility of the content. If this is not configured, a random key is generated and prefixed to the <![CDATA[<code>Toggle()</code>]]>  function. For example, a value of <![CDATA[<code>run</code>]]> would result in a function named <![CDATA[<code>runToggle()</code>]]>.</description>
+			<description>Text to be prefixed to the <![CDATA[<code>Toggle()</code>]]> function that is called to toggle visibility of the content. If this is not configured, a random key is generated and prefixed to the <![CDATA[<code>Toggle()</code>]]> function. For example, a value of <![CDATA[<code>run</code>]]> would result in a function named <![CDATA[<code>runToggle()</code>]]>.</description>
 			<name>stateVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

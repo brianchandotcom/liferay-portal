@@ -3447,7 +3447,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+<<<<<<< HEAD
 			<description>Identifies the component instance.</description>
+=======
+			<description>Sets the search container's id.</description>
+>>>>>>> 39fe809... Additions to search-container descriptions.
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3864,16 +3868,19 @@
 		<tei-class>com.liferay.taglib.ui.SearchContainerTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the search container's pagination variable. Different pagination variables ensure independent pagination when multiple search containers are on a JSP.</description>
 			<name>curParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the number of items to show on each search container page.</description>
 			<name>delta</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the <![CDATA[<code>delta</code>]]> attribute as configurable by users.</description>
 			<name>deltaConfigurable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3930,6 +3937,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the column ordering as ascending or descending. Values are <![CDATA[<code>"asc"</code>]]> or <![CDATA[<code>"desc"</code>]]>.</description>
 			<name>orderByType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3940,6 +3948,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Inserts a checkbox column in the search container. Value must be a <![CDATA[<code>RowChecker</code>]]> object.</description>
 			<name>rowChecker</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3955,16 +3964,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the total number of objects in the search container.</description>
 			<name>total</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the variable name for the results of the <![CDATA[<code>total</code>]]> attribute. The default is <![CDATA[<code>"total"</code>]]>.</description>
 			<name>totalVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the variable name for the <![CDATA[<code>SearchContainer</code>]]> object. The default is <![CDATA[<code>"searchContainer"</code>]]>.</description>
 			<name>var</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

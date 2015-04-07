@@ -1064,12 +1064,11 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isMobileDeviceEnabled() {
-		if (PropsValues.MOBILE_DEVICE_TYPE == null) {
+		if (Validator.isNull(PropsValues.MOBILE_DEVICE_TYPE)) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	public static boolean isNotChecked(

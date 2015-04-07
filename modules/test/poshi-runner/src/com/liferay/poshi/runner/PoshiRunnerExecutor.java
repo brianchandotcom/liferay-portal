@@ -156,13 +156,13 @@ public class PoshiRunnerExecutor {
 				}
 				else if ((childElement.attributeValue(
 							"macro-desktop") != null) &&
-						 (PropsValues.MOBILE_DEVICE_TYPE != null)) {
+						 Validator.isNotNull(PropsValues.MOBILE_DEVICE_TYPE)) {
 
 					runMacroElement(childElement, "macro-desktop");
 				}
 				else if ((childElement.attributeValue(
 							"macro-mobile") != null) &&
-						 (PropsValues.MOBILE_DEVICE_TYPE != null)) {
+						 Validator.isNotNull(PropsValues.MOBILE_DEVICE_TYPE)) {
 
 					runMacroElement(childElement, "macro-mobile");
 				}

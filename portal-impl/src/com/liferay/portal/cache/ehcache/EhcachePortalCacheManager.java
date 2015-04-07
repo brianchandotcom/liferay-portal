@@ -42,6 +42,7 @@ import javax.management.MBeanServer;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.event.CacheManagerEventListenerRegistry;
@@ -100,6 +101,24 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	public void setStopCacheManagerTimer(boolean stopCacheManagerTimer) {
 		_stopCacheManagerTimer = stopCacheManagerTimer;
+	}
+
+	protected Ehcache createEhcache(
+		String portalCacheName, CacheConfiguration cacheConfiguration) {
+
+		if (_cacheManager.cacheExists(portalCacheName)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Overriding existing cache " + portalCacheName);
+			}
+
+			_cacheManager.removeCache(portalCacheName);
+		}
+
+		Cache cache = new Cache(cacheConfiguration);
+
+		_cacheManager.addCache(cache);
+
+		return cache;
 	}
 
 	@Override
@@ -199,18 +218,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			String portalCacheName = cacheConfiguration.getName();
 
 			synchronized (_cacheManager) {
-				if (_cacheManager.cacheExists(portalCacheName)) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Overriding existing cache " + portalCacheName);
-					}
-
-					_cacheManager.removeCache(portalCacheName);
-				}
-
-				Cache cache = new Cache(cacheConfiguration);
-
-				_cacheManager.addCache(cache);
+				Ehcache ehcache = createEhcache(
+					portalCacheName, cacheConfiguration);
 
 				PortalCache<K, V> portalCache = portalCaches.get(
 					portalCacheName);
@@ -220,7 +229,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 						_getEhcachePortalCache(portalCache);
 
 					if (ehcachePortalCache != null) {
-						ehcachePortalCache.reconfigEhcache(cache);
+						ehcachePortalCache.reconfigEhcache(ehcache);
 					}
 					else {
 						_log.error(

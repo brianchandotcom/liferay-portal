@@ -423,7 +423,7 @@ if (hints != null) {
 								contents="<%= value %>"
 								contentsLanguageId="<%= languageId %>"
 								cssClass="<%= cssClass %>"
-								editorImpl="ckeditor"
+								editorName="ckeditor"
 								name="<%= fieldParam %>"
 								toolbarSet="simple"
 							/>

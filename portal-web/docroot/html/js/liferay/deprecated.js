@@ -199,8 +199,8 @@
 		return str.replace(regex, A.bind('_escapeHTML', Util, !!preventDoubleEscape, entities, entitiesValues));
 	};
 
-	Util.isEditorPresent = function(editorImpl) {
-		return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
+	Util.isEditorPresent = function(editorName) {
+		return Liferay.EDITORS && Liferay.EDITORS[editorName];
 	};
 
 	Util.randomMinMax = function(min, max) {

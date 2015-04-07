@@ -14,16 +14,19 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.editor.EditorUtil;
 import com.liferay.portal.kernel.editor.config.EditorConfig;
 import com.liferay.portal.kernel.editor.config.EditorConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Enumeration;
@@ -69,8 +72,16 @@ public class InputEditorTag extends IncludeTag {
 		_data = data;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setEditorName(String)}
+	 */
+	@Deprecated
 	public void setEditorImpl(String editorImpl) {
-		_editorImpl = editorImpl;
+		_editorName = PropsUtil.get(editorImpl);
+	}
+
+	public void setEditorName(String editorName) {
+		_editorName = editorName;
 	}
 
 	public void setFileBrowserParams(Map<String, String> fileBrowserParams) {
@@ -141,6 +152,10 @@ public class InputEditorTag extends IncludeTag {
 		_width = width;
 	}
 
+	protected String buildPagePath(String editorName) {
+		return "/html/js/editor/" + editorName + ".jsp";
+	}
+
 	@Override
 	protected void cleanUp() {
 		_allowBrowseDocuments = true;
@@ -151,7 +166,7 @@ public class InputEditorTag extends IncludeTag {
 		_contentsLanguageId = null;
 		_cssClass = null;
 		_data = null;
-		_editorImpl = null;
+		_editorName = null;
 		_fileBrowserParams = null;
 		_height = null;
 		_initMethod = "initEditor";
@@ -232,8 +247,8 @@ public class InputEditorTag extends IncludeTag {
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			portlet.getPortletId(), getConfigKey(), getEditorImpl(), attributes,
-			themeDisplay, portletResponse);
+			portlet.getPortletId(), getConfigKey(), getEditorName(request),
+			attributes, themeDisplay, portletResponse);
 
 		Map<String, Object> data = editorConfig.getData();
 
@@ -244,8 +259,24 @@ public class InputEditorTag extends IncludeTag {
 		return data;
 	}
 
-	protected String getEditorImpl() {
-		return EditorUtil.getEditorValue(request, _editorImpl);
+	protected String getEditorName(HttpServletRequest request) {
+		String editorName = _editorName;
+
+		if (!BrowserSnifferUtil.isRtf(request)) {
+			editorName = "simple";
+		}
+
+		if (Validator.isNull(editorName)) {
+			editorName = _EDITOR_WYSIWYG_DEFAULT;
+		}
+
+		if (!FileAvailabilityUtil.isAvailable(
+				servletContext, buildPagePath(editorName))) {
+
+			editorName = _EDITOR_WYSIWYG_DEFAULT;
+		}
+
+		return editorName;
 	}
 
 	@Override
@@ -255,9 +286,9 @@ public class InputEditorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		String editorImpl = getEditorImpl();
+		String editorName = getEditorName(request);
 
-		_page = "/html/js/editor/" + editorImpl + ".jsp";
+		_page = buildPagePath(editorName);
 
 		request.setAttribute(
 			"liferay-ui:input-editor:allowBrowseDocuments",
@@ -273,7 +304,7 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-editor:cssClasses", getCssClasses());
-		request.setAttribute("liferay-ui:input-editor:editorImpl", editorImpl);
+		request.setAttribute("liferay-ui:input-editor:editorName", editorName);
 		request.setAttribute(
 			"liferay-ui:input-editor:fileBrowserParams", _fileBrowserParams);
 		request.setAttribute("liferay-ui:input-editor:height", _height);
@@ -306,6 +337,9 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:data", getData());
 	}
 
+	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
+		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
+
 	private boolean _allowBrowseDocuments = true;
 	private boolean _autoCreate = true;
 	private String _configKey;
@@ -314,7 +348,7 @@ public class InputEditorTag extends IncludeTag {
 	private String _contentsLanguageId;
 	private String _cssClass;
 	private Map<String, Object> _data = null;
-	private String _editorImpl;
+	private String _editorName;
 	private Map<String, String> _fileBrowserParams;
 	private String _height;
 	private String _initMethod = "initEditor";

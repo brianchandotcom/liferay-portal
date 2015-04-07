@@ -26,13 +26,13 @@ import java.util.Map;
 public class EditorConfigFactoryUtil {
 
 	public static EditorConfig getEditorConfig(
-		String portletName, String editorConfigKey, String editorImpl,
+		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		return getEditorConfigFactory().getEditorConfig(
-			portletName, editorConfigKey, editorImpl,
+			portletName, editorConfigKey, editorName,
 			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
 	}
 

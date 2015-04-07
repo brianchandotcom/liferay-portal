@@ -91,6 +91,21 @@ public interface WikiGroupServiceConfiguration {
 	)
 	public String frontPageName();
 
+	@Meta.AD(
+		deflt = "ckeditor_creole", required = false
+	)
+	public String getCreoleEditor();
+
+	@Meta.AD(
+		deflt = "ckeditor", required = false
+	)
+	public String getHTMLEditor();
+
+	@Meta.AD(
+		deflt = "simple", required = false
+	)
+	public String getMediaWikiEditor();
+
 	/**
 	 * Set the name of the default node that will be automatically created when
 	 * the Wiki portlet is first used in a site.

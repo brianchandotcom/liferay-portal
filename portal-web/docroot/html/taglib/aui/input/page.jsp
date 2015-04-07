@@ -265,7 +265,7 @@ boolean choiceField = checkboxField || radioField;
 					contents="<%= valueString %>"
 					contentsLanguageId="<%= languageId %>"
 					cssClass="<%= cssClass %>"
-					editorImpl="ckeditor"
+					editorName="ckeditor"
 					name="<%= fieldParam %>"
 					toolbarSet="simple"
 				/>

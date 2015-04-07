@@ -34,7 +34,7 @@ Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui
 JSONObject editorConfigJSONObject = (data != null) ? (JSONObject)data.get("editorConfig") : null;
 JSONObject editorOptionsJSONObject = (data != null) ? (JSONObject)data.get("editorOptions") : null;
 
-String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
+String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 
@@ -106,7 +106,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/alloyeditor/alloy-editor-core.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 		<script type="text/javascript">
-			Liferay.namespace('EDITORS')['<%= editorImpl %>'] = true;
+			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
 		</script>
 	</liferay-util:html-top>
 </c:if>

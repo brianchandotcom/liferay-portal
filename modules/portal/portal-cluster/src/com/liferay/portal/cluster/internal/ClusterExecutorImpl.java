@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -58,6 +59,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +70,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -82,13 +87,9 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  */
 @Component(
 	configurationPid = "com.liferay.portal.cluster.configuration.ClusterExecutorConfiguration",
-	immediate = true,
-	service = {
-		ClusterExecutor.class, PortalInetSocketAddressEventListener.class
-	}
+	immediate = true, service = ClusterExecutor.class
 )
-public class ClusterExecutorImpl
-	implements ClusterExecutor, PortalInetSocketAddressEventListener {
+public class ClusterExecutorImpl implements ClusterExecutor {
 
 	@Override
 	@Reference(
@@ -216,37 +217,6 @@ public class ClusterExecutorImpl
 	}
 
 	@Override
-	public void portalLocalInetSocketAddressConfigured(
-		InetSocketAddress inetSocketAddress, boolean secure) {
-
-		if (!isEnabled() || (_localClusterNodeStatus == null)) {
-			return;
-		}
-
-		ClusterNode localClusterNode = _localClusterNodeStatus.getClusterNode();
-
-		if (!isEnabled() || (localClusterNode.getPortalProtocol() != null)) {
-			return;
-		}
-
-		localClusterNode.setPortalInetSocketAddress(inetSocketAddress);
-
-		if (secure) {
-			localClusterNode.setPortalProtocol(Http.HTTPS);
-		}
-		else {
-			localClusterNode.setPortalProtocol(Http.HTTP);
-		}
-
-		sendNotifyRequest();
-	}
-
-	@Override
-	public void portalServerInetSocketAddressConfigured(
-		InetSocketAddress inetSocketAddress, boolean secure) {
-	}
-
-	@Override
 	public void removeClusterEventListener(
 		ClusterEventListener clusterEventListener) {
 
@@ -264,12 +234,24 @@ public class ClusterExecutorImpl
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(ComponentContext componentContext) {
 		clusterExecutorConfiguration = Configurable.createConfigurable(
-			ClusterExecutorConfiguration.class, properties);
+			ClusterExecutorConfiguration.class,
+			componentContext.getProperties());
 
 		String controlChannelProperties = getControlChannelProperties(
-			properties);
+			componentContext.getProperties());
+
+		BundleContext bundleContext = componentContext.getBundleContext();
+
+		ClusterExecutorPortalInetSocketAddressEventListener
+			clusterExecutorPortalInetSocketAddressEventListener =
+				new ClusterExecutorPortalInetSocketAddressEventListener();
+
+		_serviceRegistration = bundleContext.registerService(
+			PortalInetSocketAddressEventListener.class,
+			clusterExecutorPortalInetSocketAddressEventListener,
+			new HashMapDictionary<String, Object>());
 
 		initialize(controlChannelProperties);
 	}
@@ -308,6 +290,10 @@ public class ClusterExecutorImpl
 		_clusterNodeStatuses.clear();
 		_futureClusterResponses.clear();
 		_localClusterNodeStatus = null;
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	protected ClusterNodeResponse executeClusterRequest(
@@ -597,7 +583,9 @@ public class ClusterExecutorImpl
 		return true;
 	}
 
-	private String getControlChannelProperties(Map<String, Object> properties) {
+	private String getControlChannelProperties(
+		Dictionary<String, Object> properties) {
+
 		String controlChannepProperties = GetterUtil.getString(
 			properties.get(ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL));
 
@@ -628,6 +616,8 @@ public class ClusterExecutorImpl
 	private ClusterNodeStatus _localClusterNodeStatus;
 	private PortalExecutorManager _portalExecutorManager;
 	private Props _props;
+	private ServiceRegistration<PortalInetSocketAddressEventListener>
+		_serviceRegistration;
 
 	private static class ClusterNodeStatus implements Serializable {
 
@@ -679,6 +669,44 @@ public class ClusterExecutorImpl
 
 		private final Address _address;
 		private final ClusterNode _clusterNode;
+
+	}
+
+	private class ClusterExecutorPortalInetSocketAddressEventListener
+		implements PortalInetSocketAddressEventListener {
+
+		@Override
+		public void portalLocalInetSocketAddressConfigured(
+			InetSocketAddress inetSocketAddress, boolean secure) {
+
+			if (!isEnabled()) {
+				return;
+			}
+
+			ClusterNode localClusterNode = getLocalClusterNode();
+
+			if ((localClusterNode == null) ||
+				(localClusterNode.getPortalProtocol() != null)) {
+
+				return;
+			}
+
+			localClusterNode.setPortalInetSocketAddress(inetSocketAddress);
+
+			if (secure) {
+				localClusterNode.setPortalProtocol(Http.HTTPS);
+			}
+			else {
+				localClusterNode.setPortalProtocol(Http.HTTP);
+			}
+
+			sendNotifyRequest();
+		}
+
+		@Override
+		public void portalServerInetSocketAddressConfigured(
+			InetSocketAddress inetSocketAddress, boolean secure) {
+		}
 
 	}
 

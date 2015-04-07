@@ -123,8 +123,8 @@ public class PoshiRunnerValidation {
 			}
 
 			throw new PoshiRunnerException(
-				"Invalid \"" + attributeName + "\" attribute\n" + filePath +
-					":" + element.attributeValue("line-number"));
+				"Invalid " + attributeName + " attribute\n" + filePath + ":" +
+					element.attributeValue("line-number"));
 		}
 	}
 
@@ -192,7 +192,7 @@ public class PoshiRunnerValidation {
 
 				if (!hasName) {
 					throw new PoshiRunnerException(
-						"Missing \"name\" attribute\n" + filePath + ":" +
+						"Missing name attribute\n" + filePath + ":" +
 							childElement.attributeValue("line-number"));
 				}
 
@@ -265,7 +265,7 @@ public class PoshiRunnerValidation {
 
 		if (!hasName) {
 			throw new PoshiRunnerException(
-				"Missing \"name\" attribute \n" + filePath + ":" +
+				"Missing name attribute \n" + filePath + ":" +
 					element.attributeValue("line-number"));
 		}
 

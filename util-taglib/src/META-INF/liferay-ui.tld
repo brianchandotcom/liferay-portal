@@ -907,12 +907,12 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates an image captcha with a corresponding verification input.</description>
+		<description>Creates an image CAPTCHA with a corresponding verification input.</description>
 		<name>captcha</name>
 		<tag-class>com.liferay.taglib.ui.CaptchaTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The source URL for the captcha image.</description>
+			<description>The source URL for the image CAPTCHA.</description>
 			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1378,19 +1378,19 @@
 		<tag-class>com.liferay.taglib.ui.FlagsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The Java class name of the flagged asset.</description>
+			<description>The flagged asset's Java class name.</description>
 			<name>className</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The entry ID of the flagged asset.</description>
+			<description>The flagged asset's entry ID.</description>
 			<name>classPK</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The title of the flagged asset.</description>
+			<description>The flagged asset's title.</description>
 			<name>contentTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1521,12 +1521,12 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a navigable form for multiple section forms. The navigation default is a side navigation box with links to each section but can be configured to either a progressive step navigation positioned above the form or vertically stacked accordion style sections that expand when clicked.</description>
+		<description>Creates a navigable form for multiple section forms. It's default navigation is a side navigation box with links to each section. But the navigation can be configured as a progressive step navigation positioned above the form or as vertically stacked accordion style sections that expand when clicked.</description>
 		<name>form-navigator</name>
 		<tag-class>com.liferay.taglib.ui.FormNavigatorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A URL for the form cancel button.</description>
+			<description>A URL for the form's cancel button.</description>
 			<name>backURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1568,7 +1568,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A path to the formSection.jsp files folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
+			<description>A path to the <![CDATA[<code>formSection.jsp</code>]]> file's folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
 			<name>jspPath</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3754,7 +3754,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a clickable link and/or icon to an rss feed document.</description>
+		<description>Creates a clickable link and/or icon to an RSS feed document.</description>
 		<name>rss</name>
 		<tag-class>com.liferay.taglib.ui.RSSTag</tag-class>
 		<body-content>JSP</body-content>
@@ -4525,7 +4525,7 @@
 		<tag-class>com.liferay.taglib.ui.SearchIteratorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether to add a search-paginator to the search container. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<description>Whether to add a <![CDATA[<code>liferay-ui:search-paginator</code>]]> to the search container. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>paginate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

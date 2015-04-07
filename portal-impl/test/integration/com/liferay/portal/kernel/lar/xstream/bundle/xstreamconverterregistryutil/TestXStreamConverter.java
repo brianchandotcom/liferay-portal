@@ -19,12 +19,8 @@ import com.liferay.portal.kernel.lar.xstream.XStreamHierarchicalStreamReader;
 import com.liferay.portal.kernel.lar.xstream.XStreamHierarchicalStreamWriter;
 import com.liferay.portal.kernel.lar.xstream.XStreamMarshallingContext;
 import com.liferay.portal.kernel.lar.xstream.XStreamUnmarshallingContext;
-import com.liferay.portal.kernel.util.StackTraceUtil;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -45,8 +41,6 @@ public class TestXStreamConverter implements XStreamConverter {
 		Object object,
 		XStreamHierarchicalStreamWriter xStreamHierarchicalStreamWriter,
 		XStreamMarshallingContext xStreamMarshallingContext) {
-
-		_atomicReference.set(StackTraceUtil.getCallerKey());
 	}
 
 	@Override
@@ -56,12 +50,5 @@ public class TestXStreamConverter implements XStreamConverter {
 
 		return null;
 	}
-
-	@Reference(target = "(test=AtomicState)")
-	protected void getAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
-	}
-
-	private AtomicReference<String> _atomicReference;
 
 }

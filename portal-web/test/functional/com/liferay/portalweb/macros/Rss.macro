@@ -29,7 +29,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="RssFeed#UNDO_LINK" value1="Undo" />
 	</command>
 
-	<command name="disabledShowFeedTitle">
+	<command name="disableShowFeedTitle">
 		<execute function="SelectFrame" locator1="RssFeed#RSS_CONFIGURATION_IFRAME" />
 		<execute function="Uncheck" locator1="RssFeed#DISPLAY_SETTINGS_SHOW_FEED_TITLE" value1="Show Feed Title" />
 		<execute function="Uncheck" locator1="RssFeed#DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION" value1="Show Feed Description" />

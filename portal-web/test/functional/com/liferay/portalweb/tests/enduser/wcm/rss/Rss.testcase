@@ -528,7 +528,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#disabledShowFeedTitle" />
+		<execute macro="Rss#disableShowFeedTitle" />
 
 		<execute macro="Rss#save" />
 

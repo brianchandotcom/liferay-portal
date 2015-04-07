@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.cmis;
+package com.liferay.document.library.repository.cmis.test;
 
-import com.liferay.portal.repository.cmis.CMISRepositoryDetector;
+import com.liferay.document.library.repository.cmis.internal.CMISRepositoryDetector;
 
 import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
 

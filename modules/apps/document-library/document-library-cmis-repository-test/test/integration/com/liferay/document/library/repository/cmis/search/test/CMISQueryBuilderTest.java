@@ -14,71 +14,26 @@
 
 package com.liferay.document.library.repository.cmis.search.test;
 
-import com.liferay.portal.kernel.bean.BeanLocator;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.repository.cmis.search.BaseCmisSearchQueryBuilder;
+import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.service.RepositoryEntryLocalService;
-import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.service.DLAppService;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-
-import java.lang.reflect.Field;
 
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
-import org.powermock.api.mockito.PowerMockito;
+import org.junit.runner.RunWith;
 
 /**
  * @author Mika Koivisto
  */
-public class CMISQueryBuilderTest extends PowerMockito {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
-
-	@Before
-	public void setUp() {
-		resetServices();
-
-		MockitoAnnotations.initMocks(this);
-
-		_beanLocator = PortalBeanLocatorUtil.getBeanLocator();
-
-		_mockBeanLocator = Mockito.spy(_beanLocator);
-
-		PortalBeanLocatorUtil.setBeanLocator(_mockBeanLocator);
-	}
-
-	@After
-	public void tearDown() {
-		resetServices();
-
-		PortalBeanLocatorUtil.setBeanLocator(_beanLocator);
-	}
+@RunWith(Arquillian.class)
+public class CMISQueryBuilderTest {
 
 	@Test
 	public void testBooleanQuery() throws Exception {
@@ -89,7 +44,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -113,7 +68,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		queryConfig.setAttribute(
 			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -136,7 +91,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -159,7 +114,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		queryConfig.setAttribute(
 			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals("CONTAINS('test')", cmisQuery);
@@ -181,7 +136,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		queryConfig.setAttribute(
 			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals("CONTAINS('(test OR multiple)')", cmisQuery);
@@ -203,7 +158,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		queryConfig.setAttribute(
 			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals("CONTAINS('(test multiple)')", cmisQuery);
@@ -223,7 +178,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		queryConfig.setAttribute(
 			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals("CONTAINS('(-multiple OR test)')", cmisQuery);
@@ -245,7 +200,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		queryConfig.setAttribute(
 			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -266,7 +221,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		queryConfig.setAttribute(
 			"capabilityQuery", CapabilityQuery.FULLTEXTONLY.value());
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals("CONTAINS('test\\'s')", cmisQuery);
@@ -281,7 +236,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -308,7 +263,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -325,7 +280,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -343,7 +298,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -360,7 +315,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -379,7 +334,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -407,7 +362,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -424,7 +379,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		BooleanQuery searchQuery =
 			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
 
-		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+		String cmisQuery = _cmisSearchQueryBuilder.buildQuery(
 			searchContext, searchQuery);
 
 		assertQueryEquals(
@@ -438,33 +393,6 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 	protected String buildFolderQuery(boolean searchSubfolders)
 		throws Exception {
-
-		when(
-			_mockBeanLocator.locate(
-				DLAppService.class.getName())
-		).thenReturn(
-			_dlAppService
-		);
-
-		when(
-			_mockBeanLocator.locate(
-				RepositoryEntryLocalService.class.getName())
-		).thenReturn(
-			_repositoryEntryLocalService
-		);
-
-		when(
-			_repositoryEntry.getMappedId()
-		).thenReturn(
-			"1000"
-		);
-
-		when(
-			_repositoryEntryLocalService.fetchRepositoryEntry(
-				Matchers.eq(1000l))
-		).thenReturn(
-			_repositoryEntry
-		);
 
 		SearchContext searchContext = getSearchContext();
 
@@ -480,7 +408,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
 		queryConfig.setSearchSubfolders(searchSubfolders);
 
-		return CMISSearchQueryBuilderUtil.buildQuery(searchContext, searchQuery);
+		return _cmisSearchQueryBuilder.buildQuery(searchContext, searchQuery);
 	}
 
 	protected SearchContext getSearchContext() {
@@ -491,39 +419,12 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		return searchContext;
 	}
 
-	protected void resetService(Class<?> serviceUtilClass) {
-		try {
-			Field field = serviceUtilClass.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(serviceUtilClass, null);
-		}
-		catch (Exception e) {
-		}
-	}
-
-	protected void resetServices() {
-		resetService(DLAppServiceUtil.class);
-		resetService(RepositoryEntryLocalServiceUtil.class);
-	}
-
 	private static final String _QUERY_POSTFIX = " ORDER BY HITS DESC";
 
 	private static final String _QUERY_PREFIX =
 		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE ";
 
-	private BeanLocator _beanLocator;
-
-	@Mock
-	private DLAppService _dlAppService;
-
-	private BeanLocator _mockBeanLocator;
-
-	@Mock
-	private RepositoryEntry _repositoryEntry;
-
-	@Mock
-	private RepositoryEntryLocalService _repositoryEntryLocalService;
+	private final CMISSearchQueryBuilder _cmisSearchQueryBuilder =
+		new BaseCmisSearchQueryBuilder();
 
 }

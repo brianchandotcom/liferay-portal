@@ -524,17 +524,6 @@ public class JournalContentDisplayContext {
 		return _enableConversions;
 	}
 
-	public boolean isEnablePrint() {
-		if (_enablePrint != null) {
-			return _enablePrint;
-		}
-
-		_enablePrint = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enablePrint", null));
-
-		return _enablePrint;
-	}
-
 	public boolean isEnableRatings() {
 		if (_enableRatings != null) {
 			return _enableRatings;
@@ -763,7 +752,6 @@ public class JournalContentDisplayContext {
 	private Boolean _enableCommentRatings;
 	private Boolean _enableComments;
 	private Boolean _enableConversions;
-	private Boolean _enablePrint;
 	private Boolean _enableRatings;
 	private Boolean _enableRelatedAssets;
 	private Boolean _enableViewCountIncrement;

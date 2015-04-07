@@ -90,7 +90,7 @@ if (entry == null) {
 		<aui:input name="url" />
 
 		<aui:field-wrapper label="content">
-			<liferay-ui:input-editor contents="<%= content %>" editorName="<%= EDITOR_NAME %>" />
+			<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp") %>' />
 
 			<aui:input name="content" type="hidden" />
 		</aui:field-wrapper>
@@ -150,7 +150,3 @@ if (entry == null) {
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>
-
-<%!
-public static final String EDITOR_NAME = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp");
-%>

@@ -32,7 +32,11 @@ public class DefaultMessageBus implements MessageBus {
 	public synchronized void addDestination(Destination destination) {
 		_destinations.put(destination.getName(), destination);
 
-		fireDestinationAddedEvent(destination);
+		for (DestinationEventListener destinationEventListener :
+			_destinationEventListeners) {
+
+			destinationEventListener.destinationAdded(destination);
+		}
 	}
 
 	@Override
@@ -110,16 +114,20 @@ public class DefaultMessageBus implements MessageBus {
 
 	@Override
 	public synchronized Destination removeDestination(String destinationName) {
-		Destination destinationModel = _destinations.remove(destinationName);
+		Destination destination = _destinations.remove(destinationName);
 
-		if (destinationModel != null) {
-			destinationModel.removeDestinationEventListeners();
-			destinationModel.unregisterMessageListeners();
+		if (destination != null) {
+			destination.removeDestinationEventListeners();
+			destination.unregisterMessageListeners();
 
-			fireDestinationRemovedEvent(destinationModel);
+			for (DestinationEventListener destinationEventListener :
+					_destinationEventListeners) {
+
+				destinationEventListener.destinationRemoved(destination);
+			}
 		}
 
-		return destinationModel;
+		return destination;
 	}
 
 	@Override
@@ -197,18 +205,6 @@ public class DefaultMessageBus implements MessageBus {
 		}
 
 		return destination.unregister(messageListener);
-	}
-
-	protected void fireDestinationAddedEvent(Destination destination) {
-		for (DestinationEventListener listener : _destinationEventListeners) {
-			listener.destinationAdded(destination);
-		}
-	}
-
-	protected void fireDestinationRemovedEvent(Destination destination) {
-		for (DestinationEventListener listener : _destinationEventListeners) {
-			listener.destinationRemoved(destination);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

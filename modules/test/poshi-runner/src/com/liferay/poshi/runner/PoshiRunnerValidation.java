@@ -192,7 +192,7 @@ public class PoshiRunnerValidation {
 
 				_parseElements(childElement, filePath);
 			}
-			else {
+			else if (childElementName.equals("var")) {
 				_validateVarElement(childElement, filePath);
 			}
 		}
@@ -257,7 +257,7 @@ public class PoshiRunnerValidation {
 			}
 		}
 
-		if (attributes.size() == 2) {
+		if (attributes.size() <= 2) {
 			if (Validator.isNull(element.getText())) {
 				throw new PoshiRunnerException(
 					"Missing value attribute\n" + filePath + ":" +

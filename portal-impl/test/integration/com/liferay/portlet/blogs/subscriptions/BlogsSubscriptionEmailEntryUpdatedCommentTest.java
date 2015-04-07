@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.subscriptions;
 
 import com.dumbster.smtp.MailMessage;
 
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -176,8 +177,9 @@ public class BlogsSubscriptionEmailEntryUpdatedCommentTest {
 	}
 
 	protected void setUpBlogsGroupServiceSettings() throws Exception {
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			_group.getGroupId(), BlogsConstants.SERVICE_NAME);
+		Settings settings = SettingsFactoryUtil.getSettings(
+			new GroupServiceSettingsLocator(
+				_group.getGroupId(), BlogsConstants.SERVICE_NAME));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

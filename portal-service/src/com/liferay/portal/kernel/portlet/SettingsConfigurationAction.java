@@ -17,7 +17,10 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -272,19 +275,22 @@ public class SettingsConfigurationAction
 			actionRequest, "settingsScope");
 
 		if (settingsScope.equals("company")) {
-			return SettingsFactoryUtil.getCompanyServiceSettings(
-				themeDisplay.getCompanyId(), serviceName);
+			return SettingsFactoryUtil.getSettings(
+				new CompanyServiceSettingsLocator(
+					themeDisplay.getCompanyId(), serviceName));
 		}
 		else if (settingsScope.equals("group")) {
-			return SettingsFactoryUtil.getGroupServiceSettings(
-				themeDisplay.getSiteGroupId(), serviceName);
+			return SettingsFactoryUtil.getSettings(
+				new GroupServiceSettingsLocator(
+					themeDisplay.getSiteGroupId(), serviceName));
 		}
 		else if (settingsScope.equals("portletInstance")) {
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
 
-			return SettingsFactoryUtil.getPortletInstanceSettings(
-				themeDisplay.getLayout(), portletResource);
+			return SettingsFactoryUtil.getSettings(
+				new PortletInstanceSettingsLocator(
+					themeDisplay.getLayout(), portletResource));
 		}
 
 		throw new IllegalArgumentException(

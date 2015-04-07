@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.settings;
+package com.liferay.portal.kernel.settings.internal;
 
 import java.util.Collection;
 

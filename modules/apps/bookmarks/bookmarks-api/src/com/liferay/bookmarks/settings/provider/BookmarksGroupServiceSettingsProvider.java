@@ -17,11 +17,12 @@ package com.liferay.bookmarks.settings.provider;
 import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.settings.BookmarksGroupServiceSettings;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.internal.ParameterMapSettings;
 
 import java.util.Map;
 
@@ -46,8 +47,9 @@ public class BookmarksGroupServiceSettingsProvider
 	public BookmarksGroupServiceSettings getGroupServiceSettings(long groupId)
 		throws SettingsException {
 
-		Settings settings = _settingsFactory.getGroupServiceSettings(
-			groupId, BookmarksConstants.SERVICE_NAME);
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				groupId, BookmarksConstants.SERVICE_NAME));
 
 		return new BookmarksGroupServiceSettings(settings);
 	}
@@ -57,8 +59,9 @@ public class BookmarksGroupServiceSettingsProvider
 			long groupId, Map<String, String[]> parameterMap)
 		throws SettingsException {
 
-		Settings settings = _settingsFactory.getGroupServiceSettings(
-			groupId, BookmarksConstants.SERVICE_NAME);
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				groupId, BookmarksConstants.SERVICE_NAME));
 
 		return new BookmarksGroupServiceSettings(
 			new ParameterMapSettings(parameterMap, settings));

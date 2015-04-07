@@ -14,6 +14,8 @@
 
 package com.liferay.portal.settings;
 
+import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
+import com.liferay.portal.kernel.resource.manager.ResourceManager;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
 
@@ -30,9 +32,15 @@ public class SettingsDefinitionSettingsDescriptor
 	implements SettingsDescriptor {
 
 	public SettingsDefinitionSettingsDescriptor(
-		SettingsDefinition<?, ?> settingsDefinition) {
+		SettingsDefinition<?, ?> settingsDefinition, Object configurationBean) {
 
 		_settingsDefinition = settingsDefinition;
+		_configurationBean = configurationBean;
+
+		Class<?> settingsClass = settingsDefinition.getSettingsClass();
+
+		_resourceManager = new ClassLoaderResourceManager(
+			settingsClass.getClassLoader());
 
 		_initAllKeys();
 		_initMultiValuedKeys();
@@ -45,8 +53,17 @@ public class SettingsDefinitionSettingsDescriptor
 	}
 
 	@Override
+	public Object getConfigurationBean() {
+		return _configurationBean;
+	}
+
+	@Override
 	public Set<String> getMultiValuedKeys() {
 		return _multiValuedKeys;
+	}
+
+	public ResourceManager getResourceManager() {
+		return _resourceManager;
 	}
 
 	@Override
@@ -90,7 +107,9 @@ public class SettingsDefinitionSettingsDescriptor
 	}
 
 	private final Set<String> _allKeys = new HashSet<>();
+	private final Object _configurationBean;
 	private final Set<String> _multiValuedKeys = new HashSet<>();
+	private final ResourceManager _resourceManager;
 	private final SettingsDefinition<?, ?> _settingsDefinition;
 	private final Set<String> _settingsIds = new HashSet<>();
 

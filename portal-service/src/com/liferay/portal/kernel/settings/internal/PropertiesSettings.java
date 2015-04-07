@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings;
+package com.liferay.portal.kernel.settings.internal;
 
 import com.liferay.portal.kernel.settings.BaseSettings;
 import com.liferay.portal.kernel.settings.Settings;

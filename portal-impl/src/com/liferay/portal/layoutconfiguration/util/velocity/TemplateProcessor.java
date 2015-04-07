@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletJSONUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -229,8 +230,9 @@ public class TemplateProcessor implements ColumnProcessor {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Settings settings = SettingsFactoryUtil.getPortletInstanceSettings(
-			themeDisplay.getLayout(), portletId);
+		Settings settings = SettingsFactoryUtil.getSettings(
+			new PortletInstanceSettingsLocator(
+				themeDisplay.getLayout(), portletId));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.kernel.settings.internal.MemorySettings;
+
 import java.util.Collection;
 
 import org.junit.Assert;

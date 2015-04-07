@@ -14,25 +14,14 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.resource.manager.ResourceManager;
-
-import java.util.Set;
-
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
+ * @author Jorge Ferrer
  */
-public interface SettingsDescriptor {
+public interface SettingsLocator {
 
-	public Set<String> getAllKeys();
+	public String getSettingsId();
 
-	public Object getConfigurationBean();
-
-	public Set<String> getMultiValuedKeys();
-
-	public ResourceManager getResourceManager();
-
-	public Class<?> getSettingsClass();
-
-	public Set<String> getSettingsIds();
+	public Settings retrieveSettings() throws SettingsException;
 
 }

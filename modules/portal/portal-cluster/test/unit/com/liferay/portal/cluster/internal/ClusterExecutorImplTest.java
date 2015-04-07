@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -43,9 +44,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Dictionary;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
@@ -449,7 +449,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		clusterExecutorImpl.setPortalExecutorManager(
 			new MockPortalExecutorManager());
 
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		StringBundler sb = new StringBundler();
 
@@ -480,7 +480,7 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		properties.put(
 			ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL, sb.toString());
 
-		clusterExecutorImpl.activate(properties);
+		clusterExecutorImpl.activate(new MockComponentContext(properties));
 
 		return clusterExecutorImpl;
 	}

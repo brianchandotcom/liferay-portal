@@ -104,17 +104,17 @@ public class LuceneFields {
 		NumericField numericField = new NumericField(
 			field, Field.Store.YES, true);
 
-		if (clazz.equals(Double.class)) {
-			numericField.setDoubleValue(GetterUtil.getDouble(number));
-		}
-		else if (clazz.equals(Float.class)) {
+		if (clazz.equals(Float.class)) {
 			numericField.setFloatValue(GetterUtil.getFloat(number));
 		}
 		else if (clazz.equals(Integer.class)) {
 			numericField.setIntValue(GetterUtil.getInteger(number));
 		}
-		else {
+		else if (clazz.equals(Long.class)) {
 			numericField.setLongValue(GetterUtil.getLong(number));
+		}
+		else {
+			numericField.setDoubleValue(GetterUtil.getDouble(number));
 		}
 
 		return numericField;

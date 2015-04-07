@@ -15,14 +15,12 @@
 package com.liferay.portal.kernel.messaging;
 
 /**
- * @author Michael C. Han
+ * @author Shuyang Zhou
  */
-public interface DestinationEventListener {
+public interface MessageBusEventListener {
 
-	public void messageListenerRegistered(
-		String destinationName, MessageListener messageListener);
+	public void destinationAdded(Destination destination);
 
-	public void messageListenerUnregistered(
-		String destinationName, MessageListener messageListener);
+	public void destinationRemoved(Destination destination);
 
 }

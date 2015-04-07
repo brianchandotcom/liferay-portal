@@ -32,18 +32,11 @@ public class DefaultMessageBus implements MessageBus {
 	public synchronized void addDestination(Destination destination) {
 		_destinations.put(destination.getName(), destination);
 
-		for (DestinationEventListener destinationEventListener :
-			_destinationEventListeners) {
+		for (MessageBusEventListener messageBusEventListener :
+				_messageBusEventListeners) {
 
-			destinationEventListener.destinationAdded(destination);
+			messageBusEventListener.destinationAdded(destination);
 		}
-	}
-
-	@Override
-	public boolean addDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		return _destinationEventListeners.add(destinationEventListener);
 	}
 
 	@Override
@@ -59,6 +52,13 @@ public class DefaultMessageBus implements MessageBus {
 
 		return destination.addDestinationEventListener(
 			destinationEventListener);
+	}
+
+	@Override
+	public boolean addMessageBusEventListener(
+		MessageBusEventListener messageBusEventListener) {
+
+		return _messageBusEventListeners.add(messageBusEventListener);
 	}
 
 	@Override
@@ -120,21 +120,14 @@ public class DefaultMessageBus implements MessageBus {
 			destination.removeDestinationEventListeners();
 			destination.unregisterMessageListeners();
 
-			for (DestinationEventListener destinationEventListener :
-					_destinationEventListeners) {
+			for (MessageBusEventListener messageBusEventListener :
+					_messageBusEventListeners) {
 
-				destinationEventListener.destinationRemoved(destination);
+				messageBusEventListener.destinationRemoved(destination);
 			}
 		}
 
 		return destination;
-	}
-
-	@Override
-	public boolean removeDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		return _destinationEventListeners.remove(destinationEventListener);
 	}
 
 	@Override
@@ -150,6 +143,13 @@ public class DefaultMessageBus implements MessageBus {
 
 		return destination.removeDestinationEventListener(
 			destinationEventListener);
+	}
+
+	@Override
+	public boolean removeMessageBusEventListener(
+		MessageBusEventListener messageBusEventListener) {
+
+		return _messageBusEventListeners.remove(messageBusEventListener);
 	}
 
 	@Override
@@ -210,8 +210,8 @@ public class DefaultMessageBus implements MessageBus {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultMessageBus.class);
 
-	private final Set<DestinationEventListener> _destinationEventListeners =
-		new ConcurrentHashSet<>();
 	private final Map<String, Destination> _destinations = new HashMap<>();
+	private final Set<MessageBusEventListener> _messageBusEventListeners =
+		new ConcurrentHashSet<>();
 
 }

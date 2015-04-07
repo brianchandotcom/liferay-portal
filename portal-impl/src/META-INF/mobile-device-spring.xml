@@ -77,7 +77,7 @@
 		<property name="messageBus">
 			<ref bean="com.liferay.portal.kernel.messaging.MessageBus" />
 		</property>
-		<property name="specificDestinationEventListener">
+		<property name="destinationEventListeners">
 			<map>
 				<entry key="liferay/device_recognition_provider">
 					<list>

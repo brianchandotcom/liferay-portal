@@ -14,27 +14,39 @@
 
 package com.liferay.portal.kernel.messaging;
 
+import com.liferay.portal.kernel.util.SetUtil;
+
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author Michael C. Han
  */
-public class BaseDestinationEventListener implements DestinationEventListener {
+public class GlobalMessageBusEventListener implements MessageBusEventListener {
 
 	@Override
 	public void destinationAdded(Destination destination) {
+		if (!_ignoredDestinations.contains(destination.getName())) {
+			destination.register(_messageListener);
+		}
 	}
 
 	@Override
 	public void destinationRemoved(Destination destination) {
+		if (!_ignoredDestinations.contains(destination.getName())) {
+			destination.unregister(_messageListener);
+		}
 	}
 
-	@Override
-	public void messageListenerRegistered(
-		String destinationName, MessageListener messageListener) {
+	public void setIgnoredDestinations(List<String> ignoredDestinations) {
+		_ignoredDestinations = SetUtil.fromList(ignoredDestinations);
 	}
 
-	@Override
-	public void messageListenerUnregistered(
-		String destinationName, MessageListener messageListener) {
+	public void setMessageListener(MessageListener messageListener) {
+		_messageListener = messageListener;
 	}
+
+	private Set<String> _ignoredDestinations;
+	private MessageListener _messageListener;
 
 }

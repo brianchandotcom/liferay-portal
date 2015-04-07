@@ -825,6 +825,10 @@ public class ServicePreAction extends Action {
 		themeDisplay.setPathFriendlyURLPrivateUser(friendlyURLPrivateUserPath);
 		themeDisplay.setPathFriendlyURLPublic(friendlyURLPublicPath);
 		themeDisplay.setPathImage(imagePath);
+		themeDisplay.setPathEditors(
+			PortalWebResourcesUtil.getContextPath(
+				PortalWebResourceConstants.RESOURCE_TYPE_EDITOR).concat(
+					"/html/js"));
 		themeDisplay.setPathJavaScript(
 			PortalWebResourcesUtil.getContextPath().concat("/html/js"));
 		themeDisplay.setPathMain(mainPath);

@@ -50,8 +50,9 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 			<c:otherwise>
 				<c:choose>
 					<c:when test="<%= (articleDisplay != null) && !journalContentDisplayContext.isExpired() %>">
-						<c:if test="<%= journalContentDisplayContext.isEnableConversions() || journalContentDisplayContext.isEnablePrint() || (journalContentDisplayContext.isShowAvailableLocales() && (articleDisplay.getAvailableLocales().length > 1)) %>">
-							<div class="user-actions">
+						<div class="user-tool-asset-addon-entries">
+							<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>" />
+
 								<c:if test="<%= journalContentDisplayContext.isEnablePrint() %>">
 									<c:choose>
 										<c:when test="<%= journalContentDisplayContext.isPrint() %>">
@@ -133,7 +134,6 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 									</c:if>
 								</c:if>
 							</div>
-						</c:if>
 
 						<div class="journal-content-article">
 							<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
@@ -318,6 +318,9 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 </c:if>
 
 <c:if test="<%= (articleDisplay != null) && journalContentDisplayContext.hasViewPermission() %>">
+	<div class="content-metadata-asset-addon-entries">
+		<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>" />
+
 	<c:if test="<%= journalContentDisplayContext.isEnableRelatedAssets() %>">
 		<div class="entry-links">
 			<liferay-ui:asset-links
@@ -360,4 +363,5 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 			userId="<%= articleDisplay.getUserId() %>"
 		/>
 	</c:if>
+	</div>
 </c:if>

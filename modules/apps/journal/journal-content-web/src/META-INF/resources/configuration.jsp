@@ -107,6 +107,26 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 	</aui:fieldset>
 
 	<aui:fieldset>
+		<aui:field-wrapper label="user-tools">
+			<liferay-ui:asset-addon-entry-selector
+				assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
+				hiddenInput="preferences--userToolAssetAddonEntries--"
+				id="userToolsAssetAddonEntriesSelector"
+				selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
+				title="select-user-tools"
+			/>
+		</aui:field-wrapper>
+
+		<aui:field-wrapper label="content-metadata">
+			<liferay-ui:asset-addon-entry-selector
+				assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
+				hiddenInput="preferences--contentMetadataAssetAddonEntries--"
+				id="contentMetadataAssetAddonEntriesSelector"
+				selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
+				title="select-content-metadata"
+			/>
+		</aui:field-wrapper>
+
 		<aui:field-wrapper>
 			<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= journalContentDisplayContext.isShowAvailableLocales() %>" />
 		</aui:field-wrapper>

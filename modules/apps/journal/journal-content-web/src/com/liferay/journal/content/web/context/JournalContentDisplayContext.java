@@ -377,6 +377,81 @@ public class JournalContentDisplayContext {
 		return _portletResource;
 	}
 
+	public List<ContentMetadataAssetAddonEntry>
+	getSelectedContentMetadataAssetAddonEntries() {
+
+		if (_contentMetadataAssetAddonEntries != null) {
+			return _contentMetadataAssetAddonEntries;
+		}
+
+		_contentMetadataAssetAddonEntries = new ArrayList<>();
+
+		String contentMetadataAssetAddonEntriesPref =
+			_portletPreferences.getValue(
+				"contentMetadataAssetAddonEntries", null);
+
+		if (Validator.isNull(contentMetadataAssetAddonEntriesPref)) {
+			return _contentMetadataAssetAddonEntries;
+		}
+
+		String[] contentMetadataAssetAddonEntryKeys = StringUtil.split(
+			contentMetadataAssetAddonEntriesPref);
+
+		for (String contentMetadataEntryKey :
+				contentMetadataAssetAddonEntryKeys) {
+
+			ContentMetadataAssetAddonEntry contentMetadataEntry =
+				ContentMetadataAssetAddonEntryTracker.
+					getContentMetadataAssetAddonEntry(contentMetadataEntryKey);
+
+			if (contentMetadataEntry != null) {
+				_contentMetadataAssetAddonEntries.add(contentMetadataEntry);
+			}
+		}
+
+		_request.setAttribute(WebKeys.JOURNAL_ARTICLE, getArticle());
+		_request.setAttribute(
+			WebKeys.JOURNAL_ARTICLE_DISPLAY, getArticleDisplay());
+
+		return _contentMetadataAssetAddonEntries;
+	}
+
+	public List<UserToolAssetAddonEntry>
+	getSelectedUserToolAssetAddonEntries() {
+
+		if (_userToolAssetAddonEntries != null) {
+			return _userToolAssetAddonEntries;
+		}
+
+		_userToolAssetAddonEntries = new ArrayList<>();
+
+		String userToolAssetAddonEntriesPref = _portletPreferences.getValue(
+			"userToolAssetAddonEntries", null);
+
+		if (Validator.isNull(userToolAssetAddonEntriesPref)) {
+			return _userToolAssetAddonEntries;
+		}
+
+		String[] userToolEntryKeys = StringUtil.split(
+			userToolAssetAddonEntriesPref);
+
+		for (String userToolEntryKey : userToolEntryKeys) {
+			UserToolAssetAddonEntry userToolEntry =
+				UserToolAssetAddonEntryTracker.getUserToolAddonEntry(
+					userToolEntryKey);
+
+			if (userToolEntry != null) {
+				_userToolAssetAddonEntries.add(userToolEntry);
+			}
+		}
+
+		_request.setAttribute(WebKeys.JOURNAL_ARTICLE, getArticle());
+		_request.setAttribute(
+			WebKeys.JOURNAL_ARTICLE_DISPLAY, getArticleDisplay());
+
+		return _userToolAssetAddonEntries;
+	}
+
 	public boolean hasViewPermission() throws PortalException {
 		if (_hasViewPermission != null) {
 			return _hasViewPermission;
@@ -692,6 +767,8 @@ public class JournalContentDisplayContext {
 	private JournalArticleDisplay _articleDisplay;
 	private Long _articleGroupId;
 	private String _articleId;
+	private List<ContentMetadataAssetAddonEntry>
+		_contentMetadataAssetAddonEntries;
 	private String[] _conversions;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
@@ -719,5 +796,6 @@ public class JournalContentDisplayContext {
 	private Boolean _showEditTemplateIcon;
 	private Boolean _showIconsActions;
 	private Boolean _showSelectArticleIcon;
+	private List<UserToolAssetAddonEntry> _userToolAssetAddonEntries;
 
 }

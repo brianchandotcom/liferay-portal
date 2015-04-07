@@ -14,16 +14,17 @@
 
 package com.liferay.portal.sanitizer.bundle.sanitizerimpl;
 
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.util.StackTraceUtil;
+
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 
 /**
  * @author Peter Fellwock

@@ -4,6 +4,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute function="Pause" locator1="1000" />
 		<execute function="Click" locator1="CPCategories#CATEGORY_ENTRY_MENULIST_ARROW" />
 		<execute function="AssertClick" locator1="CPCategories#CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
 

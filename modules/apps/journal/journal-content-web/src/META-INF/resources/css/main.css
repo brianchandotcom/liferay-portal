@@ -14,34 +14,27 @@
 		}
 	}
 
-	.taglib-discussion {
-		margin-top: 18px;
-	}
+	.user-tool-entries {
+		text-align: right;
 
-	.taglib-ratings-wrapper {
-		margin-top: 1em;
-	}
+		.user-tool-entry {
+			display: inline-block;
+			margin: 0 1em 2em 0;
 
-	.tabview-list {
-		margin: 18px 0;
-	}
-
-	.user-actions {
-		padding-bottom: 2.5em;
-
-		.export-actions, .print-action, .locale-actions {
-			float: right;
+			&:last-child {
+				margin-right: 0;
+			}
 		}
+	}
 
-		.print-action {
-			margin-left: 1em;
-		}
+	.content-metadata-entries {
+		.content-metadata-entry {
+			display: block;
+			margin: 3em 0;
 
-		.locale-separator {
-			border-right: 1px solid #CCC;
-			float: right;
-			margin-right: 1em;
-			padding: 0.8em 0.5em;
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
 	}
 }

@@ -50,8 +50,9 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 			<c:otherwise>
 				<c:choose>
 					<c:when test="<%= (articleDisplay != null) && !journalContentDisplayContext.isExpired() %>">
-						<c:if test="<%= journalContentDisplayContext.isEnableConversions() || journalContentDisplayContext.isEnablePrint() || (journalContentDisplayContext.isShowAvailableLocales() && (articleDisplay.getAvailableLocales().length > 1)) %>">
-							<div class="user-actions">
+						<div class="user-tool-entries">
+							<liferay-ui:selectable-entry-display entries="<%= journalContentDisplayContext.getSelectedUserToolEntries() %>" />
+
 								<c:if test="<%= journalContentDisplayContext.isEnablePrint() %>">
 									<c:choose>
 										<c:when test="<%= journalContentDisplayContext.isPrint() %>">
@@ -123,17 +124,12 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 									%>
 
 									<c:if test="<%= availableLocales.length > 1 %>">
-										<c:if test="<%= journalContentDisplayContext.isEnableConversions() || journalContentDisplayContext.isEnablePrint() %>">
-											<div class="locale-separator"> </div>
-										</c:if>
-
 										<div class="locale-actions">
 											<liferay-ui:language formAction="<%= currentURL %>" languageId="<%= LanguageUtil.getLanguageId(request) %>" languageIds="<%= availableLocales %>" />
 										</div>
 									</c:if>
 								</c:if>
 							</div>
-						</c:if>
 
 						<div class="journal-content-article">
 							<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
@@ -318,46 +314,50 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 </c:if>
 
 <c:if test="<%= (articleDisplay != null) && journalContentDisplayContext.hasViewPermission() %>">
-	<c:if test="<%= journalContentDisplayContext.isEnableRelatedAssets() %>">
-		<div class="entry-links">
-			<liferay-ui:asset-links
-				className="<%= JournalArticle.class.getName() %>"
-				classPK="<%= articleDisplay.getResourcePrimKey() %>"
-			/>
-		</div>
-	</c:if>
+	<div class="content-metadata-entries">
+		<liferay-ui:selectable-entry-display entries="<%= journalContentDisplayContext.getSelectedContentMetadataEntries() %>" />
 
-	<c:if test="<%= journalContentDisplayContext.isEnableRatings() && !journalContentDisplayContext.isPrint() %>">
-		<div class="taglib-ratings-wrapper">
-			<liferay-ui:ratings
-				className="<%= JournalArticle.class.getName() %>"
-				classPK="<%= articleDisplay.getResourcePrimKey() %>"
-			/>
-		</div>
-	</c:if>
-
-	<c:if test="<%= journalContentDisplayContext.isEnableComments() %>">
-		<c:if test="<%= journalContentDisplayContext.getDiscussionMessagesCount() > 0 %>">
-			<liferay-ui:header
-				title="comments"
-			/>
+		<c:if test="<%= journalContentDisplayContext.isEnableRelatedAssets() %>">
+			<div class="entry-links">
+				<liferay-ui:asset-links
+					className="<%= JournalArticle.class.getName() %>"
+					classPK="<%= articleDisplay.getResourcePrimKey() %>"
+				/>
+			</div>
 		</c:if>
 
-		<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
+		<c:if test="<%= journalContentDisplayContext.isEnableRatings() && !journalContentDisplayContext.isPrint() %>">
+			<div class="taglib-ratings-wrapper">
+				<liferay-ui:ratings
+					className="<%= JournalArticle.class.getName() %>"
+					classPK="<%= articleDisplay.getResourcePrimKey() %>"
+				/>
+			</div>
+		</c:if>
 
-		<portlet:resourceURL var="discussionPaginationURL">
-			<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:resourceURL>
+		<c:if test="<%= journalContentDisplayContext.isEnableComments() %>">
+			<c:if test="<%= journalContentDisplayContext.getDiscussionMessagesCount() > 0 %>">
+				<liferay-ui:header
+					title="comments"
+				/>
+			</c:if>
 
-		<liferay-ui:discussion
-			className="<%= JournalArticle.class.getName() %>"
-			classPK="<%= articleDisplay.getResourcePrimKey() %>"
-			formAction="<%= discussionURL %>"
-			hideControls="<%= journalContentDisplayContext.isPrint() %>"
-			paginationURL="<%= discussionPaginationURL %>"
-			ratingsEnabled="<%= journalContentDisplayContext.isEnableCommentRatings() && !journalContentDisplayContext.isPrint() %>"
-			redirect="<%= currentURL %>"
-			userId="<%= articleDisplay.getUserId() %>"
-		/>
-	</c:if>
+			<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
+
+			<portlet:resourceURL var="discussionPaginationURL">
+				<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
+			</portlet:resourceURL>
+
+			<liferay-ui:discussion
+				className="<%= JournalArticle.class.getName() %>"
+				classPK="<%= articleDisplay.getResourcePrimKey() %>"
+				formAction="<%= discussionURL %>"
+				hideControls="<%= journalContentDisplayContext.isPrint() %>"
+				paginationURL="<%= discussionPaginationURL %>"
+				ratingsEnabled="<%= journalContentDisplayContext.isEnableCommentRatings() && !journalContentDisplayContext.isPrint() %>"
+				redirect="<%= currentURL %>"
+				userId="<%= articleDisplay.getUserId() %>"
+			/>
+		</c:if>
+	</div>
 </c:if>

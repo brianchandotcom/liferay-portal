@@ -29,10 +29,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -71,6 +71,7 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -78,10 +79,12 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalContentDisplayContext {
 
 	public JournalContentDisplayContext(
-			HttpServletRequest request, PortletPreferences portletPreferences)
+			HttpServletRequest request, HttpServletResponse response,
+			PortletPreferences portletPreferences)
 		throws PortalException {
 
 		_request = request;
+		_response = response;
 		_portletPreferences = portletPreferences;
 
 		String portletId = PortalUtil.getPortletId(request);
@@ -370,6 +373,72 @@ public class JournalContentDisplayContext {
 		_portletResource = ParamUtil.getString(_request, "portletResource");
 
 		return _portletResource;
+	}
+
+	public List<ContentMetadataEntry> getSelectedContentMetadataEntries() {
+		if (_contentMetadataEntries != null) {
+			return _contentMetadataEntries;
+		}
+
+		_contentMetadataEntries = new ArrayList<>();
+
+		String contentMetadataEntriesPref = _portletPreferences.getValue(
+			"contentMetadataEntries", null);
+
+		if (Validator.isNull(contentMetadataEntriesPref)) {
+			return _contentMetadataEntries;
+		}
+
+		String[] contentMetadataEntryKeys = StringUtil.split(
+			contentMetadataEntriesPref);
+
+		for (String contentMetadataEntryKey : contentMetadataEntryKeys) {
+			ContentMetadataEntry contentMetadataEntry =
+				ContentMetadataEntryTracker.getContentMetadataEntry(
+					contentMetadataEntryKey);
+
+			if (contentMetadataEntry != null) {
+				_contentMetadataEntries.add(contentMetadataEntry);
+			}
+		}
+
+		_request.setAttribute(WebKeys.JOURNAL_ARTICLE, getArticle());
+		_request.setAttribute(
+			WebKeys.JOURNAL_ARTICLE_DISPLAY, getArticleDisplay());
+
+		return _contentMetadataEntries;
+	}
+
+	public List<UserToolEntry> getSelectedUserToolEntries() {
+		if (_userToolEntries != null) {
+			return _userToolEntries;
+		}
+
+		_userToolEntries = new ArrayList<>();
+
+		String userToolEntriesPref = _portletPreferences.getValue(
+			"userToolEntries", null);
+
+		if (Validator.isNull(userToolEntriesPref)) {
+			return _userToolEntries;
+		}
+
+		String[] userToolEntryKeys = StringUtil.split(userToolEntriesPref);
+
+		for (String userToolEntryKey : userToolEntryKeys) {
+			UserToolEntry userToolEntry = UserToolEntryTracker.getUserToolEntry(
+				userToolEntryKey);
+
+			if (userToolEntry != null) {
+				_userToolEntries.add(userToolEntry);
+			}
+		}
+
+		_request.setAttribute(WebKeys.JOURNAL_ARTICLE, getArticle());
+		_request.setAttribute(
+			WebKeys.JOURNAL_ARTICLE_DISPLAY, getArticleDisplay());
+
+		return _userToolEntries;
 	}
 
 	public boolean hasViewPermission() throws PortalException {
@@ -685,6 +754,7 @@ public class JournalContentDisplayContext {
 	private JournalArticleDisplay _articleDisplay;
 	private Long _articleGroupId;
 	private String _articleId;
+	private List<ContentMetadataEntry> _contentMetadataEntries;
 	private String[] _conversions;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
@@ -706,11 +776,13 @@ public class JournalContentDisplayContext {
 	private String _portletResource;
 	private Boolean _print;
 	private final HttpServletRequest _request;
+	private final HttpServletResponse _response;
 	private Boolean _showAddArticleIcon;
 	private Boolean _showAvailableLocales;
 	private Boolean _showEditArticleIcon;
 	private Boolean _showEditTemplateIcon;
 	private Boolean _showIconsActions;
 	private Boolean _showSelectArticleIcon;
+	private List<UserToolEntry> _userToolEntries;
 
 }

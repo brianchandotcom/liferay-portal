@@ -147,6 +147,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LANGUAGE_SELECT</td>
+	<td>//select[@id='_125_languageId']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_FIRST_NAME_FIELD</td>
 	<td>//input[@id='_125_firstName']</td>
 	<td></td>
@@ -509,11 +514,6 @@
 	<td></td>
 </tr>
 <!--DISPLAY_SETTINGS-->
-<tr>
-	<td>DISPLAY_SETTINGS_LANGUAGE_SELECT</td>
-	<td>//select[@id='_125_languageId']</td>
-	<td></td>
-</tr>
 <tr>
 	<td>DISPLAY_SETTINGS_TIME_ZONE_SELECT</td>
 	<td>//select[@id='_125_timeZoneId']</td>

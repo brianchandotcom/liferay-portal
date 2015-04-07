@@ -264,6 +264,7 @@
 				<classpath mode="compile">lib/development/catalina.jar</classpath>
 				<classpath mode="compile">lib/development/cobertura.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.bnd.jar</classpath>
+				<classpath mode="compile">lib/development/com.liferay.tools.servicebuilder.jar</classpath>
 				<classpath mode="compile">lib/development/deployment.jar</classpath>
 				<classpath mode="compile">lib/development/derby.jar</classpath>
 				<classpath mode="compile">lib/development/derbytools.jar</classpath>

@@ -1,0 +1,2761 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<hint-collection name="CLOB">
+		<hint name="max-length">2000000</hint>
+	</hint-collection>
+	<hint-collection name="EDITOR">
+		<hint name="editor">true</hint>
+		<hint name="max-length">2000000</hint>
+	</hint-collection>
+	<hint-collection name="URL">
+		<hint name="max-length">4000</hint>
+	</hint-collection>
+	<hint-collection name="TEXTAREA">
+		<hint name="display-height">105</hint>
+		<hint name="display-width">500</hint>
+		<hint name="max-length">4000</hint>
+	</hint-collection>
+	<hint-collection name="SEARCHABLE-DATE">
+		<hint name="month-nullable">true</hint>
+		<hint name="day-nullable">true</hint>
+		<hint name="year-nullable">true</hint>
+		<hint name="show-time">false</hint>
+	</hint-collection>
+	<model name="com.liferay.counter.model.Counter">
+		<field name="name" type="String" />
+		<field name="currentId" type="long" />
+	</model>
+	<model name="com.liferay.portal.kernel.workflow.WorkflowTask">
+		<field name="dueDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.model.Account">
+		<default-hints>
+			<hint name="display-width">210</hint>
+		</default-hints>
+		<field name="mvccVersion" type="long" />
+		<field name="accountId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="parentAccountId" type="long" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="legalName" type="String" />
+		<field name="legalId" type="String" />
+		<field name="legalType" type="String" />
+		<field name="sicCode" type="String" />
+		<field name="tickerSymbol" type="String" />
+		<field name="industry" type="String" />
+		<field name="type" type="String" />
+		<field name="size" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.Address">
+		<default-hints>
+			<hint name="display-width">210</hint>
+		</default-hints>
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="addressId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="street1" type="String" />
+		<field name="street2" type="String" />
+		<field name="street3" type="String" />
+		<field name="city" type="String" />
+		<field name="zip" type="String" />
+		<field name="regionId" type="long" />
+		<field name="countryId" type="long" />
+		<field name="typeId" type="long" />
+		<field name="mailing" type="boolean" />
+		<field name="primary" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.BackgroundTask">
+		<field name="mvccVersion" type="long" />
+		<field name="backgroundTaskId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="servletContextNames" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="taskExecutorClassName" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="taskContextMap" type="Map" />
+		<field name="completed" type="boolean" />
+		<field name="completionDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusMessage" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.BrowserTracker">
+		<field name="mvccVersion" type="long" />
+		<field name="browserTrackerId" type="long" />
+		<field name="userId" type="long" />
+		<field name="browserKey" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ClassName">
+		<field name="mvccVersion" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="value" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.ClusterGroup">
+		<field name="mvccVersion" type="long" />
+		<field name="clusterGroupId" type="long" />
+		<field name="name" type="String" />
+		<field name="clusterNodeIds" type="String" />
+		<field name="wholeCluster" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.Company">
+		<default-hints>
+			<hint name="display-width">210</hint>
+		</default-hints>
+		<field name="mvccVersion" type="long" />
+		<field name="companyId" type="long" />
+		<field name="accountId" type="long" />
+		<field name="webId" type="String" />
+		<field name="key" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="mx" type="String">
+			<validator name="required" />
+		</field>
+		<field name="homeURL" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="logoId" type="long" />
+		<field name="system" type="boolean" />
+		<field name="maxUsers" type="int" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.Contact">
+		<default-hints>
+			<hint name="display-width">210</hint>
+		</default-hints>
+		<field name="mvccVersion" type="long" />
+		<field name="contactId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="accountId" type="long" />
+		<field name="parentContactId" type="long" />
+		<field name="emailAddress" type="String" />
+		<field name="firstName" type="String" />
+		<field name="middleName" type="String" />
+		<field name="lastName" type="String" />
+		<field name="prefixId" type="long" />
+		<field name="suffixId" type="long" />
+		<field name="male" type="boolean" />
+		<field name="birthday" type="Date">
+			<hint name="year-range-delta">70</hint>
+			<hint name="year-range-future">false</hint>
+			<hint name="show-time">false</hint>
+		</field>
+		<field name="smsSn" type="String" />
+		<field name="aimSn" type="String" />
+		<field name="facebookSn" type="String" />
+		<field name="icqSn" type="String" />
+		<field name="jabberSn" type="String" />
+		<field name="msnSn" type="String" />
+		<field name="mySpaceSn" type="String" />
+		<field name="skypeSn" type="String" />
+		<field name="twitterSn" type="String" />
+		<field name="ymSn" type="String" />
+		<field name="employeeStatusId" type="String" />
+		<field name="employeeNumber" type="String" />
+		<field name="jobTitle" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="jobClass" type="String" />
+		<field name="hoursOfOperation" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.Country">
+		<field name="mvccVersion" type="long" />
+		<field name="countryId" type="long" />
+		<field name="name" type="String" />
+		<field name="a2" type="String" />
+		<field name="a3" type="String" />
+		<field name="number" type="String" />
+		<field name="idd" type="String" />
+		<field name="zipRequired" type="boolean" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.EmailAddress">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="emailAddressId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="address" type="String">
+			<hint name="display-width">210</hint>
+			<validator name="email" />
+		</field>
+		<field name="typeId" type="long" />
+		<field name="primary" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.ExportImportConfiguration">
+		<field name="mvccVersion" type="long" />
+		<field name="exportImportConfigurationId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="type" type="int" />
+		<field name="settings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.model.Group">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="creatorUserId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="parentGroupId" type="long" />
+		<field name="liveGroupId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="groupKey" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="name" type="String" localized="true">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">4000</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="type" type="int" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="manualMembership" type="boolean" />
+		<field name="membershipRestriction" type="int" />
+		<field name="friendlyURL" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="site" type="boolean" />
+		<field name="remoteStagingGroupCount" type="int" />
+		<field name="inheritContent" type="boolean" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.Image">
+		<field name="mvccVersion" type="long" />
+		<field name="imageId" type="long" />
+		<field name="modifiedDate" type="Date" />
+		<field name="type" type="String" />
+		<field name="height" type="int" />
+		<field name="width" type="int" />
+		<field name="size" type="int" />
+	</model>
+	<model name="com.liferay.portal.model.Layout">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="plid" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="privateLayout" type="boolean" />
+		<field name="layoutId" type="long" />
+		<field name="parentLayoutId" type="long" />
+		<field name="name" type="String" localized="true">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">4000</hint>
+			<validator name="required" />
+		</field>
+		<field name="title" type="String" localized="true">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">300</hint>
+		</field>
+		<field name="keywords" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">300</hint>
+		</field>
+		<field name="robots" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">300</hint>
+		</field>
+		<field name="type" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="hidden" type="boolean" />
+		<field name="friendlyURL" type="String">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="iconImageId" type="long" />
+		<field name="themeId" type="String" />
+		<field name="colorSchemeId" type="String" />
+		<field name="wapThemeId" type="String" />
+		<field name="wapColorSchemeId" type="String" />
+		<field name="css" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="priority" type="int" />
+		<field name="layoutPrototypeUuid" type="String" />
+		<field name="layoutPrototypeLinkEnabled" type="boolean" />
+		<field name="sourcePrototypeLayoutUuid" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.LayoutBranch">
+		<field name="mvccVersion" type="long" />
+		<field name="layoutBranchId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="layoutSetBranchId" type="long" />
+		<field name="plid" type="long" />
+		<field name="name" type="String">
+			<validator name="rangeLength">[4,100]</validator>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="master" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.LayoutFriendlyURL">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="layoutFriendlyURLId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="plid" type="long" />
+		<field name="privateLayout" type="boolean" />
+		<field name="friendlyURL" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="languageId" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.LayoutPrototype">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="layoutPrototypeId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="settings" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.LayoutRevision">
+		<field name="mvccVersion" type="long" />
+		<field name="layoutRevisionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="layoutSetBranchId" type="long" />
+		<field name="layoutBranchId" type="long" />
+		<field name="parentLayoutRevisionId" type="long" />
+		<field name="head" type="boolean" />
+		<field name="major" type="boolean" />
+		<field name="plid" type="long" />
+		<field name="privateLayout" type="boolean" />
+		<field name="name" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<validator name="required" />
+		</field>
+		<field name="title" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="keywords" type="String" localized="true" />
+		<field name="robots" type="String" localized="true" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="iconImageId" type="long" />
+		<field name="themeId" type="String" />
+		<field name="colorSchemeId" type="String" />
+		<field name="wapThemeId" type="String" />
+		<field name="wapColorSchemeId" type="String" />
+		<field name="css" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.model.LayoutSet">
+		<field name="mvccVersion" type="long" />
+		<field name="layoutSetId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="privateLayout" type="boolean" />
+		<field name="logoId" type="long" />
+		<field name="themeId" type="String" />
+		<field name="colorSchemeId" type="String" />
+		<field name="wapThemeId" type="String" />
+		<field name="wapColorSchemeId" type="String" />
+		<field name="css" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="pageCount" type="int" />
+		<field name="settings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="layoutSetPrototypeUuid" type="String" />
+		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.LayoutSetBranch">
+		<field name="mvccVersion" type="long" />
+		<field name="layoutSetBranchId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="privateLayout" type="boolean" />
+		<field name="name" type="String">
+			<validator name="rangeLength">[4,100]</validator>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="master" type="boolean" />
+		<field name="logoId" type="long" />
+		<field name="themeId" type="String" />
+		<field name="colorSchemeId" type="String" />
+		<field name="wapThemeId" type="String" />
+		<field name="wapColorSchemeId" type="String" />
+		<field name="css" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="settings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="layoutSetPrototypeUuid" type="String" />
+		<field name="layoutSetPrototypeLinkEnabled" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.LayoutSetPrototype">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="layoutSetPrototypeId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" localized="true">
+			<hint name="max-length">4000</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="settings" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.ListType">
+		<field name="mvccVersion" type="long" />
+		<field name="listTypeId" type="long" />
+		<field name="name" type="String" />
+		<field name="type" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.Lock">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="lockId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="className" type="String" />
+		<field name="key" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="owner" type="String">
+			<hint name="max-length">1024</hint>
+		</field>
+		<field name="inheritable" type="boolean" />
+		<field name="expirationDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.model.MembershipRequest">
+		<field name="mvccVersion" type="long" />
+		<field name="membershipRequestId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="comments" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="replyComments" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="replyDate" type="Date" />
+		<field name="replierUserId" type="long" />
+		<field name="statusId" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.Organization">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="organizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="parentOrganizationId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="name" type="String">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">100</hint>
+			<validator name="required" />
+		</field>
+		<field name="type" type="String">
+			<hint name="auto-escape">false</hint>
+		</field>
+		<field name="recursable" type="boolean" />
+		<field name="regionId" type="long" />
+		<field name="countryId" type="long" />
+		<field name="statusId" type="long" />
+		<field name="comments" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">400</hint>
+		</field>
+		<field name="logoId" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.OrgGroupRole">
+		<field name="mvccVersion" type="long" />
+		<field name="organizationId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="roleId" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.OrgLabor">
+		<field name="mvccVersion" type="long" />
+		<field name="orgLaborId" type="long" />
+		<field name="organizationId" type="long" />
+		<field name="typeId" type="long" />
+		<field name="sunOpen" type="int" />
+		<field name="sunClose" type="int" />
+		<field name="monOpen" type="int" />
+		<field name="monClose" type="int" />
+		<field name="tueOpen" type="int" />
+		<field name="tueClose" type="int" />
+		<field name="wedOpen" type="int" />
+		<field name="wedClose" type="int" />
+		<field name="thuOpen" type="int" />
+		<field name="thuClose" type="int" />
+		<field name="friOpen" type="int" />
+		<field name="friClose" type="int" />
+		<field name="satOpen" type="int" />
+		<field name="satClose" type="int" />
+	</model>
+	<model name="com.liferay.portal.model.PasswordPolicy">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="passwordPolicyId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="defaultPolicy" type="boolean" />
+		<field name="name" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="changeable" type="boolean" />
+		<field name="changeRequired" type="boolean" />
+		<field name="minAge" type="long" />
+		<field name="checkSyntax" type="boolean" />
+		<field name="allowDictionaryWords" type="boolean" />
+		<field name="minAlphanumeric" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="minLength" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="minLowerCase" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="minNumbers" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="minSymbols" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="minUpperCase" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="regex" type="String" />
+		<field name="history" type="boolean" />
+		<field name="historyCount" type="int" />
+		<field name="expireable" type="boolean" />
+		<field name="maxAge" type="long" />
+		<field name="warningTime" type="long" />
+		<field name="graceLimit" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="lockout" type="boolean" />
+		<field name="maxFailure" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="lockoutDuration" type="long" />
+		<field name="requireUnlock" type="boolean" />
+		<field name="resetFailureCount" type="long" />
+		<field name="resetTicketMaxAge" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.PasswordPolicyRel">
+		<field name="mvccVersion" type="long" />
+		<field name="passwordPolicyRelId" type="long" />
+		<field name="passwordPolicyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.PasswordTracker">
+		<field name="mvccVersion" type="long" />
+		<field name="passwordTrackerId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="password" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.Phone">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="phoneId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="number" type="String">
+			<hint name="display-width">100</hint>
+		</field>
+		<field name="extension" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="typeId" type="long" />
+		<field name="primary" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.PluginSetting">
+		<field name="mvccVersion" type="long" />
+		<field name="pluginSettingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="pluginId" type="String" />
+		<field name="pluginType" type="String" />
+		<field name="roles" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.PortalPreferences">
+		<field name="mvccVersion" type="long" />
+		<field name="portalPreferencesId" type="long" />
+		<field name="ownerId" type="long" />
+		<field name="ownerType" type="int" />
+		<field name="preferences" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.Portlet">
+		<field name="mvccVersion" type="long" />
+		<field name="id" type="long" />
+		<field name="companyId" type="long" />
+		<field name="portletId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="roles" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.PortletItem">
+		<field name="mvccVersion" type="long" />
+		<field name="portletItemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="portletId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="classNameId" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.PortletPreferences">
+		<field name="mvccVersion" type="long" />
+		<field name="portletPreferencesId" type="long" />
+		<field name="ownerId" type="long" />
+		<field name="ownerType" type="int" />
+		<field name="plid" type="long" />
+		<field name="portletId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="preferences" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.Region">
+		<field name="mvccVersion" type="long" />
+		<field name="regionId" type="long" />
+		<field name="countryId" type="long" />
+		<field name="regionCode" type="String" />
+		<field name="name" type="String" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.Release">
+		<field name="mvccVersion" type="long" />
+		<field name="releaseId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="servletContextName" type="String" />
+		<field name="buildNumber" type="int" />
+		<field name="buildDate" type="Date" />
+		<field name="verified" type="boolean" />
+		<field name="state" type="int" />
+		<field name="testString" type="String">
+			<hint name="max-length">1024</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.Repository">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="repositoryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="portletId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="dlFolderId" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.RepositoryEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="repositoryEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="repositoryId" type="long" />
+		<field name="mappedId" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="manualCheckInRequired" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.ResourceAction">
+		<field name="mvccVersion" type="long" />
+		<field name="resourceActionId" type="long" />
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="actionId" type="String" />
+		<field name="bitwiseValue" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ResourceBlock">
+		<field name="mvccVersion" type="long" />
+		<field name="resourceBlockId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+		<field name="permissionsHash" type="String" />
+		<field name="referenceCount" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ResourceBlockPermission">
+		<field name="mvccVersion" type="long" />
+		<field name="resourceBlockPermissionId" type="long" />
+		<field name="resourceBlockId" type="long" />
+		<field name="roleId" type="long" />
+		<field name="actionIds" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ResourcePermission">
+		<field name="mvccVersion" type="long" />
+		<field name="resourcePermissionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="scope" type="int" />
+		<field name="primKey" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="roleId" type="long" />
+		<field name="ownerId" type="long" />
+		<field name="actionIds" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.ResourceTypePermission">
+		<field name="mvccVersion" type="long" />
+		<field name="resourceTypePermissionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+		<field name="roleId" type="long" />
+		<field name="actionIds" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.Role">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="roleId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="name" type="String">
+			<hint name="display-width">210</hint>
+			<validator name="required" />
+		</field>
+		<field name="title" type="String" localized="true">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="type" type="int" />
+		<field name="subtype" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.ServiceComponent">
+		<field name="mvccVersion" type="long" />
+		<field name="serviceComponentId" type="long" />
+		<field name="buildNamespace" type="String" />
+		<field name="buildNumber" type="long" />
+		<field name="buildDate" type="long" />
+		<field name="data" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.Shard">
+		<field name="mvccVersion" type="long" />
+		<field name="shardId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.Subscription">
+		<field name="mvccVersion" type="long" />
+		<field name="subscriptionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="frequency" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.SystemEvent">
+		<field name="mvccVersion" type="long" />
+		<field name="systemEventId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="classUuid" type="String" />
+		<field name="referrerClassNameId" type="long" />
+		<field name="parentSystemEventId" type="long" />
+		<field name="systemEventSetKey" type="long" />
+		<field name="type" type="int" />
+		<field name="extraData" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.Team">
+		<field name="mvccVersion" type="long" />
+		<field name="teamId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="groupId" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.Ticket">
+		<field name="mvccVersion" type="long" />
+		<field name="ticketId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="key" type="String" />
+		<field name="type" type="int" />
+		<field name="extraInfo" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="expirationDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.model.User">
+		<default-hints>
+			<hint name="display-width">210</hint>
+		</default-hints>
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="userId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="defaultUser" type="boolean" />
+		<field name="contactId" type="long" />
+		<field name="password" type="String" />
+		<field name="passwordEncrypted" type="boolean" />
+		<field name="passwordReset" type="boolean" />
+		<field name="passwordModifiedDate" type="Date" />
+		<field name="digest" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="reminderQueryQuestion" type="String" />
+		<field name="reminderQueryAnswer" type="String" />
+		<field name="graceLoginCount" type="int" />
+		<field name="screenName" type="String">
+			<validator name="required" />
+		</field>
+		<field name="emailAddress" type="String">
+			<validator name="email" />
+		</field>
+		<field name="facebookId" type="long" />
+		<field name="ldapServerId" type="long" />
+		<field name="openId" type="String">
+			<hint name="max-length">1024</hint>
+			<hint name="display-width">400</hint>
+		</field>
+		<field name="portraitId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="timeZoneId" type="String" />
+		<field name="greeting" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="comments" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">400</hint>
+		</field>
+		<field name="firstName" type="String">
+			<validator name="required" />
+		</field>
+		<field name="middleName" type="String" />
+		<field name="lastName" type="String" />
+		<field name="jobTitle" type="String">
+			<hint name="max-length">100</hint>
+		</field>
+		<field name="loginDate" type="Date" />
+		<field name="loginIP" type="String" />
+		<field name="lastLoginDate" type="Date" />
+		<field name="lastLoginIP" type="String" />
+		<field name="lastFailedLoginDate" type="Date" />
+		<field name="failedLoginAttempts" type="int" />
+		<field name="lockout" type="boolean" />
+		<field name="lockoutDate" type="Date" />
+		<field name="agreedToTermsOfUse" type="boolean" />
+		<field name="emailAddressVerified" type="boolean" />
+		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.portal.model.UserGroup">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="userGroupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="parentUserGroupId" type="long" />
+		<field name="name" type="String">
+			<hint name="display-width">210</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="addedByLDAPImport" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.UserGroupGroupRole">
+		<field name="mvccVersion" type="long" />
+		<field name="userGroupId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="roleId" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.UserGroupRole">
+		<field name="mvccVersion" type="long" />
+		<field name="userId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="roleId" type="long" />
+	</model>
+	<model name="com.liferay.portal.model.UserIdMapper">
+		<field name="mvccVersion" type="long" />
+		<field name="userIdMapperId" type="long" />
+		<field name="userId" type="long" />
+		<field name="type" type="String" />
+		<field name="description" type="String" />
+		<field name="externalUserId" type="String" />
+	</model>
+	<model name="com.liferay.portal.model.UserNotificationDelivery">
+		<field name="mvccVersion" type="long" />
+		<field name="userNotificationDeliveryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="portletId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="classNameId" type="long" />
+		<field name="notificationType" type="int" />
+		<field name="deliveryType" type="int" />
+		<field name="deliver" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.UserNotificationEvent">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="userNotificationEventId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="type" type="String" />
+		<field name="timestamp" type="long" />
+		<field name="deliveryType" type="int" />
+		<field name="deliverBy" type="long" />
+		<field name="delivered" type="boolean" />
+		<field name="payload" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="actionRequired" type="boolean" />
+		<field name="archived" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.UserTracker">
+		<field name="mvccVersion" type="long" />
+		<field name="userTrackerId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="modifiedDate" type="Date" />
+		<field name="sessionId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="remoteAddr" type="String" />
+		<field name="remoteHost" type="String" />
+		<field name="userAgent" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.UserTrackerPath">
+		<field name="mvccVersion" type="long" />
+		<field name="userTrackerPathId" type="long" />
+		<field name="userTrackerId" type="long" />
+		<field name="path" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="pathDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.model.VirtualHost">
+		<default-hints>
+			<hint name="display-width">210</hint>
+		</default-hints>
+		<field name="mvccVersion" type="long" />
+		<field name="virtualHostId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="layoutSetId" type="long" />
+		<field name="hostname" type="String">
+			<validator name="required" />
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.WebDAVProps">
+		<field name="mvccVersion" type="long" />
+		<field name="webDavPropsId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="props" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portal.model.Website">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="websiteId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="url" type="String">
+			<hint-collection name="URL" />
+			<hint name="display-width">210</hint>
+			<validator name="url" />
+		</field>
+		<field name="typeId" type="long" />
+		<field name="primary" type="boolean" />
+	</model>
+	<model name="com.liferay.portal.model.WorkflowDefinitionLink">
+		<field name="mvccVersion" type="long" />
+		<field name="workflowDefinitionLinkId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="typePK" type="long" />
+		<field name="workflowDefinitionName" type="String" />
+		<field name="workflowDefinitionVersion" type="int" />
+	</model>
+	<model name="com.liferay.portal.model.WorkflowInstanceLink">
+		<field name="mvccVersion" type="long" />
+		<field name="workflowInstanceLinkId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="workflowInstanceId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.announcements.model.AnnouncementsDelivery">
+		<field name="deliveryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="type" type="String" />
+		<field name="email" type="boolean" />
+		<field name="sms" type="boolean" />
+		<field name="website" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.announcements.model.AnnouncementsEntry">
+		<field name="uuid" type="String" />
+		<field name="entryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="title" type="String" />
+		<field name="content" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
+		</field>
+		<field name="url" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="type" type="String" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date">
+			<hint name="default-month-delta">1</hint>
+		</field>
+		<field name="priority" type="int" />
+		<field name="alert" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.announcements.model.AnnouncementsFlag">
+		<field name="flagId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="entryId" type="long" />
+		<field name="value" type="int" />
+	</model>
+	<model name="com.liferay.portlet.asset.model.AssetCategory">
+		<field name="uuid" type="String" />
+		<field name="categoryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="parentCategoryId" type="long" />
+		<field name="leftCategoryId" type="long" />
+		<field name="rightCategoryId" type="long" />
+		<field name="name" type="String" />
+		<field name="title" type="String" localized="true" />
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">350</hint>
+		</field>
+		<field name="vocabularyId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.asset.model.AssetCategoryProperty">
+		<field name="categoryPropertyId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="categoryId" type="long" />
+		<field name="key" type="String">
+			<hint name="display-width">210</hint>
+		</field>
+		<field name="value" type="String">
+			<hint name="display-width">210</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portlet.asset.model.AssetEntry">
+		<field name="entryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="classUuid" type="String" />
+		<field name="classTypeId" type="long" />
+		<field name="listable" type="boolean" />
+		<field name="visible" type="boolean" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+		<field name="publishDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="mimeType" type="String" />
+		<field name="title" type="String" localized="true">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="summary" type="String" localized="true">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="url" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="layoutUuid" type="String" />
+		<field name="height" type="int" />
+		<field name="width" type="int" />
+		<field name="priority" type="double" />
+		<field name="viewCount" type="int" />
+	</model>
+	<model name="com.liferay.portlet.asset.model.AssetLink">
+		<field name="linkId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="entryId1" type="long" />
+		<field name="entryId2" type="long" />
+		<field name="type" type="int" />
+		<field name="weight" type="int" />
+	</model>
+	<model name="com.liferay.portlet.asset.model.AssetTag">
+		<field name="tagId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="assetCount" type="int" />
+	</model>
+	<model name="com.liferay.portlet.asset.model.AssetTagStats">
+		<field name="tagStatsId" type="long" />
+		<field name="tagId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="assetCount" type="int" />
+	</model>
+	<model name="com.liferay.portlet.asset.model.AssetVocabulary">
+		<field name="uuid" type="String" />
+		<field name="vocabularyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="title" type="String" localized="true" />
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">350</hint>
+		</field>
+		<field name="settings" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portlet.blogs.model.BlogsEntry">
+		<field name="uuid" type="String" />
+		<field name="entryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="title" type="String">
+			<hint name="max-length">150</hint>
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
+		<field name="subtitle" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="urlTitle" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">350</hint>
+		</field>
+		<field name="content" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
+		</field>
+		<field name="displayDate" type="Date" />
+		<field name="allowPingbacks" type="boolean" />
+		<field name="allowTrackbacks" type="boolean" />
+		<field name="trackbacks" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="coverImageCaption" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="coverImageFileEntryId" type="long" />
+		<field name="coverImageURL" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="smallImage" type="boolean" />
+		<field name="smallImageFileEntryId" type="long" />
+		<field name="smallImageId" type="long" />
+		<field name="smallImageURL" type="String">
+			<hint-collection name="URL" />
+			<hint name="display-width">210</hint>
+		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.blogs.model.BlogsStatsUser">
+		<field name="statsUserId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="entryCount" type="int" />
+		<field name="lastPostDate" type="Date" />
+		<field name="ratingsTotalEntries" type="int" />
+		<field name="ratingsTotalScore" type="double" />
+		<field name="ratingsAverageScore" type="double" />
+	</model>
+	<model name="com.liferay.portlet.calendar.model.CalEvent">
+		<field name="uuid" type="String" />
+		<field name="eventId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="title" type="String">
+			<sanitize content-type="text/plain" modes="ALL" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
+		</field>
+		<field name="location" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+		<field name="durationHour" type="int" />
+		<field name="durationMinute" type="int" />
+		<field name="allDay" type="boolean" />
+		<field name="timeZoneSensitive" type="boolean" />
+		<field name="type" type="String" />
+		<field name="repeating" type="boolean" />
+		<field name="recurrence" type="String">
+			<hint-collection name="CLOB" />
+			<hint name="auto-escape">false</hint>
+		</field>
+		<field name="remindBy" type="int" />
+		<field name="firstReminder" type="int" />
+		<field name="secondReminder" type="int" />
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLContent">
+		<field name="contentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="repositoryId" type="long" />
+		<field name="path" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="version" type="String" />
+		<field name="data" type="Blob" />
+		<field name="size" type="long" />
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntry">
+		<field name="uuid" type="String" />
+		<field name="fileEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="repositoryId" type="long" />
+		<field name="folderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="fileName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="extension" type="String" />
+		<field name="mimeType" type="String" />
+		<field name="title" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="extraSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="fileEntryTypeId" type="long" />
+		<field name="version" type="String" />
+		<field name="size" type="long" />
+		<field name="readCount" type="int" />
+		<field name="smallImageId" type="long" />
+		<field name="largeImageId" type="long" />
+		<field name="custom1ImageId" type="long" />
+		<field name="custom2ImageId" type="long" />
+		<field name="manualCheckInRequired" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata">
+		<field name="uuid" type="String" />
+		<field name="fileEntryMetadataId" type="long" />
+		<field name="DDMStorageId" type="long" />
+		<field name="DDMStructureId" type="long" />
+		<field name="fileEntryTypeId" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="fileVersionId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryType">
+		<field name="uuid" type="String" />
+		<field name="fileEntryTypeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="fileEntryTypeKey" type="String" />
+		<field name="name" type="String" localized="true">
+			<hint name="max-length">4000</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLFileRank">
+		<field name="fileRankId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="fileEntryId" type="long" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLFileShortcut">
+		<field name="uuid" type="String" />
+		<field name="fileShortcutId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="repositoryId" type="long" />
+		<field name="folderId" type="long" />
+		<field name="toFileEntryId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="active" type="boolean" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLFileVersion">
+		<field name="uuid" type="String" />
+		<field name="fileVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="repositoryId" type="long" />
+		<field name="folderId" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="fileName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="extension" type="String" />
+		<field name="mimeType" type="String" />
+		<field name="title" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="changeLog" type="String" />
+		<field name="extraSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="fileEntryTypeId" type="long" />
+		<field name="version" type="String" />
+		<field name="size" type="long" />
+		<field name="checksum" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLFolder">
+		<field name="uuid" type="String" />
+		<field name="folderId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="repositoryId" type="long" />
+		<field name="mountPoint" type="boolean" />
+		<field name="parentFolderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="lastPostDate" type="Date" />
+		<field name="defaultFileEntryTypeId" type="long" />
+		<field name="hidden" type="boolean" />
+		<field name="restrictionType" type="int" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLSyncEvent">
+		<field name="syncEventId" type="long" />
+		<field name="modifiedTime" type="long" />
+		<field name="event" type="String" />
+		<field name="type" type="String" />
+		<field name="typePK" type="long" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecord">
+		<field name="uuid" type="String" />
+		<field name="recordId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="versionUserId" type="long" />
+		<field name="versionUserName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="DDMStorageId" type="long" />
+		<field name="recordSetId" type="long" />
+		<field name="version" type="String" />
+		<field name="displayIndex" type="int" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet">
+		<field name="uuid" type="String" />
+		<field name="recordSetId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="DDMStructureId" type="long" />
+		<field name="recordSetKey" type="String">
+			<hint name="upper-case">true</hint>
+			<hint name="auto-escape">false</hint>
+		</field>
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="minDisplayRows" type="int" />
+		<field name="scope" type="int" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion">
+		<field name="recordVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="DDMStorageId" type="long" />
+		<field name="recordSetId" type="long" />
+		<field name="recordId" type="long" />
+		<field name="version" type="String" />
+		<field name="displayIndex" type="int" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMContent">
+		<field name="uuid" type="String" />
+		<field name="contentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="data" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink">
+		<field name="uuid" type="String" />
+		<field name="storageLinkId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="structureId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMStructure">
+		<field name="uuid" type="String" />
+		<field name="structureId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="parentStructureId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="structureKey" type="String">
+			<hint name="upper-case">true</hint>
+			<hint name="auto-escape">false</hint>
+		</field>
+		<field name="version" type="String" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="definition" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="storageType" type="String" />
+		<field name="type" type="int" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout">
+		<field name="uuid" type="String" />
+		<field name="structureLayoutId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="structureVersionId" type="long" />
+		<field name="definition" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink">
+		<field name="structureLinkId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="structureId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion">
+		<field name="structureVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="structureId" type="long" />
+		<field name="version" type="String" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="definition" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="storageType" type="String" />
+		<field name="type" type="int" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate">
+		<field name="uuid" type="String" />
+		<field name="templateId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="resourceClassNameId" type="long" />
+		<field name="templateKey" type="String">
+			<hint name="upper-case">true</hint>
+			<hint name="auto-escape">false</hint>
+		</field>
+		<field name="version" type="String" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<hint name="autoSize">true</hint>
+		</field>
+		<field name="type" type="String" />
+		<field name="mode" type="String" />
+		<field name="language" type="String" />
+		<field name="script" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="cacheable" type="boolean" />
+		<field name="smallImage" type="boolean" />
+		<field name="smallImageId" type="long" />
+		<field name="smallImageURL" type="String" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion">
+		<field name="templateVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="templateId" type="long" />
+		<field name="version" type="String" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<hint name="autoSize">true</hint>
+		</field>
+		<field name="language" type="String" />
+		<field name="script" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.expando.model.ExpandoColumn">
+		<field name="columnId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="tableId" type="long" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="type" type="int" />
+		<field name="defaultData" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.expando.model.ExpandoRow">
+		<field name="rowId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="modifiedDate" type="Date" />
+		<field name="tableId" type="long" />
+		<field name="classPK" type="long" />
+	</model>
+	<model name="com.liferay.portlet.expando.model.ExpandoTable">
+		<field name="tableId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="name" type="String" />
+	</model>
+	<model name="com.liferay.portlet.expando.model.ExpandoValue">
+		<field name="valueId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="tableId" type="long" />
+		<field name="columnId" type="long" />
+		<field name="rowId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="data" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.journal.model.JournalArticle">
+		<field name="uuid" type="String" />
+		<field name="id" type="long" />
+		<field name="resourcePrimKey" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="folderId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="articleId" type="String">
+			<hint name="upper-case">true</hint>
+		</field>
+		<field name="version" type="double" />
+		<field name="title" type="String" localized="true">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="urlTitle" type="String">
+			<hint name="max-length">150</hint>
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="CLOB" />
+			<hint name="display-height">40</hint>
+		</field>
+		<field name="content" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="DDMStructureKey" type="String" />
+		<field name="DDMTemplateKey" type="String" />
+		<field name="layoutUuid" type="String" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date">
+			<hint name="default-year-delta">1</hint>
+		</field>
+		<field name="reviewDate" type="Date">
+			<hint name="default-month-delta">9</hint>
+		</field>
+		<field name="indexable" type="boolean">
+			<hint name="default-value">true</hint>
+		</field>
+		<field name="smallImage" type="boolean" />
+		<field name="smallImageId" type="long" />
+		<field name="smallImageURL" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.journal.model.JournalArticleImage">
+		<field name="articleImageId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="articleId" type="String" />
+		<field name="version" type="double" />
+		<field name="elInstanceId" type="String" />
+		<field name="elName" type="String" />
+		<field name="languageId" type="String" />
+		<field name="tempImage" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.journal.model.JournalArticleResource">
+		<field name="uuid" type="String" />
+		<field name="resourcePrimKey" type="long" />
+		<field name="groupId" type="long" />
+		<field name="articleId" type="String" />
+	</model>
+	<model name="com.liferay.portlet.journal.model.JournalContentSearch">
+		<field name="contentSearchId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="privateLayout" type="boolean" />
+		<field name="layoutId" type="long" />
+		<field name="portletId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="articleId" type="String" />
+	</model>
+	<model name="com.liferay.portlet.journal.model.JournalFeed">
+		<field name="uuid" type="String" />
+		<field name="id" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="feedId" type="String">
+			<hint name="auto-escape">false</hint>
+		</field>
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="DDMStructureKey" type="String" />
+		<field name="DDMTemplateKey" type="String" />
+		<field name="DDMRendererTemplateKey" type="String" />
+		<field name="delta" type="int">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="orderByCol" type="String" />
+		<field name="orderByType" type="String" />
+		<field name="targetLayoutFriendlyUrl" type="String">
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="targetPortletId" type="String" />
+		<field name="contentField" type="String" />
+		<field name="feedFormat" type="String" />
+		<field name="feedVersion" type="double" />
+	</model>
+	<model name="com.liferay.portlet.journal.model.JournalFolder">
+		<field name="uuid" type="String" />
+		<field name="folderId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="parentFolderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="name" type="String">
+			<hint name="max-length">100</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="restrictionType" type="int" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.messageboards.model.MBBan">
+		<field name="uuid" type="String" />
+		<field name="banId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="banUserId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.messageboards.model.MBCategory">
+		<field name="uuid" type="String" />
+		<field name="categoryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="parentCategoryId" type="long" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="displayStyle" type="String" />
+		<field name="threadCount" type="int" />
+		<field name="messageCount" type="int" />
+		<field name="lastPostDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.messageboards.model.MBDiscussion">
+		<field name="uuid" type="String" />
+		<field name="discussionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="threadId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.messageboards.model.MBMailingList">
+		<field name="uuid" type="String" />
+		<field name="mailingListId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="categoryId" type="long" />
+		<field name="emailAddress" type="String" />
+		<field name="inProtocol" type="String" />
+		<field name="inServerName" type="String" />
+		<field name="inServerPort" type="int" />
+		<field name="inUseSSL" type="boolean" />
+		<field name="inUserName" type="String" />
+		<field name="inPassword" type="String">
+			<hint name="secret">true</hint>
+		</field>
+		<field name="inReadInterval" type="int" />
+		<field name="outEmailAddress" type="String" />
+		<field name="outCustom" type="boolean" />
+		<field name="outServerName" type="String" />
+		<field name="outServerPort" type="int" />
+		<field name="outUseSSL" type="boolean" />
+		<field name="outUserName" type="String" />
+		<field name="outPassword" type="String">
+			<hint name="secret">true</hint>
+		</field>
+		<field name="allowAnonymous" type="boolean" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.messageboards.model.MBMessage">
+		<field name="uuid" type="String" />
+		<field name="messageId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="categoryId" type="long" />
+		<field name="threadId" type="long" />
+		<field name="rootMessageId" type="long" />
+		<field name="parentMessageId" type="long" />
+		<field name="subject" type="String">
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
+		<field name="body" type="String">
+			<hint-collection name="CLOB" />
+			<validator name="required" />
+		</field>
+		<field name="format" type="String" />
+		<field name="anonymous" type="boolean" />
+		<field name="priority" type="double" />
+		<field name="allowPingbacks" type="boolean" />
+		<field name="answer" type="boolean" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.messageboards.model.MBStatsUser">
+		<field name="statsUserId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="userId" type="long" />
+		<field name="messageCount" type="int" />
+		<field name="lastPostDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.messageboards.model.MBThread">
+		<field name="uuid" type="String" />
+		<field name="threadId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="categoryId" type="long" />
+		<field name="rootMessageId" type="long" />
+		<field name="rootMessageUserId" type="long" />
+		<field name="messageCount" type="int" />
+		<field name="viewCount" type="int" />
+		<field name="lastPostByUserId" type="long" />
+		<field name="lastPostDate" type="Date" />
+		<field name="priority" type="double" />
+		<field name="question" type="boolean" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.messageboards.model.MBThreadFlag">
+		<field name="uuid" type="String" />
+		<field name="threadFlagId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="threadId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.mobiledevicerules.model.MDRAction">
+		<field name="uuid" type="String" />
+		<field name="actionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="ruleGroupInstanceId" type="long" />
+		<field name="name" type="String" localized="true">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="type" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRule">
+		<field name="uuid" type="String" />
+		<field name="ruleId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="ruleGroupId" type="long" />
+		<field name="name" type="String" localized="true">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="type" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup">
+		<field name="uuid" type="String" />
+		<field name="ruleGroupId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" localized="true">
+			<hint name="display-width">210</hint>
+			<hint name="max-length">255</hint>
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance">
+		<field name="uuid" type="String" />
+		<field name="ruleGroupInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="ruleGroupId" type="long" />
+		<field name="priority" type="int" />
+	</model>
+	<model name="com.liferay.portlet.ratings.model.RatingsEntry">
+		<field name="uuid" type="String" />
+		<field name="entryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="score" type="double" />
+	</model>
+	<model name="com.liferay.portlet.ratings.model.RatingsStats">
+		<field name="statsId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="totalEntries" type="int" />
+		<field name="totalScore" type="double" />
+		<field name="averageScore" type="double" />
+	</model>
+	<model name="com.liferay.portlet.shopping.model.ShoppingCart">
+		<field name="cartId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="itemIds" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="couponCodes" type="String" />
+		<field name="altShipping" type="int" />
+		<field name="insure" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.shopping.model.ShoppingCategory">
+		<field name="categoryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="parentCategoryId" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.shopping.model.ShoppingCoupon">
+		<field name="couponId" type="long">
+			<hint name="upper-case">true</hint>
+		</field>
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="code" type="String" />
+		<field name="name" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date">
+			<hint name="default-month-delta">1</hint>
+		</field>
+		<field name="active" type="boolean" />
+		<field name="limitCategories" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="limitSkus" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="minOrder" type="double" />
+		<field name="discount" type="double" />
+		<field name="discountType" type="String" />
+	</model>
+	<model name="com.liferay.portlet.shopping.model.ShoppingItem">
+		<field name="itemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="categoryId" type="long" />
+		<field name="sku" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="properties" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="fields" type="boolean" />
+		<field name="fieldsQuantities" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="minQuantity" type="int" />
+		<field name="maxQuantity" type="int" />
+		<field name="price" type="double" />
+		<field name="discount" type="double" />
+		<field name="taxable" type="boolean" />
+		<field name="shipping" type="double" />
+		<field name="useShippingFormula" type="boolean" />
+		<field name="requiresShipping" type="boolean" />
+		<field name="stockQuantity" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="featured" type="boolean" />
+		<field name="sale" type="boolean" />
+		<field name="smallImage" type="boolean" />
+		<field name="smallImageId" type="long" />
+		<field name="smallImageURL" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="mediumImage" type="boolean" />
+		<field name="mediumImageId" type="long" />
+		<field name="mediumImageURL" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="largeImage" type="boolean" />
+		<field name="largeImageId" type="long" />
+		<field name="largeImageURL" type="String">
+			<hint-collection name="URL" />
+		</field>
+	</model>
+	<model name="com.liferay.portlet.shopping.model.ShoppingItemField">
+		<field name="itemFieldId" type="long" />
+		<field name="itemId" type="long" />
+		<field name="name" type="String">
+			<hint name="display-width">100</hint>
+		</field>
+		<field name="values" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-height">15</hint>
+			<hint name="display-width">100</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-height">15</hint>
+			<hint name="display-width">150</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portlet.shopping.model.ShoppingItemPrice">
+		<default-hints>
+			<hint name="display-width">50</hint>
+		</default-hints>
+		<field name="itemPriceId" type="long" />
+		<field name="itemId" type="long" />
+		<field name="minQuantity" type="int" />
+		<field name="maxQuantity" type="int" />
+		<field name="price" type="double" />
+		<field name="discount" type="double" />
+		<field name="taxable" type="boolean" />
+		<field name="shipping" type="double" />
+		<field name="useShippingFormula" type="boolean" />
+		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.portlet.shopping.model.ShoppingOrder">
+		<default-hints>
+			<hint name="display-width">210</hint>
+		</default-hints>
+		<field name="orderId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="number" type="String" />
+		<field name="tax" type="double" />
+		<field name="shipping" type="double" />
+		<field name="altShipping" type="String" />
+		<field name="requiresShipping" type="boolean" />
+		<field name="insure" type="boolean" />
+		<field name="insurance" type="double" />
+		<field name="couponCodes" type="String" />
+		<field name="couponDiscount" type="double" />
+		<field name="billingFirstName" type="String" />
+		<field name="billingLastName" type="String" />
+		<field name="billingEmailAddress" type="String" />
+		<field name="billingCompany" type="String" />
+		<field name="billingStreet" type="String" />
+		<field name="billingCity" type="String" />
+		<field name="billingState" type="String" />
+		<field name="billingZip" type="String" />
+		<field name="billingCountry" type="String" />
+		<field name="billingPhone" type="String" />
+		<field name="shipToBilling" type="boolean" />
+		<field name="shippingFirstName" type="String" />
+		<field name="shippingLastName" type="String" />
+		<field name="shippingEmailAddress" type="String" />
+		<field name="shippingCompany" type="String" />
+		<field name="shippingStreet" type="String" />
+		<field name="shippingCity" type="String" />
+		<field name="shippingState" type="String" />
+		<field name="shippingZip" type="String" />
+		<field name="shippingCountry" type="String" />
+		<field name="shippingPhone" type="String" />
+		<field name="ccName" type="String" />
+		<field name="ccType" type="String" />
+		<field name="ccNumber" type="String" />
+		<field name="ccExpMonth" type="int" />
+		<field name="ccExpYear" type="int" />
+		<field name="ccVerNumber" type="String">
+			<hint name="display-width">30</hint>
+		</field>
+		<field name="comments" type="String">
+			<hint-collection name="CLOB" />
+			<hint name="display-height">105</hint>
+			<hint name="display-width">500</hint>
+		</field>
+		<field name="ppTxnId" type="String" />
+		<field name="ppPaymentStatus" type="String" />
+		<field name="ppPaymentGross" type="double" />
+		<field name="ppReceiverEmail" type="String" />
+		<field name="ppPayerEmail" type="String" />
+		<field name="sendOrderEmail" type="boolean" />
+		<field name="sendShippingEmail" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.shopping.model.ShoppingOrderItem">
+		<field name="orderItemId" type="long" />
+		<field name="orderId" type="long" />
+		<field name="itemId" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="sku" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="properties" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="price" type="double" />
+		<field name="quantity" type="int" />
+		<field name="shippedDate" type="Date" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivity">
+		<field name="activityId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="long" />
+		<field name="activitySetId" type="long" />
+		<field name="mirrorActivityId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="parentClassNameId" type="long" />
+		<field name="parentClassPK" type="long" />
+		<field name="type" type="int" />
+		<field name="extraData" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="auto-escape">false</hint>
+		</field>
+		<field name="receiverUserId" type="long" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivityAchievement">
+		<field name="activityAchievementId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="long" />
+		<field name="name" type="String" />
+		<field name="firstInGroup" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivityCounter">
+		<field name="activityCounterId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="name" type="String" />
+		<field name="ownerType" type="int" />
+		<field name="currentValue" type="int" />
+		<field name="totalValue" type="int" />
+		<field name="graceValue" type="int" />
+		<field name="startPeriod" type="int" />
+		<field name="endPeriod" type="int" />
+		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivityLimit">
+		<field name="activityLimitId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="activityType" type="int" />
+		<field name="activityCounterName" type="String" />
+		<field name="value" type="String" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivitySet">
+		<field name="activitySetId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="long" />
+		<field name="modifiedDate" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="type" type="int" />
+		<field name="extraData" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="auto-escape">false</hint>
+		</field>
+		<field name="activityCount" type="int" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialActivitySetting">
+		<field name="activitySettingId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="activityType" type="int" />
+		<field name="name" type="String" />
+		<field name="value" type="String">
+			<hint name="max-length">1024</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialRelation">
+		<field name="uuid" type="String" />
+		<field name="relationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="long" />
+		<field name="userId1" type="long" />
+		<field name="userId2" type="long" />
+		<field name="type" type="int" />
+	</model>
+	<model name="com.liferay.portlet.social.model.SocialRequest">
+		<field name="uuid" type="String" />
+		<field name="requestId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="long" />
+		<field name="modifiedDate" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="type" type="int" />
+		<field name="extraData" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="receiverUserId" type="long" />
+		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion">
+		<field name="frameworkVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="url" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="active" type="boolean" />
+		<field name="priority" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portlet.softwarecatalog.model.SCLicense">
+		<field name="licenseId" type="long" />
+		<field name="name" type="String" />
+		<field name="url" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="openSource" type="boolean" />
+		<field name="active" type="boolean" />
+		<field name="recommended" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.softwarecatalog.model.SCProductEntry">
+		<field name="productEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="type" type="String" />
+		<field name="tags" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="shortDescription" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-height">70</hint>
+			<validator name="required" />
+		</field>
+		<field name="longDescription" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-height">155</hint>
+		</field>
+		<field name="pageURL" type="String">
+			<hint-collection name="URL" />
+			<validator name="required" />
+			<validator name="url" />
+		</field>
+		<field name="author" type="String">
+			<validator name="required" />
+		</field>
+		<field name="repoGroupId" type="String" />
+		<field name="repoArtifactId" type="String" />
+	</model>
+	<model name="com.liferay.portlet.softwarecatalog.model.SCProductScreenshot">
+		<field name="productScreenshotId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="productEntryId" type="long" />
+		<field name="thumbnailId" type="long" />
+		<field name="fullImageId" type="long" />
+		<field name="priority" type="int" />
+	</model>
+	<model name="com.liferay.portlet.softwarecatalog.model.SCProductVersion">
+		<field name="productVersionId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="productEntryId" type="long" />
+		<field name="version" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="changeLog" type="String">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-height">70</hint>
+		</field>
+		<field name="downloadPageURL" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="directDownloadURL" type="String">
+			<hint name="max-length">2000</hint>
+		</field>
+		<field name="repoStoreArtifact" type="boolean" />
+	</model>
+	<model name="com.liferay.portlet.trash.model.TrashEntry">
+		<field name="entryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="systemEventSetKey" type="long" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.portlet.trash.model.TrashVersion">
+		<field name="versionId" type="long" />
+		<field name="entryId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="status" type="int" />
+	</model>
+</model-hints>

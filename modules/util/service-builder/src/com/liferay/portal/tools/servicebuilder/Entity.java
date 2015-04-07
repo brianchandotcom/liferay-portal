@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,7 +91,8 @@ public class Entity {
 		this(
 			null, null, null, name, null, null, null, false, false, false, true,
 			null, null, null, null, null, true, false, false, false, false,
-			false, null, null, null, null, null, null, null, null, null, null);
+			false, null, null, null, null, null, null, null, null, null, null,
+			false);
 	}
 
 	public Entity(
@@ -107,7 +107,7 @@ public class Entity {
 		List<EntityColumn> collectionList, List<EntityColumn> columnList,
 		EntityOrder order, List<EntityFinder> finderList,
 		List<Entity> referenceList, List<String> unresolvedReferenceList,
-		List<String> txRequiredList) {
+		List<String> txRequiredList, boolean permissionModel) {
 
 		_packagePath = packagePath;
 		_portletName = portletName;
@@ -142,6 +142,7 @@ public class Entity {
 		_referenceList = referenceList;
 		_unresolvedReferenceList = unresolvedReferenceList;
 		_txRequiredList = txRequiredList;
+		_permissionModel = permissionModel;
 
 		if (_finderList != null) {
 			Set<EntityColumn> finderColumns = new HashSet<>();
@@ -734,9 +735,7 @@ public class Entity {
 	public boolean isPermissionCheckEnabled(EntityFinder finder) {
 		if (_name.equals("Group") || _name.equals("User") ||
 			finder.getName().equals("UUID_G") || !finder.isCollection() ||
-			!hasPrimitivePK() ||
-			!ResourceActionsUtil.hasModelResourceActions(
-				_packagePath + ".model." + _name)) {
+			!hasPrimitivePK() || !_permissionModel) {
 
 			return false;
 		}
@@ -901,6 +900,7 @@ public class Entity {
 	private final EntityOrder _order;
 	private final String _packagePath;
 	private List<String> _parentTransients;
+	private final boolean _permissionModel;
 	private final String _persistenceClass;
 	private final List<EntityColumn> _pkList;
 	private boolean _portalReference;

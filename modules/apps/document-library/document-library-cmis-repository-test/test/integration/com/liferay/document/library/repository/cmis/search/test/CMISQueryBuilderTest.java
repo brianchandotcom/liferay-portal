@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis.search;
+package com.liferay.document.library.repository.cmis.search.test;
 
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -480,8 +480,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
 		queryConfig.setSearchSubfolders(searchSubfolders);
 
-		return CMISSearchQueryBuilderUtil.buildQuery(
-			searchContext, searchQuery);
+		return CMISSearchQueryBuilderUtil.buildQuery(searchContext, searchQuery);
 	}
 
 	protected SearchContext getSearchContext() {

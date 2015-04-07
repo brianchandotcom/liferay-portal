@@ -610,7 +610,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SCHEDULER_EVENT_DIALOG_BOX_CALENDAR</td>
+	<td>SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT</td>
 	<td>//select[@name='calendarId']</td>
 	<td></td>
 </tr>

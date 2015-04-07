@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ALL_CATEGORIES_CHECKBOX</td>
-	<td>//input[contains(@name,'AssetCategories')]</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

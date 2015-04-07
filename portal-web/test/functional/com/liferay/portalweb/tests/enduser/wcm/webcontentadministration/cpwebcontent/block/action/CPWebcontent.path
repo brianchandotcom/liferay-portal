@@ -362,7 +362,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_CHECKBOX</td>
-	<td>//div[@data-title='${key_webContentTitle}']//input[@name='_15_rowIdsJournalArticle']</td>
+	<td>//div[@data-title='${key_webContentTitle}']//input[contains(@name,'rowIdsJournalArticle')]</td>
 	<td></td>
 </tr>
 <tr>

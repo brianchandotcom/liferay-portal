@@ -24,7 +24,6 @@ import com.liferay.gradle.plugins.util.StringUtil;
 import java.io.File;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import org.gradle.api.Action;
@@ -40,6 +39,7 @@ import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -278,30 +278,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		BuildCssTask buildCssTask = (BuildCssTask)GradleUtil.getTask(
 			project, BUILD_CSS_TASK_NAME);
 
-		configureTaskBuildCssDirNames(buildCssTask);
 		configureTaskBuildCssPortalWebFile(buildCssTask);
+		configureTaskBuildCssRootDirs(buildCssTask);
 		configureTaskBuildCssTmpDir(buildCssTask, liferayExtension);
-	}
-
-	protected void configureTaskBuildCssDirNames(BuildCssTask buildCssTask) {
-		List<String> cssDirNames = buildCssTask.getCssDirNames();
-
-		if (!cssDirNames.isEmpty()) {
-			return;
-		}
-
-		Project project = buildCssTask.getProject();
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
-
-		for (File file : sourceDirectorySet.getSrcDirs()) {
-			String cssDirName = project.relativePath(file);
-
-			cssDirNames.add(cssDirName);
-		}
 	}
 
 	protected void configureTaskBuildCssPortalWebFile(
@@ -315,6 +294,23 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			buildCssTask.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
 
 		buildCssTask.setPortalWebFile(configuration.getSingleFile());
+	}
+
+	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
+		FileCollection rootDirs = buildCssTask.getRootDirs();
+
+		if ((rootDirs != null) && !rootDirs.isEmpty()) {
+			return;
+		}
+
+		Project project = buildCssTask.getProject();
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
+
+		buildCssTask.setRootDirs(sourceDirectorySet.getSrcDirs());
 	}
 
 	protected void configureTaskBuildCssTmpDir(

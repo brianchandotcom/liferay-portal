@@ -27,7 +27,6 @@ import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -42,6 +41,7 @@ import org.gradle.api.artifacts.ResolvedArtifact;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.file.DuplicatesStrategy;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.RelativePath;
@@ -143,18 +143,16 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskBuildCssDirNames(BuildCssTask buildCssTask) {
-		List<String> cssDirNames = buildCssTask.getCssDirNames();
+	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
+		FileCollection rootDirs = buildCssTask.getRootDirs();
 
-		if (!cssDirNames.isEmpty()) {
+		if ((rootDirs != null) && !rootDirs.isEmpty()) {
 			return;
 		}
 
 		Project project = buildCssTask.getProject();
 
-		String cssDirName = project.relativePath(getWebAppDir(project));
-
-		cssDirNames.add(cssDirName);
+		buildCssTask.setRootDirs(getWebAppDir(project));
 	}
 
 	@Override

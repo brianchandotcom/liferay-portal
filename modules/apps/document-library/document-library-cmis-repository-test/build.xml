@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="import.shared" value="document-library-cmis-repository-impl" />
+
+	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+</project>

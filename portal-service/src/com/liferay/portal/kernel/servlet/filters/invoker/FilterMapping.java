@@ -42,8 +42,62 @@ public class FilterMapping {
 		_filter = filter;
 		_urlPatterns = urlPatterns;
 
-		initFilterConfig(filterConfig);
-		initDispatchers(dispatchers);
+		String urlRegexPattern = GetterUtil.getString(
+			filterConfig.getInitParameter("url-regex-pattern"));
+
+		if (Validator.isNotNull(urlRegexPattern)) {
+			_urlRegexPattern = Pattern.compile(urlRegexPattern);
+		}
+		else {
+			_urlRegexPattern = null;
+		}
+
+		String urlRegexIgnorePattern = GetterUtil.getString(
+			filterConfig.getInitParameter("url-regex-ignore-pattern"));
+
+		if (Validator.isNotNull(urlRegexIgnorePattern)) {
+			_urlRegexIgnorePattern = Pattern.compile(urlRegexIgnorePattern);
+		}
+		else {
+			_urlRegexIgnorePattern = null;
+		}
+
+		boolean dispatcherError = false;
+		boolean dispatcherForward = false;
+		boolean dispatcherInclude = false;
+		boolean dispatcherRequest = false;
+
+		for (String dispatcher : dispatchers) {
+			switch(dispatcher) {
+				case "ERROR":
+					dispatcherError = true;
+					break;
+				case "FORWARD":
+					dispatcherForward = true;
+					break;
+				case "INCLUDE":
+					dispatcherInclude = true;
+					break;
+				case "REQUEST":
+					dispatcherRequest = true;
+					break;
+				default:
+					throw new IllegalArgumentException(
+						"Invalid dispatcher " + dispatcher);
+			}
+		}
+
+		_dispatcherError = dispatcherError;
+		_dispatcherForward = dispatcherForward;
+		_dispatcherInclude = dispatcherInclude;
+
+		if (!_dispatcherError && !_dispatcherForward && !_dispatcherInclude &&
+			!dispatcherRequest) {
+
+			dispatcherRequest = true;
+		}
+
+		_dispatcherRequest = dispatcherRequest;
 	}
 
 	public Filter getFilter() {
@@ -134,51 +188,11 @@ public class FilterMapping {
 		return matchURLRegexPattern;
 	}
 
-	public void setFilter(Filter filter) {
-		_filter = filter;
-	}
-
-	protected void initDispatchers(List<String> dispatchers) {
-		for (String dispatcher : dispatchers) {
-			if (dispatcher.equals("ERROR")) {
-				_dispatcherError = true;
-			}
-			else if (dispatcher.equals("FORWARD")) {
-				_dispatcherForward = true;
-			}
-			else if (dispatcher.equals("INCLUDE")) {
-				_dispatcherInclude = true;
-			}
-			else if (dispatcher.equals("REQUEST")) {
-				_dispatcherRequest = true;
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Invalid dispatcher " + dispatcher);
-			}
-		}
-
-		if (!_dispatcherError && !_dispatcherForward && !_dispatcherInclude &&
-			!_dispatcherRequest) {
-
-			_dispatcherRequest = true;
-		}
-	}
-
-	protected void initFilterConfig(FilterConfig filterConfig) {
-		String urlRegexPattern = GetterUtil.getString(
-			filterConfig.getInitParameter("url-regex-pattern"));
-
-		if (Validator.isNotNull(urlRegexPattern)) {
-			_urlRegexPattern = Pattern.compile(urlRegexPattern);
-		}
-
-		String urlRegexIgnorePattern = GetterUtil.getString(
-			filterConfig.getInitParameter("url-regex-ignore-pattern"));
-
-		if (Validator.isNotNull(urlRegexIgnorePattern)) {
-			_urlRegexIgnorePattern = Pattern.compile(urlRegexIgnorePattern);
-		}
+	public FilterMapping replaceFilter(Filter filter) {
+		return new FilterMapping(
+			filter, _urlPatterns, _dispatcherError,
+			_dispatcherForward, _dispatcherInclude, _dispatcherRequest,
+			_urlRegexIgnorePattern, _urlRegexPattern);
 	}
 
 	protected boolean isMatchDispatcher(Dispatcher dispatcher) {
@@ -234,19 +248,35 @@ public class FilterMapping {
 		return false;
 	}
 
+	private FilterMapping(
+		Filter filter, List<String> urlPatterns,
+		boolean dispatcherError, boolean dispatcherForward,
+		boolean dispatcherInclude, boolean dispatcherRequest,
+		Pattern urlRegexIgnorePattern, Pattern urlRegexPattern) {
+
+		_dispatcherError = dispatcherError;
+		_dispatcherForward = dispatcherForward;
+		_dispatcherInclude = dispatcherInclude;
+		_dispatcherRequest = dispatcherRequest;
+		_filter = filter;
+		_urlPatterns = urlPatterns;
+		_urlRegexIgnorePattern = urlRegexIgnorePattern;
+		_urlRegexPattern = urlRegexPattern;
+	}
+
 	private static final String _SLASH_STAR = "/*";
 
 	private static final String _STAR_PERIOD = "*.";
 
 	private static final Log _log = LogFactoryUtil.getLog(FilterMapping.class);
 
-	private boolean _dispatcherError;
-	private boolean _dispatcherForward;
-	private boolean _dispatcherInclude;
-	private boolean _dispatcherRequest;
-	private Filter _filter;
+	private final boolean _dispatcherError;
+	private final boolean _dispatcherForward;
+	private final boolean _dispatcherInclude;
+	private final boolean _dispatcherRequest;
+	private final Filter _filter;
 	private final List<String> _urlPatterns;
-	private Pattern _urlRegexIgnorePattern;
-	private Pattern _urlRegexPattern;
+	private final Pattern _urlRegexIgnorePattern;
+	private final Pattern _urlRegexPattern;
 
 }

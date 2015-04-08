@@ -336,9 +336,15 @@ public class InvokerFilterHelper {
 		Filter previousFilter = _filters.put(filterName, filter);
 
 		if (previousFilter != null) {
-			for (FilterMapping filterMapping : _filterMappings) {
+			for (int i = 0; i < _filterMappings.size(); i++) {
+				FilterMapping filterMapping = _filterMappings.get(i);
+
 				if (filterMapping.getFilter() == previousFilter) {
-					filterMapping.setFilter(filter);
+					_filterMappings.remove(i);
+
+					filterMapping = filterMapping.replaceFilter(filter);
+
+					_filterMappings.add(i, filterMapping);
 				}
 			}
 		}

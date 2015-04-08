@@ -23,7 +23,7 @@ import org.gradle.api.Project;
  */
 public class LiferayExtension {
 
-	public LiferayExtension(Project project) throws Exception {
+	public LiferayExtension(Project project) {
 		this.project = project;
 
 		_tmpDir = new File(project.getRootDir(), "tmp");

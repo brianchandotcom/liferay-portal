@@ -168,7 +168,7 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (summary != null) {
-			return _replaceCommandVars(summary);
+			return _replaceCommandVars(summary, element);
 		}
 
 		return null;
@@ -255,17 +255,37 @@ public final class SummaryLoggerHandler {
 			_getStatusLoggerElement("PASSED"));
 	}
 
-	private static String _replaceCommandVars(String token) throws Exception {
+	private static String _replaceCommandVars(String token, Element element)
+		throws Exception {
+
 		Matcher matcher = _pattern.matcher(token);
 
 		while (matcher.find() &&
 			   PoshiRunnerVariablesUtil.containsKeyInCommandMap(
 				   matcher.group(1))) {
 
-			String varValue = PoshiRunnerVariablesUtil.getValueFromCommandMap(
-				matcher.group(1));
+			String varName = matcher.group(1);
 
-			varValue = Matcher.quoteReplacement(varValue);
+			String varValue = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+				varName);
+
+			if ((element.attributeValue("function") != null) &&
+				varName.startsWith("locator")) {
+
+				String locator = element.attributeValue(varName);
+
+				if (locator.contains("#")) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("<em title=\"");
+					sb.append(varValue);
+					sb.append("\">");
+					sb.append(locator.substring(locator.indexOf("#") + 1));
+					sb.append("</em>");
+
+					varValue = sb.toString();
+				}
+			}
 
 			token = StringUtil.replace(token, matcher.group(), varValue);
 		}

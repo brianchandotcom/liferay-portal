@@ -14,7 +14,7 @@
 
 package com.liferay.portal.mobile.device.messaging;
 
-import com.liferay.portal.kernel.messaging.BaseDestinationEventListener;
+import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider;
  * @author Shuyang Zhou
  */
 public class DeviceRecognitionProviderDestinationEventListener
-	extends BaseDestinationEventListener {
+	implements DestinationEventListener {
 
 	@Override
 	public void messageListenerRegistered(

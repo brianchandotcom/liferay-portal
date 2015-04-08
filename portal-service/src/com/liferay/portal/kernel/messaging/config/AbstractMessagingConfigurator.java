@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.messaging.DestinationConfigurationProcessCallable;
@@ -56,10 +57,10 @@ public abstract class AbstractMessagingConfigurator
 
 		MessageBus messageBus = getMessageBus();
 
-		for (DestinationEventListener destinationEventListener :
-				_globalDestinationEventListeners) {
+		for (MessageBusEventListener messageBusEventListener :
+				_messageBusEventListeners) {
 
-			messageBus.addDestinationEventListener(destinationEventListener);
+			messageBus.addMessageBusEventListener(messageBusEventListener);
 		}
 
 		for (Destination destination : _destinations) {
@@ -72,15 +73,20 @@ public abstract class AbstractMessagingConfigurator
 
 		for (Map.Entry<String, List<DestinationEventListener>>
 				destinationEventListeners :
-					_specificDestinationEventListeners.entrySet()) {
+					_destinationEventListeners.entrySet()) {
 
 			String destinationName = destinationEventListeners.getKey();
 
 			for (DestinationEventListener destinationEventListener :
 					destinationEventListeners.getValue()) {
 
-				messageBus.addDestinationEventListener(
-					destinationName, destinationEventListener);
+				Destination destination = messageBus.getDestination(
+					destinationName);
+
+				if (destination != null) {
+					destination.addDestinationEventListener(
+						destinationEventListener);
+				}
 			}
 		}
 
@@ -172,22 +178,27 @@ public abstract class AbstractMessagingConfigurator
 
 		for (Map.Entry<String, List<DestinationEventListener>>
 				destinationEventListeners :
-					_specificDestinationEventListeners.entrySet()) {
+					_destinationEventListeners.entrySet()) {
 
 			String destinationName = destinationEventListeners.getKey();
 
 			for (DestinationEventListener destinationEventListener :
 					destinationEventListeners.getValue()) {
 
-				messageBus.removeDestinationEventListener(
-					destinationName, destinationEventListener);
+				Destination destination = messageBus.getDestination(
+					destinationName);
+
+				if (destination != null) {
+					destination.removeDestinationEventListener(
+						destinationEventListener);
+				}
 			}
 		}
 
-		for (DestinationEventListener destinationEventListener :
-				_globalDestinationEventListeners) {
+		for (MessageBusEventListener messageBusEventListener :
+				_messageBusEventListeners) {
 
-			messageBus.removeDestinationEventListener(destinationEventListener);
+			messageBus.removeMessageBusEventListener(messageBusEventListener);
 		}
 
 		ClassLoader operatingClassLoader = getOperatingClassloader();
@@ -222,6 +233,13 @@ public abstract class AbstractMessagingConfigurator
 	}
 
 	@Override
+	public void setDestinationEventListeners(
+		Map<String, List<DestinationEventListener>> destinationEventListeners) {
+
+		_destinationEventListeners = destinationEventListeners;
+	}
+
+	@Override
 	public void setDestinations(List<Destination> destinations) {
 		for (Destination destination : destinations) {
 			try {
@@ -240,10 +258,10 @@ public abstract class AbstractMessagingConfigurator
 	}
 
 	@Override
-	public void setGlobalDestinationEventListeners(
-		List<DestinationEventListener> globalDestinationEventListeners) {
+	public void setMessageBusEventListeners(
+		List<MessageBusEventListener> messageBusEventListeners) {
 
-		_globalDestinationEventListeners = globalDestinationEventListeners;
+		_messageBusEventListeners = messageBusEventListeners;
 	}
 
 	@Override
@@ -295,14 +313,6 @@ public abstract class AbstractMessagingConfigurator
 		_replacementDestinations = replacementDestinations;
 	}
 
-	@Override
-	public void setSpecificDestinationEventListener(
-		Map<String, List<DestinationEventListener>>
-			specificDestinationEventListeners) {
-
-		_specificDestinationEventListeners = specificDestinationEventListeners;
-	}
-
 	protected abstract MessageBus getMessageBus();
 
 	protected abstract ClassLoader getOperatingClassloader();
@@ -310,14 +320,14 @@ public abstract class AbstractMessagingConfigurator
 	private static final Log _log = LogFactoryUtil.getLog(
 		AbstractMessagingConfigurator.class);
 
+	private Map<String, List<DestinationEventListener>>
+		_destinationEventListeners = new HashMap<>();
 	private final List<Destination> _destinations = new ArrayList<>();
-	private List<DestinationEventListener> _globalDestinationEventListeners =
+	private List<MessageBusEventListener> _messageBusEventListeners =
 		new ArrayList<>();
 	private Map<String, List<MessageListener>> _messageListeners =
 		new HashMap<>();
 	private boolean _portalMessagingConfigurator;
 	private List<Destination> _replacementDestinations = new ArrayList<>();
-	private Map<String, List<DestinationEventListener>>
-		_specificDestinationEventListeners = new HashMap<>();
 
 }

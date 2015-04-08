@@ -32,26 +32,18 @@ public class DefaultMessageBus implements MessageBus {
 	public synchronized void addDestination(Destination destination) {
 		_destinations.put(destination.getName(), destination);
 
-		fireDestinationAddedEvent(destination);
-	}
+		for (MessageBusEventListener messageBusEventListener :
+				_messageBusEventListeners) {
 
-	@Override
-	public void addDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		_destinationEventListeners.add(destinationEventListener);
-	}
-
-	@Override
-	public void addDestinationEventListener(
-		String destinationName,
-		DestinationEventListener destinationEventListener) {
-
-		Destination destination = _destinations.get(destinationName);
-
-		if (destination != null) {
-			destination.addDestinationEventListener(destinationEventListener);
+			messageBusEventListener.destinationAdded(destination);
 		}
+	}
+
+	@Override
+	public boolean addMessageBusEventListener(
+		MessageBusEventListener messageBusEventListener) {
+
+		return _messageBusEventListeners.add(messageBusEventListener);
 	}
 
 	@Override
@@ -102,47 +94,32 @@ public class DefaultMessageBus implements MessageBus {
 				"Destination " + destinationName + " is not configured");
 		}
 
-		boolean registered = destination.register(messageListener);
-
-		if (registered) {
-			fireMessageListenerRegisteredEvent(destination, messageListener);
-		}
-
-		return registered;
+		return destination.register(messageListener);
 	}
 
 	@Override
 	public synchronized Destination removeDestination(String destinationName) {
-		Destination destinationModel = _destinations.remove(destinationName);
-
-		if (destinationModel != null) {
-			destinationModel.removeDestinationEventListeners();
-			destinationModel.unregisterMessageListeners();
-
-			fireDestinationRemovedEvent(destinationModel);
-		}
-
-		return destinationModel;
-	}
-
-	@Override
-	public void removeDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		_destinationEventListeners.remove(destinationEventListener);
-	}
-
-	@Override
-	public void removeDestinationEventListener(
-		String destinationName,
-		DestinationEventListener destinationEventListener) {
-
-		Destination destination = _destinations.get(destinationName);
+		Destination destination = _destinations.remove(destinationName);
 
 		if (destination != null) {
-			destination.removeDestinationEventListener(
-				destinationEventListener);
+			destination.removeDestinationEventListeners();
+			destination.unregisterMessageListeners();
+
+			for (MessageBusEventListener messageBusEventListener :
+					_messageBusEventListeners) {
+
+				messageBusEventListener.destinationRemoved(destination);
+			}
 		}
+
+		return destination;
+	}
+
+	@Override
+	public boolean removeMessageBusEventListener(
+		MessageBusEventListener messageBusEventListener) {
+
+		return _messageBusEventListeners.remove(messageBusEventListener);
 	}
 
 	@Override
@@ -197,54 +174,14 @@ public class DefaultMessageBus implements MessageBus {
 			return false;
 		}
 
-		boolean unregistered = destination.unregister(messageListener);
-
-		if (unregistered) {
-			fireMessageListenerUnregisteredEvent(destination, messageListener);
-		}
-
-		return unregistered;
-	}
-
-	protected void fireDestinationAddedEvent(Destination destination) {
-		for (DestinationEventListener listener : _destinationEventListeners) {
-			listener.destinationAdded(destination);
-		}
-	}
-
-	protected void fireDestinationRemovedEvent(Destination destination) {
-		for (DestinationEventListener listener : _destinationEventListeners) {
-			listener.destinationRemoved(destination);
-		}
-	}
-
-	protected void fireMessageListenerRegisteredEvent(
-		Destination destination, MessageListener messageListener) {
-
-		for (DestinationEventListener destinationEventListener :
-				_destinationEventListeners) {
-
-			destinationEventListener.messageListenerRegistered(
-				destination.getName(), messageListener);
-		}
-	}
-
-	protected void fireMessageListenerUnregisteredEvent(
-		Destination destination, MessageListener messageListener) {
-
-		for (DestinationEventListener destinationEventListener :
-				_destinationEventListeners) {
-
-			destinationEventListener.messageListenerUnregistered(
-				destination.getName(), messageListener);
-		}
+		return destination.unregister(messageListener);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultMessageBus.class);
 
-	private final Set<DestinationEventListener> _destinationEventListeners =
-		new ConcurrentHashSet<>();
 	private final Map<String, Destination> _destinations = new HashMap<>();
+	private final Set<MessageBusEventListener> _messageBusEventListeners =
+		new ConcurrentHashSet<>();
 
 }

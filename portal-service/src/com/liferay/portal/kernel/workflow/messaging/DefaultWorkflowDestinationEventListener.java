@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.workflow.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseDestinationEventListener;
+import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
  * @author Michael C. Han
  */
 public class DefaultWorkflowDestinationEventListener
-	extends BaseDestinationEventListener {
+	implements DestinationEventListener {
 
 	@Override
 	public void messageListenerRegistered(

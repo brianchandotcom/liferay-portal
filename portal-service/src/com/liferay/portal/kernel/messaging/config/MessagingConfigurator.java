@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.messaging.config;
 
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
+import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
 
 import java.util.List;
@@ -32,19 +33,18 @@ public interface MessagingConfigurator {
 
 	public void disconnect();
 
+	public void setDestinationEventListeners(
+		Map<String, List<DestinationEventListener>> destinationEventListeners);
+
 	public void setDestinations(List<Destination> destinations);
 
-	public void setGlobalDestinationEventListeners(
-		List<DestinationEventListener> globalDestinationEventListeners);
+	public void setMessageBusEventListeners(
+		List<MessageBusEventListener> messageBusEventListeners);
 
 	public void setMessageListeners(
 		Map<String, List<MessageListener>> messageListeners);
 
 	public void setReplacementDestinations(
 		List<Destination> replacementDestinations);
-
-	public void setSpecificDestinationEventListener(
-		Map<String, List<DestinationEventListener>>
-			specificDestinationEventListeners);
 
 }

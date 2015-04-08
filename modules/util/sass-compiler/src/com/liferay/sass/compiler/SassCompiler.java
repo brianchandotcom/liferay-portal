@@ -77,14 +77,17 @@ public class SassCompiler {
 		Sass_File_Context sassFileContext = null;
 
 		try {
-			sassFileContext = _LiferaysassLibrary.sass_make_file_context(inputFile);
+			sassFileContext = _LiferaysassLibrary.sass_make_file_context(
+				inputFile);
 
 			Sass_Options sassOptions = _LiferaysassLibrary.sass_make_options();
 
-			_LiferaysassLibrary.sass_option_set_image_path(sassOptions, imgPath);
+			_LiferaysassLibrary.sass_option_set_image_path(
+				sassOptions, imgPath);
 			_LiferaysassLibrary.sass_option_set_include_path(
 				sassOptions, includePaths);
-			_LiferaysassLibrary.sass_option_set_input_path(sassOptions, inputFile);
+			_LiferaysassLibrary.sass_option_set_input_path(
+				sassOptions, inputFile);
 			_LiferaysassLibrary.sass_option_set_output_path(sassOptions, "");
 			_LiferaysassLibrary.sass_option_set_output_style(
 				sassOptions, Sass_Output_Style.SASS_STYLE_COMPACT);
@@ -97,14 +100,16 @@ public class SassCompiler {
 			_LiferaysassLibrary.sass_compile_file_context(sassFileContext);
 
 			Sass_Context sassContext =
-				_LiferaysassLibrary.sass_file_context_get_context(sassFileContext);
+				_LiferaysassLibrary.sass_file_context_get_context(
+					sassFileContext);
 
 			int errorStatus = _LiferaysassLibrary.sass_context_get_error_status(
 				sassContext);
 
 			if (errorStatus != 0) {
 				String errorMessage =
-					_LiferaysassLibrary.sass_context_get_error_message(sassContext);
+					_LiferaysassLibrary.sass_context_get_error_message(
+						sassContext);
 
 				throw new SassCompilerException(errorMessage);
 			}
@@ -121,7 +126,8 @@ public class SassCompiler {
 		finally {
 			try {
 				if (sassFileContext != null) {
-					_LiferaysassLibrary.sass_delete_file_context(sassFileContext);
+					_LiferaysassLibrary.sass_delete_file_context(
+						sassFileContext);
 				}
 			}
 			catch (Throwable t) {
@@ -144,11 +150,13 @@ public class SassCompiler {
 		try {
 			Memory pointer = toPointer(input);
 
-			sassDataContext = _LiferaysassLibrary.sass_make_data_context(pointer);
+			sassDataContext = _LiferaysassLibrary.sass_make_data_context(
+				pointer);
 
 			Sass_Options sassOptions = _LiferaysassLibrary.sass_make_options();
 
-			_LiferaysassLibrary.sass_option_set_image_path(sassOptions, imgPath);
+			_LiferaysassLibrary.sass_option_set_image_path(
+				sassOptions, imgPath);
 			_LiferaysassLibrary.sass_option_set_include_path(
 				sassOptions, includePath);
 			_LiferaysassLibrary.sass_option_set_output_style(
@@ -162,14 +170,16 @@ public class SassCompiler {
 			_LiferaysassLibrary.sass_compile_data_context(sassDataContext);
 
 			Sass_Context sassContext =
-				_LiferaysassLibrary.sass_data_context_get_context(sassDataContext);
+				_LiferaysassLibrary.sass_data_context_get_context(
+					sassDataContext);
 
 			int errorStatus = _LiferaysassLibrary.sass_context_get_error_status(
 				sassContext);
 
 			if (errorStatus != 0) {
 				String errorMessage =
-					_LiferaysassLibrary.sass_context_get_error_message(sassContext);
+					_LiferaysassLibrary.sass_context_get_error_message(
+						sassContext);
 
 				throw new SassCompilerException(errorMessage);
 			}
@@ -186,7 +196,8 @@ public class SassCompiler {
 		finally {
 			try {
 				if (sassDataContext != null) {
-					_LiferaysassLibrary.sass_delete_data_context(sassDataContext);
+					_LiferaysassLibrary.sass_delete_data_context(
+						sassDataContext);
 				}
 			}
 			catch (Throwable t) {
@@ -236,6 +247,7 @@ public class SassCompiler {
 		}
 	}
 
-	private static final LiferaysassLibrary _LiferaysassLibrary = LiferaysassLibrary.INSTANCE;
+	private static final LiferaysassLibrary _LiferaysassLibrary =
+		LiferaysassLibrary.INSTANCE;
 
 }

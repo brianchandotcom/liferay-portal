@@ -59,14 +59,17 @@ public class MentionsEditorConfigContributor
 			"resultFilters", "function(query, results) {return results;}");
 		triggerJSONObject.put("resultTextLocator", "screenName");
 
-		LiferayPortletURL autoCompleteUserURL =
-			liferayPortletResponse.createResourceURL("1_WAR_mentionsportlet");
+		if (liferayPortletResponse != null) {
+			LiferayPortletURL autoCompleteUserURL =
+				liferayPortletResponse.createResourceURL(
+					"1_WAR_mentionsportlet");
 
-		String source =
-			autoCompleteUserURL.toString() + "&" +
-				PortalUtil.getPortletNamespace("1_WAR_mentionsportlet");
+			String source =
+				autoCompleteUserURL.toString() + "&" +
+					PortalUtil.getPortletNamespace("1_WAR_mentionsportlet");
 
-		triggerJSONObject.put("source", source);
+			triggerJSONObject.put("source", source);
+		}
 
 		triggerJSONObject.put("term", "@");
 		triggerJSONObject.put("tplReplace", "{mention}");

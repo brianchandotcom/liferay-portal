@@ -604,6 +604,139 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkXMLSecurity(
+		String fileName, String content, String absolutePath) {
+
+		boolean outsidePortalCore = isExcludedPath(
+			getRunOutsidePortalExclusionPaths(), absolutePath);
+
+		if (content.contains("DocumentBuilderFactory.newInstance")) {
+			if (outsidePortalCore) {
+				processErrorMessage(
+					fileName,
+					"Possible XXE or Quadratic Blowup security vulnerablity " +
+						"using DocumentBuilderFactory.newInstance: "
+						+ fileName);
+			}
+			else {
+				processErrorMessage(
+					fileName,
+					"Use SecureXMLBuilderUtil.newDocumentBuilderFactory " +
+						"instead of DocumentBuilderFactory.newInstance: " +
+						fileName);
+			}
+		}
+
+		if (content.contains("SAXParserFactory.newInstance") ||
+			content.contains("saxParserFactory.newInstance")) {
+
+			if (outsidePortalCore) {
+				processErrorMessage(
+					fileName,
+					"Possible XXE or Quadratic Blowup security vulnerablity " +
+						"using SAXParserFactory.newInstance: " + fileName);
+			}
+			else {
+				processErrorMessage(
+					fileName,
+					"Use SecureXMLBuilderUtil.newXMLReader instead of " +
+						"SAXParserFactory.newInstance: " +
+						fileName);
+			}
+		}
+
+		if (content.contains("SAXParserFactory.newSAXParser") ||
+			content.contains("saxParserFactory.newSAXParser")) {
+
+			if (outsidePortalCore) {
+				processErrorMessage(
+					fileName,
+					"Possible XXE or Quadratic Blowup security vulnerablity " +
+						"using SAXParserFactory.newSAXParser: " + fileName);
+			}
+			else {
+				processErrorMessage(
+					fileName,
+					"Use SecureXMLBuilderUtil.newXMLReader instead of " +
+						"SAXParserFactory.newSAXParser: " +
+						fileName);
+			}
+		}
+
+		if (content.contains("new SAXParser") ||
+			content.contains("new javax.xml.parsers.SAXParser") ||
+			content.contains("new org.apache.xerces.parsers.SAXParser")) {
+
+			if (outsidePortalCore) {
+				processErrorMessage(
+					fileName,
+					"Possible XXE or Quadratic Blowup security vulnerablity " +
+						"using new SAXParser: " + fileName);
+			}
+			else {
+				processErrorMessage(
+					fileName,
+					"Use SecureXMLBuilderUtil.newXMLReader instead of " +
+						"new SAXParser: " +
+						fileName);
+			}
+		}
+
+		if (content.contains("new SAXReader") ||
+			content.contains("new org.dom4j.io.SAXReader")) {
+
+			if (outsidePortalCore) {
+				processErrorMessage(
+					fileName,
+					"Possible XXE or Quadratic Blowup security vulnerablity " +
+						"using new SAXReader: " + fileName);
+			}
+			else {
+				processErrorMessage(
+					fileName,
+					"Use SecureXMLBuilderUtil.newXMLReader instead of " +
+						"new SAXReader: " +
+						fileName);
+			}
+		}
+
+		if (content.contains("XMLInputFactory.newFactory") ||
+			content.contains("xmlInputFactory.newFactory")) {
+
+			if (outsidePortalCore) {
+				processErrorMessage(
+					fileName,
+					"Possible XXE or Quadratic Blowup security vulnerablity " +
+						"using XMLInputFactory.newFactory: " + fileName);
+			}
+			else {
+				processErrorMessage(
+					fileName,
+					"Use SecureXMLBuilderUtil.newXMLInputFactory instead of " +
+						"XMLInputFactory.newFactory: " +
+						fileName);
+			}
+		}
+
+		if (content.contains("XMLInputFactory.newInstance") ||
+			content.contains("xmlInputFactory.newInstance")) {
+
+			if (outsidePortalCore) {
+				processErrorMessage(
+					fileName,
+					"Possible XXE or Quadratic Blowup security vulnerablity " +
+						"using XMLInputFactory.newInstance: " + fileName);
+			}
+			else {
+				processErrorMessage(
+					fileName,
+					"Use SecureXMLBuilderUtil.newXMLInputFactory instead of " +
+						"XMLInputFactory.newInstance: " +
+						fileName);
+			}
+		}
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -934,6 +1067,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		checkFinderCacheInterfaceMethod(fileName, newContent);
 
+		// LPS-50479
+
+		if (!isExcludedFile(_secureXmlExclusionFiles, absolutePath) &&
+			!fileName.contains("/test/")) {
+
+			checkXMLSecurity(fileName, content, absolutePath);
+		}
+
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
 
@@ -1156,6 +1297,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_proxyExclusionFiles = getPropertyList("proxy.excludes.files");
 		_secureRandomExclusionFiles = getPropertyList(
 			"secure.random.excludes.files");
+		_secureXmlExclusionFiles = getPropertyList(
+			"secure.xml.excludes.files");
 		_staticLogVariableExclusionFiles = getPropertyList(
 			"static.log.excludes.files");
 		_testAnnotationsExclusionFiles = getPropertyList(
@@ -3162,6 +3305,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _proxyExclusionFiles;
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 	private List<String> _secureRandomExclusionFiles;
+	private List<String> _secureXmlExclusionFiles;
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

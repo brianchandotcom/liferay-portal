@@ -32,9 +32,6 @@ import javax.servlet.ServletResponse;
 public class MediaItemSelectorView
 	implements ItemSelectorView<MediaItemSelectorCriterion> {
 
-	public static final String HTML =
-		"<html>" + MediaItemSelectorView.class.getName() + "</html>";
-
 	@Override
 	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return MediaItemSelectorCriterion.class;
@@ -54,7 +51,8 @@ public class MediaItemSelectorView
 
 		PrintWriter writer = response.getWriter();
 
-		writer.print(HTML);
+		writer.print(
+			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
 	}
 
 }

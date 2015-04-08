@@ -32,9 +32,6 @@ import javax.servlet.ServletResponse;
 public class FlickrItemSelectorView
 	implements ItemSelectorView<FlickrItemSelectorCriterion> {
 
-	public static final String HTML =
-		"<html>" + FlickrItemSelectorView.class.getName() + "</html>";
-
 	@Override
 	public Class<FlickrItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return FlickrItemSelectorCriterion.class;
@@ -54,7 +51,8 @@ public class FlickrItemSelectorView
 
 		PrintWriter writer = response.getWriter();
 
-		writer.print(HTML);
+		writer.print(
+			"<html>" + FlickrItemSelectorView.class.getName() + "</html>");
 	}
 
 }

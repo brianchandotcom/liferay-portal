@@ -59,49 +59,7 @@ import net.sf.ehcache.event.NotificationScope;
 public class EhcacheConfigurationHelperUtil {
 
 	public static ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
-			String configurationPath) {
-
-		return getConfiguration(configurationPath, false, false);
-	}
-
-	public static ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
-			String configurationPath, boolean clusterAware) {
-
-		return getConfiguration(configurationPath, clusterAware, false);
-	}
-
-	public static ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
-			String configurationPath, boolean clusterAware,
-			boolean usingDefault) {
-
-		if (configurationPath == null) {
-			throw new NullPointerException("Configuration path is null");
-		}
-
-		return getConfiguration(
-			EhcacheConfigurationHelperUtil.class.getResource(configurationPath),
-			clusterAware, usingDefault);
-	}
-
-	public static ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
-			URL configurationURL) {
-
-		return getConfiguration(configurationURL, false, false);
-	}
-
-	public static ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
-			URL configurationURL, boolean clusterAware) {
-
-		return getConfiguration(configurationURL, clusterAware, false);
-	}
-
-	public static ObjectValuePair
-		<Configuration, PortalCacheManagerConfiguration>getConfiguration(
+		<Configuration, PortalCacheManagerConfiguration> getConfiguration(
 			URL configurationURL, boolean clusterAware, boolean usingDefault) {
 
 		if (configurationURL == null) {

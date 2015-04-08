@@ -274,6 +274,15 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				xmlReader.parse(new InputSource(inputStream));
 			}
+			catch (SAXParseException e) {
+				if (e.getMessage().contains("DOCTYPE is disallowed")) {
+					throw new Exception(
+						"Please upgrade your web.xml to 2.4, DTD based web.xml " +
+							"is no longer supported", e);
+				}
+
+				throw e;
+			}
 		}
 
 		return _webXMLDefinition;

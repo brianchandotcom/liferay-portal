@@ -102,7 +102,9 @@ public class PoshiRunnerValidation {
 			}
 
 			if (classType.equals("function")) {
-				if (attributeName.equals("default")) {
+				if (attributeName.equals("default") ||
+					attributeName.equals("summary")) {
+
 					continue;
 				}
 			}

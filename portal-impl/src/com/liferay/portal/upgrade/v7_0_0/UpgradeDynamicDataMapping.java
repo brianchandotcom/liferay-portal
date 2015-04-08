@@ -16,26 +16,39 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMContentTable;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMStructureTable;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
@@ -49,8 +62,12 @@ import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormFieldValueTransformer;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesTransformer;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+
+import java.io.File;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -226,30 +243,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_name DDMContent xml data_ TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DDMContentTable.TABLE_NAME, DDMContentTable.TABLE_COLUMNS,
-				DDMContentTable.TABLE_SQL_CREATE,
-				DDMContentTable.TABLE_SQL_ADD_INDEXES);
-		}
-
-		try {
-			runSQL("alter_column_name DDMStructure xsd definition TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DDMStructureTable.TABLE_NAME, DDMStructureTable.TABLE_COLUMNS,
-				DDMStructureTable.TABLE_SQL_CREATE,
-				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
-		}
+		upgradeDDMSchema();
 
 		upgradeStructuresAndAddStructureVersionsAndLayouts();
 		upgradeTemplatesAndAddTemplateVersions();
-
 		upgradeXMLStorageAdapter();
+
+		upgradeFileUploadReferences();
 	}
 
 	protected DDMForm getDDMForm(long structureId) throws Exception {
@@ -303,26 +303,44 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
+	protected DDMFormValues getDDMFormValues(DDMForm ddmForm, String xml)
+		throws Exception {
+
+		DDMFormValuesXSDDeserializer ddmFormValuesXSDDeserializer =
+			new DDMFormValuesXSDDeserializer();
+
+		return ddmFormValuesXSDDeserializer.deserialize(ddmForm, xml);
+	}
+
 	protected String getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
 		return DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout);
 	}
 
-	protected String toJSON(DDMForm ddmForm) throws Exception {
+	protected String toJSON(DDMForm ddmForm) {
 		return DDMFormJSONSerializerUtil.serialize(ddmForm);
 	}
 
-	protected String toJSON(DDMForm ddmForm, String xml)
-		throws PortalException {
-
-		DDMFormValuesXSDDeserializer ddmFormValuesXSDDeserializer =
-			new DDMFormValuesXSDDeserializer();
-
-		DDMFormValues ddmFormValues = ddmFormValuesXSDDeserializer.deserialize(
-			ddmForm, xml);
-
+	protected String toJSON(DDMFormValues ddmFormValues) {
 		return DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+	}
+
+	protected void transformFileUploadDDMFormFields(
+			long groupId, long companyId, long userId, String userName,
+			Timestamp createDate, long entryId, String entryVersion,
+			DDMFormValues ddmFormValues)
+		throws Exception {
+
+		DDMFormValuesTransformer ddmFormValuesTransformer =
+			new DDMFormValuesTransformer(ddmFormValues);
+
+		ddmFormValuesTransformer.addTransformer(
+			new FileUploadDDMFormFieldValueTransformer(
+				groupId, companyId, userId, userName, createDate, entryId,
+				entryVersion));
+
+		ddmFormValuesTransformer.transform();
 	}
 
 	protected void updateContent(DDMForm ddmForm, long contentId)
@@ -345,7 +363,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			if (rs.next()) {
 				String xml = rs.getString("data_");
 
-				updateContent(contentId, toJSON(ddmForm, xml));
+				DDMFormValues ddmFormValues = getDDMFormValues(ddmForm, xml);
+
+				updateContent(contentId, toJSON(ddmFormValues));
 			}
 		}
 		finally {
@@ -376,6 +396,28 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
+	protected DDMForm updateDDMFormFields(DDMForm ddmForm) {
+		DDMForm copyDDMForm = new DDMForm(ddmForm);
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			copyDDMForm.getDDMFormFieldsMap(true);
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			String dataType = ddmFormField.getDataType();
+
+			if (Validator.equals(dataType, "file-upload")) {
+				ddmFormField.setDataType("document-library");
+				ddmFormField.setType("ddm-documentlibrary");
+			}
+			else if (Validator.equals(dataType, "image")) {
+				ddmFormField.setNamespace("ddm");
+				ddmFormField.setType("ddm-image");
+			}
+		}
+
+		return copyDDMForm;
+	}
+
 	protected void updateStructureStorageType() throws Exception {
 		runSQL(
 			"update DDMStructure set storageType='json' where " +
@@ -386,6 +428,140 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		runSQL(
 			"update DDMStructureVersion set storageType='json' where " +
 				"storageType = 'xml'");
+	}
+
+	protected void upgradeDDLFileUploadReferences() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("select DDLRecordVersion.*, DDMContent.data_, ");
+			sb.append("DDMStructure.structureId from DDLRecordVersion inner ");
+			sb.append("join DDLRecordSet on DDLRecordVersion.recordSetId = ");
+			sb.append("DDLRecordSet.recordSetId inner join DDMContent on  ");
+			sb.append("DDLRecordVersion.DDMStorageId = DDMContent.contentId ");
+			sb.append("inner join DDMStructure on DDLRecordSet.");
+			sb.append("DDMStructureId = DDMStructure.structureId");
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				long entryId = rs.getLong("recordId");
+				String entryVersion = rs.getString("version");
+				long contentId = rs.getLong("ddmStorageId");
+				String data_ = rs.getString("data_");
+				long ddmStructureId = rs.getLong("structureId");
+
+				DDMForm ddmForm = getDDMForm(ddmStructureId);
+
+				DDMFormValues ddmFormValues =
+					DDMFormValuesJSONDeserializerUtil.deserialize(
+						ddmForm, data_);
+
+				transformFileUploadDDMFormFields(
+					groupId, companyId, userId, userName, createDate, entryId,
+					entryVersion, ddmFormValues);
+
+				updateContent(contentId, toJSON(ddmFormValues));
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void upgradeDDMSchema() throws Exception {
+		try {
+			runSQL("alter_column_name DDMContent xml data_ TEXT null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				DDMContentTable.TABLE_NAME, DDMContentTable.TABLE_COLUMNS,
+				DDMContentTable.TABLE_SQL_CREATE,
+				DDMContentTable.TABLE_SQL_ADD_INDEXES);
+		}
+
+		try {
+			runSQL("alter_column_name DDMStructure xsd definition TEXT null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				DDMStructureTable.TABLE_NAME, DDMStructureTable.TABLE_COLUMNS,
+				DDMStructureTable.TABLE_SQL_CREATE,
+				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
+		}
+	}
+
+	protected void upgradeDLFileUploadReferences() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(10);
+
+			sb.append("select DLFileVersion.*, DDMContent.contentId, ");
+			sb.append("DDMContent.data_, DDMStructure.structureId from ");
+			sb.append("DLFileEntryMetadata inner join DDMContent on ");
+			sb.append("DLFileEntryMetadata.DDMStorageId = DDMContent.");
+			sb.append("contentId inner join DDMStructure on ");
+			sb.append("DLFileEntryMetadata.DDMStructureId = DDMStructure.");
+			sb.append("structureId inner join DLFileVersion on ");
+			sb.append("DLFileEntryMetadata.fileVersionId = DLFileVersion.");
+			sb.append("fileVersionId and DLFileEntryMetadata.fileEntryId = ");
+			sb.append("DLFileVersion.fileEntryId");
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				long entryId = rs.getLong("fileEntryId");
+				String entryVersion = rs.getString("version");
+				long contentId = rs.getLong("contentId");
+				String data_ = rs.getString("data_");
+				long ddmStructureId = rs.getLong("structureId");
+
+				DDMForm ddmForm = getDDMForm(ddmStructureId);
+
+				DDMFormValues ddmFormValues =
+					DDMFormValuesJSONDeserializerUtil.deserialize(
+						ddmForm, data_);
+
+				transformFileUploadDDMFormFields(
+					groupId, companyId, userId, userName, createDate, entryId,
+					entryVersion, ddmFormValues);
+
+				updateContent(contentId, toJSON(ddmFormValues));
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void upgradeFileUploadReferences() throws Exception {
+		upgradeDDLFileUploadReferences();
+		upgradeDLFileUploadReferences();
 	}
 
 	protected void upgradeStructureDefinition(
@@ -446,6 +622,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(structureId);
 
+				ddmForm = updateDDMFormFields(ddmForm);
+
 				String definition = toJSON(ddmForm);
 
 				upgradeStructureDefinition(structureId, definition);
@@ -498,6 +676,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				if (language.equals("xsd")) {
 					DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
 						script);
+
+					ddmForm = updateDDMFormFields(ddmForm);
 
 					script = toJSON(ddmForm);
 
@@ -1052,6 +1232,366 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				}
 			}
 		}
+
+	}
+
+	private class FileUploadDDMFormFieldValueTransformer
+		implements DDMFormFieldValueTransformer {
+
+		public FileUploadDDMFormFieldValueTransformer(
+			long groupId, long companyId, long userId, String userName,
+			Timestamp createDate, long entryId, String entryVersion) {
+
+			_groupId = groupId;
+			_companyId = companyId;
+			_userId = userId;
+			_userName = userName;
+			_createDate = createDate;
+			_entryId = entryId;
+			_entryVersion = entryVersion;
+		}
+
+		@Override
+		public String getFieldType() {
+			return "ddm-fileupload";
+		}
+
+		@Override
+		public void transform(DDMFormFieldValue ddmFormFieldValue)
+			throws PortalException {
+
+			Value value = ddmFormFieldValue.getValue();
+
+			for (Locale locale : value.getAvailableLocales()) {
+				String valueString = value.getString(locale);
+
+				if (Validator.isNull(valueString)) {
+					continue;
+				}
+
+				String fileEntryUuid = PortalUUIDUtil.generate();
+
+				upgradeFileUploadReference(
+					fileEntryUuid, ddmFormFieldValue.getName(), valueString);
+
+				value.addString(locale, toJSON(_groupId, fileEntryUuid));
+			}
+		}
+
+		protected long addDDMDLFolder() throws Exception {
+			long ddmFolderId = getDLFolderId(
+				_groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "DDM");
+
+			if (ddmFolderId > 0) {
+				return ddmFolderId;
+			}
+
+			ddmFolderId = increment();
+
+			addDLFolder(
+				PortalUUIDUtil.generate(), ddmFolderId, _groupId, _companyId,
+				_userId, _userName, _now, _now, _groupId,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "DDM",
+				StringPool.BLANK, _now);
+
+			return ddmFolderId;
+		}
+
+		protected void addDLFileEntry(
+				String uuid, long fileEntryId, long groupId, long companyId,
+				long userId, String userName, Timestamp createDate,
+				Timestamp modifiedDate, long classNameId, long classPK,
+				long repositoryId, long folderId, String treePath, String name,
+				String fileName, String extension, String mimeType,
+				String title, String description, String extraSettings,
+				long fileEntryTypeId, String version, long size, int readCount,
+				long smallImageId, long largeImageId, long custom1ImageId,
+				long custom2ImageId, boolean manualCheckInRequired)
+			throws Exception {
+
+			Connection con = null;
+			PreparedStatement ps = null;
+
+			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("insert into DLFileEntry (uuid_, fileEntryId, ");
+				sb.append("groupId, companyId, userId, userName, createDate, ");
+				sb.append("modifiedDate, classNameId, classPK, repositoryId, ");
+				sb.append("folderId, treePath, name, fileName, extension, ");
+				sb.append("mimeType, title, description, extraSettings, ");
+				sb.append("fileEntryTypeId, version, size_, readCount,  ");
+				sb.append("smallImageId, largeImageId, custom1ImageId, ");
+				sb.append("custom2ImageId, manualCheckInRequired) values (?, ");
+				sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+				sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+				String sql = sb.toString();
+
+				ps = con.prepareStatement(sql);
+
+				ps.setString(1, uuid);
+				ps.setLong(2, fileEntryId);
+				ps.setLong(3, groupId);
+				ps.setLong(4, companyId);
+				ps.setLong(5, userId);
+				ps.setString(6, userName);
+				ps.setTimestamp(7, createDate);
+				ps.setTimestamp(8, modifiedDate);
+				ps.setLong(9, classNameId);
+				ps.setLong(10, classPK);
+				ps.setLong(11, repositoryId);
+				ps.setLong(12, folderId);
+				ps.setString(13, treePath);
+				ps.setString(14, name);
+				ps.setString(15, fileName);
+				ps.setString(16, extension);
+				ps.setString(17, mimeType);
+				ps.setString(18, title);
+				ps.setString(19, description);
+				ps.setString(20, extraSettings);
+				ps.setLong(21, fileEntryTypeId);
+				ps.setString(22, version);
+				ps.setLong(23, size);
+				ps.setInt(24, readCount);
+				ps.setLong(25, smallImageId);
+				ps.setLong(26, largeImageId);
+				ps.setLong(27, custom1ImageId);
+				ps.setLong(28, custom2ImageId);
+				ps.setBoolean(29, manualCheckInRequired);
+
+				ps.executeUpdate();
+			}
+			finally {
+				DataAccess.cleanUp(con, ps);
+			}
+		}
+
+		protected void addDLFolder(
+				String uuid, long folderId, long groupId, long companyId,
+				long userId, String userName, Timestamp createDate,
+				Timestamp modifiedDate, long repositoryId, long parentFolderId,
+				String name, String description, Timestamp lastPostDate)
+			throws Exception {
+
+			Connection con = null;
+			PreparedStatement ps = null;
+
+			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("insert into DLFolder (uuid_, folderId, groupId, ");
+				sb.append("companyId, userId, userName, createDate, ");
+				sb.append("modifiedDate, repositoryId, mountPoint, ");
+				sb.append("parentFolderId, name, description, lastPostDate, ");
+				sb.append("defaultFileEntryTypeId, hidden_, status, ");
+				sb.append("statusByUserId, statusByUserName, restrictionType");
+				sb.append(") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+				sb.append("?, ?, ?, ?, ?, ?, ?)");
+
+				String sql = sb.toString();
+
+				ps = con.prepareStatement(sql);
+
+				ps.setString(1, uuid);
+				ps.setLong(2, folderId);
+				ps.setLong(3, groupId);
+				ps.setLong(4, companyId);
+				ps.setLong(5, userId);
+				ps.setString(6, userName);
+				ps.setTimestamp(7, createDate);
+				ps.setTimestamp(8, modifiedDate);
+				ps.setLong(9, repositoryId);
+				ps.setBoolean(10, false);
+				ps.setLong(11, parentFolderId);
+				ps.setString(12, name);
+				ps.setString(13, description);
+				ps.setTimestamp(14, lastPostDate);
+				ps.setLong(15, 0);
+				ps.setBoolean(16, false);
+				ps.setInt(17, WorkflowConstants.STATUS_APPROVED);
+				ps.setInt(18, 0);
+				ps.setString(19, StringPool.BLANK);
+				ps.setInt(20, 0);
+
+				ps.executeUpdate();
+			}
+			finally {
+				DataAccess.cleanUp(con, ps);
+			}
+		}
+
+		protected long addDLFolderTree(String ddmFormFieldName)
+			throws Exception {
+
+			long ddmFolderId = addDDMDLFolder();
+
+			long entryIdFolderId = addEntryIdDLFolder(ddmFolderId);
+
+			long entryVersionFolderId = addEntryVersionDLFolder(
+				entryIdFolderId);
+
+			long fieldNameFolderId = increment();
+
+			addDLFolder(
+				PortalUUIDUtil.generate(), fieldNameFolderId, _groupId,
+				_companyId, _userId, _userName, _now, _now, _groupId,
+				entryVersionFolderId, ddmFormFieldName, StringPool.BLANK, _now);
+
+			return fieldNameFolderId;
+		}
+
+		protected long addEntryIdDLFolder(long ddmFolderId) throws Exception {
+			long entryIdFolderId = getDLFolderId(
+				_groupId, ddmFolderId, String.valueOf(_entryId));
+
+			if (entryIdFolderId > 0) {
+				return entryIdFolderId;
+			}
+
+			entryIdFolderId = increment();
+
+			addDLFolder(
+				PortalUUIDUtil.generate(), entryIdFolderId, _groupId,
+				_companyId, _userId, _userName, _now, _now, _groupId,
+				ddmFolderId, String.valueOf(_entryId), StringPool.BLANK, _now);
+
+			return entryIdFolderId;
+		}
+
+		protected long addEntryVersionDLFolder(long entryIdFolderId)
+			throws Exception {
+
+			long entryVersionFolderId = getDLFolderId(
+				_groupId, entryIdFolderId, _entryVersion);
+
+			if (entryVersionFolderId > 0) {
+				return entryVersionFolderId;
+			}
+
+			entryVersionFolderId = increment();
+
+			addDLFolder(
+				PortalUUIDUtil.generate(), entryVersionFolderId, _groupId,
+				_companyId, _userId, _userName, _now, _now, _groupId,
+				entryIdFolderId, _entryVersion, StringPool.BLANK, _now);
+
+			return entryVersionFolderId;
+		}
+
+		protected long getDLFolderId(
+				long groupId, long parentFolderId, String name)
+			throws Exception {
+
+			Connection con = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+
+			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				String sql =
+					"select folderId from DLFolder where groupId = ? and " +
+					"parentFolderId = ? and name = ?";
+
+				ps = con.prepareStatement(sql);
+
+				ps.setLong(1, groupId);
+				ps.setLong(2, parentFolderId);
+				ps.setString(3, name);
+
+				rs = ps.executeQuery();
+
+				if (rs.next()) {
+					return rs.getLong("folderId");
+				}
+			}
+			finally {
+				DataAccess.cleanUp(con, ps, rs);
+			}
+
+			return 0;
+		}
+
+		protected String getExtension(String fileName) {
+			String extension = StringPool.BLANK;
+
+			int pos = fileName.lastIndexOf(CharPool.PERIOD);
+
+			if (pos > 0) {
+				extension = fileName.substring(pos + 1, fileName.length());
+			}
+
+			return StringUtil.toLowerCase(extension);
+		}
+
+		protected String toJSON(long groupId, String fileEntryUuid) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("groupId", groupId);
+			jsonObject.put("uuid", fileEntryUuid);
+
+			return jsonObject.toString();
+		}
+
+		protected String upgradeFileUploadReference(
+				String fileEntryUuid, String ddmFormFieldName,
+				String valueString)
+			throws PortalException {
+
+			try {
+				long dlFolderId = addDLFolderTree(ddmFormFieldName);
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				String name = String.valueOf(
+					increment(DLFileEntry.class.getName()));
+
+				String fileName = jsonObject.getString("name");
+				String filePath = jsonObject.getString("path");
+
+				// File entry
+
+				String extension = getExtension(fileName);
+
+				File file = DLStoreUtil.getFile(
+					_companyId, CompanyConstants.SYSTEM, filePath);
+
+				addDLFileEntry(
+					fileEntryUuid, increment(), _groupId, _companyId, _userId,
+					_userName, _createDate, _createDate, 0, 0, _groupId,
+					dlFolderId, StringPool.BLANK, name, fileName, extension,
+					MimeTypesUtil.getContentType(fileName), fileName,
+					StringPool.BLANK, StringPool.BLANK,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					DLFileEntryConstants.VERSION_DEFAULT, file.length(),
+					DLFileEntryConstants.DEFAULT_READ_COUNT, 0, 0, 0, 0, false);
+
+				// File
+
+				DLStoreUtil.addFile(_companyId, dlFolderId, name, file);
+
+				return fileEntryUuid;
+			}
+			catch (Exception e) {
+				throw new PortalException(e);
+			}
+		}
+
+		private final long _companyId;
+		private final Timestamp _createDate;
+		private final long _entryId;
+		private final String _entryVersion;
+		private final long _groupId;
+		private final Timestamp _now = new Timestamp(
+			System.currentTimeMillis());
+		private final long _userId;
+		private final String _userName;
 
 	}
 

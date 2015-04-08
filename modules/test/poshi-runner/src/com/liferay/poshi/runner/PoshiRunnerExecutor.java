@@ -156,13 +156,13 @@ public class PoshiRunnerExecutor {
 				}
 				else if ((childElement.attributeValue(
 							"macro-desktop") != null) &&
-						 !_MOBILE_DEVICE_ENABLED) {
+						 Validator.isNotNull(PropsValues.MOBILE_DEVICE_TYPE)) {
 
 					runMacroElement(childElement, "macro-desktop");
 				}
 				else if ((childElement.attributeValue(
 							"macro-mobile") != null) &&
-						 _MOBILE_DEVICE_ENABLED) {
+						 Validator.isNotNull(PropsValues.MOBILE_DEVICE_TYPE)) {
 
 					runMacroElement(childElement, "macro-mobile");
 				}
@@ -673,9 +673,6 @@ public class PoshiRunnerExecutor {
 			parseElement(thenElement);
 		}
 	}
-
-	private static final boolean _MOBILE_DEVICE_ENABLED =
-		PropsValues.MOBILE_DEVICE_ENABLED;
 
 	private static Object _returnObject;
 

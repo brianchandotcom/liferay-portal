@@ -51,8 +51,11 @@ public class SeleniumUtil extends PropsValues {
 			portalURL = "http://localhost:8180/console";
 		}
 
-		if (MOBILE_DEVICE_ENABLED) {
+		if (MOBILE_DEVICE_TYPE.equals("android")) {
 			_selenium = new AndroidMobileDriverImpl(projectDir, portalURL);
+		}
+		else if (MOBILE_DEVICE_TYPE.equals("ios")) {
+			_selenium = new IOSMobileDriverImpl(projectDir, portalURL);
 		}
 		else {
 			if (BROWSER_TYPE.equals("*chrome") ||

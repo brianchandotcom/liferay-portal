@@ -257,25 +257,6 @@ public class InvokerFilterHelper {
 		return servletContext.getClassLoader();
 	}
 
-	protected void initFilter(
-			ServletContext servletContext, String filterName,
-			String filterClassName, Map<String, String> initParameterMap)
-		throws Exception {
-
-		FilterConfig filterConfig = new InvokerFilterConfig(
-			servletContext, filterName, initParameterMap);
-
-		Filter filter = getFilter(
-			servletContext, filterClassName, filterConfig);
-
-		if (filter == null) {
-			return;
-		}
-
-		_filterConfigs.put(filterName, filterConfig);
-		_filters.put(filterName, filter);
-	}
-
 	protected void initFilterMapping(
 		String filterName, List<String> urlPatterns, List<String> dispatchers) {
 
@@ -336,8 +317,16 @@ public class InvokerFilterHelper {
 				initParameterMap.put(name, value);
 			}
 
-			initFilter(
-				servletContext, filterName, filterClassName, initParameterMap);
+			FilterConfig filterConfig = new InvokerFilterConfig(
+				servletContext, filterName, initParameterMap);
+
+			Filter filter = getFilter(
+				servletContext, filterClassName, filterConfig);
+
+			if (filter != null) {
+				_filterConfigs.put(filterName, filterConfig);
+				_filters.put(filterName, filter);
+			}
 		}
 
 		List<Element> filterMappingElements = rootElement.elements(

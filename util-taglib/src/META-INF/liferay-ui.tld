@@ -4905,7 +4905,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A variable to refer to the component.</description>
+			<description>A variable for the component.</description>
 			<name>param</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

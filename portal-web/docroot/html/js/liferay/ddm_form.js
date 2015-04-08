@@ -282,81 +282,6 @@ AUI.add(
 						);
 					},
 
-					_afterDeleteAvailableLocale: function(event) {
-						var instance = this;
-
-						var localizationMap = instance.get('localizationMap');
-
-						delete localizationMap[event.locale];
-
-						instance.set('localizationMap', localizationMap);
-					},
-
-					_afterEditingLocaleChange: function(event) {
-						var instance = this;
-
-						var translationManager = event.target;
-
-						var defaultLocale = translationManager.get('defaultLocale');
-
-						var availableLocales = translationManager.get('availableLocales');
-
-						if (AArray.indexOf([defaultLocale].concat(availableLocales), event.prevVal) > -1) {
-							instance.updateLocalizationMap(event.prevVal);
-						}
-
-						instance.set('displayLocale', event.newVal);
-
-						instance.syncLabelUI();
-						instance.syncValueUI();
-					},
-
-					_getLocalizable: function() {
-						var instance = this;
-
-						return instance.getFieldDefinition().localizable === true;
-					},
-
-					_getRepeatable: function() {
-						var instance = this;
-
-						return instance.getFieldDefinition().repeatable === true;
-					},
-
-					_handleToolbarClick: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						instance.ddmRepeatableButton = currentTarget;
-
-						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
-							instance.repeat();
-						}
-						else if (currentTarget.hasClass('lfr-ddm-repeatable-delete-button')) {
-							instance.remove();
-						}
-
-						event.stopPropagation();
-					},
-
-					_valueLocalizationMap: function() {
-						var instance = this;
-
-						var values = instance.get('values');
-						var instanceId = instance.get('instanceId');
-
-						var fieldValue = instance.getFieldInfo(values, 'instanceId', instanceId);
-
-						var localizationMap = {};
-
-						if (!A.Object.isEmpty(fieldValue)) {
-							localizationMap = fieldValue.value;
-						}
-
-						return localizationMap;
-					},
-
 					getFieldDefinition: function() {
 						var instance = this;
 
@@ -608,22 +533,98 @@ AUI.add(
 					updateTranslationsDefaultValue: function() {
 						var instance = this;
 
+						var localizationMap = instance.get('localizationMap');
 						var parent = instance.get('parent');
 
 						var translationManager = parent.get('translationManager');
 
+						if (translationManager) {
+							AArray.each(
+								translationManager.get('availableLocales'),
+								function(item, index) {
+									var value = localizationMap[item];
+
+									if (Lang.isUndefined(value)) {
+										localizationMap[item] = instance.getValue();
+									}
+								}
+							);
+						}
+					},
+
+					_afterDeleteAvailableLocale: function(event) {
+						var instance = this;
+
 						var localizationMap = instance.get('localizationMap');
 
-						AArray.each(
-							translationManager.get('availableLocales'),
-							function(item, index) {
-								var value = localizationMap[item];
+						delete localizationMap[event.locale];
 
-								if (Lang.isUndefined(value)) {
-									localizationMap[item] = instance.getValue();
-								}
-							}
-						);
+						instance.set('localizationMap', localizationMap);
+					},
+
+					_afterEditingLocaleChange: function(event) {
+						var instance = this;
+
+						var translationManager = event.target;
+
+						var defaultLocale = translationManager.get('defaultLocale');
+
+						var availableLocales = translationManager.get('availableLocales');
+
+						if (AArray.indexOf([defaultLocale].concat(availableLocales), event.prevVal) > -1) {
+							instance.updateLocalizationMap(event.prevVal);
+						}
+
+						instance.set('displayLocale', event.newVal);
+
+						instance.syncLabelUI();
+						instance.syncValueUI();
+					},
+
+					_getLocalizable: function() {
+						var instance = this;
+
+						return instance.getFieldDefinition().localizable === true;
+					},
+
+					_getRepeatable: function() {
+						var instance = this;
+
+						return instance.getFieldDefinition().repeatable === true;
+					},
+
+					_handleToolbarClick: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						instance.ddmRepeatableButton = currentTarget;
+
+						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
+							instance.repeat();
+						}
+						else if (currentTarget.hasClass('lfr-ddm-repeatable-delete-button')) {
+							instance.remove();
+						}
+
+						event.stopPropagation();
+					},
+
+					_valueLocalizationMap: function() {
+						var instance = this;
+
+						var values = instance.get('values');
+						var instanceId = instance.get('instanceId');
+
+						var fieldValue = instance.getFieldInfo(values, 'instanceId', instanceId);
+
+						var localizationMap = {};
+
+						if (!A.Object.isEmpty(fieldValue)) {
+							localizationMap = fieldValue.value;
+						}
+
+						return localizationMap;
 					}
 				}
 			}

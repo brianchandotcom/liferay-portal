@@ -24,6 +24,8 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 import java.io.IOException;
 import java.io.Writer;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
@@ -35,11 +37,12 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 	public ItemSelectorViewRendererImpl(
 		ItemSelectorView<ItemSelectorCriterion> itemSelectorView,
-		ItemSelectorCriterion itemSelectorCriterion, 
+		ItemSelectorCriterion itemSelectorCriterion, PortletURL portletURL,
 		String itemSelectedCallback) {
 
 		_itemSelectorView = itemSelectorView;
 		_itemSelectorCriterion = itemSelectorCriterion;
+		_portletURL = portletURL;
 		_itemSelectedCallback = itemSelectedCallback;
 	}
 
@@ -64,7 +67,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 		_itemSelectorView.renderHTML(
 			pageContext.getRequest(), pipingServletResponse,
-			_itemSelectorCriterion, _itemSelectedCallback);
+			_itemSelectorCriterion, _portletURL, _itemSelectedCallback);
 
 		Writer writer = pageContext.getOut();
 
@@ -76,5 +79,6 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	private final String _itemSelectedCallback;
 	private final ItemSelectorCriterion _itemSelectorCriterion;
 	private final ItemSelectorView<ItemSelectorCriterion> _itemSelectorView;
+	private final PortletURL _portletURL;
 
 }

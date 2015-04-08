@@ -16,8 +16,6 @@ package com.liferay.document.selector;
 
 import java.io.IOException;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 

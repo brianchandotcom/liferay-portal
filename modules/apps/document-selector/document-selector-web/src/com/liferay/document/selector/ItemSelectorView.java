@@ -18,6 +18,8 @@ import java.io.IOException;
 
 import java.util.Locale;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -33,7 +35,8 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			T itemSelectorCriterion, String itemSelectedCallback)
+			T itemSelectorCriterion, PortletURL portletURL,
+			String itemSelectedCallback)
 		throws IOException, ServletException;
 
 }

@@ -25,39 +25,43 @@ import java.util.Map;
  * of the editor.
  *
  * <p>
- * Implementations of this class must be OSGI components that are registered in
- * the OSGI Registry.
+ * Implementations of this class must be OSGi components that are registered in
+ * the OSGi Registry.
  * </p>
  *
  * <p>
- * The configuration and options can be targeted on specific editors, based on
- * three different criteria: the portlet name, the editor config key and the
- * editor name. These criteria will be defined as OSGI properties with the
+ * The configuration and options can be targeted for specific editors, based on
+ * three different criteria: portlet name, editor config key, and
+ * editor name. These criteria can be defined as OSGi properties with the
  * following names:
+ * </p>
  *
  * <ul>
  * <li>
- * javax.portlet.name: The portlet name. If specified, the configuration and
- * options populated in the JSON object will apply to every editor used in that
+ * <code>javax.portlet.name</code>: The portlet name. If specified, the configuration and
+ * options populated in the JSON object are applied to every editor used in that
  * portlet.
  * </li>
  * <li>
- * editor.config.key: The key used to identify the editor (the configKey
- * attribute used by the input-editor taglib) If specified, the configuration
- * and options populated in the JSON object will apply to every editor with the
- * specified configKey.
+ * <code>editor.config.key</code>: The key used to identify the editor (the
+ * <code>input-editor</code> taglib tag's <code>configKey</code>
+ * attribute value). If specified, the configuration
+ * and options populated in the JSON object are applied to every editor with the
+ * specified <code>configKey</code>.
  * </li>
  * <li>
- * editor.name: The name of the editor (the eidtorName attributed used by the
- * input-editor taglib: ckeditor, ckeditor_bbcode, alloyeditor...) If specified,
- * the configuration and options populated in the JSON object will apply to
+ * <code>editor.name</code>: The name of the editor (the
+ * <code>input-editor</code> taglib tag's <code>editorName</code> attribute value:
+ * <code>ckeditor</code>, <code>ckeditor_bbcode</code>, <code>alloyeditor</code>, etc.). If specified,
+ * the configuration and options populated in the JSON object are applied to
  * every editor with that name.
  * </li>
  * </ul>
  *
  * <p>
- * In case that there's more than one config,
- * the priority is defined as follows (the first have highest priority):
+ * In case there's more than one configuration,
+ * they're prioritized by the following criteria combinations (the first
+ * combination getting the highest priority):
  * </p>
  *
  * <ol>
@@ -85,8 +89,8 @@ import java.util.Map;
  * </ol>
  *
  * <p>
- * If there are more than one config in the same of any of the previous levels,
- * the priority will be defined based on the service rank.
+ * If there are multiple configurations having the same criteria elements,
+ * prioritization between them is based on service rank.
  * </p>
  *
  * @author Sergio González
@@ -105,14 +109,14 @@ public interface EditorConfigContributor {
 	 * for different editors.
 	 * </p>
 	 *
-	 * @param  jsonObject the original json object containing all the
-	 *         configuration set by previous EditorConfigContributor modules.
-	 * @param  inputEditorTaglibAttributes the attributes specified to the input
-	 *         taglib that is rendering the editor.
-	 * @param  themeDisplay the theme display
-	 * @param  liferayPortletResponse the liferay portlet response. Optionally
-	 *         <code>null</code>. This should only be used to generate portlet
-	 *         URLs.
+	 * @param jsonObject the original json object containing all the
+	 *        configuration set by previous EditorConfigContributor modules.
+	 * @param inputEditorTaglibAttributes the attributes specified to the input
+	 *        taglib that is rendering the editor.
+	 * @param themeDisplay the theme display
+	 * @param liferayPortletResponse the liferay portlet response. Optionally
+	 *        <code>null</code>. This should only be used to generate portlet
+	 *        URLs.
 	 */
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
@@ -130,14 +134,14 @@ public interface EditorConfigContributor {
 	 * by the editor, so typically will be the same for all the editors.
 	 * </p>
 	 *
-	 * @param  jsonObject the original json object containing all the
-	 *         options set by previous EditorConfigContributor modules.
-	 * @param  inputEditorTaglibAttributes the attributes specified to the input
-	 *         taglib that is rendering the editor.
-	 * @param  themeDisplay the theme display
-	 * @param  liferayPortletResponse the liferay portlet response. Optionally
-	 *         <code>null</code>. This should only be used to generate portlet
-	 *         URLs.
+	 * @param jsonObject the original json object containing all the options set
+	 *        by previous EditorConfigContributor modules.
+	 * @param inputEditorTaglibAttributes the attributes specified to the input
+	 *        taglib that is rendering the editor.
+	 * @param themeDisplay the theme display
+	 * @param liferayPortletResponse the liferay portlet response. Optionally
+	 *        <code>null</code>. This should only be used to generate portlet
+	 *        URLs.
 	 */
 	public void populateOptionsJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,

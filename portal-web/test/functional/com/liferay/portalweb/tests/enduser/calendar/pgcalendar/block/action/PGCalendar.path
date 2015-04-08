@@ -19,8 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SCHEDULER_VIEW_WEEK</td>
-	<td>//div[@class='yui3-widget component scheduler-view scheduler-view-day scheduler-view-week']</td>
+	<td>COG_ICON</td>
+	<td>//div[@id='main-content']//i[contains(@class,'icon-cog') and contains(@class,'lfr-icon-menu-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COG_MENULIST_CONFIGURATION</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,6 +144,11 @@
 <tr>
 	<td>SMALL_CALENDAR_BUSY_DAY</td>
 	<td>//td[contains(@class,'yui3-calendar-day') and contains(@class,'lfr-busy-day') and contains(text(),'${key_dateNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SMALL_CALENDAR_WEEK_START_DAY</td>
+	<td>xpath=(//tr[@class='yui3-calendar-weekdayrow']/th)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -480,6 +490,33 @@
 <tr>
 	<td>OTHER_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER</td>
 	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='colorPicker']/div/div/div/div[contains(@style,'${key_color}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULER_VIEW_WEEK-->
+<tr>
+	<td>SCHEDULER_VIEW_WEEK</td>
+	<td>//div[@class='yui3-widget component scheduler-view scheduler-view-day scheduler-view-week']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_WEEK_WEEK_START_DAY</td>
+	<td>xpath=(//tr[contains(@class,'scheduler-view-day-header')]//th[@class='scheduler-view-day-header-day']/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULER_VIEW_MONTH-->
+<tr>
+	<td>SCHEDULER_VIEW_MONTH_WEEK_START_DAY</td>
+	<td>xpath=(//div[contains(@class,'scheduler-view-month-content')]//tr[@class='scheduler-view-table-header-col']//th[@class='scheduler-view-table-header-day']/div)[1]</td>
 	<td></td>
 </tr>
 <tr>

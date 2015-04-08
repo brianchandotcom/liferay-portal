@@ -5190,15 +5190,18 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a message confirming items were moved to the trash and an option to restore those items form the trash.</description>
 		<name>trash-undo</name>
 		<tag-class>com.liferay.taglib.ui.TrashUndoTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<description>The url of the undo link.</description>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The redirect url.</description>
 			<name>redirect</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

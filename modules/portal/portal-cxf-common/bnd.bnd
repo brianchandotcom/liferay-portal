@@ -1,0 +1,52 @@
+Bundle-ClassPath:\
+	.,\
+	lib/cxf-core.jar,\
+	lib/cxf-rt-bindings-soap.jar,\
+	lib/cxf-rt-databinding-jaxb.jar,\
+	lib/cxf-rt-transports-http.jar,\
+	lib/cxf-rt-wsdl.jar,\
+	lib/cxf-tools-common.jar,\
+	lib/cxf-tools-validator.jar,\
+	lib/stax2-api.jar,\
+	lib/xmlschema-core.jar,\
+	lib/woodstox-core-asl.jar,\
+	lib/wsdl4j.jar
+Bundle-Name: Liferay CXF common infrastructure
+Bundle-SymbolicName: com.liferay.cxf.common
+Bundle-Version: 1.0.0
+Export-Package: \
+	javax.wsdl.*;version="1.2",\
+	org.apache.cxf.*;version="3.0.3",\
+	org.apache.ws.commons.schema.*;version="2.1.0"
+Import-Package:\
+	!com.sun.*,\
+	!org.springframework.*,\
+	!javax.validation.*,\
+	!org.apache.abdera.*,\
+	!org.apache.aries.*,\
+	!org.apache.cxf.aegis.*,\
+	!org.apache.cxf.ws.policy.*,\
+	!org.apache.neethi.*,\
+	!org.apache.velocity.*,\
+	!org.apache.xml.resolver.*,\
+	!org.apache.xmlbeans.*,\
+	!org.jvnet.fastinfoset.*,\
+	!org.jvnet.staxex.*,\
+	!org.junit.*,\
+	!org.relaxng.datatype.*,\
+	!org.slf4j.spi.*,\
+	!net.sf.cglib.proxy.*,\
+	*
+Include-Resource:\
+	classes,\
+	lib/=lib/cxf-core.jar,\
+	lib/=lib/cxf-rt-bindings-soap.jar,\
+	lib/=lib/cxf-rt-databinding-jaxb.jar,\
+	lib/=lib/cxf-rt-transports-http.jar,\
+	lib/=lib/cxf-rt-wsdl.jar,\
+	lib/=lib/cxf-tools-common.jar,\
+	lib/=lib/cxf-tools-validator.jar,\
+	lib/=lib/stax2-api.jar,\
+	lib/=lib/woodstox-core-asl.jar,\
+	lib/=lib/wsdl4j.jar,\
+	lib/=lib/xmlschema-core.jar

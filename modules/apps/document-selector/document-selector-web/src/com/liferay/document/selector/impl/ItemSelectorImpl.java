@@ -72,22 +72,44 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		Map<String, String[]> parameters = portletRequest.getParameterMap();
 
+		String itemSelectedCallback = parameters.get(
+			PARAMETER_ITEM_SELECTED_CALLBACK)[0];
+
+		List<ItemSelectorCriterion> itemSelectorCriteria =
+			getItemSelectorCriteria(parameters);
+
+		ItemSelectorCriterion[] itemSelectorCriteriaArray =
+			itemSelectorCriteria.toArray(
+				new ItemSelectorCriterion[itemSelectorCriteria.size()]);
+
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
 			new ArrayList<>();
 
-		List<Class<? extends ItemSelectorCriterion>>
-			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
-				parameters);
+		for (int i = 0; i<itemSelectorCriteria.size(); i++) {
+			ItemSelectorCriterion itemSelectorCriterion =
+				itemSelectorCriteria.get(i);
 
-		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
-			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
-				itemSelectorCriterionClasses.get(i);
+			ItemSelectorCriterionHandler<ItemSelectorCriterion>
+				itemSelectorCriterionHandler = getItemSelectorCriterionHandler(
+				itemSelectorCriterion.getClass());
 
-			String paramPrefix = i + "_";
+			List<ItemSelectorView<ItemSelectorCriterion>> itemSelectorViews =
+				itemSelectorCriterionHandler.getItemSelectorViews(
+					itemSelectorCriterion);
 
-			addItemSelectorViewRenderers(
-				itemSelectorViewRenderers, parameters, paramPrefix,
-				itemSelectorCriterionClass);
+			for (ItemSelectorView<ItemSelectorCriterion> itemSelectorView :
+				itemSelectorViews) {
+
+				PortletURL portletURL = getItemSelectorURL(
+					portletRequest, itemSelectedCallback,
+					itemSelectorCriteriaArray);
+
+
+				itemSelectorViewRenderers.add(
+					new ItemSelectorViewRendererImpl(
+						itemSelectorView, itemSelectorCriterion, portletURL,
+						itemSelectedCallback));
+			}
 		}
 
 		return new ItemSelectorRenderingImpl(
@@ -131,35 +153,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return portletURL;
-	}
-
-	protected void addItemSelectorViewRenderers(
-		List<ItemSelectorViewRenderer> itemSelectorViewRenderers,
-		Map<String, String[]> parameters, String paramPrefix,
-		Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass) {
-
-		ItemSelectorCriterionHandler<ItemSelectorCriterion>
-			itemSelectorCriterionHandler = getItemSelectorCriterionHandler(
-				itemSelectorCriterionClass);
-
-		ItemSelectorCriterion itemSelectorCriterion = getItemSelectorCriterion(
-			parameters, paramPrefix, itemSelectorCriterionClass);
-
-		List<ItemSelectorView<ItemSelectorCriterion>> itemSelectorViews =
-			itemSelectorCriterionHandler.getItemSelectorViews(
-				itemSelectorCriterion);
-
-		String itemSelectedCallback = parameters.get(
-			PARAMETER_ITEM_SELECTED_CALLBACK)[0];
-
-		for (ItemSelectorView<ItemSelectorCriterion> itemSelectorView :
-				itemSelectorViews) {
-
-			itemSelectorViewRenderers.add(
-				new ItemSelectorViewRendererImpl(
-					itemSelectorView, itemSelectorCriterion,
-					itemSelectedCallback));
-		}
 	}
 
 	protected <T extends ItemSelectorCriterion> T getItemSelectorCriterion(
@@ -393,6 +386,29 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		_itemSelectionCriterionHandlers.remove(
 			itemSelectorCriterionClass.getName());
+	}
+
+	private List<ItemSelectorCriterion> getItemSelectorCriteria(
+		Map<String, String[]> parameters) {
+
+		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+
+		List<Class<? extends ItemSelectorCriterion>>
+			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
+			parameters);
+
+		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
+			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
+				itemSelectorCriterionClasses.get(i);
+
+			String paramPrefix = i + "_";
+
+			itemSelectorCriteria.add(
+				getItemSelectorCriterion(
+					parameters, paramPrefix, itemSelectorCriterionClass));
+		}
+
+		return itemSelectorCriteria;
 	}
 
 	private final ConcurrentMap

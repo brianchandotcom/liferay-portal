@@ -18,6 +18,11 @@ import com.liferay.document.selector.ItemSelectorCriterionHandler;
 import com.liferay.document.selector.ItemSelectorRendering;
 import com.liferay.document.selector.ItemSelectorView;
 import com.liferay.document.selector.ItemSelectorViewRenderer;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLFactory;
+import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.io.IOException;
 
@@ -31,6 +36,8 @@ import javax.portlet.PortletRequest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 
@@ -51,6 +58,20 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		_mediaItemSelectorCriterion.setFileExtension("jpg");
 		_mediaItemSelectorCriterion.setMaxSize(2048);
+
+		PortletURLFactory portletURLFactory = mock(PortletURLFactory.class);
+
+		LiferayPortletURL mockLiferayPortletURL = mock(LiferayPortletURL.class);
+
+		when(
+			portletURLFactory.create(
+				Mockito.any(PortletRequest.class), Mockito.anyString(),
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			mockLiferayPortletURL
+		);
+
+		new PortletURLFactoryUtil().setPortletURLFactory(portletURLFactory);
 	}
 
 	@Test
@@ -149,6 +170,14 @@ public class ItemSelectorImplTest extends PowerMockito {
 			portletRequest.getParameterMap()
 		).thenReturn(
 			parameters
+		);
+
+		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+
+		when(
+			portletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
 		);
 
 		return portletRequest;

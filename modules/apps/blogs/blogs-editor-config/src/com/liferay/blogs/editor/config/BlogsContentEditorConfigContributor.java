@@ -50,6 +50,10 @@ public class BlogsContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		if (liferayPortletResponse == null) {
+			return;
+		}
+
 		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
 		portletURL.setParameter("struts_action", "/blogs/upload_editor_image");

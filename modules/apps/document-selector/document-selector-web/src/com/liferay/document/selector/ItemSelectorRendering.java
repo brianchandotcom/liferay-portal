@@ -23,6 +23,6 @@ public interface ItemSelectorRendering {
 
 	public String getItemSelectedCallback();
 
-	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers();
+	public List<ItemSelectorViewRenderer> getItemSelectorViewRenderers();
 
 }

@@ -14,7 +14,9 @@
 
 package com.liferay.document.selector.impl;
 
+import com.liferay.document.selector.ItemSelectorCriterionHandler;
 import com.liferay.document.selector.ItemSelectorRendering;
+import com.liferay.document.selector.ItemSelectorView;
 import com.liferay.document.selector.ItemSelectorViewRenderer;
 
 import java.io.IOException;
@@ -96,16 +98,15 @@ public class ItemSelectorImplTest extends PowerMockito {
 			"itemSelectedCallback",
 			itemSelectorRendering.getItemSelectedCallback());
 
-		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
+		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
 			itemSelectorRendering.getItemSelectorViewRenderers();
 
-		ItemSelectorViewRenderer<MediaItemSelectorCriterion>
-			mediaItemSelectorViewRenderer =
-				(ItemSelectorViewRenderer<MediaItemSelectorCriterion>)
-					itemSelectorViewRenderers.get(0);
+		ItemSelectorViewRenderer mediaItemSelectorViewRenderer =
+			itemSelectorViewRenderers.get(0);
 
 		MediaItemSelectorCriterion mediaItemSelectorCriterion =
-			mediaItemSelectorViewRenderer.getItemSelectorCriterion();
+			(MediaItemSelectorCriterion)
+				mediaItemSelectorViewRenderer.getItemSelectorCriterion();
 
 		Assert.assertEquals(
 			_mediaItemSelectorCriterion.getFileExtension(),
@@ -114,23 +115,24 @@ public class ItemSelectorImplTest extends PowerMockito {
 			_mediaItemSelectorCriterion.getMaxSize(),
 			mediaItemSelectorCriterion.getMaxSize());
 		Assert.assertTrue(
-			mediaItemSelectorViewRenderer.getItemSelectorView()
-				instanceof MediaItemSelectorView);
+			(ItemSelectorView)
+				mediaItemSelectorViewRenderer.getItemSelectorView()
+					instanceof MediaItemSelectorView);
 
-		ItemSelectorViewRenderer<FlickrItemSelectorCriterion>
-			flickrItemSelectorViewRenderer =
-				(ItemSelectorViewRenderer<FlickrItemSelectorCriterion>)
-					itemSelectorViewRenderers.get(1);
+		ItemSelectorViewRenderer flickrItemSelectorViewRenderer =
+			itemSelectorViewRenderers.get(1);
 
 		FlickrItemSelectorCriterion flickrItemSelectorCriterion =
-			flickrItemSelectorViewRenderer.getItemSelectorCriterion();
+			(FlickrItemSelectorCriterion)
+				flickrItemSelectorViewRenderer.getItemSelectorCriterion();
 
 		Assert.assertEquals(
 			_flickrItemSelectorCriterion.getUser(),
 			flickrItemSelectorCriterion.getUser());
 		Assert.assertTrue(
-			flickrItemSelectorViewRenderer.getItemSelectorView()
-				instanceof FlickrItemSelectorView);
+			(ItemSelectorView)
+				flickrItemSelectorViewRenderer.getItemSelectorView()
+					instanceof FlickrItemSelectorView);
 
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
 	}

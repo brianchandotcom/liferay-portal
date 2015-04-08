@@ -149,12 +149,16 @@ public class ItemSelectorImpl implements ItemSelector {
 			itemSelectorCriterionHandler.getItemSelectorViews(
 				itemSelectorCriterion);
 
+		String itemSelectedCallback = parameters.get(
+			PARAMETER_ITEM_SELECTED_CALLBACK)[0];
+
 		for (ItemSelectorView<ItemSelectorCriterion> itemSelectorView :
 				itemSelectorViews) {
 
 			itemSelectorViewRenderers.add(
 				new ItemSelectorViewRendererImpl(
-					itemSelectorView, itemSelectorCriterion));
+					itemSelectorView, itemSelectorCriterion,
+					itemSelectedCallback));
 		}
 	}
 

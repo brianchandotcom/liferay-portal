@@ -885,7 +885,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The month of the year to display at the top of the calendar.</description>
+			<description>A month of the year to display at the top of the calendar.</description>
 			<name>month</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -899,7 +899,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The year to display at the top of the calendar.</description>
+			<description>A year to display at the top of the calendar.</description>
 			<name>year</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1646,7 +1646,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The header's title to display as the header text.</description>
+			<description>A title to display as the header text.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1802,7 +1802,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The URL navigated to when the icon is clicked.</description>
+			<description>A URL navigated to when the icon is clicked.</description>
 			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1864,7 +1864,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The URL navigated to when the icon is clicked.</description>
+			<description>A URL navigated to when the icon is clicked.</description>
 			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2579,13 +2579,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The left box's name.</description>
+			<description>A name for the left box.</description>
 			<name>leftBoxName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The left list of key value pairs.</description>
+			<description>A list of key value pairs for the left box.</description>
 			<name>leftList</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2605,19 +2605,19 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The left box's title to display at the top of the box.</description>
+			<description>A title to display at the top of the right box.</description>
 			<name>leftTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The right box's name.</description>
+			<description>A name for the right box.</description>
 			<name>rightBoxName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The right list of key value pairs.</description>
+			<description>A list of key value pairs for the right box.</description>
 			<name>rightList</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2637,7 +2637,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The right box's title to display at the top of the box.</description>
+			<description>A title to display at the top of the right box.</description>
 			<name>rightTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2763,7 +2763,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The search box's title.</description>
+			<description>A title for the search box.</description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2808,7 +2808,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The variable name for this component.</description>
+			<description>A variable name for this component.</description>
 			<name>param</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2969,7 +2969,7 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The time zone input's name.</description>
+			<description>A name for the component.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3308,7 +3308,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The name of the language key from which to derive the message to be displayed.</description>
+			<description>The name of a language key from which to derive the message to be displayed.</description>
 			<name>key</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3562,7 +3562,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The panel's title to display at the top of the panel.</description>
+			<description>A title to display at the top of the panel.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3635,7 +3635,7 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The location of the PNG image file to use.</description>
+			<description>The location of a PNG image file to use.</description>
 			<name>image</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3759,7 +3759,7 @@
 		<tag-class>com.liferay.taglib.ui.RSSTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The default maximum number of items to display. The default value is <![CDATA[<code>20</code>]]>.</description>
+			<description>A default maximum number of items to display. The default value is <![CDATA[<code>20</code>]]>.</description>
 			<name>delta</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4482,13 +4482,13 @@
 		<tag-class>com.liferay.taglib.ui.SearchContainerRowParameterTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The name of the row parameter.</description>
+			<description>A name for the row parameter.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The value of the row parameter.</description>
+			<description>A value for the row parameter.</description>
 			<name>value</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4801,7 +4801,7 @@
 		<tag-class>com.liferay.taglib.ui.SuccessTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The key to be placed in the <![CDATA[<code>SessionMessages</code>]]> object to trigger the success message.</description>
+			<description>A key to be placed in the <![CDATA[<code>SessionMessages</code>]]> object to trigger the success message.</description>
 			<name>key</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5038,7 +5038,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The ID of the component instance whose content's visibility to toggle.</description>
+			<description>The ID of a component instance whose content's visibility to toggle.</description>
 			<name>id</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

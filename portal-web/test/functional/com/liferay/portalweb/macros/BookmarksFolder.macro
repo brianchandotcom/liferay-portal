@@ -178,6 +178,13 @@
 			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
+		<while>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGBookmarks#BACK_ICON" />
+			<then>
+				<execute function="Click" locator1="PGBookmarks#BACK_ICON" />
+			</then>
+		</while>
+
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="PGBookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />

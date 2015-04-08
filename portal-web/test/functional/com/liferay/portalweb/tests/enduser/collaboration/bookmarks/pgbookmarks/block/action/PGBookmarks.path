@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BACK_ICON</td>
+	<td>//a[contains(@id,'TabsBack')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

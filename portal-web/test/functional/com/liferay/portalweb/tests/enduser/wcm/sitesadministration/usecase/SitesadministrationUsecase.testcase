@@ -837,7 +837,7 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute function="AssertLocation" value1="http://localhost:8080/user/usersn/home" />
+		<execute function="AssertLocation" value1="http://localhost:8080/user/usersn" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

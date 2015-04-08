@@ -79,7 +79,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="CPUsergroupsSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
-		<execute function="Type#clickAtSendKeys" locator1="CPUsergroupsSitepages#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
+		<execute function="Type#mouseOverFocusType" locator1="CPUsergroupsSitepages#ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 		<execute function="AssertClick" locator1="CPUsergroupsSitepages#ADD_PAGE_BUTTON" value1="Add Page" />
 		<execute function="AssertTextEquals" locator1="CPUsergroupsSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 

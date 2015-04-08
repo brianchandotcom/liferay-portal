@@ -29,6 +29,12 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="RssFeed#UNDO_LINK" value1="Undo" />
 	</command>
 
+	<command name="disableShowFeedTitle">
+		<execute function="SelectFrame" locator1="RssFeed#RSS_CONFIGURATION_IFRAME" />
+		<execute function="Uncheck" locator1="RssFeed#DISPLAY_SETTINGS_SHOW_FEED_TITLE" value1="Show Feed Title" />
+		<execute function="Uncheck" locator1="RssFeed#DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION" value1="Show Feed Description" />
+	</command>
+
 	<command name="save">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
@@ -57,6 +63,12 @@
 		<var name="key_feedTitle" value="${feedTitle}" />
 
 		<execute function="AssertTextEquals" locator1="RssFeed#FEED_NAVIGATION_DISPLAY_STYLE" value1="${feedTitle}" />
+	</command>
+
+	<command name="viewNoFeedTitle">
+		<var name="key_feedTitle" value="${feedTitle}" />
+
+		<execute function="AssertTextNotPresent" locator1="RssFeed#FEEDS_TITLE" value1="${feedTitle}" />
 	</command>
 
 	<command name="viewPG">

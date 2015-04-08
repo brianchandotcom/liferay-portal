@@ -1077,8 +1077,7 @@
 		<execute function="Click" locator1="CPUsersandorganizationsViewusers#USER_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#USER_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
-		<execute function="Select" locator1="CPUsersandorganizationsUser#DISPLAY_SETTINGS_LANGUAGE_SELECT" value1="${languageName}" />
+		<execute function="Select" locator1="CPUsersandorganizationsUser#LANGUAGE_SELECT" value1="${languageName}" />
 		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

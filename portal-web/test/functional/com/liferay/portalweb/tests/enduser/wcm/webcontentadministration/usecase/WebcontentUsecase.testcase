@@ -39,6 +39,8 @@
 
 		<execute macro="Page#openURL" />
 
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>

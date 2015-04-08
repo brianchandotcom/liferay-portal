@@ -1513,11 +1513,11 @@
 			</then>
 		</while>
 
-		<var name="key_eventNumber" value="${eventNumber}" />
-
 		<if>
 			<isset var="eventNumber" />
 			<then>
+				<var name="key_eventNumber" value="${eventNumber}" />
+
 				<if>
 					<condition function="IsElementPresent" locator1="PGCalendarMonthView#SCHEDULER_EVENT_MONTH_VIEW_SHOW_MORE_LINK" />
 					<then>

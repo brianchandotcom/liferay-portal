@@ -1,21 +1,9 @@
 Bundle-ClassPath:\
 	.,\
-	lib/animal-sniffer-annotations.jar,\
-	lib/cxf-core.jar,\
-	lib/cxf-rt-bindings-soap.jar,\
 	lib/cxf-rt-bindings-xml.jar,\
-	lib/cxf-rt-databinding-jaxb.jar,\
-	lib/cxf-rt-frontend-simple.jar,\
 	lib/cxf-rt-frontend-jaxws.jar,\
-	lib/cxf-rt-transports-http.jar,\
-	lib/cxf-rt-wsdl.jar,\
-	lib/cxf-tools-common.jar,\
-	lib/cxf-tools-validator.jar,\
-	lib/jaxb-impl.jar,\
-	lib/stax2-api.jar,\
-	lib/woodstox-core-asl.jar,\
-	lib/wsdl4j.jar,\
-	lib/xmlschema-core.jar
+	lib/cxf-rt-frontend-simple.jar,\
+	lib/cxf-rt-ws-policy.jar
 Bundle-Name: Liferay Portal SOAP Extender
 Bundle-SymbolicName: com.liferay.portal.soap.extender
 Bundle-Version: 1.0.0
@@ -23,11 +11,14 @@ Import-Package:\
 	!com.sun.*,\
 	!org.springframework.*,\
 	!javax.validation.*,\
+	!org.apache.abdera.*,\
 	!org.apache.aries.*,\
+	!org.apache.cxf.aegis.*,\
 	!org.apache.cxf.ws.policy.*,\
 	!org.apache.neethi.*,\
 	!org.apache.velocity.*,\
 	!org.apache.xml.resolver.*,\
+	!org.apache.xmlbeans.*,\
 	!org.jvnet.fastinfoset.*,\
 	!org.jvnet.staxex.*,\
 	!org.junit.*,\
@@ -37,19 +28,7 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	lib/=lib/animal-sniffer-annotations.jar,\
-	lib/=lib/cxf-core.jar,\
-	lib/=lib/cxf-rt-bindings-soap.jar,\
 	lib/=lib/cxf-rt-bindings-xml.jar,\
-	lib/=lib/cxf-rt-databinding-jaxb.jar,\
-	lib/=lib/cxf-rt-frontend-simple.jar,\
 	lib/=lib/cxf-rt-frontend-jaxws.jar,\
-	lib/=lib/cxf-rt-transports-http.jar,\
-	lib/=lib/cxf-rt-wsdl.jar,\
-	lib/=lib/cxf-tools-common.jar,\
-	lib/=lib/cxf-tools-validator.jar,\
-	lib/=lib/jaxb-impl.jar,\
-	lib/=lib/stax2-api.jar,\
-	lib/=lib/woodstox-core-asl.jar,\
-	lib/=lib/wsdl4j.jar,\
-	lib/=lib/xmlschema-core.jar
+	lib/=lib/cxf-rt-frontend-simple.jar,\
+	lib/=lib/cxf-rt-ws-policy.jar

@@ -25,4 +25,6 @@ public interface ItemSelectorRendering {
 
 	public List<ItemSelectorViewRenderer> getItemSelectorViewRenderers();
 
+	public String getSelectedTab();
+
 }

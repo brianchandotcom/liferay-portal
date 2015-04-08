@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -43,6 +42,7 @@ import javax.management.MBeanServer;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.event.CacheManagerEventListenerRegistry;
@@ -73,8 +73,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		reconfigPortalCache(_configurationPair.getValue());
 	}
 
-	public void setConfigPropertyKey(String configPropertyKey) {
-		_configPropertyKey = configPropertyKey;
+	public void setConfigFile(String configFile) {
+		_configFile = configFile;
+	}
+
+	public void setDefaultConfigFile(String defaultConfigFile) {
+		_defaultConfigFile = defaultConfigFile;
 	}
 
 	public void setRegisterCacheConfigurations(
@@ -93,6 +97,28 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	public void setRegisterCacheStatistics(boolean registerCacheStatistics) {
 		_registerCacheStatistics = registerCacheStatistics;
+	}
+
+	public void setStopCacheManagerTimer(boolean stopCacheManagerTimer) {
+		_stopCacheManagerTimer = stopCacheManagerTimer;
+	}
+
+	protected Ehcache createEhcache(
+		String portalCacheName, CacheConfiguration cacheConfiguration) {
+
+		if (_cacheManager.cacheExists(portalCacheName)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Overriding existing cache " + portalCacheName);
+			}
+
+			_cacheManager.removeCache(portalCacheName);
+		}
+
+		Cache cache = new Cache(cacheConfiguration);
+
+		_cacheManager.addCache(cache);
+
+		return cache;
 	}
 
 	@Override
@@ -136,34 +162,34 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected void initPortalCacheManager() {
-		String configurationPath = PropsUtil.get(_configPropertyKey);
-
-		if (Validator.isNull(configurationPath)) {
-			configurationPath = _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE;
+		if (Validator.isNull(_configFile)) {
+			_configFile = _defaultConfigFile;
 		}
 
-		_usingDefault = configurationPath.equals(
-			_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE);
+		_usingDefault = _configFile.equals(_defaultConfigFile);
 
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
-			configurationPath, clusterAware, _usingDefault);
+			EhcacheConfigurationHelperUtil.class.getResource(_configFile),
+			clusterAware, _usingDefault);
 
 		_cacheManager = new CacheManager(_configurationPair.getKey());
 
 		_cacheManager.setName(name);
 
-		FailSafeTimer failSafeTimer = _cacheManager.getTimer();
+		if (_stopCacheManagerTimer) {
+			FailSafeTimer failSafeTimer = _cacheManager.getTimer();
 
-		failSafeTimer.cancel();
+			failSafeTimer.cancel();
 
-		try {
-			Field cacheManagerTimerField = ReflectionUtil.getDeclaredField(
-				CacheManager.class, "cacheManagerTimer");
+			try {
+				Field cacheManagerTimerField = ReflectionUtil.getDeclaredField(
+					CacheManager.class, "cacheManagerTimer");
 
-			cacheManagerTimerField.set(_cacheManager, null);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+				cacheManagerTimerField.set(_cacheManager, null);
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 		CacheManagerEventListenerRegistry cacheManagerEventListenerRegistry =
@@ -193,18 +219,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			String portalCacheName = cacheConfiguration.getName();
 
 			synchronized (_cacheManager) {
-				if (_cacheManager.cacheExists(portalCacheName)) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Overriding existing cache " + portalCacheName);
-					}
-
-					_cacheManager.removeCache(portalCacheName);
-				}
-
-				Cache cache = new Cache(cacheConfiguration);
-
-				_cacheManager.addCache(cache);
+				Ehcache ehcache = createEhcache(
+					portalCacheName, cacheConfiguration);
 
 				PortalCache<K, V> portalCache = portalCaches.get(
 					portalCacheName);
@@ -214,7 +230,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 						_getEhcachePortalCache(portalCache);
 
 					if (ehcachePortalCache != null) {
-						ehcachePortalCache.reconfigEhcache(cache);
+						ehcachePortalCache.reconfigEhcache(ehcache);
 					}
 					else {
 						_log.error(
@@ -243,21 +259,20 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return null;
 	}
 
-	private static final String _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE =
-		"/ehcache/liferay-multi-vm-clustered.xml";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);
 
 	private CacheManager _cacheManager;
-	private String _configPropertyKey;
+	private String _configFile;
 	private ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 		_configurationPair;
+	private String _defaultConfigFile;
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;
 	private boolean _registerCacheStatistics = true;
 	private ServiceTracker <MBeanServer, ManagementService> _serviceTracker;
+	private boolean _stopCacheManagerTimer = true;
 	private boolean _usingDefault;
 
 	private class MBeanServerServiceTrackerCustomizer

@@ -7,12 +7,12 @@
 	xsi:noNamespaceSchemaLocation="ehcache.xsd"
 >
 	<cacheManagerPeerProviderFactory
-		class="com.liferay.portal.cache.ehcache.LiferayCacheManagerPeerProviderFactory"
+		class="portalPropertyKey=ehcache.cache.manager.peer.provider.factory"
 		properties="portalPropertyKey=net.sf.ehcache.configurationResourceName.peerProviderProperties"
 		propertySeparator=","
 	/>
 	<cacheManagerPeerListenerFactory
-		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		class="portalPropertyKey=ehcache.cache.manager.peer.listener.factory"
 	/>
 
 	<!--
@@ -27,7 +27,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>
@@ -47,9 +47,7 @@
 		name="org.hibernate.cache.UpdateTimestampsCache"
 		overflowToDisk="false"
 	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-		/>
+		<cacheEventListenerFactory class="portalPropertyKey=ehcache.cache.event.listener.factory" />
 	</cache>
 
 	<!--
@@ -65,7 +63,7 @@
 		timeToIdleSeconds="600"
 	>
 		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
 			properties="replicatePuts=false"
 			propertySeparator=","
 		/>

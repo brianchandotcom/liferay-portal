@@ -16,7 +16,11 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
+import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
@@ -170,6 +174,22 @@ public final class SummaryLoggerHandler {
 		return null;
 	}
 
+	public static String replaceCommandVars(String token)
+		throws PoshiRunnerException {
+
+		Matcher matcher = _pattern.matcher(token);
+
+		while (matcher.find() && _commandMap.containsKey(matcher.group(1))) {
+			String varValue = getValueFromCommandMap(matcher.group(1));
+
+			varValue = Matcher.quoteReplacement(varValue);
+
+			token = StringUtil.replace(token, matcher.group(), varValue);
+		}
+
+		return token;
+	}
+
 	private static boolean _isCurrentMajorStep(Element element) {
 		if (element == _majorStepElement) {
 			return true;
@@ -281,5 +301,6 @@ public final class SummaryLoggerHandler {
 	private static Element _minorStepElement;
 	private static LoggerElement _minorStepLoggerElement;
 	private static LoggerElement _minorStepsLoggerElement;
+	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 
 }

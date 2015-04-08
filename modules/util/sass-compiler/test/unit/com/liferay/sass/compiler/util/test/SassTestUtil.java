@@ -26,7 +26,7 @@ import java.io.IOException;
 public class SassTestUtil {
 
 	public static void addSearchPath() throws IOException {
-		NativeLibrary.addSearchPath("sass", _getResourcesPath());
+		NativeLibrary.addSearchPath("liferaysass", _getResourcesPath());
 	}
 
 	private static String _getResourcesPath() throws IOException {

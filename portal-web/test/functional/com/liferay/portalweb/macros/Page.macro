@@ -550,6 +550,11 @@
 		</if>
 	</command>
 
+	<command name="openURLLocale">
+		<execute function="Open" locator1="${localiztionPageURL}" />
+		<execute function="AssertLocation" value1="${localiztionPageURL}" />
+	</command>
+
 	<command name="selectPageTypeRadioPG">
 		<var name="key_pageType" value="${pageType}" />
 
@@ -768,6 +773,18 @@
 
 		<execute function="AssertTextEquals" locator1="Dockbar#ADMIN" value1="${adminTranslation}" />
 		<execute function="AssertTextEquals" locator1="Dockbar#MY_SITES" value1="${mySitesTranslation}" />
+	</command>
+
+	<command name="viewURLLocale">
+		<if>
+			<isset var="localizationOption" />
+			<then>
+				<execute function="AssertClick" locator1="Message#INFO_4" value1="${localizationOption}" />
+			</then>
+		</if>
+
+		<execute function="AssertLocation" value1="${localiztionPageURL}" />
+		<execute function="AssertNotLocation" value1="${localePageURL}" />
 	</command>
 
 	<command name="viewUserPageLayoutPG">

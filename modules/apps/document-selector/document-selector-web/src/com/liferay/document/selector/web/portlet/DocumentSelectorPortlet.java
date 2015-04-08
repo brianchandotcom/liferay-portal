@@ -139,8 +139,7 @@ public class DocumentSelectorPortlet extends MVCPortlet {
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		ItemSelectorRendering itemSelectorRendering =
-			_itemSelector.getItemSelectorRendering(
-				actionRequest.getParameterMap());
+			_itemSelector.getItemSelectorRendering(actionRequest);
 
 		LocalizedItemSelectorRendering localizedItemSelectorRendering =
 			new LocalizedItemSelectorRendering(

@@ -31,6 +31,10 @@ import org.junit.Test;
  */
 public class PoshiRunnerContextTest extends TestCase {
 
+	public PoshiRunnerContextTest() throws Exception {
+		PoshiRunnerContext.readFiles();
+	}
+
 	@Test
 	public void testGetActionCaseElements() {
 		List<Element> elements = PoshiRunnerContext.getActionCaseElements(
@@ -74,7 +78,7 @@ public class PoshiRunnerContextTest extends TestCase {
 
 	@Test
 	public void testGetFilePath() throws Exception {
-		String actualFilePath = PoshiRunnerContext.getFilePath(
+		String actualFilePath = PoshiRunnerContext.getFilePathFromFileName(
 			"Action2.action");
 
 		String baseDir = PoshiRunnerGetterUtil.getCanonicalPath(

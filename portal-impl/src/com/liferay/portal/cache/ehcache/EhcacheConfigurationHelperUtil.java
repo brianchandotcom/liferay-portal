@@ -333,7 +333,7 @@ public class EhcacheConfigurationHelperUtil {
 	}
 
 	private static String _parseFactoryClassName(String factoryClassName) {
-		if (!factoryClassName.contains(StringPool.EQUAL)) {
+		if (factoryClassName.indexOf(CharPool.EQUAL) == -1) {
 			return factoryClassName;
 		}
 

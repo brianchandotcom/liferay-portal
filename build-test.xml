@@ -3425,6 +3425,7 @@ module.framework.properties.osgi.console=11312</echo>
 	<target name="prepare-selenium">
 		<delete file="portal-web/test/test-portal-web-ext.properties" />
 
+		<antcall target="prepare-selenium-app-server-properties" />
 		<antcall target="prepare-selenium-browser-properties" />
 		<antcall target="prepare-selenium-database-properties" />
 		<antcall target="prepare-selenium-email-properties" />
@@ -3568,6 +3569,17 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					test.skip.tear.down=true
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-app-server-properties">
+		<if>
+			<isset property="app.server.type" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					app.server.type=${app.server.type}
 				</echo>
 			</then>
 		</if>
@@ -3777,6 +3789,15 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					database.sybase.username=${database.sybase.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.type" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.type=${database.type}
 				</echo>
 			</then>
 		</if>

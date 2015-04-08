@@ -49,7 +49,6 @@ import org.apache.jasper.compiler.ErrorDispatcher;
 import org.apache.jasper.compiler.Jsr199JavaCompiler;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleRequirement;
 import org.osgi.framework.wiring.BundleRevision;

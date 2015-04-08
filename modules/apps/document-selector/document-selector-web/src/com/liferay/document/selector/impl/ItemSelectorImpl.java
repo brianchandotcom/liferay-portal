@@ -151,7 +151,7 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		for (ItemSelectorView<T> itemSelectorView : itemSelectorViews) {
 			itemSelectorViewRenderers.add(
-				new ItemSelectorViewRenderer<T>(
+				new ItemSelectorViewRendererImpl<T>(
 					itemSelectorView, itemSelectorCriterion));
 		}
 	}

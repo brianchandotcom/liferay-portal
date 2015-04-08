@@ -629,7 +629,7 @@
 		</execute>
 	</command>
 
-	<command name="CannotAddVocabularyWithNullTitle" priority="3">
+	<command known-issues="LPS-54712" name="CannotAddVocabularyWithNullTitle" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

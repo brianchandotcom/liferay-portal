@@ -382,6 +382,8 @@ public class EhcacheConfigurationHelperUtil {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Ignore malformed value " + value);
 				}
+
+				continue;
 			}
 
 			properties.put(valueParts[0], _htmlUtil.unescape(valueParts[1]));

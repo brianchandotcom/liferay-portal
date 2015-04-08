@@ -298,7 +298,7 @@ AUI.add(
 						return AArray.filter(
 							instance.get('fields'),
 							function(item) {
-								return item.get('name') === name;
+								return (item.get('name') === name);
 							}
 						);
 					},

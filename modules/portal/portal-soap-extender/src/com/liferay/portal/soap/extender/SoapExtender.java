@@ -14,29 +14,20 @@
 
 package com.liferay.portal.soap.extender;
 
-import com.liferay.portal.soap.extender.configuration.ExtensionManager;
-
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.Servlet;
-
 import javax.xml.namespace.QName;
 import javax.xml.ws.Binding;
 import javax.xml.ws.handler.Handler;
-import javax.xml.ws.spi.Provider;
 
 import org.apache.cxf.Bus;
-import org.apache.cxf.BusFactory;
-import org.apache.cxf.bus.CXFBusFactory;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 import org.apache.cxf.jaxws.support.JaxWsEndpointImpl;
-import org.apache.cxf.jaxws22.spi.ProviderImpl;
-import org.apache.cxf.transport.servlet.CXFNonSpringServlet;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -45,8 +36,6 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.http.context.ServletContextHelper;
-import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -59,64 +48,14 @@ import org.slf4j.LoggerFactory;
 public class SoapExtender {
 
 	public SoapExtender(
-		BundleContext bundleContext, String contextPath,
-		ExtensionManager extensionManager) {
+		BundleContext bundleContext, String contextPath) {
 
 		_bundleContext = bundleContext;
 		_contextPath = contextPath;
-		_extensionManager = extensionManager;
 	}
 
-	protected Bus createBus() {
-		CXFBusFactory cxfBusFactory = (CXFBusFactory)CXFBusFactory.newInstance(
-			CXFBusFactory.class.getName());
-
-		return cxfBusFactory.createBus(_extensionManager.getExtensions());
-	}
-
-	protected void registerCXFServlet(Bus bus, String contextPath) {
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		Class<?> clazz = getClass();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-			clazz.getName());
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, contextPath);
-
-		_registerLiferayJaxWsProvider();
-
-		_servletContextHelperServiceRegistration =
-			_bundleContext.registerService(
-				ServletContextHelper.class,
-				new ServletContextHelper(_bundleContext.getBundle()) {},
-				properties);
-
-		CXFNonSpringServlet cxfNonSpringServlet = new CXFNonSpringServlet();
-
-		cxfNonSpringServlet.setBus(bus);
-
-		properties = new Hashtable<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			clazz.getName());
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME, "CXFServlet");
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "/*");
-
-		_servletServiceRegistration = _bundleContext.registerService(
-			Servlet.class, cxfNonSpringServlet, properties);
-	}
 
 	protected void start() {
-		Bus bus = createBus();
-
-		BusFactory.setDefaultBus(bus);
-
-		registerCXFServlet(bus, _contextPath);
 
 		try {
 			Filter filter = _bundleContext.createFilter(
@@ -145,45 +84,6 @@ public class SoapExtender {
 			}
 		}
 
-		try {
-			_providerServiceRegistration.unregister();
-		}
-		catch (Exception e) {
-			if (_logger.isWarnEnabled()) {
-				_logger.warn(
-					"Unable to unregister JAX-WS provider " +
-						_providerServiceRegistration);
-			}
-		}
-
-		try {
-			_servletServiceRegistration.unregister();
-		}
-		catch (Exception e) {
-			if (_logger.isWarnEnabled()) {
-				_logger.warn(
-					"Unable to unregister servlet service registration " +
-						_servletServiceRegistration);
-			}
-		}
-
-		try {
-			_servletContextHelperServiceRegistration.unregister();
-		}
-		catch (Exception e) {
-			if (_logger.isWarnEnabled()) {
-				_logger.warn(
-					"Unable to unregister servlet context helper service " +
-						"registration " + _serverServiceTracker);
-			}
-		}
-	}
-
-	private void _registerLiferayJaxWsProvider() {
-		ProviderImpl providerImpl = new ProviderImpl();
-
-		_providerServiceRegistration = _bundleContext.registerService(
-			Provider.class, providerImpl, null);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
@@ -191,13 +91,8 @@ public class SoapExtender {
 
 	private final BundleContext _bundleContext;
 	private final String _contextPath;
-	private final ExtensionManager _extensionManager;
-	private ServiceRegistration<Provider> _providerServiceRegistration;
 	private ServiceTracker<Object, ServerTrackingInformation>
 		_serverServiceTracker;
-	private ServiceRegistration<ServletContextHelper>
-		_servletContextHelperServiceRegistration;
-	private ServiceRegistration<Servlet> _servletServiceRegistration;
 
 	private static class ServerTrackingInformation {
 

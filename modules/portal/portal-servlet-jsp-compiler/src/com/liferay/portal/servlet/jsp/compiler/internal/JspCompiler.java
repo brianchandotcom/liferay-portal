@@ -14,11 +14,12 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -42,9 +43,6 @@ import javax.tools.JavaFileManager;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import org.apache.felix.utils.log.Logger;
 import org.apache.jasper.Constants;
 import org.apache.jasper.JspCompilationContext;
@@ -52,9 +50,7 @@ import org.apache.jasper.compiler.ErrorDispatcher;
 import org.apache.jasper.compiler.Jsr199JavaCompiler;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.wiring.BundleRequirement;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
@@ -62,12 +58,6 @@ import org.osgi.framework.wiring.BundleWiring;
 
 import org.phidias.compile.BundleJavaManager;
 import org.phidias.compile.ResourceResolver;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @author Raymond Augé
@@ -83,9 +73,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		_jspBundle = FrameworkUtil.getBundle(
 			com.liferay.portal.servlet.jsp.compiler.JspServlet.class);
 
-		_jspBundleContext = _jspBundle.getBundleContext();
-
-		_logger = new Logger(_jspBundleContext);
+		_logger = new Logger(_jspBundle.getBundleContext());
 
 		ServletContext servletContext =
 			jspCompilationContext.getServletContext();
@@ -196,7 +184,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	}
 
 	protected void collectTLDMappings(
-		SAXParser saxParser, Map<String, String[]> tldMappings, Bundle bundle) {
+		Map<String, String[]> tldMappings, Bundle bundle) {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -206,7 +194,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		for (String resourcePath : resourcePaths) {
 			URL url = bundle.getResource(resourcePath);
 
-			String uri = getTldUri(saxParser, url);
+			String uri = getTldUri(url);
 
 			if (uri == null) {
 				continue;
@@ -245,25 +233,35 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		return super.getJavaFileManager(javaFileManager);
 	}
 
-	protected String getTldUri(SAXParser saxParser, URL url) {
+	protected String getTldUri(URL url) {
 		try (InputStream inputStream = url.openStream()) {
-			XMLReader xmlReader = saxParser.getXMLReader();
+			StringBundler sb = new StringBundler();
+			byte[] buffer = new byte[4096];
+			int length = 0;
 
-			URIHandler uriHandler = new URIHandler();
+			while ((length = inputStream.read(buffer)) > 0) {
+				String xml = new String(buffer, 0, length);
+				sb.append(xml);
 
-			xmlReader.setContentHandler(uriHandler);
-			xmlReader.setDTDHandler(uriHandler);
-			xmlReader.setEntityResolver(uriHandler);
+				if (xml.indexOf("</uri>") > -1) {
+					break;
+				}
+			}
 
-			xmlReader.parse(new InputSource(inputStream));
+			String xml = sb.toString();
+
+			int uriStartPos = xml.indexOf("<uri>");
+			int uriEndPos = xml.indexOf("</uri>", uriStartPos);
+
+			if (uriStartPos < 0) {
+				return null;
+			}
+
+			return xml.substring(uriStartPos + 5, uriEndPos);
 		}
-		catch (URISAXException use) {
-			return use.getMessage();
+		catch (IOException e) {
+			return ReflectionUtil.throwException(e);
 		}
-		catch (IOException | SAXException e) {
-		}
-
-		return null;
 	}
 
 	protected void initClassPath(ServletContext servletContext) {
@@ -297,21 +295,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		tldMappings = new HashMap<>();
 
-		ServiceReference<SAXParserFactory> saxParserFactoryServiceReference =
-			_jspBundleContext.getServiceReference(SAXParserFactory.class);
-
-		SAXParserFactory saxParserFactory = _jspBundleContext.getService(
-			saxParserFactoryServiceReference);
-
-		saxParserFactory.setNamespaceAware(false);
-		saxParserFactory.setValidating(false);
-		saxParserFactory.setXIncludeAware(false);
-
 		try {
-			SAXParser saxParser = saxParserFactory.newSAXParser();
-
 			for (Bundle bundle : _allParticipatingBundles) {
-				collectTLDMappings(saxParser, tldMappings, bundle);
+				collectTLDMappings(tldMappings, bundle);
 			}
 		}
 		catch (Exception e) {
@@ -375,64 +361,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private Bundle _bundle;
 	private final List<File> _classPath = new ArrayList<>();
 	private Bundle _jspBundle;
-	private BundleContext _jspBundleContext;
 	private Logger _logger;
 	private ResourceResolver _resourceResolver;
-
-	private class URIHandler extends DefaultHandler {
-
-		@Override
-		public void characters(char[] c, int start, int length) {
-			if (inTaglib && inURI) {
-				_sb = new StringBuilder();
-
-				_sb.append(c, start, length);
-			}
-		}
-
-		@Override
-		public void endElement(String uri, String localName, String qName)
-			throws SAXException {
-
-			if (qName.equals("uri") && (_sb != null)) {
-				throw new URISAXException(_sb.toString());
-			}
-		}
-
-		@Override
-		public InputSource resolveEntity(String publicId, String systemId)
-			throws IOException {
-
-			_reader.reset();
-
-			return new InputSource(_reader);
-		}
-
-		@Override
-		public void startElement(
-			String uri, String localName, String qName, Attributes attributes) {
-
-			if (qName.equals("taglib")) {
-				inTaglib = true;
-			}
-			else if (qName.equals("uri") && inTaglib) {
-				inURI = true;
-			}
-		}
-
-		private final Reader _reader = new StringReader("");
-		private StringBuilder _sb;
-		private boolean inTaglib = false;
-		private boolean inURI = false;
-
-	}
-
-	private class URISAXException extends SAXException {
-
-		public URISAXException(String uri) {
-			super(uri);
-		}
-
-	}
 
 }

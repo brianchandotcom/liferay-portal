@@ -69,6 +69,10 @@ public class LocalizedItemSelectorRendering {
 		return _itemSelectorViewRenderers.get(title);
 	}
 
+	public String getSelectedTab() {
+		return _itemSelectorRendering.getSelectedTab();
+	}
+
 	public List<String> getTitles() {
 		return _titles;
 	}

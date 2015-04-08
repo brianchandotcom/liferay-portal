@@ -12,12 +12,15 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.content.metadata.related.assets;
 
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
 import com.liferay.portal.model.BaseSelectableEntry;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = ContentMetadataEntry.class
 )
@@ -30,8 +33,13 @@ public class RelatedAssetsSelectableEntry
 	}
 
 	@Override
+	public String getJSPPath() {
+		return _JSP_PATH;
+	}
+
+	@Override
 	public String getKey() {
-		return "relatedAssets";
+		return "enableRelatedAssets";
 	}
 
 	@Override
@@ -43,5 +51,16 @@ public class RelatedAssetsSelectableEntry
 	public Double getWeight() {
 		return 1.0;
 	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.content.metadata.related.assets)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private static final String _JSP_PATH =
+		"/META-INF/resources/related_assets.jsp";
 
 }

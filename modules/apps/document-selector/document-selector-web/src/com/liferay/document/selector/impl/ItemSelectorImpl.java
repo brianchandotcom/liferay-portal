@@ -87,7 +87,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
 			new ArrayList<>();
 
-		for (int i = 0; i<itemSelectorCriteria.size(); i++) {
+		for (int i = 0; i < itemSelectorCriteria.size(); i++) {
 			ItemSelectorCriterion itemSelectorCriterion =
 				itemSelectorCriteria.get(i);
 
@@ -104,7 +104,7 @@ public class ItemSelectorImpl implements ItemSelector {
 					itemSelectorCriterion);
 
 			for (ItemSelectorView<ItemSelectorCriterion> itemSelectorView :
-				itemSelectorViews) {
+					itemSelectorViews) {
 
 				PortletURL portletURL = getItemSelectorURL(
 					portletRequest, itemSelectedCallback,
@@ -396,7 +396,7 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		List<Class<? extends ItemSelectorCriterion>>
 			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
-			parameters);
+				parameters);
 
 		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
 			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =

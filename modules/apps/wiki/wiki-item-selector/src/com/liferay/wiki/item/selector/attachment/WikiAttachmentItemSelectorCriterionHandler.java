@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Iván Zaera
  */
-@Component(
-	service = ItemSelectorCriterionHandler.class
-)
+@Component(service = ItemSelectorCriterionHandler.class)
 public class WikiAttachmentItemSelectorCriterionHandler
 	implements ItemSelectorCriterionHandler
 		<WikiAttachmentItemSelectorCriterion> {

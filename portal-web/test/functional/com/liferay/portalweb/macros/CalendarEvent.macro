@@ -1094,6 +1094,12 @@
 		</if>
 	</command>
 
+	<command name="setAllDay">
+		<execute function="Check" locator1="PGCalendarAddevent#ALL_DAY_CHECKBOX" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
+	</command>
+
 	<command name="setDates">
 		<execute function="Type" locator1="PGCalendarAddevent#START_DATE" value1="${startDate}" />
 		<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
@@ -1434,6 +1440,11 @@
 
 	<command name="viewEventDetailsResources">
 		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#RESOURCES_FIELD" value1="${calendarName}" />
+	</command>
+
+	<command name="viewEventDetailsTime">
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
 	</command>
 
 	<command name="viewEventDetailsWithTagPG">

@@ -16,6 +16,8 @@ package com.liferay.document.selector;
 
 import java.io.IOException;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
@@ -28,8 +30,7 @@ public interface ItemSelectorViewRenderer {
 
 	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView();
 
-
-	public void renderHTML(PageContext pageContext, String itemSelectedCallback)
+	public void renderHTML(PageContext pageContext)
 		throws IOException, ServletException;
 
 }

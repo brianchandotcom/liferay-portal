@@ -31,21 +31,21 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Iván Zaera
  */
-public class ItemSelectorViewRendererImpl<T extends ItemSelectorCriterion>
-	implements ItemSelectorViewRenderer<T> {
+public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 	public ItemSelectorViewRendererImpl(
-		ItemSelectorView<T> itemSelectorView, T itemSelectorCriterion) {
+		ItemSelectorView<ItemSelectorCriterion> itemSelectorView,
+		ItemSelectorCriterion itemSelectorCriterion) {
 
 		_itemSelectorView = itemSelectorView;
 		_itemSelectorCriterion = itemSelectorCriterion;
 	}
 
-	public T getItemSelectorCriterion() {
+	public ItemSelectorCriterion getItemSelectorCriterion() {
 		return _itemSelectorCriterion;
 	}
 
-	public ItemSelectorView<T> getItemSelectorView() {
+	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView() {
 		return _itemSelectorView;
 	}
 
@@ -71,7 +71,7 @@ public class ItemSelectorViewRendererImpl<T extends ItemSelectorCriterion>
 		writer.write(sb.toString());
 	}
 
-	private final T _itemSelectorCriterion;
-	private final ItemSelectorView<T> _itemSelectorView;
+	private final ItemSelectorCriterion _itemSelectorCriterion;
+	private final ItemSelectorView<ItemSelectorCriterion> _itemSelectorView;
 
 }

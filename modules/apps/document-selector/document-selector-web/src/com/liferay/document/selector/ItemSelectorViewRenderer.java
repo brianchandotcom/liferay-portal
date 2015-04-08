@@ -22,11 +22,12 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Iván Zaera
  */
-public interface ItemSelectorViewRenderer<T extends ItemSelectorCriterion> {
+public interface ItemSelectorViewRenderer {
 
-	public T getItemSelectorCriterion();
+	public ItemSelectorCriterion getItemSelectorCriterion();
 
-	public ItemSelectorView<T> getItemSelectorView();
+	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView();
+
 
 	public void renderHTML(PageContext pageContext, String itemSelectedCallback)
 		throws IOException, ServletException;

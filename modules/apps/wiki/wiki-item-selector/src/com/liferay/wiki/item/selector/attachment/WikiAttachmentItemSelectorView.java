@@ -43,12 +43,10 @@ public class WikiAttachmentItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		Class<?> clazz = getClass();
-
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
 			"content/Language", locale);
 
-		return resourceBundle.getString(clazz.getSimpleName() + "-title");
+		return resourceBundle.getString("attachments");
 	}
 
 	@Override

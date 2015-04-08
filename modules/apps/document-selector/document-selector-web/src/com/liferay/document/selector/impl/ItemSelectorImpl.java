@@ -68,7 +68,9 @@ public class ItemSelectorImpl implements ItemSelector {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public ItemSelectorRendering getItemSelectorRendering(
-		Map<String, String[]> parameters) {
+		PortletRequest portletRequest) {
+
+		Map<String, String[]> parameters = portletRequest.getParameterMap();
 
 		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
 			new ArrayList<>();

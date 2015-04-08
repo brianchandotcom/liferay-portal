@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -85,13 +87,10 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void testGetItemSelectorRendering() throws IOException {
 		_setUpItemSelectionCriterionHandlers();
 
-		Map<String, String[]> parameters =
-			_itemSelectorImpl.getItemSelectorParameters(
-				"itemSelectedCallback", _mediaItemSelectorCriterion,
-				_flickrItemSelectorCriterion);
+		PortletRequest portletRequest = getMockPortletRequest();
 
 		ItemSelectorRendering itemSelectorRendering =
-			_itemSelectorImpl.getItemSelectorRendering(parameters);
+			_itemSelectorImpl.getItemSelectorRendering(portletRequest);
 
 		Assert.assertEquals(
 			"itemSelectedCallback",
@@ -134,6 +133,23 @@ public class ItemSelectorImplTest extends PowerMockito {
 				instanceof FlickrItemSelectorView);
 
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
+	}
+
+	protected PortletRequest getMockPortletRequest() {
+		Map<String, String[]> parameters =
+			_itemSelectorImpl.getItemSelectorParameters(
+				"itemSelectedCallback", _mediaItemSelectorCriterion,
+				_flickrItemSelectorCriterion);
+
+		PortletRequest portletRequest = mock(PortletRequest.class);
+
+		when(
+			portletRequest.getParameterMap()
+		).thenReturn(
+			parameters
+		);
+
+		return portletRequest;
 	}
 
 	private void _setUpItemSelectionCriterionHandlers() {

@@ -39,6 +39,9 @@ public class LiferayPlugin implements Plugin<Project> {
 			if (projectName.endsWith("-shared")) {
 				plugin = new LiferayJavaPlugin();
 			}
+			else if (projectName.endsWith("-theme")) {
+				plugin = new LiferayThemePlugin();
+			}
 			else {
 				plugin = new LiferayWebAppPlugin();
 			}

@@ -31,6 +31,20 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String[] prepend(String[] array, String prefix) {
+		if (ArrayUtil.isEmpty(array) || Validator.isNull(prefix)) {
+			return array;
+		}
+
+		String[] newArray = new String[array.length];
+
+		for (int i = 0; i < array.length; i++) {
+			newArray[i] = prefix + array[i];
+		}
+
+		return newArray;
+	}
+
 	public static String repeat(char c, int length) {
 		char[] chars = new char[length];
 

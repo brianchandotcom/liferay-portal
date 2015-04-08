@@ -21,6 +21,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -177,6 +178,16 @@ public class GradleUtil {
 		return fileTree.matching(closure);
 	}
 
+	public static Project getProject(Project rootProject, File projectDir) {
+		for (Project project : rootProject.getAllprojects()) {
+			if (projectDir.equals(project.getProjectDir())) {
+				return project;
+			}
+		}
+
+		return null;
+	}
+
 	public static SourceSet getSourceSet(Project project, String name) {
 		JavaPluginConvention javaPluginConvention = getConvention(
 			project, JavaPluginConvention.class);
@@ -193,12 +204,53 @@ public class GradleUtil {
 		return taskContainer.getByName(name);
 	}
 
+	public static void removeDependencies(
+		Project project, String configurationName,
+		String[] dependencyNotations) {
+
+		Configuration configuration = getConfiguration(
+			project, configurationName);
+
+		Set<Dependency> dependencies = configuration.getDependencies();
+
+		Iterator<Dependency> iterator = dependencies.iterator();
+
+		while (iterator.hasNext()) {
+			Dependency dependency = iterator.next();
+
+			String dependencyNotation = _getDependencyStringNotation(
+				dependency);
+
+			if (ArrayUtil.contains(dependencyNotations, dependencyNotation)) {
+				iterator.remove();
+			}
+		}
+	}
+
 	private static Dependency _addDependency(
 		Project project, String configurationName, Object dependencyNotation) {
 
 		DependencyHandler dependencyHandler = project.getDependencies();
 
 		return dependencyHandler.add(configurationName, dependencyNotation);
+	}
+
+	private static String _getDependencyStringNotation(Dependency dependency) {
+		StringBuilder sb = new StringBuilder();
+
+		if (Validator.isNotNull(dependency.getGroup())) {
+			sb.append(dependency.getGroup());
+			sb.append(":");
+		}
+
+		sb.append(dependency.getName());
+
+		if (Validator.isNotNull(dependency.getVersion())) {
+			sb.append(":");
+			sb.append(dependency.getVersion());
+		}
+
+		return sb.toString();
 	}
 
 }

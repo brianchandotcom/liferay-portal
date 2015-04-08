@@ -15,10 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
-import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask;
-import com.liferay.gradle.plugins.util.ArrayUtil;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.Validator;
@@ -30,7 +27,6 @@ import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -45,13 +41,13 @@ import org.gradle.api.artifacts.ResolvedArtifact;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.file.DuplicatesStrategy;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.file.copy.CopySpecInternal;
 import org.gradle.api.internal.file.copy.CopySpecResolver;
-import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
@@ -69,41 +65,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureWebAppDirName(project);
-	}
-
-	@Override
-	protected LiferayExtension addLiferayExtension(Project project) {
-		Class<? extends LiferayExtension> clazz = LiferayExtension.class;
-
-		String projectName = project.getName();
-
-		if (projectName.endsWith("-theme")) {
-			clazz = LiferayThemeExtension.class;
-		}
-
-		return GradleUtil.addExtension(
-			project, LiferayPlugin.PLUGIN_NAME, clazz);
-	}
-
-	protected BuildThumbnailsTask addTaskBuildThumbnails(Project project) {
-		BuildThumbnailsTask buildThumbnailsTask = GradleUtil.addTask(
-			project, _BUILD_THUMBNAILS_TASK_NAME, BuildThumbnailsTask.class);
-
-		buildThumbnailsTask.setDescription("Generates thumbnails.");
-		buildThumbnailsTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		return buildThumbnailsTask;
-	}
-
-	@Override
-	protected void addTasks(
-		Project project, LiferayExtension liferayExtension) {
-
-		super.addTasks(project, liferayExtension);
-
-		if (isTheme(liferayExtension)) {
-			addTaskBuildThumbnails(project);
-		}
 	}
 
 	@Override
@@ -133,16 +94,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		super.configureDependenciesCompile(project, liferayExtension);
 
-		if (isTheme(liferayExtension)) {
-			for (String dependencyNotation :
-					_THEME_COMPILE_DEPENDENCY_NOTATIONS) {
-
-				GradleUtil.addDependency(
-					project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
-					dependencyNotation);
-			}
-		}
-
 		project.afterEvaluate(
 			new Action<Project>() {
 
@@ -166,13 +117,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		Project project, LiferayExtension liferayExtension) {
 
 		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
-			if (isTheme(liferayExtension) &&
-				ArrayUtil.contains(
-					_THEME_COMPILE_DEPENDENCY_NOTATIONS, dependencyNotation)) {
-
-				continue;
-			}
-
 			GradleUtil.addDependency(
 				project, WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
 				dependencyNotation);
@@ -199,41 +143,16 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskBuildCssDirNames(BuildCssTask buildCssTask) {
-		List<String> cssDirNames = buildCssTask.getCssDirNames();
+	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
+		FileCollection rootDirs = buildCssTask.getRootDirs();
 
-		if (!cssDirNames.isEmpty()) {
+		if ((rootDirs != null) && !rootDirs.isEmpty()) {
 			return;
 		}
 
 		Project project = buildCssTask.getProject();
 
-		String cssDirName = project.relativePath(getWebAppDir(project));
-
-		cssDirNames.add(cssDirName);
-	}
-
-	protected void configureTaskBuildThumbnails(
-		Project project, LiferayThemeExtension liferayThemeExtension) {
-
-		BuildThumbnailsTask buildThumbnailsTask =
-			(BuildThumbnailsTask)GradleUtil.getTask(
-				project, _BUILD_THUMBNAILS_TASK_NAME);
-
-		configureTaskBuildThumbnailsImagesDir(
-			buildThumbnailsTask, liferayThemeExtension);
-	}
-
-	protected void configureTaskBuildThumbnailsImagesDir(
-		BuildThumbnailsTask buildThumbnailsTask,
-		LiferayThemeExtension liferayThemeExtension) {
-
-		if (buildThumbnailsTask.getImagesDir() == null) {
-			File imagesDir = new File(
-				liferayThemeExtension.getDiffsDir(), "images");
-
-			buildThumbnailsTask.setImagesDir(imagesDir);
-		}
+		buildCssTask.setRootDirs(getWebAppDir(project));
 	}
 
 	@Override
@@ -241,13 +160,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		Project project, LiferayExtension liferayExtension) {
 
 		super.configureTasks(project, liferayExtension);
-
-		if (isTheme(liferayExtension)) {
-			LiferayThemeExtension liferayThemeExtension =
-				(LiferayThemeExtension)liferayExtension;
-
-			configureTaskBuildThumbnails(project, liferayThemeExtension);
-		}
 
 		configureTaskWar(project, liferayExtension);
 	}
@@ -422,6 +334,8 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		Object versionObj = project.getVersion();
 
 		if (!versionObj.equals(Project.DEFAULT_VERSION)) {
+			super.configureVersion(project, liferayExtension);
+
 			return;
 		}
 
@@ -465,22 +379,5 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		return warPluginConvention.getWebAppDir();
 	}
-
-	protected boolean isTheme(LiferayExtension liferayExtension) {
-		if (liferayExtension instanceof LiferayThemeExtension) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private static final String _BUILD_THUMBNAILS_TASK_NAME = "buildThumbnails";
-
-	private static final String[] _THEME_COMPILE_DEPENDENCY_NOTATIONS = {
-		"com.liferay.portal:util-bridges:default",
-		"com.liferay.portal:util-java:default",
-		"com.liferay.portal:util-taglib:default",
-		"commons-logging:commons-logging:1.1.1", "log4j:log4j:1.2.16"
-	};
 
 }

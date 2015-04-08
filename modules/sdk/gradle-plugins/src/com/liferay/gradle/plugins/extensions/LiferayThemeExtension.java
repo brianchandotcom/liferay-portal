@@ -28,7 +28,13 @@ public class LiferayThemeExtension extends LiferayExtension {
 	}
 
 	public File getDiffsDir() {
-		return project.file(getDiffsDirName());
+		File diffsDir = project.file(getDiffsDirName());
+
+		if (diffsDir.exists()) {
+			return diffsDir;
+		}
+
+		return null;
 	}
 
 	public String getDiffsDirName() {

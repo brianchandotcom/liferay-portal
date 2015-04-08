@@ -452,6 +452,13 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="gotoConfiguration">
+		<execute function="Click" locator1="PGCalendar#COG_ICON" />
+		<execute function="AssertClick" locator1="PGCalendar#COG_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute function="SelectFrame" locator1="CalendarConfiguration#CALENDAR_CONFIGURATION_IFRAME" />
+	</command>
+
 	<command name="removeViewPermissionsPG">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
@@ -643,5 +650,25 @@
 				</then>
 			</elseif>
 		</if>
+	</command>
+
+	<command name="viewWeekStartMonth">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Month" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_WEEK_START_DAY" value1="${weekStartDay}" />
+	</command>
+
+	<command name="viewWeekStartSmallCalendar">
+		<execute function="AssertTextEquals" locator1="PGCalendar#SMALL_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
+	</command>
+
+	<command name="viewWeekStartWeek">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_WEEK_WEEK_START_DAY" value1="${weekStartDay}" />
 	</command>
 </definition>

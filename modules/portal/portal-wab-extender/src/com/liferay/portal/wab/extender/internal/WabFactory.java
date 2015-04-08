@@ -139,10 +139,13 @@ public class WabFactory extends AbstractExtender {
 
 	private static final String _FEATURES_DISALLOW_DOCTYPE_DECL =
 		"http://apache.org/xml/features/disallow-doctype-decl";
+
 	private static final String _SAX_EXTERNAL_GENERAL_ENTITIES =
 		"http://xml.org/sax/features/external-general-entities";
+
 	private static final String _SAX_EXTERNAL_PARAMETER_ENTITIES =
 		"http://xml.org/sax/features/external-parameter-entities";
+
 	private static final String _SAX_LOAD_EXTERNAL_DTD =
 		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
 

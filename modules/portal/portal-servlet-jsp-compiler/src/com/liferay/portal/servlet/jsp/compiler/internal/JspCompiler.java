@@ -183,7 +183,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 	}
 
-	protected void collectTLDMappings(Map<String, String[]> tldMappings, Bundle bundle) {
+	protected void collectTLDMappings(
+		Map<String, String[]> tldMappings, Bundle bundle) {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 

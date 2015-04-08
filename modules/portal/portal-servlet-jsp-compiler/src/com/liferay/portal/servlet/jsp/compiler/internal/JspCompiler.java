@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
@@ -259,9 +260,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			return xml.substring(uriStartPos + 5, uriEndPos);
 		}
 		catch (IOException e) {
+			return ReflectionUtil.throwException(e);
 		}
-
-		return null;
 	}
 
 	protected void initClassPath(ServletContext servletContext) {

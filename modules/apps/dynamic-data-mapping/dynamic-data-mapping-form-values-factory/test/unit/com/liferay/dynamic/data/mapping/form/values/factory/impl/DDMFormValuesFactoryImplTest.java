@@ -14,6 +14,20 @@
 
 package com.liferay.dynamic.data.mapping.form.values.factory.impl;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.springframework.mock.web.MockHttpServletRequest;
+
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -31,23 +45,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
-import org.skyscreamer.jsonassert.JSONAssert;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -161,16 +158,16 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 			"defaultLanguageId", LocaleUtil.toLanguageId(LocaleUtil.US));
 
 		// Title
-
-		httpServletRequest.addParameter("ddm__Title_wqer_0__en_US", "Title");
-		httpServletRequest.addParameter("ddm__Title_wqer_0__pt_BR", "Titulo");
+		
+		httpServletRequest.addParameter("ddm$$Title$wqer$0$$en_US", "Title");
+		httpServletRequest.addParameter("ddm$$Title$wqer$0$$pt_BR", "Titulo");
 
 		// Content
 
 		httpServletRequest.addParameter(
-			"ddm__Content_thsy_0__en_US", "Content");
+			"ddm$$Content$thsy$0$$en_US", "Content");
 		httpServletRequest.addParameter(
-			"ddm__Content_thsy_0__pt_BR", "Conteudo");
+			"ddm$$Content$thsy$0$$pt_BR", "Conteudo");
 
 		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
 			httpServletRequest, ddmForm);
@@ -210,10 +207,10 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 
 		// Title
 
-		httpServletRequest.addParameter("ddm__Title_wqer_0__en_US", "Title 1");
-		httpServletRequest.addParameter("ddm__Title_wqer_0__pt_BR", "Titulo 1");
-		httpServletRequest.addParameter("ddm__Title_fahu_1__en_US", "Title 2");
-		httpServletRequest.addParameter("ddm__Title_fahu_1__pt_BR", "Titulo 2");
+		httpServletRequest.addParameter("ddm$$Title$wqer$0$$en_US", "Title 1");
+		httpServletRequest.addParameter("ddm$$Title$wqer$0$$pt_BR", "Titulo 1");
+		httpServletRequest.addParameter("ddm$$Title$fahu$1$$en_US", "Title 2");
+		httpServletRequest.addParameter("ddm$$Title$fahu$1$$pt_BR", "Titulo 2");
 
 		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
 			httpServletRequest, ddmForm);
@@ -277,25 +274,25 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 
 		// Name
 
-		httpServletRequest.addParameter("ddm__Name_wqer_0__en_US", "Paul");
-		httpServletRequest.addParameter("ddm__Name_wqer_0__pt_BR", "Paulo");
-		httpServletRequest.addParameter("ddm__Name_fahu_1__en_US", "Joe");
-		httpServletRequest.addParameter("ddm__Name_fahu_1__pt_BR", "Joao");
+		httpServletRequest.addParameter("ddm$$Name$wqer$0$$en_US", "Paul");
+		httpServletRequest.addParameter("ddm$$Name$wqer$0$$pt_BR", "Paulo");
+		httpServletRequest.addParameter("ddm$$Name$fahu$1$$en_US", "Joe");
+		httpServletRequest.addParameter("ddm$$Name$fahu$1$$pt_BR", "Joao");
 
 		// Phone
 
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_gatu_0__en_US", "12");
+			"ddm$$Name$wqer$0#Phone$gatu$0$$en_US", "12");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_gatu_0__pt_BR", "34");
+			"ddm$$Name$wqer$0#Phone$gatu$0$$pt_BR", "34");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_hato_1__en_US", "56");
+			"ddm$$Name$wqer$0#Phone$hato$1$$en_US", "56");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_hato_1__pt_BR", "78");
+			"ddm$$Name$wqer$0#Phone$hato$1$$pt_BR", "78");
 		httpServletRequest.addParameter(
-			"ddm__Name_fahu_1#Phone_jamh_0__en_US", "90");
+			"ddm$$Name$fahu$1#Phone$jamh$0$$en_US", "90");
 		httpServletRequest.addParameter(
-			"ddm__Name_fahu_1#Phone_jamh_0__pt_BR", "01");
+			"ddm$$Name$fahu$1#Phone$jamh$0$$pt_BR", "01");
 
 		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
 			httpServletRequest, ddmForm);
@@ -385,40 +382,40 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 
 		// Name
 
-		httpServletRequest.addParameter("ddm__Name_wqer_0__en_US", "Paul");
-		httpServletRequest.addParameter("ddm__Name_wqer_0__pt_BR", "Paulo");
-		httpServletRequest.addParameter("ddm__Name_fahu_1__en_US", "Joe");
-		httpServletRequest.addParameter("ddm__Name_fahu_1__pt_BR", "Joao");
+		httpServletRequest.addParameter("ddm$$Name$wqer$0$$en_US", "Paul");
+		httpServletRequest.addParameter("ddm$$Name$wqer$0$$pt_BR", "Paulo");
+		httpServletRequest.addParameter("ddm$$Name$fahu$1$$en_US", "Joe");
+		httpServletRequest.addParameter("ddm$$Name$fahu$1$$pt_BR", "Joao");
 
 		// Text 1
 
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Text1_gatu_0__en_US", "Text1 Paul One");
+			"ddm$$Name$wqer$0#Text1$gatu$0$$en_US", "Text1 Paul One");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Text1_gatu_0__pt_BR", "Text1 Paulo Um");
+			"ddm$$Name$wqer$0#Text1$gatu$0$$pt_BR", "Text1 Paulo Um");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Text1_hayt_1__en_US", "Text1 Paul Two");
+			"ddm$$Name$wqer$0#Text1$hayt$1$$en_US", "Text1 Paul Two");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Text1_hayt_1__pt_BR", "Text1 Paulo Dois");
+			"ddm$$Name$wqer$0#Text1$hayt$1$$pt_BR", "Text1 Paulo Dois");
 		httpServletRequest.addParameter(
-			"ddm__Name_fahu_1#Text1_banm_0__en_US", "Text1 Joe One");
+			"ddm$$Name$fahu$1#Text1$banm$0$$en_US", "Text1 Joe One");
 		httpServletRequest.addParameter(
-			"ddm__Name_fahu_1#Text1_banm_0__pt_BR", "Text1 Joao Um");
+			"ddm$$Name$fahu$1#Text1$banm$0$$pt_BR", "Text1 Joao Um");
 
 		// Text 2
 
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Text2_haby_0__en_US", "Text2 Paul One");
+			"ddm$$Name$wqer$0#Text2$haby$0$$en_US", "Text2 Paul One");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Text2_haby_0__pt_BR", "Text2 Paulo Um");
+			"ddm$$Name$wqer$0#Text2$haby$0$$pt_BR", "Text2 Paulo Um");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Text2_makp_1__en_US", "Text2 Paul Two");
+			"ddm$$Name$wqer$0#Text2$makp$1$$en_US", "Text2 Paul Two");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Text2_makp_1__pt_BR", "Text2 Paulo Dois");
+			"ddm$$Name$wqer$0#Text2$makp$1$$pt_BR", "Text2 Paulo Dois");
 		httpServletRequest.addParameter(
-			"ddm__Name_fahu_1#Text2_bagj_0__en_US", "Text2 Joe One");
+			"ddm$$Name$fahu$1#Text2$bagj$0$$en_US", "Text2 Joe One");
 		httpServletRequest.addParameter(
-			"ddm__Name_fahu_1#Text2_bagj_0__pt_BR", "Text2 Joao Um");
+			"ddm$$Name$fahu$1#Text2$bagj$0$$pt_BR", "Text2 Joao Um");
 
 		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
 			httpServletRequest, ddmForm);
@@ -510,32 +507,32 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 
 		// Name
 
-		httpServletRequest.addParameter("ddm__Name_wqer_0__en_US", "Paul");
-		httpServletRequest.addParameter("ddm__Name_fahu_1__en_US", "Joe");
+		httpServletRequest.addParameter("ddm$$Name$wqer$0$$en_US", "Paul");
+		httpServletRequest.addParameter("ddm$$Name$fahu$1$$en_US", "Joe");
 
 		// Phone
 
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_gatu_0__en_US", "1");
+			"ddm$$Name$wqer$0#Phone$gatu$0$$en_US", "1");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_hato_1__en_US", "2");
+			"ddm$$Name$wqer$0#Phone$hato$1$$en_US", "2");
 		httpServletRequest.addParameter(
-			"ddm__Name_fahu_1#Phone_jakl_0__en_US", "3");
+			"ddm$$Name$fahu$1#Phone$jakl$0$$en_US", "3");
 
 		// Ext
 
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_gatu_0#Ext_jkau_0__en_US", "1.1");
+			"ddm$$Name$wqer$0#Phone$gatu$0#Ext$jkau$0$$en_US", "1.1");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_gatu_0#Ext_amat_1__en_US", "1.2");
+			"ddm$$Name$wqer$0#Phone$gatu$0#Ext$amat$1$$en_US", "1.2");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_hato_1#Ext_hamp_0__en_US", "2.1");
+			"ddm$$Name$wqer$0#Phone$hato$1#Ext$hamp$0$$en_US", "2.1");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_hato_1#Ext_xzal_1__en_US", "2.2");
+			"ddm$$Name$wqer$0#Phone$hato$1#Ext$xzal$1$$en_US", "2.2");
 		httpServletRequest.addParameter(
-			"ddm__Name_wqer_0#Phone_hato_1#Ext_kaly_2__en_US", "2.3");
+			"ddm$$Name$wqer$0#Phone$hato$1#Ext$kaly$2$$en_US", "2.3");
 		httpServletRequest.addParameter(
-			"ddm__Name_fahu_1#Phone_jakl_0#Ext_bagt_0__en_US", "3.1");
+			"ddm$$Name$fahu$1#Phone$jakl$0#Ext$bagt$0$$en_US", "3.1");
 
 		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
 			httpServletRequest, ddmForm);
@@ -602,17 +599,17 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 		// Name
 
 		httpServletRequest.addParameter(
-			"ddm__Separator_wqer_0#Name_gatu_0__en_US", "Joe");
+			"ddm$$Separator$wqer$0#Name$gatu$0$$en_US", "Joe");
 		httpServletRequest.addParameter(
-			"ddm__Separator_wqer_0#Name_gatu_0__pt_BR", "Joao");
+			"ddm$$Separator$wqer$0#Name$gatu$0$$pt_BR", "Joao");
 		httpServletRequest.addParameter(
-			"ddm__Separator_haby_1#Name_hato_0__en_US", "Paul");
+			"ddm$$Separator$haby$1#Name$hato$0$$en_US", "Paul");
 		httpServletRequest.addParameter(
-			"ddm__Separator_haby_1#Name_hato_0__pt_BR", "Paulo");
+			"ddm$$Separator$haby$1#Name$hato$0$$pt_BR", "Paulo");
 		httpServletRequest.addParameter(
-			"ddm__Separator_bajk_2#Name_fahu_0__en_US", "Claude");
+			"ddm$$Separator$bajk$2#Name$fahu$0$$en_US", "Claude");
 		httpServletRequest.addParameter(
-			"ddm__Separator_bajk_2#Name_fahu_0__pt_BR", "Claudio");
+			"ddm$$Separator$bajk$2#Name$fahu$0$$pt_BR", "Claudio");
 
 		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
 			httpServletRequest, ddmForm);

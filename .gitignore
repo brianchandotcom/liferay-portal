@@ -14,6 +14,7 @@ cobertura.ser
 
 **/.sonar
 **/pmd-reports
+**/.DS_Store
 
 /*.ant-*
 /*.ipr
@@ -26,6 +27,7 @@ cobertura.ser
 /.settings
 /.sonar
 /.xmlcatalog
+/.DS_Store
 /ActiveMQ
 /ant.install.log
 /api

@@ -187,8 +187,12 @@ public class UpgradeDynamicMappingTest extends PowerMockito {
 		UpgradeDynamicDataMapping upgradeDynamicDataMapping =
 			new UpgradeDynamicDataMapping();
 
+		DDMFormValues actualDDMFormValues =
+			upgradeDynamicDataMapping.getDDMFormValues(
+				ddmForm, document.asXML());
+
 		String actualJSON = upgradeDynamicDataMapping.toJSON(
-			ddmForm, document.asXML());
+			actualDDMFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
@@ -309,8 +313,12 @@ public class UpgradeDynamicMappingTest extends PowerMockito {
 		UpgradeDynamicDataMapping upgradeDynamicDataMapping =
 			new UpgradeDynamicDataMapping();
 
+		DDMFormValues actualDDMFormValues =
+			upgradeDynamicDataMapping.getDDMFormValues(
+				ddmForm, document.asXML());
+
 		String actualJSON = upgradeDynamicDataMapping.toJSON(
-			ddmForm, document.asXML());
+			actualDDMFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
@@ -392,8 +400,12 @@ public class UpgradeDynamicMappingTest extends PowerMockito {
 		UpgradeDynamicDataMapping upgradeDynamicDataMapping =
 			new UpgradeDynamicDataMapping();
 
+		DDMFormValues actualDDMFormValues =
+			upgradeDynamicDataMapping.getDDMFormValues(
+				ddmForm, document.asXML());
+
 		String actualJSON = upgradeDynamicDataMapping.toJSON(
-			ddmForm, document.asXML());
+			actualDDMFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}

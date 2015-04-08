@@ -74,8 +74,8 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		Map<String, String[]> parameters = portletRequest.getParameterMap();
 
-		String itemSelectedCallback = parameters.get(
-			PARAMETER_ITEM_SELECTED_CALLBACK)[0];
+		String itemSelectedCallback = getValue(
+			parameters, PARAMETER_ITEM_SELECTED_CALLBACK);
 
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			getItemSelectorCriteria(parameters);
@@ -91,9 +91,13 @@ public class ItemSelectorImpl implements ItemSelector {
 			ItemSelectorCriterion itemSelectorCriterion =
 				itemSelectorCriteria.get(i);
 
+			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
+				itemSelectorCriterion.getClass();
+
 			ItemSelectorCriterionHandler<ItemSelectorCriterion>
-				itemSelectorCriterionHandler = getItemSelectorCriterionHandler(
-				itemSelectorCriterion.getClass());
+				itemSelectorCriterionHandler =
+					_itemSelectionCriterionHandlers.get(
+						itemSelectorCriterionClass.getName());
 
 			List<ItemSelectorView<ItemSelectorCriterion>> itemSelectorViews =
 				itemSelectorCriterionHandler.getItemSelectorViews(
@@ -118,8 +122,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return new ItemSelectorRenderingImpl(
-			parameters.get(PARAMETER_ITEM_SELECTED_CALLBACK)[0],
-			parameters.get(PARAMETER_SELECTED_TAB)[0],
+			itemSelectedCallback, getValue(parameters, PARAMETER_SELECTED_TAB),
 			itemSelectorViewRenderers);
 	}
 
@@ -214,14 +217,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return itemSelectorCriterionClasses;
-	}
-
-	protected ItemSelectorCriterionHandler<ItemSelectorCriterion>
-		getItemSelectorCriterionHandler(
-			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass) {
-
-		return _itemSelectionCriterionHandlers.get(
-			itemSelectorCriterionClass.getName());
 	}
 
 	protected Map<String, String[]> getItemSelectorParameters(

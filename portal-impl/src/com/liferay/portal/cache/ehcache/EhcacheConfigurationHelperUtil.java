@@ -147,7 +147,7 @@ public class EhcacheConfigurationHelperUtil {
 			propertySeparator = StringPool.COMMA;
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(properties.size() * 4);
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			sb.append(entry.getKey());

@@ -88,7 +88,7 @@ public class ItemSelectorImpl implements ItemSelector {
 				itemSelectorCriterionClass);
 		}
 
-		return new ItemSelectorRendering(
+		return new ItemSelectorRenderingImpl(
 			parameters.get(PARAMETER_ITEM_SELECTED_CALLBACK)[0],
 			itemSelectorViewRenderers);
 	}

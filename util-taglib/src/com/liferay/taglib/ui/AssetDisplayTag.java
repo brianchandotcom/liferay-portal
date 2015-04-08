@@ -187,6 +187,17 @@ public class AssetDisplayTag extends IncludeTag {
 			request.setAttribute("liferay-ui:asset-display:renderer", renderer);
 		}
 
+		AssetRendererFactory assetRendererFactory = _assetRendererFactory;
+
+		if ((assetRendererFactory == null) && (assetEntry != null)) {
+			assetRendererFactory = assetEntry.getAssetRendererFactory();
+		}
+
+		if (assetRendererFactory != null) {
+			request.setAttribute(
+				WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
+		}
+
 		try {
 			_page = renderer.render(
 				(PortletRequest)pageContext.getAttribute(
@@ -199,28 +210,18 @@ public class AssetDisplayTag extends IncludeTag {
 			_log.error(e);
 		}
 
-		if (Validator.isNull(_page)) {
+		if (Validator.isNotNull(_page) && (assetRendererFactory != null) &&
+			Validator.isNotNull(assetRendererFactory.getPortletId())) {
+
+			String rootPortletId = PortletConstants.getRootPortletId(
+				assetRendererFactory.getPortletId());
+
+			PortletBag portletBag = PortletBagPool.get(rootPortletId);
+
+			servletContext = portletBag.getServletContext();
+		}
+		else {
 			_page = "/html/taglib/ui/asset_display/" + _template + ".jsp";
-		}
-
-		AssetRendererFactory assetRendererFactory = _assetRendererFactory;
-
-		if ((assetRendererFactory == null) && (assetEntry != null)) {
-			assetRendererFactory = assetEntry.getAssetRendererFactory();
-		}
-
-		if (assetRendererFactory != null) {
-			request.setAttribute(
-				WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
-
-			if (Validator.isNotNull(assetRendererFactory.getPortletId())) {
-				String rootPortletId = PortletConstants.getRootPortletId(
-					assetRendererFactory.getPortletId());
-
-				PortletBag portletBag = PortletBagPool.get(rootPortletId);
-
-				servletContext = portletBag.getServletContext();
-			}
 		}
 
 		request.setAttribute(WebKeys.ASSET_ENTRY_VIEW_URL, _viewURL);

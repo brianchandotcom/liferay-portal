@@ -65,6 +65,8 @@ public class ItemSelectorImpl implements ItemSelector {
 	public static final String PARAMETER_ITEM_SELECTED_CALLBACK =
 		"itemSelectedCallback";
 
+	public static final String PARAMETER_SELECTED_TAB = "selectedTab";
+
 	@Override
 	@SuppressWarnings("rawtypes")
 	public ItemSelectorRendering getItemSelectorRendering(
@@ -104,6 +106,9 @@ public class ItemSelectorImpl implements ItemSelector {
 					portletRequest, itemSelectedCallback,
 					itemSelectorCriteriaArray);
 
+				portletURL.setParameter(
+					PARAMETER_SELECTED_TAB,
+					itemSelectorView.getTitle(portletRequest.getLocale()));
 
 				itemSelectorViewRenderers.add(
 					new ItemSelectorViewRendererImpl(
@@ -114,6 +119,7 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		return new ItemSelectorRenderingImpl(
 			parameters.get(PARAMETER_ITEM_SELECTED_CALLBACK)[0],
+			parameters.get(PARAMETER_SELECTED_TAB)[0],
 			itemSelectorViewRenderers);
 	}
 

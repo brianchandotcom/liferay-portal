@@ -44,6 +44,7 @@ import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +54,11 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class CMISQueryBuilderTest {
+
+	@ClassRule
+	@Rule
+	public static final DeleteAfterTestRunTestRule deleteAfterTestRule =
+		new DeleteAfterTestRunTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -439,10 +445,6 @@ public class CMISQueryBuilderTest {
 			"(cmis:name LIKE 'test%.jpg' OR cmis:createdBy LIKE 'test%.jpg')",
 			cmisQuery);
 	}
-
-	@Rule
-	public final DeleteAfterTestRunTestRule deleteAfterTestRule =
-		new DeleteAfterTestRunTestRule();
 
 	protected void assertQueryEquals(String where, String query) {
 		Assert.assertEquals(_QUERY_PREFIX + where + _QUERY_POSTFIX, query);

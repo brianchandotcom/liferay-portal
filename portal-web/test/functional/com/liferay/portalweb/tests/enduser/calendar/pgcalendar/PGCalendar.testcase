@@ -72,7 +72,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventAllDayCommentToCurrentSiteCalendars" priority="5">
+	<command known-issues="LPS-54826" name="AddCalendarEventAllDayCommentToCurrentSiteCalendars" priority="5">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event All Day Comment" />
@@ -316,7 +316,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRegularCommentToCurrentSiteCalendars" priority="5">
+	<command known-issues="LPS-54826" name="AddCalendarEventRegularCommentToCurrentSiteCalendars" priority="5">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Regular Comment" />
@@ -569,7 +569,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingCommentToCurrentSiteCalendars" priority="5">
+	<command known-issues="LPS-54826" name="AddCalendarEventRepeatingCommentToCurrentSiteCalendars" priority="5">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Repeating Comment" />

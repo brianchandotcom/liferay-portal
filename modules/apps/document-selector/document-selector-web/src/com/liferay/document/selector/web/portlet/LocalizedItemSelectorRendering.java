@@ -44,14 +44,14 @@ public class LocalizedItemSelectorRendering {
 		_locale = locale;
 		_itemSelectorRendering = itemSelectorRendering;
 
-		for (ItemSelectorViewRenderer<?> itemSelectorViewRenderer :
+		for (ItemSelectorViewRenderer itemSelectorViewRenderer :
 				itemSelectorRendering.getItemSelectorViewRenderers()) {
 
 			add(itemSelectorViewRenderer);
 		}
 	}
 
-	public void add(ItemSelectorViewRenderer<?> itemSelectorViewRenderer) {
+	public void add(ItemSelectorViewRenderer itemSelectorViewRenderer) {
 		ItemSelectorView<?> itemSelectorView =
 			itemSelectorViewRenderer.getItemSelectorView();
 
@@ -65,9 +65,7 @@ public class LocalizedItemSelectorRendering {
 		return _itemSelectorRendering.getItemSelectedCallback();
 	}
 
-	public ItemSelectorViewRenderer<?> getItemSelectorViewRenderer(
-		String title) {
-
+	public ItemSelectorViewRenderer getItemSelectorViewRenderer(String title) {
 		return _itemSelectorViewRenderers.get(title);
 	}
 
@@ -81,7 +79,7 @@ public class LocalizedItemSelectorRendering {
 	}
 
 	private final ItemSelectorRendering _itemSelectorRendering;
-	private final Map<String, ItemSelectorViewRenderer<?>>
+	private final Map<String, ItemSelectorViewRenderer>
 		_itemSelectorViewRenderers = new HashMap<>();
 	private final Locale _locale;
 	private final List<String> _titles = new ArrayList<>();

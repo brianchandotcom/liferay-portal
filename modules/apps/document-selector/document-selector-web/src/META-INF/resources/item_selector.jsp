@@ -32,7 +32,7 @@ LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSel
 
 	<%
 	for (String title : localizedItemSelectorRendering.getTitles()) {
-		ItemSelectorViewRenderer<?> itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
+		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
 	%>
 
 		<liferay-ui:section>

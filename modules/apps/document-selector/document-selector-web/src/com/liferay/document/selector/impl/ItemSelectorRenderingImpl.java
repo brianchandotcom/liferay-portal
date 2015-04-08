@@ -26,7 +26,7 @@ public class ItemSelectorRenderingImpl implements ItemSelectorRendering {
 
 	public ItemSelectorRenderingImpl(
 		String itemSelectedCallback,
-		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers) {
+		List<ItemSelectorViewRenderer> itemSelectorViewRenderers) {
 
 		_itemSelectedCallback = itemSelectedCallback;
 		_itemSelectorViewRenderers = itemSelectorViewRenderers;
@@ -36,11 +36,11 @@ public class ItemSelectorRenderingImpl implements ItemSelectorRendering {
 		return _itemSelectedCallback;
 	}
 
-	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers() {
+	public List<ItemSelectorViewRenderer> getItemSelectorViewRenderers() {
 		return _itemSelectorViewRenderers;
 	}
 
 	private final String _itemSelectedCallback;
-	private final List<ItemSelectorViewRenderer<?>> _itemSelectorViewRenderers;
+	private final List<ItemSelectorViewRenderer> _itemSelectorViewRenderers;
 
 }

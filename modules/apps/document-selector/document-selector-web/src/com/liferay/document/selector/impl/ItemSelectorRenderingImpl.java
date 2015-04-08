@@ -25,10 +25,11 @@ import java.util.List;
 public class ItemSelectorRenderingImpl implements ItemSelectorRendering {
 
 	public ItemSelectorRenderingImpl(
-		String itemSelectedCallback,
+		String itemSelectedCallback, String selectedTab,
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers) {
 
 		_itemSelectedCallback = itemSelectedCallback;
+		_selectedTab = selectedTab;
 		_itemSelectorViewRenderers = itemSelectorViewRenderers;
 	}
 
@@ -40,7 +41,13 @@ public class ItemSelectorRenderingImpl implements ItemSelectorRendering {
 		return _itemSelectorViewRenderers;
 	}
 
+	@Override
+	public String getSelectedTab() {
+		return _selectedTab;
+	}
+
 	private final String _itemSelectedCallback;
 	private final List<ItemSelectorViewRenderer> _itemSelectorViewRenderers;
+	private final String _selectedTab;
 
 }

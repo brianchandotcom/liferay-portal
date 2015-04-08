@@ -14,7 +14,6 @@
 
 package com.liferay.document.selector.impl;
 
-import com.liferay.document.selector.ItemSelectorCriterionHandler;
 import com.liferay.document.selector.ItemSelectorRendering;
 import com.liferay.document.selector.ItemSelectorView;
 import com.liferay.document.selector.ItemSelectorViewRenderer;

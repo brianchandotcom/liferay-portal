@@ -14,86 +14,20 @@
 
 package com.liferay.portal.repository.cmis;
 
-import com.liferay.portal.InvalidRepositoryException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.RepositoryException;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Repository;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.persistence.RepositoryUtil;
-
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.chemistry.opencmis.client.api.OperationContext;
-import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.client.api.SessionFactory;
 import org.apache.chemistry.opencmis.client.runtime.OperationContextImpl;
 import org.apache.chemistry.opencmis.client.runtime.SessionFactoryImpl;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
-import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.enums.IncludeRelationships;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisPermissionDeniedException;
-import org.apache.chemistry.opencmis.commons.exceptions.CmisUnauthorizedException;
 
 /**
  * @author Alexander Chow
  */
 public class CMISRepositoryUtil {
-
-	public static void checkRepository(
-			long repositoryId, Map<String, String> parameters,
-			UnicodeProperties typeSettingsProperties, String typeSettingsKey)
-		throws PortalException, RepositoryException {
-
-		if (!typeSettingsProperties.containsKey(typeSettingsKey)) {
-			org.apache.chemistry.opencmis.client.api.Repository cmisRepository =
-				_sessionFactory.getRepositories(parameters).get(0);
-
-			typeSettingsProperties.setProperty(
-				typeSettingsKey, cmisRepository.getId());
-
-			try {
-				Repository repository = RepositoryUtil.findByPrimaryKey(
-					repositoryId);
-
-				repository.setTypeSettingsProperties(typeSettingsProperties);
-
-				RepositoryUtil.update(repository);
-			}
-			catch (Exception e) {
-				throw new RepositoryException(e);
-			}
-		}
-
-		parameters.put(
-			SessionParameter.REPOSITORY_ID,
-			getTypeSettingsValue(typeSettingsProperties, typeSettingsKey));
-	}
-
-	public static com.liferay.portal.kernel.repository.cmis.Session
-			createSession(Map<String, String> parameters)
-		throws PrincipalException, RepositoryException {
-
-		try {
-			Session session = _sessionFactory.createSession(parameters);
-
-			session.setDefaultContext(_operationContext);
-
-			return new SessionImpl(session);
-		}
-		catch (CmisPermissionDeniedException cpde) {
-			throw new PrincipalException(cpde);
-		}
-		catch (CmisUnauthorizedException cue) {
-			throw new PrincipalException();
-		}
-		catch (Exception e) {
-			throw new RepositoryException(e);
-		}
-	}
 
 	public static OperationContext getOperationContext() {
 		return _operationContext;
@@ -101,20 +35,6 @@ public class CMISRepositoryUtil {
 
 	public static SessionFactory getSessionFactory() {
 		return _sessionFactory;
-	}
-
-	public static String getTypeSettingsValue(
-			UnicodeProperties typeSettingsProperties, String typeSettingsKey)
-		throws InvalidRepositoryException {
-
-		String value = typeSettingsProperties.getProperty(typeSettingsKey);
-
-		if (Validator.isNull(value)) {
-			throw new InvalidRepositoryException(
-				"Properties value cannot be null for key " + typeSettingsKey);
-		}
-
-		return value;
 	}
 
 	private static final OperationContext _operationContext;

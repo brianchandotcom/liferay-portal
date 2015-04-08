@@ -1,0 +1,19 @@
+Bundle-Name: Liferay Document Library CMIS Repository Implementation
+Bundle-SymbolicName: com.liferay.document.library.repository.cmis.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.sun.istack,\
+	!com.sun.net.httpserver,\
+	!com.sun.org.apache.xml.internal.resolver.*,\
+	!com.sun.xml.*,\
+	!org.json.simple.*,\
+	!org.jvnet.*,\
+	*
+Include-Resource:\
+	@${app.server.lib.portal.dir}/chemistry-opencmis-client-api.jar,\
+	@${app.server.lib.portal.dir}/chemistry-opencmis-client-bindings.jar,\
+	@${app.server.lib.portal.dir}/chemistry-opencmis-client-impl.jar,\
+	@${app.server.lib.portal.dir}/chemistry-opencmis-commons-api.jar,\
+	@${app.server.lib.portal.dir}/chemistry-opencmis-commons-impl.jar,\
+	@${app.server.lib.portal.dir}/jaxws-rt.jar,\
+	classes

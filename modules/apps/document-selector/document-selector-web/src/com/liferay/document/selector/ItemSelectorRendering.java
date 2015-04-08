@@ -19,25 +19,10 @@ import java.util.List;
 /**
  * @author Iván Zaera
  */
-public class ItemSelectorRendering {
+public interface ItemSelectorRendering {
 
-	public ItemSelectorRendering(
-		String itemSelectedCallback,
-		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers) {
+	public String getItemSelectedCallback();
 
-		_itemSelectedCallback = itemSelectedCallback;
-		_itemSelectorViewRenderers = itemSelectorViewRenderers;
-	}
-
-	public String getItemSelectedCallback() {
-		return _itemSelectedCallback;
-	}
-
-	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers() {
-		return _itemSelectorViewRenderers;
-	}
-
-	private final String _itemSelectedCallback;
-	private final List<ItemSelectorViewRenderer<?>> _itemSelectorViewRenderers;
+	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers();
 
 }

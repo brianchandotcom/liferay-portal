@@ -1670,7 +1670,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1820,7 +1820,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1901,7 +1901,7 @@
 		<tag-class>com.liferay.taglib.ui.IconMenuTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2099,7 +2099,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A variable name for this component.</description>
+			<description>A variable name for the component.</description>
 			<name>param</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2259,7 +2259,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2573,7 +2573,7 @@
 		<tag-class>com.liferay.taglib.ui.InputMoveBoxesTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2732,7 +2732,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2782,7 +2782,7 @@
 		<tag-class>com.liferay.taglib.ui.InputSelectTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2808,7 +2808,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A variable name for this component.</description>
+			<description>A variable name for the component.</description>
 			<name>param</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2820,7 +2820,7 @@
 		<tag-class>com.liferay.taglib.ui.InputTextAreaTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2839,7 +2839,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A variable name for this component.</description>
+			<description>A variable name for the component.</description>
 			<name>param</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2942,7 +2942,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3506,7 +3506,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3581,7 +3581,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling this component.</description>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4905,13 +4905,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A variable to refer to this component.</description>
+			<description>A variable to refer to the component.</description>
 			<name>param</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A URL to refer to the portlet that contains this component.</description>
+			<description>A URL to refer to the portlet that contains the component.</description>
 			<name>portletURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -96,7 +96,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="AddFormTemplate" priority="5">
+	<command name="AddFormTemplate" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -1892,7 +1892,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="CopyDataDefinition" priority="5">
+	<command name="CopyDataDefinition" priority="5">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -1971,7 +1971,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="CopyDataDefinitionWithCopyDisplayTemplates" priority="5">
+	<command name="CopyDataDefinitionWithCopyDisplayTemplates" priority="5">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -2061,7 +2061,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="CopyDataDefinitionWithCopyFormTemplates" priority="5">
+	<command name="CopyDataDefinitionWithCopyFormTemplates" priority="5">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -2162,7 +2162,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="CopyDataDefinitionWithCopyFormTemplatesAndCopyDisplayTemplates" priority="5">
+	<command name="CopyDataDefinitionWithCopyFormTemplatesAndCopyDisplayTemplates" priority="5">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -2386,7 +2386,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="DeleteFormTemplate" priority="5">
+	<command name="DeleteFormTemplate" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -3066,7 +3066,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="EditFormTemplate" priority="5">
+	<command name="EditFormTemplate" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="ddlFormTemplateNameEdit" value="Data Definition Form Template Name Edit" />
@@ -3888,7 +3888,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="ViewFormTemplateFieldReadOnlyWithEditMode" priority="4">
+	<command name="ViewFormTemplateFieldReadOnlyWithEditMode" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -3954,7 +3954,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="ViewFormTemplateFields" priority="5">
+	<command name="ViewFormTemplateFields" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -4023,7 +4023,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="ViewFormTemplateFieldsAfterSaveAndContinue" priority="4">
+	<command name="ViewFormTemplateFieldsAfterSaveAndContinue" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -4160,7 +4160,7 @@
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsListRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 
-	<command known-issues="LPS-54394" name="ViewNoDuplicatesInOriginalAfterCopy" priority="5">
+	<command name="ViewNoDuplicatesInOriginalAfterCopy" priority="5">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />

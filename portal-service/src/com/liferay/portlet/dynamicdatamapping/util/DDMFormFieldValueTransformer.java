@@ -15,7 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 /**
  * @author Marcellus Tavares
@@ -24,6 +24,7 @@ public interface DDMFormFieldValueTransformer {
 
 	public String getFieldType();
 
-	public void transform(Value value) throws PortalException;
+	public void transform(DDMFormFieldValue ddmFormFieldValue)
+		throws PortalException;
 
 }

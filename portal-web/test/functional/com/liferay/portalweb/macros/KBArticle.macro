@@ -547,7 +547,7 @@
 	</command>
 
 	<command name="gotoNextArticlePG">
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NEXT" value1="${kbDisplayNextArticle}" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_NEXT" value1="${kbDisplayNextArticle}" />
 	</command>
 
 	<command name="gotoPGViaKBSearchResult">
@@ -562,7 +562,7 @@
 	</command>
 
 	<command name="gotoPreviousArticle">
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_PREVIOUS" value1="${kbDisplayPreviousArticle}" />
+		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_PREVIOUS" value1="${kbDisplayPreviousArticle}" />
 	</command>
 
 	<command name="gotoRelatedAssetCP">
@@ -1218,7 +1218,7 @@
 
 		<execute function="MouseOver" locator1="CPKnowledgebaseadmin#ARTICLE_TABLE_CREATE_DATE" />
 
-		<var locator-key="ARTICLE_TABLE_CREATE_DATE_POPUP" name="publishDate" path="CPKnowledgebaseadmin" />
+		<var locator="CPKnowledgebaseadmin#ARTICLE_TABLE_CREATE_DATE_POPUP" name="publishDate" />
 
 		<var name="key_publishDate" value="${publishDate}" />
 		<var name="separator" value=" " />

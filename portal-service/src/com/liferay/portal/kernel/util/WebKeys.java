@@ -267,6 +267,8 @@ public interface WebKeys {
 
 	public static final String WINDOW_STATE = "WINDOW_STATE";
 
+	public static final String WORKFLOW_ASSET_PREVIEW = "WORKFLOW_ASSET_PREVIEW";
+
 	public static final String XUGGLER_INSTALL_STATUS = "XUGGLER_INSTALL_STATUS";
 
 }

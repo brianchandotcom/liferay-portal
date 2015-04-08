@@ -22,10 +22,29 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portal.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+
+import java.util.Date;
 
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,6 +53,40 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class CMISQueryBuilderTest {
+
+	@Before
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		_repository = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			ClassNameLocalServiceUtil.getClassNameId(_REPOSITORY_CLASS_NAME),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			serviceContext);
+
+		_repositoryEntry =
+			RepositoryEntryLocalServiceUtil.createRepositoryEntry(
+				_repository.getDlFolderId());
+
+		_repositoryEntry.setUuid(serviceContext.getUuid());
+		_repositoryEntry.setGroupId(serviceContext.getScopeGroupId());
+		_repositoryEntry.setCompanyId(serviceContext.getCompanyId());
+		_repositoryEntry.setUserId(serviceContext.getUserId());
+		_repositoryEntry.setUserName(StringUtil.randomString());
+		_repositoryEntry.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		_repositoryEntry.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		_repositoryEntry.setRepositoryId(_repository.getRepositoryId());
+		_repositoryEntry.setMappedId(_MAPPED_ID);
+
+		RepositoryEntryLocalServiceUtil.addRepositoryEntry(_repositoryEntry);
+	}
 
 	@Test
 	public void testBooleanQuery() throws Exception {
@@ -249,8 +302,8 @@ public class CMISQueryBuilderTest {
 		String folderQuery = buildFolderQuery(false);
 
 		assertQueryEquals(
-			"((IN_FOLDER('1000') AND (cmis:name = 'test' OR cmis:createdBy " +
-				"= 'test')) OR CONTAINS('test'))",
+			"((IN_FOLDER('" + _MAPPED_ID + "') AND (cmis:name = 'test' OR " +
+				"cmis:createdBy = 'test')) OR CONTAINS('test'))",
 			folderQuery);
 	}
 
@@ -348,8 +401,8 @@ public class CMISQueryBuilderTest {
 		String folderQuery = buildFolderQuery(true);
 
 		assertQueryEquals(
-			"((IN_TREE('1000') AND (cmis:name = 'test' OR cmis:createdBy = " +
-				"'test')) OR CONTAINS('test'))",
+			"((IN_TREE('" + _MAPPED_ID + "') AND (cmis:name = 'test' OR " +
+				"cmis:createdBy = 'test')) OR CONTAINS('test'))",
 			folderQuery);
 	}
 
@@ -387,6 +440,10 @@ public class CMISQueryBuilderTest {
 			cmisQuery);
 	}
 
+	@Rule
+	public final DeleteAfterTestRunTestRule deleteAfterTestRule =
+		new DeleteAfterTestRunTestRule();
+
 	protected void assertQueryEquals(String where, String query) {
 		Assert.assertEquals(_QUERY_PREFIX + where + _QUERY_POSTFIX, query);
 	}
@@ -396,7 +453,7 @@ public class CMISQueryBuilderTest {
 
 		SearchContext searchContext = getSearchContext();
 
-		searchContext.setFolderIds(new long[] {1000});
+		searchContext.setFolderIds(new long[] {_repository.getDlFolderId()});
 		searchContext.setKeywords("test");
 
 		BooleanQuery searchQuery =
@@ -419,12 +476,23 @@ public class CMISQueryBuilderTest {
 		return searchContext;
 	}
 
+	private static final String _MAPPED_ID = "1000";
+
 	private static final String _QUERY_POSTFIX = " ORDER BY HITS DESC";
 
 	private static final String _QUERY_PREFIX =
 		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE ";
 
+	private static final String _REPOSITORY_CLASS_NAME =
+		"com.liferay.portal.repository.liferayrepository.LiferayRepository";
+
 	private final CMISSearchQueryBuilder _cmisSearchQueryBuilder =
 		new BaseCmisSearchQueryBuilder();
+
+	@DeleteAfterTestRun
+	private Repository _repository;
+
+	@DeleteAfterTestRun
+	private RepositoryEntry _repositoryEntry;
 
 }

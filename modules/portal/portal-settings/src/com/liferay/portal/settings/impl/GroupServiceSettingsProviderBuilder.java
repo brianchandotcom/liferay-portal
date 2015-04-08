@@ -15,13 +15,14 @@
 package com.liferay.portal.settings.impl;
 
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
+import com.liferay.portal.kernel.settings.impl.ParameterMapSettings;
 
 import java.lang.reflect.Constructor;
 
@@ -47,8 +48,8 @@ public class GroupServiceSettingsProviderBuilder
 
 	@Override
 	public S getGroupServiceSettings(long groupId) throws SettingsException {
-		Settings settings = _settingsFactory.getGroupServiceSettings(
-			groupId, _getSettingsId());
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(groupId, _getSettingsId()));
 
 		try {
 			return _getSettings(settings);
@@ -64,8 +65,8 @@ public class GroupServiceSettingsProviderBuilder
 			long groupId, Map<String, String[]> parameterMap)
 		throws SettingsException {
 
-		Settings settings = _settingsFactory.getGroupServiceSettings(
-			groupId, _getSettingsId());
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(groupId, _getSettingsId()));
 
 		try {
 			return _getSettings(

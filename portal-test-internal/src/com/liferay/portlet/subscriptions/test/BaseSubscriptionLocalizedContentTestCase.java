@@ -16,6 +16,7 @@ package com.liferay.portlet.subscriptions.test;
 
 import com.dumbster.smtp.MailMessage;
 
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -135,8 +136,9 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 			String bodyPreferenceName)
 		throws Exception {
 
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			group.getGroupId(), getServiceName());
+		Settings settings = SettingsFactoryUtil.getSettings(
+			new GroupServiceSettingsLocator(
+				group.getGroupId(), getServiceName()));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

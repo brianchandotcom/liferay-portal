@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings;
+package com.liferay.portal.kernel.settings.impl;
 
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 

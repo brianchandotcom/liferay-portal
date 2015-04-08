@@ -17,11 +17,12 @@ package com.liferay.portlet.messageboards;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.GroupServiceSettings;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.settings.impl.ParameterMapSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.RSSUtil;
@@ -43,8 +44,8 @@ public class MBGroupServiceSettings implements GroupServiceSettings {
 	public static MBGroupServiceSettings getInstance(long groupId)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, MBConstants.SERVICE_NAME);
+		Settings settings = SettingsFactoryUtil.getSettings(
+			new GroupServiceSettingsLocator(groupId, MBConstants.SERVICE_NAME));
 
 		return new MBGroupServiceSettings(settings);
 	}
@@ -53,8 +54,8 @@ public class MBGroupServiceSettings implements GroupServiceSettings {
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getGroupServiceSettings(
-			groupId, MBConstants.SERVICE_NAME);
+		Settings settings = SettingsFactoryUtil.getSettings(
+			new GroupServiceSettingsLocator(groupId, MBConstants.SERVICE_NAME));
 
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(
 			parameterMap, settings);

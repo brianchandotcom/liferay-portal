@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.kernel.settings.impl.MemorySettings;
+import com.liferay.portal.kernel.settings.impl.PortletPreferencesSettings;
+
 import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;

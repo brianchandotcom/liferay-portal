@@ -14,14 +14,15 @@
 
 package com.liferay.portal.settings.impl;
 
-import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettings;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
+import com.liferay.portal.kernel.settings.impl.ParameterMapSettings;
 import com.liferay.portal.model.Layout;
 
 import java.lang.reflect.Constructor;
@@ -50,8 +51,8 @@ public class PortletInstanceSettingsProviderBuilder
 	public P getPortletInstanceSettings(Layout layout, String portletId)
 		throws SettingsException {
 
-		Settings settings = _settingsFactory.getPortletInstanceSettings(
-			layout, portletId);
+		Settings settings = _settingsFactory.getSettings(
+			new PortletInstanceSettingsLocator(layout, portletId));
 
 		try {
 			return _getSettings(settings);
@@ -67,8 +68,8 @@ public class PortletInstanceSettingsProviderBuilder
 			Layout layout, String portletId, Map<String, String[]> parameterMap)
 		throws SettingsException {
 
-		Settings settings = _settingsFactory.getPortletInstanceSettings(
-			layout, portletId);
+		Settings settings = _settingsFactory.getSettings(
+			new PortletInstanceSettingsLocator(layout, portletId));
 
 		try {
 			return _getSettings(

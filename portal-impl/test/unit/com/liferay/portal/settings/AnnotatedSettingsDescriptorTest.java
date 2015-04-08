@@ -101,6 +101,6 @@ public class AnnotatedSettingsDescriptorTest {
 	}
 
 	private final AnnotatedSettingsDescriptor _annotatedSettingsDescriptor =
-		new AnnotatedSettingsDescriptor(MockSettings.class);
+		new AnnotatedSettingsDescriptor(MockSettings.class, null);
 
 }

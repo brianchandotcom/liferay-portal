@@ -61,7 +61,7 @@ public class SettingsDefinitionSettingsDescriptorTest {
 			};
 
 		_settingsDefinitionSettingsDescriptor =
-			new SettingsDefinitionSettingsDescriptor(settingsDefinition);
+			new SettingsDefinitionSettingsDescriptor(settingsDefinition, null);
 	}
 
 	@Test

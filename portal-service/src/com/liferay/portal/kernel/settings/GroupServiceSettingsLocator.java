@@ -1,0 +1,74 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.kernel.settings;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+
+/**
+ * @author Ivan Zaera
+ * @author Jorge Ferrer
+ */
+public class GroupServiceSettingsLocator implements SettingsLocator {
+
+	public GroupServiceSettingsLocator(long groupId, String serviceName) {
+		_groupId = groupId;
+		_serviceName = serviceName;
+	}
+
+	public String getSettingsId() {
+		return _serviceName;
+	}
+
+	public Settings retrieveSettings() throws SettingsException {
+		long companyId = getCompanyId(_groupId);
+
+		Settings portalPropertiesSettings =
+			_settingsLocatorHelper.getPortalPropertiesSettings();
+
+		Settings configurationBeanSettings =
+			_settingsLocatorHelper.getConfigurationBeanSettings(
+				_serviceName, portalPropertiesSettings);
+
+		Settings portalPreferencesSettings =
+			_settingsLocatorHelper.getPortalPreferencesSettings(
+				companyId, configurationBeanSettings);
+
+		Settings companyPortletPreferencesSettings =
+			_settingsLocatorHelper.getCompanyPortletPreferencesSettings(
+				companyId, _serviceName, portalPreferencesSettings);
+
+		return _settingsLocatorHelper.getGroupPortletPreferencesSettings(
+			_groupId, _serviceName, companyPortletPreferencesSettings);
+	}
+
+	protected long getCompanyId(long groupId) throws SettingsException {
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			return group.getCompanyId();
+		}
+		catch (PortalException pe) {
+			throw new SettingsException(pe);
+		}
+	}
+
+	private final long _groupId;
+	private final String _serviceName;
+	private final SettingsLocatorHelper _settingsLocatorHelper =
+		new SettingsLocatorHelper();
+
+}

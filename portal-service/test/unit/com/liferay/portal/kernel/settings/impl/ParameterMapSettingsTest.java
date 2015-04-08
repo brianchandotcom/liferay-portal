@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.settings;
+package com.liferay.portal.kernel.settings.impl;
 
 import java.util.HashMap;
 import java.util.Map;

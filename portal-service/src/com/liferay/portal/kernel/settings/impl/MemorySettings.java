@@ -12,7 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.settings;
+package com.liferay.portal.kernel.settings.impl;
+
+import com.liferay.portal.kernel.settings.BaseModifiableSettings;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
 
 import java.util.Collection;
 import java.util.HashMap;

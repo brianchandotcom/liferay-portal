@@ -14,60 +14,21 @@
 
 package com.liferay.document.selector;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.taglib.servlet.PipingServletResponse;
-
 import java.io.IOException;
-import java.io.Writer;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
  */
-public class ItemSelectorViewRenderer<T extends ItemSelectorCriterion> {
+public interface ItemSelectorViewRenderer<T extends ItemSelectorCriterion> {
 
-	public ItemSelectorViewRenderer(
-		ItemSelectorView<T> itemSelectorView, T itemSelectorCriterion) {
+	public T getItemSelectorCriterion();
 
-		_itemSelectorView = itemSelectorView;
-		_itemSelectorCriterion = itemSelectorCriterion;
-	}
-
-	public T getItemSelectorCriterion() {
-		return _itemSelectorCriterion;
-	}
-
-	public ItemSelectorView<T> getItemSelectorView() {
-		return _itemSelectorView;
-	}
+	public ItemSelectorView<T> getItemSelectorView();
 
 	public void renderHTML(PageContext pageContext, String itemSelectedCallback)
-		throws IOException, ServletException {
-
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			response, unsyncStringWriter);
-
-		_itemSelectorView.renderHTML(
-			pageContext.getRequest(), pipingServletResponse,
-			_itemSelectorCriterion, itemSelectedCallback);
-
-		Writer writer = pageContext.getOut();
-
-		StringBundler sb = unsyncStringWriter.getStringBundler();
-
-		writer.write(sb.toString());
-	}
-
-	private final T _itemSelectorCriterion;
-	private final ItemSelectorView<T> _itemSelectorView;
+		throws IOException, ServletException;
 
 }

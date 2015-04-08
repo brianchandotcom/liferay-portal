@@ -1,6 +1,6 @@
 Bundle-Activator: com.liferay.portal.soap.extender.test.activators.handlers.JaxwsApiBundleActivatorWithHandlers
-Bundle-Name: Liferay Portal SOAP Extender Test Simple
-Bundle-SymbolicName: com.liferay.portal.soap.extender.test.simple
+Bundle-Name: Liferay Portal SOAP Extender Test API With Handlers
+Bundle-SymbolicName: com.liferay.portal.soap.extender.test.api.handlers
 Bundle-Version: 1.0.0
 Include-Resource:\
 	com/liferay/portal/soap/extender/test/activators/handlers=classes/com/liferay/portal/soap/extender/test/activators/handlers,\

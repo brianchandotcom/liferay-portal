@@ -38,6 +38,7 @@ import java.net.URL;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -108,23 +109,6 @@ public class EhcacheConfigurationHelperUtil {
 
 		return new ObjectValuePair<>(
 			ehcacheConfiguration, portalCacheManagerConfiguration);
-	}
-
-	private static CacheListenerScope _getCacheListenerScope(
-		NotificationScope notificationScope) {
-
-		if (notificationScope == NotificationScope.ALL) {
-			return CacheListenerScope.ALL;
-		}
-		else if (notificationScope == NotificationScope.LOCAL) {
-			return CacheListenerScope.LOCAL;
-		}
-		else if (notificationScope == NotificationScope.REMOTE) {
-			return CacheListenerScope.REMOTE;
-		}
-
-		throw new IllegalArgumentException(
-			"Unable to parse notification scope " + notificationScope);
 	}
 
 	private static Set<CallbackConfiguration>
@@ -252,7 +236,7 @@ public class EhcacheConfigurationHelperUtil {
 				cacheEventListenerFactoryConfiguration.getProperties(),
 				cacheEventListenerFactoryConfiguration. getPropertySeparator());
 
-			CacheListenerScope cacheListenerScope = _getCacheListenerScope(
+			CacheListenerScope cacheListenerScope = _scopeMap.get(
 				cacheEventListenerFactoryConfiguration.getListenFor());
 
 			if (factoryClassName.equals(
@@ -412,5 +396,13 @@ public class EhcacheConfigurationHelperUtil {
 		EhcacheConfigurationHelperUtil.class);
 
 	private static final HtmlImpl _htmlUtil = new HtmlImpl();
+	private static final Map<NotificationScope, CacheListenerScope> _scopeMap =
+		new EnumMap<>(NotificationScope.class);
+
+	static {
+		_scopeMap.put(NotificationScope.ALL, CacheListenerScope.ALL);
+		_scopeMap.put(NotificationScope.LOCAL, CacheListenerScope.LOCAL);
+		_scopeMap.put(NotificationScope.REMOTE, CacheListenerScope.REMOTE);
+	}
 
 }

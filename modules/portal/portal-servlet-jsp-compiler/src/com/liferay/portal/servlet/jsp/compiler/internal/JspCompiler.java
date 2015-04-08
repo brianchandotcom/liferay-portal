@@ -252,6 +252,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			int uriStartPos = xml.indexOf("<uri>");
 			int uriEndPos = xml.indexOf("</uri>", uriStartPos);
 
+			if (uriStartPos < 0) {
+				return null;
+			}
+
 			return xml.substring(uriStartPos + 5, uriEndPos);
 		}
 		catch (IOException e) {

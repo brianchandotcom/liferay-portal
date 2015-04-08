@@ -532,9 +532,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewEventDetailsWithTagPG">
+		<execute macro="CalendarEvent#viewEventDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsTags">
 			<var name="tagText" value="tag1" />
 		</execute>
 	</command>
@@ -1423,9 +1426,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewEventDetailsWithTagPG">
+		<execute macro="CalendarEvent#viewEventDetails">
 			<var name="calendarName" value="${siteName}" />
-			<var name="eventTitle" value="${eventTitle2}" />
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsTags">
 			<var name="tagTextList" value="${tagText1},${tagText2}" />
 		</execute>
 

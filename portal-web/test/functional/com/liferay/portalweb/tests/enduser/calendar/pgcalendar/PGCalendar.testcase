@@ -202,9 +202,12 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewEventDetailsWithTagPG">
+		<execute macro="CalendarEvent#viewEventDetails">
 			<var name="calendarName" value="Liferay" />
 			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsTags">
 			<var name="tagText" value="tag1" />
 		</execute>
 	</command>
@@ -463,9 +466,12 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewEventDetailsWithTagPG">
+		<execute macro="CalendarEvent#viewEventDetails">
 			<var name="calendarName" value="Liferay" />
 			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsTags">
 			<var name="tagText" value="tag1" />
 		</execute>
 	</command>
@@ -817,9 +823,12 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewEventDetailsWithTagPG">
+		<execute macro="CalendarEvent#viewEventDetails">
 			<var name="calendarName" value="Liferay" />
 			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsTags">
 			<var name="tagText" value="tag1" />
 		</execute>
 	</command>
@@ -2304,6 +2313,56 @@
 		</execute>
 	</command>
 
+	<command name="InviteAndViewAdditionalUsers" priority="5">
+		<description message="This is a use case for LPS-46700." />
+
+		<var name="eventTitle" value="Calendar Event Regular Title" />
+		<var name="eventType" value="Regular" />
+		<var name="resourceNameList" value="userfn userln,Test Test" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+		<var name="usersList" value="userfn userln, Test Test" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="inviteResource" value="true" />
+			<var name="optionSet" value="true" />
+			<var name="resourceNameList" value="${resourceNameList}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewUsers">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="usersList" value="${usersList}" />
+		</execute>
+	</command>
+
 	<command name="SearchForOtherCalendars" priority="5">
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -2553,7 +2612,6 @@
 		<execute macro="CalendarEvent#viewEventDetails">
 			<var name="calendarName" value="Liferay" />
 			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewEventDetailsTime">

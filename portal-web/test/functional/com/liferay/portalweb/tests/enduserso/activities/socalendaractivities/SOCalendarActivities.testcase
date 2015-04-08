@@ -104,7 +104,6 @@
 		<execute macro="CalendarEvent#viewEventDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="user" value="${adminName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -520,7 +519,6 @@
 		<execute macro="CalendarEvent#viewEventDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="user" value="${adminName}" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${commentContent}" />
@@ -621,7 +619,6 @@
 		<execute macro="CalendarEvent#viewEventDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="user" value="${adminName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

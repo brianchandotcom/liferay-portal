@@ -652,7 +652,7 @@
 		</if>
 	</command>
 
-	<command name="viewWeekStartMonth">
+	<command name="viewWeekStartDayViaMonthView">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Month" />
 		</execute>
@@ -660,11 +660,11 @@
 		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_WEEK_START_DAY" value1="${weekStartDay}" />
 	</command>
 
-	<command name="viewWeekStartSmallCalendar">
+	<command name="viewWeekStartDayViaSmallCalendar">
 		<execute function="AssertTextEquals" locator1="PGCalendar#SMALL_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
 	</command>
 
-	<command name="viewWeekStartWeek">
+	<command name="viewWeekStartDayViaWeekView">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
 		</execute>

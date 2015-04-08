@@ -2843,15 +2843,15 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#viewWeekStartWeek">
+		<execute macro="Calendar#viewWeekStartDayViaWeekView">
 			<var name="weekStartDay" value="Mon" />
 		</execute>
 
-		<execute macro="Calendar#viewWeekStartMonth">
+		<execute macro="Calendar#viewWeekStartDayViaMonthView">
 			<var name="weekStartDay" value="Mon" />
 		</execute>
 
-		<execute macro="Calendar#viewWeekStartSmallCalendar">
+		<execute macro="Calendar#viewWeekStartDayViaSmallCalendar">
 			<var name="weekStartDay" value="Mo" />
 		</execute>
 
@@ -2886,15 +2886,15 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#viewWeekStartWeek">
+		<execute macro="Calendar#viewWeekStartDayViaWeekView">
 			<var name="weekStartDay" value="Sat" />
 		</execute>
 
-		<execute macro="Calendar#viewWeekStartMonth">
+		<execute macro="Calendar#viewWeekStartDayViaMonthView">
 			<var name="weekStartDay" value="Sat" />
 		</execute>
 
-		<execute macro="Calendar#viewWeekStartSmallCalendar">
+		<execute macro="Calendar#viewWeekStartDayViaSmallCalendar">
 			<var name="weekStartDay" value="Sa" />
 		</execute>
 

@@ -60,16 +60,6 @@
 			<xs:element name="template" type="xs:string" />
 			<xs:element name="template-language" type="template-language-type" />
 			<xs:element name="notification-type" type="notification-transport-type" maxOccurs="unbounded" />
-			<xs:element name="bcc-recipients" minOccurs="0">
-				<xs:complexType>
-					<xs:group ref="recipients-group" />
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="cc-recipients" minOccurs="0">
-				<xs:complexType>
-					<xs:group ref="recipients-group" />
-				</xs:complexType>
-			</xs:element>
 			<xs:element name="recipients" minOccurs="0">
 				<xs:complexType>
 					<xs:group ref="recipients-group" />
@@ -87,12 +77,6 @@
 					<xs:element name="auto-create" type="xs:boolean" minOccurs="0" default="true" />
 				</xs:sequence>
 			</xs:choice>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="script-complex-type">
-		<xs:sequence>
-			<xs:element name="script" type="xs:string" />
-			<xs:element name="script-language" type="script-language-type" />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="task-timer-complex-type">
@@ -285,7 +269,14 @@
 					</xs:choice>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="scripted-assignment" type="script-complex-type" />
+			<xs:element name="scripted-assignment">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="script" type="xs:string" />
+						<xs:element name="script-language" type="script-language-type" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="user" type="user-complex-type" />
 		</xs:choice>
 	</xs:group>
@@ -308,7 +299,6 @@
 					</xs:choice>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="scripted-recipient" type="script-complex-type" minOccurs="0" maxOccurs="unbounded" />
 			<xs:element name="user" type="user-complex-type" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:group>

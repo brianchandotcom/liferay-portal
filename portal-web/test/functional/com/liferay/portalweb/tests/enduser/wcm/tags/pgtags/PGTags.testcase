@@ -320,6 +320,7 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.txt" />
 			<var name="dmDocumentSize" value="0KB" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
@@ -335,8 +336,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewPG">
-			<var name="assetContent" value="Web Content Content" />
-			<var name="assetTitle" value="Web Content Title" />
+			<var name="assetContent" value="DM Document Description" />
+			<var name="assetTitle" value="DM Document Title" />
 			<var name="tagName" value="tag name" />
 		</execute>
 	</command>

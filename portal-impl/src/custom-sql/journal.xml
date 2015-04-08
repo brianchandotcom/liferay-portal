@@ -90,10 +90,16 @@
 				{JournalArticle.*}
 			FROM
 				JournalArticle
+			LEFT JOIN JournalArticle tempJournalArticle ON
+				[$STATUS_JOIN$] AND
+				(JournalArticle.groupId = tempJournalArticle.groupId) AND
+				(JournalArticle.articleId = tempJournalArticle.articleId) AND
+				(JournalArticle.version < tempJournalArticle.version)
 			WHERE
-				(classNameId = ?) AND
-				([$STATUS$]) AND
-				(expirationDate <= ?)
+				(JournalArticle.classNameId = ?) AND
+				(JournalArticle.[$STATUS$]) AND
+				(JournalArticle.expirationDate <= ?) AND
+				(tempJournalArticle.version is NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByNoAssets">

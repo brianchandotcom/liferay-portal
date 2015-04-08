@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+PortletURL portletURL = (PortletURL)request.getAttribute("portletURL");
+
 String itemSelectedCallback = (String)request.getAttribute("itemSelectedCallback");
 
 WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = (WikiAttachmentItemSelectorCriterion)request.getAttribute("wikiAttachmentItemSelectorCriterion");
@@ -29,6 +31,7 @@ WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(pageResource.getNodeId(), p
 <aui:form method="post" name="selectDocumentFm">
 	<liferay-ui:search-container
 		emptyResultsMessage="this-page-does-not-have-file-attachments"
+		iteratorURL="<%= portletURL %>"
 		total="<%= wikiPage.getAttachmentsFileEntriesCount() %>"
 	>
 		<liferay-ui:search-container-results

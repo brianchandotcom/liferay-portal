@@ -21,6 +21,8 @@ import java.io.PrintWriter;
 
 import java.util.Locale;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
@@ -47,7 +49,7 @@ public class FlickrItemSelectorView
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			FlickrItemSelectorCriterion flickrItemSelectorCriterion,
-			String itemSelectedCallback)
+			PortletURL portletURL, String itemSelectedCallback)
 		throws IOException {
 
 		PrintWriter writer = response.getWriter();

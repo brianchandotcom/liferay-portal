@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -54,12 +56,13 @@ public class WikiAttachmentItemSelectorView
 			ServletRequest request, ServletResponse response,
 			WikiAttachmentItemSelectorCriterion
 				wikiAttachmentItemSelectorCriterion,
-			String itemSelectedCallback)
+			PortletURL portletURL, String itemSelectedCallback)
 		throws IOException, ServletException {
 
 		request.setAttribute(
 			"wikiAttachmentItemSelectorCriterion",
 			wikiAttachmentItemSelectorCriterion);
+		request.setAttribute("portletURL", portletURL);
 		request.setAttribute("itemSelectedCallback", itemSelectedCallback);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(

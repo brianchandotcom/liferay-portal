@@ -5153,33 +5153,40 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a UI component for users to permanently delete items such as images, articles, etc. from the trash/recycling bin.</description>
 		<name>trash-empty</name>
 		<tag-class>com.liferay.taglib.ui.TrashEmptyTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<description>Message to be displayed to ensure the user wants to remove the item(s) from the trash.</description>
 			<name>confirmMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Message to be used for the <![CDATA[<code>empty-trash</code>]]> button and link.</description>
 			<name>emptyMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Message to display to give users information about removing items from the trash.</description>
 			<name>infoMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The url for the <![CDATA[<code>empty-trash</code>]]> button/link.</description>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The number of items to be removed from the trash.</description>
 			<name>totalEntries</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 	</tag>
 	<tag>

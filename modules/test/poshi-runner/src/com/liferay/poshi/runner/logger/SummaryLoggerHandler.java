@@ -168,26 +168,10 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (summary != null) {
-			return PoshiRunnerVariablesUtil.replaceCommandVars(summary);
+			return _replaceCommandVars(summary);
 		}
 
 		return null;
-	}
-
-	public static String replaceCommandVars(String token)
-		throws PoshiRunnerException {
-
-		Matcher matcher = _pattern.matcher(token);
-
-		while (matcher.find() && _commandMap.containsKey(matcher.group(1))) {
-			String varValue = getValueFromCommandMap(matcher.group(1));
-
-			varValue = Matcher.quoteReplacement(varValue);
-
-			token = StringUtil.replace(token, matcher.group(), varValue);
-		}
-
-		return token;
 	}
 
 	private static boolean _isCurrentMajorStep(Element element) {
@@ -269,6 +253,24 @@ public final class SummaryLoggerHandler {
 
 		lineContainerLoggerElement.addChildLoggerElement(
 			_getStatusLoggerElement("PASSED"));
+	}
+
+	private static String _replaceCommandVars(String token) throws Exception {
+		Matcher matcher = _pattern.matcher(token);
+
+		while (matcher.find() &&
+			   PoshiRunnerVariablesUtil.containsKeyInCommandMap(
+				   matcher.group(1))) {
+
+			String varValue = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+				matcher.group(1));
+
+			varValue = Matcher.quoteReplacement(varValue);
+
+			token = StringUtil.replace(token, matcher.group(), varValue);
+		}
+
+		return token;
 	}
 
 	private static void _startMajorStep(Element element) {

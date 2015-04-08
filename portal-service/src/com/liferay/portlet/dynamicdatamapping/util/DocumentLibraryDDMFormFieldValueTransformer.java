@@ -25,6 +25,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
 
@@ -40,7 +41,11 @@ public class DocumentLibraryDDMFormFieldValueTransformer
 	}
 
 	@Override
-	public void transform(Value value) throws PortalException {
+	public void transform(DDMFormFieldValue ddmFormFieldValue)
+		throws PortalException {
+
+		Value value = ddmFormFieldValue.getValue();
+
 		for (Locale locale : value.getAvailableLocales()) {
 			FileEntry tempFileEntry = fetchTempFileEntry(
 				value.getString(locale));

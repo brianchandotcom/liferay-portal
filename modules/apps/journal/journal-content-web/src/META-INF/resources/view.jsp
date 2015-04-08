@@ -240,29 +240,5 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 	<div class="content-metadata-entries">
 		<liferay-ui:selectable-entry-display entries="<%= journalContentDisplayContext.getSelectedContentMetadataEntries() %>" />
 
-		<c:if test="<%= journalContentDisplayContext.isEnableComments() %>">
-			<c:if test="<%= journalContentDisplayContext.getDiscussionMessagesCount() > 0 %>">
-				<liferay-ui:header
-					title="comments"
-				/>
-			</c:if>
-
-			<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-
-			<portlet:resourceURL var="discussionPaginationURL">
-				<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:resourceURL>
-
-			<liferay-ui:discussion
-				className="<%= JournalArticle.class.getName() %>"
-				classPK="<%= articleDisplay.getResourcePrimKey() %>"
-				formAction="<%= discussionURL %>"
-				hideControls="<%= journalContentDisplayContext.isPrint() %>"
-				paginationURL="<%= discussionPaginationURL %>"
-				ratingsEnabled="<%= journalContentDisplayContext.isEnableCommentRatings() && !journalContentDisplayContext.isPrint() %>"
-				redirect="<%= currentURL %>"
-				userId="<%= articleDisplay.getUserId() %>"
-			/>
-		</c:if>
 	</div>
 </c:if>

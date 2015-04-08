@@ -12,36 +12,47 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.content.metadata.comments;
 
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
 import com.liferay.portal.model.BaseSelectableEntry;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 @Component(
-	immediate = true, service = ContentMetadataEntry.class
+	immediate = true, service = {ContentMetadataEntry.class, CommentRatingsSelectableEntry.class}
 )
-public class CommentsSelectableEntry
+public class CommentRatingsSelectableEntry
 	extends BaseSelectableEntry implements ContentMetadataEntry {
 
 	@Override
 	public String getIcon() {
-		return "comments";
+		return "comment-alt";
 	}
 
 	@Override
 	public String getKey() {
-		return "enableComments";
+		return "enableCommentRatings";
 	}
 
 	@Override
 	public String getLabel() {
-		return "comments";
+		return "comment-ratings";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 3.0;
+		return 4.0;
+	}
+
+	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
 	}
 
 }

@@ -14,54 +14,28 @@
 
 package com.liferay.portal.dao.orm.hibernate.region;
 
-import com.liferay.portal.kernel.cache.CacheListener;
-import com.liferay.portal.kernel.cache.CacheListenerScope;
-import com.liferay.portal.kernel.cache.CacheManagerListener;
+import com.liferay.portal.cache.ehcache.EhcachePortalCacheManager;
+import com.liferay.portal.cache.ehcache.EhcacheUnwrapUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
-import java.net.URL;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
-
-import javax.management.MBeanServer;
 
 import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.config.Configuration;
-import net.sf.ehcache.config.ConfigurationFactory;
 import net.sf.ehcache.hibernate.EhCacheRegionFactory;
 import net.sf.ehcache.hibernate.regions.EhcacheCollectionRegion;
 import net.sf.ehcache.hibernate.regions.EhcacheEntityRegion;
 import net.sf.ehcache.hibernate.regions.EhcacheQueryResultsRegion;
 import net.sf.ehcache.hibernate.regions.EhcacheTimestampsRegion;
-import net.sf.ehcache.management.ManagementService;
-import net.sf.ehcache.util.FailSafeTimer;
 
 import org.hibernate.cache.CacheDataDescription;
 import org.hibernate.cache.CacheException;
@@ -142,109 +116,61 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	}
 
 	@Override
-	public void start(Settings settings, Properties properties)
-		throws CacheException {
+	public void start(Settings settings, Properties properties) {
+		String configFile = null;
 
-		try {
-			String configurationPath = null;
-
-			if (properties != null) {
-				configurationPath = (String)properties.get(
-					NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME);
-			}
-
-			if (Validator.isNull(configurationPath)) {
-				configurationPath = _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE;
-			}
-
-			Configuration configuration = null;
-
-			if (Validator.isNull(configurationPath)) {
-				configuration = ConfigurationFactory.parseConfiguration();
-			}
-			else {
-				_usingDefault = configurationPath.equals(
-					_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE);
-
-				configuration = EhcacheConfigurationUtil.getConfiguration(
-					configurationPath, _usingDefault);
-			}
-
-			/*Object transactionManager =
-				getOnePhaseCommitSyncTransactionManager(settings, properties);
-
-			configuration.setDefaultTransactionManager(transactionManager);*/
-
-			manager = new CacheManager(configuration);
-
-			boolean skipUpdateCheck = GetterUtil.getBoolean(
-				SystemProperties.get("net.sf.ehcache.skipUpdateCheck"));
-			boolean tcActive = GetterUtil.getBoolean(
-				SystemProperties.get("tc.active"));
-
-			if (skipUpdateCheck && !tcActive) {
-				FailSafeTimer failSafeTimer = manager.getTimer();
-
-				failSafeTimer.cancel();
-
-				try {
-					Field cacheManagerTimerField =
-						ReflectionUtil.getDeclaredField(
-							CacheManager.class, "cacheManagerTimer");
-
-					cacheManagerTimerField.set(manager, null);
-				}
-				catch (Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
-
-			mbeanRegistrationHelper.registerMBean(manager, properties);
-
-			PortalCacheProvider.registerPortalCacheManager(
-				new HibernatePortalCacheManager(manager));
-
-			if (PropsValues.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED) {
-				Registry registry = RegistryUtil.getRegistry();
-
-				_serviceTracker = registry.trackServices(
-					MBeanServer.class,
-					new MBeanServerServiceTrackerCustomizer());
-
-				_serviceTracker.open();
-			}
+		if (properties != null) {
+			configFile = (String)properties.get(
+				NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME);
 		}
-		catch (net.sf.ehcache.CacheException ce) {
-			throw new CacheException(ce);
-		}
+
+		HibernatePortalCacheManager hibernatePortalCacheManager =
+			new HibernatePortalCacheManager();
+
+		hibernatePortalCacheManager.setClusterAware(true);
+		hibernatePortalCacheManager.setConfigFile(configFile);
+		hibernatePortalCacheManager.setDefaultConfigFile(
+			_DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE);
+		hibernatePortalCacheManager.setMpiOnly(true);
+		hibernatePortalCacheManager.setName(PortalCacheManagerNames.HIBERNATE);
+
+		boolean skipUpdateCheck = GetterUtil.getBoolean(
+			SystemProperties.get("net.sf.ehcache.skipUpdateCheck"));
+		boolean tcActive = GetterUtil.getBoolean(
+			SystemProperties.get("tc.active"));
+
+		hibernatePortalCacheManager.setStopCacheManagerTimer(
+			skipUpdateCheck && !tcActive);
+
+		hibernatePortalCacheManager.afterPropertiesSet();
+
+		manager = hibernatePortalCacheManager.getEhcacheManager();
+		_hibernatePortalCacheManager = hibernatePortalCacheManager;
+
+		mbeanRegistrationHelper.registerMBean(manager, properties);
 	}
 
 	@Override
 	public void stop() {
-		PortalCacheProvider.unregisterPortalCacheManager(manager.getName());
-
-		_serviceTracker.close();
-
 		super.stop();
+
+		if (_hibernatePortalCacheManager != null) {
+			_hibernatePortalCacheManager.destroy();
+		}
 	}
 
 	protected void configureCache(String regionName) {
-		synchronized (manager) {
-			Ehcache ehcache = manager.getEhcache(regionName);
+		PortalCache<Serializable, Serializable> portalCache =
+			_hibernatePortalCacheManager.getCache(regionName);
 
-			if (ehcache == null) {
-				manager.addCache(regionName);
+		Ehcache ehcache = EhcacheUnwrapUtil.getEhcache(portalCache);
 
-				ehcache = manager.getEhcache(regionName);
-			}
+		if (!(ehcache instanceof ModifiableEhcacheWrapper)) {
+			Ehcache modifiableEhcacheWrapper = new ModifiableEhcacheWrapper(
+				ehcache);
 
-			if (!(ehcache instanceof ModifiableEhcacheWrapper)) {
-				Ehcache modifiableEhcacheWrapper = new ModifiableEhcacheWrapper(
-					ehcache);
-
-				manager.replaceCacheWithDecoratedCache(
-					ehcache, modifiableEhcacheWrapper);
-			}
+			manager.replaceCacheWithDecoratedCache(
+				ehcache, modifiableEhcacheWrapper);
 		}
 	}
 
@@ -298,267 +224,19 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayEhcacheRegionFactory.class);
 
-	private ServiceTracker<MBeanServer, ManagementService> _serviceTracker;
-	private boolean _usingDefault;
-
-	private class HibernatePortalCache<K extends Serializable, V>
-		implements PortalCache<K, V> {
-
-		@Override
-		public V get(K key) {
-			Element element = _ehcache.get(key);
-
-			if (element == null) {
-				return null;
-			}
-
-			return (V)element.getObjectValue();
-		}
-
-		@Override
-		public List<K> getKeys() {
-			return _ehcache.getKeys();
-		}
-
-		@Override
-		public String getName() {
-			return _ehcache.getName();
-		}
-
-		@Override
-		public PortalCacheManager<K, V> getPortalCacheManager() {
-			return _portalCacheManager;
-		}
-
-		@Override
-		public void put(K key, V value) {
-			_ehcache.put(new Element(key, value));
-		}
-
-		@Override
-		public void put(K key, V value, int timeToLive) {
-			Element element = new Element(key, value);
-
-			if (timeToLive != DEFAULT_TIME_TO_LIVE) {
-				element.setTimeToLive(timeToLive);
-			}
-
-			_ehcache.put(element);
-		}
-
-		@Override
-		public void registerCacheListener(CacheListener<K, V> cacheListener) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void registerCacheListener(
-			CacheListener<K, V> cacheListener,
-			CacheListenerScope cacheListenerScope) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void remove(K key) {
-			_ehcache.remove(key);
-		}
-
-		@Override
-		public void removeAll() {
-			_ehcache.removeAll();
-		}
-
-		@Override
-		public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void unregisterCacheListeners() {
-			throw new UnsupportedOperationException();
-		}
-
-		private HibernatePortalCache(
-			Ehcache ehcache, PortalCacheManager<K, V> portalCacheManager) {
-
-			_ehcache = ehcache;
-			_portalCacheManager = portalCacheManager;
-		}
-
-		private final Ehcache _ehcache;
-		private final PortalCacheManager<K, V> _portalCacheManager;
-
-	}
+	private volatile PortalCacheManager<Serializable, Serializable>
+		_hibernatePortalCacheManager;
 
 	private class HibernatePortalCacheManager
-		implements PortalCacheManager<Serializable, Serializable> {
+		extends EhcachePortalCacheManager<Serializable, Serializable> {
 
 		@Override
-		public void clearAll() {
-			throw new UnsupportedOperationException();
-		}
+		protected Ehcache createEhcache(
+			String portalCacheName, CacheConfiguration cacheConfiguration) {
 
-		@Override
-		public void destroy() {
-			throw new UnsupportedOperationException();
-		}
+			reconfigureCache(new Cache(cacheConfiguration));
 
-		@Override
-		public PortalCache<Serializable, Serializable> getCache(String name) {
-			PortalCache<Serializable, Serializable> portalCache =
-				_portalCaches.get(name);
-
-			if (portalCache != null) {
-				return portalCache;
-			}
-
-			synchronized (_cacheManager) {
-				portalCache = _portalCaches.get(name);
-
-				if (portalCache == null) {
-					if (!_cacheManager.cacheExists(name)) {
-						return null;
-					}
-
-					Cache cache = _cacheManager.getCache(name);
-
-					portalCache = new HibernatePortalCache<>(cache, this);
-
-					_portalCaches.put(name, portalCache);
-				}
-			}
-
-			return portalCache;
-		}
-
-		@Override
-		public PortalCache<Serializable, Serializable> getCache(
-			String name, boolean blocking) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public Set<CacheManagerListener> getCacheManagerListeners() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public String getName() {
-			return _name;
-		}
-
-		@Override
-		public boolean isClusterAware() {
-			return true;
-		}
-
-		@Override
-		public void reconfigureCaches(URL configurationURL) {
-			if (configurationURL == null) {
-				return;
-			}
-
-			if (manager == null) {
-				return;
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Reconfiguring Hibernate caches using " + configurationURL);
-			}
-
-			Configuration configuration =
-				EhcacheConfigurationUtil.getConfiguration(
-					configurationURL, _usingDefault);
-
-			synchronized (manager) {
-				Map<String, CacheConfiguration> cacheConfigurations =
-					configuration.getCacheConfigurations();
-
-				for (CacheConfiguration cacheConfiguration :
-						cacheConfigurations.values()) {
-
-					reconfigureCache(new Cache(cacheConfiguration));
-				}
-			}
-		}
-
-		@Override
-		public boolean registerCacheManagerListener(
-			CacheManagerListener cacheManagerListener) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void removeCache(String name) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public boolean unregisterCacheManagerListener(
-			CacheManagerListener cacheManagerListener) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void unregisterCacheManagerListeners() {
-			throw new UnsupportedOperationException();
-		}
-
-		private HibernatePortalCacheManager(CacheManager cacheManager) {
-			_cacheManager = cacheManager;
-
-			_cacheManager.setName(PortalCacheManagerNames.HIBERNATE);
-
-			_name = _cacheManager.getName();
-		}
-
-		private final CacheManager _cacheManager;
-		private final String _name;
-		private final Map<String, PortalCache<Serializable, Serializable>>
-			_portalCaches = new HashMap<>();
-
-	}
-
-	private class MBeanServerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<MBeanServer, ManagementService> {
-
-		@Override
-		public ManagementService addingService(
-			ServiceReference<MBeanServer> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			MBeanServer mBeanServer = registry.getService(serviceReference);
-
-			ManagementService managementService = new ManagementService(
-				manager, mBeanServer, true, true, true, true);
-
-			managementService.init();
-
-			return managementService;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<MBeanServer> serviceReference,
-			ManagementService managementService) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<MBeanServer> serviceReference,
-			ManagementService managementService) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			managementService.dispose();
+			return manager.getCache(portalCacheName);
 		}
 
 	}

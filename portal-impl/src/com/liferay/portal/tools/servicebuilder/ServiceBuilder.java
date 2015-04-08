@@ -127,6 +127,12 @@ public class ServiceBuilder {
 
 	public static final String AUTHOR = "Brian Wing Shun Chan";
 
+	public static final String MODEL_HINTS_CONFIGS =
+		"classpath*:META-INF/portal-model-hints.xml," +
+			"META-INF/portal-model-hints.xml," +
+				"classpath*:META-INF/ext-model-hints.xml," +
+					"META-INF/portlet-model-hints.xml";
+
 	public static final String READ_ONLY_PREFIXES =
 		"fetch,get,has,is,load,reindex,search";
 
@@ -245,6 +251,10 @@ public class ServiceBuilder {
 		String hbmFileName = arguments.get("service.hbm.file");
 		String implDir = arguments.get("service.impl.dir");
 		String inputFileName = arguments.get("service.input.file");
+		String[] modelHintsConfigs = StringUtil.split(
+			GetterUtil.getString(
+				arguments.get("service.model.hints.configs"),
+				MODEL_HINTS_CONFIGS));
 		String modelHintsFileName = arguments.get("service.model.hints.file");
 		boolean osgiModule = GetterUtil.getBoolean(
 			arguments.get("service.osgi.module"));
@@ -266,6 +276,15 @@ public class ServiceBuilder {
 			"service.sql.sequences.file");
 		String targetEntityName = arguments.get("service.target.entity.name");
 		String testDir = arguments.get("service.test.dir");
+
+		ModelHintsImpl modelHintsImpl = new ModelHintsImpl();
+
+		modelHintsImpl.setModelHintsConfigs(modelHintsConfigs);
+		modelHintsImpl.afterPropertiesSet();
+
+		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
+
+		modelHintsUtil.setModelHints(modelHintsImpl);
 
 		try {
 			new ServiceBuilder(
@@ -290,6 +309,7 @@ public class ServiceBuilder {
 				"\tservice.hbm.file=${basedir}/src/META-INF/portal-hbm.xml\n" +
 				"\tservice.impl.dir=${basedir}/src\n" +
 				"\tservice.input.file=${service.file}\n" +
+				"\tservice.model.hints.configs=" + MODEL_HINTS_CONFIGS + "\n" +
 				"\tservice.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml\n" +
 				"\tservice.osgi.module=false\n" +
 				"\tservice.plugin.name=\n" +

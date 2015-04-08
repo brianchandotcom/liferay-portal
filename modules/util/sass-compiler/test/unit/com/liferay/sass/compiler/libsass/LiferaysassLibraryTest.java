@@ -14,7 +14,7 @@
 
 package com.liferay.sass.compiler.libsass;
 
-import com.liferay.sass.compiler.libsass.SassLibrary.Sass_File_Context;
+import com.liferay.sass.compiler.libsass.LiferaysassLibrary.Sass_File_Context;
 import com.liferay.sass.compiler.util.test.SassTestUtil;
 
 import org.junit.Assert;
@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Gregory Amerson
  */
-public class SassLibraryTest {
+public class LiferaysassLibraryTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -33,18 +33,18 @@ public class SassLibraryTest {
 
 	@Test
 	public void testInstance() throws Exception {
-		Assert.assertNotNull(SassLibrary.INSTANCE);
+		Assert.assertNotNull(LiferaysassLibrary.INSTANCE);
 	}
 
 	@Test
 	public void testSassFileContext() throws Exception {
 		Sass_File_Context sassFileContext =
-			SassLibrary.INSTANCE.sass_make_file_context("");
+			LiferaysassLibrary.INSTANCE.sass_make_file_context("");
 
 		Assert.assertNotNull(sassFileContext);
 		Assert.assertNotNull(sassFileContext.getPointer());
 
-		SassLibrary.INSTANCE.sass_delete_file_context(sassFileContext);
+		LiferaysassLibrary.INSTANCE.sass_delete_file_context(sassFileContext);
 	}
 
 }

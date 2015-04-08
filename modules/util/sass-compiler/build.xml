@@ -90,7 +90,7 @@
 	<target name="compile">
 		<if>
 			<not>
-				<available file="src/com/liferay/sass/compiler/libsass/SassLibrary.java" />
+				<available file="src/com/liferay/sass/compiler/libsass/LiferaysassLibrary.java" />
 			</not>
 			<then>
 				<mirrors-get
@@ -116,14 +116,19 @@
 					fork="true"
 					failonerror="true"
 				>
-					<arg line="-f -library sass -mode Directory -o ../src -package com.liferay.sass.compiler.libsass -runtime JNAerator sass_context.h" />
+					<arg line="-f -library liferaysass -mode Directory -o ../../src -package com.liferay.sass.compiler.libsass -runtime JNAerator sass_context.h" />
 				</java>
 
 				<delete file="jnaerator-0.11-shaded.jar" />
 
-				<concat destfile="src/com/liferay/sass/compiler/libsass/SassLibrary.java">
-					<header>/* @generated */</header>
-					<fileset file="tmp/src/com/liferay/sass/compiler/libsass/SassLibrary.java" />
+				<move
+					file="src/com/liferay/sass/compiler/libsass/LiferaysassLibrary.java"
+					todir="tmp"
+				/>
+
+				<concat destfile="src/com/liferay/sass/compiler/libsass/LiferaysassLibrary.java">
+					<header >/* @generated */</header>
+					<filelist dir="tmp" files="LiferaysassLibrary.java" />
 				</concat>
 
 				<delete dir="tmp" />

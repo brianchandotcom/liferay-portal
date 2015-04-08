@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Journal Content Ratings Content Metadata
+Bundle-SymbolicName: com.liferay.journal.content.content.metadata.ratings
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /journal-content-content-metadata-ratings

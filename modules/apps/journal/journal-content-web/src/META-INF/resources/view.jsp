@@ -240,15 +240,6 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 	<div class="content-metadata-entries">
 		<liferay-ui:selectable-entry-display entries="<%= journalContentDisplayContext.getSelectedContentMetadataEntries() %>" />
 
-		<c:if test="<%= journalContentDisplayContext.isEnableRatings() && !journalContentDisplayContext.isPrint() %>">
-			<div class="taglib-ratings-wrapper">
-				<liferay-ui:ratings
-					className="<%= JournalArticle.class.getName() %>"
-					classPK="<%= articleDisplay.getResourcePrimKey() %>"
-				/>
-			</div>
-		</c:if>
-
 		<c:if test="<%= journalContentDisplayContext.isEnableComments() %>">
 			<c:if test="<%= journalContentDisplayContext.getDiscussionMessagesCount() > 0 %>">
 				<liferay-ui:header

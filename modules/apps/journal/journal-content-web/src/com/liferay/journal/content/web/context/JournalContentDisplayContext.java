@@ -444,17 +444,6 @@ public class JournalContentDisplayContext {
 		return _enableComments;
 	}
 
-	public boolean isEnableRatings() {
-		if (_enableRatings != null) {
-			return _enableRatings;
-		}
-
-		_enableRatings = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableRatings", null));
-
-		return _enableRatings;
-	}
-
 	public boolean isEnableViewCountIncrement() {
 		if (_enableViewCountIncrement != null) {
 			return _enableViewCountIncrement;
@@ -635,7 +624,6 @@ public class JournalContentDisplayContext {
 	private Integer _discussionMessagesCount;
 	private Boolean _enableCommentRatings;
 	private Boolean _enableComments;
-	private Boolean _enableRatings;
 	private Boolean _enableViewCountIncrement;
 	private Boolean _expired;
 	private Boolean _hasViewPermission;

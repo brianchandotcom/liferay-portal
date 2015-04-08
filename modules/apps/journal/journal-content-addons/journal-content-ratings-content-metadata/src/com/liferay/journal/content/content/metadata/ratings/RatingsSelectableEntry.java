@@ -12,12 +12,15 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.content.metadata.ratings;
 
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
 import com.liferay.portal.model.BaseSelectableEntry;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = ContentMetadataEntry.class
 )
@@ -27,6 +30,11 @@ public class RatingsSelectableEntry
 	@Override
 	public String getIcon() {
 		return "star-half-full";
+	}
+
+	@Override
+	public String getJSPPath() {
+		return _JSP_PATH;
 	}
 
 	@Override
@@ -43,5 +51,15 @@ public class RatingsSelectableEntry
 	public Double getWeight() {
 		return 2.0;
 	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.content.metadata.ratings)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private static final String _JSP_PATH = "/META-INF/resources/ratings.jsp";
 
 }

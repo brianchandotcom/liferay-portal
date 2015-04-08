@@ -17,14 +17,20 @@ package com.liferay.bookmarks.web.portlet.action;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.portal.struts.FindAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.struts.FindStrutsAction;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alexander Chow
  */
-public class FindFolderAction extends FindAction {
+@Component(
+	property = "path=/bookmarks/find_folder", service = StrutsAction.class
+)
+public class FindFolderAction extends FindStrutsAction {
 
 	@Override
 	protected long getGroupId(long primaryKey) throws Exception {

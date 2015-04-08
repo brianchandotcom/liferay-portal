@@ -14,44 +14,42 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-public abstract class FindAction extends Action {
+public abstract class FindStrutsAction extends BaseStrutsAction {
 
-	public FindAction() {
+	public FindStrutsAction() {
 		_findActionDelegate = new BaseFindActionDelegate() {
 
 			@Override
 			public long getGroupId(long primaryKey) throws Exception {
-				return FindAction.this.getGroupId(primaryKey);
+				return FindStrutsAction.this.getGroupId(primaryKey);
 			}
 
 			@Override
 			public String getPrimaryKeyParameterName() {
-				return FindAction.this.getPrimaryKeyParameterName();
+				return FindStrutsAction.this.getPrimaryKeyParameterName();
 			}
 
 			@Override
 			public String getStrutsAction(
 				HttpServletRequest request, String portletId) {
 
-				return FindAction.this.getStrutsAction(request, portletId);
+				return FindStrutsAction.this.getStrutsAction(
+					request, portletId);
 			}
 
 			@Override
 			public String[] initPortletIds() {
-				return FindAction.this.initPortletIds();
+				return FindStrutsAction.this.initPortletIds();
 			}
 
 			@Override
@@ -59,7 +57,8 @@ public abstract class FindAction extends Action {
 					HttpServletRequest request, PortletURL portletURL)
 				throws Exception {
 
-				return FindAction.this.processPortletURL(request, portletURL);
+				return FindStrutsAction.this.processPortletURL(
+					request, portletURL);
 			}
 
 			@Override
@@ -67,15 +66,15 @@ public abstract class FindAction extends Action {
 					PortletURL portletURL, long primaryKey)
 				throws Exception {
 
-				FindAction.this.setPrimaryKeyParameter(portletURL, primaryKey);
+				FindStrutsAction.this.setPrimaryKeyParameter(
+					portletURL, primaryKey);
 			}
 
 		};
 	}
 
 	@Override
-	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
+	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 

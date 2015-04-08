@@ -70,7 +70,7 @@ public class FindActionTest {
 	public void testGetPlidAndPortletIdViewInContext() throws Exception {
 		addLayouts(true, false);
 
-		Object[] plidAndPorltetId = FindAction.getPlidAndPortletId(
+		Object[] plidAndPorltetId = BaseFindActionDelegate.getPlidAndPortletId(
 			getThemeDisplay(), _blogsEntry.getGroupId(), _assetLayout.getPlid(),
 			_PORTLET_IDS);
 
@@ -85,7 +85,7 @@ public class FindActionTest {
 		addLayouts(false, false);
 
 		try {
-			FindAction.getPlidAndPortletId(
+			BaseFindActionDelegate.getPlidAndPortletId(
 				getThemeDisplay(), _blogsEntry.getGroupId(),
 				_assetLayout.getPlid(), _PORTLET_IDS);
 
@@ -101,7 +101,7 @@ public class FindActionTest {
 
 		HttpServletRequest request = getHttpServletRequest();
 
-		FindAction.setTargetLayout(
+		BaseFindActionDelegate.setTargetLayout(
 			request, _blogsEntry.getGroupId(), _blogLayout.getPlid());
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
@@ -116,7 +116,7 @@ public class FindActionTest {
 
 		HttpServletRequest request = getHttpServletRequest();
 
-		FindAction.setTargetLayout(
+		BaseFindActionDelegate.setTargetLayout(
 			request, _blogsEntry.getGroupId(), _blogLayout.getPlid());
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);

@@ -13,12 +13,6 @@
 			<forward name="portlet.bookmarks.error" path="/portlet/bookmarks/error.jsp" />
 		</action>
 
-		<action path="/bookmarks/find_entry" type="com.liferay.bookmarks.web.portlet.action.FindEntryAction" />
-
-		<action path="/bookmarks/find_folder" type="com.liferay.bookmarks.web.portlet.action.FindFolderAction" />
-
-		<action path="/bookmarks/open_entry" type="com.liferay.bookmarks.web.portlet.action.OpenEntryAction" />
-
 		<action path="/bookmarks/search" forward="/portlet/bookmarks/search.jsp" />
 
 		<action path="/bookmarks/select_folder" type="com.liferay.bookmarks.web.portlet.action.EditFolderAction">

@@ -47,10 +47,6 @@
 			<forward name="portlet.wiki.view_categorized_pages" path="/portlet/wiki/view_categorized_pages.jsp" />
 		</action>
 
-		<action path="/wiki/find_page" type="com.liferay.wiki.web.wiki.portlet.action.FindPageAction">
-			<forward name="portlet.wiki.view_categorized_pages" path="/portlet/wiki/view_categorized_pages.jsp" />
-		</action>
-
 		<action path="/wiki/import_pages" type="com.liferay.wiki.web.wiki.portlet.action.ImportPagesAction">
 			<forward name="portlet.wiki.error" path="/portlet/wiki/error.jsp" />
 			<forward name="portlet.wiki.import_pages" path="/portlet/wiki/import_pages.jsp" />

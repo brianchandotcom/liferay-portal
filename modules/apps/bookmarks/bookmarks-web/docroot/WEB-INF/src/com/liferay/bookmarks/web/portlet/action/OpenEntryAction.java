@@ -17,28 +17,27 @@ package com.liferay.bookmarks.web.portlet.action;
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class OpenEntryAction extends Action {
+@Component(
+	property = "path=/bookmarks/open_entry", service = StrutsAction.class
+)
+public class OpenEntryAction extends BaseStrutsAction {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
+	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -58,9 +57,9 @@ public class OpenEntryAction extends Action {
 
 			entry = BookmarksEntryServiceUtil.openEntry(entry);
 
-			request.setAttribute(WebKeys.FORWARD_URL, entry.getUrl());
+			response.sendRedirect(entry.getUrl());
 
-			return actionMapping.findForward(ActionConstants.COMMON_FORWARD);
+			return null;
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);

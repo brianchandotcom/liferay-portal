@@ -14,8 +14,9 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.struts.FindAction;
+import com.liferay.portal.struts.FindStrutsAction;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPageResource;
@@ -26,10 +27,15 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Samuel Kong
  */
-public class FindPageAction extends FindAction {
+@Component(
+	property = "path=/wiki/find_page", service = StrutsAction.class
+)
+public class FindPageAction extends FindStrutsAction {
 
 	@Override
 	protected long getGroupId(long primaryKey) throws Exception {

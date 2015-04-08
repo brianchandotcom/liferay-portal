@@ -145,7 +145,7 @@ public class PoshiRunnerContext {
 	}
 
 	private static String _getCommandSummary(
-		String classCommandName, Element commandElement) {
+		String classCommandName, String classType, Element commandElement) {
 
 		String summaryIgnore = commandElement.attributeValue("summary-ignore");
 
@@ -155,12 +155,23 @@ public class PoshiRunnerContext {
 			return null;
 		}
 
-		if (commandElement.attributeValue("summary") != null) {
+		if (Validator.isNotNull(commandElement.attributeValue("summary"))) {
 			return commandElement.attributeValue("summary");
 		}
-		else {
-			return classCommandName;
+
+		if (classType.equals("function")) {
+			String className =
+				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+					classCommandName);
+
+			Element rootElement = getFunctionRootElement(className);
+
+			if (Validator.isNotNull(rootElement.attributeValue("summary"))) {
+				return rootElement.attributeValue("summary");
+			}
 		}
+
+		return classCommandName;
 	}
 
 	private static List<String> _getRelatedActionClassCommandNames(
@@ -304,7 +315,8 @@ public class PoshiRunnerContext {
 
 					_commandSummaries.put(
 						classType + "#" + classCommandName,
-						_getCommandSummary(classCommandName, commandElement));
+						_getCommandSummary(
+							classCommandName, classType, commandElement));
 				}
 
 				if (classType.equals("function")) {
@@ -320,7 +332,8 @@ public class PoshiRunnerContext {
 					_commandSummaries.put(
 						classType + "#" + className,
 						_getCommandSummary(
-							defaultClassCommandName, defaultCommandElement));
+							defaultClassCommandName, classType,
+							defaultCommandElement));
 
 					String xml = rootElement.asXML();
 

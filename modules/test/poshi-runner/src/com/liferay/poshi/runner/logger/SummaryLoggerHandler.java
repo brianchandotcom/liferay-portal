@@ -274,7 +274,7 @@ public final class SummaryLoggerHandler {
 
 				String locator = element.attributeValue(varName);
 
-				if (locator.contains("#")) {
+				if (Validator.isNotNull(locator) && locator.contains("#")) {
 					StringBuilder sb = new StringBuilder();
 
 					sb.append("<em title=\"");

@@ -63,7 +63,8 @@ public abstract class FindStrutsAction extends BaseStrutsAction {
 
 			@Override
 			public void setPrimaryKeyParameter(
-				PortletURL portletURL, long primaryKey) throws Exception {
+					PortletURL portletURL, long primaryKey)
+				throws Exception {
 
 				FindStrutsAction.this.setPrimaryKeyParameter(
 					portletURL, primaryKey);

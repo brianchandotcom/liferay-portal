@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.FindStrutsAction;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;

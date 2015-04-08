@@ -64,7 +64,7 @@ public class PoshiRunnerValidation {
 
 			if (!possibleElementNames.contains(elementName)) {
 				throw new PoshiRunnerException(
-					"Invalid " + elementName + " element\n" + filePath + ": " +
+					"Invalid " + elementName + " element\n" + filePath + ":" +
 						childElement.attributeValue("line-number"));
 			}
 		}
@@ -103,7 +103,7 @@ public class PoshiRunnerValidation {
 
 		if (!StringUtils.equals(elementName, "definition")) {
 			throw new PoshiRunnerException(
-				"Invalid " + elementName + " element\n" + filePath + ": " +
+				"Invalid " + elementName + " element\n" + filePath + ":" +
 					element.attributeValue("line-number"));
 		}
 
@@ -118,8 +118,7 @@ public class PoshiRunnerValidation {
 			if (Validator.isNull(attribute.getValue())) {
 				throw new PoshiRunnerException(
 					"Missing " + attributeName + " attribute value\n" +
-						filePath + ": " +
-							element.attributeValue("line-number"));
+						filePath + ":" + element.attributeValue("line-number"));
 			}
 
 			if (attributeName.equals("line-number")) {
@@ -149,7 +148,7 @@ public class PoshiRunnerValidation {
 			}
 
 			throw new PoshiRunnerException(
-				"Invalid " + attributeName + " attribute\n" + filePath + ": " +
+				"Invalid " + attributeName + " attribute\n" + filePath + ":" +
 					element.attributeValue("line-number"));
 		}
 	}
@@ -171,7 +170,7 @@ public class PoshiRunnerValidation {
 			(element.attributeValue("extends") == null)) {
 
 			throw new PoshiRunnerException(
-				"Missing child elements\n" + filePath + ": " +
+				"Missing child elements\n" + filePath + ":" +
 					element.attributeValue("line-number"));
 		}
 
@@ -183,13 +182,13 @@ public class PoshiRunnerValidation {
 			if (!possibleTagElementNames.contains(childElementName)) {
 				throw new PoshiRunnerException(
 					"Invalid " + childElementName + " element\n" + filePath +
-						": " + childElement.attributeValue("line-number"));
+						":" + childElement.attributeValue("line-number"));
 			}
 
 			if (childElementName.equals("command")) {
 				if (Validator.isNull(childElement.attributeValue("name"))) {
 					throw new PoshiRunnerException(
-						"Missing name attribute\n" + filePath + ": " +
+						"Missing name attribute\n" + filePath + ":" +
 							childElement.attributeValue("line-number"));
 				}
 
@@ -214,7 +213,7 @@ public class PoshiRunnerValidation {
 
 		if (!StringUtils.equals(rootElementName, "html")) {
 			throw new PoshiRunnerException(
-				"Invalid " + rootElementName + " element\n" + filePath + ": " +
+				"Invalid " + rootElementName + " element\n" + filePath + ":" +
 					element.attributeValue("line-number"));
 		}
 
@@ -222,7 +221,7 @@ public class PoshiRunnerValidation {
 
 		if (childElements.isEmpty()) {
 			throw new PoshiRunnerException(
-				"Missing child elements\n" + filePath + ": " +
+				"Missing child elements\n" + filePath + ":" +
 					element.attributeValue("line-number"));
 		}
 	}
@@ -238,7 +237,7 @@ public class PoshiRunnerValidation {
 
 		if (Validator.isNull(element.attributeValue("name"))) {
 			throw new PoshiRunnerException(
-				"Missing name attribute\n" + filePath + ": " +
+				"Missing name attribute\n" + filePath + ":" +
 					element.attributeValue("line-number"));
 		}
 
@@ -247,7 +246,7 @@ public class PoshiRunnerValidation {
 		if (attributes.size() <= 2) {
 			if (Validator.isNull(element.getText())) {
 				throw new PoshiRunnerException(
-					"Missing value attribute\n" + filePath + ": " +
+					"Missing value attribute\n" + filePath + ":" +
 						element.attributeValue("line-number"));
 			}
 		}

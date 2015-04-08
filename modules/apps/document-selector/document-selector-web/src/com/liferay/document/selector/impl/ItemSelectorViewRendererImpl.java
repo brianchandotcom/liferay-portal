@@ -35,10 +35,12 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 	public ItemSelectorViewRendererImpl(
 		ItemSelectorView<ItemSelectorCriterion> itemSelectorView,
-		ItemSelectorCriterion itemSelectorCriterion) {
+		ItemSelectorCriterion itemSelectorCriterion, 
+		String itemSelectedCallback) {
 
 		_itemSelectorView = itemSelectorView;
 		_itemSelectorCriterion = itemSelectorCriterion;
+		_itemSelectedCallback = itemSelectedCallback;
 	}
 
 	public ItemSelectorCriterion getItemSelectorCriterion() {
@@ -49,7 +51,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 		return _itemSelectorView;
 	}
 
-	public void renderHTML(PageContext pageContext, String itemSelectedCallback)
+	public void renderHTML(PageContext pageContext)
 		throws IOException, ServletException {
 
 		HttpServletResponse response =
@@ -62,7 +64,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 		_itemSelectorView.renderHTML(
 			pageContext.getRequest(), pipingServletResponse,
-			_itemSelectorCriterion, itemSelectedCallback);
+			_itemSelectorCriterion, _itemSelectedCallback);
 
 		Writer writer = pageContext.getOut();
 
@@ -71,6 +73,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 		writer.write(sb.toString());
 	}
 
+	private final String _itemSelectedCallback;
 	private final ItemSelectorCriterion _itemSelectorCriterion;
 	private final ItemSelectorView<ItemSelectorCriterion> _itemSelectorView;
 

@@ -74,6 +74,22 @@ else {
 }
 
 int priceId = ParamUtil.getInteger(request, "priceId", -1);
+
+long largeImageId = 0;
+String largeImageURL = null;
+long mediumImageId = 0;
+String mediumImageURL = null;
+long smallImageId = 0;
+String smallImageURL = null;
+
+if (item != null) {
+	largeImageId = item.getLargeImageId();
+	largeImageURL = item.getLargeImageURL();
+	mediumImageId = item.getMediumImageId();
+	mediumImageURL = item.getMediumImageURL();
+	smallImageId = item.getSmallImageId();
+	smallImageURL = item.getSmallImageURL();
+}
 %>
 
 <portlet:actionURL var="editItemURL">
@@ -512,27 +528,39 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			</liferay-ui:error>
 
 			<aui:fieldset>
-				<aui:input label="small-image-url" name="smallImageURL" />
+				<aui:input label="small-image-url" name="smallImageURL" value="<%= smallImageURL %>" />
 
 				<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="small-image" />
 
 				<aui:input label="" name="smallFile" type="file" />
 
+				<c:if test="<%= smallImageId > 0 %>">
+					<aui:a href='<%= themeDisplay.getPathImage() + "/shopping/item?img_id=" + smallImageId + "&t=" + WebServerServletTokenUtil.getToken(smallImageId) %>' style="font-size: xx-small;" target="_blank"><liferay-ui:message key="see-small-image" /></aui:a>
+				</c:if>
+
 				<aui:input checked="<%= ((item != null) && item.isSmallImage()) ? true : false %>" label="use-small-image" name="smallImage" type="checkbox" />
 
-				<aui:input label="medium-image-url" name="mediumImageURL" />
+				<aui:input label="medium-image-url" name="mediumImageURL" value="<%= mediumImageURL %>" />
 
 				<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="medium-image" />
 
 				<aui:input label="" name="mediumFile" type="file" />
 
+				<c:if test="<%= mediumImageId > 0 %>">
+					<aui:a href='<%= themeDisplay.getPathImage() + "/shopping/item?img_id=" + mediumImageId + "&t=" + WebServerServletTokenUtil.getToken(mediumImageId) %>' style="font-size: xx-small;" target="_blank"><liferay-ui:message key="see-medium-image" /></aui:a>
+				</c:if>
+
 				<aui:input checked="<%= ((item != null) && item.isMediumImage()) ? true : false %>" label="use-medium-image" name="mediumImage" type="checkbox" />
 
-				<aui:input label="large-image-url" name="largeImageURL" />
+				<aui:input label="large-image-url" name="largeImageURL" value="<%= largeImageURL %>" />
 
 				<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="large-image" />
 
 				<aui:input label="" name="largeFile" type="file" />
+
+				<c:if test="<%= largeImageId > 0 %>">
+					<aui:a href='<%= themeDisplay.getPathImage() + "/shopping/item?img_id=" + largeImageId + "&t=" + WebServerServletTokenUtil.getToken(largeImageId) %>' style="font-size: xx-small;" target="_blank"><liferay-ui:message key="see-large-image" /></aui:a>
+				</c:if>
 
 				<aui:input checked="<%= ((item != null) && item.isLargeImage()) ? true : false %>" label="use-large-image" name="largeImage" type="checkbox" />
 			</aui:fieldset>

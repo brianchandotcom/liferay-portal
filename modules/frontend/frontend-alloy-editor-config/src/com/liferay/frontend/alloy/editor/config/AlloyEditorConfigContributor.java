@@ -62,46 +62,51 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 		jsonObject.put(
 			"contentsLanguage", contentsLanguageId.replace("iw_", "he_"));
 
-		LiferayPortletURL documentSelectorURL =
-			liferayPortletResponse.createRenderURL(
-				PortletKeys.DOCUMENT_SELECTOR);
+		if (liferayPortletResponse != null) {
+			LiferayPortletURL documentSelectorURL =
+				liferayPortletResponse.createRenderURL(
+					PortletKeys.DOCUMENT_SELECTOR);
 
-		documentSelectorURL.setParameter("mvcPath", "/view.jsp");
-		documentSelectorURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+			documentSelectorURL.setParameter("mvcPath", "/view.jsp");
+			documentSelectorURL.setParameter(
+				"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 
-		String name =
-			liferayPortletResponse.getNamespace() +
-				GetterUtil.getString((String)inputEditorTaglibAttributes.get(
-					"liferay-ui:input-editor:name"));
+			String name =
+				liferayPortletResponse.getNamespace() +
+					GetterUtil.getString(
+						(String)inputEditorTaglibAttributes.get(
+							"liferay-ui:input-editor:name"));
 
-		documentSelectorURL.setParameter("eventName", name + "selectDocument");
-		documentSelectorURL.setParameter(
-			"showGroupsSelector", Boolean.TRUE.toString());
+			documentSelectorURL.setParameter(
+				"eventName", name + "selectDocument");
+			documentSelectorURL.setParameter(
+				"showGroupsSelector", Boolean.TRUE.toString());
 
-		Map<String, String> fileBrowserParamsMap =
-			(Map<String, String>)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:fileBrowserParams");
+			Map<String, String> fileBrowserParamsMap =
+				(Map<String, String>)inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:fileBrowserParams");
 
-		if (fileBrowserParamsMap != null) {
-			for (Map.Entry<String, String> entry :
-					fileBrowserParamsMap.entrySet()) {
+			if (fileBrowserParamsMap != null) {
+				for (Map.Entry<String, String> entry :
+						fileBrowserParamsMap.entrySet()) {
 
-				documentSelectorURL.setParameter(
-					entry.getKey(), entry.getValue());
+					documentSelectorURL.setParameter(
+						entry.getKey(), entry.getValue());
+				}
 			}
-		}
 
-		jsonObject.put("filebrowserBrowseUrl", documentSelectorURL.toString());
-		jsonObject.put(
-			"filebrowserFlashBrowseUrl",
-			documentSelectorURL.toString() + "&Type=flash");
-		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl",
-			documentSelectorURL.toString() + "&Type=image");
-		jsonObject.put(
-			"filebrowserImageBrowseUrl",
-			documentSelectorURL.toString() + "&Type=image");
+			jsonObject.put(
+				"filebrowserBrowseUrl", documentSelectorURL.toString());
+			jsonObject.put(
+				"filebrowserFlashBrowseUrl",
+				documentSelectorURL.toString() + "&Type=flash");
+			jsonObject.put(
+				"filebrowserImageBrowseLinkUrl",
+				documentSelectorURL.toString() + "&Type=image");
+			jsonObject.put(
+				"filebrowserImageBrowseUrl",
+				documentSelectorURL.toString() + "&Type=image");
+		}
 
 		String languageId = LocaleUtil.toLanguageId(themeDisplay.getLocale());
 

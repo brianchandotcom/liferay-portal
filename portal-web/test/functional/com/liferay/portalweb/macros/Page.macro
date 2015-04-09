@@ -2,7 +2,7 @@
 	<command name="addFriendlyURLLocalizedPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
-		<execute function="Click#pauseClickAt" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_LOCALIZED" />
+		<execute function="Click#clickAt" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_LOCALIZED" />
 		<execute function="Type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="${localizedFriendlyURL}" />
 	</command>
 

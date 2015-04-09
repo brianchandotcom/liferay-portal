@@ -86,8 +86,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					configureLiferayExtension(project, liferayExtension);
-					configureTasks(project, liferayExtension);
 					configureVersion(project, liferayExtension);
+
+					configureTasks(project, liferayExtension);
 				}
 
 			});

@@ -21,6 +21,17 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
  */
 public class LayoutPrototypePortlet extends MVCPortlet {
 
+	public void deleteLayoutPrototypes(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] layoutPrototypeIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "layoutPrototypeIds"), 0L);
+
+		for (long layoutPrototypeId : layoutPrototypeIds) {
+			LayoutPrototypeServiceUtil.deleteLayoutPrototype(layoutPrototypeId);
+		}
+	}
+
 	@Override
 	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -95,17 +106,6 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 				"portlet.layout_prototypes.edit_layout_prototype"));
 	}
 
-	protected void deleteLayoutPrototypes(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] layoutPrototypeIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "layoutPrototypeIds"), 0L);
-
-		for (long layoutPrototypeId : layoutPrototypeIds) {
-			LayoutPrototypeServiceUtil.deleteLayoutPrototype(layoutPrototypeId);
-		}
-	}
-
 	/**
 	 * Resets the number of failed merge attempts for the page template, which
 	 * is accessed from the action request's <code>layoutPrototypeId</code>
@@ -119,7 +119,7 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 	 * @param  actionRequest the action request
 	 * @throws Exception if an exception occurred
 	 */
-	protected void resetMergeFailCount(ActionRequest actionRequest)
+	public void resetMergeFailCount(ActionRequest actionRequest)
 		throws Exception {
 
 		long layoutPrototypeId = ParamUtil.getLong(
@@ -131,7 +131,7 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 		SitesUtil.setMergeFailCount(layoutPrototype, 0);
 	}
 
-	protected void updateLayoutPrototype(ActionRequest actionRequest)
+	public void updateLayoutPrototype(ActionRequest actionRequest)
 		throws Exception {
 
 		long layoutPrototypeId = ParamUtil.getLong(

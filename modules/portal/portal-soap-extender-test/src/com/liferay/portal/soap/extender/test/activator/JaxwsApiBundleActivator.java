@@ -14,7 +14,7 @@
 
 package com.liferay.portal.soap.extender.test.activator;
 
-import com.liferay.portal.soap.extender.test.activator.config.ConfigAdminActivator;
+import com.liferay.portal.soap.extender.test.activator.config.ConfigAdminBundleActivator;
 import com.liferay.portal.soap.extender.test.service.GreeterImpl;
 
 import javax.xml.ws.Endpoint;
@@ -29,7 +29,7 @@ public class JaxwsApiBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		_configAdminActivator = new ConfigAdminActivator();
+		_configAdminActivator = new ConfigAdminBundleActivator();
 
 		_configAdminActivator.start(bundleContext);
 
@@ -43,7 +43,7 @@ public class JaxwsApiBundleActivator implements BundleActivator {
 		_configAdminActivator.stop(bundleContext);
 	}
 
-	private ConfigAdminActivator _configAdminActivator;
+	private ConfigAdminBundleActivator _configAdminActivator;
 	private Endpoint _endpoint;
 
 }

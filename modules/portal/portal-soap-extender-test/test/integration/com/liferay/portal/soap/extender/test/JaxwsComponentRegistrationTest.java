@@ -16,8 +16,6 @@ package com.liferay.portal.soap.extender.test;
 
 import com.liferay.portal.soap.extender.test.service.Greeter;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import javax.xml.namespace.QName;
@@ -42,8 +40,8 @@ import org.junit.runner.RunWith;
 public class JaxwsComponentRegistrationTest {
 
 	@Test
-	public void testIsRegistered() throws IOException {
-		URL url = new URL(_url, "/o/soap/greeter?wsdl");
+	public void testIsRegistered() throws Exception {
+		URL url = new URL(_url, "/o/soap-test/greeter?wsdl");
 
 		QName qName = new QName(
 			"http://service.test.extender.soap.portal.liferay.com/",

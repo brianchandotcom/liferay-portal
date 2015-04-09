@@ -14,52 +14,47 @@
 
 package com.liferay.portal.soap.extender.test.activator.handler;
 
-import com.liferay.portal.soap.extender.test.activator.config.ConfigAdminBundleActivator;
+import com.liferay.portal.soap.extender.test.activator.config.GreeterBundleActivator;
 import com.liferay.portal.soap.extender.test.handler.SampleHandler;
-import com.liferay.portal.soap.extender.test.service.GreeterImpl;
 
-import java.util.List;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
-import javax.xml.ws.Binding;
-import javax.xml.ws.Endpoint;
 import javax.xml.ws.handler.Handler;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class JaxwsApiBundleActivator implements BundleActivator {
+public class HandlerBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		_configAdminActivator = new ConfigAdminBundleActivator();
+		Dictionary<String, Object> properties = new Hashtable<>();
 
-		_configAdminActivator.start(bundleContext);
+		properties.put("soap.address", "/greeter");
 
-		_endpoint = Endpoint.publish("/greeterApi", new GreeterImpl());
+		_serviceRegistration = bundleContext.registerService(
+			Handler.class, new SampleHandler(), properties);
 
-		Binding binding = _endpoint.getBinding();
+		_greeterBundleActivator = new GreeterBundleActivator();
 
-		@SuppressWarnings("rawtypes")
-		List<Handler> handlerChain = binding.getHandlerChain();
-
-		Handler<?> handler = new SampleHandler();
-
-		handlerChain.add(handler);
-
-		binding.setHandlerChain(handlerChain);
+		_greeterBundleActivator.start(bundleContext);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		_configAdminActivator.stop(bundleContext);
+		_greeterBundleActivator.stop(bundleContext);
 
-		_endpoint.stop();
+		_serviceRegistration.unregister();
 	}
 
-	private ConfigAdminBundleActivator _configAdminActivator;
-	private Endpoint _endpoint;
+	private GreeterBundleActivator _greeterBundleActivator;
+
+	@SuppressWarnings("rawtypes")
+	private ServiceRegistration<Handler> _serviceRegistration;
 
 }

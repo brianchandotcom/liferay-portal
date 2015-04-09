@@ -51,7 +51,7 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 
 	@Override
 	public String getClassName() {
-		return AssetEntriesFacet.class.getName();
+		return AssetEntriesSearchFacet.class.getName();
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	public FacetConfiguration getDefaultConfiguration() {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setClassName(getClassName());
+		facetConfiguration.setClassName(getFacetClassName());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -91,6 +91,11 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getDisplayView() {
 		return "/facets/view/asset_entries.jsp";
+	}
+
+	@Override
+	public String getFacetClassName() {
+		return AssetEntriesFacet.class.getName();
 	}
 
 	@Override

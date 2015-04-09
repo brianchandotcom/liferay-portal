@@ -183,11 +183,12 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 					<%
 					request.setAttribute(WebKeys.SEL_LAYOUT, selLayout);
+
+					DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(request, Collections.singletonMap("idPrefix", new String[]{"details"}));
 					%>
 
-					<liferay-util:include page="<%= layoutTypeController.getEditPage() %>">
-						<liferay-util:param name="idPrefix" value="details" />
-					</liferay-util:include>
+					<%= layoutTypeController.includeEditContent(dynamicServletRequest, response, selLayout) %>
+
 				</div>
 
 			<%

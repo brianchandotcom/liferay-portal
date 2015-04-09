@@ -86,8 +86,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					configureLiferayExtension(project, liferayExtension);
-					configureTasks(project, liferayExtension);
 					configureVersion(project, liferayExtension);
+
+					configureTasks(project, liferayExtension);
 				}
 
 			});
@@ -278,14 +279,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			getAppServerDir(liferayExtension, "libGlobalDirName"));
 		liferayExtension.setAppServerPortalDir(
 			getAppServerDir(liferayExtension, "portalDirName"));
-
-		File appServerLibPortalDir =
-			liferayExtension.getAppServerLibPortalDir();
-
-		if (appServerLibPortalDir == null) {
-			appServerLibPortalDir = new File(
-				liferayExtension.getAppServerPortalDir(), "WEB-INF/lib");
-		}
 	}
 
 	protected void configureRepositories(Project project) {

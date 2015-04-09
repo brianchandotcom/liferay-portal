@@ -15,20 +15,18 @@
 package com.liferay.portlet.dynamicdatamapping.template;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.template.ClassLoaderTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Writer;
-
-import java.net.URL;
 
 /**
  * @author Marcellus Tavares
@@ -41,10 +39,6 @@ public class DDMTemplateVariableCodeHandler
 
 		_classLoader = classLoader;
 		_templatePath = templatePath;
-	}
-
-	public DDMTemplateVariableCodeHandler(String templatePath) {
-		this(null, templatePath);
 	}
 
 	@Override
@@ -84,7 +78,8 @@ public class DDMTemplateVariableCodeHandler
 	}
 
 	protected Template getTemplate(String resource) throws Exception {
-		TemplateResource templateResource = getTemplateResource(resource);
+		TemplateResource templateResource = new ClassLoaderTemplateResource(
+			_classLoader, resource);
 
 		return TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
@@ -103,23 +98,6 @@ public class DDMTemplateVariableCodeHandler
 		template.processTemplate(writer);
 
 		return StringUtil.trim(writer.toString());
-	}
-
-	protected TemplateResource getTemplateResource(String resource) {
-		URL url = null;
-
-		if (_classLoader == null) {
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			classLoader.getResource(resource);
-		}
-		else {
-			url = _classLoader.getResource(resource);
-		}
-
-		return new URLTemplateResource(resource, url);
 	}
 
 	protected String handleRepeatableField(

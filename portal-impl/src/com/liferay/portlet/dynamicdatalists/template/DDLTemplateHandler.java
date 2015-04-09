@@ -111,6 +111,12 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 		return templateVariableGroups;
 	}
 
+	protected ClassLoader getClassLoader() {
+		Class<?> clazz = getClass();
+
+		return clazz.getClassLoader();
+	}
+
 	protected TemplateVariableGroup getDDLVariablesTemplateVariableGroups() {
 		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
 			"data-list-variables");
@@ -146,6 +152,7 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
+			getClassLoader(),
 			"com/liferay/portlet/dynamicdatalists/dependencies/template/");
 
 }

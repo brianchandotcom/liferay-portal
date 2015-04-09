@@ -29,7 +29,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= LayoutPrototypePermissionUtil.contains(permissionChecker, layoutPrototype.getLayoutPrototypeId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
+			<portlet:param name="mvcPath" value="/html/portlet/layout_prototypes/edit_layout_prototype.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
 		</portlet:renderURL>
@@ -100,15 +100,13 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 	</c:if>
 
 	<c:if test="<%= LayoutPrototypePermissionUtil.contains(permissionChecker, layoutPrototype.getLayoutPrototypeId(), ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deleteLayoutPrototypes" var="deleteLayoutPrototypesURL">
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="layoutPrototypeIds" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
+			url="<%= deleteLayoutPrototypesURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

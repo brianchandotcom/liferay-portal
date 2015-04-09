@@ -40,7 +40,6 @@ import java.io.Reader;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Tina Tian
@@ -158,9 +157,22 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		return false;
 	}
 
-	private Set<TemplateResourceParser> _getTemplateResourceParsers() {
+	private TemplateResource _getTemplateResource() {
 		TemplateResource templateResource =
 			TemplateResourceThreadLocal.getTemplateResource(_name);
+
+		if (templateResource instanceof CacheTemplateResource) {
+			CacheTemplateResource cacheTemplateResource =
+				(CacheTemplateResource)templateResource;
+
+			return cacheTemplateResource.getInnerTemplateResource();
+		}
+
+		return templateResource;
+	}
+
+	private Set<TemplateResourceParser> _getTemplateResourceParsers() {
+		TemplateResource templateResource = _getTemplateResource();
 
 		if ((templateResource != null) &&
 			(templateResource instanceof ClassLoaderTemplateResource)) {
@@ -172,8 +184,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 				new ClassLoaderResourceParser(
 					classLoaderTemplateResource.getClassLoader());
 
-			Set<TemplateResourceParser> templateResourceParsers =
-				new TreeSet<>(_templateResourceParsers);
+			Set<TemplateResourceParser> templateResourceParsers = new HashSet<>(
+				_templateResourceParsers);
 
 			templateResourceParsers.add(classLoaderResourceParser);
 

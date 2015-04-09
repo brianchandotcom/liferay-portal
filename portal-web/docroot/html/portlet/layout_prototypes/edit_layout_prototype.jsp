@@ -21,7 +21,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-LayoutPrototype layoutPrototype = (LayoutPrototype)request.getAttribute(WebKeys.LAYOUT_PROTOTYPE);
+long layoutPrototypeId = ParamUtil.getLong(request, "layoutPrototypeId");
+
+LayoutPrototype layoutPrototype = LayoutPrototypeServiceUtil.fetchLayoutPrototype(layoutPrototypeId);
 
 if (layoutPrototype == null) {
 	layoutPrototype = new LayoutPrototypeImpl();
@@ -29,8 +31,6 @@ if (layoutPrototype == null) {
 	layoutPrototype.setNew(true);
 	layoutPrototype.setActive(true);
 }
-
-long layoutPrototypeId = BeanParamUtil.getLong(layoutPrototype, request, "layoutPrototypeId");
 %>
 
 <liferay-util:include page="/html/portlet/layout_prototypes/toolbar.jsp">

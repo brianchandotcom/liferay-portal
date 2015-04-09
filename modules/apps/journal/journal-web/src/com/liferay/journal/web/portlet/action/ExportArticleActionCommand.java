@@ -14,7 +14,9 @@
 
 package com.liferay.journal.web.portlet.action;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.journal.web.util.ExportArticleUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.util.PortalUtil;
 
@@ -23,10 +25,20 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Farache
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	property = {
+		"action.command.name=exportArticle",
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
+	},
+	service = ActionCommand.class
+)
 public class ExportArticleActionCommand extends BaseActionCommand {
 
 	@Override

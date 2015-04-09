@@ -17,8 +17,8 @@ package com.liferay.bookmarks.trash;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.service.permission.BookmarksEntryPermission;
-import com.liferay.bookmarks.service.permission.BookmarksFolderPermission;
+import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
+import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.util.BookmarksUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
@@ -108,7 +108,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 		throws PortalException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return BookmarksFolderPermission.contains(
+			return BookmarksFolderPermissionChecker.contains(
 				permissionChecker, groupId, classPK, ActionKeys.ADD_ENTRY);
 		}
 
@@ -184,7 +184,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
-		return BookmarksEntryPermission.contains(
+		return BookmarksEntryPermissionChecker.contains(
 			permissionChecker, entry, actionId);
 	}
 

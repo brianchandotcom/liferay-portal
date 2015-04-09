@@ -43,7 +43,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiPagePermission;
+import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Locale;
@@ -117,7 +117,7 @@ public class WikiPageIndexer extends BaseIndexer {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(entryClassPK);
 
-		return WikiPagePermission.contains(
+		return WikiPagePermissionChecker.contains(
 			permissionChecker, page, ActionKeys.VIEW);
 	}
 

@@ -34,7 +34,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiNodePermission;
+import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -248,7 +248,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return WikiNodePermission.contains(
+		return WikiNodePermissionChecker.contains(
 			permissionChecker, classPK, actionId);
 	}
 

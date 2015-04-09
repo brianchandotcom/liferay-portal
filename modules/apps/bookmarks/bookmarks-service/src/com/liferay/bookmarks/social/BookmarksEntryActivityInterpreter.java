@@ -15,7 +15,7 @@
 package com.liferay.bookmarks.social;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.permission.BookmarksEntryPermission;
+import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -92,7 +92,7 @@ public class BookmarksEntryActivityInterpreter
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		return BookmarksEntryPermission.contains(
+		return BookmarksEntryPermissionChecker.contains(
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 

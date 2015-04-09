@@ -16,7 +16,7 @@ package com.liferay.bookmarks.service.impl;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.base.BookmarksFolderServiceBaseImpl;
-import com.liferay.bookmarks.service.permission.BookmarksFolderPermission;
+import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -37,7 +37,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			parentFolderId, ActionKeys.ADD_FOLDER);
 
@@ -50,7 +50,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
 
 		bookmarksFolderLocalService.deleteFolder(folderId);
@@ -63,7 +63,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
 
 		bookmarksFolderLocalService.deleteFolder(
@@ -75,7 +75,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), folder, ActionKeys.VIEW);
 
 		return folder;
@@ -85,7 +85,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException {
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
 
 		List<Long> folderIds = getSubfolderIds(groupId, folderId, true);
@@ -239,7 +239,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.moveFolder(folderId, parentFolderId);
@@ -253,7 +253,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.moveFolderFromTrash(
@@ -267,7 +267,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
 
 		return bookmarksFolderLocalService.moveFolderToTrash(
@@ -279,7 +279,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		bookmarksFolderLocalService.restoreFolderFromTrash(
@@ -290,7 +290,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public void subscribeFolder(long groupId, long folderId)
 		throws PortalException {
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
 
 		bookmarksFolderLocalService.subscribeFolder(
@@ -301,7 +301,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	public void unsubscribeFolder(long groupId, long folderId)
 		throws PortalException {
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
 
 		bookmarksFolderLocalService.unsubscribeFolder(
@@ -317,7 +317,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.updateFolder(

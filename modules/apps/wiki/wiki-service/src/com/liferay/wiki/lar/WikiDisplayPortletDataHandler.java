@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiPermission;
+import com.liferay.wiki.service.permission.WikiResourcePermissionChecker;
 import com.liferay.wiki.service.persistence.WikiNodeUtil;
 
 import java.util.Map;
@@ -105,7 +105,8 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 			return portletPreferences;
 		}
 
-		portletDataContext.addPortletPermissions(WikiPermission.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(
+			WikiResourcePermissionChecker.RESOURCE_NAME);
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, portletId, node);
@@ -126,7 +127,7 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPortletPermissions(
-			WikiPermission.RESOURCE_NAME);
+			WikiResourcePermissionChecker.RESOURCE_NAME);
 
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, WikiNode.class);

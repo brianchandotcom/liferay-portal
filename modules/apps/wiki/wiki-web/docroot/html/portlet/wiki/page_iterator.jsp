@@ -379,7 +379,7 @@ for (int i = 0; i < results.size(); i++) {
 	</aui:button-row>
 </c:if>
 
-<c:if test='<%= type.equals("all_pages") && WikiNodePermission.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_PAGE) %>'>
+<c:if test='<%= type.equals("all_pages") && WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_PAGE) %>'>
 	<aui:button-row>
 		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="addPageURL">
 			<liferay-portlet:param name="struts_action" value="/wiki/edit_page" />

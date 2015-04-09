@@ -21,7 +21,7 @@ import com.liferay.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.bookmarks.model.impl.BookmarksFolderImpl;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.service.permission.BookmarksPermission;
+import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -105,7 +105,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.addPortletPermissions(
-			BookmarksPermission.RESOURCE_NAME);
+			BookmarksResourcePermissionChecker.RESOURCE_NAME);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
@@ -136,7 +136,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.importPortletPermissions(
-			BookmarksPermission.RESOURCE_NAME);
+			BookmarksResourcePermissionChecker.RESOURCE_NAME);
 
 		Element foldersElement = portletDataContext.getImportDataGroupElement(
 			BookmarksFolder.class);

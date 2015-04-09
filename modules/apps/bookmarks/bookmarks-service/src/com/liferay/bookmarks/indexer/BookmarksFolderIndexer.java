@@ -16,7 +16,7 @@ package com.liferay.bookmarks.indexer;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.service.permission.BookmarksFolderPermission;
+import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -75,7 +75,7 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
 			entryClassPK);
 
-		return BookmarksFolderPermission.contains(
+		return BookmarksFolderPermissionChecker.contains(
 			permissionChecker, folder, ActionKeys.VIEW);
 	}
 

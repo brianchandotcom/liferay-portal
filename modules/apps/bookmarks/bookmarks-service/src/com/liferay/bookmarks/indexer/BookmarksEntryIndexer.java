@@ -19,7 +19,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.service.permission.BookmarksEntryPermission;
+import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -81,7 +81,7 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		return BookmarksEntryPermission.contains(
+		return BookmarksEntryPermissionChecker.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 

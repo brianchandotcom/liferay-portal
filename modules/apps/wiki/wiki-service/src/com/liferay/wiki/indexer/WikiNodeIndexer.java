@@ -32,7 +32,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiNodePermission;
+import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
 import java.util.Locale;
 
@@ -72,7 +72,7 @@ public class WikiNodeIndexer extends BaseIndexer {
 
 		WikiNode node = WikiNodeLocalServiceUtil.getNode(entryClassPK);
 
-		return WikiNodePermission.contains(
+		return WikiNodePermissionChecker.contains(
 			permissionChecker, node, ActionKeys.VIEW);
 	}
 

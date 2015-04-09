@@ -17,8 +17,8 @@ package com.liferay.bookmarks.service.impl;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.base.BookmarksEntryServiceBaseImpl;
-import com.liferay.bookmarks.service.permission.BookmarksEntryPermission;
-import com.liferay.bookmarks.service.permission.BookmarksFolderPermission;
+import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
+import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Hits;
@@ -43,7 +43,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 			String description, ServiceContext serviceContext)
 		throws PortalException {
 
-		BookmarksFolderPermission.check(
+		BookmarksFolderPermissionChecker.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_ENTRY);
 
 		return bookmarksEntryLocalService.addEntry(
@@ -53,7 +53,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 
 	@Override
 	public void deleteEntry(long entryId) throws PortalException {
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
 		bookmarksEntryLocalService.deleteEntry(entryId);
@@ -97,7 +97,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 
 	@Override
 	public BookmarksEntry getEntry(long entryId) throws PortalException {
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.VIEW);
 
 		return bookmarksEntryLocalService.getEntry(entryId);
@@ -219,7 +219,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 	public BookmarksEntry moveEntry(long entryId, long parentFolderId)
 		throws PortalException {
 
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
 		return bookmarksEntryLocalService.moveEntry(entryId, parentFolderId);
@@ -229,7 +229,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 	public BookmarksEntry moveEntryFromTrash(long entryId, long parentFolderId)
 		throws PortalException {
 
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
 		return bookmarksEntryLocalService.moveEntryFromTrash(
@@ -240,7 +240,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 	public BookmarksEntry moveEntryToTrash(long entryId)
 		throws PortalException {
 
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
 		return bookmarksEntryLocalService.moveEntryToTrash(
@@ -251,7 +251,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 	public BookmarksEntry openEntry(BookmarksEntry entry)
 		throws PortalException {
 
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entry, ActionKeys.VIEW);
 
 		return bookmarksEntryLocalService.openEntry(getGuestOrUserId(), entry);
@@ -259,7 +259,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 
 	@Override
 	public BookmarksEntry openEntry(long entryId) throws PortalException {
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.VIEW);
 
 		return bookmarksEntryLocalService.openEntry(
@@ -268,7 +268,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 
 	@Override
 	public void restoreEntryFromTrash(long entryId) throws PortalException {
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
 		bookmarksEntryLocalService.restoreEntryFromTrash(getUserId(), entryId);
@@ -285,7 +285,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 
 	@Override
 	public void subscribeEntry(long entryId) throws PortalException {
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.SUBSCRIBE);
 
 		bookmarksEntryLocalService.subscribeEntry(getUserId(), entryId);
@@ -293,7 +293,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 
 	@Override
 	public void unsubscribeEntry(long entryId) throws PortalException {
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.SUBSCRIBE);
 
 		bookmarksEntryLocalService.unsubscribeEntry(getUserId(), entryId);
@@ -305,7 +305,7 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 			String description, ServiceContext serviceContext)
 		throws PortalException {
 
-		BookmarksEntryPermission.check(
+		BookmarksEntryPermissionChecker.check(
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
 		return bookmarksEntryLocalService.updateEntry(

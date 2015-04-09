@@ -49,7 +49,7 @@ else {
 %>
 
 <liferay-ui:icon-menu cssClass="<%= cssClass %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
-	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+	<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -65,7 +65,7 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= BookmarksEntry.class.getName() %>"
 			modelResourceDescription="<%= entry.getName() %>"
@@ -84,7 +84,7 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.SUBSCRIBE) && (bookmarksGroupServiceSettings.isEmailEntryAddedEnabled() || bookmarksGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
+	<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.SUBSCRIBE) && (bookmarksGroupServiceSettings.isEmailEntryAddedEnabled() || bookmarksGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksEntry.class.getName(), entry.getEntryId()) %>">
 				<portlet:actionURL var="unsubscribeURL">
@@ -119,7 +119,7 @@ else {
 		</c:choose>
 	</c:if>
 
-	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
+	<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="struts_action" value="/bookmarks/view" />
 			<portlet:param name="folderId" value="<%= String.valueOf(entry.getFolderId()) %>" />

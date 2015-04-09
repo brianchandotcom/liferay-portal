@@ -57,7 +57,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiNodePermission;
+import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageTitleComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
@@ -370,7 +370,7 @@ public class WikiUtil {
 			WikiNode node = itr.next();
 
 			if (!(Arrays.binarySearch(hiddenNodes, node.getName()) < 0) ||
-				!WikiNodePermission.contains(
+				!WikiNodePermissionChecker.contains(
 					permissionChecker, node, ActionKeys.VIEW)) {
 
 				itr.remove();

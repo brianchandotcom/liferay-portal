@@ -45,7 +45,7 @@ if (folder != null) {
 	modelResourceDescription = folder.getName();
 	resourcePrimKey = String.valueOf(folderId);
 
-	showPermissionsURL = BookmarksFolderPermission.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
+	showPermissionsURL = BookmarksFolderPermissionChecker.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
 }
 else {
 	modelResource = "com.liferay.bookmarks";
@@ -69,7 +69,7 @@ if (row == null) {
 %>
 
 <liferay-ui:icon-menu cssClass="<%= cssClass %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
-	<c:if test="<%= (folder != null) && BookmarksFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">
+	<c:if test="<%= (folder != null) && BookmarksFolderPermissionChecker.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/bookmarks/edit_folder" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -104,7 +104,7 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<c:if test="<%= BookmarksFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) && (bookmarksGroupServiceSettings.isEmailEntryAddedEnabled() || bookmarksGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
+	<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) && (bookmarksGroupServiceSettings.isEmailEntryAddedEnabled() || bookmarksGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= (folder == null) ? SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), scopeGroupId) : SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), folder.getFolderId()) %>">
 				<portlet:actionURL var="unsubscribeURL">
@@ -139,7 +139,7 @@ if (row == null) {
 		</c:choose>
 	</c:if>
 
-	<c:if test="<%= BookmarksFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+	<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
 		<portlet:renderURL var="addFolderURL">
 			<portlet:param name="struts_action" value="/bookmarks/edit_folder" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -149,7 +149,7 @@ if (row == null) {
 		<liferay-ui:icon cssClass="<%= listGroupItemCssClass %>" iconCssClass="icon-plus" message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>' url="<%= addFolderURL %>" />
 	</c:if>
 
-	<c:if test="<%= BookmarksFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ENTRY) %>">
+	<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ENTRY) %>">
 		<portlet:renderURL var="editEntryURL">
 			<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -164,7 +164,7 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<c:if test="<%= (folder != null) && BookmarksFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
+	<c:if test="<%= (folder != null) && BookmarksFolderPermissionChecker.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="struts_action" value="/bookmarks/view" />
 			<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />

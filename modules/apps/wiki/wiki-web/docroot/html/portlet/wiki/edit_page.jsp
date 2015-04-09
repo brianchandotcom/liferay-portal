@@ -52,7 +52,7 @@ List<FileEntry> attachmentsFileEntries = null;
 if (wikiPage != null) {
 	attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
 
-	if (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) {
+	if (WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) {
 		editable = true;
 	}
 }
@@ -438,7 +438,7 @@ if (Validator.isNull(redirect)) {
 
 					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' primary="<%= true %>" value="<%= publishButtonLabel %>" />
 
-					<c:if test="<%= !newPage && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
+					<c:if test="<%= !newPage && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 						<c:choose>
 							<c:when test="<%= !wikiPage.isDraft() && TrashUtil.isTrashEnabled(scopeGroupId) %>">
 								<aui:button name="moveToTrashButton" onClick='<%= renderResponse.getNamespace() + "moveToTrashPage();" %>' value="move-to-the-recycle-bin" />

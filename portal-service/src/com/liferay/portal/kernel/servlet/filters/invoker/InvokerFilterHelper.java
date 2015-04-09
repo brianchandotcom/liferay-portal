@@ -181,11 +181,7 @@ public class InvokerFilterHelper {
 				FilterMapping filterMapping = _filterMappings.get(i);
 
 				if (filterMapping.getFilter() == previousFilter) {
-					_filterMappings.remove(i);
-
-					filterMapping = filterMapping.replaceFilter(filter);
-
-					_filterMappings.add(i, filterMapping);
+					_filterMappings.set(i, filterMapping.replaceFilter(filter));
 				}
 			}
 		}

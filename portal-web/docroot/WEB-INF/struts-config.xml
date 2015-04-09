@@ -714,33 +714,6 @@
 			<forward name="portlet.invitation.view" path="portlet.invitation.view" />
 		</action>
 
-		<!-- Layout Prototypes -->
-
-		<action path="/layout_prototypes/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
-
-		<action path="/layout_prototypes/edit_layout_prototype" type="com.liferay.portlet.layoutprototypes.action.EditLayoutPrototypeAction">
-			<forward name="portlet.layout_prototypes.edit_layout_prototype" path="portlet.layout_prototypes.edit_layout_prototype" />
-			<forward name="portlet.layout_prototypes.error" path="portlet.layout_prototypes.error" />
-		</action>
-
-		<action path="/layout_prototypes/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layout_prototypes.error" />
-		</action>
-
-		<action path="/layout_prototypes/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layout_prototypes.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
-		</action>
-
-		<action path="/layout_prototypes/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.import_layouts" path="portlet.layouts_admin.import_layouts" />
-		</action>
-
-		<action path="/layout_prototypes/view" forward="portlet.layout_prototypes.view" />
-
 		<!-- Layout Set Prototypes -->
 
 		<action path="/layout_set_prototypes/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />

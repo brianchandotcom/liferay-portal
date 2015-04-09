@@ -2914,6 +2914,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#gotoAdd" />
+
 		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
 
 		<execute macro="CalendarEvent#selectRepeatFrequency">

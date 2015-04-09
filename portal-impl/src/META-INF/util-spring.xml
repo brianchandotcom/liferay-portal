@@ -1117,8 +1117,6 @@
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.journal.JournalArticleCustomAttributesDisplay" class="com.liferay.portlet.journal.JournalArticleCustomAttributesDisplay" />
-	<bean id="com.liferay.portlet.journal.JournalFolderCustomAttributesDisplay" class="com.liferay.portlet.journal.JournalFolderCustomAttributesDisplay" />
 	<bean id="com.liferay.portlet.journal.atom.JournalArticleAtomCollectionProvider" class="com.liferay.portlet.journal.atom.JournalArticleAtomCollectionProvider" />
 	<bean id="com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandler" class="com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler" class="com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler" />

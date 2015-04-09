@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -44,24 +43,24 @@ public class FilterMapping {
 		_filter = filter;
 		_urlPatterns = urlPatterns;
 
-		String urlRegexPattern = GetterUtil.getString(
-			filterConfig.getInitParameter("url-regex-pattern"));
+		String urlRegexPattern = filterConfig.getInitParameter(
+			"url-regex-pattern");
 
-		if (Validator.isNotNull(urlRegexPattern)) {
-			_urlRegexPattern = Pattern.compile(urlRegexPattern);
-		}
-		else {
+		if (Validator.isNull(urlRegexPattern)) {
 			_urlRegexPattern = null;
 		}
+		else {
+			_urlRegexPattern = Pattern.compile(urlRegexPattern);
+		}
 
-		String urlRegexIgnorePattern = GetterUtil.getString(
-			filterConfig.getInitParameter("url-regex-ignore-pattern"));
+		String urlRegexIgnorePattern = filterConfig.getInitParameter(
+			"url-regex-ignore-pattern");
 
-		if (Validator.isNotNull(urlRegexIgnorePattern)) {
-			_urlRegexIgnorePattern = Pattern.compile(urlRegexIgnorePattern);
+		if (Validator.isNull(urlRegexIgnorePattern)) {
+			_urlRegexIgnorePattern = null;
 		}
 		else {
-			_urlRegexIgnorePattern = null;
+			_urlRegexIgnorePattern = Pattern.compile(urlRegexIgnorePattern);
 		}
 
 		_dispatchers = EnumSet.noneOf(Dispatcher.class);

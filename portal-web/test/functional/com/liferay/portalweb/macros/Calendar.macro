@@ -49,6 +49,18 @@
 		</if>
 	</command>
 
+	<command name="assertDialogBoxPresentCmd">
+		<if>
+			<equals arg1="${schedulerEventDialogBox}" arg2="false" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
+			</then>
+			<else>
+				<execute function="AssertSelectedLabel" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="changeColorPG">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />

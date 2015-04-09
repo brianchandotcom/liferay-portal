@@ -403,7 +403,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
+		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
 	</command>
 
 	<command name="changeViewPG">
@@ -1245,10 +1245,10 @@
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="false" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
+				<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
 			</then>
 			<else>
-				<execute function="AssertSelectedLabel" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
+				<execute function="AssertSelectedLabel" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
 			</else>
 		</if>
 	</command>

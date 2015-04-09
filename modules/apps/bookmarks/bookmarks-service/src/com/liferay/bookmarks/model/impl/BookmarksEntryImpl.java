@@ -25,9 +25,6 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 
-	public BookmarksEntryImpl() {
-	}
-
 	@Override
 	public String buildTreePath() throws PortalException {
 		if (getFolderId() ==

@@ -172,6 +172,38 @@ public class PasswordPolicyServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
+		HttpPrincipal httpPrincipal, long passwordPolicyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class,
+					"fetchPasswordPolicy", _fetchPasswordPolicyParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					passwordPolicyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.PasswordPolicy)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		HttpPrincipal httpPrincipal, long passwordPolicyId,
 		java.lang.String name, java.lang.String description,
@@ -185,7 +217,7 @@ public class PasswordPolicyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class,
-					"updatePasswordPolicy", _updatePasswordPolicyParameterTypes3);
+					"updatePasswordPolicy", _updatePasswordPolicyParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					passwordPolicyId, name, description, changeable,
@@ -232,7 +264,7 @@ public class PasswordPolicyServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PasswordPolicyServiceUtil.class,
-					"updatePasswordPolicy", _updatePasswordPolicyParameterTypes4);
+					"updatePasswordPolicy", _updatePasswordPolicyParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					passwordPolicyId, name, description, changeable,
@@ -285,7 +317,10 @@ public class PasswordPolicyServiceHttp {
 	private static final Class<?>[] _deletePasswordPolicyParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updatePasswordPolicyParameterTypes3 = new Class[] {
+	private static final Class<?>[] _fetchPasswordPolicyParameterTypes3 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updatePasswordPolicyParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			boolean.class, boolean.class, long.class, boolean.class,
 			boolean.class, int.class, int.class, int.class, int.class, int.class,
@@ -293,7 +328,7 @@ public class PasswordPolicyServiceHttp {
 			long.class, int.class, boolean.class, int.class, long.class,
 			long.class, long.class
 		};
-	private static final Class<?>[] _updatePasswordPolicyParameterTypes4 = new Class[] {
+	private static final Class<?>[] _updatePasswordPolicyParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			boolean.class, boolean.class, long.class, boolean.class,
 			boolean.class, int.class, int.class, int.class, int.class, int.class,

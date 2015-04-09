@@ -141,6 +141,20 @@ public class PasswordPolicyServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.PasswordPolicySoap fetchPasswordPolicy(
+		long passwordPolicyId) throws RemoteException {
+		try {
+			com.liferay.portal.model.PasswordPolicy returnValue = PasswordPolicyServiceUtil.fetchPasswordPolicy(passwordPolicyId);
+
+			return com.liferay.portal.model.PasswordPolicySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #updatePasswordPolicy(long,
 	String, String, boolean, boolean, long, boolean, boolean,

@@ -84,6 +84,13 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 		_passwordPolicyService.deletePasswordPolicy(passwordPolicyId);
 	}
 
+	@Override
+	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
+		long passwordPolicyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _passwordPolicyService.fetchPasswordPolicy(passwordPolicyId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

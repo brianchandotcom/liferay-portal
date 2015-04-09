@@ -1205,20 +1205,6 @@
 
 		<action path="/page_ratings/view" forward="portlet.page_ratings.view" />
 
-		<!-- Password Policies Admin -->
-
-		<action path="/password_policies_admin/edit_password_policy" type="com.liferay.portlet.passwordpoliciesadmin.action.EditPasswordPolicyAction">
-			<forward name="portlet.password_policies_admin.edit_password_policy" path="portlet.password_policies_admin.edit_password_policy" />
-			<forward name="portlet.password_policies_admin.error" path="portlet.password_policies_admin.error" />
-		</action>
-
-		<action path="/password_policies_admin/edit_password_policy_assignments" type="com.liferay.portlet.passwordpoliciesadmin.action.EditPasswordPolicyAssignmentsAction">
-			<forward name="portlet.password_policies_admin.edit_password_policy_assignments" path="portlet.password_policies_admin.edit_password_policy_assignments" />
-			<forward name="portlet.password_policies_admin.error" path="portlet.password_policies_admin.error" />
-		</action>
-
-		<action path="/password_policies_admin/view" forward="portlet.password_policies_admin.view" />
-
 		<!-- Plugins Admin -->
 
 		<action path="/plugins_admin/edit_plugin" type="com.liferay.portlet.pluginsadmin.action.EditPluginAction">

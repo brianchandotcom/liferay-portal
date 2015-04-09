@@ -92,6 +92,16 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 		passwordPolicyLocalService.deletePasswordPolicy(passwordPolicyId);
 	}
 
+	@Override
+	public PasswordPolicy fetchPasswordPolicy(long passwordPolicyId)
+		throws PortalException {
+
+		PasswordPolicyPermissionUtil.check(
+			getPermissionChecker(), passwordPolicyId, ActionKeys.VIEW);
+
+		return passwordPolicyLocalService.fetchPasswordPolicy(passwordPolicyId);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #updatePasswordPolicy(long,
 	 *             String, String, boolean, boolean, long, boolean, boolean,

@@ -802,26 +802,6 @@
 		<put name="portlet_content" value="/portlet/page_ratings/view.jsp" />
 	</definition>
 
-	<!-- Password Policies Admin -->
-
-	<definition name="portlet.password_policies_admin" extends="portlet" />
-
-	<definition name="portlet.password_policies_admin.edit_password_policy" extends="portlet.password_policies_admin">
-		<put name="portlet_content" value="/portlet/password_policies_admin/edit_password_policy.jsp" />
-	</definition>
-
-	<definition name="portlet.password_policies_admin.edit_password_policy_assignments" extends="portlet.password_policies_admin">
-		<put name="portlet_content" value="/portlet/password_policies_admin/edit_password_policy_assignments.jsp" />
-	</definition>
-
-	<definition name="portlet.password_policies_admin.error" extends="portlet.password_policies_admin">
-		<put name="portlet_content" value="/portlet/password_policies_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.password_policies_admin.view" extends="portlet.password_policies_admin">
-		<put name="portlet_content" value="/portlet/password_policies_admin/view.jsp" />
-	</definition>
-
 	<!-- Plugins Admin -->
 
 	<definition name="portlet.plugins_admin" extends="portlet" />

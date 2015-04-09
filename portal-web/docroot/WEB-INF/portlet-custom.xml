@@ -753,14 +753,14 @@
 	<portlet>
 		<portlet-name>129</portlet-name>
 		<display-name>Password Policies Admin</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.passwordpoliciesadmin.PasswordPoliciesAdminPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/password_policies_admin/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/password_policies_admin/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/password_policies_admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

@@ -29,7 +29,7 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/password_policies_admin/edit_password_policy" />
+			<portlet:param name="mvcPath" value="/html/portlet/password_policies_admin/edit_password_policy.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 		</portlet:renderURL>
@@ -61,7 +61,7 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 
 	<c:if test="<%= PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignMembersURL">
-			<portlet:param name="struts_action" value="/password_policies_admin/edit_password_policy_assignments" />
+			<portlet:param name="mvcPath" value="/html/portlet/password_policies_admin/edit_password_policy_assignments.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 		</portlet:renderURL>
@@ -74,13 +74,11 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 	</c:if>
 
 	<c:if test="<%= !passwordPolicy.getDefaultPolicy() && PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/password_policies_admin/edit_password_policy" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deletePasswordPolicy" var="deletePasswordPolicyURL">
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete url="<%= deletePasswordPolicyURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

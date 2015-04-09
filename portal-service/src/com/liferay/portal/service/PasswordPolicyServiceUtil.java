@@ -92,6 +92,12 @@ public class PasswordPolicyServiceUtil {
 		getService().deletePasswordPolicy(passwordPolicyId);
 	}
 
+	public static com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
+		long passwordPolicyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchPasswordPolicy(passwordPolicyId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

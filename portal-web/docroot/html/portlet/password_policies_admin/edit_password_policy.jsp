@@ -21,9 +21,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-PasswordPolicy passwordPolicy = (PasswordPolicy)request.getAttribute(WebKeys.PASSWORD_POLICY);
+long passwordPolicyId = ParamUtil.getLong(request, "passwordPolicyId");
 
-long passwordPolicyId = BeanParamUtil.getLong(passwordPolicy, request, "passwordPolicyId");
+PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(passwordPolicyId);
 
 boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defaultPolicy");
 %>
@@ -34,12 +34,9 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 	title='<%= (passwordPolicy == null) ? "new-password-policy" : passwordPolicy.getName() %>'
 />
 
-<portlet:actionURL var="editPasswordPolicyURL">
-	<portlet:param name="struts_action" value="/password_policies_admin/edit_password_policy" />
-</portlet:actionURL>
+<portlet:actionURL name="editPasswordPolicy" var="editPasswordPolicyURL" />
 
 <aui:form action="<%= editPasswordPolicyURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (passwordPolicy == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="passwordPolicyId" type="hidden" value="<%= passwordPolicyId %>" />
 

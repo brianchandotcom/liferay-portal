@@ -12,118 +12,42 @@
  * details.
  */
 
-package com.liferay.portlet.passwordpoliciesadmin.action;
+package com.liferay.portlet.passwordpoliciesadmin;
 
 import com.liferay.portal.DuplicatePasswordPolicyException;
 import com.liferay.portal.NoSuchPasswordPolicyException;
 import com.liferay.portal.PasswordPolicyNameException;
 import com.liferay.portal.RequiredPasswordPolicyException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.PasswordPolicyServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserServiceUtil;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
+ * @author Brian Wing Shun Chan
  * @author Scott Lee
+ * @author Drew Brokke
  */
-public class EditPasswordPolicyAction extends PortletAction {
+public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updatePasswordPolicy(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deletePasswordPolicy(actionRequest);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(
-					actionRequest, "portlet.password_policies_admin.error");
-			}
-			else if (e instanceof DuplicatePasswordPolicyException ||
-					 e instanceof PasswordPolicyNameException ||
-					 e instanceof NoSuchPasswordPolicyException ||
-					 e instanceof RequiredPasswordPolicyException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				if (cmd.equals(Constants.DELETE)) {
-					String redirect = PortalUtil.escapeRedirect(
-						ParamUtil.getString(actionRequest, "redirect"));
-
-					if (Validator.isNotNull(redirect)) {
-						actionResponse.sendRedirect(redirect);
-					}
-				}
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getPasswordPolicy(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchPasswordPolicyException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.password_policies_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest,
-				"portlet.password_policies_admin.edit_password_policy"));
-	}
-
-	protected void deletePasswordPolicy(ActionRequest actionRequest)
+	public void deletePasswordPolicy(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long passwordPolicyId = ParamUtil.getLong(
@@ -132,7 +56,8 @@ public class EditPasswordPolicyAction extends PortletAction {
 		PasswordPolicyServiceUtil.deletePasswordPolicy(passwordPolicyId);
 	}
 
-	protected void updatePasswordPolicy(ActionRequest actionRequest)
+	public void editPasswordPolicy(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long passwordPolicyId = ParamUtil.getLong(
@@ -205,6 +130,74 @@ public class EditPasswordPolicyAction extends PortletAction {
 				graceLimit, lockout, maxFailure, lockoutDuration,
 				resetFailureCount, resetTicketMaxAge, serviceContext);
 		}
+	}
+
+	public void editPasswordPolicyAssignments(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long passwordPolicyId = ParamUtil.getLong(
+			actionRequest, "passwordPolicyId");
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+		long[] addOrganizationIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addOrganizationIds"), 0L);
+		long[] removeOrganizationIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
+
+		if (ArrayUtil.isNotEmpty(addUserIds)) {
+			UserServiceUtil.addPasswordPolicyUsers(
+				passwordPolicyId, addUserIds);
+		}
+
+		if (ArrayUtil.isNotEmpty(removeUserIds)) {
+			UserServiceUtil.unsetPasswordPolicyUsers(
+				passwordPolicyId, removeUserIds);
+		}
+
+		if (ArrayUtil.isNotEmpty(addOrganizationIds)) {
+			OrganizationServiceUtil.addPasswordPolicyOrganizations(
+				passwordPolicyId, addOrganizationIds);
+		}
+
+		if (ArrayUtil.isNotEmpty(removeOrganizationIds)) {
+			OrganizationServiceUtil.unsetPasswordPolicyOrganizations(
+				passwordPolicyId, removeOrganizationIds);
+		}
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchPasswordPolicyException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof DuplicatePasswordPolicyException ||
+			cause instanceof NoSuchPasswordPolicyException ||
+			cause instanceof PasswordPolicyNameException ||
+			cause instanceof PrincipalException ||
+			cause instanceof RequiredPasswordPolicyException) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

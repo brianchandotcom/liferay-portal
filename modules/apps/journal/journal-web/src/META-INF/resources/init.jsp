@@ -174,6 +174,7 @@ page import="com.liferay.portlet.journal.service.permission.JournalPermission" %
 page import="com.liferay.portlet.journal.util.JournalContentUtil" %><%@
 page import="com.liferay.portlet.journal.util.JournalConverterUtil" %><%@
 page import="com.liferay.portlet.journal.util.JournalUtil" %><%@
+page import="com.liferay.portlet.journal.util.comparator.ArticleVersionComparator" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@

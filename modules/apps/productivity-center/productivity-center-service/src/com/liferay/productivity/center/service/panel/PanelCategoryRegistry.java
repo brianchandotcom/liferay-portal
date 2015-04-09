@@ -14,30 +14,27 @@
 
 package com.liferay.productivity.center.service.panel;
 
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.service.util.PanelEntryServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(immediate = true, service = PanelCategoryRegistry.class)
 public class PanelCategoryRegistry {
 
-	public static Iterable<PanelCategory> getPanelCategories(
-		PanelCategory panelCategory) {
-
-		return _instance._getPanelCategories(panelCategory);
-	}
-
-	private PanelCategoryRegistry() {
-		_serviceTrackerMap.open();
-	}
-
-	private Iterable<PanelCategory> _getPanelCategories(
+	public Iterable<PanelCategory> getPanelCategories(
 		PanelCategory panelCategory) {
 
 		Iterable<PanelCategory> panelCategories = _serviceTrackerMap.getService(
@@ -50,12 +47,22 @@ public class PanelCategoryRegistry {
 		return panelCategories;
 	}
 
-	private static final PanelCategoryRegistry _instance =
-		new PanelCategoryRegistry();
+	@Activate
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
 
-	private static final ServiceTrackerMap<String, List<PanelCategory>>
-		_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
-			PanelCategory.class, "(panel.category=*)",
+		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+			bundleContext, PanelCategory.class, "(panel.category=*)",
 			PanelEntryServiceReferenceMapper.<PanelCategory>create());
+
+		_serviceTrackerMap.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	private ServiceTrackerMap<String, List<PanelCategory>> _serviceTrackerMap;
 
 }

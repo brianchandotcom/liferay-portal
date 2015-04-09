@@ -202,11 +202,6 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>Lucene Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.LuceneServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
 		<servlet-name>Module Framework Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.module.framework.ModuleFrameworkServletAdapter</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -682,10 +677,6 @@
 	<servlet-mapping>
 		<servlet-name>Language Servlet</servlet-name>
 		<url-pattern>/language/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Lucene Servlet</servlet-name>
-		<url-pattern>/lucene/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Netvibes Servlet</servlet-name>

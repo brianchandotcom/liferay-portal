@@ -684,10 +684,6 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portal.servlet.LuceneServlet">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.servlet.MainServlet">
 		<priority value="WARN" />
 	</category>

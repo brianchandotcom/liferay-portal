@@ -324,17 +324,6 @@ public class LuceneHelperUtil {
 		return getLuceneHelper().getIndexSearcher(companyId);
 	}
 
-	public static long getLastGeneration(long companyId) {
-		return getLuceneHelper().getLastGeneration(companyId);
-	}
-
-	public static InputStream getLoadIndexesInputStreamFromCluster(
-		long companyId, String bootupClusterNodeId) {
-
-		return getLuceneHelper().getLoadIndexesInputStreamFromCluster(
-			companyId, bootupClusterNodeId);
-	}
-
 	public static LuceneHelper getLuceneHelper() {
 		return _luceneHelper;
 	}
@@ -383,18 +372,10 @@ public class LuceneHelperUtil {
 		return getLuceneHelper().getVersion();
 	}
 
-	public static boolean isLoadIndexFromClusterEnabled() {
-		return getLuceneHelper().isLoadIndexFromClusterEnabled();
-	}
-
 	public static void loadIndex(long companyId, InputStream inputStream)
 		throws IOException {
 
 		getLuceneHelper().loadIndex(companyId, inputStream);
-	}
-
-	public static void loadIndexesFromCluster(long companyId) {
-		getLuceneHelper().loadIndexesFromCluster(companyId);
 	}
 
 	public static void releaseIndexSearcher(

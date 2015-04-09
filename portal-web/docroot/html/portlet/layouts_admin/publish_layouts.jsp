@@ -347,6 +347,10 @@ else if (!quickPublish) {
 
 							<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 
+							<c:if test="<%= !quickPublish %>">
+								<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
+							</c:if>
+
 							<aui:fieldset cssClass="options-group" label="permissions">
 								<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
 							</aui:fieldset>
@@ -459,7 +463,6 @@ else if (!quickPublish) {
 		{
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
 			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>',
-			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>',
 			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 			form: document.<portlet:namespace />exportPagesFm,
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
@@ -475,7 +478,6 @@ else if (!quickPublish) {
 			rangeLastPublishNode: '#rangeLastPublish',
 			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
 			remoteAddressNode: '#<portlet:namespace />remoteAddress',
-			remoteDeletePortletDataNode: '#remoteDeletePortletData',
 			remoteGroupIdNode: '#<portlet:namespace />remoteGroupId',
 			remotePathContextNode: '#<portlet:namespace />remotePathContext',
 			remotePortNode: '#<portlet:namespace />remotePort',

@@ -84,8 +84,7 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 		return _configurationActionUpdate;
 	}
 
-	@Override
-	public String getEditPage() {
+	protected String getEditPage() {
 		return StrutsUtil.TEXT_HTML_DIR + _editPage;
 	}
 

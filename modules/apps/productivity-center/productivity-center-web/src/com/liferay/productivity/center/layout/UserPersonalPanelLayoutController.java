@@ -59,8 +59,7 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 		return StringPool.EMPTY_ARRAY;
 	}
 
-	@Override
-	public String getEditPage() {
+	protected String getEditPage() {
 		return _EDIT_PAGE;
 	}
 

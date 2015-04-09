@@ -704,12 +704,12 @@ public class ServiceBuilder {
 			_implDir = implDir;
 			_modelHintsFileName = modelHintsFileName;
 			_osgiModule = osgiModule;
+			_permissionModels = permissionModels;
 			_pluginName = GetterUtil.getString(pluginName);
 			_propsUtil = propsUtil;
 			_readOnlyPrefixes = readOnlyPrefixes;
 			_remotingFileName = remotingFileName;
 			_resourcesDir = resourcesDir;
-			_permissionModels = permissionModels;
 			_springFileName = springFileName;
 
 			_springNamespaces = springNamespaces;

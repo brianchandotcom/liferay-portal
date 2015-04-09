@@ -341,7 +341,7 @@
 		for (String javaScriptFile : javaScriptFiles) {
 		%>
 
-			<script src="<%= path %>/<%= javaScriptFile %>?t=<%= javaScriptLastModified %>" type="text/javascript"></script>
+			<script src="<%= path %>/<%= PortalUtil.getStaticResourceURL(request, javaScriptFile, "minifierType=", javaScriptLastModified) %>" type="text/javascript"></script>
 
 		<%
 		}

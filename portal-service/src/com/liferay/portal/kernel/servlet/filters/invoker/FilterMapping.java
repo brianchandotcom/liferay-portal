@@ -82,11 +82,7 @@ public class FilterMapping {
 	public boolean isMatch(
 		HttpServletRequest request, Dispatcher dispatcher, String uri) {
 
-		if (!isMatchDispatcher(dispatcher)) {
-			return false;
-		}
-
-		if (uri == null) {
+		if (!_dispatchers.contains(dispatcher) || (uri == null)) {
 			return false;
 		}
 
@@ -167,10 +163,6 @@ public class FilterMapping {
 		return new FilterMapping(
 			filter, _urlPatterns, _dispatchers, _urlRegexIgnorePattern,
 			_urlRegexPattern);
-	}
-
-	protected boolean isMatchDispatcher(Dispatcher dispatcher) {
-		return _dispatchers.contains(dispatcher);
 	}
 
 	protected boolean isMatchURLPattern(String uri, String urlPattern) {

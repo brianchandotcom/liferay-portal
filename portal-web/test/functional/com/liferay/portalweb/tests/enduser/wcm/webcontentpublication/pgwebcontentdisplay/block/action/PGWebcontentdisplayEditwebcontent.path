@@ -45,22 +45,22 @@
 </tr>
 <tr>
 	<td>STRUCTURE_NAME</td>
-	<td>//span[@id='_15_structureNameLabel']</td>
+	<td>//span[contains(@id,'structureNameLabel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_NAME</td>
-	<td>//span[@id='_15_templateNameLabel']</td>
+	<td>//span[contains(@id,'templateNameLabel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDIT_TEMPLATE</td>
-	<td>//a[@id='_15_editDDMTemplate']</td>
+	<td>//a[contains(@id,'editDDMTemplate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_TEMPLATE</td>
-	<td>//a[@id='_15_selectTemplate']</td>
+	<td>//a[contains(@id,'selectTemplate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>SUMMARY_FIELD</td>
-	<td>//textarea[contains(@id,'_15_description')]</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>SEARCHABLE_CHECKBOX</td>
-	<td>//input[@id='_15_indexable']</td>
+	<td>//input[contains(@id,'indexable')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -131,37 +131,32 @@
 <!--MENU-->
 <tr>
 	<td>MENU_CONTENT</td>
-	<td>//a[@id='_15_contentLink']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MENU_ABSTRACT</td>
-	<td>//a[@id='_15_abstractLink']</td>
+	<td>//a[contains(@id,'contentLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_CATEGORIZATION</td>
-	<td>//a[@id='_15_categorizationLink']</td>
+	<td>//a[contains(@id,'categorizationLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_SCHEDULE</td>
-	<td>//a[@id='_15_scheduleLink']</td>
+	<td>//a[contains(@id,'scheduleLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_DISPLAY_PAGE</td>
-	<td>//a[@id='_15_displayPageLink']</td>
+	<td>//a[contains(@id,'displayPageLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_RELATED_ASSETS</td>
-	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td>//a[contains(@id,'relatedAssetsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_CUSTOM_FIELDS</td>
-	<td>//a[@id='_15_customFieldsLink']</td>
+	<td>//a[contains(@id,'customFieldsLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -172,17 +167,17 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_BASIC_PREVIEW</td>
-	<td>//div[@id='_15_articleToolbar']//div/button[contains(.,'Basic Preview')]</td>
+	<td>//div[contains(@id,'articleToolbar')]//div/button[contains(.,'Basic Preview')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_PERMISSIONS</td>
-	<td>//div[@id='_15_articleToolbar']//div/button[contains(.,'Permissions')]</td>
+	<td>//div[contains(@id,'articleToolbar')]//div/button[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_VIEW_HISTORY</td>
-	<td>//div[@id='_15_articleToolbar']/div/a[contains(.,'View History')]</td>
+	<td>//div[contains(@id,'articleToolbar')]/div/a[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>

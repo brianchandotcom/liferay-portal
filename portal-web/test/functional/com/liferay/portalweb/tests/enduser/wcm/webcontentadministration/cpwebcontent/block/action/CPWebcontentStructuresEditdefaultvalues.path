@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[contains(@id,'_15_title') and contains(@id,'_en') and contains(@id,'_US')]</td>
+	<td>//input[contains(@id,'title') and contains(@id,'_en') and contains(@id,'_US')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//button[@id='_15_publishButton' and contains(.,'Save')]</td>
+	<td>//button[contains(@id,'publishButton') and contains(.,'Save')]</td>
 	<td></td>
 </tr>
 </tbody>

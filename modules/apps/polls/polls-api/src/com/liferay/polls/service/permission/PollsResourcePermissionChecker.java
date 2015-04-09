@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(property = {"resource.name=com.liferay.polls"})
 public class PollsResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.polls";

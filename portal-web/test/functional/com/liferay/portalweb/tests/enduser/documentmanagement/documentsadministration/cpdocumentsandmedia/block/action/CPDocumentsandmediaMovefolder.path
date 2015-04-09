@@ -9,12 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>CPDocumentsandmediaMovefolder</td>
-</tr>
-<!---->
-<tr>
 	<td>OPTIONS_WRENCH_ICON</td>
 	<td>//div[@id='main-content']//a[@title='Options']</td>
 	<td></td>

@@ -9,12 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>CPBookmarksAddFolder</td>
-</tr>
-<!---->
-<tr>
 	<td>NAME_FIELD</td>
 	<td>//input[@id='_198_WAR_bookmarksweb_name']</td>
 	<td></td>

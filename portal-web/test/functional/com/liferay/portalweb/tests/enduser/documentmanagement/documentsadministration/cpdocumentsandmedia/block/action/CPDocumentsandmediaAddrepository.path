@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>CPDocumentsandmediaAddrepository</td>
-</tr>
-<tr>
 	<td>NAME_FIELD</td>
 	<td>//input[@id='_199_name']</td>
 	<td></td>

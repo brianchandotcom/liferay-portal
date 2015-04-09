@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>SODashboard</td>
-</tr>
-<tr>
 	<td>DASHBOARD_URL</td>
 	<td>/user/${dashboardScreenName}/so/dashboard</td>
 	<td></td>

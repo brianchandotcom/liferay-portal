@@ -9,12 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>CPWebcontentMoveSelectfolder</td>
-</tr>
-<!---->
-<tr>
 	<td>SELECT_FOLDER_IFRAME</td>
 	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>

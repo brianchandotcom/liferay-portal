@@ -55,10 +55,6 @@ public class LiferayExtension {
 		return _appServerLibGlobalDir;
 	}
 
-	public File getAppServerLibPortalDir() {
-		return _appServerLibPortalDir;
-	}
-
 	public File getAppServerParentDir() {
 		return _appServerParentDir;
 	}
@@ -107,10 +103,6 @@ public class LiferayExtension {
 		_appServerLibGlobalDir = appServerLibGlobalDir;
 	}
 
-	public void setAppServerLibPortalDir(File appServerLibPortalDir) {
-		_appServerLibPortalDir = appServerLibPortalDir;
-	}
-
 	public void setAppServerParentDir(File appServerParentDir) {
 		_appServerParentDir = appServerParentDir;
 	}
@@ -136,7 +128,6 @@ public class LiferayExtension {
 	private File _appServerDeployDir;
 	private File _appServerDir;
 	private File _appServerLibGlobalDir;
-	private File _appServerLibPortalDir;
 	private File _appServerParentDir;
 	private File _appServerPortalDir;
 	private final ConfigObject _appServers = new ConfigObject();

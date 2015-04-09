@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
+import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.Validator;
@@ -65,6 +66,29 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureWebAppDirName(project);
+	}
+
+	protected DirectDeployTask addTaskDirectDeploy(Project project) {
+		DirectDeployTask directDeployTask = GradleUtil.addTask(
+			project, DIRECT_DEPLOY_TASK_NAME, DirectDeployTask.class);
+
+		directDeployTask.dependsOn(WarPlugin.WAR_TASK_NAME);
+
+		directDeployTask.setDescription(
+			"Processes the war archive just like it was run through Liferay " +
+				"Auto Deployer.");
+		directDeployTask.setGroup(WarPlugin.WEB_APP_GROUP);
+
+		return directDeployTask;
+	}
+
+	@Override
+	protected void addTasks(
+		Project project, LiferayExtension liferayExtension) {
+
+		super.addTasks(project, liferayExtension);
+
+		addTaskDirectDeploy(project);
 	}
 
 	@Override
@@ -155,12 +179,90 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		buildCssTask.setRootDirs(getWebAppDir(project));
 	}
 
+	protected void configureTaskDirectDeploy(
+		Project project, LiferayExtension liferayExtension) {
+
+		DirectDeployTask directDeployTask =
+			(DirectDeployTask)GradleUtil.getTask(
+				project, DIRECT_DEPLOY_TASK_NAME);
+
+		configureTaskDirectDeployAppServerDeployDir(
+			directDeployTask, liferayExtension);
+		configureTaskDirectDeployAppServerLibGlobalDir(
+			directDeployTask, liferayExtension);
+		configureTaskDirectDeployAppServerPortalDir(
+			directDeployTask, liferayExtension);
+		configureTaskDirectDeployAppServerType(
+			directDeployTask, liferayExtension);
+		configureTaskDirectDeployWebAppFile(directDeployTask);
+		configureTaskDirectDeployWebAppType(directDeployTask);
+	}
+
+	protected void configureTaskDirectDeployAppServerDeployDir(
+		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+
+		if (directDeployTask.getAppServerDeployDir() == null) {
+			directDeployTask.setAppServerDeployDir(
+				liferayExtension.getAppServerDeployDir());
+		}
+	}
+
+	protected void configureTaskDirectDeployAppServerLibGlobalDir(
+		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+
+		if (directDeployTask.getAppServerLibGlobalDir() == null) {
+			directDeployTask.setAppServerLibGlobalDir(
+				liferayExtension.getAppServerLibGlobalDir());
+		}
+	}
+
+	protected void configureTaskDirectDeployAppServerPortalDir(
+		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+
+		if (directDeployTask.getAppServerPortalDir() == null) {
+			directDeployTask.setAppServerPortalDir(
+				liferayExtension.getAppServerPortalDir());
+		}
+	}
+
+	protected void configureTaskDirectDeployAppServerType(
+		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+
+		if (Validator.isNull(directDeployTask.getAppServerType())) {
+			directDeployTask.setAppServerType(
+				liferayExtension.getAppServerType());
+		}
+	}
+
+	protected void configureTaskDirectDeployWebAppFile(
+		DirectDeployTask directDeployTask) {
+
+		if (directDeployTask.getWebAppFile() != null) {
+			return;
+		}
+
+		War warTask = (War)GradleUtil.getTask(
+			directDeployTask.getProject(), WarPlugin.WAR_TASK_NAME);
+
+		directDeployTask.setWebAppFile(warTask.getArchivePath());
+	}
+
+	protected void configureTaskDirectDeployWebAppType(
+		DirectDeployTask directDeployTask) {
+
+		if (Validator.isNull(directDeployTask.getWebAppType())) {
+			directDeployTask.setWebAppType(
+				getWebAppType(directDeployTask.getProject()));
+		}
+	}
+
 	@Override
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
 		super.configureTasks(project, liferayExtension);
 
+		configureTaskDirectDeploy(project, liferayExtension);
 		configureTaskWar(project, liferayExtension);
 	}
 
@@ -379,5 +481,15 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		return warPluginConvention.getWebAppDir();
 	}
+
+	protected String getWebAppType(Project project) {
+		String projectName = project.getName();
+
+		int index = projectName.lastIndexOf("-");
+
+		return projectName.substring(index + 1);
+	}
+
+	protected static final String DIRECT_DEPLOY_TASK_NAME = "directDeploy";
 
 }

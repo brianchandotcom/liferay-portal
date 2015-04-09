@@ -37,6 +37,7 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.ResolvableDependencies;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.ExtensionContainer;
@@ -62,6 +63,13 @@ public class GradleUtil {
 		Project project, String configurationName, File file) {
 
 		return _addDependency(project, configurationName, project.files(file));
+	}
+
+	public static Dependency addDependency(
+		Project project, String configurationName,
+		FileCollection fileCollection) {
+
+		return _addDependency(project, configurationName, fileCollection);
 	}
 
 	public static Dependency addDependency(

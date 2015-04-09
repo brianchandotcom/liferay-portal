@@ -45,6 +45,12 @@ public class FileUtil {
 		return file.exists();
 	}
 
+	public static String getAbsolutePath(File file) {
+		String absolutePath = file.getAbsolutePath();
+
+		return absolutePath.replace('\\', '/');
+	}
+
 	public static Properties readProperties(File file) throws Exception {
 		Properties properties = new Properties();
 

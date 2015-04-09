@@ -20,10 +20,20 @@ import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import com.liferay.portal.security.permission.ResourcePermissionChecker;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
-public class PollsResourcePermissionChecker {
+@Component(
+	immediate = true,
+	property = {
+		"resource.name=com.liferay.polls"
+	}
+)
+public class PollsResourcePermissionChecker
+	implements ResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.polls";
 
@@ -49,6 +59,13 @@ public class PollsResourcePermissionChecker {
 
 		return permissionChecker.hasPermission(
 			groupId, RESOURCE_NAME, groupId, actionId);
+	}
+
+	@Override
+	public Boolean checkResource(
+		PermissionChecker permissionChecker, long classPK, String actionId) {
+
+		return contains(permissionChecker, classPK, actionId);
 	}
 
 }

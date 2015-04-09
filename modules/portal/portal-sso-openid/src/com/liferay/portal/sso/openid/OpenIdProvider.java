@@ -14,8 +14,8 @@
 
 package com.liferay.portal.sso.openid;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -26,20 +26,8 @@ public class OpenIdProvider {
 		return _axSchema;
 	}
 
-	public String getAxTypeEmail() {
-		return _axTypeEmail;
-	}
-
-	public String getAxTypeFirstName() {
-		return _axTypeFirstName;
-	}
-
-	public String getAxTypeFullName() {
-		return _axTypeFullName;
-	}
-
-	public String getAxTypeLastName() {
-		return _axTypeLastName;
+	public Map<String, String> getAxTypes() {
+		return _axTypes;
 	}
 
 	public String getName() {
@@ -50,28 +38,12 @@ public class OpenIdProvider {
 		return _url;
 	}
 
-	public void setAxSchema(String axSchema) {
-		_axSchema = StringUtil.split(axSchema, StringPool.COMMA);
-	}
-
 	public void setAxSchema(String[] axSchema) {
 		_axSchema = axSchema;
 	}
 
-	public void setAxTypeEmail(String axTypeEmail) {
-		_axTypeEmail = axTypeEmail;
-	}
-
-	public void setAxTypeFirstName(String axTypeFirstName) {
-		_axTypeFirstName = axTypeFirstName;
-	}
-
-	public void setAxTypeFullName(String axTypeFullName) {
-		_axTypeFullName = axTypeFullName;
-	}
-
-	public void setAxTypeLastName(String axTypeLastName) {
-		_axTypeLastName = axTypeLastName;
+	public void setAxTypes(String name, String value) {
+		_axTypes.put(name, value);
 	}
 
 	public void setName(String name) {
@@ -83,10 +55,7 @@ public class OpenIdProvider {
 	}
 
 	private String[] _axSchema;
-	private String _axTypeEmail;
-	private String _axTypeFirstName;
-	private String _axTypeFullName;
-	private String _axTypeLastName;
+	private final Map<String, String> _axTypes = new HashMap<>();
 	private String _name;
 	private String _url;
 

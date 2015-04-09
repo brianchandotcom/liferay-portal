@@ -15,7 +15,6 @@
 package com.liferay.portal.sso.openid.internal.portlet.action;
 
 import com.liferay.portal.UserEmailAddressException;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.openid.OpenId;
@@ -499,17 +498,11 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 			_openIdProviderRegistry.getOpenIdProvider(
 				discoveryInformation.getOPEndpoint());
 
-		String[] openIdAXTypes = openIdProvider.getAxSchema();
+		Map<String, String> openIdAXTypes = openIdProvider.getAxTypes();
 
-		for (String openIdAXType : openIdAXTypes) {
-			openIdAXType =
-				StringUtil.toUpperCase(openIdAXType.substring(0, 1)) +
-					openIdAXType.substring(1, openIdAXType.length());
-
+		for (String openIdAXType : openIdAXTypes.keySet()) {
 			fetchRequest.addAttribute(
-				openIdAXType,
-				BeanPropertiesUtil.getString(openIdProvider, openIdAXType),
-				true);
+				openIdAXType, openIdAXTypes.get(openIdAXType), true);
 		}
 
 		authRequest.addExtension(fetchRequest);

@@ -15,6 +15,7 @@
 package com.liferay.portal.sso.openid.internal;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.sso.openid.OpenIdProvider;
 import com.liferay.portal.sso.openid.OpenIdProviderRegistry;
@@ -76,36 +77,53 @@ public class OpenIdProviderRegistryImpl implements OpenIdProviderRegistry {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		OpenIdProvider defaultOpenIdProvider = new OpenIdProvider();
+		Collection<OpenIdProvider> providers = initOpenIdProviders(properties);
 
-		defaultOpenIdProvider.setAxSchema(
-			GetterUtil.getString(properties, "open.id.ax.schema[default]"));
-		defaultOpenIdProvider.setAxTypeEmail(
-			GetterUtil.getString(properties, "open.id.ax.type.email[default]"));
-		defaultOpenIdProvider.setAxTypeFirstName(
-			GetterUtil.getString(
-				properties, "open.id.ax.type.firstname[default]"));
-		defaultOpenIdProvider.setAxTypeLastName(
-			GetterUtil.getString(
-				properties, "open.id.ax.type.lastname[default]"));
-		defaultOpenIdProvider.setName(OPEN_ID_PROVIDER_NAME_DEFAULT);
+		for (OpenIdProvider provider : providers) {
+			setOpenIdProvider(provider);
+		}
+	}
 
-		setOpenIdProvider(defaultOpenIdProvider);
+	protected Collection<OpenIdProvider> initOpenIdProviders(
+		Map<String, Object> properties) {
 
-		OpenIdProvider yahooOpenIdProvider = new OpenIdProvider();
+		Map<String, OpenIdProvider> result = new HashMap<>(2);
 
-		yahooOpenIdProvider.setAxSchema(
-			GetterUtil.getString(properties, "open.id.ax.schema[yahoo]"));
-		yahooOpenIdProvider.setAxTypeEmail(
-			GetterUtil.getString(properties, "open.id.ax.type.email[yahoo]"));
-		yahooOpenIdProvider.setAxTypeFullName(
-			GetterUtil.getString(
-				properties, "open.id.ax.type.fullname[yahoo]"));
-		yahooOpenIdProvider.setName("yahoo");
-		yahooOpenIdProvider.setUrl(
-			GetterUtil.getString(properties, "open.id.url[yahoo]"));
+		for (String key : properties.keySet()) {
+			int pos = key.indexOf("[");
 
-		setOpenIdProvider(yahooOpenIdProvider);
+			if (pos < 0) {
+				continue;
+			}
+
+			String name = key.substring(pos + 1, key.length() - 1);
+
+			OpenIdProvider openIdProvider = result.get(name);
+
+			if (openIdProvider == null) {
+				openIdProvider = new OpenIdProvider();
+				openIdProvider.setName(name);
+
+				result.put(name, openIdProvider);
+			}
+
+			String value = GetterUtil.getString(properties.get(key));
+
+			if (key.startsWith(_OPEN_ID_AX_SCHEMA)) {
+				openIdProvider.setAxSchema(StringUtil.split(value));
+			}
+			else if (key.startsWith(_OPEN_ID_AX_TYPE_URL)) {
+				openIdProvider.setUrl(value);
+			}
+			else {
+				String attributeName = key.substring(
+					_OPEN_ID_AX_TYPE.length() + 1, pos);
+
+				openIdProvider.setAxTypes(attributeName, value);
+			}
+		}
+
+		return result.values();
 	}
 
 	@Reference(
@@ -119,6 +137,12 @@ public class OpenIdProviderRegistryImpl implements OpenIdProviderRegistry {
 	protected void unsetOpenIdProvider(OpenIdProvider openIdProvider) {
 		_openIdProviders.remove(openIdProvider.getName());
 	}
+
+	private static final String _OPEN_ID_AX_SCHEMA = "open.id.ax.schema";
+
+	private static final String _OPEN_ID_AX_TYPE = "open.id.ax.type";
+
+	private static final String _OPEN_ID_AX_TYPE_URL = "open.id.url";
 
 	private final Map<String, OpenIdProvider> _openIdProviders =
 		new HashMap<>();

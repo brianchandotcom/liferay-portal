@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.portlet.action;
 
+import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -29,10 +31,20 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	property = {
+		"action.command.name=copyArticle",
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
+	},
+	service = ActionCommand.class
+)
 public class CopyArticleActionCommand extends BaseActionCommand {
 
 	protected void copyArticle(PortletRequest portletRequest) throws Exception {

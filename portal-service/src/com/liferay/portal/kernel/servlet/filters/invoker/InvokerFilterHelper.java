@@ -213,9 +213,9 @@ public class InvokerFilterHelper {
 		return invokerFilterChain;
 	}
 
-	protected Filter getFilter(
+	protected void initFilter(
 		ServletContext servletContext, String filterClassName,
-		FilterConfig filterConfig) {
+		String filterName, Map<String, String> initParameterMap) {
 
 		ClassLoader pluginClassLoader = servletContext.getClassLoader();
 
@@ -223,17 +223,21 @@ public class InvokerFilterHelper {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		try {
-			if (contextClassLoader != pluginClassLoader) {
-				currentThread.setContextClassLoader(pluginClassLoader);
-			}
+		if (contextClassLoader != pluginClassLoader) {
+			currentThread.setContextClassLoader(pluginClassLoader);
+		}
 
+		try {
 			Filter filter = (Filter)InstanceFactory.newInstance(
 				pluginClassLoader, filterClassName);
 
+			FilterConfig filterConfig = new InvokerFilterConfig(
+				servletContext, filterName, initParameterMap);
+
 			filter.init(filterConfig);
 
-			return filter;
+			_filterConfigs.put(filterName, filterConfig);
+			_filters.put(filterName, filter);
 		}
 		catch (Exception e) {
 			_log.error("Unable to initialize filter " + filterClassName, e);
@@ -243,8 +247,6 @@ public class InvokerFilterHelper {
 				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
-
-		return null;
 	}
 
 	protected void initFilterMapping(
@@ -307,16 +309,8 @@ public class InvokerFilterHelper {
 				initParameterMap.put(name, value);
 			}
 
-			FilterConfig filterConfig = new InvokerFilterConfig(
-				servletContext, filterName, initParameterMap);
-
-			Filter filter = getFilter(
-				servletContext, filterClassName, filterConfig);
-
-			if (filter != null) {
-				_filterConfigs.put(filterName, filterConfig);
-				_filters.put(filterName, filter);
-			}
+			initFilter(
+				servletContext, filterClassName, filterName, initParameterMap);
 		}
 
 		List<Element> filterMappingElements = rootElement.elements(

@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(
+	immediate = true,
 	property = {
 		"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
 	}

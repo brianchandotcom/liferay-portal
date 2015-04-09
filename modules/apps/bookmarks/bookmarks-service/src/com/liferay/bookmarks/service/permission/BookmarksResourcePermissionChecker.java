@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
+	immediate = true,
 	property = {"resource.name=com.liferay.bookmarks"},
 	service = ResourcePermissionChecker.class
 )

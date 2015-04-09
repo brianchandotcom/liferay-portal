@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="init.jsp" %>
 
 <%
 LiferayPortletResponse liferayPortletResponse = (LiferayPortletResponse)portletResponse;

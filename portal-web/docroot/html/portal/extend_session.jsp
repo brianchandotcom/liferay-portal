@@ -43,6 +43,10 @@ for (String servletContextName : ServletContextPool.keySet()) {
 
 		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
 
+		if (requestDispatcher == null) {
+			continue;
+		}
+
 		request.setAttribute(WebKeys.EXTEND_SESSION, Boolean.TRUE);
 
 		try {

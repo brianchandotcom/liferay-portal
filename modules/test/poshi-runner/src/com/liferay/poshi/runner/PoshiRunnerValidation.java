@@ -90,7 +90,7 @@ public class PoshiRunnerValidation {
 			}
 
 			if (!attributeName.startsWith("value") &&
-				Validator.isNull(attribute.getValue())) {
+				(attribute.getValue() == null)) {
 
 				throw new PoshiRunnerException(
 					"Missing " + attributeName + " attribute value\n" +

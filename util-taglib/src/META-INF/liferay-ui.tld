@@ -4593,7 +4593,7 @@
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>Boolean</type>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>A label for the search button such as <![CDATA[<code>Search</code>]]> or <![CDATA[<code>Go</code>]]>.</description>

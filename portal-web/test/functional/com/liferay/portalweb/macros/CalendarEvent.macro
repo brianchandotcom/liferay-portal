@@ -250,6 +250,7 @@
 		<var name="key_rsvp" value="${rsvp}" />
 
 		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE" value1="${rsvp}" />
+
 		<execute function="Pause" value1="3000" />
 
 		<execute macro="CalendarEvent#selectViaSchedulerCmd">
@@ -1570,6 +1571,7 @@
 		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
 
 		<execute function="SelectFrame" locator1="PGCalendarVieweventdetails#VIEW_EVENT_IFRAME" />
+
 		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
 	</command>
 

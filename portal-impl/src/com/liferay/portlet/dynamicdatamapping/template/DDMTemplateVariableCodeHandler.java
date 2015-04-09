@@ -36,8 +36,15 @@ import java.net.URL;
 public class DDMTemplateVariableCodeHandler
 	implements TemplateVariableCodeHandler {
 
-	public DDMTemplateVariableCodeHandler(String templatePath) {
+	public DDMTemplateVariableCodeHandler(
+		ClassLoader classLoader, String templatePath) {
+
+		_classLoader = classLoader;
 		_templatePath = templatePath;
+	}
+
+	public DDMTemplateVariableCodeHandler(String templatePath) {
+		this(null, templatePath);
 	}
 
 	@Override
@@ -99,11 +106,18 @@ public class DDMTemplateVariableCodeHandler
 	}
 
 	protected TemplateResource getTemplateResource(String resource) {
-		Class<?> clazz = getClass();
+		URL url = null;
 
-		ClassLoader classLoader = clazz.getClassLoader();
+		if (_classLoader == null) {
+			Class<?> clazz = getClass();
 
-		URL url = classLoader.getResource(resource);
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			classLoader.getResource(resource);
+		}
+		else {
+			url = _classLoader.getResource(resource);
+		}
 
 		return new URLTemplateResource(resource, url);
 	}
@@ -149,6 +163,7 @@ public class DDMTemplateVariableCodeHandler
 		template.put("repeatable", templateVariableDefinition.isRepeatable());
 	}
 
+	private final ClassLoader _classLoader;
 	private final String _templatePath;
 
 }

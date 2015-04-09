@@ -292,10 +292,10 @@ AUI.add(
 						return instance.getFieldInfo(definition, 'name', name);
 					},
 
-					getFieldsByName: function(name) {
+					getFirstFieldByName: function(name) {
 						var instance = this;
 
-						return AArray.filter(
+						return AArray.find(
 							instance.get('fields'),
 							function(item) {
 								return (item.get('name') === name);
@@ -568,10 +568,10 @@ AUI.add(
 							function(item, index) {
 								var name = item.get('name');
 
-								var originalChildFields = originalField.getFieldsByName(name);
+								var originalChildField = originalField.getFirstFieldByName(name);
 
-								if (originalChildFields.length) {
-									instance._addFieldValidation(item, originalChildFields[0]);
+								if (originalChildField) {
+									instance._addFieldValidation(item, originalChildField);
 								}
 							}
 						);

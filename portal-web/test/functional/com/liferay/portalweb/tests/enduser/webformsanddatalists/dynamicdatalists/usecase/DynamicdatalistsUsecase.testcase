@@ -1618,7 +1618,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54394" name="FormTemplateUniqueField" priority="5">
+	<command name="FormTemplateUniqueField" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
@@ -1807,7 +1807,7 @@
 		<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='Text'])[3]" />
 	</command>
 
-	<command known-issues="LPS-54394" name="TemplateAddDeletedField" priority="4">
+	<command name="TemplateAddDeletedField" priority="4">
 		<description message="This is a use case for LPS-48743." />
 
 		<execute macro="Page#gotoContentCP">
@@ -1873,7 +1873,7 @@
 		<execute macro="DDLTemplate#saveFormTemplateCP" />
 	</command>
 
-	<command known-issues="LPS-54394" name="ViewFormTemplateFieldsAfterBackNavigation" priority="3">
+	<command name="ViewFormTemplateFieldsAfterBackNavigation" priority="3">
 		<description message="This is a use case for LPS-48591." />
 
 		<execute macro="Page#gotoContentCP">

@@ -231,7 +231,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentViaAddContentPanel" priority="5">
+	<command known-issues="LPS-54774" name="AddWebContentViaAddContentPanel" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -256,7 +256,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWithStructure" priority="5">
+	<command known-issues="LPS-54575" name="AddWithStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -313,7 +313,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeTemplate" priority="5">
+	<command known-issues="LPS-54575" name="ChangeTemplate" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -571,7 +571,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAllSettingsEnabledWCDConfiguration" priority="5">
+	<command known-issues="LPS-54808" name="ViewAllSettingsEnabledWCDConfiguration" priority="5">
 		<execute macro="WebContentDisplayPortlet#configureSetupPG">
 			<var name="wcdConfigurationSettings" value="Enable Print,Enable Related Assets,Enable Ratings,Enable Comments,Enable Comment Ratings,Enable View Count Increment" />
 		</execute>
@@ -623,7 +623,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewEditTemplate" priority="5">
+	<command known-issues="LPS-54575" name="ViewEditTemplate" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

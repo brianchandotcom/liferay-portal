@@ -161,7 +161,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategorywithSiteRole" priority="4">
+	<command known-issues="LPS-54712" name="AddCategorywithSiteRole" priority="4">
 		<var name="pageName" value="Test Page Name" />
 		<var name="siteName" value="Test Site Name" />
 
@@ -449,7 +449,7 @@
 		</execute>
 	</command>
 
-	<command name="DeletePartialCategory" priority="5">
+	<command known-issues="LPS-54712" name="DeletePartialCategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1257,7 +1257,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCannotAddDuplicateSubCategory" priority="5">
+	<command known-issues="LPS-54798" name="ViewCannotAddDuplicateSubCategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

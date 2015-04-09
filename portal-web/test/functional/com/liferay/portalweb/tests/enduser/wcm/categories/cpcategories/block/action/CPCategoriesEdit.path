@@ -81,22 +81,22 @@
 </tr>
 <tr>
 	<td>PROPERTIES_KEY_FIELD_1</td>
-	<td>//input[@id='_147_key0']</td>
+	<td>//input[contains(@id,'key0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PROPERTIES_VALUE_FIELD_1</td>
-	<td>//input[@id='_147_value0']</td>
+	<td>//input[contains(@id,'value0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PROPERTIES_KEY_FIELD_2</td>
-	<td>//input[@id='_147_key2']</td>
+	<td>//input[contains(@id,'key2')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PROPERTIES_VALUE_FIELD_2</td>
-	<td>//input[@id='_147_value2']</td>
+	<td>//input[contains(@id,'value2')]</td>
 	<td></td>
 </tr>
 </tbody>

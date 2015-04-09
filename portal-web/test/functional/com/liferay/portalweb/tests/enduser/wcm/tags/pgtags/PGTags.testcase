@@ -11,7 +11,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddAutoAssertionTagViaBlogs" priority="5">
+	<command known-issues="LPS-51696" name="AddAutoAssertionTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -105,7 +105,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMultipleTagsViaBlogs" priority="5">
+	<command known-issues="LPS-51696" name="AddMultipleTagsViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -153,7 +153,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSelectTagViaBlogs" priority="5">
+	<command known-issues="LPS-51696" name="AddSelectTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -207,7 +207,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTagViaBlogs" priority="5">
+	<command known-issues="LPS-51696" name="AddTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -245,7 +245,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUTFTagViaBlogs" priority="5">
+	<command known-issues="LPS-51696" name="AddUTFTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -320,6 +320,7 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.txt" />
 			<var name="dmDocumentSize" value="0KB" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
@@ -335,8 +336,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewPG">
-			<var name="assetContent" value="Web Content Content" />
-			<var name="assetTitle" value="Web Content Title" />
+			<var name="assetContent" value="DM Document Description" />
+			<var name="assetTitle" value="DM Document Title" />
 			<var name="tagName" value="tag name" />
 		</execute>
 	</command>
@@ -426,7 +427,7 @@
 		</execute>
 	</command>
 
-	<command name="DisplayTagUsageStatistics" priority="5">
+	<command known-issues="LPS-54822" name="DisplayTagUsageStatistics" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -608,7 +609,7 @@
 		</execute>
 	</command>
 
-	<command name="FilterTagsByNameAP" priority="5">
+	<command known-issues="LPS-54822" name="FilterTagsByNameAP" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -700,7 +701,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveSelectTagViaBlogs" priority="5">
+	<command known-issues="LPS-51696" name="RemoveSelectTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -761,7 +762,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveTagViaBlogs" priority="5">
+	<command known-issues="LPS-51696" name="RemoveTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -821,7 +822,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchMultipleTagsViaBlogs" priority="5">
+	<command known-issues="LPS-51696" name="SearchMultipleTagsViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -67,6 +67,10 @@ public class PoshiRunnerValidation {
 					"Invalid " + elementName + " element\n" + filePath + ":" +
 						childElement.attributeValue("line-number"));
 			}
+
+			if (elementName.equals("execute")) {
+				_validateExecuteElement(childElement, filePath);
+			}
 		}
 	}
 
@@ -155,10 +159,123 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateExecuteElement(
+			Element element, String filePath)
+		throws PoshiRunnerException {
+
+		if (Validator.isNotNull(element.attributeValue("action"))) {
+			List<String> possibleAttributes = Arrays.asList(
+				"action", "line-number", "locator1", "locator2", "locator-key1",
+				"locator-key2", "value1", "value2");
+
+			_validateAttributes(element, possibleAttributes, filePath);
+
+			int locatorCount = PoshiRunnerContext.getActionLocatorCount(
+				element.attributeValue("action"));
+
+			for (int i = 1; i < locatorCount; i++) {
+				if ((element.attributeValue("locator" + i) != null) &&
+					(element.attributeValue("locator-key" + i) != null)) {
+
+					throw new PoshiRunnerException(
+						"There cannot be both locator and locator-key\n" +
+							filePath + ":" +
+							element.attributeValue("line-number"));
+				}
+			}
+		}
+		else if (Validator.isNotNull(element.attributeValue("function"))) {
+			List<String> possibleAttributes = Arrays.asList(
+				"function", "line-number", "locator1", "locator2", "value1",
+				"value2");
+
+			_validateAttributes(element, possibleAttributes, filePath);
+		}
+		else if (Validator.isNotNull(element.attributeValue("macro"))) {
+			List<String> possibleAttributes = Arrays.asList(
+				"macro", "line-number");
+
+			_validateAttributes(element, possibleAttributes, filePath);
+		}
+		else if (Validator.isNotNull(element.attributeValue("selenium"))) {
+			List<String> possibleAttributes = Arrays.asList(
+				"argument1", "argument2", "selenium", "line-number");
+
+			_validateAttributes(element, possibleAttributes, filePath);
+		}
+		else if (Validator.isNotNull(element.attributeValue("test-case"))) {
+			List<Attribute> attributes = element.attributes();
+
+			if (attributes.size() > 2) {
+				throw new PoshiRunnerException(
+					"Too many attributes\n" + filePath + ":" +
+						element.attributeValue("line-number"));
+			}
+		}
+		else {
+			throw new PoshiRunnerException(
+				"Invalid attribute\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.size() != 0) {
+			if (Validator.isNotNull(element.attributeValue("function")) ||
+				Validator.isNotNull(element.attributeValue("macro"))) {
+
+				for (Element childElement : childElements) {
+					if (StringUtils.equals(childElement.getName(), "var")) {
+						_validateVarElement(childElement, filePath);
+
+						continue;
+					}
+					else {
+						throw new PoshiRunnerException(
+							"Invalid child element\n" +
+								filePath + ":" +
+								element.attributeValue("line-number"));
+					}
+				}
+			}
+			else {
+				throw new PoshiRunnerException(
+					"Invalid child element\n" + filePath + ":" +
+						element.attributeValue("line-number"));
+			}
+		}
+	}
+
 	private static void _validateFunctionFile(Element element, String filePath)
 		throws PoshiRunnerException {
 
 		_validateDefinitionElement(element, filePath);
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			throw new PoshiRunnerException(
+				"Missing child elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.getName();
+
+			if (!childElementName.equals("command")) {
+				throw new PoshiRunnerException(
+					"Invalid " + childElementName +
+						" element\n" + filePath + ":" +
+						childElement.attributeValue("line-number"));
+			}
+
+			List<String> possibleAttributes = Arrays.asList(
+				"line-number", "name", "summary");
+
+			_validateAttributes(childElement, possibleAttributes, filePath);
+
+			_parseElements(childElement, filePath);
+		}
 	}
 
 	private static void _validateMacroFile(Element element, String filePath)

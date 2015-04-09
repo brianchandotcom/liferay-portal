@@ -218,8 +218,8 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 					project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 				FileTree fileTree = GradleUtil.getFilteredFileTree(
-					sourceSet.getResources(),
-					new String[] {"content/Language*.properties"}, null);
+					sourceSet.getResources(), null,
+					new String[] {"content/Language*.properties"});
 
 				Iterator<File> iterator = fileTree.iterator();
 

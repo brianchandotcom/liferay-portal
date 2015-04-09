@@ -181,7 +181,7 @@ public class GradleUtil {
 	}
 
 	public static FileTree getFilteredFileTree(
-		FileTree fileTree, final String[] includes, final String[] excludes) {
+		FileTree fileTree, final String[] excludes, final String[] includes) {
 
 		Closure<Void> closure = new Closure<Void>(null) {
 

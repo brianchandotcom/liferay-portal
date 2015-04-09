@@ -12,20 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.journal;
+package com.liferay.journal.web.custom;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.journal.model.JournalFolder;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portlet.journal.model.JournalFolder"
-	}
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
+	},
+	service = CustomAttributesDisplay.class
 )
 public class JournalFolderCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {

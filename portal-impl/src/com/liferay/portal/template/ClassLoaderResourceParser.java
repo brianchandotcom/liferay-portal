@@ -31,6 +31,16 @@ import java.util.List;
  */
 public class ClassLoaderResourceParser extends URLResourceParser {
 
+	public ClassLoaderResourceParser() {
+		Class<?> clazz = getClass();
+
+		_classLoader = clazz.getClassLoader();
+	}
+
+	public ClassLoaderResourceParser(ClassLoader classLoader) {
+		_classLoader = classLoader;
+	}
+
 	@Override
 	@SuppressWarnings("deprecation")
 	public URL getURL(String templateId) {
@@ -42,17 +52,13 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 			return null;
 		}
 
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Loading " + templateId);
 		}
 
 		templateId = normalizePath(templateId);
 
-		return classLoader.getResource(templateId);
+		return _classLoader.getResource(templateId);
 	}
 
 	protected static String normalizePath(String path) {
@@ -126,5 +132,7 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClassLoaderResourceParser.class);
+
+	private final ClassLoader _classLoader;
 
 }

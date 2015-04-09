@@ -70,7 +70,7 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(PollsWebKeys.POLLS_
 			<%= StringUtil.replace(question.getDescription(locale), StringPool.NEW_LINE, "<br />") %>
 
 			<c:choose>
-				<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
+				<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 					<aui:fieldset>
 						<aui:field-wrapper>
 
@@ -93,7 +93,7 @@ PollsQuestion question = (PollsQuestion)request.getAttribute(PollsWebKeys.POLLS_
 				<c:otherwise>
 					<%@ include file="/html/portlet/polls/view_question_results.jspf" %>
 
-					<c:if test="<%= !themeDisplay.isSignedIn() && !question.isExpired() && !PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
+					<c:if test="<%= !themeDisplay.isSignedIn() && !question.isExpired() && !PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 						<div class="alert alert-info">
 							<a href="<%= themeDisplay.getURLSignIn() %>" target="_top"><liferay-ui:message key="please-sign-in-to-vote" /></a>
 						</div>
@@ -110,11 +110,11 @@ boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionCh
 boolean hasViewPermission = true;
 
 if (question != null) {
-	hasViewPermission = PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.VIEW);
+	hasViewPermission = PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.VIEW);
 }
 
-boolean showAddPollIcon = hasConfigurationPermission && PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
-boolean showEditPollIcon = (question != null) && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE);
+boolean showAddPollIcon = hasConfigurationPermission && PollsResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
+boolean showEditPollIcon = (question != null) && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE);
 boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototypeLinkActive() && (hasConfigurationPermission || showEditPollIcon || showAddPollIcon);
 %>
 

@@ -238,7 +238,7 @@ if (folder != null) {
 					<%
 					String rowHREF = null;
 
-					if (BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.VIEW)) {
+					if (BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.VIEW)) {
 						PortletURL tempRowURL = renderResponse.createRenderURL();
 
 						tempRowURL.setParameter("struts_action", "/bookmarks/view_entry");

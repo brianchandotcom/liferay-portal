@@ -26,7 +26,7 @@ try {
 					<%= LanguageUtil.format(request, "this-page-is-currently-redirected-to-x", redirectPage.getTitle(), false) %>
 				</div>
 
-				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
+				<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 					<portlet:renderURL var="removeRedirectURL">
 						<portlet:param name="struts_action" value="/wiki/edit_page" />
 						<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
@@ -44,7 +44,7 @@ try {
 					</div>
 				</c:if>
 			</c:when>
-			<c:when test="<%= Validator.isNull(formattedContent) && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
+			<c:when test="<%= Validator.isNull(formattedContent) && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 				<div class="alert alert-info">
 					<aui:a href="<%= editPageURL.toString() %>" label="this-page-is-empty-edit-it-to-add-some-text" />
 				</div>

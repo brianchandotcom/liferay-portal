@@ -23,7 +23,7 @@ WikiNode node = (WikiNode)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
+	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/wiki/edit_node" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -37,7 +37,7 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= WikiNode.class.getName() %>"
 			modelResourceDescription="<%= node.getName() %>"
@@ -55,7 +55,7 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.IMPORT) %>">
+	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.IMPORT) %>">
 		<portlet:renderURL var="importURL">
 			<portlet:param name="struts_action" value="/wiki/import_pages" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -78,7 +78,7 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiGroupServiceSettings.emailPageAddedEnabled() || wikiGroupServiceSettings.emailPageUpdatedEnabled()) %>">
+	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiGroupServiceSettings.emailPageAddedEnabled() || wikiGroupServiceSettings.emailPageUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
 				<portlet:actionURL var="unsubscribeURL">
@@ -111,7 +111,7 @@ WikiNode node = (WikiNode)row.getObject();
 		</c:choose>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
+	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="viewDeletedAttachmentsURL">
 			<portlet:param name="struts_action" value="/wiki/view_node_deleted_attachments" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -126,7 +126,7 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.DELETE) %>">
+	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/wiki/edit_node" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= (TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />

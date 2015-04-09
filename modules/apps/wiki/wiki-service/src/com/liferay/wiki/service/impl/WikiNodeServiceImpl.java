@@ -20,8 +20,8 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.base.WikiNodeServiceBaseImpl;
-import com.liferay.wiki.service.permission.WikiNodePermission;
-import com.liferay.wiki.service.permission.WikiPermission;
+import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
+import com.liferay.wiki.service.permission.WikiResourcePermissionChecker;
 
 import java.io.InputStream;
 
@@ -44,7 +44,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
-		WikiPermission.check(
+		WikiResourcePermissionChecker.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_NODE);
 
@@ -54,7 +54,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public void deleteNode(long nodeId) throws PortalException {
-		WikiNodePermission.check(
+		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.DELETE);
 
 		wikiNodeLocalService.deleteNode(nodeId);
@@ -62,7 +62,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public WikiNode getNode(long nodeId) throws PortalException {
-		WikiNodePermission.check(
+		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.VIEW);
 
 		return wikiNodeLocalService.getNode(nodeId);
@@ -70,7 +70,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public WikiNode getNode(long groupId, String name) throws PortalException {
-		WikiNodePermission.check(
+		WikiNodePermissionChecker.check(
 			getPermissionChecker(), groupId, name, ActionKeys.VIEW);
 
 		return wikiNodeLocalService.getNode(groupId, name);
@@ -95,7 +95,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 				groupId, status);
 
 			for (WikiNode node : allNodes) {
-				if (WikiNodePermission.contains(
+				if (WikiNodePermissionChecker.contains(
 						getPermissionChecker(), node, ActionKeys.VIEW)) {
 
 					nodes.add(node);
@@ -134,7 +134,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 			Map<String, String[]> options)
 		throws PortalException {
 
-		WikiNodePermission.check(
+		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.IMPORT);
 
 		wikiNodeLocalService.importPages(
@@ -143,7 +143,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public WikiNode moveNodeToTrash(long nodeId) throws PortalException {
-		WikiNodePermission.check(
+		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.DELETE);
 
 		return wikiNodeLocalService.moveNodeToTrash(getUserId(), nodeId);
@@ -153,7 +153,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 	public void restoreNodeFromTrash(long nodeId) throws PortalException {
 		WikiNode node = wikiNodeLocalService.getNode(nodeId);
 
-		WikiNodePermission.check(
+		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.DELETE);
 
 		wikiNodeLocalService.restoreNodeFromTrash(getUserId(), node);
@@ -161,7 +161,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public void subscribeNode(long nodeId) throws PortalException {
-		WikiNodePermission.check(
+		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.SUBSCRIBE);
 
 		wikiNodeLocalService.subscribeNode(getUserId(), nodeId);
@@ -169,7 +169,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public void unsubscribeNode(long nodeId) throws PortalException {
-		WikiNodePermission.check(
+		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.SUBSCRIBE);
 
 		wikiNodeLocalService.unsubscribeNode(getUserId(), nodeId);
@@ -181,7 +181,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		WikiNodePermission.check(
+		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.UPDATE);
 
 		return wikiNodeLocalService.updateNode(

@@ -12,24 +12,28 @@
  * details.
  */
 
-package com.liferay.wiki.service.permission;
+package com.liferay.bookmarks.service.permission;
 
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
-import com.liferay.wiki.constants.WikiPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-@Component(property = {"resource.name=com.liferay.wiki"})
-public class WikiPermission implements ResourcePermissionChecker {
+@Component(
+	property = {"resource.name=com.liferay.bookmarks"},
+	service = ResourcePermissionChecker.class
+)
+public class BookmarksResourcePermissionChecker
+	extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.wiki";
+	public static final String RESOURCE_NAME = "com.liferay.bookmarks";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -41,18 +45,11 @@ public class WikiPermission implements ResourcePermissionChecker {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long groupId, String actionId) {
+		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, RESOURCE_NAME, groupId,
-			WikiPortletKeys.WIKI, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
+		return contains(
+			permissionChecker, RESOURCE_NAME, BookmarksPortletKeys.BOOKMARKS,
+			classPK, actionId);
 	}
 
 	@Override

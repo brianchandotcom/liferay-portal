@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.wiki.model.WikiPage"
 	}
 )
-public class WikiPagePermission implements BaseModelPermissionChecker {
+public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long resourcePrimKey,
@@ -104,7 +104,7 @@ public class WikiPagePermission implements BaseModelPermissionChecker {
 			return contains(permissionChecker, page, actionId);
 		}
 		catch (NoSuchPageException nspe) {
-			return WikiNodePermission.contains(
+			return WikiNodePermissionChecker.contains(
 				permissionChecker, nodeId, ActionKeys.VIEW);
 		}
 	}
@@ -121,7 +121,7 @@ public class WikiPagePermission implements BaseModelPermissionChecker {
 			return contains(permissionChecker, page, actionId);
 		}
 		catch (NoSuchPageException nspe) {
-			return WikiNodePermission.contains(
+			return WikiNodePermissionChecker.contains(
 				permissionChecker, nodeId, ActionKeys.VIEW);
 		}
 	}
@@ -177,7 +177,7 @@ public class WikiPagePermission implements BaseModelPermissionChecker {
 			if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 				WikiNode node = page.getNode();
 
-				if (!WikiNodePermission.contains(
+				if (!WikiNodePermissionChecker.contains(
 						permissionChecker, node, actionId)) {
 
 					return false;

@@ -12,27 +12,20 @@
  * details.
  */
 
-package com.liferay.bookmarks.service.permission;
+package com.liferay.polls.service.permission;
 
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.ResourcePermissionChecker;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jorge Ferrer
+ * @author Mika Koivisto
  */
-@Component(
-	property = {"resource.name=com.liferay.bookmarks"},
-	service = ResourcePermissionChecker.class
-)
-public class BookmarksPermission extends BaseResourcePermissionChecker {
+public class PollsResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.bookmarks";
+	public static final String RESOURCE_NAME = "com.liferay.polls";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -44,18 +37,18 @@ public class BookmarksPermission extends BaseResourcePermissionChecker {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
+		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return contains(
-			permissionChecker, RESOURCE_NAME, BookmarksPortletKeys.BOOKMARKS,
-			classPK, actionId);
-	}
+		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+			permissionChecker, groupId, RESOURCE_NAME, groupId,
+			PollsPortletKeys.POLLS, actionId);
 
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
+		}
 
-		return contains(permissionChecker, classPK, actionId);
+		return permissionChecker.hasPermission(
+			groupId, RESOURCE_NAME, groupId, actionId);
 	}
 
 }

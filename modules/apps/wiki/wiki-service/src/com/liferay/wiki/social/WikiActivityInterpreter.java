@@ -32,7 +32,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiPagePermission;
+import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
 /**
  * @author Samuel Kong
@@ -219,7 +219,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		if (!WikiPagePermission.contains(
+		if (!WikiPagePermissionChecker.contains(
 				permissionChecker, activity.getClassPK(), ActionKeys.VIEW)) {
 
 			return false;
@@ -239,7 +239,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 				pageResource.getNodeId(), pageResource.getTitle(), version);
 
 			if (!page.isApproved() &&
-				!WikiPagePermission.contains(
+				!WikiPagePermissionChecker.contains(
 					permissionChecker, activity.getClassPK(),
 					ActionKeys.UPDATE)) {
 

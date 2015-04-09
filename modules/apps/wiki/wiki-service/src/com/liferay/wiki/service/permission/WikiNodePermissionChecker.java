@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.polls.service.permission;
+package com.liferay.wiki.service.permission;
 
-import com.liferay.polls.constants.PollsPortletKeys;
-import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,68 +29,80 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = {
-		"model.class.name=com.liferay.polls.model.PollsQuestion"
-	},
-	service = BaseModelPermissionChecker.class
+		"model.class.name=com.liferay.wiki.model.WikiNode"
+	}
 )
-public class PollsQuestionPermission implements BaseModelPermissionChecker {
+public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker, long questionId,
-			String actionId)
+			PermissionChecker permissionChecker, long nodeId, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, questionId, actionId)) {
+		if (!contains(permissionChecker, nodeId, actionId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, PollsQuestion question,
+			PermissionChecker permissionChecker, long groupId, String name,
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, question, actionId)) {
+		if (!contains(permissionChecker, groupId, name, actionId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, WikiNode node, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, node, actionId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long questionId,
-			String actionId)
+			PermissionChecker permissionChecker, long nodeId, String actionId)
 		throws PortalException {
 
-		PollsQuestion question = PollsQuestionLocalServiceUtil.getQuestion(
-			questionId);
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(nodeId);
 
-		return contains(permissionChecker, question, actionId);
+		return contains(permissionChecker, node, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, PollsQuestion question,
-		String actionId) {
+			PermissionChecker permissionChecker, long groupId, String name,
+			String actionId)
+		throws PortalException {
+
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(groupId, name);
+
+		return contains(permissionChecker, node, actionId);
+	}
+
+	public static boolean contains(
+		PermissionChecker permissionChecker, WikiNode node, String actionId) {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, question.getGroupId(),
-			PollsQuestion.class.getName(), question.getQuestionId(),
-			PollsPortletKeys.POLLS, actionId);
+			permissionChecker, node.getGroupId(), WikiNode.class.getName(),
+			node.getNodeId(), WikiPortletKeys.WIKI, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				question.getCompanyId(), PollsQuestion.class.getName(),
-				question.getQuestionId(), question.getUserId(), actionId)) {
+				node.getCompanyId(), WikiNode.class.getName(), node.getNodeId(),
+				node.getUserId(), actionId)) {
 
 			return true;
 		}
 
 		return permissionChecker.hasPermission(
-			question.getGroupId(), PollsQuestion.class.getName(),
-			question.getQuestionId(), actionId);
+			node.getGroupId(), WikiNode.class.getName(), node.getNodeId(),
+			actionId);
 	}
 
 	@Override

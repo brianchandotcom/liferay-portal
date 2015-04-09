@@ -15,7 +15,6 @@
 package com.liferay.portal.repository.external;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.repository.BaseRepository;
@@ -23,12 +22,8 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
-import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
-import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
@@ -92,35 +87,6 @@ public class LegacyExternalRepositoryFactory implements RepositoryFactory {
 				"Unable to find a valid repository for class name ID " +
 					classNameId,
 				e);
-		}
-
-		CMISRepositoryHandler cmisRepositoryHandler = null;
-
-		if (baseRepository instanceof CMISRepositoryHandler) {
-			cmisRepositoryHandler = (CMISRepositoryHandler)baseRepository;
-		}
-		else if (baseRepository instanceof BaseRepositoryProxyBean) {
-			BaseRepositoryProxyBean baseRepositoryProxyBean =
-				(BaseRepositoryProxyBean)baseRepository;
-
-			ClassLoaderBeanHandler classLoaderBeanHandler =
-				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
-					baseRepositoryProxyBean.getProxyBean());
-
-			Object bean = classLoaderBeanHandler.getBean();
-
-			if (bean instanceof CMISRepositoryHandler) {
-				cmisRepositoryHandler = (CMISRepositoryHandler)bean;
-			}
-		}
-
-		if (cmisRepositoryHandler != null) {
-			CMISRepository cmisRepository = new CMISRepository(
-				cmisRepositoryHandler);
-
-			cmisRepositoryHandler.setCmisRepository(cmisRepository);
-
-			setupRepository(repositoryId, repository, cmisRepository);
 		}
 
 		setupRepository(repositoryId, repository, baseRepository);

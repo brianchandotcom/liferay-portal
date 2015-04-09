@@ -15,7 +15,6 @@
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
 import java.io.IOException;
@@ -235,7 +234,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	protected String getTldUri(URL url) {
 		try (InputStream inputStream = url.openStream()) {
-			StringBundler sb = new StringBundler();
+			StringBuilder sb = new StringBuilder();
 			byte[] buffer = new byte[4096];
 			int length = 0;
 

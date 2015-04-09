@@ -37,7 +37,7 @@ JournalArticle article = ActionUtil.getArticle(request);
 		<%
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "html/portlet/journal/view_article_history.jsp");
+		portletURL.setParameter("mvcPath", "/view_article_history.jsp");
 		portletURL.setParameter("tabs1", tabs1);
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter("referringPortletResource", referringPortletResource);

@@ -15,8 +15,8 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.tasks.BuildCssTask;
-import com.liferay.gradle.plugins.tasks.DirectDeployTask;
+import com.liferay.gradle.plugins.tasks.BuildCss;
+import com.liferay.gradle.plugins.tasks.DirectDeploy;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.Validator;
@@ -68,18 +68,18 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		configureWebAppDirName(project);
 	}
 
-	protected DirectDeployTask addTaskDirectDeploy(Project project) {
-		DirectDeployTask directDeployTask = GradleUtil.addTask(
-			project, DIRECT_DEPLOY_TASK_NAME, DirectDeployTask.class);
+	protected DirectDeploy addTaskDirectDeploy(Project project) {
+		DirectDeploy directDeploy = GradleUtil.addTask(
+			project, DIRECT_DEPLOY_TASK_NAME, DirectDeploy.class);
 
-		directDeployTask.dependsOn(WarPlugin.WAR_TASK_NAME);
+		directDeploy.dependsOn(WarPlugin.WAR_TASK_NAME);
 
-		directDeployTask.setDescription(
+		directDeploy.setDescription(
 			"Processes a WAR file as if it was picked up by the Liferay auto " +
 				"deploy directory");
-		directDeployTask.setGroup(WarPlugin.WEB_APP_GROUP);
+		directDeploy.setGroup(WarPlugin.WEB_APP_GROUP);
 
-		return directDeployTask;
+		return directDeploy;
 	}
 
 	@Override
@@ -167,92 +167,89 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
-		FileCollection rootDirs = buildCssTask.getRootDirs();
+	protected void configureTaskBuildCssRootDirs(BuildCss buildCss) {
+		FileCollection rootDirs = buildCss.getRootDirs();
 
 		if ((rootDirs != null) && !rootDirs.isEmpty()) {
 			return;
 		}
 
-		Project project = buildCssTask.getProject();
+		Project project = buildCss.getProject();
 
-		buildCssTask.setRootDirs(getWebAppDir(project));
+		buildCss.setRootDirs(getWebAppDir(project));
 	}
 
 	protected void configureTaskDirectDeploy(
 		Project project, LiferayExtension liferayExtension) {
 
-		DirectDeployTask directDeployTask =
-			(DirectDeployTask)GradleUtil.getTask(
-				project, DIRECT_DEPLOY_TASK_NAME);
+		DirectDeploy directDeploy = (DirectDeploy)GradleUtil.getTask(
+			project, DIRECT_DEPLOY_TASK_NAME);
 
 		configureTaskDirectDeployAppServerDeployDir(
-			directDeployTask, liferayExtension);
+			directDeploy, liferayExtension);
 		configureTaskDirectDeployAppServerLibGlobalDir(
-			directDeployTask, liferayExtension);
+			directDeploy, liferayExtension);
 		configureTaskDirectDeployAppServerPortalDir(
-			directDeployTask, liferayExtension);
-		configureTaskDirectDeployAppServerType(
-			directDeployTask, liferayExtension);
-		configureTaskDirectDeployWebAppFile(directDeployTask);
-		configureTaskDirectDeployWebAppType(directDeployTask);
+			directDeploy, liferayExtension);
+		configureTaskDirectDeployAppServerType(directDeploy, liferayExtension);
+		configureTaskDirectDeployWebAppFile(directDeploy);
+		configureTaskDirectDeployWebAppType(directDeploy);
 	}
 
 	protected void configureTaskDirectDeployAppServerDeployDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+		DirectDeploy directDeploy, LiferayExtension liferayExtension) {
 
-		if (directDeployTask.getAppServerDeployDir() == null) {
-			directDeployTask.setAppServerDeployDir(
+		if (directDeploy.getAppServerDeployDir() == null) {
+			directDeploy.setAppServerDeployDir(
 				liferayExtension.getAppServerDeployDir());
 		}
 	}
 
 	protected void configureTaskDirectDeployAppServerLibGlobalDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+		DirectDeploy directDeploy, LiferayExtension liferayExtension) {
 
-		if (directDeployTask.getAppServerLibGlobalDir() == null) {
-			directDeployTask.setAppServerLibGlobalDir(
+		if (directDeploy.getAppServerLibGlobalDir() == null) {
+			directDeploy.setAppServerLibGlobalDir(
 				liferayExtension.getAppServerLibGlobalDir());
 		}
 	}
 
 	protected void configureTaskDirectDeployAppServerPortalDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+		DirectDeploy directDeploy, LiferayExtension liferayExtension) {
 
-		if (directDeployTask.getAppServerPortalDir() == null) {
-			directDeployTask.setAppServerPortalDir(
+		if (directDeploy.getAppServerPortalDir() == null) {
+			directDeploy.setAppServerPortalDir(
 				liferayExtension.getAppServerPortalDir());
 		}
 	}
 
 	protected void configureTaskDirectDeployAppServerType(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+		DirectDeploy directDeploy, LiferayExtension liferayExtension) {
 
-		if (Validator.isNull(directDeployTask.getAppServerType())) {
-			directDeployTask.setAppServerType(
-				liferayExtension.getAppServerType());
+		if (Validator.isNull(directDeploy.getAppServerType())) {
+			directDeploy.setAppServerType(liferayExtension.getAppServerType());
 		}
 	}
 
 	protected void configureTaskDirectDeployWebAppFile(
-		DirectDeployTask directDeployTask) {
+		DirectDeploy directDeploy) {
 
-		if (directDeployTask.getWebAppFile() != null) {
+		if (directDeploy.getWebAppFile() != null) {
 			return;
 		}
 
 		War war = (War)GradleUtil.getTask(
-			directDeployTask.getProject(), WarPlugin.WAR_TASK_NAME);
+			directDeploy.getProject(), WarPlugin.WAR_TASK_NAME);
 
-		directDeployTask.setWebAppFile(war.getArchivePath());
+		directDeploy.setWebAppFile(war.getArchivePath());
 	}
 
 	protected void configureTaskDirectDeployWebAppType(
-		DirectDeployTask directDeployTask) {
+		DirectDeploy directDeploy) {
 
-		if (Validator.isNull(directDeployTask.getWebAppType())) {
-			directDeployTask.setWebAppType(
-				getWebAppType(directDeployTask.getProject()));
+		if (Validator.isNull(directDeploy.getWebAppType())) {
+			directDeploy.setWebAppType(
+				getWebAppType(directDeploy.getProject()));
 		}
 	}
 

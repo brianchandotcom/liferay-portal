@@ -15,9 +15,9 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.tasks.BuildCssTask;
-import com.liferay.gradle.plugins.tasks.FormatSourceTask;
-import com.liferay.gradle.plugins.tasks.InitGradleTask;
+import com.liferay.gradle.plugins.tasks.BuildCss;
+import com.liferay.gradle.plugins.tasks.FormatSource;
+import com.liferay.gradle.plugins.tasks.InitGradle;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.StringUtil;
 import com.liferay.gradle.plugins.util.Validator;
@@ -129,35 +129,35 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected BuildCssTask addTaskBuildCss(Project project) {
-		BuildCssTask buildCssTask = GradleUtil.addTask(
-			project, BUILD_CSS_TASK_NAME, BuildCssTask.class);
+	protected BuildCss addTaskBuildCss(Project project) {
+		BuildCss buildCss = GradleUtil.addTask(
+			project, BUILD_CSS_TASK_NAME, BuildCss.class);
 
-		buildCssTask.setDescription("Compiles CSS files.");
-		buildCssTask.setGroup(BasePlugin.BUILD_GROUP);
+		buildCss.setDescription("Compiles CSS files.");
+		buildCss.setGroup(BasePlugin.BUILD_GROUP);
 
-		return buildCssTask;
+		return buildCss;
 	}
 
-	protected FormatSourceTask addTaskFormatSource(Project project) {
-		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
+	protected FormatSource addTaskFormatSource(Project project) {
+		FormatSource formatSource = GradleUtil.addTask(
+			project, FORMAT_SOURCE_TASK_NAME, FormatSource.class);
 
-		formatSourceTask.setDescription(
+		formatSource.setDescription(
 			"Runs Liferay Source Formatter to format files.");
 
-		return formatSourceTask;
+		return formatSource;
 	}
 
-	protected InitGradleTask addTaskInitGradle(Project project) {
-		InitGradleTask initGradleTask = GradleUtil.addTask(
-			project, INIT_GRADLE_TASK_NAME, InitGradleTask.class);
+	protected InitGradle addTaskInitGradle(Project project) {
+		InitGradle initGradle = GradleUtil.addTask(
+			project, INIT_GRADLE_TASK_NAME, InitGradle.class);
 
-		initGradleTask.setDescription(
+		initGradle.setDescription(
 			"Initializes build.gradle by migrating information from legacy " +
 				"files.");
 
-		return initGradleTask;
+		return initGradle;
 	}
 
 	protected void addTasks(
@@ -322,51 +322,49 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTaskBuildCss(
 		Project project, LiferayExtension liferayExtension) {
 
-		BuildCssTask buildCssTask = (BuildCssTask)GradleUtil.getTask(
+		BuildCss buildCss = (BuildCss)GradleUtil.getTask(
 			project, BUILD_CSS_TASK_NAME);
 
-		configureTaskBuildCssPortalWebFile(buildCssTask);
-		configureTaskBuildCssRootDirs(buildCssTask);
-		configureTaskBuildCssTmpDir(buildCssTask, liferayExtension);
+		configureTaskBuildCssPortalWebFile(buildCss);
+		configureTaskBuildCssRootDirs(buildCss);
+		configureTaskBuildCssTmpDir(buildCss, liferayExtension);
 	}
 
-	protected void configureTaskBuildCssPortalWebFile(
-		BuildCssTask buildCssTask) {
-
-		if (buildCssTask.getPortalWebFile() != null) {
+	protected void configureTaskBuildCssPortalWebFile(BuildCss buildCss) {
+		if (buildCss.getPortalWebFile() != null) {
 			return;
 		}
 
 		Configuration configuration = GradleUtil.getConfiguration(
-			buildCssTask.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
+			buildCss.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
 
-		buildCssTask.setPortalWebFile(configuration.getSingleFile());
+		buildCss.setPortalWebFile(configuration.getSingleFile());
 	}
 
-	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
-		FileCollection rootDirs = buildCssTask.getRootDirs();
+	protected void configureTaskBuildCssRootDirs(BuildCss buildCss) {
+		FileCollection rootDirs = buildCss.getRootDirs();
 
 		if ((rootDirs != null) && !rootDirs.isEmpty()) {
 			return;
 		}
 
-		Project project = buildCssTask.getProject();
+		Project project = buildCss.getProject();
 
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
 
-		buildCssTask.setRootDirs(sourceDirectorySet.getSrcDirs());
+		buildCss.setRootDirs(sourceDirectorySet.getSrcDirs());
 	}
 
 	protected void configureTaskBuildCssTmpDir(
-		BuildCssTask buildCssTask, LiferayExtension liferayExtension) {
+		BuildCss buildCss, LiferayExtension liferayExtension) {
 
-		if (buildCssTask.getTmpDir() == null) {
+		if (buildCss.getTmpDir() == null) {
 			File tmpDir = new File(liferayExtension.getTmpDir(), "portal-web");
 
-			buildCssTask.setTmpDir(tmpDir);
+			buildCss.setTmpDir(tmpDir);
 		}
 	}
 

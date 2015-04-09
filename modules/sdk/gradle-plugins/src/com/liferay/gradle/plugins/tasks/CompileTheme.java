@@ -43,9 +43,9 @@ import org.gradle.api.tasks.TaskAction;
 /**
  * @author Andrea Di Giorgi
  */
-public class CompileThemeTask extends DefaultTask {
+public class CompileTheme extends DefaultTask {
 
-	public CompileThemeTask() {
+	public CompileTheme() {
 		_project = getProject();
 	}
 
@@ -213,12 +213,10 @@ public class CompileThemeTask extends DefaultTask {
 	protected void copyThemeParentProject() {
 		Project themeParentProject = getThemeParentProject();
 
-		CompileThemeTask compileParentThemeTask =
-			(CompileThemeTask)GradleUtil.getTask(
-				themeParentProject, LiferayThemePlugin.COMPILE_THEME_TASK_NAME);
+		CompileTheme compileParentTheme = (CompileTheme)GradleUtil.getTask(
+			themeParentProject, LiferayThemePlugin.COMPILE_THEME_TASK_NAME);
 
-		final File parentThemeRootDir =
-			compileParentThemeTask.getThemeRootDir();
+		final File parentThemeRootDir = compileParentTheme.getThemeRootDir();
 
 		Closure<Void> closure = new Closure<Void>(null) {
 

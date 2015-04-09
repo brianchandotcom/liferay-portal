@@ -16,9 +16,9 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
-import com.liferay.gradle.plugins.tasks.BuildCssTask;
-import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask;
-import com.liferay.gradle.plugins.tasks.CompileThemeTask;
+import com.liferay.gradle.plugins.tasks.BuildCss;
+import com.liferay.gradle.plugins.tasks.BuildThumbnails;
+import com.liferay.gradle.plugins.tasks.CompileTheme;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.Validator;
@@ -51,36 +51,36 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	}
 
 	@Override
-	protected BuildCssTask addTaskBuildCss(Project project) {
-		BuildCssTask buildCssTask = super.addTaskBuildCss(project);
+	protected BuildCss addTaskBuildCss(Project project) {
+		BuildCss buildCss = super.addTaskBuildCss(project);
 
-		buildCssTask.dependsOn(COMPILE_THEME_TASK_NAME);
+		buildCss.dependsOn(COMPILE_THEME_TASK_NAME);
 
-		return buildCssTask;
+		return buildCss;
 	}
 
-	protected BuildThumbnailsTask addTaskBuildThumbnails(Project project) {
-		BuildThumbnailsTask buildThumbnailsTask = GradleUtil.addTask(
-			project, BUILD_THUMBNAILS_TASK_NAME, BuildThumbnailsTask.class);
+	protected BuildThumbnails addTaskBuildThumbnails(Project project) {
+		BuildThumbnails buildThumbnails = GradleUtil.addTask(
+			project, BUILD_THUMBNAILS_TASK_NAME, BuildThumbnails.class);
 
-		buildThumbnailsTask.setDescription("Generates thumbnails.");
-		buildThumbnailsTask.setGroup(BasePlugin.BUILD_GROUP);
+		buildThumbnails.setDescription("Generates thumbnails.");
+		buildThumbnails.setGroup(BasePlugin.BUILD_GROUP);
 
-		return buildThumbnailsTask;
+		return buildThumbnails;
 	}
 
-	protected CompileThemeTask addTaskCompileTheme(Project project) {
-		CompileThemeTask compileThemeTask = GradleUtil.addTask(
-			project, COMPILE_THEME_TASK_NAME, CompileThemeTask.class);
+	protected CompileTheme addTaskCompileTheme(Project project) {
+		CompileTheme compileTheme = GradleUtil.addTask(
+			project, COMPILE_THEME_TASK_NAME, CompileTheme.class);
 
-		compileThemeTask.dependsOn(BUILD_THUMBNAILS_TASK_NAME);
+		compileTheme.dependsOn(BUILD_THUMBNAILS_TASK_NAME);
 
-		compileThemeTask.setDescription(
+		compileTheme.setDescription(
 			"Compiles the theme by merging the \"diffs\" directory with the " +
 				"parent theme.");
-		compileThemeTask.setGroup(BasePlugin.BUILD_GROUP);
+		compileTheme.setGroup(BasePlugin.BUILD_GROUP);
 
-		return compileThemeTask;
+		return compileTheme;
 	}
 
 	@Override
@@ -126,30 +126,29 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	protected void configureTaskBuildThumbnails(
 		Project project, LiferayThemeExtension liferayThemeExtension) {
 
-		BuildThumbnailsTask buildThumbnailsTask =
-			(BuildThumbnailsTask)GradleUtil.getTask(
-				project, BUILD_THUMBNAILS_TASK_NAME);
+		BuildThumbnails buildThumbnails = (BuildThumbnails)GradleUtil.getTask(
+			project, BUILD_THUMBNAILS_TASK_NAME);
 
 		configureTaskBuildThumbnailsImagesDir(
-			buildThumbnailsTask, liferayThemeExtension);
+			buildThumbnails, liferayThemeExtension);
 	}
 
 	protected void configureTaskBuildThumbnailsImagesDir(
-		BuildThumbnailsTask buildThumbnailsTask,
+		BuildThumbnails buildThumbnails,
 		LiferayThemeExtension liferayThemeExtension) {
 
-		if (buildThumbnailsTask.getImagesDir() != null) {
+		if (buildThumbnails.getImagesDir() != null) {
 			return;
 		}
 
 		File diffsDir = getDiffsDir(
-			buildThumbnailsTask.getProject(), liferayThemeExtension);
+			buildThumbnails.getProject(), liferayThemeExtension);
 
 		if (diffsDir != null) {
 			File imagesDir = new File(
 				liferayThemeExtension.getDiffsDir(), "images");
 
-			buildThumbnailsTask.setImagesDir(imagesDir);
+			buildThumbnails.setImagesDir(imagesDir);
 		}
 	}
 
@@ -163,74 +162,70 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	protected void configureTaskCompileTheme(
 		Project project, LiferayThemeExtension liferayThemeExtension) {
 
-		CompileThemeTask compileThemeTask =
-			(CompileThemeTask)GradleUtil.getTask(
-				project, COMPILE_THEME_TASK_NAME);
+		CompileTheme compileTheme = (CompileTheme)GradleUtil.getTask(
+			project, COMPILE_THEME_TASK_NAME);
 
-		configureTaskCompileThemeDiffsDir(
-			compileThemeTask, liferayThemeExtension);
-		configureTaskCompileThemeParent(
-			compileThemeTask, liferayThemeExtension);
-		configureTaskCompileThemePortalWebFile(compileThemeTask);
-		configureTaskCompileThemeType(compileThemeTask, liferayThemeExtension);
+		configureTaskCompileThemeDiffsDir(compileTheme, liferayThemeExtension);
+		configureTaskCompileThemeParent(compileTheme, liferayThemeExtension);
+		configureTaskCompileThemePortalWebFile(compileTheme);
+		configureTaskCompileThemeType(compileTheme, liferayThemeExtension);
 
-		configureTaskCompileThemeDependsOn(compileThemeTask);
+		configureTaskCompileThemeDependsOn(compileTheme);
 	}
 
 	protected void configureTaskCompileThemeDependsOn(
-		CompileThemeTask compileThemeTask) {
+		CompileTheme compileTheme) {
 
-		compileThemeTask.dependsOn(BUILD_THUMBNAILS_TASK_NAME);
+		compileTheme.dependsOn(BUILD_THUMBNAILS_TASK_NAME);
 
-		Project themeParentProject = compileThemeTask.getThemeParentProject();
+		Project themeParentProject = compileTheme.getThemeParentProject();
 
 		if (themeParentProject != null) {
 			String taskName =
 				themeParentProject.getPath() + Project.PATH_SEPARATOR +
 					COMPILE_THEME_TASK_NAME;
 
-			compileThemeTask.dependsOn(taskName);
+			compileTheme.dependsOn(taskName);
 		}
 	}
 
 	protected void configureTaskCompileThemeDiffsDir(
-		CompileThemeTask compileThemeTask,
+		CompileTheme compileTheme,
 		LiferayThemeExtension liferayThemeExtension) {
 
-		if (compileThemeTask.getDiffsDir() == null) {
-			compileThemeTask.setDiffsDir(liferayThemeExtension.getDiffsDir());
+		if (compileTheme.getDiffsDir() == null) {
+			compileTheme.setDiffsDir(liferayThemeExtension.getDiffsDir());
 		}
 	}
 
 	protected void configureTaskCompileThemeParent(
-		CompileThemeTask compileThemeTask,
+		CompileTheme compileTheme,
 		LiferayThemeExtension liferayThemeExtension) {
 
-		if (Validator.isNull(compileThemeTask.getThemeParent())) {
-			compileThemeTask.setThemeParent(
-				liferayThemeExtension.getThemeParent());
+		if (Validator.isNull(compileTheme.getThemeParent())) {
+			compileTheme.setThemeParent(liferayThemeExtension.getThemeParent());
 		}
 	}
 
 	protected void configureTaskCompileThemePortalWebFile(
-		CompileThemeTask compileThemeTask) {
+		CompileTheme compileTheme) {
 
-		if (compileThemeTask.getPortalWebFile() != null) {
+		if (compileTheme.getPortalWebFile() != null) {
 			return;
 		}
 
 		Configuration configuration = GradleUtil.getConfiguration(
-			compileThemeTask.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
+			compileTheme.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
 
-		compileThemeTask.setPortalWebFile(configuration.getSingleFile());
+		compileTheme.setPortalWebFile(configuration.getSingleFile());
 	}
 
 	protected void configureTaskCompileThemeType(
-		CompileThemeTask compileThemeTask,
+		CompileTheme compileTheme,
 		LiferayThemeExtension liferayThemeExtension) {
 
-		if (Validator.isNull(compileThemeTask.getThemeType())) {
-			compileThemeTask.setThemeType(liferayThemeExtension.getThemeType());
+		if (Validator.isNull(compileTheme.getThemeType())) {
+			compileTheme.setThemeType(liferayThemeExtension.getThemeType());
 		}
 	}
 
@@ -281,11 +276,10 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	protected File getDiffsDir(
 		Project project, LiferayThemeExtension liferayThemeExtension) {
 
-		CompileThemeTask compileThemeTask =
-			(CompileThemeTask)GradleUtil.getTask(
-				project, COMPILE_THEME_TASK_NAME);
+		CompileTheme compileTheme = (CompileTheme)GradleUtil.getTask(
+			project, COMPILE_THEME_TASK_NAME);
 
-		File diffsDir = compileThemeTask.getDiffsDir();
+		File diffsDir = compileTheme.getDiffsDir();
 
 		if (diffsDir == null) {
 			diffsDir = liferayThemeExtension.getDiffsDir();

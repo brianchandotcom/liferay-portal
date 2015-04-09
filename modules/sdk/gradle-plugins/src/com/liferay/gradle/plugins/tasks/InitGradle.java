@@ -48,7 +48,7 @@ import org.gradle.api.tasks.TaskAction;
  * @author Chas Austin
  * @author Andrea Di Giorgi
  */
-public class InitGradleTask extends DefaultTask {
+public class InitGradle extends DefaultTask {
 
 	@TaskAction
 	public void initGradle() throws Exception {

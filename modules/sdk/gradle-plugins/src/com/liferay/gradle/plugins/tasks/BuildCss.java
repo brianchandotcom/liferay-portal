@@ -42,7 +42,7 @@ import org.gradle.process.internal.streams.SafeStreams;
 /**
  * @author Andrea Di Giorgi
  */
-public class BuildCssTask extends BasePortalToolsTask {
+public class BuildCss extends BasePortalToolsTask {
 
 	@Override
 	public void exec() {

@@ -20,9 +20,9 @@ import java.util.List;
 /**
  * @author Andrea Di Giorgi
  */
-public class FormatSourceTask extends BasePortalToolsTask {
+public class FormatSource extends BasePortalToolsTask {
 
-	public FormatSourceTask() {
+	public FormatSource() {
 		setMaxHeapSize("512m");
 	}
 

@@ -16,6 +16,12 @@
 
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<liferay-util:include page="/html/js/editor/ckeditor.jsp">
+<%@ page import="com.liferay.portal.kernel.web.PortalWebResourcesUtil" %>
+
+<%
+	String ckeditorPath = PortalWebResourcesUtil.getContextPath() + "/html/js/editor/ckeditor.jsp";
+%>
+
+<liferay-util:include page="<%= ckeditorPath %>">
 	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_bbcode.jsp" />
 </liferay-util:include>

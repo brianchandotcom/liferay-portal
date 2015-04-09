@@ -14,14 +14,38 @@
 
 package com.liferay.portlet.layoutprototypes;
 
+import com.liferay.portal.NoSuchLayoutPrototypeException;
+import com.liferay.portal.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.LayoutPrototypeServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portlet.sites.util.SitesUtil;
+
+import java.io.IOException;
+
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Eudaldo Alonso
  */
 public class LayoutPrototypePortlet extends MVCPortlet {
 
-	public void deleteLayoutPrototypes(ActionRequest actionRequest)
+	public void deleteLayoutPrototypes(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long[] layoutPrototypeIds = StringUtil.split(
@@ -30,80 +54,6 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 		for (long layoutPrototypeId : layoutPrototypeIds) {
 			LayoutPrototypeServiceUtil.deleteLayoutPrototype(layoutPrototypeId);
 		}
-	}
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateLayoutPrototype(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteLayoutPrototypes(actionRequest);
-			}
-			else if (cmd.equals("reset_merge_fail_count")) {
-				resetMergeFailCount(actionRequest);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.layout_prototypes.error");
-			}
-			else if (e instanceof RequiredLayoutPrototypeException) {
-				SessionErrors.add(actionRequest, e.getClass());
-
-				String redirect = PortalUtil.escapeRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
-
-				if (Validator.isNotNull(redirect)) {
-					actionResponse.sendRedirect(redirect);
-				}
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getLayoutPrototype(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchLayoutPrototypeException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.layout_prototypes.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest,
-				"portlet.layout_prototypes.edit_layout_prototype"));
 	}
 
 	/**
@@ -119,7 +69,8 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 	 * @param  actionRequest the action request
 	 * @throws Exception if an exception occurred
 	 */
-	public void resetMergeFailCount(ActionRequest actionRequest)
+	public void resetMergeFailCount(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long layoutPrototypeId = ParamUtil.getLong(
@@ -131,7 +82,8 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 		SitesUtil.setMergeFailCount(layoutPrototype, 0);
 	}
 
-	public void updateLayoutPrototype(ActionRequest actionRequest)
+	public void updateLayoutPrototype(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long layoutPrototypeId = ParamUtil.getLong(
@@ -161,6 +113,33 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 				layoutPrototypeId, nameMap, descriptionMap, active,
 				serviceContext);
 		}
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof NoSuchLayoutPrototypeException ||
+			cause instanceof PrincipalException ||
+			cause instanceof RequiredLayoutPrototypeException) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

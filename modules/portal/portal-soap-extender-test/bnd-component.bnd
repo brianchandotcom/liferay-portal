@@ -1,4 +1,7 @@
+Bundle-Activator: com.liferay.portal.soap.extender.test.activator.config.ConfigAdminActivator
 Bundle-Name: Liferay Portal SOAP Extender Test Component
 Bundle-SymbolicName: com.liferay.portal.soap.extender.test.component
 Bundle-Version: 1.0.0
-Include-Resource: com/liferay/portal/soap/extender/test/service=classes/com/liferay/portal/soap/extender/test/service
+Include-Resource:\
+	com/liferay/portal/soap/extender/test/activator/config=classes/com/liferay/portal/soap/extender/test/activator/config,\
+	com/liferay/portal/soap/extender/test/service=classes/com/liferay/portal/soap/extender/test/service

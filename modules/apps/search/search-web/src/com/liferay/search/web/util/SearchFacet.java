@@ -38,6 +38,8 @@ public interface SearchFacet {
 
 	public Facet getFacet();
 
+	public String getFacetClassName();
+
 	public FacetConfiguration getFacetConfiguration();
 
 	public String getFieldName();

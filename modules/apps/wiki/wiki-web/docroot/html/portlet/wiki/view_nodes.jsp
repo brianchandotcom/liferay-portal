@@ -101,8 +101,8 @@ searchContainer.setResults(results);
 		resultRows.add(row);
 	}
 
-	boolean showAddNodeButton = WikiPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
-	boolean showPermissionsButton = WikiPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+	boolean showAddNodeButton = WikiResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
+	boolean showPermissionsButton = WikiResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 	%>
 
 	<aui:fieldset>

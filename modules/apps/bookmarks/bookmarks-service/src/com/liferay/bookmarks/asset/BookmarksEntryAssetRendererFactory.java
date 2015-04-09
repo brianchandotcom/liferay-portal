@@ -18,8 +18,8 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.permission.BookmarksEntryPermission;
-import com.liferay.bookmarks.service.permission.BookmarksPermission;
+import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
+import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -128,7 +128,7 @@ public class BookmarksEntryAssetRendererFactory
 			PermissionChecker permissionChecker, long groupId, long classTypeId)
 		throws Exception {
 
-		return BookmarksPermission.contains(
+		return BookmarksResourcePermissionChecker.contains(
 			permissionChecker, groupId, ActionKeys.ADD_ENTRY);
 	}
 
@@ -137,7 +137,7 @@ public class BookmarksEntryAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return BookmarksEntryPermission.contains(
+		return BookmarksEntryPermissionChecker.contains(
 			permissionChecker, classPK, actionId);
 	}
 

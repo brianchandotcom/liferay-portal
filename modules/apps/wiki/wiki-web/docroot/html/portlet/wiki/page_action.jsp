@@ -23,7 +23,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
+	<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/wiki/edit_page" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
@@ -37,7 +37,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= WikiPage.class.getName() %>"
 			modelResourceDescription="<%= wikiPage.getTitle() %>"
@@ -55,7 +55,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
+	<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
 		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="copyPageURL">
 			<liferay-portlet:param name="struts_action" value="/wiki/edit_page" />
 			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
@@ -86,7 +86,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) && (wikiGroupServiceSettings.emailPageAddedEnabled() || wikiGroupServiceSettings.emailPageUpdatedEnabled()) %>">
+	<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) && (wikiGroupServiceSettings.emailPageAddedEnabled() || wikiGroupServiceSettings.emailPageUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>">
 				<portlet:actionURL var="unsubscribeURL">
@@ -121,7 +121,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		</c:choose>
 	</c:if>
 
-	<c:if test="<%= !wikiPage.isDraft() && WikiPagePermission.contains(permissionChecker, wikiPage.getNodeId(), HtmlUtil.unescape(wikiPage.getTitle()), ActionKeys.DELETE) %>">
+	<c:if test="<%= !wikiPage.isDraft() && WikiPagePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), HtmlUtil.unescape(wikiPage.getTitle()), ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/wiki/edit_page" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= (TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
@@ -136,7 +136,7 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= wikiPage.isDraft() && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
+	<c:if test="<%= wikiPage.isDraft() && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/wiki/edit_page" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

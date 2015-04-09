@@ -119,7 +119,7 @@ for (int i = 0; i < choices.size(); i++) {
 
 	</div>
 
-	<c:if test="<%= PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
+	<c:if test="<%= PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
 		<br />
 
 		<liferay-ui:header

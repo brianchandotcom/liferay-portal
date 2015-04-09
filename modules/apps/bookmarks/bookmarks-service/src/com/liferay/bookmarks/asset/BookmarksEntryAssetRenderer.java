@@ -17,7 +17,7 @@ package com.liferay.bookmarks.asset;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.permission.BookmarksEntryPermission;
+import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -173,7 +173,7 @@ public class BookmarksEntryAssetRenderer
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker) {
 		try {
-			return BookmarksEntryPermission.contains(
+			return BookmarksEntryPermissionChecker.contains(
 				permissionChecker, _entry, ActionKeys.UPDATE);
 		}
 		catch (Exception e) {
@@ -185,7 +185,7 @@ public class BookmarksEntryAssetRenderer
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 		try {
-			return BookmarksEntryPermission.contains(
+			return BookmarksEntryPermissionChecker.contains(
 				permissionChecker, _entry, ActionKeys.VIEW);
 		}
 		catch (Exception e) {

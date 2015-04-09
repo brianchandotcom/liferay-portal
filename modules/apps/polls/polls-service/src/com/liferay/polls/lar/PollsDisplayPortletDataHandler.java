@@ -19,7 +19,7 @@ import com.liferay.polls.exception.NoSuchQuestionException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsVote;
-import com.liferay.polls.service.permission.PollsPermission;
+import com.liferay.polls.service.permission.PollsResourcePermissionChecker;
 import com.liferay.polls.service.persistence.PollsQuestionUtil;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -95,7 +95,8 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 			return portletPreferences;
 		}
 
-		portletDataContext.addPortletPermissions(PollsPermission.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(
+			PollsResourcePermissionChecker.RESOURCE_NAME);
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, portletId, question);
@@ -124,7 +125,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPortletPermissions(
-			PollsPermission.RESOURCE_NAME);
+			PollsResourcePermissionChecker.RESOURCE_NAME);
 
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, PollsQuestion.class);

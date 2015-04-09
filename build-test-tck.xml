@@ -267,7 +267,9 @@ servletContextNames=${tck.servlet.context.names}</echo>
 			</then>
 		</if>
 
-		<antcall target="start-app-server" />
+		<antcall target="start-app-server">
+			<param name="testable.portal.started.marker.file" value=".testable.portal.started" />
+		</antcall>
 
 		<waitfor checkevery="100" checkeveryunit="millisecond" maxwait="10" maxwaitunit="minute" timeoutproperty="tck.wars.deployment.timeout">
 			<socket server="localhost" port="${portlet.tck.bridge.handshake.port}" />

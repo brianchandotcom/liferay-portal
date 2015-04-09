@@ -130,7 +130,7 @@
 		</execute>
 	</command>
 
-	<command name="AddStructureWithUnlocalizableFields" priority="4">
+	<command known-issues="LPS-54575" name="AddStructureWithUnlocalizableFields" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -281,7 +281,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContent" priority="5">
+	<command known-issues="LPS-51687" name="AddWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -301,7 +301,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentDraft" priority="5">
+	<command known-issues="LPS-51687" name="AddWebContentDraft" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -344,7 +344,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentLocalized" priority="4">
+	<command known-issues="LPS-51687" name="AddWebContentLocalized" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -373,7 +373,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentMultiple" priority="4">
+	<command known-issues="LPS-51687" name="AddWebContentMultiple" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -429,7 +429,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentTitleEscapeCharacter" priority="5">
+	<command known-issues="LPS-51687" name="AddWebContentTitleEscapeCharacter" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -449,7 +449,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentWithStructure" priority="5">
+	<command known-issues="LPS-54575" name="AddWebContentWithStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -483,7 +483,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentWithTemplateXSL" priority="5">
+	<command known-issues="LPS-54575" name="AddWebContentWithTemplateXSL" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -639,7 +639,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWebContent" priority="5">
+	<command known-issues="LPS-51687" name="EditWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -665,7 +665,7 @@
 		</execute>
 	</command>
 
-	<command name="ExpireEditWebContent" priority="4">
+	<command known-issues="LPS-51687" name="ExpireEditWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -700,7 +700,7 @@
 		</execute>
 	</command>
 
-	<command name="ExpireWebContent" priority="4">
+	<command known-issues="LPS-51687" name="ExpireWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -725,7 +725,7 @@
 		</execute>
 	</command>
 
-	<command name="ImportLAR" priority="5">
+	<command known-issues="LPS-54575" name="ImportLAR" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -809,7 +809,7 @@
 		</execute>
 	</command>
 
-	<command name="ImportLARLinkToPageValidation" priority="4">
+	<command known-issues="LPS-54575" name="ImportLARLinkToPageValidation" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page" />
 		</execute>
@@ -911,7 +911,7 @@
 		</execute>
 	</command>
 
-	<command name="PublishExpireWebContent" priority="4">
+	<command known-issues="LPS-51687" name="PublishExpireWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -997,7 +997,7 @@
 		</execute>
 	</command>
 
-	<command name="UserEditWebContent" priority="4">
+	<command known-issues="LPS-54712" name="UserEditWebContent" priority="4">
 		<var name="roleType" value="Regular" />
 
 		<execute macro="Page#gotoContentCP">

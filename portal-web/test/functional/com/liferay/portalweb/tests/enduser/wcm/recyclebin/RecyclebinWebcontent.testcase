@@ -59,7 +59,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreWebcontent" priority="5">
+	<command known-issues="LPS-51687" name="RestoreWebcontent" priority="5">
 		<var name="assetName" value="${webContentTitle}" />
 		<var name="assetRestoreLocation" value="Home" />
 		<var name="assetType" value="Web Content Article" />

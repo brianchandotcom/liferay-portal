@@ -427,7 +427,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherCategoriesNavigation" priority="3">
+	<command known-issues="LPS-54822" name="AssetPublisherCategoriesNavigation" priority="3">
 		<var name="siteName" value="Liferay" />
 
 		<execute macro="Page#gotoContentCP">

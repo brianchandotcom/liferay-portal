@@ -207,7 +207,7 @@
 		<execute function="AssertTextNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_READ_MORE" value1="Read More" />
 	</command>
 
-	<command name="AddWebContentWithGlobalScopeViaCPToSiteAP" priority="4">
+	<command known-issues="LPS-51687" name="AddWebContentWithGlobalScopeViaCPToSiteAP" priority="4">
 		<var name="globalSiteType" value="Global" />
 		<var name="portletName" value="Asset Publisher" />
 		<var name="removeSiteScopeName" value="Site Name" />

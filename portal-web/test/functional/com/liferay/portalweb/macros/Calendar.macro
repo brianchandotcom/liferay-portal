@@ -576,6 +576,8 @@
 
 		<execute function="AssertElementPresent" locator1="PGCalendar#SMALL_CALENDAR_BUSY_DAY" />
 		<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_BUSY_DAY" />
+
+		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="viewColorDefaultPG">

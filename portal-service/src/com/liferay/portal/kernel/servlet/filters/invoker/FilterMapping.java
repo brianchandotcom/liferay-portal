@@ -190,9 +190,9 @@ public class FilterMapping {
 
 	public FilterMapping replaceFilter(Filter filter) {
 		return new FilterMapping(
-			filter, _urlPatterns, _dispatcherError,
-			_dispatcherForward, _dispatcherInclude, _dispatcherRequest,
-			_urlRegexIgnorePattern, _urlRegexPattern);
+			filter, _urlPatterns, _dispatcherError, _dispatcherForward,
+			_dispatcherInclude, _dispatcherRequest, _urlRegexIgnorePattern,
+			_urlRegexPattern);
 	}
 
 	protected boolean isMatchDispatcher(Dispatcher dispatcher) {
@@ -249,17 +249,17 @@ public class FilterMapping {
 	}
 
 	private FilterMapping(
-		Filter filter, List<String> urlPatterns,
-		boolean dispatcherError, boolean dispatcherForward,
-		boolean dispatcherInclude, boolean dispatcherRequest,
-		Pattern urlRegexIgnorePattern, Pattern urlRegexPattern) {
+		Filter filter, List<String> urlPatterns, boolean dispatcherError,
+		boolean dispatcherForward, boolean dispatcherInclude,
+		boolean dispatcherRequest, Pattern urlRegexIgnorePattern,
+		Pattern urlRegexPattern) {
 
+		_filter = filter;
+		_urlPatterns = urlPatterns;
 		_dispatcherError = dispatcherError;
 		_dispatcherForward = dispatcherForward;
 		_dispatcherInclude = dispatcherInclude;
 		_dispatcherRequest = dispatcherRequest;
-		_filter = filter;
-		_urlPatterns = urlPatterns;
 		_urlRegexIgnorePattern = urlRegexIgnorePattern;
 		_urlRegexPattern = urlRegexPattern;
 	}

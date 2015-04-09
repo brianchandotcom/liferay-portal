@@ -173,6 +173,24 @@ public class InvokerFilterHelper {
 		}
 	}
 
+	public void updateFilterMappings(String filterName, Filter filter) {
+		Filter previousFilter = _filters.put(filterName, filter);
+
+		if (previousFilter != null) {
+			for (int i = 0; i < _filterMappings.size(); i++) {
+				FilterMapping filterMapping = _filterMappings.get(i);
+
+				if (filterMapping.getFilter() == previousFilter) {
+					_filterMappings.remove(i);
+
+					filterMapping = filterMapping.replaceFilter(filter);
+
+					_filterMappings.add(i, filterMapping);
+				}
+			}
+		}
+	}
+
 	protected void addInvokerFilter(InvokerFilter invokerFilter) {
 		_invokerFilters.add(invokerFilter);
 	}
@@ -329,24 +347,6 @@ public class InvokerFilterHelper {
 			}
 
 			initFilterMapping(filterName, urlPatterns, dispatchers);
-		}
-	}
-
-	public void updateFilterMappings(String filterName, Filter filter) {
-		Filter previousFilter = _filters.put(filterName, filter);
-
-		if (previousFilter != null) {
-			for (int i = 0; i < _filterMappings.size(); i++) {
-				FilterMapping filterMapping = _filterMappings.get(i);
-
-				if (filterMapping.getFilter() == previousFilter) {
-					_filterMappings.remove(i);
-
-					filterMapping = filterMapping.replaceFilter(filter);
-
-					_filterMappings.add(i, filterMapping);
-				}
-			}
 		}
 	}
 

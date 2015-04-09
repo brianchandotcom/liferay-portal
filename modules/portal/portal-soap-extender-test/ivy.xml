@@ -17,6 +17,10 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="cxf-core" org="org.apache.cxf" rev="3.0.3" />
+		<dependency name="org.eclipse.osgi.services" org="org.eclipse.osgi" rev="3.5.0-SNAPSHOT" />
+		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="arquillian-container-liferay" org="org.arquillian.liferay" rev="1.0.0.Final-SNAPSHOT" />
 		<dependency name="arquillian-deployment-generator-bnd" org="org.arquillian.liferay" rev="1.0.0.Final-SNAPSHOT" />
 		<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.7.Final" />

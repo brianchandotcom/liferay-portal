@@ -14,15 +14,9 @@
 
 package com.liferay.portal.soap.extender.test.service;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
-	immediate = true, property = {"jaxws=true", "soap.address=/greeter"},
-	service = Greeter.class
-)
 public class GreeterImpl implements Greeter {
 
 	@Override

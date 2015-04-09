@@ -22,28 +22,19 @@ import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.LogicalMessage;
-import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.LogicalHandler;
 import javax.xml.ws.handler.LogicalMessageContext;
 import javax.xml.ws.handler.MessageContext;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
-	immediate = true, property = {"soap.address=/greeter"},
-	service = Handler.class
-)
-public class SampleComponentHandler
-	implements LogicalHandler<LogicalMessageContext> {
+public class SampleHandler implements LogicalHandler<LogicalMessageContext> {
 
-	public SampleComponentHandler() {
+	public SampleHandler() {
 		_transformerFactory = TransformerFactory.newInstance();
 
-		_url = SampleComponentHandler.class.getResource(
-			"dependencies/template.xsl");
+		_url = SampleHandler.class.getResource("dependencies/template.xsl");
 	}
 
 	@Override

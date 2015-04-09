@@ -182,7 +182,15 @@
 
 		<property name="alloy.bootstrap.deploy" value="docroot/html/themes/_unstyled/css/aui" />
 
-		<property name="alloy.bootstrap.file" value="bootstrap-sass-${alloy.bootstrap.version}.zip" />
+		<path id="alloy.bootstrap.zip.path">
+			<fileset dir="third-party">
+				<include name="bootstrap-sass-${alloy.bootstrap.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy.bootstrap.zip.path" refid="alloy.bootstrap.zip.path" />
+
+		<basename file="${alloy.bootstrap.zip.path}" property="alloy.bootstrap.file" />
 
 		<property name="alloy.bootstrap.tmp.dir" value="docroot/html/ALLOY_BOOTSTRAP_ZIP" />
 

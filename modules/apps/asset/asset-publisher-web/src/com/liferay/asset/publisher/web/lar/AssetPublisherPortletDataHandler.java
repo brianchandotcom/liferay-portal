@@ -42,6 +42,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -137,6 +138,24 @@ public class AssetPublisherPortletDataHandler
 		}
 
 		return 0;
+	}
+
+	protected void restorePortletPreference(
+			PortletDataContext portletDataContext, String name,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			portletDataContext.getPlid());
+
+		PortletPreferences originalPortletPreferences =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, portletDataContext.getPortletId());
+
+		String[] values = originalPortletPreferences.getValues(
+			name, new String[] {StringPool.BLANK});
+
+		portletPreferences.setValues(name, values);
 	}
 
 	protected void updateExportClassNameIds(
@@ -448,6 +467,9 @@ public class AssetPublisherPortletDataHandler
 					portletDataContext.getPlid());
 			}
 		}
+
+		restorePortletPreference(
+			portletDataContext, "notifiedAssetEntryIds", portletPreferences);
 
 		return portletPreferences;
 	}

@@ -14,6 +14,13 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import com.liferay.gradle.plugins.util.ClosureBackedScript;
+
+import groovy.lang.Closure;
+
+import groovy.util.ConfigObject;
+import groovy.util.ConfigSlurper;
+
 import java.io.File;
 
 import org.gradle.api.Project;
@@ -23,10 +30,49 @@ import org.gradle.api.Project;
  */
 public class LiferayExtension {
 
-	public LiferayExtension(Project project) throws Exception {
+	public LiferayExtension(Project project) {
 		this.project = project;
+	}
 
-		_tmpDir = new File(project.getRootDir(), "tmp");
+	public void appServers(Closure<?> closure) {
+		ConfigSlurper configSlurper = new ConfigSlurper();
+
+		ConfigObject newAppServers = configSlurper.parse(
+			new ClosureBackedScript(closure));
+
+		_appServers.merge(newAppServers);
+	}
+
+	public File getAppServerDeployDir() {
+		return _appServerDeployDir;
+	}
+
+	public File getAppServerDir() {
+		return _appServerDir;
+	}
+
+	public File getAppServerLibGlobalDir() {
+		return _appServerLibGlobalDir;
+	}
+
+	public File getAppServerLibPortalDir() {
+		return _appServerLibPortalDir;
+	}
+
+	public File getAppServerParentDir() {
+		return _appServerParentDir;
+	}
+
+	public File getAppServerPortalDir() {
+		return _appServerPortalDir;
+	}
+
+	public ConfigObject getAppServers() {
+		return _appServers;
+	}
+
+	public String getAppServerType() {
+		return _appServerType;
 	}
 
 	public String getPortalVersion() {
@@ -49,6 +95,34 @@ public class LiferayExtension {
 		return version;
 	}
 
+	public void setAppServerDeployDir(File appServerDeployDir) {
+		_appServerDeployDir = appServerDeployDir;
+	}
+
+	public void setAppServerDir(File appServerDir) {
+		_appServerDir = appServerDir;
+	}
+
+	public void setAppServerLibGlobalDir(File appServerLibGlobalDir) {
+		_appServerLibGlobalDir = appServerLibGlobalDir;
+	}
+
+	public void setAppServerLibPortalDir(File appServerLibPortalDir) {
+		_appServerLibPortalDir = appServerLibPortalDir;
+	}
+
+	public void setAppServerParentDir(File appServerParentDir) {
+		_appServerParentDir = appServerParentDir;
+	}
+
+	public void setAppServerPortalDir(File appServerPortalDir) {
+		_appServerPortalDir = appServerPortalDir;
+	}
+
+	public void setAppServerType(String appServerType) {
+		_appServerType = appServerType;
+	}
+
 	public void setPortalVersion(String portalVersion) {
 		_portalVersion = portalVersion;
 	}
@@ -59,7 +133,15 @@ public class LiferayExtension {
 
 	protected final Project project;
 
-	private String _portalVersion = "7.0.0-SNAPSHOT";
+	private File _appServerDeployDir;
+	private File _appServerDir;
+	private File _appServerLibGlobalDir;
+	private File _appServerLibPortalDir;
+	private File _appServerParentDir;
+	private File _appServerPortalDir;
+	private final ConfigObject _appServers = new ConfigObject();
+	private String _appServerType;
+	private String _portalVersion;
 	private File _tmpDir;
 
 }

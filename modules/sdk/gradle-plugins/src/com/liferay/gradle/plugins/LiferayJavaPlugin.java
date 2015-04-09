@@ -20,13 +20,18 @@ import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.StringUtil;
+import com.liferay.gradle.plugins.util.Validator;
+
+import groovy.util.ConfigObject;
 
 import java.io.File;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -73,11 +78,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addConfigurations(project);
 		addTasks(project, liferayExtension);
 
+		applyConfigScripts(project, liferayExtension);
+
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
+					configureLiferayExtension(project, liferayExtension);
 					configureTasks(project, liferayExtension);
 					configureVersion(project, liferayExtension);
 				}
@@ -171,6 +179,13 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return task;
 	}
 
+	protected void applyConfigScripts(
+		Project project, LiferayExtension liferayExtension) {
+
+		GradleUtil.applyScript(
+			project, "config-liferay.gradle", liferayExtension);
+	}
+
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 	}
@@ -230,6 +245,46 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			GradleUtil.addDependency(
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
 				dependencyNotation);
+		}
+	}
+
+	protected void configureLiferayExtension(
+		Project project, LiferayExtension liferayExtension) {
+
+		File appServerParentDir = liferayExtension.getAppServerParentDir();
+		String appServerType = liferayExtension.getAppServerType();
+
+		if ((appServerParentDir == null) || Validator.isNull(appServerType)) {
+			return;
+		}
+
+		File appServerDir = liferayExtension.getAppServerDir();
+
+		if (appServerDir == null) {
+			String appServerName = getAppServerProperty(
+				liferayExtension, appServerType, "name");
+			String appServerVersion = getAppServerProperty(
+				liferayExtension, appServerType, "version");
+
+			appServerDir = new File(
+				appServerParentDir, appServerName + "-" + appServerVersion);
+
+			liferayExtension.setAppServerDir(appServerDir);
+		}
+
+		liferayExtension.setAppServerDeployDir(
+			getAppServerDir(liferayExtension, "deployDirName"));
+		liferayExtension.setAppServerLibGlobalDir(
+			getAppServerDir(liferayExtension, "libGlobalDirName"));
+		liferayExtension.setAppServerPortalDir(
+			getAppServerDir(liferayExtension, "portalDirName"));
+
+		File appServerLibPortalDir =
+			liferayExtension.getAppServerLibPortalDir();
+
+		if (appServerLibPortalDir == null) {
+			appServerLibPortalDir = new File(
+				liferayExtension.getAppServerPortalDir(), "WEB-INF/lib");
 		}
 	}
 
@@ -388,6 +443,35 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		project.setVersion(
 			liferayExtension.getVersionPrefix() + "." + project.getVersion());
+	}
+
+	protected File getAppServerDir(
+		LiferayExtension liferayExtension, String dirNameKey) {
+
+		File appServerDir = liferayExtension.getAppServerDir();
+
+		String dirName = getAppServerProperty(
+			liferayExtension, liferayExtension.getAppServerType(), dirNameKey);
+
+		return new File(appServerDir, dirName);
+	}
+
+	protected String getAppServerProperty(
+		LiferayExtension liferayExtension, String appServerType, String key) {
+
+		ConfigObject appServers = liferayExtension.getAppServers();
+
+		Map<String, String> appServerProperties =
+			(Map<String, String>)appServers.getProperty(appServerType);
+
+		String value = appServerProperties.get(key);
+
+		if (Validator.isNull(value)) {
+			throw new GradleException(
+				"Unable to get property " + key + " for " + appServerType);
+		}
+
+		return value;
 	}
 
 	protected static final String[] COMPILE_DEPENDENCY_NOTATIONS = {

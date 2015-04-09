@@ -18,6 +18,8 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.net.URL;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -110,6 +113,26 @@ public class GradleUtil {
 		Project project, Class<T> clazz) {
 
 		Map<String, Class<T>> args = Collections.singletonMap("plugin", clazz);
+
+		project.apply(args);
+	}
+
+	public static void applyScript(Project project, String name, Object obj) {
+		Map<String, Object> args = new HashMap<>();
+
+		ClassLoader classLoader = GradleUtil.class.getClassLoader();
+
+		URL url = classLoader.getResource(name);
+
+		if (url == null) {
+			throw new GradleException("Unable to apply script " + name);
+		}
+
+		args.put("from", url);
+
+		if (obj != null) {
+			args.put("to", obj);
+		}
 
 		project.apply(args);
 	}

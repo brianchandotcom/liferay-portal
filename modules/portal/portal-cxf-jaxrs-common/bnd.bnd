@@ -1,0 +1,43 @@
+Bundle-Activator: com.liferay.portal.cxf.jaxrs.common.activator.SetUpActivator
+Bundle-ClassPath:\
+	.,\
+	lib/cxf-rt-frontend-jaxrs.jar,\
+	lib/cxf-rt-rs-extension-providers.jar,\
+	lib/javax.annotation-api.jar,\
+	lib/javax.json-api.jar,\
+	lib/javax.ws.rs-api.jar,\
+	lib/jettison.jar
+Bundle-Name: Liferay Portal CXF common JAXRS infrastructure
+Bundle-SymbolicName: com.liferay.portal.cxf.jaxrs.common
+Bundle-Version: 1.0.0
+Export-Package:\
+	javax.json.*,\
+	javax.ws.rs.*,\
+	org.apache.cxf.*;version="3.0.3"
+Import-Package:\
+	!com.sun.*,\
+	!javax.validation.*,\
+	!net.sf.cglib.proxy.*,\
+	!org.apache.abdera.*,\
+	!org.apache.aries.*,\
+	!org.apache.cxf.aegis.*,\
+	!org.apache.cxf.ws.policy.*,\
+	!org.apache.neethi.*,\
+	!org.apache.velocity.*,\
+	!org.apache.xml.resolver.*,\
+	!org.apache.xmlbeans.*,\
+	!org.junit.*,\
+	!org.jvnet.fastinfoset.*,\
+	!org.jvnet.staxex.*,\
+	!org.relaxng.datatype.*,\
+	!org.slf4j.spi.*,\
+	!org.springframework.*,\
+	*
+Include-Resource:\
+	classes,\
+	lib/=lib/cxf-rt-frontend-jaxrs.jar,\
+	lib/=lib/cxf-rt-rs-extension-providers.jar,\
+	lib/=lib/javax.annotation-api.jar,\
+	lib/=lib/javax.json-api.jar,\
+	lib/=lib/javax.ws.rs-api.jar,\
+	lib/=lib/jettison.jar

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.template;
 
-
 /**
  * @author Raymond Augé
  */

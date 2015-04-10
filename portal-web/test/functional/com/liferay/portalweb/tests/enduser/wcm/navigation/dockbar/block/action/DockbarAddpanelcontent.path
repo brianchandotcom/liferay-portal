@@ -49,6 +49,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_TAB</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATIONS_TAB</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Applications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TAB</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

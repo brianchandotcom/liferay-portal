@@ -57,9 +57,9 @@
 			</elseif>
 		</if>
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD_ICON" value1="Add" />
 
-		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="AssertClick" locator1="DockbarAddpanelpage#PAGE_TAB" value1="Page" />
 		<execute function="Type#mouseOverFocusType" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
 
 		<if>
@@ -206,7 +206,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN_DROP_DOWN_BUTTON" value1="Admin" />
 		<execute function="AssertClick" locator1="Dockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
 
 		<if>
@@ -572,9 +572,9 @@
 			<condition function="IsElementPresent#isElementPresentClickNavigation" locator1="Home#PAGE_2" />
 			<then>
 				<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_2" />
-				<execute function="ClickNoError" locator1="Home#PAGE_DELETE" />
+				<execute function="ClickNoError" locator1="Home#DELETE_PAGE_ICON" />
 				<execute function="Confirm" value1="Are you sure you want to delete this page?" />
-				<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
+				<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#DELETE_PAGE_ICON" />
 			</then>
 		</while>
 	</command>

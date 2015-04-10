@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.layout.prototype.web.portlet.lar;
+package com.liferay.layout.prototype.web.lar;
 
+import com.liferay.layout.prototype.web.constants.LayoutPrototypePortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -31,9 +33,18 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Daniela Zapata Riesco
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE
+	},
+	service = PortletDataHandler.class
+)
 public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "layout_prototypes";

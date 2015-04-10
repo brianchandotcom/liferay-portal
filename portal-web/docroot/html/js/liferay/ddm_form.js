@@ -292,6 +292,17 @@ AUI.add(
 						return instance.getFieldInfo(definition, 'name', name);
 					},
 
+					getFirstFieldByName: function(name) {
+						var instance = this;
+
+						return AArray.find(
+							instance.get('fields'),
+							function(item) {
+								return (item.get('name') === name);
+							}
+						);
+					},
+
 					getInputName: function() {
 						var instance = this;
 
@@ -362,12 +373,7 @@ AUI.add(
 
 						siblings.splice(index, 1);
 
-						instance.fire(
-							'remove',
-							{
-								field: instance
-							}
-						);
+						instance._removeFieldValidation(instance);
 
 						instance.destroy();
 
@@ -410,13 +416,7 @@ AUI.add(
 
 								field.renderUI();
 
-								instance.fire(
-									'repeat',
-									{
-										field: field,
-										originalField: instance
-									}
-								);
+								instance._addFieldValidation(field, instance);
 							}
 						);
 					},
@@ -552,6 +552,31 @@ AUI.add(
 						}
 					},
 
+					_addFieldValidation: function(newField, originalField) {
+						var instance = this;
+
+						instance.fire(
+							'repeat',
+							{
+								field: newField,
+								originalField: originalField
+							}
+						);
+
+						AArray.each(
+							newField.get('fields'),
+							function(item, index) {
+								var name = item.get('name');
+
+								var originalChildField = originalField.getFirstFieldByName(name);
+
+								if (originalChildField) {
+									instance._addFieldValidation(item, originalChildField);
+								}
+							}
+						);
+					},
+
 					_afterDeleteAvailableLocale: function(event) {
 						var instance = this;
 
@@ -608,6 +633,24 @@ AUI.add(
 						}
 
 						event.stopPropagation();
+					},
+
+					_removeFieldValidation: function(field) {
+						var instance = this;
+
+						AArray.each(
+							field.get('fields'),
+							function(item, index) {
+								instance._removeFieldValidation(item);
+							}
+						);
+
+						instance.fire(
+							'remove',
+							{
+								field: field
+							}
+						);
 					},
 
 					_valueLocalizationMap: function() {
@@ -1474,7 +1517,11 @@ AUI.add(
 
 								var originalFieldInputName = originalField.getInputName();
 
-								validatorRules[field.getInputName()] = validatorRules[originalFieldInputName];
+								var originalFieldRules = validatorRules[originalFieldInputName];
+
+								if (originalFieldRules) {
+									validatorRules[field.getInputName()] = originalFieldRules;
+								}
 							}
 							else if (event.type === 'liferay-ddm-field:remove') {
 								delete validatorRules[field.getInputName()];

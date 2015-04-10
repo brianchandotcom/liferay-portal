@@ -101,7 +101,7 @@
 		</copy>
 	</target>
 
-	<target name="taglibdoc">
+	<target name="taglibdoc" depends="validate-tld">
 		<property name="doc.taglibs.dir" value="${doc.dir}/taglibs" />
 
 		<mkdir dir="${doc.taglibs.dir}" />
@@ -124,9 +124,14 @@
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-ui.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-util.tld" />
 		</java>
+	</target>
 
+	<target name="validate-tld">
 		<schemavalidate>
-			<fileset dir="${project.dir}/util-taglib/src/META-INF" includes="*.tld" />
+			<fileset
+				dir="${project.dir}/util-taglib/src/META-INF"
+				includes="*.tld"
+			/>
 		</schemavalidate>
 	</target>
 </project>

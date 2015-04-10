@@ -60,37 +60,37 @@
 </tr>
 <tr>
 	<td>SHOW_AVAILABLE_LOCALES_CHECKBOX</td>
-	<td>//input[@id='_86_showAvailableLocales']</td>
+	<td>//input[contains(@id,'showAvailableLocales')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_PRINT_CHECKBOX</td>
-	<td>//input[@id='_86_enablePrint']</td>
+	<td>//input[contains(@id,'enablePrint')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RELATED_ASSETS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRelatedAssets']</td>
+	<td>//input[contains(@id,'enableRelatedAssets')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRatings']</td>
+	<td>//input[contains(@id,'enableRatings')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS_CHECKBOX</td>
-	<td>//input[@id='_86_enableComments']</td>
+	<td>//input[contains(@id,'enableComments')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENT_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentRatings']</td>
+	<td>//input[contains(@id,'enableCommentRatings')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX</td>
-	<td>//input[@id='_86_enableViewCountIncrement']</td>
+	<td>//input[contains(@id,'enableViewCountIncrement')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,11 +137,6 @@
 <tr>
 	<td>NAVIGATION_SETUP</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SUPPORTED_CLIENTS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Supported Clients')]</td>
 	<td></td>
 </tr>
 <tr>

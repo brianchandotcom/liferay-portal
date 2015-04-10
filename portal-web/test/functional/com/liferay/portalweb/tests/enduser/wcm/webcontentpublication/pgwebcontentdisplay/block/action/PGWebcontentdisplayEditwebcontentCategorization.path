@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
-	<td>//button[@id='_15_saveButton']</td>
+	<td>//button[contains(@id,'saveButton')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_15_publishButton']</td>
+	<td>//button[contains(@id,'publishButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,37 +41,32 @@
 <!--MENU-->
 <tr>
 	<td>MENU_CONTENT</td>
-	<td>//a[@id='_15_contentLink']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MENU_ABSTRACT</td>
-	<td>//a[@id='_15_abstractLink']</td>
+	<td>//a[contains(@id,'contentLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_CATEGORIZATION</td>
-	<td>//a[@id='_15_categorizationLink']</td>
+	<td>//a[contains(@id,'categorizationLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_SCHEDULE</td>
-	<td>//a[@id='_15_scheduleLink']</td>
+	<td>//a[contains(@id,'scheduleLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_DISPLAY_PAGE</td>
-	<td>//a[@id='_15_displayPageLink']</td>
+	<td>//a[contains(@id,'displayPageLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_RELATED_ASSETS</td>
-	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td>//a[contains(@id,'relatedAssetsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_CUSTOM_FIELDS</td>
-	<td>//a[@id='_15_customFieldsLink']</td>
+	<td>//a[contains(@id,'customFieldsLink')]</td>
 	<td></td>
 </tr>
 <tr>

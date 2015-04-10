@@ -18,6 +18,8 @@ import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.net.URL;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import org.openqa.selenium.Dimension;
@@ -251,7 +253,7 @@ public final class LoggerUtil {
 
 		_javascriptExecutor = (JavascriptExecutor)_webDriver;
 
-		_webDriver.get("file://" + _CURRENT_DIR + "/dependencies/report.html");
+		_webDriver.get("file://" + _getReportFilePath());
 	}
 
 	public static void stopLogger() throws Exception {
@@ -267,8 +269,23 @@ public final class LoggerUtil {
 		}
 	}
 
+	private static String _getReportFilePath() {
+		LoggerUtil loggerUtil = new LoggerUtil();
+
+		Class<?> clazz = loggerUtil.getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		URL url = classLoader.getResource(
+			"com/liferay/poshi/runner/logger/dependencies/report.html");
+
+		return url.getPath();
+	}
+
 	private static final String _CURRENT_DIR =
 		PoshiRunnerGetterUtil.getCanonicalPath(".");
+
+	private static final LoggerUtil _instance = new LoggerUtil();
 
 	private static JavascriptExecutor _javascriptExecutor;
 	private static WebDriver _webDriver;

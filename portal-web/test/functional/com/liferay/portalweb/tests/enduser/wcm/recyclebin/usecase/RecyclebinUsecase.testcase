@@ -808,7 +808,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54678" name="RecycleBinWebContent" priority="3">
+	<command name="RecycleBinWebContent" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />

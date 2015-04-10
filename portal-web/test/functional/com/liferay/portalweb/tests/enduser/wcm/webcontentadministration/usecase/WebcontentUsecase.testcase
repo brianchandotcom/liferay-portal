@@ -96,7 +96,7 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
-	<command known-issues="LPS-54678" name="AddContentWithTitleAndAllFieldsNull" priority="5">
+	<command name="AddContentWithTitleAndAllFieldsNull" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -275,7 +275,7 @@
 		<execute function="AssertTextNotPresent" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT" value1="WC WebContent Content" />
 	</command>
 
-	<command known-issues="LPS-54678" name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="5">
+	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -415,7 +415,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54678" name="DeleteTemplateAndStructureWithReferencedWebContent" priority="5">
+	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -476,7 +476,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54678" name="EditArticleMadeFromGlobalStructure" priority="5">
+	<command name="EditArticleMadeFromGlobalStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -539,7 +539,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54678" name="EditContentWithTitleAndAllFieldsNull" priority="5">
+	<command name="EditContentWithTitleAndAllFieldsNull" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -581,7 +581,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54678" name="EditGlobalWebContentTemplate" priority="5">
+	<command name="EditGlobalWebContentTemplate" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -643,7 +643,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54678" name="EditWebContentTemplate" priority="5">
+	<command name="EditWebContentTemplate" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -884,7 +884,7 @@
 		<execute macro="WebContentStructures#addNullCP" />
 	</command>
 
-	<command known-issues="LPS-54678" name="WebContentAdministrationLocalization" priority="5">
+	<command name="WebContentAdministrationLocalization" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

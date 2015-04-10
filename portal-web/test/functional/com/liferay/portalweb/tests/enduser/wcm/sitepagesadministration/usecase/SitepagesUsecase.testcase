@@ -28,7 +28,7 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-54743" name="AddSitePageXSS" priority="5">
+	<command name="AddSitePageXSS" priority="5">
 		<var name="sitePage3Name"><![CDATA[<script>alert("Site Page 3")</script> />]]></var>
 
 		<execute macro="Page#addPG">
@@ -1103,7 +1103,7 @@
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
-	<command known-issues="LPS-54747" name="WebContentAdministrationSitesPagesPanel" priority="3">
+	<command name="WebContentAdministrationSitesPagesPanel" priority="3">
 		<execute macro="Page#addPG">
 			<var name="componentName" value="Collaboration" />
 			<var name="pageName" value="Panel Test Page" />

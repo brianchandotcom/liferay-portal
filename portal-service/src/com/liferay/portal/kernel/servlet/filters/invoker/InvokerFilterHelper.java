@@ -104,30 +104,6 @@ public class InvokerFilterHelper {
 		}
 	}
 
-	public Filter registerFilter(String filterName, Filter filter) {
-		Filter previousFilter = _filters.put(filterName, filter);
-
-		if (previousFilter != null) {
-			for (FilterMapping filterMapping : _filterMappings) {
-				if (filterMapping.getFilter() == previousFilter) {
-					if (filter != null) {
-						filterMapping.setFilter(filter);
-					}
-					else {
-						_filterMappings.remove(filterMapping);
-						_filterConfigs.remove(filterName);
-					}
-				}
-			}
-		}
-
-		for (InvokerFilter invokerFilter : _invokerFilters) {
-			invokerFilter.clearFilterChainsCache();
-		}
-
-		return previousFilter;
-	}
-
 	public void registerFilterMapping(
 		FilterMapping filterMapping, String filterName, boolean after) {
 
@@ -197,6 +173,20 @@ public class InvokerFilterHelper {
 		}
 	}
 
+	public void updateFilterMappings(String filterName, Filter filter) {
+		Filter previousFilter = _filters.put(filterName, filter);
+
+		if (previousFilter != null) {
+			for (int i = 0; i < _filterMappings.size(); i++) {
+				FilterMapping filterMapping = _filterMappings.get(i);
+
+				if (filterMapping.getFilter() == previousFilter) {
+					_filterMappings.set(i, filterMapping.replaceFilter(filter));
+				}
+			}
+		}
+	}
+
 	protected void addInvokerFilter(InvokerFilter invokerFilter) {
 		_invokerFilters.add(invokerFilter);
 	}
@@ -219,27 +209,31 @@ public class InvokerFilterHelper {
 		return invokerFilterChain;
 	}
 
-	protected Filter getFilter(
+	protected void initFilter(
 		ServletContext servletContext, String filterClassName,
-		FilterConfig filterConfig) {
+		String filterName, Map<String, String> initParameterMap) {
 
-		ClassLoader pluginClassLoader = getPluginClassLoader(servletContext);
+		ClassLoader pluginClassLoader = servletContext.getClassLoader();
 
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		try {
-			if (contextClassLoader != pluginClassLoader) {
-				currentThread.setContextClassLoader(pluginClassLoader);
-			}
+		if (contextClassLoader != pluginClassLoader) {
+			currentThread.setContextClassLoader(pluginClassLoader);
+		}
 
+		try {
 			Filter filter = (Filter)InstanceFactory.newInstance(
 				pluginClassLoader, filterClassName);
 
+			FilterConfig filterConfig = new InvokerFilterConfig(
+				servletContext, filterName, initParameterMap);
+
 			filter.init(filterConfig);
 
-			return filter;
+			_filterConfigs.put(filterName, filterConfig);
+			_filters.put(filterName, filter);
 		}
 		catch (Exception e) {
 			_log.error("Unable to initialize filter " + filterClassName, e);
@@ -249,31 +243,6 @@ public class InvokerFilterHelper {
 				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
-
-		return null;
-	}
-
-	protected ClassLoader getPluginClassLoader(ServletContext servletContext) {
-		return servletContext.getClassLoader();
-	}
-
-	protected void initFilter(
-			ServletContext servletContext, String filterName,
-			String filterClassName, Map<String, String> initParameterMap)
-		throws Exception {
-
-		FilterConfig filterConfig = new InvokerFilterConfig(
-			servletContext, filterName, initParameterMap);
-
-		Filter filter = getFilter(
-			servletContext, filterClassName, filterConfig);
-
-		if (filter == null) {
-			return;
-		}
-
-		_filterConfigs.put(filterName, filterConfig);
-		_filters.put(filterName, filter);
 	}
 
 	protected void initFilterMapping(
@@ -337,7 +306,7 @@ public class InvokerFilterHelper {
 			}
 
 			initFilter(
-				servletContext, filterName, filterClassName, initParameterMap);
+				servletContext, filterClassName, filterName, initParameterMap);
 		}
 
 		List<Element> filterMappingElements = rootElement.elements(
@@ -448,7 +417,7 @@ public class InvokerFilterHelper {
 
 			_filterConfigs.put(servletFilterName, filterConfig);
 
-			registerFilter(servletFilterName, filter);
+			updateFilterMappings(servletFilterName, filter);
 
 			FilterMapping filterMapping = new FilterMapping(
 				filter, filterConfig, urlPatterns, dispatchers);

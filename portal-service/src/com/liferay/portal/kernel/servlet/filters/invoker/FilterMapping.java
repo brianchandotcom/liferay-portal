@@ -107,11 +107,7 @@ public class FilterMapping {
 			}
 		}
 
-		if (!matchURLPattern) {
-			return false;
-		}
-
-		if (isMatchURLRegexPattern(request, uri)) {
+		if (matchURLPattern && isMatchURLRegexPattern(request, uri)) {
 			return true;
 		}
 
@@ -165,40 +161,23 @@ public class FilterMapping {
 	}
 
 	protected boolean isMatchURLPattern(String uri, String urlPattern) {
-		if (urlPattern.equals(uri)) {
-			return true;
-		}
-
-		if (urlPattern.equals(_SLASH_STAR)) {
+		if (urlPattern.equals(uri) || urlPattern.equals(_SLASH_STAR)) {
 			return true;
 		}
 
 		if (urlPattern.endsWith(_SLASH_STAR)) {
-			if (urlPattern.regionMatches(0, uri, 0, urlPattern.length() - 2)) {
-				if (uri.length() == (urlPattern.length() - 2)) {
-					return true;
-				}
-				else if (CharPool.SLASH ==
-							uri.charAt(urlPattern.length() - 2)) {
+			if (uri.equals(urlPattern.substring(0, urlPattern.length() - 2)) ||
+				uri.startsWith(
+					urlPattern.substring(0, urlPattern.length() - 1))) {
 
-					return true;
-				}
+				return true;
 			}
 		}
-		else if (urlPattern.startsWith(_STAR_PERIOD)) {
-			int slashPos = uri.lastIndexOf(CharPool.SLASH);
-			int periodPos = uri.lastIndexOf(CharPool.PERIOD);
+		else if (urlPattern.startsWith(_STAR_PERIOD) &&
+				 (uri.indexOf(CharPool.SLASH) != -1) &&
+				 uri.endsWith(urlPattern.substring(1))) {
 
-			if ((slashPos >= 0) && (periodPos > slashPos) &&
-				(periodPos != (uri.length() - 1)) &&
-				((uri.length() - periodPos) == (urlPattern.length() - 1))) {
-
-				if (urlPattern.regionMatches(
-						2, uri, periodPos + 1, urlPattern.length() - 2)) {
-
-					return true;
-				}
-			}
+			return true;
 		}
 
 		return false;

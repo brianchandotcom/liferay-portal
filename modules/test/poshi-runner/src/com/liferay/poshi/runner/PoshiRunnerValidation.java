@@ -74,31 +74,6 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	private static void _validateAttributes(
-			Element element, List<String> possibleAttributes, String filePath)
-		throws PoshiRunnerException {
-
-		List<Attribute> attributes = element.attributes();
-
-		for (Attribute attribute : attributes) {
-			String attributeName = attribute.getName();
-
-			if (!possibleAttributes.contains(attributeName)) {
-				throw new PoshiRunnerException(
-					"Invalid " + attributeName + " attribute\n" + filePath +
-						":" + element.attributeValue("line-number"));
-			}
-
-			if (!attributeName.startsWith("value") &&
-				(attribute.getValue() == null)) {
-
-				throw new PoshiRunnerException(
-					"Missing " + attributeName + " attribute value\n" +
-						filePath + ":" + element.attributeValue("line-number"));
-			}
-		}
-	}
-
 	private static void _validateCommandElement(
 			Element element, String filePath)
 		throws PoshiRunnerException {
@@ -109,10 +84,11 @@ public class PoshiRunnerValidation {
 					element.attributeValue("line-number"));
 		}
 
-		List<String> possibleAttributes = Arrays.asList(
+		List<String> possibleAttributeNames = Arrays.asList(
 			"line-number", "name", "summary", "summary-ignore");
 
-		_validateAttributes(element, possibleAttributes, filePath);
+		_validatePossibleAttributeNames(
+			element, possibleAttributeNames, filePath);
 	}
 
 	private static void _validateDefinitionElement(
@@ -181,29 +157,33 @@ public class PoshiRunnerValidation {
 		throws PoshiRunnerException {
 
 		if (Validator.isNotNull(element.attributeValue("function"))) {
-			List<String> possibleAttributes = Arrays.asList(
+			List<String> possibleAttributeNames = Arrays.asList(
 				"function", "line-number", "locator1", "locator2", "value1",
 				"value2");
 
-			_validateAttributes(element, possibleAttributes, filePath);
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("macro"))) {
-			List<String> possibleAttributes = Arrays.asList(
+			List<String> possibleAttributeNames = Arrays.asList(
 				"line-number", "macro");
 
-			_validateAttributes(element, possibleAttributes, filePath);
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("selenium"))) {
-			List<String> possibleAttributes = Arrays.asList(
+			List<String> possibleAttributeNames = Arrays.asList(
 				"argument1", "argument2", "line-number", "selenium");
 
-			_validateAttributes(element, possibleAttributes, filePath);
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("test-case"))) {
-			List<String> possibleAttributes = Arrays.asList(
+			List<String> possibleAttributeNames = Arrays.asList(
 				"line-number", "test-case");
 
-			_validateAttributes(element, possibleAttributes, filePath);
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
 		}
 		else {
 			throw new PoshiRunnerException(
@@ -324,6 +304,24 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validatePossibleAttributeNames(
+			Element element, List<String> possibleAttributeNames,
+			String filePath)
+		throws PoshiRunnerException {
+
+		List<Attribute> attributes = element.attributes();
+
+		for (Attribute attribute : attributes) {
+			String attributeName = attribute.getName();
+
+			if (!possibleAttributeNames.contains(attributeName)) {
+				throw new PoshiRunnerException(
+					"Invalid " + attributeName + " attribute\n" + filePath +
+						":" + element.attributeValue("line-number"));
+			}
+		}
+	}
+
 	private static void _validateTestcaseFile(Element element, String filePath)
 		throws PoshiRunnerException {
 
@@ -349,11 +347,12 @@ public class PoshiRunnerValidation {
 			}
 		}
 
-		List<String> possibleAttributes = Arrays.asList(
+		List<String> possibleAttributeNames = Arrays.asList(
 			"attribute", "group", "line-number", "locator", "method", "name",
 			"pattern", "value");
 
-		_validateAttributes(element, possibleAttributes, filePath);
+		_validatePossibleAttributeNames(
+			element, possibleAttributeNames, filePath);
 	}
 
 }

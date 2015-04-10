@@ -25,7 +25,7 @@ AUI.add(
 			return FieldTypes[type] || FieldTypes.field;
 		};
 
-		var isNode = function(node) {
+		var validNode = function(node) {
 			return node && (node._node || node.nodeType);
 		};
 
@@ -1243,7 +1243,7 @@ AUI.add(
 
 						var editor = instance.getEditor();
 
-						return isNode(editor) ? A.one(editor).val() : editor.getHTML();
+						return validNode(editor) ? A.one(editor).val() : editor.getHTML();
 					},
 
 					setValue: function(value) {
@@ -1251,7 +1251,7 @@ AUI.add(
 
 						var editor = instance.getEditor();
 
-						if (isNode(editor)) {
+						if (validNode(editor)) {
 							TextHTMLField.superclass.setValue.apply(instance, arguments);
 						}
 						else {

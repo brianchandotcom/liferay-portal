@@ -1,4 +1,4 @@
-<definition default="assertConfirmation">
+<definition default="assertConfirmation" summary="Assert that the confirmation window equals the value '${value1}'">
 	<command name="assertConfirmation">
 		<execute selenium="assertConfirmation" />
 

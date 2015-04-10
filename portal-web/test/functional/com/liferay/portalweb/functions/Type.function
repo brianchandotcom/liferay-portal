@@ -1,4 +1,4 @@
-<definition default="type">
+<definition default="type" summary="Type to '${locator1}' the value '${value1}'">
 	<command name="clickAtSendKeys">
 		<execute selenium="waitForVisible" />
 
@@ -119,7 +119,7 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="type" summary="Type '${value1}' to '${locator1}'">
+	<command name="type">
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />

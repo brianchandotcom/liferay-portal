@@ -1,5 +1,5 @@
-<definition default="assertClick">
-	<command name="assertClick" summary="Click '${value1}' link">
+<definition default="assertClick" summary="Click on '${locator1}' that should have a value of '${value1}'">
+	<command name="assertClick">
 		<if>
 			<contains string="${locator1}" substring="/input" />
 			<then>

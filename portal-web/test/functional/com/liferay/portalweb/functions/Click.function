@@ -1,4 +1,4 @@
-<definition default="click">
+<definition default="click" summary="Click on '${locator1}'">
 	<command name="click">
 		<execute selenium="waitForVisible" />
 

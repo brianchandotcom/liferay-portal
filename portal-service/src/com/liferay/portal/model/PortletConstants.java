@@ -151,7 +151,7 @@ public class PortletConstants {
 	public static String getRootPortletId(String portletId) {
 		PortletInstance portletInstance = new PortletInstance(portletId);
 
-		return portletInstance.getRootPortletId();
+		return portletInstance.getPortletName();
 	}
 
 	/**

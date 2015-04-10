@@ -455,7 +455,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteCannotBeItsOwnParent" priority="5">
+	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParent" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -475,7 +475,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteCannotBeItsOwnParentStaging" priority="5">
+	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParentStaging" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

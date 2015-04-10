@@ -19,7 +19,7 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
-	<command name="AddPortletAsUserWithCustomizePermission" priority="4">
+	<command known-issues="LPS-39821" name="AddPortletAsUserWithCustomizePermission" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -242,7 +242,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteMembershouldAddAndRemovePortletFromHisCustomizableView" priority="4">
+	<command known-issues="LPS-39821" name="SiteMembershouldAddAndRemovePortletFromHisCustomizableView" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

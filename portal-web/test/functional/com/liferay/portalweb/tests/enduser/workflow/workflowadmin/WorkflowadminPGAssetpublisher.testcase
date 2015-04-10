@@ -161,7 +161,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54683" name="ApproveWebContentPG" priority="5">
+	<command name="ApproveWebContentPG" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="workflowAssetType" value="Web Content Article" />

@@ -57,6 +57,11 @@ public class ClassLoaderResourceParserTest {
 
 		String templateId = "DummyFile";
 
+		Class<?> clazz = getClass();
+
+		classLoaderResourceParser = new ClassLoaderResourceParser(
+			clazz.getClassLoader());
+
 		Assert.assertNull(classLoaderResourceParser.getURL(templateId));
 
 		try (CaptureHandler captureHandler =

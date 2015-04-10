@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.template.ClassLoaderTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -156,6 +157,44 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		return false;
 	}
 
+	private TemplateResource _getTemplateResource() {
+		TemplateResource templateResource =
+			TemplateResourceThreadLocal.getTemplateResource(_name);
+
+		if (templateResource instanceof CacheTemplateResource) {
+			CacheTemplateResource cacheTemplateResource =
+				(CacheTemplateResource)templateResource;
+
+			return cacheTemplateResource.getInnerTemplateResource();
+		}
+
+		return templateResource;
+	}
+
+	private Set<TemplateResourceParser> _getTemplateResourceParsers() {
+		TemplateResource templateResource = _getTemplateResource();
+
+		if ((templateResource != null) &&
+			(templateResource instanceof ClassLoaderTemplateResource)) {
+
+			ClassLoaderTemplateResource classLoaderTemplateResource =
+				(ClassLoaderTemplateResource)templateResource;
+
+			ClassLoaderResourceParser classLoaderResourceParser =
+				new ClassLoaderResourceParser(
+					classLoaderTemplateResource.getClassLoader());
+
+			Set<TemplateResourceParser> templateResourceParsers = new HashSet<>(
+				_templateResourceParsers);
+
+			templateResourceParsers.add(classLoaderResourceParser);
+
+			return templateResourceParsers;
+		}
+
+		return _templateResourceParsers;
+	}
+
 	private TemplateResource _loadFromCache(
 		PortalCache<String, TemplateResource> portalCache, String templateId) {
 
@@ -222,8 +261,11 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	}
 
 	private TemplateResource _loadFromParser(String templateId) {
+		Set<TemplateResourceParser> templateResourceParsers =
+			_getTemplateResourceParsers();
+
 		for (TemplateResourceParser templateResourceParser :
-				_templateResourceParsers) {
+				templateResourceParsers) {
 
 			try {
 				TemplateResource templateResource =

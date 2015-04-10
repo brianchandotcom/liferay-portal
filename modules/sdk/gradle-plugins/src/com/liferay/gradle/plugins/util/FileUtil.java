@@ -84,6 +84,16 @@ public class FileUtil {
 		return relativePath.toString();
 	}
 
+	public static String stripExtension(String fileName) {
+		int index = fileName.lastIndexOf('.');
+
+		if (index != -1) {
+			fileName = fileName.substring(0, index);
+		}
+
+		return fileName;
+	}
+
 	public static void unzip(
 		Project project, final File sourceFile, final File destinationFile,
 		final int cutDirs, final String[] excludes, final String[] includes) {

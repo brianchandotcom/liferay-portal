@@ -235,6 +235,14 @@ public class GradleUtil {
 		return taskContainer.getByName(name);
 	}
 
+	public static String getTaskName(String prefix, File file) {
+		String fileName = FileUtil.stripExtension(file.getName());
+
+		fileName = fileName.replaceAll("\\W", "");
+
+		return prefix + StringUtil.capitalize(fileName);
+	}
+
 	public static void removeDependencies(
 		Project project, String configurationName,
 		String[] dependencyNotations) {

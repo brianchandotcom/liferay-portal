@@ -22,8 +22,6 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 
-import javax.portlet.PortletPreferences;
-
 import javax.servlet.http.HttpServletRequest;
 public class EntrySelectorTag extends IncludeTag {
 
@@ -39,8 +37,8 @@ public class EntrySelectorTag extends IncludeTag {
 		_id = id;
 	}
 
-	public void setPortletPreferences(PortletPreferences portletPreferences) {
-		_portletPreferences = portletPreferences;
+	public void setSelectedEntries(List<SelectableEntry> selectedEntries) {
+		_selectedEntries = selectedEntries;
 	}
 
 	public void setTitle(String title) {
@@ -52,7 +50,7 @@ public class EntrySelectorTag extends IncludeTag {
 		_entries = null;
 		_hiddenInput = null;
 		_id = null;
-		_portletPreferences = null;
+		_selectedEntries = null;
 		_title = null;
 	}
 
@@ -76,8 +74,7 @@ public class EntrySelectorTag extends IncludeTag {
 			"liferay-ui:entry-selector:hiddenInput", _hiddenInput);
 		request.setAttribute("liferay-ui:entry-selector:id", id);
 		request.setAttribute(
-			"liferay-ui:entry-selector:portletPreferences",
-			_portletPreferences);
+			"liferay-ui:entry-selector:selectedEntries", _selectedEntries);
 		request.setAttribute("liferay-ui:entry-selector:title", _title);
 	}
 
@@ -87,7 +84,7 @@ public class EntrySelectorTag extends IncludeTag {
 	private List<SelectableEntry> _entries;
 	private String _hiddenInput;
 	private String _id;
-	private PortletPreferences _portletPreferences;
+	private List<SelectableEntry> _selectedEntries;
 	private String _title = "select-entries";
 
 }

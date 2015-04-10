@@ -20,7 +20,7 @@
 List<SelectableEntry> entries = (List<SelectableEntry>)request.getAttribute("liferay-ui:entry-selector:entries");
 String hiddenInput = (String)request.getAttribute("liferay-ui:entry-selector:hiddenInput");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:entry-selector:id"));
-PortletPreferences portletPreferences = (PortletPreferences)request.getAttribute("liferay-ui:entry-selector:portletPreferences");
+List<SelectableEntry> selectedEntries = (List<SelectableEntry>)request.getAttribute("liferay-ui:entry-selector:selectedEntries");
 String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:entry-selector:title"));
 %>
 
@@ -30,8 +30,7 @@ String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:ent
 	<ul class="list-inline list-unstyled selected-entries">
 
 		<%
-		for (SelectableEntry entry : entries) {
-			if (entry.isSelected(request, portletPreferences)) {
+		for (SelectableEntry entry : selectedEntries) {
 		%>
 
 			<li class="list-entry" data-key="<%= entry.getKey() %>">
@@ -44,7 +43,6 @@ String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:ent
 			</li>
 
 		<%
-			}
 		}
 		%>
 

@@ -174,6 +174,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_PAGE_ICON</td>
+	<td>//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -480,7 +485,7 @@
 </tr>
 <tr>
 	<td>PORTLET</td>
-	<td>//section[header/h1[contains(.,&quot;${key_portletName}&quot;)]]</td>
+	<td>//section[header/h1[contains(.,'${key_portletName}')]] | //div[contains(@class,'portlet-borderless')]/span[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -500,7 +505,7 @@
 </tr>
 <tr>
 	<td>PORTLET_BORDERLESS</td>
-	<td>//div[contains(@class,'portlet-borderless')]/span[contains(.,&quot;${key_portletName}&quot;)]</td>
+	<td>//div[contains(@class,'portlet-borderless')]/span[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

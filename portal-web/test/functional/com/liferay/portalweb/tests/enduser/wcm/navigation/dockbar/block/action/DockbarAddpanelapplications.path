@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PORTLET_LINK</td>
+	<td>//span[contains(@data-search,'-${portletName}') and contains(@class,'add-content-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

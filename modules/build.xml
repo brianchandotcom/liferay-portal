@@ -20,6 +20,7 @@
 		<dirset dir="apps/iframe" includes="*" />
 		<dirset dir="apps/invitation" includes="*" />
 		<dirset dir="apps/journal" includes="*" />
+		<dirset dir="apps/layout" includes="*" />
 		<dirset dir="apps/loan-calculator" includes="*" />
 		<dirset dir="apps/mentions" excludes="mentions-editor-config" includes="*" />
 		<dirset dir="apps/message-boards" includes="*" />

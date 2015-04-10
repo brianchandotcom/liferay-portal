@@ -267,20 +267,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a toolbar for viewing items in app view.</description>
 		<name>app-view-toolbar</name>
 		<tag-class>com.liferay.taglib.ui.AppViewToolbarTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether to include the option to choose a display style for component items.</description>
 			<name>includeDisplayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether to include the option to select all component items.</description>
 			<name>includeSelectAll</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The file path for the search JSP page.</description>
 			<name>searchJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

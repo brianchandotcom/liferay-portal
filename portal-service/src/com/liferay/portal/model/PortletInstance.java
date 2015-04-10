@@ -46,12 +46,10 @@ public class PortletInstance {
 		this(portletName, userId, null);
 	}
 
-	public PortletInstance(
-		String portletName, long userId, String instanceId) {
-
+	public PortletInstance(String portletName, long userId, String instanceId) {
 		_portletName = portletName;
-		_instanceId = instanceId;
 		_userId = userId;
+		_instanceId = instanceId;
 	}
 
 	public PortletInstance(String portletName, String instanceId) {

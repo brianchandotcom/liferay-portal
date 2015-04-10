@@ -154,8 +154,7 @@ public class PortletInstanceTest {
 	public void testRootPortletId1() {
 		PortletInstance portletInstance = new PortletInstance(PortletKeys.TEST);
 
-		Assert.assertEquals(
-			PortletKeys.TEST, portletInstance.getPortletName());
+		Assert.assertEquals(PortletKeys.TEST, portletInstance.getPortletName());
 	}
 
 	@Test
@@ -163,8 +162,7 @@ public class PortletInstanceTest {
 		PortletInstance portletInstance = new PortletInstance(
 			getId(PortletKeys.TEST, "1234"));
 
-		Assert.assertEquals(
-			PortletKeys.TEST, portletInstance.getPortletName());
+		Assert.assertEquals(PortletKeys.TEST, portletInstance.getPortletName());
 	}
 
 	@Test
@@ -172,8 +170,7 @@ public class PortletInstanceTest {
 		PortletInstance portletInstance = new PortletInstance(
 			getId(PortletKeys.TEST, 1234));
 
-		Assert.assertEquals(
-			PortletKeys.TEST, portletInstance.getPortletName());
+		Assert.assertEquals(PortletKeys.TEST, portletInstance.getPortletName());
 	}
 
 	@Test
@@ -181,8 +178,7 @@ public class PortletInstanceTest {
 		PortletInstance portletInstance = new PortletInstance(
 			getId(PortletKeys.TEST, 1234, "5678"));
 
-		Assert.assertEquals(
-			PortletKeys.TEST, portletInstance.getPortletName());
+		Assert.assertEquals(PortletKeys.TEST, portletInstance.getPortletName());
 	}
 
 	@Test

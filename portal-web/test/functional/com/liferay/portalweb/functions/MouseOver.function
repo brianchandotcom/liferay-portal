@@ -1,4 +1,4 @@
-<definition default="mouseOver">
+<definition default="mouseOver" summary="Mouse over '${locator1}'">
 	<command name="mouseOver">
 		<execute selenium="waitForVisible" />
 

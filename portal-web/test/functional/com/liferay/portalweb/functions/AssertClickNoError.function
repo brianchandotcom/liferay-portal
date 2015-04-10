@@ -1,4 +1,4 @@
-<definition default="assertClickNoError">
+<definition default="assertClickNoError" summary="Click on '${locator1}' that should have a value of '${value1}'">
 	<command name="assertClickNoError">
 		<if>
 			<contains string="${locator1}" substring="/input" />

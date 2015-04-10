@@ -1,5 +1,5 @@
-<definition default="assertTextNotEquals">
-	<command name="assertNotPartialText">
+<definition default="assertTextNotEquals" summary="Assert that '${locator1}' does not equal the value '${value1}'">
+	<command name="assertNotPartialText" summary="Assert that '${locator1}' does not contain the value '${value1}'">
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="waitForNotPartialText" />

@@ -39,7 +39,7 @@ public class LayoutTypeURLImpl extends LayoutTypePortletImpl {
 	@Override
 	public String getURL(Map<String, String> variables) {
 		if (hasViewPermission()) {
-			super.getURL(variables);
+			return super.getURL(variables);
 		}
 
 		return replaceVariables(getDefaultURL(), variables);

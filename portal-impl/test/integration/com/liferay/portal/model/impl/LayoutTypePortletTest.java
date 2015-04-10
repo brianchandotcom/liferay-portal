@@ -293,7 +293,7 @@ public class LayoutTypePortletTest {
 		try {
 			portlets = _layoutTypePortlet.getAllPortlets();
 
-			Assert.assertTrue(portlets.isEmpty());
+			Assert.assertEquals(1, portlets.size());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

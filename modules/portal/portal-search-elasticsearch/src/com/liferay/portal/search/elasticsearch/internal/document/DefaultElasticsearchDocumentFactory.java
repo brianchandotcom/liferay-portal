@@ -23,8 +23,6 @@ import com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFac
 
 import java.io.IOException;
 
-import java.math.BigDecimal;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -194,27 +192,26 @@ public class DefaultElasticsearchDocumentFactory
 		if (!field.isNumeric()) {
 			return value;
 		}
-		else {
-			Class<?> numericClass = field.getNumericClass();
 
-			if (numericClass.equals(BigDecimal.class) ||
-				numericClass.equals(Double.class)) {
+		Class<? extends Number> numericClass = field.getNumericClass();
 
-				return Double.valueOf(value);
-			}
-			else if (numericClass.equals(Float.class)) {
-				return Float.valueOf(value);
-			}
-			else if (numericClass.equals(Integer.class)) {
-				return Integer.valueOf(value);
-			}
-			else if (numericClass.equals(Short.class)) {
-				return Short.valueOf(value);
-			}
-			else {
-				return Long.valueOf(value);
-			}
+		if (numericClass.equals(Float.class)) {
+			return Float.valueOf(value);
 		}
+
+		if (numericClass.equals(Integer.class)) {
+			return Integer.valueOf(value);
+		}
+
+		if (numericClass.equals(Short.class)) {
+			return Short.valueOf(value);
+		}
+
+		if (numericClass.equals(Long.class)) {
+			return Long.valueOf(value);
+		}
+
+		return Double.valueOf(value);
 	}
 
 }

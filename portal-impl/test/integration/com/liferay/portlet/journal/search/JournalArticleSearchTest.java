@@ -141,11 +141,27 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Test
+	public void testOrderByDDMBooleanFieldRepeatable() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.testOrderByDDMBooleanFieldRepeatable();
+	}
+
+	@Test
 	public void testOrderByDDMIntegerField() throws Exception {
 		TestOrderHelper orderTestHelper =
 			new JournalArticleSearchTestOrderHelper(group);
 
 		orderTestHelper.testOrderByDDMIntegerField();
+	}
+
+	@Test
+	public void testOrderByDDMIntegerFieldRepeatable() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.testOrderByDDMIntegerFieldRepeatable();
 	}
 
 	@Test
@@ -157,11 +173,27 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Test
+	public void testOrderByDDMNumberFieldRepeatable() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.testOrderByDDMNumberFieldRepeatable();
+	}
+
+	@Test
 	public void testOrderByDDMTextField() throws Exception {
 		TestOrderHelper orderTestHelper =
 			new JournalArticleSearchTestOrderHelper(group);
 
 		orderTestHelper.testOrderByDDMTextField();
+	}
+
+	@Test
+	public void testOrderByDDMTextFieldRepeatable() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.testOrderByDDMTextFieldRepeatable();
 	}
 
 	@Ignore()
@@ -171,7 +203,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	protected BaseModel<?> addBaseModel(
-			BaseModel<?> parentBaseModel, String keywords,
+			BaseModel<?> parentBaseModel, String[] keywords,
 			DDMStructure ddmStructure, DDMTemplate ddmTemplate,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -204,7 +236,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
 
 		return addBaseModel(
-			parentBaseModel, keywords, ddmStructure, ddmTemplate,
+			parentBaseModel, new String[] {keywords}, ddmStructure, ddmTemplate,
 			serviceContext);
 	}
 
@@ -415,13 +447,25 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		@Override
 		protected BaseModel<?> addSearchableAssetEntry(
-				BaseModel<?> parentBaseModel, String keywords,
+				String fieldValue, BaseModel<?> parentBaseModel,
 				DDMStructure ddmStructure, DDMTemplate ddmTemplate,
 				ServiceContext serviceContext)
 			throws Exception {
 
 			return addBaseModel(
-				parentBaseModel, keywords, ddmStructure, ddmTemplate,
+				parentBaseModel, new String[] {fieldValue}, ddmStructure,
+				ddmTemplate, serviceContext);
+		}
+
+		@Override
+		protected BaseModel<?> addSearchableAssetEntryRepeatable(
+				String[] fieldValues, BaseModel<?> parentBaseModel,
+				DDMStructure ddmStructure, DDMTemplate ddmTemplate,
+				ServiceContext serviceContext)
+			throws Exception {
+
+			return addBaseModel(
+				parentBaseModel, fieldValues, ddmStructure, ddmTemplate,
 				serviceContext);
 		}
 

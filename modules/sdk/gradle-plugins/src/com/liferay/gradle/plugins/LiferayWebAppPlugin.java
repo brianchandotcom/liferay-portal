@@ -52,6 +52,7 @@ import org.gradle.api.internal.file.copy.CopySpecResolver;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.War;
@@ -61,11 +62,27 @@ import org.gradle.api.tasks.bundling.War;
  */
 public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
+	public static final String DEPLOY_TASK_NAME = "deploy";
+
+	public static final String DIRECT_DEPLOY_TASK_NAME = "directDeploy";
+
 	@Override
 	public void apply(Project project) {
 		super.apply(project);
 
 		configureWebAppDirName(project);
+	}
+
+	protected Copy addTaskDeploy(Project project) {
+		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
+
+		copy.dependsOn(WarPlugin.WAR_TASK_NAME);
+
+		copy.setDescription(
+			"Assembles the project into a WAR file and deploys it to Liferay.");
+		copy.setGroup(WarPlugin.WEB_APP_GROUP);
+
+		return copy;
 	}
 
 	protected DirectDeployTask addTaskDirectDeploy(Project project) {
@@ -88,6 +105,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		super.addTasks(project, liferayExtension);
 
+		addTaskDeploy(project);
 		addTaskDirectDeploy(project);
 	}
 
@@ -179,6 +197,17 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		buildCssTask.setRootDirs(getWebAppDir(project));
 	}
 
+	protected void configureTaskDeploy(
+		Project project, LiferayExtension liferayExtension) {
+
+		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+
+		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
+
+		copy.from(war.getArchivePath());
+		copy.into(liferayExtension.getDeployDir());
+	}
+
 	protected void configureTaskDirectDeploy(
 		Project project, LiferayExtension liferayExtension) {
 
@@ -262,6 +291,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		super.configureTasks(project, liferayExtension);
 
+		configureTaskDeploy(project, liferayExtension);
 		configureTaskDirectDeploy(project, liferayExtension);
 		configureTaskWar(project, liferayExtension);
 	}
@@ -489,7 +519,5 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		return projectName.substring(index + 1);
 	}
-
-	protected static final String DIRECT_DEPLOY_TASK_NAME = "directDeploy";
 
 }

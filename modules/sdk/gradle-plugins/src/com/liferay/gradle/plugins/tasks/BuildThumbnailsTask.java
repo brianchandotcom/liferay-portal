@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import com.liferay.gradle.plugins.util.FileUtil;
+
 import java.io.File;
 import java.io.OutputStream;
 
@@ -138,12 +140,16 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 	protected List<String> getArgs(File screenshotFile) {
 		List<String> args = getArgs();
 
-		args.add("thumbnail.original.file=" + screenshotFile);
+		args.add(
+			"thumbnail.original.file=" +
+				FileUtil.getAbsolutePath(screenshotFile));
 
 		File thumbnailFile = new File(
 			screenshotFile.getParentFile(), "thumbnail.png");
 
-		args.add("thumbnail.thumbnail.file=" + thumbnailFile);
+		args.add(
+			"thumbnail.thumbnail.file=" +
+				FileUtil.getAbsolutePath(thumbnailFile));
 
 		return args;
 	}

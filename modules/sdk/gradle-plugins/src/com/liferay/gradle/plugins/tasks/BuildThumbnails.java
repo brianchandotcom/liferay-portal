@@ -34,7 +34,7 @@ import org.gradle.process.internal.streams.SafeStreams;
 /**
  * @author Andrea Di Giorgi
  */
-public class BuildThumbnailsTask extends BasePortalToolsTask {
+public class BuildThumbnails extends BasePortalToolsTask {
 
 	@Override
 	public void exec() {

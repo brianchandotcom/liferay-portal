@@ -29,7 +29,7 @@ import org.gradle.api.tasks.InputFile;
 /**
  * @author Andrea Di Giorgi
  */
-public class DirectDeployTask extends BasePortalImplToolsTask {
+public class DirectDeploy extends BasePortalImplToolsTask {
 
 	@InputDirectory
 	public File getAppServerDeployDir() {

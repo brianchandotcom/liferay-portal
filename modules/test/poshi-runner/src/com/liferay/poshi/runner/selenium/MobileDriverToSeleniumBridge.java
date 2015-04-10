@@ -999,16 +999,16 @@ public class MobileDriverToSeleniumBridge
 			int screenPositionX = elementPositionCenterX * 3 / 2;
 
 			sb.append(screenPositionX);
-
 			sb.append(" ");
 
 			int elementPositionCenterY =
 				WebDriverHelper.getElementPositionCenterY(this, locator);
-
+			int navigationBarHeight = 116;
 			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
 
 			int screenPositionY =
-				(elementPositionCenterY - viewportPositionTop) * 3 / 2 + 116;
+				(elementPositionCenterY - viewportPositionTop) * 3 / 2 +
+				navigationBarHeight;
 
 			sb.append(screenPositionY);
 

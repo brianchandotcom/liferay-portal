@@ -66,6 +66,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
 			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="rootNodeName" value="<%= layoutPrototype.getName(locale) %>" />
+			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
@@ -85,6 +86,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
 			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="rootNodeName" value="<%= layoutPrototype.getName(locale) %>" />
+			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon

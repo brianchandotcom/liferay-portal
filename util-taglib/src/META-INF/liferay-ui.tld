@@ -222,45 +222,56 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a nav list item component for navigating app view entries.</description>
 		<name>app-view-navigation-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewNavigationEntryTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<description>The path for the action JSP page.</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A CSS class for styling this component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The data attributes and values to be applied to the component link.</description>
 			<name>dataView</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
+			<description>The title of the component.</description>
 			<name>entryTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The CSS class that sets the component icon.</description>
 			<name>iconImage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The source path for the component icon.</description>
 			<name>iconSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the entry is selected or not.</description>
 			<name>selected</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The url to view the entry.</description>
 			<name>viewURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -9,12 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>CPWebcontentStructures</td>
-</tr>
-<!---->
-<tr>
 	<td>STRUCTURES_IFRAME</td>
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'scopeTitle=Structures')]</td>
 	<td></td>

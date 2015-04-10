@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>PGDocumentsandmediaCategoriesDialogBox</td>
-</tr>
-<tr>
 	<td>CATEGORIES_DIALOG_BOX</td>
 	<td>//div[contains(@class,'lfr-tag-selector-popup')]</td>
 	<td></td>

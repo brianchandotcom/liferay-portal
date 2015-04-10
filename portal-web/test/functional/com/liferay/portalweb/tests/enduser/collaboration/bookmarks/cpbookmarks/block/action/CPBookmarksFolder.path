@@ -9,12 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>CPBookmarksFolder</td>
-</tr>
-<!---->
-<tr>
 	<td>EXTEND_ACTION_PATH</td>
 	<td>CPBookmarks</td>
 	<td></td>

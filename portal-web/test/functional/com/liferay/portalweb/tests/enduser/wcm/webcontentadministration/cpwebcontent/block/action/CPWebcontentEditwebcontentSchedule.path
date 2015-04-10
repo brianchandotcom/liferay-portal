@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>CPWebcontentEditwebcontentSchedule</td>
-</tr>
-<tr>
 	<td>EXTEND_ACTION_PATH</td>
 	<td>CPWebcontentAddwebcontent</td>
 	<td></td>

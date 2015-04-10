@@ -9,12 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>CPWebcontentMove</td>
-</tr>
-<!---->
-<tr>
 	<td>PARENT_FOLDER_NAME</td>
 	<td>//a[contains(@id,'parentFolderName')]</td>
 	<td></td>

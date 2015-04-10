@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>PGWikiWikipageAttachments</td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -112,7 +107,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ATTACHMENT_TABLE_REMOVE</td> 
+	<td>ATTACHMENT_TABLE_REMOVE</td>
 	<td>//tr[contains(.,'${key_attachmentFileName}')]/td[contains(.,'Remove')]/span/a</td>
 	<td></td>
 </tr>

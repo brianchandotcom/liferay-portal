@@ -106,49 +106,29 @@ public class PoshiRunnerValidation {
 		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
 			filePath);
 
-		List<Attribute> attributes = element.attributes();
+		if (classType.equals("function")) {
+			List<String> possibleAttributeNames = Arrays.asList(
+				"default", "line-number", "summary", "summary-ignore");
 
-		for (Attribute attribute : attributes) {
-			String attributeName = attribute.getName();
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
+		}
 
-			if (Validator.isNull(attribute.getValue())) {
-				throw new PoshiRunnerException(
-					"Missing " + attributeName + " attribute value\n" +
-						filePath + ":" + element.attributeValue("line-number"));
-			}
+		if (classType.equals("macro")) {
+			List<String> possibleAttributeNames = Arrays.asList(
+				"extends", "line-number");
 
-			if (attributeName.equals("line-number")) {
-				continue;
-			}
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
+		}
 
-			if (classType.equals("function")) {
-				if (attributeName.equals("default") ||
-					attributeName.equals("summary") ||
-					attributeName.equals("summary-ignore")) {
+		if (classType.equals("testcase")) {
+			List<String> possibleAttributeNames = Arrays.asList(
+				"component-name", "extends", "ignore", "ignore-command-names",
+				"line-number");
 
-					continue;
-				}
-			}
-
-			if (classType.equals("macro")) {
-				if (attributeName.equals("extends")) {
-					continue;
-				}
-			}
-
-			if (classType.equals("testcase")) {
-				if (attributeName.equals("component-name") ||
-					attributeName.equals("extends") ||
-					attributeName.equals("ignore") ||
-					attributeName.equals("ignore-command-names")) {
-
-					continue;
-				}
-			}
-
-			throw new PoshiRunnerException(
-				"Invalid " + attributeName + " attribute\n" + filePath + ":" +
-					element.attributeValue("line-number"));
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
 		}
 	}
 
@@ -207,7 +187,7 @@ public class PoshiRunnerValidation {
 						throw new PoshiRunnerException(
 							"Invalid child element\n" +
 								filePath + ":" +
-								element.attributeValue("line-number"));
+									element.attributeValue("line-number"));
 					}
 				}
 			}

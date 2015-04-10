@@ -14,12 +14,13 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl;
+import com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl;
+import com.liferay.portal.kernel.search.generic.TermRangeQueryFactoryImpl;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 /**
  * @author Bruno Farache
@@ -42,21 +43,7 @@ public class BaseSearchEngine implements SearchEngine {
 	@Override
 	public BooleanClauseFactory getBooleanClauseFactory() {
 		if (_booleanClauseFactory == null) {
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-			String className =
-				"com.liferay.portal.kernel.search.generic." +
-					"BooleanClauseFactoryImpl";
-
-			try {
-				_booleanClauseFactory =
-					(BooleanClauseFactory)InstanceFactory.newInstance(
-						classLoader, className);
-			}
-			catch (Exception e) {
-				_log.fatal(
-					"Unable to locate appropriate BooleanClauseFactory", e);
-			}
+			_booleanClauseFactory = new BooleanClauseFactoryImpl();
 		}
 
 		return _booleanClauseFactory;
@@ -64,36 +51,11 @@ public class BaseSearchEngine implements SearchEngine {
 
 	@Override
 	public BooleanQueryFactory getBooleanQueryFactory() {
-		if (_booleanQueryFactory != null) {
-			return _booleanQueryFactory;
-		}
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		String className =
-			"com.liferay.portal.search.lucene.BooleanQueryFactoryImpl";
-
-		if (!isLuceneBased()) {
-			className =
-				"com.liferay.portal.kernel.search.generic." +
-					"BooleanQueryFactoryImpl";
-		}
-
-		try {
-			_booleanQueryFactory =
-				(BooleanQueryFactory)InstanceFactory.newInstance(
-					classLoader, className);
-		}
-		catch (Exception e) {
-			_log.fatal("Unable to locate appropriate BooleanQueryFactory", e);
+		if (_booleanQueryFactory == null) {
+			_booleanQueryFactory = new BooleanQueryFactoryImpl();
 		}
 
 		return _booleanQueryFactory;
-	}
-
-	@Override
-	public Priority getClusteredWritePriority() {
-		return _clusteredWritePriority;
 	}
 
 	@Override
@@ -108,26 +70,8 @@ public class BaseSearchEngine implements SearchEngine {
 
 	@Override
 	public TermQueryFactory getTermQueryFactory() {
-		if (_termQueryFactory != null) {
-			return _termQueryFactory;
-		}
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		String className =
-			"com.liferay.portal.search.lucene.TermQueryFactoryImpl";
-
-		if (!isLuceneBased()) {
-			className =
-				"com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl";
-		}
-
-		try {
-			_termQueryFactory = (TermQueryFactory)InstanceFactory.newInstance(
-				classLoader, className);
-		}
-		catch (Exception e) {
-			_log.fatal("Unable to locate appropriate BooleanQueryFactory", e);
+		if (_termQueryFactory == null) {
+			_termQueryFactory = new TermQueryFactoryImpl();
 		}
 
 		return _termQueryFactory;
@@ -135,28 +79,8 @@ public class BaseSearchEngine implements SearchEngine {
 
 	@Override
 	public TermRangeQueryFactory getTermRangeQueryFactory() {
-		if (_termRangeQueryFactory != null) {
-			return _termRangeQueryFactory;
-		}
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		String className =
-			"com.liferay.portal.search.lucene.TermRangeQueryFactoryImpl";
-
-		if (!isLuceneBased()) {
-			className =
-				"com.liferay.portal.kernel.search.generic." +
-					"TermRangeQueryFactoryImpl";
-		}
-
-		try {
-			_termRangeQueryFactory =
-				(TermRangeQueryFactory)InstanceFactory.newInstance(
-					classLoader, className);
-		}
-		catch (Exception e) {
-			_log.fatal("Unable to locate appropriate BooleanQueryFactory", e);
+		if (_termRangeQueryFactory == null) {
+			_termRangeQueryFactory = new TermRangeQueryFactoryImpl();
 		}
 
 		return _termRangeQueryFactory;
@@ -169,16 +93,6 @@ public class BaseSearchEngine implements SearchEngine {
 
 	@Override
 	public void initialize(long companyId) {
-	}
-
-	@Override
-	public boolean isClusteredWrite() {
-		return _clusteredWrite;
-	}
-
-	@Override
-	public boolean isLuceneBased() {
-		return _luceneBased;
 	}
 
 	/**
@@ -213,24 +127,12 @@ public class BaseSearchEngine implements SearchEngine {
 		_booleanQueryFactory = booleanQueryFactory;
 	}
 
-	public void setClusteredWrite(boolean clusteredWrite) {
-		_clusteredWrite = clusteredWrite;
-	}
-
-	public void setClusteredWritePriority(Priority clusteredWritePriority) {
-		_clusteredWritePriority = clusteredWritePriority;
-	}
-
 	public void setIndexSearcher(IndexSearcher indexSearcher) {
 		_indexSearcher = indexSearcher;
 	}
 
 	public void setIndexWriter(IndexWriter indexWriter) {
 		_indexWriter = indexWriter;
-	}
-
-	public void setLuceneBased(boolean luceneBased) {
-		_luceneBased = luceneBased;
 	}
 
 	public void setTermQueryFactory(TermQueryFactory termQueryFactory) {
@@ -252,11 +154,8 @@ public class BaseSearchEngine implements SearchEngine {
 
 	private BooleanClauseFactory _booleanClauseFactory;
 	private BooleanQueryFactory _booleanQueryFactory;
-	private boolean _clusteredWrite;
-	private Priority _clusteredWritePriority;
 	private IndexSearcher _indexSearcher = new DummyIndexSearcher();
 	private IndexWriter _indexWriter = new DummyIndexWriter();
-	private boolean _luceneBased;
 	private TermQueryFactory _termQueryFactory;
 	private TermRangeQueryFactory _termRangeQueryFactory;
 	private String _vendor;

@@ -37,7 +37,7 @@ public class LuceneSearchEngine extends BaseSearchEngine {
 
 			fileOutputStream = new FileOutputStream(fileName);
 
-			LuceneHelperUtil.dumpIndex(companyId, fileOutputStream);
+			_luceneHelper.dumpIndex(companyId, fileOutputStream);
 
 			return fileName;
 		}
@@ -53,7 +53,7 @@ public class LuceneSearchEngine extends BaseSearchEngine {
 	public void initialize(long companyId) {
 		super.initialize(companyId);
 
-		LuceneHelperUtil.startup(companyId);
+		_luceneHelper.startup(companyId);
 	}
 
 	@Override
@@ -67,9 +67,9 @@ public class LuceneSearchEngine extends BaseSearchEngine {
 	public void removeCompany(long companyId) {
 		super.removeCompany(companyId);
 
-		LuceneHelperUtil.delete(companyId);
+		_luceneHelper.delete(companyId);
 
-		LuceneHelperUtil.shutdown(companyId);
+		_luceneHelper.shutdown(companyId);
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class LuceneSearchEngine extends BaseSearchEngine {
 
 			fileInputStream = new FileInputStream(fileName);
 
-			LuceneHelperUtil.loadIndex(companyId, fileInputStream);
+			_luceneHelper.loadIndex(companyId, fileInputStream);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -91,9 +91,15 @@ public class LuceneSearchEngine extends BaseSearchEngine {
 		}
 	}
 
+	public void setLuceneHelper(LuceneHelper luceneHelper) {
+		_luceneHelper = luceneHelper;
+	}
+
 	protected String getFileName(String backupName) {
 		return SystemProperties.get(SystemProperties.TMP_DIR) +
 			File.separator + backupName;
 	}
+
+	private LuceneHelper _luceneHelper;
 
 }

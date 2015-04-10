@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.cluster.Priority;
-
 /**
  * @author Michael C. Han
  */
@@ -45,11 +43,6 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	@Override
 	public BooleanQueryFactory getBooleanQueryFactory() {
 		return _searchEngine.getBooleanQueryFactory();
-	}
-
-	@Override
-	public Priority getClusteredWritePriority() {
-		return _searchEngine.getClusteredWritePriority();
 	}
 
 	@Override
@@ -84,16 +77,6 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	@Override
 	public void initialize(long companyId) {
 		_searchEngine.initialize(companyId);
-	}
-
-	@Override
-	public boolean isClusteredWrite() {
-		return _searchEngine.isClusteredWrite();
-	}
-
-	@Override
-	public boolean isLuceneBased() {
-		return _searchEngine.isLuceneBased();
 	}
 
 	@Override

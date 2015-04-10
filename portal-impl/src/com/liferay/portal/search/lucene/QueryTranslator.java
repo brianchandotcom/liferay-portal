@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.lucene;
+
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
 
 /**
  * @author Raymond Augé
@@ -20,7 +23,5 @@ package com.liferay.portal.kernel.search;
 public interface QueryTranslator<T> {
 
 	public T translate(Query query) throws ParseException;
-
-	public Object translateForSolr(Query query) throws ParseException;
 
 }

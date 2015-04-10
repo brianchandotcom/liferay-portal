@@ -14,18 +14,16 @@
 
 package com.liferay.portal.search.lucene;
 
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.highlight.Formatter;
@@ -38,48 +36,10 @@ import org.apache.lucene.util.Version;
  */
 public interface LuceneHelper {
 
+	public void addDate(Document doc, String field, Date value);
+
 	public void addDocument(long companyId, Document document)
 		throws IOException;
-
-	public void addExactTerm(
-		BooleanQuery booleanQuery, String field, String value);
-
-	public void addNumericRangeTerm(
-		BooleanQuery booleanQuery, String field, Integer startValue,
-		Integer endValue);
-
-	public void addNumericRangeTerm(
-		BooleanQuery booleanQuery, String field, Long startValue,
-		Long endValue);
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #addNumericRangeTerm(BooleanQuery, String, Long, Long)}
-	 */
-	@Deprecated
-	public void addNumericRangeTerm(
-		BooleanQuery booleanQuery, String field, String startValue,
-		String endValue);
-
-	public void addRangeTerm(
-		BooleanQuery booleanQuery, String field, String startValue,
-		String endValue);
-
-	public void addRequiredTerm(
-		BooleanQuery booleanQuery, String field, String value, boolean like);
-
-	public void addRequiredTerm(
-		BooleanQuery booleanQuery, String field, String[] values, boolean like);
-
-	public void addTerm(
-		BooleanQuery booleanQuery, String field, String value, boolean like);
-
-	public void addTerm(
-		BooleanQuery booleanQuery, String field, String value, boolean like,
-		BooleanClauseOccur booleanClauseOccur);
-
-	public void addTerm(
-		BooleanQuery booleanQuery, String field, String[] values, boolean like);
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #releaseIndexSearcher(long,
@@ -112,6 +72,13 @@ public interface LuceneHelper {
 	 */
 	@Deprecated
 	public IndexSearcher getSearcher(long companyId, boolean readOnly)
+		throws IOException;
+
+	public String getSnippet(Query query, String field, String s)
+		throws IOException;
+
+	public String getSnippet(
+			Query query, String field, String s, Formatter formatter)
 		throws IOException;
 
 	public String getSnippet(

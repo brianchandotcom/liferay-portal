@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.lucene.LuceneHelperUtil;
+import com.liferay.portal.search.lucene.LuceneHelper;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.util.lucene.KeywordsUtil;
@@ -100,6 +100,10 @@ public class RepositorySearchQueryBuilderImpl
 
 	public void setAnalyzer(Analyzer analyzer) {
 		_analyzer = analyzer;
+	}
+
+	public void setLuceneHelper(LuceneHelper luceneHelper) {
+		_luceneHelper = luceneHelper;
 	}
 
 	protected void addContext(
@@ -182,7 +186,7 @@ public class RepositorySearchQueryBuilderImpl
 
 		try {
 			QueryParser queryParser = new QueryParser(
-				LuceneHelperUtil.getVersion(), field, _analyzer);
+				_luceneHelper.getVersion(), field, _analyzer);
 
 			queryParser.setAllowLeadingWildcard(true);
 			queryParser.setLowercaseExpandedTerms(false);
@@ -459,5 +463,6 @@ public class RepositorySearchQueryBuilderImpl
 		RepositorySearchQueryBuilderImpl.class);
 
 	private Analyzer _analyzer;
+	private LuceneHelper _luceneHelper;
 
 }

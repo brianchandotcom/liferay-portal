@@ -66,6 +66,10 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 		_boostStart = boostStart;
 	}
 
+	public void setLuceneHelper(LuceneHelper luceneHelper) {
+		_luceneHelper = luceneHelper;
+	}
+
 	public void setQuerySuggestionMaxNGramLength(
 		int querySuggestionMaxNGramLength) {
 
@@ -106,7 +110,7 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 		IndexSearcher indexSearcher = null;
 
 		try {
-			indexSearcher = LuceneHelperUtil.getIndexSearcher(
+			indexSearcher = _luceneHelper.getIndexSearcher(
 				searchContext.getCompanyId());
 
 			String localizedKeywordFieldName = DocumentImpl.getLocalizedName(
@@ -127,7 +131,7 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 		}
 		finally {
 			try {
-				LuceneHelperUtil.releaseIndexSearcher(
+				_luceneHelper.releaseIndexSearcher(
 					searchContext.getCompanyId(), indexSearcher);
 			}
 			catch (IOException ioe) {
@@ -312,7 +316,7 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 				scoresThreshold = _SCORES_THRESHOLD_DEFAULT;
 			}
 
-			indexSearcher = LuceneHelperUtil.getIndexSearcher(
+			indexSearcher = _luceneHelper.getIndexSearcher(
 				searchContext.getCompanyId());
 
 			List<IndexReader> indexReaders = new ArrayList<>();
@@ -363,7 +367,7 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 		}
 		finally {
 			try {
-				LuceneHelperUtil.releaseIndexSearcher(
+				_luceneHelper.releaseIndexSearcher(
 					searchContext.getCompanyId(), indexSearcher);
 			}
 			catch (IOException ioe) {
@@ -379,6 +383,7 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 
 	private float _boostEnd = 1.0f;
 	private float _boostStart = 2.0f;
+	private LuceneHelper _luceneHelper;
 	private int _querySuggestionMaxNGramLength = 50;
 	private final RelevancyChecker _relevancyChecker =
 		new DefaultRelevancyChecker();

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener;
 import com.liferay.portal.kernel.concurrent.CallerRunsPolicy;
 import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
@@ -101,16 +100,6 @@ public abstract class AbstractSearchEngineConfigurator
 		registerSearchEngineMessageListener(
 			searchEngineId, searchEngine, searchWriterDestination,
 			new SearchWriterMessageListener(), searchEngine.getIndexWriter());
-
-		if (searchEngine.isClusteredWrite()) {
-			ClusterBridgeMessageListener clusterBridgeMessageListener =
-				new ClusterBridgeMessageListener();
-
-			clusterBridgeMessageListener.setPriority(
-				searchEngine.getClusteredWritePriority());
-
-			searchWriterDestination.register(clusterBridgeMessageListener);
-		}
 	}
 
 	protected Destination createSearchReaderDestination(

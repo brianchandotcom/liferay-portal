@@ -1487,8 +1487,6 @@ public interface PropsKeys {
 
 	public static final String LUCENE_BUFFER_SIZE = "lucene.buffer.size";
 
-	public static final String LUCENE_CLUSTER_INDEX_LOADING_SYNC_TIMEOUT = "lucene.cluster.index.loading.sync.timeout";
-
 	public static final String LUCENE_COMMIT_BATCH_SIZE = "lucene.commit.batch.size";
 
 	public static final String LUCENE_COMMIT_TIME_INTERVAL = "lucene.commit.time.interval";
@@ -1504,8 +1502,6 @@ public interface PropsKeys {
 	public static final String LUCENE_MERGE_POLICY = "lucene.merge.policy";
 
 	public static final String LUCENE_MERGE_SCHEDULER = "lucene.merge.scheduler";
-
-	public static final String LUCENE_REPLICATE_WRITE = "lucene.replicate.write";
 
 	public static final String LUCENE_STORE_TYPE = "lucene.store.type";
 

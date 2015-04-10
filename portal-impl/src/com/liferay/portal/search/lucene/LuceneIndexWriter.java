@@ -46,7 +46,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		try {
-			LuceneHelperUtil.addDocument(
+			_luceneHelper.addDocument(
 				searchContext.getCompanyId(), _getLuceneDocument(document));
 
 			if (_log.isDebugEnabled()) {
@@ -73,7 +73,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		try {
-			LuceneHelperUtil.deleteDocuments(
+			_luceneHelper.deleteDocuments(
 				searchContext.getCompanyId(), new Term(Field.UID, uid));
 
 			if (_log.isDebugEnabled()) {
@@ -101,7 +101,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		try {
-			LuceneHelperUtil.deleteDocuments(
+			_luceneHelper.deleteDocuments(
 				searchContext.getCompanyId(),
 				new Term(Field.ENTRY_CLASS_NAME, className));
 		}
@@ -110,12 +110,16 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 		}
 	}
 
+	public void setLuceneHelper(LuceneHelper luceneHelper) {
+		_luceneHelper = luceneHelper;
+	}
+
 	@Override
 	public void updateDocument(SearchContext searchContext, Document document)
 		throws SearchException {
 
 		try {
-			LuceneHelperUtil.updateDocument(
+			_luceneHelper.updateDocument(
 				searchContext.getCompanyId(),
 				new Term(Field.UID, document.getUID()),
 				_getLuceneDocument(document));
@@ -236,5 +240,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LuceneIndexWriter.class);
+
+	private LuceneHelper _luceneHelper;
 
 }

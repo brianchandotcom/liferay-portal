@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.cluster.Priority;
-
 /**
  * @author Bruno Farache
  * @author Michael C. Han
@@ -29,8 +27,6 @@ public interface SearchEngine {
 
 	public BooleanQueryFactory getBooleanQueryFactory();
 
-	public Priority getClusteredWritePriority();
-
 	public IndexSearcher getIndexSearcher();
 
 	public IndexWriter getIndexWriter();
@@ -42,10 +38,6 @@ public interface SearchEngine {
 	public String getVendor();
 
 	public void initialize(long companyId);
-
-	public boolean isClusteredWrite();
-
-	public boolean isLuceneBased();
 
 	public void removeBackup(long companyId, String backupName)
 		throws SearchException;

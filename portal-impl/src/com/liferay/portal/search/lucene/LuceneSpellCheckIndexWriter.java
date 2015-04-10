@@ -59,8 +59,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			SuggestionConstants.TYPE_QUERY_SUGGESTION);
 
 		try {
-			LuceneHelperUtil.deleteDocuments(
-				searchContext.getCompanyId(), term);
+			_luceneHelper.deleteDocuments(searchContext.getCompanyId(), term);
 		}
 		catch (IOException e) {
 			throw new SearchException(e);
@@ -76,12 +75,15 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			SuggestionConstants.TYPE_SPELL_CHECKER);
 
 		try {
-			LuceneHelperUtil.deleteDocuments(
-				searchContext.getCompanyId(), term);
+			_luceneHelper.deleteDocuments(searchContext.getCompanyId(), term);
 		}
 		catch (IOException e) {
 			throw new SearchException(e);
 		}
+	}
+
+	public void setLuceneHelper(LuceneHelper luceneHelper) {
+		_luceneHelper = luceneHelper;
 	}
 
 	protected void addField(
@@ -176,7 +178,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
-		IndexAccessor indexAccessor = LuceneHelperUtil.getIndexAccessor(
+		IndexAccessor indexAccessor = _luceneHelper.getIndexAccessor(
 			searchContext.getCompanyId());
 
 		IndexSearcher indexSearcher = null;
@@ -184,7 +186,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		try {
 			List<IndexReader> indexReaders = new ArrayList<>();
 
-			indexSearcher = LuceneHelperUtil.getIndexSearcher(
+			indexSearcher = _luceneHelper.getIndexSearcher(
 				searchContext.getCompanyId());
 
 			if (indexSearcher.maxDoc() > 0) {
@@ -217,7 +219,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		}
 		finally {
 			try {
-				LuceneHelperUtil.releaseIndexSearcher(
+				_luceneHelper.releaseIndexSearcher(
 					searchContext.getCompanyId(), indexSearcher);
 			}
 			catch (IOException ioe) {
@@ -233,7 +235,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
-		IndexAccessor indexAccessor = LuceneHelperUtil.getIndexAccessor(
+		IndexAccessor indexAccessor = _luceneHelper.getIndexAccessor(
 			searchContext.getCompanyId());
 
 		IndexSearcher indexSearcher = null;
@@ -242,7 +244,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			String localizedFieldName = DocumentImpl.getLocalizedName(
 				languageId, keywordFieldName);
 
-			indexSearcher = LuceneHelperUtil.getIndexSearcher(
+			indexSearcher = _luceneHelper.getIndexSearcher(
 				searchContext.getCompanyId());
 
 			List<IndexReader> indexReaders = new ArrayList<>();
@@ -290,7 +292,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		}
 		finally {
 			try {
-				LuceneHelperUtil.releaseIndexSearcher(
+				_luceneHelper.releaseIndexSearcher(
 					searchContext.getCompanyId(), indexSearcher);
 			}
 			catch (IOException ioe) {
@@ -321,5 +323,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LuceneSpellCheckIndexWriter.class);
+
+	private LuceneHelper _luceneHelper;
 
 }

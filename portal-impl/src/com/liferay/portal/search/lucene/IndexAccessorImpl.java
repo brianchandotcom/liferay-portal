@@ -308,6 +308,8 @@ public class IndexAccessorImpl implements IndexAccessor {
 		_write(term, document);
 	}
 
+	protected static LuceneHelper luceneHelper;
+
 	private static void _invalidate(long companyId) {
 		for (SPI spi : MPIHelperUtil.getSPIs()) {
 			try {
@@ -504,11 +506,11 @@ public class IndexAccessorImpl implements IndexAccessor {
 	private void _initIndexWriter() {
 		try {
 			Analyzer analyzer = new LimitTokenCountAnalyzer(
-				LuceneHelperUtil.getAnalyzer(),
+				luceneHelper.getAnalyzer(),
 				PropsValues.LUCENE_ANALYZER_MAX_TOKENS);
 
 			IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
-				LuceneHelperUtil.getVersion(), analyzer);
+				luceneHelper.getVersion(), analyzer);
 
 			indexWriterConfig.setIndexDeletionPolicy(_dumpIndexDeletionPolicy);
 			indexWriterConfig.setMergePolicy(_getMergePolicy());
@@ -596,7 +598,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 		@Override
 		public Serializable call() {
-			IndexAccessor indexAccessor = LuceneHelperUtil.getIndexAccessor(
+			IndexAccessor indexAccessor = luceneHelper.getIndexAccessor(
 				_companyId);
 
 			indexAccessor.invalidate();

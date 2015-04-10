@@ -21,6 +21,8 @@ public class LayoutTemplateConstants {
 
 	public static final String CUSTOM_SEPARATOR = "_CUSTOM_";
 
+	public static final String INSTANCE_SEPARATOR = "_INSTANCE_";
+
 	public static final String STANDARD_SEPARATOR = "_STANDARD_";
 
 }

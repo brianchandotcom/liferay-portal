@@ -175,14 +175,16 @@ public class LayoutTypePortletTest {
 
 		Assert.assertEquals(2, columns.size());
 
-		portletId = _layoutTypePortlet.addPortletId(
+		String addedPortletId = _layoutTypePortlet.addPortletId(
 			_user.getUserId(), portletId);
 
-		Assert.assertNotNull(portletId);
+		Assert.assertNotNull(addedPortletId);
 
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets(column1);
 
 		Assert.assertEquals(1, portlets.size());
+		Assert.assertEquals(portletId, portlets.get(0).getPortletName());
+		Assert.assertEquals(addedPortletId, portlets.get(0).getPortletName());
 	}
 
 	@Test
@@ -203,10 +205,10 @@ public class LayoutTypePortletTest {
 		String column1 = columns.get(0);
 		String column2 = columns.get(1);
 
-		portletId = _layoutTypePortlet.addPortletId(
+		String addedPortletId = _layoutTypePortlet.addPortletId(
 			_user.getUserId(), portletId, column2, -1);
 
-		Assert.assertNotNull(portletId);
+		Assert.assertNotNull(addedPortletId);
 
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets(column1);
 
@@ -215,6 +217,8 @@ public class LayoutTypePortletTest {
 		portlets = _layoutTypePortlet.getAllPortlets(column2);
 
 		Assert.assertEquals(1, portlets.size());
+		Assert.assertEquals(portletId, portlets.get(0).getPortletName());
+		Assert.assertEquals(addedPortletId, portlets.get(0).getPortletName());
 	}
 
 	@Test

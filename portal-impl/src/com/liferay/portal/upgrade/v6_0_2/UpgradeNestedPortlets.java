@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PortletKeys;
 
 import java.sql.Connection;
@@ -104,16 +103,18 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 		}
 	}
 
+	private static final String _INSTANCE_SEPARATOR = "_INSTANCE_";
+
 	private static final String _GET_LAYOUT =
 		"select plid, typeSettings from Layout where typeSettings like " +
 			"'%nested-column-ids=" + PortletKeys.NESTED_PORTLETS +
-				PortletConstants.INSTANCE_SEPARATOR + "%'";
+				_INSTANCE_SEPARATOR + "%'";
 
 	private static final int _UNDERLINE_COUNT = StringUtil.count(
-		PortletConstants.INSTANCE_SEPARATOR, StringPool.UNDERLINE) + 1;
+		_INSTANCE_SEPARATOR, StringPool.UNDERLINE) + 1;
 
 	private static final Pattern _pattern = Pattern.compile(
 		"(" + PortletKeys.NESTED_PORTLETS +
-			PortletConstants.INSTANCE_SEPARATOR + "[^_,\\s=]+_)([^_,\\s=]+)");
+			_INSTANCE_SEPARATOR + "[^_,\\s=]+_)([^_,\\s=]+)");
 
 }

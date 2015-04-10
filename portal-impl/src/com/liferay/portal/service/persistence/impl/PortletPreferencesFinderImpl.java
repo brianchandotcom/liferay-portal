@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
@@ -327,13 +328,10 @@ public class PortletPreferencesFinderImpl
 			return true;
 		}
 
-		if (portletPreferencesPortletId.startsWith(
-				portletId.concat(PortletConstants.INSTANCE_SEPARATOR))) {
+		PortletInstance portletInstance = new PortletInstance(
+			portletPreferencesPortletId);
 
-			return true;
-		}
-
-		return false;
+		return portletInstance.hasIdenticalRootPortletId(portletId);
 	}
 
 	private static final String _OWNER_ID_SQL =

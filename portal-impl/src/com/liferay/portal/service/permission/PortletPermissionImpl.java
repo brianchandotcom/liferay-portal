@@ -47,6 +47,8 @@ import javax.portlet.PortletMode;
  */
 public class PortletPermissionImpl implements PortletPermission {
 
+	public static final boolean DEFAULT_CHECK_STAGING_PERMISSION = true;
+
 	public static final boolean DEFAULT_STRICT = false;
 
 	@Override
@@ -96,9 +98,21 @@ public class PortletPermissionImpl implements PortletPermission {
 			String portletId, String actionId, boolean strict)
 		throws PortalException {
 
+		check(
+			permissionChecker, groupId, layout, portletId, actionId, strict,
+			DEFAULT_CHECK_STAGING_PERMISSION);
+	}
+
+	@Override
+	public void check(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict,
+			boolean checkStagingPermission)
+		throws PortalException {
+
 		if (!contains(
-				permissionChecker, groupId, layout, portletId, actionId,
-				strict)) {
+				permissionChecker, groupId, layout, portletId, actionId, strict,
+				checkStagingPermission)) {
 
 			throw new PrincipalException();
 		}
@@ -243,6 +257,18 @@ public class PortletPermissionImpl implements PortletPermission {
 			String portletId, String actionId, boolean strict)
 		throws PortalException {
 
+		return contains(
+			permissionChecker, groupId, layout, portletId, actionId, strict,
+			DEFAULT_CHECK_STAGING_PERMISSION);
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict,
+			boolean checkStagingPermission)
+		throws PortalException {
+
 		String name = null;
 		String primKey = null;
 
@@ -274,11 +300,13 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		name = PortletConstants.getRootPortletId(portletId);
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, name, groupId, name, actionId);
+		if (checkStagingPermission) {
+			Boolean hasPermission = StagingPermissionUtil.hasPermission(
+				permissionChecker, groupId, name, groupId, name, actionId);
 
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
+			}
 		}
 
 		if (group.isControlPanel() && actionId.equals(ActionKeys.VIEW)) {

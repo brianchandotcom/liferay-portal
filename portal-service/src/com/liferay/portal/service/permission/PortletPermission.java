@@ -50,6 +50,12 @@ public interface PortletPermission {
 		throws PortalException;
 
 	public void check(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict,
+			boolean checkStagingPermission)
+		throws PortalException;
+
+	public void check(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId, String actionId)
 		throws PortalException;
@@ -112,6 +118,12 @@ public interface PortletPermission {
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId, Layout layout,
 			String portletId, String actionId, boolean strict)
+		throws PortalException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict,
+			boolean checkStagingPermission)
 		throws PortalException;
 
 	public boolean contains(

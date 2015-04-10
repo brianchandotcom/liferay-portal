@@ -1235,8 +1235,11 @@ public class AssetPublisherUtil {
 			String portletId)
 		throws PortalException {
 
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
 		PortletPermissionUtil.check(
-			permissionChecker, plid, portletId, ActionKeys.SUBSCRIBE);
+			permissionChecker, 0, layout, portletId, ActionKeys.SUBSCRIBE,
+			false, false);
 
 		SubscriptionLocalServiceUtil.addSubscription(
 			permissionChecker.getUserId(), groupId,
@@ -1256,8 +1259,11 @@ public class AssetPublisherUtil {
 			PermissionChecker permissionChecker, long plid, String portletId)
 		throws PortalException {
 
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
 		PortletPermissionUtil.check(
-			permissionChecker, plid, portletId, ActionKeys.SUBSCRIBE);
+			permissionChecker, 0, layout, portletId, ActionKeys.SUBSCRIBE,
+			false, false);
 
 		SubscriptionLocalServiceUtil.deleteSubscription(
 			permissionChecker.getUserId(),

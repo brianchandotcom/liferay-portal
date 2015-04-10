@@ -69,6 +69,17 @@ public class PortletPermissionUtil {
 	}
 
 	public static void check(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict,
+			boolean checkStagingPermission)
+		throws PortalException {
+
+		getPortletPermission().check(
+			permissionChecker, groupId, layout, portletId, actionId, strict,
+			checkStagingPermission);
+	}
+
+	public static void check(
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId, String actionId)
 		throws PortalException {
@@ -182,6 +193,17 @@ public class PortletPermissionUtil {
 
 		return getPortletPermission().contains(
 			permissionChecker, groupId, layout, portletId, actionId, strict);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, Layout layout,
+			String portletId, String actionId, boolean strict,
+			boolean checkStagingPermission)
+		throws PortalException {
+
+		return getPortletPermission().contains(
+			permissionChecker, groupId, layout, portletId, actionId, strict,
+			checkStagingPermission);
 	}
 
 	/**

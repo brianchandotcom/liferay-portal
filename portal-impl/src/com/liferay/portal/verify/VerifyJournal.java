@@ -291,7 +291,12 @@ public class VerifyJournal extends VerifyProcess {
 			dynamicContentElement.attributeValue("id"));
 
 		JournalArticleImage articleImage =
-			JournalArticleImageLocalServiceUtil.getArticleImage(articleImageId);
+			JournalArticleImageLocalServiceUtil.fetchJournalArticleImage(
+				articleImageId);
+
+		if (articleImage == null) {
+			return;
+		}
 
 		articleImage.setElName(name + StringPool.UNDERLINE + index);
 

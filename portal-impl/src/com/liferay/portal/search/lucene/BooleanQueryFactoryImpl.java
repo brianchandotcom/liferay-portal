@@ -24,18 +24,18 @@ public class BooleanQueryFactoryImpl implements BooleanQueryFactory {
 
 	@Override
 	public BooleanQuery create() {
-		return new BooleanQueryImpl(_luceneHelper, _queryTranslator);
+		return new BooleanQueryImpl(_luceneQueryHelper, _queryTranslator);
 	}
 
-	public void setLuceneHelper(LuceneHelper luceneHelper) {
-		_luceneHelper = luceneHelper;
+	public void setLuceneQueryHelper(LuceneQueryHelper luceneQueryHelper) {
+		_luceneQueryHelper = luceneQueryHelper;
 	}
 
 	public void setQueryTranslator(QueryTranslator queryTranslator) {
 		_queryTranslator = queryTranslator;
 	}
 
-	private LuceneHelper _luceneHelper;
+	private LuceneQueryHelper _luceneQueryHelper;
 	private QueryTranslator _queryTranslator;
 
 }

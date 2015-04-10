@@ -139,7 +139,7 @@
 		</property>
 		<property name="booleanQueryFactory" >
 			<bean class="com.liferay.portal.search.lucene.BooleanQueryFactoryImpl">
-				<property name="luceneHelper" ref="com.liferay.portal.search.lucene.LuceneHelperImpl" />
+				<property name="luceneQueryHelper" ref="com.liferay.portal.search.lucene.LuceneQueryHelperImpl" />
 				<property name="queryTranslator" ref="com.liferay.portal.search.lucene.QueryTranslator" />
 			</bean>
 		</property>
@@ -155,6 +155,10 @@
 		<property name="vendor" value="Lucene" />
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneHelperImpl" class="com.liferay.portal.search.lucene.LuceneHelperImpl">
+		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
+		<property name="version" ref="org.apache.lucene.util.Version" />
+	</bean>
+	<bean id="com.liferay.portal.search.lucene.LuceneQueryHelperImpl" class="com.liferay.portal.search.lucene.LuceneQueryHelperImpl">
 		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
 		<property name="queryPreProcessConfiguration" ref="com.liferay.portal.kernel.search.QueryPreProcessConfiguration" />
 		<property name="version" ref="org.apache.lucene.util.Version" />

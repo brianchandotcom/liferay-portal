@@ -18,8 +18,6 @@
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("struts_action", "/layout_prototypes/view");
 %>
 
 <liferay-ui:error exception="<%= RequiredLayoutPrototypeException.class %>" message="you-cannot-delete-page-templates-that-are-used-by-a-page" />
@@ -53,7 +51,7 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 				name="name"
 			>
 				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" />
+					<portlet:param name="mvcPath" value="/html/portlet/layout_prototypes/edit_layout_prototype.jsp" />
 					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="backURL" value="<%= searchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />

@@ -156,6 +156,20 @@ public class LayoutPrototypeServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.LayoutPrototypeSoap fetchLayoutPrototype(
+		long layoutPrototypeId) throws RemoteException {
+		try {
+			com.liferay.portal.model.LayoutPrototype returnValue = LayoutPrototypeServiceUtil.fetchLayoutPrototype(layoutPrototypeId);
+
+			return com.liferay.portal.model.LayoutPrototypeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.model.LayoutPrototypeSoap getLayoutPrototype(
 		long layoutPrototypeId) throws RemoteException {
 		try {

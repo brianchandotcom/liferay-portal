@@ -76,6 +76,10 @@ public interface LayoutPrototypeService extends BaseService {
 	public void deleteLayoutPrototype(long layoutPrototypeId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutPrototype fetchLayoutPrototype(
+		long layoutPrototypeId) throws PortalException;
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

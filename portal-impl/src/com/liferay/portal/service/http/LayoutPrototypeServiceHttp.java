@@ -186,12 +186,44 @@ public class LayoutPrototypeServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.model.LayoutPrototype fetchLayoutPrototype(
+		HttpPrincipal httpPrincipal, long layoutPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
+					"fetchLayoutPrototype", _fetchLayoutPrototypeParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					layoutPrototypeId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.LayoutPrototype)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.model.LayoutPrototype getLayoutPrototype(
 		HttpPrincipal httpPrincipal, long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
-					"getLayoutPrototype", _getLayoutPrototypeParameterTypes4);
+					"getLayoutPrototype", _getLayoutPrototypeParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPrototypeId);
@@ -224,7 +256,7 @@ public class LayoutPrototypeServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
-					"search", _searchParameterTypes5);
+					"search", _searchParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, active, obc);
@@ -260,7 +292,7 @@ public class LayoutPrototypeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
 					"updateLayoutPrototype",
-					_updateLayoutPrototypeParameterTypes6);
+					_updateLayoutPrototypeParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPrototypeId, nameMap, descriptionMap, active,
@@ -296,7 +328,7 @@ public class LayoutPrototypeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
 					"updateLayoutPrototype",
-					_updateLayoutPrototypeParameterTypes7);
+					_updateLayoutPrototypeParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPrototypeId, nameMap, description, active);
@@ -332,7 +364,7 @@ public class LayoutPrototypeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPrototypeServiceUtil.class,
 					"updateLayoutPrototype",
-					_updateLayoutPrototypeParameterTypes8);
+					_updateLayoutPrototypeParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPrototypeId, nameMap, description, active,
@@ -375,22 +407,25 @@ public class LayoutPrototypeServiceHttp {
 	private static final Class<?>[] _deleteLayoutPrototypeParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getLayoutPrototypeParameterTypes4 = new Class[] {
+	private static final Class<?>[] _fetchLayoutPrototypeParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _searchParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getLayoutPrototypeParameterTypes5 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _searchParameterTypes6 = new Class[] {
 			long.class, java.lang.Boolean.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _updateLayoutPrototypeParameterTypes6 = new Class[] {
+	private static final Class<?>[] _updateLayoutPrototypeParameterTypes7 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateLayoutPrototypeParameterTypes7 = new Class[] {
+	private static final Class<?>[] _updateLayoutPrototypeParameterTypes8 = new Class[] {
 			long.class, java.util.Map.class, java.lang.String.class,
 			boolean.class
 		};
-	private static final Class<?>[] _updateLayoutPrototypeParameterTypes8 = new Class[] {
+	private static final Class<?>[] _updateLayoutPrototypeParameterTypes9 = new Class[] {
 			long.class, java.util.Map.class, java.lang.String.class,
 			boolean.class, com.liferay.portal.service.ServiceContext.class
 		};

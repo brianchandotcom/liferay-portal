@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layout_prototypes/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -33,7 +33,7 @@ if (layoutPrototype == null) {
 }
 %>
 
-<liferay-util:include page="/html/portlet/layout_prototypes/toolbar.jsp">
+<liferay-util:include page="/toolbar.jsp">
 	<liferay-util:param name="toolbarItem" value='<%= layoutPrototype.isNew() ? "add" : StringPool.BLANK %>' />
 </liferay-util:include>
 
@@ -48,7 +48,7 @@ request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototyp
 request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 %>
 
-<liferay-util:include page="/html/portlet/layout_prototypes/merge_alert.jsp" />
+<liferay-util:include page="/merge_alert.jsp" />
 
 <portlet:actionURL name="editLayoutPrototype" var="editLayoutPrototypeURL" />
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layout_prototypes/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
@@ -26,7 +26,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 			<portlet:renderURL var="viewLayoutPrototypesURL" />
 
 			<portlet:renderURL var="addLayoutPrototypeURL">
-				<portlet:param name="mvcPath" value="/html/portlet/layout_prototypes/edit_layout_prototype.jsp" />
+				<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
 				<portlet:param name="redirect" value="<%= viewLayoutPrototypesURL %>" />
 				<portlet:param name="backURL" value="<%= viewLayoutPrototypesURL %>" />
 			</portlet:renderURL>

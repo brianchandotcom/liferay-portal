@@ -20,4 +20,4 @@
 page import="com.liferay.portal.RequiredLayoutPrototypeException" %><%@
 page import="com.liferay.portal.service.LayoutPrototypeLocalServiceUtil" %>
 
-<%@ include file="/html/portlet/layout_prototypes/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

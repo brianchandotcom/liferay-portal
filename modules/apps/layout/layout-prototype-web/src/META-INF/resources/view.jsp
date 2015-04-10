@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layout_prototypes/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -22,7 +22,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <liferay-ui:error exception="<%= RequiredLayoutPrototypeException.class %>" message="you-cannot-delete-page-templates-that-are-used-by-a-page" />
 
-<liferay-util:include page="/html/portlet/layout_prototypes/toolbar.jsp" />
+<liferay-util:include page="/toolbar.jsp" />
 
 <aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
@@ -51,7 +51,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				name="name"
 			>
 				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcPath" value="/html/portlet/layout_prototypes/edit_layout_prototype.jsp" />
+					<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
 					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="backURL" value="<%= searchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
@@ -85,7 +85,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/layout_prototypes/layout_prototype_action.jsp"
+				path="/layout_prototype_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

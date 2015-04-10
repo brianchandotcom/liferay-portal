@@ -210,24 +210,21 @@ public class PoshiRunnerValidation {
 		}
 		else if (Validator.isNotNull(element.attributeValue("macro"))) {
 			List<String> possibleAttributes = Arrays.asList(
-				"macro", "line-number");
+				"line-number", "macro");
 
 			_validateAttributes(element, possibleAttributes, filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("selenium"))) {
 			List<String> possibleAttributes = Arrays.asList(
-				"argument1", "argument2", "selenium", "line-number");
+				"argument1", "argument2", "line-number", "selenium");
 
 			_validateAttributes(element, possibleAttributes, filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("test-case"))) {
-			List<Attribute> attributes = element.attributes();
+			List<String> possibleAttributes = Arrays.asList(
+				"line-number", "test-case");
 
-			if (attributes.size() > 2) {
-				throw new PoshiRunnerException(
-					"Too many attributes\n" + filePath + ":" +
-						element.attributeValue("line-number"));
-			}
+			_validateAttributes(element, possibleAttributes, filePath);
 		}
 		else {
 			throw new PoshiRunnerException(

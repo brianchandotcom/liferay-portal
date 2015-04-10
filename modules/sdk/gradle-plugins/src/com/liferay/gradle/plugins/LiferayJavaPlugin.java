@@ -37,10 +37,8 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.ModuleVersionSelector;
-import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
@@ -422,25 +420,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Configuration compileConfiguration = GradleUtil.getConfiguration(
 			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
 
-		Set<Dependency> compileDependencies =
-			compileConfiguration.getAllDependencies();
-
-		for (Dependency dependency : compileDependencies) {
-			if (!(dependency instanceof ProjectDependency)) {
-				continue;
-			}
-
-			ProjectDependency projectDependency = (ProjectDependency)dependency;
-
-			Project dependencyProject =
-				projectDependency.getDependencyProject();
-
-			String taskName =
-				dependencyProject.getPath() + Project.PATH_SEPARATOR +
-					BasePlugin.CLEAN_TASK_NAME;
-
-			cleanTask.dependsOn(taskName);
-		}
+		cleanTask.dependsOn(
+			compileConfiguration.getTaskDependencyFromProjectDependency(
+				true, BasePlugin.CLEAN_TASK_NAME));
 	}
 
 	protected void configureTasks(

@@ -14,13 +14,18 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -49,6 +54,8 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 		if (_log.isDebugEnabled()) {
 			_log.debug("onXml");
 		}
+
+		filterByLocalizability(document, tokens);
 
 		filterByLanguage(document, languageId);
 
@@ -125,6 +132,85 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 
 			filterByLanguage(
 				defaultLanguageElement, languageId, defaultLanguageId);
+		}
+	}
+
+	protected void filterByLocalizability(
+		Document document, Map<String, String> tokens) {
+
+		long structureId = Long.parseLong(tokens.get("structure_id"));
+
+		DDMStructure structure = null;
+
+		try {
+			structure = DDMStructureLocalServiceUtil.getDDMStructure(
+				structureId);
+
+			if (Validator.isNull(structure)) {
+				return;
+			}
+
+			Element rootElement = document.getRootElement();
+
+			String defaultLanguageId = LocaleUtil.toLanguageId(
+				LocaleUtil.getSiteDefault());
+
+			String defaultLocale = rootElement.attributeValue(
+				"default-locale", defaultLanguageId);
+
+			filterByLocalizability(rootElement, defaultLocale, structure);
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void filterByLocalizability(
+			Element root, String defaultLanguageId, DDMStructure structure)
+		throws PortalException {
+
+		List<Element> elements = root.elements("dynamic-element");
+
+		int listIndex = elements.size() - 1;
+
+		while (listIndex >= 0) {
+			Element element = elements.get(listIndex);
+
+			String name = element.attributeValue("name");
+
+			if (!structure.hasField(name)) {
+				listIndex--;
+				continue;
+			}
+
+			if (!structure.isFieldTransient(name)) {
+				filterFields(element, structure, name, defaultLanguageId);
+			}
+
+			filterByLocalizability(element, defaultLanguageId, structure);
+
+			listIndex--;
+		}
+	}
+
+	protected void filterFields(
+		Element dynamicElementElement, DDMStructure ddmStructure,
+		String name, String defaultLanguageId) throws PortalException {
+
+		boolean localizable = GetterUtil.getBoolean(
+			ddmStructure.getFieldProperty(name, "localizable"));
+
+		List<Element> dynamicContentElements = dynamicElementElement.elements(
+			"dynamic-content");
+
+		for (Element dynamicContentElement : dynamicContentElements) {
+			String languageId = dynamicContentElement.attributeValue(
+				"language-id");
+
+			if (!localizable && !languageId.equals(defaultLanguageId)) {
+				dynamicElementElement.remove(dynamicContentElement);
+
+				continue;
+			}
 		}
 	}
 

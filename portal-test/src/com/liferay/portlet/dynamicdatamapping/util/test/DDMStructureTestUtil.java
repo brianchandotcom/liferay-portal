@@ -42,6 +42,7 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -225,7 +226,8 @@ public class DDMStructureTestUtil {
 	public static String getSampleStructuredContent(
 		Map<Locale, String> contents, String defaultLocale) {
 
-		return getSampleStructuredContent("name", contents, defaultLocale);
+		return getSampleStructuredContent(
+			"name", Collections.singletonList(contents), defaultLocale);
 	}
 
 	public static String getSampleStructuredContent(String keywords) {
@@ -233,37 +235,44 @@ public class DDMStructureTestUtil {
 	}
 
 	public static String getSampleStructuredContent(
-		String name, Map<Locale, String> contents, String defaultLocale) {
+		String name, List<Map<Locale, String>> contents, String defaultLocale) {
 
-		StringBundler sb = new StringBundler(2 * contents.size());
+		StringBundler availableLocales = new StringBundler(2 * contents.size());
 
-		for (Map.Entry<Locale, String> content : contents.entrySet()) {
-			Locale locale = content.getKey();
+		for (Map<Locale, String> map : contents) {
+			StringBundler sb = new StringBundler(2 * map.size());
 
-			sb.append(LocaleUtil.toLanguageId(locale));
-			sb.append(StringPool.COMMA);
+			for (Locale locale : map.keySet()) {
+				sb.append(LocaleUtil.toLanguageId(locale));
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			availableLocales.append(sb);
 		}
 
-		sb.setIndex(sb.index() - 1);
-
-		Document document = createDocumentContent(sb.toString(), defaultLocale);
+		Document document = createDocumentContent(
+			availableLocales.toString(), defaultLocale);
 
 		Element rootElement = document.getRootElement();
 
-		Element dynamicElementElement = rootElement.addElement(
-			"dynamic-element");
+		for (Map<Locale, String> map : contents) {
+			Element dynamicElementElement = rootElement.addElement(
+				"dynamic-element");
 
-		dynamicElementElement.addAttribute("index-type", "keyword");
-		dynamicElementElement.addAttribute("name", name);
-		dynamicElementElement.addAttribute("type", "text");
+			dynamicElementElement.addAttribute("index-type", "keyword");
+			dynamicElementElement.addAttribute("name", name);
+			dynamicElementElement.addAttribute("type", "text");
 
-		for (Map.Entry<Locale, String> content : contents.entrySet()) {
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
+			for (Map.Entry<Locale, String> entry : map.entrySet()) {
+				Element element = dynamicElementElement.addElement(
+					"dynamic-content");
 
-			dynamicContentElement.addAttribute(
-				"language-id", LocaleUtil.toLanguageId(content.getKey()));
-			dynamicContentElement.addCDATA(content.getValue());
+				element.addAttribute(
+					"language-id", LocaleUtil.toLanguageId(entry.getKey()));
+				element.addCDATA(entry.getValue());
+			}
 		}
 
 		return document.asXML();
@@ -276,7 +285,8 @@ public class DDMStructureTestUtil {
 
 		contents.put(Locale.US, keywords);
 
-		return getSampleStructuredContent(name, contents, "en_US");
+		return getSampleStructuredContent(
+			name, Collections.singletonList(contents), "en_US");
 	}
 
 	public static Map<String, Map<String, String>> getXSDMap(String xsd)

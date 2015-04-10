@@ -177,27 +177,21 @@ public class JournalTestUtilTest {
 	}
 
 	@Test
-	public void testAddDynamicContent() {
-		try {
-			Map<Locale, String> contents = new HashMap<>();
+	public void testAddDynamicContent() throws Exception {
+		Map<Locale, String> contents = new HashMap<>();
 
-			contents.put(LocaleUtil.BRAZIL, "Joe Bloggs");
-			contents.put(LocaleUtil.US, "Joe Bloggs");
+		contents.put(LocaleUtil.BRAZIL, "Joe Bloggs");
+		contents.put(LocaleUtil.US, "Joe Bloggs");
 
-			String xml = DDMStructureTestUtil.getSampleStructuredContent(
-				contents, LanguageUtil.getLanguageId(LocaleUtil.US));
+		String xml = DDMStructureTestUtil.getSampleStructuredContent(
+			contents, LanguageUtil.getLanguageId(LocaleUtil.US));
 
-			String content = JournalUtil.transform(
-				null, getTokens(), Constants.VIEW, "en_US",
-				SAXReaderUtil.read(xml), null,
-				JournalTestUtil.getSampleTemplateXSL(),
-				TemplateConstants.LANG_TYPE_VM);
+		String content = JournalUtil.transform(
+			null, getTokens(), Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, JournalTestUtil.getSampleTemplateXSL(),
+			TemplateConstants.LANG_TYPE_VM);
 
-			Assert.assertEquals("Joe Bloggs", content);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		Assert.assertEquals("Joe Bloggs", content);
 	}
 
 	@Test

@@ -57,6 +57,7 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -141,11 +142,27 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Test
+	public void testOrderByDDMBooleanFieldRepeatable() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.testOrderByDDMBooleanFieldRepeatable();
+	}
+
+	@Test
 	public void testOrderByDDMIntegerField() throws Exception {
 		TestOrderHelper orderTestHelper =
 			new JournalArticleSearchTestOrderHelper(group);
 
 		orderTestHelper.testOrderByDDMIntegerField();
+	}
+
+	@Test
+	public void testOrderByDDMIntegerFieldRepeatable() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.testOrderByDDMIntegerFieldRepeatable();
 	}
 
 	@Test
@@ -157,11 +174,27 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Test
+	public void testOrderByDDMNumberFieldRepeatable() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.testOrderByDDMNumberFieldRepeatable();
+	}
+
+	@Test
 	public void testOrderByDDMTextField() throws Exception {
 		TestOrderHelper orderTestHelper =
 			new JournalArticleSearchTestOrderHelper(group);
 
 		orderTestHelper.testOrderByDDMTextField();
+	}
+
+	@Test
+	public void testOrderByDDMTextFieldRepeatable() throws Exception {
+		TestOrderHelper orderTestHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		orderTestHelper.testOrderByDDMTextFieldRepeatable();
 	}
 
 	@Ignore()
@@ -170,8 +203,8 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	public void testSearchAttachments() throws Exception {
 	}
 
-	protected BaseModel<?> addBaseModel(
-			BaseModel<?> parentBaseModel, String keywords,
+	protected BaseModel<?> addArticleWithXmlContent(
+			BaseModel<?> parentBaseModel, String content,
 			DDMStructure ddmStructure, DDMTemplate ddmTemplate,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -179,9 +212,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		_ddmStructure = ddmStructure;
 
 		JournalFolder folder = (JournalFolder)parentBaseModel;
-
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
-			"name", keywords);
 
 		return JournalTestUtil.addArticleWithXMLContent(
 			folder.getFolderId(), content, ddmStructure.getStructureKey(),
@@ -203,8 +233,11 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
 
-		return addBaseModel(
-			parentBaseModel, keywords, ddmStructure, ddmTemplate,
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			keywords);
+
+		return addArticleWithXmlContent(
+			parentBaseModel, content, ddmStructure, ddmTemplate,
 			serviceContext);
 	}
 
@@ -415,13 +448,42 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		@Override
 		protected BaseModel<?> addSearchableAssetEntry(
-				BaseModel<?> parentBaseModel, String keywords,
+				String fieldValue, BaseModel<?> parentBaseModel,
 				DDMStructure ddmStructure, DDMTemplate ddmTemplate,
 				ServiceContext serviceContext)
 			throws Exception {
 
-			return addBaseModel(
-				parentBaseModel, keywords, ddmStructure, ddmTemplate,
+			String content = DDMStructureTestUtil.getSampleStructuredContent(
+				fieldValue);
+
+			return addArticleWithXmlContent(
+				parentBaseModel, content, ddmStructure, ddmTemplate,
+				serviceContext);
+		}
+
+		@Override
+		protected BaseModel<?> addSearchableAssetEntryRepeatable(
+				String[] fieldValues, BaseModel<?> parentBaseModel,
+				DDMStructure ddmStructure, DDMTemplate ddmTemplate,
+				ServiceContext serviceContext)
+			throws Exception {
+
+			ArrayList<Map<Locale, String>> contents = new ArrayList<>(
+				fieldValues.length);
+
+			for (String fieldValue : fieldValues) {
+				Map<Locale, String> map = new HashMap<>();
+
+				map.put(Locale.US, fieldValue);
+
+				contents.add(map);
+			}
+
+			String content = DDMStructureTestUtil.getSampleStructuredContent(
+				"name", contents, "en_US");
+
+			return addArticleWithXmlContent(
+				parentBaseModel, content, ddmStructure, ddmTemplate,
 				serviceContext);
 		}
 

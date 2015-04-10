@@ -390,6 +390,9 @@ public class PoshiRunnerExecutor {
 							PoshiRunnerGetterUtil.
 								getCommandNameFromClassCommandName(locator));
 
+					PoshiRunnerVariablesUtil.putIntoExecuteMap(
+						"locator-key" + (i + 1), locatorKey);
+
 					locator = PoshiRunnerContext.getPathLocator(
 						pathClassName + "#" + locatorKey);
 

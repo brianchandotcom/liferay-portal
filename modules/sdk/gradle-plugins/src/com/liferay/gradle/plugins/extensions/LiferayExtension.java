@@ -71,6 +71,10 @@ public class LiferayExtension {
 		return _appServerType;
 	}
 
+	public File getDeployDir() {
+		return _deployDir;
+	}
+
 	public String getPortalVersion() {
 		return _portalVersion;
 	}
@@ -115,6 +119,10 @@ public class LiferayExtension {
 		_appServerType = appServerType;
 	}
 
+	public void setDeployDir(File deployDir) {
+		_deployDir = deployDir;
+	}
+
 	public void setPortalVersion(String portalVersion) {
 		_portalVersion = portalVersion;
 	}
@@ -132,6 +140,7 @@ public class LiferayExtension {
 	private File _appServerPortalDir;
 	private final ConfigObject _appServers = new ConfigObject();
 	private String _appServerType;
+	private File _deployDir;
 	private String _portalVersion;
 	private File _tmpDir;
 

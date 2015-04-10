@@ -273,12 +273,32 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			liferayExtension.setAppServerDir(appServerDir);
 		}
 
-		liferayExtension.setAppServerDeployDir(
-			getAppServerDir(liferayExtension, "deployDirName"));
-		liferayExtension.setAppServerLibGlobalDir(
-			getAppServerDir(liferayExtension, "libGlobalDirName"));
-		liferayExtension.setAppServerPortalDir(
-			getAppServerDir(liferayExtension, "portalDirName"));
+		if (liferayExtension.getAppServerDeployDir() == null) {
+			File appServerDeployDir = getAppServerDir(
+				liferayExtension, appServerDir, "deployDirName");
+
+			liferayExtension.setAppServerDeployDir(appServerDeployDir);
+		}
+
+		if (liferayExtension.getAppServerLibGlobalDir() == null) {
+			File appServerLibGlobalDir = getAppServerDir(
+				liferayExtension, appServerDir, "libGlobalDirName");
+
+			liferayExtension.setAppServerLibGlobalDir(appServerLibGlobalDir);
+		}
+
+		if (liferayExtension.getAppServerPortalDir() == null) {
+			File appServerPortalDir = getAppServerDir(
+				liferayExtension, appServerDir, "portalDirName");
+
+			liferayExtension.setAppServerPortalDir(appServerPortalDir);
+		}
+
+		if (liferayExtension.getDeployDir() == null) {
+			File deployDir = new File(appServerParentDir, "deploy");
+
+			liferayExtension.setDeployDir(deployDir);
+		}
 	}
 
 	protected void configureRepositories(Project project) {
@@ -439,9 +459,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected File getAppServerDir(
-		LiferayExtension liferayExtension, String dirNameKey) {
-
-		File appServerDir = liferayExtension.getAppServerDir();
+		LiferayExtension liferayExtension, File appServerDir,
+		String dirNameKey) {
 
 		String dirName = getAppServerProperty(
 			liferayExtension, liferayExtension.getAppServerType(), dirNameKey);

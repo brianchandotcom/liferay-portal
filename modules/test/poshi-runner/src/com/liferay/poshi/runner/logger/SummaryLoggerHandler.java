@@ -272,15 +272,19 @@ public final class SummaryLoggerHandler {
 			if ((element.attributeValue("function") != null) &&
 				varName.startsWith("locator")) {
 
-				String locator = element.attributeValue(varName);
+				varName = StringUtil.replace(
+					varName, "locator", "locator-key");
 
-				if (Validator.isNotNull(locator) && locator.contains("#")) {
+				String locatorKey =
+					PoshiRunnerVariablesUtil.getValueFromCommandMap(varName);
+
+				if (Validator.isNotNull(locatorKey)) {
 					StringBuilder sb = new StringBuilder();
 
 					sb.append("<em title=\"");
 					sb.append(varValue);
 					sb.append("\">");
-					sb.append(locator.substring(locator.indexOf("#") + 1));
+					sb.append(locatorKey);
 					sb.append("</em>");
 
 					varValue = sb.toString();

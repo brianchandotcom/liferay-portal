@@ -33,7 +33,7 @@ if (layoutPrototype == null) {
 }
 %>
 
-<liferay-util:include page="/toolbar.jsp">
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="toolbarItem" value='<%= layoutPrototype.isNew() ? "add" : StringPool.BLANK %>' />
 </liferay-util:include>
 
@@ -48,7 +48,7 @@ request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototyp
 request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 %>
 
-<liferay-util:include page="/merge_alert.jsp" />
+<liferay-util:include page="/merge_alert.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="editLayoutPrototype" var="editLayoutPrototypeURL" />
 

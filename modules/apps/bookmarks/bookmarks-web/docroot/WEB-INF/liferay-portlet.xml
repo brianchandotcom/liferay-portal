@@ -16,8 +16,8 @@
 		<user-notification-handler-class>com.liferay.bookmarks.notifications.BookmarksUserNotificationHandler</user-notification-handler-class>
 		<asset-renderer-factory>com.liferay.bookmarks.asset.BookmarksEntryAssetRendererFactory</asset-renderer-factory>
 		<asset-renderer-factory>com.liferay.bookmarks.asset.BookmarksFolderAssetRendererFactory</asset-renderer-factory>
-		<custom-attributes-display>com.liferay.bookmarks.customattributes.BookmarksEntryCustomAttributesDisplay</custom-attributes-display>
-		<custom-attributes-display>com.liferay.bookmarks.customattributes.BookmarksFolderCustomAttributesDisplay</custom-attributes-display>
+		<custom-attributes-display>com.liferay.bookmarks.web.customattributes.BookmarksEntryCustomAttributesDisplay</custom-attributes-display>
+		<custom-attributes-display>com.liferay.bookmarks.web.customattributes.BookmarksFolderCustomAttributesDisplay</custom-attributes-display>
 		<trash-handler>com.liferay.bookmarks.trash.BookmarksEntryTrashHandler</trash-handler>
 		<trash-handler>com.liferay.bookmarks.trash.BookmarksFolderTrashHandler</trash-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>

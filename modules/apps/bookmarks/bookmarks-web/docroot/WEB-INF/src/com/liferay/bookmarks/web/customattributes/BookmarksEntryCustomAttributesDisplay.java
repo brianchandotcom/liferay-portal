@@ -12,26 +12,26 @@
  * details.
  */
 
-package com.liferay.bookmarks.customattributes;
+package com.liferay.bookmarks.web.customattributes;
 
-import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 
 /**
  * @author Jorge Ferrer
  */
-public class BookmarksFolderCustomAttributesDisplay
+public class BookmarksEntryCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
 	@Override
 	public String getClassName() {
-		return BookmarksFolder.class.getName();
+		return BookmarksEntry.class.getName();
 	}
 
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/folder.png";
+		return themeDisplay.getPathThemeImages() + "/ratings/star_hover.png";
 	}
 
 }

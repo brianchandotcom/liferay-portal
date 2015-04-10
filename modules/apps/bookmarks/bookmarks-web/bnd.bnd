@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.bookmarks.asset,\
 	com.liferay.bookmarks.constants,\
-	com.liferay.bookmarks.customattributes,\
 	com.liferay.bookmarks.indexer,\
 	com.liferay.bookmarks.lar,\
 	com.liferay.bookmarks.model,\

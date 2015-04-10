@@ -204,8 +204,6 @@ public class PoshiRunnerGetterUtil {
 
 		Element rootElement = document.getRootElement();
 
-		PoshiRunnerValidation.validate(rootElement, filePath);
-
 		return rootElement;
 	}
 

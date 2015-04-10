@@ -59,10 +59,6 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 		return StringPool.EMPTY_ARRAY;
 	}
 
-	protected String getEditPage() {
-		return _EDIT_PAGE;
-	}
-
 	@Override
 	public String getURL() {
 		return _URL;
@@ -163,6 +159,10 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 		catch (SystemException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	protected String getEditPage() {
+		return _EDIT_PAGE;
 	}
 
 	protected void removePanelEntryRegistries(HttpServletRequest request) {

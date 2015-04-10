@@ -180,28 +180,7 @@ public class PoshiRunnerValidation {
 			Element element, String filePath)
 		throws PoshiRunnerException {
 
-		if (Validator.isNotNull(element.attributeValue("action"))) {
-			List<String> possibleAttributes = Arrays.asList(
-				"action", "line-number", "locator1", "locator2", "locator-key1",
-				"locator-key2", "value1", "value2");
-
-			_validateAttributes(element, possibleAttributes, filePath);
-
-			int locatorCount = PoshiRunnerContext.getActionLocatorCount(
-				element.attributeValue("action"));
-
-			for (int i = 1; i < locatorCount; i++) {
-				if ((element.attributeValue("locator" + i) != null) &&
-					(element.attributeValue("locator-key" + i) != null)) {
-
-					throw new PoshiRunnerException(
-						"There cannot be both locator and locator-key\n" +
-							filePath + ":" +
-							element.attributeValue("line-number"));
-				}
-			}
-		}
-		else if (Validator.isNotNull(element.attributeValue("function"))) {
+		if (Validator.isNotNull(element.attributeValue("function"))) {
 			List<String> possibleAttributes = Arrays.asList(
 				"function", "line-number", "locator1", "locator2", "value1",
 				"value2");

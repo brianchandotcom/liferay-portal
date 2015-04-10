@@ -15,6 +15,7 @@
 package com.liferay.layout.prototype.web.portlet;
 
 import com.liferay.layout.prototype.web.constants.LayoutPrototypePortletKeys;
+import com.liferay.layout.prototype.web.upgrade.LayoutPrototypeWebUpgrade;
 import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -42,6 +43,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -170,6 +172,11 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutPrototypeWebUpgrade(
+		LayoutPrototypeWebUpgrade layoutPrototypeWebUpgrade) {
 	}
 
 }

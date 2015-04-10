@@ -71,11 +71,25 @@ public class InitGradleTask extends DefaultTask {
 
 		List<String> contents = new ArrayList<>();
 
-		contents.addAll(getBuildGradleDependencies());
-		contents.addAll(getBuildGradleLiferay());
-		contents.addAll(getBuildGradleProperties());
+		addContentsSection(contents, getBuildGradleDependencies());
+		addContentsSection(contents, getBuildGradleLiferay());
+		addContentsSection(contents, getBuildGradleProperties());
 
 		FileUtil.write(buildGradleFile, contents);
+	}
+
+	protected void addContentsSection(
+		List<String> contents, List<String> contentsSection) {
+
+		if (contentsSection.isEmpty()) {
+			return;
+		}
+
+		if (!contents.isEmpty()) {
+			contents.add("");
+		}
+
+		contents.addAll(contentsSection);
 	}
 
 	protected List<String> getBuildDependenciesCompile() {
@@ -220,9 +234,9 @@ public class InitGradleTask extends DefaultTask {
 	protected List<String> getBuildGradleDependencies() {
 		List<String> contents = new ArrayList<>();
 
-		contents.addAll(getBuildDependenciesCompile());
-		contents.addAll(getBuildDependenciesProvidedCompile());
-		contents.addAll(getBuildDependenciesTestCompile());
+		addContentsSection(contents, getBuildDependenciesCompile());
+		addContentsSection(contents, getBuildDependenciesProvidedCompile());
+		addContentsSection(contents, getBuildDependenciesTestCompile());
 
 		return wrapContents(contents, 0, " {", "dependencies", "}", false);
 	}

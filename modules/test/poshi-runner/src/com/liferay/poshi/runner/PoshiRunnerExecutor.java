@@ -193,9 +193,10 @@ public class PoshiRunnerExecutor {
 					parseElement(childElement);
 				}
 				catch (Exception e) {
-					SummaryLoggerHandler.failSummary(childElement);
+					SummaryLoggerHandler.failSummary(
+						childElement, e.getMessage());
 
-					throw new PoshiRunnerException(e);
+					throw e;
 				}
 
 				SummaryLoggerHandler.passSummary(childElement);

@@ -131,7 +131,8 @@ public class PoshiRunnerValidation {
 
 			if (classType.equals("function")) {
 				if (attributeName.equals("default") ||
-					attributeName.equals("summary")) {
+					attributeName.equals("summary") ||
+					attributeName.equals("summary-ignore")) {
 
 					continue;
 				}
@@ -270,7 +271,7 @@ public class PoshiRunnerValidation {
 			}
 
 			List<String> possibleAttributes = Arrays.asList(
-				"line-number", "name", "summary");
+				"line-number", "name", "summary", "summary-ignore");
 
 			_validateAttributes(childElement, possibleAttributes, filePath);
 

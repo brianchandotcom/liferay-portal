@@ -124,5 +124,24 @@
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-ui.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-util.tld" />
 		</java>
+
+		<schemavalidate
+      			file="${project.dir}/util-taglib/src/META-INF/aui.tld"/>
+		<schemavalidate
+			file="${project.dir}/util-taglib/src/META-INF/ddm.tld"/>
+		<schemavalidate
+			file="${project.dir}/util-taglib/src/META-INF/liferay-portlet-ext.tld"/>
+		<schemavalidate
+			file="${project.dir}/util-taglib/src/META-INF/liferay-portlet.tld"/>
+		<schemavalidate
+			file="${project.dir}/util-taglib/src/META-INF/liferay-security.tld"/>
+		<schemavalidate
+			file="${project.dir}/util-taglib/src/META-INF/liferay-staging.tld"/>
+		<schemavalidate
+			file="${project.dir}/util-taglib/src/META-INF/liferay-theme.tld"/>
+		<schemavalidate
+			file="${project.dir}/util-taglib/src/META-INF/liferay-ui.tld"/>
+		<schemavalidate
+			file="${project.dir}/util-taglib/src/META-INF/liferay-util.tld"/>
 	</target>
 </project>

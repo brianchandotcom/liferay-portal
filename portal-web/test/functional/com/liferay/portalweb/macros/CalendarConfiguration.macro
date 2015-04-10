@@ -1,0 +1,20 @@
+<definition>
+	<command name="save">
+		<execute function="AssertClick" locator1="CalendarConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="CalendarConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="selectWeekStartsOn">
+		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_WEEK_STARTS_ON_SELECT" value1="${weekStartDay}" />
+	</command>
+
+	<command name="tearDown">
+		<execute macro="Calendar#gotoConfiguration" />
+
+		<execute macro="CalendarConfiguration#selectWeekStartsOn">
+			<var name="weekStartDay" value="Sunday" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#save" />
+	</command>
+</definition>

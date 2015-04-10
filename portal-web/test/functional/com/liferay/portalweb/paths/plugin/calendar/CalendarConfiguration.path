@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>CalendarConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CalendarConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CalendarConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDAR_CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@src,'_1_WAR_calendarportlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!-- USER_SETTINGS -->
+<tr>
+	<td>USER_SETTINGS_TIME_FORMAT_SELECT</td>
+	<td>//select[contains(@id,'TimeFormat')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SETTINGS_DEFAULT_DURATION_SELECT</td>
+	<td>//select[contains(@id,'defaultDuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SETTINGS_DEFAULT_VIEW_SELECT</td>
+	<td>//select[contains(@id,'defaultView')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SETTINGS_WEEK_STARTS_ON_SELECT</td>
+	<td>//select[contains(@id,'weekStartsOn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SETTINGS_TIME_ZONE_SELECT</td>
+	<td>//select[contains(@id,'timeZoneId')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

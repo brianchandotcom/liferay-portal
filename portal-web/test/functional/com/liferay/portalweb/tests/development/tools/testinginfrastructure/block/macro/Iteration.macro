@@ -1,5 +1,5 @@
 <definition>
-	<command name="loopContainingContainsIfConditional" priority="5">
+	<command name="loopContainingContainsIfConditional">
 		<echo message="Test loops: loop containing contains if conditional" />
 
 		<var name="letter" value="a" />
@@ -14,7 +14,7 @@
 		</for>
 	</command>
 
-	<command name="loopContainingEchoStatement" priority="5">
+	<command name="loopContainingEchoStatement">
 		<echo message="Test loops: loop containing echo statement" />
 
 		<var name="list" value="4,5" />
@@ -26,7 +26,7 @@
 		<execute macro="TestUtils#pass" />
 	</command>
 
-	<command name="loopContainingEqualsIfConditional" priority="5">
+	<command name="loopContainingEqualsIfConditional">
 		<echo message="Test loops: loop containing equals if conditional" />
 
 		<var name="numberFound" value="" />
@@ -47,7 +47,7 @@
 		</execute>
 	</command>
 
-	<command name="loopOnEmptyList" priority="5">
+	<command name="loopOnEmptyList">
 		<echo message="Test loops: loop on empty list" />
 
 		<var name="list" value="" />
@@ -59,7 +59,7 @@
 		<execute macro="TestUtils#pass" />
 	</command>
 
-	<command name="nestedForLoops" priority="5">
+	<command name="nestedForLoops">
 		<echo message="Test loops: checking to make sure that you can have nested loops" />
 
 		<var name="string" value="" />

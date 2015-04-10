@@ -271,7 +271,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY_GENERIC" />
 	</command>
 
-	<command name="viewMySubscriptionsPG" priority="4">
+	<command name="viewMySubscriptionsPG">
 		<execute function="AssertClick" locator1="PGMessageboards#NAVIGATION_MY_SUBSCRIPTIONS" value1="My Subscriptions" />
 
 		<execute function="AssertTextPresent" locator1="PGMessageboardsMysubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_1" value1="${parentcategory1}" />

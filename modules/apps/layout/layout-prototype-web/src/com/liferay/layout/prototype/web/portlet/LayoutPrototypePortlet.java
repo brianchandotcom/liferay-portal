@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutprototypes;
+package com.liferay.layout.prototype.web.portlet;
 
 import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.RequiredLayoutPrototypeException;

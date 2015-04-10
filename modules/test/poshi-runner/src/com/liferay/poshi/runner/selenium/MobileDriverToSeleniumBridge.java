@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.util.PropsValues;
 import com.thoughtworks.selenium.Selenium;
 
 import io.appium.java_client.MobileDriver;
+import io.appium.java_client.TouchAction;
 
 import java.io.IOException;
 
@@ -984,38 +985,60 @@ public class MobileDriverToSeleniumBridge
 	}
 
 	protected void tap(String locator) {
-		try {
-			Runtime runtime = Runtime.getRuntime();
+		if (PropsValues.MOBILE_DEVICE_TYPE.equals("android")) {
+			try {
+				Runtime runtime = Runtime.getRuntime();
 
-			StringBuilder sb = new StringBuilder(6);
+				StringBuilder sb = new StringBuilder(6);
 
-			sb.append(PropsValues.MOBILE_ANDROID_HOME);
-			sb.append("/platform-tools/");
-			sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
+				sb.append(PropsValues.MOBILE_ANDROID_HOME);
+				sb.append("/platform-tools/");
+				sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
 
-			int elementPositionCenterX =
-				WebDriverHelper.getElementPositionCenterX(this, locator);
+				int elementPositionCenterX =
+					WebDriverHelper.getElementPositionCenterX(this, locator);
 
-			int screenPositionX = elementPositionCenterX * 3 / 2;
+				int screenPositionX = elementPositionCenterX * 3 / 2;
 
-			sb.append(screenPositionX);
-			sb.append(" ");
+				sb.append(screenPositionX);
+				sb.append(" ");
 
-			int elementPositionCenterY =
-				WebDriverHelper.getElementPositionCenterY(this, locator);
-			int navigationBarHeight = 116;
-			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+				int elementPositionCenterY =
+					WebDriverHelper.getElementPositionCenterY(this, locator);
+				int navigationBarHeight = 116;
+				int viewportPositionTop = WebDriverHelper.getScrollOffsetY(
+					this);
 
+				int screenPositionY =
+					(elementPositionCenterY - viewportPositionTop) * 3 / 2 +
+					navigationBarHeight;
+
+				sb.append(screenPositionY);
+
+				runtime.exec(sb.toString());
+			}
+			catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+		else if (PropsValues.MOBILE_DEVICE_TYPE.equals("ios")) {
+			int navigationBarHeight = 50;
+
+			int screenPositionX = WebDriverHelper.getElementPositionCenterX(
+				this, locator);
 			int screenPositionY =
-				(elementPositionCenterY - viewportPositionTop) * 3 / 2 +
+				WebDriverHelper.getElementPositionCenterY(this, locator) +
 				navigationBarHeight;
 
-			sb.append(screenPositionY);
+			this.context("NATIVE_APP");
 
-			runtime.exec(sb.toString());
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+			TouchAction touchAction = new TouchAction(this);
+
+			touchAction.tap(screenPositionX, screenPositionY);
+
+			touchAction.perform();
+
+			this.context("WEBVIEW_1");
 		}
 	}
 

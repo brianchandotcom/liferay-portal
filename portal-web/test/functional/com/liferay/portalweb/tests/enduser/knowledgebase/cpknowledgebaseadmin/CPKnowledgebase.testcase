@@ -700,7 +700,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54597" name="ViewImportedKBArticlesPrioritization" priority="5">
+	<command name="ViewImportedKBArticlesPrioritization" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -917,7 +917,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54597" name="ViewNoErrorAfterImportWithoutParentMarkdownFiles" priority="4">
+	<command name="ViewNoErrorAfterImportWithoutParentMarkdownFiles" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>

@@ -237,6 +237,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		configureDependenciesCompile(project, liferayExtension);
+		configureDependenciesTestCompile(project, liferayExtension);
 	}
 
 	protected void configureDependenciesCompile(
@@ -245,6 +246,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
 			GradleUtil.addDependency(
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+				dependencyNotation);
+		}
+	}
+
+	protected void configureDependenciesTestCompile(
+		Project project, LiferayExtension liferayExtension) {
+
+		for (String dependencyNotation : TEST_COMPILE_DEPENDENCY_NOTATIONS) {
+			GradleUtil.addDependency(
+				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 				dependencyNotation);
 		}
 	}
@@ -501,6 +512,20 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"net.sourceforge.jtds:jtds:1.2.6",
 		"org.eclipse.persistence:javax.persistence:2.0.0",
 		"postgresql:postgresql:9.2-1002.jdbc4"
+	};
+
+	protected static final String[] TEST_COMPILE_DEPENDENCY_NOTATIONS = {
+		"com.liferay.portal:portal-impl:default",
+		"com.liferay.portal:portal-service:default",
+		"com.liferay.portal:portal-test:default", "junit:junit:4.12",
+		"org.mockito:mockito-all:1.9.5",
+		"org.powermock:powermock-api-mockito:1.6.1",
+		"org.powermock:powermock-api-support:1.6.1",
+		"org.powermock:powermock-core:1.6.1",
+		"org.powermock:powermock-module-junit4:1.6.1",
+		"org.powermock:powermock-module-junit4-common:1.6.1",
+		"org.powermock:powermock-reflect:1.6.1",
+		"org.springframework:spring-test:3.0.7.RELEASE"
 	};
 
 	private static final String _REPOSITORY_URL =

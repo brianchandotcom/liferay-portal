@@ -1,0 +1,6 @@
+# Liferay Service Builder
+
+> Service Builder is a model-driven code generation tool built by Liferay that allows developers to define custom object models called entities. Service Builder generates a service layer through object-relational mapping (ORM) technology that provides a clean separation between your object model and code for the underlying database. This frees you to add the necessary business logic for your application. Service Builder takes an XML file as input and generates the necessary model, persistence, and service layers for your application. These layers provide a clean separation of concerns. Service Builder generates most of the common code needed to implement create, read, update, delete, and find operations on the database, allowing you to focus on the higher level aspects of service design.
+> -- [Liferay Developer Network](https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/what-is-service-builder)
+
+For the latest information on Service Builder please see the [Service Builder](https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/what-is-service-builder) page on the [Liferay Developer Network](https://dev.liferay.com/).

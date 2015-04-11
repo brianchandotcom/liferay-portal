@@ -700,7 +700,7 @@ public class ResourceBlockLocalServiceImpl
 		finally {
 			PermissionThreadLocal.setIndexEnabled(flushEnabled);
 
-			PermissionCacheUtil.clearCache();
+			PermissionCacheUtil.clearResourceCache();
 		}
 	}
 
@@ -737,7 +737,7 @@ public class ResourceBlockLocalServiceImpl
 			updateCompanyScopeResourceTypePermissions(
 				companyId, name, roleId, actionIdsLong, operator);
 
-		PermissionCacheUtil.clearCache();
+		PermissionCacheUtil.clearResourceCache();
 	}
 
 	@Override
@@ -749,7 +749,7 @@ public class ResourceBlockLocalServiceImpl
 			updateGroupScopeResourceTypePermissions(
 				companyId, groupId, name, roleId, actionIdsLong, operator);
 
-		PermissionCacheUtil.clearCache();
+		PermissionCacheUtil.clearResourceCache();
 	}
 
 	@Override
@@ -805,7 +805,7 @@ public class ResourceBlockLocalServiceImpl
 			companyId, groupId, name, permissionedModel, permissionsHash,
 			resourceBlockPermissionsContainer);
 
-		PermissionCacheUtil.clearCache();
+		PermissionCacheUtil.clearResourceCache();
 	}
 
 	@Override

@@ -309,21 +309,21 @@
 		</execute>
 
 		<execute macro="Page#openURLLocale">
-			<var name="localiztionPageURL" value="http://localhost:8080/web/site2-name" />
+			<var name="localizationPageURL" value="http://localhost:8080/web/site2-name" />
 		</execute>
 
 		<execute macro="Page#viewURLLocale">
 			<var name="localePageURL" value="http://localhost:8080/es/web/site2-name" />
-			<var name="localiztionPageURL" value="http://localhost:8080/web/site2-name" />
+			<var name="localizationPageURL" value="http://localhost:8080/web/site2-name" />
 		</execute>
 
 		<execute macro="Page#openURLLocale">
-			<var name="localiztionPageURL" value="http://localhost:8080/web/site1-name" />
+			<var name="localizationPageURL" value="http://localhost:8080/web/site1-name" />
 		</execute>
 
 		<execute macro="Page#viewURLLocale">
 			<var name="localePageURL" value="http://localhost:8080/en/web/site1-name" />
-			<var name="localiztionPageURL" value="http://localhost:8080/web/site1-name" />
+			<var name="localizationPageURL" value="http://localhost:8080/web/site1-name" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -332,13 +332,13 @@
 		</execute>
 
 		<execute macro="Page#openURLLocale">
-			<var name="localiztionPageURL" value="http://localhost:8080/es/web/site2-name" />
+			<var name="localizationPageURL" value="http://localhost:8080/es/web/site2-name" />
 		</execute>
 
 		<execute macro="Page#viewURLLocale">
 			<var name="localePageURL" value="http://localhost:8080/es/web/site2-name" />
 			<var name="localizationOption" value="Display the page in English (United States)." />
-			<var name="localiztionPageURL" value="http://localhost:8080/web/site2-name" />
+			<var name="localizationPageURL" value="http://localhost:8080/web/site2-name" />
 		</execute>
 	</command>
 

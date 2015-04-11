@@ -20,6 +20,8 @@ import com.liferay.poshi.runner.util.Validator;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -184,6 +186,8 @@ public class PoshiRunnerValidation {
 
 			_validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
+
+			_validateFunctionContext(element, filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("macro"))) {
 			List<String> possibleAttributeNames = Arrays.asList(
@@ -252,6 +256,74 @@ public class PoshiRunnerValidation {
 			element, possibleAttributeNames, filePath);
 
 		_parseElements(element, filePath);
+	}
+
+	private static void _validateFunctionContext(
+			Element element, String filePath)
+		throws PoshiRunnerException {
+
+		String function = element.attributeValue("function");
+
+		String className = function;
+
+		if (!function.contains("#")) {
+			Element rootElement = PoshiRunnerContext.getFunctionRootElement(
+				className);
+
+			if (Validator.isNull(rootElement)) {
+				throw new PoshiRunnerException (
+					"Invalid " + function + " class\n" + filePath + ":" +
+						element.attributeValue("line-number"));
+			}
+
+			function = function + "#" + rootElement.attributeValue("default");
+		}
+		else {
+			className = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				function);
+
+			Element rootElement = PoshiRunnerContext.getFunctionRootElement(
+				className);
+
+			if (Validator.isNull(rootElement)) {
+				throw new PoshiRunnerException (
+					"Invalid " + function + " class\n" + filePath + ":" +
+						element.attributeValue("line-number"));
+			}
+		}
+
+		Element childElement = PoshiRunnerContext.getFunctionCommandElement(
+			function);
+
+		if (childElement == null) {
+			throw new PoshiRunnerException(
+				"Invalid " + function + " command\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+
+		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
+			className);
+
+		for (int i = 0; i < locatorCount; i++) {
+			String locatorKey = element.attributeValue("locator" + (i + 1));
+
+			if (locatorKey != null) {
+				Matcher matcher = _pattern.matcher(locatorKey);
+
+				if (!locatorKey.contains("#") || matcher.find()) {
+					continue;
+				}
+
+				String locator = PoshiRunnerContext.getPathLocator(locatorKey);
+
+				if (Validator.isNull(locator)) {
+					throw new PoshiRunnerException(
+						"Invalid " + locatorKey + " locator" + (i + 1) +
+							"\n" + filePath + ":" +
+							element.attributeValue("line-number"));
+				}
+			}
+		}
 	}
 
 	private static void _validateFunctionFile(Element element, String filePath)
@@ -455,5 +527,7 @@ public class PoshiRunnerValidation {
 
 	private static final String _BASE_DIR =
 		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
+
+	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 
 }

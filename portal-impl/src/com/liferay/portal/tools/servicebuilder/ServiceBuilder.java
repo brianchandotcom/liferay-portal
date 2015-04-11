@@ -276,7 +276,7 @@ public class ServiceBuilder {
 		String targetEntityName = arguments.get("service.target.entity.name");
 		String testDir = arguments.get("service.test.dir");
 
-		Set<String> resourceActionModels = _readResourceActionModels(
+		Set<String> resourceActionModels = readResourceActionModels(
 			implDir, resourceActionsConfigs);
 
 		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
@@ -1914,7 +1914,7 @@ public class ServiceBuilder {
 
 		for (Element resourceElement : resourceElements) {
 			resourceActionModels.addAll(
-				_readResourceActionModels(
+				readResourceActionModels(
 					implDir,
 					new String[] {resourceElement.attributeValue("file")}));
 		}
@@ -1929,7 +1929,7 @@ public class ServiceBuilder {
 		}
 	}
 
-	private static Set<String> _readResourceActionModels(
+	public static Set<String> readResourceActionModels(
 			String implDir, String[] resourceActionsConfigs)
 		throws Exception {
 

@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
+import com.liferay.gradle.plugins.tasks.BuildWsdlTask;
 import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -37,10 +38,8 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.ModuleVersionSelector;
-import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
@@ -50,6 +49,7 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -57,6 +57,8 @@ import org.gradle.api.tasks.SourceSet;
 public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
+
+	public static final String BUILD_WSDL_TASK_NAME = "buildWsdl";
 
 	public static final String FORMAT_SOURCE_TASK_NAME = "formatSource";
 
@@ -139,6 +141,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return buildCssTask;
 	}
 
+	protected BuildWsdlTask addTaskBuildWsdl(Project project) {
+		BuildWsdlTask buildWsdlTask = GradleUtil.addTask(
+			project, BUILD_WSDL_TASK_NAME, BuildWsdlTask.class);
+
+		buildWsdlTask.setDescription("Generates the WSDL client stubs.");
+		buildWsdlTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		return buildWsdlTask;
+	}
+
 	protected FormatSourceTask addTaskFormatSource(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
@@ -164,6 +176,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		addTaskBuildCss(project);
+		addTaskBuildWsdl(project);
 		addTaskFormatSource(project);
 		addTaskInitGradle(project);
 		addTaskWar(project);
@@ -390,6 +403,50 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
+	protected void configureTaskBuildWsdl(Project project) {
+		BuildWsdlTask buildWsdlTask = (BuildWsdlTask)GradleUtil.getTask(
+			project, BUILD_WSDL_TASK_NAME);
+
+		configureTaskBuildWsdlDestinationDir(buildWsdlTask);
+		configureTaskBuildWsdlRootDirs(buildWsdlTask);
+
+		buildWsdlTask.createTasks();
+
+		TaskOutputs taskOutputs = buildWsdlTask.getOutputs();
+
+		GradleUtil.addDependency(
+			buildWsdlTask.getProject(), JavaPlugin.COMPILE_CONFIGURATION_NAME,
+			taskOutputs.getFiles());
+	}
+
+	protected void configureTaskBuildWsdlDestinationDir(
+		BuildWsdlTask buildWsdlTask) {
+
+		if (buildWsdlTask.getDestinationDir() != null) {
+			return;
+		}
+
+		Project project = buildWsdlTask.getProject();
+
+		File destinationDir = project.file("lib");
+
+		buildWsdlTask.setDestinationDir(destinationDir);
+	}
+
+	protected void configureTaskBuildWsdlRootDirs(BuildWsdlTask buildWsdlTask) {
+		FileCollection rootDirs = buildWsdlTask.getRootDirs();
+
+		if ((rootDirs != null) && !rootDirs.isEmpty()) {
+			return;
+		}
+
+		Project project = buildWsdlTask.getProject();
+
+		File rootDir = project.file("wsdl");
+
+		buildWsdlTask.rootDirs(rootDir);
+	}
+
 	protected void configureTaskClasses(Project project) {
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
@@ -422,31 +479,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Configuration compileConfiguration = GradleUtil.getConfiguration(
 			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
 
-		Set<Dependency> compileDependencies =
-			compileConfiguration.getAllDependencies();
-
-		for (Dependency dependency : compileDependencies) {
-			if (!(dependency instanceof ProjectDependency)) {
-				continue;
-			}
-
-			ProjectDependency projectDependency = (ProjectDependency)dependency;
-
-			Project dependencyProject =
-				projectDependency.getDependencyProject();
-
-			String taskName =
-				dependencyProject.getPath() + Project.PATH_SEPARATOR +
-					BasePlugin.CLEAN_TASK_NAME;
-
-			cleanTask.dependsOn(taskName);
-		}
+		cleanTask.dependsOn(
+			compileConfiguration.getTaskDependencyFromProjectDependency(
+				true, BasePlugin.CLEAN_TASK_NAME));
 	}
 
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
 		configureTaskBuildCss(project, liferayExtension);
+		configureTaskBuildWsdl(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);
 	}

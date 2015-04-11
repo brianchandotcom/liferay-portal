@@ -19,6 +19,8 @@ import com.liferay.portlet.util.test.PortletKeys;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.security.InvalidParameterException;
+
 /**
  * @author Raymond Augé
  */
@@ -148,6 +150,11 @@ public class PortletInstanceTest {
 			getId(getWarPortletId(), 1234, "5678"));
 
 		Assert.assertTrue(portletInstance.hasInstanceId());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testInvalidPortletName() {
+		new PortletInstance(getId("1234_INSTANCE_asdf", 1234, "5678"));
 	}
 
 	@Test

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.security.InvalidParameterException;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
@@ -47,9 +49,21 @@ public class PortletInstance {
 	}
 
 	public PortletInstance(String portletName, long userId, String instanceId) {
+		validatePortletName(portletName);
+
 		_portletName = portletName;
 		_userId = userId;
 		_instanceId = instanceId;
+	}
+
+	private void validatePortletName(String portletName) {
+		for (String keyword : _PORTLET_NAME_RESERVED_KEYWORDS) {
+			if (portletName.indexOf(keyword) != -1) {
+				throw new InvalidParameterException(
+					"The portletName '" + portletName +
+						"' must not contain the keyword " + keyword);
+			}
+		}
 	}
 
 	public PortletInstance(String portletName, String instanceId) {
@@ -146,6 +160,9 @@ public class PortletInstance {
 		return GetterUtil.getLong(
 			portletInstance.substring(x + _USER_SEPARATOR.length()));
 	}
+
+	private String[] _PORTLET_NAME_RESERVED_KEYWORDS =
+		new String[] {_INSTANCE_SEPARATOR, _USER_SEPARATOR};
 
 	private final String _instanceId;
 	private final String _portletName;

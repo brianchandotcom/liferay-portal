@@ -2170,16 +2170,46 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-required-plugins">
-		<ant dir="${lp.plugins.dir}/portlets/marketplace-portlet" target="direct-deploy" />
+		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+			<property name="plugin.types" value="portlets" />
+			<property name="plugins.includes" value="marketplace-portlet" />
+		</ant>
 
 		<get-testcase-property property.name="marketplace.staging.enabled" />
 
 		<if>
 			<equals arg1="${marketplace.staging.enabled}" arg2="true" />
 			<then>
-				<echo append="true" file="${app.server.deploy.dir}/marketplace-portlet/WEB-INF/classes/portlet.properties">
+				<path id="marketplace.portlet.war.path">
+					<fileset dir="${app.server.parent.dir}/deploy" erroronmissingdir="false">
+						<include name="marketplace-portlet-*.war" />
+					</fileset>
+				</path>
+
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<mkdir dir="${tstamp.value}" />
+
+				<property name="marketplace.portlet.war.path" value="${toString:marketplace.portlet.war.path}" />
+
+				<unzip
+					dest="${tstamp.value}"
+					src="${marketplace.portlet.war.path}"
+				/>
+
+				<echo append="true" file="${tstamp.value}/WEB-INF/classes/portlet.properties">
 
 ${marketplace.portlet.properties}</echo>
+
+				<zip
+					basedir="${tstamp.value}"
+					destfile="${marketplace.portlet.war.path}"
+					update="yes"
+				/>
+
+				<delete dir="${tstamp.value}" />
 			</then>
 		</if>
 	</target>

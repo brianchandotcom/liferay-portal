@@ -12,14 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.repository.search;
+
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.SearchContext;
 
 /**
  * @author Michael C. Han
- * @see    org.apache.lucene.search.spell.StringDistance
  */
-public interface StringDistanceCalculator {
+public interface RepositorySearchQueryTermBuilder {
 
-	public float getDistance(String string1, String string2);
+	public void addTerm(
+			BooleanQuery booleanQuery, SearchContext searchContext,
+			String field, String value)
+		throws ParseException;
 
 }

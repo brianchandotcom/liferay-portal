@@ -320,7 +320,7 @@
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -330,7 +330,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[@value='15VIEW']</td>
+	<td>//input[contains(@value,'PortletVIEW')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -100,8 +100,10 @@ public class PortletConstants {
 	public static String assemblePortletId(
 		String portletId, long userId, String instanceId) {
 
+		String portletName = getRootPortletId(portletId);
+
 		PortletInstance portletInstance = new PortletInstance(
-			portletId, userId, instanceId);
+			portletName, userId, instanceId);
 
 		return portletInstance.getPortletInstanceKey();
 	}

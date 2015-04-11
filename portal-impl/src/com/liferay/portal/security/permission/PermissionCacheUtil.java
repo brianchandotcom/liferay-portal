@@ -92,10 +92,9 @@ public class PermissionCacheUtil {
 	}
 
 	public static Boolean getUserRole(long userId, Role role) {
-		String key = String.valueOf(role.getRoleId()).concat(
-			String.valueOf(userId));
+		UserRoleKey userRoleKey = new UserRoleKey(userId, role.getRoleId());
 
-		Boolean userRole = _userRolePortalCache.get(key);
+		Boolean userRole = _userRolePortalCache.get(userRoleKey);
 
 		if (userRole != null) {
 			return userRole;
@@ -109,7 +108,7 @@ public class PermissionCacheUtil {
 
 		userRole = userPermissionCheckerBag.hasRole(role);
 
-		_userRolePortalCache.put(key, userRole);
+		_userRolePortalCache.put(userRoleKey, userRole);
 
 		return userRole;
 	}
@@ -163,10 +162,9 @@ public class PermissionCacheUtil {
 			return;
 		}
 
-		String key = String.valueOf(role.getRoleId()).concat(
-			String.valueOf(userId));
+		UserRoleKey userRoleKey = new UserRoleKey(userId, role.getRoleId());
 
-		_userRolePortalCache.put(key, value);
+		_userRolePortalCache.put(userRoleKey, value);
 	}
 
 	private static final PortalCache<BagKey, PermissionCheckerBag>
@@ -186,8 +184,8 @@ public class PermissionCacheUtil {
 		_userPermissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
 			USER_PERMISSION_CHECKER_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
-	private static final PortalCache<String, Boolean> _userRolePortalCache =
-		MultiVMPoolUtil.getCache(
+	private static final PortalCache<UserRoleKey, Boolean>
+		_userRolePortalCache = MultiVMPoolUtil.getCache(
 			USER_ROLE_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 
@@ -322,6 +320,39 @@ public class PermissionCacheUtil {
 		private final long _companyId;
 		private final long _groupId;
 		private final String _name;
+		private final long _userId;
+
+	}
+
+	private static class UserRoleKey implements Serializable {
+
+		public UserRoleKey(long userId, long roleId) {
+			_userId = userId;
+			_roleId = roleId;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			UserRoleKey userRoleKey = (UserRoleKey)obj;
+
+			if ((userRoleKey._userId == _userId) &&
+				(userRoleKey._roleId == _roleId)) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		@Override
+		public int hashCode() {
+			return (int)(_userId * 11 + _roleId);
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final long _roleId;
 		private final long _userId;
 
 	}

@@ -403,7 +403,7 @@ AUI.add(
 					_formatTempFiles: function(fileNames) {
 						var instance = this;
 
-						if (fileNames.length && Lang.isArray(fileNames)) {
+						if (fileNames && fileNames.length && Lang.isArray(fileNames)) {
 							var fileListContent = instance._fileListContent;
 
 							instance._pendingFileInfo.show();

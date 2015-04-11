@@ -592,7 +592,6 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute function="AssertClick" locator1="CPMessageboardsThread#MESSAGE_REPLY_1" value1="Reply" />
 
 		<execute function="Type#typeFrame" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadReplyBody}" />

@@ -50,22 +50,22 @@
 </tr>
 <tr>
 	<td>INFO_1</td>
-	<td>xPath=(//div[@class='alert alert-info'])[1]</td>
+	<td>xpath=(//div[@class='alert alert-info'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_2</td>
-	<td>xPath=(//div[@class='alert alert-info'])[2]</td>
+	<td>xpath=(//div[@class='alert alert-info'])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_3</td>
-	<td>xPath=(//div[@class='alert alert-info'])[3]</td>
+	<td>xpath=(//div[@class='alert alert-info'])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_4</td>
-	<td>xpath=(//div[contains(@class,'alert-info') and (contains(@class,'alert-warning'))]/a)[1]</td>
+	<td>xpath=(//div[contains(@class,'alert-info') and contains(@class,'alert-warning')]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

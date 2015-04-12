@@ -511,7 +511,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="RSS" />

@@ -52,7 +52,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				</aui:nav>
 
 				<aui:nav-bar-search>
-					<%@ include file="/search.jsp" %>
+					<%@ include file="/search.jspf" %>
 				</aui:nav-bar-search>
 			</aui:nav-bar>
 

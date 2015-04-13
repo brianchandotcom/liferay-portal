@@ -530,7 +530,7 @@ public class ServiceBuilder {
 
 		content = _stripFullyQualifiedClassNames(content);
 
-		File tempFile = new File("ServiceBuilder.temp");
+		File tempFile = new File(_TMP_DIR, "ServiceBuilder.temp");
 
 		FileUtils.write(tempFile, content);
 
@@ -1275,7 +1275,7 @@ public class ServiceBuilder {
 
 		if (!refFile.exists()) {
 			refFileName = String.valueOf(System.currentTimeMillis());
-			refFile = new File(refFileName);
+			refFile = new File(_TMP_DIR, refFileName);
 
 			ClassLoader classLoader = getClass().getClassLoader();
 
@@ -1299,11 +1299,12 @@ public class ServiceBuilder {
 		ServiceBuilder serviceBuilder = new ServiceBuilder(
 			_apiDir, _autoImportDefaultReferences, _autoNamespaceTables,
 			_beanLocatorUtil, _buildNumber, _buildNumberIncrement, _hbmFileName,
-			_implDir, refFileName, _modelHintsFileName, _osgiModule,
-			_pluginName, _propsUtil, _readOnlyPrefixes, _remotingFileName,
-			_resourceActionModels, _resourcesDir, _springFileName,
-			_springNamespaces, _sqlDir, _sqlFileName, _sqlIndexesFileName,
-			_sqlSequencesFileName, _targetEntityName, _testDir, false);
+			_implDir, refFile.getAbsolutePath(), _modelHintsFileName,
+			_osgiModule, _pluginName, _propsUtil, _readOnlyPrefixes,
+			_remotingFileName, _resourceActionModels, _resourcesDir,
+			_springFileName, _springNamespaces, _sqlDir, _sqlFileName,
+			_sqlIndexesFileName, _sqlSequencesFileName, _targetEntityName,
+			_testDir, false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -5400,6 +5401,8 @@ public class ServiceBuilder {
 	private static final String _SPRING_NAMESPACE_BEANS = "beans";
 
 	private static final String _SQL_CREATE_TABLE = "create table ";
+
+	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/service/builder/dependencies/";

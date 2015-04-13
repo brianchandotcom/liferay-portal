@@ -210,10 +210,11 @@ public class PoshiRunnerValidation {
 	private static void _validateForElement(Element element, String filePath)
 		throws PoshiRunnerException {
 
-		List<String> possibleAttributes = Arrays.asList(
+		List<String> possibleAttributeNames = Arrays.asList(
 			"line-number", "list", "param");
 
-		_validatePossibleAttributeNames(element, possibleAttributes, filePath);
+		_validatePossibleAttributeNames(
+			element, possibleAttributeNames, filePath);
 
 		_parseElements(element, filePath);
 	}

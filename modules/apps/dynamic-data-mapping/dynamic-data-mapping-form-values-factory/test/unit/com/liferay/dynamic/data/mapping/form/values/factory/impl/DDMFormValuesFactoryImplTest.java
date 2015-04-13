@@ -14,20 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.values.factory.impl;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.springframework.mock.web.MockHttpServletRequest;
-
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -45,6 +31,23 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -158,7 +161,7 @@ public class DDMFormValuesFactoryImplTest extends PowerMockito {
 			"defaultLanguageId", LocaleUtil.toLanguageId(LocaleUtil.US));
 
 		// Title
-		
+
 		httpServletRequest.addParameter("ddm$$Title$wqer$0$$en_US", "Title");
 		httpServletRequest.addParameter("ddm$$Title$wqer$0$$pt_BR", "Titulo");
 

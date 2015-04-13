@@ -140,55 +140,50 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		DDMForm ddmForm = new DDMForm();
 
 		DDMFormField nameDDMFormField = new DDMFormField("Name", "text");
-		DDMFormField phoneDDMFormField = new DDMFormField("Phone", "text");
-		DDMFormField extDDMFormField = new DDMFormField("Ext", "text");
-		DDMFormField addressDDMFormField = new DDMFormField("Address", "text");
-		DDMFormField zipCodeDDMFormField = new DDMFormField("ZipCode", "text");
-		DDMFormField contactDDMFormField = new DDMFormField("Contact","text");
-		DDMFormField faxDDMFormField = new DDMFormField("Fax","text");
 
-		phoneDDMFormField.addNestedDDMFormField(extDDMFormField);
+		DDMFormField phoneDDMFormField = new DDMFormField("Phone", "text");
+
+		phoneDDMFormField.addNestedDDMFormField(
+			new DDMFormField("Ext", "text"));
 
 		nameDDMFormField.addNestedDDMFormField(phoneDDMFormField);
 
-		addressDDMFormField.addNestedDDMFormField(zipCodeDDMFormField);
-		
+		DDMFormField addressDDMFormField = new DDMFormField("Address", "text");
+
+		addressDDMFormField.addNestedDDMFormField(
+			new DDMFormField("ZipCode", "text"));
+
 		nameDDMFormField.addNestedDDMFormField(addressDDMFormField);
-		
-		contactDDMFormField.addNestedDDMFormField(faxDDMFormField);
 
 		ddmForm.addDDMFormField(nameDDMFormField);
-		
+
+		DDMFormField contactDDMFormField = new DDMFormField("Contact", "text");
+
+		contactDDMFormField.addNestedDDMFormField(
+			new DDMFormField("Fax", "text"));
+
 		ddmForm.addDDMFormField(contactDDMFormField);
-		
+
 		String nameDDMFormFieldParameterName = getDDMFormFieldParameterName(
 			"Name", StringPool.BLANK);
-		
-		String contactDDMFormFieldParameterName = getDDMFormFieldParameterName(
-				"Contact", StringPool.BLANK);
 
 		String phoneDDMFormFieldParameterName = getDDMFormFieldParameterName(
 			"Phone", nameDDMFormFieldParameterName);
-		
-		String faxDDMFormFieldParameterName = getDDMFormFieldParameterName(
-				"Fax", contactDDMFormFieldParameterName);
 
 		String extDDMFormFieldFieldParameterName = getDDMFormFieldParameterName(
 			"Ext", phoneDDMFormFieldParameterName);
-		
+
 		String addressDDMFormFieldParameterName = getDDMFormFieldParameterName(
-				"Address", nameDDMFormFieldParameterName);
-		
+			"Address", nameDDMFormFieldParameterName);
+
 		String zipCodeDDMFormFieldParameterName = getDDMFormFieldParameterName(
-				"ZipCode", addressDDMFormFieldParameterName);
-		
-		String renderedFaxDDMFormField = renderTextField(
-				faxDDMFormFieldParameterName, StringPool.BLANK,
-				StringPool.BLANK);
-		
-		String renderedContactDDMFormField = renderTextField(
-				contactDDMFormFieldParameterName, StringPool.BLANK,
-				renderedFaxDDMFormField);
+			"ZipCode", addressDDMFormFieldParameterName);
+
+		String contactDDMFormFieldParameterName = getDDMFormFieldParameterName(
+			"Contact", StringPool.BLANK);
+
+		String faxDDMFormFieldParameterName = getDDMFormFieldParameterName(
+			"Fax", contactDDMFormFieldParameterName);
 
 		String renderedExtDDMFormField = renderTextField(
 			extDDMFormFieldFieldParameterName, StringPool.BLANK,
@@ -197,35 +192,43 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		String renderedPhoneDDMFormField = renderTextField(
 			phoneDDMFormFieldParameterName, StringPool.BLANK,
 			renderedExtDDMFormField);
-		
+
 		String renderedZipCodeDDMFormField = renderTextField(
-				zipCodeDDMFormFieldParameterName,StringPool.BLANK,
-				StringPool.BLANK);
-		
+			zipCodeDDMFormFieldParameterName, StringPool.BLANK,
+			StringPool.BLANK);
+
 		String renderedAddressDDMFormField = renderTextField(
-				addressDDMFormFieldParameterName,StringPool.BLANK,
-				renderedZipCodeDDMFormField);
-		
-		String renderedNameChildren = StringUtil.add(renderedPhoneDDMFormField, 
-				renderedAddressDDMFormField, StringPool.BLANK);
+			addressDDMFormFieldParameterName, StringPool.BLANK,
+			renderedZipCodeDDMFormField);
+
+		String renderedNameChildren = StringUtil.add(
+			renderedPhoneDDMFormField, renderedAddressDDMFormField,
+			StringPool.BLANK);
 
 		String renderedNameDDMFormField = renderTextField(
 			nameDDMFormFieldParameterName, StringPool.BLANK,
 			renderedNameChildren);
-		
+
+		String renderedFaxDDMFormField = renderTextField(
+			faxDDMFormFieldParameterName, StringPool.BLANK, StringPool.BLANK);
+
+		String renderedContactDDMFormField = renderTextField(
+			contactDDMFormFieldParameterName, StringPool.BLANK,
+			renderedFaxDDMFormField);
+
 		DDMFormRendererHelper ddmFormFieldRendererHelper =
 			new DDMFormRendererHelper(ddmForm, createDDMFormRenderingContext());
 
 		Map<String, String> renderedDDMFormFieldsMap =
 			ddmFormFieldRendererHelper.getRenderedDDMFormFieldsMap();
-		
+
 		Assert.assertEquals(2, renderedDDMFormFieldsMap.size());
-	
-		Assert.assertEquals(renderedNameDDMFormField, 
-				renderedDDMFormFieldsMap.get("Name"));
-		
-		Assert.assertEquals(renderedContactDDMFormField, 
-				renderedDDMFormFieldsMap.get("Contact"));
+
+		Assert.assertEquals(
+			renderedNameDDMFormField, renderedDDMFormFieldsMap.get("Name"));
+		Assert.assertEquals(
+			renderedContactDDMFormField,
+			renderedDDMFormFieldsMap.get("Contact"));
 	}
 
 	@Test

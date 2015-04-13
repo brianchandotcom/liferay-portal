@@ -3,7 +3,7 @@
 
 <project>
 	<property name="import.shared" value="dynamic-data-mapping-form-renderer" />
-	
+
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />

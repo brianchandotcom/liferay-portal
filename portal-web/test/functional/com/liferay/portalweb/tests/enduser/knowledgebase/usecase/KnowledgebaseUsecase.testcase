@@ -7,11 +7,13 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Page#tearDownPG" />
-
 		<execute macro="KBFolder#tearDownCP" />
 
 		<execute macro="KBArticle#tearDownCP" />
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
 	<command name="DeleteConfiguredKBFolder" priority="4">

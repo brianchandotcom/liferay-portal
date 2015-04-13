@@ -22,9 +22,11 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Page#tearDownPG" />
+		<execute macro="BlogsEntry#tearDownCP" />
 
 		<execute macro="KBArticle#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
 	<command name="AddKBArticleContentNull" priority="5">

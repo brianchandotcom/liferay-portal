@@ -15,6 +15,7 @@
 package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.CMISRepositoryHandler;
+import com.liferay.document.library.repository.cmis.configuration.CMISRepositoryConfiguration;
 import com.liferay.document.library.repository.cmis.search.BaseCmisSearchQueryBuilder;
 import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -64,7 +65,8 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 			_repositoryLocalService.getRepository(repositoryId);
 
 		CMISRepository cmisRepository = new CMISRepository(
-			baseRepository, _cmisSearchQueryBuilder);
+			_cmisRepositoryConfiguration, baseRepository,
+			_cmisSearchQueryBuilder);
 
 		baseRepository.setCmisRepository(cmisRepository);
 
@@ -82,6 +84,12 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	protected void setCMISRepositoryConfiguration(
+		CMISRepositoryConfiguration cmisRepositoryConfiguration) {
+
+		_cmisRepositoryConfiguration = cmisRepositoryConfiguration;
 	}
 
 	protected void setCompanyLocalService(
@@ -137,6 +145,7 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 	}
 
 	private AssetEntryLocalService _assetEntryLocalService;
+	private CMISRepositoryConfiguration _cmisRepositoryConfiguration;
 	private final CMISSearchQueryBuilder _cmisSearchQueryBuilder =
 		new BaseCmisSearchQueryBuilder();
 	private CompanyLocalService _companyLocalService;

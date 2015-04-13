@@ -66,7 +66,7 @@ public class LayoutExportBackgroundTaskExecutor
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration, ExportImportDateUtil.RANGE_ALL);
+			exportImportConfiguration);
 
 		StringBundler sb = new StringBundler(4);
 

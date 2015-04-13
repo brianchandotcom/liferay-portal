@@ -60,7 +60,7 @@ public class PortletExportBackgroundTaskExecutor
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration, ExportImportDateUtil.RANGE_ALL);
+			exportImportConfiguration);
 
 		File larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
 			sourcePlid, sourceGroupId, portletId, parameterMap,

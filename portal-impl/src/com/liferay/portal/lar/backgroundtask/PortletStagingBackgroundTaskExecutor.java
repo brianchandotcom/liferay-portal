@@ -130,8 +130,7 @@ public class PortletStagingBackgroundTaskExecutor
 			long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
 			long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 			DateRange dateRange = ExportImportDateUtil.getDateRange(
-				_exportImportConfiguration,
-				ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
+				_exportImportConfiguration);
 
 			File larFile = null;
 			MissingReferences missingReferences = null;

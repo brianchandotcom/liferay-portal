@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.values.factory.impl;
+package com.liferay.dynamic.data.mapping.form.values.factory;
 
-import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
+import com.liferay.dynamic.data.mapping.form.values.factory.internal.DDMFormValuesFactoryImpl;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -54,7 +54,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 @PrepareForTest({LocaleUtil.class})
 @RunWith(PowerMockRunner.class)
-public class DDMFormValuesFactoryImplTest extends PowerMockito {
+public class DDMFormValuesFactoryTest extends PowerMockito {
 
 	@Before
 	public void setUp() {

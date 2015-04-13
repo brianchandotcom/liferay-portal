@@ -14,7 +14,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.values.query.impl.parser;
+package com.liferay.dynamic.data.mapping.form.values.query.internal.parser;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;

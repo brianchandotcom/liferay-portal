@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.values.query.impl;
+package com.liferay.dynamic.data.mapping.form.values.query;
 
-import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
-import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
-import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuerySyntaxException;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.DDMFormValuesQueryFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;

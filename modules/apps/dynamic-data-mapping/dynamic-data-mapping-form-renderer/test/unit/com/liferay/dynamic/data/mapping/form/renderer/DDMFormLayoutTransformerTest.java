@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.renderer.impl;
+package com.liferay.dynamic.data.mapping.form.renderer;
 
 import com.liferay.dynamic.data.mapping.form.renderer.internal.DDMFormLayoutTransformer;
 import com.liferay.portal.kernel.util.LocaleUtil;

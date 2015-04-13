@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.renderer.impl;
+package com.liferay.dynamic.data.mapping.form.renderer;
 
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.internal.DDMFormRendererHelper;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;

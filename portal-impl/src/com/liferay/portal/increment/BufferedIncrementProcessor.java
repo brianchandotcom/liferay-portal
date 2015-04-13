@@ -16,6 +16,7 @@ package com.liferay.portal.increment;
 
 import com.liferay.portal.kernel.concurrent.BatchablePipe;
 import com.liferay.portal.kernel.increment.Increment;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -87,10 +88,16 @@ public class BufferedIncrementProcessor {
 	@SuppressWarnings("rawtypes")
 	public void process(BufferedIncreasableEntry bufferedIncreasableEntry) {
 		if (_batchablePipe.put(bufferedIncreasableEntry)) {
-			_executorService.execute(
-				new BufferedIncrementRunnable(
-					_bufferedIncrementConfiguration, _batchablePipe,
-						_queueLengthTracker));
+			Runnable runnable = new BufferedIncrementRunnable(
+				_bufferedIncrementConfiguration, _batchablePipe,
+					_queueLengthTracker, Thread.currentThread());
+
+			if (ProxyModeThreadLocal.isForceSync()) {
+				runnable.run();
+			}
+			else {
+				_executorService.execute(runnable);
+			}
 		}
 	}
 

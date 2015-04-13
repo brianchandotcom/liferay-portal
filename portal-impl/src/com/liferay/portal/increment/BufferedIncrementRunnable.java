@@ -35,11 +35,12 @@ public class BufferedIncrementRunnable implements Runnable {
 	public BufferedIncrementRunnable(
 		BufferedIncrementConfiguration bufferedIncrementConfiguration,
 		BatchablePipe<Serializable, Increment<?>> batchablePipe,
-		AtomicInteger queueLengthTracker) {
+		AtomicInteger queueLengthTracker, Thread dispatchThread) {
 
 		_bufferedIncrementConfiguration = bufferedIncrementConfiguration;
 		_batchablePipe = batchablePipe;
 		_queueLengthTracker = queueLengthTracker;
+		_dispatchThread = dispatchThread;
 
 		if (_bufferedIncrementConfiguration.isStandbyEnabled()) {
 			_queueLengthTracker.incrementAndGet();
@@ -86,9 +87,11 @@ public class BufferedIncrementRunnable implements Runnable {
 			}
 		}
 
-		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
+		if (_dispatchThread != Thread.currentThread()) {
+			ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
+			CentralizedThreadLocal.clearShortLivedThreadLocals();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -98,6 +101,7 @@ public class BufferedIncrementRunnable implements Runnable {
 	private final BufferedIncrementConfiguration
 		_bufferedIncrementConfiguration;
 	private final long _companyId;
+	private final Thread _dispatchThread;
 	private final AtomicInteger _queueLengthTracker;
 
 }

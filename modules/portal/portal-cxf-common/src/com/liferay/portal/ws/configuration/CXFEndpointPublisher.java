@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
 public class CXFEndpointPublisher {
 
 	@Activate
-	public void activate(
+	protected void activate(
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws ConfigurationException {
 
@@ -91,12 +91,12 @@ public class CXFEndpointPublisher {
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_dependencyManager.clear();
 	}
 
 	@Modified
-	public void modified(
+	protected void modified(
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws ConfigurationException {
 

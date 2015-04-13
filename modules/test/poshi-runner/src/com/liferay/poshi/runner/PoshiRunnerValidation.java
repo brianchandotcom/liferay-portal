@@ -182,6 +182,8 @@ public class PoshiRunnerValidation {
 
 			_validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
+
+			_validateMacroContext(element, filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("selenium"))) {
 			List<String> possibleAttributeNames = Arrays.asList(
@@ -268,6 +270,20 @@ public class PoshiRunnerValidation {
 			_validateCommandElement(childElement, filePath);
 
 			_parseElements(childElement, filePath);
+		}
+	}
+
+	private static void _validateMacroContext(Element element, String filePath)
+		throws PoshiRunnerException {
+
+		String classCommandName = element.attributeValue("macro");
+
+		String commandElementKey = "macro#" + classCommandName;
+
+		if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
+			throw new PoshiRunnerException(
+				"Invalid " + classCommandName + " command\n" + filePath +
+					":" + element.attributeValue("line-number"));
 		}
 	}
 

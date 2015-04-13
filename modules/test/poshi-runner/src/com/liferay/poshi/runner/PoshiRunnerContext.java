@@ -147,6 +147,14 @@ public class PoshiRunnerContext {
 		return _rootElements.get("testcase#" + className);
 	}
 
+	public static boolean isCommandElement(String commandElementKey) {
+		if (Validator.isNotNull(_commandElements.get(commandElementKey))) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void readFiles() throws Exception {
 		_readPoshiFiles();
 		_readSeleniumFiles();

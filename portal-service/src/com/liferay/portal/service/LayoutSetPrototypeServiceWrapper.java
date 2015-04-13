@@ -65,6 +65,13 @@ public class LayoutSetPrototypeServiceWrapper
 		_layoutSetPrototypeService.deleteLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
+	@Override
+	public com.liferay.portal.model.LayoutSetPrototype fetchLayoutSetPrototype(
+		long layoutSetPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutSetPrototypeService.fetchLayoutSetPrototype(layoutSetPrototypeId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

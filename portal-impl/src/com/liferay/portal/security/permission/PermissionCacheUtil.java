@@ -60,6 +60,34 @@ public class PermissionCacheUtil {
 		_userPermissionCheckerBagPortalCache.removeAll();
 	}
 
+	public static void clearCache(long userId) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		_userPermissionCheckerBagPortalCache.remove(userId);
+
+		_userRolePortalCache.removeAll();
+		_permissionCheckerBagPortalCache.removeAll();
+		_permissionPortalCache.removeAll();
+		_resourceBlockIdsBagCache.removeAll();
+	}
+
+	public static void clearCache(long[] userIds) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		for (long userId : userIds) {
+			_userPermissionCheckerBagPortalCache.remove(userId);
+		}
+
+		_userRolePortalCache.removeAll();
+		_permissionCheckerBagPortalCache.removeAll();
+		_permissionPortalCache.removeAll();
+		_resourceBlockIdsBagCache.removeAll();
+	}
+
 	public static void clearResourceCache() {
 		if (ExportImportThreadLocal.isImportInProcess() ||
 			!PermissionThreadLocal.isFlushEnabled()) {

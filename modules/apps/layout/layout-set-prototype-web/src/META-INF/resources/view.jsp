@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layout_set_prototypes/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -22,7 +22,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <liferay-ui:error exception="<%= RequiredLayoutSetPrototypeException.class %>" message="you-cannot-delete-site-templates-that-are-used-by-a-site" />
 
-<liferay-util:include page="/html/portlet/layout_set_prototypes/toolbar.jsp" />
+<liferay-util:include page="/toolbar.jsp" />
 
 <aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
@@ -94,7 +94,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/layout_set_prototypes/layout_set_prototype_action.jsp"
+				path="/layout_set_prototype_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

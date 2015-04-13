@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layout_set_prototypes/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype");

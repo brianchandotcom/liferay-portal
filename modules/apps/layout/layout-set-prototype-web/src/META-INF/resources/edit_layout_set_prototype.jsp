@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layout_set_prototypes/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -53,7 +53,7 @@ Group group = themeDisplay.getSiteGroup();
 <liferay-ui:success key='<%= PortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
 
 <c:if test="<%= !group.isLayoutSetPrototype() %>">
-	<liferay-util:include page="/html/portlet/layout_set_prototypes/toolbar.jsp">
+	<liferay-util:include page="/toolbar.jsp">
 		<liferay-util:param name="toolbarItem" value='<%= layoutSetPrototype.isNew() ? "add" : StringPool.BLANK %>' />
 	</liferay-util:include>
 
@@ -69,7 +69,7 @@ request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", layoutS
 request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 %>
 
-<liferay-util:include page="/html/portlet/layout_set_prototypes/merge_alert.jsp" />
+<liferay-util:include page="/merge_alert.jsp" />
 
 <portlet:actionURL name="updateLayoutSetPrototype" var="updateLayoutSetPrototypeURL" />
 

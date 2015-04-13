@@ -16,12 +16,19 @@ package com.liferay.jasper.jspc;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import java.util.Iterator;
 
 import org.apache.jasper.JasperException;
 import org.apache.jasper.compiler.JspConfig;
+import org.apache.jasper.compiler.TldLocation;
+import org.apache.jasper.compiler.TldLocationsCache;
 import org.apache.jasper.compiler.WebXml;
+import org.apache.jasper.servlet.JspCServletContext;
 import org.apache.tomcat.util.scan.Constants;
 
 /**
@@ -65,21 +72,60 @@ public class JspC extends org.apache.jasper.JspC {
 	protected void initServletContext() {
 		super.initServletContext();
 
-		try {
-			WebXml webXml = new WebXml(context);
+		if (Boolean.getBoolean("module.web")) {
+			final String portalDir = System.getProperty("portal.dir");
 
-			if (webXml.getInputSource() != null) {
-				return;
+			if ((portalDir == null) || portalDir.isEmpty()) {
+				throw new RuntimeException(
+					"Portal dir must be specified to compile jsp for module " +
+						"web");
+			}
+
+			try {
+				tldLocationsCache = new TldLocationsCache(
+					new JspCServletContext(
+						new PrintWriter(System.out),
+						new URL("file://" + portalDir + "/"))) {
+
+					@Override
+					public TldLocation getLocation(String uri)
+						throws JasperException {
+
+						TldLocation tldLocation = super.getLocation(uri);
+
+						String name = tldLocation.getName();
+
+						if (name.startsWith("/WEB-INF/tld/")) {
+							tldLocation = new TldLocation(
+								"file://" + portalDir + name);
+						}
+
+						return tldLocation;
+					}
+
+				};
+			}
+			catch (MalformedURLException murle) {
+				throw new RuntimeException(murle);
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		else {
+			try {
+				WebXml webXml = new WebXml(context);
+
+				if (webXml.getInputSource() != null) {
+					return;
+				}
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+
+			context.setAttribute(
+				Constants.MERGED_WEB_XML, "<web-app version=\"2.4\" />");
+
+			jspConfig = new JspConfig(context);
 		}
-
-		context.setAttribute(
-			Constants.MERGED_WEB_XML, "<web-app version=\"2.4\" />");
-
-		jspConfig = new JspConfig(context);
 	}
 
 }

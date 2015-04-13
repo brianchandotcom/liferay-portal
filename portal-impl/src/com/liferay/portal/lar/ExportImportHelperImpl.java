@@ -1305,24 +1305,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				continue;
 			}
 
-			String reference = StringPool.BLANK;
-
-			if (entityStagedModel instanceof JournalArticle) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.put("groupId", importedFileEntry.getGroupId());
-				jsonObject.put("uuid", importedFileEntry.getUuid());
-
-				reference = jsonObject.toString();
-			}
-			else {
-				reference = DLUtil.getPreviewURL(
-					importedFileEntry, importedFileEntry.getFileVersion(), null,
-					StringPool.BLANK, false, false);
-			}
+			String url = DLUtil.getPreviewURL(
+				importedFileEntry, importedFileEntry.getFileVersion(), null,
+				StringPool.BLANK, false, false);
 
 			content = StringUtil.replace(
-				content, "[$dl-reference=" + path + "$]", reference);
+				content, "[$dl-reference=" + path + "$]", url);
 		}
 
 		return content;

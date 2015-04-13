@@ -358,8 +358,7 @@ public class JournalArticleLocalServiceImpl
 		String title = titleMap.get(locale);
 
 		content = format(
-			user, groupId, articleId, version, false, content, ddmStructureKey,
-			images);
+			user, groupId, articleId, version, false, content, images);
 
 		article.setUuid(serviceContext.getUuid());
 		article.setResourcePrimKey(resourcePrimKey);
@@ -5194,7 +5193,7 @@ public class JournalArticleLocalServiceImpl
 
 		content = format(
 			user, groupId, articleId, article.getVersion(), addNewVersion,
-			content, ddmStructureKey, images);
+			content, images);
 
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setFolderId(folderId);
@@ -5481,8 +5480,7 @@ public class JournalArticleLocalServiceImpl
 
 		content = format(
 			user, groupId, articleId, article.getVersion(),
-			!oldArticle.isDraft(), content, oldArticle.getDDMStructureKey(),
-			images);
+			!oldArticle.isDraft(), content, images);
 
 		article.setContent(content);
 
@@ -6420,7 +6418,7 @@ public class JournalArticleLocalServiceImpl
 
 	protected String format(
 			User user, long groupId, String articleId, double version,
-			boolean incrementVersion, String content, String ddmStructureKey,
+			boolean incrementVersion, String content,
 			Map<String, byte[]> images)
 		throws PortalException {
 
@@ -6446,6 +6444,10 @@ public class JournalArticleLocalServiceImpl
 
 	protected void formatDocumentLibrary(Element dynamicElementElement)
 		throws PortalException {
+
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
 
 		for (Element dynamicContentElement :
 				dynamicElementElement.elements("dynamic-content")) {

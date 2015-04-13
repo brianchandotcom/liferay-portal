@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.keywords=Tags Compiler",
 		"javax.portlet.info.short-title=Tags Compiler",
 		"javax.portlet.info.title=Tags Compiler",
+		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.supported-public-render-parameter=tags",
 		"javax.portlet.supports.mime-type=text/html"
 	},

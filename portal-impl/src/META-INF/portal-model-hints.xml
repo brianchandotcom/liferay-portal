@@ -1263,7 +1263,9 @@
 		<field name="leftCategoryId" type="long" />
 		<field name="rightCategoryId" type="long" />
 		<field name="name" type="String" />
-		<field name="title" type="String" localized="true" />
+		<field name="title" type="String" localized="true">
+			<validator name="required" />
+		</field>
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">350</hint>
@@ -1341,7 +1343,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="assetCount" type="int" />
 	</model>
 	<model name="com.liferay.portlet.asset.model.AssetTagStats">
@@ -1360,7 +1364,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
-		<field name="title" type="String" localized="true" />
+		<field name="title" type="String" localized="true">
+			<validator name="required" />
+		</field>
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">350</hint>

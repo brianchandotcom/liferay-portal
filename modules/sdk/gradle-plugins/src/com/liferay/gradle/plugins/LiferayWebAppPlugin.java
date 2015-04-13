@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.BuildWsdlTask;
+import com.liferay.gradle.plugins.tasks.BuildXsdTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -143,8 +144,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 				@Override
 				public void execute(Project project) {
 					File serviceJarFile = new File(
-						getWebAppDir(project),
-						"WEB-INF/lib/" + project.getName() + "-service.jar");
+						getLibDir(project), project.getName() + "-service.jar");
 
 					if (serviceJarFile.exists()) {
 						GradleUtil.addDependency(
@@ -199,21 +199,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskBuildWsdlDestinationDir(
-		BuildWsdlTask buildWsdlTask) {
-
-		if (buildWsdlTask.getDestinationDir() != null) {
-			return;
-		}
-
-		Project project = buildWsdlTask.getProject();
-
-		File destinationDir = new File(getWebAppDir(project), "WEB-INF/lib");
-
-		buildWsdlTask.setDestinationDir(destinationDir);
-	}
-
-	@Override
 	protected void configureTaskBuildWsdlRootDirs(BuildWsdlTask buildWsdlTask) {
 		FileCollection rootDirs = buildWsdlTask.getRootDirs();
 
@@ -226,6 +211,18 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		File rootDir = new File(getWebAppDir(project), "WEB-INF/wsdl");
 
 		buildWsdlTask.rootDirs(rootDir);
+	}
+
+	protected void configureTaskBuildXsdRootDir(BuildXsdTask buildXsdTask) {
+		if (buildXsdTask.getRootDir() != null) {
+			return;
+		}
+
+		Project project = buildXsdTask.getProject();
+
+		File rootDir = new File(getWebAppDir(project), "WEB-INF/xsd");
+
+		buildXsdTask.setRootDir(rootDir);
 	}
 
 	protected void configureTaskDeploy(
@@ -534,6 +531,11 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 			project, WarPluginConvention.class);
 
 		warPluginConvention.setWebAppDirName("docroot");
+	}
+
+	@Override
+	protected File getLibDir(Project project) {
+		return new File(getWebAppDir(project), "WEB-INF/lib");
 	}
 
 	protected File getWebAppDir(Project project) {

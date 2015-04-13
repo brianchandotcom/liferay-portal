@@ -572,7 +572,7 @@ public class BookmarksEntryLocalServiceImpl
 			entry.getEntryId(), entry.getUuid(), 0, assetCategoryIds,
 			assetTagNames, true, null, null, null, ContentTypes.TEXT_PLAIN,
 			entry.getName(), entry.getDescription(), null, entry.getUrl(), null,
-			0, 0, null, false);
+			0, 0, null);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

@@ -498,7 +498,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				recordVersion.getRecordVersionId(), record.getUuid(), 0,
 				assetCategoryIds, assetTagNames, false, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, null, false);
+				null, 0, 0, null);
 		}
 		else {
 			assetEntryLocalService.updateEntry(
@@ -507,7 +507,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				record.getRecordId(), record.getUuid(), 0, assetCategoryIds,
 				assetTagNames, visible, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, null, false);
+				null, 0, 0, null);
 		}
 	}
 

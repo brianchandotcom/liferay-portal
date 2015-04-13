@@ -2438,7 +2438,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getUuid(), 0, assetCategoryIds, assetTagNames, false, null,
 			null, null, ContentTypes.TEXT_HTML,
 			layout.getName(LocaleUtil.getDefault()), null, null, null, null, 0,
-			0, null, false);
+			0, null);
 	}
 
 	/**

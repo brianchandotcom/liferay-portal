@@ -124,7 +124,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				MBThread.class.getName(), thread.getThreadId(),
 				thread.getUuid(), 0, new long[0], new String[0], false, null,
 				null, null, null, String.valueOf(thread.getRootMessageId()),
-				null, null, null, null, 0, 0, null, false);
+				null, null, null, null, 0, 0, null);
 		}
 
 		return thread;

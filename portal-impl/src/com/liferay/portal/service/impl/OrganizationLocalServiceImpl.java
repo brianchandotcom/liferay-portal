@@ -1727,7 +1727,7 @@ public class OrganizationLocalServiceImpl
 			Organization.class.getName(), organization.getOrganizationId(),
 			organization.getUuid(), 0, assetCategoryIds, assetTagNames, false,
 			null, null, null, null, organization.getName(), StringPool.BLANK,
-			null, null, null, 0, 0, null, false);
+			null, null, null, 0, 0, null);
 	}
 
 	/**

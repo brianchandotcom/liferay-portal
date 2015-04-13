@@ -263,4 +263,42 @@ public class SetUtil {
 		return intersect(fromArray(array1), fromArray(array2));
 	}
 
+	public static <T> Set<T> symmetricDifference(
+		Collection<T> collection1, Collection<T> collection2) {
+
+		if (collection1.isEmpty() || collection2.isEmpty()) {
+			return Collections.emptySet();
+		}
+
+		Set<T> set1 = null;
+
+		if (collection1 instanceof Set) {
+			set1 = (Set<T>)collection1;
+		}
+		else {
+			set1 = new HashSet<>(collection1);
+		}
+
+		Set<T> set2 = null;
+
+		if (collection2 instanceof Set) {
+			set2 = (Set<T>)collection2;
+		}
+		else {
+			set2 = new HashSet<>(collection2);
+		}
+
+		Set<T> intersection = intersect(set1, set2);
+
+		set1.addAll(set2);
+
+		set1.removeAll(intersection);
+
+		return set1;
+	}
+
+	public static Set<Long> symmetricDifference(long[] array1, long[] array2) {
+		return symmetricDifference(fromArray(array1), fromArray(array2));
+	}
+
 }

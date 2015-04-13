@@ -410,7 +410,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildWsdlDestinationDir(buildWsdlTask);
 		configureTaskBuildWsdlRootDirs(buildWsdlTask);
 
-		buildWsdlTask.createTasks();
+		buildWsdlTask.addTasks();
 
 		TaskOutputs taskOutputs = buildWsdlTask.getOutputs();
 

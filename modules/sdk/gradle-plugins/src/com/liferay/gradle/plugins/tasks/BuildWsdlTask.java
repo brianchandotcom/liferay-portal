@@ -68,11 +68,11 @@ public class BuildWsdlTask extends DefaultTask {
 			});
 	}
 
-	public void createTasks() {
+	public void addTasks() {
 		Iterable<File> wsdlFiles = getWsdlFiles();
 
 		for (File wsdlFile : wsdlFiles) {
-			createTasks(wsdlFile);
+			addTasks(wsdlFile);
 		}
 	}
 
@@ -141,7 +141,7 @@ public class BuildWsdlTask extends DefaultTask {
 			_project, _CONFIGURATION_NAME, "javax.mail", "mail", "1.4");
 	}
 
-	protected Task createTaskCompile(
+	protected Task addTaskCompile(
 		File wsdlFile, File tmpDir, Task generateTask) {
 
 		String taskName = GradleUtil.getTaskName(
@@ -161,7 +161,7 @@ public class BuildWsdlTask extends DefaultTask {
 		return javaCompile;
 	}
 
-	protected Task createTaskGenerate(File wsdlFile, File tmpDir) {
+	protected Task addTaskGenerate(File wsdlFile, File tmpDir) {
 		String taskName = GradleUtil.getTaskName(
 			LiferayJavaPlugin.BUILD_WSDL_TASK_NAME + "Generate", wsdlFile);
 
@@ -187,7 +187,7 @@ public class BuildWsdlTask extends DefaultTask {
 		return javaExec;
 	}
 
-	protected Task createTaskJar(
+	protected Task addTaskJar(
 		File wsdlFile, Task compileTask, Task generateTask) {
 
 		String taskName = GradleUtil.getTaskName(
@@ -210,17 +210,17 @@ public class BuildWsdlTask extends DefaultTask {
 		return jar;
 	}
 
-	protected void createTasks(File wsdlFile) {
+	protected void addTasks(File wsdlFile) {
 		String tmpDirName =
 			"build-wsdl/" + FileUtil.stripExtension(wsdlFile.getName());
 
 		File tmpDir = new File(_project.getBuildDir(), tmpDirName);
 
-		Task generateTask = createTaskGenerate(wsdlFile, tmpDir);
+		Task generateTask = addTaskGenerate(wsdlFile, tmpDir);
 
-		Task compileTask = createTaskCompile(wsdlFile, tmpDir, generateTask);
+		Task compileTask = addTaskCompile(wsdlFile, tmpDir, generateTask);
 
-		Task jarTask = createTaskJar(wsdlFile, compileTask, generateTask);
+		Task jarTask = addTaskJar(wsdlFile, compileTask, generateTask);
 
 		TaskOutputs taskOutputs = getOutputs();
 

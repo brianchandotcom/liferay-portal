@@ -22,6 +22,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.jasper.JasperException;
 import org.apache.jasper.compiler.JspConfig;
@@ -37,6 +39,10 @@ import org.apache.tomcat.util.scan.Constants;
 public class JspC extends org.apache.jasper.JspC {
 
 	public static void main(String[] args) {
+		Logger logger = Logger.getLogger(WebXml.class.getName());
+
+		logger.setLevel(Level.SEVERE);
+
 		JspC jspc = new JspC();
 
 		try {

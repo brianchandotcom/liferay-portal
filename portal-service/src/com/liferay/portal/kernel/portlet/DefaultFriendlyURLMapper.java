@@ -322,6 +322,14 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		return PortletConstants.assemblePortletId(getPortletId(), instanceId);
 	}
 
+	/**
+	 * Returns <code>true</code> if all the route parameters are public render
+	 * parameters.
+	 *
+	 * @param  routeParameters the parameter map.
+	 * @return <code>true</code> if all the route parameters are public render
+	 *         parameters; <code>false</code> otherwise
+	 */
 	protected boolean isAllPublicRenderParameters(
 		Map<String, String> routeParameters) {
 

@@ -1234,6 +1234,11 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	@Override
+	public boolean isInfiniteStock() {
+		return _shoppingItem.isInfiniteStock();
+	}
+
+	@Override
 	public void setFieldsQuantitiesArray(
 		java.lang.String[] fieldsQuantitiesArray) {
 		_shoppingItem.setFieldsQuantitiesArray(fieldsQuantitiesArray);

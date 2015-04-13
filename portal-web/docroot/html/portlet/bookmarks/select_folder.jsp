@@ -102,7 +102,7 @@ if (folder != null) {
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				data.put("folderid", curFolder.getFolderId());
-				data.put("name", HtmlUtil.escapeAttribute(curFolder.getName()));
+				data.put("name", curFolder.getName());
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
@@ -124,7 +124,7 @@ if (folder != null) {
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("folderid", folderId);
-			data.put("name", HtmlUtil.escapeAttribute(folderName));
+			data.put("name", folderName);
 			%>
 
 			<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-folder" />

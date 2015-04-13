@@ -558,7 +558,7 @@ public class DDMImpl implements DDM {
 			UploadRequest uploadRequest, String fieldNameValue)
 		throws Exception {
 
-		File file = uploadRequest.getFile(fieldNameValue + "File");
+		File file = uploadRequest.getFile(fieldNameValue);
 
 		byte[] bytes = FileUtil.getBytes(file);
 
@@ -583,24 +583,23 @@ public class DDMImpl implements DDM {
 	protected String getImageFieldValue(
 		UploadRequest uploadRequest, String fieldNameValue) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("alt", StringPool.BLANK);
-		jsonObject.put("data", StringPool.BLANK);
-
 		try {
 			byte[] bytes = getImageBytes(uploadRequest, fieldNameValue);
 
 			if (ArrayUtil.isNotEmpty(bytes)) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 				jsonObject.put(
 					"alt", uploadRequest.getParameter(fieldNameValue + "Alt"));
 				jsonObject.put("data", UnicodeFormatter.bytesToHex(bytes));
+
+				return jsonObject.toString();
 			}
 		}
 		catch (Exception e) {
 		}
 
-		return jsonObject.toString();
+		return StringPool.BLANK;
 	}
 
 }

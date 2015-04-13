@@ -19,10 +19,14 @@ import com.liferay.portal.image.DatabaseHook;
 import com.liferay.portal.image.FileSystemHook;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.Hook;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -42,12 +46,14 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
@@ -59,6 +65,7 @@ import java.util.Map;
 /**
  * @author Sergio González
  * @author Miguel Pastor
+ * @author Vilmos Papp
  */
 public class UpgradeImageGallery extends UpgradeProcess {
 
@@ -490,6 +497,39 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		}
 	}
 
+	protected byte[] getDatabaseImageAsBytes(Image image) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select text_ from Image where imageId = ?");
+
+			ps.setLong(1, image.getImageId());
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				String getTextObj = rs.getString("text_");
+
+				return (byte[])Base64.stringToObject(getTextObj);
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Image " + image.getImageId() + " is not in the database");
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return new byte[0];
+	}
+
 	protected long getDefaultUserId(long companyId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -516,6 +556,31 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	protected byte[] getHookImageAsBytes(Image image)
+		throws IOException, PortalException, SQLException, SystemException {
+
+		InputStream is = getHookImageAsStream(image);
+
+		return FileUtil.getBytes(is);
+	}
+
+	protected InputStream getHookImageAsStream(Image image)
+		throws PortalException, SQLException, SystemException {
+
+		InputStream is = null;
+
+		if (_sourceHook instanceof DatabaseHook) {
+			byte[] bytes = getDatabaseImageAsBytes(image);
+
+			is = new UnsyncByteArrayInputStream(bytes);
+		}
+		else {
+			is = _sourceHook.getImageAsStream(image);
+		}
+
+		return is;
 	}
 
 	protected Object[] getImage(long imageId) throws Exception {
@@ -565,9 +630,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			long repositoryId, long companyId, String name, Image image)
 		throws Exception {
 
-		InputStream is = _sourceHook.getImageAsStream(image);
-
-		byte[] bytes = FileUtil.getBytes(is);
+		byte[] bytes = getHookImageAsBytes(image);
 
 		if (name == null) {
 			name = image.getImageId() + StringPool.PERIOD + image.getType();
@@ -644,8 +707,6 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ResultSet rs = null;
 
 			try {
-				InputStream is = _sourceHook.getImageAsStream(thumbnailImage);
-
 				con = DataAccess.getUpgradeOptimizedConnection();
 
 				ps = con.prepareStatement(
@@ -656,6 +717,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 				if (rs.next()) {
 					long fileVersionId = rs.getLong(1);
+
+					InputStream is = getHookImageAsStream(thumbnailImage);
 
 					ImageProcessorUtil.storeThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,

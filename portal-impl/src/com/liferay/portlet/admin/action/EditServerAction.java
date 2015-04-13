@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.mail.Account;
 import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -415,7 +416,7 @@ public class EditServerAction extends PortletAction {
 			for (String searchEngineId : searchEngineIds) {
 				for (long companyId : companyIds) {
 					SearchEngineUtil.deletePortletDocuments(
-						searchEngineId, companyId, portletId);
+						searchEngineId, companyId, portletId, true);
 				}
 			}
 
@@ -517,7 +518,9 @@ public class EditServerAction extends PortletAction {
 			SessionErrors.add(
 				actionRequest, ScriptingException.class.getName(), se);
 
-			_log.error(se.getMessage());
+			Log log = SanitizerLogWrapper.allowCRLF(_log);
+
+			log.error(se.getMessage());
 		}
 	}
 
@@ -608,12 +611,16 @@ public class EditServerAction extends PortletAction {
 
 	protected void threadDump() throws Exception {
 		if (_log.isInfoEnabled()) {
-			_log.info(ThreadUtil.threadDump());
+			Log log = SanitizerLogWrapper.allowCRLF(_log);
+
+			log.info(ThreadUtil.threadDump());
 		}
 		else {
+			Class<?> clazz = getClass();
+
 			_log.error(
 				"Thread dumps require the log level to be at least INFO for " +
-					getClass().getName());
+					clazz.getName());
 		}
 	}
 

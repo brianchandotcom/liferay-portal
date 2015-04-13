@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -809,15 +808,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 
 		BooleanQuery.setMaxClauseCount(_LUCENE_BOOLEAN_QUERY_CLAUSE_MAX_SIZE);
-
-		if (StringUtil.equalsIgnoreCase(
-				Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
-
-			_protocol = Http.HTTPS;
-		}
-		else {
-			_protocol = Http.HTTP;
-		}
 	}
 
 	private ObjectValuePair<String, URL>
@@ -858,6 +848,19 @@ public class LuceneHelperImpl implements LuceneHelper {
 				throw new Exception(sb.toString());
 			}
 
+			String protocol = clusterNode.getPortalProtocol();
+
+			if (Validator.isNull(protocol)) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Cluster node protocol is empty. The protocol is ");
+				sb.append("set by the first request or configured in ");
+				sb.append("portal.properties by the property ");
+				sb.append("\"portal.instance.protocol\"");
+
+				throw new Exception(sb.toString());
+			}
+
 			InetAddress inetAddress = clusterNode.getInetAddress();
 
 			String fileName = PortalUtil.getPathContext();
@@ -869,7 +872,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 			fileName = fileName.concat("lucene/dump");
 
 			URL url = new URL(
-				_protocol, inetAddress.getHostAddress(), port, fileName);
+				protocol, inetAddress.getHostAddress(), port, fileName);
 
 			String transientToken = (String)clusterNodeResponse.getResult();
 
@@ -1004,7 +1007,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 		new ConcurrentHashMap<Long, IndexAccessor>();
 	private LoadIndexClusterEventListener _loadIndexClusterEventListener;
 	private ThreadPoolExecutor _luceneIndexThreadPoolExecutor;
-	private String _protocol;
 	private Version _version;
 
 	private static class ShutdownSyncJob implements Runnable {

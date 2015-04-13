@@ -118,6 +118,18 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
+	public boolean isVisible(long classPK, int status) throws Exception {
+		return true;
+	}
+
+	@Override
+	public boolean isVisibleRelatedEntry(long classPK, int status)
+		throws Exception {
+
+		return true;
+	}
+
+	@Override
 	public void postProcessContextQuery(
 		BooleanQuery contextQuery, SearchContext searchContext) {
 	}

@@ -12,6 +12,8 @@ AUI.add(
 
 		var FOLDER_ROWS_PER_PAGE = 'folderRowsPerPage';
 
+		var ITEMS_PER_PAGE = 'itemsPerPage';
+
 		var PAIR_SEPARATOR = History.PAIR_SEPARATOR;
 
 		var SEARCH_TYPE = 'searchType';
@@ -154,6 +156,7 @@ AUI.add(
 								boundingBox: instance.get('entryPaginationContainer'),
 								circular: false,
 								itemsPerPage: entryRowsPerPage,
+								itemsPerPageList: instance.get('entryRowsPerPageOptions'),
 								namespace: instance.NS,
 								page: entryPage,
 								results: entriesTotal,
@@ -183,6 +186,7 @@ AUI.add(
 								boundingBox: instance.get('folderPaginationContainer'),
 								circular: false,
 								itemsPerPage: folderRowsPerPage,
+								itemsPerPageList: instance.get('folderRowsPerPageOptions'),
 								namespace: instance.NS,
 								page: folderPage,
 								results: foldersTotal,
@@ -285,13 +289,10 @@ AUI.add(
 						if (A.instanceOf(pagination, Liferay.Pagination)) {
 							var state = paginationData.state;
 
-							pagination.set('results', state.total);
 							pagination.set('total', instance._getTotalPages(state.total, state.rowsPerPage));
 							pagination.set('visible', (state.total > state.rowsPerPage));
 
 							pagination.setState(state);
-
-							pagination._syncResults();
 						}
 					},
 
@@ -379,9 +380,9 @@ AUI.add(
 
 						var customParams = {};
 
-						var entryRowsPerPage = instance.get(ENTRY_ROWS_PER_PAGE);
+						var entryRowsPerPage = instance._entryPagination.get(ITEMS_PER_PAGE);
 
-						var folderRowsPerPage = instance.get(FOLDER_ROWS_PER_PAGE);
+						var folderRowsPerPage = instance._folderPagination.get(ITEMS_PER_PAGE);
 
 						if (resetPagination) {
 							customParams[instance.ns(STR_ENTRY_START)] = 0;

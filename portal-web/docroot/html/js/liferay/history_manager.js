@@ -27,7 +27,7 @@ AUI.add(
 		HistoryManager.after(
 			'change',
 			function(event) {
-				if (event.src === HistoryManager.SRC_HASH || event.src === HistoryManager.SRC_POPSTATE) {
+				if ((event.src === HistoryManager.SRC_HASH || event.src === HistoryManager.SRC_POPSTATE) && !A.Object.isEmpty(event.changed)) {
 					HistoryManager.fire(EVENT_STATE_CHANGE, event);
 				}
 			}

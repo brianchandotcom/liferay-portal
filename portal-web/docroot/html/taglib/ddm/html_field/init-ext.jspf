@@ -23,6 +23,7 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ddm_init-ext");
 
 String fieldsDisplayInputName = fieldsNamespace + "_fieldsDisplay";
+String fieldsDisplayInputId = randomNamespace + fieldsDisplayInputName;
 
 String mode = null;
 

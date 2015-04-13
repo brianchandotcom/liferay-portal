@@ -191,7 +191,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							}
 							%>
 
-							<img alt="" border="no" class="thumbnail" src="<%= thumbnailSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
+							<img alt="<liferay-ui:message key="thumbnail" />" border="no" class="thumbnail" src="<%= thumbnailSrc %>" style="max-height: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT %>px; max-width: <%= PropsValues.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH %>px;" />
 						</span>
 
 						<span class="user-date">
@@ -255,6 +255,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					<div>
 
 						<%
+						String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview_previewId") + StringPool.UNDERLINE;
+
 						int previewFileCount = 0;
 						String previewFileURL = null;
 						String[] previewFileURLs = null;
@@ -316,6 +318,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							}
 						}
 
+						request.setAttribute("view_file_entry.jsp-randomNamespace", randomNamespace);
+
 						request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(hasAudio));
 						request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(hasVideo));
 
@@ -341,15 +345,15 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							<c:otherwise>
 								<c:choose>
 									<c:when test="<%= hasAudio %>">
-										<div class="lfr-preview-audio" id="<portlet:namespace />previewFile">
-											<div class="lfr-preview-audio-content" id="<portlet:namespace />previewFileContent"></div>
+										<div class="lfr-preview-audio" id="<portlet:namespace /><%= randomNamespace %>previewFile">
+											<div class="lfr-preview-audio-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
 										</div>
 
 										<liferay-util:include page="/html/portlet/document_library/player.jsp" />
 									</c:when>
 									<c:when test="<%= hasImages %>">
-										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
-											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
+										<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace /><%= randomNamespace %>previewFile">
+											<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
 												<div class="lfr-preview-file-image-current-column">
 													<div class="lfr-preview-file-image-container">
 														<img class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
@@ -359,10 +363,10 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 										</div>
 									</c:when>
 									<c:when test="<%= hasVideo %>">
-										<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
+										<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace /><%= randomNamespace %>previewFile">
 											<div class="lfr-preview-file-content lfr-preview-video-content">
 												<div class="lfr-preview-file-video-current-column">
-													<div id="<portlet:namespace />previewFileContent"></div>
+													<div id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
 												</div>
 											</div>
 										</div>
@@ -370,22 +374,22 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 										<liferay-util:include page="/html/portlet/document_library/player.jsp" />
 									</c:when>
 									<c:otherwise>
-										<div class="lfr-preview-file" id="<portlet:namespace />previewFile">
-											<div class="lfr-preview-file-content" id="<portlet:namespace />previewFileContent">
+										<div class="lfr-preview-file" id="<portlet:namespace /><%= randomNamespace %>previewFile">
+											<div class="lfr-preview-file-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
 												<div class="lfr-preview-file-image-current-column">
 													<div class="lfr-preview-file-image-container">
-														<img class="lfr-preview-file-image-current" id="<portlet:namespace />previewFileImage" src="<%= previewFileURL + "1" %>" />
+														<img class="lfr-preview-file-image-current" id="<portlet:namespace /><%= randomNamespace %>previewFileImage" src="<%= previewFileURL + "1" %>" />
 													</div>
-													<span class="lfr-preview-file-actions hide" id="<portlet:namespace />previewFileActions">
-														<span class="lfr-preview-file-toolbar" id="<portlet:namespace />previewToolbar"></span>
+													<span class="lfr-preview-file-actions hide" id="<portlet:namespace /><%= randomNamespace %>previewFileActions">
+														<span class="lfr-preview-file-toolbar" id="<portlet:namespace /><%= randomNamespace %>previewToolbar"></span>
 
 														<span class="lfr-preview-file-info">
-															<span class="lfr-preview-file-index" id="<portlet:namespace />previewFileIndex">1</span> <liferay-ui:message key="of" /> <span class="lfr-preview-file-count"><%= previewFileCount %></span>
+															<span class="lfr-preview-file-index" id="<portlet:namespace /><%= randomNamespace %>previewFileIndex">1</span> <liferay-ui:message key="of" /> <span class="lfr-preview-file-count"><%= previewFileCount %></span>
 														</span>
 													</span>
 												</div>
 
-												<div class="lfr-preview-file-images" id="<portlet:namespace />previewImagesContent">
+												<div class="lfr-preview-file-images" id="<portlet:namespace /><%= randomNamespace %>previewImagesContent">
 													<div class="lfr-preview-file-images-content"></div>
 												</div>
 											</div>
@@ -394,15 +398,15 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 										<aui:script use="liferay-preview">
 											new Liferay.Preview(
 												{
-													actionContent: '#<portlet:namespace />previewFileActions',
+													actionContent: '#<portlet:namespace /><%= randomNamespace %>previewFileActions',
 													baseImageURL: '<%= previewFileURL %>',
-													boundingBox: '#<portlet:namespace />previewFile',
-													contentBox: '#<portlet:namespace />previewFileContent',
-													currentPreviewImage: '#<portlet:namespace />previewFileImage',
-													imageListContent: '#<portlet:namespace />previewImagesContent',
+													boundingBox: '#<portlet:namespace /><%= randomNamespace %>previewFile',
+													contentBox: '#<portlet:namespace /><%= randomNamespace %>previewFileContent',
+													currentPreviewImage: '#<portlet:namespace /><%= randomNamespace %>previewFileImage',
+													imageListContent: '#<portlet:namespace /><%= randomNamespace %>previewImagesContent',
 													maxIndex: <%= previewFileCount %>,
-													previewFileIndexNode: '#<portlet:namespace />previewFileIndex',
-													toolbar: '#<portlet:namespace />previewToolbar'
+													previewFileIndexNode: '#<portlet:namespace /><%= randomNamespace %>previewFileIndex',
+													toolbar: '#<portlet:namespace /><%= randomNamespace %>previewToolbar'
 												}
 											).render();
 										</aui:script>

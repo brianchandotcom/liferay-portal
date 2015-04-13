@@ -26,6 +26,8 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 
 ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
+searchContainer.setEmptyResultsMessage("no-web-content-was-found-that-matched-the-specified-filters");
+
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
 %>
 

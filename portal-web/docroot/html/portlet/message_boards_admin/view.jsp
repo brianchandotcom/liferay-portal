@@ -260,11 +260,11 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 								if ((threadPriority != null) && (thread.getPriority() > 0)) {
 									buffer.append("<img class=\"thread-priority\" alt=\"");
-									buffer.append(threadPriority[0]);
+									buffer.append(HtmlUtil.escapeAttribute(threadPriority[0]));
 									buffer.append("\" src=\"");
-									buffer.append(threadPriority[1]);
+									buffer.append(HtmlUtil.escapeAttribute(threadPriority[1]));
 									buffer.append("\" title=\"");
-									buffer.append(threadPriority[0]);
+									buffer.append(HtmlUtil.escapeAttribute(threadPriority[0]));
 									buffer.append("\" />");
 								}
 
@@ -482,11 +482,11 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 						if ((threadPriority != null) && (thread.getPriority() > 0)) {
 							buffer.append("<img class=\"thread-priority\" alt=\"");
-							buffer.append(threadPriority[0]);
+							buffer.append(HtmlUtil.escapeAttribute(threadPriority[0]));
 							buffer.append("\" src=\"");
-							buffer.append(threadPriority[1]);
+							buffer.append(HtmlUtil.escapeAttribute(threadPriority[1]));
 							buffer.append("\" title=\"");
-							buffer.append(threadPriority[0]);
+							buffer.append(HtmlUtil.escapeAttribute(threadPriority[0]));
 							buffer.append("\" />");
 						}
 

@@ -151,6 +151,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>0</render-weight>
+		<header-portlet-css>/html/portlet/currency_converter/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-currency-converter</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -283,6 +284,7 @@
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/polls/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-polls</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>26</portlet-name>
@@ -612,9 +614,6 @@
 		<struts-path>polls_display</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<portlet-data-handler-class>com.liferay.portlet.polls.lar.PollsDisplayPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.polls.lar.PollsChoiceStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.polls.lar.PollsQuestionStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.polls.lar.PollsVoteStagedModelDataHandler</staged-model-data-handler-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<instanceable>true</instanceable>
@@ -667,6 +666,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/recent_documents/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-recent-documents</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -1080,6 +1080,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
+		<header-portlet-css>/html/portlet/activities/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-activities</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -1093,7 +1094,7 @@
 		<instanceable>true</instanceable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
+		<render-weight>1</render-weight>
 		<css-class-wrapper>portlet-nested-portlets</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -1361,7 +1362,7 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>my</control-panel-entry-category>
 		<control-panel-entry-weight>2.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.mypages.MyPagesControlPanelEntry</control-panel-entry-class>
+		<control-panel-entry-class>com.liferay.portlet.grouppages.GroupPagesControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
@@ -1450,6 +1451,8 @@
 		<portlet-name>147</portlet-name>
 		<icon>/html/icons/asset_category_admin.png</icon>
 		<struts-path>asset_category_admin</struts-path>
+		<indexer-class>com.liferay.portlet.asset.util.AssetCategoryIndexer</indexer-class>
+		<indexer-class>com.liferay.portlet.asset.util.AssetVocabularyIndexer</indexer-class>
 		<staged-model-data-handler-class>com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
@@ -1731,7 +1734,7 @@
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>refererPortletName,refererWebDAVToken,scopeTitle,showGlobalScope,showManageTemplates,showToolbar</autopropagated-parameters>
+		<autopropagated-parameters>refererPortletName,refererWebDAVToken,scopeTitle,showBackURL,showGlobalScope,showManageTemplates,showToolbar</autopropagated-parameters>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
@@ -1747,6 +1750,7 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLRecordSetStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLRecordStagedModelDataHandler</staged-model-data-handler-class>
 		<template-handler>com.liferay.portlet.dynamicdatalists.template.DDLTemplateHandler</template-handler>
 		<webdav-storage-token>dynamic_data_lists</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.dynamicdatalists.webdav.DDLWebDAVStorageImpl</webdav-storage-class>
@@ -1851,9 +1855,11 @@
 	<portlet>
 		<portlet-name>175</portlet-name>
 		<icon>/html/icons/asset_publisher.png</icon>
+		<struts-path>related_assets</struts-path>
 		<parent-struts-path>asset_publisher</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.assetpublisher.lar.AssetPublisherPortletDataHandler</portlet-data-handler-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<instanceable>true</instanceable>

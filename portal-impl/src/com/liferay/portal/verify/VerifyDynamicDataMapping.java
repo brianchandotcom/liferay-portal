@@ -34,9 +34,12 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -242,6 +245,26 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		return jsonObject.toString();
 	}
 
+	protected long getUserId(AuditedModel auditedModel) throws Exception {
+		User user = UserLocalServiceUtil.fetchUser(auditedModel.getUserId());
+
+		if (user != null) {
+			return user.getUserId();
+		}
+
+		User defaultUser = UserLocalServiceUtil.getDefaultUser(
+			auditedModel.getCompanyId());
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Using default user " + defaultUser.getUserId() +
+					" for audited model " + auditedModel.getModelClassName() +
+						" with primary key " + auditedModel.getPrimaryKeyObj());
+		}
+
+		return defaultUser.getUserId();
+	}
+
 	protected boolean hasDefaultMetadataElement(
 		Element dynamicElementElement, String defaultLanguageId) {
 
@@ -293,7 +316,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		for (DDLRecord ddlRecord : ddlRecords) {
 			updateFileUploadReferences(
 				ddlRecord.getCompanyId(), ddlRecord.getDDMStorageId(),
-				ddlRecord.getUserId(), ddlRecord.getGroupId(), ddlRecord,
+				getUserId(ddlRecord), ddlRecord.getGroupId(), ddlRecord,
 				ddlRecord.getStatus());
 		}
 	}
@@ -312,7 +335,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		updateFileUploadReferences(
 			fileEntry.getCompanyId(), dlFileEntryMetadata.getDDMStorageId(),
-			fileEntry.getUserId(), fileEntry.getGroupId(), dlFileEntryMetadata,
+			getUserId(fileEntry), fileEntry.getGroupId(), dlFileEntryMetadata,
 			fileVersion.getStatus());
 	}
 

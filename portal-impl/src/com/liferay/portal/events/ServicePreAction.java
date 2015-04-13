@@ -582,7 +582,8 @@ public class ServicePreAction extends Action {
 			boolean customizable = layoutTypePortlet.isCustomizable();
 
 			if (!customizable ||
-				(group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+				group.isLayoutPrototype() || group.isLayoutSetPrototype() ||
+				group.isStagingGroup()) {
 
 				customizedView = false;
 			}
@@ -1215,7 +1216,10 @@ public class ServicePreAction extends Action {
 					request, myAccountPortlet.getPortletId(), controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
-				if (scopeGroupId > 0) {
+				if (signedIn) {
+					myAccountURL.setDoAsGroupId(user.getGroupId());
+				}
+				else if (scopeGroupId > 0) {
 					myAccountURL.setDoAsGroupId(scopeGroupId);
 				}
 
@@ -2227,24 +2231,29 @@ public class ServicePreAction extends Action {
 
 		// Main Journal article
 
-		long mainJournalArticleId = ParamUtil.getLong(request, "p_j_a_id");
+		String strutsAction = PortalUtil.getStrutsAction(request);
 
-		if (mainJournalArticleId > 0) {
-			try {
-				JournalArticle mainJournalArticle =
-					JournalArticleServiceUtil.getArticle(mainJournalArticleId);
+		if (strutsAction.equals(_PATH_PORTAL_LAYOUT)) {
+			long mainJournalArticleId = ParamUtil.getLong(request, "p_j_a_id");
 
-				AssetEntry layoutAssetEntry =
-					AssetEntryLocalServiceUtil.getEntry(
-						JournalArticle.class.getName(),
-						mainJournalArticle.getResourcePrimKey());
+			if (mainJournalArticleId > 0) {
+				try {
+					JournalArticle mainJournalArticle =
+						JournalArticleServiceUtil.getArticle(
+							mainJournalArticleId);
 
-				request.setAttribute(
-					WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
-			}
-			catch (NoSuchArticleException nsae) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(nsae.getMessage());
+					AssetEntry layoutAssetEntry =
+						AssetEntryLocalServiceUtil.getEntry(
+							JournalArticle.class.getName(),
+							mainJournalArticle.getResourcePrimKey());
+
+					request.setAttribute(
+						WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
+				}
+				catch (NoSuchArticleException nsae) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(nsae.getMessage());
+					}
 				}
 			}
 		}

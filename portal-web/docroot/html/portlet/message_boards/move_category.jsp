@@ -113,7 +113,7 @@ if (category != null) {
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = event.categoryid;
 
-					document.getElementById('<portlet:namespace />parentCategoryName').value = event.name;
+					document.getElementById('<portlet:namespace />parentCategoryName').value = A.Lang.String.unescapeEntities(event.name);
 
 					Liferay.Util.toggleDisabled('#<portlet:namespace />removeCategoryButton', false);
 				}

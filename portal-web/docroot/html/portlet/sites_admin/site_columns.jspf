@@ -34,7 +34,9 @@
 		buffer.append("\">");
 	}
 	else {
-		buffer.append("<img align=\"left\" border=\"0\" style=\"margin: 0px 5px 0px 0px;\" src=\"");
+		buffer.append("<img align=\"left\" alt=\"");
+		buffer.append(LanguageUtil.get(locale, "icon"));
+		buffer.append("\" border=\"0\" style=\"margin: 0px 5px 0px 0px;\" src=\"");
 		buffer.append(curGroup.getIconURL(themeDisplay));
 		buffer.append("\">");
 	}

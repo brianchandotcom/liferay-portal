@@ -898,7 +898,8 @@ public class BookmarksFolderLocalServiceImpl
 				// Folders and entries
 
 				List<Object> curFoldersAndEntries = getFoldersAndEntries(
-					folder.getGroupId(), folder.getFolderId());
+					folder.getGroupId(), folder.getFolderId(),
+					WorkflowConstants.STATUS_IN_TRASH);
 
 				restoreDependentsFromTrash(curFoldersAndEntries, trashEntryId);
 

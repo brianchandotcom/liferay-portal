@@ -127,8 +127,6 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			for (int i = 0; i < results.size(); i++) {
 				JournalArticle articleVersion = results.get(i);
 
-				articleVersion = articleVersion.toEscapedModel();
-
 				ResultRow row = new ResultRow(articleVersion, articleVersion.getArticleId() + EditArticleAction.VERSION_SEPARATOR + articleVersion.getVersion(), i);
 
 				// Article id

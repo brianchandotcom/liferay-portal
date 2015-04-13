@@ -712,17 +712,16 @@ public class LanguageImpl implements Language {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Group liveGroup = group;
-
 		if (group.isStagingGroup()) {
-			liveGroup = group.getLiveGroup();
+			group = group.getLiveGroup();
 		}
 
-		UnicodeProperties groupTypeSettings =
-			liveGroup.getTypeSettingsProperties();
+		if (!group.isSite() || group.isCompany()) {
+			return true;
+		}
 
 		return GetterUtil.getBoolean(
-			groupTypeSettings.getProperty("inheritLocales"), true);
+			group.getTypeSettingsProperty("inheritLocales"), true);
 	}
 
 	@Override

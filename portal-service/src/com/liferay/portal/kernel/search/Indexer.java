@@ -74,6 +74,12 @@ public interface Indexer {
 
 	public boolean isStagingAware();
 
+	public boolean isVisible(long classPK, int status)
+		throws Exception;
+
+	public boolean isVisibleRelatedEntry(long classPK, int status)
+		throws Exception;
+
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception;

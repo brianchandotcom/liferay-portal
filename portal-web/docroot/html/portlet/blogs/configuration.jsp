@@ -19,8 +19,6 @@
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", BlogsUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", BlogsUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 
@@ -53,17 +51,16 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 String[] socialBookmarksTypesArray = StringUtil.split(portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES)));
 %>
 
-<liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL">
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
-
-<aui:form action="<%= configurationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
 	String tabs2Names = "display-settings,email-from,entry-added-email,entry-updated-email";
@@ -76,7 +73,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(portletPreferences.getValu
 	<liferay-ui:tabs
 		names="<%= tabs2Names %>"
 		param="tabs2"
-		url="<%= portletURL %>"
+		url="<%= configurationRenderURL %>"
 	/>
 
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
@@ -140,7 +137,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(portletPreferences.getValu
 						[$PORTLET_NAME$]
 					</dt>
 					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
+						<%= HtmlUtil.escape(PortalUtil.getPortletTitle(renderResponse)) %>
 					</dd>
 					<dt>
 						[$SITE_NAME$]
@@ -256,7 +253,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(portletPreferences.getValu
 						[$PORTLET_NAME$]
 					</dt>
 					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
+						<%= HtmlUtil.escape(PortalUtil.getPortletTitle(renderResponse)) %>
 					</dd>
 					<dt>
 						[$SITE_NAME$]

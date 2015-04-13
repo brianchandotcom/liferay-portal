@@ -173,7 +173,8 @@
 		</constructor-arg>
 		<constructor-arg>
 			<util:map map-class="java.util.LinkedHashMap">
-				<entry key="assetCategoryTitles(_.+)?" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
+				<entry key="articleId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="assetCategoryTitles?(_.+)?" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="assetTagNames" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="ddm/.*" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="emailAddress" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />

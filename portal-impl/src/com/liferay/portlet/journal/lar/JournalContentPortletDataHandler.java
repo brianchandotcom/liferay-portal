@@ -17,6 +17,8 @@ package com.liferay.portlet.journal.lar;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.PortletDataHandlerChoice;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +28,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -71,12 +75,19 @@ import javax.portlet.PortletPreferences;
 public class JournalContentPortletDataHandler
 	extends JournalPortletDataHandler {
 
+	public static final String NAMESPACE = "journal-content";
+
 	public JournalContentPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("articleId", "ddmTemplateKey", "groupId");
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				null, "selected-web-content", true, true, null,
+				NAMESPACE, "selected-web-content", true, false,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerChoice(
+						NAMESPACE, "referenced-content-behavior", 0,
+						new String[] {"include-if-modified", "include-always"})
+				},
 				JournalArticle.class.getName()));
 		setPublishToLiveByDefault(
 			PropsValues.JOURNAL_CONTENT_PUBLISH_TO_LIVE_BY_DEFAULT);
@@ -160,8 +171,20 @@ public class JournalContentPortletDataHandler
 			return portletPreferences;
 		}
 
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, portletId, article);
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "selected-web-content")) {
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, article);
+		}
+		else {
+			Portlet referrerPortlet = PortletLocalServiceUtil.getPortletById(
+				portletId);
+
+			portletDataContext.addReferenceElement(
+				referrerPortlet, portletDataContext.getExportDataRootElement(),
+				article, PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+		}
 
 		String defaultTemplateId = article.getTemplateId();
 		String preferenceTemplateId = portletPreferences.getValue(
@@ -240,7 +263,7 @@ public class JournalContentPortletDataHandler
 				portletDataContext.getPlid());
 
 			JournalContentSearchLocalServiceUtil.updateContentSearch(
-				portletDataContext.getScopeGroupId(), layout.isPrivateLayout(),
+				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), portletId, articleId, true);
 		}
 		else {

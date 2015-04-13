@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.tools.sourceformatter.XMLSourceProcessor;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -98,7 +99,7 @@ public class XMLAttributesSorter {
 	}
 
 	protected String sortAttributes(String content) throws Exception {
-		Document document = _saxReaderUtil.read(content);
+		Document document = _saxReader.read(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -108,6 +109,6 @@ public class XMLAttributesSorter {
 	}
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
-	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();
+	private static SAXReader _saxReader = new SAXReaderImpl();
 
 }

@@ -82,6 +82,26 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
+	public WikiPage fetchParentPage() throws SystemException {
+		if (Validator.isNull(getParentTitle())) {
+			return null;
+		}
+
+		return WikiPageLocalServiceUtil.fetchPage(
+			getNodeId(), getParentTitle());
+	}
+
+	@Override
+	public WikiPage fetchRedirectPage() throws SystemException {
+		if (Validator.isNull(getRedirectTitle())) {
+			return null;
+		}
+
+		return WikiPageLocalServiceUtil.fetchPage(
+			getNodeId(), getRedirectTitle());
+	}
+
+	@Override
 	public List<FileEntry> getAttachmentsFileEntries() throws SystemException {
 		return getAttachmentsFileEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -232,27 +252,19 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
-	public WikiPage getParentPage() {
+	public WikiPage getParentPage() throws PortalException, SystemException {
 		if (Validator.isNull(getParentTitle())) {
 			return null;
 		}
 
-		try {
-			return WikiPageLocalServiceUtil.getPage(
-				getNodeId(), getParentTitle());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
-		}
+		return WikiPageLocalServiceUtil.getPage(getNodeId(), getParentTitle());
 	}
 
 	@Override
-	public List<WikiPage> getParentPages() {
+	public List<WikiPage> getParentPages() throws SystemException {
 		List<WikiPage> parentPages = new ArrayList<WikiPage>();
 
-		WikiPage parentPage = getParentPage();
+		WikiPage parentPage = fetchParentPage();
 
 		if (parentPage != null) {
 			parentPages.addAll(parentPage.getParentPages());
@@ -263,20 +275,13 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
-	public WikiPage getRedirectPage() {
+	public WikiPage getRedirectPage() throws PortalException, SystemException {
 		if (Validator.isNull(getRedirectTitle())) {
 			return null;
 		}
 
-		try {
-			return WikiPageLocalServiceUtil.getPage(
-				getNodeId(), getRedirectTitle());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
-		}
+		return WikiPageLocalServiceUtil.getPage(
+			getNodeId(), getRedirectTitle());
 	}
 
 	@Override

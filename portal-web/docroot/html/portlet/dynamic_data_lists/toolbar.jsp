@@ -50,6 +50,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 						dialog: {
 							destroyOnHide: true
 						},
+						groupId: <%= scopeGroupId %>,
 
 						<%
 						Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());

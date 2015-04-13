@@ -66,10 +66,8 @@ for (int i = 0; i < choices.size(); i++) {
 	</td>
 
 	<td class="table-cell">
-		<div class="progress-bar progress-bar-horizontal <%= votesPercentWidth == 0 ? "no-progress" : StringPool.BLANK %>" style="height: 1.4em; width: <%= votesPixelWidth %>px;">
-			<div class="progress-bar-content">
-				<div class="progress-bar-status" style="height: 100%; top: auto; width: <%= votesPercentWidth %>%; "></div>
-			</div>
+		<div class="progress" style="width: <%= votesPixelWidth %>px;">
+			<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="<%= votesPercentWidth %>" class="bar" role="progressbar" style="width: <%= votesPercentWidth %>%;"></div>
 		</div>
 	</td>
 

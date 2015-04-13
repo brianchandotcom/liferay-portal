@@ -18,8 +18,6 @@ import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.UserPortraitSizeException;
 import com.liferay.portal.UserPortraitTypeException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
@@ -75,17 +73,10 @@ public class EditUserPortraitAction extends EditCompanyLogoAction {
 			}
 			else if (e instanceof FileSizeException ||
 					 e instanceof ImageTypeException ||
-					 e instanceof UserPortraitTypeException) {
-
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.putException(e);
-
-				writeJSON(actionRequest, actionResponse, jsonObject);
-			}
-			else if (e instanceof NoSuchFileException ||
+					 e instanceof NoSuchFileException ||
+					 e instanceof UploadException ||
 					 e instanceof UserPortraitSizeException ||
-					 e instanceof UploadException) {
+					 e instanceof UserPortraitTypeException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

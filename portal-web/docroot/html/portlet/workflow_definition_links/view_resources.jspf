@@ -82,7 +82,9 @@ portletURL.setParameter("tabs1", "default-configuration");
 			>
 
 				<%
-				buffer.append("<img align=\"left\" border=\"0\" src=\"");
+				buffer.append("<img align=\"left\" alt=\"");
+				buffer.append(LanguageUtil.get(locale, "icon"));
+				buffer.append("\" border=\"0\" src=\"");
 				buffer.append(workflowHandler.getIconPath(liferayPortletRequest));
 				buffer.append("\" style=\"margin-right: 5px;\">");
 				buffer.append(ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()));
@@ -183,7 +185,9 @@ portletURL.setParameter("tabs1", "default-configuration");
 			>
 
 				<%
-				buffer.append("<img align=\"left\" border=\"0\" src=\"");
+				buffer.append("<img align=\"left\" alt=\"");
+				buffer.append(LanguageUtil.get(locale, "icon"));
+				buffer.append("\" border=\"0\" src=\"");
 				buffer.append(workflowHandler.getIconPath(liferayPortletRequest));
 				buffer.append("\" style=\"margin-right: 5px;\">");
 				buffer.append(ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()));

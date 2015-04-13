@@ -124,6 +124,13 @@ public class PortalUtil {
 		getPortal().addPortalPortEventListener(portalPortEventListener);
 	}
 
+	public static void addPortalPortProtocolEventListener(
+		PortalPortProtocolEventListener portalPortProtocolEventListener) {
+
+		getPortal().addPortalPortProtocolEventListener(
+			portalPortProtocolEventListener);
+	}
+
 	public static void addPortletBreadcrumbEntry(
 		HttpServletRequest request, String title, String url) {
 
@@ -551,6 +558,13 @@ public class PortalUtil {
 	}
 
 	public static Map<String, Serializable> getExpandoBridgeAttributes(
+			ExpandoBridge expandoBridge, HttpServletRequest request)
+		throws PortalException, SystemException {
+
+		return getPortal().getExpandoBridgeAttributes(expandoBridge, request);
+	}
+
+	public static Map<String, Serializable> getExpandoBridgeAttributes(
 			ExpandoBridge expandoBridge, PortletRequest portletRequest)
 		throws PortalException, SystemException {
 
@@ -565,6 +579,14 @@ public class PortalUtil {
 
 		return getPortal().getExpandoBridgeAttributes(
 			expandoBridge, uploadPortletRequest);
+	}
+
+	public static Serializable getExpandoValue(
+			HttpServletRequest request, String name, int type,
+			String displayType)
+		throws PortalException, SystemException {
+
+		return getPortal().getExpandoValue(request, name, type, displayType);
 	}
 
 	public static Serializable getExpandoValue(

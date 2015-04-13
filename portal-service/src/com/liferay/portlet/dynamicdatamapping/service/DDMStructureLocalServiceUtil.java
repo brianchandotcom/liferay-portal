@@ -1510,9 +1510,11 @@ public class DDMStructureLocalServiceUtil {
 	* @param metadataEntryValue the metadata entry's value
 	* @param serviceContext the service context to be applied. Can set the
 	structure's modification date.
-	* @throws PortalException if a matching structure could not be found, if
-	the XSD was not well-formed, or if a portal exception occurred
+	* @throws PortalException if a matching structure could not be found,
+	if the XSD was not well-formed, or if a portal exception
+	occurred
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, with no direct replacement
 	*/
 	public static void updateXSDFieldMetadata(long structureId,
 		java.lang.String fieldName, java.lang.String metadataEntryName,

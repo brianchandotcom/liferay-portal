@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/iframe/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 String htmlAttributes =
 	"alt=" + alt + "\n" +
 	"border=" + border + "\n" +
@@ -31,11 +29,13 @@ String htmlAttributes =
 	"vspace=" + vspace + "\n";
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
-<aui:form action="<%= configurationURL %>" method="post" name="fm">
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-ui:panel-container extended="<%= true %>" id="iframeSettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="iframeGeneralPanel" persistState="<%= true %>" title="general">

@@ -61,6 +61,7 @@
 
 	.company-logo {
 		border-width: 0;
+		display: block;
 		width: 100px;
 	}
 
@@ -316,5 +317,13 @@
 		.organization-information {
 			height: 1%;
 		}
+	}
+}
+
+@include respond-to(phone, tablet) {
+	.portlet-users-admin .float-container .company-logo {
+		display: inline-block;
+		margin: 5px;
+		width: 60px;
 	}
 }

@@ -564,19 +564,19 @@ public interface ${entity.name}Model extends
 	public Object clone();
 
 	@Override
-	public int compareTo(${entity.name} ${entity.varName});
+	public int compareTo(${packagePath}.model.${entity.name} ${entity.varName});
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<${entity.name}> toCacheModel();
+	public CacheModel<${packagePath}.model.${entity.name}> toCacheModel();
 
 	@Override
-	public ${entity.name} toEscapedModel();
+	public ${packagePath}.model.${entity.name} toEscapedModel();
 
 	@Override
-	public ${entity.name} toUnescapedModel();
+	public ${packagePath}.model.${entity.name} toUnescapedModel();
 
 	@Override
 	public String toString();

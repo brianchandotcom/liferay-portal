@@ -16,6 +16,13 @@ package com.liferay.portlet.xslcontent.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -38,16 +45,46 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void validateUrls(ActionRequest actionRequest) {
-		String xmlUrl = getParameter(actionRequest, "xmlUrl");
-		String xslUrl = getParameter(actionRequest, "xslUrl");
+	protected boolean hasAllowedProtocol(String xmlURL) {
+		try {
+			URL url = new URL(xmlURL);
 
-		if (xmlUrl.startsWith("file:/")) {
+			String protocol = url.getProtocol();
+
+			if (ArrayUtil.contains(_PROTOCOLS, protocol)) {
+				return true;
+			}
+		}
+		catch (MalformedURLException murle) {
+			return false;
+		}
+
+		return false;
+	}
+
+	protected void validateUrls(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String xmlUrl = getParameter(actionRequest, "xmlUrl");
+
+		xmlUrl = StringUtil.replace(
+			xmlUrl, "@portal_url@", themeDisplay.getPortalURL());
+
+		if (!hasAllowedProtocol(xmlUrl)) {
 			SessionErrors.add(actionRequest, "xmlUrl");
 		}
-		else if (xslUrl.startsWith("file:/")) {
+
+		String xslUrl = getParameter(actionRequest, "xslUrl");
+
+		xslUrl = StringUtil.replace(
+			xslUrl, "@portal_url@", themeDisplay.getPortalURL());
+
+		if (!hasAllowedProtocol(xslUrl)) {
 			SessionErrors.add(actionRequest, "xslUrl");
 		}
 	}
+
+	private static final String[] _PROTOCOLS = {"http", "https"};
 
 }

@@ -180,6 +180,12 @@ public class JournalArticleStagedModelDataHandler
 			existingArticle = fetchExistingArticle(
 				articleResourceUuid, portletDataContext.getCompanyGroupId(),
 				articleArticleId, null, 0.0, preloaded);
+
+			if (existingArticle == null) {
+				existingArticle = fetchExistingArticle(
+					articleResourceUuid, portletDataContext.getScopeGroupId(),
+					articleArticleId, null, 0.0, preloaded);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof SystemException) {
@@ -240,6 +246,12 @@ public class JournalArticleStagedModelDataHandler
 	protected boolean countStagedModel(
 		PortletDataContext portletDataContext, JournalArticle article) {
 
+		if (article.getClassNameId() ==
+				PortalUtil.getClassNameId(DDMStructure.class)) {
+
+			return false;
+		}
+
 		return !portletDataContext.isModelCounted(
 			JournalArticleResource.class.getName(),
 			article.getResourcePrimKey());
@@ -276,7 +288,10 @@ public class JournalArticleStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
-		if (Validator.isNotNull(article.getTemplateId())) {
+		if (Validator.isNotNull(article.getTemplateId()) &&
+			(article.getClassNameId() !=
+					PortalUtil.getClassNameId(DDMStructure.class))) {
+
 			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 				article.getGroupId(),
 				PortalUtil.getClassNameId(DDMStructure.class),

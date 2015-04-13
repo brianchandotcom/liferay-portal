@@ -263,7 +263,7 @@ String[][] categorySections = {mainSections, seoSections, advancedSections, misc
 <aui:script use="aui-base">
 	var applicationAdapter = A.one('#<portlet:namespace />customJspServletContextName');
 
-	if (applicationAdapter) {
+	if ((applicationAdapter !== null) && applicationAdapter.length) {
 		var publicPages = A.one('#<portlet:namespace />publicLayoutSetPrototypeId');
 		var privatePages = A.one('#<portlet:namespace />privateLayoutSetPrototypeId');
 

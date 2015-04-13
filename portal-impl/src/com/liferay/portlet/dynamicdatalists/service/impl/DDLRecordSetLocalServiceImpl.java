@@ -176,7 +176,7 @@ public class DDLRecordSetLocalServiceImpl
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
 
-		deleteRecordSet(recordSet);
+		ddlRecordSetLocalService.deleteRecordSet(recordSet);
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class DDLRecordSetLocalServiceImpl
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByG_R(
 			groupId, recordSetKey);
 
-		deleteRecordSet(recordSet);
+		ddlRecordSetLocalService.deleteRecordSet(recordSet);
 	}
 
 	@Override
@@ -197,7 +197,7 @@ public class DDLRecordSetLocalServiceImpl
 			groupId);
 
 		for (DDLRecordSet recordSet : recordSets) {
-			deleteRecordSet(recordSet);
+			ddlRecordSetLocalService.deleteRecordSet(recordSet);
 		}
 	}
 

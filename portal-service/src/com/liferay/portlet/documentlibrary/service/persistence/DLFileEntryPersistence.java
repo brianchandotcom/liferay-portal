@@ -1741,6 +1741,154 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the document library file entries where repositoryId = &#63; and folderId = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @return the matching document library file entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByR_F(
+		long repositoryId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the document library file entries where repositoryId = &#63; and folderId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @param start the lower bound of the range of document library file entries
+	* @param end the upper bound of the range of document library file entries (not inclusive)
+	* @return the range of matching document library file entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByR_F(
+		long repositoryId, long folderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the document library file entries where repositoryId = &#63; and folderId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @param start the lower bound of the range of document library file entries
+	* @param end the upper bound of the range of document library file entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching document library file entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByR_F(
+		long repositoryId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file entry
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry findByR_F_First(
+		long repositoryId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+
+	/**
+	* Returns the first document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchByR_F_First(
+		long repositoryId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file entry
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a matching document library file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry findByR_F_Last(
+		long repositoryId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+
+	/**
+	* Returns the last document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchByR_F_Last(
+		long repositoryId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the document library file entries before and after the current document library file entry in the ordered set where repositoryId = &#63; and folderId = &#63;.
+	*
+	* @param fileEntryId the primary key of the current document library file entry
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next document library file entry
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException if a document library file entry with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry[] findByR_F_PrevAndNext(
+		long fileEntryId, long repositoryId, long folderId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+
+	/**
+	* Removes all the document library file entries where repositoryId = &#63; and folderId = &#63; from the database.
+	*
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByR_F(long repositoryId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of document library file entries where repositoryId = &#63; and folderId = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param folderId the folder ID
+	* @return the number of matching document library file entries
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByR_F(long repositoryId, long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the document library file entries where groupId = &#63; and userId = &#63; and folderId = &#63;.
 	*
 	* @param groupId the group ID

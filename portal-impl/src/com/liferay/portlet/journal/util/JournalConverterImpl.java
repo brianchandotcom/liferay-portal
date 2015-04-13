@@ -477,7 +477,7 @@ public class JournalConverterImpl implements JournalConverter {
 			int x = url.indexOf("/documents/");
 
 			if (x == -1) {
-				return null;
+				return StringPool.BLANK;
 			}
 
 			int y = url.indexOf(StringPool.QUESTION);
@@ -510,7 +510,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	protected Field getField(

@@ -76,15 +76,6 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 
 				String zipEntryFileName = zipEntry.getName();
 
-				if (!zipEntryFileName.endsWith(".war") &&
-					!zipEntryFileName.endsWith(".xml") &&
-					!zipEntryFileName.endsWith(".zip") &&
-					!zipEntryFileName.equals(
-						"liferay-marketplace.properties")) {
-
-					continue;
-				}
-
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Extracting " + zipEntryFileName + " from " +

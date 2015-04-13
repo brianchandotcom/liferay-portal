@@ -20,7 +20,17 @@
 long groupId = ParamUtil.getLong(request, FileEntryDisplayTerms.SELECTED_GROUP_ID);
 
 if (groupId == 0) {
-	groupId = ParamUtil.getLong(request, "groupId");
+	groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
+
+	Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+	if ((group != null) && group.isStaged()) {
+		Group liveGroup = group.getLiveGroup();
+
+		if ((liveGroup != null) && !liveGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) {
+			groupId = liveGroup.getGroupId();
+		}
+	}
 }
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
@@ -92,7 +102,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			title="folders"
 		/>
 
-		<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
 		<div class="helper-clearfix">
 			<liferay-ui:icon-menu cssClass="lfr-document-library-add-menu" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add">
@@ -185,9 +195,11 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 
 			// Name
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(6);
 
-			sb.append("<img align=\"left\" border=\"0\" src=\"");
+			sb.append("<img align=\"left\" alt=\"");
+			sb.append(LanguageUtil.get(locale, "folder"));
+			sb.append("\" border=\"0\" src=\"");
 			sb.append(HtmlUtil.escapeAttribute(themeDisplay.getPathThemeImages()));
 			sb.append("/common/folder.png\">");
 			sb.append(HtmlUtil.escape(curFolder.getName()));

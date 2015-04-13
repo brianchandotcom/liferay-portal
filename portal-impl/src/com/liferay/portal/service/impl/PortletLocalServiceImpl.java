@@ -2124,7 +2124,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			if (publicRenderParameter == null) {
 				_log.error(
 					"Supported public render parameter references " +
-						"unnknown identifier " + identifier);
+						"unknown identifier " + identifier);
 
 				continue;
 			}
@@ -2292,7 +2292,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 				if (portletFilter == null) {
 					_log.error(
-						"Filter mapping references unnknown filter name " +
+						"Filter mapping references unknown filter name " +
 							filterName);
 
 					continue;
@@ -2304,7 +2304,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				if (portletModels.size() == 0) {
 					_log.error(
 						"Filter mapping with filter name " + filterName +
-							" references unnknown portlet name " + portletName);
+							" references unknown portlet name " + portletName);
 				}
 
 				for (Portlet portletModel : portletModels) {

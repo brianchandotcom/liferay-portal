@@ -20,12 +20,14 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -159,13 +161,15 @@ public interface Staging {
 		throws Exception;
 
 	public JSONArray getErrorMessagesJSONArray(
-			Locale locale, Map<String, MissingReference> missingReferences,
-			Map<String, Serializable> contextMap)
-		throws SystemException;
+		Locale locale, Map<String, MissingReference> missingReferences,
+			Map<String, Serializable> contextMap);
 
 	public JSONObject getExceptionMessagesJSONObject(
-			Locale locale, Exception e, Map<String, Serializable> contextMap)
-		throws SystemException;
+			Locale locale, Exception e, Map<String, Serializable> contextMap);
+
+	public Date getLastPublishDate(LayoutSet layoutSet) throws PortalException;
+
+	public Date getLastPublishDate(PortletPreferences jxPortletPreferences);
 
 	public Group getLiveGroup(long groupId)
 		throws PortalException, SystemException;
@@ -298,9 +302,18 @@ public interface Staging {
 		throws Exception;
 
 	public void updateLastPublishDate(
+			long sourceGroupId, boolean privateLayout, DateRange dateRange,
+			Date lastPublishDate)
+		throws Exception;
+
+	public void updateLastPublishDate(
 			String portletId, PortletPreferences portletPreferences,
 			Date lastPublishDate)
 		throws Exception;
+
+	public void updateLastPublishDate(
+		String portletId, PortletPreferences portletPreferences,
+		DateRange dateRange, Date lastPublishDate);
 
 	public void updateStaging(PortletRequest PortletRequest, Group liveGroup)
 		throws Exception;

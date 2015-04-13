@@ -18,11 +18,11 @@ AUI.add(
 					classPK: {
 					},
 
-					doAsGroupId: {
-					},
-
 					container: {
 						setter: A.one
+					},
+
+					doAsGroupId: {
 					},
 
 					fieldsDisplayInput: {
@@ -47,6 +47,8 @@ AUI.add(
 				EXTENDS: A.Base,
 
 				NAME: 'liferay-ddm-repeatable-fields',
+
+				eventHandlers: {},
 
 				prototype: {
 					initializer: function() {
@@ -80,14 +82,20 @@ AUI.add(
 									var validatorRules = liferayForm.formValidator.get('rules');
 
 									if (event.type === 'liferay-ddm-repeatable-fields:repeat') {
-										validatorRules[fieldInputName] = validatorRules[instance.getFieldInputName(event.originalFieldNode)];
+										var originalFieldRules = validatorRules[instance.getFieldInputName(event.originalFieldNode)];
+
+										if (originalFieldRules) {
+											validatorRules[fieldInputName] = originalFieldRules;
+										}
 									}
 									else if (event.type === 'liferay-ddm-repeatable-fields:remove') {
 										delete validatorRules[fieldInputName];
 
 										var validatorField = liferayForm.formValidator.getField(fieldInputName);
 
-										liferayForm.formValidator.resetField(validatorField);
+										if (validatorField) {
+											liferayForm.formValidator.resetField(validatorField);
+										}
 									}
 
 									liferayForm.formValidator.set('rules', validatorRules);
@@ -169,6 +177,18 @@ AUI.add(
 						).join('');
 					},
 
+					getFieldParentNode: function(fieldNode) {
+						var instance = this;
+
+						var parentNode = fieldNode.ancestor('.field-wrapper');
+
+						if (!parentNode) {
+							parentNode = instance.get('container');
+						}
+
+						return parentNode;
+					},
+
 					getFieldsList: function(fieldName, parentNode) {
 						var instance = this;
 
@@ -190,18 +210,6 @@ AUI.add(
 						}
 
 						return container.all(selector.join(''));
-					},
-
-					getFieldParentNode: function(fieldNode) {
-						var instance = this;
-
-						var parentNode = fieldNode.ancestor('.field-wrapper');
-
-						if (!parentNode) {
-							parentNode = instance.get('container');
-						}
-
-						return parentNode;
 					},
 
 					insertField: function(fieldNode) {
@@ -236,6 +244,10 @@ AUI.add(
 						);
 
 						fieldNode.remove();
+
+						var eventHandlers = RepeatableFields.eventHandlers[instance.getFieldInputName(fieldNode)];
+
+						A.Array.invoke(eventHandlers, 'detach');
 
 						instance.syncFieldsTreeUI();
 					},

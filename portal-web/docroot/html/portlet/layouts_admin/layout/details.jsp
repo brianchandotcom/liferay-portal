@@ -52,23 +52,26 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	}
 	%>
 
-	<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>">
+	<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>" focusField="friendlyURL">
 
 		<%
+		Locale exceptionLocale = null;
 		LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)errorException;
 		%>
 
 		<%@ include file="/html/portlet/layouts_admin/error_friendly_url_exception.jspf" %>
 	</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= LayoutFriendlyURLsException.class %>">
+	<liferay-ui:error exception="<%= LayoutFriendlyURLsException.class %>" focusField="friendlyURL">
 
 		<%
 		LayoutFriendlyURLsException lfurlse = (LayoutFriendlyURLsException)errorException;
 
-		List<LayoutFriendlyURLException> layoutFriendlyURLExceptions = lfurlse.getLayoutFriendlyURLExceptions();
+		Map<Locale, Exception> localizedExceptionsMap = lfurlse.getLocalizedExceptionsMap();
 
-		for (LayoutFriendlyURLException lfurle : layoutFriendlyURLExceptions) {
+		for (Map.Entry<Locale, Exception> entry : localizedExceptionsMap.entrySet()) {
+			Locale exceptionLocale = entry.getKey();
+			LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)entry.getValue();
 		%>
 
 			<%@ include file="/html/portlet/layouts_admin/error_friendly_url_exception.jspf" %>
@@ -96,7 +99,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 					<aui:field-wrapper cssClass="input-append input-flex-add-on input-prepend" helpMessage='<%= LanguageUtil.format(pageContext, "for-example-x", "<em>/news</em>") %>' label="friendly-url" name="friendlyURL">
 						<span class="add-on" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
 
-						<liferay-ui:input-localized availableLocales="<%= LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()) %>" cssClass="input-medium" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="friendlyURL" xml="<%= selLayout.getFriendlyURLsXML() %>" />
+						<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="friendlyURL" xml="<%= selLayout.getFriendlyURLsXML() %>" />
 					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>

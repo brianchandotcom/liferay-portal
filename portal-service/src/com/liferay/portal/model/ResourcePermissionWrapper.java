@@ -400,8 +400,20 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
+	public void addResourceAction(java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermission.addResourceAction(actionId);
+	}
+
+	@Override
 	public boolean hasActionId(java.lang.String actionId) {
 		return _resourcePermission.hasActionId(actionId);
+	}
+
+	@Override
+	public void removeResourceAction(java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourcePermission.removeResourceAction(actionId);
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Hits;
@@ -35,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
  */
+@ProviderType
 public class DDLUtil {
 
 	public static DDL getDDL() {
@@ -90,6 +93,10 @@ public class DDLUtil {
 			renderResponse);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static boolean isEditable(
 			HttpServletRequest request, String portletId, long groupId)
 		throws Exception {
@@ -97,6 +104,10 @@ public class DDLUtil {
 		return getDDL().isEditable(request, portletId, groupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static boolean isEditable(
 			PortletPreferences preferences, String portletId, long groupId)
 		throws Exception {

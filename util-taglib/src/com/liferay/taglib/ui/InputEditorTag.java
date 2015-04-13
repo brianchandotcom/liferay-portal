@@ -126,6 +126,13 @@ public class InputEditorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		if (_contentsLanguageId == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_contentsLanguageId = themeDisplay.getLanguageId();
+		}
+
 		String cssClasses = "portlet ";
 
 		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);

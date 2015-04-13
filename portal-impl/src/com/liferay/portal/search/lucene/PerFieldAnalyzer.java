@@ -25,7 +25,7 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -149,6 +149,7 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 	private static Log _log = LogFactoryUtil.getLog(PerFieldAnalyzer.class);
 
 	private Analyzer _analyzer;
-	private Map<String, Analyzer> _analyzers = new HashMap<String, Analyzer>();
+	private Map<String, Analyzer> _analyzers =
+		new LinkedHashMap<String, Analyzer>();
 
 }

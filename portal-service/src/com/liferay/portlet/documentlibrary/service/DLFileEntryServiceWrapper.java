@@ -334,6 +334,17 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
+		long groupId, long userId, long repositoryId, long rootFolderId,
+		java.lang.String[] mimeTypes, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryService.getGroupFileEntries(groupId, userId,
+			repositoryId, rootFolderId, mimeTypes, status, start, end, obc);
+	}
+
+	@Override
 	public int getGroupFileEntriesCount(long groupId, long userId,
 		long rootFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -349,6 +360,16 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryService.getGroupFileEntriesCount(groupId, userId,
 			rootFolderId, mimeTypes, status);
+	}
+
+	@Override
+	public int getGroupFileEntriesCount(long groupId, long userId,
+		long repositoryId, long rootFolderId, java.lang.String[] mimeTypes,
+		int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryService.getGroupFileEntriesCount(groupId, userId,
+			repositoryId, rootFolderId, mimeTypes, status);
 	}
 
 	@Override

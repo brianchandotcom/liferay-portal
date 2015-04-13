@@ -55,7 +55,7 @@ boolean numericValue = false;
 if ((bean != null) && Validator.isNull(listType) && showEmptyOption) {
 	Object propertyInstance = null;
 
-	Class<?> propertyTypeClass = BeanPropertiesUtil.getObjectTypeSilent(bean, name);
+	Class<?> propertyTypeClass = BeanPropertiesUtil.getObjectTypeSilent(bean, name, String.class);
 
 	if (propertyTypeClass.isPrimitive()) {
 		propertyInstance = _primitiveObjects.get(propertyTypeClass);

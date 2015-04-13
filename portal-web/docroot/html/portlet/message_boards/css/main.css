@@ -1,3 +1,5 @@
+@import "compass";
+
 .portlet-asset-publisher, .portlet-message-boards, .portlet-trash {
 	.category-buttons {
 		clear: both;
@@ -134,6 +136,10 @@
 	.message-container .user-info {
 		border-right: 1px solid #CCC;
 		padding: 5px;
+
+		.user-name {
+			@include hyphenation;
+		}
 	}
 
 	.clear {
@@ -286,6 +292,16 @@
 				width: 99.5%;
 			}
 		}
+	}
+
+	.category-title {
+		@include ellipsis;
+
+		font-weight: bold;
+	}
+
+	.category-description {
+		@include hyphenation;
 	}
 
 	.subcategories {

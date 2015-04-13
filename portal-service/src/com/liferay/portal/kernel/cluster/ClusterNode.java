@@ -51,6 +51,26 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 			return value;
 		}
 
+		if ((_portalProtocol == null) ||
+			(clusterNode._portalProtocol == null)) {
+
+			if (_portalProtocol != null) {
+				return 1;
+			}
+
+			if (clusterNode._portalProtocol != null) {
+				return -1;
+			}
+
+			return 0;
+		}
+
+		value = _portalProtocol.compareTo(clusterNode._portalProtocol);
+
+		if (value != 0) {
+			return value;
+		}
+
 		if (_port > clusterNode._port) {
 			value = 1;
 		}
@@ -92,6 +112,10 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 		return _port;
 	}
 
+	public String getPortalProtocol() {
+		return _portalProtocol;
+	}
+
 	@Override
 	public int hashCode() {
 		return _clusterNodeId.hashCode();
@@ -101,12 +125,18 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 		_port = port;
 	}
 
+	public void setPortalProtocol(String portalProtocol) {
+		_portalProtocol = portalProtocol;
+	}
+
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{clusterNodeId=");
 		sb.append(_clusterNodeId);
+		sb.append(", portalProtocol=");
+		sb.append(_portalProtocol);
 		sb.append(", inetAddress=");
 		sb.append(_inetAddress);
 		sb.append(", port=");
@@ -119,5 +149,6 @@ public class ClusterNode implements Comparable<ClusterNode>, Serializable {
 	private String _clusterNodeId;
 	private InetAddress _inetAddress;
 	private int _port;
+	private String _portalProtocol;
 
 }

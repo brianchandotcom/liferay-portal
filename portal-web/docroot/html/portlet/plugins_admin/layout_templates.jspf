@@ -82,7 +82,9 @@ for (int i = 0; i < results.size(); i++) {
 		sb.append("\">");
 	}
 
-	sb.append("<img align=\"left\" src=\"");
+	sb.append("<img align=\"left\" alt=\"");
+	sb.append(LanguageUtil.get(locale, "thumbnail"));
+	sb.append("\" src=\"");
 	sb.append(layoutTemplate.getStaticResourcePath());
 	sb.append(HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()));
 	sb.append("\" style=\"margin-right: 10px\" />");

@@ -48,6 +48,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
@@ -148,7 +149,8 @@ public class EditMessageAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.message_boards.error");
 			}
-			else if (e instanceof CaptchaMaxChallengesException ||
+			else if (e instanceof AntivirusScannerException ||
+					 e instanceof CaptchaMaxChallengesException ||
 					 e instanceof CaptchaTextException ||
 					 e instanceof DuplicateFileException ||
 					 e instanceof FileExtensionException ||
@@ -171,7 +173,12 @@ public class EditMessageAction extends PortletAction {
 					actionResponse.sendRedirect(uploadExceptionRedirect);
 				}
 
-				SessionErrors.add(actionRequest, e.getClass());
+				if (e instanceof AntivirusScannerException) {
+					SessionErrors.add(actionRequest, e.getClass(), e);
+				}
+				else {
+					SessionErrors.add(actionRequest, e.getClass());
+				}
 			}
 			else if (e instanceof AssetCategoryException ||
 					 e instanceof AssetTagException) {

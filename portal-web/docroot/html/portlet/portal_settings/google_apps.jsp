@@ -29,7 +29,7 @@ if (Validator.isNotNull(googleAppsPassword)) {
 <h3><liferay-ui:message key="google-apps" /></h3>
 
 <aui:fieldset>
-	<aui:input autocomplete="off" cssClass="lfr-input-text-container" label="user-name" name='<%= "settings--" + PropsKeys.GOOGLE_APPS_USERNAME + "--" %>' type="text" value="<%= googleAppsUsername %>" />
+	<aui:input autocomplete="off" label="user-name" name='<%= "settings--" + PropsKeys.GOOGLE_APPS_USERNAME + "--" %>' type="text" value="<%= googleAppsUsername %>" wrapperCssClass="lfr-input-text-container" />
 
-	<aui:input autocomplete="off" cssClass="lfr-input-text-container" label="password" name='<%= "settings--" + PropsKeys.GOOGLE_APPS_PASSWORD + "--" %>' type="password" value="<%= googleAppsPassword %>" />
+	<aui:input autocomplete="off" label="password" name='<%= "settings--" + PropsKeys.GOOGLE_APPS_PASSWORD + "--" %>' type="password" value="<%= googleAppsPassword %>" wrapperCssClass="lfr-input-text-container" />
 </aui:fieldset>

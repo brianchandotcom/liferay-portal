@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -72,15 +74,7 @@ public class ServiceContextFactory {
 				PortalUtil.getCanonicalURL(
 					PortalUtil.getLayoutURL(themeDisplay), themeDisplay,
 					themeDisplay.getLayout(), true));
-			serviceContext.setPathMain(PortalUtil.getPathMain());
-			serviceContext.setPathFriendlyURLPrivateGroup(
-				PortalUtil.getPathFriendlyURLPrivateGroup());
-			serviceContext.setPathFriendlyURLPrivateUser(
-				PortalUtil.getPathFriendlyURLPrivateUser());
-			serviceContext.setPathFriendlyURLPublic(
-				PortalUtil.getPathFriendlyURLPublic());
 			serviceContext.setPlid(themeDisplay.getPlid());
-			serviceContext.setPortalURL(PortalUtil.getPortalURL(request));
 			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
 			serviceContext.setSignedIn(themeDisplay.isSignedIn());
 			serviceContext.setTimeZone(themeDisplay.getTimeZone());
@@ -95,13 +89,15 @@ public class ServiceContextFactory {
 
 			serviceContext.setCompanyId(companyId);
 
-			serviceContext.setPathFriendlyURLPrivateGroup(
-				PortalUtil.getPathFriendlyURLPrivateGroup());
-			serviceContext.setPathFriendlyURLPrivateUser(
-				PortalUtil.getPathFriendlyURLPrivateUser());
-			serviceContext.setPathFriendlyURLPublic(
-				PortalUtil.getPathFriendlyURLPublic());
-			serviceContext.setPathMain(PortalUtil.getPathMain());
+			Group guestGroup = GroupLocalServiceUtil.getGroup(
+				serviceContext.getCompanyId(), GroupConstants.GUEST);
+
+			serviceContext.setScopeGroupId(guestGroup.getGroupId());
+
+			long plid = LayoutLocalServiceUtil.getDefaultPlid(
+				serviceContext.getScopeGroupId(), false);
+
+			serviceContext.setPlid(plid);
 
 			User user = null;
 
@@ -122,6 +118,15 @@ public class ServiceContextFactory {
 				serviceContext.setSignedIn(false);
 			}
 		}
+
+		serviceContext.setPortalURL(PortalUtil.getPortalURL(request));
+		serviceContext.setPathMain(PortalUtil.getPathMain());
+		serviceContext.setPathFriendlyURLPrivateGroup(
+			PortalUtil.getPathFriendlyURLPrivateGroup());
+		serviceContext.setPathFriendlyURLPrivateUser(
+			PortalUtil.getPathFriendlyURLPrivateUser());
+		serviceContext.setPathFriendlyURLPublic(
+			PortalUtil.getPathFriendlyURLPublic());
 
 		// Attributes
 

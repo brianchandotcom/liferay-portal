@@ -5072,6 +5072,182 @@ public class JournalArticleUtil {
 	}
 
 	/**
+	* Returns all the journal articles where classNameId = &#63; and templateId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @return the matching journal articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_T(
+		long classNameId, java.lang.String templateId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_T(classNameId, templateId);
+	}
+
+	/**
+	* Returns a range of all the journal articles where classNameId = &#63; and templateId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_T(
+		long classNameId, java.lang.String templateId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_T(classNameId, templateId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles where classNameId = &#63; and templateId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_T(
+		long classNameId, java.lang.String templateId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_T(classNameId, templateId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle findByC_T_First(
+		long classNameId, java.lang.String templateId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByC_T_First(classNameId, templateId, orderByComparator);
+	}
+
+	/**
+	* Returns the first journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_T_First(
+		long classNameId, java.lang.String templateId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_T_First(classNameId, templateId, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle findByC_T_Last(
+		long classNameId, java.lang.String templateId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByC_T_Last(classNameId, templateId, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_T_Last(
+		long classNameId, java.lang.String templateId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_T_Last(classNameId, templateId, orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set where classNameId = &#63; and templateId = &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle[] findByC_T_PrevAndNext(
+		long id, long classNameId, java.lang.String templateId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByC_T_PrevAndNext(id, classNameId, templateId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the journal articles where classNameId = &#63; and templateId = &#63; from the database.
+	*
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_T(long classNameId, java.lang.String templateId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_T(classNameId, templateId);
+	}
+
+	/**
+	* Returns the number of journal articles where classNameId = &#63; and templateId = &#63;.
+	*
+	* @param classNameId the class name ID
+	* @param templateId the template ID
+	* @return the number of matching journal articles
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_T(long classNameId, java.lang.String templateId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_T(classNameId, templateId);
+	}
+
+	/**
 	* Returns all the journal articles where displayDate &lt; &#63; and status = &#63;.
 	*
 	* @param displayDate the display date

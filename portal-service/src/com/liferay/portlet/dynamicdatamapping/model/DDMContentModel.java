@@ -388,19 +388,20 @@ public interface DDMContentModel extends BaseModel<DDMContent>,
 	public Object clone();
 
 	@Override
-	public int compareTo(DDMContent ddmContent);
+	public int compareTo(
+		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<DDMContent> toCacheModel();
+	public CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMContent> toCacheModel();
 
 	@Override
-	public DDMContent toEscapedModel();
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent toEscapedModel();
 
 	@Override
-	public DDMContent toUnescapedModel();
+	public com.liferay.portlet.dynamicdatamapping.model.DDMContent toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -204,6 +204,11 @@
 			<finder-column name="head" />
 			<finder-column name="parentTitle" case-sensitive="false" />
 		</finder>
+		<finder name="N_H_R" return-type="Collection">
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+			<finder-column name="redirectTitle" case-sensitive="false" />
+		</finder>
 		<finder name="N_H_S" return-type="Collection">
 			<finder-column name="nodeId" />
 			<finder-column name="head" />

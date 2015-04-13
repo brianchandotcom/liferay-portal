@@ -163,10 +163,10 @@ AUI.add(
 		var STR_ROWS_PER_PAGE = 'rowsPerPage';
 
 		var TPL_CATEGORY_ITEM =
-			'<label class="category-item" id="categoryNode{categoryId}" title="{name}">' +
-				'<span class="category-name" title="{name}">' +
-					'<input class="category-item-check" data-categoryId="{categoryId}" name="category-item-check" type="checkbox" value="{name}" {checked} />' +
-					'{name}' +
+			'<label class="category-item" id="categoryNode{categoryId}" title="{titleCurrentValue}">' +
+				'<span class="category-name" title="{titleCurrentValue}">' +
+					'<input class="category-item-check" data-categoryId="{categoryId}" name="category-item-check" type="checkbox" value="{titleCurrentValue}" {checked} />' +
+					'{titleCurrentValue}' +
 				'</span>' +
 				'<span class="category-path" title="{path}">{path}</span>' +
 			'</label>';
@@ -1484,7 +1484,7 @@ AUI.add(
 							{
 								'$display = /assetvocabulary/get-group-vocabularies-display': {
 									groupId: parentGroupId,
-									name: query,
+									title: query,
 									start: start,
 									end: end,
 									addDefaultVocabulary: true,
@@ -1538,7 +1538,7 @@ AUI.add(
 							params = A.mix(
 								{
 									groupId: themeDisplay.getSiteGroupId(),
-									name: Lang.sub(TPL_SEARCH_QUERY, [query])
+									title: Lang.sub(TPL_SEARCH_QUERY, [query])
 								},
 								defaultParams
 							);

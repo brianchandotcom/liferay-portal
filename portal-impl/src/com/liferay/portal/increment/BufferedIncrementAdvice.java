@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.increment.IncrementFactory;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
@@ -29,6 +30,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -104,10 +106,24 @@ public class BufferedIncrementAdvice
 		Increment<?> increment = IncrementFactory.createIncrement(
 			bufferedIncrement.incrementClass(), value);
 
-		BufferedIncreasableEntry bufferedIncreasableEntry =
+		final BufferedIncrementProcessor callbackBufferedIncrementProcessor =
+			bufferedIncrementProcessor;
+
+		final BufferedIncreasableEntry bufferedIncreasableEntry =
 			new BufferedIncreasableEntry(methodInvocation, batchKey, increment);
 
-		bufferedIncrementProcessor.process(bufferedIncreasableEntry);
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					callbackBufferedIncrementProcessor.process(
+						bufferedIncreasableEntry);
+
+					return null;
+				}
+
+			});
 
 		return nullResult;
 	}

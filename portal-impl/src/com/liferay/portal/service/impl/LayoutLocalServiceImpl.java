@@ -2822,9 +2822,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layouts = ListUtil.sort(
 			layouts, new LayoutPriorityComparator(layout, lessThan));
 
-		Layout firstLayout = layouts.get(0);
+		if (layout.getParentLayoutId() ==
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 
-		layoutLocalServiceHelper.validateFirstLayout(firstLayout);
+			Layout firstLayout = layouts.get(0);
+
+			layoutLocalServiceHelper.validateFirstLayout(firstLayout);
+		}
 
 		int newPriority = LayoutConstants.FIRST_PRIORITY;
 

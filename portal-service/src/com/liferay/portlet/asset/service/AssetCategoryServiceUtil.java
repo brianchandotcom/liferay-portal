@@ -166,12 +166,12 @@ public class AssetCategoryServiceUtil {
 	OrderByComparator)}
 	*/
 	public static com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
-		long groupId, java.lang.String name, long vocabularyId, int start,
+		long groupId, java.lang.String title, long vocabularyId, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getJSONVocabularyCategories(groupId, name, vocabularyId,
+				   .getJSONVocabularyCategories(groupId, title, vocabularyId,
 			start, end, obc);
 	}
 
@@ -292,11 +292,11 @@ public class AssetCategoryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
-		long[] groupIds, java.lang.String name, long[] vocabularyIds,
+		long[] groupIds, java.lang.String title, long[] vocabularyIds,
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().search(groupIds, name, vocabularyIds, start, end);
+		return getService().search(groupIds, title, vocabularyIds, start, end);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategory updateCategory(

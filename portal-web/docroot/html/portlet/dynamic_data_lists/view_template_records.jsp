@@ -20,12 +20,6 @@
 DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-boolean showAddRecordButton = false;
-
-if (DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGroupId())) {
-	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD);
-}
 %>
 
 <portlet:actionURL var="editRecordSetURL">
@@ -33,7 +27,7 @@ if (DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGro
 </portlet:actionURL>
 
 <aui:form action="<%= editRecordSetURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
-	<c:if test="<%= showAddRecordButton %>">
+	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD) && editable %>">
 		<aui:nav-bar>
 			<aui:nav>
 				<portlet:renderURL var="addRecordURL">

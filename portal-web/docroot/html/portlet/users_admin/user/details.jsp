@@ -144,7 +144,7 @@ if (selContact != null) {
 						/>
 					</c:when>
 					<c:otherwise>
-						<img src="<%= selUser.getPortraitURL(themeDisplay) %>" />
+						<img alt="<liferay-ui:message key="portrait" />" src="<%= selUser.getPortraitURL(themeDisplay) %>" />
 					</c:otherwise>
 				</c:choose>
 			</c:if>

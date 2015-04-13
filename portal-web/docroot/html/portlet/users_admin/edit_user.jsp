@@ -158,6 +158,14 @@ allGroups.addAll(organizationsRelatedGroups);
 allGroups.addAll(GroupLocalServiceUtil.getOrganizationsGroups(organizations));
 allGroups.addAll(GroupLocalServiceUtil.getUserGroupsGroups(userGroups));
 
+List<Group> roleGroups = new ArrayList<Group>();
+
+for (Group group : allGroups) {
+	if (RoleLocalServiceUtil.hasGroupRoles(group.getGroupId())) {
+		roleGroups.add(group);
+	}
+}
+
 String[] mainSections = PropsValues.USERS_FORM_ADD_MAIN;
 String[] identificationSections = PropsValues.USERS_FORM_ADD_IDENTIFICATION;
 String[] miscellaneousSections = PropsValues.USERS_FORM_ADD_MISCELLANEOUS;
@@ -237,6 +245,7 @@ if (selUser != null) {
 	request.setAttribute("user.inheritedSiteRoles", inheritedSiteRoles);
 	request.setAttribute("user.userGroups", userGroups);
 	request.setAttribute("user.allGroups", allGroups);
+	request.setAttribute("user.roleGroups", roleGroups);
 
 	request.setAttribute("addresses.className", Contact.class.getName());
 	request.setAttribute("emailAddresses.className", Contact.class.getName());

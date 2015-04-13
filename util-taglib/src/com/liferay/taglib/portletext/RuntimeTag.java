@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.portlet.PortletParameterUtil;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -35,6 +37,9 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,8 +86,16 @@ public class RuntimeTag extends TagSupport {
 
 		queryString = PortletParameterUtil.addNamespace(portletId, queryString);
 
+		Map<String, String[]> parameterMap = request.getParameterMap();
+
+		if (!portletId.equals(request.getParameter("p_p_id"))) {
+			parameterMap = MapUtil.filter(
+				parameterMap, new HashMap<String, String[]>(),
+				new PrefixPredicateFilter("p_p_"));
+		}
+
 		request = DynamicServletRequest.addQueryString(
-			restrictPortletServletRequest, queryString);
+			restrictPortletServletRequest, parameterMap, queryString, false);
 
 		try {
 			request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
@@ -108,6 +121,8 @@ public class RuntimeTag extends TagSupport {
 			Portlet portlet = getPortlet(
 				themeDisplay.getCompanyId(), portletId);
 
+			JSONObject jsonObject = null;
+
 			if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
 					portletId) < 1) ||
@@ -124,18 +139,22 @@ public class RuntimeTag extends TagSupport {
 					portletLayoutListener.onAddToLayout(
 						portletId, themeDisplay.getPlid());
 				}
+
+				jsonObject = JSONFactoryUtil.createJSONObject();
+
+				PortletJSONUtil.populatePortletJSONObject(
+					request, StringPool.BLANK, portlet, jsonObject);
 			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			PortletJSONUtil.populatePortletJSONObject(
-				request, StringPool.BLANK, portlet, jsonObject);
-
-			PortletJSONUtil.writeHeaderPaths(response, jsonObject);
+			if (jsonObject != null) {
+				PortletJSONUtil.writeHeaderPaths(response, jsonObject);
+			}
 
 			PortletContainerUtil.render(request, response, portlet);
 
-			PortletJSONUtil.writeFooterPaths(response, jsonObject);
+			if (jsonObject != null) {
+				PortletJSONUtil.writeFooterPaths(response, jsonObject);
+			}
 		}
 		finally {
 			restrictPortletServletRequest.mergeSharedAttributes();

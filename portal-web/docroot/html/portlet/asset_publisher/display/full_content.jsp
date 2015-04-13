@@ -19,6 +19,10 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	redirect = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "redirect");
+}
+
 List results = (List)request.getAttribute("view.jsp-results");
 
 if (Validator.isNull(redirect) && results.isEmpty()) {

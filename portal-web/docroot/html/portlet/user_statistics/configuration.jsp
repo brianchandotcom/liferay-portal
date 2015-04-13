@@ -16,19 +16,13 @@
 
 <%@ include file="/html/portlet/user_statistics/init.jsp" %>
 
-<%
-String tabs2 = ParamUtil.getString(request, "tabs2");
-
-String redirect = ParamUtil.getString(request, "redirect");
-%>
-
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
-<liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
+
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="userStatisticsRankingsPanel" persistState="<%= true %>" title="ranking">
 		<aui:input label="rank-by-contribution" name="preferences--rankByContribution--" type="checkbox" value="<%= rankByContribution %>" />

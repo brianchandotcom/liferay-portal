@@ -42,6 +42,7 @@ import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.model.UserTrackerPath;
+import com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -721,10 +722,17 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			return _PATH_PORTAL_ERROR;
 		}
 
+		long companyId = PortalUtil.getCompanyId(request);
+		String portletId = ParamUtil.getString(request, "p_p_id");
+
 		if (!path.equals(_PATH_PORTAL_JSON_SERVICE) &&
 			!path.equals(_PATH_PORTAL_RENDER_PORTLET) &&
 			!ParamUtil.getBoolean(request, "wsrp") &&
-			!themeDisplay.isImpersonated()) {
+			!themeDisplay.isImpersonated() &&
+			!InterruptedPortletRequestWhitelistUtil.
+				isPortletInvocationWhitelisted(
+					companyId, portletId,
+					PortalUtil.getStrutsAction(request))) {
 
 			// Authenticated users should agree to Terms of Use
 
@@ -797,9 +805,6 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		if (isPortletPath(path)) {
 			try {
 				Portlet portlet = null;
-
-				long companyId = PortalUtil.getCompanyId(request);
-				String portletId = ParamUtil.getString(request, "p_p_id");
 
 				if (Validator.isNotNull(portletId)) {
 					portlet = PortletLocalServiceUtil.getPortletById(
@@ -928,7 +933,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 						user.getCompanyId(), strutsPath);
 				}
 
-				if ((portlet != null) && portlet.isActive()) {
+				if ((portlet != null) && portlet.isActive() &&
+					!portlet.isSystem()) {
+
 					ThemeDisplay themeDisplay =
 						(ThemeDisplay)request.getAttribute(
 							WebKeys.THEME_DISPLAY);

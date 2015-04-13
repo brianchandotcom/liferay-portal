@@ -35,6 +35,8 @@ public class PortletKeys {
 
 	public static final String ASSET_BROWSER = "172";
 
+	public static final String ASSET_CATEGORIES_ADMIN = "147";
+
 	public static final String ASSET_CATEGORIES_NAVIGATION = "122";
 
 	public static final String ASSET_PUBLISHER = "101";
@@ -104,6 +106,8 @@ public class PortletKeys {
 	public static final String JOURNAL_CONTENT_LIST = "62";
 
 	public static final String JOURNAL_CONTENT_SEARCH = "77";
+
+	public static final String KALEO_FORMS = "1_WAR_kaleoformsportlet";
 
 	public static final String LANGUAGE = "82";
 

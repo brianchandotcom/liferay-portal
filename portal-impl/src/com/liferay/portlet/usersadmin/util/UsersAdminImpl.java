@@ -217,6 +217,17 @@ public class UsersAdminImpl implements UsersAdmin {
 			return filteredGroupRoles;
 		}
 
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (!GroupPermissionUtil.contains(
+				permissionChecker, group, ActionKeys.ASSIGN_USER_ROLES) &&
+			!OrganizationPermissionUtil.contains(
+				permissionChecker, group.getOrganizationId(),
+				ActionKeys.ASSIGN_USER_ROLES)) {
+
+			return Collections.emptyList();
+		}
+
 		itr = filteredGroupRoles.iterator();
 
 		while (itr.hasNext()) {
@@ -228,30 +239,9 @@ public class UsersAdminImpl implements UsersAdmin {
 					RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
 				roleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
 				roleName.equals(RoleConstants.SITE_ADMINISTRATOR) ||
-				roleName.equals(RoleConstants.SITE_OWNER)) {
-
-				itr.remove();
-			}
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (GroupPermissionUtil.contains(
-				permissionChecker, groupId, ActionKeys.ASSIGN_USER_ROLES) ||
-			OrganizationPermissionUtil.contains(
-				permissionChecker, group.getOrganizationId(),
-				ActionKeys.ASSIGN_USER_ROLES)) {
-
-			return filteredGroupRoles;
-		}
-
-		itr = filteredGroupRoles.iterator();
-
-		while (itr.hasNext()) {
-			Role role = itr.next();
-
-			if (!RolePermissionUtil.contains(
-					permissionChecker, groupId, role.getRoleId(),
+				roleName.equals(RoleConstants.SITE_OWNER) ||
+				!RolePermissionUtil.contains(
+					permissionChecker, groupId, groupRole.getRoleId(),
 					ActionKeys.ASSIGN_MEMBERS)) {
 
 				itr.remove();
@@ -893,41 +883,27 @@ public class UsersAdminImpl implements UsersAdmin {
 	public List<UserGroupRole> getUserGroupRoles(PortletRequest portletRequest)
 		throws PortalException, SystemException {
 
-		List<UserGroupRole> userGroupRoles = new UniqueList<UserGroupRole>();
-
-		long[] groupRolesRoleIds = StringUtil.split(
-			ParamUtil.getString(portletRequest, "groupRolesRoleIds"), 0L);
-		long[] groupRolesGroupIds = StringUtil.split(
-			ParamUtil.getString(portletRequest, "groupRolesGroupIds"), 0L);
-
-		if (groupRolesGroupIds.length != groupRolesRoleIds.length) {
-			return userGroupRoles;
-		}
-
 		User user = PortalUtil.getSelectedUser(portletRequest);
 
-		long userId = 0;
-
-		if (user != null) {
-			userId = user.getUserId();
+		if (user == null) {
+			return Collections.emptyList();
 		}
 
-		for (int i = 0; i < groupRolesGroupIds.length; i++) {
-			if ((groupRolesGroupIds[i] == 0) || (groupRolesRoleIds[i] == 0)) {
-				continue;
-			}
+		Set<UserGroupRole> userGroupRoles =
+			new HashSet<UserGroupRole>(
+				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+					user.getUserId()));
 
-			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-				userId, groupRolesGroupIds[i], groupRolesRoleIds[i]);
+		userGroupRoles.addAll(
+			getUserGroupRoles(
+				portletRequest, user, "addGroupRolesGroupIds",
+				"addGroupRolesRoleIds"));
+		userGroupRoles.removeAll(
+			getUserGroupRoles(
+				portletRequest, user, "deleteGroupRolesGroupIds",
+				"deleteGroupRolesRoleIds"));
 
-			UserGroupRole userGroupRole =
-				UserGroupRoleLocalServiceUtil.createUserGroupRole(
-					userGroupRolePK);
-
-			userGroupRoles.add(userGroupRole);
-		}
-
-		return userGroupRoles;
+		return new ArrayList<UserGroupRole>(userGroupRoles);
 	}
 
 	@Override
@@ -1433,6 +1409,45 @@ public class UsersAdminImpl implements UsersAdmin {
 				WebsiteServiceUtil.deleteWebsite(website.getWebsiteId());
 			}
 		}
+	}
+
+	protected List<UserGroupRole> getUserGroupRoles(
+		PortletRequest portletRequest, User user, String groupIdsParam,
+		String roleIdsParam) {
+
+		List<UserGroupRole> userGroupRoles = new UniqueList<UserGroupRole>();
+
+		long[] groupRolesGroupIds = StringUtil.split(
+			ParamUtil.getString(portletRequest, groupIdsParam), 0L);
+		long[] groupRolesRoleIds = StringUtil.split(
+			ParamUtil.getString(portletRequest, roleIdsParam), 0L);
+
+		if (groupRolesGroupIds.length != groupRolesRoleIds.length) {
+			return userGroupRoles;
+		}
+
+		long userId = 0;
+
+		if (user != null) {
+			userId = user.getUserId();
+		}
+
+		for (int i = 0; i < groupRolesGroupIds.length; i++) {
+			if ((groupRolesGroupIds[i] == 0) || (groupRolesRoleIds[i] == 0)) {
+				continue;
+			}
+
+			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
+				userId, groupRolesGroupIds[i], groupRolesRoleIds[i]);
+
+			UserGroupRole userGroupRole =
+				UserGroupRoleLocalServiceUtil.createUserGroupRole(
+					userGroupRolePK);
+
+			userGroupRoles.add(userGroupRole);
+		}
+
+		return userGroupRoles;
 	}
 
 }

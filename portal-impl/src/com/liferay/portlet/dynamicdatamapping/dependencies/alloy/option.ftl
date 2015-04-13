@@ -14,20 +14,22 @@
 	<#assign parentFieldRawValue = field.getValue(requestedLocale, parentValueIndex)!"[]">
 </#if>
 
-<#assign selected = jsonFactoryUtil.looseDeserialize(parentFieldRawValue)?seq_contains(fieldStructure.value)>
+<#assign parentFieldNamespace = "">
+
+<#if parentFieldStructure.fieldNamespace??>
+	<#assign parentFieldNamespace = "_INSTANCE_" + parentFieldStructure.fieldNamespace>
+</#if>
+
+<#assign namespacedParentFieldName = namespacedParentName + parentFieldNamespace>
+
+<#assign parentFieldRawValues = jsonFactoryUtil.looseDeserialize(parentFieldRawValue)>
+
+<#assign selected = paramUtil.getParameterValues(request, namespacedParentFieldName, parentFieldRawValues)?seq_contains(fieldStructure.value)>
 
 <#if parentType == "select">
 	<@aui.option cssClass=cssClass label=escapeAttribute(fieldStructure.label) selected=selected value=escape(fieldStructure.value) />
 <#else>
-	<#assign parentFieldNamespace = "">
-
-	<#assign parentFieldNamespace = "">
-
-	<#if parentFieldStructure.fieldNamespace??>
-		<#assign parentFieldNamespace = "_INSTANCE_" + parentFieldStructure.fieldNamespace>
-	</#if>
-
-	<@aui.input checked=selected cssClass=cssClass label=escape(fieldStructure.label) name="${namespacedParentName}${parentFieldNamespace}" type="radio" value=fieldStructure.value>
+	<@aui.input checked=selected cssClass=cssClass label=escape(fieldStructure.label) name="${namespacedParentFieldName}" type="radio" value=fieldStructure.value>
 		<#if parentFieldStructure.required?? && (parentFieldStructure.required == "true")>
 			<@aui.validator name="required" />
 		</#if>

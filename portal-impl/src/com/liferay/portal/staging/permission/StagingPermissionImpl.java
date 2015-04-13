@@ -71,8 +71,11 @@ public class StagingPermissionImpl implements StagingPermission {
 			long classPK, String portletId, String actionId)
 		throws Exception {
 
-		if (!actionId.equals(ActionKeys.VIEW) &&
+		if (!actionId.equals(ActionKeys.ADD_TO_PAGE) &&
+			!actionId.equals(ActionKeys.CONFIGURATION) &&
+			!actionId.equals(ActionKeys.CUSTOMIZE) &&
 			!actionId.equals(ActionKeys.DELETE) &&
+			!actionId.equals(ActionKeys.VIEW) &&
 			group.hasLocalOrRemoteStagingGroup() &&
 			(Validator.isNull(portletId) || group.isStagedPortlet(portletId))) {
 

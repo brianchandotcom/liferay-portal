@@ -463,7 +463,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
 		long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -474,7 +474,7 @@ public class AssetCategoryServiceHttp {
 					_getJSONVocabularyCategoriesParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					name, vocabularyId, start, end, obc);
+					title, vocabularyId, start, end, obc);
 
 			Object returnObj = null;
 
@@ -979,7 +979,7 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
-		HttpPrincipal httpPrincipal, long[] groupIds, java.lang.String name,
+		HttpPrincipal httpPrincipal, long[] groupIds, java.lang.String title,
 		long[] vocabularyIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -988,7 +988,7 @@ public class AssetCategoryServiceHttp {
 					"search", _searchParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					groupIds, name, vocabularyIds, start, end);
+					groupIds, title, vocabularyIds, start, end);
 
 			Object returnObj = null;
 

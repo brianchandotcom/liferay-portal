@@ -172,6 +172,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				DDLRecord.class.getName(), recordVersion.getPrimaryKey());
 		}
 
+		// Asset
+
+		assetEntryLocalService.deleteEntry(
+			DDLRecord.class.getName(), record.getRecordId());
+
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -414,6 +419,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		boolean addDraftAssetEntry = false;
+		boolean visible = true;
 
 		if ((recordVersion != null) && !recordVersion.isApproved()) {
 			String version = recordVersion.getVersion();
@@ -428,11 +434,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 					addDraftAssetEntry = true;
 				}
 			}
-		}
 
-		boolean visible = false;
-
-		if ((recordVersion != null) && !recordVersion.isApproved()) {
 			visible = false;
 		}
 

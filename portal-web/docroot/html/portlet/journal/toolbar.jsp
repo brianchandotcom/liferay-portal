@@ -128,6 +128,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 						}
 					}
 				},
+				groupId: <%= scopeGroupId %>,
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showGlobalScope: false,

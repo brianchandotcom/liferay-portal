@@ -185,6 +185,7 @@ AUI.add(
 
 						LiferayFormBuilder.superclass.bindUI.apply(instance, arguments);
 
+						instance.translationManager.after('defaultLocaleChange', instance._onDefaultLocaleChange, instance);
 						instance.translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance);
 					},
 
@@ -482,6 +483,30 @@ AUI.add(
 						return readOnlyAttributes;
 					},
 
+					_onDefaultLocaleChange: function(event) {
+						var instance = this;
+
+						var fields = instance.get('fields');
+
+						var newVal = event.newVal;
+
+						var translationManager = instance.translationManager;
+
+						var availableLanguageIds = translationManager.get('availableLocales');
+
+						if (availableLanguageIds.indexOf(newVal) < 0) {
+							var config = {
+								fields: fields,
+								newVal: newVal,
+								prevVal: event.prevVal
+							};
+
+							translationManager.addAvailableLocale(newVal);
+
+							instance._updateLocalizationMaps(config);
+						}
+					},
+
 					_onPropertyModelChange: function(event) {
 						var instance = this;
 
@@ -660,6 +685,32 @@ AUI.add(
 								}
 
 								instance._updateFieldsLocalizationMap(locale, item.get('fields'));
+							}
+						);
+					},
+
+					_updateLocalizationMaps: function(config) {
+						var instance = this;
+
+						var fields = config.fields;
+						var newVal = config.newVal;
+						var prevVal = config.prevVal;
+
+						AArray.each(
+							fields._items,
+							function(field) {
+								var childFields = field.get('fields');
+								var localizationMap = field.get('localizationMap');
+
+								var config = {
+									fields: childFields,
+									newVal: newVal,
+									prevVal: prevVal
+								};
+
+								localizationMap[newVal] = localizationMap[prevVal];
+
+								instance._updateLocalizationMaps(config);
 							}
 						);
 					}
@@ -848,6 +899,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-form-validator', 'aui-text-unicode', 'json', 'liferay-menu', 'liferay-translation-manager', 'text']
+		requires: ['arraysort', 'aui-form-builder', 'aui-form-validator', 'aui-text-unicode', 'json', 'liferay-menu', 'liferay-translation-manager', 'liferay-util-window', 'text']
 	}
 );

@@ -31,6 +31,7 @@
 				String urlControlPanelSitesPortlet = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", curPortletId);
 
 				urlControlPanelSitesPortlet = HttpUtil.setParameter(urlControlPanelSitesPortlet, "controlPanelCategory", controlPanelCategory);
+				urlControlPanelSitesPortlet = HttpUtil.setParameter(urlControlPanelSitesPortlet, "doAsGroupId", group.getGroupId());
 
 				boolean selected = curPortletId.equals(ppid);
 

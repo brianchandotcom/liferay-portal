@@ -73,7 +73,10 @@ for (int j = 0; j < folderColumns.length; j++) {
 					buffer.append("\">");
 				}
 
-				buffer.append("<img align=\"left\" border=\"0\" src=\"");
+				buffer.append("<span class=\"entry-thumbnail\">");
+				buffer.append("<img align=\"left\" alt=\"");
+				buffer.append(LanguageUtil.get(locale, "thumbnail"));
+				buffer.append("\" border=\"0\" src=\"");
 				buffer.append(HtmlUtil.escapeHREF(themeDisplay.getPathThemeImages()));
 
 				if (curFolder.isMountPoint()) {
@@ -88,24 +91,32 @@ for (int j = 0; j < folderColumns.length; j++) {
 					}
 				}
 
+				buffer.append("</span>");
+				buffer.append("<div class=\"entry-metadata\">");
+
 				if (!repositoryAccess) {
 					buffer.append("<span title=\"");
 					buffer.append(LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository"));
 					buffer.append("\">");
 				}
 
-				buffer.append("<strong>");
+				buffer.append("<span class=\"entry-title\">");
+				buffer.append("<span class=\"entry-title-text\">");
 				buffer.append(HtmlUtil.escape(curFolder.getName()));
-				buffer.append("</strong>");
+				buffer.append("</span>");
+				buffer.append("</span>");
 
 				if (!repositoryAccess) {
 					buffer.append("</span>");
 				}
 
 				if (Validator.isNotNull(curFolder.getDescription())) {
-					buffer.append("<br />");
+					buffer.append("<div class=\"entry-description\">");
 					buffer.append(HtmlUtil.escape(curFolder.getDescription()));
+					buffer.append("</div>");
 				}
+
+				buffer.append("</div>");
 
 				if (repositoryAccess) {
 					buffer.append("</a>");

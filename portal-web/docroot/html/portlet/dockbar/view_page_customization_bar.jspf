@@ -15,7 +15,7 @@
 --%>
 
 <%
-boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
+boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isStagingGroup() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
 boolean linkedLayout = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
 boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
 %>
@@ -127,34 +127,34 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 							<liferay-ui:icon label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
 						</c:if>
 					</div>
-				</div>
 
-				<aui:script>
-					Liferay.provide(
-						window,
-						'<portlet:namespace />toggleCustomizedView',
-						function(event) {
-							var A = AUI();
+					<aui:script>
+						Liferay.provide(
+							window,
+							'<portlet:namespace />toggleCustomizedView',
+							function(event) {
+								var A = AUI();
 
-							A.io.request(
-								themeDisplay.getPathMain() + '/portal/update_layout',
-								{
-									data: {
-										cmd: 'toggle_customized_view',
-										customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
-										p_auth: '<%= AuthTokenUtil.getToken(request) %>'
-									},
-									on: {
-										success: function(event, id, obj) {
-											window.location.href = themeDisplay.getLayoutURL();
+								A.io.request(
+									themeDisplay.getPathMain() + '/portal/update_layout',
+									{
+										data: {
+											cmd: 'toggle_customized_view',
+											customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
+											p_auth: '<%= AuthTokenUtil.getToken(request) %>'
+										},
+										on: {
+											success: function(event, id, obj) {
+												window.location.href = themeDisplay.getLayoutURL();
+											}
 										}
 									}
-								}
-							);
-						},
-						['aui-io-request']
-					);
-				</aui:script>
+								);
+							},
+							['aui-io-request']
+						);
+					</aui:script>
+				</div>
 
 				<aui:script use="aui-base">
 					var toggleCustomizedView = A.one('#<portlet:namespace />toggleCustomizedView');

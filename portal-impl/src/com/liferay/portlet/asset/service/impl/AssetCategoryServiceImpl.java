@@ -19,11 +19,21 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -31,13 +41,17 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetCategoryDisplay;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.base.AssetCategoryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.util.Autocomplete;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -220,7 +234,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	 */
 	@Override
 	public JSONObject getJSONVocabularyCategories(
-			long groupId, String name, long vocabularyId, int start, int end,
+			long groupId, String title, long vocabularyId, int start, int end,
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
@@ -237,12 +251,11 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		List<AssetCategory> categories;
 		int total = 0;
 
-		if (Validator.isNotNull(name)) {
-			name = (CustomSQLUtil.keywords(name))[0];
-
-			categories = getVocabularyCategories(
-				groupId, name, vocabularyId, start, end, obc);
-			total = getVocabularyCategoriesCount(groupId, name, vocabularyId);
+		if (Validator.isNotNull(title)) {
+			categories = searchCategories(
+				new long[] {groupId}, title, new long[] {vocabularyId}, start,
+				end);
+			total = categories.size();
 		}
 		else {
 			categories = getVocabularyCategories(vocabularyId, start, end, obc);
@@ -435,32 +448,14 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 	@Override
 	public JSONArray search(
-			long[] groupIds, String name, long[] vocabularyIds, int start,
+			long[] groupIds, String title, long[] vocabularyIds, int start,
 			int end)
 		throws PortalException, SystemException {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		List<AssetCategory> categories = searchCategories(
+			groupIds, title, vocabularyIds, start, end);
 
-		for (long groupId : groupIds) {
-			JSONArray categoriesJSONArray = null;
-
-			if (Validator.isNull(name)) {
-				categoriesJSONArray = toJSONArray(
-					assetCategoryPersistence.filterFindByG_V(
-						groupId, vocabularyIds));
-			}
-			else {
-				categoriesJSONArray = toJSONArray(
-					assetCategoryPersistence.filterFindByG_LikeN_V(
-						groupId, name, vocabularyIds));
-			}
-
-			for (int j = 0; j < categoriesJSONArray.length(); j++) {
-				jsonArray.put(categoriesJSONArray.getJSONObject(j));
-			}
-		}
-
-		return jsonArray;
+		return toJSONArray(categories);
 	}
 
 	@Override
@@ -477,6 +472,37 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return assetCategoryLocalService.updateCategory(
 			getUserId(), categoryId, parentCategoryId, titleMap, descriptionMap,
 			vocabularyId, categoryProperties, serviceContext);
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long[] groupIds, String title, long[] vocabularyIds,
+		int start, int end) {
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes =
+			new HashMap<String, Serializable>();
+
+		attributes.put(Field.ASSET_VOCABULARY_IDS, vocabularyIds);
+		attributes.put(Field.TITLE, title);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(groupIds);
+		searchContext.setKeywords(title);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		searchContext.setStart(start);
+
+		return searchContext;
 	}
 
 	protected List<AssetCategory> filterCategories(
@@ -500,6 +526,56 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		}
 
 		return categories;
+	}
+
+	protected List<AssetCategory> searchCategories(
+			long[] groupIds, String title, long[] vocabularyIds, int start,
+			int end)
+		throws PortalException, SystemException {
+
+		User user = getUser();
+
+		SearchContext searchContext = buildSearchContext(
+			user.getCompanyId(), groupIds, title, vocabularyIds, start, end);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetCategory.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext);
+
+			List<Document> documents = hits.toList();
+
+			List<AssetCategory> categories = new ArrayList<AssetCategory>(
+			documents.size());
+
+			for (Document document : documents) {
+				long categoryId = GetterUtil.getLong(
+					document.get(Field.ASSET_CATEGORY_ID));
+
+				AssetCategory category =
+					AssetCategoryLocalServiceUtil.getCategory(categoryId);
+
+				if (category == null) {
+					categories = null;
+
+					long companyId = GetterUtil.getLong(
+						document.get(Field.COMPANY_ID));
+
+					indexer.delete(companyId, document.getUID());
+				}
+				else if (categories != null) {
+					categories.add(category);
+				}
+			}
+
+			if (categories != null) {
+				return categories;
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	protected JSONArray toJSONArray(List<AssetCategory> categories)
@@ -536,7 +612,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 			StringBundler sb = new StringBundler(1 + names.size());
 
-			sb.append(vocabulary.getName());
+			sb.append(vocabulary.getTitleCurrentValue());
 			sb.append(names.toArray(new String[names.size()]));
 
 			categoryJSONObject.put("path", sb.toString());

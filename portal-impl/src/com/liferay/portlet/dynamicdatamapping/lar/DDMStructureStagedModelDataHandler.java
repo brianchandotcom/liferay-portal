@@ -21,10 +21,13 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -33,6 +36,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -138,6 +142,13 @@ public class DDMStructureStagedModelDataHandler
 				DDMStructure.class + ".ddmStructureKey");
 
 		structureKeys.put(structureKey, existingStructure.getStructureKey());
+
+		Map<Long, Long> structureIdsUnmodified =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class + ".unmodified");
+
+		structureIdsUnmodified.put(
+			structureId, existingStructure.getStructureId());
 	}
 
 	@Override
@@ -262,12 +273,30 @@ public class DDMStructureStagedModelDataHandler
 					structure.getStorageType(), structure.getType(),
 					serviceContext);
 			}
-			else {
+			else if (isModifiedStructure(existingStructure, structure)) {
 				importedStructure =
 					DDMStructureLocalServiceUtil.updateStructure(
 						existingStructure.getStructureId(), parentStructureId,
 						structure.getNameMap(), structure.getDescriptionMap(),
 						structure.getXsd(), serviceContext);
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Not importing DDM structure with key " +
+							structure.getStructureKey() +
+								" since it was not modified");
+				}
+
+				importedStructure = existingStructure;
+
+				Map<Long, Long> structureIdsUnmodified =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						DDMStructure.class + ".unmodified");
+
+				structureIdsUnmodified.put(
+					structure.getStructureId(),
+					existingStructure.getStructureId());
 			}
 		}
 		else {
@@ -283,6 +312,48 @@ public class DDMStructureStagedModelDataHandler
 
 		structureKeys.put(
 			structure.getStructureKey(), importedStructure.getStructureKey());
+	}
+
+	protected boolean isModifiedStructure(
+		DDMStructure existingStructure, DDMStructure structure) {
+
+		Date modifiedDate = structure.getModifiedDate();
+
+		if (modifiedDate.after(existingStructure.getModifiedDate())) {
+			return true;
+		}
+
+		if (!Validator.equals(
+				structure.getNameMap(), existingStructure.getNameMap())) {
+
+			return true;
+		}
+
+		if (!Validator.equals(
+				structure.getDescriptionMap(),
+				existingStructure.getDescriptionMap())) {
+
+			return true;
+		}
+
+		if (!Validator.equals(structure.getXsd(), existingStructure.getXsd())) {
+			return true;
+		}
+
+		if (!Validator.equals(
+				structure.getStorageType(),
+				existingStructure.getStorageType())) {
+
+			return true;
+		}
+
+		if (!Validator.equals(
+				structure.getType(), existingStructure.getType())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected DDMStructure getExistingStructure(
@@ -320,5 +391,8 @@ public class DDMStructureStagedModelDataHandler
 
 		structure.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DDMStructureStagedModelDataHandler.class);
 
 }

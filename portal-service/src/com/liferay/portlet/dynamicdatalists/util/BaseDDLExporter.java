@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatalists.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -74,6 +75,12 @@ public abstract class BaseDDLExporter implements DDLExporter {
 			long recordSetId, int status, int start, int end,
 			OrderByComparator orderByComparator)
 		throws Exception;
+
+	protected String getStatusMessage(int status) {
+		String statusLabel = WorkflowConstants.getStatusLabel(status);
+
+		return LanguageUtil.get(_locale, statusLabel);
+	}
 
 	private Locale _locale;
 

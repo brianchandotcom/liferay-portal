@@ -437,8 +437,6 @@ AUI.add(
 					_searchFileEntry: function(searchData) {
 						var instance = this;
 
-						instance._documentLibraryContainer.all('.document-entries-pagination').hide();
-
 						var requestParams = {};
 
 						requestParams[instance.ns(STRUTS_ACTION)] = '/document_library/search';

@@ -16,7 +16,6 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -71,9 +70,7 @@ public class PortletExportBackgroundTaskExecutor
 	}
 
 	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e)
-		throws SystemException {
-
+	public String handleException(BackgroundTask backgroundTask, Exception e) {
 		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
 			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
 

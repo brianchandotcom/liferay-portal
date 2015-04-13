@@ -209,6 +209,14 @@ if (!portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 			showPortletCssIcon = true;
 		}
 	}
+
+	if (layoutTypePortlet.isCustomizable() && !layoutTypePortlet.isColumnDisabled(columnId) && !portlet.isPreferencesCompanyWide() && portlet.isPreferencesUniquePerLayout() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
+		showConfigurationIcon = true;
+
+		if (PropsValues.PORTLET_CSS_ENABLED) {
+			showPortletCssIcon = true;
+		}
+	}
 }
 
 if (group.isLayoutPrototype()) {
@@ -771,11 +779,11 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		Properties freeformStyleProps = PropertiesUtil.load(portletSetup.getValue("portlet-freeform-styles", StringPool.BLANK));
 
 		sb.append("style=\"left: ");
-		sb.append(GetterUtil.getString(freeformStyleProps.getProperty("left"), "0"));
+		sb.append(GetterUtil.getString(HtmlUtil.escapeAttribute(freeformStyleProps.getProperty("left")), "0"));
 		sb.append("; position: absolute; top: ");
-		sb.append(GetterUtil.getString(freeformStyleProps.getProperty("top"), "0"));
+		sb.append(GetterUtil.getString(HtmlUtil.escapeAttribute(freeformStyleProps.getProperty("top")), "0"));
 		sb.append("; width: ");
-		sb.append(GetterUtil.getString(freeformStyleProps.getProperty("width"), "400px"));
+		sb.append(GetterUtil.getString(HtmlUtil.escapeAttribute(freeformStyleProps.getProperty("width")), "400px"));
 		sb.append(";\"");
 
 		freeformStyles = sb.toString();

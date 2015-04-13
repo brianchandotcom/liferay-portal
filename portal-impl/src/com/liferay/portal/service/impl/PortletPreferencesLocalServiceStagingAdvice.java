@@ -16,16 +16,20 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.PortletPreferencesIds;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portal.staging.StagingAdvicesThreadLocal;
@@ -199,7 +203,11 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			return methodInvocation.proceed();
 		}
 
-		plid = layoutRevision.getLayoutRevisionId();
+		User user = UserLocalServiceUtil.getUserById(
+			PrincipalThreadLocal.getUserId());
+
+		plid = StagingUtil.getRecentLayoutRevisionId(
+			user, layoutRevision.getLayoutSetBranchId(), layout.getPlid());
 
 		if (arguments.length == 1) {
 			PortletPreferencesIds portletPreferencesIds =

@@ -14,31 +14,10 @@
 
 package com.liferay.portal;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.liferay.portal.kernel.exception.LocalizedException;
 
 /**
  * @author Sergio González
  */
-public class LayoutFriendlyURLsException extends PortalException {
-
-	public LayoutFriendlyURLsException() {
-		super();
-	}
-
-	public void addLayoutFriendlyURLException(
-		LayoutFriendlyURLException lfurle) {
-
-		_layoutFriendlyURLExceptions.add(lfurle);
-	}
-
-	public List<LayoutFriendlyURLException> getLayoutFriendlyURLExceptions() {
-		return _layoutFriendlyURLExceptions;
-	}
-
-	private List<LayoutFriendlyURLException> _layoutFriendlyURLExceptions =
-		new ArrayList<LayoutFriendlyURLException>();
-
+public class LayoutFriendlyURLsException extends LocalizedException {
 }

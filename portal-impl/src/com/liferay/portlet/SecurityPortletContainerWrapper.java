@@ -331,8 +331,15 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
-		PortletMode portletMode = PortletModeFactory.getPortletMode(
-			ParamUtil.getString(request, "p_p_mode"));
+		PortletMode portletMode = PortletMode.VIEW;
+
+		String portletId = portlet.getPortletId();
+		String ppid = request.getParameter("p_p_id");
+		String ppmode = request.getParameter("p_p_mode");
+
+		if (portletId.equals(ppid) && (ppmode != null)) {
+			portletMode = PortletModeFactory.getPortletMode(ppmode);
+		}
 
 		return PortletPermissionUtil.hasAccessPermission(
 			permissionChecker, themeDisplay.getScopeGroupId(), layout, portlet,

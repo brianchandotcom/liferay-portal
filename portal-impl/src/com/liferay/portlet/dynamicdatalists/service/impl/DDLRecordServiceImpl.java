@@ -66,6 +66,18 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteRecord(long recordId)
+		throws PortalException, SystemException {
+
+		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
+
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.DELETE);
+
+		ddlRecordLocalService.deleteRecord(record);
+	}
+
+	@Override
 	public DDLRecord deleteRecordLocale(
 			long recordId, Locale locale, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -89,6 +101,20 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			getPermissionChecker(), record.getRecordSetId(), ActionKeys.VIEW);
 
 		return record;
+	}
+
+	@Override
+	public void revertRecordVersion(
+			long recordId, String version, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
+
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
+
+		ddlRecordLocalService.revertRecordVersion(
+			getGuestOrUserId(), recordId, version, serviceContext);
 	}
 
 	@Override

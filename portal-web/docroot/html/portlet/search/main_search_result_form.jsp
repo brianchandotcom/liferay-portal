@@ -78,6 +78,8 @@ if (assetRendererFactory != null) {
 		viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
 
 		viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
+
+		viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
 	}
 	else {
 		viewURL = viewFullContentURL.toString();
@@ -97,10 +99,12 @@ else {
 
 Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
+Summary summary = null;
+
 if (indexer != null) {
 	String snippet = document.get(Field.SNIPPET);
 
-	Summary summary = indexer.getSummary(document, locale, snippet, viewFullContentURL);
+	summary = indexer.getSummary(document, locale, snippet, viewFullContentURL);
 
 	entryTitle = summary.getTitle();
 	entrySummary = summary.getContent();
@@ -124,6 +128,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 <span class="asset-entry">
 	<span class="asset-entry-type">
 		<%= ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), className) %>
+
+		<c:if test="<%= locale != summary.getLocale() %>">
+			<liferay-ui:icon image='<%= "../language/" + LocaleUtil.toLanguageId(summary.getLocale()) %>' message='<%= LanguageUtil.format(locale, "this-result-comes-from-the-x-version-of-this-web-content", LocaleUtil.getLongDisplayName(summary.getLocale(), new HashSet<String>())) %>' />
+		</c:if>
 	</span>
 
 	<span class="asset-entry-title">
@@ -186,6 +194,12 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 				<div class="asset-entry-categories">
 
 					<%
+					Locale assetCategoryLocale = locale;
+
+					if (locale != summary.getLocale()) {
+						assetCategoryLocale = summary.getLocale();
+					}
+
 					for (int i = 0; i < assetCategoryIds.length; i++) {
 						long assetCategoryId = GetterUtil.getLong(assetCategoryIds[i]);
 
@@ -211,12 +225,12 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 						<c:if test="<%= i == 0 %>">
 							<div class="taglib-asset-categories-summary">
 								<span class="asset-vocabulary">
-									<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>:
+									<%= HtmlUtil.escape(assetVocabulary.getTitle(assetCategoryLocale)) %>:
 								</span>
 						</c:if>
 
 						<a class="asset-category" href="<%= categoryURL.toString() %>">
-							<%= _buildAssetCategoryPath(assetCategory, locale) %>
+							<%= _buildAssetCategoryPath(assetCategory, assetCategoryLocale) %>
 						</a>
 
 						<c:if test="<%= (i + 1) == assetCategoryIds.length %>">

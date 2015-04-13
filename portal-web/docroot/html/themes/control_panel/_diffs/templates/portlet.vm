@@ -5,7 +5,7 @@
 #set ($portlet_title_icon_css_class = "")
 #set ($portlet_description = $portlet_display.getDescription())
 #set ($portlet_description_css_class = "alert alert-info lfr-control-panel-help-content lfr-message-content")
-#set ($portlet_back_url = $htmlUtil.escapeAttribute($portlet_display.getURLBack()))
+#set ($portlet_back_url = $htmlUtil.escapeHREF($portlet_display.getURLBack()))
 #set ($enable_portlet_descriptions = $sessionClicks.get($request, "enable-portlet-descriptions", "1"))
 #set ($show_portlet_title = $portlet_display.getControlPanelCategory().startsWith("site_administration."))
 #set ($show_portlet_description = $enable_portlet_descriptions == "1" && $sessionClicks.get($request, "show-portlet-description-$portlet_id", "1") == "1")

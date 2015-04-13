@@ -90,7 +90,7 @@
 				showAssetCount: true
 			},
 			displayStyle: 'users',
-			fieldName: 'userId',
+			fieldName: 'userName',
 			label: 'user',
 			order: 'OrderHitsDesc',
 			static: false,

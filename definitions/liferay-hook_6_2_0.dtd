@@ -102,6 +102,8 @@ phone.number.format.usa.regexp
 portlet.add.default.resource.check.enabled
 portlet.add.default.resource.check.whitelist
 portlet.add.default.resource.check.whitelist.actions
+portlet.interrupted.request.whitelist
+portlet.interrupted.request.whitelist.actions
 rss.feeds.enabled
 sanitizer.impl
 servlet.session.create.events

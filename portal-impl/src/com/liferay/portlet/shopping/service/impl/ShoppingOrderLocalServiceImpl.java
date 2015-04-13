@@ -181,6 +181,10 @@ public class ShoppingOrderLocalServiceImpl
 				ShoppingItem item = shoppingItemLocalService.getItem(
 					ShoppingUtil.getItemId(orderItem.getItemId()));
 
+				if (item.isInfiniteStock()) {
+					continue;
+				}
+
 				if (!item.isFields()) {
 					int quantity =
 						item.getStockQuantity() - orderItem.getQuantity();

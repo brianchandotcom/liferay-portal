@@ -4787,7 +4787,9 @@ public class JournalArticleLocalServiceImpl
 			article.setResourcePrimKey(latestArticle.getResourcePrimKey());
 			article.setGroupId(latestArticle.getGroupId());
 			article.setCompanyId(latestArticle.getCompanyId());
-			article.setCreateDate(serviceContext.getModifiedDate(now));
+			article.setUserId(user.getUserId());
+			article.setUserName(user.getFullName());
+			article.setCreateDate(latestArticle.getCreateDate());
 			article.setClassNameId(latestArticle.getClassNameId());
 			article.setClassPK(latestArticle.getClassPK());
 			article.setArticleId(articleId);
@@ -4803,8 +4805,6 @@ public class JournalArticleLocalServiceImpl
 			user, groupId, articleId, article.getVersion(), addNewVersion,
 			content, ddmStructureKey, images);
 
-		article.setUserId(user.getUserId());
-		article.setUserName(user.getFullName());
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
@@ -5020,7 +5020,18 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = null;
 
-		User user = userPersistence.findByPrimaryKey(oldArticle.getUserId());
+		User user = userPersistence.fetchByPrimaryKey(
+			serviceContext.getUserId());
+
+		if (user == null) {
+			user = userPersistence.fetchByC_U(
+				oldArticle.getCompanyId(), oldArticle.getUserId());
+
+			if (user == null) {
+				user = userPersistence.fetchByC_DU(
+					oldArticle.getCompanyId(), true);
+			}
+		}
 
 		Locale defaultLocale = getArticleDefaultLocale(content, serviceContext);
 
@@ -5034,7 +5045,7 @@ public class JournalArticleLocalServiceImpl
 			article.setResourcePrimKey(oldArticle.getResourcePrimKey());
 			article.setGroupId(oldArticle.getGroupId());
 			article.setCompanyId(oldArticle.getCompanyId());
-			article.setUserId(oldArticle.getUserId());
+			article.setUserId(user.getUserId());
 			article.setUserName(user.getFullName());
 			article.setCreateDate(new Date());
 			article.setModifiedDate(new Date());
@@ -5632,32 +5643,49 @@ public class JournalArticleLocalServiceImpl
 	protected void checkArticlesByReviewDate(Date reviewDate)
 		throws PortalException, SystemException {
 
+		List<JournalArticle> latestArticles = new ArrayList<JournalArticle>();
+
 		List<JournalArticle> articles = journalArticleFinder.findByReviewDate(
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, reviewDate,
 			_previousCheckDate);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Sending review notifications for " + articles.size() +
-					" articles");
-		}
-
 		for (JournalArticle article : articles) {
-			String articleURL = StringPool.BLANK;
+			long groupId = article.getGroupId();
+			String articleId = article.getArticleId();
+			double version = article.getVersion();
 
-			long ownerId = article.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.JOURNAL;
+			if (!journalArticleLocalService.isLatestVersion(
+					groupId, articleId, version)) {
 
-			PortletPreferences preferences =
-				portletPreferencesLocalService.getPreferences(
-					article.getCompanyId(), ownerId, ownerType, plid,
-					portletId);
+				article = journalArticleLocalService.getLatestArticle(
+					groupId, articleId);
+			}
 
-			sendEmail(
-				article, articleURL, preferences, "review",
-				new ServiceContext());
+			if (!latestArticles.contains(article)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Sending review notification for article " +
+							article.getId());
+				}
+
+				latestArticles.add(article);
+
+				String articleURL = StringPool.BLANK;
+
+				long ownerId = article.getGroupId();
+				int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
+				long plid = PortletKeys.PREFS_PLID_SHARED;
+				String portletId = PortletKeys.JOURNAL;
+
+				PortletPreferences preferences =
+					portletPreferencesLocalService.getPreferences(
+						article.getCompanyId(), ownerId, ownerType, plid,
+						portletId);
+
+				sendEmail(
+					article, articleURL, preferences, "review",
+					new ServiceContext());
+			}
 		}
 	}
 
@@ -5783,8 +5811,11 @@ public class JournalArticleLocalServiceImpl
 		for (Node imageNode : imageNodes) {
 			Element imageEl = (Element)imageNode;
 
-			String instanceId = imageEl.attributeValue("instance-id");
-			String name = imageEl.attributeValue("name");
+			String elInstanceId = imageEl.attributeValue("instance-id");
+			String elName = imageEl.attributeValue("name");
+			String elIndex = imageEl.attributeValue("index");
+
+			String name = elName + StringPool.UNDERLINE + elIndex;
 
 			List<Element> dynamicContentEls = imageEl.elements(
 				"dynamic-content");
@@ -5806,7 +5837,7 @@ public class JournalArticleLocalServiceImpl
 
 				imageId = journalArticleImageLocalService.getArticleImageId(
 					newArticle.getGroupId(), newArticle.getArticleId(),
-					newArticle.getVersion(), instanceId, name, languageId);
+					newArticle.getVersion(), elInstanceId, name, languageId);
 
 				imageLocalService.updateImage(imageId, oldImage.getTextObj());
 
@@ -5838,7 +5869,7 @@ public class JournalArticleLocalServiceImpl
 				String elIndex = element.attributeValue(
 					"index", StringPool.BLANK);
 
-				String name = elName + "_" + elIndex;
+				String name = elName + StringPool.UNDERLINE + elIndex;
 
 				formatImage(
 					groupId, articleId, version, incrementVersion, element,
@@ -6464,6 +6495,15 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException, SystemException {
 
 		try {
+			DDMStructure ddmStructure =
+				ddmStructureLocalService.fetchDDMStructure(ddmStructureId);
+
+			if (ddmStructure == null) {
+				return;
+			}
+
+			Document documentXSD = SAXReaderUtil.read(ddmStructure.getXsd());
+
 			Document document = SAXReaderUtil.read(content);
 
 			Element rootElement = document.getRootElement();
@@ -6480,15 +6520,57 @@ public class JournalArticleLocalServiceImpl
 				for (Element dynamicContentElement : dynamicContentElements) {
 					String value = dynamicContentElement.getText();
 
-					ddmStructureLocalService.updateXSDFieldMetadata(
-						ddmStructureId, fieldName,
-						FieldConstants.PREDEFINED_VALUE, value, serviceContext);
+					documentXSD = updateDDMStructureXSDFieldMetadata(
+						documentXSD, fieldName, FieldConstants.PREDEFINED_VALUE,
+						value);
 				}
 			}
+
+			ddmStructureLocalService.updateXSD(
+				ddmStructureId, documentXSD.asXML(), serviceContext);
 		}
 		catch (DocumentException de) {
 			throw new SystemException(de);
 		}
+	}
+
+	protected Document updateDDMStructureXSDFieldMetadata(
+			Document document, String fieldName, String metadataEntryName,
+			String metadataEntryValue)
+		throws DocumentException {
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String dynamicElementElementFieldName = GetterUtil.getString(
+				dynamicElementElement.attributeValue("name"));
+
+			if (!dynamicElementElementFieldName.equals(fieldName)) {
+				continue;
+			}
+
+			List<Element> metadataElements = dynamicElementElement.elements(
+				"meta-data");
+
+			for (Element metadataElement : metadataElements) {
+				List<Element> metadataEntryElements =
+					metadataElement.elements();
+
+				for (Element metadataEntryElement : metadataEntryElements) {
+					String metadataEntryElementName = GetterUtil.getString(
+						metadataEntryElement.attributeValue("name"));
+
+					if (metadataEntryElementName.equals(metadataEntryName)) {
+						metadataEntryElement.setText(metadataEntryValue);
+					}
+				}
+			}
+		}
+
+		return document;
 	}
 
 	protected void updatePreviousApprovedArticle(JournalArticle article)

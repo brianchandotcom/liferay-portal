@@ -124,6 +124,29 @@ public class MBMessageIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isVisible(long classPK, int status) throws Exception {
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+
+		return isVisible(message.getStatus(), status);
+	}
+
+	@Override
+	public boolean isVisibleRelatedEntry(long classPK, int status)
+		throws Exception {
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+
+		if (message.isDiscussion()) {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(
+				message.getClassName());
+
+			return indexer.isVisible(message.getClassPK(), status);
+		}
+
+		return true;
+	}
+
+	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {

@@ -16,55 +16,49 @@
 
 <%@ include file="/html/portlet/currency_converter/init.jsp" %>
 
-<form action="<portlet:actionURL><portlet:param name="struts_action" value="/currency_converter/edit" /></portlet:actionURL>" method="post" name="<portlet:namespace />fm">
-<input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-<input name="<portlet:namespace />symbols" type="hidden" value="" />
+<portlet:actionURL var="editCurrency">
+	<portlet:param name="struts_action" value="/currency_converter/edit" />
+</portlet:actionURL>
 
-<%
+<aui:form action="<%= editCurrency %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="symbols" type="hidden" value="" />
 
-// Left list
+	<%
+	List leftList = new ArrayList();
 
-List leftList = new ArrayList();
-
-for (int i = 0; i < symbols.length; i++) {
-	leftList.add(new KeyValuePair(symbols[i], LanguageUtil.get(pageContext, "currency." + symbols[i])));
-}
-
-//leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
-
-// Right list
-
-List rightList = new ArrayList();
-
-Arrays.sort(symbols);
-
-for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
-	String symbol = entry.getValue();
-	String currencyValue = entry.getKey();
-
-	if (Arrays.binarySearch(symbols, symbol) < 0) {
-		rightList.add(new KeyValuePair(symbol, LanguageUtil.get(pageContext, "currency." + currencyValue)));
+	for (int i = 0; i < symbols.length; i++) {
+		leftList.add(new KeyValuePair(symbols[i], LanguageUtil.get(pageContext, "currency." + symbols[i])));
 	}
-}
 
-rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-%>
+	List rightList = new ArrayList();
 
-<liferay-ui:input-move-boxes
-	leftBoxName="current_actions"
-	leftList="<%= leftList %>"
-	leftReorder="true"
-	leftTitle="current"
-	rightBoxName="available_actions"
-	rightList="<%= rightList %>"
-	rightTitle="available"
-/>
+	Arrays.sort(symbols);
 
-<br />
+	for (Map.Entry<String, String> entry : allSymbols.entrySet()) {
+		String symbol = entry.getValue();
+		String currencyValue = entry.getKey();
 
-<input onClick="<portlet:namespace />saveCurrency();" type="button" value="<liferay-ui:message key="save" />" />
+		if (Arrays.binarySearch(symbols, symbol) < 0) {
+			rightList.add(new KeyValuePair(symbol, LanguageUtil.get(pageContext, "currency." + currencyValue)));
+		}
+	}
 
-</form>
+	rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+	%>
+
+	<liferay-ui:input-move-boxes
+		leftBoxName="current_actions"
+		leftList="<%= leftList %>"
+		leftReorder="true"
+		leftTitle="current"
+		rightBoxName="available_actions"
+		rightList="<%= rightList %>"
+		rightTitle="available"
+	/>
+
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveCurrency();" %>' primary="<%= true %>" value="save" />
+</aui:form>
 
 <aui:script>
 	Liferay.provide(

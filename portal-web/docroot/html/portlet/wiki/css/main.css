@@ -1,24 +1,28 @@
+@import "compass";
+
 .portlet-wiki {
 	.wiki-body {
+		@include hyphenation;
+
 		ol ol {
 			list-style: decimal outside;
 		}
 
 		pre {
-			background : #fff;
-			border: 1px dashed #2f6fab;
+			background : #FFF;
+			border: 1px dashed #2F6FAB;
 			margin: 5px 0;
 			padding: 0.5em;
 		}
 	}
 
 	a.createpage {
-		color: #f00;
+		color: #F00;
 	}
 
 	.toc {
-		border: 1px solid #aaa;
-		background-color: #f9f9f9;
+		border: 1px solid #AAA;
+		background-color: #F9F9F9;
 		padding: 0 1em;
 
 		h4 {
@@ -50,7 +54,7 @@
 	}
 
 	.page-categories {
-		color: #7d7d7d;
+		color: #7D7D7D;
 	}
 
 	.taglib-discussion {
@@ -58,31 +62,31 @@
 	}
 
 	.page-tags {
-		color: #7d7d7d;
+		color: #7D7D7D;
 	}
 
-	.portlet-body h2 a.hashlink,
-	.portlet-body h3 a.hashlink,
-	.portlet-body h4 a.hashlink {
-		color: #DDE0E1;
-		font-size: 12px;
-		text-decoration: none;
-	}
+	.portlet-body {
+		h1.page-title .return-to-page {
+			background: url(@theme_image_path@/wiki/return_to_page.png) no-repeat 0 50%;
+			padding-left: 20px;
+			text-decoration: none;
+		}
 
-	.portlet-body h2:hover a.hashlink,
-	.portlet-body h3:hover a.hashlink,
-	.portlet-body h4:hover a.hashlink {
-		color: #777;
-	}
+		h2, h3, h4 {
+			a.hashlink {
+				color: #DDE0E1;
+				font-size: 12px;
+				text-decoration: none;
+			}
 
-	.portlet-body h1.page-title .return-to-page {
-		background: url(@theme_image_path@/wiki/return_to_page.png) no-repeat 0 50%;
-		padding-left: 20px;
-		text-decoration: none;
+			&:hover a.hashlink {
+				color: #777;
+			}
+		}
 	}
 
 	.preview {
-		background: #ffc;
+		background: #FFC;
 		border: 1px dotted gray;
 		padding: 3px;
 	}
@@ -97,113 +101,117 @@
 
 	.child-pages {
 		margin: 2em 0;
+
+		h2 {
+			background-color: #DDD;
+			border-width: 0;
+			font-weight: normal;
+			margin: 0 0 0.5em;
+			padding: 0.2em;
+		}
+
+		h3 {
+			font-size: 1.2em;
+			margin-bottom: 0.3em;
+		}
+
+		ul {
+			margin-top: 0;
+		}
+
+		li {
+			font-weight: bold;
+			font-size: 1.1em;
+		}
 	}
 
-	.child-pages h2 {
-		background-color: #DDD;
-		border-width: 0;
-		font-weight: normal;
-		margin: 0 0 0.5em;
-		padding: 0.2em;
-	}
+	.content-body {
+		.wiki-code {
+			background: #FFF;
+			border: 1px solid #777;
+			font-family: monospace;
+			white-space: pre;
+		}
 
-	.child-pages h3 {
-		font-size: 1.2em;
-		margin-bottom: 0.3em;
-	}
+		.code-lines {
+			border-right: 1px solid #CCC;
+			color: #000;
+			margin-right: 5px;
+			padding: 0 5px;
+		}
 
-	.child-pages ul {
-		margin-top: 0;
-	}
+		a.external-link {
+			background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
+			text-decoration: none;
+			padding-right: 10px;
 
-	.child-pages li {
-		font-weight: bold;
-		font-size: 1.1em;
-	}
-
-	.content-body .wiki-code {
-		background: #fff;
-		border: 1px solid #777;
-		font-family: monospace;
-		white-space: pre;
-	}
-
-	.content-body .code-lines {
-		border-right: 1px solid #ccc;
-		color: #000;
-		margin-right: 5px;
-		padding: 0 5px;
-	}
-
-	.content-body a.external-link {
-		background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
-		text-decoration: none;
-		padding-right: 10px;
-	}
-
-	.content-body a.external-link:hover {
-		background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
-		text-decoration: underline;
-		padding-right: 11px;
-	}
-
-	.history-navigation .central-info a.change-mode {
-		font-weight: bold;
-	}
-
-	.history-navigation .central-info span.change-mode {
-		color: #999;
-		font-weight: bold;
-	}
-
-	.history-navigation .central-info {
-		float: left;
-		padding-left: 10px;
-		padding-right: 10px;
-		text-align: center;
-		width: 66%;
-	}
-
-	.history-navigation .central-title {
-		font-weight: bold;
-		padding-right: 20px;
-	}
-
-	.history-navigation .central-username {
-		font-weight: bold;
-	}
-
-	.history-navigation .next {
-		background-image: url(@theme_image_path@/arrows/paging_next.png);
-		background-position: 100% 0;
-		float: right;
-		padding-right: 15px;
-	}
-
-	.history-navigation .previous {
-		background-image: url(@theme_image_path@/arrows/paging_previous.png);
-		float: left;
-		padding-left: 15px;
-	}
-
-	.history-navigation a, .history-navigation span {
-		background: url() no-repeat;
-	}
-
-	.history-navigation span.next {
-		background-position: 100% 100%;
-	}
-
-	.history-navigation span.previous {
-		background-position: 0 100%;
+			&:hover {
+				background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
+				text-decoration: underline;
+				padding-right: 11px;
+			}
+		}
 	}
 
 	.history-navigation {
-		background: #eee;
-		border-top: 1px solid #ccc;
+		background: #EEE;
+		border-top: 1px solid #CCC;
 		margin: 15px 0 20px;
 		overflow: hidden;
 		padding: 5px;
+
+		.central-info {
+			float: left;
+			padding-left: 10px;
+			padding-right: 10px;
+			text-align: center;
+			width: 66%;
+
+			a.change-mode {
+				font-weight: bold;
+			}
+
+			span.change-mode {
+				color: #999;
+				font-weight: bold;
+			}
+		}
+
+		.central-title {
+			font-weight: bold;
+			padding-right: 20px;
+		}
+
+		.central-username {
+			font-weight: bold;
+		}
+
+		.next {
+			background-image: url(@theme_image_path@/arrows/paging_next.png);
+			background-position: 100% 0;
+			float: right;
+			padding-right: 15px;
+		}
+
+		.previous {
+			background-image: url(@theme_image_path@/arrows/paging_previous.png);
+			float: left;
+			padding-left: 15px;
+		}
+
+		a, span {
+			background: url() no-repeat;
+		}
+
+		span {
+			&.next {
+				background-position: 100% 100%;
+			}
+
+			&.previous {
+				background-position: 0 100%;
+			}
+		}
 	}
 
 	.node-current {
@@ -212,36 +220,36 @@
 	}
 
 	.page-actions {
+		clear: both;
 		margin-top: 1.5em;
 
 		&:after {
-			clear: both;
 			content: ".";
 			display: block;
 			height: 0;
 			visibility: hidden;
 		}
-	}
 
-	.page-actions .article-actions {
-		border-right: 1px solid #999;
-		float: left;
-		margin-right: 10px;
-		padding-right: 10px;
-	}
+		.article-actions {
+			border-right: 1px solid #999;
+			float: left;
+			margin-right: 10px;
+			padding-right: 10px;
+		}
 
-	.page-actions .stats {
-		color: #999;
-	}
+		.stats {
+			color: #999;
+		}
 
-	.page-actions.top-actions {
-		margin-bottom: 15px;
-		margin-top: 0;
-		text-align: right;
-	}
+		&.top-actions {
+			margin-bottom: 15px;
+			margin-top: 0;
+			text-align: right;
 
-	.page-actions.top-actions img {
-		margin-left: 5px;
+			img {
+				margin-left: 5px;
+			}
+		}
 	}
 
 	.page-activities {
@@ -266,24 +274,26 @@
 
 	.page-info {
 		width: 100%;
-	}
 
-	.page-info tr th, .page-info tr td {
-		border: 1px solid #ccc;
-		border-left: none;
-		border-right: none;
-		padding: 0.3em 1em;
-	}
-
-	.page-old-version a {
-		color: #f93;
+		tr {
+			th, td {
+				border: 1px solid #CCC;
+				border-left-width: 0;
+				border-right-width: 0;
+				padding: 0.3em 1em;
+			}
+		}
 	}
 
 	.page-old-version {
-		color: #f93;
+		color: #F93;
 		line-height: 1.2em;
 		margin: -1em 0 1.4em 0;
 		width: auto;
+
+		a {
+			color: #F93;
+		}
 	}
 
 	.page-ratings {
@@ -291,7 +301,7 @@
 	}
 
 	.page-redirect {
-		color: #7d7d7d;
+		color: #7D7D7D;
 		cursor: pointer;
 		line-height: 1.2em;
 		margin: -1em 0 1.4em 0;
@@ -311,13 +321,15 @@
 		padding-left: 10px;
 	}
 
-	.syntax-help h4 {
-		margin-bottom: 0.5em;
-	}
+	.syntax-help {
+		h4 {
+			margin-bottom: 0.5em;
+		}
 
-	.syntax-help pre {
-		margin-left: 1em;
-		margin-bottom: 1em;
+		pre {
+			margin-left: 1em;
+			margin-bottom: 1em;
+		}
 	}
 
 	.top-links {
@@ -325,14 +337,14 @@
 	}
 
 	.top-links-nodes {
-		border: 1px solid #ddd;
+		border: 1px solid #DDD;
 		float: left;
 		list-style-type: none;
 		margin: 0 0.5em 0.5em;
 		padding: 0.2em 0.5em;
 
 		.top-link-node {
-			border-right: 1px solid #aaa;
+			border-right: 1px solid #AAA;
 			display: inline-block;
 			list-style-type: none;
 			margin: 0.3em;
@@ -359,7 +371,7 @@
 	}
 
 	.subscription-info tr td {
-		border: none;
+		border-width: 0;
 		padding: 0.1em 10px 0.1em 0;
 	}
 

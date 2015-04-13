@@ -32,6 +32,8 @@ portletURL.setParameter("assetOrder", String.valueOf(assetOrder));
 
 <%
 ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
+
+searchContainer.setEmptyResultsMessage("no-web-content-was-found-that-matched-the-specified-filters");
 %>
 
 <liferay-ui:search-form
@@ -44,6 +46,8 @@ ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTe
 
 searchTerms.setFolderIds(new ArrayList<Long>());
 searchTerms.setVersion(-1);
+
+boolean includeScheduledArticles = false;
 
 List<JournalArticle> results = null;
 int total = 0;

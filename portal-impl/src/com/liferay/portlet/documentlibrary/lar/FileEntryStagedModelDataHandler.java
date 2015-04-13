@@ -44,7 +44,6 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -64,6 +63,7 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -101,6 +101,10 @@ public class FileEntryStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(FileEntry fileEntry) {
+		if (fileEntry.isInTrash()) {
+			return TrashUtil.getOriginalTitle(fileEntry.getTitle());
+		}
+
 		return fileEntry.getTitle();
 	}
 
@@ -168,16 +172,16 @@ public class FileEntryStagedModelDataHandler
 			try {
 				is = FileEntryUtil.getContentStream(fileEntry);
 			}
-			catch (NoSuchFileException nsfe) {
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to retrieve content for file entry " +
+							fileEntry.getFileEntryId(),
+						e);
+				}
 			}
 
 			if (is == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"No file found for file entry " +
-							fileEntry.getFileEntryId());
-				}
-
 				fileEntryElement.detach();
 
 				return;
@@ -187,7 +191,9 @@ public class FileEntryStagedModelDataHandler
 				String binPath = ExportImportPathUtil.getModelPath(
 					fileEntry, fileEntry.getVersion());
 
-				portletDataContext.addZipEntry(binPath, is);
+				if (portletDataContext.isPathNotProcessed(binPath)) {
+					portletDataContext.addZipEntry(binPath, is);
+				}
 
 				fileEntryElement.addAttribute("bin-path", binPath);
 			}
@@ -291,7 +297,15 @@ public class FileEntryStagedModelDataHandler
 			try {
 				is = FileEntryUtil.getContentStream(fileEntry);
 			}
-			catch (NoSuchFileException nsfe) {
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to retrieve content for file entry " +
+							fileEntry.getFileEntryId(),
+						e);
+				}
+
+				return;
 			}
 		}
 		else {

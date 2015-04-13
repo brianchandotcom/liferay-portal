@@ -236,7 +236,14 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		if ((parameterName != null) && parameterName.equals("serviceContext") &&
 			parameterType.equals(ServiceContext.class)) {
 
-			return new ServiceContext();
+			ServiceContext serviceContext =
+				_jsonWebServiceActionParameters.getServiceContext();
+
+			if (serviceContext == null) {
+				serviceContext = new ServiceContext();
+			}
+
+			return serviceContext;
 		}
 
 		String className = parameterType.getName();

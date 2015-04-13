@@ -124,6 +124,13 @@ public class WikiPageIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isVisible(long classPK, int status) throws Exception {
+		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+
+		return isVisible(page.getStatus(), status);
+	}
+
+	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {

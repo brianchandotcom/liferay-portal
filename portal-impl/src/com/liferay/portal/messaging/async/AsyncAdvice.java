@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.async.Async;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -71,8 +73,21 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 			destinationName = _defaultDestinationName;
 		}
 
-		MessageBusUtil.sendMessage(
-			destinationName, new AsyncProcessCallable(methodInvocation));
+		final String callbackDestinationName = destinationName;
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					MessageBusUtil.sendMessage(
+						callbackDestinationName,
+						new AsyncProcessCallable(methodInvocation));
+
+					return null;
+				}
+
+			});
 
 		return nullResult;
 	}

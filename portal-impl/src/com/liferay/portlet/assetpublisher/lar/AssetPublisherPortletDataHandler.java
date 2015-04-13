@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -191,6 +192,21 @@ public class AssetPublisherPortletDataHandler
 					portletDataContext, portlet, portletPreferences,
 					"queryValues" + index, AssetCategory.class.getName(),
 					portletDataContext.getExportDataRootElement());
+			}
+			else if (name.startsWith("queryName") &&
+					 StringUtil.equalsIgnoreCase(value, "assetTags")) {
+
+				String index = name.substring(9);
+
+				String[] assetTagNames = portletPreferences.getValues(
+					"queryValues" + index, null);
+
+				if (ArrayUtil.isEmpty(assetTagNames)) {
+					continue;
+				}
+
+				portletDataContext.addAssetTags(
+					AssetPublisher.class.getName(), 0, assetTagNames);
 			}
 			else if (name.equals("scopeIds")) {
 				updateExportScopeIds(

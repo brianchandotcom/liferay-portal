@@ -5,7 +5,6 @@
 
 	<property name="war.file" value="${ant.project.name}" />
 
-	<property name="alloy-font-awesome.file" value="alloy-font-awesome-1.0.0.zip" />
 	<property name="ckeditor.file" value="ckeditor_4.0.3_liferay.zip" />
 	<property name="fckeditor.file" value="FCKeditor_2.6.3.zip" />
 	<property name="scayt.file" value="scayt_4.0.3.zip" />
@@ -230,6 +229,18 @@
 	</target>
 
 	<target name="build-alloy-font-awesome">
+		<property name="alloy-font-awesome.version" value="1.0" />
+
+		<path id="alloy-font-awesome.zip.path">
+			<fileset dir="third-party">
+				<include name="alloy-font-awesome-${alloy-font-awesome.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy-font-awesome.zip.path" refid="alloy-font-awesome.zip.path" />
+
+		<basename file="${alloy-font-awesome.zip.path}" property="alloy-font-awesome.file" />
+
 		<if>
 			<not>
 				<uptodate
@@ -628,7 +639,7 @@
 
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html"
 					match="(\t*)// Get the optional [^;]*?;\r?(\n).*?sFileSize \) \) ;"
-					replace="\1var sFileDesc = oNode.attributes.getNamedItem('desc').value ;\2\1var sFileErrorMessageNamedItem = oNode.attributes.getNamedItem('errorMessage');\2\1var sFileErrorMessage = null;\2\1 if (sFileErrorMessageNamedItem) {sFileErrorMessage = sFileErrorMessageNamedItem.value;}\2\1var sFileUrl = oNode.attributes.getNamedItem('url').value ;\2\2\1oHtml.Append( oListManager.GetFileRowHtml( sFileDesc, sFileUrl, sFileSize, sFileErrorMessage ) ) ;"
+					replace="\1var sFileDesc = oNode.attributes.getNamedItem('desc').value ;\2\1var sFileErrorMessageNamedItem = oNode.attributes.getNamedItem('errorMessage');\2\1var sFileErrorMessage = null;\2\1 if (sFileErrorMessageNamedItem) {sFileErrorMessage = sFileErrorMessageNamedItem.value;}\2\1var sFileUrl = oNode.attributes.getNamedItem('url').value ;\2\2\1oHtml.Append( oListManager.GetFileRowHtml( sFileName, sFileUrl, sFileSize, sFileErrorMessage ) ) ;"
 					flags="s"
 				/>
 
@@ -725,10 +736,13 @@
 								alert( 'You cannot upload a video file if video preview generation is disabled.' );
 								break ;
 							case 211:
-								alert( 'You cannot upload an audio file if audio preview generation is disabled.' );
+								alert( 'File may contain a virus.' );
 								break ;
-							case 212:
-								alert( 'A category is required for this file. Please use the Documents and Media application to upload the file.' );
+							case 220:
+								alert( 'You cannot upload a video file if video preview generation is disabled.' );
+								break ;
+							case 221:
+								alert( 'You cannot upload an audio file if audio preview generation is disabled.' );
 								break ;
 							default :
 						]]>

@@ -38,15 +38,7 @@ if (folderId > 0) {
 	folder = DLAppLocalServiceUtil.getFolder(folderId);
 }
 
-boolean inherited = true;
-
-if ((folder != null) && (folder.getModel() instanceof DLFolder)) {
-	DLFolder dlFolder = (DLFolder)folder.getModel();
-
-	inherited = !dlFolder.isOverrideFileEntryTypes();
-}
-
-List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, inherited);
+List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, true);
 
 FileVersion fileVersion = null;
 

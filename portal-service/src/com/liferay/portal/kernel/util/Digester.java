@@ -35,6 +35,8 @@ public interface Digester {
 
 	public static final String SHA_1 = "SHA-1";
 
+	public static final String SHA_256 = "SHA-256";
+
 	public String digest(ByteBuffer byteBuffer);
 
 	public String digest(InputStream inputStream);

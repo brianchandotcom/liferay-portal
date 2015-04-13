@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -95,6 +97,25 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 
 					MessageBusUtil.unregisterMessageListener(
 						destinationName, this);
+				}
+
+				String jobName = message.getString(SchedulerEngine.JOB_NAME);
+				String groupName = message.getString(
+					SchedulerEngine.GROUP_NAME);
+				StorageType storageType = (StorageType)message.get(
+					SchedulerEngine.STORAGE_TYPE);
+
+				try {
+					SchedulerEngineHelperUtil.delete(
+						jobName, groupName, storageType);
+				}
+				catch (SchedulerException se) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Unable to delete job " + jobName + " in group " +
+								groupName,
+							se);
+					}
 				}
 			}
 			else {

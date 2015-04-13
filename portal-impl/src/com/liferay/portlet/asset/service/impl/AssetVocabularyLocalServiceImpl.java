@@ -16,6 +16,8 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -149,6 +151,13 @@ public class AssetVocabularyLocalServiceImpl
 				serviceContext.getGuestPermissions());
 		}
 
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetVocabulary.class);
+
+		indexer.reindex(vocabulary);
+
 		return vocabulary;
 	}
 
@@ -226,6 +235,13 @@ public class AssetVocabularyLocalServiceImpl
 
 		assetCategoryLocalService.deleteVocabularyCategories(
 			vocabulary.getVocabularyId());
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetVocabulary.class);
+
+		indexer.delete(vocabulary);
 	}
 
 	@Override
@@ -401,6 +417,13 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setSettings(settings);
 
 		assetVocabularyPersistence.update(vocabulary);
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetVocabulary.class);
+
+		indexer.reindex(vocabulary);
 
 		return vocabulary;
 	}

@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/site_map/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 LayoutLister layoutLister = new LayoutLister();
 
 String rootNodeName = StringPool.BLANK;
@@ -27,11 +25,13 @@ LayoutView layoutView = layoutLister.getLayoutView(layout.getGroupId(), layout.i
 List layoutList = layoutView.getList();
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
-<aui:form action="<%= configurationURL %>" method="post" name="fm">
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<aui:fieldset>
 		<aui:select label="root-layout" name="preferences--rootLayoutUuid--">
@@ -47,7 +47,7 @@ List layoutList = layoutView.getList();
 				String[] nodeValues = StringUtil.split(layoutDesc, '|');
 
 				long objId = GetterUtil.getLong(nodeValues[3]);
-				String name = nodeValues[4];
+				String name = HtmlUtil.escape(nodeValues[4]);
 
 				int depth = 0;
 

@@ -135,6 +135,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
 		</finder>
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="templateId" />
+		</finder>
 		<finder name="LtD_S" return-type="Collection">
 			<finder-column name="displayDate" comparator="&lt;" />
 			<finder-column name="status" />

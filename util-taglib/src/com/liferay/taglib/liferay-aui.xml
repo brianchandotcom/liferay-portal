@@ -8,54 +8,65 @@
 		<author>Julio Camarero</author>
 	</authors>
 	<component name="A" bodyContent="true" writeJSP="false">
+		<description>Creates an anchor (or link) that offers custom configuration and localization.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
 				<name>ariaRole</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Takes a set of data and passes it as HTML data attributes. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 				<name>data</name>
 				<inputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></inputType>
 				<outputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the URL navigated to when the link is clicked.</description>
 				<name>href</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the text value for the anchor's label.</description>
 				<name>label</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the language of the anchor component, to assist search engines and web browsers in finding and rendering the anchor appropriately.</description>
 				<name>lang</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a JavaScript function to be called on a user clicking the anchor.</description>
 				<name>onClick</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the target window in which the URL is opened. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
 				<name>target</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the anchor's title.</description>
 				<name>title</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -65,59 +76,70 @@
 	<component name="Button" alloyComponent="false">
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component. These styles override the ones set by the <![CDATA[<code>primary</code>]]> attribute.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Takes a set of data and passes it as HTML data attributes. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 				<name>data</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.util.Map</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the component is disabled. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>disabled</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the URL navigated to when the button is clicked.</description>
 				<name>href</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the icon to display on the button based on the icon CSS class value given. Possible CSS class values can be found at <![CDATA[<a href="http://marcoceppi.github.io/bootstrap-glyphicons/">here</a>]]>.</description>
 				<name>icon</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the alignment for the button's icon. The default value is <![CDATA[<code>left</code>]]>.</description>
 				<name>iconAlign</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<defaultValue>left</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets the button's name.</description>
 				<name>name</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a function to be called on a user clicking the button.</description>
 				<name>onClick</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to apply the primary btn CSS styling to the button. If the <![CDATA[<code>type</code>]]> attribute is set to <![CDATA[<code>submit</code>]]>, this value is set to <![CDATA[<code>true</code>]]>. For all other types, the value is set to <![CDATA[<code>false</code>]]> by default.</description>
 				<name>primary</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 				<defaultValue>null</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets the button's type. Possible values are <![CDATA[<code>button</code>]]>, <![CDATA[<code>submit</code>]]>, <![CDATA[<code>cancel</code>]]> and <![CDATA[<code>reset</code>]]>. The default value is <![CDATA[<code>button</code>]]>.</description>
 				<name>type</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<defaultValue>button</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets whether to open a dialog window with the <![CDATA[<code>href</code>]]> location when a user clicks the button. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>useDialog</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -131,13 +153,16 @@
 		</attributes>
 	</component>
 	<component name="ButtonRow" bodyContent="true" alloyComponent="false">
+		<description>Creates a button row <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap <![CDATA[<code>&lt;aui:button&gt;</code>]]> components and offer additional styling.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -145,13 +170,16 @@
 		</attributes>
 	</component>
 	<component name="Col" bodyContent="true">
+		<description>Creates a column to display content in an <![CDATA[<code>&lt;aui:row&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -167,12 +195,14 @@
 				<outputType>int</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the width of the column in the containing row as a fraction of <![CDATA[<code>12</code>]]>. For example, a span of <![CDATA[<code>4</code>]]> would result in a column width <![CDATA[<code>4/12</code>]]> (or <![CDATA[<code>1/3</code>]]>) of the total width of the containing row.</description>
 				<name>span</name>
 				<inputType>int</inputType>
 				<outputType>int</outputType>
 				<defaultValue>12</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets the width of the column in the containing row as a percentage, overriding the <![CDATA[<code>span</code>]]> attribute. The width is then converted to a span expressed as <![CDATA[<code>((width/100) x 12)</code>]]>, rounded to the nearest whole number. For example, a width of <![CDATA[<code>33</code>]]> would be converted to <![CDATA[<code>3.96</code>]]>, which would be rounded up to a span value of <![CDATA[<code>4</code>]]>.</description>
 				<name>width</name>
 				<inputType>int</inputType>
 				<outputType>int</outputType>
@@ -180,28 +210,34 @@
 		</attributes>
 	</component>
 	<component name="Column" bodyContent="true">
+		<description>Deprecated as of 6.2, replaced by <![CDATA[<code>aui:col</code>]]>.</description>
 		<attributes>
 			<attribute>
+				<description>Sets the width of the column in percentage. For example, <![CDATA[<code>20</code>]]> would be 20%. The default value is <![CDATA[<code>0</code>]]>.</description>
 				<name>columnWidth</name>
 				<inputType>int</inputType>
 				<outputType>int</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the column should be the first column. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>first</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the column is the last column. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>last</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -266,19 +302,23 @@
 		</attributes>
 	</component>
 	<component name="Container" bodyContent="true">
+		<description>Creates a container <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap <![CDATA[<code>&lt;aui:row&gt;</code>]]> components and offer additional styling.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the container's size is fixed or is able to span the entire width of the viewport. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>fluid</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -286,53 +326,64 @@
 		</attributes>
 	</component>
 	<component name="FieldWrapper" dynamicAttributes="false" bodyContent="true">
+		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap form fields and offer additional styling.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Takes a set of data and passes it as HTML data attributes. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 				<name>data</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.util.Map</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the wrapper should be the first element of the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>first</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets text to display as a help tooltip on mouse over of the component's help icon.</description>
 				<name>helpMessage</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to make this field inline with the next element. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>inlineField</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Aligns the label's text. Possible values are <![CDATA[<code>right</code>]]> and <![CDATA[<code>left</code>]]>.</description>
 				<name>inlineLabel</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the text value for the wrapper's label.</description>
 				<name>label</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the wrapper should be the last element of the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>last</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the field wrapper's name.</description>
 				<name>name</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to mark the wrapped fields as required.</description>
 				<name>required</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -340,28 +391,34 @@
 		</attributes>
 	</component>
 	<component name="Fieldset" bodyContent="true">
+		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group related form elements and offer additional styling.</description>
 		<attributes>
 			<attribute>
+				<description>Sets whether to display the field set as a column instead of a row.</description>
 				<name>column</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets text to display as a help tooltip on mouse over of the component's help icon.</description>
 				<name>helpMessage</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the text value for the field set's label and renders it as a legend, with a horizontal rule, above the fieldset.</description>
 				<name>label</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -369,51 +426,61 @@
 		</attributes>
 	</component>
 	<component name="Form" bodyContent="true">
+		<description>Creates a form that offers additional styling and custom namespacing.</description>
 		<attributes>
 			<attribute>
+				<description>Sets where to send the form data when the form is submitted.</description>
 				<name>action</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to escape the XML of the form's action URL. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>escapeXml</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets whether to align the form's labels. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>inlineLabels</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets how to send the form data. The default value is <![CDATA[<code>post</code>]]>. Possible values are <![CDATA[<code>get</code>]]> and <![CDATA[<code>post</code>]]>.</description>
 				<name>method</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<defaultValue>post</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets the form's name and ID. The default value is <![CDATA[<code>fm</code>]]>.</description>
 				<name>name</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<defaultValue>fm</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets a function to be called on submitting the form.</description>
 				<name>onSubmit</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a namespace for the form and its elements. This attribute lets you set a namespace value that differs from the default portlet namespace.</description>
 				<name>portletNamespace</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>useNamespace</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -422,38 +489,46 @@
 		</attributes>
 	</component>
 	<component name="Icon">
+		<description>Creates a customizable icon that can leverage Bootstrap CSS icon classes.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a class to give to the container of the icon, to provide an implementation for the icon. Note that the preferred method of setting the icon's image is via the <![CDATA[<code>image</code>]]> attribute.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Takes a set of data and passes it as HTML data attributes. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 				<name>data</name>
 				<inputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></inputType>
 				<outputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the image to display for the icon. Values are taken from the suffix of the Bootstrap icon CSS classes. For example, to display the edit icon you would reference the <![CDATA[<code>icon-edit</code>]]> CSS class by setting the value <![CDATA[<code>edit</code>]]>. If an icon image is referenced for <![CDATA[<code>cssClass</code>]]> and <![CDATA[<code>image</code>]]>, both icons are shown in the component.</description>
 				<name>image</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the text to display alongside the icon.</description>
 				<name>label</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the target window in which the URL is opened. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
 				<name>target</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the URL navigated to when the icon is clicked.</description>
 				<name>url</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -461,43 +536,52 @@
 		</attributes>
 	</component>
 	<component name="Input">
+		<description>Creates a configurable input component.</description>
 		<attributes>
 			<attribute>
+				<description>Sets whether the input component gets focus by default.</description>
 				<name>autoFocus</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the input component autosizes.</description>
 				<name>autoSize</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a bean to associate with the input component.</description>
 				<name>bean</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to reload the page when the value of the input changes. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>changesContext</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the input is selected. Note that this attribute is only enabled when <![CDATA[<code>type</code>]]> is <![CDATA[<code>radio</code>]]> or <![CDATA[<code>checkbox</code>]]>.</description>.
 				<name>checked</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the primary key for the instance of the class. The default value is <![CDATA[<code>0</code>]]>.</description>
 				<name>classPK</name>
 				<inputType>long</inputType>
 				<outputType>long</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Takes a set of data and passes it as HTML data attributes. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 				<name>data</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.util.Map</outputType>
@@ -508,11 +592,13 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the default language ID for the component.</description>
 				<name>defaultLanguageId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the component is disabled. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>disabled</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -523,52 +609,62 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a variable name to refer to the <![CDATA[<code>field</code>]]> of the component.</description>
 				<name>fieldParam</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the input component should be the first element of the form.</description>
 				<name>first</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the name of the component's form.</description>
 				<name>formName</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets text to display as a help tooltip on mouse over of the component's help icon.</description>
 				<name>helpMessage</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling the help message text. The default value is <![CDATA[<code>input-group-addon</code>]]>.</description>
 				<name>helpTextCssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<defaultValue>add-on</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to ignore the value saved from the request object. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>ignoreRequestValue</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to align the input's field with the next element in the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>inlineField</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Aligns the input label's text. Possible values are <![CDATA[<code>right</code>]]> and <![CDATA[<code>left</code>]]>.</description>
 				<name>inlineLabel</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the label for the input component. If not assigned a value, the label is automatically taken from the <![CDATA[<code>name</code>]]> attribute's value.</description>
 				<name>label</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -579,27 +675,32 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the component should be the last element of the form.</description>
 				<name>last</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to translate the component's text features into the user's language. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>localized</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the maximum value for the input if its <![CDATA[<code>type</code>]]> is <![CDATA[<code>number</code>]]> or <![CDATA[<code>range</code>]]>. Note that the max value is inclusive if the input's <![CDATA[<code>type</code>]]> is <![CDATA[<code>range</code>]]>.</description>
 				<name>max</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Number</outputType>
 				<defaultValue>null</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets the class for the bean object.</description>
 				<name>model</name>
 				<inputType><![CDATA[java.lang.Class<?>]]></inputType>
 				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the minimum value for the input if its <![CDATA[<code>type</code>]]> is <![CDATA[<code>number</code>]]> or <![CDATA[<code>range</code>]]>. Note that the min value is inclusive if the input's <![CDATA[<code>type</code>]]> is <![CDATA[<code>range</code>]]>.</description>
 				<name>min</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Number</outputType>
@@ -611,74 +712,88 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the component's name.</description>
 				<name>name</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<description>Sets a function to be called when the input's value changes.</description>
 				<name>onChange</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a function to be called on a user clicking the input.</description>
 				<name>onClick</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets placeholder text for the input's field.</description>
 				<name>placeholder</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets text to display before the input.</description>
 				<name>prefix</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to mark the input as required.</description>
 				<name>required</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the input's field is resizeable, if the input is of type <![CDATA[<code>textarea</code>]]>.</description>
 				<name>resizable</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to show the input's required label, if an input value is required.</description>
 				<name>showRequiredLabel</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets text to display after the input.</description>
 				<name>suffix</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the input's title.</description>
 				<name>title</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the input's type. Possible values are <![CDATA[<code>text</code>]]>, <![CDATA[<code>hidden</code>]]>, <![CDATA[<code>assetCategories</code>]]>, <![CDATA[<code>assetTags</code>]]>, <![CDATA[<code>textarea</code>]]>, <![CDATA[<code>timeZone</code>]]>, <![CDATA[<code>password</code>]]>, <![CDATA[<code>checkbox</code>]]>, <![CDATA[<code>radio</code>]]>, <![CDATA[<code>submit</code>]]>, <![CDATA[<code>button</code>]]>, <![CDATA[<code>color</code>]]>, <![CDATA[<code>email</code>]]>, <![CDATA[<code>number</code>]]>, <![CDATA[<code>range</code>]]>, <![CDATA[<code>resource</code>]]>, <![CDATA[<code>url</code>]]>, and an empty value. If an empty value or no value is set, the input's type is obtained automatically from the input component's bean.</description>
 				<name>type</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>useNamespace</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets the input's value.</description>
 				<name>value</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling the <![CDATA[<code>div</code>]]> that wraps the input component.</description>
 				<name>wrapperCssClass</name>
 				<required>false</required>
 				<rtexprvalue>true</rtexprvalue>
@@ -687,8 +802,10 @@
 		</attributes>
 	</component>
 	<component name="Layout" bodyContent="true">
+		<description>Deprecated as of 6.2, with no replacement.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -696,18 +813,22 @@
 		</attributes>
 	</component>
 	<component name="ModelContext" dynamicAttributes="false" writeJSP="false">
+		<description>Creates a configurable model context object that can be used as a model for other components.</description>
 		<attributes>
 			<attribute>
+				<description>Sets the bean associated with the model object.</description>
 				<name>bean</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the default language ID for the component.</description>
 				<name>defaultLanguageId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the class for the bean object.</description>
 				<name>model</name>
 				<inputType><![CDATA[java.lang.Class<?>]]></inputType>
 				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
@@ -715,13 +836,16 @@
 		</attributes>
 	</component>
 	<component name="Nav" bodyContent="true">
+		<description>Creates a navigation wrapper component to hold <![CDATA[<code>&lt;nav:item&gt;</code>]]> components for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a name for the navigation component for assistive technologies to interpret.</description>
 				<name>ariaLabel</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
 				<name>ariaRole</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -732,6 +856,7 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -742,11 +867,13 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>useNamespace</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -755,13 +882,16 @@
 		</attributes>
 	</component>
 	<component name="NavBar" bodyContent="false">
+		<description>Creates a navigation bar to house navigation components.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -769,13 +899,16 @@
 		</attributes>
 	</component>
 	<component name="NavBarSearch" bodyContent="true">
+		<description>Creates a search component for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -786,6 +919,7 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the search container for the navigation bar to use.</description>
 				<name>searchContainer</name>
 				<inputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></inputType>
 				<outputType><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></outputType>
@@ -793,69 +927,83 @@
 		</attributes>
 	</component>
 	<component name="NavItem" bodyContent="true">
+		<description>Creates a navigation item for using in an <![CDATA[<code>&lt;aui:nav&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling the link set in the <![CDATA[<code>href</code>]]> attribute.</description>
 				<name>anchorCssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Takes a set of data and passes it as HTML data attributes for the anchor. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 				<name>anchorData</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.util.Map</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the instance of the navigation item's link, set in the <![CDATA[<code>href</code>]]> attribute.</description>
 				<name>anchorId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a name for the navigation item for assistive technologies to interpret.</description>
 				<name>ariaLabel</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
 				<name>ariaRole</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Takes a set of data and passes it as HTML data attributes. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 				<name>data</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.util.Map</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the navigation item is a dropdown menu. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>dropdown</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the URL navigated to when the navigation item is clicked.</description>
 				<name>href</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.String</outputType>
 				<defaultValue>javascript:void(0);</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling the navigation item's icon.</description>
 				<name>iconCssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the text to display for the navigation item.</description>
 				<name>label</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the navigation item is selected by default. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>selected</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -866,6 +1014,7 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the navigation item's title.</description>
 				<name>title</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -876,12 +1025,14 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to open a dialog window with the <![CDATA[<code>href</code>]]> location when a user clicks the navigation item. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>useDialog</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>false</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets whether to wrap the navigation item's dropdown menu in an unordered list with the <![CDATA[<code>drop-down-menu</code>]]> class. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>wrapDropDownMenu</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -890,33 +1041,40 @@
 		</attributes>
 	</component>
 	<component name="Option" bodyContent="true">
+		<description>Creates an option component for using in an <![CDATA[<code>&lt;aui:select&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Takes a set of data and passes it as HTML data attributes. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 				<name>data</name>
 				<inputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></inputType>
 				<outputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the component is disabled. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>disabled</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the text to display as the option in the select form.</description>
 				<name>label</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the option is selected when the component loads. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>selected</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the styling for the option component. For example, to align the text to the right you would specify <![CDATA[<code>text-align:right;</code>]]>.</description>
 				<name>style</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -928,6 +1086,7 @@
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets the option's value. If no value is given, the value is taken from the <![CDATA[<code>label</code>]]> attribute.</description>
 				<name>value</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
@@ -959,19 +1118,23 @@
 		</attributes>
 	</component>
 	<component name="Row" bodyContent="true">
+		<description>Creates a row to hold <![CDATA[<code>&lt;aui:col&gt;</code>]]> components.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to assign the <![CDATA[<code>row-fluid</code>]]> CSS class to the row. The default value is <![CDATA[<code>true</code>]]>. If set to <![CDATA[<code>false</code>]]>, the <![CDATA[<code>row</code>]]> CSS class is assigned.</description>
 				<name>fluid</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -979,8 +1142,10 @@
 		</attributes>
 	</component>
 	<component name="Script" dynamicAttributes="false" parentClass="com.liferay.taglib.util.PositionTagSupport" writeJSP="false">
+		<description>Creates a script component in which to write JavaScript that facilitates using AlloyUI modules.</description>
 		<attributes>
 			<attribute>
+				<description>Sets the script's position.</description>
 				<name>position</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -988,6 +1153,7 @@
 				<settable>false</settable>
 			</attribute>
 			<attribute>
+				<description>Sets AlloyUI modules to be used in the script. Names of multiple modules must be separated by commas.</description>
 				<name>use</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -995,43 +1161,52 @@
 		</attributes>
 	</component>
 	<component name="Select" bodyContent="true">
+		<description>Creates a select field (or combo box) for holding <![CDATA[<code>&lt;aui:option&gt;</code>]]> components.</description>
 		<attributes>
 			<attribute>
+				<description>Sets the bean associated with the select component.</description>
 				<name>bean</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to reload the page when the value of the field changes. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>changesContext</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a CSS class for styling this component.</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Takes a set of data and passes it as HTML data attributes. For example, the <![CDATA[<code>HashMap&lt;"class-name", "foo"&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = "foo";</code>]]>.</description>
 				<name>data</name>
 				<inputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></inputType>
 				<outputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the component is disabled. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>disabled</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the component should be the first element of the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>first</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets text to display as a help tooltip on mouse over of the component's help icon.</description>
 				<name>helpMessage</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1042,26 +1217,31 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to align the select field with the next element in the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>inlineField</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Aligns the label's text. Possible values are <![CDATA[<code>right</code>]]> and <![CDATA[<code>left</code>]]>.</description>
 				<name>inlineLabel</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the select field's label and displays it above the field.</description>
 				<name>label</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether the component should be the last element in the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>last</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the list type and automatically generates the options. Possible values can be found in <![CDATA[<code>ListTypeImpl.java</code>]]>.</description>
 				<name>listType</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1072,58 +1252,69 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether multiple options can be selected. If set to <![CDATA[<code>true</code>]]>, the select field expands to allow for multiple selections. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>multiple</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the select field's name attribute. Note that this value overrides the <![CDATA[<code>label</code>]]> attribute and takes the place of the label.</description>
 				<name>name</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<description>Sets a function to be called when the select field's value changes.</description>
 				<name>onChange</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets a function to be called on users clicking the select field.</description>
 				<name>onClick</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the text to display before the select field.</description>
 				<name>prefix</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to mark the select field as required. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>required</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to display an empty option as a placeholder. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>showEmptyOption</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to display the required label above the select field. Note that this attribute is only active if the <![CDATA[<code>required</code>]]> attribute is set to <![CDATA[<code>true</code>]]>. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>showRequiredLabel</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets the text to display after the select field.</description>
 				<name>suffix</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the select field's title.</description>
 				<name>title</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>useNamespace</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -1131,15 +1322,20 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Spacer" dynamicAttributes="false" parentClass="com.liferay.portal.kernel.servlet.taglib.TagSupport" writeBaseClass="false" writeJSP="false" />
+	<component name="Spacer" dynamicAttributes="false" parentClass="com.liferay.portal.kernel.servlet.taglib.TagSupport" writeBaseClass="false" writeJSP="false">
+		<description>Creates a spacer component that enables JSP 2.1 server-side trimming of white spaces.</description>
+	</component>
 	<component name="TranslationManager" dynamicAttributes="false">
+		<description>Creates a UI component for managing translation of associated content.</description>
 		<attributes>
 			<attribute>
+				<description>Sets the available locales of translation languages to choose from.</description>
 				<name>availableLocales</name>
 				<inputType>java.util.Locale[]</inputType>
 				<outputType>java.util.Locale[]</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the language ID to which the translation manager defaults when no other translations are available in the user's language.</description>
 				<name>defaultLanguageId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1150,17 +1346,20 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to activate the translation manager. The default value is <![CDATA[<code>true</code>]]>. If this is set to <![CDATA[<code>false</code>]]>, the translation manager will not work entirely.</description>
 				<name>initialize</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets whether to make the translation manager read-only for the user. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>readOnly</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -1168,13 +1367,16 @@
 		</attributes>
 	</component>
 	<component name="Validator" className="ValidatorTagImpl" dynamicAttributes="false" parentClass="com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport" writeJSP="false">
+		<description>Creates a component to validate input fields.</description>
 		<attributes>
 			<attribute>
+				<description>Sets a custom error message to replace the default validation error message.</description>
 				<name>errorMessage</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the type of validation for the input field. Possible values are <![CDATA[<code>acceptFiles</code>]]>, <![CDATA[<code>alpha</code>]]>, <![CDATA[<code>alphanum</code>]]>, <![CDATA[<code>date</code>]]>, <![CDATA[<code>digits</code>]]>, <![CDATA[<code>email</code>]]>, <![CDATA[<code>equalTo</code>]]>, <![CDATA[<code>iri</code>]]>, <![CDATA[<code>max</code>]]>, <![CDATA[<code>maxLength</code>]]>, <![CDATA[<code>min</code>]]>, <![CDATA[<code>minLength</code>]]>, <![CDATA[<code>number</code>]]>, <![CDATA[<code>required</code>]]>, and <![CDATA[<code>url</code>]]>.</description>
 				<name>name</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
@@ -1183,28 +1385,34 @@
 		</attributes>
 	</component>
 	<component name="WorkflowStatus" dynamicAttributes="false">
+		<description>Creates a UI component that displays the current status of its associated workflow.</description>
 		<attributes>
 			<attribute>
+				<description>Sets the bean associated with the workflow status component.</description>
 				<name>bean</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets text to display as a help tooltip on mouse over of the component's help icon.</description>
 				<name>helpMessage</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Identifies the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the class for the bean object.</description>
 				<name>model</name>
 				<inputType><![CDATA[java.lang.Class<?>]]></inputType>
 				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 			</attribute>
 			<attribute>
+				<description>Sets whether to show the workflow status icon. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>showIcon</name>
 				<required>false</required>
 				<rtexprvalue>true</rtexprvalue>
@@ -1212,6 +1420,7 @@
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets whether to show the status label. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>showLabel</name>
 				<required>false</required>
 				<rtexprvalue>true</rtexprvalue>
@@ -1219,16 +1428,19 @@
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<description>Sets the workflow status. Possible values are <![CDATA[<code>0</code>]]> (Approved), <![CDATA[<code>1</code>]]> (Pending), <![CDATA[<code>2</code>]]> (Draft), <![CDATA[<code>3</code>]]> (Expired), <![CDATA[<code>4</code>]]> (Denied), <![CDATA[<code>5</code>]]> (Inactive), <![CDATA[<code>6</code>]]> (Incomplete), <![CDATA[<code>7</code>]]> (Scheduled), and <![CDATA[<code>8</code>]]> (In-Trash). Any other value defaults to status (Any).</description>
 				<name>status</name>
 				<inputType>java.lang.Integer</inputType>
 				<outputType>java.lang.Integer</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the worflow status message, overriding the existing one.</description>
 				<name>statusMessage</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<description>Sets the version for the workflow status and displays the version in a label next to the workflow status.</description>
 				<name>version</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

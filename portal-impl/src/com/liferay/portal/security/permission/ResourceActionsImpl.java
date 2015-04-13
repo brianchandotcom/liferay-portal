@@ -685,29 +685,13 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	protected void checkPortletActions(Portlet portlet, List<String> actions) {
-		if (!actions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
-			!actions.contains(ActionKeys.ADD_TO_PAGE)) {
-
-			actions.add(ActionKeys.ADD_TO_PAGE);
-		}
+		checkPortletLayoutManagerActions(actions);
 
 		if ((portlet != null) &&
 			(portlet.getControlPanelEntryCategory() != null) &&
 			!actions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 
 			actions.add(ActionKeys.ACCESS_IN_CONTROL_PANEL);
-		}
-
-		if (!actions.contains(ActionKeys.CONFIGURATION)) {
-			actions.add(ActionKeys.CONFIGURATION);
-		}
-
-		if (!actions.contains(ActionKeys.PERMISSIONS)) {
-			actions.add(ActionKeys.PERMISSIONS);
-		}
-
-		if (!actions.contains(ActionKeys.VIEW)) {
-			actions.add(ActionKeys.VIEW);
 		}
 	}
 
@@ -730,6 +714,12 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	protected void checkPortletLayoutManagerActions(List<String> actions) {
+		if (!actions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
+			!actions.contains(ActionKeys.ADD_TO_PAGE)) {
+
+			actions.add(ActionKeys.ADD_TO_PAGE);
+		}
+
 		if (!actions.contains(ActionKeys.CONFIGURATION)) {
 			actions.add(ActionKeys.CONFIGURATION);
 		}

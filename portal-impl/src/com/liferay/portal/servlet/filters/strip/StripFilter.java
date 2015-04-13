@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.KMPSearch;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -496,7 +497,16 @@ public class StripFilter extends BasePortalFilter {
 			return;
 		}
 
-		writer.append(charBuffer, 0, endPos);
+		if (JavaDetector.isJDK6()) {
+			CharBuffer duplicateCharBuffer = charBuffer.duplicate();
+
+			int limit = duplicateCharBuffer.position() + endPos;
+
+			writer.append((CharSequence)duplicateCharBuffer.limit(limit));
+		}
+		else {
+			writer.append(charBuffer, 0, endPos);
+		}
 
 		charBuffer.position(charBuffer.position() + endPos);
 

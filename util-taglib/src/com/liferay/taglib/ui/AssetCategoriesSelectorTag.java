@@ -40,6 +40,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_curCategoryIds = curCategoryIds;
 	}
 
+	public void setGroupIds(long[] groupIds) {
+		_groupIds = groupIds;
+	}
+
 	public void setHiddenInput(String hiddenInput) {
 		_hiddenInput = hiddenInput;
 	}
@@ -50,6 +54,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_classPK = 0;
 		_contentCallback = null;
 		_curCategoryIds = null;
+		_groupIds = null;
 		_hiddenInput = "assetCategoryIds";
 	}
 
@@ -72,6 +77,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			"liferay-ui:asset-categories-selector:curCategoryIds",
 			_curCategoryIds);
 		request.setAttribute(
+			"liferay-ui:asset-categories-selector:groupIds", _groupIds);
+		request.setAttribute(
 			"liferay-ui:asset-categories-selector:hiddenInput", _hiddenInput);
 	}
 
@@ -82,6 +89,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	private long _classPK;
 	private String _contentCallback;
 	private String _curCategoryIds;
+	private long[] _groupIds;
 	private String _hiddenInput = "assetCategoryIds";
 
 }

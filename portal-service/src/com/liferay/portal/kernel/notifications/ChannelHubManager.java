@@ -112,10 +112,6 @@ public interface ChannelHubManager {
 			Collection<String> notificationEventUuids)
 		throws ChannelException;
 
-	public void sendClusterNotificationEvent(
-			long companyId, long userId, NotificationEvent notificationEvent)
-		throws ChannelException;
-
 	public void sendNotificationEvent(
 			long companyId, long userId, NotificationEvent notificationEvent)
 		throws ChannelException;

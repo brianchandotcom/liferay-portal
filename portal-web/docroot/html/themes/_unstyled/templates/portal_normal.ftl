@@ -31,7 +31,7 @@ ${theme.include(body_top_include)}
 				</a>
 
 				<#if show_site_name>
-					<span class="site-name" title="<@liferay.language_format objects="${site_name}" key="go-to-x" />">
+					<span class="site-name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 						${site_name}
 					</span>
 				</#if>

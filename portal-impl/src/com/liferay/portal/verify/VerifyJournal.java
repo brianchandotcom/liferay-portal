@@ -44,10 +44,13 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.model.JournalArticleImage;
 import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
@@ -75,6 +78,7 @@ public class VerifyJournal extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyContent();
+		verifyDynamicElements();
 		updateFolderAssets();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
@@ -83,57 +87,92 @@ public class VerifyJournal extends VerifyProcess {
 		verifyURLTitle();
 	}
 
-	protected void updateElements(List<Element> elements) throws Exception {
-		for (Element element : elements) {
-			String type = element.attributeValue("type");
+	protected void updateDynamicElements(List<Element> dynamicElements)
+		throws PortalException, SystemException {
 
-			if (!type.equals("document_library")) {
-				continue;
+		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
+
+		for (Element dynamicElement : dynamicElements) {
+			updateDynamicElements(dynamicElement.elements("dynamic-element"));
+
+			String name = dynamicElement.attributeValue("name");
+
+			int index = ddmFieldsCounter.get(name);
+
+			dynamicElement.addAttribute("index", String.valueOf(index));
+
+			String type = dynamicElement.attributeValue("type");
+
+			if (type.equals("image")) {
+				updateImageElement(dynamicElement, name, index);
 			}
 
-			updateElements(element.elements("dynamic-element"));
+			ddmFieldsCounter.incrementKey(name);
+		}
+	}
 
-			Element dynamicContentElement = element.element("dynamic-content");
+	protected void updateDocumentLibraryElements(Element element)
+		throws Exception {
 
-			String path = dynamicContentElement.getStringValue();
+		Element dynamicContentElement = element.element("dynamic-content");
 
-			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+		String path = dynamicContentElement.getStringValue();
 
-			if (pathArray.length != 5) {
-				continue;
+		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+
+		if (pathArray.length != 5) {
+			return;
+		}
+
+		long groupId = GetterUtil.getLong(pathArray[2]);
+		long folderId = GetterUtil.getLong(pathArray[3]);
+		String title = HttpUtil.decodeURL(HtmlUtil.escape(pathArray[4]));
+
+		if (title.contains(StringPool.SLASH)) {
+			title = StringUtil.replace(
+				title, StringPool.SLASH, StringPool.BLANK);
+
+			StringBundler sb = new StringBundler(9);
+
+			for (int i = 0; i < 4; i++) {
+				sb.append(pathArray[i]);
+				sb.append(StringPool.SLASH);
 			}
 
-			long groupId = GetterUtil.getLong(pathArray[2]);
-			long folderId = GetterUtil.getLong(pathArray[3]);
-			String title = HttpUtil.decodeURL(HtmlUtil.escape(pathArray[4]));
+			sb.append(title);
 
-			if (title.contains(StringPool.SLASH)) {
-				title = StringUtil.replace(
-					title, StringPool.SLASH, StringPool.BLANK);
+			path = sb.toString();
+		}
 
-				StringBundler sb = new StringBundler(9);
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchFileEntry(
+			groupId, folderId, title);
 
-				for (int i = 0; i < 4; i++) {
-					sb.append(pathArray[i]);
-					sb.append(StringPool.SLASH);
-				}
+		if (dlFileEntry == null) {
+			return;
+		}
 
-				sb.append(title);
+		Node node = dynamicContentElement.node(0);
 
-				path = sb.toString();
-			}
+		node.setText(path + StringPool.SLASH + dlFileEntry.getUuid());
+	}
 
-			DLFileEntry dlFileEntry =
-				DLFileEntryLocalServiceUtil.fetchFileEntry(
-					groupId, folderId, title);
+	protected void updateElement(long groupId, Element element)
+		throws Exception {
 
-			if (dlFileEntry == null) {
-				continue;
-			}
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
 
-			Node node = dynamicContentElement.node(0);
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateElement(groupId, dynamicElementElement);
+		}
 
-			node.setText(path + StringPool.SLASH + dlFileEntry.getUuid());
+		String type = element.attributeValue("type");
+
+		if (type.equals("document_library")) {
+			updateDocumentLibraryElements(element);
+		}
+		else if (type.equals("link_to_layout")) {
+			updateLinkToLayoutElements(groupId, element);
 		}
 	}
 
@@ -162,6 +201,37 @@ public class VerifyJournal extends VerifyProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Assets verified for folders");
+		}
+	}
+
+	protected void updateImageElement(Element element, String name, int index)
+		throws PortalException, SystemException {
+
+		Element dynamicContentElement = element.element("dynamic-content");
+
+		long articleImageId = GetterUtil.getLong(
+			dynamicContentElement.attributeValue("id"));
+
+		JournalArticleImage articleImage =
+			JournalArticleImageLocalServiceUtil.getArticleImage(articleImageId);
+
+		articleImage.setElName(name + StringPool.UNDERLINE + index);
+
+		JournalArticleImageLocalServiceUtil.updateJournalArticleImage(
+			articleImage);
+	}
+
+	protected void updateLinkToLayoutElements(long groupId, Element element) {
+		Element dynamicContentElement = element.element("dynamic-content");
+
+		Node node = dynamicContentElement.node(0);
+
+		String text = node.getText();
+
+		if (!text.isEmpty() && !text.endsWith(StringPool.AT + groupId)) {
+			node.setText(
+				dynamicContentElement.getStringValue() + StringPool.AT +
+					groupId);
 		}
 	}
 
@@ -207,8 +277,9 @@ public class VerifyJournal extends VerifyProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select id_ from JournalArticle where content like " +
-					"'%document_library%' and structureId != ''");
+				"select id_ from JournalArticle where (content like " +
+					"'%document_library%' or content like '%link_to_layout%')" +
+						" and structureId != ''");
 
 			rs = ps.executeQuery();
 
@@ -222,7 +293,9 @@ public class VerifyJournal extends VerifyProcess {
 
 				Element rootElement = document.getRootElement();
 
-				updateElements(rootElement.elements());
+				for (Element element : rootElement.elements()) {
+					updateElement(article.getGroupId(), element);
+				}
 
 				article.setContent(document.asXML());
 
@@ -282,6 +355,50 @@ public class VerifyJournal extends VerifyProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	protected void verifyDynamicElements()
+		throws PortalException, SystemException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			new JournalArticleActionableDynamicQuery() {
+
+				@Override
+				public void performAction(Object object) {
+					JournalArticle article = (JournalArticle)object;
+
+					try {
+						verifyDynamicElements(article);
+					}
+					catch (Exception e) {
+						_log.error(
+							"Unable to update content for article " +
+								article.getId(),
+							e);
+					}
+				}
+
+		};
+
+		actionableDynamicQuery.performActions();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Dynamic elements verified for articles");
+		}
+	}
+
+	protected void verifyDynamicElements(JournalArticle article)
+		throws Exception {
+
+		Document document = SAXReaderUtil.read(article.getContent());
+
+		Element rootElement = document.getRootElement();
+
+		updateDynamicElements(rootElement.elements("dynamic-element"));
+
+		article.setContent(document.asXML());
+
+		JournalArticleLocalServiceUtil.updateJournalArticle(article);
 	}
 
 	protected void verifyOracleNewLine() throws Exception {

@@ -20,12 +20,15 @@ import com.liferay.portal.dao.orm.hibernate.region.SingletonLiferayEhcacheRegion
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEventType;
+import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
 import java.io.Serializable;
+
+import java.nio.ByteBuffer;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -51,8 +54,12 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		byte[] data = (byte[])message.getPayload();
+
+		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
+
 		PortalCacheClusterEvent portalCacheClusterEvent =
-			(PortalCacheClusterEvent)message.getPayload();
+			(PortalCacheClusterEvent)deserializer.readObject();
 
 		if (portalCacheClusterEvent == null) {
 			if (_log.isWarnEnabled()) {

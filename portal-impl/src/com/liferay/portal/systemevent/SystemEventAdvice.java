@@ -289,7 +289,9 @@ public class SystemEventAdvice
 
 		ClassedModel classedModel = (ClassedModel)arguments[0];
 
-		if (!(classedModel.getPrimaryKeyObj() instanceof Long)) {
+		if ((classedModel == null) ||
+			!(classedModel.getPrimaryKeyObj() instanceof Long)) {
+
 			if (_log.isDebugEnabled() && (phase == PHASE_BEFORE)) {
 				_log.debug(
 					"The first parameter of " + methodInvocation +

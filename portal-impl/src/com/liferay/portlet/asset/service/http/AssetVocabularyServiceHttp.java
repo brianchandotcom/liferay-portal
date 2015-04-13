@@ -597,7 +597,7 @@ public class AssetVocabularyServiceHttp {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplay(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
 		int start, int end, boolean addDefaultVocabulary,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -608,7 +608,7 @@ public class AssetVocabularyServiceHttp {
 					_getGroupVocabulariesDisplayParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					name, start, end, addDefaultVocabulary, obc);
+					title, start, end, addDefaultVocabulary, obc);
 
 			Object returnObj = null;
 

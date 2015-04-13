@@ -50,6 +50,7 @@ double version = ParamUtil.getDouble(request, "version");
 
 		searchContainer.setDelta(pageDelta);
 		searchContainer.setDeltaConfigurable(false);
+		searchContainer.setEmptyResultsMessage("no-web-content-was-found-that-matched-the-specified-filters");
 		searchContainer.setOrderByCol(orderByCol);
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -78,18 +79,13 @@ double version = ParamUtil.getDouble(request, "version");
 		searchTerms.setVersion(version);
 		searchTerms.setAdvancedSearch(true);
 
+		boolean includeScheduledArticles = false;
+
 		List<JournalArticle> results = null;
 		int total = 0;
 		%>
 
-		<c:choose>
-			<c:when test="<%= PropsValues.JOURNAL_ARTICLES_SEARCH_WITH_INDEX %>">
-				<%@ include file="/html/portlet/journal/article_search_results_index.jspf" %>
-			</c:when>
-			<c:otherwise>
-				<%@ include file="/html/portlet/journal/article_search_results_database.jspf" %>
-			</c:otherwise>
-		</c:choose>
+		<%@ include file="/html/portlet/journal/article_search_results.jspf" %>
 
 		<%
 		List resultRows = searchContainer.getResultRows();

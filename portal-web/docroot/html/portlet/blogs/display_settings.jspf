@@ -50,7 +50,7 @@
 			displayStyle="<%= displayStyle %>"
 			displayStyleGroupId="<%= displayStyleGroupId %>"
 			displayStyles="<%= displayStyles %>"
-			refreshURL="<%= portletURL.toString() %>"
+			refreshURL="<%= configurationRenderURL %>"
 		/>
 	</div>
 

@@ -17,9 +17,12 @@ package com.liferay.portal.lar;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.dao.orm.Conjunction;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
@@ -386,17 +389,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 	 */
 	@Override
 	public void addDateRangeCriteria(
-		DynamicQuery dynamicQuery, String modifiedDatePropertyName) {
+		DynamicQuery dynamicQuery, String propertyName) {
 
-		if (!hasDateRange()) {
+		Criterion criterion = getDateRangeCriteria(propertyName);
+
+		if (criterion == null) {
 			return;
 		}
 
-		Property modifiedDateProperty = PropertyFactoryUtil.forName(
-			modifiedDatePropertyName);
-
-		dynamicQuery.add(modifiedDateProperty.ge(_startDate));
-		dynamicQuery.add(modifiedDateProperty.le(_endDate));
+		dynamicQuery.add(criterion);
 	}
 
 	@Override
@@ -820,6 +821,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _assetCategoryIdsMap.get(getPrimaryKeyString(clazz, classPK));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public Map<String, long[]> getAssetCategoryIdsMap() {
 		return _assetCategoryIdsMap;
@@ -910,6 +915,22 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return dateRange;
+	}
+
+	@Override
+	public Criterion getDateRangeCriteria(String propertyName) {
+		if (!hasDateRange()) {
+			return null;
+		}
+
+		Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
+
+		Property property = PropertyFactoryUtil.forName(propertyName);
+
+		conjunction.add(property.le(_endDate));
+		conjunction.add(property.ge(_startDate));
+
+		return conjunction;
 	}
 
 	@Override
@@ -1077,6 +1098,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public Map<String, Map<?, ?>> getNewPrimaryKeysMaps() {
+		return _newPrimaryKeysMaps;
+	}
+
+	@Override
 	public Map<?, ?> getNewPrimaryKeysMap(String className) {
 		Map<?, ?> map = _newPrimaryKeysMaps.get(className);
 
@@ -1089,6 +1115,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return map;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public long getOldPlid() {
 		return _oldPlid;
@@ -1107,6 +1137,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public long getPlid() {
 		return _plid;
+	}
+
+	@Override
+	public String getRootPortletId() {
+		return _rootPortletId;
 	}
 
 	@Override
@@ -1179,6 +1214,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return getReferenceDataElement(parentElement, clazz, groupId, uuid);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public List<Element> getReferenceDataElements(
 		Element parentElement, Class<?> clazz) {
@@ -1215,6 +1254,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public Element getReferenceElement(
+		Element parentElement, Class<?> clazz, long groupId, String uuid,
+		String referenceType) {
+
+		List<Element> referenceElements = getReferenceElements(
+			parentElement, clazz, groupId, uuid, 0, referenceType);
+
+		if (!referenceElements.isEmpty()) {
+			return referenceElements.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
+	public Element getReferenceElement(
 		StagedModel parentStagedModel, Class<?> clazz, long classPK) {
 
 		List<Element> referenceElements = getReferenceElements(
@@ -1239,6 +1293,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return ExportImportPathUtil.getRootPath(this);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public Set<String> getScopedPrimaryKeys() {
 		return _scopedPrimaryKeys;
@@ -1314,6 +1372,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _userPersonalSiteGroupId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public List<String> getZipEntries() {
 		return getZipReader().getEntries();
@@ -1377,6 +1439,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return getZipReader().getEntryAsString(path);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public List<String> getZipFolderEntries() {
 		return getZipFolderEntries(StringPool.SLASH);
@@ -1514,7 +1580,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		List<MBMessage> messages = _commentsMap.get(
 			getPrimaryKeyString(clazz, classPK));
 
-		if (messages == null) {
+		if ((messages == null) || messages.isEmpty()) {
 			return;
 		}
 
@@ -1757,7 +1823,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		List<RatingsEntry> ratingsEntries = _ratingsEntriesMap.get(
 			getPrimaryKeyString(clazz, classPK));
 
-		if (ratingsEntries == null) {
+		if ((ratingsEntries == null) || ratingsEntries.isEmpty()) {
 			return;
 		}
 
@@ -1862,6 +1928,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return addScopedPrimaryKey(String.class, path);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public boolean isPathNotExportedInScope(String path) {
 		return !isPathExportedInScope(path);
@@ -1978,6 +2048,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void setNewPrimaryKeysMaps(
+		Map<String, Map<?, ?>> newPrimaryKeysMaps) {
+
+		_newPrimaryKeysMaps = newPrimaryKeysMaps;
+	}
+
+	@Override
 	public void setOldPlid(long oldPlid) {
 		_oldPlid = oldPlid;
 	}
@@ -2002,6 +2079,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
 		_privateLayout = privateLayout;
+	}
+
+	@Override
+	public void setRootPortletId(String rootPortletId) {
+		_rootPortletId = rootPortletId;
 	}
 
 	@Override
@@ -2593,14 +2675,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Date _endDate;
 	private Map<String, List<ExpandoColumn>> _expandoColumnsMap =
 		new HashMap<String, List<ExpandoColumn>>();
-	private Element _exportDataRootElement;
+	private transient Element _exportDataRootElement;
 	private long _groupId;
-	private Element _importDataRootElement;
-	private Map<String, Lock> _locksMap = new HashMap<String, Lock>();
-	private ManifestSummary _manifestSummary = new ManifestSummary();
-	private Set<String> _missingReferences = new HashSet<String>();
-	private Element _missingReferencesElement;
-	private List<Layout> _newLayouts;
+	private transient Element _importDataRootElement;
+	private transient Map<String, Lock> _locksMap = new HashMap<String, Lock>();
+	private transient ManifestSummary _manifestSummary = new ManifestSummary();
+	private transient Set<String> _missingReferences = new HashSet<String>();
+	private transient Element _missingReferencesElement;
+	private transient List<Layout> _newLayouts;
 	private Map<String, Map<?, ?>> _newPrimaryKeysMaps =
 		new HashMap<String, Map<?, ?>>();
 	private Set<String> _notUniquePerLayout = new HashSet<String>();
@@ -2609,10 +2691,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Map<String, List<KeyValuePair>> _permissionsMap =
 		new HashMap<String, List<KeyValuePair>>();
 	private long _plid;
-	private PortletDataContextListener _portletDataContextListener;
+	private transient PortletDataContextListener _portletDataContextListener;
+	private String _rootPortletId;
 	private Set<String> _primaryKeys = new HashSet<String>();
 	private boolean _privateLayout;
-	private Map<String, List<RatingsEntry>> _ratingsEntriesMap =
+	private transient Map<String, List<RatingsEntry>> _ratingsEntriesMap =
 		new HashMap<String, List<RatingsEntry>>();
 	private Set<String> _references = new HashSet<String>();
 	private Set<String> _scopedPrimaryKeys = new HashSet<String>();
@@ -2624,10 +2707,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _sourceGroupId;
 	private long _sourceUserPersonalSiteGroupId;
 	private Date _startDate;
-	private UserIdStrategy _userIdStrategy;
+	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
-	private XStream _xStream;
-	private ZipReader _zipReader;
-	private ZipWriter _zipWriter;
+	private transient XStream _xStream;
+	private transient ZipReader _zipReader;
+	private transient ZipWriter _zipWriter;
 
 }

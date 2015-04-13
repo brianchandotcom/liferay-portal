@@ -269,12 +269,12 @@ public class AssetCategoryServiceSoap {
 	OrderByComparator)}
 	*/
 	public static java.lang.String getJSONVocabularyCategories(long groupId,
-		java.lang.String name, long vocabularyId, int start, int end,
+		java.lang.String title, long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = AssetCategoryServiceUtil.getJSONVocabularyCategories(groupId,
-					name, vocabularyId, start, end, obc);
+					title, vocabularyId, start, end, obc);
 
 			return returnValue.toString();
 		}
@@ -511,11 +511,11 @@ public class AssetCategoryServiceSoap {
 	}
 
 	public static java.lang.String search(long[] groupIds,
-		java.lang.String name, long[] vocabularyIds, int start, int end)
+		java.lang.String title, long[] vocabularyIds, int start, int end)
 		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONArray returnValue = AssetCategoryServiceUtil.search(groupIds,
-					name, vocabularyIds, start, end);
+					title, vocabularyIds, start, end);
 
 			return returnValue.toString();
 		}

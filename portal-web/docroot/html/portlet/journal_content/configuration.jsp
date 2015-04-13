@@ -23,7 +23,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 JournalArticle article = null;
 
-String type = ParamUtil.getString(request, "type");
+String defaultType = "-1";
+
+String type = ParamUtil.getString(request, "type", defaultType);
 
 try {
 	if (Validator.isNotNull(articleId)) {
@@ -32,10 +34,17 @@ try {
 		article = article.toEscapedModel();
 
 		articleGroupId = article.getGroupId();
-		type = article.getType();
+
+		if (type.equals(defaultType)) {
+			type = article.getType();
+		}
+	}
+	else if (type.equals(defaultType)) {
+		type = StringPool.BLANK;
 	}
 }
 catch (NoSuchArticleException nsae) {
+	type = StringPool.BLANK;
 }
 %>
 
@@ -119,7 +128,7 @@ catch (NoSuchArticleException nsae) {
 						<c:if test="<%= tableIteratorObj.isSmallImage() %>">
 							<br />
 
-							<img border="0" hspace="0" src="<%= Validator.isNotNull(tableIteratorObj.getSmallImageURL()) ? HtmlUtil.escapeHREF(tableIteratorObj.getSmallImageURL()) : themeDisplay.getPathImage() + "/journal/template?img_id=" + tableIteratorObj.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(tableIteratorObj.getSmallImageId()) %>" vspace="0" />
+							<img alt="" border="0" hspace="0" src="<%= Validator.isNotNull(tableIteratorObj.getSmallImageURL()) ? HtmlUtil.escapeHREF(tableIteratorObj.getSmallImageURL()) : themeDisplay.getPathImage() + "/journal/template?img_id=" + tableIteratorObj.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(tableIteratorObj.getSmallImageId()) %>" vspace="0" />
 						</c:if>
 					</liferay-ui:table-iterator>
 
@@ -143,12 +152,15 @@ catch (NoSuchArticleException nsae) {
 
 	ArticleSearch searchContainer = new ArticleSearch(dynamicRenderRequest, configurationRenderURL);
 
+	searchContainer.setEmptyResultsMessage("no-web-content-was-found-that-matched-the-specified-filters");
+
 	List<String> headerNames = searchContainer.getHeaderNames();
 
 	headerNames.clear();
 
 	headerNames.add("id");
 	headerNames.add("title");
+	headerNames.add("status");
 	headerNames.add("modified-date");
 	headerNames.add("display-date");
 	headerNames.add("author");
@@ -169,6 +181,8 @@ catch (NoSuchArticleException nsae) {
 
 	searchTerms.setFolderIds(new ArrayList<Long>());
 	searchTerms.setVersion(-1);
+
+	boolean includeScheduledArticles = true;
 
 	List<JournalArticle> results = null;
 	int total = 0;
@@ -205,6 +219,10 @@ catch (NoSuchArticleException nsae) {
 		// Title
 
 		row.addText(HtmlUtil.escape(curArticle.getTitle(locale)), rowHREF);
+
+		// Status
+
+		row.addStatus(curArticle.getStatus(), curArticle.getStatusByUserId(), curArticle.getStatusDate());
 
 		// Modified date
 

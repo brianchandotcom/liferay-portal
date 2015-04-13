@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -420,6 +421,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @return the the map of request header name/value pairs
 	 * @see    com.liferay.portal.kernel.servlet.HttpHeaders
 	 */
+	@JSON(include = false)
 	public Map<String, String> getHeaders() {
 		return _headers;
 	}
@@ -765,6 +767,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public boolean isCommandAdd() {
 		if (Validator.equals(_command, Constants.ADD) ||
+			Validator.equals(_command, Constants.ADD_DYNAMIC) ||
 			Validator.equals(_command, Constants.ADD_MULTIPLE)) {
 
 			return true;
@@ -1489,7 +1492,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private Date _formDate;
 	private String[] _groupPermissions;
 	private String[] _guestPermissions;
-	private Map<String, String> _headers;
+	private transient Map<String, String> _headers;
 	private boolean _indexingEnabled = true;
 	private String _languageId;
 	private String _layoutFullURL;

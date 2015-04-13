@@ -37,7 +37,7 @@ if (classPK > 0) {
 	%>
 
 		<li class="<%= phone.isPrimary() ? "primary" : "" %>">
-			<%= phone.getNumber() %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
+			<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <%= LanguageUtil.get(pageContext, phone.getType().getName()) %>
 		</li>
 
 	<%

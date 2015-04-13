@@ -1,3 +1,5 @@
+@import "compass";
+
 .lfr-asset-column-content {
 	margin-right: 1em;
 	padding: 0;
@@ -11,7 +13,8 @@
 	.lfr-asset-summary {
 		margin-bottom: 2em;
 		text-align: center;
-		word-break: break-all;
+
+		@include word-break(break-all);
 	}
 
 	.lfr-asset-avatar img {
@@ -132,6 +135,8 @@
 	.lfr-asset-description {
 		color: #444;
 		font-style: italic;
+
+		@include hyphenation;
 	}
 
 	.lfr-asset-icon {

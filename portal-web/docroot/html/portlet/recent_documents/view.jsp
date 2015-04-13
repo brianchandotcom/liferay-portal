@@ -25,7 +25,7 @@ List fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId
 		<liferay-ui:message key="there-are-no-recent-downloads" />
 	</c:when>
 	<c:otherwise>
-		<table class="lfr-table">
+		<ul class="recent-documents">
 
 		<%
 		for (int i = 0; i < fileRanks.size(); i++) {
@@ -35,19 +35,14 @@ List fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileRank.getFileEntryId());
 
 				fileEntry = fileEntry.toEscapedModel();
-
-				PortletURL rowURL = renderResponse.createActionURL();
-
-				rowURL.setParameter("struts_action", "/recent_documents/get_file");
-				rowURL.setParameter("fileEntryId", String.valueOf(fileRank.getFileEntryId()));
-				rowURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		%>
 
-				<tr>
-					<td>
-						<a href="<%= rowURL.toString() %>"><img align="left" alt="" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= fileEntry.getIcon() %>.png" /><%= fileEntry.getTitle() %></a>
-					</td>
-				</tr>
+				<li>
+					<a href="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>">
+						<img alt="" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= fileEntry.getIcon() %>.png" />
+						<%= fileEntry.getTitle() %>
+					</a>
+				</li>
 
 		<%
 			}
@@ -56,6 +51,6 @@ List fileRanks = DLAppLocalServiceUtil.getFileRanks(scopeGroupId, user.getUserId
 		}
 		%>
 
-		</table>
+		</ul>
 	</c:otherwise>
 </c:choose>

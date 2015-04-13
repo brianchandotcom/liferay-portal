@@ -217,7 +217,16 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 				browseRequest.setFacetSpec(facet.getFieldName(), facetSpec);
 			}
 
-			browseRequest.setCount(PropsValues.INDEX_SEARCH_LIMIT);
+			int end = searchContext.getEnd();
+
+			if ((end == QueryUtil.ALL_POS) ||
+				(end > PropsValues.INDEX_SEARCH_LIMIT)) {
+
+				end = PropsValues.INDEX_SEARCH_LIMIT;
+			}
+
+			browseRequest.setCount(end);
+
 			browseRequest.setOffset(0);
 			browseRequest.setQuery(
 				(org.apache.lucene.search.Query)QueryTranslatorUtil.translate(
@@ -230,14 +239,12 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 			BrowseResult browseResult = boboBrowser.browse(browseRequest);
 
-			BrowseHit[] browseHits = browseResult.getHits();
-
 			long endTime = System.currentTimeMillis();
 
 			float searchTime = (float)(endTime - startTime) / Time.SECOND;
 
 			hits = toHits(
-				indexSearcher, new HitDocs(browseHits), query, startTime,
+				indexSearcher, new HitDocs(browseResult), query, startTime,
 				searchTime, searchContext.getStart(), searchContext.getEnd());
 
 			Map<String, FacetAccessible> facetMap = browseResult.getFacetMap();
@@ -265,14 +272,12 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 				BrowseResult browseResult = boboBrowser.browse(browseRequest);
 
-				BrowseHit[] browseHits = browseResult.getHits();
-
 				long endTime = System.currentTimeMillis();
 
 				float searchTime = (float)(endTime - startTime) / Time.SECOND;
 
 				hits = toHits(
-					indexSearcher, new HitDocs(browseHits), query, startTime,
+					indexSearcher, new HitDocs(browseResult), query, startTime,
 					searchTime, searchContext.getStart(),
 					searchContext.getEnd());
 
@@ -641,18 +646,20 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 			Document subsetDocument = getDocument(document);
 
-			if (queryConfig.isHighlightEnabled()) {
-				Locale locale = queryConfig.getLocale();
+			getSnippet(
+				document, query, Field.ASSET_CATEGORY_TITLES,
+				queryConfig.getLocale(), subsetDocument, queryTerms);
 
+			if (queryConfig.isHighlightEnabled()) {
 				getSnippet(
-					document, query, Field.CONTENT, locale, subsetDocument,
-					queryTerms);
+					document, query, Field.CONTENT, queryConfig.getLocale(),
+					subsetDocument, queryTerms);
 				getSnippet(
-					document, query, Field.DESCRIPTION, locale, subsetDocument,
-					queryTerms);
+					document, query, Field.DESCRIPTION, queryConfig.getLocale(),
+					subsetDocument, queryTerms);
 				getSnippet(
-					document, query, Field.TITLE, locale, subsetDocument,
-					queryTerms);
+					document, query, Field.TITLE, queryConfig.getLocale(),
+					subsetDocument, queryTerms);
 			}
 
 			subsetDocs.add(subsetDocument);
@@ -711,8 +718,9 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 	private class HitDocs {
 
-		public HitDocs(BrowseHit[] browseHits) {
-			_browseHits = browseHits;
+		public HitDocs(BrowseResult browseResult) {
+			_browseHits = browseResult.getHits();
+			_browseResult = browseResult;
 		}
 
 		public HitDocs(TopFieldDocs topFieldDocs) {
@@ -749,14 +757,15 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			if (_topFieldDocs != null) {
 				return _topFieldDocs.totalHits;
 			}
-			else if (_browseHits != null) {
-				return _browseHits.length;
+			else if (_browseResult != null) {
+				return _browseResult.getNumHits();
 			}
 
 			throw new IllegalStateException();
 		}
 
 		private BrowseHit[] _browseHits;
+		private BrowseResult _browseResult;
 		private TopFieldDocs _topFieldDocs;
 
 	}

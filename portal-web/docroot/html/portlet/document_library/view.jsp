@@ -212,7 +212,7 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 	}
 	%>
 
-	new Liferay.Portlet.DocumentLibrary(
+	var documentLibrary = new Liferay.Portlet.DocumentLibrary(
 		{
 			columnNames: ['<%= StringUtil.merge(escapedEntryColumns, "','") %>'],
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
@@ -293,4 +293,12 @@ if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOC
 			viewFileEntryURL: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
 		}
 	);
+
+	var changeScopeHandles = function(event) {
+		documentLibrary.destroy();
+
+		Liferay.detach('changeScope', changeScopeHandles);
+	};
+
+	Liferay.on('changeScope', changeScopeHandles);
 </aui:script>

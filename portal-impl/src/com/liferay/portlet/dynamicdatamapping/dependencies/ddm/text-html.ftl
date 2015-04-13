@@ -1,18 +1,6 @@
 <#include "../init.ftl">
 
-<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
-
-<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
-	<@liferay_ui["input-editor"] initMethod="${namespacedFieldName}InitEditor" name="${namespacedFieldName}Editor" onBlurMethod="${namespacedFieldName}OnBlurEditor" skipEditorLoading=skipEditorLoading />
-
-	<@aui.input name=namespacedFieldName type="hidden" value=fieldValue>
-		<#if required>
-			<@aui.validator name="required" />
-		</#if>
-	</@>
-
-	${fieldStructure.children}
-</@>
+<#assign fieldValue = paramUtil.getString(request, "${namespacedFieldName}Editor", fieldValue)>
 
 <@aui.script>
 	window['${portletNamespace}${namespacedFieldName}InitEditor'] = function() {
@@ -45,17 +33,35 @@
 	);
 </@>
 
+<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
+	<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
+
+	<@liferay_ui["input-editor"] contentsLanguageId="${requestedLocale}" initMethod="${namespacedFieldName}InitEditor" name="${namespacedFieldName}Editor" onBlurMethod="${namespacedFieldName}OnBlurEditor" skipEditorLoading=skipEditorLoading />
+
+	<@aui.input name=namespacedFieldName type="hidden" value=fieldValue>
+		<#if required>
+			<@aui.validator name="required" />
+		</#if>
+	</@>
+
+	${fieldStructure.children}
+</@>
+
 <@aui.script use="aui-base">
 	var field = A.one('#${portletNamespace}${namespacedFieldName}');
 
 	var form = field.get('form');
 
 	if (form) {
-		form.on(
-			'submit',
+		var handler = Liferay.on(
+			'submitForm',
 			function(event) {
-				field.val(window['${portletNamespace}${namespacedFieldName}Editor'].getHTML());
+				if (event.form.compareTo(form)) {
+					field.val(window['${portletNamespace}${namespacedFieldName}Editor'].getHTML());
+				}
 			}
 		);
+
+		Liferay.DDM.RepeatableFields.eventHandlers['${portletNamespace}${namespacedFieldName}'] = [handler];
 	}
 </@>

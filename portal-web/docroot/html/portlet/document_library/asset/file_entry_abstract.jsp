@@ -40,17 +40,17 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 		<c:choose>
 			<c:when test="<%= showThumbnail && ImageProcessorUtil.hasImages(fileVersion) %>">
 				<div>
-					<img alt="" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1") %>" />
+					<img alt="<liferay-ui:message key="image" />" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1") %>" />
 				</div>
 			</c:when>
 			<c:when test="<%= showThumbnail && PDFProcessorUtil.hasImages(fileVersion) %>">
 				<div>
-					<img alt="" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1") %>" />
+					<img alt="<liferay-ui:message key="document" />" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1") %>" />
 				</div>
 			</c:when>
 			<c:when test="<%= showThumbnail && VideoProcessorUtil.hasVideo(fileVersion) %>">
 				<div>
-					<img alt="" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1") %>" />
+					<img alt="<liferay-ui:message key="video" />" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1") %>" />
 				</div>
 			</c:when>
 			<c:otherwise>

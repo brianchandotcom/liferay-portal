@@ -108,7 +108,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 					<%
 					for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
-						Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId()), themeDisplay.getLocale());
+						Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(_getCurrentAndAncestorSiteGroupIds(groupIds, true), locale);
 
 						if (assetAvailableClassTypes.isEmpty()) {
 							continue;
@@ -291,7 +291,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							String categoryIds = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
 
 							if (Validator.isNotNull(tagNames) || Validator.isNotNull(categoryIds) || (queryLogicIndexes.length == 1)) {
-								request.setAttribute("configuration.jsp-categorizableGroupIds", _getCategorizableGroupIds(groupIds));
+								request.setAttribute("configuration.jsp-categorizableGroupIds", _getCurrentAndAncestorSiteGroupIds(groupIds, true));
 								request.setAttribute("configuration.jsp-index", String.valueOf(index));
 								request.setAttribute("configuration.jsp-queryLogicIndex", String.valueOf(queryLogicIndex));
 
@@ -555,7 +555,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		}
 
 		<%
-		Map<Long, String> assetAvailableClassTypes = curRendererFactory.getClassTypes(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId()), themeDisplay.getLocale());
+		Map<Long, String> assetAvailableClassTypes = curRendererFactory.getClassTypes(_getCurrentAndAncestorSiteGroupIds(groupIds, true), locale);
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;
@@ -772,22 +772,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 </aui:script>
 
 <%!
-private long[] _getCategorizableGroupIds(long[] groupIds) throws Exception {
-	Set<Long> categorizableGroupIds = new HashSet<Long>(groupIds.length);
-
-	for (long groupId : groupIds) {
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.isLayout()) {
-			groupId = group.getParentGroupId();
-		}
-
-		categorizableGroupIds.add(groupId);
-	}
-
-	return ArrayUtil.toLongArray(categorizableGroupIds);
-}
-
 private String _getSectionId(String name) {
 	return TextFormatter.format(name, TextFormatter.M);
 }

@@ -158,6 +158,28 @@ public class ManifestSummary implements Serializable {
 		return _manifestSummaryKeys;
 	}
 
+	public long getModelAdditionCount() {
+		long modelAddition = -1;
+
+		for (String manifestSummaryKey : _manifestSummaryKeys) {
+			long manifestSummaryKeyModelAdditionCount = getModelAdditionCount(
+				manifestSummaryKey);
+
+			if (manifestSummaryKeyModelAdditionCount == -1) {
+				continue;
+			}
+
+			if (modelAddition == -1) {
+				modelAddition = manifestSummaryKeyModelAdditionCount;
+			}
+			else {
+				modelAddition += manifestSummaryKeyModelAdditionCount;
+			}
+		}
+
+		return modelAddition;
+	}
+
 	public long getModelAdditionCount(Class<? extends ClassedModel> clazz) {
 		return getModelAdditionCount(clazz, clazz);
 	}

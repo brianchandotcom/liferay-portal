@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -50,6 +51,25 @@ public class WorkflowTasksUserNotificationHandler
 		return HtmlUtil.escape(jsonObject.getString("notificationMessage"));
 	}
 
+	protected String getKaleoProcessLink(
+			long workflowTaskId, ServiceContext serviceContext)
+		throws Exception {
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			serviceContext.getRequest(), PortletKeys.KALEO_FORMS,
+			serviceContext.getPlid(), PortletRequest.RENDER_PHASE);
+
+		String currentURL = portletURL.toString();
+
+		portletURL.setParameter("tabs2", "edit-workflow-task");
+		portletURL.setParameter("backURL", currentURL);
+		portletURL.setParameter(
+			"workflowTaskId", String.valueOf(workflowTaskId));
+		portletURL.setWindowState(WindowState.NORMAL);
+
+		return portletURL.toString();
+	}
+
 	@Override
 	protected String getLink(
 			UserNotificationEvent userNotificationEvent,
@@ -58,6 +78,13 @@ public class WorkflowTasksUserNotificationHandler
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
+
+		String entryClassName = jsonObject.getString("entryClassName");
+
+		if (Validator.equals(entryClassName, _KALEO_PROCESS_CLASS_NAME)) {
+			return getKaleoProcessLink(
+				jsonObject.getLong("workflowTaskId"), serviceContext);
+		}
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASKS,
@@ -73,5 +100,8 @@ public class WorkflowTasksUserNotificationHandler
 
 		return portletURL.toString();
 	}
+
+	private static final String _KALEO_PROCESS_CLASS_NAME =
+		"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess";
 
 }

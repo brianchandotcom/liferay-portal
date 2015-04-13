@@ -324,9 +324,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				addImportDataRootElement(portletDataContext, data);
 			}
 
-			portletDataContext.addDeletionSystemEventStagedModelTypes(
-				getDeletionSystemEventStagedModelTypes());
-
 			return doImportData(
 				portletDataContext, portletId, portletPreferences, data);
 		}
@@ -555,16 +552,18 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 							DDMTemplate.class.getSimpleName(), "uuid",
 							ddmTemplateUuid);
 
-					String ddmTemplatePath = ddmTemplateElement.attributeValue(
-						"path");
+					if (ddmTemplateElement != null) {
+						String ddmTemplatePath =
+							ddmTemplateElement.attributeValue("path");
 
-					ddmTemplate =
-						(DDMTemplate)portletDataContext.getZipEntryAsObject(
-							ddmTemplatePath);
+						ddmTemplate =
+							(DDMTemplate)portletDataContext.getZipEntryAsObject(
+								ddmTemplatePath);
 
-					if (ddmTemplate != null) {
-						StagedModelDataHandlerUtil.importStagedModel(
-							portletDataContext, ddmTemplate);
+						if (ddmTemplate != null) {
+							StagedModelDataHandlerUtil.importStagedModel(
+								portletDataContext, ddmTemplate);
+						}
 					}
 				}
 				else {

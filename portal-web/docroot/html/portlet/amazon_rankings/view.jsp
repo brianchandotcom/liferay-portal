@@ -42,7 +42,7 @@
 			<tr>
 				<td>
 					<aui:a href='<%= "http://www.amazon.com/exec/obidos/ASIN/" + amazonRankings.getISBN() %>' target="_blank">
-						<img border="0" src="<%= amazonRankings.getSmallImageURL() %>" />
+						<img alt="<liferay-ui:message key="amazon-rankings" />" border="0" src="<%= amazonRankings.getSmallImageURL() %>" />
 					</aui:a>
 				</td>
 				<td>

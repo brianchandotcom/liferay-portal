@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Hits;
@@ -34,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
  */
+@ProviderType
 public interface DDL {
 
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception;
@@ -63,10 +66,18 @@ public interface DDL {
 			RenderResponse renderResponse)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public boolean isEditable(
 			HttpServletRequest request, String portletId, long groupId)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public boolean isEditable(
 			PortletPreferences preferences, String portletId, long groupId)
 		throws Exception;

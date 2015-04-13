@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -49,6 +50,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 	public void addAttributes(
 		Document document, DDMStructure ddmStructure, Fields fields) {
 
+		long groupId = GetterUtil.getLong(
+			document.get(com.liferay.portal.kernel.search.Field.GROUP_ID));
+
+		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
+
 		for (Field field : fields) {
 			try {
 				String indexType = ddmStructure.getFieldProperty(
@@ -64,7 +70,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 					continue;
 				}
 
-				for (Locale locale : LanguageUtil.getAvailableLocales()) {
+				for (Locale locale : locales) {
 					String name = encodeName(
 						ddmStructure.getStructureId(), field.getName(), locale);
 

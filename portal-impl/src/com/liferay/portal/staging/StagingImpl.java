@@ -529,7 +529,7 @@ public class StagingImpl implements Staging {
 	@Override
 	public JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap) throws SystemException {
+		Map<String, Serializable> contextMap) {
 
 		JSONArray errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -589,8 +589,14 @@ public class StagingImpl implements Staging {
 
 			errorMessageJSONObject.put("name", missingReferenceDisplayName);
 
-			Group group = GroupLocalServiceUtil.fetchGroup(
-				missingReference.getGroupId());
+			Group group = null;
+
+			try {
+				group = GroupLocalServiceUtil.fetchGroup(
+					missingReference.getGroupId());
+			}
+			catch (SystemException se) {
+			}
 
 			if (group != null) {
 				errorMessageJSONObject.put(
@@ -613,8 +619,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONObject getExceptionMessagesJSONObject(
-			Locale locale, Exception e, Map<String, Serializable> contextMap)
-		throws SystemException {
+		Locale locale, Exception e, Map<String, Serializable> contextMap) {
 
 		JSONObject exceptionMessagesJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -883,6 +888,35 @@ public class StagingImpl implements Staging {
 		}
 
 		return exceptionMessagesJSONObject;
+	}
+
+	@Override
+	public Date getLastPublishDate(LayoutSet layoutSet) throws PortalException {
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		long lastPublishDate = GetterUtil.getLong(
+			settingsProperties.getProperty(
+				_LAST_PUBLISH_DATE, StringPool.BLANK));
+
+		if (lastPublishDate == 0) {
+			return null;
+		}
+
+		return new Date(lastPublishDate);
+	}
+
+	@Override
+	public Date getLastPublishDate(PortletPreferences jxPortletPreferences) {
+		long lastPublishDate = GetterUtil.getLong(
+			jxPortletPreferences.getValue(
+				_LAST_PUBLISH_DATE, StringPool.BLANK));
+
+		if (lastPublishDate == 0) {
+			return null;
+		}
+
+		return new Date(lastPublishDate);
 	}
 
 	@Override
@@ -1743,18 +1777,33 @@ public class StagingImpl implements Staging {
 			long groupId, boolean privateLayout, Date lastPublishDate)
 		throws Exception {
 
-		if (lastPublishDate == null) {
-			lastPublishDate = new Date();
-		}
+		updateLastPublishDate(groupId, privateLayout, null, lastPublishDate);
+	}
+
+	@Override
+	public void updateLastPublishDate(
+			long groupId, boolean privateLayout, DateRange dateRange,
+			Date lastPublishDate)
+		throws Exception {
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);
+
+		Date originalLastPublishDate = getLastPublishDate(layoutSet);
+
+		if (!isValidDateRange(dateRange, originalLastPublishDate)) {
+			return;
+		}
+
+		if (lastPublishDate == null) {
+			lastPublishDate = new Date();
+		}
 
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
 		settingsProperties.setProperty(
-			"last-publish-date", String.valueOf(lastPublishDate.getTime()));
+			_LAST_PUBLISH_DATE, String.valueOf(lastPublishDate.getTime()));
 
 		LayoutSetLocalServiceUtil.updateSettings(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
@@ -1767,13 +1816,28 @@ public class StagingImpl implements Staging {
 			Date lastPublishDate)
 		throws Exception {
 
+		updateLastPublishDate(
+			portletId, portletPreferences, null, lastPublishDate);
+	}
+
+	@Override
+	public void updateLastPublishDate(
+		String portletId, PortletPreferences portletPreferences,
+		DateRange dateRange, Date lastPublishDate) {
+
+		Date originalLastPublishDate = getLastPublishDate(portletPreferences);
+
+		if (!isValidDateRange(dateRange, originalLastPublishDate)) {
+			return;
+		}
+
 		if (lastPublishDate == null) {
 			lastPublishDate = new Date();
 		}
 
 		try {
 			portletPreferences.setValue(
-				"last-publish-date", String.valueOf(lastPublishDate.getTime()));
+				_LAST_PUBLISH_DATE, String.valueOf(lastPublishDate.getTime()));
 
 			portletPreferences.store();
 		}
@@ -2110,6 +2174,37 @@ public class StagingImpl implements Staging {
 		return ParamUtil.getString(
 			portletRequest, param,
 			GetterUtil.getString(group.getTypeSettingsProperty(param)));
+	}
+
+	protected static boolean isValidDateRange(
+		DateRange dateRange, Date originalLastPublishDate) {
+
+		if (dateRange == null) {
+
+			// This is a valid scenario when publishing all
+
+			return true;
+		}
+
+		Date startDate = dateRange.getStartDate();
+		Date endDate = dateRange.getEndDate();
+
+		if (originalLastPublishDate != null) {
+			if ((startDate != null) &&
+				startDate.after(originalLastPublishDate)) {
+
+				return false;
+			}
+
+			if ((endDate != null) && endDate.before(originalLastPublishDate)) {
+				return false;
+			}
+		}
+		else if ((startDate != null) || (endDate != null)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected void publishLayouts(
@@ -2452,6 +2547,8 @@ public class StagingImpl implements Staging {
 
 		GroupLocalServiceUtil.updateGroup(group);
 	}
+
+	private static final String _LAST_PUBLISH_DATE = "last-publish-date";
 
 	private static Log _log = LogFactoryUtil.getLog(StagingImpl.class);
 

@@ -156,6 +156,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				dialog: {
 					destroyOnHide: true
 				},
+				groupId: <%= scopeGroupId %>,
 				refererPortletName: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
 				showGlobalScope: true,
 				showManageTemplates: false,

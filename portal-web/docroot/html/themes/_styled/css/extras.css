@@ -168,7 +168,7 @@
 	@include border-radius(10px);
 }
 
-body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbnail, .lfr-api-results, .lfr-translation-manager, .lfr-translation-manager-translation, .lfr-upload-container .cancel-button .modify-pages .delete-tab, .portlet-image-gallery-display .image-thumbnail img, .rule-group-instance-container .rule-group-instance, .select-documents, .select-files, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote, .tags-search-combobox .field-input-text {
+body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbnail, .lfr-api-results, .lfr-translation-manager, .lfr-translation-manager-translation, .lfr-upload-container .cancel-button .modify-pages .delete-tab, .portlet-image-gallery-display .image-thumbnail img, .rule-group-instance-container .rule-group-instance, .select-documents, .select-files, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote > div, .taglib-ratings.stars .rating-focused > div, .tags-search-combobox .field-input-text {
 	@include border-radius(4px);
 }
 
@@ -211,6 +211,24 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 .underlay-content {
 	@include border-bottom-left-radius(8px);
 	@include border-bottom-right-radius(8px);
+}
+
+.input-localized {
+	.lfr-input-localized-state {
+		@include border-radius(3px);
+	}
+
+	.lfr-input-localized .lfr-input-localized-state {
+		@include box-shadow(0 0 3px #DDD);
+
+		&.lfr-input-localized-state-error {
+			@include box-shadow(0 0 3px #FF0047);
+		}
+	}
+
+	.palette-item-selected .lfr-input-localized-state {
+		@include box-shadow(0 0 3px #27C1F2);
+	}
 }
 
 .lfr-add-panel {

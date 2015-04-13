@@ -132,6 +132,18 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
+	public boolean isVisible(long classPK, int status) throws Exception {
+		return _indexer.isVisible(classPK, status);
+	}
+
+	@Override
+	public boolean isVisibleRelatedEntry(long classPK, int status)
+		throws Exception {
+
+		return _indexer.isVisibleRelatedEntry(classPK, status);
+	}
+
+	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {

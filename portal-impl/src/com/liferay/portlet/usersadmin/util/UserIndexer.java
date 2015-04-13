@@ -65,6 +65,7 @@ public class UserIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.USERS_ADMIN;
 
 	public UserIndexer() {
+		setCommitImmediately(true);
 		setIndexerEnabled(PropsValues.USERS_INDEXER_ENABLED);
 		setPermissionAware(true);
 		setStagingAware(false);
@@ -345,7 +346,8 @@ public class UserIndexer extends BaseIndexer {
 				Collection<Document> documents = entry.getValue();
 
 				SearchEngineUtil.updateDocuments(
-					getSearchEngineId(), companyId, documents);
+					getSearchEngineId(), companyId, documents,
+					isCommitImmediately());
 			}
 		}
 		else if (obj instanceof User) {
@@ -358,7 +360,8 @@ public class UserIndexer extends BaseIndexer {
 			Document document = getDocument(user);
 
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), user.getCompanyId(), document);
+				getSearchEngineId(), user.getCompanyId(), document,
+				isCommitImmediately());
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				Contact.class);

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
@@ -108,6 +109,9 @@ import javax.portlet.PortletURL;
  */
 public abstract class BaseIndexer implements Indexer {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
 	public static final int INDEX_FILTER_SEARCH_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.INDEX_FILTER_SEARCH_LIMIT));
 
@@ -120,7 +124,7 @@ public abstract class BaseIndexer implements Indexer {
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
 			SearchEngineUtil.deleteDocument(
-				getSearchEngineId(), companyId, uid);
+				getSearchEngineId(), companyId, uid, _commitImmediately);
 		}
 		catch (SearchException se) {
 			throw se;
@@ -354,6 +358,10 @@ public abstract class BaseIndexer implements Indexer {
 		return true;
 	}
 
+	public boolean isCommitImmediately() {
+		return _commitImmediately;
+	}
+
 	@Override
 	public boolean isFilterSearch() {
 		return _filterSearch;
@@ -371,6 +379,18 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public boolean isStagingAware() {
 		return _stagingAware;
+	}
+
+	@Override
+	public boolean isVisible(long classPK, int status) throws Exception {
+		return true;
+	}
+
+	@Override
+	public boolean isVisibleRelatedEntry(long classPK, int status)
+		throws Exception {
+
+		return true;
 	}
 
 	@Override
@@ -409,7 +429,9 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public void reindex(Object obj) throws SearchException {
 		try {
-			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled() ||
+				ExportImportThreadLocal.isImportInProcess()) {
+
 				return;
 			}
 
@@ -427,7 +449,7 @@ public abstract class BaseIndexer implements Indexer {
 	public void reindex(String className, long classPK) throws SearchException {
 		try {
 			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled() ||
-				(classPK <= 0)) {
+				ExportImportThreadLocal.isImportInProcess() || (classPK <= 0)) {
 
 				return;
 			}
@@ -450,7 +472,9 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public void reindex(String[] ids) throws SearchException {
 		try {
-			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled() ||
+				ExportImportThreadLocal.isImportInProcess()) {
+
 				return;
 			}
 
@@ -469,7 +493,9 @@ public abstract class BaseIndexer implements Indexer {
 		throws SearchException {
 
 		try {
-			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled() ||
+				ExportImportThreadLocal.isImportInProcess()) {
+
 				return;
 			}
 
@@ -486,30 +512,22 @@ public abstract class BaseIndexer implements Indexer {
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		try {
-			searchContext.setSearchEngineId(getSearchEngineId());
-
-			BooleanQuery fullQuery = getFullQuery(searchContext);
-
-			fullQuery.setQueryConfig(searchContext.getQueryConfig());
+			Hits hits = null;
 
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			int end = searchContext.getEnd();
-			int start = searchContext.getStart();
+			if ((permissionChecker != null) &&
+				isUseSearchResultPermissionFilter(searchContext)) {
 
-			if (isFilterSearch() && (permissionChecker != null)) {
-				searchContext.setEnd(end + INDEX_FILTER_SEARCH_LIMIT);
-				searchContext.setStart(0);
+				SearchResultPermissionFilter searchResultPermissionFilter =
+					new DefaultSearchResultPermissionFilter(
+						this, permissionChecker);
+
+				hits = searchResultPermissionFilter.search(searchContext);
 			}
-
-			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
-
-			searchContext.setEnd(end);
-			searchContext.setStart(start);
-
-			if (isFilterSearch() && (permissionChecker != null)) {
-				hits = filterSearch(hits, permissionChecker, searchContext);
+			else {
+				hits = doSearch(searchContext);
 			}
 
 			processHits(searchContext, hits);
@@ -522,6 +540,10 @@ public abstract class BaseIndexer implements Indexer {
 		catch (Exception e) {
 			throw new SearchException(e);
 		}
+	}
+
+	public void setCommitImmediately(boolean commitImmediately) {
+		_commitImmediately = commitImmediately;
 	}
 
 	@Override
@@ -591,7 +613,8 @@ public abstract class BaseIndexer implements Indexer {
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 
 		document.addLocalizedKeyword(
-			"localized_title", assetEntry.getTitleMap(), true, true);
+			"localized_title",
+			populateMap(assetEntry, assetEntry.getTitleMap()), true, true);
 		document.addKeyword("visible", assetEntry.isVisible());
 	}
 
@@ -960,6 +983,10 @@ public abstract class BaseIndexer implements Indexer {
 		searchQuery.addTerms(Field.KEYWORDS, keywords, searchContext.isLike());
 
 		addSearchExpando(searchQuery, searchContext, keywords);
+
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.ASSET_CATEGORY_TITLES,
+			searchContext.isLike());
 	}
 
 	protected void addSearchLayout(
@@ -1283,7 +1310,8 @@ public abstract class BaseIndexer implements Indexer {
 		document.addUID(getPortletId(), field1);
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), companyId, document.get(Field.UID));
+			getSearchEngineId(), companyId, document.get(Field.UID),
+			_commitImmediately);
 	}
 
 	protected void deleteDocument(long companyId, String field1, String field2)
@@ -1294,7 +1322,8 @@ public abstract class BaseIndexer implements Indexer {
 		document.addUID(getPortletId(), field1, field2);
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), companyId, document.get(Field.UID));
+			getSearchEngineId(), companyId, document.get(Field.UID),
+			_commitImmediately);
 	}
 
 	protected abstract void doDelete(Object obj) throws Exception;
@@ -1321,6 +1350,23 @@ public abstract class BaseIndexer implements Indexer {
 		throws Exception {
 	}
 
+	protected Hits doSearch(SearchContext searchContext)
+		throws SearchException {
+
+		searchContext.setSearchEngineId(getSearchEngineId());
+
+		BooleanQuery fullQuery = getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		fullQuery.setQueryConfig(queryConfig);
+
+		return SearchEngineUtil.search(searchContext, fullQuery);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
 	protected Hits filterSearch(
 		Hits hits, PermissionChecker permissionChecker,
 		SearchContext searchContext) {
@@ -1452,13 +1498,15 @@ public abstract class BaseIndexer implements Indexer {
 		addSearchAssetCategoryTitles(
 			document, Field.ASSET_CATEGORY_TITLES, assetCategories);
 
-		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-			className, classPK);
-
-		document.addText(Field.ASSET_TAG_NAMES, assetTagNames);
+		long classNameId = PortalUtil.getClassNameId(className);
 
 		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
-			className, classPK);
+			classNameId, classPK);
+
+		String[] assetTagNames = StringUtil.split(
+			ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR));
+
+		document.addText(Field.ASSET_TAG_NAMES, assetTagNames);
 
 		long[] assetTagsIds = StringUtil.split(
 			ListUtil.toString(assetTags, AssetTag.TAG_ID_ACCESSOR), 0L);
@@ -1580,6 +1628,9 @@ public abstract class BaseIndexer implements Indexer {
 	protected Locale getSnippetLocale(Document document, Locale locale) {
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
+		String localizedAssetCategoryTitlesName =
+			prefix +
+			DocumentImpl.getLocalizedName(locale, Field.ASSET_CATEGORY_TITLES);
 		String localizedContentName =
 			prefix + DocumentImpl.getLocalizedName(locale, Field.CONTENT);
 		String localizedDescriptionName =
@@ -1587,7 +1638,8 @@ public abstract class BaseIndexer implements Indexer {
 		String localizedTitleName =
 			prefix + DocumentImpl.getLocalizedName(locale, Field.TITLE);
 
-		if ((document.getField(localizedContentName) != null) ||
+		if ((document.getField(localizedAssetCategoryTitlesName) != null) ||
+			(document.getField(localizedContentName) != null) ||
 			(document.getField(localizedDescriptionName) != null) ||
 			(document.getField(localizedTitleName) != null)) {
 
@@ -1595,6 +1647,23 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		return null;
+	}
+
+	protected boolean isUseSearchResultPermissionFilter(
+		SearchContext searchContext) {
+
+		return isFilterSearch();
+	}
+
+	protected boolean isVisible(int entryStatus, int queryStatus) {
+		if (((queryStatus != WorkflowConstants.STATUS_ANY) &&
+			 (entryStatus == queryStatus)) ||
+			(entryStatus != WorkflowConstants.STATUS_IN_TRASH)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected Document newDocument() {
@@ -1659,6 +1728,26 @@ public abstract class BaseIndexer implements Indexer {
 		document.addText("zip", zips.toArray(new String[zips.size()]));
 	}
 
+	protected Map<Locale, String> populateMap(
+		AssetEntry assetEntry, Map<Locale, String> map) {
+
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales(
+			assetEntry.getGroupId());
+
+		String defaultValue = map.get(
+			LocaleUtil.fromLanguageId(assetEntry.getDefaultLanguageId()));
+
+		for (Locale availableLocale : availableLocales) {
+			if (!map.containsKey(availableLocale) ||
+				Validator.isNull(map.get(availableLocale))) {
+
+				map.put(availableLocale, defaultValue);
+			}
+		}
+
+		return map;
+	}
+
 	protected void postProcessFullQuery(
 			BooleanQuery fullQuery, SearchContext searchContext)
 		throws Exception {
@@ -1717,6 +1806,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
+	private boolean _commitImmediately;
 	private Document _document = new DocumentImpl();
 	private boolean _filterSearch;
 	private boolean _indexerEnabled = true;

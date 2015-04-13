@@ -305,9 +305,9 @@ public class VideoProcessorImpl
 
 			RenderedImage renderedImage = imageBag.getRenderedImage();
 
-			storeThumbnailmage(
+			storeThumbnailImage(
 				fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_1);
-			storeThumbnailmage(
+			storeThumbnailImage(
 				fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_2);
 		}
 	}

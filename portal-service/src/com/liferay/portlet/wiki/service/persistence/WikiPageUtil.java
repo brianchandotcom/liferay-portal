@@ -4100,6 +4100,200 @@ public class WikiPageUtil {
 	}
 
 	/**
+	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
+	*
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @return the matching wiki pages
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R(
+		long nodeId, boolean head, java.lang.String redirectTitle)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByN_H_R(nodeId, head, redirectTitle);
+	}
+
+	/**
+	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @param start the lower bound of the range of wiki pages
+	* @param end the upper bound of the range of wiki pages (not inclusive)
+	* @return the range of matching wiki pages
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R(
+		long nodeId, boolean head, java.lang.String redirectTitle, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByN_H_R(nodeId, head, redirectTitle, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.wiki.model.impl.WikiPageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @param start the lower bound of the range of wiki pages
+	* @param end the upper bound of the range of wiki pages (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching wiki pages
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R(
+		long nodeId, boolean head, java.lang.String redirectTitle, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByN_H_R(nodeId, head, redirectTitle, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
+	*
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching wiki page
+	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.wiki.model.WikiPage findByN_H_R_First(
+		long nodeId, boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.wiki.NoSuchPageException {
+		return getPersistence()
+				   .findByN_H_R_First(nodeId, head, redirectTitle,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
+	*
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.wiki.model.WikiPage fetchByN_H_R_First(
+		long nodeId, boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByN_H_R_First(nodeId, head, redirectTitle,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
+	*
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching wiki page
+	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.wiki.model.WikiPage findByN_H_R_Last(
+		long nodeId, boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.wiki.NoSuchPageException {
+		return getPersistence()
+				   .findByN_H_R_Last(nodeId, head, redirectTitle,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
+	*
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.wiki.model.WikiPage fetchByN_H_R_Last(
+		long nodeId, boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByN_H_R_Last(nodeId, head, redirectTitle,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
+	*
+	* @param pageId the primary key of the current wiki page
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next wiki page
+	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.wiki.model.WikiPage[] findByN_H_R_PrevAndNext(
+		long pageId, long nodeId, boolean head, java.lang.String redirectTitle,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.wiki.NoSuchPageException {
+		return getPersistence()
+				   .findByN_H_R_PrevAndNext(pageId, nodeId, head,
+			redirectTitle, orderByComparator);
+	}
+
+	/**
+	* Removes all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; from the database.
+	*
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByN_H_R(long nodeId, boolean head,
+		java.lang.String redirectTitle)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByN_H_R(nodeId, head, redirectTitle);
+	}
+
+	/**
+	* Returns the number of wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
+	*
+	* @param nodeId the node ID
+	* @param head the head
+	* @param redirectTitle the redirect title
+	* @return the number of matching wiki pages
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByN_H_R(long nodeId, boolean head,
+		java.lang.String redirectTitle)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByN_H_R(nodeId, head, redirectTitle);
+	}
+
+	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63;.
 	*
 	* @param nodeId the node ID

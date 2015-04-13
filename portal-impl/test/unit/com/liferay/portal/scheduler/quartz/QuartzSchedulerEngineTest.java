@@ -501,7 +501,9 @@ public class QuartzSchedulerEngineTest {
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
 			_MEMORY_TEST_GROUP_NAME);
 
-		Assert.assertTrue(schedulerResponses.isEmpty());
+		for (SchedulerResponse schedulerResponse : schedulerResponses) {
+			_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
+		}
 
 		// Unschedule persisted job
 
@@ -532,7 +534,7 @@ public class QuartzSchedulerEngineTest {
 			_quartzSchedulerEngine.getScheduledJob(
 				_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME);
 
-		Assert.assertNotNull(schedulerResponse);
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 
 		_quartzSchedulerEngine.unschedule(
 			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME);
@@ -540,7 +542,7 @@ public class QuartzSchedulerEngineTest {
 		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
 			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME);
 
-		Assert.assertNull(schedulerResponse);
+		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
 
 		// Unschedule persisted job
 
@@ -561,10 +563,6 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUnschedule3() throws Exception {
-		List<SchedulerResponse> schedulerResponses =
-			_quartzSchedulerEngine.getScheduledJobs();
-
-		Assert.assertEquals(2 * _DEFAULT_JOB_NUMBER, schedulerResponses.size());
 		Assert.assertEquals(0, _testDestination.getMessageListenerCount());
 
 		String testJobName = _TEST_JOB_NAME_PREFIX + "memory";
@@ -581,17 +579,21 @@ public class QuartzSchedulerEngineTest {
 		_quartzSchedulerEngine.schedule(
 			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, message);
 
-		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs();
+		SchedulerResponse schedulerResponse =
+			_quartzSchedulerEngine.getScheduledJob(
+				testJobName, _MEMORY_TEST_GROUP_NAME);
 
-		Assert.assertEquals(
-			2 * _DEFAULT_JOB_NUMBER + 1, schedulerResponses.size());
+		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
+
 		Assert.assertEquals(1, _testDestination.getMessageListenerCount());
 
 		_quartzSchedulerEngine.unschedule(testJobName, _MEMORY_TEST_GROUP_NAME);
 
-		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs();
+		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
+			testJobName, _MEMORY_TEST_GROUP_NAME);
 
-		Assert.assertEquals(2 * _DEFAULT_JOB_NUMBER, schedulerResponses.size());
+		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
+
 		Assert.assertEquals(0, _testDestination.getMessageListenerCount());
 	}
 

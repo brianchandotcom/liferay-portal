@@ -44,7 +44,6 @@ import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -201,16 +200,6 @@ public class EditEntryAction extends PortletAction {
 		for (long fileEntryId : fileEntryIds) {
 			DLAppServiceUtil.cancelCheckOut(fileEntryId);
 		}
-
-		long[] fileShortcutIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
-
-		for (long fileShortcutId : fileShortcutIds) {
-			DLFileShortcut fileShortcut = DLAppLocalServiceUtil.getFileShortcut(
-				fileShortcutId);
-
-			DLAppServiceUtil.cancelCheckOut(fileShortcut.getToFileEntryId());
-		}
 	}
 
 	protected void checkInEntries(ActionRequest actionRequest)
@@ -226,18 +215,6 @@ public class EditEntryAction extends PortletAction {
 			DLAppServiceUtil.checkInFileEntry(
 				fileEntryId, false, StringPool.BLANK, serviceContext);
 		}
-
-		long[] fileShortcutIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
-
-		for (long fileShortcutId : fileShortcutIds) {
-			DLFileShortcut fileShortcut = DLAppLocalServiceUtil.getFileShortcut(
-				fileShortcutId);
-
-			DLAppServiceUtil.checkInFileEntry(
-				fileShortcut.getToFileEntryId(), false, StringPool.BLANK,
-				serviceContext);
-		}
 	}
 
 	protected void checkOutEntries(ActionRequest actionRequest)
@@ -251,17 +228,6 @@ public class EditEntryAction extends PortletAction {
 
 		for (long fileEntryId : fileEntryIds) {
 			DLAppServiceUtil.checkOutFileEntry(fileEntryId, serviceContext);
-		}
-
-		long[] fileShortcutIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
-
-		for (long fileShortcutId : fileShortcutIds) {
-			DLFileShortcut fileShortcut = DLAppLocalServiceUtil.getFileShortcut(
-				fileShortcutId);
-
-			DLAppServiceUtil.checkOutFileEntry(
-				fileShortcut.getToFileEntryId(), serviceContext);
 		}
 	}
 

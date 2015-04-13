@@ -25,7 +25,7 @@
 
 		<%= DDMXSDUtil.getHTML(pageContext, xsd, fields, portletResponse.getNamespace(), fieldsNamespace, mode, readOnly, requestedLocale) %>
 
-		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
+		<aui:input id="<%= fieldsDisplayInputId %>" name="<%= fieldsDisplayInputName %>" type="hidden" />
 
 		<aui:script use="liferay-ddm-repeatable-fields">
 			new Liferay.DDM.RepeatableFields(
@@ -34,7 +34,7 @@
 					classPK: <%= classPK %>,
 					container: '#<%= randomNamespace %>',
 					doAsGroupId: <%= scopeGroupId %>,
-					fieldsDisplayInput: '#<portlet:namespace /><%= fieldsDisplayInputName %>',
+					fieldsDisplayInput: '#<portlet:namespace /><%= fieldsDisplayInputId %>',
 					namespace: '<%= fieldsNamespace %>',
 					p_l_id: <%= themeDisplay.getPlid() %>,
 					portletNamespace: '<portlet:namespace />',

@@ -73,7 +73,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				%>
 
 				<span class="entry-thumbnail">
-					<img class="thumbnail" src="<%= thumbnailSrc %>" />
+					<img alt="<liferay-ui:message key="thumbnail" />" class="thumbnail" src="<%= thumbnailSrc %>" />
 
 					<c:if test="<%= fileShortcut != null %>">
 						<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
@@ -88,13 +88,15 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 					</c:if>
 				</span>
 
-				<span class="entry-title"><%= HtmlUtil.escape(latestFileVersion.getTitle()) %></span>
+				<div class="entry-metadata">
+					<span class="entry-title"><%= HtmlUtil.escape(latestFileVersion.getTitle()) %></span>
 
-				<c:if test="<%= Validator.isNotNull(latestFileVersion.getDescription()) %>">
-					<div class="file-entry-list-description">
-						<%= HtmlUtil.escape(latestFileVersion.getDescription()) %>
-					</div>
-				</c:if>
+					<c:if test="<%= Validator.isNotNull(latestFileVersion.getDescription()) %>">
+						<div class="entry-description">
+							<%= HtmlUtil.escape(latestFileVersion.getDescription()) %>
+						</div>
+					</c:if>
+				</div>
 			</liferay-ui:search-container-column-text>
 		</c:when>
 		<c:when test='<%= fileEntryColumn.equals("size") %>'>

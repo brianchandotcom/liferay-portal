@@ -96,7 +96,7 @@ catch (Exception e) {
 
 			<c:if test="<%= (feedImage != null) && showFeedImage %>">
 				<div class="feed-image-<%= feedImageAlignment %>">
-					<aui:a href="<%= _escapeJavaScriptLink(feedImageLink) %>" target="_new" title="<%= HtmlUtil.escapeAttribute(feedImage.getTitle()) %>"><img alt="<%= feedImage.getDescription() %>" src="<%= HtmlUtil.escapeHREF(feedImageURL) %>" /></aui:a>
+					<aui:a href="<%= _escapeJavaScriptLink(feedImageLink) %>" target="_new" title="<%= HtmlUtil.escapeAttribute(feedImage.getTitle()) %>"><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escapeHREF(feedImageURL) %>" /></aui:a>
 				</div>
 			</c:if>
 
@@ -151,7 +151,7 @@ catch (Exception e) {
 				%>
 
 					<div class="feed-entry">
-						<img alt="<%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? LanguageUtil.get(pageContext, "collapse") : LanguageUtil.get(pageContext, "expande") %>" class="<portlet:namespace />entry-expander feed-entry-expander" src='<%= themeDisplay.getPathThemeImage() %>/arrows/01_<%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "minus" : "plus" %>.png' />
+						<img alt="<%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? LanguageUtil.get(pageContext, "collapse") : LanguageUtil.get(pageContext, "expand") %>" class="<portlet:namespace />entry-expander feed-entry-expander" src='<%= themeDisplay.getPathThemeImage() %>/arrows/01_<%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "minus" : "plus" %>.png' />
 
 						<span class="feed-entry-title"><aui:a href="<%= _escapeJavaScriptLink(entryLink) %>" target="_new"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></span>
 

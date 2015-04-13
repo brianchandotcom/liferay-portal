@@ -15,8 +15,6 @@
 --%>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
 Group group = null;
 
 if (groupId > 0) {

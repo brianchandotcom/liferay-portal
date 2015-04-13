@@ -239,29 +239,14 @@ public class EditCompanyAction extends PortletAction {
 			SessionErrors.add(actionRequest, "casServerNameInvalid");
 		}
 
-		if (Validator.isNotNull(casServerURL) &&
-			Validator.isNotNull(casServiceURL)) {
-
-			SessionErrors.add(
-				actionRequest, "casServerURLAndServiceURLConflict");
+		if (!Validator.isUrl(casServerURL)) {
+			SessionErrors.add(actionRequest, "casServerURLInvalid");
 		}
-		else if (Validator.isNull(casServerURL) &&
-				 Validator.isNull(casServiceURL)) {
 
-			SessionErrors.add(actionRequest, "casServerURLAndServiceURLNotSet");
-		}
-		else {
-			if (Validator.isNotNull(casServerURL) &&
-				!Validator.isUrl(casServerURL)) {
+		if (Validator.isNotNull(casServiceURL) &&
+			!Validator.isUrl(casServiceURL)) {
 
-				SessionErrors.add(actionRequest, "casServerURLInvalid");
-			}
-
-			if (Validator.isNotNull(casServiceURL) &&
-				!Validator.isUrl(casServiceURL)) {
-
-				SessionErrors.add(actionRequest, "casServiceURLInvalid");
-			}
+			SessionErrors.add(actionRequest, "casServiceURLInvalid");
 		}
 
 		if (Validator.isNotNull(casNoSuchUserRedirectURL) &&

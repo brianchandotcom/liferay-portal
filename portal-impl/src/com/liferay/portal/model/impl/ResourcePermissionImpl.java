@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 
@@ -92,6 +93,15 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 	}
 
 	@Override
+	public void addResourceAction(String actionId) throws PortalException {
+		ResourceAction resourceAction =
+			ResourceActionLocalServiceUtil.getResourceAction(
+				getName(), actionId);
+
+		setActionIds(getActionIds() | resourceAction.getBitwiseValue());
+	}
+
+	@Override
 	public boolean hasActionId(String actionId) {
 		ResourceAction resourceAction =
 			ResourceActionLocalServiceUtil.fetchResourceAction(
@@ -107,6 +117,15 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void removeResourceAction(String actionId) throws PortalException {
+		ResourceAction resourceAction =
+			ResourceActionLocalServiceUtil.getResourceAction(
+				getName(), actionId);
+
+		setActionIds(getActionIds() & (~resourceAction.getBitwiseValue()));
 	}
 
 }

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 
 import java.io.IOException;
 
@@ -29,6 +30,8 @@ import org.dom4j.Node;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
+
+import org.xml.sax.XMLReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -163,7 +166,15 @@ public class XMLFormatter {
 	public static String toString(String xml, String indent)
 		throws DocumentException, IOException {
 
-		SAXReader saxReader = new SAXReader();
+		XMLReader xmlReader = null;
+
+		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider()
+				!= null) {
+
+			xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
+		}
+
+		SAXReader saxReader = new SAXReader(xmlReader);
 
 		Document document = saxReader.read(new UnsyncStringReader(xml));
 

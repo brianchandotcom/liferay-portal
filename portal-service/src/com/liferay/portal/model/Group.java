@@ -117,6 +117,9 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean hasStagingGroup();
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
+	*/
 	public boolean isChild(long groupId);
 
 	/**

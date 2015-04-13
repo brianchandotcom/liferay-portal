@@ -192,7 +192,8 @@ public class UserGroupIndexer extends BaseIndexer {
 				Collection<Document> documents = entry.getValue();
 
 				SearchEngineUtil.updateDocuments(
-					getSearchEngineId(), companyId, documents);
+					getSearchEngineId(), companyId, documents,
+					isCommitImmediately());
 			}
 		}
 		else if (obj instanceof UserGroup) {
@@ -201,7 +202,8 @@ public class UserGroupIndexer extends BaseIndexer {
 			Document document = getDocument(userGroup);
 
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), userGroup.getCompanyId(), document);
+				getSearchEngineId(), userGroup.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 

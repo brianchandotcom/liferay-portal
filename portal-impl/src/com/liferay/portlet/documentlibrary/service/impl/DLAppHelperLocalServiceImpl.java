@@ -966,7 +966,7 @@ public class DLAppHelperLocalServiceImpl
 				// Folders, file entries, and file shortcuts
 
 				QueryDefinition queryDefinition = new QueryDefinition(
-					WorkflowConstants.STATUS_ANY);
+					WorkflowConstants.STATUS_IN_TRASH);
 
 				List<Object> foldersAndFileEntriesAndFileShortcuts =
 					dlFolderLocalService.

@@ -97,6 +97,8 @@ if (assetEntryId > 0) {
 					viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
 
 					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, viewFullContentURLString);
+
+					urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", true);
 			%>
 
 					<li class="asset-links-list-item">

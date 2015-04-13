@@ -96,7 +96,7 @@ portletURL.setParameter("eventName", eventName);
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("usergroupid", userGroup.getUserGroupId());
-					data.put("usergroupname", HtmlUtil.escape(userGroup.getName()));
+					data.put("usergroupname", userGroup.getName());
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

@@ -19,8 +19,6 @@
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", WikiUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", WikiUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 
@@ -54,17 +52,16 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 String emailSignature = PrefsParamUtil.getString(portletPreferences, request, emailSignatureParam, defaultEmailSignature);
 %>
 
-<liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL">
 	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
-
-<aui:form action="<%= configurationURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
 	String tabs2Names = "display-settings,email-from,page-added-email,page-updated-email";
@@ -77,7 +74,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 	<liferay-ui:tabs
 		names="<%= tabs2Names %>"
 		param="tabs2"
-		url="<%= portletURL %>"
+		url="<%= configurationRenderURL %>"
 	/>
 
 	<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
@@ -139,7 +136,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 						[$PORTLET_NAME$]
 					</dt>
 					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
+						<%= HtmlUtil.escape(PortalUtil.getPortletTitle(renderResponse)) %>
 					</dd>
 					<dt>
 						[$SITE_NAME$]
@@ -278,7 +275,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 						[$PORTLET_NAME$]
 					</dt>
 					<dd>
-						<%= PortalUtil.getPortletTitle(renderResponse) %>
+						<%= HtmlUtil.escape(PortalUtil.getPortletTitle(renderResponse)) %>
 					</dd>
 					<dt>
 						[$SITE_NAME$]

@@ -386,6 +386,8 @@ public class PortletImporter {
 
 		portletDataContext.setPlid(plid);
 		portletDataContext.setPrivateLayout(layout.isPrivateLayout());
+		portletDataContext.setRootPortletId(
+			PortletConstants.getRootPortletId(portletId));
 
 		// Manifest
 
@@ -438,6 +440,11 @@ public class PortletImporter {
 			portletDataContext.setMissingReferencesElement(
 				missingReferencesElement);
 		}
+
+		// Deletion system events
+
+		_deletionSystemEventImporter.importDeletionSystemEvents(
+			portletDataContext);
 
 		// Read asset categories, asset tags, comments, locks, and ratings
 		// entries to make them available to the data handlers through the
@@ -552,16 +559,13 @@ public class PortletImporter {
 
 		readAssetLinks(portletDataContext);
 
-		// Deletion system events
-
-		_deletionSystemEventImporter.importDeletionSystemEvents(
-			portletDataContext);
-
 		if (_log.isInfoEnabled()) {
 			_log.info("Importing portlet takes " + stopWatch.getTime() + " ms");
 		}
 
 		zipReader.close();
+
+		ExportImportHelperUtil.reindex(portletDataContext, userId);
 	}
 
 	protected String getAssetCategoryName(

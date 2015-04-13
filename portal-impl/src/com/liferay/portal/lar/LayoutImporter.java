@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -67,6 +65,7 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -393,7 +392,7 @@ public class LayoutImporter {
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-		PortletDataContext portletDataContext =
+		final PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				companyId, groupId, parameterMap, strategy, zipReader);
 
@@ -533,6 +532,11 @@ public class LayoutImporter {
 			portletDataContext.setMissingReferencesElement(
 				missingReferencesElement);
 		}
+
+		// Deletion system events
+
+		_deletionSystemEventImporter.importDeletionSystemEvents(
+			portletDataContext);
 
 		// Look and feel
 
@@ -680,9 +684,13 @@ public class LayoutImporter {
 				long layoutId = GetterUtil.getLong(
 					portletElement.attributeValue("layout-id"));
 
+				long plid = LayoutConstants.DEFAULT_PLID;
+
 				Layout layout = newLayoutsMap.get(layoutId);
 
-				long plid = layout.getPlid();
+				if (layout != null) {
+					plid = layout.getPlid();
+				}
 
 				portletDataContext.setPlid(plid);
 
@@ -752,6 +760,9 @@ public class LayoutImporter {
 					manifestSummary);
 
 			try {
+				portletDataContext.setRootPortletId(
+					PortletConstants.getRootPortletId(portletId));
+
 				if (layout != null) {
 					portletPreferencesGroupId = layout.getGroupId();
 				}
@@ -782,6 +793,8 @@ public class LayoutImporter {
 				}
 			}
 			finally {
+				portletDataContext.setRootPortletId(StringPool.BLANK);
+
 				_portletImporter.resetPortletScope(
 					portletDataContext, portletPreferencesGroupId);
 			}
@@ -807,15 +820,6 @@ public class LayoutImporter {
 					PortletDataHandlerKeys.PORTLET_SETUP),
 				importPortletControlsMap.get(
 					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
-		}
-
-		if (importPermissions) {
-			if (userId > 0) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					User.class);
-
-				indexer.reindex(userId);
-			}
 		}
 
 		// Asset links
@@ -909,16 +913,13 @@ public class LayoutImporter {
 		updateLayoutPriorities(
 			portletDataContext, _layoutElements, privateLayout);
 
-		// Deletion system events
-
-		_deletionSystemEventImporter.importDeletionSystemEvents(
-			portletDataContext);
-
 		if (_log.isInfoEnabled()) {
 			_log.info("Importing layouts takes " + stopWatch.getTime() + " ms");
 		}
 
 		zipReader.close();
+
+		ExportImportHelperUtil.reindex(portletDataContext, userId);
 	}
 
 	protected void importLayout(
@@ -1003,13 +1004,10 @@ public class LayoutImporter {
 					portletDataContext.getCompanyId());
 			}
 			else if (Validator.isNotNull(scopeLayoutUuid)) {
-				boolean privateLayout = GetterUtil.getBoolean(
-					portletElement.attributeValue("private-layout"));
-
 				Layout scopeLayout =
 					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 						scopeLayoutUuid, portletDataContext.getGroupId(),
-						privateLayout);
+						portletDataContext.isPrivateLayout());
 
 				if (scopeLayout.hasScopeGroup()) {
 					scopeGroup = scopeLayout.getScopeGroup();
@@ -1030,6 +1028,9 @@ public class LayoutImporter {
 
 				if (group.isStaged() && !group.isStagedRemotely()) {
 					try {
+						boolean privateLayout = GetterUtil.getBoolean(
+							portletElement.attributeValue("private-layout"));
+
 						Layout oldLayout =
 							LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 								scopeLayoutUuid,
@@ -1099,6 +1100,13 @@ public class LayoutImporter {
 					layoutElement.attributeValue("layout-id"));
 
 				Layout layout = layouts.get(layoutId);
+
+				// Layout might have not been imported due to a controlled
+				// error. See SitesImpl#addMergeFailFriendlyURLLayout.
+
+				if (layout == null) {
+					continue;
+				}
 
 				int layoutPriority = GetterUtil.getInteger(
 					layoutElement.attributeValue("layout-priority"));

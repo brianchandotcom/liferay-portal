@@ -157,9 +157,8 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
 		if (actions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
 			PortletPermissionUtil.contains(
-				permissionChecker, groupId, getDefaultPlid(group, category),
-				portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL,
-				true)) {
+				permissionChecker, groupId, 0, portlet.getRootPortletId(),
+				ActionKeys.ACCESS_IN_CONTROL_PANEL, true)) {
 
 			return true;
 		}

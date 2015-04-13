@@ -17,6 +17,8 @@ package com.liferay.portlet.asset.service.impl;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -152,6 +154,13 @@ public class AssetCategoryLocalServiceImpl
 			}
 		}
 
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetCategory.class);
+
+		indexer.reindex(category);
+
 		return category;
 	}
 
@@ -204,6 +213,13 @@ public class AssetCategoryLocalServiceImpl
 	@Override
 	public void deleteCategory(AssetCategory category)
 		throws PortalException, SystemException {
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetCategory.class);
+
+		indexer.delete(category);
 
 		deleteCategory(category, false);
 	}
@@ -415,6 +431,13 @@ public class AssetCategoryLocalServiceImpl
 			}
 		}
 
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetCategory.class);
+
+		indexer.reindex(toCategoryId);
+
 		deleteCategory(fromCategoryId);
 	}
 
@@ -446,6 +469,13 @@ public class AssetCategoryLocalServiceImpl
 		category.setParentCategoryId(parentCategoryId);
 
 		assetCategoryPersistence.update(category);
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetCategory.class);
+
+		indexer.reindex(category);
 
 		return category;
 	}
@@ -605,6 +635,11 @@ public class AssetCategoryLocalServiceImpl
 
 			assetEntryLocalService.reindex(entries);
 		}
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetCategory.class);
+
+		indexer.reindex(category);
 
 		return category;
 	}

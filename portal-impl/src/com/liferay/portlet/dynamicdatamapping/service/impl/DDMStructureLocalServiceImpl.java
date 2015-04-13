@@ -1353,15 +1353,18 @@ public class DDMStructureLocalServiceImpl
 	 * Updates the structure matching the structure ID, replacing the metadata
 	 * entry of the named field.
 	 *
-	 * @param  structureId the primary key of the structure
-	 * @param  fieldName the name of the field whose metadata to update
-	 * @param  metadataEntryName the metadata entry's name
-	 * @param  metadataEntryValue the metadata entry's value
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         structure's modification date.
-	 * @throws PortalException if a matching structure could not be found, if
-	 *         the XSD was not well-formed, or if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
+	 * @param      structureId the primary key of the structure
+	 * @param      fieldName the name of the field whose metadata to update
+	 * @param      metadataEntryName the metadata entry's name
+	 * @param      metadataEntryValue the metadata entry's value
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             structure's modification date.
+	 * @throws     PortalException if a matching structure could not be found,
+	 *             if the XSD was not well-formed, or if a portal exception
+	 *             occurred
+	 * @throws     SystemException if a system exception occurred
+	 *
+	 * @deprecated As of 6.2.0, with no direct replacement
 	 */
 	@Override
 	public void updateXSDFieldMetadata(

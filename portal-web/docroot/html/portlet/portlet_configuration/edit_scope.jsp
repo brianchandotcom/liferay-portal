@@ -91,6 +91,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 					id='<%= "scope" + availableGroup.getGroupId() %>'
 					message="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>"
 					method="post"
+					onClick='<%= renderResponse.getNamespace() + "changeScope();" %>'
 					src="<%= availableGroup.getIconURL(themeDisplay) %>"
 					url="<%= setScopeURL %>"
 				/>
@@ -114,9 +115,16 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 					image="add"
 					message='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(pageContext, "create-new") + ")" %>'
 					method="post"
+					onClick='<%= renderResponse.getNamespace() + "changeScope();" %>'
 					url="<%= createNewScopeURL %>"
 				/>
 			</c:if>
 		</liferay-ui:icon-menu>
 	</aui:field-wrapper>
 </aui:fieldset>
+
+<aui:script>
+	function <portlet:namespace />changeScope() {
+		Liferay.Util.getTop().Liferay.fire('changeScope');
+	}
+</aui:script>

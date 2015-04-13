@@ -67,7 +67,9 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 
 		_webImageMimeTypes = SetUtil.fromArray(
 			PropsValues.MIME_TYPES_WEB_IMAGES);
+	}
 
+	public void afterPropertiesSet() {
 		URL url = org.apache.tika.mime.MimeTypes.class.getResource(
 			"tika-mimetypes.xml");
 

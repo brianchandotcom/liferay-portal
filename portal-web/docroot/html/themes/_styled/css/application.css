@@ -546,6 +546,75 @@
 	}
 }
 
+/* ---------- CKEditor panel menu ---------- */
+
+.cke_panel.cke_combopanel {
+	width: 220px;
+}
+
+.cke_panel_block {
+	.cke_panel_grouptitle {
+		font-size: 20px;
+		line-height: 20px;
+		margin-top: 0;
+	}
+
+	.cke_panel_list {
+		margin-left: 0;
+
+		.cke_panel_listItem {
+			line-height: initial;
+
+			a:hover {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+/* ---------- HTML editor ---------- */
+
+body.html-editor {
+	background: #FFF;
+	color: #000;
+	padding: 1em;
+}
+
+.html-editor.portlet-message-boards {
+	@include hyphenation;
+
+	word-wrap: break-word;
+
+	blockquote {
+		background: #EEF0F2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
+		border: 1px solid #777;
+		padding: 5px 45px;
+
+		&:after {
+			background: url(../images/message_boards/quoteright.png) no-repeat 50%;
+			content: '';
+			display: block;
+			float: right;
+			height: 24px;
+			margin-right: -35px;
+			margin-top: -25px;
+			width: 31px;
+			z-index: 999;
+		}
+
+		cite {
+			display: block;
+			font-weight: bold;
+		}
+	}
+
+	pre {
+		background: #F9F9F9;
+		border: 1px solid #777;
+		padding: 0.5em;
+	}
+}
+
 /* ---------- Inline editing ---------- */
 
 .lfr-editable {

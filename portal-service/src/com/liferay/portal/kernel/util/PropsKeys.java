@@ -127,6 +127,8 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_EMAIL_FROM_NAME = "asset.publisher.email.from.name";
 
+	public static final String ASSET_PUBLISHER_PERMISSION_CHECKING_CONFIGURABLE = "asset.publisher.permission.checking.configurable";
+
 	public static final String ASSET_PUBLISHER_QUERY_FORM_CONFIGURATION = "asset.publisher.query.form.configuration";
 
 	public static final String ASSET_PUBLISHER_SEARCH_WITH_INDEX = "asset.publisher.search.with.index";
@@ -472,6 +474,8 @@ public interface PropsKeys {
 	public static final String COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE = "company.security.auto.login.max.age";
 
 	public static final String COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE = "company.security.login.form.autocomplete";
+
+	public static final String COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE = "company.security.password.reminder.query.form.autocomplete";
 
 	public static final String COMPANY_SECURITY_SEND_PASSWORD = "company.security.send.password";
 
@@ -977,6 +981,8 @@ public interface PropsKeys {
 
 	public static final String IMAGE_HOOK_IMPL = "image.hook.impl";
 
+	public static final String IMAGE_IO_USE_DISK_CACHE = "image.io.use.disk.cache";
+
 	public static final String IMAGEMAGICK_ENABLED = "imagemagick.enabled";
 
 	public static final String IMAGEMAGICK_GLOBAL_SEARCH_PATH = "imagemagick.global.search.path";
@@ -994,6 +1000,8 @@ public interface PropsKeys {
 	public static final String INDEX_ON_STARTUP_DELAY = "index.on.startup.delay";
 
 	public static final String INDEX_ON_UPGRADE = "index.on.upgrade";
+
+	public static final String INDEX_PERMISSION_FILTER_SEARCH_AMPLIFICATION_FACTOR = "index.permission.filter.search.amplification.factor";
 
 	public static final String INDEX_READ_ONLY = "index.read.only";
 
@@ -1069,6 +1077,8 @@ public interface PropsKeys {
 
 	public static final String INVOKER_FILTER_CHAIN_SIZE = "invoker.filter.chain.cache.size";
 
+	public static final String INVOKER_FILTER_URI_MAX_LENGTH = "invoker.filter.uri.max.length";
+
 	public static final String JAVADOC_MANAGER_ENABLED = "javadoc.manager.enabled";
 
 	public static final String JAVASCRIPT_BAREBONE_ENABLED = "javascript.barebone.enabled";
@@ -1138,6 +1148,8 @@ public interface PropsKeys {
 	public static final String JOURNAL_ARTICLE_FORM_TRANSLATE = "journal.article.form.translate";
 
 	public static final String JOURNAL_ARTICLE_FORM_UPDATE = "journal.article.form.update";
+
+	public static final String JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = "journal.articles.index.all.versions";
 
 	public static final String JOURNAL_ARTICLE_STORAGE_TYPE = "journal.article.storage.type";
 
@@ -1507,6 +1519,8 @@ public interface PropsKeys {
 
 	public static final String LOGIN_FORM_NAVIGATION_PRE = "login.form.navigation.pre";
 
+	public static final String LOGIN_SECURE_FORGOT_PASSWORD = "login.secure.forgot.password";
+
 	public static final String LOGOUT_EVENTS_POST = "logout.events.post";
 
 	public static final String LOGOUT_EVENTS_PRE = "logout.events.pre";
@@ -1706,6 +1720,8 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_BASE_DIR = "module.framework.base.dir";
 
 	public static final String MODULE_FRAMEWORK_BEGINNING_START_LEVEL = "module.framework.beginning.start.level";
+
+	public static final String MODULE_FRAMEWORK_ENABLED = "module.framework.enabled";
 
 	public static final String MODULE_FRAMEWORK_INITIAL_BUNDLES = "module.framework.initial.bundles";
 
@@ -1993,11 +2009,15 @@ public interface PropsKeys {
 
 	public static final String POP_SERVER_SUBDOMAIN = "pop.server.subdomain";
 
+	public static final String PORTAL_IMPERSONATION_DEFAULT_URL = "portal.impersonation.default.url";
+
 	public static final String PORTAL_IMPERSONATION_ENABLE = "portal.impersonation.enable";
 
 	public static final String PORTAL_INSTANCE_HTTP_PORT = "portal.instance.http.port";
 
 	public static final String PORTAL_INSTANCE_HTTPS_PORT = "portal.instance.https.port";
+
+	public static final String PORTAL_INSTANCE_PROTOCOL = "portal.instance.protocol";
 
 	public static final String PORTAL_JAAS_AUTH_TYPE = "portal.jaas.auth.type";
 
@@ -2040,6 +2060,12 @@ public interface PropsKeys {
 	public static final String PORTLET_EVENT_DISTRIBUTION = "portlet.event.distribution";
 
 	public static final String PORTLET_FILTERS_SYSTEM = "portlet.filters.system";
+
+	public static final String PORTLET_INTERRUPTED_REQUEST_WHITELIST = "portlet.interrupted.request.whitelist";
+
+	public static final String PORTLET_INTERRUPTED_REQUEST_WHITELIST_ACTIONS = "portlet.interrupted.request.whitelist.actions";
+
+	public static final String PORTLET_PREFERENCES_STRICT_STORE = "portlet.preferences.strict.store";
 
 	public static final String PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION = "portlet.public.render.parameter.distribution";
 
@@ -2713,7 +2739,21 @@ public interface PropsKeys {
 
 	public static final String WIKI_RSS_ABSTRACT_LENGTH = "wiki.rss.abstract.length";
 
+	public static final String XML_SECURITY_ENABLED = "xml.security.enabled";
+
+	public static final String XML_SECURITY_WHITELIST = "xml.security.whitelist";
+
 	public static final String XML_VALIDATION_ENABLED = "xml.validation.enabled";
+
+	public static final String XSL_CONTENT_XML_DOCTYPE_DECLARATION_ALLOWED = "xsl.content.xml.doctype.declaration.allowed";
+
+	public static final String XSL_CONTENT_XML_EXTERNAL_GENERAL_ENTITIES_ALLOWED = "xsl.content.xml.external.general.entities.allowed";
+
+	public static final String XSL_CONTENT_XML_EXTERNAL_PARAMETER_ENTITIES_ALLOWED = "xsl.content.xml.external.parameter.entities.allowed";
+
+	public static final String XSL_CONTENT_XSL_SECURE_PROCESSING_ENABLED = "xsl.content.xsl.secure.processing.enabled";
+
+	public static final String XSL_TEMPLATE_SECURE_PROCESSING_ENABLED = "xsl.template.secure.processing.enabled";
 
 	public static final String XUGGLER_ENABLED = "xuggler.enabled";
 

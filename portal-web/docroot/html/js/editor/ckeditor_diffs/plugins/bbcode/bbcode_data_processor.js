@@ -115,23 +115,34 @@
 			return data;
 		},
 
-		toHtml: function(data, fixForBody) {
+		toHtml: function(data, config) {
 			var instance = this;
 
 			if (!instance._bbcodeConverter) {
 				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML();
 			}
 
-			data = instance._bbcodeConverter.convert(data);
+			if (config) {
+				var fragment = CKEDITOR.htmlParser.fragment.fromHtml(data);
 
-			var length = emoticonSymbols.length;
+				var writer = new CKEDITOR.htmlParser.basicWriter();
 
-			for (var i = 0; i < length; i++) {
-				var image = TEMPLATE_IMAGE.replace('{image}', emoticonPath + emoticonImages[i]);
+				fragment.writeHtml(writer);
 
-				var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, '\\$&');
+				data = writer.getHtml();
+			}
+			else {
+				data = instance._bbcodeConverter.convert(data);
 
-				data = data.replace(new RegExp(escapedSymbol, 'g'), image);
+				var length = emoticonSymbols.length;
+
+				for (var i = 0; i < length; i++) {
+					var image = TEMPLATE_IMAGE.replace('{image}', emoticonPath + emoticonImages[i]);
+
+					var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, '\\$&');
+
+					data = data.replace(new RegExp(escapedSymbol, 'g'), image);
+				}
 			}
 
 			return data;
@@ -842,20 +853,6 @@
 				newThreadURL = editorConfig.newThreadURL;
 
 				editor.dataProcessor = new BBCodeDataProcessor(editor);
-
-				editor.on(
-					'paste',
-					function(event) {
-						var data = event.data;
-
-						var htmlData = data.dataValue;
-
-						htmlData = editor.dataProcessor.toDataFormat(htmlData);
-
-						data.dataValue = htmlData;
-					},
-					editor.element.$
-				);
 
 				editor.fire('customDataProcessorLoaded');
 			}

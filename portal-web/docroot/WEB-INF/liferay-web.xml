@@ -367,7 +367,7 @@
 	</filter>
 	<filter>
 		<filter-name>URL Rewrite Filter</filter-name>
-		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+		<filter-class>com.liferay.portal.servlet.filters.urlrewrite.UrlRewriteFilter</filter-class>
 		<init-param>
 			<param-name>logLevel</param-name>
 			<param-value>ERROR</param-value>
@@ -378,7 +378,7 @@
 		</init-param>
 		<init-param>
 			<param-name>url-regex-ignore-pattern</param-name>
-			<param-value>^/html/.+\.(css|gif|html|ico|jpg|js|png)(\?.*)?$</param-value>
+			<param-value>(^/combo/)|(^/html/.+\.(css|gif|html|ico|jpg|js|png)(\?.*)?$)</param-value>
 		</init-param>
 	</filter>
 	<filter>

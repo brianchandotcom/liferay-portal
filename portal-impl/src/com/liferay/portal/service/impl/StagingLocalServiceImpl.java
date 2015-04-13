@@ -50,6 +50,7 @@ import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryThreadLocal;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -736,7 +737,12 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		File tempFile = null;
 
+		boolean fileMaxSizeCheckEnabled =
+			PortletFileRepositoryThreadLocal.isFileMaxSizeCheckEnabled();
+
 		try {
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(false);
+
 			tempFile = FileUtil.createTempFile("lar");
 
 			fileOutputStream = new FileOutputStream(tempFile);
@@ -790,6 +796,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			StreamUtil.cleanUp(fileOutputStream);
 
 			FileUtil.delete(tempFile);
+
+			PortletFileRepositoryThreadLocal.setFileMaxSizeCheckEnabled(
+				fileMaxSizeCheckEnabled);
 		}
 	}
 

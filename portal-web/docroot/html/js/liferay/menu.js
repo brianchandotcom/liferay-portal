@@ -588,6 +588,10 @@ AUI.add(
 							if (focusManager) {
 								focusManager.refresh();
 							}
+
+							var visibleItems = listNode.all('li:not([hidden])');
+
+							listNode.toggle(!!visibleItems.size());
 						}
 					);
 

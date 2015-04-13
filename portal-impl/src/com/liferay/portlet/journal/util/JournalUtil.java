@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -540,6 +541,12 @@ public class JournalUtil {
 	public static Tuple getArticles(Hits hits)
 		throws PortalException, SystemException {
 
+		return getArticles(hits, false);
+	}
+
+	public static Tuple getArticles(Hits hits, boolean includeScheduledArticles)
+		throws PortalException, SystemException {
+
 		List<JournalArticle> articles = new ArrayList<JournalArticle>();
 		boolean corruptIndex = false;
 
@@ -549,11 +556,20 @@ public class JournalUtil {
 		for (com.liferay.portal.kernel.search.Document document : documents) {
 			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
 			String articleId = document.get("articleId");
+			boolean scheduledHead = GetterUtil.getBoolean(
+				document.get("scheduledHead"));
 
 			try {
-				JournalArticle article =
-					JournalArticleLocalServiceUtil.getArticle(
+				JournalArticle article;
+
+				if (includeScheduledArticles && scheduledHead) {
+					article = JournalArticleLocalServiceUtil.getLatestArticle(
+						groupId, articleId, WorkflowConstants.STATUS_SCHEDULED);
+				}
+				else {
+					article = JournalArticleLocalServiceUtil.getArticle(
 						groupId, articleId);
+				}
 
 				articles.add(article);
 			}

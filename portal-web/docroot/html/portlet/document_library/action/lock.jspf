@@ -14,7 +14,7 @@
  */
 --%>
 
-<c:if test="<%= showActions && fileEntry.isSupportsLocking() %>">
+<c:if test="<%= (fileShortcut == null) && showActions && fileEntry.isSupportsLocking() %>">
 	<c:choose>
 		<c:when test="<%= !checkedOut && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
 			<portlet:actionURL var="checkOutURL">

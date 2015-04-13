@@ -77,7 +77,9 @@
 
 								siteThemeDisplay.setScopeGroupId(refererGroup.getGroupId());
 
-								String buttonLabel = LanguageUtil.format(pageContext, "manage-x", StringUtil.shorten(refererGroup.getDescriptiveName(locale), 35));
+								String siteName = HtmlUtil.escape(StringUtil.shorten(refererGroup.getDescriptiveName(locale), 35));
+
+								String buttonLabel = LanguageUtil.format(pageContext, "manage-x", siteName);
 
 								PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(renderResponse, siteThemeDisplay);
 						%>

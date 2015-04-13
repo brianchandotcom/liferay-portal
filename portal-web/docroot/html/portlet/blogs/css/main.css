@@ -135,6 +135,7 @@
 
 	.taglib-ratings.stars {
 		margin-top: 0.5em;
+		overflow: auto;
 	}
 
 	.form-search:after {

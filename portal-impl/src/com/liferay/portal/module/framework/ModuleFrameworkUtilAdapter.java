@@ -15,7 +15,10 @@
 package com.liferay.portal.module.framework;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
 
@@ -85,6 +88,14 @@ public class ModuleFrameworkUtilAdapter {
 	}
 
 	public static void startFramework() throws Exception {
+		if (!PropsValues.MODULE_FRAMEWORK_ENABLED) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Module framework is disabled");
+			}
+
+			return;
+		}
+
 		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
 
 		ClassLoaderUtil.setContextClassLoader(
@@ -133,6 +144,9 @@ public class ModuleFrameworkUtilAdapter {
 
 		_moduleFramework.updateBundle(bundleId, inputStream);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ModuleFrameworkUtilAdapter.class);
 
 	private static ModuleFramework _moduleFramework;
 	private static ModuleFrameworkAdapterHelper _moduleFrameworkAdapterHelper =

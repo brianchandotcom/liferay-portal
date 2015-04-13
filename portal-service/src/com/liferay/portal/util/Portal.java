@@ -140,6 +140,15 @@ public interface Portal {
 		PortalPortEventListener portalPortEventListener);
 
 	/**
+	 * Adds the portal port and protocol event listener to the portal. The listener will be
+	 * notified whenever the portal port and protocol is set.
+	 *
+	 * @param portalPortEventListener the portal port and protocol event listener to add
+	 */
+	public void addPortalPortProtocolEventListener(
+		PortalPortProtocolEventListener portalPortProtocolEventListener);
+
+	/**
 	 * Adds an entry to the portlet breadcrumbs for the page.
 	 *
 	 * @param request the servlet request for the page
@@ -658,12 +667,21 @@ public interface Portal {
 		throws SystemException;
 
 	public Map<String, Serializable> getExpandoBridgeAttributes(
+			ExpandoBridge expandoBridge, HttpServletRequest request)
+		throws PortalException, SystemException;
+
+	public Map<String, Serializable> getExpandoBridgeAttributes(
 			ExpandoBridge expandoBridge, PortletRequest portletRequest)
 		throws PortalException, SystemException;
 
 	public Map<String, Serializable> getExpandoBridgeAttributes(
 			ExpandoBridge expandoBridge,
 			UploadPortletRequest uploadPortletRequest)
+		throws PortalException, SystemException;
+
+	public Serializable getExpandoValue(
+			HttpServletRequest request, String name, int type,
+			String displayType)
 		throws PortalException, SystemException;
 
 	public Serializable getExpandoValue(

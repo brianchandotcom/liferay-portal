@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/blogs_aggregator/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 String organizationName = StringPool.BLANK;
 
 Organization organization = null;
@@ -30,11 +28,13 @@ if (organizationId > 0) {
 }
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
+<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
-<aui:form action="<%= configurationURL %>" method="post" name="fm">
+<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 	<aui:input name="preferences--organizationId--" type="hidden" value="<%= organizationId %>" />
 
 	<aui:fieldset>

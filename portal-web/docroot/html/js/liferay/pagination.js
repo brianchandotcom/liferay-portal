@@ -73,8 +73,8 @@ AUI.add(
 
 					TPL_DELTA_SELECTOR: '<div class="lfr-pagination-delta-selector">' +
 						'<div class="btn-group lfr-icon-menu">' +
-							'<a class="btn direction-down dropdown-toggle max-display-items-15" href="javascript:;" id={id} title="{title}">' +
-								'<span class="lfr-icon-menu-text">{title}</span> <i class="icon-caret-down" />' +
+							'<a class="btn direction-down dropdown-toggle max-display-items-15" href="javascript:;" id="{id}" title="{title}">' +
+								'<span class="lfr-icon-menu-text">{title}</span> <i class="icon-caret-down"></i>' +
 							'</a>' +
 						'</div>' +
 					'</div>',
@@ -83,13 +83,13 @@ AUI.add(
 
 					TPL_ITEM: '<li id="{idLi}" role="presentation">' +
 						'<a href="javascript:;" class="lfr-pagination-link taglib-icon" id="{idLink}" role="menuitem">' +
-							'<span class="taglib-text-icon" data-index="{index}" data-value="{value}"">{value}</span>' +
+							'<span class="taglib-text-icon" data-index="{index}" data-value="{value}">{value}</span>' +
 						'</a>' +
 					'</li>',
 
 					TPL_LABEL: '{x} {items} {per} {page}',
 
-					TPL_RESULTS: '<small class="search-results" id="id">{value}</small>',
+					TPL_RESULTS: '<small class="search-results" id="{id}">{value}</small>',
 
 					TPL_RESULTS_MESSAGE: '{showing} {from} - {to} {of} {x} {results}.',
 
@@ -163,10 +163,10 @@ AUI.add(
 
 						itemContainer.appendChild(buffer.join(''));
 
+						deltaSelector.one('#' + deltaSelectorId).ancestor().appendChild(itemContainer);
+
 						itemsContainer.appendChild(deltaSelector);
 						itemsContainer.appendChild(searchResults);
-
-						deltaSelector.one('#' + deltaSelectorId).ancestor().appendChild(itemContainer);
 
 						boundingBox.appendChild(itemsContainer);
 

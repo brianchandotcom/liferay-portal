@@ -173,7 +173,7 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.image.ImageToolUtil" class="com.liferay.portal.kernel.image.ImageToolUtil">
 		<property name="imageTool">
-			<bean class="com.liferay.portal.image.ImageToolImpl" />
+			<bean class="com.liferay.portal.image.ImageToolImpl" factory-method="getInstance" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.image.SpriteProcessorUtil" class="com.liferay.portal.kernel.image.SpriteProcessorUtil">
@@ -583,9 +583,23 @@
 			<bean class="com.liferay.portal.workflow.permission.WorkflowPermissionImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.xml.SAXReader" class="com.liferay.portal.xml.SAXReaderImpl" />
+	<bean id="com.liferay.portal.kernel.xml.SAXReader" class="com.liferay.portal.xml.SAXReaderImpl">
+		<property name="secure" value="true" />
+		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.xml.SAXReaderUtil" class="com.liferay.portal.kernel.xml.SAXReaderUtil">
-		<property name="SAXReader" ref="com.liferay.portal.kernel.xml.SAXReader" />
+		<property name="secureSAXReader">
+			<bean class="com.liferay.portal.xml.SAXReaderImpl">
+				<property name="secure" value="true" />
+				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
+			</bean>
+		</property>
+		<property name="unsecureSAXReader">
+			<bean class="com.liferay.portal.xml.SAXReaderImpl">
+				<property name="secure" value="false" />
+				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
+			</bean>
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.xmlrpc.XmlRpc" class="com.liferay.portal.xmlrpc.XmlRpcImpl" />
 	<bean id="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil" class="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil">
@@ -624,8 +638,10 @@
 	</bean>
 	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
 		<property name="modelHints">
-			<bean class="com.liferay.portal.model.ModelHintsImpl">
-				<property name="SAXReader" ref="com.liferay.portal.kernel.xml.SAXReader" />
+			<bean class="com.liferay.portal.model.ModelHintsImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil">
+				<property name="sAXReader">
+					<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" factory-method="getUnsecureSAXReader" />
+				</property>
 			</bean>
 		</property>
 	</bean>
@@ -660,6 +676,11 @@
 	<bean id="com.liferay.portal.security.auth.EmailAddressValidatorFactory" class="com.liferay.portal.security.auth.EmailAddressValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.FullNameGeneratorFactory" class="com.liferay.portal.security.auth.FullNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.FullNameValidatorFactory" class="com.liferay.portal.security.auth.FullNameValidatorFactory" />
+	<bean id="com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistUtil" class="com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistUtil">
+		<property name="interruptedPortletRequestWhitelist">
+			<bean class="com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" class="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
 	<bean id="com.liferay.portal.security.ldap.AttributesTransformerFactory" class="com.liferay.portal.security.ldap.AttributesTransformerFactory" />
@@ -707,6 +728,10 @@
 		<property name="toolkit">
 			<bean class="com.liferay.portal.security.pwd.ToolkitImpl" />
 		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.xml.SecureXMLFactoryProvider" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl" />
+	<bean id="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil">
+		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
 	</bean>
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceHelper" class="com.liferay.portal.service.impl.LayoutLocalServiceHelper" />
 	<bean id="com.liferay.portal.service.PersistedModelLocalServiceRegistry" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" />

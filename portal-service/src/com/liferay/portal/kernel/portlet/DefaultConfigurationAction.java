@@ -147,6 +147,13 @@ public class DefaultConfigurationAction
 				actionRequest,
 				PortalUtil.getPortletId(actionRequest) +
 					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
+
+			String redirect = PortalUtil.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
 		}
 	}
 

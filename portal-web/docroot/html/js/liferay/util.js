@@ -1401,6 +1401,8 @@
 			ddmURL.setParameter('classPK', config.classPK);
 			ddmURL.setParameter('eventName', config.eventName);
 			ddmURL.setParameter('groupId', config.groupId);
+			ddmURL.setParameter('mode', config.mode);
+			ddmURL.setParameter('portletResourceNamespace', config.portletResourceNamespace);
 
 			if ('redirect' in config) {
 				ddmURL.setParameter('redirect', config.redirect);
@@ -1415,6 +1417,10 @@
 			}
 
 			ddmURL.setParameter('scopeTitle', config.title);
+
+			if ('showBackURL' in config) {
+				ddmURL.setParameter('showBackURL', config.showBackURL);
+			}
 
 			if ('showGlobalScope' in config) {
 				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
@@ -1431,6 +1437,8 @@
 			if ('showToolbar' in config) {
 				ddmURL.setParameter('showToolbar', config.showToolbar);
 			}
+
+			ddmURL.setParameter('structureAvailableFields', config.structureAvailableFields);
 
 			if (config.struts_action) {
 				ddmURL.setParameter('struts_action', config.struts_action);
@@ -1783,7 +1791,9 @@
 		function(folderData, namespace) {
 			A.byIdNS(namespace, folderData.idString).val(folderData.idValue);
 
-			A.byIdNS(namespace, folderData.nameString).val(folderData.nameValue);
+			var name = AString.unescapeEntities(folderData.nameValue);
+
+			A.byIdNS(namespace, folderData.nameString).val(name);
 
 			var button = A.byIdNS(namespace, 'removeFolderButton');
 

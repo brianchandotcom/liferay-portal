@@ -77,7 +77,9 @@ for (int i = 0; i < results.size(); i++) {
 		sb.append("\">");
 	}
 
-	sb.append("<img align=\"left\" src=\"");
+	sb.append("<img align=\"left\" alt=\"");
+	sb.append(LanguageUtil.get(locale, "thumbnail"));
+	sb.append("\" src=\"");
 	sb.append(theme2.getStaticResourcePath());
 	sb.append(HtmlUtil.escapeAttribute(theme2.getImagesPath()));
 	sb.append("/thumbnail.png\" style=\"margin-right: 10px\" />");

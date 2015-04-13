@@ -97,6 +97,14 @@ public class MulticastTransport extends Thread implements Transport {
 			}
 		}
 		catch (IOException ioe) {
+			if (!_connected) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to disconnect", ioe);
+				}
+
+				return;
+			}
+
 			_log.error("Unable to process ", ioe);
 
 			_socket.disconnect();

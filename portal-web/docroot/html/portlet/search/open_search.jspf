@@ -135,11 +135,13 @@ for (int i = 0; i < portlets.size(); i++) {
 	List resultRows = new ArrayList();
 
 	try {
+		SAXReader saxReader = SAXReaderUtil.getUnsecureSAXReader();
+
 		String xml = openSearch.search(request, groupId, themeDisplay.getUserId(), keywords, openSearchSearchContainer.getCur(), openSearchSearchContainer.getDelta(), format);
 
 		xml = XMLFormatter.stripInvalidChars(xml);
 
-		com.liferay.portal.kernel.xml.Document document = SAXReaderUtil.read(xml);
+		com.liferay.portal.kernel.xml.Document document = saxReader.read(xml);
 
 		Element rootElement = document.getRootElement();
 

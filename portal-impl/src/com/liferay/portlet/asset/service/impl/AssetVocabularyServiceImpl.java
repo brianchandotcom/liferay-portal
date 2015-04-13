@@ -19,15 +19,26 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.AssetVocabularyDisplay;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.base.AssetVocabularyServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
@@ -230,18 +241,16 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	@Override
 	public AssetVocabularyDisplay getGroupVocabulariesDisplay(
-			long groupId, String name, int start, int end,
+			long groupId, String title, int start, int end,
 			boolean addDefaultVocabulary, OrderByComparator obc)
 		throws PortalException, SystemException {
 
 		List<AssetVocabulary> vocabularies;
 		int total = 0;
 
-		if (Validator.isNotNull(name)) {
-			name = (CustomSQLUtil.keywords(name))[0];
-
-			vocabularies = getGroupVocabularies(groupId, name, start, end, obc);
-			total = getGroupVocabulariesCount(groupId, name);
+		if (Validator.isNotNull(title)) {
+			vocabularies = searchVocabularies(groupId, title, start, end);
+			total = vocabularies.size();
 		}
 		else {
 			vocabularies = getGroupVocabularies(groupId, start, end, obc);
@@ -360,6 +369,29 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			serviceContext);
 	}
 
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, String title, int start, int end) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute(Field.TITLE, title);
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setKeywords(title);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
 	protected List<AssetVocabulary> filterVocabularies(
 			List<AssetVocabulary> vocabularies)
 		throws PortalException {
@@ -381,6 +413,55 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		}
 
 		return vocabularies;
+	}
+
+	protected List<AssetVocabulary> searchVocabularies(
+			long groupId, String title, int start, int end)
+		throws PortalException, SystemException {
+
+		User user = getUser();
+
+		SearchContext searchContext = buildSearchContext(
+			user.getCompanyId(), groupId, title, start, end);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetVocabulary.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext);
+
+			List<Document> documents = hits.toList();
+
+			List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>(
+				documents.size());
+
+			for (Document document : documents) {
+				long vocabularyId = GetterUtil.getLong(
+					document.get(Field.ASSET_VOCABULARY_ID));
+
+				AssetVocabulary vocabulary =
+					AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);
+
+				if (vocabulary == null) {
+					vocabularies = null;
+
+					long companyId = GetterUtil.getLong(
+						document.get(Field.COMPANY_ID));
+
+					indexer.delete(companyId, document.getUID());
+				}
+				else if (vocabularies != null) {
+					vocabularies.add(vocabulary);
+				}
+			}
+
+			if (vocabularies != null) {
+				return vocabularies;
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 }

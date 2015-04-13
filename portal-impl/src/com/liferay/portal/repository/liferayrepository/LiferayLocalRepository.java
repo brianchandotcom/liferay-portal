@@ -182,7 +182,7 @@ public class LiferayLocalRepository
 
 	@Override
 	public void deleteAll() throws PortalException, SystemException {
-		dlFolderLocalService.deleteAll(getGroupId());
+		dlFolderLocalService.deleteAllByRepository(getRepositoryId());
 	}
 
 	@Override

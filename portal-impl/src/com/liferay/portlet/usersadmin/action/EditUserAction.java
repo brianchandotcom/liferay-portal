@@ -274,11 +274,31 @@ public class EditUserAction extends PortletAction {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 
+				String password1 = actionRequest.getParameter("password1");
+				String password2 = actionRequest.getParameter("password2");
+
+				boolean submittedPassword = false;
+
+				if (!Validator.isBlank(password1) ||
+					!Validator.isBlank(password2)) {
+
+					submittedPassword = true;
+				}
+
 				if (e instanceof CompanyMaxUsersException ||
-					e instanceof RequiredUserException) {
+					e instanceof RequiredUserException ||
+					submittedPassword) {
 
 					String redirect = PortalUtil.escapeRedirect(
 						ParamUtil.getString(actionRequest, "redirect"));
+
+					if (submittedPassword) {
+						User user = PortalUtil.getSelectedUser(actionRequest);
+
+						redirect = HttpUtil.setParameter(
+							redirect, actionResponse.getNamespace() + "p_u_i_d",
+							user.getUserId());
+					}
 
 					if (Validator.isNotNull(redirect)) {
 						actionResponse.sendRedirect(redirect);
@@ -626,8 +646,10 @@ public class EditUserAction extends PortletAction {
 
 		List<UserGroupRole> userGroupRoles = null;
 
-		if ((actionRequest.getParameter("groupRolesGroupIds") != null) ||
-			(actionRequest.getParameter("groupRolesRoleIds") != null)) {
+		if ((actionRequest.getParameter("addGroupRolesGroupIds") != null) ||
+			(actionRequest.getParameter("addGroupRolesRoleIds") != null) ||
+			(actionRequest.getParameter("deleteGroupRolesGroupIds") != null) ||
+			(actionRequest.getParameter("deleteGroupRolesRoleIds") != null)) {
 
 			userGroupRoles = UsersAdminUtil.getUserGroupRoles(actionRequest);
 		}

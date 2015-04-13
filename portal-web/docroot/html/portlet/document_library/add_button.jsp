@@ -25,16 +25,8 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 List<DLFileEntryType> fileEntryTypes = Collections.emptyList();
 
-boolean inherited = true;
-
-if ((folder != null) && (folder.getModel() instanceof DLFolder)) {
-	DLFolder dlFolder = (DLFolder)folder.getModel();
-
-	inherited = !dlFolder.isOverrideFileEntryTypes();
-}
-
 if ((folder == null) || folder.isSupportsMetadata()) {
-	fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, inherited);
+	fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, true);
 }
 
 boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT);

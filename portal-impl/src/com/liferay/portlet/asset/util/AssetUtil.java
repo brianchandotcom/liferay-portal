@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -149,6 +150,40 @@ public class AssetUtil {
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, assetCategory.getTitleCurrentValue(),
 			portletURL.toString());
+	}
+
+	public static String checkViewURL(
+		AssetEntry assetEntry, boolean viewInContext, String viewURL,
+		String currentURL, ThemeDisplay themeDisplay) {
+
+		return checkViewURL(
+			assetEntry, viewInContext, viewURL, currentURL, themeDisplay, true);
+	}
+
+	public static String checkViewURL(
+		AssetEntry assetEntry, boolean viewInContext, String viewURL,
+		String currentURL, ThemeDisplay themeDisplay,
+		boolean checkInheritRedirect) {
+
+		if (Validator.isNotNull(viewURL)) {
+			if (checkInheritRedirect) {
+				viewURL = HttpUtil.setParameter(
+					viewURL, "inheritRedirect", viewInContext);
+			}
+
+			String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
+
+			Layout layout = themeDisplay.getLayout();
+
+			if (!viewInContext || (Validator.isNotNull(assetEntryLayoutUuid) &&
+				 !assetEntryLayoutUuid.equals(layout.getUuid()))) {
+
+				viewURL = HttpUtil.setParameter(
+					viewURL, "redirect", currentURL);
+			}
+		}
+
+		return viewURL;
 	}
 
 	public static long[] filterCategoryIds(

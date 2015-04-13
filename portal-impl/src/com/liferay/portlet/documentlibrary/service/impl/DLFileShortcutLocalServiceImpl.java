@@ -95,11 +95,8 @@ public class DLFileShortcutLocalServiceImpl
 		// Folder
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
-
-			dlFolder.setLastPostDate(fileShortcut.getModifiedDate());
-
-			dlFolderPersistence.update(dlFolder);
+			dlFolderLocalService.updateLastPostDate(
+				folderId, fileShortcut.getModifiedDate());
 		}
 
 		// Asset
@@ -351,11 +348,8 @@ public class DLFileShortcutLocalServiceImpl
 		// Folder
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
-
-			dlFolder.setLastPostDate(fileShortcut.getModifiedDate());
-
-			dlFolderPersistence.update(dlFolder);
+			dlFolderLocalService.updateLastPostDate(
+				folderId, fileShortcut.getModifiedDate());
 		}
 
 		// Asset

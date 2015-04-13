@@ -1,9 +1,19 @@
+@import "compass";
+
 .portlet-document-library-display {
-	.entry-title {
-		display: block;
-		font-size: 1.15em;
-		font-weight: bold;
-		padding: 1.4em 0 0;
+	.entry-metadata {
+		.entry-title {
+			display: block;
+
+			@include ellipsis;
+
+			font-size: 1.15em;
+			font-weight: bold;
+		}
+
+		.entry-description {
+			@include hyphenation;
+		}
 	}
 
 	.view-folders .repository-error {
@@ -13,11 +23,6 @@
 		td {
 			background-color: #FDD;
 		}
-	}
-
-	.file-entry-list-description {
-		font-style: italic;
-		margin-left: 10px;
 	}
 
 	.file-entry-tags {
@@ -40,14 +45,9 @@
 		position: relative;
 
 		.thumbnail {
-			float: left;
 			max-height: 128px;
 			max-width: 128px;
 		}
-	}
-
-	.entry-title {
-		float: left;
 	}
 
 	.taglib-webdav {

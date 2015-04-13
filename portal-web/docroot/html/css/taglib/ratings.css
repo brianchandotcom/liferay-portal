@@ -1,6 +1,5 @@
 .taglib-ratings {
 	&.stars {
-		overflow: hidden;
 		padding-top: 10px;
 
 		.liferay-rating-score {

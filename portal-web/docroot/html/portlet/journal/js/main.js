@@ -66,7 +66,7 @@ AUI.add(
 
 		var TPL_STRUCTURE_FIELD_INPUT = '<input class="lfr-input-text" type="text" value="" size="40"/>';
 
-		var TPL_TOOLTIP_IMAGE = '<img align="top" class="journal-article-instructions-container" src="' + themeDisplay.getPathThemeImages() + '/portlet/help.png" />';
+		var TPL_TOOLTIP_IMAGE = '<img align="top" alt="" class="journal-article-instructions-container" src="' + themeDisplay.getPathThemeImages() + '/portlet/help.png" />';
 
 		var fieldsDataSet = new A.DataSet();
 

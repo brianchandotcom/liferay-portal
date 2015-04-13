@@ -236,8 +236,12 @@ public class LayoutSetPrototypeStagedModelDataHandler
 					layoutSetPrototype,
 					getLayoutSetPrototypeLARFileName(layoutSetPrototype));
 
-			portletDataContext.addZipEntry(
-				layoutSetPrototypeLARPath, inputStream);
+			if (portletDataContext.isPathNotProcessed(
+					layoutSetPrototypeLARPath)) {
+
+				portletDataContext.addZipEntry(
+					layoutSetPrototypeLARPath, inputStream);
+			}
 
 			List<Layout> layoutSetPrototypeLayouts =
 				LayoutLocalServiceUtil.getLayouts(

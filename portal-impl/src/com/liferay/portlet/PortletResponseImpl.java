@@ -33,6 +33,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletURLListener;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.struts.StrutsActionPortletURL;
@@ -236,7 +237,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		if (_document == null) {
 			try {
 				DocumentBuilderFactory documentBuilderFactory =
-					DocumentBuilderFactory.newInstance();
+					SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
 
 				DocumentBuilder documentBuilder =
 					documentBuilderFactory.newDocumentBuilder();

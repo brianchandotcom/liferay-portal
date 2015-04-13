@@ -522,6 +522,23 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public void deleteRepositoryFileEntries(long repositoryId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.deleteRepositoryFileEntries(repositoryId,
+			folderId);
+	}
+
+	@Override
+	public void deleteRepositoryFileEntries(long repositoryId, long folderId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.deleteRepositoryFileEntries(repositoryId,
+			folderId, includeTrashedEntries);
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntry(
 		long groupId, long folderId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -541,6 +558,14 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.fetchFileEntryByName(groupId, folderId,
 			name);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
+		long groupId, long[] ddmStructureIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getDDMStructureFileEntries(groupId,
+			ddmStructureIds);
 	}
 
 	@Override
@@ -652,6 +677,17 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
+		long groupId, long userId,
+		java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws java.lang.Exception {
+		return _dlFileEntryLocalService.getFileEntries(groupId, userId,
+			repositoryIds, folderIds, mimeTypes, queryDefinition);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
 		long folderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.getFileEntries(folderId, name);
@@ -692,6 +728,16 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		throws java.lang.Exception {
 		return _dlFileEntryLocalService.getFileEntriesCount(groupId, userId,
 			folderIds, mimeTypes, queryDefinition);
+	}
+
+	@Override
+	public int getFileEntriesCount(long groupId, long userId,
+		java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws java.lang.Exception {
+		return _dlFileEntryLocalService.getFileEntriesCount(groupId, userId,
+			repositoryIds, folderIds, mimeTypes, queryDefinition);
 	}
 
 	@Override

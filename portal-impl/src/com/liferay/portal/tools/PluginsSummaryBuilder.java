@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
@@ -218,6 +219,44 @@ public class PluginsSummaryBuilder {
 
 				x = y;
 			}
+		}
+
+		File buildXmlFile = new File(pluginDir, "build.xml");
+		System.out.println("## read a " + buildXmlFile);
+
+		String buildXmlContent = _fileUtil.read(buildXmlFile);
+
+		int x = buildXmlContent.indexOf("import.shared");
+
+		if (x == -1) {
+			return ticketIds;
+		}
+
+		x = buildXmlContent.indexOf("value=\"", x);
+		x = buildXmlContent.indexOf("\"", x);
+
+		int y = buildXmlContent.indexOf("\" />", x);
+
+		if ((x == -1) || (y == -1)) {
+			return ticketIds;
+		}
+
+		String[] importShared = StringUtil.split(
+			buildXmlContent.substring(x + 1, y));
+
+		if (importShared.length == 0) {
+			return ticketIds;
+		}
+
+		for (String currentImportShared : importShared) {
+			File currentImportSharedDir = new File(
+				pluginDir, "../../shared/" + currentImportShared);
+
+			if (!currentImportSharedDir.exists()) {
+				continue;
+			}
+
+			ticketIds.addAll(_extractTicketIds(currentImportSharedDir, range));
 		}
 
 		return ticketIds;
@@ -592,6 +631,8 @@ public class PluginsSummaryBuilder {
 	}
 
 	private static final String[] _TICKET_ID_PREFIXES = {"LPS", "SOS"};
+
+	private static FileImpl _fileUtil = FileImpl.getInstance();
 
 	private Set<String> _distinctAuthors = new TreeSet<String>();
 	private Set<String> _distinctLicenses = new TreeSet<String>();

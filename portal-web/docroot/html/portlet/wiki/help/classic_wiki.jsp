@@ -51,7 +51,7 @@ CamelCaseWordsAreLinksToPages
 </h4>
 
 <pre>
-<img alt="<liferay-ui:message key="tab" />"src="<%= themeDisplay.getPathThemeImages() %>/wiki/tab.png" />* Item
+<img alt="<liferay-ui:message key="tab" />" src="<%= themeDisplay.getPathThemeImages() %>/wiki/tab.png" />* Item
 <img alt="<liferay-ui:message key="tab" />" src="<%= themeDisplay.getPathThemeImages() %>/wiki/tab.png" />&nbsp;<img alt="<liferay-ui:message key="tab" />" src="<%= themeDisplay.getPathThemeImages() %>/wiki/tab.png" />* Subitem
 
 <img alt="<liferay-ui:message key="tab" />" src="<%= themeDisplay.getPathThemeImages() %>/wiki/tab.png" />1 Ordered Item

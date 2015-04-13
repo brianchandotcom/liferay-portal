@@ -85,7 +85,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 
 					data.put("ddmstructureid", structure.getStructureId());
 					data.put("ddmstructurekey", structure.getStructureKey());
-					data.put("name", HtmlUtil.escapeAttribute(structure.getName(locale)));
+					data.put("name", structure.getName(locale));
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

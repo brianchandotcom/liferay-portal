@@ -107,7 +107,7 @@ public class AUIUtil {
 			sb.append("data-");
 			sb.append(dataKey);
 			sb.append("=\"");
-			sb.append(dataValue);
+			sb.append(HtmlUtil.escapeAttribute(dataValue));
 			sb.append("\" ");
 		}
 

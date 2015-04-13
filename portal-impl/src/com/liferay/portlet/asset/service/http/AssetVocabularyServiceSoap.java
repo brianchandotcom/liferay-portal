@@ -330,13 +330,13 @@ public class AssetVocabularyServiceSoap {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay getGroupVocabulariesDisplay(
-		long groupId, java.lang.String name, int start, int end,
+		long groupId, java.lang.String title, int start, int end,
 		boolean addDefaultVocabulary,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.asset.model.AssetVocabularyDisplay returnValue = AssetVocabularyServiceUtil.getGroupVocabulariesDisplay(groupId,
-					name, start, end, addDefaultVocabulary, obc);
+					title, start, end, addDefaultVocabulary, obc);
 
 			return returnValue;
 		}

@@ -56,7 +56,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			WebKeys.UPLOAD_EXCEPTION);
 
 		if (uploadException != null) {
-			return JSONFactoryUtil.serializeException(uploadException);
+			return JSONFactoryUtil.serializeThrowable(uploadException);
 		}
 
 		JSONWebServiceAction jsonWebServiceAction = null;
@@ -97,7 +97,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				_log.error(getThrowableMessage(e));
 			}
 
-			return JSONFactoryUtil.serializeException(e);
+			return JSONFactoryUtil.serializeThrowable(e);
 		}
 	}
 

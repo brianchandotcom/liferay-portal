@@ -4,7 +4,7 @@
 	<#assign fieldValue = "">
 </#if>
 
-<div class="lfr-forms-field-wrapper field-wrapper-content">
+<div class="field-wrapper-content lfr-forms-field-wrapper">
 	<#if !disabled>
 		<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
 	</#if>

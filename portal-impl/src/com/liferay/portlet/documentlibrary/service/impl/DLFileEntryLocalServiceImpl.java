@@ -244,12 +244,8 @@ public class DLFileEntryLocalServiceImpl
 		// Folder
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
-				dlFileEntry.getFolderId());
-
-			dlFolder.setLastPostDate(dlFileEntry.getModifiedDate());
-
-			dlFolderPersistence.update(dlFolder);
+			dlFolderLocalService.updateLastPostDate(
+				dlFileEntry.getFolderId(), dlFileEntry.getModifiedDate());
 		}
 
 		// File
@@ -389,12 +385,9 @@ public class DLFileEntryLocalServiceImpl
 			if (dlFileEntry.getFolderId() !=
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
-					dlFileEntry.getFolderId());
-
-				dlFolder.setLastPostDate(latestDLFileVersion.getModifiedDate());
-
-				dlFolderPersistence.update(dlFolder);
+				dlFolderLocalService.updateLastPostDate(
+					dlFileEntry.getFolderId(),
+					latestDLFileVersion.getModifiedDate());
 			}
 
 			// File
@@ -895,6 +888,39 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteRepositoryFileEntries(long repositoryId, long folderId)
+		throws PortalException, SystemException {
+
+		deleteRepositoryFileEntries(repositoryId, folderId, true);
+	}
+
+	@Override
+	public void deleteRepositoryFileEntries(
+			long repositoryId, long folderId, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
+		int count = dlFileEntryPersistence.countByR_F(repositoryId, folderId);
+
+		int pages = count / _DELETE_INTERVAL;
+
+		for (int i = 0; i <= pages; i++) {
+			int start = (i * _DELETE_INTERVAL);
+			int end = start + _DELETE_INTERVAL;
+
+			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByR_F(
+				repositoryId, folderId, start, end);
+
+			for (DLFileEntry dlFileEntry : dlFileEntries) {
+				if (includeTrashedEntries ||
+					!dlFileEntry.isInTrashExplicitly()) {
+
+					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+				}
+			}
+		}
+	}
+
+	@Override
 	public DLFileEntry fetchFileEntry(long groupId, long folderId, String title)
 		throws SystemException {
 
@@ -914,6 +940,15 @@ public class DLFileEntryLocalServiceImpl
 		throws SystemException {
 
 		return dlFileEntryPersistence.fetchByG_F_N(groupId, folderId, name);
+	}
+
+	@Override
+	public List<DLFileEntry> getDDMStructureFileEntries(
+			long groupId, long[] ddmStructureIds)
+		throws SystemException {
+
+		return dlFileEntryFinder.findByDDMStructureIds(
+			groupId, ddmStructureIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
@@ -1058,6 +1093,18 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileEntry> getFileEntries(
+			long groupId, long userId, List<Long> repositoryIds,
+			List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.findByG_U_R_F_M(
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
+			queryDefinition);
+	}
+
+	@Override
 	public List<DLFileEntry> getFileEntries(long folderId, String name)
 		throws SystemException {
 
@@ -1106,6 +1153,18 @@ public class DLFileEntryLocalServiceImpl
 
 		return dlFileEntryFinder.countByG_U_F_M(
 			groupId, userId, folderIds, mimeTypes, queryDefinition);
+	}
+
+	@Override
+	public int getFileEntriesCount(
+			long groupId, long userId, List<Long> repositoryIds,
+			List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.countByG_U_R_F_M(
+			groupId, userId, repositoryIds, folderIds, mimeTypes,
+			queryDefinition);
 	}
 
 	@Override
@@ -2270,12 +2329,9 @@ public class DLFileEntryLocalServiceImpl
 				(dlFileEntry.getFolderId() !=
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-				DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
-					dlFileEntry.getFolderId());
-
-				dlFolder.setLastPostDate(serviceContext.getModifiedDate(now));
-
-				dlFolderPersistence.update(dlFolder);
+				dlFolderLocalService.updateLastPostDate(
+					dlFileEntry.getFolderId(),
+					serviceContext.getModifiedDate(now));
 			}
 
 			// App helper

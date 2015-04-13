@@ -412,6 +412,7 @@ if (hints != null) {
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:input-editor
+								contentsLanguageId="<%= languageId %>"
 								cssClass='<%= cssClass + \" lfr-input-text\" %>'
 								editorImpl="ckeditor"
 								initMethod='<%= fieldParam + \"InitEditor\" %>'

@@ -56,11 +56,13 @@
 
 					Map.Entry<String, PortletURL> entry = iterator.next();
 
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
+
 					String message = _getMessage(entry.getKey(), addPortletURLs, locale);
 					%>
 
 					<aui:nav-item
-						href="<%= _getURL(groupId, plid, entry.getValue(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
+						href="<%= _getURL(groupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
 						iconCssClass="icon-file"
 						label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-x" : "add-x-in-x", new Object[] {HtmlUtil.escape(message), HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'
 					/>
@@ -74,11 +76,13 @@
 
 						<%
 						for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
+							AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
+
 							String message = _getMessage(entry.getKey(), addPortletURLs, locale);
 						%>
 
 							<aui:nav-item
-								href="<%= _getURL(groupId, plid, entry.getValue(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
+								href="<%= _getURL(groupId, plid, entry.getValue(), assetRendererFactory.getPortletId(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
 								iconCssClass="icon-file"
 								label="<%= HtmlUtil.escape(message) %>"
 							/>
@@ -95,6 +99,16 @@
 </c:if>
 
 <%!
+private String _getClassName(String className) {
+	int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+
+	if (pos != -1) {
+		className = className.substring(0, pos);
+	}
+
+	return className;
+}
+
 private String _getMessage(String className, Map<String, PortletURL> addPortletURLs, Locale locale) {
 	String message = null;
 
@@ -115,7 +129,7 @@ private String _getMessage(String className, Map<String, PortletURL> addPortletU
 	return message;
 }
 
-private String _getURL(long groupId, long plid, PortletURL addPortletURL, String message, boolean defaultAssetPublisher, Layout layout, PageContext pageContext, LiferayPortletResponse liferayPortletResponse) {
+private String _getURL(long groupId, long plid, PortletURL addPortletURL, String portletId, String message, boolean defaultAssetPublisher, Layout layout, PageContext pageContext, LiferayPortletResponse liferayPortletResponse) {
 	addPortletURL.setParameter("groupId", String.valueOf(groupId));
 	addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
@@ -124,8 +138,10 @@ private String _getURL(long groupId, long plid, PortletURL addPortletURL, String
 	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
 	addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
 
+	String namespace = PortalUtil.getPortletNamespace(portletId);
+
 	if (defaultAssetPublisher) {
-		addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
+		addPortletURLString = HttpUtil.addParameter(addPortletURLString, namespace + "layoutUuid", layout.getUuid());
 	}
 
 	return "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "new-x", HtmlUtil.escape(message))) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";

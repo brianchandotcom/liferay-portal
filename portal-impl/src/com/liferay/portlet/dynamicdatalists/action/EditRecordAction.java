@@ -23,13 +23,11 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 
@@ -131,14 +129,11 @@ public class EditRecordAction extends PortletAction {
 	protected void deleteRecord(ActionRequest actionRequest) throws Exception {
 		long recordId = ParamUtil.getLong(actionRequest, "recordId");
 
-		DDLRecordLocalServiceUtil.deleteRecord(recordId);
+		DDLRecordServiceUtil.deleteRecord(recordId);
 	}
 
 	protected void revertRecordVersion(ActionRequest actionRequest)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		long recordId = ParamUtil.getLong(actionRequest, "recordId");
 
@@ -147,8 +142,8 @@ public class EditRecordAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
 
-		DDLRecordLocalServiceUtil.revertRecordVersion(
-			themeDisplay.getUserId(), recordId, version, serviceContext);
+		DDLRecordServiceUtil.revertRecordVersion(
+			recordId, version, serviceContext);
 	}
 
 	protected DDLRecord updateRecord(ActionRequest actionRequest)

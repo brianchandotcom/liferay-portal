@@ -21,26 +21,28 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_asset_
 
 String className = (String)request.getAttribute("liferay-ui:asset-categories-selector:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-selector:classPK"));
+long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-selector:hiddenInput");
 String curCategoryIds = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-categories-selector:curCategoryIds"), "");
 String curCategoryNames = StringPool.BLANK;
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
-List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
-
 Group siteGroup = themeDisplay.getSiteGroup();
 
-StringBundler vocabularyGroupIds = new StringBundler(3);
+if (ArrayUtil.isEmpty(groupIds)) {
+	groupIds = new long[] {siteGroup.getGroupId()};
+}
 
-vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(siteGroup.getGroupId(), false));
+if (!ArrayUtil.contains(groupIds, themeDisplay.getCompanyGroupId())) {
+	groupIds = ArrayUtil.append(groupIds, themeDisplay.getCompanyGroupId());
+}
 
-vocabularyGroupIds.append(siteGroup.getGroupId());
+groupIds = ArrayUtil.unique(groupIds);
 
-if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
-	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId(), false));
+List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 
-	vocabularyGroupIds.append(StringPool.COMMA);
-	vocabularyGroupIds.append(themeDisplay.getCompanyGroupId());
+for (int i = 0; i < groupIds.length; i++) {
+	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupIds[i], false));
 }
 
 if (Validator.isNotNull(className)) {
@@ -148,7 +150,7 @@ else {
 				maxEntries: <%= maxEntries %>,
 				moreResultsLabel: '<%= UnicodeLanguageUtil.get(pageContext, "load-more-results") %>',
 				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
-				vocabularyGroupIds: '<%= vocabularyGroupIds.toString() %>',
+				vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 				vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'
 			}
 		).render();

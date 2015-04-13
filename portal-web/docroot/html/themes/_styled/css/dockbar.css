@@ -751,4 +751,27 @@ $editLayoutPanelWidth: 460px;
 			width: 515px;
 		}
 	}
+
+	@include respond-to(phone, tablet) {
+		#navigation {
+			display: none;
+
+			&.open {
+				display: block;
+			}
+		}
+
+		.dockbar-split .dockbar {
+			height: auto;
+			position: relative;
+
+			.navbar-inner {
+				width: auto;
+			}
+		}
+
+		.user-avatar-image {
+			width: 18px;
+		}
+	}
 }

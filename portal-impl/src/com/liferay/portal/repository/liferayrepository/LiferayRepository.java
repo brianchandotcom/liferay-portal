@@ -590,8 +590,8 @@ public class LiferayRepository
 
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryService.getGroupFileEntries(
-				getGroupId(), userId, toFolderId(rootFolderId), mimeTypes,
-				status, start, end, obc);
+				getGroupId(), userId, getRepositoryId(),
+				toFolderId(rootFolderId), mimeTypes, status, start, end, obc);
 
 		return toFileEntries(dlFileEntries);
 	}
@@ -610,7 +610,8 @@ public class LiferayRepository
 		throws PortalException, SystemException {
 
 		return dlFileEntryService.getGroupFileEntriesCount(
-			getGroupId(), userId, toFolderId(rootFolderId), mimeTypes, status);
+			getGroupId(), userId, getRepositoryId(), toFolderId(rootFolderId),
+			mimeTypes, status);
 	}
 
 	@Override

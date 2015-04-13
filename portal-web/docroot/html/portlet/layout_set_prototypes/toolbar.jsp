@@ -23,12 +23,10 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
-			<portlet:renderURL var="viewLayoutSetPrototypesURL">
-				<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
-			</portlet:renderURL>
+			<portlet:renderURL var="viewLayoutSetPrototypesURL" />
 
 			<portlet:renderURL var="addLayoutSetPrototypeURL">
-				<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
+				<portlet:param name="mvcPath" value="/html/portlet/layout_set_prototypes/edit_layout_set_prototype.jsp" />
 				<portlet:param name="redirect" value="<%= viewLayoutSetPrototypesURL %>" />
 				<portlet:param name="backURL" value="<%= viewLayoutSetPrototypesURL %>" />
 			</portlet:renderURL>

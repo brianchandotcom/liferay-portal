@@ -27,14 +27,12 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 
 	<%
 	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_set_prototypes_merge_alert") + StringPool.UNDERLINE;
-
-	PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-	portletURL.setParameter("redirect", redirect);
-	portletURL.setParameter("layoutSetPrototypeId",String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
-	portletURL.setParameter("struts_action", "/layout_set_prototypes/edit_layout_set_prototype");
-	portletURL.setParameter(Constants.CMD, "reset_merge_fail_count");
 	%>
+
+	<portlet:actionURL name="resetMergeFailCount" var="resetMergeFailCountURL">
+		<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
+	</portlet:actionURL>
 
 	<div class="alert alert-warning">
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
@@ -48,7 +46,7 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 		AUI.$('#<%= randomNamespace %>resetButton').on(
 			'click',
 			function(event) {
-				submitForm(document.hrefFm, '<%= portletURL.toString() %>');
+				submitForm(document.hrefFm, '<%= resetMergeFailCountURL.toString() %>');
 			}
 		);
 	</aui:script>

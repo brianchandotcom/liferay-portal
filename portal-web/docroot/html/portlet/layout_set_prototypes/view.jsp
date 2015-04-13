@@ -18,8 +18,6 @@
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 %>
 
 <liferay-ui:error exception="<%= RequiredLayoutSetPrototypeException.class %>" message="you-cannot-delete-site-templates-that-are-used-by-a-site" />

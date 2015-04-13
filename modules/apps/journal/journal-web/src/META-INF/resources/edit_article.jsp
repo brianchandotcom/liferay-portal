@@ -328,7 +328,9 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 				title: '<%= (article != null) ? HtmlUtil.escapeJS(article.getTitle(locale)) : StringPool.BLANK %>'
 			},
-			namespace: '<portlet:namespace />'
+			namespace: '<portlet:namespace />',
+			'strings.addTemplate': '<liferay-ui:message key="please-add-a-template-to-render-this-structure" />',
+			'strings.saveAsDraftBeforePreview': '<liferay-ui:message key="in-order-to-preview-your-changes,-the-web-content-is-saved-as-a-draft" />'
 		}
 	);
 </aui:script>

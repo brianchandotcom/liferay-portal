@@ -100,22 +100,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void addConfigurations(Project project) {
-		addPortalWebConfiguration(project);
-	}
-
-	protected void addDependenciesPortalWeb(Project project) {
-		GradleUtil.addDependency(
-			project, PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
-			"portal-web", "default");
-	}
-
-	protected LiferayExtension addLiferayExtension(Project project) {
-		return GradleUtil.addExtension(
-			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
-	}
-
-	protected void addPortalWebConfiguration(final Project project) {
+	protected void addConfigurationPortalWeb(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_WEB_CONFIGURATION_NAME);
 
@@ -133,6 +118,21 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected void addConfigurations(Project project) {
+		addConfigurationPortalWeb(project);
+	}
+
+	protected void addDependenciesPortalWeb(Project project) {
+		GradleUtil.addDependency(
+			project, PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
+			"portal-web", "default");
+	}
+
+	protected LiferayExtension addLiferayExtension(Project project) {
+		return GradleUtil.addExtension(
+			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
 	}
 
 	protected BuildCssTask addTaskBuildCss(Project project) {

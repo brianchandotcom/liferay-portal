@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE</td>
-	<td>//input[contains(@id,'structure')]</td>
+	<td>//input[contains(@id,'structure') and contains(@value,'${key_structureName}')]</td>
 	<td></td>
 </tr>
 <tr>

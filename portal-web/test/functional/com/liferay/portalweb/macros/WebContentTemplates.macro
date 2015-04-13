@@ -55,7 +55,10 @@
 
 				<execute function="SelectFrame" />
 				<execute function="SelectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
-				<execute function="AssertTextEquals#assertValue" locator1="CPWebcontentTemplatesAddtemplate#STRUCTURE" value1="${structureName}" />
+
+				<var name="key_structureName" value="${structureName}" />
+
+				<execute function="AssertElementPresent" locator1="CPWebcontentTemplatesAddtemplate#STRUCTURE" value1="${structureName}" />
 
 				<if>
 					<equals arg1="${templateLanguage}" arg2="ftl" />

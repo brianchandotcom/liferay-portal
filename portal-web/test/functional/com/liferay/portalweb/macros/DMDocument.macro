@@ -339,15 +339,6 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>
 		</if>
-
-		<while>
-			<condition function="IsVisible" locator1="PGDocumentsandmediaDocument#UP_BUTTON" />
-			<then>
-				<execute function="Click" locator1="PGDocumentsandmediaDocument#UP_BUTTON" />
-
-				<execute function="Pause" locator1="3000" />
-			</then>
-		</while>
 	</command>
 
 	<command name="addPGViaAP">
@@ -923,15 +914,6 @@
 		<execute function="AssertClick" locator1="PGDocumentsandmediaEditdocument#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<while>
-			<condition function="IsVisible" locator1="PGDocumentsandmediaEditdocument#BACK" />
-			<then>
-				<execute function="Click" locator1="PGDocumentsandmediaEditdocument#BACK" />
-
-				<execute function="Pause" locator1="3000" />
-			</then>
-		</while>
 	</command>
 
 	<command name="editPGViaAP">

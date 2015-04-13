@@ -40,6 +40,7 @@
 	}
 
 	.entry-thumbnail {
+		font-size: 1.15em;
 		float: left;
 		margin-right: 1em;
 		position: relative;

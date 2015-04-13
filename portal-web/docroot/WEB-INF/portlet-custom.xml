@@ -1053,7 +1053,7 @@
 	<portlet>
 		<portlet-name>149</portlet-name>
 		<display-name>Site Templates</display-name>
-		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.layoutsetprototypes.LayoutSetPrototypePortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/layout_set_prototypes/</value>

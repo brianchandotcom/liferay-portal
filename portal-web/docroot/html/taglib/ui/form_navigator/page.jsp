@@ -27,6 +27,7 @@ String formName = GetterUtil.getString((String)request.getAttribute("liferay-ui:
 String htmlBottom = (String)request.getAttribute("liferay-ui:form-navigator:htmlBottom");
 String htmlTop = (String)request.getAttribute("liferay-ui:form-navigator:htmlTop");
 String jspPath = (String)request.getAttribute("liferay-ui:form-navigator:jspPath");
+String[] legacyCategorySections = (String[])request.getAttribute("liferay-ui:form-navigator:legacyCategorySections");
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
 
 if (Validator.isNull(backURL)) {
@@ -39,12 +40,6 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 if (Validator.isNull(backURL)) {
 	backURL = portletURL.toString();
-}
-
-String[] allSections = new String[0];
-
-for (String[] categorySection : categorySections) {
-	allSections = ArrayUtil.append(allSections, categorySection);
 }
 
 String curSection = StringPool.BLANK;

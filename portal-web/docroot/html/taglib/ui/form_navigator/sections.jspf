@@ -15,8 +15,8 @@
 --%>
 
 <%
-for (int i = 0; i < allSections.length; i++) {
-	String section = allSections[i];
+for (int i = 0; i < legacyCategorySections.length; i++) {
+	String section = legacyCategorySections[i];
 
 	String sectionId = namespace + _getSectionId(section);
 	String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";

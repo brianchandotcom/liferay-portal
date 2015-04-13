@@ -96,6 +96,20 @@ public class FormNavigatorTag extends IncludeTag {
 		_showButtons = true;
 	}
 
+	protected String[] getLegacyCategorySections() {
+		if (_categorySections == null) {
+			return new String[0];
+		}
+
+		String[] sections = new String[0];
+
+		for (String[] categorySection : _categorySections) {
+			sections = ArrayUtil.append(sections, categorySection);
+		}
+
+		return sections;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -116,6 +130,9 @@ public class FormNavigatorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:form-navigator:id", _id);
 		request.setAttribute("liferay-ui:form-navigator:htmlTop", _htmlTop);
 		request.setAttribute("liferay-ui:form-navigator:jspPath", _jspPath);
+		request.setAttribute(
+			"liferay-ui:form-navigator:legacyCategorySections",
+			getLegacyCategorySections());
 		request.setAttribute(
 			"liferay-ui:form-navigator:showButtons",
 			String.valueOf(_showButtons));

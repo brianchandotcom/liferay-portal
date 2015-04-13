@@ -2531,11 +2531,7 @@ public class ServiceBuilder {
 					newContent.substring(lastClass);
 		}
 
-		newContent = _formatXml(newContent);
-
-		if (!oldContent.equals(newContent)) {
-			writeFileRaw(xmlFile, newContent);
-		}
+		writeFileRaw(xmlFile, _formatXml(newContent));
 	}
 
 	private void _createModel(Entity entity) throws Exception {
@@ -2674,11 +2670,7 @@ public class ServiceBuilder {
 					newContent.substring(lastModel);
 		}
 
-		newContent = _formatXml(newContent);
-
-		if (!oldContent.equals(newContent)) {
-			writeFileRaw(xmlFile, newContent);
-		}
+		writeFileRaw(xmlFile, _formatXml(newContent));
 	}
 
 	private void _createModelImpl(Entity entity) throws Exception {
@@ -3010,11 +3002,7 @@ public class ServiceBuilder {
 			}
 		}
 
-		newContent = _formatXml(newContent);
-
-		if (!content.equals(newContent)) {
-			writeFileRaw(outputFile, newContent);
-		}
+		writeFileRaw(outputFile, _formatXml(newContent));
 	}
 
 	private void _createService(Entity entity, int sessionType)
@@ -3508,11 +3496,7 @@ public class ServiceBuilder {
 					newContent.substring(lastSession);
 		}
 
-		newContent = _formatXml(newContent);
-
-		if (!oldContent.equals(newContent)) {
-			writeFileRaw(xmlFile, newContent);
-		}
+		writeFileRaw(xmlFile, _formatXml(newContent));
 	}
 
 	private void _createSQLIndexes() throws Exception {

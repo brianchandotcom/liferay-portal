@@ -62,16 +62,16 @@ public class CXFEndpointPublisher {
 		org.apache.felix.dm.Component component =
 			_dependencyManager.createComponent();
 
-		CXFEndpointPublisherConfiguration configuration =
+		CXFEndpointPublisherConfiguration cxfEndpointPublisherConfiguration =
 			Configurable.createConfigurable(
 				CXFEndpointPublisherConfiguration.class, properties);
 
-		ServicesRegistrator whiteboardRegistrator = new ServicesRegistrator(
+		ServicesRegistrator servicesRegistrator = new ServicesRegistrator(
 			bundleContext, properties);
 
-		component.setImplementation(whiteboardRegistrator);
+		component.setImplementation(servicesRegistrator);
 
-		String[] extensions = configuration.extensions();
+		String[] extensions = cxfEndpointPublisherConfiguration.extensions();
 
 		if (extensions != null) {
 			for (String extension : extensions) {
@@ -79,7 +79,7 @@ public class CXFEndpointPublisher {
 					_dependencyManager.createServiceDependency();
 
 				serviceDependency.setCallbacks(
-					whiteboardRegistrator, "addExtension", "-");
+					servicesRegistrator, "addExtension", "-");
 				serviceDependency.setService(Object.class, extension);
 				serviceDependency.setRequired(true);
 
@@ -133,9 +133,13 @@ public class CXFEndpointPublisher {
 		protected void start() {
 			Dictionary<String, Object> properties = new Hashtable<>();
 
-			String contextPath = _properties.get("contextPath").toString();
+			Object contextPathObject = _properties.get("contextPath");
 
-			String contextName = contextPath.substring(1).replace("/", ".");
+			String contextPath = contextPathObject.toString();
+
+			contextPath = contextPath.substring(1);
+
+			String contextName = contextPath.replace("/", ".");
 
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,

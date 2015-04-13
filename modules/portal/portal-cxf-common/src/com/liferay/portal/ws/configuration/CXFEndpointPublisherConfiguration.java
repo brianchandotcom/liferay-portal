@@ -21,7 +21,7 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.ws.WebServicePublisherConfiguration"
+	id = "com.liferay.portal.ws.configuration.WebServicePublisherConfiguration"
 )
 public interface CXFEndpointPublisherConfiguration {
 

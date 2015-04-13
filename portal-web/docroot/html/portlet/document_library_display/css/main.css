@@ -1,13 +1,16 @@
 @import "bourbon";
 
 .portlet-document-library-display {
+	.entry-metadata .entry-title, .entry-thumbnail {
+		font-size: 1.15em;
+	}
+
 	.entry-metadata {
 		.entry-title {
 			display: block;
 
 			@include ellipsis;
 
-			font-size: 1.15em;
 			font-weight: bold;
 		}
 
@@ -40,7 +43,6 @@
 	}
 
 	.entry-thumbnail {
-		font-size: 1.15em;
 		float: left;
 		margin-right: 1em;
 		position: relative;

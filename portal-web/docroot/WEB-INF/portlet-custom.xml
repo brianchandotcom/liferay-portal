@@ -1053,14 +1053,14 @@
 	<portlet>
 		<portlet-name>149</portlet-name>
 		<display-name>Site Templates</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/layout_set_prototypes/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/layout_set_prototypes/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/layout_set_prototypes/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

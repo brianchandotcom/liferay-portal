@@ -14,12 +14,14 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
+ * @author Sergio González
  */
 public class FormNavigatorTag extends IncludeTag {
 
@@ -32,10 +34,18 @@ public class FormNavigatorTag extends IncludeTag {
 		_backURL = backURL;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setCategoryNames(String[] categoryNames) {
 		_categoryNames = categoryNames;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setCategorySections(String[][] categorySections) {
 		_categorySections = categorySections;
 	}
@@ -60,6 +70,10 @@ public class FormNavigatorTag extends IncludeTag {
 		_id = id;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setJspPath(String jspPath) {
 		_jspPath = jspPath;
 	}

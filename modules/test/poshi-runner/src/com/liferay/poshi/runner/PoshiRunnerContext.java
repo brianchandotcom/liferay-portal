@@ -328,6 +328,15 @@ public class PoshiRunnerContext {
 					String classCommandName =
 						className + "#" + commandElement.attributeValue("name");
 
+					if (Validator.isNotNull(
+							_commandElements.get(
+								classType + "#" + classCommandName))) {
+
+						throw new Exception(
+							"Duplicate command name\n" + filePath + ":" +
+								commandElement.attributeValue("line-number"));
+					}
+
 					_commandElements.put(
 						classType + "#" + classCommandName, commandElement);
 

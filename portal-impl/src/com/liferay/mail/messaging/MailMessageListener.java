@@ -44,8 +44,8 @@ public class MailMessageListener extends BaseMessageListener {
 
 		if (from == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Email from address is not configured." +
-					"Email is not sent.");
+				_log.warn(
+					"Email from address is not configured email is not sent.");
 			}
 
 			return;
@@ -151,6 +151,6 @@ public class MailMessageListener extends BaseMessageListener {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-			MailMessageListener.class);
+		MailMessageListener.class);
 
 }

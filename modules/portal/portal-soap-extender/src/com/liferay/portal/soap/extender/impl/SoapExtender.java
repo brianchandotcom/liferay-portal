@@ -89,18 +89,23 @@ public class SoapExtender {
 	}
 
 	protected void addBusDependencies() {
-		String[] contextPathStrings =
-			getSoapExtenderConfiguration().contextPaths();
+		SoapExtenderConfiguration soapExtenderConfiguration =
+			getSoapExtenderConfiguration();
 
-		if (contextPathStrings != null) {
-			for (String contextPath : contextPathStrings) {
-				String contextPathFilterString =
-					"(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
-						"=" + contextPath + ")";
-				addTCCLDependency(
-					true, Bus.class, contextPathFilterString, "addBus",
-					"removeBus");
-			}
+		String[] contextPaths = soapExtenderConfiguration.contextPaths();
+
+		if (contextPaths == null) {
+			return;
+		}
+
+		for (String contextPath : contextPaths) {
+			String contextPathFilterString =
+				"(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
+					"=" + contextPath + ")";
+
+			addTCCLDependency(
+				true, Bus.class, contextPathFilterString, "addBus",
+				"removeBus");
 		}
 	}
 
@@ -108,14 +113,16 @@ public class SoapExtender {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
-		String[] handlersFilters = soapExtenderConfiguration.handlers();
+		String[] handlers = soapExtenderConfiguration.handlers();
 
-		if (handlersFilters != null) {
-			for (String handlerFilter : handlersFilters) {
-				addTCCLDependency(
-					false, Handler.class, handlerFilter, "addHandler",
-					"removeHandler");
-			}
+		if (handlers == null) {
+			return;
+		}
+
+		for (String handlerFilter : handlers) {
+			addTCCLDependency(
+				false, Handler.class, handlerFilter, "addHandler",
+				"removeHandler");
 		}
 	}
 
@@ -125,11 +132,13 @@ public class SoapExtender {
 
 		String[] serviceFilters = soapExtenderConfiguration.serviceFilters();
 
-		if (serviceFilters != null) {
-			for (String serviceFilter : serviceFilters) {
-				addTCCLDependency(
-					false, null, serviceFilter, "addService", "removeService");
-			}
+		if (serviceFilters == null) {
+			return;
+		}
+
+		for (String serviceFilter : serviceFilters) {
+			addTCCLDependency(
+				false, null, serviceFilter, "addService", "removeService");
 		}
 	}
 

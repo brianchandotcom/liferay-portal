@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.model.impl;
+package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.Portlet;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -39,8 +38,6 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.PortletMode;
 
@@ -231,7 +228,7 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			return false;
 		}
 
-		if (!PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
+		if (!_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
 			return true;
 		}
 
@@ -394,6 +391,11 @@ public class DefaultLayoutTypeAccessPolicyImpl
 
 		return false;
 	}
+
+	private static final boolean _PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED));
 
 	private static final LayoutTypeAccessPolicy _instance =
 		new DefaultLayoutTypeAccessPolicyImpl();

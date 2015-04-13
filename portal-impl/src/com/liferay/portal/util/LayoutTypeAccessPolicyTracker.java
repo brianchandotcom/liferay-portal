@@ -14,9 +14,9 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.model.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;

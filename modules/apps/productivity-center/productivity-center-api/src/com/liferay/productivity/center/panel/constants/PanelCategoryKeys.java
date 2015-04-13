@@ -12,13 +12,19 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel;
+package com.liferay.productivity.center.panel.constants;
+
+import com.liferay.portal.util.PortletCategoryKeys;
 
 /**
  * @author Adolfo Pérez
  */
-public interface PanelCategory extends PanelEntry {
+public interface PanelCategoryKeys {
 
-	public String getIconCssClass();
+	public static final String MY = PortletCategoryKeys.MY;
+
+	public static final String ROOT = "root";
+
+	public static final String USER_PERSONAL_PANEL = "user_personal_panel";
 
 }

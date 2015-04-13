@@ -12,25 +12,49 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel;
+package com.liferay.productivity.center.service.panel;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.productivity.center.panel.PanelCategory;
+import com.liferay.productivity.center.panel.constants.PanelCategoryKeys;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
  */
-public interface PanelEntry {
+@Component(
+	immediate = true, property = {"panel.category=" + PanelCategoryKeys.ROOT},
+	service = PanelCategory.class
+)
+public class UserPersonalPanelCategory implements PanelCategory {
 
-	public String getKey();
+	@Override
+	public String getIconCssClass() {
+		return StringPool.BLANK;
+	}
 
-	public String getLabel(Locale locale);
+	@Override
+	public String getKey() {
+		return PanelCategoryKeys.USER_PERSONAL_PANEL;
+	}
 
+	@Override
+	public String getLabel(Locale locale) {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
-		throws PortalException;
+		throws PortalException {
+
+		return true;
+	}
 
 }

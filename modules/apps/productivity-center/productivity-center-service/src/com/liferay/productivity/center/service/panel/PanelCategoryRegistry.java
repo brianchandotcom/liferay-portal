@@ -14,16 +14,18 @@
 
 package com.liferay.productivity.center.service.panel;
 
+import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.productivity.center.panel.PanelCategory;
-import com.liferay.productivity.center.service.util.PanelEntryServiceReferenceMapper;
+import com.liferay.productivity.center.service.util.ParentPanelCategoryServiceReferenceMapper;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -35,10 +37,11 @@ import org.osgi.service.component.annotations.Deactivate;
 public class PanelCategoryRegistry {
 
 	public Iterable<PanelCategory> getPanelCategories(
-		PanelCategory panelCategory) {
+		PanelCategory parentPanelCategory) {
 
-		Iterable<PanelCategory> panelCategories = _serviceTrackerMap.getService(
-			panelCategory.getKey());
+		Iterable<PanelCategory> panelCategories =
+			_childPanelCategoryServiceTrackerMap.getService(
+				parentPanelCategory.getKey());
 
 		if (panelCategories == null) {
 			return Collections.emptyList();
@@ -47,22 +50,64 @@ public class PanelCategoryRegistry {
 		return panelCategories;
 	}
 
+	public PanelCategory getPanelCategory(String panelCategoryKey) {
+		PanelCategory panelCategory =
+			_panelCategoryServiceTrackerMap.getService(panelCategoryKey);
+
+		if (panelCategory == null) {
+			throw new IllegalArgumentException(
+				"No panel category found with key " + panelCategoryKey);
+		}
+
+		return panelCategory;
+	}
+
 	@Activate
-	protected void activate(BundleContext bundleContext)
+	protected void activate(final BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
-			bundleContext, PanelCategory.class, "(panel.category=*)",
-			PanelEntryServiceReferenceMapper.<PanelCategory>create());
+		_childPanelCategoryServiceTrackerMap =
+			ServiceTrackerMapFactory.multiValueMap(
+				bundleContext, PanelCategory.class, "(panel.category=*)",
+			ParentPanelCategoryServiceReferenceMapper.<PanelCategory>create());
 
-		_serviceTrackerMap.open();
+		_childPanelCategoryServiceTrackerMap.open();
+
+		_panelCategoryServiceTrackerMap =
+			ServiceTrackerMapFactory.singleValueMap(
+				bundleContext, PanelCategory.class, null,
+				new ServiceReferenceMapper<String, PanelCategory>() {
+
+					@Override
+					public void map(
+						ServiceReference<PanelCategory> serviceReference,
+						Emitter<String> emitter) {
+
+						PanelCategory panelCategory = bundleContext.getService(
+							serviceReference);
+
+						try {
+							emitter.emit(panelCategory.getKey());
+						}
+						finally {
+							bundleContext.ungetService(serviceReference);
+						}
+					}
+
+				});
+
+		_panelCategoryServiceTrackerMap.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_childPanelCategoryServiceTrackerMap.close();
+		_panelCategoryServiceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, List<PanelCategory>> _serviceTrackerMap;
+	private ServiceTrackerMap<String, List<PanelCategory>>
+		_childPanelCategoryServiceTrackerMap;
+	private ServiceTrackerMap<String, PanelCategory>
+		_panelCategoryServiceTrackerMap;
 
 }

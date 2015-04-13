@@ -33,6 +33,8 @@ else {
 
 	if (group.isLayoutSetPrototype()) {
 		layoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(group.getClassPK());
+
+		layoutSetPrototypeId = layoutSetPrototype.getLayoutSetPrototypeId();
 	}
 }
 

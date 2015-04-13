@@ -49,8 +49,7 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 
 			@Override
 			public QName getEndpointName() {
-				Object soapEndpointName = properties.get(
-					"soap.endpoint.name");
+				Object soapEndpointName = properties.get("soap.endpoint.name");
 
 				if ((soapEndpointName != null) &&
 					soapEndpointName instanceof QName) {
@@ -65,8 +64,7 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 
 			@Override
 			public Class<?> getServiceClass() {
-				Object soapServiceClass = properties.get(
-					"soap.service.class");
+				Object soapServiceClass = properties.get("soap.service.class");
 
 				if ((soapServiceClass != null) &&
 					soapServiceClass instanceof Class<?>) {
@@ -79,8 +77,7 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 
 			@Override
 			public String getWsdlLocation() {
-				Object soapWsdlLocation = properties.get(
-					"soap.wsdl.location");
+				Object soapWsdlLocation = properties.get("soap.wsdl.location");
 
 				if (soapWsdlLocation != null) {
 					return soapWsdlLocation.toString();

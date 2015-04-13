@@ -59,6 +59,35 @@ public class SoapExtender {
 		return _soapExtenderConfiguration;
 	}
 
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_soapExtenderConfiguration = Configurable.createConfigurable(
+			SoapExtenderConfiguration.class, properties);
+
+		_dependencyManager = new TCCLDependencyManager(bundleContext);
+
+		_component = _dependencyManager.createComponent();
+
+		CXFJaxWSServiceRegistrator jaxwsServiceRegistrator =
+			new CXFJaxWSServiceRegistrator();
+
+		jaxwsServiceRegistrator.setSoapDescriptorBuilder(
+			_soapDescriptorBuilder);
+
+		_component.setImplementation(jaxwsServiceRegistrator);
+
+		addBusDependencies();
+		addHandlerDependencies();
+		addServiceDependencies();
+		addSoapDescriptorBuilderDependency();
+
+		_dependencyManager.add(_component);
+
+		_component.start();
+	}
+
 	protected void addBusDependencies() {
 		String[] contextPathStrings =
 			getSoapExtenderConfiguration().contextPaths();
@@ -143,35 +172,6 @@ public class SoapExtender {
 		_component.add(serviceDependency);
 
 		return serviceDependency;
-	}
-
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_soapExtenderConfiguration = Configurable.createConfigurable(
-			SoapExtenderConfiguration.class, properties);
-
-		_dependencyManager = new TCCLDependencyManager(bundleContext);
-
-		_component = _dependencyManager.createComponent();
-
-		CXFJaxWSServiceRegistrator jaxwsServiceRegistrator =
-			new CXFJaxWSServiceRegistrator();
-
-		jaxwsServiceRegistrator.setSoapDescriptorBuilder(
-			_soapDescriptorBuilder);
-
-		_component.setImplementation(jaxwsServiceRegistrator);
-
-		addBusDependencies();
-		addHandlerDependencies();
-		addServiceDependencies();
-		addSoapDescriptorBuilderDependency();
-
-		_dependencyManager.add(_component);
-
-		_component.start();
 	}
 
 	@Deactivate

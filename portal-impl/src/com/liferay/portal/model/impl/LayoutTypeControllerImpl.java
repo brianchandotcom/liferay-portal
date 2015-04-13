@@ -85,11 +85,6 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	}
 
 	@Override
-	public String getEditPage() {
-		return StrutsUtil.TEXT_HTML_DIR + _editPage;
-	}
-
-	@Override
 	public String getURL() {
 		return _url;
 	}
@@ -212,6 +207,10 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 		catch (SystemException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	protected String getEditPage() {
+		return StrutsUtil.TEXT_HTML_DIR + _editPage;
 	}
 
 	private final String[] _configurationActionDelete;

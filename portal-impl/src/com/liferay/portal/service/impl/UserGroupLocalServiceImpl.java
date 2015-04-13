@@ -370,7 +370,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Users
 
-		clearUserUserGroups(userGroup.getUserGroupId());
+		clearUserUserGroups(userGroup.getUserId());
 
 		// Group
 

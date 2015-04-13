@@ -40,7 +40,7 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 
 		try {
 			_cxfConfiguration = configurationAdmin.createFactoryConfiguration(
-				"com.liferay.portal.ws.WebServicePublisherConfiguration", null);
+				_WEB_SERVICE_PUBLISHER_CONFIGURATION, null);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -49,8 +49,7 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 			_cxfConfiguration.update(properties);
 
 			_soapConfiguration = configurationAdmin.createFactoryConfiguration(
-				"com.liferay.portal.soap.extender.SoapExtenderConfiguration",
-				null);
+				_SOAP_EXTENDER_CONFIGURATION, null);
 
 			properties = new Hashtable<>();
 
@@ -76,7 +75,7 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext context) {
+	public void stop(BundleContext bundleContext) {
 		try {
 			_jaxwsApiConfiguration.delete();
 		}
@@ -95,6 +94,13 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 		catch (Exception e) {
 		}
 	}
+
+	private static final String _SOAP_EXTENDER_CONFIGURATION =
+		"com.liferay.portal.soap.extender.configuration." +
+			"SoapExtenderConfiguration";
+
+	private static final String _WEB_SERVICE_PUBLISHER_CONFIGURATION =
+		"com.liferay.portal.ws.configuration.WebServicePublisherConfiguration";
 
 	private Configuration _cxfConfiguration;
 	private Configuration _jaxwsApiConfiguration;

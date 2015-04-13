@@ -201,12 +201,14 @@ public class FormNavigatorTag extends IncludeTag {
 			getCategorySectionLabels());
 		request.setAttribute(
 			"liferay-ui:form-navigator:displayStyle", _displayStyle);
-		request.setAttribute("liferay-ui:form-navigator:formName", _formName);
 		request.setAttribute(
-			"liferay-ui:form-navigator:htmlBottom", _htmlBottom);
+			"liferay-ui:form-navigator:formModelBean", _formModelBean);
+		request.setAttribute("liferay-ui:form-navigator:formName", _formName);
 		request.setAttribute("liferay-ui:form-navigator:id", _id);
 		request.setAttribute("liferay-ui:form-navigator:htmlTop", _htmlTop);
 		request.setAttribute("liferay-ui:form-navigator:jspPath", _jspPath);
+		request.setAttribute(
+			"liferay-ui:form-navigator:htmlBottom", _htmlBottom);
 		request.setAttribute(
 			"liferay-ui:form-navigator:legacyCategorySections",
 			getLegacyCategorySections());

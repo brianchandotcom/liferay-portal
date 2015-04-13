@@ -281,8 +281,10 @@ if (selUser != null) {
 		backURL="<%= backURL %>"
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
+		formModelBean="<%= selUser %>"
 		htmlBottom="<%= htmlBottom %>"
 		htmlTop="<%= htmlTop %>"
+		id="users.form"
 		jspPath="/html/portlet/users_admin/user/"
 	/>
 </aui:form>

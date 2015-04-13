@@ -209,6 +209,8 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 		backURL="<%= backURL %>"
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
+		formModelBean="<%= group %>"
+		id="sites.form"
 		jspPath="/html/portlet/sites_admin/site/"
 		showButtons="<%= true %>"
 	/>

@@ -42,7 +42,7 @@ for (int i = 0; i < legacyCategorySections.length; i++) {
 <%
 }
 
-List<FormNavigatorEntry> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, request);
+List<FormNavigatorEntry> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
 
 for (int i = 0; i < formNavigatorEntries.size(); i++) {
 	FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(i);

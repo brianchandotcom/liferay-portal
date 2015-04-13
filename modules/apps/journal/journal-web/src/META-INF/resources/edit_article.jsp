@@ -276,9 +276,11 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 				<liferay-ui:form-navigator
 					categoryNames="<%= _CATEGORY_NAMES %>"
 					categorySections="<%= categorySections %>"
+					formModelBean="<%= article %>"
 					formName="fm1"
 					htmlBottom="<%= htmlBottom %>"
 					htmlTop="<%= htmlTop %>"
+					id="journal.article.form"
 					jspPath="/article/"
 					showButtons="<%= false %>"
 				/>

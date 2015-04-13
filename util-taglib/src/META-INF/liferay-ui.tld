@@ -1568,6 +1568,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Unique identifier for this navigator. This id will be referenced to include sections and categories in this navigator.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A path to the <![CDATA[<code>formSection.jsp</code>]]> file's folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
 			<name>jspPath</name>
 			<required>false</required>

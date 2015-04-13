@@ -56,6 +56,10 @@ public class FormNavigatorTag extends IncludeTag {
 		_htmlTop = htmlTop;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setJspPath(String jspPath) {
 		_jspPath = jspPath;
 	}
@@ -73,6 +77,7 @@ public class FormNavigatorTag extends IncludeTag {
 		_formName = "fm";
 		_htmlBottom = null;
 		_htmlTop = null;
+		_id = null;
 		_jspPath = null;
 		_showButtons = true;
 	}
@@ -94,6 +99,7 @@ public class FormNavigatorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:form-navigator:formName", _formName);
 		request.setAttribute(
 			"liferay-ui:form-navigator:htmlBottom", _htmlBottom);
+		request.setAttribute("liferay-ui:form-navigator:id", _id);
 		request.setAttribute("liferay-ui:form-navigator:htmlTop", _htmlTop);
 		request.setAttribute("liferay-ui:form-navigator:jspPath", _jspPath);
 		request.setAttribute(
@@ -111,6 +117,7 @@ public class FormNavigatorTag extends IncludeTag {
 	private String _formName = "fm";
 	private String _htmlBottom;
 	private String _htmlTop;
+	private String _id;
 	private String _jspPath;
 	private boolean _showButtons = true;
 

@@ -281,7 +281,7 @@
 		<execute macro="SOProfile#editPhoneNumbersNull" />
 	</command>
 
-	<command known-issues="SOS-2463" name="EditProfilePicture" priority="5">
+	<command name="EditProfilePicture" priority="5">
 		<var name="imageFileName" value="Document_4.jpg" />
 		<var name="imageFileNameEdit" value="Document_3.jpg" />
 		<var name="userName" value="${userName}" />

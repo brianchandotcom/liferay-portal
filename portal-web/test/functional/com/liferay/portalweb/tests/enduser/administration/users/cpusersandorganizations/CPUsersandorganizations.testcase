@@ -1500,7 +1500,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-47829" name="DeleteOrganization" priority="5">
+	<command name="DeleteOrganization" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 
@@ -1758,7 +1758,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49812" name="ErrorAddUserScreenNameNumberSiteId" priority="5">
+	<command name="ErrorAddUserScreenNameNumberSiteId" priority="5">
 		<var name="siteID" value="${siteID}" />
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />

@@ -1016,7 +1016,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-45435" name="ViewRemoveWikiFrontPageChildPageViewPermissionActivities" priority="4">
+	<command name="ViewRemoveWikiFrontPageChildPageViewPermissionActivities" priority="4">
 		<var name="pageName" value="Wiki" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />

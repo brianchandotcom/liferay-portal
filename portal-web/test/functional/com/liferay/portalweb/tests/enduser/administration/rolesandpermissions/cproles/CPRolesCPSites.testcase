@@ -20,7 +20,7 @@
 		<execute macro="PortalSettings#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-41293" name="AddSiteRegRole" priority="5">
+	<command name="AddSiteRegRole" priority="5">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_SITE_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add Site" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />

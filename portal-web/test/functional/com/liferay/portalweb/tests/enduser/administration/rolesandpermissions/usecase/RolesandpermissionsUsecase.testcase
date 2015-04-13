@@ -500,7 +500,7 @@
 		<execute function="AssertTextNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="Guest" />
 	</command>
 
-	<command known-issues="LPS-48551" name="RolesOrganizationSearch" priority="4">
+	<command name="RolesOrganizationSearch" priority="4">
 		<var name="searchAssetTitle" value="Test Document" />
 
 		<execute macro="Page#gotoCP">
@@ -1125,7 +1125,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-48551" name="RolesSiteSearch" priority="4">
+	<command name="RolesSiteSearch" priority="4">
 		<var name="searchAssetTitle" value="Test Document" />
 
 		<execute macro="Page#gotoCP">

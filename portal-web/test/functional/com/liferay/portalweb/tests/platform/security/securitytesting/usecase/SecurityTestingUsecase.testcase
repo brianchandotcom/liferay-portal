@@ -84,7 +84,7 @@
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Test" />
 	</command>
 
-	<command known-issues="LPS-44790" name="ViewExternalWebappsPG" priority="5">
+	<command name="ViewExternalWebappsPG" priority="5">
 		<property name="portlet.plugins.includes" value="opensocial-portlet" />
 
 		<execute macro="Page#addPG">

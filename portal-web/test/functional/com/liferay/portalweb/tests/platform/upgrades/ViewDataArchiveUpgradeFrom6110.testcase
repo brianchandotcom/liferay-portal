@@ -5,7 +5,7 @@
 	<property name="portal.version" value="6.1.10" />
 	<property name="testray.main.component.name" value="Upgrades" />
 
-	<command known-issues="LPS-48380" name="ViewExportedLARSite" priority="4">
+	<command name="ViewExportedLARSite" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="AP Import Site B" />

@@ -514,7 +514,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-48125" name="SearchBlogsEntryTag" priority="5">
+	<command name="SearchBlogsEntryTag" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>

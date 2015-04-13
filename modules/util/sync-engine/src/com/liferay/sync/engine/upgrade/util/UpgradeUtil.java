@@ -78,7 +78,7 @@ public class UpgradeUtil {
 
 			return;
 		}
-		else if (buildNumber == ReleaseInfo.getBuildNumber()) {
+		else if (buildNumber >= ReleaseInfo.getBuildNumber()) {
 			return;
 		}
 

@@ -71,9 +71,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SyncEngine {
 
-	public static synchronized void cancelSyncAccountTasks(long syncAccountId)
-		throws Exception {
-
+	public static synchronized void cancelSyncAccountTasks(long syncAccountId) {
 		if (!_running) {
 			return;
 		}

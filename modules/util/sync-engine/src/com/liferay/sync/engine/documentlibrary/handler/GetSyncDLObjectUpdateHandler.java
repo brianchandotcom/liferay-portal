@@ -540,7 +540,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		sourceSyncFile.setLockUserName(targetSyncFile.getLockUserName());
 		sourceSyncFile.setModifiedTime(targetSyncFile.getModifiedTime());
 		sourceSyncFile.setSize(targetSyncFile.getSize());
-		sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_UPDATED_REMOTE);
 		sourceSyncFile.setVersion(targetSyncFile.getVersion());
 		sourceSyncFile.setVersionId(targetSyncFile.getVersionId());
 
@@ -555,6 +554,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				Files.createDirectories(targetFilePath);
 
 				sourceSyncFile.setState(SyncFile.STATE_SYNCED);
+				sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_UPDATED_REMOTE);
 
 				SyncFileService.update(sourceSyncFile);
 
@@ -575,6 +575,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		}
 		else {
 			sourceSyncFile.setState(SyncFile.STATE_SYNCED);
+			sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_RENAMED_REMOTE);
 
 			SyncFileService.update(sourceSyncFile);
 		}

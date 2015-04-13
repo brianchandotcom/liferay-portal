@@ -71,7 +71,21 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.QueryPreProcessConfiguration" class="com.liferay.portal.search.QueryPreProcessConfigurationImpl">
-		<property name="analyzer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
+		<property name="fieldNames">
+			<util:set>
+				<value>assetCategoryTitles?(_.+)?</value>
+				<value>assetTagNames</value>
+				<value>emailAddress</value>
+				<value>firstName</value>
+				<value>lastName</value>
+				<value>license</value>
+				<value>path</value>
+				<value>screenName</value>
+				<value>tag</value>
+				<value>treePath</value>
+				<value>userName</value>
+			</util:set>
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.SearchEngineUtil" class="com.liferay.portal.kernel.search.SearchEngineUtil">
 		<property name="excludedEntryClassNames">

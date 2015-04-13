@@ -26,6 +26,9 @@ import org.elasticsearch.index.query.QueryBuilders;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author André de Oliveira
@@ -34,13 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = TermQueryTranslator.class)
 public class TermQueryTranslatorImpl implements TermQueryTranslator {
 
-	@Reference
-	public void setQueryPreProcessConfiguration(
-		QueryPreProcessConfiguration queryPreProcessConfiguration) {
-
-		_queryPreProcessConfiguration = queryPreProcessConfiguration;
-	}
-
 	@Override
 	public QueryBuilder translate(TermQuery termQuery) {
 		QueryTerm queryTerm = termQuery.getQueryTerm();
@@ -48,11 +44,30 @@ public class TermQueryTranslatorImpl implements TermQueryTranslator {
 		String field = queryTerm.getField();
 		String value = queryTerm.getValue();
 
-		if (_queryPreProcessConfiguration.isSubstringSearchAlways(field)) {
+		if ((_queryPreProcessConfiguration != null) &&
+			_queryPreProcessConfiguration.isSubstringSearchAlways(field)) {
+
 			return _toCaseInsensitiveSubstringQuery(field, value);
 		}
 
 		return QueryBuilders.matchQuery(field, value);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setQueryPreProcessConfiguration(
+		QueryPreProcessConfiguration queryPreProcessConfiguration) {
+
+		_queryPreProcessConfiguration = queryPreProcessConfiguration;
+	}
+
+	protected void unsetQueryPreProcessConfiguration(
+		QueryPreProcessConfiguration queryPreProcessConfiguration) {
+
+		_queryPreProcessConfiguration = null;
 	}
 
 	private QueryBuilder _toCaseInsensitiveSubstringQuery(

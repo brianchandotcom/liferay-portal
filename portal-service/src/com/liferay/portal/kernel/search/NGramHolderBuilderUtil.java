@@ -45,6 +45,10 @@ public class NGramHolderBuilderUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			NGramHolderBuilderUtil.class);
 
+		if (_nGramHolderBuilder == null) {
+			return _defaultNGramHolderBuilder;
+		}
+
 		return _nGramHolderBuilder;
 	}
 
@@ -54,6 +58,8 @@ public class NGramHolderBuilderUtil {
 		_nGramHolderBuilder = nGramHolderBuilder;
 	}
 
+	private static final NGramHolderBuilder _defaultNGramHolderBuilder =
+		new NullNGramHolderBuilder();
 	private static NGramHolderBuilder _nGramHolderBuilder;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.util.OSDetector;
+import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.util.Arrays;
@@ -30,23 +32,45 @@ import org.dom4j.Element;
  */
 public class PoshiRunnerValidation {
 
-	public static void validate(Element element, String filePath)
-		throws PoshiRunnerException {
+	public static void validate() throws PoshiRunnerException {
+		String[] filePathsArray = PoshiRunnerContext.getFilePathsArray();
 
-		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
-			filePath);
+		for (String filePath : filePathsArray) {
+			filePath = _BASE_DIR + "/" + filePath;
 
-		if (classType.equals("function")) {
-			_validateFunctionFile(element, filePath);
-		}
-		else if (classType.equals("macro")) {
-			_validateMacroFile(element, filePath);
-		}
-		else if (classType.equals("path")) {
-			_validatePathFile(element, filePath);
-		}
-		else if (classType.equals("testcase")) {
-			_validateTestcaseFile(element, filePath);
+			if (OSDetector.isWindows()) {
+				filePath = filePath.replace("/", "\\");
+			}
+
+			String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
+				filePath);
+			String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
+				filePath);
+
+			if (classType.equals("function")) {
+				Element element = PoshiRunnerContext.getFunctionRootElement(
+					className);
+
+				_validateFunctionFile(element, filePath);
+			}
+			else if (classType.equals("macro")) {
+				Element element = PoshiRunnerContext.getMacroRootElement(
+					className);
+
+				_validateMacroFile(element, filePath);
+			}
+			else if (classType.equals("path")) {
+				Element element = PoshiRunnerContext.getPathRootElement(
+					className);
+
+				_validatePathFile(element, filePath);
+			}
+			else if (classType.equals("testcase")) {
+				Element element = PoshiRunnerContext.getTestcaseRootElement(
+					className);
+
+				_validateTestcaseFile(element, filePath);
+			}
 		}
 	}
 
@@ -373,5 +397,8 @@ public class PoshiRunnerValidation {
 		_validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
 	}
+
+	private static final String _BASE_DIR =
+		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
 
 }

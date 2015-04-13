@@ -91,6 +91,10 @@ public class PoshiRunnerContext {
 		return _filePaths.get(fileName);
 	}
 
+	public static String[] getFilePathsArray() {
+		return _filePathsArray;
+	}
+
 	public static Element getFunctionCommandElement(String classCommandName) {
 		return _commandElements.get("function#" + classCommandName);
 	}
@@ -121,6 +125,10 @@ public class PoshiRunnerContext {
 
 	public static String getPathLocator(String pathLocatorKey) {
 		return _pathLocators.get(pathLocatorKey);
+	}
+
+	public static Element getPathRootElement(String className) {
+		return _rootElements.get("path#" + className);
 	}
 
 	public static Map<String, Element> getRootElementsMap() {
@@ -206,6 +214,8 @@ public class PoshiRunnerContext {
 
 		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
 			filePath);
+
+		_rootElements.put("path#" + className, rootElement);
 
 		Element bodyElement = rootElement.element("body");
 

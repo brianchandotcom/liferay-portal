@@ -76,6 +76,9 @@ public class PoshiRunnerValidation {
 			else if (elementName.equals("execute")) {
 				_validateExecuteElement(childElement, filePath);
 			}
+			else if (elementName.equals("for")) {
+				_validateForElement(childElement, filePath);
+			}
 		}
 	}
 
@@ -202,6 +205,18 @@ public class PoshiRunnerValidation {
 						element.attributeValue("line-number"));
 			}
 		}
+	}
+
+	private static void _validateForElement(Element element, String filePath)
+		throws PoshiRunnerException {
+
+		List<String> possibleAttributeNames = Arrays.asList(
+			"line-number", "list", "param");
+
+		_validatePossibleAttributeNames(
+			element, possibleAttributeNames, filePath);
+
+		_parseElements(element, filePath);
 	}
 
 	private static void _validateFunctionFile(Element element, String filePath)

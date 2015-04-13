@@ -14,7 +14,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.values.query.impl.parser;
+package com.liferay.dynamic.data.mapping.form.values.query.internal.parser;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -25,9 +25,6 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-/**
- * @author Brian Wing Shun Chan
- */
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class DDMFormValuesQueryParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.3", RuntimeMetaData.VERSION); }

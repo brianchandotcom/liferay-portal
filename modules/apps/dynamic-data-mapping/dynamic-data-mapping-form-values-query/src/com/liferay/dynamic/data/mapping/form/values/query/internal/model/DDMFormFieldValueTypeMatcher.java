@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.values.query.impl.model;
+package com.liferay.dynamic.data.mapping.form.values.query.internal.model;
 
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 /**
  * @author Pablo Carvalho
  */
-public class DDMFormFieldValueNameMatcher implements DDMFormFieldValueMatcher {
+public class DDMFormFieldValueTypeMatcher implements DDMFormFieldValueMatcher {
 
 	@Override
 	public boolean matches(DDMFormFieldValue ddmFormFieldValue) {
-		return _name.equals(ddmFormFieldValue.getName());
+		return _type.equals(ddmFormFieldValue.getType());
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setType(String type) {
+		_type = type;
 	}
 
-	public String _name;
+	private String _type;
 
 }

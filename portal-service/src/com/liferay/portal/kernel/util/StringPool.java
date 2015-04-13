@@ -76,6 +76,8 @@ public class StringPool {
 
 	public static final String DOUBLE_DASH = "--";
 
+	public static final String DOUBLE_DOLLAR = "$$";
+
 	public static final String DOUBLE_OPEN_BRACKET = "[[";
 
 	public static final String DOUBLE_OPEN_CURLY_BRACE = "{{";

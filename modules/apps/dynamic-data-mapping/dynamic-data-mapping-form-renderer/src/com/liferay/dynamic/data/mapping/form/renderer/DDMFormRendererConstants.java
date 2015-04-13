@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.util.StringPool;
 public class DDMFormRendererConstants {
 
 	public static final String DDM_FORM_FIELD_LANGUAGE_ID_SEPARATOR =
-		StringPool.DOUBLE_UNDERLINE;
+		StringPool.DOUBLE_DOLLAR;
 
-	public static final String DDM_FORM_FIELD_NAME_PREFIX = "ddm__";
+	public static final String DDM_FORM_FIELD_NAME_PREFIX = "ddm$$";
 
 	public static final String DDM_FORM_FIELD_PARTS_SEPARATOR =
-		StringPool.UNDERLINE;
+		StringPool.DOLLAR;
 
 	public static final String DDM_FORM_FIELDS_SEPARATOR = StringPool.POUND;
 

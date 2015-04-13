@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.values.factory.impl;
+package com.liferay.dynamic.data.mapping.form.values.factory.internal;
 
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -139,13 +140,13 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		if (Validator.isNotNull(parentDefaultDDMFormFieldParameterName)) {
 			sb.append(parentDefaultDDMFormFieldParameterName);
-			sb.append(StringPool.POUND);
+			sb.append(DDMFormRendererConstants.DDM_FORM_FIELDS_SEPARATOR);
 		}
 
 		sb.append(ddmFormField.getName());
-		sb.append(StringPool.UNDERLINE);
+		sb.append(DDMFormRendererConstants.DDM_FORM_FIELD_PARTS_SEPARATOR);
 		sb.append(StringUtil.randomString());
-		sb.append(StringPool.UNDERLINE);
+		sb.append(DDMFormRendererConstants.DDM_FORM_FIELD_PARTS_SEPARATOR);
 		sb.append(0);
 
 		return sb.toString();
@@ -165,12 +166,13 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 	protected String extractPrefix(String ddmFormFieldParameterName) {
 		return StringUtil.extractLast(
-			ddmFormFieldParameterName, _DDM_FORM_FIELD_PREFIX);
+			ddmFormFieldParameterName,
+			DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX);
 	}
 
 	protected String extractSuffix(String ddmFormFieldParameterName) {
 		int pos = ddmFormFieldParameterName.lastIndexOf(
-			StringPool.DOUBLE_UNDERLINE);
+			DDMFormRendererConstants.DDM_FORM_FIELD_LANGUAGE_ID_SEPARATOR);
 
 		return ddmFormFieldParameterName.substring(0, pos);
 	}
@@ -235,13 +237,15 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		ddmFormFieldParameterNames.add(ddmFormFieldParameterName);
 
-		int pos = ddmFormFieldParameterName.indexOf(StringPool.POUND);
+		int pos = ddmFormFieldParameterName.indexOf(
+			DDMFormRendererConstants.DDM_FORM_FIELDS_SEPARATOR);
 
 		while (pos != -1) {
 			ddmFormFieldParameterNames.add(
 				ddmFormFieldParameterName.substring(0, pos));
 
-			pos = ddmFormFieldParameterName.indexOf(StringPool.POUND, pos + 1);
+			pos = ddmFormFieldParameterName.indexOf(
+				DDMFormRendererConstants.DDM_FORM_FIELDS_SEPARATOR, pos + 1);
 		}
 
 		return ddmFormFieldParameterNames;
@@ -253,9 +257,10 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(_DDM_FORM_FIELD_PREFIX);
+		sb.append(DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX);
 		sb.append(ddmFormFieldParameterName);
-		sb.append(StringPool.DOUBLE_UNDERLINE);
+		sb.append(
+			DDMFormRendererConstants.DDM_FORM_FIELD_LANGUAGE_ID_SEPARATOR);
 		sb.append(LocaleUtil.toLanguageId(locale));
 
 		return ParamUtil.getString(
@@ -332,7 +337,9 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			return StringPool.BLANK;
 		}
 
-		return parentEntryKey.concat(StringPool.POUND).concat(fieldNameFilter);
+		return parentEntryKey.concat(
+			DDMFormRendererConstants.DDM_FORM_FIELDS_SEPARATOR).concat(
+				fieldNameFilter);
 	}
 
 	protected Set<String> getEntryKeys(
@@ -382,7 +389,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		String ddmFormFieldParameterName) {
 
 		String lastDDMFormFieldParameterName = StringUtil.extractLast(
-			ddmFormFieldParameterName, StringPool.POUND);
+			ddmFormFieldParameterName,
+			DDMFormRendererConstants.DDM_FORM_FIELDS_SEPARATOR);
 
 		if (lastDDMFormFieldParameterName == null) {
 			return ddmFormFieldParameterName;
@@ -398,11 +406,13 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			ddmFormFieldParameterName);
 
 		return StringUtil.split(
-			lastDDMFormFieldParameterName, StringPool.UNDERLINE);
+			lastDDMFormFieldParameterName, StringPool.DOLLAR);
 	}
 
 	protected boolean isDDMFormFieldParameter(String parameterName) {
-		if (parameterName.startsWith(_DDM_FORM_FIELD_PREFIX)) {
+		if (parameterName.startsWith(
+				DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX)) {
+
 			return true;
 		}
 
@@ -547,7 +557,5 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	private static final int _DDM_FORM_FIELD_INSTANCE_ID_INDEX = 1;
 
 	private static final int _DDM_FORM_FIELD_NAME_INDEX = 0;
-
-	private static final String _DDM_FORM_FIELD_PREFIX = "ddm__";
 
 }

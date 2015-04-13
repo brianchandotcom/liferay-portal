@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.renderer.impl;
+package com.liferay.dynamic.data.mapping.form.renderer;
 
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.internal.DDMFormRendererHelper;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -140,14 +138,29 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		DDMForm ddmForm = new DDMForm();
 
 		DDMFormField nameDDMFormField = new DDMFormField("Name", "text");
-		DDMFormField phoneDDMFormField = new DDMFormField("Phone", "text");
-		DDMFormField extDDMFormField = new DDMFormField("Ext", "text");
 
-		phoneDDMFormField.addNestedDDMFormField(extDDMFormField);
+		DDMFormField phoneDDMFormField = new DDMFormField("Phone", "text");
+
+		phoneDDMFormField.addNestedDDMFormField(
+			new DDMFormField("Ext", "text"));
 
 		nameDDMFormField.addNestedDDMFormField(phoneDDMFormField);
 
+		DDMFormField addressDDMFormField = new DDMFormField("Address", "text");
+
+		addressDDMFormField.addNestedDDMFormField(
+			new DDMFormField("ZipCode", "text"));
+
+		nameDDMFormField.addNestedDDMFormField(addressDDMFormField);
+
 		ddmForm.addDDMFormField(nameDDMFormField);
+
+		DDMFormField contactDDMFormField = new DDMFormField("Contact", "text");
+
+		contactDDMFormField.addNestedDDMFormField(
+			new DDMFormField("Fax", "text"));
+
+		ddmForm.addDDMFormField(contactDDMFormField);
 
 		String nameDDMFormFieldParameterName = getDDMFormFieldParameterName(
 			"Name", StringPool.BLANK);
@@ -158,6 +171,18 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		String extDDMFormFieldFieldParameterName = getDDMFormFieldParameterName(
 			"Ext", phoneDDMFormFieldParameterName);
 
+		String addressDDMFormFieldParameterName = getDDMFormFieldParameterName(
+			"Address", nameDDMFormFieldParameterName);
+
+		String zipCodeDDMFormFieldParameterName = getDDMFormFieldParameterName(
+			"ZipCode", addressDDMFormFieldParameterName);
+
+		String contactDDMFormFieldParameterName = getDDMFormFieldParameterName(
+			"Contact", StringPool.BLANK);
+
+		String faxDDMFormFieldParameterName = getDDMFormFieldParameterName(
+			"Fax", contactDDMFormFieldParameterName);
+
 		String renderedExtDDMFormField = renderTextField(
 			extDDMFormFieldFieldParameterName, StringPool.BLANK,
 			StringPool.BLANK);
@@ -166,9 +191,28 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 			phoneDDMFormFieldParameterName, StringPool.BLANK,
 			renderedExtDDMFormField);
 
+		String renderedZipCodeDDMFormField = renderTextField(
+			zipCodeDDMFormFieldParameterName, StringPool.BLANK,
+			StringPool.BLANK);
+
+		String renderedAddressDDMFormField = renderTextField(
+			addressDDMFormFieldParameterName, StringPool.BLANK,
+			renderedZipCodeDDMFormField);
+
+		String renderedNameChildren = StringUtil.add(
+			renderedPhoneDDMFormField, renderedAddressDDMFormField,
+			StringPool.BLANK);
+
 		String renderedNameDDMFormField = renderTextField(
 			nameDDMFormFieldParameterName, StringPool.BLANK,
-			renderedPhoneDDMFormField);
+			renderedNameChildren);
+
+		String renderedFaxDDMFormField = renderTextField(
+			faxDDMFormFieldParameterName, StringPool.BLANK, StringPool.BLANK);
+
+		String renderedContactDDMFormField = renderTextField(
+			contactDDMFormFieldParameterName, StringPool.BLANK,
+			renderedFaxDDMFormField);
 
 		DDMFormRendererHelper ddmFormFieldRendererHelper =
 			new DDMFormRendererHelper(ddmForm, createDDMFormRenderingContext());
@@ -176,8 +220,13 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		Map<String, String> renderedDDMFormFieldsMap =
 			ddmFormFieldRendererHelper.getRenderedDDMFormFieldsMap();
 
+		Assert.assertEquals(2, renderedDDMFormFieldsMap.size());
+
 		Assert.assertEquals(
 			renderedNameDDMFormField, renderedDDMFormFieldsMap.get("Name"));
+		Assert.assertEquals(
+			renderedContactDDMFormField,
+			renderedDDMFormFieldsMap.get("Contact"));
 	}
 
 	@Test

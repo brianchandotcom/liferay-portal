@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.values.query.impl;
+package com.liferay.dynamic.data.mapping.form.values.query.internal;
 
-import com.liferay.dynamic.data.mapping.form.values.query.impl.model.DDMFormFieldValueMatcher;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.model.DDMFormFieldValueMatchesAllMatcher;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.model.DDMFormFieldValueMatchesAnyMatcher;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.model.DDMFormFieldValueNameMatcher;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.model.DDMFormFieldValueTypeMatcher;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.model.DDMFormFieldValueValueMatcher;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.model.DDMFormValuesFilter;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.model.DDMFormValuesFilterImpl;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryBaseListener;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.AttributeTypeContext;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.AttributeValueContext;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.FieldSelectorContext;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.FieldSelectorExpressionContext;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.LocaleExpressionContext;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.PredicateAndExpressionContext;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.PredicateEqualityExpressionContext;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.PredicateOrExpressionContext;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.SelectorExpressionContext;
-import com.liferay.dynamic.data.mapping.form.values.query.impl.parser.DDMFormValuesQueryParser.StepTypeContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormFieldValueMatcher;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormFieldValueMatchesAllMatcher;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormFieldValueMatchesAnyMatcher;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormFieldValueNameMatcher;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormFieldValueTypeMatcher;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormFieldValueValueMatcher;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormValuesFilter;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.model.DDMFormValuesFilterImpl;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryBaseListener;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.AttributeTypeContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.AttributeValueContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.FieldSelectorContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.FieldSelectorExpressionContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.LocaleExpressionContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.PredicateAndExpressionContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.PredicateEqualityExpressionContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.PredicateOrExpressionContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.SelectorExpressionContext;
+import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.StepTypeContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;

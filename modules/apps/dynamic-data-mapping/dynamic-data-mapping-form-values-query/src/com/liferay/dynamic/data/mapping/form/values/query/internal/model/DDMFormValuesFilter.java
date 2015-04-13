@@ -12,39 +12,28 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.values.query.impl.model;
+package com.liferay.dynamic.data.mapping.form.values.query.internal.model;
 
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Pablo Carvalho
  */
-public class DDMFormFieldValueMatchesAllMatcher
-	implements DDMFormFieldValueMatcher {
+public interface DDMFormValuesFilter {
 
-	public void addDDMFormFieldValueMatcher(
-		DDMFormFieldValueMatcher ddmFormFieldValueMatcher) {
+	public List<DDMFormFieldValue> filter(DDMFormValues ddmFormValues);
 
-		_ddmFormFieldValueMatchers.add(ddmFormFieldValueMatcher);
-	}
+	public List<DDMFormFieldValue> filter(
+		List<DDMFormFieldValue> baseDDMFormFieldValues);
 
-	@Override
-	public boolean matches(DDMFormFieldValue ddmFormFieldValue) {
-		for (DDMFormFieldValueMatcher ddmFormFieldValueMatcher :
-				_ddmFormFieldValueMatchers) {
+	public boolean isGreedy();
 
-			if (!ddmFormFieldValueMatcher.matches(ddmFormFieldValue)) {
-				return false;
-			}
-		}
+	public void setDDMFormFieldValueMatcher(
+		DDMFormFieldValueMatcher ddmFormFieldValueMatcher);
 
-		return true;
-	}
-
-	private final List<DDMFormFieldValueMatcher> _ddmFormFieldValueMatchers =
-		new ArrayList<>();
+	public void setGreedy(boolean greedy);
 
 }

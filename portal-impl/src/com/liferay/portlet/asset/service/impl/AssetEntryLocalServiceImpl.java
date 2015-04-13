@@ -551,8 +551,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			long[] categoryIds, String[] tagNames, boolean visible,
 			Date startDate, Date endDate, Date expirationDate, String mimeType,
 			String title, String description, String summary, String url,
-			String layoutUuid, int height, int width, Integer priority,
-			boolean sync)
+			String layoutUuid, int height, int width, Integer priority)
 		throws PortalException {
 
 		// Entry
@@ -709,6 +708,31 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
+	 *             Date, Date, String, long, String, long, long[], String[],
+	 *             boolean, Date, Date, Date, String, String, String, String,
+	 *             String, String, int, int, Integer)}
+	 */
+	@Deprecated
+	@Override
+	public AssetEntry updateEntry(
+			long userId, long groupId, Date createDate, Date modifiedDate,
+			String className, long classPK, String classUuid, long classTypeId,
+			long[] categoryIds, String[] tagNames, boolean visible,
+			Date startDate, Date endDate, Date expirationDate, String mimeType,
+			String title, String description, String summary, String url,
+			String layoutUuid, int height, int width, Integer priority,
+			boolean sync)
+		throws PortalException {
+
+		return updateEntry(
+			userId, groupId, createDate, modifiedDate, className, classPK,
+			classUuid, classTypeId, categoryIds, tagNames, visible, startDate,
+			endDate, expirationDate, mimeType, title, description, summary, url,
+			layoutUuid, height, width, priority);
+	}
+
 	@Override
 	public AssetEntry updateEntry(
 			long userId, long groupId, String className, long classPK,
@@ -729,14 +753,13 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				entry.getExpirationDate(), entry.getMimeType(),
 				entry.getTitle(), entry.getDescription(), entry.getSummary(),
 				entry.getUrl(), entry.getLayoutUuid(), entry.getHeight(),
-				entry.getWidth(), GetterUtil.getInteger(entry.getPriority()),
-				false);
+				entry.getWidth(), GetterUtil.getInteger(entry.getPriority()));
 		}
 
 		return updateEntry(
 			userId, groupId, null, null, className, classPK, null, 0,
 			categoryIds, tagNames, true, null, null, null, null, null, null,
-			null, null, null, 0, 0, null, false);
+			null, null, null, 0, 0, null);
 	}
 
 	/**
@@ -785,7 +808,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			userId, groupId, null, null, className, classPK, classUuid,
 			classTypeId, categoryIds, tagNames, visible, startDate, endDate,
 			expirationDate, mimeType, title, description, summary, url,
-			layoutUuid, height, width, priority, sync);
+			layoutUuid, height, width, priority);
 	}
 
 	@Override

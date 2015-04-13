@@ -1758,14 +1758,14 @@
 	<portlet>
 		<portlet-name>192</portlet-name>
 		<display-name>Site Template Settings</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.layoutsetprototypes.LayoutSetPrototypePortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/layout_set_prototypes/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/layout_set_prototypes/edit_layout_set_prototype</value>
+			<name>view-template</name>
+			<value>/html/portlet/layout_set_prototypes/edit_layout_set_prototype.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

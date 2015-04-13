@@ -238,6 +238,14 @@ public class LayoutAction extends Action {
 		try {
 			Layout layout = themeDisplay.getLayout();
 
+			if (layout != null && layout.isTypeURL()) {
+				String redirect = PortalUtil.getLayoutActualURL(layout);
+
+				response.sendRedirect(redirect);
+
+				return null;
+			}
+
 			Layout previousLayout = (Layout)session.getAttribute(
 				WebKeys.PREVIOUS_LAYOUT);
 

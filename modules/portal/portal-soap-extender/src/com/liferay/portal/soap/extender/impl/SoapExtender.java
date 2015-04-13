@@ -47,40 +47,6 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 )
 public class SoapExtender {
 
-	@Activate
-	public void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_soapExtenderConfiguration = Configurable.createConfigurable(
-			SoapExtenderConfiguration.class, properties);
-
-		_dependencyManager = new TCCLDependencyManager(bundleContext);
-
-		_component = _dependencyManager.createComponent();
-
-		CXFJaxWSServiceRegistrator jaxwsServiceRegistrator =
-			new CXFJaxWSServiceRegistrator();
-
-		jaxwsServiceRegistrator.setSoapDescriptorBuilder(
-			_soapDescriptorBuilder);
-
-		_component.setImplementation(jaxwsServiceRegistrator);
-
-		addBusDependencies();
-		addHandlerDependencies();
-		addServiceDependencies();
-		addSoapDescriptorBuilderDependency();
-
-		_dependencyManager.add(_component);
-
-		_component.start();
-	}
-
-	@Deactivate
-	public void deactivate() {
-		_dependencyManager.clear();
-	}
-
 	public org.apache.felix.dm.Component getComponent() {
 		return _component;
 	}
@@ -91,22 +57,6 @@ public class SoapExtender {
 
 	public SoapExtenderConfiguration getSoapExtenderConfiguration() {
 		return _soapExtenderConfiguration;
-	}
-
-	@Modified
-	public void modified(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		deactivate();
-
-		activate(bundleContext, properties);
-	}
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	public void setSoapDescriptorBuilder(
-		SoapDescriptorBuilder soapDescriptorBuilder) {
-
-		_soapDescriptorBuilder = soapDescriptorBuilder;
 	}
 
 	protected void addBusDependencies() {
@@ -193,6 +143,56 @@ public class SoapExtender {
 		_component.add(serviceDependency);
 
 		return serviceDependency;
+	}
+
+	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_soapExtenderConfiguration = Configurable.createConfigurable(
+			SoapExtenderConfiguration.class, properties);
+
+		_dependencyManager = new TCCLDependencyManager(bundleContext);
+
+		_component = _dependencyManager.createComponent();
+
+		CXFJaxWSServiceRegistrator jaxwsServiceRegistrator =
+			new CXFJaxWSServiceRegistrator();
+
+		jaxwsServiceRegistrator.setSoapDescriptorBuilder(
+			_soapDescriptorBuilder);
+
+		_component.setImplementation(jaxwsServiceRegistrator);
+
+		addBusDependencies();
+		addHandlerDependencies();
+		addServiceDependencies();
+		addSoapDescriptorBuilderDependency();
+
+		_dependencyManager.add(_component);
+
+		_component.start();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_dependencyManager.clear();
+	}
+
+	@Modified
+	protected void modified(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		deactivate();
+
+		activate(bundleContext, properties);
+	}
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	protected void setSoapDescriptorBuilder(
+		SoapDescriptorBuilder soapDescriptorBuilder) {
+
+		_soapDescriptorBuilder = soapDescriptorBuilder;
 	}
 
 	private org.apache.felix.dm.Component _component;

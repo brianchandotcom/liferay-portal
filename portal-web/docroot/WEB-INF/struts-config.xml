@@ -714,43 +714,6 @@
 			<forward name="portlet.invitation.view" path="portlet.invitation.view" />
 		</action>
 
-		<!-- Layout Set Prototypes -->
-
-		<action path="/layout_set_prototypes/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
-
-		<action path="/layout_set_prototypes/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/layout_set_prototypes/edit_layout_set_prototype" type="com.liferay.portlet.layoutsetprototypes.action.EditLayoutSetPrototypeAction">
-			<forward name="portlet.layout_set_prototypes.edit_layout_set_prototype" path="portlet.layout_set_prototypes.edit_layout_set_prototype" />
-			<forward name="portlet.layout_set_prototypes.error" path="portlet.layout_set_prototypes.error" />
-		</action>
-
-		<action path="/layout_set_prototypes/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layout_set_prototypes.error" />
-		</action>
-
-		<action path="/layout_set_prototypes/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
-		</action>
-
-		<action path="/layout_set_prototypes/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.import_layouts" path="portlet.layouts_admin.import_layouts" />
-		</action>
-
-		<action path="/layout_set_prototypes/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
-		</action>
-
-		<action path="/layout_set_prototypes/view" forward="portlet.layout_set_prototypes.view" />
-
 		<!-- Layouts Admin -->
 
 		<action path="/layouts_admin/add_layout" forward="portlet.layouts_admin.add_layout" />

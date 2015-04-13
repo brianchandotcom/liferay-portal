@@ -77,9 +77,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 			url="<%= exportURL %>"
 			useDialog="<%= true %>"
 		/>
-	</c:if>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layoutPrototype.getGroup(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 		<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />

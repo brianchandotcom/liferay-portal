@@ -21,7 +21,22 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute(WebKeys.LAYOUT_PROTOTYPE);
+long layoutSetPrototypeId = ParamUtil.getLong(request, "layoutSetPrototypeId");
+
+LayoutSetPrototype layoutSetPrototype = null;
+
+if (Validator.isNotNull(layoutSetPrototypeId)) {
+	layoutSetPrototype = LayoutSetPrototypeServiceUtil.fetchLayoutSetPrototype(layoutSetPrototypeId);
+}
+else {
+	Group group = themeDisplay.getScopeGroup();
+
+	if (group.isLayoutSetPrototype()) {
+		layoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(group.getClassPK());
+
+		layoutSetPrototypeId = layoutSetPrototype.getLayoutSetPrototypeId();
+	}
+}
 
 if (layoutSetPrototype == null) {
 	layoutSetPrototype = new LayoutSetPrototypeImpl();
@@ -29,8 +44,6 @@ if (layoutSetPrototype == null) {
 	layoutSetPrototype.setNew(true);
 	layoutSetPrototype.setActive(true);
 }
-
-long layoutSetPrototypeId = BeanParamUtil.getLong(layoutSetPrototype, request, "layoutSetPrototypeId");
 
 boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 
@@ -58,8 +71,9 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 <liferay-util:include page="/html/portlet/layout_set_prototypes/merge_alert.jsp" />
 
-<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveLayoutSetPrototype();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<portlet:actionURL name="updateLayoutSetPrototype" var="updateLayoutSetPrototypeURL" />
+
+<aui:form action="<%= updateLayoutSetPrototypeURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="layoutSetPrototypeId" type="hidden" value="<%= layoutSetPrototypeId %>" />
 
@@ -110,14 +124,6 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveLayoutSetPrototype() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (layoutSetPrototype.isNew()) ? Constants.ADD : Constants.UPDATE %>';
-
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" /></portlet:actionURL>');
-	}
-</aui:script>
 
 <%
 if (!layoutSetPrototype.isNew()) {

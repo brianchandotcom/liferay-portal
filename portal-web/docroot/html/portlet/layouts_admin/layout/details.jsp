@@ -144,7 +144,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			request.setAttribute("edit_layout_prototype.jsp-selPlid", String.valueOf(selLayout.getPlid()));
 			%>
 
-			<liferay-util:include page="/html/portlet/layouts_admin/merge_alert.jsp" />
+			<liferay-util:include page="/html/portlet/layouts_admin/layout_merge_alert.jsp" />
 		</div>
 	</c:if>
 

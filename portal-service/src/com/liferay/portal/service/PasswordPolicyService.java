@@ -82,8 +82,7 @@ public interface PasswordPolicyService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
-		long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long passwordPolicyId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.

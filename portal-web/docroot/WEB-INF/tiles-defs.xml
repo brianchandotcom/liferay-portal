@@ -528,22 +528,6 @@
 		<put name="portlet_content" value="/portlet/invitation/view.jsp" />
 	</definition>
 
-	<!-- Layout Set Prototypes -->
-
-	<definition name="portlet.layout_set_prototypes" extends="portlet" />
-
-	<definition name="portlet.layout_set_prototypes.edit_layout_set_prototype" extends="portlet.layout_set_prototypes">
-		<put name="portlet_content" value="/portlet/layout_set_prototypes/edit_layout_set_prototype.jsp" />
-	</definition>
-
-	<definition name="portlet.layout_set_prototypes.error" extends="portlet.layout_set_prototypes">
-		<put name="portlet_content" value="/portlet/layout_set_prototypes/error.jsp" />
-	</definition>
-
-	<definition name="portlet.layout_set_prototypes.view" extends="portlet.layout_set_prototypes">
-		<put name="portlet_content" value="/portlet/layout_set_prototypes/view.jsp" />
-	</definition>
-
 	<!-- Layouts Admin -->
 
 	<definition name="portlet.layouts_admin" extends="portlet" />

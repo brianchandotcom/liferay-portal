@@ -65,7 +65,6 @@
 					<aui:nav-item cssClass="divider" />
 
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>" varImpl="manageSiteTemplateURL">
-						<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
 						<portlet:param name="redirect" value="<%= viewSitesURL %>" />
 						<portlet:param name="backURL" value="<%= viewSitesURL %>" />
 					</liferay-portlet:renderURL>

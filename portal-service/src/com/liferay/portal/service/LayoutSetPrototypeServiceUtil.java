@@ -73,6 +73,12 @@ public class LayoutSetPrototypeServiceUtil {
 		getService().deleteLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
+	public static com.liferay.portal.model.LayoutSetPrototype fetchLayoutSetPrototype(
+		long layoutSetPrototypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchLayoutSetPrototype(layoutSetPrototypeId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

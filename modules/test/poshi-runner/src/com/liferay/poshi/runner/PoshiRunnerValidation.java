@@ -33,8 +33,6 @@ import org.dom4j.Element;
 public class PoshiRunnerValidation {
 
 	public static void validate() throws PoshiRunnerException {
-		PoshiRunnerContext.getRootElementsMap();
-
 		String[] filePathsArray = PoshiRunnerContext.getFilePathsArray();
 
 		for (String filePath : filePathsArray) {

@@ -48,11 +48,6 @@ import com.liferay.portlet.asset.service.base.AssetEntryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryValidator;
 import com.liferay.portlet.asset.util.AssetSearcher;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.ArrayList;
@@ -706,50 +701,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		// saved categories and tags
 
 		assetEntryPersistence.update(entry);
-
-		// Synchronize
-
-		if (sync) {
-			if (className.equals(BlogsEntry.class.getName())) {
-				BlogsEntry blogsEntry = blogsEntryPersistence.findByPrimaryKey(
-					classPK);
-
-				blogsEntry.setTitle(title);
-
-				blogsEntryPersistence.update(blogsEntry);
-			}
-			else if (className.equals(DLFileEntry.class.getName())) {
-				DLFileEntry dlFileEntry =
-					dlFileEntryPersistence.findByPrimaryKey(classPK);
-
-				String fileName = DLUtil.getSanitizedFileName(
-					title, dlFileEntry.getExtension());
-
-				dlFileEntry.setFileName(fileName);
-
-				dlFileEntry.setTitle(title);
-				dlFileEntry.setDescription(description);
-
-				dlFileEntryPersistence.update(dlFileEntry);
-			}
-			else if (className.equals(JournalArticle.class.getName())) {
-				JournalArticle journalArticle =
-					journalArticlePersistence.findByPrimaryKey(classPK);
-
-				journalArticle.setTitle(title);
-				journalArticle.setDescription(description);
-
-				journalArticlePersistence.update(journalArticle);
-			}
-			else if (className.equals(MBMessage.class.getName())) {
-				MBMessage mbMessage = mbMessagePersistence.findByPrimaryKey(
-					classPK);
-
-				mbMessage.setSubject(title);
-
-				mbMessagePersistence.update(mbMessage);
-			}
-		}
 
 		// Indexer
 

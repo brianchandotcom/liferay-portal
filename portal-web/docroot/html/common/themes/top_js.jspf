@@ -116,11 +116,11 @@
 			},
 
 			PortletKeys: {
-				DOCUMENT_LIBRARY : '<%= PortletKeys.DOCUMENT_LIBRARY %>',
-				DOCUMENT_SELECTOR : '<%= PortletKeys.DOCUMENT_SELECTOR %>',
+				DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
+				DOCUMENT_SELECTOR: '<%= PortletKeys.DOCUMENT_SELECTOR %>',
 				DYNAMIC_DATA_MAPPING: '<%= PortletKeys.DYNAMIC_DATA_MAPPING %>',
 				PORTLET_CONFIGURATION: '<%= PortletKeys.PORTLET_CONFIGURATION %>',
-				PORTLET_SHARING : '<%= PortletKeys.PORTLET_SHARING %>'
+				PORTLET_SHARING: '<%= PortletKeys.PORTLET_SHARING %>'
 			},
 
 			PropsValues: {
@@ -296,6 +296,9 @@
 			},
 			getPortletRootPath: function() {
 				return '<%= themeDisplay.getPathContext() %>/html/portlet';
+			},
+			getStaticResourceURLParams: function() {
+				return '<%= PortalUtil.getStaticResourceURL(request, StringPool.BLANK, "minifierType=", javaScriptLastModified) %>';
 			}
 		};
 
@@ -338,7 +341,7 @@
 		for (String javaScriptFile : javaScriptFiles) {
 		%>
 
-			<script src="<%= path %>/<%= javaScriptFile %>?t=<%= javaScriptLastModified %>" type="text/javascript"></script>
+			<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, path + "/" + javaScriptFile, "minifierType=", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 		<%
 		}

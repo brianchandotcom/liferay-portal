@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -35,6 +36,7 @@ import java.util.List;
 /**
  * @author Daniela Zapata Riesco
  */
+@OSGiBeanProperties
 public class LayoutPrototypeStagedModelDataHandler
 	extends BaseStagedModelDataHandler <LayoutPrototype> {
 

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.layout.prototype.web.constants;
 
-<%@ page import="com.liferay.portal.NoSuchLayoutPrototypeException" %><%@
-page import="com.liferay.portal.RequiredLayoutPrototypeException" %><%@
-page import="com.liferay.portal.service.LayoutPrototypeLocalServiceUtil" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public class LayoutPrototypePortletKeys {
 
-<%@ include file="/html/portlet/layout_prototypes/init-ext.jsp" %>
+	public static final String LAYOUT_PROTOTYPE =
+		"com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet";
+
+}

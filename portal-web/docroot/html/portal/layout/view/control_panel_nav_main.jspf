@@ -29,27 +29,9 @@ List<Portlet> portlets = PortalUtil.getControlPanelPortlets(controlPanelCategory
 
 			urlControlPanelSitesPortlet = HttpUtil.setParameter(urlControlPanelSitesPortlet, "controlPanelCategory", controlPanelCategory);
 			urlControlPanelSitesPortlet = HttpUtil.setParameter(urlControlPanelSitesPortlet, "doAsGroupId", group.getGroupId());
-
-			boolean selected = curPortletId.equals(ppid);
-
-			String portletControlPanelEntryCategory = portlet.getControlPanelEntryCategory();
-
-			if (portletControlPanelEntryCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-				Group siteGroup = themeDisplay.getSiteGroup();
-
-				if (siteGroup.isLayoutPrototype() && curPortletId.equals(PortletKeys.LAYOUT_PROTOTYPE)) {
-					selected = true;
-				}
-				else if (siteGroup.isLayoutSetPrototype() && curPortletId.equals(PortletKeys.LAYOUT_SET_PROTOTYPE)) {
-					selected = true;
-				}
-				else if (siteGroup.isSite() && curPortletId.equals(PortletKeys.SITES_ADMIN)) {
-					selected = true;
-				}
-			}
 		%>
 
-			<aui:nav-item anchorId='<%= "controlPanelSubNav" + curPortletId + "Link" %>' href="<%= urlControlPanelSitesPortlet %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" selected="<%= selected %>" />
+			<aui:nav-item anchorId='<%= "controlPanelSubNav" + curPortletId + "Link" %>' href="<%= urlControlPanelSitesPortlet %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" selected="<%= curPortletId.equals(ppid) %>" />
 
 		<%
 		}

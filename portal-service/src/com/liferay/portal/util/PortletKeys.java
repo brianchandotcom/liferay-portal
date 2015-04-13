@@ -85,8 +85,6 @@ public class PortletKeys {
 	public static final String JOURNAL =
 		"com_liferay_journal_web_portlet_JournalPortlet";
 
-	public static final String LAYOUT_PROTOTYPE = "146";
-
 	public static final String LAYOUT_SET_PROTOTYPE = "149";
 
 	public static final String LAYOUTS_ADMIN = "88";

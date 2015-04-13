@@ -26,6 +26,10 @@ public class TokenizerUtil {
 	public static Tokenizer getTokenizer() {
 		PortalRuntimePermission.checkGetBeanProperty(TokenizerUtil.class);
 
+		if (_tokenizer == null) {
+			return _defaultTokenizer;
+		}
+
 		return _tokenizer;
 	}
 
@@ -42,6 +46,7 @@ public class TokenizerUtil {
 		_tokenizer = tokenizer;
 	}
 
+	private static final Tokenizer _defaultTokenizer = new SimpleTokenizer();
 	private static Tokenizer _tokenizer;
 
 }

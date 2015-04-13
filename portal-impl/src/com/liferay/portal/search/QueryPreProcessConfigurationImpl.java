@@ -15,7 +15,12 @@
 package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.search.QueryPreProcessConfiguration;
-import com.liferay.portal.search.lucene.PerFieldAnalyzer;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
@@ -25,13 +30,28 @@ public class QueryPreProcessConfigurationImpl
 
 	@Override
 	public boolean isSubstringSearchAlways(String fieldName) {
-		return _perFieldAnalyzer.isSubstringSearchAlways(fieldName);
+		if (_fieldNamePatterns.containsKey(fieldName)) {
+			return true;
+		}
+
+		for (Pattern pattern : _fieldNamePatterns.values()) {
+			Matcher matcher = pattern.matcher(fieldName);
+
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
-	public void setAnalyzer(PerFieldAnalyzer perFieldAnalyzer) {
-		_perFieldAnalyzer = perFieldAnalyzer;
+	public void setFieldNames(Set<String> fieldNames) {
+		for (String fieldName : fieldNames) {
+			_fieldNamePatterns.put(fieldName, Pattern.compile(fieldName));
+		}
 	}
 
-	private PerFieldAnalyzer _perFieldAnalyzer;
+	private final Map<String, Pattern> _fieldNamePatterns =
+		new LinkedHashMap<>();
 
 }

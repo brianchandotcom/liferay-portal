@@ -30,16 +30,24 @@ public class PermissionThreadLocal {
 		return _addResource.get();
 	}
 
-	public static boolean isFlushEnabled() {
-		return _flushEnabled.get();
+	public static boolean isFlushResourceBlockEnabled() {
+		return _flushResourceBlockEnabled.get();
+	}
+
+	public static boolean isFlushResourcePermissionEnabled() {
+		return _flushResourcePermissionEnabled.get();
 	}
 
 	public static void setAddResource(boolean addResource) {
 		_addResource.set(addResource);
 	}
 
-	public static void setIndexEnabled(boolean indexEnabled) {
-		_flushEnabled.set(indexEnabled);
+	public static void setFlushResourceBlockEnabled(boolean enabled) {
+		_flushResourceBlockEnabled.set(enabled);
+	}
+
+	public static void setFlushResourcePermissionEnabled(boolean enabled) {
+		_flushResourcePermissionEnabled.set(enabled);
 	}
 
 	public static void setPermissionChecker(
@@ -51,9 +59,14 @@ public class PermissionThreadLocal {
 	private static final ThreadLocal<Boolean> _addResource =
 		new AutoResetThreadLocal<>(
 			PermissionThreadLocal.class + "._addResource", true);
-	private static final ThreadLocal<Boolean> _flushEnabled =
+	private static final ThreadLocal<Boolean> _flushResourceBlockEnabled =
 		new AutoResetThreadLocal<>(
-			PermissionThreadLocal.class + "._flushEnabled", true);
+			PermissionThreadLocal.class + "._flushResourceBlockEnabled", true);
+	private static final ThreadLocal<Boolean>
+		_flushResourcePermissionEnabled = new AutoResetThreadLocal<>(
+			PermissionThreadLocal.class +
+				"._flushResourcePermissionEnabled",
+			true);
 
 	private static final ThreadLocal<PermissionChecker> _permissionChecker =
 		new AutoResetThreadLocal<PermissionChecker>(

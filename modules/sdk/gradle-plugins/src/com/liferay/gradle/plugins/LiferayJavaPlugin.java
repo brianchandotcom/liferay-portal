@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.BuildWsdlTask;
+import com.liferay.gradle.plugins.tasks.BuildXsdTask;
 import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -46,6 +47,7 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.SourceSet;
@@ -59,6 +61,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
 
 	public static final String BUILD_WSDL_TASK_NAME = "buildWsdl";
+
+	public static final String BUILD_XSD_TASK_NAME = "buildXsd";
 
 	public static final String FORMAT_SOURCE_TASK_NAME = "formatSource";
 
@@ -151,6 +155,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return buildWsdlTask;
 	}
 
+	protected BuildXsdTask addTaskBuildXsd(Project project) {
+		BuildXsdTask buildXsdTask = GradleUtil.addTask(
+			project, BUILD_XSD_TASK_NAME, BuildXsdTask.class);
+
+		buildXsdTask.setDescription("Generates XMLBeans types.");
+		buildXsdTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		return buildXsdTask;
+	}
+
 	protected FormatSourceTask addTaskFormatSource(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
@@ -177,6 +191,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		addTaskBuildCss(project);
 		addTaskBuildWsdl(project);
+		addTaskBuildXsd(project);
 		addTaskFormatSource(project);
 		addTaskInitGradle(project);
 		addTaskWar(project);
@@ -442,6 +457,50 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildWsdlTask.rootDirs(rootDir);
 	}
 
+	protected void configureTaskBuildXsd(Project project) {
+		BuildXsdTask buildXsdTask = (BuildXsdTask)GradleUtil.getTask(
+			project, BUILD_XSD_TASK_NAME);
+
+		configureTaskBuildXsdDestinationDir(buildXsdTask);
+		configureTaskBuildXsdRootDir(buildXsdTask);
+
+		buildXsdTask.addTasks();
+
+		TaskOutputs taskOutputs = buildXsdTask.getOutputs();
+
+		GradleUtil.addDependency(
+			buildXsdTask.getProject(), JavaPlugin.COMPILE_CONFIGURATION_NAME,
+			taskOutputs.getFiles());
+	}
+
+	protected void configureTaskBuildXsdDestinationDir(
+		BuildXsdTask buildXsdTask) {
+
+		File destinationDir = buildXsdTask.getDestinationDir();
+
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			buildXsdTask.getProject(), BasePluginConvention.class);
+
+		if ((destinationDir == null) ||
+			destinationDir.equals(basePluginConvention.getDistsDir())) {
+
+			buildXsdTask.setDestinationDir(
+				getLibDir(buildXsdTask.getProject()));
+		}
+	}
+
+	protected void configureTaskBuildXsdRootDir(BuildXsdTask buildXsdTask) {
+		if (buildXsdTask.getRootDir() != null) {
+			return;
+		}
+
+		Project project = buildXsdTask.getProject();
+
+		File rootDir = project.file("xsd");
+
+		buildXsdTask.setRootDir(rootDir);
+	}
+
 	protected void configureTaskClasses(Project project) {
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
@@ -484,6 +543,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureTaskBuildCss(project, liferayExtension);
 		configureTaskBuildWsdl(project);
+		configureTaskBuildXsd(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);
 	}

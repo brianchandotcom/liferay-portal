@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.BuildWsdlTask;
+import com.liferay.gradle.plugins.tasks.BuildXsdTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -210,6 +211,18 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		File rootDir = new File(getWebAppDir(project), "WEB-INF/wsdl");
 
 		buildWsdlTask.rootDirs(rootDir);
+	}
+
+	protected void configureTaskBuildXsdRootDir(BuildXsdTask buildXsdTask) {
+		if (buildXsdTask.getRootDir() != null) {
+			return;
+		}
+
+		Project project = buildXsdTask.getProject();
+
+		File rootDir = new File(getWebAppDir(project), "WEB-INF/xsd");
+
+		buildXsdTask.setRootDir(rootDir);
 	}
 
 	protected void configureTaskDeploy(

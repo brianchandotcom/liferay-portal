@@ -232,11 +232,6 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetCategory" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
-		<reference package-path="com.liferay.portlet.blogs" entity="BlogsEntry" />
-		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntry" />
-		<reference package-path="com.liferay.portlet.journal" entity="JournalArticle" />
-		<reference package-path="com.liferay.portlet.journal" entity="JournalArticleResource" />
-		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
 	</entity>

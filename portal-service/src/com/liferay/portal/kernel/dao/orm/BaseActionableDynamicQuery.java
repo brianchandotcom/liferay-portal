@@ -73,6 +73,11 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@Override
+	public AddOrderCriteriaMethod getAddOrderCriteriaMethod() {
+		return _addOrderCriteriaMethod;
+	}
+
+	@Override
 	public PerformActionMethod getPerformActionMethod() {
 		return _performActionMethod;
 	}
@@ -119,6 +124,13 @@ public abstract class BaseActionableDynamicQuery
 	@Override
 	public void setAddCriteriaMethod(AddCriteriaMethod addCriteriaMethod) {
 		_addCriteriaMethod = addCriteriaMethod;
+	}
+
+	@Override
+	public void setAddOrderCriteriaMethod(
+		AddOrderCriteriaMethod addOrderCriteriaMethod) {
+
+		_addOrderCriteriaMethod = addOrderCriteriaMethod;
 	}
 
 	@Override
@@ -237,6 +249,16 @@ public abstract class BaseActionableDynamicQuery
 		}
 	}
 
+	protected void addOrderCriteria(DynamicQuery dynamicQuery) {
+		if (_addOrderCriteriaMethod != null) {
+			_addOrderCriteriaMethod.addOrderCriteria(dynamicQuery);
+
+			return;
+		}
+
+		dynamicQuery.addOrder(OrderFactoryUtil.asc(_primaryKeyPropertyName));
+	}
+
 	protected long doPerformActions(long previousPrimaryKey)
 		throws PortalException {
 
@@ -248,7 +270,7 @@ public abstract class BaseActionableDynamicQuery
 
 		dynamicQuery.add(property.gt(previousPrimaryKey));
 
-		dynamicQuery.addOrder(OrderFactoryUtil.asc(_primaryKeyPropertyName));
+		addOrderCriteria(dynamicQuery);
 
 		dynamicQuery.setLimit(0, _interval);
 
@@ -374,6 +396,7 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	private AddCriteriaMethod _addCriteriaMethod;
+	private AddOrderCriteriaMethod _addOrderCriteriaMethod;
 	private BaseLocalService _baseLocalService;
 	private ClassLoader _classLoader;
 	private Class<?> _clazz;

@@ -25,9 +25,6 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-/**
- * @author Brian Wing Shun Chan
- */
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class DDMFormValuesQueryParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.3", RuntimeMetaData.VERSION); }

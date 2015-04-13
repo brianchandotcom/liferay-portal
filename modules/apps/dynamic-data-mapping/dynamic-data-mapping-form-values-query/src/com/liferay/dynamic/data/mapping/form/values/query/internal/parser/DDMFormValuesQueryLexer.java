@@ -25,9 +25,6 @@ import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
-/**
- * @author Brian Wing Shun Chan
- */
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class DDMFormValuesQueryLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.3", RuntimeMetaData.VERSION); }

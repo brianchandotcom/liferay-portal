@@ -92,7 +92,7 @@ public class AssetTagsSearchFacet extends BaseSearchFacet {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		String displayStyle = ParamUtil.getString(
-			actionRequest, getClassName() + "displayStyle", "list");
+			actionRequest, getClassName() + "displayStyleFacet", "list");
 		int frequencyThreshold = ParamUtil.getInteger(
 			actionRequest, getClassName() + "frequencyThreshold", 1);
 		int maxTerms = ParamUtil.getInteger(

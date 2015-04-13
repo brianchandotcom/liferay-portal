@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsetprototypes;
+package com.liferay.layout.set.prototype.web.portlet;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;

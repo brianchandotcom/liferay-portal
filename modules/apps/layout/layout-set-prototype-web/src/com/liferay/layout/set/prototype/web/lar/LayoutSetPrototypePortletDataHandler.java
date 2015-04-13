@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsetprototypes.lar;
+package com.liferay.layout.set.prototype.web.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;

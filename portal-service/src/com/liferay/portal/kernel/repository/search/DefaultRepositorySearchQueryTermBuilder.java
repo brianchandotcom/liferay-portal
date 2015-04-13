@@ -12,26 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.search.lucene;
+package com.liferay.portal.kernel.repository.search;
 
-import com.liferay.portal.kernel.search.StringDistanceCalculator;
-
-import org.apache.lucene.search.spell.StringDistance;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.SearchContext;
 
 /**
  * @author Michael C. Han
  */
-public class StringDistanceCalculatorImpl implements StringDistanceCalculator {
+public class DefaultRepositorySearchQueryTermBuilder
+	implements RepositorySearchQueryTermBuilder {
 
 	@Override
-	public float getDistance(String string1, String string2) {
-		return _stringDistance.getDistance(string1, string2);
-	}
+	public void addTerm(
+			BooleanQuery booleanQuery, SearchContext searchContext,
+			String field, String value)
+		throws ParseException {
 
-	public void setStringDistance(StringDistance stringDistance) {
-		_stringDistance = stringDistance;
+		booleanQuery.addTerm(field, value);
 	}
-
-	private StringDistance _stringDistance;
 
 }

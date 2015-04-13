@@ -37,8 +37,12 @@
 	<!-- Util -->
 
 	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" class="com.liferay.portal.repository.search.RepositorySearchQueryBuilderImpl">
-		<property name="analyzer" ref="org.apache.lucene.analysis.KeywordAnalyzer" />
-		<property name="luceneHelper" ref="com.liferay.portal.search.lucene.LuceneHelperImpl" />
+		<property name="repositorySearchQueryTermBuilder">
+			<bean class="com.liferay.portal.search.lucene.repository.LuceneRepositorySearchQueryTermBuilder">
+				<property name="analyzer" ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<property name="version" ref="org.apache.lucene.util.Version" />
+			</bean>
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil" class="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil">
 		<property name="repositorySearchQueryBuilder" ref="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" />
@@ -82,13 +86,6 @@
 	<bean id="com.liferay.portal.kernel.search.SortFactory" class="com.liferay.portal.kernel.search.SortFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.SortFactoryUtil" class="com.liferay.portal.kernel.search.SortFactoryUtil">
 		<property name="sortFactory" ref="com.liferay.portal.kernel.search.SortFactory" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.search.StringDistanceCalculatorUtil" class="com.liferay.portal.kernel.search.StringDistanceCalculatorUtil">
-		<property name="stringDistanceCalculator">
-			<bean class="com.liferay.portal.search.lucene.StringDistanceCalculatorImpl">
-				<property name="stringDistance" ref="org.apache.lucene.search.spell.StringDistance" />
-			</bean>
-		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactory" class="com.liferay.portal.kernel.search.StringQueryFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactoryUtil" class="com.liferay.portal.kernel.search.StringQueryFactoryUtil">

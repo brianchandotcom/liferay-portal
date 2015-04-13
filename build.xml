@@ -70,6 +70,25 @@
 		<antcall target="deploy" />
 	</target>
 
+	<target name="build-registry-api" depends="setup-sdk">
+		<ant-execute
+			ant.dir="${project.dir}/modules"
+			ant.target="clean"
+		/>
+
+		<ant-execute
+			ant.dir="${project.dir}/modules/core/registry-api"
+			ant.target="compile"
+		/>
+	</target>
+
+	<target name="check-sdk-uptodate">
+		<uptodate property="sdk.uptodate">
+			<mapper to="${project.dir}/tools/sdk" type="merge" />
+			<srcfiles dir="${project.dir}/tools" includes="liferay-plugins-sdk-7.0.0.zip*" />
+		</uptodate>
+	</target>
+
 	<target name="clean">
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="benchmarks" target="clean" inheritAll="false" />
@@ -214,25 +233,6 @@
 		<ant dir="portal-web" target="clean" inheritAll="false" />
 
 		<antcall target="print-current-time" />
-	</target>
-
-	<target name="check-sdk-uptodate">
-		<uptodate property="sdk.uptodate">
-			<mapper to="${project.dir}/tools/sdk" type="merge" />
-			<srcfiles dir="${project.dir}/tools" includes="liferay-plugins-sdk-7.0.0.zip*" />
-		</uptodate>
-	</target>
-
-	<target name="build-registry-api" depends="setup-sdk">
-		<ant-execute
-			ant.dir="${project.dir}/modules"
-			ant.target="clean"
-		/>
-
-		<ant-execute
-			ant.dir="${project.dir}/modules/core/registry-api"
-			ant.target="compile"
-		/>
 	</target>
 
 	<target name="compile" depends="build-registry-api">

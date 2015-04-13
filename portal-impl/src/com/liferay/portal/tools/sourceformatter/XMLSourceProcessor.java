@@ -193,11 +193,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (!fileName.contains("/build")) {
+		if (!fileName.startsWith("build") && !fileName.contains("/build")) {
 			newContent = trimContent(newContent, false);
 		}
 
-		if (fileName.contains("/build") && !fileName.contains("/tools/")) {
+		if (fileName.startsWith("build") ||
+			(fileName.contains("/build") && !fileName.contains("/tools/"))) {
+
 			newContent = formatAntXML(fileName, newContent);
 		}
 		else if (fileName.contains("/custom-sql/")) {

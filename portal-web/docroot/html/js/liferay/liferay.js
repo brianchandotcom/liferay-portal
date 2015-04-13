@@ -173,7 +173,10 @@ Liferay = window.Liferay || {};
 		_.defaults(
 			ioConfig,
 			{
-				data: {},
+				data: {
+					cmd: cmd,
+					p_auth: p_auth
+				},
 				dataType: 'JSON'
 			}
 		);
@@ -186,11 +189,6 @@ Liferay = window.Liferay || {};
 				ioConfig.data.append('p_auth', p_auth);
 			}
 			else {
-				ioConfig.data = {
-					cmd: cmd,
-					p_auth: p_auth
-				};
-
 				_.forEach(
 					$(ioConfig.form).serializeArray(),
 					function(item, index) {

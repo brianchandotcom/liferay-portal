@@ -16,9 +16,23 @@ package com.liferay.service.access.control.profile.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class SACPEntryImpl extends SACPEntryBaseImpl {
+
+	public List<String> getAllowedServicesList() {
+		String[] allowedServices = StringUtil.split(
+			getAllowedServices(), StringPool.NEW_LINE);
+
+		return ListUtil.toList(allowedServices);
+	}
+
 }

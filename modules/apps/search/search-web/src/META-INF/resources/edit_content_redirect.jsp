@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/search/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = request.getParameter("redirect");

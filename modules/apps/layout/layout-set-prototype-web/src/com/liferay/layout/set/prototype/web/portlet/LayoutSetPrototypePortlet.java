@@ -14,6 +14,7 @@
 
 package com.liferay.layout.set.prototype.web.portlet;
 
+import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.RequiredLayoutSetPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -31,7 +32,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
@@ -109,7 +109,8 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 			MultiSessionMessages.add(
 				actionRequest,
-				PortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed");
+				LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS +
+					"requestProcessed");
 		}
 		else {
 
@@ -146,7 +147,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 		PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(
 			actionResponse, siteThemeDisplay,
-			PortletKeys.SITE_TEMPLATE_SETTINGS);
+			LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS);
 
 		actionRequest.setAttribute(
 			WebKeys.REDIRECT, siteAdministrationURL.toString());

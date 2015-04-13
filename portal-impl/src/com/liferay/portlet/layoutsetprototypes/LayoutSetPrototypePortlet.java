@@ -21,6 +21,18 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
  */
 public class LayoutSetPrototypePortlet extends MVCPortlet {
 
+	public void deleteLayoutSetPrototypes(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] layoutSetPrototypeIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "layoutSetPrototypeIds"), 0L);
+
+		for (long layoutSetPrototypeId : layoutSetPrototypeIds) {
+			LayoutSetPrototypeServiceUtil.deleteLayoutSetPrototype(
+				layoutSetPrototypeId);
+		}
+	}
+
 	@Override
 	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -134,24 +146,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 				"portlet.layout_set_prototypes.edit_layout_set_prototype"));
 	}
 
-	protected void deleteLayoutSetPrototypes(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] layoutSetPrototypeIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "layoutSetPrototypeIds"), 0L);
-
-		for (long layoutSetPrototypeId : layoutSetPrototypeIds) {
-			LayoutSetPrototypeServiceUtil.deleteLayoutSetPrototype(
-				layoutSetPrototypeId);
-		}
-	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
-	protected void resetMergeFailCount(ActionRequest actionRequest)
+	public void resetMergeFailCount(ActionRequest actionRequest)
 		throws Exception {
 
 		long layoutSetPrototypeId = ParamUtil.getLong(
@@ -164,7 +159,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
 	}
 
-	protected LayoutSetPrototype updateLayoutSetPrototype(
+	public LayoutSetPrototype updateLayoutSetPrototype(
 			ActionRequest actionRequest)
 		throws Exception {
 
@@ -217,6 +212,11 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		return LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
 			layoutSetPrototype.getLayoutSetPrototypeId(),
 			settingsProperties.toString());
+	}
+
+	@Override
+	protected boolean isCheckMethodOnProcessAction() {
+		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

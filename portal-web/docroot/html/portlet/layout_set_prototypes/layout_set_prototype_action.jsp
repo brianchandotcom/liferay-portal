@@ -85,6 +85,7 @@ Group group = layoutSetPrototype.getGroup();
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="rootNodeName" value="<%= layoutSetPrototype.getName(locale) %>" />
+			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
@@ -101,6 +102,7 @@ Group group = layoutSetPrototype.getGroup();
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="rootNodeName" value="<%= layoutSetPrototype.getName(locale) %>" />
+			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon

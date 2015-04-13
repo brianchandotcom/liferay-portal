@@ -28,35 +28,24 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 <c:if test="<%= mergeFailCount > PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
 
 	<%
-	boolean merge = false;
-
 	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_set_prototypes_merge_alert") + StringPool.UNDERLINE;
 
 	PortletURL portletURL = liferayPortletResponse.createActionURL();
 
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("layoutSetPrototypeId",String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
-
-	if (groupId > 0) {
-		portletURL.setParameter("struts_action", "/sites_admin/edit_site");
-		portletURL.setParameter(Constants.CMD, "reset_merge_fail_count_and_merge");
-		portletURL.setParameter("groupId", String.valueOf(groupId));
-		portletURL.setParameter("privateLayoutSet", String.valueOf(layoutSet.isPrivateLayout()));
-
-		merge = true;
-	}
-	else {
-		portletURL.setParameter("struts_action", "/layout_set_prototypes/edit_layout_set_prototype");
-		portletURL.setParameter(Constants.CMD, "reset_merge_fail_count");
-	}
+	portletURL.setParameter("struts_action", "/sites_admin/edit_site");
+	portletURL.setParameter(Constants.CMD, "reset_merge_fail_count_and_merge");
+	portletURL.setParameter("groupId", String.valueOf(groupId));
+	portletURL.setParameter("privateLayoutSet", String.valueOf(layoutSet.isPrivateLayout()));
 	%>
 
 	<div class="alert alert-warning">
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
 
-		<liferay-ui:message arguments="site-template" key='<%= merge ? "click-reset-and-propagate-to-reset-the-failure-count-and-propagate-changes-from-the-x" : "click-reset-to-reset-the-failure-count-and-reenable-propagation" %>' />
+		<liferay-ui:message arguments="site-template" key="click-reset-and-propagate-to-reset-the-failure-count-and-propagate-changes-from-the-x" />
 
-		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value='<%= merge ? "reset-and-propagate" : "reset" %>' />
+		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value="reset-and-propagate" />
 	</div>
 
 	<aui:script>

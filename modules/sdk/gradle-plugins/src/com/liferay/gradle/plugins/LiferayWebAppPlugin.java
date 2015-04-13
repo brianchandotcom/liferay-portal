@@ -143,8 +143,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 				@Override
 				public void execute(Project project) {
 					File serviceJarFile = new File(
-						getWebAppDir(project),
-						"WEB-INF/lib/" + project.getName() + "-service.jar");
+						getLibDir(project), project.getName() + "-service.jar");
 
 					if (serviceJarFile.exists()) {
 						GradleUtil.addDependency(
@@ -196,21 +195,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		Project project = buildCssTask.getProject();
 
 		buildCssTask.setRootDirs(getWebAppDir(project));
-	}
-
-	@Override
-	protected void configureTaskBuildWsdlDestinationDir(
-		BuildWsdlTask buildWsdlTask) {
-
-		if (buildWsdlTask.getDestinationDir() != null) {
-			return;
-		}
-
-		Project project = buildWsdlTask.getProject();
-
-		File destinationDir = new File(getWebAppDir(project), "WEB-INF/lib");
-
-		buildWsdlTask.setDestinationDir(destinationDir);
 	}
 
 	@Override
@@ -534,6 +518,11 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 			project, WarPluginConvention.class);
 
 		warPluginConvention.setWebAppDirName("docroot");
+	}
+
+	@Override
+	protected File getLibDir(Project project) {
+		return new File(getWebAppDir(project), "WEB-INF/lib");
 	}
 
 	protected File getWebAppDir(Project project) {

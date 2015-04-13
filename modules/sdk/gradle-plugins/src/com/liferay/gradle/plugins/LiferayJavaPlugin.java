@@ -422,15 +422,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTaskBuildWsdlDestinationDir(
 		BuildWsdlTask buildWsdlTask) {
 
-		if (buildWsdlTask.getDestinationDir() != null) {
-			return;
+		if (buildWsdlTask.getDestinationDir() == null) {
+			buildWsdlTask.setDestinationDir(
+				getLibDir(buildWsdlTask.getProject()));
 		}
-
-		Project project = buildWsdlTask.getProject();
-
-		File destinationDir = project.file("lib");
-
-		buildWsdlTask.setDestinationDir(destinationDir);
 	}
 
 	protected void configureTaskBuildWsdlRootDirs(BuildWsdlTask buildWsdlTask) {
@@ -526,6 +521,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 
 		return value;
+	}
+
+	protected File getLibDir(Project project) {
+		return project.file("lib");
 	}
 
 	protected static final String[] COMPILE_DEPENDENCY_NOTATIONS = {

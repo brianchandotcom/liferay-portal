@@ -41,4 +41,40 @@ for (int i = 0; i < legacyCategorySections.length; i++) {
 
 <%
 }
+
+List<FormNavigatorEntry> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, request);
+
+for (int i = 0; i < formNavigatorEntries.size(); i++) {
+	FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(i);
+
+	String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
+%>
+
+	<!-- Begin fragment <%= sectionId %> -->
+
+	<c:choose>
+		<c:when test='<%= displayStyle.equals("panel") %>'>
+			<liferay-ui:panel cssClass="list-unstyled panel-page-category" defaultState='<%= i == 0 ? "open" : "closed" %>' extended="<%= true %>" id="<%= sectionId %>" title="<%= formNavigatorEntry.getLabel() %>">
+
+				<%
+				formNavigatorEntry.render(request, response);
+				%>
+
+			</liferay-ui:panel>
+		</c:when>
+		<c:otherwise>
+			<div class="form-section <%= (curSection.equals(formNavigatorEntry.getKey()) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
+
+				<%
+				formNavigatorEntry.render(request, response);
+				%>
+
+			</div>
+		</c:otherwise>
+	</c:choose>
+
+	<!-- End fragment <%= sectionId %> -->
+
+<%
+}
 %>

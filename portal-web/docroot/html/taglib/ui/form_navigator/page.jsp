@@ -20,12 +20,14 @@
 
 <%
 String backURL = (String)request.getAttribute("liferay-ui:form-navigator:backURL");
-String[][] categorySections = (String[][])request.getAttribute("liferay-ui:form-navigator:categorySections");
-String[] categoryNames = (String[])request.getAttribute("liferay-ui:form-navigator:categoryNames");
+String[][] categorySectionKeys = (String[][])request.getAttribute("liferay-ui:form-navigator:categorySectionKeys");
+String[][] categorySectionLabels = (String[][])request.getAttribute("liferay-ui:form-navigator:categorySectionLabels");
+String[] categoryLabels = (String[])request.getAttribute("liferay-ui:form-navigator:categoryLabels");
 String displayStyle = (String)request.getAttribute("liferay-ui:form-navigator:displayStyle");
 String formName = GetterUtil.getString((String)request.getAttribute("liferay-ui:form-navigator:formName"));
 String htmlBottom = (String)request.getAttribute("liferay-ui:form-navigator:htmlBottom");
 String htmlTop = (String)request.getAttribute("liferay-ui:form-navigator:htmlTop");
+String id = (String)request.getAttribute("liferay-ui:form-navigator:id");
 String jspPath = (String)request.getAttribute("liferay-ui:form-navigator:jspPath");
 String[] legacyCategorySections = (String[])request.getAttribute("liferay-ui:form-navigator:legacyCategorySections");
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
@@ -44,8 +46,8 @@ if (Validator.isNull(backURL)) {
 
 String curSection = StringPool.BLANK;
 
-if (categorySections[0].length > 0) {
-	curSection = categorySections[0][0];
+if (categorySectionKeys[0].length > 0) {
+	curSection = categorySectionKeys[0][0];
 }
 
 String historyKey = ParamUtil.getString(request, "historyKey");
@@ -128,11 +130,12 @@ if (Validator.isNotNull(historyKey)) {
 
 					boolean error = false;
 
-					for (int i = 0; i < categoryNames.length; i++) {
-						String category = categoryNames[i];
-						String[] sections = categorySections[i];
+					for (int i = 0; i < categoryLabels.length; i++) {
+						String category = categoryLabels[i];
+						String[] sectionKeys = categorySectionKeys[i];
+						String[] sectionLabels = categorySectionLabels[i];
 
-						if (sections.length > 0) {
+						if (sectionKeys.length > 0) {
 					%>
 
 							<c:if test="<%= Validator.isNotNull(category) %>">
@@ -148,8 +151,11 @@ if (Validator.isNotNull(historyKey)) {
 
 							int step = 1;
 
-							for (String section : sections) {
-								String sectionId = namespace + _getSectionId(section);
+							for (int j = 0; j < sectionKeys.length; j++) {
+								String sectionKey = sectionKeys[j];
+								String sectionLabel = sectionLabels[j];
+
+								String sectionId = namespace + _getSectionId(sectionKey);
 
 								Boolean show = (Boolean)request.getAttribute(WebKeys.FORM_NAVIGATOR_SECTION_SHOW + sectionId);
 
@@ -162,10 +168,10 @@ if (Validator.isNotNull(historyKey)) {
 								if (sectionId.equals(namespace + errorSection)) {
 									cssClass += " section-error";
 
-									curSection = section;
+									curSection = sectionKey;
 								}
 
-								if (curSection.equals(section) || curSection.equals(sectionId)) {
+								if (curSection.equals(sectionKey) || curSection.equals(sectionId)) {
 									cssClass += " active";
 								}
 
@@ -182,12 +188,12 @@ if (Validator.isNotNull(historyKey)) {
 											<c:when test='<%= displayStyle.equals("steps") %>'>
 												<span class="number"><liferay-ui:message key="<%= String.valueOf(step) %>" /></span>
 
-												<span class="message"><liferay-ui:message key="<%= section %>" /></span>
+												<span class="message"><liferay-ui:message key="<%= sectionLabel %>" /></span>
 
 												<aui:icon cssClass="tab-icon" image="long-arrow-right" />
 											</c:when>
 											<c:otherwise>
-												<liferay-ui:message key="<%= section %>" />
+												<liferay-ui:message key="<%= sectionLabel %>" />
 											</c:otherwise>
 										</c:choose>
 

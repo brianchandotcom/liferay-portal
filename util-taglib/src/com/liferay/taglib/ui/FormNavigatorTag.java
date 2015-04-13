@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -96,6 +98,38 @@ public class FormNavigatorTag extends IncludeTag {
 		_showButtons = true;
 	}
 
+	protected String[][] getCategorySectionKeys(HttpServletRequest request) {
+		String[] categoryKeys = FormNavigatorCategoryUtil.getKeys(_id);
+
+		String[][] categorySectionKeys = new String[categoryKeys.length][];
+
+		for (int i = 0; i < categoryKeys.length; i++) {
+			String categoryKey = categoryKeys[i];
+
+			categorySectionKeys = ArrayUtil.append(
+				categorySectionKeys,
+				FormNavigatorEntryUtil.getKeys(_id, categoryKey, request));
+		}
+
+		return categorySectionKeys;
+	}
+
+	protected String[][] getCategorySectionLabels(HttpServletRequest request) {
+		String[] categoryKeys = FormNavigatorCategoryUtil.getKeys(_id);
+
+		String[][] categorySectionLabels = new String[categoryKeys.length][];
+
+		for (int i = 0; i < categoryKeys.length; i++) {
+			String categoryKey = categoryKeys[i];
+
+			categorySectionLabels = ArrayUtil.append(
+				categorySectionLabels,
+				FormNavigatorEntryUtil.getLabels(_id, categoryKey, request));
+		}
+
+		return categorySectionLabels;
+	}
+
 	protected String[] getLegacyCategorySections() {
 		if (_categorySections == null) {
 			return new String[0];
@@ -119,9 +153,14 @@ public class FormNavigatorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:form-navigator:backURL", _backURL);
 		request.setAttribute(
-			"liferay-ui:form-navigator:categoryNames", _categoryNames);
+			"liferay-ui:form-navigator:categoryLabels",
+			FormNavigatorCategoryUtil.getLabels(_id));
 		request.setAttribute(
-			"liferay-ui:form-navigator:categorySections", _categorySections);
+			"liferay-ui:form-navigator:categorySectionKeys",
+			getCategorySectionKeys(request));
+		request.setAttribute(
+			"liferay-ui:form-navigator:categorySectionLabels",
+			getCategorySectionLabels(request));
 		request.setAttribute(
 			"liferay-ui:form-navigator:displayStyle", _displayStyle);
 		request.setAttribute("liferay-ui:form-navigator:formName", _formName);

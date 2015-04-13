@@ -98,8 +98,28 @@ public class FormNavigatorTag extends IncludeTag {
 		_showButtons = true;
 	}
 
+	protected String[] getCategoryKeys() {
+		if (_categoryNames != null) {
+			return _categoryNames;
+		}
+
+		return FormNavigatorCategoryUtil.getKeys(_id);
+	}
+
+	protected String[] getCategoryLabels() {
+		if (_categoryNames != null) {
+			return _categoryNames;
+		}
+
+		return FormNavigatorCategoryUtil.getLabels(_id);
+	}
+
 	protected String[][] getCategorySectionKeys(HttpServletRequest request) {
-		String[] categoryKeys = FormNavigatorCategoryUtil.getKeys(_id);
+		if (_categorySections != null) {
+			return _categorySections;
+		}
+
+		String[] categoryKeys = getCategoryKeys();
 
 		String[][] categorySectionKeys = new String[categoryKeys.length][];
 
@@ -115,7 +135,11 @@ public class FormNavigatorTag extends IncludeTag {
 	}
 
 	protected String[][] getCategorySectionLabels(HttpServletRequest request) {
-		String[] categoryKeys = FormNavigatorCategoryUtil.getKeys(_id);
+		if (_categorySections != null) {
+			return _categorySections;
+		}
+
+		String[] categoryKeys = getCategoryKeys();
 
 		String[][] categorySectionLabels = new String[categoryKeys.length][];
 
@@ -153,8 +177,7 @@ public class FormNavigatorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:form-navigator:backURL", _backURL);
 		request.setAttribute(
-			"liferay-ui:form-navigator:categoryLabels",
-			FormNavigatorCategoryUtil.getLabels(_id));
+			"liferay-ui:form-navigator:categoryLabels", getCategoryLabels());
 		request.setAttribute(
 			"liferay-ui:form-navigator:categorySectionKeys",
 			getCategorySectionKeys(request));

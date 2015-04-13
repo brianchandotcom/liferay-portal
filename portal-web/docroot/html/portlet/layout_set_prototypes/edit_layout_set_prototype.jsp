@@ -21,7 +21,20 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute(WebKeys.LAYOUT_PROTOTYPE);
+long layoutSetPrototypeId = ParamUtil.getLong(request, "layoutSetPrototypeId");
+
+LayoutSetPrototype layoutSetPrototype = null;
+
+if (Validator.isNotNull(layoutSetPrototypeId)) {
+	layoutSetPrototype = LayoutSetPrototypeServiceUtil.fetchLayoutSetPrototype(layoutSetPrototypeId);
+}
+else {
+	Group group = themeDisplay.getScopeGroup();
+
+	if (group.isLayoutSetPrototype()) {
+		layoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(group.getClassPK());
+	}
+}
 
 if (layoutSetPrototype == null) {
 	layoutSetPrototype = new LayoutSetPrototypeImpl();
@@ -29,8 +42,6 @@ if (layoutSetPrototype == null) {
 	layoutSetPrototype.setNew(true);
 	layoutSetPrototype.setActive(true);
 }
-
-long layoutSetPrototypeId = BeanParamUtil.getLong(layoutSetPrototype, request, "layoutSetPrototypeId");
 
 boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 

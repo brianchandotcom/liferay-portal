@@ -14,17 +14,25 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.LayoutFriendlyURLException;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Gergely Mathe
  * @author Kenneth Chang
  */
 public class VerifyLayout extends VerifyProcess {
@@ -40,6 +48,7 @@ public class VerifyLayout extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		deleteOrphanedLayouts();
 		verifyFriendlyURL();
+		verifyLayoutIdFriendlyURL();
 		verifyLayoutPrototypeLinkEnabled();
 		verifyUuid();
 	}
@@ -59,6 +68,85 @@ public class VerifyLayout extends VerifyProcess {
 				LayoutLocalServiceUtil.updateFriendlyURL(
 					layout.getUserId(), layout.getPlid(), friendlyURL,
 					layoutFriendlyURL.getLanguageId());
+			}
+		}
+	}
+
+	protected void verifyLayoutIdFriendlyURL() throws Exception {
+		while (true) {
+			List<Layout> affectedLayouts =
+				_getAffectedLayoutIdFriendlyURLLayouts();
+
+			if (affectedLayouts.isEmpty()) {
+				break;
+			}
+
+			for (Layout layout : affectedLayouts) {
+				long layoutId = layout.getLayoutId();
+
+				String friendlyURL = layout.getFriendlyURL();
+
+				String newFriendlyURL = StringPool.SLASH + layoutId;
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Updating layout with friendlyURL: " + friendlyURL +
+						" to: " + newFriendlyURL);
+				}
+
+				List<LayoutFriendlyURL> layoutFriendlyURLs =
+					LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+						layout.getPlid());
+
+				for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+					if (!friendlyURL.equals(
+							layoutFriendlyURL.getFriendlyURL())) {
+
+						continue;
+					}
+
+					try {
+						LayoutLocalServiceUtil.updateFriendlyURL(
+							layout.getUserId(), layout.getPlid(),
+							newFriendlyURL, layoutFriendlyURL.getLanguageId());
+					}
+					catch (LayoutFriendlyURLException lfurle) {
+						int type = lfurle.getType();
+
+						if (type == LayoutFriendlyURLException.DUPLICATE) {
+							continue;
+						}
+						else {
+							throw lfurle;
+						}
+					}
+				}
+
+				try {
+					Layout duplicateLayout =
+						LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+							layout.getGroupId(), layout.isPrivateLayout(),
+							newFriendlyURL);
+
+					if (duplicateLayout != null) {
+						throw new LayoutFriendlyURLException(
+							LayoutFriendlyURLException.DUPLICATE);
+					}
+
+					layout.setFriendlyURL(newFriendlyURL);
+
+					LayoutLocalServiceUtil.updateLayout(layout);
+				}
+				catch (LayoutFriendlyURLException lfurle) {
+					int type = lfurle.getType();
+
+					if (type == LayoutFriendlyURLException.DUPLICATE) {
+						continue;
+					}
+					else {
+						throw lfurle;
+					}
+				}
 			}
 		}
 	}
@@ -98,5 +186,42 @@ public class VerifyLayout extends VerifyProcess {
 
 		runSQL(sb.toString());
 	}
+
+	private List<Layout> _getAffectedLayoutIdFriendlyURLLayouts()
+		throws Exception {
+
+		final List<Layout> layouts = new ArrayList<>();
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			LayoutLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					Layout layout = (Layout)object;
+
+					String friendlyURL = layout.getFriendlyURL();
+
+					long layoutId = layout.getLayoutId();
+
+					if (Validator.isNumber(friendlyURL.substring(1)) &&
+						!friendlyURL.substring(1).equals(
+							String.valueOf(layoutId))) {
+
+						layouts.add(layout);
+					}
+				}
+			});
+
+		actionableDynamicQuery.performActions();
+
+		return layouts;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(VerifyLayout.class);
 
 }

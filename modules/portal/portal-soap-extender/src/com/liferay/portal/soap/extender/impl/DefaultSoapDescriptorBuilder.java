@@ -36,24 +36,26 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 		return new SoapDescriptor() {
 			@Override
 			public String getPublicationAddress() {
-				Object addressObject = properties.get("soap.address");
+				Object soapAddress = properties.get("soap.address");
 
-				if (addressObject == null) {
-					return "/" + service.getClass().getSimpleName();
+				if (soapAddress == null) {
+					Class<?> clazz = service.getClass();
+
+					return "/" + clazz.getSimpleName();
 				}
 
-				return addressObject.toString();
+				return soapAddress.toString();
 			}
 
 			@Override
 			public QName getEndpointName() {
-				Object endpointNameObject = properties.get(
+				Object soapEndpointName = properties.get(
 					"soap.endpoint.name");
 
-				if ((endpointNameObject != null) &&
-					endpointNameObject instanceof QName) {
+				if ((soapEndpointName != null) &&
+					soapEndpointName instanceof QName) {
 
-					QName endpointName = (QName)endpointNameObject;
+					QName endpointName = (QName)soapEndpointName;
 
 					return endpointName;
 				}
@@ -63,13 +65,13 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 
 			@Override
 			public Class<?> getServiceClass() {
-				Object serviceClassObject = properties.get(
+				Object soapServiceClass = properties.get(
 					"soap.service.class");
 
-				if ((serviceClassObject != null) &&
-					serviceClassObject instanceof Class<?>) {
+				if ((soapServiceClass != null) &&
+					soapServiceClass instanceof Class<?>) {
 
-					return (Class<?>)serviceClassObject;
+					return (Class<?>)soapServiceClass;
 				}
 
 				return null;
@@ -77,11 +79,11 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 
 			@Override
 			public String getWsdlLocation() {
-				Object wsdlLocationObject = properties.get(
+				Object soapWsdlLocation = properties.get(
 					"soap.wsdl.location");
 
-				if (wsdlLocationObject != null) {
-					return wsdlLocationObject.toString();
+				if (soapWsdlLocation != null) {
+					return soapWsdlLocation.toString();
 				}
 
 				return null;

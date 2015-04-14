@@ -463,7 +463,7 @@ public class ExportImportDateUtil {
 			return RANGE_FROM_LAST_PUBLISH_DATE;
 		}
 		else {
-			return StringPool.BLANK;
+			return RANGE_ALL;
 		}
 	}
 

@@ -1,0 +1,22 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form checkbox field.
+ *
+ * @param childElementsHTML
+ * @param dir
+ * @param label
+ * @param name
+ * @param status
+ */
+{template .checkbox}
+	<div class="form-group field-wrapper form-inline" data-fieldname="{$name}">
+		<label for="{$name}">
+			<input class="field" dir="{$dir}" id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
+
+			&nbsp;{$label}
+		</label>
+
+		{$childElementsHTML}
+	</div>
+{/template}

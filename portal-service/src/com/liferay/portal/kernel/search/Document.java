@@ -169,11 +169,29 @@ public interface Document extends Cloneable, Serializable {
 
 	public void addNumber(String name, Long[] values);
 
-	public void addNumber(String name, Number[] values);
-
 	public void addNumber(String name, String value);
 
 	public void addNumber(String name, String[] values);
+
+	public void addNumberSortable(String name, BigDecimal value);
+
+	public void addNumberSortable(String name, BigDecimal[] values);
+
+	public void addNumberSortable(String name, Double value);
+
+	public void addNumberSortable(String name, Double[] values);
+
+	public void addNumberSortable(String name, Float value);
+
+	public void addNumberSortable(String name, Float[] values);
+
+	public void addNumberSortable(String name, Integer value);
+
+	public void addNumberSortable(String name, Integer[] values);
+
+	public void addNumberSortable(String name, Long value);
+
+	public void addNumberSortable(String name, Long[] values);
 
 	public void addText(String name, String value);
 

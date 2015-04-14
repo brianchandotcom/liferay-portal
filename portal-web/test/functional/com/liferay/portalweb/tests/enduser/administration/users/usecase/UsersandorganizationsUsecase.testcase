@@ -115,7 +115,7 @@
 		<execute function="AssertElementNotPresent" locator1="Home#SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS" value1="Site Settings" />
 	</command>
 
-	<command known-issues="LPS-48176" name="ImpersonatingAdministratorandOwner" priority="5">
+	<command name="ImpersonatingAdministratorandOwner" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -577,7 +577,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-44878" name="OrganizationAdministratorActivate" priority="3">
+	<command name="OrganizationAdministratorActivate" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>

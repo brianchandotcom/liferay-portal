@@ -166,7 +166,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-45920" name="UserGroupSiteOwnerPermissions" priority="5">
+	<command name="UserGroupSiteOwnerPermissions" priority="5">
 		<var name="roleType" value="Regular" />
 		<var name="siteName" value="Site Name" />
 

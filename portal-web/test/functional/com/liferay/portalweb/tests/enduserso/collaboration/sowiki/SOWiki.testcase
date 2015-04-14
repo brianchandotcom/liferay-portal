@@ -1608,7 +1608,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-45435" name="ImportLarSOWikiSite" priority="4">
+	<command name="ImportLarSOWikiSite" priority="4">
 		<var name="commentBody" value="Wiki FrontPage Comment Body" />
 		<var name="documentName1" value="Document_1.jpg" />
 		<var name="documentName2" value="Document_2.jpg" />
@@ -3213,7 +3213,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
 	</command>
 
-	<command known-issues="LPS-45435" name="ViewSOWikiFrontPageChildPageAsGuest" priority="4">
+	<command name="ViewSOWikiFrontPageChildPageAsGuest" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />

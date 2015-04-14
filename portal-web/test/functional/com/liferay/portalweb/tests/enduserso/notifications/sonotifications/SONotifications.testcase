@@ -5075,7 +5075,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command known-issues="SOS-2463" name="ViewNotificationProfilePicture" priority="3">
+	<command name="ViewNotificationProfilePicture" priority="3">
 		<var name="imageFileName" value="Document_3.jpg" />
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />

@@ -18,7 +18,7 @@
 		<execute macro="AkismetPortlet#tearDownConfiguration" />
 	</tear-down>
 
-	<command known-issues="LPS-48820" name="MarkAsNotSpamWikiPage" priority="5">
+	<command name="MarkAsNotSpamWikiPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Akismet" />
 		</execute>

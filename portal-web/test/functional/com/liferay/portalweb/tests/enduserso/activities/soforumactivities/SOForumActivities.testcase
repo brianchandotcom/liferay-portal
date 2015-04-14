@@ -509,7 +509,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-45435" name="ViewRemoveMBCategoryViewPermissionActivities" priority="4">
+	<command name="ViewRemoveMBCategoryViewPermissionActivities" priority="4">
 		<var name="categoryName1" value="MB Category 1 Name" />
 		<var name="categoryName2" value="MB Category 2 Name" />
 		<var name="pageName" value="Forums" />
@@ -620,7 +620,7 @@
 		<execute function="AssertTextNotPresent" value1="${threadBody2}" />
 	</command>
 
-	<command known-issues="LPS-45435" name="ViewRemoveMBThreadViewPermissionActivities" priority="4">
+	<command name="ViewRemoveMBThreadViewPermissionActivities" priority="4">
 		<var name="categoryName" value="MB Category 1 Name" />
 		<var name="pageName" value="Forums" />
 		<var name="siteDescription" value="Open Site Description" />

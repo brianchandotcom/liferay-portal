@@ -520,6 +520,7 @@
 			<var name="portletCategoryName" value="Configuration" />
 			<var name="portletCategoryName2" value="Users" />
 			<var name="portletNames" value="Site Settings,Social Activities,Workflow Configuration" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -553,6 +554,7 @@
 
 		<execute macro="Site#viewSiteClonedFromSiteTemplateCP">
 			<var name="clonedFromTemplate" value="true" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

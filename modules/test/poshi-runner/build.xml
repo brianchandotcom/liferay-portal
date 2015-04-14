@@ -8,7 +8,7 @@
 
 	<!--<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />-->
 
-	<target name="prepare-poshi-runner" depends="compile">
+	<target name="prepare-poshi-runner" depends="jar">
 		<echo file="classes/poshi-runner-ext.properties">
 			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
 
@@ -16,7 +16,7 @@
 		</echo>
 	</target>
 
-	<target name="prepare-sikuli" depends="compile">
+	<target name="prepare-sikuli" depends="jar">
 		<if>
 			<os family="unix" />
 			<then>

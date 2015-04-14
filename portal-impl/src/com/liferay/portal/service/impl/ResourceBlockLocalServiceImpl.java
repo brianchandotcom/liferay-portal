@@ -198,6 +198,8 @@ public class ResourceBlockLocalServiceImpl
 		resourceBlockPermissionLocalService.addResourceBlockPermissions(
 			resourceBlockId, resourceBlockPermissionsContainer);
 
+		PermissionCacheUtil.clearResourceBlockCache(companyId, groupId, name);
+
 		return resourceBlock;
 	}
 
@@ -216,7 +218,13 @@ public class ResourceBlockLocalServiceImpl
 		resourceBlockPermissionLocalService.deleteResourceBlockPermissions(
 			resourceBlock.getPrimaryKey());
 
-		return resourceBlockPersistence.remove(resourceBlock);
+		resourceBlockPersistence.remove(resourceBlock);
+
+		PermissionCacheUtil.clearResourceBlockCache(
+			resourceBlock.getCompanyId(), resourceBlock.getGroupId(),
+			resourceBlock.getName());
+
+		return resourceBlock;
 	}
 
 	@Override
@@ -444,6 +452,11 @@ public class ResourceBlockLocalServiceImpl
 						qPos.add(resourceBlockId);
 
 						sqlQuery.executeUpdate();
+
+						PermissionCacheUtil.clearResourceBlockCache(
+							resourceBlock.getCompanyId(),
+							resourceBlock.getGroupId(),
+							resourceBlock.getName());
 					}
 				}
 

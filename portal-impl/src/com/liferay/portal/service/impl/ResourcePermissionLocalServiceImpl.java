@@ -242,6 +242,10 @@ public class ResourcePermissionLocalServiceImpl
 				resourcePermission.setActionIds(resourceActionBitwiseValue);
 
 				session.save(resourcePermission);
+
+				PermissionCacheUtil.clearResourcePermissionCache(
+					resourcePermission.getName(),
+					resourcePermission.getPrimKey());
 			}
 		}
 		catch (Exception e) {
@@ -320,6 +324,8 @@ public class ResourcePermissionLocalServiceImpl
 			deleteResourcePermission(
 				resourcePermission.getResourcePermissionId());
 		}
+
+		PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
 	}
 
 	@Override
@@ -957,6 +963,8 @@ public class ResourcePermissionLocalServiceImpl
 		if (resourcePermissions.isEmpty()) {
 			roleLocalService.deleteRole(fromRoleId);
 		}
+
+		PermissionCacheUtil.clearCache();
 	}
 
 	/**

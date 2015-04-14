@@ -3409,6 +3409,7 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			article.setFolderId(newFolderId);
+			article.setModifiedDate(new Date());
 			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
@@ -3503,13 +3504,15 @@ public class JournalArticleLocalServiceImpl
 
 		// Article
 
+		article.setModifiedDate(new Date());
+
 		int oldStatus = article.getStatus();
 
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
 			article.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-			journalArticlePersistence.update(article);
 		}
+
+		journalArticlePersistence.update(article);
 
 		List<JournalArticle> articleVersions =
 			journalArticlePersistence.findByG_A(
@@ -3689,6 +3692,8 @@ public class JournalArticleLocalServiceImpl
 			article.setContent(content);
 		}
 
+		article.setModifiedDate(new Date());
+
 		journalArticlePersistence.update(article);
 
 		return article;
@@ -3728,6 +3733,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		article.setArticleId(trashArticleId);
+		article.setModifiedDate(new Date());
 
 		journalArticlePersistence.update(article);
 

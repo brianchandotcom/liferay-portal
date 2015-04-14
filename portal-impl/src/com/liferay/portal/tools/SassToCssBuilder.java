@@ -160,9 +160,8 @@ public class SassToCssBuilder {
 			new String[] {
 				"**\\_diffs\\**", "**\\.sass-cache*\\**",
 				"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**",
-				"**\\_styled\\**", "**\\_unstyled\\**",
-				"**\\tiny_mce\\**", "**\\ckeditor\\**",
-				"**\\alloyeditor\\**"
+				"**\\_styled\\**", "**\\_unstyled\\**", "**\\tiny_mce\\**",
+				"**\\ckeditor\\**", "**\\alloyeditor\\**"
 			});
 		directoryScanner.setIncludes(new String[] {"**\\*.css"});
 

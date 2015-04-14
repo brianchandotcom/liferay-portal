@@ -235,7 +235,13 @@ public class LoggerElement {
 	}
 
 	private boolean _isWrittenToLogger() {
+		if (_writtenToLogger) {
+			return true;
+		}
+
 		if (LoggerUtil.isWrittenToLogger(this)) {
+			_writtenToLogger = true;
+
 			return true;
 		}
 
@@ -250,5 +256,6 @@ public class LoggerElement {
 	private String _id;
 	private String _name = "div";
 	private String _text = "";
+	private boolean _writtenToLogger = false;
 
 }

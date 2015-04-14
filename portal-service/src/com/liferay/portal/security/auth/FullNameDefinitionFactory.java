@@ -15,9 +15,13 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,6 +51,12 @@ public class FullNameDefinitionFactory {
 		String[] fieldNames = StringUtil.split(
 			LanguageUtil.get(locale, "lang.user.name.field.names"));
 
+		String requiredFieldNames = LanguageUtil.get(
+			locale, "lang.user.name.required.field.names");
+
+		fieldNames = prependMissingRequiredFieldNames(
+			fieldNames, StringUtil.split(requiredFieldNames));
+
 		for (String userNameField : fieldNames) {
 			FullNameField fullNameField = new FullNameField();
 
@@ -59,9 +69,6 @@ public class FullNameDefinitionFactory {
 
 			fullNameField.setValues(values);
 
-			String requiredFieldNames = LanguageUtil.get(
-				locale, "lang.user.name.required.field.names");
-
 			boolean required = StringUtil.contains(
 				requiredFieldNames, userNameField);
 
@@ -73,6 +80,28 @@ public class FullNameDefinitionFactory {
 		_fullNameDefinitions.put(locale, fullNameDefinition);
 
 		return fullNameDefinition;
+	}
+
+	private static String[] prependMissingRequiredFieldNames(
+		String[] fieldNames, String[] requiredFieldNames) {
+
+		List<String> fieldNamesList = ListUtil.toList(fieldNames);
+
+		int i;
+
+		for (i = 0; i < ArrayUtil.getLength(requiredFieldNames); i++) {
+			String requiredFieldName = requiredFieldNames[i];
+
+			if (!fieldNamesList.contains(requiredFieldName)) {
+				fieldNamesList.add(i, requiredFieldName);
+			}
+		}
+
+		if (!fieldNamesList.contains("first-name")) {
+			fieldNamesList.add(0, "first-name");
+		}
+
+		return fieldNamesList.toArray(new String[fieldNamesList.size()]);
 	}
 
 	private static final FullNameDefinitionFactory _instance =

@@ -25,8 +25,8 @@ import org.osgi.framework.BundleContext;
  */
 public class TCCLDependencyManager extends DependencyManager {
 
-	public TCCLDependencyManager(BundleContext context) {
-		super(context);
+	public TCCLDependencyManager(BundleContext bundleContext) {
+		super(bundleContext);
 	}
 
 	public ServiceDependency createTCCLServiceDependency() {

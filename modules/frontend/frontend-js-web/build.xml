@@ -1,8 +1,1248 @@
 <?xml version="1.0"?>
-<!DOCTYPE project>
 
-<project>
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+<project name="portal-web" basedir="." default="war" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../build-common-web.xml" />
 
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+	<property name="war.file" value="${ant.project.name}" />
+
+	<property name="alloy.version" value="3.0.1" />
+	<property name="alloy-font-awesome.version" value="2.0" />
+	<property name="alloyeditor.version" value="0.2.5" />
+	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
+	<property name="scayt.file" value="scayt_4.4.5.zip" />
+	<property name="tinymce.file" value="tinymce_4.1.7.zip" />
+	<property name="vaadin.file" value="vaadin-6.8.12-liferay.zip" />
+	<property name="wsc.file" value="wsc_4.4.5.zip" />
+
+	<path id="jspc.common.classpath">
+		<pathelement path="docroot/WEB-INF/classes" />
+		<pathelement location="${project.dir}/portal-impl/portal-impl.jar" />
+		<pathelement location="${project.dir}/portal-pacl/portal-pacl.jar" />
+		<pathelement location="${project.dir}/portal-service/portal-service.jar" />
+		<pathelement location="${project.dir}/util-bridges/util-bridges.jar" />
+		<pathelement location="${project.dir}/util-java/util-java.jar" />
+		<pathelement location="${project.dir}/util-taglib/util-taglib.jar" />
+		<pathelement location="${project.dir}/lib/development/activation.jar" />
+		<pathelement location="${project.dir}/lib/development/mail.jar" />
+		<pathelement location="${project.dir}/lib/development/velocity.jar" />
+		<pathelement location="${project.dir}/lib/global/portal-settings-shared.jar" />
+		<pathelement location="${project.dir}/lib/global/portlet.jar" />
+		<pathelement location="${project.dir}/lib/portal/ant.jar" />
+		<pathelement location="${project.dir}/lib/portal/backport-concurrent.jar" />
+		<pathelement location="${project.dir}/lib/portal/commons-collections.jar" />
+		<pathelement location="${project.dir}/lib/portal/commons-fileupload.jar" />
+		<pathelement location="${project.dir}/lib/portal/commons-lang.jar" />
+		<pathelement location="${project.dir}/lib/portal/commons-logging.jar" />
+		<pathelement location="${project.dir}/lib/portal/commons-math.jar" />
+		<pathelement location="${project.dir}/lib/portal/displaytag.jar" />
+		<pathelement location="${project.dir}/lib/portal/dom4j.jar" />
+		<pathelement location="${project.dir}/lib/portal/jabsorb.jar" />
+		<pathelement location="${project.dir}/lib/portal/jcifs.jar" />
+		<pathelement location="${project.dir}/lib/portal/jcommon.jar" />
+		<pathelement location="${project.dir}/lib/portal/jdom.jar" />
+		<pathelement location="${project.dir}/lib/portal/jfreechart.jar" />
+		<pathelement location="${project.dir}/lib/portal/jstl-api.jar" />
+		<pathelement location="${project.dir}/lib/portal/jstl-impl.jar" />
+		<pathelement location="${project.dir}/lib/portal/log4j.jar" />
+		<pathelement location="${project.dir}/lib/portal/openid4java.jar" />
+		<pathelement location="${project.dir}/lib/portal/rome.jar" />
+		<pathelement location="${project.dir}/lib/portal/struts.jar" />
+	</path>
+
+	<extension-point name="build-portal-web-dependencies" depends="build-alloy,build-alloy-editor,build-bourbon,build-ckeditor,build-css,build-dtd,build-tinymce,build-vaadin" />
+
+	<target name="build-alloy" depends="build-alloy-bootstrap,build-alloy-font-awesome">
+		<path id="alloy.zip.path">
+			<fileset dir="third-party">
+				<include name="alloy-${alloy.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy.zip.path" refid="alloy.zip.path" />
+
+		<basename file="${alloy.zip.path}" property="alloy.file" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${alloy.file}"
+					targetfile="docroot/html/js/aui"
+				/>
+			</not>
+			<then>
+
+				<!-- Prepare -->
+
+				<delete dir="docroot/html/ALLOY_ZIP" />
+				<delete dir="docroot/html/css/portal/aui_deprecated.css" />
+				<delete dir="docroot/html/js/aui" />
+				<delete dir="docroot/html/themes/_unstyled/images/aui" />
+
+				<echo>${alloy.file}</echo>
+
+				<unzip src="third-party/${alloy.file}" dest="docroot/html/ALLOY_ZIP" />
+
+				<!-- CSS -->
+
+				<property name="alloy.build.dir" value="docroot/html/ALLOY_ZIP/build" />
+				<property name="alloy.temp.dir" value="docroot/html/ALLOY_ZIP/temp" />
+
+				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
+					<filelist
+						dir="${alloy.build.dir}/aui-skin-deprecated/css"
+						files="aui-skin-deprecated.css"
+					/>
+				</concat>
+
+				<for param="dir">
+					<path>
+						<dirset
+							dir="${alloy.build.dir}"
+							includes="aui-*"
+						/>
+					</path>
+					<sequential>
+						<basename property="dir.name" file="@{dir}" />
+						<if>
+							<and>
+								<available file="${alloy.build.dir}/${dir.name}/assets/skins/sam/${dir.name}.css" />
+								<matches pattern="-deprecated" string="${dir.name}" />
+							</and>
+							<then>
+								<concat append="true" destfile="${alloy.temp.dir}/aui_deprecated.css">
+									<filelist
+										dir="${alloy.build.dir}/${dir.name}/assets/skins/sam"
+										files="${dir.name}.css"
+									/>
+								</concat>
+							</then>
+						</if>
+						<if>
+							<available file="docroot/html/js/aui/${dir.name}/assets/skins/sam" />
+							<then>
+								<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
+									<fileset dir="docroot/html/js/aui/${dir.name}/assets/skins/sam" includes="**/*.png,**/*.jpg,**/*.gif" />
+								</copy>
+							</then>
+						</if>
+						<var name="dir.name" unset="true" />
+					</sequential>
+				</for>
+
+				<replaceregexp match="url\(([^)]+)\)" replace="url(@theme_image_path@/aui/\1)" flags="g" byline="false">
+					<fileset
+						dir="${alloy.temp.dir}"
+						includes="aui_deprecated.css"
+					/>
+				</replaceregexp>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../images/" value="" />
+				</replace>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-base/images/" value="" />
+				</replace>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-classic/images/" value="" />
+				</replace>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-deprecated/images/" value="" />
+				</replace>
+
+				<copy
+					file="${alloy.temp.dir}/aui_deprecated.css"
+					tofile="docroot/html/css/portal/aui_deprecated.css"
+					overwrite="true"
+				/>
+
+				<!-- JavaScript -->
+
+				<copy todir="docroot/html/js/aui" overwrite="true" preservelastmodified="true">
+					<fileset dir="${alloy.build.dir}/" />
+				</copy>
+
+				<!-- Images -->
+
+				<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
+					<fileset dir="${alloy.build.dir}/aui-skin-deprecated/images" />
+				</copy>
+
+				<!-- Clean up -->
+
+				<delete dir="docroot/html/ALLOY_ZIP" />
+			</then>
+		</if>
+	</target>
+
+	<target name="build-alloy-bootstrap">
+		<property name="alloy.bootstrap.version" value="3.2.0-2" />
+
+		<property name="alloy.bootstrap.deploy" value="docroot/html/themes/_unstyled/css/aui" />
+
+		<path id="alloy.bootstrap.zip.path">
+			<fileset dir="third-party">
+				<include name="bootstrap-sass-${alloy.bootstrap.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy.bootstrap.zip.path" refid="alloy.bootstrap.zip.path" />
+
+		<basename file="${alloy.bootstrap.zip.path}" property="alloy.bootstrap.file" />
+
+		<property name="alloy.bootstrap.tmp.dir" value="docroot/html/ALLOY_BOOTSTRAP_ZIP" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${alloy.bootstrap.file}"
+					targetfile="${alloy.bootstrap.deploy}"
+				/>
+			</not>
+			<then>
+
+				<!-- Prepare -->
+
+				<delete dir="${alloy.bootstrap.tmp.dir}" />
+				<delete dir="${alloy.bootstrap.deploy}" />
+
+				<unzip src="third-party/${alloy.bootstrap.file}" dest="${alloy.bootstrap.tmp.dir}" />
+
+				<!-- CSS -->
+
+				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/assets/stylesheets" />
+
+				<delete failonerror="false" includeemptydirs="true" quiet="true">
+					<fileset
+						dir="${alloy.bootstrap.lib.dir}"
+						includes="_bootstrap-*.scss"
+					/>
+				</delete>
+
+				<copy todir="${alloy.bootstrap.deploy}" overwrite="true" preservelastmodified="true">
+					<fileset dir="${alloy.bootstrap.lib.dir}/" />
+				</copy>
+
+				<!-- Glyphicons font -->
+
+				<property name="alloy.bootstrap.fonts.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/assets/fonts/bootstrap" />
+
+				<copy todir="${alloy.bootstrap.deploy}/glyphicons/font" overwrite="true" preservelastmodified="true">
+					<fileset dir="${alloy.bootstrap.fonts.lib.dir}/" />
+				</copy>
+
+				<!-- Clean up -->
+
+				<delete dir="${alloy.bootstrap.tmp.dir}" />
+			</then>
+		</if>
+	</target>
+
+	<target name="build-alloy-editor">
+		<path id="alloyeditor.zip.path">
+			<fileset dir="third-party">
+				<include name="alloy-editor-${alloyeditor.version}.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloyeditor.zip.path" refid="alloyeditor.zip.path" />
+
+		<basename file="${alloyeditor.zip.path}" property="alloyeditor.file" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${alloyeditor.file}"
+					targetfile="docroot/html/js/editor/alloyeditor"
+				/>
+			</not>
+			<then>
+				<delete dir="docroot/html/js/editor/alloyeditor" />
+
+				<echo>${alloyeditor.file}</echo>
+
+				<unzip src="third-party/${alloyeditor.file}" dest="docroot/html/js/editor/_tmp" />
+
+				<copy todir="docroot/html/js/editor/alloyeditor" overwrite="true" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
+				</copy>
+
+				<copy todir="docroot/html/js/editor/alloyeditor" overwrite="true" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/alloyeditor_diffs" />
+				</copy>
+
+				<delete dir="docroot/html/js/editor/_tmp" />
+			</then>
+			<else>
+				<copy todir="docroot/html/js/editor/alloyeditor" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/alloyeditor_diffs" />
+				</copy>
+			</else>
+		</if>
+	</target>
+
+	<target name="build-alloy-font-awesome" depends="build-alloy-bootstrap">
+		<path id="alloy-font-awesome.zip.path">
+			<fileset dir="third-party">
+				<include name="alloy-font-awesome-${alloy-font-awesome.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy-font-awesome.zip.path" refid="alloy-font-awesome.zip.path" />
+
+		<basename file="${alloy-font-awesome.zip.path}" property="alloy-font-awesome.file" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${alloy-font-awesome.file}"
+					targetfile="${alloy.bootstrap.deploy}/alloy-font-awesome"
+				/>
+			</not>
+			<then>
+				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome" />
+
+				<unzip src="third-party/${alloy-font-awesome.file}" dest="${alloy.bootstrap.deploy}" />
+
+				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/css" />
+				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/less" />
+			</then>
+		</if>
+	</target>
+
+	<target name="build-bourbon">
+		<property name="portal.common.dir" value="docroot/html/css/common" />
+
+		<property name="bourbon.version" value="3.2.3" />
+
+		<property name="bourbon.deploy" value="${portal.common.dir}/bourbon" />
+
+		<property name="bourbon.file" value="bourbon-${bourbon.version}.zip" />
+
+		<property name="bourbon.tmp.dir" value="docroot/html/BOURBON_ZIP" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${bourbon.file}"
+					targetfile="${bourbon.deploy}"
+				/>
+			</not>
+			<then>
+				<delete dir="${bourbon.tmp.dir}" />
+				<delete dir="${bourbon.deploy}" />
+
+				<unzip src="third-party/${bourbon.file}" dest="${bourbon.tmp.dir}" />
+
+				<property name="bourbon.lib.dir" value="${bourbon.tmp.dir}/bourbon-${bourbon.version}/app/assets/stylesheets" />
+
+				<copy todir="${bourbon.deploy}" overwrite="true" preservelastmodified="true">
+					<fileset dir="${bourbon.lib.dir}/" />
+				</copy>
+
+				<delete dir="${bourbon.tmp.dir}" />
+			</then>
+		</if>
+	</target>
+
+	<target name="build-ckeditor">
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${ckeditor.file}"
+					targetfile="docroot/html/js/editor/ckeditor"
+				/>
+			</not>
+			<then>
+				<delete dir="docroot/html/js/editor/ckeditor" />
+
+				<unzip src="third-party/${ckeditor.file}" dest="docroot/html/js/editor" />
+
+				<copy todir="docroot/html/js/editor/ckeditor" overwrite="true" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
+				</copy>
+
+				<antcall target="build-ckeditor-plugins-scayt" />
+
+				<antcall target="build-ckeditor-plugins-wsc" />
+			</then>
+			<else>
+				<copy todir="docroot/html/js/editor/ckeditor" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
+				</copy>
+			</else>
+		</if>
+	</target>
+
+	<target name="build-ckeditor-plugins-bbcode">
+		<concat destfile="docroot/html/js/editor/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
+			<filelist
+				dir="docroot/html/js/editor/ckeditor_diffs/plugins/bbcode"
+				files="bbcode_utils.js,lexer.js,parser.js,converter.js"
+			/>
+		</concat>
+	</target>
+
+	<target name="build-ckeditor-plugins-creole">
+		<mirrors-get
+			dest="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js"
+			src="http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html"
+		/>
+
+		<loadfile property="creole_parser.content" srcfile="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js" />
+
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				import org.apache.commons.lang.StringEscapeUtils;
+
+				// Read content
+
+				String creoleParserContent = project.getProperty("creole_parser.content");
+
+				// Get source
+
+				int x = creoleParserContent.indexOf("<pre id=\"parser\"");
+
+				x  = creoleParserContent.indexOf(">", x) + 1;
+
+				int y = creoleParserContent.indexOf("</pre>", x);
+
+				creoleParserContent = creoleParserContent.substring(x, y);
+
+				// Unescape
+
+				creoleParserContent = StringEscapeUtils.unescapeHtml(creoleParserContent);
+
+				// Wrap with function
+
+				x = creoleParserContent.indexOf("if (!Parse) {");
+
+				creoleParserContent = creoleParserContent.substring(0, x) + "(function() {\n" + creoleParserContent.substring(x) + "\n})();";
+
+				// Fix for loop
+
+				creoleParserContent = creoleParserContent.replace("for (i in this.options) {", "for (var i in this.options) {");
+
+				// Add data-cke-saved-href attribute to named links
+
+				creoleParserContent = creoleParserContent.replace(": r[1].replace(/~(.)/g, '$1');", ": r[1].replace(/~(.)/g, '$1');\nlink.setAttribute('data-cke-saved-href', link.href);\n");
+
+				// Fix image
+
+				x = creoleParserContent.indexOf("regex: rx.img,");
+				x = creoleParserContent.indexOf("{", x) + 1;
+
+				y = creoleParserContent.indexOf("r[1];", x) + 5;
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("\n\t\t\t\tvar imagePath = r[1];\n");
+				sb.append("\t\t\t\tvar imagePathPrefix = options ? options.imagePrefix : '';\n\n");
+				sb.append("\t\t\t\tif (imagePathPrefix) {\n");
+				sb.append("\t\t\t\t\tif (!(/^https?:\\/\\//gi.test(imagePath))) {\n");
+				sb.append("\t\t\t\t\t\timagePath = imagePathPrefix + imagePath;\n");
+				sb.append("\t\t\t\t\t}\n");
+				sb.append("\t\t\t\t}\n\n");
+				sb.append("\t\t\t\tvar img = document.createElement('img');\n");
+				sb.append("\t\t\t\timg.src = imagePath;");
+
+				creoleParserContent = creoleParserContent.substring(0, x) + sb.toString() + creoleParserContent.substring(y);
+
+				// Add support for whitespace in headings
+
+				creoleParserContent = creoleParserContent.replace("'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]'", "'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]*'");
+				creoleParserContent = creoleParserContent.replace("'([^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'", "'([^\\\\n=][^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'");
+
+				// Fix handling mixed list items
+
+				creoleParserContent = creoleParserContent.replace("regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*\\1[*#].+)*/,", "regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*[*#]{2}.+)*/,");
+
+				// Add support for multiple links in table cells
+
+				creoleParserContent = creoleParserContent.replace("'\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\]' +", "'(?:\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\][^|~\\\\[{]*)*' +");
+
+				// Add cke_show_border class to table start tag to keep CKEditor's formatting
+
+				creoleParserContent = creoleParserContent.replace("table: { tag: 'table', capture: 0,", "table: { tag: 'table', capture: 0,\n\t\t\tattrs: { 'class': 'cke_show_border' },");
+
+				// Fix parsing empty columns in tables
+
+				creoleParserContent = creoleParserContent.replace("regex: '\\\\|+([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +", "regex: '\\\\|([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +");
+
+				// Register Creole parser
+
+				creoleParserContent = creoleParserContent.replace("= Parse.Simple.Creole;", "= Parse.Simple.Creole;\n\nCKEDITOR.CreoleParser = Parse.Simple.Creole;");
+
+				// Fix paragraphs
+
+				creoleParserContent = creoleParserContent.replace("regex: /(^|\\n)([ \\t]*\\S.*(\\n|$))+/ },", "regex: /(^|\\n)(\\s*\\S.*(\\n|$))/ },");
+				creoleParserContent = creoleParserContent.replace("text: { capture: 0, regex: /(^|\\n)([ \\t]*[^\\s].*(\\n|$))+/ },", "text: { capture: 0, regex: /(^|\\n)(\\s*[^\\s].*(\\n|$))+/ },");
+
+
+				// Set content
+
+				project.setProperty("creole_parser.content", creoleParserContent);
+			]]>
+		</script>
+
+		<echo file="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
+	</target>
+
+	<target name="build-ckeditor-plugins-scayt">
+		<if>
+			<not>
+				<available file="third-party/${scayt.file}" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="third-party/${scayt.file}"
+					src="http://download.ckeditor.com/scayt/releases/${scayt.file}"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="docroot/html/js/editor/ckeditor/plugins"
+			src="third-party/${scayt.file}"
+		/>
+	</target>
+
+	<target name="build-ckeditor-plugins-wsc">
+		<if>
+			<not>
+				<available file="third-party/${wsc.file}" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="third-party/${wsc.file}"
+					src="http://download.ckeditor.com/wsc/releases/${wsc.file}"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="docroot/html/js/editor/ckeditor/plugins"
+			src="third-party/${wsc.file}"
+		/>
+	</target>
+
+	<target name="build-css" depends="build-themes">
+		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
+
+		<mkdir dir="${sass.tmp.dir}" />
+
+		<path id="web-lib.classpath">
+			<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+		</path>
+
+		<java
+			classname="com.liferay.portal.tools.SassToCssBuilder"
+			classpathref="web.classpath"
+			fork="true"
+			newenvironment="true"
+			outputproperty="build-css.output"
+		>
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
+			<jvmarg value="-Djava.util.logging.config.file=${project.dir}/portal-impl/src/com/liferay/portal/tools/dependencies/portal-tools-logging.properties" />
+			<jvmarg value="-Dliferay.lib.portal.dir=${basedir}/../lib/portal" />
+			<arg value="sass.dir.0=/html/css" />
+			<arg value="sass.dir.1=/html/portlet" />
+			<arg value="sass.dir.2=/html/themes" />
+			<arg value="sass.docroot.dir=${basedir}/docroot" />
+			<arg value="sass.portal.common.dir=${basedir}/docroot/html/css/common" />
+		</java>
+
+		<delete dir="${sass.tmp.dir}" />
+
+		<echo>${build-css.output}</echo>
+
+		<if>
+			<contains string="${build-css.output}" substring="Error" />
+			<then>
+				<fail>Sass to CSS Builder generated exceptions.</fail>
+			</then>
+		</if>
+	</target>
+
+	<target name="build-dtd">
+		<copy todir="docroot/dtd">
+			<fileset dir="${project.dir}/definitions" />
+		</copy>
+	</target>
+
+	<target name="build-selenium">
+		<if>
+			<not>
+				<equals arg1="${delete.function.generated}" arg2="false" />
+			</not>
+			<then>
+				<delete dir="${basedir.unix}/test/functional-generated" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset property="selenium.types" />
+			</not>
+			<then>
+				<property name="selenium.types" value="action,function,macro,path,testcase" />
+			</then>
+		</if>
+
+		<java
+			classname="com.liferay.portal.tools.seleniumbuilder.SeleniumBuilder"
+			classpathref="project.classpath"
+			failonerror="true"
+			fork="true"
+			maxmemory="1024m"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg value="project.dir=${project.dir}" />
+			<arg value="selenium.base.dir=test/functional" />
+			<arg value="selenium.types=${selenium.types}" />
+			<arg value="test.class=${test.class}" />
+		</java>
+	</target>
+
+	<target name="build-selenium-action">
+		<antcall target="build-selenium">
+			<param name="delete.function.generated" value="false" />
+			<param name="selenium.types" value="action" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-block">
+		<antcall target="build-selenium">
+			<param name="selenium.types" value="action,function,macro,path" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-function">
+		<antcall target="build-selenium">
+			<param name="delete.function.generated" value="false" />
+			<param name="selenium.types" value="function" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-macro">
+		<antcall target="build-selenium">
+			<param name="delete.function.generated" value="false" />
+			<param name="selenium.types" value="macro" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-path">
+		<antcall target="build-selenium">
+			<param name="delete.function.generated" value="false" />
+			<param name="selenium.types" value="path" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-test-case">
+		<if>
+			<not>
+				<isset property="test.class" />
+			</not>
+			<then>
+				<fail>Please set "test.class".</fail>
+			</then>
+		</if>
+
+		<antcall target="build-selenium">
+			<param name="delete.function.generated" value="false" />
+			<param name="selenium.types" value="testcase" />
+		</antcall>
+	</target>
+
+	<target name="build-selenium-user-extensions">
+		<property file="${project.dir}/test.${user.name}.properties" />
+		<property file="${project.dir}/test.${env.COMPUTERNAME}.properties" />
+		<property file="${project.dir}/test.${env.HOST}.properties" />
+		<property file="${project.dir}/test.${env.HOSTNAME}.properties" />
+		<property file="${project.dir}/test.properties" />
+
+		<propertyregex
+			property="basedir.double.slash"
+			input="${basedir}"
+			regexp="\\"
+			replace="\\\\\\\\"
+		/>
+
+		<loadfile property="ide.js.content" srcfile="${project.dir}/tools/selenium/extensions/ide.js">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+
+		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
+	</target>
+
+	<target name="build-themes" depends="build-alloy,build-bourbon">
+		<for param="module.name">
+			<path>
+				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />
+			</path>
+			<sequential>
+				<if>
+					<available file="@{module.name}/_diffs/images" />
+					<then>
+						<for param="file">
+							<path>
+								<fileset
+									dir="@{module.name}/_diffs/images"
+									includes="**/screenshot.png"
+								/>
+							</path>
+							<sequential>
+								<propertyregex input="@{file}" override="yes" property="thumbnail.file" regexp="screenshot\.png" replace="thumbnail\.png" />
+
+								<if>
+									<not>
+										<uptodate targetfile="${thumbnail.file}" srcfile="@{file}" />
+									</not>
+									<then>
+										<java
+											classname="com.liferay.portal.tools.ThumbnailBuilder"
+											classpathref="project.classpath"
+										>
+											<arg value="thumbnail.original.file=@{file}" />
+											<arg value="thumbnail.thumbnail.file=${thumbnail.file}" />
+											<arg value="thumbnail.height=120" />
+											<arg value="thumbnail.width=160" />
+											<arg value="thumbnail.overwrite=false" />
+										</java>
+									</then>
+								</if>
+							</sequential>
+						</for>
+					</then>
+				</if>
+
+				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
+					<fileset
+						dir="docroot/html/themes/_unstyled"
+						excludes="templates/init.ftl,templates/init.vm"
+					/>
+				</copy>
+
+				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
+					<fileset
+						dir="docroot/html/themes/_styled"
+					/>
+				</copy>
+
+				<if>
+					<available file="@{module.name}/_diffs" />
+					<then>
+						<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
+							<fileset
+								dir="@{module.name}/_diffs"
+							/>
+						</copy>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
+		<copy
+			file="docroot/html/themes/_unstyled/images/favicon.ico"
+			preservelastmodified="true"
+			todir="docroot"
+		/>
+	</target>
+
+	<target name="build-tinymce">
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${tinymce.file}"
+					targetfile="docroot/html/js/editor/tiny_mce"
+				/>
+			</not>
+			<then>
+				<delete dir="docroot/html/js/editor/tiny_mce" />
+				<delete dir="docroot/html/js/editor/tinymce" />
+
+				<unzip src="third-party/${tinymce.file}" dest="docroot/html/js/editor" />
+
+				<move todir="docroot/html/js/editor/tiny_mce" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/tinymce/js/tinymce">
+						<include name="*/**" />
+					</fileset>
+				</move>
+
+				<copy todir="docroot/html/js/editor/tiny_mce" overwrite="true" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/tiny_mce_diffs" />
+				</copy>
+
+				<delete dir="docroot/html/js/editor/tinymce" />
+			</then>
+		</if>
+	</target>
+
+	<target name="build-vaadin">
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${vaadin.file}"
+					targetfile="docroot/html/VAADIN"
+				/>
+			</not>
+			<then>
+				<delete dir="docroot/html/VAADIN_ZIP" />
+
+				<unzip src="third-party/${vaadin.file}" dest="docroot/html/VAADIN_ZIP" />
+
+				<delete dir="docroot/html/VAADIN" />
+
+				<copy todir="docroot/html/VAADIN/themes" preservelastmodified="true">
+					<fileset dir="docroot/html/VAADIN_ZIP/VAADIN/themes">
+						<include name="default/**" />
+						<include name="base/**" />
+						<include name="runo/**" />
+						<include name="reindeer/**" />
+						<include name="liferay/**" />
+					</fileset>
+				</copy>
+
+				<copy todir="docroot/html/VAADIN/widgetsets" preservelastmodified="true">
+					<fileset dir="docroot/html/VAADIN_ZIP/VAADIN/widgetsets">
+						<include name="com.vaadin.portal.gwt.PortalDefaultWidgetSet/**" />
+					</fileset>
+				</copy>
+
+				<delete dir="docroot/html/VAADIN_ZIP" />
+			</then>
+		</if>
+	</target>
+
+	<target name="clean" depends="build-common-web.clean,clean-css,clean-themes,clean-tlds">
+		<delete dir="classes" />
+		<delete dir="docroot/dtd" />
+		<delete dir="docroot/html/js/aui" />
+		<delete dir="docroot/html/js/editor/alloyeditor" />
+		<delete dir="docroot/html/js/editor/ckeditor" />
+		<delete dir="docroot/html/js/editor/tiny_mce" />
+		<delete dir="docroot/html/portal/aui" />
+		<delete dir="docroot/html/themes/_unstyled/images/aui/" />
+		<delete dir="docroot/html/themes/classic/color_schemes" />
+		<delete dir="docroot/html/VAADIN" />
+		<delete dir="docroot/WEB-INF/classes" />
+		<delete dir="docroot/WEB-INF/lib" />
+		<delete dir="test-classes" />
+		<delete dir="test-results" />
+	</target>
+
+	<target name="clean-css">
+		<delete includeemptydirs="true">
+			<fileset dir="docroot/html/css" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
+			<fileset dir="docroot/html/portlet" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
+			<fileset dir="docroot/html/themes" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
+		</delete>
+	</target>
+
+	<target name="clean-themes">
+		<for param="module.name">
+			<path>
+				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />
+			</path>
+			<sequential>
+				<delete includeemptydirs="true" quiet="true" failonerror="false">
+					<fileset
+						dir="@{module.name}"
+						excludes="**/_diffs/**"
+					/>
+				</delete>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="clean-tlds">
+		<delete includeemptydirs="true">
+			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
+		</delete>
+	</target>
+
+	<target name="compile-common-jsp">
+		<delete dir="${jspc.classes.dir}" quiet="true" />
+
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<equals arg1="${ant.java.version}" arg2="1.5" />
+			</and>
+			<then>
+				<var name="jspc.java.home" value="${jdk.windows.home}" />
+			</then>
+			<else>
+				<var name="jspc.java.home" value="${env.JAVA_HOME}" />
+			</else>
+		</if>
+
+		<if>
+			<available file="${app.server.portal.dir}/WEB-INF/classes/com/liferay/portal/deploy/dependencies/touch.jsp" />
+			<then>
+				<move
+					failonerror="false"
+					file="${app.server.portal.dir}/WEB-INF/classes/com/liferay/portal/deploy/dependencies/touch.jsp"
+					tofile="${app.server.portal.dir}/WEB-INF/classes/com/liferay/portal/deploy/dependencies/touch.jsp.tmp"
+				/>
+			</then>
+		</if>
+
+		<java
+			classname="org.apache.jasper.JspC"
+			classpathref="jspc.classpath"
+			fork="true"
+			jvm="${jspc.java.home}/bin/java"
+			newenvironment="true"
+			outputproperty="jspc.output"
+		>
+			<arg line="${arg.line}" />
+		</java>
+
+		<if>
+			<available file="${app.server.portal.dir}/WEB-INF/classes/com/liferay/portal/deploy/dependencies/touch.jsp.tmp" />
+			<then>
+				<move
+					failonerror="false"
+					file="${app.server.portal.dir}/WEB-INF/classes/com/liferay/portal/deploy/dependencies/touch.jsp.tmp"
+					tofile="${app.server.portal.dir}/WEB-INF/classes/com/liferay/portal/deploy/dependencies/touch.jsp"
+				/>
+			</then>
+		</if>
+
+		<echo>${jspc.output}</echo>
+
+		<if>
+			<contains string="${jspc.output}" substring="JasperException" />
+			<then>
+				<fail>JSPs failed to compile.</fail>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="tomcat" />
+			<then>
+				<fileset dir="${jspc.classes.dir}" id="oversize.files">
+					<include name="**/*.java" />
+					<size units="K" value="700" when="more" />
+				</fileset>
+
+				<pathconvert
+					dirsep="/"
+					pathsep="${line.separator}"
+					property="oversize.files.java"
+					refid="oversize.files"
+				/>
+
+				<if>
+					<not>
+						<equals arg1="${oversize.files.java}" arg2="" />
+					</not>
+					<then>
+						<antelope:stringutil property="oversize.files.jsp" string="${oversize.files.java}">
+							<replace regex="\.java" replacement="" />
+							<replace regex="${jspc.classes.dir}/org/apache/jsp" replacement="docroot" />
+							<replace regex="_jsp" replacement=".jsp" />
+							<replace regex="_002d" replacement="-" />
+							<replace regex="_005f" replacement="_" />
+						</antelope:stringutil>
+
+						<fail>
+The following JSPs may be too large for some application servers. See LPS-27841
+for more information.
+
+${oversize.files.jsp}</fail>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<javac
+			classpathref="jspc.classpath"
+			compiler="${javac.compiler}"
+			deprecation="${javac.deprecation}"
+			destdir="${jspc.classes.dir}"
+			encoding="${javac.encoding}"
+			includeAntRuntime="false"
+			nowarn="on"
+			srcdir="${jspc.classes.dir}"
+		/>
+
+		<java
+			classname="com.liferay.portal.tools.jspc.common.TimestampUpdater"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<arg line="${jspc.classes.dir}" />
+		</java>
+	</target>
+
+	<target name="compile-jonas">
+		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
+
+		<path id="jspc.classpath">
+			<pathelement location="${env.JAVA_HOME}/jre/lib/rt.jar" />
+			<path refid="jspc.common.classpath" />
+			<pathelement location="${app.server.dir}/repositories/maven2-internal/org/ow2/jonas/jonas-web-container-tomcat-6.0/${app.server.jonas.version}/jonas-web-container-tomcat-6.0-${app.server.jonas.version}-ipojo.jar" />
+			<pathelement location="${app.server.dir}/repositories/maven2-internal/org/ow2/jonas/osgi/javaee-api/${app.server.jonas.version}/javaee-api-${app.server.jonas.version}.jar" />
+		</path>
+
+		<antcall target="compile-common-jsp" inheritrefs="true">
+			<param name="arg.line" value="-d ${jspc.classes.dir} -webapp ${jsp.precompile.dir}" />
+		</antcall>
+	</target>
+
+	<target name="compile-resin">
+		<if>
+			<not>
+				<isset property="jdk.6.home" />
+			</not>
+			<then>
+				<fail>
+.
+
+Please set the property "jdk.6.home" in build.properties.
+				</fail>
+			</then>
+		</if>
+
+		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
+
+		<path id="jspc.classpath">
+			<pathelement location="${jdk.6.home}/jre/lib/rt.jar" />
+			<pathelement location="${jdk.6.home}/lib/tools.jar" />
+			<path refid="jspc.common.classpath" />
+			<pathelement location="${app.server.dir}/lib/resin.jar" />
+			<pathelement location="${project.dir}/lib/portal/abdera.jar" />
+			<pathelement location="${project.dir}/lib/portal/axis.jar" />
+			<pathelement location="${project.dir}/lib/portal/commons-beanutils.jar" />
+			<pathelement location="${project.dir}/lib/portal/commons-configuration.jar" />
+			<pathelement location="${project.dir}/lib/portal/commons-digester.jar" />
+			<pathelement location="${project.dir}/lib/portal/commons-httpclient.jar" />
+			<pathelement location="${project.dir}/lib/portal/portletbridge-core.jar" />
+			<pathelement location="${project.dir}/lib/portal/portletbridge-portlet.jar" />
+			<pathelement location="${project.dir}/lib/portal/spring-beans.jar" />
+			<pathelement location="${project.dir}/lib/portal/spring-context.jar" />
+			<pathelement location="${project.dir}/lib/portal/spring-core.jar" />
+			<pathelement location="${project.dir}/lib/portal/spring-expression.jar" />
+			<pathelement location="${project.dir}/lib/portal/spring-web.jar" />
+			<pathelement location="${project.dir}/lib/portal/spring-webmvc.jar" />
+			<pathelement location="${project.dir}/lib/portal/struts-el.jar" />
+			<pathelement location="${project.dir}/lib/portal/tika-core.jar" />
+		</path>
+
+		<delete dir="${jspc.classes.dir}" quiet="true" />
+
+		<delete file="jspc_error" />
+
+		<java
+			classname="com.liferay.portal.tools.jspc.resin.BatchJspCompiler"
+			classpathref="jspc.classpath"
+			fork="true"
+			maxmemory="512m"
+			newenvironment="true"
+			jvm="${jdk.6.home}\bin\java"
+		>
+			<arg line="docroot ${jspc.classes.dir}" />
+		</java>
+
+		<if>
+			<available file="jspc_error" />
+			<then>
+				<loadfile property="jspc_error.content" srcfile="jspc_error" />
+
+				<fail>${jspc_error.content}</fail>
+			</then>
+		</if>
+
+		<delete dir="resin-data" quiet="true" />
+	</target>
+
+	<target name="compile-tomcat">
+		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
+
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<equals arg1="${ant.java.version}" arg2="1.5" />
+			</and>
+			<then>
+				<var name="jspc.java.home" value="${jdk.windows.home}" />
+			</then>
+			<else>
+				<var name="jspc.java.home" value="${env.JAVA_HOME}" />
+			</else>
+		</if>
+
+		<path id="jspc.classpath">
+			<pathelement location="${jspc.java.home}/jre/lib/rt.jar" />
+			<path refid="jspc.common.classpath" />
+			<pathelement location="${app.server.dir}/lib/el-api.jar" />
+			<pathelement location="${app.server.dir}/lib/jasper.jar" />
+			<pathelement location="${app.server.dir}/lib/jasper-el.jar" />
+			<pathelement location="${app.server.dir}/lib/jasper-jdt.jar" />
+			<pathelement location="${app.server.dir}/lib/jsp-api.jar" />
+			<pathelement location="${app.server.dir}/lib/servlet-api.jar" />
+			<pathelement location="${app.server.dir}/lib/tomcat-api.jar" />
+			<pathelement location="${app.server.dir}/lib/tomcat-util.jar" />
+			<pathelement location="${app.server.bin.dir}/tomcat-juli.jar" />
+		</path>
+
+		<antcall target="compile-common-jsp" inheritrefs="true">
+			<param name="arg.line" value="-d ${jspc.classes.dir} -webapp ${jsp.precompile.dir}" />
+		</antcall>
+	</target>
+
+	<target name="deploy" depends="compile,build-portal-web-dependencies">
+		<antcall target="build-common-web.deploy" />
+
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<equals arg1="${app.server.jboss.major.version}" arg2="5" />
+			</and>
+			<then>
+				<copy
+					file="${app.server.portal.dir}/WEB-INF/jboss-web.xml.5"
+					overwrite="true"
+					preservelastmodified="true"
+					tofile="${app.server.portal.dir}/WEB-INF/jboss-web.xml"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${jsp.precompile}" arg2="on" />
+			<then>
+				<if>
+					<equals arg1="${app.server.type}" arg2="jonas" />
+					<then>
+						<antcall target="compile-jonas" />
+
+						<copy todir="${app.server.dir}/work/jonas/localhost/_" preservelastmodified="true">
+							<fileset dir="classes/${app.server.type}">
+								<exclude name="**/*.jspc_error" />
+								<exclude name="**/*.java" />
+							</fileset>
+						</copy>
+					</then>
+					<elseif>
+						<equals arg1="${app.server.type}" arg2="resin" />
+						<then>
+							<antcall target="compile-resin" />
+
+							<copy todir="${app.server.portal.dir}/WEB-INF/work" preservelastmodified="true">
+								<fileset dir="classes/${app.server.type}">
+									<exclude name="**/*.jspc_error" />
+									<exclude name="**/*.java" />
+								</fileset>
+							</copy>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<then>
+							<antcall target="compile-tomcat" />
+
+							<copy todir="${app.server.dir}/work/Catalina/localhost/_" preservelastmodified="true">
+								<fileset dir="classes/${app.server.type}">
+									<exclude name="**/*.jspc_error" />
+									<exclude name="**/*.java" />
+								</fileset>
+							</copy>
+						</then>
+					</elseif>
+				</if>
+			</then>
+		</if>
+	</target>
+
+	<target name="deploy-fast">
+		<if>
+			<or>
+				<equals arg1="${app.server.type}" arg2="jetty" />
+				<equals arg1="${app.server.type}" arg2="resin" />
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+			</or>
+			<then>
+				<copy todir="${app.server.portal.dir}" preservelastmodified="true">
+					<fileset dir="docroot">
+						<include name="**/*.css" />
+						<include name="**/*.dtd" />
+						<include name="**/*.ftl" />
+						<include name="**/*.gif" />
+						<include name="**/*.jar" />
+						<include name="**/*.jpg" />
+						<include name="**/*.js" />
+						<include name="**/*.jsp" />
+						<include name="**/*.jspf" />
+						<include name="**/*.png" />
+						<include name="**/*.properties" />
+						<include name="**/*.tld" />
+						<include name="**/*.vm" />
+						<include name="**/*.wsdd" />
+						<include name="**/*.xml" />
+					</fileset>
+				</copy>
+			</then>
+		</if>
+	</target>
+
+	<target name="deploy-properties">
+		<ant dir=".." target="deploy-properties" inheritAll="false" />
+	</target>
+
+	<target name="format-js">
+		<taskdef classname="com.philmander.jshint.JsHintAntTask" classpath="${project.dir}/tools/ant-jshint-2.0.5.jar" name="jshint" />
+
+		<jshint
+			dir="${project.dir}"
+			globals="alert: true, AUI: true, confirm: true, Liferay: true, prompt: true, submitForm: true, themeDisplay: true, YUI: true"
+			options="browser=true,curly=true,devel=false,eqeqeq=false,eqnull=true,evil=true,forin=false,funcscope=true,nonew=false,nonstandard=true,scripturl=true,strict=false,trailing=true,yui=true"
+		>
+			<exclude name="**/aui/**" />
+			<exclude name="**/dynamiccss/dependencies/r2*.js" />
+			<exclude name="**/editor/**" />
+			<exclude name="**/misc/**" />
+			<exclude name="**/selenium/**" />
+			<exclude name="**/VAADIN/**" />
+			<include name="**/*.js" />
+		</jshint>
+	</target>
+
+	<target name="node-execute">
+		<ant-execute
+			ant.build.file="build-node.xml"
+			ant.dir="${project.dir}/tools/sdk"
+			ant.target="node-execute"
+		/>
+	</target>
+
+	<target name="npm-execute">
+		<ant-execute
+			ant.build.file="build-node.xml"
+			ant.dir="${project.dir}/tools/sdk"
+			ant.target="npm-execute"
+		/>
+	</target>
+
+	<target name="war" depends="compile,build-portal-web-dependencies">
+		<war
+			basedir="docroot"
+			destfile="${war.file}.war"
+			excludes="WEB-INF/web.xml"
+			webxml="docroot/WEB-INF/web.xml"
+		>
+			<metainf dir="${project.dir}/oss-licenses">
+				<exclude name="**/development/**" />
+			</metainf>
+		</war>
+	</target>
 </project>

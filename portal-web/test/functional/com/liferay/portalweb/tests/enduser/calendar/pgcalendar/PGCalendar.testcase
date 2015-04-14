@@ -2726,6 +2726,30 @@
 		</execute>
 	</command>
 
+	<command name="ViewCorrectNumberOfWeeksMonthView" priority="3">
+		<description message="This is a use case for LPS-52517." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#viewMonth">
+			<var name="dateMonth" value="February 2015" />
+		</execute>
+
+		<execute macro="Calendar#viewWeekCountViaMonthView">
+			<var name="weekNumber" value="4" />
+		</execute>
+
+		<execute macro="Calendar#viewMonth">
+			<var name="dateMonth" value="October 2015" />
+		</execute>
+
+		<execute macro="Calendar#viewWeekCountViaMonthView">
+			<var name="weekNumber" value="5" />
+		</execute>
+	</command>
+
 	<command known-issues="LPS-53987" name="ViewInvitedResourceAvailability" priority="5">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="eventNumber" value="2" />

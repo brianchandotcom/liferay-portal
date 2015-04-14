@@ -17,7 +17,11 @@ package com.liferay.layout.set.prototype.web.lar;
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniela Zapata Riesco
@@ -31,4 +35,14 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SiteTemplateSettingsPortletDataHandler
 	extends LayoutSetPrototypePortletDataHandler {
+
+	@Activate
+	protected void activate() {
+		super.activate();
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
+	}
+
 }

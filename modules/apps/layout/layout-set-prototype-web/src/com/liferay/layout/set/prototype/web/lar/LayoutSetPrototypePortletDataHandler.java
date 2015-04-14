@@ -34,7 +34,11 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniela Zapata Riesco
@@ -51,7 +55,8 @@ public class LayoutSetPrototypePortletDataHandler
 
 	public static final String NAMESPACE = "layout_set_prototypes";
 
-	public LayoutSetPrototypePortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLevel(DataLevel.PORTAL);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(LayoutSetPrototype.class));
@@ -143,6 +148,10 @@ public class LayoutSetPrototypePortletDataHandler
 				portletDataContext);
 
 		layoutSetPrototypeExportActionableDynamicQuery.performCount();
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 }

@@ -471,7 +471,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Web Content Article" />
+			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
 		</execute>
 

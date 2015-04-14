@@ -93,7 +93,7 @@
 		</execute>
 
 		<execute macro="User#editDisplaySettingsCP">
-			<var name="languageName" value="German (Germany)" />
+			<var name="languageName" value="Deutsch (Deutschland)" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 

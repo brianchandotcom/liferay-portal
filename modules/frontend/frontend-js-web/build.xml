@@ -56,7 +56,7 @@
 					/>
 				</concat>
 
- 				<for param="dir">
+				<for param="dir">
 					<path>
 						<dirset
 							dir="${alloy.build.dir}"

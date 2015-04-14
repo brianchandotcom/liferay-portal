@@ -1,4 +1,5 @@
 Bundle-Name: Liferay PMD
 Bundle-SymbolicName: com.liferay.pmd
 Bundle-Version: 1.0.1
-Export-Package: com.liferay.pmd.rules.java
+Export-Package: com.liferay.pmd.rules.java,\
+com.liferay.pmd.rules.junit

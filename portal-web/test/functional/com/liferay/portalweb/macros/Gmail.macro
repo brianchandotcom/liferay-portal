@@ -94,7 +94,7 @@
 	<command name="openMessageContinueReadingButton">
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
-		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${pageName}, ' ', '-')" name="pageNameURL" />
 		<var method="StringUtil#lowerCase(/${pageNameURL})" name="pageNameURL" />
 
 		<execute function="AssertClick" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_CONTINUE_READING_BUTTON" value1="CONTINUE READING" />
@@ -113,7 +113,7 @@
 	<command name="openMessageLink">
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
-		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${pageName}, ' ', '-')" name="pageNameURL" />
 		<var method="StringUtil#lowerCase(/${pageNameURL})" name="pageNameURL" />
 
 		<var name="key_pageNameURL" value="${pageNameURL}" />

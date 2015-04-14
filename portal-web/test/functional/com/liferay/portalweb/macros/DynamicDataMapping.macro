@@ -186,7 +186,7 @@
 				<isset var="fieldName" />
 			</not>
 			<then>
-				<var name="fieldName" value="${fieldFieldLabel?replace(' ', '_')}" />
+				<var method="StringUtil#replace(${fieldFieldLabel}, ' ', '_')" name="fieldName" />
 			</then>
 		</if>
 

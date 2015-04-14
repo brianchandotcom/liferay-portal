@@ -161,7 +161,7 @@
 	</command>
 
 	<command name="definePermissionPG">
-		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
@@ -436,7 +436,7 @@
 			<if>
 				<isset var="siteNameScope" />
 				<then>
-					<var name="permissionDefinitionKeyChange" value="${permissionDefinitionKey?replace('CHECKBOX', 'CHANGE_LINK')}" />
+					<var method="StringUtil#replace(${permissionDefinitionKey}, 'CHECKBOX', 'CHANGE_LINK')" name="permissionDefinitionKeyChange" />
 
 					<execute function="AssertClick" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeyChange}" value1="Change" />
 
@@ -447,7 +447,7 @@
 					<execute function="Click" locator1="CPRolesDefinepermissionsSelectSite#SCOPE_SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
 					<var name="key_siteNameScope" value="${siteNameScope}" />
-					<var name="permissionDefinitionKeySiteScope" value="${permissionDefinitionKey?replace('CHECKBOX', 'SITE_SCOPE')}" />
+					<var method="StringUtil#replace(${permissionDefinitionKey}, 'CHECKBOX', 'SITE_SCOPE')" name="permissionDefinitionKeySiteScope" />
 
 					<execute function="SelectFrame" value1="relative=top" />
 					<execute function="AssertTextEquals" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeySiteScope}" value1="${siteNameScope}" />
@@ -627,7 +627,7 @@
 	</command>
 
 	<command name="removePermissionPG">
-		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="Uncheck" locator1="Permissions#${permissionDefinitionKey}" />
@@ -936,7 +936,7 @@
 	</command>
 
 	<command name="viewPermissionPG">
-		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<if>

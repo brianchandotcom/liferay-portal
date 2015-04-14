@@ -3,7 +3,7 @@
 		<for list="${roleList}" param="roleName" >
 			<var name="roleName" value="${roleName}" />
 
-			<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+			<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
 			<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 			<if>
@@ -28,7 +28,7 @@
 		<for list="${roleList}" param="roleName" >
 			<var name="roleName" value="${roleName}" />
 
-			<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+			<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
 			<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 			<if>
@@ -326,14 +326,14 @@
 	</command>
 
 	<command name="viewPermissionsChecked">
-		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="AssertChecked" locator1="Permissions#${permissionDefinitionKey}" />
 	</command>
 
 	<command name="viewPermissionsRemoved">
-		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="AssertNotChecked" locator1="Permissions#${permissionDefinitionKey}" />

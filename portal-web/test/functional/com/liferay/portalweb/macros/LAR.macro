@@ -268,7 +268,7 @@
 		<execute function="Click" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON" />
 		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_TEMPLATES_EXPORT_BUTTON" value1="Export" />
 
-		<var name="exportTemplateName" value="${exportTemplateName?replace(' ', '_')}" />
+		<var method="StringUtil#replace(${exportTemplateName}, ' ', '_')" name="exportTemplateName" />
 		<var name="key_larFileName" value="${exportTemplateName}" />
 		<echo message="${exportTemplateName}" />
 

@@ -834,7 +834,7 @@
 				<equals arg1="${siteURL}" arg2="true" />
 			</and>
 			<then>
-				<var name="siteNameURL" value="${siteName?replace(' ', '-')}" />
+				<var method="StringUtil#replace(${siteName}, ' ', '-')" name="siteNameURL" />
 				<var method="StringUtil#lowerCase(/${siteNameURL})" name="siteNameURL" />
 			</then>
 			<elseif>
@@ -858,13 +858,13 @@
 			</else>
 		</if>
 
-		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${pageName}, ' ', '-')" name="pageNameURL" />
 		<var method="StringUtil#lowerCase(/${pageNameURL})" name="pageNameURL" />
 
 		<if>
 			<isset var="wikiNodeName" />
 			<then>
-				<var name="wikiNodeNameURL" value="${wikiNodeName?replace(' ', '-')}" />
+				<var method="StringUtil#replace(${wikiNodeName}, ' ', '-')" name="wikiNodeNameURL" />
 				<var name="wikiNodeNameURL" value="/${wikiNodeNameURL}" />
 			</then>
 			<else>
@@ -872,7 +872,7 @@
 			</else>
 		</if>
 
-		<var name="wikiPage2TitleURL" value="${wikiPage2Title?replace(' ', '+')}" />
+		<var method="StringUtil#replace(${wikiPage2Title}, ' ', '+')" name="wikiPage2TitleURL" />
 		<var method="StringUtil#lowerCase(${wikiPage2TitleURL})" name="wikiPage2TitleURL" />
 
 		<if>

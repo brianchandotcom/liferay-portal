@@ -60,7 +60,7 @@
 		<execute function="AssertClick" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
 		<execute function="AssertClick" locator1="SOBookmarks#BOOKMARKS_ACTIONS_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
@@ -117,7 +117,7 @@
 		<execute function="AssertClick" locator1="SOBookmarks#BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
 		<execute function="AssertClick" locator1="SOBookmarks#BOOKMARKS_ACTIONS_MENULIST_PERMISSIONS" value1="Permissions" />
 
-		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />

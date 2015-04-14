@@ -14,9 +14,6 @@
 
 package com.liferay.document.selector;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -25,11 +22,11 @@ import javax.portlet.PortletURL;
  */
 public interface ItemSelector {
 
-	public PortletURL getItemSelectorURL(
-		PortletRequest portletRequest,
-		ItemSelectorCriterion... itemSelectorCriteria);
+	public ItemSelectorRendering getItemSelectorRendering(
+		PortletRequest portletRequest);
 
-	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers(
-		Map<String, String[]> parameters);
+	public PortletURL getItemSelectorURL(
+		PortletRequest portletRequest, String itemSelectedCallback,
+		ItemSelectorCriterion... itemSelectorCriteria);
 
 }

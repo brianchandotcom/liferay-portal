@@ -16,24 +16,21 @@ package com.liferay.document.selector.impl;
 
 import com.liferay.document.selector.ItemSelectorView;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.Locale;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * @author Iván Zaera
  */
 public class MediaItemSelectorView
 	implements ItemSelectorView<MediaItemSelectorCriterion> {
-
-	public static final String HTML =
-		"<html>" + MediaItemSelectorView.class.getName() + "</html>";
-
-	@Override
-	public String getHTML(
-		MediaItemSelectorCriterion mediaItemSelectorCriterion,
-		String itemSelectedCallback) {
-
-		return HTML;
-	}
 
 	@Override
 	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -43,6 +40,19 @@ public class MediaItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return MediaItemSelectorView.class.getName();
+	}
+
+	@Override
+	public void renderHTML(
+			ServletRequest request, ServletResponse response,
+			MediaItemSelectorCriterion mediaItemSelectorCriterion,
+			PortletURL portletURL, String itemSelectedCallback)
+		throws IOException {
+
+		PrintWriter writer = response.getWriter();
+
+		writer.print(
+			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
 	}
 
 }

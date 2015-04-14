@@ -106,6 +106,12 @@ public class PoshiRunnerValidation {
 			else if (elementName.equals("take-screenshot")) {
 				_validateTakeScreenshotElement(childElement, filePath);
 			}
+			else if (elementName.equals("task")) {
+				_validateTaskElement(childElement, filePath);
+			}
+			else if (elementName.equals("var")) {
+				_validateVarElement(childElement, filePath);
+			}
 		}
 	}
 
@@ -402,6 +408,18 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateTaskElement(Element element, String filePath)
+		throws PoshiRunnerException {
+
+		List<String> possibleAttributeNames = Arrays.asList(
+			"line-number", "macro-summary", "summary");
+
+		_validatePossibleAttributeNames(
+			element, possibleAttributeNames, filePath);
+
+		_parseElements(element, filePath);
+	}
+
 	private static void _validateTestcaseFile(Element element, String filePath)
 		throws PoshiRunnerException {
 
@@ -428,8 +446,8 @@ public class PoshiRunnerValidation {
 		}
 
 		List<String> possibleAttributeNames = Arrays.asList(
-			"attribute", "group", "line-number", "locator", "method", "name",
-			"pattern", "value");
+			"attribute", "group", "input", "line-number", "locator", "method",
+			"name", "pattern", "value");
 
 		_validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);

@@ -83,7 +83,7 @@
 					</sequential>
 				</for>
 
-  				<replaceregexp match="url\(([^)]+)\)" replace="url(@theme_image_path@/aui/\1)" flags="g" byline="false">
+				<replaceregexp match="url\(([^)]+)\)" replace="url(@theme_image_path@/aui/\1)" flags="g" byline="false">
 					<fileset
 						dir="${alloy.temp.dir}"
 						includes="aui_deprecated.css"

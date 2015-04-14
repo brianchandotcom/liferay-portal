@@ -37,17 +37,20 @@
 
 				<!-- Prepare -->
 
-				<delete dir="ALLOY_ZIP" />
 				<delete dir="tmp/aui" />
 
 				<echo>${alloy.file}</echo>
 
-				<unzip dest="ALLOY_ZIP" src="${third.party.dir}/${alloy.file}" />
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<unzip dest="${tstamp.value}" src="${third.party.dir}/${alloy.file}" />
 
 				<!-- CSS -->
 
-				<property name="alloy.build.dir" value="ALLOY_ZIP/build" />
-				<property name="alloy.temp.dir" value="ALLOY_ZIP/temp" />
+				<property name="alloy.build.dir" value="${tstamp.value}/build" />
+				<property name="alloy.temp.dir" value="${tstamp.value}/temp" />
 
 				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
 					<filelist
@@ -120,7 +123,7 @@
 
 				<!-- Clean up -->
 
-				<delete dir="ALLOY_ZIP" />
+				<delete dir="${tstamp.value}" />
 			</then>
 		</if>
 	</target>

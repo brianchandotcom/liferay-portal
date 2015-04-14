@@ -53,7 +53,7 @@ Group group = themeDisplay.getSiteGroup();
 <liferay-ui:success key='<%= LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
 
 <c:if test="<%= !group.isLayoutSetPrototype() %>">
-	<liferay-util:include page="/toolbar.jsp">
+	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="toolbarItem" value='<%= layoutSetPrototype.isNew() ? "add" : StringPool.BLANK %>' />
 	</liferay-util:include>
 
@@ -69,7 +69,7 @@ request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", layoutS
 request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 %>
 
-<liferay-util:include page="/merge_alert.jsp" />
+<liferay-util:include page="/merge_alert.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="updateLayoutSetPrototype" var="updateLayoutSetPrototypeURL" />
 

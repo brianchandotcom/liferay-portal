@@ -20,8 +20,10 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -82,6 +84,20 @@ public class LoggerElement {
 		}
 	}
 
+	public List<String> getAttributeNames() {
+		List<String> attributeNames = new ArrayList<>();
+
+		for (String attributeName : _attributes.keySet()) {
+			attributeNames.add(attributeName);
+		}
+
+		return attributeNames;
+	}
+
+	public String getAttributeValue(String key) {
+		return _attributes.get(key);
+	}
+
 	public String getClassName() {
 		return _className;
 	}
@@ -122,6 +138,14 @@ public class LoggerElement {
 		}
 
 		return childLoggerElements;
+	}
+
+	public void setAttribute(String attributeName, String attributeValue) {
+		_attributes.put(attributeName, attributeValue);
+
+		if (_isWrittenToLogger()) {
+			LoggerUtil.setAttribute(this, attributeName, attributeValue);
+		}
 	}
 
 	public void setClassName(String className) {
@@ -220,6 +244,7 @@ public class LoggerElement {
 
 	private static final Set<String> _usedIds = new HashSet<>();
 
+	private final Map<String, String> _attributes = new HashMap<>();
 	private final List<LoggerElement> _childLoggerElements = new ArrayList<>();
 	private String _className = "";
 	private String _id;

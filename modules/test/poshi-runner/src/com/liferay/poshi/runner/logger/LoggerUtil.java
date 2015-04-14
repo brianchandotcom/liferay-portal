@@ -20,6 +20,8 @@ import com.liferay.poshi.runner.util.Validator;
 
 import java.net.URL;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import org.openqa.selenium.Dimension;
@@ -64,6 +66,20 @@ public final class LoggerUtil {
 				StringEscapeUtils.escapeEcmaScript(
 					childLoggerElement.getText()));
 			sb.append("';");
+		}
+
+		List<String> attributeNames = childLoggerElement.getAttributeNames();
+
+		if (!attributeNames.isEmpty()) {
+			for (String attributeName : attributeNames) {
+				sb.append("childNode.setAttribute('");
+				sb.append(StringEscapeUtils.escapeEcmaScript(attributeName));
+				sb.append("', '");
+				sb.append(
+					StringEscapeUtils.escapeEcmaScript(
+						childLoggerElement.getAttributeValue(attributeName)));
+				sb.append("');");
+			}
 		}
 
 		sb.append("childNode.setAttribute('id', '");
@@ -150,6 +166,29 @@ public final class LoggerUtil {
 		sb.append("return true;");
 
 		return (boolean)_javascriptExecutor.executeScript(sb.toString());
+	}
+
+	public static void setAttribute(
+		LoggerElement loggerElement, String attributeName,
+		String attributeValue) {
+
+		if (!isLoggerStarted()) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("var node = document.getElementById('");
+		sb.append(loggerElement.getID());
+		sb.append("');");
+
+		sb.append("node.setAttribute('");
+		sb.append(StringEscapeUtils.escapeEcmaScript(attributeName));
+		sb.append("', '");
+		sb.append(StringEscapeUtils.escapeEcmaScript(attributeValue));
+		sb.append("');");
+
+		_javascriptExecutor.executeScript(sb.toString());
 	}
 
 	public static void setClassName(LoggerElement loggerElement) {

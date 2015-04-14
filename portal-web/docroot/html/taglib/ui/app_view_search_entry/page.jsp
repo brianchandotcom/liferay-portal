@@ -154,6 +154,7 @@ summary.setQueryTerms(queryTerms);
 
 			summary.setHighlight(highlightEnabled);
 			summary.setQueryTerms(queryTerms);
+			summary.setEscape(false);
 		%>
 
 			<div class="entry-discussion">

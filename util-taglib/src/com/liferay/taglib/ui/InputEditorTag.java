@@ -282,7 +282,11 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	protected String getPage(String editorName) {
-		return "/html/js/editor/" + editorName + ".jsp";
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getPathJavaScript() + "/editor/" +
+			editorName + ".jsp";
 	}
 
 	@Override

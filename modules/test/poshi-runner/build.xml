@@ -14,6 +14,10 @@
 
 			test.name=${test.name}
 		</echo>
+
+		<copy todir="classes/META-INF/resources/css">
+			<fileset dir="src/META-INF/resources/css/.sass-cache" includes="*.css" />
+		</copy>
 	</target>
 
 	<target name="prepare-sikuli" depends="jar">

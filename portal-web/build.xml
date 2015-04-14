@@ -111,6 +111,35 @@
 		</if>
 	</target>
 
+	<target name="build-alloy-font-awesome" depends="build-alloy-bootstrap">
+		<path id="alloy-font-awesome.zip.path">
+			<fileset dir="third-party">
+				<include name="alloy-font-awesome-${alloy-font-awesome.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy-font-awesome.zip.path" refid="alloy-font-awesome.zip.path" />
+
+		<basename file="${alloy-font-awesome.zip.path}" property="alloy-font-awesome.file" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="third-party/${alloy-font-awesome.file}"
+					targetfile="${alloy.bootstrap.deploy}/alloy-font-awesome"
+				/>
+			</not>
+			<then>
+				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome" />
+
+				<unzip src="third-party/${alloy-font-awesome.file}" dest="${alloy.bootstrap.deploy}" />
+
+				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/css" />
+				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/less" />
+			</then>
+		</if>
+	</target>
+
 	<target name="build-alloy-themes">
 		<path id="alloy.zip.path">
 			<fileset dir="third-party">
@@ -171,35 +200,6 @@
 			tofile="docroot/html/css/portal/aui_deprecated.css"
 			overwrite="true"
 		/>
-	</target>
-
-	<target name="build-alloy-font-awesome" depends="build-alloy-bootstrap">
-		<path id="alloy-font-awesome.zip.path">
-			<fileset dir="third-party">
-				<include name="alloy-font-awesome-${alloy-font-awesome.version}*.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloy-font-awesome.zip.path" refid="alloy-font-awesome.zip.path" />
-
-		<basename file="${alloy-font-awesome.zip.path}" property="alloy-font-awesome.file" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="third-party/${alloy-font-awesome.file}"
-					targetfile="${alloy.bootstrap.deploy}/alloy-font-awesome"
-				/>
-			</not>
-			<then>
-				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome" />
-
-				<unzip src="third-party/${alloy-font-awesome.file}" dest="${alloy.bootstrap.deploy}" />
-
-				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/css" />
-				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/less" />
-			</then>
-		</if>
 	</target>
 
 	<target name="build-bourbon">

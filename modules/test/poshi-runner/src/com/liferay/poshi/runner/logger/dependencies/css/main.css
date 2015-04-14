@@ -1,0 +1,84 @@
+body {
+	background-color: #937C6A;
+	font-family: menlo, source code pro, lucia console, monospace;
+	font-size: 11px;
+	line-height: 1.75em;
+	margin: 0;
+	overflow-x: hidden;
+	padding: 0;
+	word-wrap: break-word;
+}
+
+h3 {
+	font-size: 13px;
+	font-weight: normal;
+	margin: 0;
+	padding: 5px 0;
+}
+
+li {
+	display: block;
+}
+
+ul {
+	border-left: 1px solid #DDD;
+	color: #FFF;
+	height: 0;
+	list-style-type: none;
+	overflow: visible;
+	padding: 1px 0 1px 20px;
+}
+
+/* ---------- Run log ---------- */
+
+.tree {
+	.xml-log {
+		.pass {
+			&.conditional-failed > .line-container {
+				background: transparent;
+			}
+
+			> .line-container {
+				background-color: rgba(245, 245, 245, 0.34);
+				margin-top: 1px;
+				padding-right: 2%;
+				width: 102%;
+			}
+		}
+
+		.function.pass > .line-container {
+			background: #72C3EA;
+			border: 1px solid #4293B0;
+		}
+
+		.scoped.pass {
+			&.function {
+				background: transparent;
+				outline-width: 0;
+			}
+
+			> .line-container {
+				background: #FFFBF1;
+			}
+		}
+	}
+
+	.current-scope.pass {
+		&.function {
+			background: transparent;
+			outline-width: 0;
+		}
+
+		> .line-container {
+			background: #EEE;
+		}
+	}
+
+	/* ---------- Extras ---------- */
+
+	.xml-log {
+		.function.pass > .line-container {
+			border-radius: 6px;
+		}
+	}
+}

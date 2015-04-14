@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.logger.CommandLoggerHandler;
 import com.liferay.poshi.runner.logger.SummaryLoggerHandler;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
@@ -421,6 +422,7 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.pushFilePath(classCommandName, "function");
 
+		CommandLoggerHandler.startCommandLine(executeElement);
 		SummaryLoggerHandler.startSummary(executeElement);
 
 		Element commandElement = PoshiRunnerContext.getFunctionCommandElement(
@@ -430,6 +432,7 @@ public class PoshiRunnerExecutor {
 			parseElement(commandElement);
 		}
 		catch (Exception e) {
+			CommandLoggerHandler.failCommandLine(executeElement);
 			SummaryLoggerHandler.failSummary(executeElement, e.getMessage());
 
 			throw e;
@@ -439,6 +442,7 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.popFilePath();
 
+		CommandLoggerHandler.passCommandLine(executeElement);
 		SummaryLoggerHandler.passSummary(executeElement);
 	}
 

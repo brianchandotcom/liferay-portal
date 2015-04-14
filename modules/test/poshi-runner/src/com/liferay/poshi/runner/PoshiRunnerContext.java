@@ -148,7 +148,7 @@ public class PoshiRunnerContext {
 	}
 
 	public static boolean isCommandElement(String commandElementKey) {
-		if (Validator.isNotNull(_commandElements.get(commandElementKey))) {
+		if (_commandElements.containsKey(commandElementKey)) {
 			return true;
 		}
 
@@ -328,10 +328,7 @@ public class PoshiRunnerContext {
 					String classCommandName =
 						className + "#" + commandElement.attributeValue("name");
 
-					if (Validator.isNotNull(
-							_commandElements.get(
-								classType + "#" + classCommandName))) {
-
+					if (isCommandElement(classType + "#" + classCommandName)) {
 						throw new Exception(
 							"Duplicate command name\n" + filePath + ":" +
 								commandElement.attributeValue("line-number"));

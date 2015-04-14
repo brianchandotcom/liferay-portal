@@ -282,7 +282,7 @@ public class PoshiRunnerValidation {
 
 		if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
 			throw new PoshiRunnerException(
-				"Invalid " + classCommandName + " command\n" + filePath +
+				"Invalid macro command " + classCommandName + "\n" + filePath +
 					":" + element.attributeValue("line-number"));
 		}
 	}

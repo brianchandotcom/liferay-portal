@@ -92,7 +92,7 @@ public class BookmarksEntryAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			BookmarksPortletKeys.BOOKMARKS);

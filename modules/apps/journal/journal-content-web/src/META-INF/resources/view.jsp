@@ -280,7 +280,7 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 				>
 
 					<%
-					PortletURL addArticleURL = assetRendererFactory.getURLAdd(liferayPortletRequest, liferayPortletResponse);
+					PortletURL addArticleURL = assetRendererFactory.getURLAdd(liferayPortletRequest, liferayPortletResponse, 0);
 
 					addArticleURL.setParameter("redirect", redirectURL.toString());
 					addArticleURL.setParameter("showHeader", Boolean.FALSE.toString());

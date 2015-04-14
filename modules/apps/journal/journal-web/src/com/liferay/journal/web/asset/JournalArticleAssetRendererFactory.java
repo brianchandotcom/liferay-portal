@@ -155,14 +155,6 @@ public class JournalArticleAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		return getURLAdd(liferayPortletRequest, liferayPortletResponse, 0);
-	}
-
-	@Override
-	public PortletURL getURLAdd(
-		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(

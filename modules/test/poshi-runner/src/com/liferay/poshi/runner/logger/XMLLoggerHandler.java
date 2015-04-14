@@ -19,6 +19,16 @@ package com.liferay.poshi.runner.logger;
  */
 public final class XMLLoggerHandler {
 
+	public static LoggerElement generateChildContainerLoggerElement() {
+		LoggerElement childContainerLoggerElement = new LoggerElement();
+
+		childContainerLoggerElement.setClassName(
+			"child-container collapsible collapse");
+		childContainerLoggerElement.setName("ul");
+
+		return childContainerLoggerElement;
+	}
+
 	public static void generateXMLLog(String classCommandName) {
 		LoggerElement xmlLoggerElement = new LoggerElement();
 

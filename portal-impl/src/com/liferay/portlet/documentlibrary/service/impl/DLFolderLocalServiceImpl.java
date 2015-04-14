@@ -1405,8 +1405,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		if (dlFolder.getFolderId() == parentFolderId) {
 			throw new InvalidFolderException(
-				String.format(
-					"Cannot move folder %s into itself", parentFolderId));
+				InvalidFolderException.CANNOT_MOVE_INTO_ITSELF, parentFolderId);
 		}
 
 		List<Long> subfolderIds = new ArrayList<>();
@@ -1416,9 +1415,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		if (subfolderIds.contains(parentFolderId)) {
 			throw new InvalidFolderException(
-				String.format(
-					"Cannot move folder %s into one of its children",
-					parentFolderId));
+				InvalidFolderException.CANNOT_MOVE_INTO_CHILD_FOLDER,
+				parentFolderId);
 		}
 
 		return parentFolderId;

@@ -20,11 +20,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 @ProviderType
 public class InvalidFolderException extends PortalException {
 
+	public static final int CANNOT_MOVE_INTO_CHILD_FOLDER = 1;
+
+	public static final int CANNOT_MOVE_INTO_ITSELF = 2;
+
 	public InvalidFolderException() {
+	}
+
+	public InvalidFolderException(int type, long folderId) {
+		_type = type;
+		_folderId = folderId;
 	}
 
 	public InvalidFolderException(String msg) {
@@ -38,5 +48,23 @@ public class InvalidFolderException extends PortalException {
 	public InvalidFolderException(Throwable cause) {
 		super(cause);
 	}
+
+	public long getFolderId() {
+		return _folderId;
+	}
+
+	public String getMessageKey() {
+		if (_type == CANNOT_MOVE_INTO_CHILD_FOLDER) {
+			return "unable-to-move-folder-x-into-one-of-its-children";
+		}
+		else if (_type == CANNOT_MOVE_INTO_ITSELF) {
+			return "unable-to-move-folder-x-into-itself";
+		}
+
+		return null;
+	}
+
+	private long _folderId;
+	private int _type;
 
 }

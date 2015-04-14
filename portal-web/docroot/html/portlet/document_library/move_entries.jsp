@@ -105,7 +105,16 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
-	<liferay-ui:error exception="<%= InvalidFolderException.class %>" message="unable-to-move-folder-to-itself" />
+
+	<liferay-ui:error exception="<%= InvalidFolderException.class %>">
+
+		<%
+		InvalidFolderException ife = (InvalidFolderException)errorException;
+		%>
+
+		<liferay-ui:message arguments="<%= ife.getFolderId() %>" key="<%= ife.getMessageKey() %>" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
 	<c:if test="<%= !validMoveFolders.isEmpty() %>">

@@ -49,14 +49,14 @@
 			<aui:fieldset cssClass="subscriptions">
 
 				<%
-				String[] urls = rssPortletInstanceSettings.urls();
+				String[] urls = rssPortletInstanceConfiguration.urls();
 
 				if (urls.length == 0) {
 					urls = new String[1];
 					urls[0] = StringPool.BLANK;
 				}
 
-				String[] titles = rssPortletInstanceSettings.titles();
+				String[] titles = rssPortletInstanceConfiguration.titles();
 
 				for (int i = 0; i < urls.length; i++) {
 					String title = StringPool.BLANK;
@@ -86,27 +86,27 @@
 				<div class="display-template">
 					<liferay-ui:ddm-template-selector
 						className="<%= RSSFeed.class.getName() %>"
-						displayStyle="<%= rssPortletInstanceSettings.displayStyle() %>"
-						displayStyleGroupId="<%= rssPortletInstanceSettings.displayStyleGroupId(themeDisplay.getScopeGroupId()) %>"
+						displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>"
+						displayStyleGroupId="<%= rssPortletInstanceConfiguration.displayStyleGroupId(themeDisplay.getScopeGroupId()) %>"
 						label="display-template"
 						refreshURL="<%= configurationRenderURL.toString() %>"
 						showEmptyOption="<%= true %>"
 					/>
 				</div>
 
-				<aui:input name="preferences--showFeedTitle--" type="checkbox" value="<%= rssPortletInstanceSettings.showFeedTitle() %>" />
+				<aui:input name="preferences--showFeedTitle--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>" />
 
-				<aui:input name="preferences--showFeedPublishedDate--" type="checkbox" value="<%= rssPortletInstanceSettings.showFeedPublishedDate() %>" />
+				<aui:input name="preferences--showFeedPublishedDate--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedPublishedDate() %>" />
 
-				<aui:input name="preferences--showFeedDescription--" type="checkbox" value="<%= rssPortletInstanceSettings.showFeedDescription() %>" />
+				<aui:input name="preferences--showFeedDescription--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedDescription() %>" />
 
 				<%
 				String taglibShowFeedImageOnClick = "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "feedImageAlignment.disabled = '';} else {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "feedImageAlignment.disabled = 'disabled';}";
 				%>
 
-				<aui:input name="preferences--showFeedImage--" onClick="<%= taglibShowFeedImageOnClick %>" type="checkbox" value="<%= rssPortletInstanceSettings.showFeedImage() %>" />
+				<aui:input name="preferences--showFeedImage--" onClick="<%= taglibShowFeedImageOnClick %>" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedImage() %>" />
 
-				<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceSettings.showFeedItemAuthor() %>" />
+				<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
 
 				<aui:select label="num-of-entries-per-feed" name="preferences--entriesPerFeed--">
 
@@ -114,7 +114,7 @@
 					for (int i = 1; i < 10; i++) {
 					%>
 
-						<aui:option label="<%= i %>" selected="<%= i == rssPortletInstanceSettings.entriesPerFeed() %>" />
+						<aui:option label="<%= i %>" selected="<%= i == rssPortletInstanceConfiguration.entriesPerFeed() %>" />
 
 					<%
 					}
@@ -128,7 +128,7 @@
 					for (int i = 0; i < 10; i++) {
 					%>
 
-						<aui:option label="<%= i %>" selected="<%= i == rssPortletInstanceSettings.expandedEntriesPerFeed() %>" />
+						<aui:option label="<%= i %>" selected="<%= i == rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>" />
 
 					<%
 					}
@@ -136,9 +136,9 @@
 
 				</aui:select>
 
-				<aui:select disabled="<%= !rssPortletInstanceSettings.showFeedImage() %>" name="preferences--feedImageAlignment--">
-					<aui:option label="left" selected='<%= rssPortletInstanceSettings.feedImageAlignment().equals("left") %>' />
-					<aui:option label="right" selected='<%= rssPortletInstanceSettings.feedImageAlignment().equals("right") %>' />
+				<aui:select disabled="<%= !rssPortletInstanceConfiguration.showFeedImage() %>" name="preferences--feedImageAlignment--">
+					<aui:option label="left" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("left") %>' />
+					<aui:option label="right" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("right") %>' />
 				</aui:select>
 			</aui:fieldset>
 		</liferay-ui:panel>

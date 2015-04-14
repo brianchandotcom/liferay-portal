@@ -12,32 +12,23 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.configuration;
+package com.liferay.document.library.repository.cmis.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Raymond Augé
+ * @author Adolfo Pérez
  */
 @Meta.OCD(
-	id = "com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration",
+	id = "com.liferay.document.library.repository.cmis.configuration.CMISRepositoryConfiguration",
 	localization = "content/Language"
 )
-public interface NestedPortletsConfiguration {
-
-	public static final String TEMPLATE_CONTENT = "TEMPLATE_CONTENT";
-
-	public static final String TEMPLATE_ID = "TEMPLATE_ID";
+public interface CMISRepositoryConfiguration {
 
 	@Meta.AD(
-		deflt = "2_columns_i", id = "layout.template.default", required = false
+		deflt = "1", description = "%delete.depth.description",
+		name = "%delete.depth.name", required = false
 	)
-	public String layoutTemplateDefault();
-
-	@Meta.AD(
-		deflt = "freeform,1_column", id = "layout.template.unsupported",
-		required = false
-	)
-	public String[] layoutTemplatesUnsupported();
+	public int deleteDepth();
 
 }

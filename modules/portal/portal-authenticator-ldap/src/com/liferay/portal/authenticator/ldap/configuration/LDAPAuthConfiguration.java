@@ -21,7 +21,7 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	id = "com.liferay.portal.authenticator.ldap.configuration.LDAPAuthConfiguration",
-	localization = "content.Language"
+	localization = "content/Language"
 )
 public interface LDAPAuthConfiguration {
 

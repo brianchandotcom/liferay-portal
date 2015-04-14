@@ -22,7 +22,7 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	id = "com.liferay.translator.web.configuration.TranslatorConfiguration",
-	localization = "content.Language"
+	localization = "content/Language"
 )
 public interface TranslatorConfiguration {
 

@@ -14,6 +14,9 @@
 
 package com.liferay.document.library.repository.cmis.internal;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.document.library.repository.cmis.configuration.CMISRepositoryConfiguration;
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.service.CompanyLocalService;
@@ -24,6 +27,9 @@ import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -39,6 +45,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CMISWebServicesRepositoryFactory
 	extends BaseCMISRepositoryFactory<CMISWebServicesRepository> {
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		CMISRepositoryConfiguration cmisRepositoryConfiguration =
+			Configurable.createConfigurable(
+				CMISRepositoryConfiguration.class, properties);
+
+		super.setCMISRepositoryConfiguration(cmisRepositoryConfiguration);
+	}
 
 	@Override
 	protected CMISWebServicesRepository createBaseRepository() {

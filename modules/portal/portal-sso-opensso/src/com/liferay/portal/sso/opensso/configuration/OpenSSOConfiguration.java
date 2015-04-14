@@ -21,7 +21,7 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	id = "com.liferay.portal.sso.opensso.configuration.OpenSSOConfiguration",
-	localization = "content.Language"
+	localization = "content/Language"
 )
 public interface OpenSSOConfiguration {
 

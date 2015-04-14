@@ -799,12 +799,6 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		// LPS-39742
-
-		if (line.contains("java.lang.IllegalStateException")) {
-			return true;
-		}
-
 		// LPS-41257
 
 		if (line.matches(

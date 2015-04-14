@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/html/js/editor/init.jsp" %>
 
 <%
 LiferayPortletResponse liferayPortletResponse = (LiferayPortletResponse)portletResponse;

@@ -29,8 +29,7 @@ public class PortletInstance {
 	private static final String _USER_SEPARATOR = "_USER_";
 
 	public static final int PORTLET_INSTANCE_KEY_MAX_LENGTH =
-		ModelHintsUtil.getMaxLength(Portlet.class.getName(), "portletId") -
-			_INSTANCE_SEPARATOR.length() + _USER_SEPARATOR.length() + 39;
+		255 - _INSTANCE_SEPARATOR.length() + _USER_SEPARATOR.length() + 39;
 
 	public PortletInstance(String portletInstanceId) {
 		this(

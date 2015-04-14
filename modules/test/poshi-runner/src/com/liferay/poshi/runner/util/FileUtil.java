@@ -25,6 +25,19 @@ import org.apache.commons.io.FileUtils;
  */
 public class FileUtil {
 
+	public static void copyDirectory(File source, File destination)
+		throws IOException {
+
+		FileUtils.copyDirectory(source, destination);
+	}
+
+	public static void copyDirectory(
+			String sourceDirName, String destinationDirName)
+		throws IOException {
+
+		copyDirectory(new File(sourceDirName), new File(destinationDirName));
+	}
+
 	public static boolean exists(File file) {
 		return file.exists();
 	}

@@ -41,7 +41,7 @@ import com.liferay.wiki.parser.creole.ast.table.TableHeaderNode;
 import com.liferay.wiki.parser.creole.ast.table.TableNode;
 import com.liferay.wiki.parser.creole.parser.Creole10Lexer;
 import com.liferay.wiki.parser.creole.parser.Creole10Parser;
-import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
+import com.liferay.wiki.service.provider.WikiServiceComponentProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,12 +65,13 @@ public class AntlrCreoleParserTest {
 
 	@Before
 	public void setUp() {
-		_wikiServiceSettingsProvider = CreoleTestUtil.getWikiSettingsProvider();
+		_wikiServiceComponentProvider =
+			CreoleTestUtil.getWikiSettingsProvider();
 	}
 
 	@After
 	public void tearDown() {
-		_wikiServiceSettingsProvider.deactivate();
+		_wikiServiceComponentProvider.deactivate();
 	}
 
 	@Test
@@ -922,6 +923,6 @@ public class AntlrCreoleParserTest {
 	}
 
 	private Creole10Parser _creole10parser;
-	private WikiServiceSettingsProvider _wikiServiceSettingsProvider;
+	private WikiServiceComponentProvider _wikiServiceComponentProvider;
 
 }

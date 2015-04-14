@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.settings;
+package com.liferay.wiki.web.provider;
 
-import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -28,40 +28,28 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true
 )
-public class BookmarksWebSettingsProvider {
+public class WikiWebComponentProvider {
 
-	public static BookmarksWebSettingsProvider
-		getBookmarksWebSettingsProvider() {
-
-		return _bookmarksWebSettingsProvider;
-	}
-
-	public BookmarksGroupServiceConfiguration
-		getBookmarksGroupServiceConfiguration() {
-
-		return _bookmarksGroupServiceConfiguration;
+	public static WikiWebComponentProvider getWikiWebComponentProvider() {
+		return _wikiWebComponentProvider;
 	}
 
 	public SettingsFactory getSettingsFactory() {
 		return _settingsFactory;
 	}
 
+	public WikiGroupServiceConfiguration getWikiGroupServiceConfiguration() {
+		return _wikiGroupServiceConfiguration;
+	}
+
 	@Activate
 	protected void activate() {
-		_bookmarksWebSettingsProvider = this;
+		_wikiWebComponentProvider = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_bookmarksWebSettingsProvider = null;
-	}
-
-	@Reference
-	protected void setBookmarksGroupServiceConfiguration(
-		BookmarksGroupServiceConfiguration bookmarksGroupServiceConfiguration) {
-
-		_bookmarksGroupServiceConfiguration =
-			bookmarksGroupServiceConfiguration;
+		_wikiWebComponentProvider = null;
 	}
 
 	@Reference(unbind = "-")
@@ -69,16 +57,22 @@ public class BookmarksWebSettingsProvider {
 		_settingsFactory = settingsFactory;
 	}
 
-	protected void unsetBookmarksGroupServiceConfiguration(
-		BookmarksGroupServiceConfiguration bookmarksGroupServiceConfiguration) {
+	@Reference
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
-		_bookmarksGroupServiceConfiguration = null;
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
-	private static BookmarksWebSettingsProvider _bookmarksWebSettingsProvider;
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
-	private BookmarksGroupServiceConfiguration
-		_bookmarksGroupServiceConfiguration;
+		_wikiGroupServiceConfiguration = null;
+	}
+
+	private static WikiWebComponentProvider _wikiWebComponentProvider;
+
 	private SettingsFactory _settingsFactory;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

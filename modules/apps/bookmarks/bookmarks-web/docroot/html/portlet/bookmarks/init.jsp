@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%
-BookmarksWebSettingsProvider bookmarksWebSettingsProvider = BookmarksWebSettingsProvider.getBookmarksWebSettingsProvider();
+BookmarksWebComponentProvider bookmarksWebComponentProvider = BookmarksWebComponentProvider.getBookmarksWebComponentProvider();
 
-SettingsFactory settingsFactory = bookmarksWebSettingsProvider.getSettingsFactory();
+SettingsFactory settingsFactory = bookmarksWebComponentProvider.getSettingsFactory();
 
 BookmarksGroupServiceSettings bookmarksGroupServiceSettings = settingsFactory.getSettings(BookmarksGroupServiceSettings.class, new GroupServiceSettingsLocator(scopeGroupId, BookmarksConstants.SERVICE_NAME));
 

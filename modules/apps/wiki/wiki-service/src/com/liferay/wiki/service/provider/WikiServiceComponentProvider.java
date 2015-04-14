@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.service.settings;
+package com.liferay.wiki.service.provider;
 
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
@@ -28,20 +28,22 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true
 )
-public class WikiServiceSettingsProvider {
+public class WikiServiceComponentProvider {
 
-	public static WikiServiceSettingsProvider getWikiServiceSettingsProvider() {
-		return _wikiServiceSettingsProvider;
+	public static WikiServiceComponentProvider
+		getWikiServiceComponentProvider() {
+
+		return _wikiServiceComponentProvider;
 	}
 
 	@Activate
 	public void activate() {
-		_wikiServiceSettingsProvider = this;
+		_wikiServiceComponentProvider = this;
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_wikiServiceSettingsProvider = null;
+		_wikiServiceComponentProvider = null;
 	}
 
 	public SettingsFactory getSettingsFactory() {
@@ -70,7 +72,7 @@ public class WikiServiceSettingsProvider {
 		_wikiGroupServiceConfiguration = null;
 	}
 
-	private static WikiServiceSettingsProvider _wikiServiceSettingsProvider;
+	private static WikiServiceComponentProvider _wikiServiceComponentProvider;
 
 	private SettingsFactory _settingsFactory;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;

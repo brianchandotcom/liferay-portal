@@ -35,7 +35,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
+import com.liferay.wiki.service.provider.WikiServiceComponentProvider;
 import com.liferay.wiki.settings.WikiGroupServiceSettings;
 import com.liferay.wiki.util.WikiUtil;
 
@@ -71,11 +71,11 @@ public class WikiPageAssetRenderer
 	public WikiPageAssetRenderer(WikiPage page) throws PortalException {
 		_page = page;
 
-		WikiServiceSettingsProvider wikiServiceSettingsProvider =
-			WikiServiceSettingsProvider.getWikiServiceSettingsProvider();
+		WikiServiceComponentProvider wikiServiceComponentProvider =
+			WikiServiceComponentProvider.getWikiServiceComponentProvider();
 
 		SettingsFactory settingsFactory =
-			wikiServiceSettingsProvider.getSettingsFactory();
+			wikiServiceComponentProvider.getSettingsFactory();
 
 		_wikiGroupServiceSettings = settingsFactory.getSettings(
 			WikiGroupServiceSettings.class,

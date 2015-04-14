@@ -27,8 +27,8 @@ import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.web.provider.WikiWebComponentProvider;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
-import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,11 +54,11 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 			if (_wikiGroupServiceSettings == null) {
 				String portletId = getPortletId();
 
-				WikiWebSettingsProvider wikiWebSettingsProvider =
-					WikiWebSettingsProvider.getWikiWebSettingsProvider();
+				WikiWebComponentProvider wikiWebComponentProvider =
+					WikiWebComponentProvider.getWikiWebComponentProvider();
 
 				SettingsFactory settingsFactory =
-					wikiWebSettingsProvider.getSettingsFactory();
+					wikiWebComponentProvider.getSettingsFactory();
 
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 					_wikiGroupServiceSettings = settingsFactory.getSettings(
@@ -98,11 +98,11 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 			if (_wikiPortletInstanceSettings == null) {
 				String portletId = getPortletId();
 
-				WikiWebSettingsProvider wikiWebSettingsProvider =
-					WikiWebSettingsProvider.getWikiWebSettingsProvider();
+				WikiWebComponentProvider wikiWebComponentProvider =
+					WikiWebComponentProvider.getWikiWebComponentProvider();
 
 				SettingsFactory settingsFactory =
-					wikiWebSettingsProvider.getSettingsFactory();
+					wikiWebComponentProvider.getSettingsFactory();
 
 				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 					_wikiPortletInstanceSettings = settingsFactory.getSettings(

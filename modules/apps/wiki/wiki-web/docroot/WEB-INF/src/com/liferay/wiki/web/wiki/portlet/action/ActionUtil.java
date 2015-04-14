@@ -44,8 +44,8 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.web.provider.WikiWebComponentProvider;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
-import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -73,11 +73,11 @@ public class ActionUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		WikiWebSettingsProvider wikiWebSettingsProvider =
-			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+		WikiWebComponentProvider wikiWebComponentProvider =
+			WikiWebComponentProvider.getWikiWebComponentProvider();
 
 		SettingsFactory settingsFactory =
-			wikiWebSettingsProvider.getSettingsFactory();
+			wikiWebComponentProvider.getSettingsFactory();
 
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
 			settingsFactory.getSettings(
@@ -153,11 +153,11 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		WikiWebSettingsProvider wikiWebSettingsProvider =
-			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+		WikiWebComponentProvider wikiWebComponentProvider =
+			WikiWebComponentProvider.getWikiWebComponentProvider();
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
+			wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 		WikiPage page = WikiPageLocalServiceUtil.fetchPage(
 			nodeId, wikiGroupServiceConfiguration.frontPageName(), 0);
@@ -256,11 +256,11 @@ public class ActionUtil {
 			}
 		}
 
-		WikiWebSettingsProvider wikiWebSettingsProvider =
-			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+		WikiWebComponentProvider wikiWebComponentProvider =
+			WikiWebComponentProvider.getWikiWebComponentProvider();
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
+			wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 		if (Validator.isNull(title)) {
 			title = wikiGroupServiceConfiguration.frontPageName();

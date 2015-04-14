@@ -31,7 +31,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
+import com.liferay.wiki.web.provider.WikiWebComponentProvider;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -61,11 +61,11 @@ public class ViewAction extends PortletAction {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			WikiWebSettingsProvider wikiWebSettingsProvider =
-				WikiWebSettingsProvider.getWikiWebSettingsProvider();
+			WikiWebComponentProvider wikiWebComponentProvider =
+				WikiWebComponentProvider.getWikiWebComponentProvider();
 
 			WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-				wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
+				wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 			String title = ParamUtil.getString(
 				renderRequest, "title",

@@ -6,7 +6,7 @@
 
 		<execute function="AssertClick" locator1="CPCustomfieldsResource#ADD_CUSTOM_FIELD_BUTTON" value1="Add Custom Field" />
 
-		<var name="customFieldKey" value="${customFieldName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${customFieldName})" name="customFieldKey" />
 
 		<execute function="Type" locator1="CPCustomfieldsResourceAddcustomfield#KEY_FIELD" value1="${customFieldKey}" />
 		<execute function="Select" locator1="CPCustomfieldsResourceAddcustomfield#TYPE_SELECT" value1="${customFieldType}" />

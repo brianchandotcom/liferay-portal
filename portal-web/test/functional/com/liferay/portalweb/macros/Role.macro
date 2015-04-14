@@ -162,7 +162,7 @@
 
 	<command name="definePermissionPG">
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
 		<execute function="AssertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
@@ -628,7 +628,7 @@
 
 	<command name="removePermissionPG">
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="Uncheck" locator1="Permissions#${permissionDefinitionKey}" />
 		<execute function="AssertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
@@ -937,7 +937,7 @@
 
 	<command name="viewPermissionPG">
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<if>
 			<equals arg1="${permissionFlagged}" arg2="true" />

@@ -252,7 +252,7 @@
 		<execute macro="PermissionsInline#gotoConfigurationPG" />
 
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="AssertChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 

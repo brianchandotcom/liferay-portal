@@ -12,7 +12,7 @@
 	<command name="viewSolrLogsInConsole">
 		<execute function="Pause" locator1="1000" />
 
-		<var name="searchTerm" value="${searchTerm?lowercase()}" />
+		<var method="StringUtil#lowerCase(${searchTerm})" name="searchTerm" />
 
 		<execute function="AssertConsoleTextPresent" value1="SolrIndexSearcher" />
 		<execute function="AssertConsoleTextPresent" value1="entryClassName:com.liferay.portlet.messageboards.model.MBMessage" />

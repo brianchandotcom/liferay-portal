@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
 import com.liferay.rss.web.configuration.RSSWebConfiguration;
-import com.liferay.rss.web.settings.RSSPortletInstanceSettings;
 import com.liferay.rss.web.upgrade.RSSWebUpgrade;
 
 import java.io.IOException;
@@ -86,15 +86,15 @@ public class RSSPortlet extends MVCPortlet {
 			RSSWebConfiguration.class.getName(), _rssWebConfiguration);
 
 		try {
-			RSSPortletInstanceSettings rssPortletInstanceSettings =
+			RSSPortletInstanceConfiguration rssPortletInstanceConfiguration =
 				_settingsFactory.getSettings(
-					RSSPortletInstanceSettings.class,
+					RSSPortletInstanceConfiguration.class,
 					new PortletInstanceSettingsLocator(
 						themeDisplay.getLayout(), portletDisplay.getId()));
 
 			renderRequest.setAttribute(
-				RSSPortletInstanceSettings.class.getName(),
-				rssPortletInstanceSettings);
+				RSSPortletInstanceConfiguration.class.getName(),
+				rssPortletInstanceConfiguration);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);

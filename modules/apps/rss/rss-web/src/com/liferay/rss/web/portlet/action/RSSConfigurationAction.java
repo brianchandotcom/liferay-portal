@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
 import com.liferay.rss.web.constants.RSSPortletKeys;
-import com.liferay.rss.web.settings.RSSPortletInstanceSettings;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -77,9 +77,9 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		try {
-			RSSPortletInstanceSettings rssPortletInstanceSettings =
+			RSSPortletInstanceConfiguration rssPortletInstanceConfiguration =
 				_settingsFactory.getSettings(
-					RSSPortletInstanceSettings.class,
+					RSSPortletInstanceConfiguration.class,
 					new ParameterMapSettingsLocator(
 						renderRequest.getParameterMap(),
 						new PortletInstanceSettingsLocator(
@@ -87,8 +87,8 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 							portletDisplay.getPortletResource())));
 
 			renderRequest.setAttribute(
-				RSSPortletInstanceSettings.class.getName(),
-				rssPortletInstanceSettings);
+				RSSPortletInstanceConfiguration.class.getName(),
+				rssPortletInstanceConfiguration);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);

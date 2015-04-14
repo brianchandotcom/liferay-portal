@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -52,9 +51,7 @@ public class ServletPaths {
 		return resourcePath;
 	}
 
-	public ServletPaths(ServletContext servletContext, String resourcePath)
-		throws MalformedURLException {
-
+	public ServletPaths(ServletContext servletContext, String resourcePath) {
 		if (servletContext == null) {
 			throw new NullPointerException("Servlet context is null");
 		}

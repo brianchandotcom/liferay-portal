@@ -69,7 +69,7 @@ public class ServletPathsTest {
 	}
 
 	@Test
-	public void testConstructor() throws MalformedURLException {
+	public void testConstructor() {
 		try {
 			new ServletPaths(null, null);
 
@@ -102,7 +102,7 @@ public class ServletPathsTest {
 	}
 
 	@Test
-	public void testDown() throws MalformedURLException {
+	public void testDown() {
 		ServletContext servletContext = _prepareServletContext(
 			new MockServletContext());
 

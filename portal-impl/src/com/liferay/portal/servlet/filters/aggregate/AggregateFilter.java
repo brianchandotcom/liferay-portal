@@ -261,10 +261,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String bundleDirName = PropsUtil.get(
 			PropsKeys.JAVASCRIPT_BUNDLE_DIR, new Filter(bundleId));
 
-		ServletContext resourceServletContext =
+		ServletContext portalWebResourcesServletContext =
 			PortalWebResourcesUtil.getServletContext();
 
-		URL bundleDirURL = resourceServletContext.getResource(bundleDirName);
+		URL bundleDirURL = portalWebResourcesServletContext.getResource(
+			bundleDirName);
 
 		if (bundleDirURL == null) {
 			return null;
@@ -280,7 +281,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			boolean staleCache = false;
 
 			for (String fileName : fileNames) {
-				URL resourceURL = resourceServletContext.getResource(
+				URL resourceURL = portalWebResourcesServletContext.getResource(
 					bundleDirName.concat(StringPool.SLASH).concat(fileName));
 
 				if (resourceURL == null) {
@@ -316,7 +317,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 		else {
 			content = aggregateJavaScript(
-				new ServletPaths(resourceServletContext, bundleDirName),
+				new ServletPaths(
+					portalWebResourcesServletContext, bundleDirName),
 				fileNames);
 		}
 
@@ -522,9 +524,9 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	protected boolean isModuleRequest(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
-		String frontendContextPath = PortalWebResourcesUtil.getContextPath();
+		String contextPath = PortalWebResourcesUtil.getContextPath();
 
-		if (requestURI.startsWith(frontendContextPath)) {
+		if (requestURI.startsWith(contextPath)) {
 			return false;
 		}
 

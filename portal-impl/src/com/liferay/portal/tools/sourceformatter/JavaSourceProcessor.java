@@ -604,6 +604,44 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkXMLSecurity(
+		String fileName, String content, boolean isRunOutsidePortalExclusion) {
+
+		String[] xmlVulnerabitilies = new String[] {
+			"DocumentBuilderFactory.newInstance",
+			"new javax.xml.parsers.SAXParser",
+			"new org.apache.xerces.parsers.SAXParser",
+			"new org.dom4j.io.SAXReader", "new SAXParser", "new SAXReader",
+			"SAXParserFactory.newInstance", "saxParserFactory.newInstance",
+			"SAXParserFactory.newSAXParser", "saxParserFactory.newSAXParser",
+			"XMLInputFactory.newFactory", "xmlInputFactory.newFactory",
+			"XMLInputFactory.newInstance", "xmlInputFactory.newInstance"
+		};
+
+		for (String xmlVulnerabitily : xmlVulnerabitilies) {
+			if (!content.contains(xmlVulnerabitily)) {
+				continue;
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			if (isRunOutsidePortalExclusion) {
+				sb.append("Possible XXE or Quadratic Blowup security ");
+				sb.append("vulnerablity using ");
+			}
+			else {
+				sb.append("Use SecureXMLBuilderUtil.newDocumentBuilderFactory");
+				sb.append(" instead of ");
+			}
+
+			sb.append(xmlVulnerabitily);
+			sb.append(": ");
+			sb.append(fileName);
+
+			processErrorMessage(fileName, sb.toString());
+		}
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -775,8 +813,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "ServiceUtil: " + fileName);
 		}
 
-		if (!isExcludedPath(
-				getRunOutsidePortalExclusionPaths(), absolutePath) &&
+		boolean isRunOutsidePortalExclusion = isExcludedPath(
+			getRunOutsidePortalExclusionPaths(), absolutePath);
+
+		if (!isRunOutsidePortalExclusion &&
 			!isExcludedFile(_proxyExclusionFiles, absolutePath) &&
 			newContent.contains("import java.lang.reflect.Proxy;")) {
 
@@ -860,9 +900,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-39508
 
-		if (!isExcludedFile(_secureRandomExclusionFiles, absolutePath) &&
-			!isExcludedPath(
-				getRunOutsidePortalExclusionPaths(), absolutePath) &&
+		if (!isRunOutsidePortalExclusion &&
+			!isExcludedFile(_secureRandomExclusionFiles, absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 
@@ -933,6 +972,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-49552
 
 		checkFinderCacheInterfaceMethod(fileName, newContent);
+
+		// LPS-50479
+
+		if (!fileName.contains("/test/") &&
+			!isExcludedFile(_secureXmlExclusionFiles, absolutePath)) {
+
+			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
+		}
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
@@ -1156,6 +1203,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_proxyExclusionFiles = getPropertyList("proxy.excludes.files");
 		_secureRandomExclusionFiles = getPropertyList(
 			"secure.random.excludes.files");
+		_secureXmlExclusionFiles = getPropertyList(
+			"secure.xml.excludes.files");
 		_staticLogVariableExclusionFiles = getPropertyList(
 			"static.log.excludes.files");
 		_testAnnotationsExclusionFiles = getPropertyList(
@@ -3162,6 +3211,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _proxyExclusionFiles;
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 	private List<String> _secureRandomExclusionFiles;
+	private List<String> _secureXmlExclusionFiles;
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

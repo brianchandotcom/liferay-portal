@@ -84,7 +84,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addConfigurations(project);
 		addTasks(project, liferayExtension);
 
-		applyConfigScripts(project, liferayExtension);
+		applyConfigScripts(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -100,7 +100,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void addConfigurationPortalWeb(final Project project) {
+	protected Configuration addConfigurationPortalWeb(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_WEB_CONFIGURATION_NAME);
 
@@ -118,6 +118,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		return configuration;
 	}
 
 	protected void addConfigurations(Project project) {
@@ -208,11 +210,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return task;
 	}
 
-	protected void applyConfigScripts(
-		Project project, LiferayExtension liferayExtension) {
-
-		GradleUtil.applyScript(
-			project, "config-liferay.gradle", liferayExtension);
+	protected void applyConfigScripts(Project project) {
+		GradleUtil.applyScript(project, "config-liferay.gradle", project);
 	}
 
 	protected void applyPlugins(Project project) {

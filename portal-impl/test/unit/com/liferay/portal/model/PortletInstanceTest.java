@@ -16,10 +16,10 @@ package com.liferay.portal.model;
 
 import com.liferay.portlet.util.test.PortletKeys;
 
+import java.security.InvalidParameterException;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.security.InvalidParameterException;
 
 /**
  * @author Raymond Augé

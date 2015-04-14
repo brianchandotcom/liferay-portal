@@ -823,12 +823,6 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
-		<reference package-path="com.liferay.portlet.journal" entity="JournalArticle" />
-		<reference package-path="com.liferay.portlet.journal" entity="JournalContentSearch" />
-		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
-		<reference package-path="com.liferay.portlet.mobiledevicerules" entity="MDRRule" />
-		<reference package-path="com.liferay.portlet.mobiledevicerules" entity="MDRRuleGroup" />
-		<reference package-path="com.liferay.portlet.mobiledevicerules" entity="MDRRuleGroupInstance" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 	</entity>
 	<entity name="LayoutBranch" local-service="true" remote-service="true">

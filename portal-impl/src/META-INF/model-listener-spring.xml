@@ -17,4 +17,7 @@
 	<bean id="com.liferay.portlet.blogs.model.GroupModelListener" class="com.liferay.portlet.blogs.model.GroupModelListener" />
 	<bean id="com.liferay.portlet.journal.model.GroupModelListener" class="com.liferay.portlet.journal.model.GroupModelListener" />
 	<bean id="com.liferay.portlet.journal.model.JournalArticleModelListener" class="com.liferay.portlet.journal.model.JournalArticleModelListener" />
+	<bean id="com.liferay.portlet.journal.model.LayoutModelListener" class="com.liferay.portlet.journal.model.LayoutModelListener" />
+	<bean id="com.liferay.portlet.messageboards.model.LayoutModelListener" class="com.liferay.portlet.messageboards.model.LayoutModelListener" />
+	<bean id="com.liferay.portlet.mobiledevicerules.model.LayoutModelListener" class="com.liferay.portlet.mobiledevicerules.model.LayoutModelListener" />
 </beans>

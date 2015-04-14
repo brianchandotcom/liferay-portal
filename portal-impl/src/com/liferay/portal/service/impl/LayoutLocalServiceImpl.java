@@ -83,7 +83,6 @@ import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -444,14 +443,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			userId, layout, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames());
 
-		// Message boards
-
-		if (PropsValues.LAYOUT_COMMENTS_ENABLED) {
-			mbMessageLocalService.addDiscussionMessage(
-				userId, user.getFullName(), groupId, Layout.class.getName(),
-				plid, WorkflowConstants.ACTION_PUBLISH);
-		}
-
 		return layout;
 	}
 
@@ -617,38 +608,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		ratingsStatsLocalService.deleteStats(
 			Layout.class.getName(), layout.getPlid());
-
-		// Mobile device rules
-
-		long layoutClassNameId = classNameLocalService.getClassNameId(
-			Layout.class);
-
-		List<MDRRuleGroupInstance> mdrRuleGroupInstances =
-			mdrRuleGroupInstancePersistence.findByC_C(
-				layoutClassNameId, layout.getPlid());
-
-		for (MDRRuleGroupInstance mdrRuleGroupInstance :
-				mdrRuleGroupInstances) {
-
-			mdrRuleGroupInstanceLocalService.deleteMDRRuleGroupInstance(
-				mdrRuleGroupInstance);
-		}
-
-		// Message boards
-
-		mbMessageLocalService.deleteDiscussionMessages(
-			Layout.class.getName(), layout.getPlid());
-
-		// Journal articles
-
-		journalArticleLocalService.deleteLayoutArticleReferences(
-			layout.getGroupId(), layout.getUuid());
-
-		// Journal content searches
-
-		journalContentSearchLocalService.deleteLayoutContentSearches(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId());
 
 		// Expando
 

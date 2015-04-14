@@ -237,8 +237,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				long remoteGroupId = MapUtil.getLong(
 					settingsMap, "remoteGroupId");
 				DateRange dateRange = ExportImportDateUtil.getDateRange(
-					_exportImportConfiguration,
-					ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
+					_exportImportConfiguration);
 
 				BackgroundTask backgroundTask =
 					BackgroundTaskLocalServiceUtil.getBackgroundTask(

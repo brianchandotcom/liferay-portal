@@ -42,6 +42,7 @@ public class TestGroup implements Group {
 	public void clearStagingGroup() {
 	}
 
+	@Override
 	public Group clone() {
 		return null;
 	}

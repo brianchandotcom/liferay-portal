@@ -522,9 +522,9 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	protected boolean isModuleRequest(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
-		String frontEndContextPath = PortalWebResourcesUtil.getContextPath();
+		String frontendContextPath = PortalWebResourcesUtil.getContextPath();
 
-		if (requestURI.startsWith(frontEndContextPath)) {
+		if (requestURI.startsWith(frontendContextPath)) {
 			return false;
 		}
 

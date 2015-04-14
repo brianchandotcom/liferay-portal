@@ -64,7 +64,7 @@ portletURL.setParameter("mvcPath", "/view_feeds.jsp");
 			</aui:nav>
 
 			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-				<%@ include file="/feed_search.jsp" %>
+				<%@ include file="/feed_search.jspf" %>
 			</aui:nav-bar-search>
 		</aui:nav-bar>
 

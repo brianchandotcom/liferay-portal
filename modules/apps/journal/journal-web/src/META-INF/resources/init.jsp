@@ -152,6 +152,7 @@ page import="com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException" %
 page import="com.liferay.portlet.journal.FeedTargetPortletIdException" %><%@
 page import="com.liferay.portlet.journal.FolderNameException" %><%@
 page import="com.liferay.portlet.journal.InvalidDDMStructureException" %><%@
+page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
 page import="com.liferay.portlet.journal.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticleConstants" %><%@

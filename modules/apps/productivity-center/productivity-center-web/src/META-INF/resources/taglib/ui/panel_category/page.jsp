@@ -20,6 +20,8 @@
 PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_APP_REGISTRY);
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel-category:panelCategory");
 
+PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategory);
+
 String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
 %>
 
@@ -30,7 +32,7 @@ String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
 	iconCssClass="<%= panelCategory.getIconCssClass() %>"
 	id="<%= panelPageCategoryId %>"
 	persistState="<%= true %>"
-	state="closed"
+	state='<%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid()) ? "open" : "closed" %>'
 	title="<%= panelCategory.getLabel(themeDisplay.getLocale()) %>"
 >
 

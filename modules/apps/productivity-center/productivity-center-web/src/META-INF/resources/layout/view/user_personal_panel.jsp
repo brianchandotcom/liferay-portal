@@ -17,16 +17,17 @@
 <%@ include file="/layout/view/init.jsp" %>
 
 <%
-String portletId = ParamUtil.getString(request, "p_p_id");
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
+PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.USER_PERSONAL_PANEL);
 %>
 
 <aui:container>
 	<aui:row>
 		<aui:col width="<%= 25 %>">
-			<productivity-center-ui:panel servletContext="<%= application %>" />
+			<productivity-center-ui:panel panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
 		</aui:col>
 		<aui:col width="<%= 75 %>">
-			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>" />
+			<productivity-center-ui:panel-content portletId="<%= themeDisplay.getPpid() %>" servletContext="<%= application %>" />
 		</aui:col>
 	</aui:row>
 </aui:container>

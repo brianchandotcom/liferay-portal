@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.productivity.center.constants.ProductivityCenterWebKeys;
@@ -44,7 +45,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, property = {"layout.type=user_personal_panel"},
+	immediate = true,
+	property = {"layout.type=" + LayoutConstants.TYPE_USER_PERSONAL_PANEL},
 	service = LayoutTypeController.class
 )
 public class UserPersonalPanelLayoutController implements LayoutTypeController {

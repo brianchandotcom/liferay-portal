@@ -25,8 +25,6 @@ import java.util.Locale;
  */
 public interface PanelEntry {
 
-	public String getIconCssClass();
-
 	public String getKey();
 
 	public String getLabel(Locale locale);

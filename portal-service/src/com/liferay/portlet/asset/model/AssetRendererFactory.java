@@ -111,6 +111,11 @@ public interface AssetRendererFactory {
 
 	public String getTypeName(Locale locale, long subtypeId);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getURLAdd(
+	 * 			   LiferayPortletRequest, LiferayPortletResponse, long)}
+	 */
+	@Deprecated
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

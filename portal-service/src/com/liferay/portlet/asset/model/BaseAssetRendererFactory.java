@@ -194,11 +194,22 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return getTypeName(locale);
 	}
 
+	@Deprecated
 	@Override
 	@SuppressWarnings("unused")
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
+
+		return getURLAdd(liferayPortletRequest, liferayPortletResponse, 0);
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public PortletURL getURLAdd(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classTypeId)
 		throws PortalException {
 
 		return null;

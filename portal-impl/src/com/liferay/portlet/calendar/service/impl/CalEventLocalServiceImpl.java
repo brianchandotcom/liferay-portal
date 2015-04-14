@@ -735,7 +735,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			event.getEventId(), event.getUuid(), 0, assetCategoryIds,
 			assetTagNames, true, null, null, null, ContentTypes.TEXT_HTML,
 			event.getTitle(), event.getDescription(), null, null, null, 0, 0,
-			null, false);
+			null);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

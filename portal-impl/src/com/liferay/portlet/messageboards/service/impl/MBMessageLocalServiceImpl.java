@@ -2416,7 +2416,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.getModifiedDate(), message.getWorkflowClassName(),
 			message.getMessageId(), message.getUuid(), 0, assetCategoryIds,
 			assetTagNames, visible, null, null, null, ContentTypes.TEXT_HTML,
-			message.getSubject(), null, null, null, null, 0, 0, null, false);
+			message.getSubject(), null, null, null, null, 0, 0, null);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

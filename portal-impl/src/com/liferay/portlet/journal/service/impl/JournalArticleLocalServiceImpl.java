@@ -5545,7 +5545,7 @@ public class JournalArticleLocalServiceImpl
 				getClassTypeId(article), assetCategoryIds, assetTagNames, false,
 				null, null, null, ContentTypes.TEXT_HTML, article.getTitle(),
 				article.getDescription(), article.getDescription(), null,
-				article.getLayoutUuid(), 0, 0, null, false);
+				article.getLayoutUuid(), 0, 0, null);
 		}
 		else {
 			JournalArticleResource journalArticleResource =
@@ -5560,7 +5560,7 @@ public class JournalArticleLocalServiceImpl
 				assetCategoryIds, assetTagNames, visible, null, null, null,
 				ContentTypes.TEXT_HTML, article.getTitle(),
 				article.getDescription(), article.getDescription(), null,
-				article.getLayoutUuid(), 0, 0, null, false);
+				article.getLayoutUuid(), 0, 0, null);
 		}
 
 		assetLinkLocalService.updateLinks(
@@ -5741,7 +5741,7 @@ public class JournalArticleLocalServiceImpl
 								ContentTypes.TEXT_HTML, article.getTitle(),
 								article.getDescription(),
 								article.getDescription(), null,
-								article.getLayoutUuid(), 0, 0, null, false);
+								article.getLayoutUuid(), 0, 0, null);
 
 						assetLinkLocalService.updateLinks(
 							userId, assetEntry.getEntryId(), assetLinkEntryIds,

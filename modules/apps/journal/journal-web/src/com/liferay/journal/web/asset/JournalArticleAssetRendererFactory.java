@@ -155,12 +155,22 @@ public class JournalArticleAssetRendererFactory
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			JournalPortletKeys.JOURNAL);
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
+
+		if (classTypeId > 0) {
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchDDMStructure(classTypeId);
+
+			if (ddmStructure != null) {
+				portletURL.setParameter(
+					"ddmStructureKey", ddmStructure.getStructureKey());
+			}
+		}
 
 		return portletURL;
 	}

@@ -94,13 +94,17 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			PortletKeys.DYNAMIC_DATA_LISTS);
 
 		portletURL.setParameter(
 			"struts_action", "/dynamic_data_lists/edit_record");
+
+		if (classTypeId > 0) {
+			portletURL.setParameter("recordSetId", String.valueOf(classTypeId));
+		}
 
 		return portletURL;
 	}

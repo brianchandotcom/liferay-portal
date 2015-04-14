@@ -96,7 +96,7 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	@Override
 	public PortletURL getURLAdd(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			PortletKeys.BLOGS);

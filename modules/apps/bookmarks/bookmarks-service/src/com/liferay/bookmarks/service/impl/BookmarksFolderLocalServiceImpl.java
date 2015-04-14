@@ -570,7 +570,7 @@ public class BookmarksFolderLocalServiceImpl
 			folder.getFolderId(), folder.getUuid(), 0, assetCategoryIds,
 			assetTagNames, true, null, null, null, ContentTypes.TEXT_PLAIN,
 			folder.getName(), folder.getDescription(), null, null, null, 0, 0,
-			null, false);
+			null);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

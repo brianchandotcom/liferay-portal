@@ -63,9 +63,13 @@ public class PoshiRunnerGetterUtil {
 	public static String getClassNameFromClassCommandName(
 		String classCommandName) {
 
-		int x = classCommandName.indexOf("#");
+		if (classCommandName.contains("#")) {
+			int x = classCommandName.indexOf("#");
 
-		return classCommandName.substring(0, x);
+			return classCommandName.substring(0, x);
+		}
+
+		return classCommandName;
 	}
 
 	public static String getClassNameFromFilePath(String filePath) {

@@ -20,6 +20,8 @@ import com.liferay.poshi.runner.util.Validator;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -115,6 +117,31 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateClassCommandName(
+			Element element, String classType, String filePath)
+		throws PoshiRunnerException {
+
+		String classCommandName = element.attributeValue(classType);
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		if (!PoshiRunnerContext.isRootElement(classType + "#" + className)) {
+			throw new PoshiRunnerException (
+				"Invalid " + classType + " class " + className + "\n" +
+					filePath + ":" + element.attributeValue("line-number"));
+		}
+
+		String commandElementKey = classType + "#" + classCommandName;
+
+		if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
+			throw new PoshiRunnerException(
+				"Invalid " + classType + " command " + classCommandName + "\n" +
+					filePath + ":" + element.attributeValue("line-number"));
+		}
+	}
+
 	private static void _validateCommandElement(
 			Element element, String filePath)
 		throws PoshiRunnerException {
@@ -184,6 +211,8 @@ public class PoshiRunnerValidation {
 
 			_validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
+
+			_validateFunctionContext(element, filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("macro"))) {
 			List<String> possibleAttributeNames = Arrays.asList(
@@ -254,6 +283,48 @@ public class PoshiRunnerValidation {
 		_parseElements(element, filePath);
 	}
 
+	private static void _validateFunctionContext(
+			Element element, String filePath)
+		throws PoshiRunnerException {
+
+		_validateClassCommandName(element, "function", filePath);
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				element.attributeValue("function"));
+
+		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
+			className);
+
+		for (int i = 0; i < locatorCount; i++) {
+			String locator = element.attributeValue("locator" + (i + 1));
+
+			if (locator != null) {
+				Matcher matcher = _pattern.matcher(locator);
+
+				if (!locator.contains("#") || matcher.find()) {
+					continue;
+				}
+
+				String pathName =
+					PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+						locator);
+
+				if (!PoshiRunnerContext.isRootElement("path#" + pathName)) {
+					throw new PoshiRunnerException (
+						"Invalid path name " + pathName + "\n" + filePath +
+							":" + element.attributeValue("line-number"));
+				}
+
+				if (!PoshiRunnerContext.isPathLocator(locator)) {
+					throw new PoshiRunnerException(
+						"Invalid path locator " + locator + "\n" + filePath +
+							":" + element.attributeValue("line-number"));
+				}
+			}
+		}
+	}
+
 	private static void _validateFunctionFile(Element element, String filePath)
 		throws PoshiRunnerException {
 
@@ -285,15 +356,7 @@ public class PoshiRunnerValidation {
 	private static void _validateMacroContext(Element element, String filePath)
 		throws PoshiRunnerException {
 
-		String classCommandName = element.attributeValue("macro");
-
-		String commandElementKey = "macro#" + classCommandName;
-
-		if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
-			throw new PoshiRunnerException(
-				"Invalid macro command " + classCommandName + "\n" + filePath +
-					":" + element.attributeValue("line-number"));
-		}
+		_validateClassCommandName(element, "macro", filePath);
 	}
 
 	private static void _validateMacroFile(Element element, String filePath)
@@ -455,5 +518,7 @@ public class PoshiRunnerValidation {
 
 	private static final String _BASE_DIR =
 		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
+
+	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 
 }

@@ -151,6 +151,14 @@ public class PoshiRunnerContext {
 		return _commandElements.containsKey(commandElementKey);
 	}
 
+	public static boolean isPathLocator(String pathLocatorKey) {
+		return _pathLocators.containsKey(pathLocatorKey);
+	}
+
+	public static boolean isRootElement(String rootElementKey) {
+		return _rootElements.containsKey(rootElementKey);
+	}
+
 	public static void readFiles() throws Exception {
 		_readPoshiFiles();
 		_readSeleniumFiles();

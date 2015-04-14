@@ -832,11 +832,22 @@ public class AssetUtil {
 		return ddmStructure.getFieldType(fieldName);
 	}
 
-	protected static String getOrderByCol(String sortField, Locale locale) {
+	protected static String getOrderByCol(
+		String sortField, int sortType, Locale locale) {
+
 		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
-			sortField = DocumentImpl.getSortableFieldName(
-				sortField.concat(StringPool.UNDERLINE).concat(
-					LocaleUtil.toLanguageId(locale)));
+			sortField = sortField.concat(StringPool.UNDERLINE).concat(
+				LocaleUtil.toLanguageId(locale));
+
+			if ((sortType == Sort.DOUBLE_TYPE) ||
+				(sortType == Sort.FLOAT_TYPE) || (sortType == Sort.INT_TYPE) ||
+				(sortType == Sort.LONG_TYPE)) {
+
+				sortField = sortField.concat(StringPool.UNDERLINE).concat(
+					"Number");
+			}
+
+			sortField = DocumentImpl.getSortableFieldName(sortField);
 		}
 		else if (sortField.equals("modifiedDate")) {
 			sortField = Field.MODIFIED_DATE;
@@ -859,9 +870,11 @@ public class AssetUtil {
 			ddmFormFieldType = getDDMFormFieldType(ddmFormFieldType);
 		}
 
+		int sortType = getSortType(ddmFormFieldType);
+
 		return SortFactoryUtil.getSort(
-			AssetEntry.class, getSortType(ddmFormFieldType),
-			getOrderByCol(sortField, locale),
+			AssetEntry.class, sortType,
+			getOrderByCol(sortField, sortType, locale),
 			!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX), orderByType);
 	}
 

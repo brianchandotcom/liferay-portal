@@ -91,10 +91,8 @@ public class ServletPathsTest {
 		ServletContext servletContext = _prepareServletContext(
 			new MockServletContext());
 
-		String rootPath = ServletContextUtil.getRootPath(servletContext);
-
 		ServletPaths servletPaths = new ServletPaths(
-			servletContext, rootPath + "/test1/test2/");
+			servletContext, "/test1/test2/");
 
 		Assert.assertEquals("/test1/test2/", servletPaths.getResourcePath());
 

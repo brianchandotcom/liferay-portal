@@ -14,15 +14,26 @@
 
 package com.liferay.layout.set.prototype.web.portlet;
 
+import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
-public class LayoutSetPrototypeSettingsControlPanelEntry
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS
+	},
+	service = ControlPanelEntry.class
+)
+public class SiteTemplateSettingsControlPanelEntry
 	extends BaseControlPanelEntry {
 
 	@Override

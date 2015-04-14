@@ -19,7 +19,6 @@ import com.liferay.portal.struts.bundle.authpublicpathregistry.TestAuthPublicPat
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portal.util.test.AtomicState;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -48,7 +47,5 @@ public class AuthPublicPathRegistryTest {
 		Assert.assertFalse(
 			AuthPublicPathRegistry.contains("/unregistered/unknown/path/"));
 	}
-
-	private static final AtomicState _atomicState;
 
 }

@@ -295,11 +295,20 @@ public class PoshiRunnerValidation {
 					continue;
 				}
 
+				String pathName =
+					PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+						locator);
+
+				if (!PoshiRunnerContext.isRootElement("path#" + pathName)) {
+					throw new PoshiRunnerException (
+						"Invalid path name " + pathName + "\n" + filePath +
+							":" + element.attributeValue("line-number"));
+				}
+
 				if (!PoshiRunnerContext.isPathLocator(locator)) {
 					throw new PoshiRunnerException(
-						"Invalid locator" + (i + 1) + " " + locator + "\n" +
-							filePath + ":" +
-								element.attributeValue("line-number"));
+						"Invalid path locator " + locator + "\n" + filePath +
+							":" + element.attributeValue("line-number"));
 				}
 			}
 		}
@@ -337,6 +346,16 @@ public class PoshiRunnerValidation {
 		throws PoshiRunnerException {
 
 		String classCommandName = element.attributeValue("macro");
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		if (!PoshiRunnerContext.isRootElement("macro#" + className)) {
+			throw new PoshiRunnerException (
+				"Invalid macro class " + className + "\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
 
 		String commandElementKey = "macro#" + classCommandName;
 

@@ -19,12 +19,13 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
 import com.liferay.rss.web.configuration.RSSWebConfiguration;
-import com.liferay.rss.web.settings.RSSPortletInstanceSettings;
 import com.liferay.rss.web.upgrade.RSSWebUpgrade;
 
 import java.io.IOException;
@@ -85,13 +86,15 @@ public class RSSPortlet extends MVCPortlet {
 			RSSWebConfiguration.class.getName(), _rssWebConfiguration);
 
 		try {
-			RSSPortletInstanceSettings rssPortletInstanceSettings =
-				_portletInstanceSettingsProvider.getPortletInstanceSettings(
-					themeDisplay.getLayout(), portletDisplay.getId());
+			RSSPortletInstanceConfiguration rssPortletInstanceConfiguration =
+				_settingsFactory.getSettings(
+					RSSPortletInstanceConfiguration.class,
+					new PortletInstanceSettingsLocator(
+						themeDisplay.getLayout(), portletDisplay.getId()));
 
 			renderRequest.setAttribute(
-				RSSPortletInstanceSettings.class.getName(),
-				rssPortletInstanceSettings);
+				RSSPortletInstanceConfiguration.class.getName(),
+				rssPortletInstanceConfiguration);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -107,22 +110,16 @@ public class RSSPortlet extends MVCPortlet {
 			RSSWebConfiguration.class, properties);
 	}
 
-	@Reference(
-		target = "(class.name=com.liferay.rss.web.settings.RSSPortletInstanceSettings)"
-	)
-	protected void setPortletInstanceSettingsProvider(
-		PortletInstanceSettingsProvider<RSSPortletInstanceSettings>
-			portletInstanceSettingsProvider) {
-
-		_portletInstanceSettingsProvider = portletInstanceSettingsProvider;
-	}
-
 	@Reference(unbind = "-")
 	protected void setRSSWebUpgrade(RSSWebUpgrade rssWebUpgrade) {
 	}
 
-	private PortletInstanceSettingsProvider<RSSPortletInstanceSettings>
-		_portletInstanceSettingsProvider;
+	@Reference(unbind = "-")
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
 	private volatile RSSWebConfiguration _rssWebConfiguration;
+	private SettingsFactory _settingsFactory;
 
 }

@@ -16,6 +16,8 @@ package com.liferay.bookmarks.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+
 /**
  * @author Adolfo Pérez
  */
@@ -28,7 +30,7 @@ public interface BookmarksGroupServiceConfiguration {
 		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_added_body.tmpl}",
 		required = false
 	)
-	public String emailEntryAddedBody();
+	public LocalizedValuesMap emailEntryAddedBody();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean emailEntryAddedEnabled();
@@ -37,13 +39,13 @@ public interface BookmarksGroupServiceConfiguration {
 		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_added_subject.tmpl}",
 		required = false
 	)
-	public String emailEntryAddedSubject();
+	public LocalizedValuesMap emailEntryAddedSubject();
 
 	@Meta.AD(
 		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_updated_body.tmpl}",
 		required = false
 	)
-	public String emailEntryUpdatedBody();
+	public LocalizedValuesMap emailEntryUpdatedBody();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean emailEntryUpdatedEnabled();
@@ -52,7 +54,7 @@ public interface BookmarksGroupServiceConfiguration {
 		deflt = "${resource:com/liferay/bookmarks/configuration/dependencies/email_entry_updated_subject.tmpl}",
 		required = false
 	)
-	public String emailEntryUpdatedSubject();
+	public LocalizedValuesMap emailEntryUpdatedSubject();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",

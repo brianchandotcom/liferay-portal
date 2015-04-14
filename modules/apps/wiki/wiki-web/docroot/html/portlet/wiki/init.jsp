@@ -58,8 +58,8 @@ page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSetti
 page import="com.liferay.wiki.web.display.context.logic.WikiVisualizationHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiRequestHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiURLHelper" %><%@
-page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %><%@
-page import="com.liferay.wiki.web.settings.WikiWebSettingsProvider" %>
+page import="com.liferay.wiki.web.provider.WikiWebComponentProvider" %><%@
+page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %>
 
 <%
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
@@ -69,9 +69,9 @@ WikiGroupServiceSettings wikiGroupServiceSettings = wikiRequestHelper.getWikiGro
 
 WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);
 
-WikiWebSettingsProvider wikiWebSettingsProvider = WikiWebSettingsProvider.getWikiWebSettingsProvider();
+WikiWebComponentProvider wikiWebComponentProvider = WikiWebComponentProvider.getWikiWebComponentProvider();
 
-WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
+WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

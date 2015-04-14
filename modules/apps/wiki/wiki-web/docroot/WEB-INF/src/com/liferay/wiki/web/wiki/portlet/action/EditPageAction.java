@@ -53,7 +53,7 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
+import com.liferay.wiki.web.provider.WikiWebComponentProvider;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -272,11 +272,11 @@ public class EditPageAction extends PortletAction {
 				page = WikiPageServiceUtil.getPage(nodeId, title, false);
 			}
 			catch (NoSuchPageException nspe2) {
-				WikiWebSettingsProvider wikiWebSettingsProvider =
-					WikiWebSettingsProvider.getWikiWebSettingsProvider();
+				WikiWebComponentProvider wikiWebComponentProvider =
+					WikiWebComponentProvider.getWikiWebComponentProvider();
 
 				WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-					wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
+					wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 				if (title.equals(
 						wikiGroupServiceConfiguration.frontPageName()) &&
@@ -350,11 +350,11 @@ public class EditPageAction extends PortletAction {
 
 			String title = TrashUtil.getOriginalTitle(pageResource.getTitle());
 
-			WikiWebSettingsProvider wikiWebSettingsProvider =
-				WikiWebSettingsProvider.getWikiWebSettingsProvider();
+			WikiWebComponentProvider wikiWebComponentProvider =
+				WikiWebComponentProvider.getWikiWebComponentProvider();
 
 			WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-				wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
+				wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 			if (title.equals(wikiGroupServiceConfiguration.frontPageName())) {
 				WikiPage overridePage = WikiPageLocalServiceUtil.fetchPage(

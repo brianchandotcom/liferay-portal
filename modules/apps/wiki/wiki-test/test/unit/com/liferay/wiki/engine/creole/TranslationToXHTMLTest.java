@@ -23,7 +23,7 @@ import com.liferay.wiki.parser.creole.ast.WikiPageNode;
 import com.liferay.wiki.parser.creole.parser.Creole10Lexer;
 import com.liferay.wiki.parser.creole.parser.Creole10Parser;
 import com.liferay.wiki.parser.creole.visitor.impl.XhtmlTranslationVisitor;
-import com.liferay.wiki.service.settings.WikiServiceSettingsProvider;
+import com.liferay.wiki.service.provider.WikiServiceComponentProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,12 +49,13 @@ public class TranslationToXHTMLTest {
 
 		htmlUtil.setHtml(new HtmlImpl());
 
-		_wikiServiceSettingsProvider = CreoleTestUtil.getWikiSettingsProvider();
+		_wikiServiceComponentProvider =
+			CreoleTestUtil.getWikiSettingsProvider();
 	}
 
 	@After
 	public void tearDown() {
-		_wikiServiceSettingsProvider.deactivate();
+		_wikiServiceComponentProvider.deactivate();
 	}
 
 	@Test
@@ -775,7 +776,7 @@ public class TranslationToXHTMLTest {
 	private static final String _NEW_LINE = StringPool.NEW_LINE;
 
 	private Creole10Parser _creole10parser;
-	private WikiServiceSettingsProvider _wikiServiceSettingsProvider;
+	private WikiServiceComponentProvider _wikiServiceComponentProvider;
 	private final XhtmlTranslationVisitor _xhtmlTranslationVisitor =
 		new XhtmlTranslationVisitor();
 

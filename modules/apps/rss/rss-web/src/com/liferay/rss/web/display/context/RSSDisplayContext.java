@@ -15,8 +15,8 @@
 package com.liferay.rss.web.display.context;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
 import com.liferay.rss.web.configuration.RSSWebConfiguration;
-import com.liferay.rss.web.settings.RSSPortletInstanceSettings;
 import com.liferay.rss.web.util.RSSFeed;
 
 import java.util.ArrayList;
@@ -28,19 +28,19 @@ import java.util.List;
 public class RSSDisplayContext {
 
 	public RSSDisplayContext(
-		RSSPortletInstanceSettings rssPortletInstanceSettings,
+		RSSPortletInstanceConfiguration rssPortletInstanceConfiguration,
 		RSSWebConfiguration rssWebConfiguration) {
 
-		_rssPortletInstanceSettings = rssPortletInstanceSettings;
+		_rssPortletInstanceConfiguration = rssPortletInstanceConfiguration;
 		_rssWebConfiguration = rssWebConfiguration;
 	}
 
 	public List<RSSFeed> getRSSFeeds() {
 		List<RSSFeed> rssFeeds = new ArrayList<>();
 
-		String[] titles = _rssPortletInstanceSettings.titles();
+		String[] titles = _rssPortletInstanceConfiguration.titles();
 
-		String[] urls = _rssPortletInstanceSettings.urls();
+		String[] urls = _rssPortletInstanceConfiguration.urls();
 
 		for (int i = 0; i < urls.length; i++) {
 			String url = urls[i];
@@ -57,7 +57,8 @@ public class RSSDisplayContext {
 		return rssFeeds;
 	}
 
-	private final RSSPortletInstanceSettings _rssPortletInstanceSettings;
+	private final RSSPortletInstanceConfiguration
+		_rssPortletInstanceConfiguration;
 	private final RSSWebConfiguration _rssWebConfiguration;
 
 }

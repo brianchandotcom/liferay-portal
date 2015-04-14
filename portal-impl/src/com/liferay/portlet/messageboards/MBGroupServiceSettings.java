@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
-import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -36,7 +35,7 @@ import java.util.Map;
  * @author Jorge Ferrer
  */
 @Settings.Config(settingsIds = MBConstants.SERVICE_NAME)
-public class MBGroupServiceSettings implements GroupServiceSettings {
+public class MBGroupServiceSettings {
 
 	public static final String[] ALL_KEYS = {
 	};

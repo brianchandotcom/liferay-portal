@@ -16,7 +16,8 @@ package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,8 +41,8 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
+import com.liferay.wiki.web.provider.WikiWebComponentProvider;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
-import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -196,16 +197,17 @@ public class EditNodeAction extends PortletAction {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		WikiWebSettingsProvider wikiWebSettingsProvider =
-			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+		WikiWebComponentProvider wikiWebComponentProvider =
+			WikiWebComponentProvider.getWikiWebComponentProvider();
 
-		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
-			portletIntanceSettingsProvider =
-				wikiWebSettingsProvider.getPortletInstanceSettingsProvider();
+		SettingsFactory settingsFactory =
+			wikiWebComponentProvider.getSettingsFactory();
 
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			portletIntanceSettingsProvider.getPortletInstanceSettings(
-				themeDisplay.getLayout(), portletDisplay.getId());
+			settingsFactory.getSettings(
+				WikiPortletInstanceSettings.class,
+				new PortletInstanceSettingsLocator(
+					themeDisplay.getLayout(), portletDisplay.getId()));
 
 		return wikiPortletInstanceSettings;
 	}

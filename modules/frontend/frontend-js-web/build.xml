@@ -8,9 +8,9 @@
 
 	<property name="alloyeditor.version" value="0.2.5" />
 	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
-	<property name="html.js.path" value="src/META-INF/resources/html/js" />
+	<property name="html.js.dir" value="src/META-INF/resources/html/js" />
 	<property name="scayt.file" value="scayt_4.4.5.zip" />
-	<property name="third.party.path" value="../../../portal-web/third-party" />
+	<property name="third.party.dir" value="../../../portal-web/third-party" />
 	<property name="tinymce.file" value="tinymce_4.1.7.zip" />
 	<property name="wsc.file" value="wsc_4.4.5.zip" />
 
@@ -19,7 +19,7 @@
 		<property name="alloy.version" value="3.0.1" />
 
 		<path id="alloy.zip.path">
-			<fileset dir="${third.party.path}">
+			<fileset dir="${third.party.dir}">
 				<include name="alloy-${alloy.version}*.zip" />
 			</fileset>
 		</path>
@@ -31,7 +31,7 @@
 		<if>
 			<not>
 				<uptodate
-					srcfile="${third.party.path}/${alloy.file}"
+					srcfile="${third.party.dir}/${alloy.file}"
 					targetfile="tmp/aui"
 				/>
 			</not>
@@ -44,7 +44,7 @@
 
 				<echo>${alloy.file}</echo>
 
-				<unzip src="${third.party.path}/${alloy.file}" dest="${alloy.extracted.path}" />
+				<unzip src="${third.party.dir}/${alloy.file}" dest="${alloy.extracted.path}" />
 
 				<!-- CSS -->
 
@@ -129,7 +129,7 @@
 
 	<target name="build-alloy-editor">
 		<path id="alloyeditor.zip.path">
-			<fileset dir="${third.party.path}">
+			<fileset dir="${third.party.dir}">
 				<include name="alloy-editor-${alloyeditor.version}.zip" />
 			</fileset>
 		</path>
@@ -141,7 +141,7 @@
 		<if>
 			<not>
 				<uptodate
-					srcfile="${third.party.path}/${alloyeditor.file}"
+					srcfile="${third.party.dir}/${alloyeditor.file}"
 					targetfile="tmp/editor/alloyeditor"
 				/>
 			</not>
@@ -150,21 +150,21 @@
 
 				<echo>${alloyeditor.file}</echo>
 
-				<unzip src="${third.party.path}/${alloyeditor.file}" dest="tmp/editor/_tmp" />
+				<unzip src="${third.party.dir}/${alloyeditor.file}" dest="tmp/editor/_tmp" />
 
 				<copy todir="tmp/editor/alloyeditor" overwrite="true" preservelastmodified="true">
 					<fileset dir="tmp/editor/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
 				</copy>
 
 				<copy todir="tmp/editor/alloyeditor" overwrite="true" preservelastmodified="true">
-					<fileset dir="${html.js.path}/editor/alloyeditor_diffs" />
+					<fileset dir="${html.js.dir}/editor/alloyeditor_diffs" />
 				</copy>
 
 				<delete dir="tmp/editor/_tmp" />
 			</then>
 			<else>
 				<copy todir="tmp/editor/alloyeditor" preservelastmodified="true">
-					<fileset dir="${html.js.path}/editor/alloyeditor_diffs" />
+					<fileset dir="${html.js.dir}/editor/alloyeditor_diffs" />
 				</copy>
 			</else>
 		</if>
@@ -174,17 +174,17 @@
 		<if>
 			<not>
 				<uptodate
-					srcfile="${third.party.path}/${ckeditor.file}"
+					srcfile="${third.party.dir}/${ckeditor.file}"
 					targetfile="tmp/editor/ckeditor"
 				/>
 			</not>
 			<then>
 				<delete dir="tmp/editor/ckeditor" />
 
-				<unzip src="${third.party.path}/${ckeditor.file}" dest="tmp/editor" />
+				<unzip src="${third.party.dir}/${ckeditor.file}" dest="tmp/editor" />
 
 				<copy todir="tmp/editor/ckeditor" overwrite="true" preservelastmodified="true">
-					<fileset dir="${html.js.path}/editor/ckeditor_diffs" />
+					<fileset dir="${html.js.dir}/editor/ckeditor_diffs" />
 				</copy>
 
 				<antcall target="build-ckeditor-plugins-scayt" />
@@ -193,16 +193,16 @@
 			</then>
 			<else>
 				<copy todir="tmp/editor/ckeditor" preservelastmodified="true">
-					<fileset dir="${html.js.path}/editor/ckeditor_diffs" />
+					<fileset dir="${html.js.dir}/editor/ckeditor_diffs" />
 				</copy>
 			</else>
 		</if>
 	</target>
 
 	<target name="build-ckeditor-plugins-bbcode">
-		<concat destfile="${html.js.path}/editor/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
+		<concat destfile="${html.js.dir}/editor/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
 			<filelist
-				dir="${html.js.path}/editor/ckeditor_diffs/plugins/bbcode"
+				dir="${html.js.dir}/editor/ckeditor_diffs/plugins/bbcode"
 				files="bbcode_utils.js,lexer.js,parser.js,converter.js"
 			/>
 		</concat>
@@ -210,7 +210,7 @@
 
 	<target name="build-ckeditor-plugins-creole">
 		<mirrors-get
-			dest="${html.js.path}/editor/ckeditor_diffs/plugins/creole/creole_parser.js"
+			dest="${html.js.dir}/editor/ckeditor_diffs/plugins/creole/creole_parser.js"
 			src="http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html"
 		/>
 
@@ -310,17 +310,17 @@
 			]]>
 		</script>
 
-		<echo file="${html.js.path}/editor/ckeditor_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
+		<echo file="${html.js.dir}/editor/ckeditor_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
 	</target>
 
 	<target name="build-ckeditor-plugins-scayt">
 		<if>
 			<not>
-				<available file="${third.party.path}/${scayt.file}" />
+				<available file="${third.party.dir}/${scayt.file}" />
 			</not>
 			<then>
 				<mirrors-get
-					dest="${third.party.path}/${scayt.file}"
+					dest="${third.party.dir}/${scayt.file}"
 					src="http://download.ckeditor.com/scayt/releases/${scayt.file}"
 				/>
 			</then>
@@ -328,18 +328,18 @@
 
 		<unzip
 			dest="tmp/editor/ckeditor/plugins"
-			src="${third.party.path}/${scayt.file}"
+			src="${third.party.dir}/${scayt.file}"
 		/>
 	</target>
 
 	<target name="build-ckeditor-plugins-wsc">
 		<if>
 			<not>
-				<available file="${third.party.path}/${wsc.file}" />
+				<available file="${third.party.dir}/${wsc.file}" />
 			</not>
 			<then>
 				<mirrors-get
-					dest="${third.party.path}/${wsc.file}"
+					dest="${third.party.dir}/${wsc.file}"
 					src="http://download.ckeditor.com/wsc/releases/${wsc.file}"
 				/>
 			</then>
@@ -347,7 +347,7 @@
 
 		<unzip
 			dest="tmp/editor/ckeditor/plugins"
-			src="${third.party.path}/${wsc.file}"
+			src="${third.party.dir}/${wsc.file}"
 		/>
 	</target>
 
@@ -355,7 +355,7 @@
 		<if>
 			<not>
 				<uptodate
-					srcfile="${third.party.path}/${tinymce.file}"
+					srcfile="${third.party.dir}/${tinymce.file}"
 					targetfile="tmp/editor/tiny_mce"
 				/>
 			</not>
@@ -363,7 +363,7 @@
 				<delete dir="tmp/editor/tiny_mce" />
 				<delete dir="tmp/editor/tinymce" />
 
-				<unzip src="${third.party.path}/${tinymce.file}" dest="tmp/editor" />
+				<unzip src="${third.party.dir}/${tinymce.file}" dest="tmp/editor" />
 
 				<move todir="tmp/editor/tiny_mce" preservelastmodified="true">
 					<fileset dir="tmp/editor/tinymce/js/tinymce">
@@ -372,7 +372,7 @@
 				</move>
 
 				<copy todir="tmp/editor/tiny_mce" overwrite="true" preservelastmodified="true">
-					<fileset dir="${html.js.path}/editor/tiny_mce_diffs" />
+					<fileset dir="${html.js.dir}/editor/tiny_mce_diffs" />
 				</copy>
 
 				<delete dir="tmp/editor/tinymce" />

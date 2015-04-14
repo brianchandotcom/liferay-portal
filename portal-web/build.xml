@@ -7,9 +7,8 @@
 
 	<property name="alloy.version" value="3.0.1" />
 	<property name="alloy-font-awesome.version" value="2.0" />
+	<property name="frontend.js.web.dir" value="../modules/frontend/frontend-js-web" />
 	<property name="vaadin.file" value="vaadin-6.8.12-liferay.zip" />
-
-	<property name="front.end.js.web.path" value="../modules/frontend/frontend-js-web" />
 
 	<path id="jspc.common.classpath">
 		<pathelement path="docroot/WEB-INF/classes" />
@@ -140,7 +139,7 @@
 		</if>
 	</target>
 
-	<target name="build-alloy-themes">
+	<target name="build-alloy-theme">
 		<path id="alloy.zip.path">
 			<fileset dir="third-party">
 				<include name="alloy-${alloy.version}*.zip" />
@@ -151,7 +150,7 @@
 
 		<basename file="${alloy.zip.path}" property="alloy.file" />
 
-		<property name="alloy.dir" value="${front.end.js.web.path}/tmp/aui" />
+		<property name="alloy.dir" value="${frontend.js.web.dir}/tmp/aui" />
 
 		<if>
 			<not>
@@ -163,7 +162,7 @@
 			<then>
 				<ant-execute
 					ant.build.file="build.xml"
-					ant.dir="${front.end.js.web.path}"
+					ant.dir="${frontend.js.web.dir}"
 					ant.target="build-alloy"
 				/>
 			</then>
@@ -390,7 +389,7 @@
 		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
-	<target name="build-themes" depends="build-alloy-bootstrap,build-alloy-themes,build-alloy-font-awesome,build-bourbon">
+	<target name="build-themes" depends="build-alloy-bootstrap,build-alloy-theme,build-alloy-font-awesome,build-bourbon">
 		<for param="module.name">
 			<path>
 				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />

@@ -34,15 +34,15 @@ public class DefaultPortalWebResources implements PortalWebResources {
 	public String getContextPath() {
 		return _servletContext.getContextPath();
 	}
-	
-	@Override
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
 
 	@Override
 	public long getLastModified() {
 		return _bundle.getLastModified();
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Activate
@@ -59,6 +59,5 @@ public class DefaultPortalWebResources implements PortalWebResources {
 
 	private Bundle _bundle;
 	private ServletContext _servletContext;
-
 
 }

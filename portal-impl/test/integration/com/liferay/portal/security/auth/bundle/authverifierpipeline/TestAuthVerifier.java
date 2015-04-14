@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.auth.bundle.authverifierpipeline;
 
-import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthVerifier;
 import com.liferay.portal.security.auth.AuthVerifierResult;
@@ -22,12 +21,10 @@ import com.liferay.portal.security.auth.AuthVerifierResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -61,16 +58,7 @@ public class TestAuthVerifier implements AuthVerifier {
 
 		authVerifierResult.setSettings(settings);
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
-
 		return authVerifierResult;
 	}
-
-	@Reference(target = "(test=AtomicState)")
-	protected void getAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
-	}
-
-	private AtomicReference<String> _atomicReference;
 
 }

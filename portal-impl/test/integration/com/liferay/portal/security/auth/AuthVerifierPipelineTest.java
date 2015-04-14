@@ -23,11 +23,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portal.util.test.AtomicState;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,20 +44,8 @@ public class AuthVerifierPipelineTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			new SyntheticBundleRule("bundle.authverifierpipeline"));
 
-	@BeforeClass
-	public static void setUpClass() {
-		_atomicState = new AtomicState();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_atomicState.close();
-	}
-
 	@Test
 	public void testVerifyRequest() {
-		_atomicState.reset();
-
 		try {
 			AccessControlContext accessControlContext =
 				new AccessControlContext();
@@ -89,8 +74,6 @@ public class AuthVerifierPipelineTest {
 
 		return mockHttpServletRequest;
 	}
-
-	private static AtomicState _atomicState;
 
 	private class MockHttpServletRequestTest extends MockHttpServletRequest {
 

@@ -262,65 +262,44 @@ public class PoshiRunnerValidation {
 			Element element, String filePath)
 		throws PoshiRunnerException {
 
-		String function = element.attributeValue("function");
+		String classCommandName = element.attributeValue("function");
 
-		String className = function;
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
 
-		if (!function.contains("#")) {
-			Element rootElement = PoshiRunnerContext.getFunctionRootElement(
-				className);
-
-			if (Validator.isNull(rootElement)) {
-				throw new PoshiRunnerException (
-					"Invalid " + function + " class\n" + filePath + ":" +
-						element.attributeValue("line-number"));
-			}
-
-			function = function + "#" + rootElement.attributeValue("default");
-		}
-		else {
-			className = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				function);
-
-			Element rootElement = PoshiRunnerContext.getFunctionRootElement(
-				className);
-
-			if (Validator.isNull(rootElement)) {
-				throw new PoshiRunnerException (
-					"Invalid " + function + " class\n" + filePath + ":" +
-						element.attributeValue("line-number"));
-			}
-		}
-
-		Element childElement = PoshiRunnerContext.getFunctionCommandElement(
-			function);
-
-		if (childElement == null) {
-			throw new PoshiRunnerException(
-				"Invalid " + function + " command\n" + filePath + ":" +
+		if (!PoshiRunnerContext.isRootElement("function#" + className)) {
+			throw new PoshiRunnerException (
+				"Invalid function class " + className + "\n" + filePath + ":" +
 					element.attributeValue("line-number"));
+		}
+
+		if (!PoshiRunnerContext.isCommandElement(
+				"function#" + classCommandName)) {
+
+			throw new PoshiRunnerException (
+				"Invalid function command " + classCommandName + "\n" +
+					filePath + ":" + element.attributeValue("line-number"));
 		}
 
 		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
 			className);
 
 		for (int i = 0; i < locatorCount; i++) {
-			String locatorKey = element.attributeValue("locator" + (i + 1));
+			String locator = element.attributeValue("locator" + (i + 1));
 
-			if (locatorKey != null) {
-				Matcher matcher = _pattern.matcher(locatorKey);
+			if (locator != null) {
+				Matcher matcher = _pattern.matcher(locator);
 
-				if (!locatorKey.contains("#") || matcher.find()) {
+				if (!locator.contains("#") || matcher.find()) {
 					continue;
 				}
 
-				String locator = PoshiRunnerContext.getPathLocator(locatorKey);
-
-				if (Validator.isNull(locator)) {
+				if (!PoshiRunnerContext.isPathLocator(locator)) {
 					throw new PoshiRunnerException(
-						"Invalid " + locatorKey + " locator" + (i + 1) +
-							"\n" + filePath + ":" +
-							element.attributeValue("line-number"));
+						"Invalid locator" + (i + 1) + " " + locator + "\n" +
+							filePath + ":" +
+								element.attributeValue("line-number"));
 				}
 			}
 		}

@@ -369,7 +369,7 @@
 		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_DAY" name="expirationDateDay" />
 
 		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MONTH" name="expirationDateMonth" />
-		<var name="expirationDateMonth" value="${expirationDateMonth?increment()}" />
+		<var method="MathUtil#sum(${expirationDateMonth}, 1)" name="expirationDateMonth" />
 
 		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_YEAR" name="expirationDateYear" />
 		<var name="expirationDate" value="${expirationDateMonth}/${expirationDateDay}/${expirationDateYear}" />
@@ -390,8 +390,7 @@
 		</if>
 
 		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MINUTE" name="expirationDateMinute" />
-		<var name="expirationDateMinuteFuture" value="${expirationDateMinute?increment()}" />
-		<var name="expirationDateMinuteFuture" value="${expirationDateMinuteFuture?increment()}" />
+		<var method="MathUtil#sum(${expirationDateMinute}, 2)" name="expirationDateMinuteFuture" />
 		<var name="expirationDateMinuteFutureLength" value="${expirationDateMinuteFuture?length()}" />
 
 		<if>
@@ -426,8 +425,7 @@
 		</if>
 
 		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MINUTE" name="displayDateMinute" />
-		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
-		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
+		<var method="MathUtil#sum(${displayDateMinute}, 2)" name="displayDateMinuteFuture" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
 
 		<if>

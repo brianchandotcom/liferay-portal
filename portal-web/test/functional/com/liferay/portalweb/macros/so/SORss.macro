@@ -185,14 +185,14 @@
 				<equals arg1="${feedEntryNumber}" arg2="${entriesPerFeed}" />
 			</not>
 			<then>
-				<var name="feedEntryNumber" value="${feedEntryNumber?increment()}" />
+				<var method="MathUtil#sum(${feedEntryNumber}, 1)" name="feedEntryNumber" />
 
 				<if>
 					<not>
 						<equals arg1="${expandedFeedEntryNumber}" arg2="${expandedEntriesPerFeed}" />
 					</not>
 					<then>
-						<var name="expandedFeedEntryNumber" value="${expandedFeedEntryNumber?increment()}" />
+						<var method="MathUtil#sum(${expandedFeedEntryNumber}, 1)" name="expandedFeedEntryNumber" />
 					</then>
 				</if>
 

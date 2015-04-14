@@ -70,8 +70,7 @@
 				</then>
 			</elseif>
 			<else>
-				<var name="minutesIncremented1" value="${minutes?increment()}" />
-				<var name="minutesIncremented2" value="${minutesIncremented1?increment()}" />
+				<var method="MathUtil#sum(${minutesIncremented2}, 2)" name="minutesIncremented2" />
 			</else>
 		</if>
 

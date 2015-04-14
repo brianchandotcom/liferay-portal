@@ -493,8 +493,8 @@
 						<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 						<execute function="AssertLocation" value1="http://localhost:8080/web/site-name/site-child-page-${childPageCounter}" />
 
-						<var name="childPageCounter" value="${childPageCounter?increment()}" />
-						<var name="i" value="${i?increment()}" />
+						<var method="MathUtil#sum(${childPageCounter}, 1)" name="childPageCounter" />
+						<var method="MathUtil#sum(${i}, 1)" name="i" />
 					</then>
 				</while>
 			</else>

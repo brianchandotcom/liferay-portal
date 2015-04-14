@@ -31,7 +31,7 @@
 				<equals arg1="${i}" arg2="${portletCount}" />
 			</not>
 			<then>
-				<var name="i" value="${i?increment()}" />
+				<var method="MathUtil#sum(${i}, 1)" name="i" />
 
 				<execute function="Refresh" />
 
@@ -271,7 +271,7 @@
 				<equals arg1="${i}" arg2="${totalPortletCount}" />
 			</not>
 			<then>
-				<var name="i" value="${i?increment()}" />
+				<var method="MathUtil#sum(${i}, 1)" name="i" />
 
 				<execute function="AssertElementPresent" locator1="xpath=(//section[header/h1[contains(.,'${portletName}')]])[${i}]" />
 			</then>

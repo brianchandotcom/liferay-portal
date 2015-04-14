@@ -55,4 +55,14 @@ public final class XMLLoggerHandler {
 		xmlLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
 	}
 
+	private static LoggerElement _getChildContainerLoggerElement() {
+		LoggerElement childContainerLoggerElement = new LoggerElement();
+
+		childContainerLoggerElement.setClassName(
+			"child-container collapsible collapse");
+		childContainerLoggerElement.setName("ul");
+
+		return childContainerLoggerElement;
+	}
+
 }

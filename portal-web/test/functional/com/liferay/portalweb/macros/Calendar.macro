@@ -616,6 +616,26 @@
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
 	</command>
 
+	<command name="viewMonth">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Month" />
+		</execute>
+
+		<while>
+			<condition function="IsTextNotEqual" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_DATE" value1="February 2015" />
+			<then>
+				<execute function="Click" locator1="PGCalendar#VIEW_PREVIOUS_BUTTON" />
+			</then>
+		</while>
+
+		<while>
+			<condition function="IsTextNotEqual" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_DATE" value1="${dateMonth}" />
+			<then>
+				<execute function="Click" locator1="PGCalendar#VIEW_NEXT_BUTTON" />
+			</then>
+		</while>
+	</command>
+
 	<command name="viewMonthSmallCalendar">
 		<while>
 			<condition function="IsTextNotEqual" locator1="PGCalendar#SMALL_CALENDAR_DATE" value1="February 2015" />
@@ -665,6 +685,18 @@
 				</then>
 			</elseif>
 		</if>
+	</command>
+
+	<command name="viewWeekCountViaMonthView">
+		<var name="key_weekNumber" value="${weekNumber}" />
+
+		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_WEEK_NUMBER" />
+		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="Pause" locator1="30000" />
+
+		<var name="key_weekNumber" value="${weekNumber?increment()}" />
+
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_WEEK_NUMBER" />
 	</command>
 
 	<command name="viewWeekStartDayViaMonthView">

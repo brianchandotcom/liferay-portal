@@ -208,7 +208,7 @@
 <!--PAGE-->
 <tr>
 	<td>PAGE</td>
-	<td>//li[contains(@class,'add-page')]/a[contains(.,'${key_pageName}')] | //li[contains(@class,'lfr-nav-item')]/a[contains(.,'${key_pageName}')]</td>
+	<td>//li[contains(@class,'add-page')]/a[contains(.,'${key_pageName}')]</td>
 	<td>Page</td>
 </tr>
 <tr>

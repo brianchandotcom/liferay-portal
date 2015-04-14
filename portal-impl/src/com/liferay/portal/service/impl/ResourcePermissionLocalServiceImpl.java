@@ -146,7 +146,7 @@ public class ResourcePermissionLocalServiceImpl
 			companyId, name, scope, primKey, roleId, 0, new String[] {actionId},
 			ResourcePermissionConstants.OPERATOR_ADD);
 
-		PermissionCacheUtil.clearResourceCache();
+		PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
 	}
 
 	/**
@@ -990,7 +990,7 @@ public class ResourcePermissionLocalServiceImpl
 			companyId, name, scope, primKey, roleId, 0, new String[] {actionId},
 			ResourcePermissionConstants.OPERATOR_REMOVE);
 
-		PermissionCacheUtil.clearResourceCache();
+		PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
 	}
 
 	/**
@@ -1022,9 +1022,10 @@ public class ResourcePermissionLocalServiceImpl
 				companyId, name, scope, resourcePermission.getPrimKey(), roleId,
 				0, new String[] {actionId},
 				ResourcePermissionConstants.OPERATOR_REMOVE);
-		}
 
-		PermissionCacheUtil.clearResourceCache();
+			PermissionCacheUtil.clearResourcePermissionCache(
+				name, resourcePermission.getPrimKey());
+		}
 	}
 
 	/**
@@ -1229,7 +1230,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		resourcePermissionPersistence.update(resourcePermission);
 
-		PermissionCacheUtil.clearResourceCache();
+		PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
 
 		SearchEngineUtil.updatePermissionFields(name, primKey);
 	}
@@ -1240,9 +1241,11 @@ public class ResourcePermissionLocalServiceImpl
 		throws PortalException {
 
 		boolean flushResourcePermissionEnabled =
-			PermissionThreadLocal.isFlushResourcePermissionEnabled();
+			PermissionThreadLocal.isFlushResourcePermissionEnabled(
+				name, primKey);
 
-		PermissionThreadLocal.setFlushResourcePermissionEnabled(false);
+		PermissionThreadLocal.setFlushResourcePermissionEnabled(
+			name, primKey, false);
 
 		try {
 			long[] roleIds = ArrayUtil.toLongArray(roleIdsToActionIds.keySet());
@@ -1277,9 +1280,9 @@ public class ResourcePermissionLocalServiceImpl
 		}
 		finally {
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(
-				flushResourcePermissionEnabled);
+				name, primKey, flushResourcePermissionEnabled);
 
-			PermissionCacheUtil.clearResourceCache();
+			PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}

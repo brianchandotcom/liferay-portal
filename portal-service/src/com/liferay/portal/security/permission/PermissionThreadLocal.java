@@ -15,6 +15,11 @@
 package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,24 +35,66 @@ public class PermissionThreadLocal {
 		return _addResource.get();
 	}
 
-	public static boolean isFlushResourceBlockEnabled() {
-		return _flushResourceBlockEnabled.get();
+	public static boolean isFlushResourceBlockEnabled(
+		long companyId, long groupId, String name) {
+
+		Set<String> set = _flushResourceBlockEnabled.get();
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(companyId);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(groupId);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(name);
+
+		return !set.contains(sb.toString());
 	}
 
-	public static boolean isFlushResourcePermissionEnabled() {
-		return _flushResourcePermissionEnabled.get();
+	public static boolean isFlushResourcePermissionEnabled(
+		String resourceName, String primKey) {
+
+		Set<String> set = _flushResourcePermissionEnabled.get();
+
+		return !set.contains(resourceName + StringPool.UNDERLINE + primKey);
 	}
 
 	public static void setAddResource(boolean addResource) {
 		_addResource.set(addResource);
 	}
 
-	public static void setFlushResourceBlockEnabled(boolean enabled) {
-		_flushResourceBlockEnabled.set(enabled);
+	public static void setFlushResourceBlockEnabled(
+		long companyId, long groupId, String name, boolean enabled) {
+
+		Set<String> set = _flushResourceBlockEnabled.get();
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(companyId);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(groupId);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(name);
+
+		if (enabled) {
+			set.remove(sb.toString());
+		}
+		else {
+			set.add(sb.toString());
+		}
 	}
 
-	public static void setFlushResourcePermissionEnabled(boolean enabled) {
-		_flushResourcePermissionEnabled.set(enabled);
+	public static void setFlushResourcePermissionEnabled(
+		String resourceName, String primKey, boolean enabled) {
+
+		Set<String> set = _flushResourcePermissionEnabled.get();
+
+		if (enabled) {
+			set.remove(resourceName + StringPool.UNDERLINE + primKey);
+		}
+		else {
+			set.add(resourceName + StringPool.UNDERLINE + primKey);
+		}
 	}
 
 	public static void setPermissionChecker(
@@ -59,14 +106,15 @@ public class PermissionThreadLocal {
 	private static final ThreadLocal<Boolean> _addResource =
 		new AutoResetThreadLocal<>(
 			PermissionThreadLocal.class + "._addResource", true);
-	private static final ThreadLocal<Boolean> _flushResourceBlockEnabled =
-		new AutoResetThreadLocal<>(
-			PermissionThreadLocal.class + "._flushResourceBlockEnabled", true);
-	private static final ThreadLocal<Boolean>
-		_flushResourcePermissionEnabled = new AutoResetThreadLocal<>(
+	private static final ThreadLocal<Set<String>> _flushResourceBlockEnabled =
+		new AutoResetThreadLocal<Set<String>>(
+			PermissionThreadLocal.class + "._flushResourceBlockEnabled",
+			new HashSet<String>());
+	private static final ThreadLocal<Set<String>>
+		_flushResourcePermissionEnabled = new AutoResetThreadLocal<Set<String>>(
 			PermissionThreadLocal.class +
 				"._flushResourcePermissionEnabled",
-			true);
+			new HashSet<String>());
 
 	private static final ThreadLocal<PermissionChecker> _permissionChecker =
 		new AutoResetThreadLocal<PermissionChecker>(

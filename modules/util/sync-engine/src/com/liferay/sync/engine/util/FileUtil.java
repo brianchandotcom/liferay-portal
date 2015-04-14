@@ -338,7 +338,8 @@ public class FileUtil {
 	public static boolean isIgnoredFilePath(Path filePath) {
 		String fileName = String.valueOf(filePath.getFileName());
 
-		if (_syncFileIgnoreNames.contains(fileName) ||
+		if (_syncFileIgnoreNames.contains(
+				StringEscapeUtils.escapeJava(fileName)) ||
 			MSOfficeFileUtil.isTempCreatedFile(filePath) ||
 			(PropsValues.SYNC_FILE_IGNORE_HIDDEN && isHidden(filePath)) ||
 			Files.isSymbolicLink(filePath) || fileName.endsWith(".lnk")) {

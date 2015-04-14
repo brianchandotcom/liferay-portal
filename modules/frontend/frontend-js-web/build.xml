@@ -37,7 +37,7 @@
 
 				<!-- Prepare -->
 
-				<delete dir="{alloy.extracted.path}" />
+				<delete dir="ALLOY_ZIP" />
 				<delete dir="tmp/aui" />
 
 				<echo>${alloy.file}</echo>

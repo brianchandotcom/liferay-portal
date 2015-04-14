@@ -609,13 +609,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String[] xmlVulnerabitilies = new String[] {
 			"DocumentBuilderFactory.newInstance",
+			"new javax.xml.parsers.SAXParser",
+			"new org.apache.xerces.parsers.SAXParser",
+			"new org.dom4j.io.SAXReader", "new SAXParser", "new SAXReader",
 			"SAXParserFactory.newInstance", "saxParserFactory.newInstance",
 			"SAXParserFactory.newSAXParser", "saxParserFactory.newSAXParser",
-			"new SAXParser", "new javax.xml.parsers.SAXParser",
-			"new org.apache.xerces.parsers.SAXParser", "new SAXReader",
-			"new org.dom4j.io.SAXReader", "XMLInputFactory.newFactory",
-			"xmlInputFactory.newFactory", "XMLInputFactory.newInstance",
-			"xmlInputFactory.newInstance"
+			"XMLInputFactory.newFactory", "xmlInputFactory.newFactory",
+			"XMLInputFactory.newInstance", "xmlInputFactory.newInstance"
 		};
 
 		for (String xmlVulnerabitily : xmlVulnerabitilies) {

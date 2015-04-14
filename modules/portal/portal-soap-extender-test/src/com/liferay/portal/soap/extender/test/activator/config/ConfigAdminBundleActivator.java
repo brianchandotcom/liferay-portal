@@ -31,11 +31,11 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 	public static final String _TEST_CONTEXT_PATH = "/soap-test";
 
 	@Override
-	public void start(BundleContext context) throws Exception {
+	public void start(BundleContext bundleContext) throws Exception {
 		ServiceReference<ConfigurationAdmin> serviceReference =
-			context.getServiceReference(ConfigurationAdmin.class);
+			bundleContext.getServiceReference(ConfigurationAdmin.class);
 
-		ConfigurationAdmin configurationAdmin = context.getService(
+		ConfigurationAdmin configurationAdmin = bundleContext.getService(
 			serviceReference);
 
 		try {
@@ -60,7 +60,7 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 			_soapConfiguration.update(properties);
 
 			_jaxwsApiConfiguration = configurationAdmin.getConfiguration(
-				"com.liferay.portal.soap.extender.JaxwsApiConfiguration", null);
+				_JAXWS_API_CONFIGURATION, null);
 
 			properties = new Hashtable<>();
 
@@ -70,7 +70,7 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 			_jaxwsApiConfiguration.update(properties);
 		}
 		finally {
-			context.ungetService(serviceReference);
+			bundleContext.ungetService(serviceReference);
 		}
 	}
 
@@ -94,6 +94,9 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 		catch (Exception e) {
 		}
 	}
+
+	private static final String _JAXWS_API_CONFIGURATION =
+		"com.liferay.portal.soap.extender.configuration.JaxwsApiConfiguration";
 
 	private static final String _SOAP_EXTENDER_CONFIGURATION =
 		"com.liferay.portal.soap.extender.configuration." +

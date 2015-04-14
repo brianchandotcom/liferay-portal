@@ -38,7 +38,7 @@ public class SampleHandler implements LogicalHandler<LogicalMessageContext> {
 	}
 
 	@Override
-	public void close(MessageContext context) {
+	public void close(MessageContext messageContext) {
 	}
 
 	@Override

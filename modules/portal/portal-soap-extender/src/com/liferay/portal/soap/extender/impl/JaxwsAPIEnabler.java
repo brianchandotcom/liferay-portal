@@ -42,13 +42,14 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	configurationPid = "com.liferay.portal.soap.extender.JaxwsApiConfiguration",
+	configurationPid = "com.liferay.portal.soap.extender.configuration.JaxwsApiConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class JaxwsAPIEnabler {
 
 	@Activate
-	public void activate(BundleContext context, Map<String, Object> properties)
+	protected void activate(
+			BundleContext bundleContext, Map<String, Object> properties)
 		throws InterruptedException, InvalidSyntaxException {
 
 		JaxwsApiConfiguration configuration = Configurable.createConfigurable(
@@ -56,12 +57,12 @@ public class JaxwsAPIEnabler {
 
 		String contextPath = configuration.contextPath();
 
-		Filter filter = context.createFilter(
+		Filter filter = bundleContext.createFilter(
 			"(&(objectClass=org.apache.cxf.Bus)(" +
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH + "=" +
 				contextPath + "))");
 
-		_busServiceTracker = new ServiceTracker<>(context, filter, null);
+		_busServiceTracker = new ServiceTracker<>(bundleContext, filter, null);
 
 		_busServiceTracker.open();
 
@@ -72,25 +73,26 @@ public class JaxwsAPIEnabler {
 
 			ProviderImpl providerImpl = new ProviderImpl();
 
-			_providerServiceRegistration = context.registerService(
+			_providerServiceRegistration = bundleContext.registerService(
 				Provider.class, providerImpl, null);
 		}
 	}
 
 	@Deactivate
-	public void deactivate() {
+	protected void deactivate() {
 		_providerServiceRegistration.unregister();
 
 		_busServiceTracker.close();
 	}
 
 	@Modified
-	public void modified(BundleContext context, Map<String, Object> properties)
+	protected void modified(
+			BundleContext bundleContext, Map<String, Object> properties)
 		throws InterruptedException, InvalidSyntaxException {
 
 		deactivate();
 
-		activate(context, properties);
+		activate(bundleContext, properties);
 	}
 
 	private ServiceTracker<Bus, Bus> _busServiceTracker;

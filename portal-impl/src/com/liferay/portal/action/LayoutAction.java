@@ -246,13 +246,13 @@ public class LayoutAction extends Action {
 				return null;
 			}
 
-			Layout previousLayout = (Layout)session.getAttribute(
+			Long previousPlid = (Long)session.getAttribute(
 				WebKeys.PREVIOUS_LAYOUT);
 
-			if ((previousLayout == null) ||
-				(layout.getPlid() != previousLayout.getPlid())) {
+			if ((previousPlid == null) ||
+				(layout.getPlid() != previousPlid.longValue())) {
 
-				session.setAttribute(WebKeys.PREVIOUS_LAYOUT, layout);
+				session.setAttribute(WebKeys.PREVIOUS_LAYOUT, layout.getPlid());
 
 				if (themeDisplay.isSignedIn() &&
 					PropsValues.
@@ -277,8 +277,8 @@ public class LayoutAction extends Action {
 
 			if (resetLayout &&
 				(Validator.isNull(portletId) ||
-				 ((previousLayout != null) &&
-				  (layout.getPlid() != previousLayout.getPlid())))) {
+				 ((previousPlid != null) &&
+				  (layout.getPlid() != previousPlid.longValue())))) {
 
 				// Always clear render parameters on a layout url, but do not
 				// clear on portlet urls invoked on the same layout

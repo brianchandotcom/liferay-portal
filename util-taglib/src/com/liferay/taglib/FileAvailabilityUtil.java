@@ -16,6 +16,7 @@ package com.liferay.taglib;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.web.PortalWebResourcesUtil;
 
 import java.net.URL;
 
@@ -40,6 +41,10 @@ public class FileAvailabilityUtil {
 		}
 
 		if (path.charAt(0) != CharPool.SLASH) {
+			return true;
+		}
+
+		if (path.startsWith(PortalWebResourcesUtil.getContextPath())) {
 			return true;
 		}
 

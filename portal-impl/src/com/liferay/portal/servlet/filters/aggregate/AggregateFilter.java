@@ -261,10 +261,10 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String bundleDirName = PropsUtil.get(
 			PropsKeys.JAVASCRIPT_BUNDLE_DIR, new Filter(bundleId));
 
-		ServletContext resourceServeletContext =
+		ServletContext resourceServletContext =
 			PortalWebResourcesUtil.getServletContext();
 
-		URL bundleDirURL = resourceServeletContext.getResource(bundleDirName);
+		URL bundleDirURL = resourceServletContext.getResource(bundleDirName);
 
 		if (bundleDirURL == null) {
 			return null;
@@ -280,7 +280,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			boolean staleCache = false;
 
 			for (String fileName : fileNames) {
-				URL resourceURL = resourceServeletContext.getResource(
+				URL resourceURL = resourceServletContext.getResource(
 					bundleDirName.concat(StringPool.SLASH).concat(fileName));
 
 				if (resourceURL == null) {
@@ -316,7 +316,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 		else {
 			content = aggregateJavaScript(
-				new ServletPaths(resourceServeletContext, bundleDirName),
+				new ServletPaths(resourceServletContext, bundleDirName),
 				fileNames);
 		}
 

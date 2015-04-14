@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
-import java.util.Locale;
-
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+
+import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
@@ -29,13 +29,13 @@ public abstract class DDMFormFieldValueAccessor<A>
 		this.locale = locale;
 	}
 
+	public Locale getLocale() {
+		return locale;
+	}
+
 	@Override
 	public Class<DDMFormFieldValue> getTypeClass() {
 		return DDMFormFieldValue.class;
-	}
-	
-	public Locale getLocale() {
-		return locale;
 	}
 
 	protected Locale locale;

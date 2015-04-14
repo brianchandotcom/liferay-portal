@@ -1,6 +1,5 @@
 <definition>
 	<command name="addPG">
-		<execute function="AssertClick" locator1="PGPagecomments#BE_THE_FIRST_LINK" value1="Be the first." />
 		<execute function="Type" locator1="PGPagecomments#COMMENT_FIELD" value1="${commentBody}" />
 		<execute function="AssertClick" locator1="PGPagecomments#REPLY_BUTTON" value1="Reply" />
 
@@ -12,7 +11,6 @@
 	</command>
 
 	<command name="addWithWorkflowPG">
-		<execute function="AssertClick" locator1="PGPagecomments#BE_THE_FIRST_LINK" value1="Be the first." />
 		<execute function="Type" locator1="PGPagecomments#COMMENT_FIELD" value1="${commentBody}" />
 		<execute function="AssertClick" locator1="PGPagecomments#REPLY_BUTTON" value1="Reply" />
 
@@ -47,7 +45,6 @@
 				<execute function="ClickNoError" locator1="PGPagecomments#COMMENT_DELETE_GENERIC" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request processed successfully." />
-				<execute function="AssertTextEquals" locator1="PGPagecomments#BE_THE_FIRST_LINK" value1="Be the first." />
 			</then>
 		</while>
 	</command>

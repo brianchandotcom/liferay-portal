@@ -15,12 +15,6 @@
 package com.liferay.portal.search.lucene;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.portal.util.PropsValues;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.Date;
 
@@ -47,32 +41,6 @@ public class LuceneFields {
 				DateTools.dateToString(date, DateTools.Resolution.SECOND),
 				Field.Store.YES, Field.Index.NOT_ANALYZED);
 		}
-	}
-
-	public static Field getFile(String field, byte[] bytes, String fileExt) {
-		LuceneFileExtractor fileExtractor =
-			(LuceneFileExtractor)InstancePool.get(
-				PropsValues.LUCENE_FILE_EXTRACTOR);
-
-		return fileExtractor.getFile(field, bytes, fileExt);
-	}
-
-	public static Field getFile(String field, File file, String fileExt)
-		throws IOException {
-
-		LuceneFileExtractor fileExtractor =
-			(LuceneFileExtractor)InstancePool.get(
-				PropsValues.LUCENE_FILE_EXTRACTOR);
-
-		return fileExtractor.getFile(field, file, fileExt);
-	}
-
-	public static Field getFile(String field, InputStream is, String fileExt) {
-		LuceneFileExtractor fileExtractor =
-			(LuceneFileExtractor)InstancePool.get(
-				PropsValues.LUCENE_FILE_EXTRACTOR);
-
-		return fileExtractor.getFile(field, is, fileExt);
 	}
 
 	public static Field getKeyword(String field, double keyword) {

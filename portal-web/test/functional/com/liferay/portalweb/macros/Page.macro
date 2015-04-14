@@ -551,9 +551,9 @@
 	</command>
 
 	<command name="openURLLocale">
-		<execute function="Open" locator1="${localiztionPageURL}" />
+		<execute function="Open" locator1="${localizationPageURL}" />
 
-		<execute function="AssertLocation" value1="${localiztionPageURL}" />
+		<execute function="AssertLocation" value1="${localizationPageURL}" />
 	</command>
 
 	<command name="selectPageTypeRadioPG">

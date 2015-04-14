@@ -15,7 +15,8 @@
 package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,8 +44,8 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.web.provider.WikiWebComponentProvider;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
-import com.liferay.wiki.web.settings.WikiWebSettingsProvider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -72,16 +73,17 @@ public class ActionUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		WikiWebSettingsProvider wikiWebSettingsProvider =
-			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+		WikiWebComponentProvider wikiWebComponentProvider =
+			WikiWebComponentProvider.getWikiWebComponentProvider();
 
-		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
-			portletInstanceSettingsProvider =
-				wikiWebSettingsProvider.getPortletInstanceSettingsProvider();
+		SettingsFactory settingsFactory =
+			wikiWebComponentProvider.getSettingsFactory();
 
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			portletInstanceSettingsProvider.getPortletInstanceSettings(
-				themeDisplay.getLayout(), portletDisplay.getId());
+			settingsFactory.getSettings(
+				WikiPortletInstanceSettings.class,
+				new PortletInstanceSettingsLocator(
+					themeDisplay.getLayout(), portletDisplay.getId()));
 
 		String[] visibleNodeNames = wikiPortletInstanceSettings.visibleNodes();
 
@@ -151,11 +153,11 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		WikiWebSettingsProvider wikiWebSettingsProvider =
-			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+		WikiWebComponentProvider wikiWebComponentProvider =
+			WikiWebComponentProvider.getWikiWebComponentProvider();
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
+			wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 		WikiPage page = WikiPageLocalServiceUtil.fetchPage(
 			nodeId, wikiGroupServiceConfiguration.frontPageName(), 0);
@@ -254,11 +256,11 @@ public class ActionUtil {
 			}
 		}
 
-		WikiWebSettingsProvider wikiWebSettingsProvider =
-			WikiWebSettingsProvider.getWikiWebSettingsProvider();
+		WikiWebComponentProvider wikiWebComponentProvider =
+			WikiWebComponentProvider.getWikiWebComponentProvider();
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
+			wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 		if (Validator.isNull(title)) {
 			title = wikiGroupServiceConfiguration.frontPageName();

@@ -71,6 +71,6 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 	private final long _groupId;
 	private final String _serviceName;
 	private final SettingsLocatorHelper _settingsLocatorHelper =
-		new SettingsLocatorHelper();
+		SettingsLocatorHelperUtil.getSettingsLocatorHelper();
 
 }

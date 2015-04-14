@@ -78,6 +78,6 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 	private final Layout _layout;
 	private final String _portletId;
 	private final SettingsLocatorHelper _settingsLocatorHelper =
-		new SettingsLocatorHelper();
+		SettingsLocatorHelperUtil.getSettingsLocatorHelper();
 
 }

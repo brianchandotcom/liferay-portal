@@ -18,15 +18,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
+import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
 import com.liferay.rss.web.constants.RSSPortletKeys;
-import com.liferay.rss.web.settings.RSSPortletInstanceSettings;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -75,15 +77,18 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		try {
-			RSSPortletInstanceSettings rssPortletInstanceSettings =
-				_portletInstanceSettingsProvider.getPortletInstanceSettings(
-					themeDisplay.getLayout(),
-					portletDisplay.getPortletResource(),
-					renderRequest.getParameterMap());
+			RSSPortletInstanceConfiguration rssPortletInstanceConfiguration =
+				_settingsFactory.getSettings(
+					RSSPortletInstanceConfiguration.class,
+					new ParameterMapSettingsLocator(
+						renderRequest.getParameterMap(),
+						new PortletInstanceSettingsLocator(
+							themeDisplay.getLayout(),
+							portletDisplay.getPortletResource())));
 
 			renderRequest.setAttribute(
-				RSSPortletInstanceSettings.class.getName(),
-				rssPortletInstanceSettings);
+				RSSPortletInstanceConfiguration.class.getName(),
+				rssPortletInstanceConfiguration);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -92,14 +97,9 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 		return super.render(portletConfig, renderRequest, renderResponse);
 	}
 
-	@Reference(
-		target = "(class.name=com.liferay.rss.web.settings.RSSPortletInstanceSettings)"
-	)
-	protected void setPortletInstanceSettingsProvider(
-		PortletInstanceSettingsProvider<RSSPortletInstanceSettings>
-			portletInstanceSettingsProvider) {
-
-		_portletInstanceSettingsProvider = portletInstanceSettingsProvider;
+	@Reference(unbind = "-")
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
 	}
 
 	protected void updateSubscriptions(ActionRequest actionRequest)
@@ -139,7 +139,6 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 		setPreference(actionRequest, "titles", titles);
 	}
 
-	private PortletInstanceSettingsProvider<RSSPortletInstanceSettings>
-		_portletInstanceSettingsProvider;
+	private SettingsFactory _settingsFactory;
 
 }

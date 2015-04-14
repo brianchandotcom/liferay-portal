@@ -50,6 +50,6 @@ public class CompanyServiceSettingsLocator implements SettingsLocator {
 	private final long _companyId;
 	private final String _serviceName;
 	private final SettingsLocatorHelper _settingsLocatorHelper =
-		new SettingsLocatorHelper();
+		SettingsLocatorHelperUtil.getSettingsLocatorHelper();
 
 }

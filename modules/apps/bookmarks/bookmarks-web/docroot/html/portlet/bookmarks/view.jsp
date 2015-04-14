@@ -138,7 +138,7 @@ if (folder != null) {
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksEntriesFoldersListingPanel" persistState="<%= true %>" title='<%= (folder != null) ? "subfolders" : "folders" %>'>
 							<liferay-ui:search-container
 								curParam="cur1"
-								delta="<%= bookmarksGroupServiceSettings.getFoldersPerPage() %>"
+								delta="<%= Integer.valueOf(bookmarksGroupServiceSettings.foldersPerPage()) %>"
 								deltaConfigurable="<%= false %>"
 								headerNames="<%= StringUtil.merge(folderColumns) %>"
 								iteratorURL="<%= portletURL %>"
@@ -218,7 +218,7 @@ if (folder != null) {
 			%>
 
 			<liferay-ui:search-container
-				delta="<%= bookmarksGroupServiceSettings.getEntriesPerPage() %>"
+				delta="<%= Integer.valueOf(bookmarksGroupServiceSettings.entriesPerPage()) %>"
 				deltaConfigurable="<%= false %>"
 				emptyResultsMessage="there-are-no-entries"
 				iteratorURL="<%= portletURL %>"

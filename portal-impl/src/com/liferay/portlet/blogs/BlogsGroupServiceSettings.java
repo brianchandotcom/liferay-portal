@@ -16,7 +16,6 @@ package com.liferay.portlet.blogs;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
-import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -33,7 +32,7 @@ import java.util.Map;
  * @author Iván Zaera
  */
 @Settings.Config(settingsIds = BlogsConstants.SERVICE_NAME)
-public class BlogsGroupServiceSettings implements GroupServiceSettings {
+public class BlogsGroupServiceSettings {
 
 	public static BlogsGroupServiceSettings getInstance(long groupId)
 		throws PortalException {

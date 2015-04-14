@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
-import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -33,7 +32,7 @@ import java.util.Map;
  * @author Adolfo Pérez
  */
 @Settings.Config(settingsIds = DLConstants.SERVICE_NAME)
-public class DLGroupServiceSettings implements GroupServiceSettings {
+public class DLGroupServiceSettings {
 
 	public static DLGroupServiceSettings getInstance(long groupId)
 		throws PortalException {

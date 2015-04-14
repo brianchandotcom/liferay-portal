@@ -43,6 +43,14 @@ public interface Settings {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	public @interface OverrideClass {
+
+		public Class value() default Object.class;
+
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)
 	public @interface Property {
 

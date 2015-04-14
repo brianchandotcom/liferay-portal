@@ -14,157 +14,28 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
-import com.liferay.portal.kernel.resource.manager.ResourceManager;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
-
-import java.util.Properties;
-
-import javax.portlet.PortletPreferences;
 
 /**
- * @author Ivan Zaera
- * @author Jorge Ferrer
+ * @author Iván Zaera
  */
-@DoPrivileged
-public class SettingsLocatorHelper {
-
-	public SettingsLocatorHelper() {
-	}
-
-	public PortletPreferences getCompanyPortletPreferences(
-		long companyId, String settingsId) {
-
-		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
-			companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
-			settingsId);
-	}
+public interface SettingsLocatorHelper {
 
 	public Settings getCompanyPortletPreferencesSettings(
-		long companyId, String settingsId, Settings parentSettings) {
-
-		return new PortletPreferencesSettings(
-			getCompanyPortletPreferences(companyId, settingsId),
-			parentSettings);
-	}
+		long companyId, String settingsId, Settings parentSettings);
 
 	public Settings getConfigurationBeanSettings(
-		String settingsId, Settings parentSettings) {
-
-		return new ConfigurationBeanSettings(
-			new LocationVariableResolver(
-				getResourceManager(settingsId),
-				SettingsFactoryUtil.getSettingsFactory()),
-			getConfigurationBean(settingsId), parentSettings);
-	}
-
-	public PortletPreferences getGroupPortletPreferences(
-			long groupId, String settingsId)
-		throws SettingsException {
-
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			return PortletPreferencesLocalServiceUtil.getStrictPreferences(
-				group.getCompanyId(), groupId,
-				PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, settingsId);
-		}
-		catch (PortalException pe) {
-			throw new SettingsException(pe);
-		}
-	}
+		String settingsId, Settings parentSettings);
 
 	public Settings getGroupPortletPreferencesSettings(
-			long groupId, String settingsId, Settings parentSettings)
-		throws SettingsException {
-
-		return new PortletPreferencesSettings(
-			getGroupPortletPreferences(groupId, settingsId), parentSettings);
-	}
-
-	public PortletPreferences getPortalPreferences(long companyId) {
-		return PortalPreferencesLocalServiceUtil.getPreferences(
-			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-	}
+		long groupId, String settingsId, Settings parentSettings);
 
 	public Settings getPortalPreferencesSettings(
-		long companyId, Settings parentSettings) {
+		long companyId, Settings parentSettings);
 
-		return new PortletPreferencesSettings(
-			getPortalPreferences(companyId), parentSettings);
-	}
-
-	public Properties getPortalProperties() {
-		return PropsUtil.getProperties();
-	}
-
-	public Settings getPortalPropertiesSettings() {
-		return new PropertiesSettings(
-			new LocationVariableResolver(
-				new ClassLoaderResourceManager(
-					PortalClassLoaderUtil.getClassLoader()),
-				SettingsFactoryUtil.getSettingsFactory()),
-			getPortalProperties());
-	}
-
-	public PortletPreferences getPortletInstancePortletPreferences(
-		Layout layout, String portletId) {
-
-		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
-
-		if (PortletConstants.hasUserId(portletId)) {
-			ownerId = PortletConstants.getUserId(portletId);
-			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
-		}
-
-		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
-			layout.getCompanyId(), ownerId, ownerType, layout.getPlid(),
-			portletId);
-	}
+	public Settings getPortalPropertiesSettings();
 
 	public Settings getPortletInstancePortletPreferencesSettings(
-		Layout layout, String portletId, Settings parentSettings) {
-
-		return new PortletPreferencesSettings(
-			getPortletInstancePortletPreferences(layout, portletId),
-			parentSettings);
-	}
-
-	protected Object getConfigurationBean(String settingsId) {
-		settingsId = PortletConstants.getRootPortletId(settingsId);
-
-		SettingsDescriptor settingsDescriptor =
-			SettingsFactoryUtil.getSettingsDescriptor(settingsId);
-
-		if (settingsDescriptor == null) {
-			return null;
-		}
-
-		return settingsDescriptor.getConfigurationBean();
-	}
-
-	protected ResourceManager getResourceManager(String settingsId) {
-		settingsId = PortletConstants.getRootPortletId(settingsId);
-
-		SettingsDescriptor settingsDescriptor =
-			SettingsFactoryUtil.getSettingsDescriptor(settingsId);
-
-		if (settingsDescriptor == null) {
-			return null;
-		}
-
-		return settingsDescriptor.getResourceManager();
-	}
+		Layout layout, String portletId, Settings parentSettings);
 
 }

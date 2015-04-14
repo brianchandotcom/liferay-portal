@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.settings.definition.SettingsDefinition;
-
 import java.util.List;
 
 /**
@@ -33,19 +31,16 @@ public interface SettingsFactory {
 
 	public Settings getServerSettings(String settingsId);
 
+	public <T> T getSettings(Class<T> clazz, SettingsLocator settingsLocator)
+		throws SettingsException;
+
 	public Settings getSettings(SettingsLocator settingsLocator)
 		throws SettingsException;
 
 	public SettingsDescriptor getSettingsDescriptor(String settingsId);
 
-	public void registerSettingsDefinition(
-		SettingsDefinition<?, ?> settingsDefinition, Object configurationBean);
-
 	public void registerSettingsMetadata(
 		Class<?> settingsClass, Object configurationBean,
 		FallbackKeys fallbackKeys);
-
-	public void unregisterSettingsDefinition(
-		SettingsDefinition<?, ?> settingsDefinition);
 
 }

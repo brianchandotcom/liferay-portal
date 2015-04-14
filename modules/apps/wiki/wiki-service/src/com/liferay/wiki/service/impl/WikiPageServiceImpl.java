@@ -19,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.RSSUtil;
+import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
@@ -822,8 +824,10 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				String value = null;
 
 				WikiGroupServiceSettings wikiGroupServiceSettings =
-					_groupServiceSettingsProvider.getGroupServiceSettings(
-						page.getGroupId());
+					_settingsFactory.getSettings(
+						WikiGroupServiceSettings.class,
+						new GroupServiceSettingsLocator(
+							page.getGroupId(), WikiConstants.SERVICE_NAME));
 
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 					value = StringUtil.shorten(
@@ -892,10 +896,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(
-		name = "com.liferay.wiki.settings.provider.WikiGroupServiceSettingsProvider"
-	)
-	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
-		_groupServiceSettingsProvider;
+	@BeanReference(type = SettingsFactory.class)
+	private SettingsFactory _settingsFactory;
 
 }

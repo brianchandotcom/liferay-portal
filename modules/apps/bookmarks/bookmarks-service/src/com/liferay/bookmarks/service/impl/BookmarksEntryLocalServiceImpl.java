@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.service.impl;
 
+import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.EntryURLException;
 import com.liferay.bookmarks.model.BookmarksEntry;
@@ -44,8 +45,9 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -713,13 +715,15 @@ public class BookmarksEntryLocalServiceImpl
 		}
 
 		BookmarksGroupServiceSettings bookmarksGroupServiceSettings =
-			_groupServiceSettingsProvider.getGroupServiceSettings(
-				entry.getGroupId());
+			_settingsFactory.getSettings(
+				BookmarksGroupServiceSettings.class,
+				new GroupServiceSettingsLocator(
+					entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
 
 		if ((serviceContext.isCommandAdd() &&
-			 !bookmarksGroupServiceSettings.isEmailEntryAddedEnabled()) ||
+			 !bookmarksGroupServiceSettings.emailEntryAddedEnabled()) ||
 			(serviceContext.isCommandUpdate() &&
-			 !bookmarksGroupServiceSettings.isEmailEntryUpdatedEnabled())) {
+			 !bookmarksGroupServiceSettings.emailEntryUpdatedEnabled())) {
 
 			return;
 		}
@@ -741,24 +745,23 @@ public class BookmarksEntryLocalServiceImpl
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
 				StringPool.SLASH + entry.getEntryId();
 
-		String fromName = bookmarksGroupServiceSettings.getEmailFromName();
-		String fromAddress =
-			bookmarksGroupServiceSettings.getEmailFromAddress();
+		String fromName = bookmarksGroupServiceSettings.emailFromName();
+		String fromAddress = bookmarksGroupServiceSettings.emailFromAddress();
 
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceSettings.getEmailEntryUpdatedSubject();
+				bookmarksGroupServiceSettings.emailEntryUpdatedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceSettings.getEmailEntryUpdatedBody();
+				bookmarksGroupServiceSettings.emailEntryUpdatedBody();
 		}
 		else {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceSettings.getEmailEntryAddedSubject();
+				bookmarksGroupServiceSettings.emailEntryAddedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceSettings.getEmailEntryAddedBody();
+				bookmarksGroupServiceSettings.emailEntryAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender =
@@ -836,10 +839,7 @@ public class BookmarksEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryLocalServiceImpl.class);
 
-	@BeanReference(
-		name = "com.liferay.bookmarks.settings.provider.BookmarksGroupServiceSettingsProvider"
-	)
-	private GroupServiceSettingsProvider<BookmarksGroupServiceSettings>
-		_groupServiceSettingsProvider;
+	@BeanReference(type = SettingsFactory.class)
+	private SettingsFactory _settingsFactory;
 
 }

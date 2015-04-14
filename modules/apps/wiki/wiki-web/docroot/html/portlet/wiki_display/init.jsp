@@ -22,12 +22,12 @@ page import="com.liferay.wiki.model.WikiNode" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.service.WikiNodeServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
-page import="com.liferay.wiki.web.settings.WikiWebSettingsProvider" %>
+page import="com.liferay.wiki.web.provider.WikiWebComponentProvider" %>
 
 <%
-WikiWebSettingsProvider wikiWebSettingsProvider = WikiWebSettingsProvider.getWikiWebSettingsProvider();
+WikiWebComponentProvider wikiWebComponentProvider = WikiWebComponentProvider.getWikiWebComponentProvider();
 
-WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebSettingsProvider.getWikiGroupServiceConfiguration();
+WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 
 long nodeId = GetterUtil.getLong(portletPreferences.getValue("nodeId", StringPool.BLANK));
 String title = GetterUtil.getString(portletPreferences.getValue("title", wikiGroupServiceConfiguration.frontPageName()));

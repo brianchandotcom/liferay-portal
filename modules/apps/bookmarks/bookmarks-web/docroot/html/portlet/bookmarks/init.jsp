@@ -17,17 +17,17 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%
-BookmarksWebSettingsProvider bookmarksWebSettingsProvider = BookmarksWebSettingsProvider.getBookmarksWebSettingsProvider();
+BookmarksWebComponentProvider bookmarksWebComponentProvider = BookmarksWebComponentProvider.getBookmarksWebComponentProvider();
 
-GroupServiceSettingsProvider<BookmarksGroupServiceSettings> groupServiceSettingsProvider = bookmarksWebSettingsProvider.getGroupServiceSettingsProvider();
+SettingsFactory settingsFactory = bookmarksWebComponentProvider.getSettingsFactory();
 
-BookmarksGroupServiceSettings bookmarksGroupServiceSettings = groupServiceSettingsProvider.getGroupServiceSettings(scopeGroupId);
+BookmarksGroupServiceSettings bookmarksGroupServiceSettings = settingsFactory.getSettings(BookmarksGroupServiceSettings.class, new GroupServiceSettingsLocator(scopeGroupId, BookmarksConstants.SERVICE_NAME));
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-long rootFolderId = bookmarksGroupServiceSettings.getRootFolderId();
+long rootFolderId = bookmarksGroupServiceSettings.rootFolderId();
 String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -58,7 +58,7 @@ if (portletId.equals(BookmarksPortletKeys.BOOKMARKS) || portletId.equals(Bookmar
 	allFolderColumns += ",action";
 }
 
-String[] folderColumns = bookmarksGroupServiceSettings.getFolderColumns();
+String[] folderColumns = bookmarksGroupServiceSettings.folderColumns();
 
 if (!portletId.equals(BookmarksPortletKeys.BOOKMARKS) && !portletId.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN)) {
 	folderColumns = ArrayUtil.remove(folderColumns, "action");
@@ -70,7 +70,7 @@ if (portletId.equals(BookmarksPortletKeys.BOOKMARKS) || portletId.equals(Bookmar
 	allEntryColumns += ",action";
 }
 
-String[] entryColumns = bookmarksGroupServiceSettings.getEntryColumns();
+String[] entryColumns = bookmarksGroupServiceSettings.entryColumns();
 
 if (!portletId.equals(BookmarksPortletKeys.BOOKMARKS) && !portletId.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN)) {
 	entryColumns = ArrayUtil.remove(entryColumns, "action");

@@ -2,7 +2,7 @@ Bundle-Name: Liferay Portal Settings
 Bundle-SymbolicName: com.liferay.portal.settings
 Bundle-Version: 1.0.0
 Export-Package:\
-	aQute.bnd.annotation.metatype.*
+	aQute.bnd.annotation.metatype
 Include-Resource:\
 	classes,\
     @../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*

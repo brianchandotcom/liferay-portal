@@ -68,6 +68,7 @@
 					</path>
 					<sequential>
 						<basename property="dir.name" file="@{dir}" />
+
 						<if>
 							<and>
 								<available file="${alloy.build.dir}/${dir.name}/assets/skins/sam/${dir.name}.css" />
@@ -82,6 +83,7 @@
 								</concat>
 							</then>
 						</if>
+
 						<var name="dir.name" unset="true" />
 					</sequential>
 				</for>

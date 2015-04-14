@@ -460,10 +460,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.search.lucene.LuceneFileExtractor">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.search.lucene.LuceneIndexSearcherImpl">
 		<priority value="ERROR" />
 	</category>

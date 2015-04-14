@@ -217,7 +217,7 @@
 			src="http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html"
 		/>
 
-		<loadfile property="creole_parser.content" srcfile="${front.end.js.web.src.path}/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js" />
+		<loadfile property="creole_parser.content" srcfile="${html.js.dir}/editor/ckeditor_diffs/plugins/creole/creole_parser.js" />
 
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[

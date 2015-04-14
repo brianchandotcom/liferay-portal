@@ -18,10 +18,6 @@
 
 <%@ page import="com.liferay.portal.kernel.web.PortalWebResourcesUtil" %>
 
-<%
-	String ckeditorPath = PortalWebResourcesUtil.getContextPath() + "/html/js/editor/ckeditor.jsp";
-%>
-
-<liferay-util:include page="<%= ckeditorPath %>">
+<liferay-util:include page='<%= PortalWebResourcesUtil.getContextPath() + "/html/js/editor/ckeditor.jsp" %>'>
 	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_bbcode.jsp" />
 </liferay-util:include>

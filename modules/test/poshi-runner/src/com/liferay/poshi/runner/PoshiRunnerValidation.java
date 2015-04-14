@@ -117,6 +117,31 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateClassCommandName(
+			Element element, String classType, String filePath)
+		throws PoshiRunnerException {
+
+		String classCommandName = element.attributeValue(classType);
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		if (!PoshiRunnerContext.isRootElement(classType + "#" + className)) {
+			throw new PoshiRunnerException (
+				"Invalid " + classType + " class " + className + "\n" +
+					filePath + ":" + element.attributeValue("line-number"));
+		}
+
+		String commandElementKey = classType + "#" + classCommandName;
+
+		if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
+			throw new PoshiRunnerException(
+				"Invalid " + classType + " command " + classCommandName + "\n" +
+					filePath + ":" + element.attributeValue("line-number"));
+		}
+	}
+
 	private static void _validateCommandElement(
 			Element element, String filePath)
 		throws PoshiRunnerException {
@@ -262,25 +287,11 @@ public class PoshiRunnerValidation {
 			Element element, String filePath)
 		throws PoshiRunnerException {
 
-		String classCommandName = element.attributeValue("function");
+		_validateClassCommandName(element, "function", filePath);
 
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				classCommandName);
-
-		if (!PoshiRunnerContext.isRootElement("function#" + className)) {
-			throw new PoshiRunnerException (
-				"Invalid function class " + className + "\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-
-		if (!PoshiRunnerContext.isCommandElement(
-				"function#" + classCommandName)) {
-
-			throw new PoshiRunnerException (
-				"Invalid function command " + classCommandName + "\n" +
-					filePath + ":" + element.attributeValue("line-number"));
-		}
+				element.attributeValue("function"));
 
 		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
 			className);
@@ -345,25 +356,7 @@ public class PoshiRunnerValidation {
 	private static void _validateMacroContext(Element element, String filePath)
 		throws PoshiRunnerException {
 
-		String classCommandName = element.attributeValue("macro");
-
-		String className =
-			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				classCommandName);
-
-		if (!PoshiRunnerContext.isRootElement("macro#" + className)) {
-			throw new PoshiRunnerException (
-				"Invalid macro class " + className + "\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-
-		String commandElementKey = "macro#" + classCommandName;
-
-		if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
-			throw new PoshiRunnerException(
-				"Invalid macro command " + classCommandName + "\n" + filePath +
-					":" + element.attributeValue("line-number"));
-		}
+		_validateClassCommandName(element, "macro", filePath);
 	}
 
 	private static void _validateMacroFile(Element element, String filePath)

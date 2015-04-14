@@ -6,6 +6,7 @@
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 
+	<property name="alloy.version" value="3.0.1" />
 	<property name="alloyeditor.version" value="0.2.5" />
 	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
 	<property name="html.js.dir" value="src/META-INF/resources/html/js" />
@@ -15,9 +16,6 @@
 	<property name="wsc.file" value="wsc_4.4.5.zip" />
 
 	<target name="build-alloy">
-		<property name="alloy.extracted.path" value="ALLOY_ZIP" />
-		<property name="alloy.version" value="3.0.1" />
-
 		<path id="alloy.zip.path">
 			<fileset dir="${third.party.dir}">
 				<include name="alloy-${alloy.version}*.zip" />
@@ -44,12 +42,12 @@
 
 				<echo>${alloy.file}</echo>
 
-				<unzip src="${third.party.dir}/${alloy.file}" dest="${alloy.extracted.path}" />
+				<unzip dest="ALLOY_ZIP" src="${third.party.dir}/${alloy.file}" />
 
 				<!-- CSS -->
 
-				<property name="alloy.build.dir" value="${alloy.extracted.path}/build" />
-				<property name="alloy.temp.dir" value="${alloy.extracted.path}/temp" />
+				<property name="alloy.build.dir" value="ALLOY_ZIP/build" />
+				<property name="alloy.temp.dir" value="ALLOY_ZIP/temp" />
 
 				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
 					<filelist
@@ -122,7 +120,7 @@
 
 				<!-- Clean up -->
 
-				<delete dir="${alloy.extracted.path}" />
+				<delete dir="ALLOY_ZIP" />
 			</then>
 		</if>
 	</target>

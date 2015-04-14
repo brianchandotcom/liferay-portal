@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -69,8 +69,12 @@ public class AuthVerifierPipeline {
 	private AuthVerifierPipeline() {
 		Registry registry = RegistryUtil.getRegistry();
 
+		Filter authVerifierPipelineFilter = registry.getFilter(
+			"(&(objectClass=" + AuthVerifier.class.getName() +
+				")(urls.includes=*))");
+
 		_serviceTracker = registry.trackServices(
-			AuthVerifier.class, new AuthVerifierTrackerCustomizer());
+			authVerifierPipelineFilter, new AuthVerifierTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -307,12 +311,6 @@ public class AuthVerifierPipeline {
 		@Override
 		public AuthVerifierConfiguration addingService(
 			ServiceReference<AuthVerifier> serviceReference) {
-
-			if (Validator.isNull(
-					serviceReference.getProperty("urls.includes"))) {
-
-				return null;
-			}
 
 			Registry registry = RegistryUtil.getRegistry();
 

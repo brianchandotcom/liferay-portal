@@ -292,14 +292,17 @@ public final class LoggerUtil {
 
 		_javascriptExecutor = (JavascriptExecutor)_webDriver;
 
-		_webDriver.get("file://" + _getReportFilePath());
+		_webDriver.get("file://" + _getResourcesDir() + "html/index.html");
 	}
 
 	public static void stopLogger() throws Exception {
+		FileUtil.copyDirectory(
+			_getResourcesDir() + "css/", _CURRENT_DIR + "/test-results/css/");
+
 		String content = (String)_javascriptExecutor.executeScript(
 			"return document.getElementsByTagName('html')[0].outerHTML;");
 
-		FileUtil.write(_CURRENT_DIR + "/test-results/report.html", content);
+		FileUtil.write(_CURRENT_DIR + "/test-results/html/index.html", content);
 
 		if (isLoggerStarted()) {
 			_webDriver.quit();
@@ -308,15 +311,14 @@ public final class LoggerUtil {
 		}
 	}
 
-	private static String _getReportFilePath() {
+	private static String _getResourcesDir() {
 		LoggerUtil loggerUtil = new LoggerUtil();
 
 		Class<?> clazz = loggerUtil.getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		URL url = classLoader.getResource(
-			"com/liferay/poshi/runner/logger/dependencies/report.html");
+		URL url = classLoader.getResource("META-INF/resources/");
 
 		return url.getPath();
 	}

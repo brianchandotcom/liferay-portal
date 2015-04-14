@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<link href="http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="../css/main.css" media="screen" rel="stylesheet" type="text/css" />
+		<script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js" type="text/javascript"></script>
+	</head>
+	<body class="gray">
+		<div class="sidebar">
+			<div class="global-btn-container">
+				<button class="btn btn-command-log" data-logid="01" />
+
+				<button class="btn btn-sidebar" />
+
+				<button class="btn btn-jump-to-error" />
+			</div>
+
+			<div class="command-log" data-logid="01" id="commandLog">
+			</div>
+
+			<div class="scope-type">
+				<span class="title" />
+
+				<span class="scope-name" />
+			</div>
+
+			<div class="parameter">
+				<span class="title" />
+
+				<div class="parameter-list">
+				</div>
+			</div>
+		</div>
+
+		<div class="xml-log" id="xmlLog">
+			<ul class="xml-log-container" id="xmlLogContainer" />
+		</div>
+
+		<div class="hidden" id="summary">
+			<div id="steps">
+				<h4 id="steps-header">Steps:</h4>
+
+				<ul id="major-steps" />
+			</div>
+
+			<div id="cause">
+				<h4 id="cause-header">Cause:</h4>
+
+				<div id="cause-body" />
+			</div>
+		</div>
+	</body>
+</html>

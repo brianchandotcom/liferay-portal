@@ -20,39 +20,39 @@ package com.liferay.poshi.runner.logger;
 public final class XMLLoggerHandler {
 
 	public static void generateXMLLog(String classCommandName) {
-		LoggerElement xmlLogElement = new LoggerElement();
+		LoggerElement xmlLoggerElement = new LoggerElement();
 
-		xmlLogElement.setName("li");
-		xmlLogElement.setClassName("header");
+		xmlLoggerElement.setName("li");
+		xmlLoggerElement.setClassName("header");
 
-		LoggerElement btnContainerElement = new LoggerElement();
+		LoggerElement btnContainerLoggerElement = new LoggerElement();
 
-		btnContainerElement.setName("div");
-		btnContainerElement.setClassName("btn-container");
+		btnContainerLoggerElement.setName("div");
+		btnContainerLoggerElement.setClassName("btn-container");
 
-		LoggerElement btnElement = new LoggerElement();
+		LoggerElement btnLoggerElement = new LoggerElement();
 
-		btnElement.setName("button");
-		btnElement.setClassName("btn btn-collapse");
+		btnLoggerElement.setName("button");
+		btnLoggerElement.setClassName("btn btn-collapse");
 
-		btnContainerElement.addChildLoggerElement(btnElement);
+		btnContainerLoggerElement.addChildLoggerElement(btnLoggerElement);
 
-		xmlLogElement.addChildLoggerElement(btnContainerElement);
+		xmlLoggerElement.addChildLoggerElement(btnContainerLoggerElement);
 
-		LoggerElement lineContainerElement = new LoggerElement();
+		LoggerElement lineContainerLoggerElement = new LoggerElement();
 
-		lineContainerElement.setName("div");
-		lineContainerElement.setClassName("line-container");
+		lineContainerLoggerElement.setName("div");
+		lineContainerLoggerElement.setClassName("line-container");
 
-		LoggerElement lineElement = new LoggerElement();
+		LoggerElement lineLoggerElement = new LoggerElement();
 
-		lineElement.setName("h3");
-		lineElement.setClassName("testCaseCommand");
-		lineElement.setText(classCommandName);
+		lineLoggerElement.setName("h3");
+		lineLoggerElement.setClassName("test-case-command");
+		lineLoggerElement.setText(classCommandName);
 
-		lineContainerElement.addChildLoggerElement(lineElement);
+		lineContainerLoggerElement.addChildLoggerElement(lineLoggerElement);
 
-		xmlLogElement.addChildLoggerElement(lineContainerElement);
+		xmlLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
 	}
 
 }

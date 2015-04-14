@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.web;
+package com.liferay.portal.kernel.servlet;
 
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

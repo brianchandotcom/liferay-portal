@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.web;
 
-import com.liferay.portal.kernel.web.PortalWebResources;
+import com.liferay.portal.kernel.servlet.PortalWebResources;
 
 import javax.servlet.ServletContext;
 

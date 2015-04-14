@@ -16,7 +16,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.web.PortalWebResourcesUtil" %>
+<%@ page import="com.liferay.portal.kernel.servlet.PortalWebResourcesUtil" %>
 
 <liferay-util:include page='<%= PortalWebResourcesUtil.getContextPath() + "/html/js/editor/ckeditor.jsp" %>'>
 	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_creole.jsp" />

@@ -14,9 +14,9 @@
 
 package com.liferay.taglib;
 
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.web.PortalWebResourcesUtil;
 
 import java.net.URL;
 

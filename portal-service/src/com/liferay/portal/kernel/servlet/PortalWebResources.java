@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.web;
+package com.liferay.portal.kernel.servlet;
 
 import javax.servlet.ServletContext;
 

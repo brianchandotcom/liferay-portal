@@ -1321,6 +1321,15 @@ public class HttpImpl implements Http {
 
 		URLConnection urlConnection = url.openConnection();
 
+		if (urlConnection == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Could not open url connection to: " + url.toString());
+			}
+
+			return null;
+		}
+
 		try (InputStream inputStream = urlConnection.getInputStream();
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream()) {

@@ -35,6 +35,7 @@ page import="com.liferay.portlet.documentlibrary.FileMimeTypeException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileShortcutPermissionException" %><%@
 page import="com.liferay.portlet.documentlibrary.FolderNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.InvalidFileVersionException" %><%@
+page import="com.liferay.portlet.documentlibrary.InvalidFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchDirectoryException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFileEntryException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@

@@ -97,7 +97,6 @@ public class RoleFinderTest {
 			_resourceBlockPermission);
 	}
 
-	@SuppressWarnings("PMD.JUnitUseAssertFailPropertly")
 	@Test
 	public void testFindByC_N_S_P_A() throws Exception {
 		List<Role> roles = RoleFinderUtil.findByC_N_S_P_A(

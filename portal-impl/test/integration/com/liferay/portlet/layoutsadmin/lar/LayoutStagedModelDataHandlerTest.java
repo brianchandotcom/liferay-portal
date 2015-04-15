@@ -17,7 +17,6 @@ package com.liferay.portlet.layoutsadmin.lar;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -31,9 +30,6 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,39 +52,6 @@ public class LayoutStagedModelDataHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
-
-	@Test
-	public void testTypeArticle() throws Exception {
-		initExport();
-
-		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<>();
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			stagingGroup.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, JournalArticle.class, journalArticle);
-
-		Layout layout = LayoutTestUtil.addTypeArticleLayout(
-			stagingGroup.getGroupId(), journalArticle.getArticleId());
-
-		addDependentLayoutFriendlyURLs(dependentStagedModelsMap, layout);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, layout);
-
-		validateExport(portletDataContext, layout, dependentStagedModelsMap);
-
-		initImport();
-
-		Layout exportedLayout = (Layout)readExportedStagedModel(layout);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedLayout);
-	}
 
 	@Test
 	public void testTypeLinkToLayout() throws Exception {

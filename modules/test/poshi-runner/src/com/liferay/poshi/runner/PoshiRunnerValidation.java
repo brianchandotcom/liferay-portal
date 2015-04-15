@@ -185,8 +185,7 @@ public class PoshiRunnerValidation {
 		}
 
 		if (classType.equals("macro")) {
-			List<String> possibleAttributeNames = Arrays.asList(
-				"extends", "line-number");
+			List<String> possibleAttributeNames = Arrays.asList("line-number");
 
 			_validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
@@ -368,9 +367,7 @@ public class PoshiRunnerValidation {
 
 		List<Element> childElements = element.elements();
 
-		if (childElements.isEmpty() &&
-			(element.attributeValue("extends") == null)) {
-
+		if (childElements.isEmpty()) {
 			throw new PoshiRunnerException(
 				"Missing child elements\n" + filePath + ":" +
 					element.attributeValue("line-number"));

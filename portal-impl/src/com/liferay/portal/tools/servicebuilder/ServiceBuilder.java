@@ -4403,11 +4403,20 @@ public class ServiceBuilder {
 		fileName = StringUtil.replace(
 			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-		int pos = fileName.lastIndexOf("/src/") + 5;
+		String sourceDirName = "/src/";
+
+		int pos = fileName.lastIndexOf(sourceDirName);
+
+		if (pos == -1) {
+			sourceDirName = "/docroot/WEB-INF/service/";
+
+			pos = fileName.lastIndexOf(sourceDirName);
+		}
 
 		String fullyQualifiedClassName = StringUtil.replace(
-			fileName.substring(pos, fileName.length() - 5), CharPool.SLASH,
-			CharPool.PERIOD);
+			fileName.substring(
+				pos + sourceDirName.length(), fileName.length() - 5),
+			CharPool.SLASH, CharPool.PERIOD);
 
 		JavaClass javaClass = _javaClasses.get(fullyQualifiedClassName);
 

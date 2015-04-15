@@ -1532,20 +1532,26 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of each category in the form.</description>
+			<description>Deprecated as of 7.0.0. The name of each category in the form.</description>
 			<name>categoryNames</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of each section within a category.</description>
+			<description>Deprecated as of 7.0.0. The name of each section within a category.</description>
 			<name>categorySections</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>A type of navigation to be used. Options are <![CDATA[<code>steps</code>]]> and <![CDATA[<code>panel</code>]]>. The default display style is side navigation.</description>
 			<name>displayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The bean edited in the form.</description>
+			<name>formModelBean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1568,7 +1574,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A path to the <![CDATA[<code>formSection.jsp</code>]]> file's folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
+			<description>Unique identifier for this navigator. This id will be referenced to include sections and categories in this navigator.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Deprecated as of 7.0.0. A path to the <![CDATA[<code>formSection.jsp</code>]]> file's folder <![CDATA[<code>/path/to/jsp/folder/</code>]]>.</description>
 			<name>jspPath</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

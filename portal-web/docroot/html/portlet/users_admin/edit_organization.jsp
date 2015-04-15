@@ -135,7 +135,9 @@ else {
 		backURL="<%= backURL %>"
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
+		formModelBean="<%= organization %>"
 		htmlTop="<%= htmlTop %>"
+		id="organizations.form"
 		jspPath="/html/portlet/users_admin/organization/"
 	/>
 </aui:form>

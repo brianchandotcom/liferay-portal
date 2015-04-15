@@ -14,12 +14,18 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
+ * @author Sergio González
  */
 public class FormNavigatorTag extends IncludeTag {
 
@@ -32,16 +38,28 @@ public class FormNavigatorTag extends IncludeTag {
 		_backURL = backURL;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setCategoryNames(String[] categoryNames) {
 		_categoryNames = categoryNames;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setCategorySections(String[][] categorySections) {
 		_categorySections = categorySections;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
+	}
+
+	public void setFormModelBean(Object formModelBean) {
+		_formModelBean = formModelBean;
 	}
 
 	public void setFormName(String formName) {
@@ -56,6 +74,14 @@ public class FormNavigatorTag extends IncludeTag {
 		_htmlTop = htmlTop;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setJspPath(String jspPath) {
 		_jspPath = jspPath;
 	}
@@ -70,11 +96,91 @@ public class FormNavigatorTag extends IncludeTag {
 		_categoryNames = null;
 		_categorySections = null;
 		_displayStyle = "form";
+		_formModelBean = null;
 		_formName = "fm";
 		_htmlBottom = null;
 		_htmlTop = null;
+		_id = null;
 		_jspPath = null;
 		_showButtons = true;
+	}
+
+	protected String[] getCategoryKeys() {
+		if (_categoryNames != null) {
+			return _categoryNames;
+		}
+
+		return FormNavigatorCategoryUtil.getKeys(_id);
+	}
+
+	protected String[] getCategoryLabels() {
+		if (_categoryNames != null) {
+			return _categoryNames;
+		}
+
+		return FormNavigatorCategoryUtil.getLabels(_id);
+	}
+
+	protected String[][] getCategorySectionKeys() {
+		if (_categorySections != null) {
+			return _categorySections;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String[] categoryKeys = getCategoryKeys();
+
+		String[][] categorySectionKeys = new String[categoryKeys.length][];
+
+		for (int i = 0; i < categoryKeys.length; i++) {
+			String categoryKey = categoryKeys[i];
+
+			categorySectionKeys = ArrayUtil.append(
+				categorySectionKeys,
+				FormNavigatorEntryUtil.getKeys(
+					_id, categoryKey, themeDisplay.getUser(), _formModelBean));
+		}
+
+		return categorySectionKeys;
+	}
+
+	protected String[][] getCategorySectionLabels() {
+		if (_categorySections != null) {
+			return _categorySections;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String[] categoryKeys = getCategoryKeys();
+
+		String[][] categorySectionLabels = new String[categoryKeys.length][];
+
+		for (int i = 0; i < categoryKeys.length; i++) {
+			String categoryKey = categoryKeys[i];
+
+			categorySectionLabels = ArrayUtil.append(
+				categorySectionLabels,
+				FormNavigatorEntryUtil.getLabels(
+					_id, categoryKey, themeDisplay.getUser(), _formModelBean));
+		}
+
+		return categorySectionLabels;
+	}
+
+	protected String[] getLegacyCategorySections() {
+		if (_categorySections == null) {
+			return new String[0];
+		}
+
+		String[] sections = new String[0];
+
+		for (String[] categorySection : _categorySections) {
+			sections = ArrayUtil.append(sections, categorySection);
+		}
+
+		return sections;
 	}
 
 	@Override
@@ -86,16 +192,26 @@ public class FormNavigatorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:form-navigator:backURL", _backURL);
 		request.setAttribute(
-			"liferay-ui:form-navigator:categoryNames", _categoryNames);
+			"liferay-ui:form-navigator:categoryLabels", getCategoryLabels());
 		request.setAttribute(
-			"liferay-ui:form-navigator:categorySections", _categorySections);
+			"liferay-ui:form-navigator:categorySectionKeys",
+			getCategorySectionKeys());
+		request.setAttribute(
+			"liferay-ui:form-navigator:categorySectionLabels",
+			getCategorySectionLabels());
 		request.setAttribute(
 			"liferay-ui:form-navigator:displayStyle", _displayStyle);
-		request.setAttribute("liferay-ui:form-navigator:formName", _formName);
 		request.setAttribute(
-			"liferay-ui:form-navigator:htmlBottom", _htmlBottom);
+			"liferay-ui:form-navigator:formModelBean", _formModelBean);
+		request.setAttribute("liferay-ui:form-navigator:formName", _formName);
+		request.setAttribute("liferay-ui:form-navigator:id", _id);
 		request.setAttribute("liferay-ui:form-navigator:htmlTop", _htmlTop);
 		request.setAttribute("liferay-ui:form-navigator:jspPath", _jspPath);
+		request.setAttribute(
+			"liferay-ui:form-navigator:htmlBottom", _htmlBottom);
+		request.setAttribute(
+			"liferay-ui:form-navigator:legacyCategorySections",
+			getLegacyCategorySections());
 		request.setAttribute(
 			"liferay-ui:form-navigator:showButtons",
 			String.valueOf(_showButtons));
@@ -108,9 +224,11 @@ public class FormNavigatorTag extends IncludeTag {
 	private String[] _categoryNames;
 	private String[][] _categorySections;
 	private String _displayStyle = "form";
+	private Object _formModelBean;
 	private String _formName = "fm";
 	private String _htmlBottom;
 	private String _htmlTop;
+	private String _id;
 	private String _jspPath;
 	private boolean _showButtons = true;
 

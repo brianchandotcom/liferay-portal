@@ -15,8 +15,8 @@
 --%>
 
 <%
-for (int i = 0; i < allSections.length; i++) {
-	String section = allSections[i];
+for (int i = 0; i < legacyCategorySections.length; i++) {
+	String section = legacyCategorySections[i];
 
 	String sectionId = namespace + _getSectionId(section);
 	String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
@@ -33,6 +33,42 @@ for (int i = 0; i < allSections.length; i++) {
 		<c:otherwise>
 			<div class="form-section <%= (curSection.equals(section) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
 				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
+			</div>
+		</c:otherwise>
+	</c:choose>
+
+	<!-- End fragment <%= sectionId %> -->
+
+<%
+}
+
+List<FormNavigatorEntry<Object>> formNavigatorEntries = FormNavigatorEntryUtil.getFormNavigatorEntries(id, user, formModelBean);
+
+for (int i = 0; i < formNavigatorEntries.size(); i++) {
+	FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(i);
+
+	String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
+%>
+
+	<!-- Begin fragment <%= sectionId %> -->
+
+	<c:choose>
+		<c:when test='<%= displayStyle.equals("panel") %>'>
+			<liferay-ui:panel cssClass="list-unstyled panel-page-category" defaultState='<%= i == 0 ? "open" : "closed" %>' extended="<%= true %>" id="<%= sectionId %>" title="<%= formNavigatorEntry.getLabel() %>">
+
+				<%
+				formNavigatorEntry.render(request, response);
+				%>
+
+			</liferay-ui:panel>
+		</c:when>
+		<c:otherwise>
+			<div class="form-section <%= (curSection.equals(formNavigatorEntry.getKey()) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
+
+				<%
+				formNavigatorEntry.render(request, response);
+				%>
+
 			</div>
 		</c:otherwise>
 	</c:choose>

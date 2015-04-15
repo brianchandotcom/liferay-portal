@@ -67,7 +67,9 @@ request.setAttribute("websites.classPK", company.getAccountId());
 	<liferay-ui:form-navigator
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
+		formModelBean="<%= company %>"
 		htmlTop="<%= htmlTop %>"
+		id="company.settings.form"
 		jspPath="/html/portlet/portal_settings/"
 		showButtons="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>"
 	/>

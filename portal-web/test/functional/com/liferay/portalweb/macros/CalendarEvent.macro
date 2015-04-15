@@ -226,7 +226,7 @@
 		<if>
 			<equals arg1="${addRSVPEnabled}" arg2="true" />
 			<then>
-				<execute macro="CalendarEvent#addRSVPPG">
+				<execute macro="CalendarEvent#addRSVP">
 					<var name="endDate" value="${endDate}" />
 					<var name="endDateTime" value="${endDateTime}" />
 					<var name="eventTitle" value="${eventTitle}" />
@@ -240,7 +240,7 @@
 		</if>
 	</command>
 
-	<command name="addRSVPPG">
+	<command name="addRSVP">
 		<execute macro="CalendarEvent#selectViaSchedulerCmd">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
@@ -253,11 +253,21 @@
 
 		<execute function="Pause" value1="3000" />
 
-		<execute macro="CalendarEvent#selectViaSchedulerCmd">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
+		<if>
+			<equals arg1="${rsvp}" arg2="No" />
+			<then>
+				<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" value1="${rsvp}" />
+				<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC" />
+			</then>
+			<else>
+				<execute macro="CalendarEvent#selectViaSchedulerCmd">
+					<var name="eventTitle" value="${eventTitle}" />
+				</execute>
+
+				<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" value1="${rsvp}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addSetTimePG">
@@ -897,6 +907,16 @@
 		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
 	</command>
 
+	<command name="gotoEdit">
+		<execute macro="CalendarEvent#selectViaSchedulerCmd">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
+
+		<execute function="SelectFrame" locator1="PGCalendarEditevent#EDIT_EVENT_IFRAME" />
+	</command>
+
 	<command name="gotoRepeatConfiguration">
 		<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 	</command>
@@ -916,7 +936,10 @@
 			<var name="key_resource" value="${resourceName}" />
 
 			<execute function="Click" locator1="PGCalendarAddevent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST" value1="${resourceName}" />
-			<execute function="AssertTextEquals" locator1="PGCalendarAddevent#INVITATIONS_PENDING" value1="${resourceName}" />
+
+			<execute macro="CalendarEvent#viewRSVPPending">
+				<var name="resourceName" value="${resourceName}" />=
+			</execute>
 		</for>
 	</command>
 
@@ -1571,6 +1594,30 @@
 
 	<command name="viewRepeatWeekStartDay">
 		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY" value1="${weekStartDay}" />
+	</command>
+
+	<command name="viewRSVPAccepted">
+		<var name="key_resource" value="${resourceName}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#INVITATIONS_ACCEPTED" value1="${resourceName}" />
+	</command>
+
+	<command name="viewRSVPDeclined">
+		<var name="key_resource" value="${resourceName}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#INVITATIONS_DECLINED" value1="${resourceName}" />
+	</command>
+
+	<command name="viewRSVPMaybe">
+		<var name="key_resource" value="${resourceName}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#INVITATIONS_MAYBE" value1="${resourceName}" />
+	</command>
+
+	<command name="viewRSVPPending">
+		<var name="key_resource" value="${resourceName}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#INVITATIONS_PENDING" value1="${resourceName}" />
 	</command>
 
 	<command name="viewTitleViaDetailsCmd">

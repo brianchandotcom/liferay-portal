@@ -34,6 +34,7 @@ AUI.add(
 					form: defaultConfig,
 					incompleteProcessMessageNode: defaultConfig,
 					layoutSetSettingsNode: defaultConfig,
+					locale: STR_EMPTY,
 					logoNode: defaultConfig,
 					processesNode: defaultConfig,
 					rangeAllNode: defaultConfig,
@@ -48,6 +49,7 @@ AUI.add(
 					secureConnectionNode: defaultConfig,
 					setupNode: defaultConfig,
 					themeReferenceNode: defaultConfig,
+					timeZone: STR_EMPTY,
 					userPreferencesNode: defaultConfig
 				},
 
@@ -1145,7 +1147,10 @@ AUI.add(
 
 							endsLater = ADate.isGreater(endDate, startDate);
 
-							var today = new Date();
+							var localeString = instance.get('locale');
+							var timeZoneString = instance.get('timeZone');
+
+							var today = new Date(new Date().toLocaleString(localeString, {timeZone: timeZoneString}));
 
 							endsInPast = ADate.isGreaterOrEqual(today, endDate);
 							startsInPast = ADate.isGreaterOrEqual(today, startDate);

@@ -95,7 +95,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testIncorrectLineBreaks() throws Exception {
 		test(
-			"IncorrectLineBreaks.testjava",
+			"IncorrectLineBreaks1.testjava",
 			new String[] {
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",

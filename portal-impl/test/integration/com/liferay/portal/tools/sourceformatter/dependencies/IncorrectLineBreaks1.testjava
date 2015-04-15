@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Hugo Huijser
  */
-public class IncorrectLineBreaks {
+public class IncorrectLineBreaks1 {
 	public void method1() {
 		String thisIsAStringWithAVeryVeryVeryLongName = "";
 

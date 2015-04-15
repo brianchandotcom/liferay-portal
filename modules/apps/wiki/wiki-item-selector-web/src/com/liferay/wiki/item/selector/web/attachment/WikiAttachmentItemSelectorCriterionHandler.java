@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.item.selector.attachment;
+package com.liferay.wiki.item.selector.web.attachment;
 
 import com.liferay.document.selector.ItemSelectorCriterionHandler;
 import com.liferay.document.selector.ItemSelectorView;

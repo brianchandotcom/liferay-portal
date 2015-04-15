@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.item.selector.attachment;
+package com.liferay.wiki.item.selector.web.attachment;
 
 import com.liferay.document.selector.ItemSelectorView;
 
@@ -64,7 +64,7 @@ public class WikiAttachmentItemSelectorView
 		request.setAttribute("itemSelectedCallback", itemSelectedCallback);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/wiki-item-selector/attachments.jsp");
+			"/o/wiki-item-selector-web/attachments.jsp");
 
 		requestDispatcher.include(request, response);
 	}

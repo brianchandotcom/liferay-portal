@@ -340,6 +340,10 @@ public interface LayoutService extends BaseService {
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String fileName) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	public byte[] exportPortletInfo(long companyId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
@@ -353,21 +357,27 @@ public interface LayoutService extends BaseService {
 	* @param groupId the primary key of the group
 	* @param portletId the primary key of the portlet
 	* @param parameterMap the mapping of parameters indicating which
-	information to export. For information on the keys used in the
-	map see {@link
+	information to export. For information on the keys used in
+	the map see {@link
 	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a byte array
-	* @throws PortalException if a layout, group, or portlet with the primary
-	key could not be found, if the group did not have permission to
-	manage the layouts involved, or if some other portal exception
-	occurred
+	* @throws PortalException if a layout, group, or portlet with the
+	primary key could not be found, if the group did not have
+	permission to manage the layouts involved, or if some other
+	portal exception occurred
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@java.lang.Deprecated
 	public byte[] exportPortletInfo(long plid, long groupId,
 		java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
+		throws PortalException;
+
+	public java.io.File exportPortletInfoAsFile(
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
 	/**
@@ -378,23 +388,29 @@ public interface LayoutService extends BaseService {
 	* @param groupId the primary key of the group
 	* @param portletId the primary key of the portlet
 	* @param parameterMap the mapping of parameters indicating which
-	information to export. For information on the keys used in the
-	map see {@link
+	information to export. For information on the keys used in
+	the map see {@link
 	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a file
-	* @throws PortalException if a layout, group, or portlet with the primary
-	key could not be found, it the group did not have permission to
-	manage the layouts involved, or if some other portal exception
-	occurred
+	* @throws PortalException if a layout, group, or portlet with the
+	primary key could not be found, it the group did not have
+	permission to manage the layouts involved, or if some other
+	portal exception occurred
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@java.lang.Deprecated
 	public java.io.File exportPortletInfoAsFile(long plid, long groupId,
 		java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
 		throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	public java.io.File exportPortletInfoAsFile(java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
@@ -588,6 +604,14 @@ public interface LayoutService extends BaseService {
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream inputStream) throws PortalException;
 
+	public void importPortletInfo(
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		java.io.File file) throws PortalException;
+
+	public void importPortletInfo(
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		java.io.InputStream is) throws PortalException;
+
 	/**
 	* Imports the portlet information (categories, permissions, ... etc.) from
 	* the file.
@@ -596,14 +620,16 @@ public interface LayoutService extends BaseService {
 	* @param groupId the primary key of the group
 	* @param portletId the primary key of the portlet
 	* @param parameterMap the mapping of parameters indicating which
-	information will be imported. For information on the keys used in
-	the map see {@link
+	information will be imported. For information on the keys
+	used in the map see {@link
 	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
-	* @throws PortalException if a group, layout, or portlet with the primary
-	key could not be found, or if the group did not have permission
-	to manage the layouts
+	* @throws PortalException if a group, layout, or portlet with the
+	primary key could not be found, or if the group did not have
+	permission to manage the layouts
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@java.lang.Deprecated
 	public void importPortletInfo(long plid, long groupId,
 		java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
@@ -617,23 +643,33 @@ public interface LayoutService extends BaseService {
 	* @param groupId the primary key of the group
 	* @param portletId the primary key of the portlet
 	* @param parameterMap the mapping of parameters indicating which
-	information will be imported. For information on the keys used in
-	the map see {@link
+	information will be imported. For information on the keys
+	used in the map see {@link
 	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
-	* @throws PortalException if a group, portlet, or layout with the primary
-	key could not be found or if the group did not have permission to
-	manage the layouts
+	* @throws PortalException if a group, portlet, or layout with the
+	primary key could not be found or if the group did not have
+	permission to manage the layouts
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@java.lang.Deprecated
 	public void importPortletInfo(long plid, long groupId,
 		java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream is) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	public void importPortletInfo(java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	public void importPortletInfo(java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream is) throws PortalException;
@@ -1109,10 +1145,26 @@ public interface LayoutService extends BaseService {
 		java.io.InputStream inputStream) throws PortalException;
 
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		java.io.File file) throws PortalException;
+
+	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		java.io.InputStream inputStream) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
+	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
 		long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
 		long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,

@@ -22,17 +22,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 
 import java.io.File;
-import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
@@ -58,16 +55,6 @@ public class PortletImportBackgroundTaskExecutor
 		ExportImportConfiguration exportImportConfiguration =
 			getExportImportConfiguration(backgroundTask);
 
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
-		long userId = MapUtil.getLong(settingsMap, "userId");
-		long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
-		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-		String portletId = MapUtil.getString(settingsMap, "portletId");
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)settingsMap.get("parameterMap");
-
 		List<FileEntry> attachmentsFileEntries =
 			backgroundTask.getAttachmentsFileEntries();
 
@@ -81,9 +68,7 @@ public class PortletImportBackgroundTaskExecutor
 
 				TransactionHandlerUtil.invoke(
 					transactionAttribute,
-					new PortletImportCallable(
-						exportImportConfiguration, file, parameterMap,
-						portletId, targetGroupId, targetPlid, userId));
+					new PortletImportCallable(exportImportConfiguration, file));
 			}
 			catch (Throwable t) {
 				if (_log.isDebugEnabled()) {
@@ -109,17 +94,10 @@ public class PortletImportBackgroundTaskExecutor
 	private class PortletImportCallable implements Callable<Void> {
 
 		public PortletImportCallable(
-			ExportImportConfiguration exportImportConfiguration, File file,
-			Map<String, String[]> parameterMap, String portletId,
-			long targetGroupId, long targetPlid, long userId) {
+			ExportImportConfiguration exportImportConfiguration, File file) {
 
 			_exportImportConfiguration = exportImportConfiguration;
 			_file = file;
-			_parameterMap = parameterMap;
-			_portletId = portletId;
-			_targetGroupId = targetGroupId;
-			_targetPlid = targetPlid;
-			_userId = userId;
 		}
 
 		@Override
@@ -128,19 +106,13 @@ public class PortletImportBackgroundTaskExecutor
 				_exportImportConfiguration, _file);
 
 			LayoutLocalServiceUtil.importPortletInfo(
-				_userId, _targetPlid, _targetGroupId, _portletId, _parameterMap,
-				_file);
+				_exportImportConfiguration, _file);
 
 			return null;
 		}
 
 		private final ExportImportConfiguration _exportImportConfiguration;
 		private final File _file;
-		private final Map<String, String[]> _parameterMap;
-		private final String _portletId;
-		private final long _targetGroupId;
-		private final long _targetPlid;
-		private final long _userId;
 
 	}
 

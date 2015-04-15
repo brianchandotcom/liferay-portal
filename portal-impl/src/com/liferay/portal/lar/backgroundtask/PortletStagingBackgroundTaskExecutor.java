@@ -23,16 +23,13 @@ import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 
 import java.io.File;
-import java.io.Serializable;
 
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
@@ -115,16 +112,6 @@ public class PortletStagingBackgroundTaskExecutor
 
 		@Override
 		public MissingReferences call() throws PortalException {
-			Map<String, Serializable> settingsMap =
-				_exportImportConfiguration.getSettingsMap();
-
-			long userId = MapUtil.getLong(settingsMap, "userId");
-			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
-			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-			String portletId = MapUtil.getString(settingsMap, "portletId");
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-
 			File larFile = null;
 			MissingReferences missingReferences = null;
 
@@ -144,8 +131,7 @@ public class PortletStagingBackgroundTaskExecutor
 				markBackgroundTask(_backgroundTaskId, "validated");
 
 				LayoutLocalServiceUtil.importPortletInfo(
-					userId, targetPlid, targetGroupId, portletId, parameterMap,
-					larFile);
+					_exportImportConfiguration, larFile);
 			}
 			finally {
 				larFile.delete();

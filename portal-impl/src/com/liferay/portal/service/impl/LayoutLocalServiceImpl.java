@@ -2072,33 +2072,27 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * Imports the portlet information (categories, permissions, ... etc.) from
-	 * the file.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  plid the primary key of the target layout
-	 * @param  groupId the primary key of the target group
-	 * @param  portletId the primary key of the portlet
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information will be imported. For information on the keys used in
-	 *         the map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  file the LAR file with the data
-	 * @throws PortalException if a group, layout, portlet or user with the
-	 *         primary key could not be found
-	 */
 	@Override
 	public void importPortletInfo(
-			long userId, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException {
 
 		try {
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			long userId = MapUtil.getLong(settingsMap, "userId");
+			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+			String portletId = MapUtil.getString(settingsMap, "portletId");
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)settingsMap.get("parameterMap");
+
 			PortletImporter portletImporter = PortletImporter.getInstance();
 
 			portletImporter.importPortletInfo(
-				userId, plid, groupId, portletId, parameterMap, file);
+				userId, targetPlid, targetGroupId, portletId, parameterMap,
+				file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
@@ -2135,22 +2129,73 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public void importPortletInfo(
+			ExportImportConfiguration exportImportConfiguration, InputStream is)
+		throws PortalException {
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile("lar");
+
+			FileUtil.write(file, is);
+
+			importPortletInfo(exportImportConfiguration, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	/**
+	 * Imports the portlet information (categories, permissions, ... etc.) from
+	 * the file.
+	 *
+	 * @param      userId the primary key of the user
+	 * @param      plid the primary key of the target layout
+	 * @param      groupId the primary key of the target group
+	 * @param      portletId the primary key of the portlet
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information will be imported. For information on the keys
+	 *             used in the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      file the LAR file with the data
+	 * @throws     PortalException if a group, layout, portlet or user with the
+	 *             primary key could not be found
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public void importPortletInfo(
+			long userId, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Imports the portlet information (categories, permissions, ... etc.) from
 	 * the input stream.
 	 *
-	 * @param  userId the primary key of the user
-	 * @param  plid the primary key of the layout
-	 * @param  groupId the primary key of the group
-	 * @param  portletId the primary key of the portlet
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information will be imported. For information on the keys used in
-	 *         the map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  is the input stream
-	 * @throws PortalException if a group, portlet, layout or user with the
-	 *         primary key could not be found
+	 * @param      userId the primary key of the user
+	 * @param      plid the primary key of the layout
+	 * @param      groupId the primary key of the group
+	 * @param      portletId the primary key of the portlet
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information will be imported. For information on the keys
+	 *             used in the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      is the input stream
+	 * @throws     PortalException if a group, portlet, layout or user with the
+	 *             primary key could not be found
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public void importPortletInfo(
 			long userId, long plid, long groupId, String portletId,
@@ -2175,6 +2220,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void importPortletInfo(
 			long userId, String portletId, Map<String, String[]> parameterMap,
@@ -2198,6 +2247,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			portletId, parameterMap, file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void importPortletInfo(
 			long userId, String portletId, Map<String, String[]> parameterMap,

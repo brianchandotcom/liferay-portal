@@ -1057,22 +1057,58 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			inputStream);
 	}
 
+	@Override
+	public void importPortletInfo(
+			ExportImportConfiguration exportImportConfiguration, File file)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		layoutLocalService.importPortletInfo(exportImportConfiguration, file);
+	}
+
+	@Override
+	public void importPortletInfo(
+			ExportImportConfiguration exportImportConfiguration, InputStream is)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		layoutLocalService.importPortletInfo(exportImportConfiguration, is);
+	}
+
 	/**
 	 * Imports the portlet information (categories, permissions, ... etc.) from
 	 * the file.
 	 *
-	 * @param  plid the primary key of the layout
-	 * @param  groupId the primary key of the group
-	 * @param  portletId the primary key of the portlet
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information will be imported. For information on the keys used in
-	 *         the map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  file the LAR file with the data
-	 * @throws PortalException if a group, layout, or portlet with the primary
-	 *         key could not be found, or if the group did not have permission
-	 *         to manage the layouts
+	 * @param      plid the primary key of the layout
+	 * @param      groupId the primary key of the group
+	 * @param      portletId the primary key of the portlet
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information will be imported. For information on the keys
+	 *             used in the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      file the LAR file with the data
+	 * @throws     PortalException if a group, layout, or portlet with the
+	 *             primary key could not be found, or if the group did not have
+	 *             permission to manage the layouts
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public void importPortletInfo(
 			long plid, long groupId, String portletId,
@@ -1091,18 +1127,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Imports the portlet information (categories, permissions, ... etc.) from
 	 * the input stream.
 	 *
-	 * @param  plid the primary key of the layout
-	 * @param  groupId the primary key of the group
-	 * @param  portletId the primary key of the portlet
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information will be imported. For information on the keys used in
-	 *         the map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  is the input stream
-	 * @throws PortalException if a group, portlet, or layout with the primary
-	 *         key could not be found or if the group did not have permission to
-	 *         manage the layouts
+	 * @param      plid the primary key of the layout
+	 * @param      groupId the primary key of the group
+	 * @param      portletId the primary key of the portlet
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information will be imported. For information on the keys
+	 *             used in the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      is the input stream
+	 * @throws     PortalException if a group, portlet, or layout with the
+	 *             primary key could not be found or if the group did not have
+	 *             permission to manage the layouts
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public void importPortletInfo(
 			long plid, long groupId, String portletId,
@@ -1117,6 +1155,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), plid, groupId, portletId, parameterMap, is);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void importPortletInfo(
 			String portletId, Map<String, String[]> parameterMap, File file)
@@ -1135,6 +1177,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), portletId, parameterMap, file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void importPortletInfo(
 			String portletId, Map<String, String[]> parameterMap,

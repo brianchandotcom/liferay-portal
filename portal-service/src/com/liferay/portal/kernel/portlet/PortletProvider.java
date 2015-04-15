@@ -12,10 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.provider;
+package com.liferay.portal.kernel.portlet;
 
 /**
  * @author Eudaldo Alonso
  */
-public interface BrowsePortletProvider extends PortletProvider {
+public interface PortletProvider {
+
+	public static final String CLASS_NAME_ANY = "any-class-name";
+
+	public String getPortletId();
+
+	public enum Action {
+
+		ADD, BROWSE, EDIT, VIEW
+
+	}
+
 }

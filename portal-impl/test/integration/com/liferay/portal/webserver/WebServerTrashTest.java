@@ -14,8 +14,8 @@
 
 package com.liferay.portal.webserver;
 
-import com.liferay.portal.kernel.provider.PortletProvider;
-import com.liferay.portal.kernel.provider.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;

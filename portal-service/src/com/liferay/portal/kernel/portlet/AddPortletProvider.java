@@ -12,28 +12,20 @@
  * details.
  */
 
-package com.liferay.trash.web.portlet.provider;
+package com.liferay.portal.kernel.portlet;
 
-import com.liferay.portal.kernel.provider.ViewPortletProvider;
-import com.liferay.trash.web.constants.TrashPortletKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 
-import org.osgi.service.component.annotations.Component;
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portlet.trash.model.TrashEntry"
-	},
-	service = ViewPortletProvider.class
-)
-public class TrashViewPortletProvider implements ViewPortletProvider {
+public interface AddPortletProvider extends PortletProvider {
 
-	@Override
-	public String getPortletId() {
-		return TrashPortletKeys.TRASH;
-	}
+	public void updatePortletPreferences(
+			PortletPreferences portletPreferences, String portletId,
+			String className, long classPK, ThemeDisplay themeDisplay)
+		throws Exception;
 
 }

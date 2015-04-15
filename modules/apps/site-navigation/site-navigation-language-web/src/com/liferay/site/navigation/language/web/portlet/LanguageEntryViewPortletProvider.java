@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.journal.web.provider;
+package com.liferay.site.navigation.language.web.provider;
 
-import com.liferay.journal.web.constants.JournalPortletKeys;
-import com.liferay.portal.kernel.provider.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eduardo Garcia
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
+		"model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
 	},
-	service = EditPortletProvider.class
+	service = ViewPortletProvider.class
 )
-public class JournalEditPortletProvider implements EditPortletProvider {
+public class LanguageEntryViewPortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return JournalPortletKeys.JOURNAL;
+		return LanguagePortletKeys.LANGUAGE;
 	}
 
 }

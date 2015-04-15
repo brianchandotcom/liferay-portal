@@ -578,14 +578,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (_log.isDebugEnabled()) {
 			level = 4;
 		}
-		else if (_log.isErrorEnabled()) {
-			level = 1;
-		}
 		else if (_log.isInfoEnabled()) {
 			level = 3;
 		}
 		else if (_log.isWarnEnabled()) {
 			level = 2;
+		}
+		else if (_log.isErrorEnabled()) {
+			level = 1;
 		}
 
 		return String.valueOf(level);

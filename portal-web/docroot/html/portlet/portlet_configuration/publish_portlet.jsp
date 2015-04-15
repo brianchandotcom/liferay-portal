@@ -473,6 +473,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 					deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 					form: document.<portlet:namespace />fm1,
 					incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
+					locale: '<%= locale.toLanguageTag() %>',
 					namespace: '<portlet:namespace />',
 					processesNode: '#publishProcesses',
 					processesResourceURL: '<%= publishProcessesURL.toString() %>',
@@ -480,7 +481,8 @@ portletURL.setParameter("tabs3", "current-and-previous");
 					rangeDateRangeNode: '#rangeDateRange',
 					rangeLastNode: '#rangeLast',
 					rangeLastPublishNode: '#rangeLastPublish',
-					ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>'
+					ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
+					timeZone: '<%= timeZone.getID() %>'
 				}
 			);
 		</aui:script>

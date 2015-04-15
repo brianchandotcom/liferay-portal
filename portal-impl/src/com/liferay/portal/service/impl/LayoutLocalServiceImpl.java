@@ -3318,15 +3318,25 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public MissingReferences validateImportPortletInfo(
-			long userId, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException {
 
 		try {
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			long userId = MapUtil.getLong(settingsMap, "userId");
+			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+			String portletId = MapUtil.getString(settingsMap, "portletId");
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)settingsMap.get("parameterMap");
+
 			PortletImporter portletImporter = PortletImporter.getInstance();
 
 			return portletImporter.validateFile(
-				userId, plid, groupId, portletId, parameterMap, file);
+				userId, targetPlid, targetGroupId, portletId, parameterMap,
+				file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
@@ -3345,6 +3355,46 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public MissingReferences validateImportPortletInfo(
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
+		throws PortalException {
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile("lar");
+
+			FileUtil.write(file, inputStream);
+
+			return validateImportPortletInfo(exportImportConfiguration, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public MissingReferences validateImportPortletInfo(
+			long userId, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public MissingReferences validateImportPortletInfo(
 			long userId, long plid, long groupId, String portletId,

@@ -1883,6 +1883,49 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public MissingReferences validateImportPortletInfo(
+			ExportImportConfiguration exportImportConfiguration, File file)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+		String portletId = MapUtil.getString(settingsMap, "portletId");
+
+		PortletPermissionUtil.check(
+			getPermissionChecker(), targetPlid, portletId,
+			ActionKeys.CONFIGURATION);
+
+		return layoutLocalService.validateImportPortletInfo(
+			exportImportConfiguration, file);
+	}
+
+	@Override
+	public MissingReferences validateImportPortletInfo(
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+		String portletId = MapUtil.getString(settingsMap, "portletId");
+
+		PortletPermissionUtil.check(
+			getPermissionChecker(), targetPlid, portletId,
+			ActionKeys.CONFIGURATION);
+
+		return layoutLocalService.validateImportPortletInfo(
+			exportImportConfiguration, inputStream);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public MissingReferences validateImportPortletInfo(
 			long plid, long groupId, String portletId,
 			Map<String, String[]> parameterMap, File file)
 		throws PortalException {
@@ -1894,6 +1937,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), plid, groupId, portletId, parameterMap, file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public MissingReferences validateImportPortletInfo(
 			long plid, long groupId, String portletId,

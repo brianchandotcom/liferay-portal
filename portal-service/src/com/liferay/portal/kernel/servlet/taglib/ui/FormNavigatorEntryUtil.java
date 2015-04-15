@@ -27,23 +27,10 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Sergio González
  */
 public class FormNavigatorEntryUtil {
-
-	public static List<FormNavigatorEntry> getFormNavigatorEntries(
-		String formNavigatorId, User user, Object formModelBean) {
-
-		List<FormNavigatorEntry> formNavigatorEntries =
-			_instance._formNavigatorEntries.getService(
-				_getKey(formNavigatorId, null));
-
-		return filterVisibleFormNavigatorEntries(
-			formNavigatorEntries, user, formModelBean);
-	}
 
 	public static List<FormNavigatorEntry> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, User user,
@@ -52,6 +39,17 @@ public class FormNavigatorEntryUtil {
 		List<FormNavigatorEntry> formNavigatorEntries =
 			_instance._formNavigatorEntries.getService(
 				_getKey(formNavigatorId, categoryKey));
+
+		return filterVisibleFormNavigatorEntries(
+			formNavigatorEntries, user, formModelBean);
+	}
+
+	public static List<FormNavigatorEntry> getFormNavigatorEntries(
+		String formNavigatorId, User user, Object formModelBean) {
+
+		List<FormNavigatorEntry> formNavigatorEntries =
+			_instance._formNavigatorEntries.getService(
+				_getKey(formNavigatorId, null));
 
 		return filterVisibleFormNavigatorEntries(
 			formNavigatorEntries, user, formModelBean);

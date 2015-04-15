@@ -29,6 +29,10 @@ public class LayoutConstants {
 
 	public static final String NAME_CONTROL_PANEL_DEFAULT = "Control Panel";
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static final String TYPE_ARTICLE = "article";
 
 	public static final String TYPE_CONTROL_PANEL = "control_panel";

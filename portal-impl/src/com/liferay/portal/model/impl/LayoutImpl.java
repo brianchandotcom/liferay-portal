@@ -1007,21 +1007,19 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public boolean isSupportsEmbeddedPortlets() {
-		if (isTypeArticle() || isTypeEmbedded() || isTypePanel() ||
-			isTypePortlet()) {
-
+		if (isTypeEmbedded() || isTypePanel() || isTypePortlet()) {
 			return true;
 		}
 
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isTypeArticle() {
-		if (getType().equals(LayoutConstants.TYPE_ARTICLE)) {
-			return true;
-		}
-
 		return false;
 	}
 

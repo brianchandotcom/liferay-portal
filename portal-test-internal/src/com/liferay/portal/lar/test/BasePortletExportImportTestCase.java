@@ -338,8 +338,7 @@ public abstract class BasePortletExportImportTestCase
 			exportImportConfiguration, larFile);
 
 		LayoutLocalServiceUtil.importPortletInfo(
-			TestPropsValues.getUserId(), importedLayout.getPlid(),
-			importedGroup.getGroupId(), portletId, importParameterMap, larFile);
+			exportImportConfiguration, larFile);
 	}
 
 	protected AssetEntry getAssetEntry(StagedModel stagedModel)

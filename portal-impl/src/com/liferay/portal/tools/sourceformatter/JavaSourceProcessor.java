@@ -981,6 +981,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
 		}
 
+		newContent = getCombinedLinesContent(newContent);
+
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
 
@@ -2162,6 +2164,44 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return line;
 	}
 
+	protected String getCombinedLinesContent(String content) {
+		Matcher matcher = _combinedLinesPattern.matcher(content);
+
+		while (matcher.find()) {
+			String tabs = matcher.group(1);
+
+			int x = matcher.start(1);
+
+			int y = content.indexOf(
+				StringPool.NEW_LINE + tabs + StringPool.CLOSE_CURLY_BRACE, x);
+
+			y = content.indexOf(StringPool.NEW_LINE, y + 1);
+
+			if (y < x) {
+				return content;
+			}
+
+			String match = content.substring(x, y);
+
+			String replacement = match;
+
+			while (replacement.contains("\n\t")) {
+				replacement = StringUtil.replace(replacement, "\n\t", "\n");
+			}
+
+			replacement = StringUtil.replace(
+				replacement, new String[] {",\n", "\n"},
+				new String[] {StringPool.COMMA_AND_SPACE, StringPool.BLANK});
+
+			if (getLineLength(replacement) <= _MAX_LINE_LENGTH) {
+				return getCombinedLinesContent(
+					StringUtil.replace(content, match, replacement));
+			}
+		}
+
+		return content;
+	}
+
 	protected String getCombinedLinesContent(
 		String content, String fileName, String line, String trimmedLine,
 		int lineLength, int lineCount, String previousLine, String linePart,
@@ -3181,6 +3221,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
 	private boolean _checkUnprocessedExceptions;
+	private Pattern _combinedLinesPattern = Pattern.compile(
+		"\n(\t*).+(=|\\]) \\{\n");
 	private List<String> _diamondOperatorExclusionFiles;
 	private List<String> _diamondOperatorExclusionPaths;
 	private Pattern _diamondOperatorPattern = Pattern.compile(

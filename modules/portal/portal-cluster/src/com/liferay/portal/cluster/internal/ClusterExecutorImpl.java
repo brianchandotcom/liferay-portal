@@ -18,7 +18,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.cluster.ClusterChannel;
 import com.liferay.portal.cluster.ClusterChannelFactory;
-import com.liferay.portal.cluster.ClusterReceiver;
 import com.liferay.portal.cluster.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.cluster.internal.constants.ClusterPropsKeys;
 import com.liferay.portal.kernel.cluster.Address;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterException;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -209,11 +207,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 	@Override
 	public boolean isEnabled() {
-		if ((_clusterLink == null) || !_clusterLink.isEnabled()) {
-			return false;
-		}
-
-		return _clusterLink.isEnabled();
+		return _enabled;
 	}
 
 	@Override
@@ -239,6 +233,14 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			ClusterExecutorConfiguration.class,
 			componentContext.getProperties());
 
+		_enabled = GetterUtil.getBoolean(
+			_props.get(PropsKeys.CLUSTER_LINK_ENABLED));
+
+		String controlChannelProperties = getControlChannelProperties(
+			componentContext.getProperties());
+
+		initialize(controlChannelProperties);
+
 		BundleContext bundleContext = componentContext.getBundleContext();
 
 		ClusterExecutorPortalInetSocketAddressEventListener
@@ -249,11 +251,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			PortalInetSocketAddressEventListener.class,
 			clusterExecutorPortalInetSocketAddressEventListener,
 			new HashMapDictionary<String, Object>());
-
-		String controlChannelProperties = getControlChannelProperties(
-			componentContext.getProperties());
-
-		initialize(controlChannelProperties);
 	}
 
 	protected void configurePortalInstanceCommunications() {
@@ -437,7 +434,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		_executorService = _portalExecutorManager.getPortalExecutor(
 			ClusterExecutorImpl.class.getName());
 
-		_clusterReceiver = new ClusterRequestReceiver(this);
+		ClusterRequestReceiver clusterReceiver = new ClusterRequestReceiver(
+			this);
 
 		String channelNamePrefix = GetterUtil.getString(
 			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_PREFIX),
@@ -445,7 +443,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 		_clusterChannel = _clusterChannelFactory.createClusterChannel(
 			channelPropertiesControl, channelNamePrefix + "control",
-			_clusterReceiver);
+			clusterReceiver);
 
 		ClusterNode localClusterNode = new ClusterNode(
 			generateClusterNodeId(), _clusterChannel.getBindInetAddress());
@@ -457,7 +455,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 		sendNotifyRequest();
 
-		_clusterReceiver.openLatch();
+		clusterReceiver.openLatch();
 
 		configurePortalInstanceCommunications();
 
@@ -530,14 +528,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		_clusterChannelFactory = clusterChannelFactory;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setClusterLink(ClusterLink clusterLink) {
-		_clusterLink = clusterLink;
-	}
-
 	@Reference(unbind = "-")
 	protected void setPortalExecutorManager(
 		PortalExecutorManager portalExecutorManager) {
@@ -548,10 +538,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
 		_props = props;
-	}
-
-	protected void unsetClusterLink(ClusterLink clusterLink) {
-		_clusterLink = null;
 	}
 
 	protected volatile ClusterExecutorConfiguration
@@ -602,11 +588,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	private ClusterChannelFactory _clusterChannelFactory;
 	private final CopyOnWriteArrayList<ClusterEventListener>
 		_clusterEventListeners = new CopyOnWriteArrayList<>();
-	private ClusterLink _clusterLink;
 	private final Map<String, ClusterNodeStatus> _clusterNodeStatuses =
 		new ConcurrentHashMap<>();
-	private ClusterReceiver _clusterReceiver;
 	private ClusterEventListener _debugClusterEventListener;
+	private boolean _enabled;
 	private ExecutorService _executorService;
 	private final Map<String, FutureClusterResponses> _futureClusterResponses =
 		new ConcurrentReferenceValueHashMap<>(

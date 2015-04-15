@@ -20,21 +20,19 @@ import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
-import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
@@ -381,26 +379,6 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
 
-		clusterExecutorImpl.setClusterLink(
-			new ClusterLink() {
-
-				@Override
-				public boolean isEnabled() {
-					return enabled;
-				}
-
-				@Override
-				public void sendMulticastMessage(
-					Message message, Priority priority) {
-				}
-
-				@Override
-				public void sendUnicastMessage(
-					Address address, Message message, Priority priority) {
-				}
-
-			});
-
 		clusterExecutorImpl.setProps(
 			new Props() {
 
@@ -411,7 +389,11 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 				@Override
 				public String get(String key) {
-					return null;
+					if (PropsKeys.CLUSTER_LINK_ENABLED.equals(key)) {
+						return String.valueOf(enabled);
+					}
+
+					return StringPool.BLANK;
 				}
 
 				@Override

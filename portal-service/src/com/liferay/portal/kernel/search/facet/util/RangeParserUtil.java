@@ -28,9 +28,7 @@ public class RangeParserUtil {
 			new String[] {
 				StringPool.OPEN_CURLY_BRACE, StringPool.CLOSE_CURLY_BRACE
 			},
-			new String[] {
-				StringPool.OPEN_BRACKET, StringPool.CLOSE_BRACKET
-			}
+			new String[] {StringPool.OPEN_BRACKET, StringPool.CLOSE_BRACKET}
 		);
 
 		int x = range.indexOf(StringPool.OPEN_BRACKET);

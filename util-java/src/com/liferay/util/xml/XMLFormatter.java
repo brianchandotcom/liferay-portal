@@ -90,9 +90,7 @@ public class XMLFormatter {
 				StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE,
 				StringPool.RETURN
 			},
-			new String[] {
-				"[$NEW_LINE$]", "[$NEW_LINE$]", "[$NEW_LINE$]"
-			});
+			new String[] {"[$NEW_LINE$]", "[$NEW_LINE$]", "[$NEW_LINE$]"});
 	}
 
 	public static String toString(Node node) throws IOException {

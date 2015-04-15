@@ -39,9 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(
 	immediate = true,
 	property = {"templatePath=/META-INF/resources/checkbox.soy"},
-	service = {
-		CheckboxDDMFormFieldRenderer.class, DDMFormFieldRenderer.class
-	}
+	service = {CheckboxDDMFormFieldRenderer.class, DDMFormFieldRenderer.class}
 )
 public class CheckboxDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 

@@ -94,9 +94,7 @@ import org.osgi.service.component.annotations.Component;
  * @see    com.liferay.portlet.journal.lar.JournalCreationStrategy
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
-	},
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = PortletDataHandler.class
 )
 public class JournalPortletDataHandler extends BasePortletDataHandler {

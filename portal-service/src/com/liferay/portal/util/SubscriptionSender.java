@@ -720,10 +720,7 @@ public class SubscriptionSender implements Serializable {
 		Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 		content = StringUtil.replace(
-			content,
-			new String[] {
-				"href=\"/", "src=\"/"
-			},
+			content, new String[] {"href=\"/", "src=\"/"},
 			new String[] {
 				"href=\"" + company.getPortalURL(groupId) + "/",
 				"src=\"" + company.getPortalURL(groupId) + "/"

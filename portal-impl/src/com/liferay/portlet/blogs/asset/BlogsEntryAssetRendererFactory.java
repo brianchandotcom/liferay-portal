@@ -43,9 +43,7 @@ import javax.portlet.WindowStateException;
  * @author Sergio González
  */
 @OSGiBeanProperties(
-	property = {
-		"search.asset.type=com.liferay.portlet.blogs.model.BlogsEntry"
-	}
+	property = {"search.asset.type=com.liferay.portlet.blogs.model.BlogsEntry"}
 )
 public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 

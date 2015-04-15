@@ -30,9 +30,7 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
  * @author Michael C. Han
  */
 @OSGiBeanProperties(
-	property = {
-		"search.asset.type=com.liferay.portal.model.User"
-	}
+	property = {"search.asset.type=com.liferay.portal.model.User"}
 )
 public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 

@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + SiteMapPortletKeys.SITE_MAP
-	},
+	property = {"javax.portlet.name=" + SiteMapPortletKeys.SITE_MAP},
 	service = ConfigurationAction.class
 )
 public class SiteMapConfigurationAction extends DefaultConfigurationAction {

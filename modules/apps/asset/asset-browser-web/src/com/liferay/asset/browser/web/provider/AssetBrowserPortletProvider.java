@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=" + PortletProvider.CLASS_NAME_ANY
-	},
+	property = {"model.class.name=" + PortletProvider.CLASS_NAME_ANY},
 	service = BrowsePortletProvider.class
 )
 public class AssetBrowserPortletProvider implements BrowsePortletProvider {

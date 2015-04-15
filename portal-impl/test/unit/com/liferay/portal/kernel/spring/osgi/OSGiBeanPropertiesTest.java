@@ -302,9 +302,7 @@ public class OSGiBeanPropertiesTest {
 	@Test
 	public void testWithArrayOfByteProperties() {
 		@OSGiBeanProperties(
-			property = {
-				"key:Byte=127", "key:Byte=95", "key:Byte=13"
-			}
+			property = {"key:Byte=127", "key:Byte=95", "key:Byte=13"}
 		)
 		class C {
 		}
@@ -488,9 +486,7 @@ public class OSGiBeanPropertiesTest {
 	@Test
 	public void testWithArrayOfProperties() {
 		@OSGiBeanProperties(
-			property = {
-				"key=valueA", "key=valueB", "key=valueC"
-			}
+			property = {"key=valueA", "key=valueB", "key=valueC"}
 		)
 		class C {
 		}
@@ -516,9 +512,7 @@ public class OSGiBeanPropertiesTest {
 	@Test
 	public void testWithArrayOfShortProperties() {
 		@OSGiBeanProperties(
-			property = {
-				"key:Short=32767", "key:Short=-32768", "key:Short=12"
-			}
+			property = {"key:Short=32767", "key:Short=-32768", "key:Short=12"}
 		)
 		class C {
 		}

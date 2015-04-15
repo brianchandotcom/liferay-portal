@@ -45,9 +45,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"search.asset.type=com.liferay.wiki.model.WikiPage"
-	},
+	property = {"search.asset.type=com.liferay.wiki.model.WikiPage"},
 	service = AssetRendererFactory.class
 )
 public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {

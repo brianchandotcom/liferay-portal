@@ -546,9 +546,7 @@ public abstract class BaseDB implements DB {
 			nullable = "not null;";
 		}
 
-		String[] template = {
-			words[1], words[2], words[3], words[4], nullable
-		};
+		String[] template = {words[1], words[2], words[3], words[4], nullable};
 
 		return template;
 	}
@@ -572,9 +570,7 @@ public abstract class BaseDB implements DB {
 			}
 		}
 
-		String[] template = {
-			words[1], words[2], "", words[3], nullable
-		};
+		String[] template = {words[1], words[2], "", words[3], nullable};
 
 		return template;
 	}

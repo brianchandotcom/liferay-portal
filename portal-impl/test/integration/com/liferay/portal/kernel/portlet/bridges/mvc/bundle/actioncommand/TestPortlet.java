@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + TestPortlet.PORTLET_NAME
-	},
+	property = {"javax.portlet.name=" + TestPortlet.PORTLET_NAME},
 	service = Portlet.class
 )
 public class TestPortlet extends MVCPortlet {

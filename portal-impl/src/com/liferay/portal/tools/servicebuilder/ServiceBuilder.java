@@ -3906,21 +3906,14 @@ public class ServiceBuilder {
 						new String[] {
 							".service.persistence.", "HBM\" table=\""
 						},
-						new String[] {
-							".model.", "\" table=\""
-						});
+						new String[] {".model.", "\" table=\""});
 
 					if (!line.contains(".model.impl.") &&
 						!line.contains("BlobModel")) {
 
 						line = StringUtil.replace(
-							line,
-							new String[] {
-								".model.", "\" table=\""
-							},
-							new String[] {
-								".model.impl.", "Impl\" table=\""
-							});
+							line, new String[] {".model.", "\" table=\""},
+							new String[] {".model.impl.", "Impl\" table=\""});
 					}
 				}
 

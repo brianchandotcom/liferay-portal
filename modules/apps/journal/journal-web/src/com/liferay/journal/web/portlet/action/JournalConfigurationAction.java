@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
-	},
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = ConfigurationAction.class
 )
 public class JournalConfigurationAction extends DefaultConfigurationAction {

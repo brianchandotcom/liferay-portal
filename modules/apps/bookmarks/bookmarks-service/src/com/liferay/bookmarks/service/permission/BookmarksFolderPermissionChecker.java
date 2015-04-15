@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
-	}
+	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"}
 )
 public class BookmarksFolderPermissionChecker
 	implements BaseModelPermissionChecker {

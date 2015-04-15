@@ -27,9 +27,7 @@ public class AggregateUtil {
 
 		content = StringUtil.replace(
 			content,
-			new String[] {
-				"[$RELATIVE_1$]", "[$RELATIVE_2$]", "[$RELATIVE_3$]"
-			},
+			new String[] {"[$RELATIVE_1$]", "[$RELATIVE_2$]", "[$RELATIVE_3$]"},
 			new String[] {
 				"url('" + baseURL, "url(\"" + baseURL, "url(" + baseURL
 			});

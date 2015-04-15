@@ -113,9 +113,7 @@ public class AssetPublisherExportImportTest
 			new String[] {String.valueOf(dlFileEntryClassNameId)});
 		preferenceMap.put(
 			"anyClassTypeDLFileEntryAssetRendererFactory",
-			new String[] {
-				String.valueOf(Boolean.TRUE)
-			});
+			new String[] {String.valueOf(Boolean.TRUE)});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
 			preferenceMap);
@@ -146,9 +144,7 @@ public class AssetPublisherExportImportTest
 			new String[] {String.valueOf(journalArticleClassNameId)});
 		preferenceMap.put(
 			"anyClassTypeJournalArticleAssetRendererFactory",
-			new String[] {
-				String.valueOf(Boolean.TRUE)
-			});
+			new String[] {String.valueOf(Boolean.TRUE)});
 
 		PortletPreferences portletPreferences = getImportedPortletPreferences(
 			preferenceMap);
@@ -417,9 +413,7 @@ public class AssetPublisherExportImportTest
 			new String[] {String.valueOf(journalArticleClassNameId)});
 		preferenceMap.put(
 			"anyClassTypeJournalArticleAssetRendererFactory",
-			new String[] {
-				String.valueOf(ddmStructure.getStructureId())
-			});
+			new String[] {String.valueOf(ddmStructure.getStructureId())});
 		preferenceMap.put(
 			"classTypeIds",
 			new String[] {String.valueOf(ddmStructure.getStructureId())});
@@ -498,9 +492,7 @@ public class AssetPublisherExportImportTest
 
 		preferenceMap.put(
 			"anyClassTypeDLFileEntryAssetRendererFactory",
-			new String[] {
-				String.valueOf(Boolean.FALSE)
-			});
+			new String[] {String.valueOf(Boolean.FALSE)});
 
 		preferenceMap.put(
 			"classTypeIdsDLFileEntryAssetRendererFactory",
@@ -549,9 +541,7 @@ public class AssetPublisherExportImportTest
 
 		preferenceMap.put(
 			"anyClassTypeJournalArticleAssetRendererFactory",
-			new String[] {
-				String.valueOf(Boolean.FALSE)
-			});
+			new String[] {String.valueOf(Boolean.FALSE)});
 
 		preferenceMap.put(
 			"classTypeIdsJournalArticleAssetRendererFactory",

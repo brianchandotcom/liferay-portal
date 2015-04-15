@@ -23,11 +23,7 @@ public class UpgradeCalendar extends UpgradePortletId {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			new String[] {
-				"8", "1_WAR_calendarportlet"
-			}
-		};
+		return new String[][] {new String[] {"8", "1_WAR_calendarportlet"}};
 	}
 
 }

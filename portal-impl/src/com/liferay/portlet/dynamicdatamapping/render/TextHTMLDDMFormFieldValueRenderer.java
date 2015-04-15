@@ -44,9 +44,7 @@ public class TextHTMLDDMFormFieldValueRenderer
 
 				return StringUtil.replace(
 					_HTML,
-					new String[] {
-						"[$DDM_FORM_FIELD_VALUE$]", "[$PREVIEW$]"
-					},
+					new String[] {"[$DDM_FORM_FIELD_VALUE$]", "[$PREVIEW$]"},
 					new String[] {
 						HtmlUtil.escapeJS(value.getString(locale)),
 						LanguageUtil.get(locale, "preview")

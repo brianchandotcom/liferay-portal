@@ -43,9 +43,7 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.iframe.web.configuration.IFrameConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {
-		"javax.portlet.name=" + IFramePortletKeys.IFRAME
-	},
+	property = {"javax.portlet.name=" + IFramePortletKeys.IFRAME},
 	service = ConfigurationAction.class
 )
 public class IFrameConfigurationAction extends DefaultConfigurationAction {

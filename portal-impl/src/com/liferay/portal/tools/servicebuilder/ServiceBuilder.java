@@ -1953,10 +1953,19 @@ public class ServiceBuilder {
 				}
 			}
 			else {
-				InputStream inputStream = classLoader.getResourceAsStream(
-					config);
+				Enumeration<URL> urls = classLoader.getResources(config);
 
-				if (inputStream == null) {
+				if (urls.hasMoreElements()) {
+					while (urls.hasMoreElements()) {
+						URL url = urls.nextElement();
+
+						try (InputStream inputStream = url.openStream()) {
+							_readResourceActionModels(
+								implDir, inputStream, resourceActionModels);
+						}
+					}
+				}
+				else {
 					File file = new File(config);
 
 					if (!file.exists()) {
@@ -1967,12 +1976,10 @@ public class ServiceBuilder {
 						continue;
 					}
 
-					inputStream = new FileInputStream(file);
-				}
-
-				try (InputStream curInputStream = inputStream) {
-					_readResourceActionModels(
-						implDir, inputStream, resourceActionModels);
+					try (InputStream inputStream = new FileInputStream(file)) {
+						_readResourceActionModels(
+							implDir, inputStream, resourceActionModels);
+					}
 				}
 			}
 		}

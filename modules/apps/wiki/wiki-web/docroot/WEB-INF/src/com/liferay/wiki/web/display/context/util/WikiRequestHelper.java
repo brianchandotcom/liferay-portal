@@ -27,7 +27,7 @@ import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.settings.WikiGroupServiceSettings;
-import com.liferay.wiki.web.provider.WikiWebComponentProvider;
+import com.liferay.wiki.web.internal.WikiWebComponentProvider;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 
 import javax.servlet.http.HttpServletRequest;

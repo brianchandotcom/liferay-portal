@@ -1082,13 +1082,8 @@ public class GroupFinderImpl
 
 		if (params.isEmpty()) {
 			return StringUtil.replace(
-				sql,
-				new String[] {
-					"[$JOIN$]", "[$WHERE$]"
-				},
-				new String[] {
-					StringPool.BLANK, StringPool.BLANK
-				});
+				sql, new String[] {"[$JOIN$]", "[$WHERE$]"},
+				new String[] {StringPool.BLANK, StringPool.BLANK});
 		}
 
 		String cacheKey = _getCacheKey(sql, params);

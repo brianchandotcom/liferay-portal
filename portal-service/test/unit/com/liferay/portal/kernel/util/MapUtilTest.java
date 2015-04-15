@@ -365,7 +365,8 @@ public class MapUtilTest {
 				"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT,
 				"rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT,
 				"subscribeByDefault",
-				PropsKeys.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT};
+				PropsKeys.MESSAGE_BOARDS_SUBSCRIBE_BY_DEFAULT
+			};
 
 			Map<String, String> map = MapUtil.fromArray(array);
 

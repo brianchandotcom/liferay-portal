@@ -117,8 +117,9 @@ public class PortalImplAlternateURLTest {
 		throws Exception {
 
 		testAlternateURL(
-			"liferay.com", new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN,
-			LocaleUtil.GERMANY}, LocaleUtil.SPAIN, LocaleUtil.US, "/en");
+			"liferay.com",
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			LocaleUtil.SPAIN, LocaleUtil.US, "/en");
 	}
 
 	@Test
@@ -126,9 +127,9 @@ public class PortalImplAlternateURLTest {
 		throws Exception {
 
 		testAlternateURL(
-			"liferay.com", new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN,
-			LocaleUtil.GERMANY}, LocaleUtil.SPAIN, LocaleUtil.SPAIN,
-			StringPool.BLANK);
+			"liferay.com",
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
 
 	protected String generateURL(

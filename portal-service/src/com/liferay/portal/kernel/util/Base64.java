@@ -84,9 +84,7 @@ public class Base64 {
 			new String[] {
 				StringPool.MINUS, StringPool.STAR, StringPool.UNDERLINE
 			},
-			new String[] {
-				StringPool.PLUS, StringPool.EQUAL, StringPool.SLASH
-			});
+			new String[] {StringPool.PLUS, StringPool.EQUAL, StringPool.SLASH});
 	}
 
 	public static String objectToString(Object o) {
@@ -128,9 +126,7 @@ public class Base64 {
 	public static String toURLSafe(String base64) {
 		return StringUtil.replace(
 			base64,
-			new String[] {
-				StringPool.PLUS, StringPool.EQUAL, StringPool.SLASH
-			},
+			new String[] {StringPool.PLUS, StringPool.EQUAL, StringPool.SLASH},
 			new String[] {
 				StringPool.MINUS, StringPool.STAR, StringPool.UNDERLINE
 			});

@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + TrashPortletKeys.TRASH
-	},
+	property = {"javax.portlet.name=" + TrashPortletKeys.TRASH},
 	service = SchedulerEntry.class
 )
 public class CheckEntryMessageListener

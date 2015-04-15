@@ -24,9 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portal.model.Group"
-	},
+	property = {"model.class.name=com.liferay.portal.model.Group"},
 	service = BrowsePortletProvider.class
 )
 public class SiteBrowserPortletProvider implements BrowsePortletProvider {

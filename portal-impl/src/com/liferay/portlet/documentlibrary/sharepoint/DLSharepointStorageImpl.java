@@ -454,7 +454,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		}
 
 		return new Tree[] {
-			removedDocsTree, removedDirsTree, failedDocsTree, failedDirsTree};
+			removedDocsTree, removedDirsTree, failedDocsTree, failedDirsTree
+		};
 	}
 
 	protected FileEntry getFileEntry(SharepointRequest sharepointRequest)

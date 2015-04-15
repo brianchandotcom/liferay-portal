@@ -37,9 +37,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name="+ LanguagePortletKeys.LANGUAGE
-	},
+	property = {"javax.portlet.name="+ LanguagePortletKeys.LANGUAGE},
 	service = TemplateHandler.class
 )
 public class LanguagePortletDisplayTemplateHandler

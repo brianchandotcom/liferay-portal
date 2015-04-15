@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + TrashPortletKeys.TRASH
-	},
+	property = {"javax.portlet.name=" + TrashPortletKeys.TRASH},
 	service = ControlPanelEntry.class
 )
 public class TrashControlPanelEntry extends BaseControlPanelEntry {

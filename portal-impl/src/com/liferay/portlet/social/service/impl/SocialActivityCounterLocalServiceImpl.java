@@ -1305,9 +1305,7 @@ public class SocialActivityCounterLocalServiceImpl
 		throws PortalException {
 
 		String lockKey = StringUtil.merge(
-			new Object[] {
-				groupId, classNameId, classPK, name, ownerType
-			},
+			new Object[] {groupId, classNameId, classPK, name, ownerType},
 			StringPool.POUND);
 
 		LockProtectedAction<SocialActivityCounter> lockProtectedAction =

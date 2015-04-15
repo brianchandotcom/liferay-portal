@@ -204,7 +204,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					new DayAndPosition(Calendar.TUESDAY, 0),
 					new DayAndPosition(Calendar.WEDNESDAY, 0),
 					new DayAndPosition(Calendar.THURSDAY, 0),
-					new DayAndPosition(Calendar.FRIDAY, 0)};
+					new DayAndPosition(Calendar.FRIDAY, 0)
+				};
 
 				recurrence.setByDay(dayPos);
 			}
@@ -253,7 +254,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					portletRequest, "monthlyDay1");
 
 				DayAndPosition[] dayPos = {
-					new DayAndPosition(monthlyDay, monthlyPos)};
+					new DayAndPosition(monthlyDay, monthlyPos)
+				};
 
 				recurrence.setByDay(dayPos);
 
@@ -289,7 +291,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					portletRequest, "yearlyMonth1");
 
 				DayAndPosition[] dayPos = {
-					new DayAndPosition(yearlyDay, yearlyPos)};
+					new DayAndPosition(yearlyDay, yearlyPos)
+				};
 
 				recurrence.setByDay(dayPos);
 

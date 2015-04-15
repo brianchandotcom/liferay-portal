@@ -340,9 +340,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		return false;
 	}
 
-	private static final Class<?>[] _INTERFACES = {
-		ServletContext.class
-	};
+	private static final Class<?>[] _INTERFACES = {ServletContext.class};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FreeMarkerManager.class);

@@ -25,9 +25,7 @@ import com.liferay.portal.util.PortletKeys;
  * @author Jorge Ferrer
  */
 @OSGiBeanProperties(
-	property = {
-		"resource.name=com.liferay.portlet.messageboards"
-	}
+	property = {"resource.name=com.liferay.portlet.messageboards"}
 )
 public class MBPermission extends BaseResourcePermissionChecker {
 

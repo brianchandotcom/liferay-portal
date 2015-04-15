@@ -221,12 +221,8 @@ public class SassToCssBuilder {
 	private String _normalizeFileName(String dirName, String fileName) {
 		return StringUtil.replace(
 			dirName + StringPool.SLASH + fileName,
-			new String[] {
-				StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH
-			},
-			new String[] {
-				StringPool.SLASH, StringPool.SLASH
-			}
+			new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
+			new String[] {StringPool.SLASH, StringPool.SLASH}
 		);
 	}
 

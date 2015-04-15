@@ -180,7 +180,6 @@ public class StrictXMLDescriptor implements XMLDescriptor {
 		return firstValue;
 	}
 
-	private static final String[] _ROOT_ORDERED_CHILDREN = {
-	};
+	private static final String[] _ROOT_ORDERED_CHILDREN = {};
 
 }

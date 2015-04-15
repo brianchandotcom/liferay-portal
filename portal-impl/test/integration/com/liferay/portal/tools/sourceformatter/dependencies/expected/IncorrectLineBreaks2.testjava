@@ -12,26 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet.bridges.mvc.bundle.actioncommand;
+package com.liferay.portal.tools.sourceformatter.dependencies;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-
-import javax.portlet.Portlet;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Manuel de la Peña
+ * @author Hugo Huijser
  */
-@Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + TestPortlet.PORTLET_NAME},
-	service = Portlet.class
-)
-public class TestPortlet extends MVCPortlet {
+public class IncorrectLineBreaks2 {
 
-	public static final String PORTLET_NAME =
-		"com_liferay_portal_kernel_portlet_bridges_mvc_bundle_actioncommand_" +
-			"TestPortlet";
+	public static final String NUMBERS = new String[] {
+		"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"
+	};
+
+	public String method1(String s) {
+		return StringUtil.trimLeading(
+			s,
+			new char[] {
+				CharPool.NEW_LINE, CharPool.NO_BREAK_SPACE, CharPool.TAB
+			});
+	}
 
 }

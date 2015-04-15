@@ -53,8 +53,7 @@ public class WebXML23Descriptor extends SimpleXMLDescriptor {
 		return _UNIQUE_ELEMENTS;
 	}
 
-	private static final ElementIdentifier[] _ELEMENTS_IDENTIFIED_BY_ATTR = {
-	};
+	private static final ElementIdentifier[] _ELEMENTS_IDENTIFIED_BY_ATTR = {};
 
 	private static final ElementIdentifier[] _ELEMENTS_IDENTIFIED_BY_CHILD = {
 		new ElementIdentifier("context-param", "param-name"),
@@ -69,9 +68,7 @@ public class WebXML23Descriptor extends SimpleXMLDescriptor {
 		new ElementIdentifier("ejb-local-ref", "ejb-ref-name")
 	};
 
-	private static final String[] _JOINABLE_ELEMENTS = {
-		"welcome-file-list"
-	};
+	private static final String[] _JOINABLE_ELEMENTS = {"welcome-file-list"};
 
 	private static final String[] _ROOT_ORDERED_CHILDREN = {
 		"icon", "display-name", "description", "distributable", "context-param",

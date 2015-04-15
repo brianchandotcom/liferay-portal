@@ -71,7 +71,8 @@ public class Base64InputStreamTest {
 	public void testDecodeUnit() throws Exception {
 		byte[] bytes = {
 			'a', 'b', 'c', 'd', 'e', 'f', 'h', '=', 'e', 'f', '=', '=', 'e',
-			'=', 'e', 'f', '=', 'a'};
+			'=', 'e', 'f', '=', 'a'
+		};
 
 		try (Base64InputStream base64InputStream = new Base64InputStream(
 				new ByteArrayInputStream(bytes))) {
@@ -151,7 +152,8 @@ public class Base64InputStreamTest {
 	@Test
 	public void testRead_3args() throws Exception {
 		byte[] bytes = {
-			'a', 'b', 'c', 'd', 'a', 'b', 'c', 'd', 'e', 'f', 'g', '='};
+			'a', 'b', 'c', 'd', 'a', 'b', 'c', 'd', 'e', 'f', 'g', '='
+		};
 
 		try (Base64InputStream base64InputStream = new Base64InputStream(
 				new ByteArrayInputStream(bytes))) {

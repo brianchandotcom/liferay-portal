@@ -269,9 +269,10 @@ public class PortalResiliencyPortletContainerWrapper
 	private static final String[] _ACTION_REQUEST_ATTRIBUTE_NAMES =
 		{WebKeys.SPI_AGENT_LIFECYCLE, WebKeys.SPI_AGENT_PORTLET};
 
-	private static final String[] _EVENT_REQUEST_ATTRIBUTE_NAMES =
-		{WebKeys.SPI_AGENT_EVENT, WebKeys.SPI_AGENT_LAYOUT,
-			WebKeys.SPI_AGENT_LIFECYCLE, WebKeys.SPI_AGENT_PORTLET};
+	private static final String[] _EVENT_REQUEST_ATTRIBUTE_NAMES = {
+		WebKeys.SPI_AGENT_EVENT, WebKeys.SPI_AGENT_LAYOUT,
+		WebKeys.SPI_AGENT_LIFECYCLE, WebKeys.SPI_AGENT_PORTLET
+	};
 
 	private static final String[] _RENDER_REQUEST_ATTRIBUTE_NAMES =
 		_ACTION_REQUEST_ATTRIBUTE_NAMES;

@@ -322,7 +322,8 @@ public class WriterOutputStreamTest {
 		writerOutputStream.write(
 			new byte[] {
 				(byte)'a', (byte)'b', (byte)'c', (byte)'d', (byte)'e',
-				(byte)'f', (byte)'g'},
+				(byte)'f', (byte)'g'
+			},
 			1, 5);
 
 		Assert.assertFalse(flushed.get());
@@ -345,7 +346,8 @@ public class WriterOutputStreamTest {
 		writerOutputStream.write(
 			new byte[] {
 				(byte)'a', (byte)'b', (byte)'c', (byte)'d', (byte)'e',
-				(byte)'f', (byte)'g'},
+				(byte)'f', (byte)'g'
+			},
 			1, 5);
 
 		Assert.assertFalse(flushed.get());

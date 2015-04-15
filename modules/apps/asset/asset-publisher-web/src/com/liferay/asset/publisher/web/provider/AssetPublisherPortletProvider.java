@@ -32,12 +32,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=" + PortletProvider.CLASS_NAME_ANY
-	},
-	service = {
-		AddPortletProvider.class, ViewPortletProvider.class
-	}
+	property = {"model.class.name=" + PortletProvider.CLASS_NAME_ANY},
+	service = {AddPortletProvider.class, ViewPortletProvider.class}
 )
 public class AssetPublisherPortletProvider
 	implements AddPortletProvider, ViewPortletProvider {

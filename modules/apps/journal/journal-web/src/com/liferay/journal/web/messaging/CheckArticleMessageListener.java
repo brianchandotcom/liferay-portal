@@ -34,9 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tina Tian
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
-	},
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = SchedulerEntry.class
 )
 public class CheckArticleMessageListener

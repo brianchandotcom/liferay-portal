@@ -377,9 +377,7 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 
 		return StringUtil.replace(
 			_INPUT_FIELD_TEMPLATE,
-			new String[] {
-				"$childElementsHTML", "$name", "$value"
-			},
+			new String[] {"$childElementsHTML", "$name", "$value"},
 			new String[] {
 				ddmFormFieldRenderingContext.getChildElementsHTML(),
 				ddmFormFieldRenderingContext.getName(),

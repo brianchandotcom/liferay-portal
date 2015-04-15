@@ -139,9 +139,7 @@ public class ViewActionCommand extends BaseActionCommand {
 				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$PAGE_URL$]",
 				"[$PORTAL_URL$]"
 			},
-			new String[] {
-				fromAddress, fromName, layoutFullURL, portalURL
-			});
+			new String[] {fromAddress, fromName, layoutFullURL, portalURL});
 
 		body = StringUtil.replace(
 			body,
@@ -149,9 +147,7 @@ public class ViewActionCommand extends BaseActionCommand {
 				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$PAGE_URL$]",
 				"[$PORTAL_URL$]"
 			},
-			new String[] {
-				fromAddress, fromName, layoutFullURL, portalURL
-			});
+			new String[] {fromAddress, fromName, layoutFullURL, portalURL});
 
 		for (String emailAddress : validEmailAddresses) {
 			InternetAddress to = new InternetAddress(emailAddress);

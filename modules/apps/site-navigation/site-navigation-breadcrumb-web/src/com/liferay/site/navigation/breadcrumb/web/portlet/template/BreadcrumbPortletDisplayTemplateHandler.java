@@ -39,9 +39,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + BreadcrumbPortletKeys.BREADCRUMB
-	},
+	property = {"javax.portlet.name=" + BreadcrumbPortletKeys.BREADCRUMB},
 	service = TemplateHandler.class
 )
 public class BreadcrumbPortletDisplayTemplateHandler

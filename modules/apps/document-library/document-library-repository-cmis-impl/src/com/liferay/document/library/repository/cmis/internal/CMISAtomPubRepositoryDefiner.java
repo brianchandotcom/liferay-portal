@@ -69,7 +69,8 @@ public class CMISAtomPubRepositoryDefiner extends BaseCMISRepositoryDefiner {
 
 	private static final String[][] _SUPPORTED_PARAMETERS = {
 		{CMISRepositoryConstants.CMIS_ATOMPUB_URL_PARAMETER,
-			CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER}
+			CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER
+		}
 	};
 
 	private RepositoryFactory _repositoryFactory;

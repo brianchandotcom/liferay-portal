@@ -25,9 +25,7 @@ import com.liferay.portal.util.PortletKeys;
  * @author Jorge Ferrer
  */
 @OSGiBeanProperties(
-	property = {
-		"resource.name=com.liferay.portlet.documentlibrary"
-	}
+	property = {"resource.name=com.liferay.portlet.documentlibrary"}
 )
 public class DLPermission extends BaseResourcePermissionChecker {
 

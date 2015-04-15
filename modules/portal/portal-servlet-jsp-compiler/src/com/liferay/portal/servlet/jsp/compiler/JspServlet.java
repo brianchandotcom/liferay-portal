@@ -272,9 +272,7 @@ public class JspServlet extends HttpServlet {
 		return _jspServletContext;
 	}
 
-	private static final Class<?>[] _INTERFACES = {
-		ServletContext.class
-	};
+	private static final Class<?>[] _INTERFACES = {ServletContext.class};
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;

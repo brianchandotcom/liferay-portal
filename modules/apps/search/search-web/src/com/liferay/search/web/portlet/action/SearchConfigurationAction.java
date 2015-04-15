@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + SearchPortletKeys.SEARCH
-	},
+	property = {"javax.portlet.name=" + SearchPortletKeys.SEARCH},
 	service = ConfigurationAction.class
 )
 public class SearchConfigurationAction extends DefaultConfigurationAction {

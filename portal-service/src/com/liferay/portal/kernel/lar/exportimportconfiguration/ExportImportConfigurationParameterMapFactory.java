@@ -45,7 +45,8 @@ public class ExportImportConfigurationParameterMapFactory {
 			parameterMap.put(
 				PortletDataHandlerKeys.DATA_STRATEGY,
 				new String[] {
-					PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE});
+					PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE
+				});
 		}
 
 		/*if (!parameterMap.containsKey(
@@ -204,7 +205,8 @@ public class ExportImportConfigurationParameterMapFactory {
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
 			new String[] {
-				String.valueOf(layoutSetPrototypeLinkEnabledParameter)});
+				String.valueOf(layoutSetPrototypeLinkEnabledParameter)
+			});
 
 		// Layout set settings
 

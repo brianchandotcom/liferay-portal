@@ -641,10 +641,7 @@ public class JournalRSSUtil {
 		SyndEntry syndEntry) {
 
 		url = StringUtil.replace(
-			url,
-			new String[] {
-				"@group_id@", "@image_path@", "@main_path@"
-			},
+			url, new String[] {"@group_id@", "@image_path@", "@main_path@"},
 			new String[] {
 				String.valueOf(feed.getGroupId()), themeDisplay.getPathImage(),
 				themeDisplay.getPathMain()

@@ -21,19 +21,13 @@ public class PathUtil {
 
 	public static String toUnixPath(String path) {
 		return StringUtil.replace(
-			path,
-			new String[] {
-				StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH
-			},
+			path, new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
 			new String[] {StringPool.SLASH, StringPool.SLASH});
 	}
 
 	public static String toWindowsPath(String path) {
 		return StringUtil.replace(
-			path,
-			new String[] {
-				StringPool.SLASH, StringPool.DOUBLE_BACK_SLASH
-			},
+			path, new String[] {StringPool.SLASH, StringPool.DOUBLE_BACK_SLASH},
 			new String[] {StringPool.BACK_SLASH, StringPool.BACK_SLASH});
 	}
 

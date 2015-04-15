@@ -24,9 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portlet.trash.model.TrashEntry"
-	},
+	property = {"model.class.name=com.liferay.portlet.trash.model.TrashEntry"},
 	service = ViewPortletProvider.class
 )
 public class TrashViewPortletProvider implements ViewPortletProvider {

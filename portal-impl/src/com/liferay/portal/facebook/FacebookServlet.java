@@ -91,13 +91,8 @@ public class FacebookServlet extends HttpServlet {
 
 	protected String fixFbml(String fbml) {
 		fbml = StringUtil.replace(
-			fbml,
-			new String[] {
-				"<nobr>", "</nobr>"
-			},
-			new String[] {
-				StringPool.BLANK, StringPool.BLANK
-			});
+			fbml, new String[] {"<nobr>", "</nobr>"},
+			new String[] {StringPool.BLANK, StringPool.BLANK});
 
 		return fbml;
 	}

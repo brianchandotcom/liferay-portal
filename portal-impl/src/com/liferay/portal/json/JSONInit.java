@@ -78,9 +78,7 @@ public class JSONInit {
 			PortletDisplayModel.class, PortletURL.class
 		};
 
-		JoddJson.excludedTypeNames = new String[] {
-			"javax.*"
-		};
+		JoddJson.excludedTypeNames = new String[] {"javax.*"};
 
 		TypeJsonSerializerMap typeSerializerMap = JoddJson.defaultSerializers;
 

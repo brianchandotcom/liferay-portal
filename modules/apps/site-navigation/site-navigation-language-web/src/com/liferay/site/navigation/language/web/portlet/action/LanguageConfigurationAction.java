@@ -24,9 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + LanguagePortletKeys.LANGUAGE
-	},
+	property = {"javax.portlet.name=" + LanguagePortletKeys.LANGUAGE},
 	service = ConfigurationAction.class
 )
 public class LanguageConfigurationAction extends DefaultConfigurationAction {

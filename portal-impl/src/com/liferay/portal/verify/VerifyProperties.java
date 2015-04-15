@@ -541,9 +541,7 @@ public class VerifyProperties extends VerifyProcess {
 
 		// IFrame
 
-		new String[] {
-			"iframe.auth", "auth", "com.liferay.iframe.web"
-		},
+		new String[] {"iframe.auth", "auth", "com.liferay.iframe.web"},
 		new String[] {
 			"iframe.auth-type", "auth.type", "com.liferay.iframe.web"
 		},
@@ -710,9 +708,7 @@ public class VerifyProperties extends VerifyProcess {
 			"ldap.import.user.password.enabled", "import.user.password.enabled",
 			"com.liferay.portal.ldap"
 		},
-		new String[] {
-			"ldap.page.size", "page.size", "com.liferay.portal.ldap"
-		},
+		new String[] {"ldap.page.size", "page.size", "com.liferay.portal.ldap"},
 		new String[] {
 			"ldap.password.policy.enabled", "password.policy.enabled",
 			"com.liferay.portal.ldap"
@@ -720,9 +716,7 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"ldap.range.size", "range.size", "com.liferay.portal.ldap"
 		},
-		new String[] {
-			"ldap.referral", "referral", "com.liferay.portal.ldap"
-		},
+		new String[] {"ldap.referral", "referral", "com.liferay.portal.ldap"},
 		new String[] {
 			"ldap.user.ignore.attributes", "user.ignore.attributes",
 			"com.liferay.portal.ldap"
@@ -1109,18 +1103,10 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"amazon.license.0", "amazon.access.key.id"
 		},
-		new String[] {
-			"amazon.license.1", "amazon.access.key.id"
-		},
-		new String[] {
-			"amazon.license.2", "amazon.access.key.id"
-		},
-		new String[] {
-			"amazon.license.3", "amazon.access.key.id"
-		},
-		new String[] {
-			"cdn.host", "cdn.host.http"
-		},
+		new String[] {"amazon.license.1", "amazon.access.key.id"},
+		new String[] {"amazon.license.2", "amazon.access.key.id"},
+		new String[] {"amazon.license.3", "amazon.access.key.id"},
+		new String[] {"cdn.host", "cdn.host.http"},
 		new String[] {
 			"cluster.executor.debug.enabled", "cluster.link.debug.enabled"
 		},
@@ -1176,12 +1162,8 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"dl.hook.file.system.root.dir", "dl.store.file.system.root.dir"
 		},
-		new String[] {
-			"dl.hook.impl", "dl.store.impl"
-		},
-		new String[] {
-			"dl.hook.jcr.fetch.delay", "dl.store.jcr.fetch.delay"
-		},
+		new String[] {"dl.hook.impl", "dl.store.impl"},
+		new String[] {"dl.hook.jcr.fetch.delay", "dl.store.jcr.fetch.delay"},
 		new String[] {
 			"dl.hook.jcr.fetch.max.failures", "dl.store.jcr.fetch.max.failures"
 		},
@@ -1189,15 +1171,9 @@ public class VerifyProperties extends VerifyProcess {
 			"dl.hook.jcr.move.version.labels",
 			"dl.store.jcr.move.version.labels"
 		},
-		new String[] {
-			"dl.hook.s3.access.key", "dl.store.s3.access.key"
-		},
-		new String[] {
-			"dl.hook.s3.bucket.name", "dl.store.s3.bucket.name"
-		},
-		new String[] {
-			"dl.hook.s3.secret.key", "dl.store.s3.secret.key"
-		},
+		new String[] {"dl.hook.s3.access.key", "dl.store.s3.access.key"},
+		new String[] {"dl.hook.s3.bucket.name", "dl.store.s3.bucket.name"},
+		new String[] {"dl.hook.s3.secret.key", "dl.store.s3.secret.key"},
 		new String[] {
 			"editor.wysiwyg.portal-web.docroot.html.portlet.calendar." +
 				"edit_configuration.jsp",
@@ -1236,9 +1212,7 @@ public class VerifyProperties extends VerifyProcess {
 			"field.editable.com.liferay.portal.model.User.screenName",
 			"field.editable.user.types"
 		},
-		new String[] {
-			"icon.menu.max.display.items", "menu.max.display.items"
-		},
+		new String[] {"icon.menu.max.display.items", "menu.max.display.items"},
 		new String[] {
 			"journal.error.template.freemarker", "journal.error.template[ftl]"
 		},
@@ -1281,9 +1255,7 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"referer.url.domains.allowed", "redirect.url.domains.allowed"
 		},
-		new String[] {
-			"referer.url.ips.allowed", "redirect.url.ips.allowed"
-		},
+		new String[] {"referer.url.ips.allowed", "redirect.url.ips.allowed"},
 		new String[] {
 			"referer.url.security.mode", "redirect.url.security.mode"
 		},

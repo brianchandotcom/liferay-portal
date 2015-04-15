@@ -57,18 +57,14 @@ public class ValidatorTest extends PowerMockito {
 
 	@Test
 	public void testIsFileExtension() throws Exception {
-		String[] validFileExtensions = {
-			"abc", ".abc", "."
-		};
+		String[] validFileExtensions = {"abc", ".abc", "."};
 
 		testValidFileExtensions(validFileExtensions, true);
 	}
 
 	@Test
 	public void testIsFileName() throws Exception {
-		String[] validFileNames = {
-			".asdf", "abc", "abc.def", "abc.def.xyz"
-		};
+		String[] validFileNames = {".asdf", "abc", "abc.def", "abc.def.xyz"};
 
 		testValidFileNames(validFileNames, true);
 	}

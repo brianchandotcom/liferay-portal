@@ -24,9 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(
-	property = {
-		"jmx.objectname=" + JMXWhiteboardByDynamicMBean.OBJECT_NAME
-	},
+	property = {"jmx.objectname=" + JMXWhiteboardByDynamicMBean.OBJECT_NAME},
 	service = DynamicMBean.class
 )
 public class JMXWhiteboardByDynamicMBean extends StandardMBean

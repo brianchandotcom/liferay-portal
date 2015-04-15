@@ -112,7 +112,8 @@ public class RSSFeedEntry {
 					syndContent.getValue(),
 					new String[] {"src=\"/", "href=\"/"},
 					new String[] {
-						"src=\"" + baseURL + "/", "href=\"" + baseURL + "/"});
+						"src=\"" + baseURL + "/", "href=\"" + baseURL + "/"
+					});
 
 				try {
 					sanitizedValue = SanitizerUtil.sanitize(

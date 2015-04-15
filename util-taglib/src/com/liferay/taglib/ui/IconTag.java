@@ -432,13 +432,8 @@ public class IconTag extends IncludeTag {
 		}
 
 		return StringUtil.replace(
-			_image,
-			new String[] {
-				StringPool.UNDERLINE, _AUI_PATH
-			},
-			new String[] {
-				StringPool.DASH, StringPool.BLANK
-			});
+			_image, new String[] {StringPool.UNDERLINE, _AUI_PATH},
+			new String[] {StringPool.DASH, StringPool.BLANK});
 	}
 
 	protected String getProcessedUrl() {

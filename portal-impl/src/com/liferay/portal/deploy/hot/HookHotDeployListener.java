@@ -2507,8 +2507,7 @@ public class HookHotDeployListener
 		"session.max.allowed", "users.image.max.height", "users.image.max.width"
 	};
 
-	private static final String[] _PROPS_VALUES_LONG = {
-	};
+	private static final String[] _PROPS_VALUES_LONG = {};
 
 	private static final String[] _PROPS_VALUES_MERGE_STRING_ARRAY = {
 		"asset.publisher.query.form.configuration", "auth.token.ignore.actions",

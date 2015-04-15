@@ -73,9 +73,7 @@ public class PluginsSummaryBuilder {
 		directoryScanner.setExcludes(
 			new String[] {"**\\tmp\\**", "**\\tools\\**"});
 		directoryScanner.setIncludes(
-			new String[] {
-				"**\\liferay-plugin-package.properties"
-			});
+			new String[] {"**\\liferay-plugin-package.properties"});
 
 		directoryScanner.scan();
 

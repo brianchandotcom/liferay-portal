@@ -68,9 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"search.engine.id=SYSTEM_ENGINE", "vendor=Elasticsearch"
-	},
+	property = {"search.engine.id=SYSTEM_ENGINE", "vendor=Elasticsearch"},
 	service = {ElasticsearchSearchEngine.class, SearchEngine.class}
 )
 public class ElasticsearchSearchEngine extends BaseSearchEngine {

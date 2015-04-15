@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(
 	immediate = true, property = {"templatePath=/META-INF/resources/text.soy"},
-	service = {
-		TextDDMFormFieldRenderer.class, DDMFormFieldRenderer.class
-	}
+	service = {TextDDMFormFieldRenderer.class, DDMFormFieldRenderer.class}
 )
 public class TextDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 

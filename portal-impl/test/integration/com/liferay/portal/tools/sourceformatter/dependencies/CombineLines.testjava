@@ -14,8 +14,11 @@
 
 package com.liferay.portal.tools.sourceformatter.dependencies;
 
+import com.liferay.portal.kernel.provider.AddPortletProvider;
+import com.liferay.portal.kernel.provider.ViewPortletProvider;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,16 @@ import java.util.Set;
 /**
  * @author Hugo Huijser
  */
+@Component(
+	immediate = true,
+	property = {
+		"editor.config.key=contentEditor",
+		"service.ranking:Integer=0"
+	},
+	service = {
+		AddPortletProvider.class, ViewPortletProvider.class
+	}
+)
 public class CombineLines
 	extends SuperClass {
 
@@ -35,6 +48,14 @@ public class CombineLines
 
 		return
 			test;
+	}
+
+	public String[][] getStringArray() {
+		return new String[][] {
+			new String[] {
+				"hello", "world"
+			}
+		};
 	}
 
 	public void method1(
@@ -120,6 +141,17 @@ public class CombineLines
 				});
 
 		return numbers;
+	}
+
+	public String method6(String s) {
+		return StringUtil.replace(
+			s,
+			new String[] {
+				StringPool.PERIOD, StringPool.SLASH
+			},
+			new String[] {
+				StringPool.COMMA, StringPool.BACK_SLASH
+			});
 	}
 
 }

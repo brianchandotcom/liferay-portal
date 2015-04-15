@@ -37,8 +37,7 @@ import java.util.Map;
 @Settings.Config(settingsIds = MBConstants.SERVICE_NAME)
 public class MBGroupServiceSettings {
 
-	public static final String[] ALL_KEYS = {
-	};
+	public static final String[] ALL_KEYS = {};
 
 	public static MBGroupServiceSettings getInstance(long groupId)
 		throws PortalException {

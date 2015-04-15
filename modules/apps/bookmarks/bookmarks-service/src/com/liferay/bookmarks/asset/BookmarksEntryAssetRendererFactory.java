@@ -46,9 +46,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"search.asset.type=com.liferay.bookmarks.model.BookmarksEntry"
-	},
+	property = {"search.asset.type=com.liferay.bookmarks.model.BookmarksEntry"},
 	service = AssetRendererFactory.class
 )
 public class BookmarksEntryAssetRendererFactory

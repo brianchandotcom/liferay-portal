@@ -17,7 +17,7 @@ package com.liferay.sass.compiler.ruby;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import jodd.io.ZipUtil;
@@ -40,7 +40,20 @@ public class JRubyScriptingContainer {
 	public JRubyScriptingContainer(
 		String jrubyCompileMode, int jrubyCompilerThreshold) {
 
-		initRubyGems();
+		_loadPaths = new ArrayList<>();
+
+		_loadPaths.add("META-INF/jruby.home/lib/ruby/site_ruby/1.8");
+		_loadPaths.add("META-INF/jruby.home/lib/ruby/site_ruby/shared");
+		_loadPaths.add("META-INF/jruby.home/lib/ruby/1.8");
+		_loadPaths.add("gems/chunky_png-1.3.4/lib");
+		_loadPaths.add("gems/compass-1.0.1/lib");
+		_loadPaths.add("gems/compass-core-1.0.3/lib");
+		_loadPaths.add("gems/compass-import-once-1.0.5/lib");
+		_loadPaths.add("gems/ffi-1.9.6-java/lib");
+		_loadPaths.add("gems/multi_json-1.10.1/lib");
+		_loadPaths.add("gems/rb-fsevent-0.9.4/lib");
+		_loadPaths.add("gems/rb-inotify-0.9.5/lib");
+		_loadPaths.add("gems/sass-3.4.13/lib");
 
 		_scriptingContainer = new ScriptingContainer(
 			LocalContextScope.THREADSAFE);
@@ -66,59 +79,16 @@ public class JRubyScriptingContainer {
 		return _scriptingContainer;
 	}
 
-	private void initRubyGems() {
-		File rubyGemsJarFile = new File("lib/com.liferay.ruby.gems.jar");
-
-		if (!rubyGemsJarFile.exists()) {
-			System.err.println(rubyGemsJarFile + " does not exist");
-
-			return;
-		}
-
-		File rubyDir = new File(_RUBY_LIB_PATH);
-
-		if (rubyDir.lastModified() < rubyGemsJarFile.lastModified()) {
-			if (rubyDir.exists()) {
-				rubyDir.delete();
-			}
-
-			rubyDir.mkdirs();
-
-			try {
-				ZipUtil.unzip(rubyGemsJarFile, rubyDir);
-
-				rubyDir.setLastModified(rubyGemsJarFile.lastModified());
-			}
-			catch (IOException ioe) {
-				System.err.println(
-					"Unable to unzip " + rubyGemsJarFile + " to " + rubyDir);
-
-				ioe.printStackTrace();
-			}
-		}
-	}
-
 	private static final int _COMPILE_DEFAULT_THRESHOLD = 5;
 
 	private static final String _COMPILE_MODE_FORCE = "force";
 
 	private static final String _COMPILE_MODE_JIT = "jit";
 
-	private static final String _LANGUAGE = "ruby";
-
 	private static final String _RUBY_LIB_PATH =
 		System.getProperty("java.io.tmpdir") + "/liferay/ruby";
 
-	private final List<String> _loadPaths = Arrays.asList(
-		_RUBY_LIB_PATH + "/gems/chunky_png-1.3.4/lib",
-		_RUBY_LIB_PATH + "/gems/compass-1.0.1/lib",
-		_RUBY_LIB_PATH + "/gems/compass-core-1.0.3/lib",
-		_RUBY_LIB_PATH + "/gems/compass-import-once-1.0.5/lib",
-		_RUBY_LIB_PATH + "/gems/ffi-1.9.6-java/lib",
-		_RUBY_LIB_PATH + "/gems/multi_json-1.10.1/lib",
-		_RUBY_LIB_PATH + "/gems/rb-fsevent-0.9.4/lib",
-		_RUBY_LIB_PATH + "/gems/rb-inotify-0.9.5/lib",
-		_RUBY_LIB_PATH + "/gems/sass-3.4.13/lib");
+	private List<String> _loadPaths;
 	private final ScriptingContainer _scriptingContainer;
 
 }

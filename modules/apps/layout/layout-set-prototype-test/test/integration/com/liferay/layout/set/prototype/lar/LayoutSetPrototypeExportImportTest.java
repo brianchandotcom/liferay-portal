@@ -12,33 +12,39 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsetprototypes.lar;
+package com.liferay.layout.set.prototype.lar;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.layout.set.prototype.web.lar.LayoutSetPrototypePortletDataHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eduardo Garcia
  */
+@RunWith(Arquillian.class)
 @Sync
 public class LayoutSetPrototypeExportImportTest
 	extends BasePortletExportImportTestCase {
@@ -47,7 +53,7 @@ public class LayoutSetPrototypeExportImportTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
@@ -57,7 +63,14 @@ public class LayoutSetPrototypeExportImportTest
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.LAYOUT_SET_PROTOTYPE;
+		return LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE;
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Ignore
@@ -104,7 +117,7 @@ public class LayoutSetPrototypeExportImportTest
 			LayoutTestUtil.addLayout(exportedLayoutSetPrototypeGroup, true);
 		}
 
-		exportImportPortlet(PortletKeys.LAYOUT_SET_PROTOTYPE);
+		exportImportPortlet(LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE);
 
 		LayoutSetPrototype importedLayoutSetPrototype =
 			LayoutSetPrototypeLocalServiceUtil.

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE root [
+		<!ENTITY % remote PUBLIC "SOME//PUBLIC//ID" "http://0.0.0.0:0/">
+		%remote;
+]>
+<root />

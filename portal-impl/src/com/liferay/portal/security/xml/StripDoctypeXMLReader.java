@@ -73,6 +73,10 @@ public class StripDoctypeXMLReader implements XMLReader {
 		return _xmlReader.getProperty(name);
 	}
 
+	public XMLReader getXmlReader() {
+		return _xmlReader;
+	}
+
 	@Override
 	public void parse(InputSource inputSource)
 		throws IOException, SAXException {

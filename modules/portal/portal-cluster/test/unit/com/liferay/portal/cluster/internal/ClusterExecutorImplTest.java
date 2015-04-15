@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
@@ -381,26 +382,6 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
 
-		clusterExecutorImpl.setClusterLink(
-			new ClusterLink() {
-
-				@Override
-				public boolean isEnabled() {
-					return enabled;
-				}
-
-				@Override
-				public void sendMulticastMessage(
-					Message message, Priority priority) {
-				}
-
-				@Override
-				public void sendUnicastMessage(
-					Address address, Message message, Priority priority) {
-				}
-
-			});
-
 		clusterExecutorImpl.setProps(
 			new Props() {
 
@@ -411,7 +392,11 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 				@Override
 				public String get(String key) {
-					return null;
+					if (PropsKeys.CLUSTER_LINK_ENABLED.equals(key)) {
+						return String.valueOf(enabled);
+					}
+
+					return StringPool.BLANK;
 				}
 
 				@Override

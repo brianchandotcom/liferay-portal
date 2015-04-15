@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/js/editor/init.jsp" %>
 
 <%
 String portletId = portletDisplay.getRootPortletId();
@@ -48,7 +48,6 @@ if (Validator.isNotNull(onInitMethod)) {
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:showSource"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
-String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
 %>
 
 <liferay-util:buffer var="editor">
@@ -59,7 +58,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 	<liferay-util:html-top outputKey="js_editor_tinymce">
 
 		<%
-		long javaScriptLastModified = ServletContextUtil.getLastModified(application, "/html/js/", true);
+		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified();
 		%>
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/tiny_mce/tinymce.min.js", javaScriptLastModified)) %>" type="text/javascript"></script>
@@ -137,7 +136,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 					data = <%= HtmlUtil.escape(namespace + initMethod) %>();
 				}
 				else {
-					data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+					data = '<%= contents != null ? contents: StringPool.BLANK %>';
 				}
 			}
 			else {
@@ -148,42 +147,6 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 		},
 
 		initEditor: function() {
-			var toolbars = {
-				email: [
-					'fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify',
-					'cut copy paste bullist numlist | blockquote | undo redo | link unlink image <c:if test="<%= showSource %>">code</c:if> | hr removeformat | preview print fullscreen'
-				],
-				liferay: [
-					'styleselect fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify',
-					'cut copy paste searchreplace bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media <c:if test="<%= showSource %>">code</c:if>',
-					'table | hr removeformat | subscript superscript | charmap emoticons | preview print fullscreen'
-				],
-				phone: [
-					'bold italic underline | bullist numlist',
-					'link unlink image'
-				],
-				simple: [
-					'bold italic underline strikethrough | bullist numlist | table | link unlink image <c:if test="<%= showSource %>">code</c:if>'
-				],
-				tablet: [
-					'styleselect fontselect fontsizeselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify',
-					'bullist numlist | link unlink image <c:if test="<%= showSource %>">code</c:if>'
-				]
-			};
-
-			var currentToolbarSet = '<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>';
-
-			var Util = Liferay.Util;
-
-			if (Util.isPhone()) {
-				currentToolbarSet = 'phone';
-			}
-			else if (Util.isTablet()) {
-				currentToolbarSet = 'tablet';
-			}
-
-			var currentToolbar = toolbars[currentToolbarSet] || toolbars['liferay'];
-
 			var tinyMCELanguage = {'ar_SA': 'ar', 'bg_BG': 'bg_BG', 'ca_ES': 'ca', 'cs_CZ': 'cs', 'de_DE': 'de', 'el_GR': 'el', 'en_AU': 'en_GB', 'en_GB': 'en_GB',
 				'en_US': 'en_GB', 'es_ES': 'es', 'et_EE': 'et', 'eu_ES': 'eu', 'fa_IR': 'fa', 'fi_FI': 'fi', 'fr_FR': 'fr_FR', 'gl_ES': 'gl', 'hr_HR': 'hr', 'hu_HU': 'hu_HU',
 				'in_ID': 'id', 'it_IT': 'it', 'iw_IL': 'he_IL', 'ja_JP': 'ja', 'ko_KR': 'ko_KR', 'lt_LT': 'lt', 'nb_NO': 'nb_NO', 'nl_NL': 'nl', 'pl_PL': 'pl', 'pt_BR': 'pt_BR',
@@ -201,12 +164,8 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 					invalid_elements: 'script',
 					language: tinyMCELanguage['<%= HtmlUtil.escape(contentsLanguageId) %>'] || tinyMCELanguage['en_US'],
 					menubar: false,
-					mode: 'exact',
-					plugins: [
-						'advlist autolink autosave link image lists charmap print preview hr anchor',
-						'searchreplace wordcount fullscreen media <c:if test="<%= showSource %>">code</c:if>',
-						'table contextmenu emoticons textcolor paste fullpage textcolor colorpicker textpattern'
-					],
+					mode: 'textareas',
+					plugins: 'contextmenu preview print <c:if test="<%= showSource %>">code</c:if>',
 					relative_urls: false,
 					remove_script_host: false,
 					selector: '#<%= name %>',
@@ -228,20 +187,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 					}
 					%>
 
-					style_formats: [
-						{title: 'Normal', inline: 'p'},
-						{title: 'Heading 1', block: 'h1'},
-						{title: 'Heading 2', block: 'h2'},
-						{title: 'Heading 3', block: 'h3'},
-						{title: 'Heading 4', block: 'h4'},
-						{title: 'Preformatted Text', block: 'pre'},
-						{title: 'Cited Work', inline: 'cite'},
-						{title: 'Computer Code', inline: 'code'},
-						{title: 'Info Message', block: 'div', classes: 'portlet-msg-info'},
-						{title: 'Alert Message', block: 'div', classes: 'portlet-msg-alert'},
-						{title: 'Error Message', block: 'div', classes: 'portlet-msg-error'}
-					],
-					toolbar: currentToolbar,
+					toolbar: 'bold italic underline | alignleft aligncenter alignright alignjustify | <c:if test="<%= showSource %>"> code</c:if> preview print',
 					toolbar_items_size: 'small'
 				}
 			);

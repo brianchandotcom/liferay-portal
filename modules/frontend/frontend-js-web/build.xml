@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+
+	<property name="alloy.version" value="3.0.1" />
+	<property name="alloyeditor.version" value="0.2.5" />
+	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
+	<property name="html.js.dir" value="src/META-INF/resources/html/js" />
+	<property name="scayt.file" value="scayt_4.4.5.zip" />
+	<property name="third.party.dir" value="../../../portal-web/third-party" />
+	<property name="tinymce.file" value="tinymce_4.1.7.zip" />
+	<property name="wsc.file" value="wsc_4.4.5.zip" />
+
+	<target name="build-alloy">
+		<path id="alloy.zip.path">
+			<fileset dir="${third.party.dir}">
+				<include name="alloy-${alloy.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy.zip.path" refid="alloy.zip.path" />
+
+		<basename file="${alloy.zip.path}" property="alloy.file" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="${third.party.dir}/${alloy.file}"
+					targetfile="tmp/aui"
+				/>
+			</not>
+			<then>
+
+				<!-- Prepare -->
+
+				<delete dir="tmp/aui" />
+
+				<echo>${alloy.file}</echo>
+
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<unzip dest="${tstamp.value}" src="${third.party.dir}/${alloy.file}" />
+
+				<!-- CSS -->
+
+				<property name="alloy.build.dir" value="${tstamp.value}/build" />
+				<property name="alloy.temp.dir" value="${tstamp.value}/temp" />
+
+				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
+					<filelist
+						dir="${alloy.build.dir}/aui-skin-deprecated/css"
+						files="aui-skin-deprecated.css"
+					/>
+				</concat>
+
+				<for param="dir">
+					<path>
+						<dirset
+							dir="${alloy.build.dir}"
+							includes="aui-*"
+						/>
+					</path>
+					<sequential>
+						<basename property="dir.name" file="@{dir}" />
+
+						<if>
+							<and>
+								<available file="${alloy.build.dir}/${dir.name}/assets/skins/sam/${dir.name}.css" />
+								<matches pattern="-deprecated" string="${dir.name}" />
+							</and>
+							<then>
+								<concat append="true" destfile="${alloy.temp.dir}/aui_deprecated.css">
+									<filelist
+										dir="${alloy.build.dir}/${dir.name}/assets/skins/sam"
+										files="${dir.name}.css"
+									/>
+								</concat>
+							</then>
+						</if>
+
+						<var name="dir.name" unset="true" />
+					</sequential>
+				</for>
+
+				<replaceregexp match="url\(([^)]+)\)" replace="url(@theme_image_path@/aui/\1)" flags="g" byline="false">
+					<fileset
+						dir="${alloy.temp.dir}"
+						includes="aui_deprecated.css"
+					/>
+				</replaceregexp>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../images/" value="" />
+				</replace>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-base/images/" value="" />
+				</replace>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-classic/images/" value="" />
+				</replace>
+
+				<replace file="${alloy.temp.dir}/aui_deprecated.css">
+					<replacefilter token="../../../../../build/aui-skin-deprecated/images/" value="" />
+				</replace>
+
+ 				<copy
+					file="${alloy.temp.dir}/aui_deprecated.css"
+					tofile="tmp/aui/aui_deprecated.css"
+					overwrite="true"
+				/>
+
+				<!-- JavaScript -->
+
+				<copy todir="tmp/aui" overwrite="true" preservelastmodified="true">
+					<fileset dir="${alloy.build.dir}/" />
+				</copy>
+
+				<!-- Clean up -->
+
+				<delete dir="${tstamp.value}" />
+			</then>
+		</if>
+	</target>
+
+	<target name="build-alloy-editor">
+		<path id="alloyeditor.zip.path">
+			<fileset dir="${third.party.dir}">
+				<include name="alloy-editor-${alloyeditor.version}.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloyeditor.zip.path" refid="alloyeditor.zip.path" />
+
+		<basename file="${alloyeditor.zip.path}" property="alloyeditor.file" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="${third.party.dir}/${alloyeditor.file}"
+					targetfile="tmp/editor/alloyeditor"
+				/>
+			</not>
+			<then>
+				<delete dir="tmp/editor/alloyeditor" />
+
+				<echo>${alloyeditor.file}</echo>
+
+				<unzip src="${third.party.dir}/${alloyeditor.file}" dest="tmp/editor/_tmp" />
+
+				<copy todir="tmp/editor/alloyeditor" overwrite="true" preservelastmodified="true">
+					<fileset dir="tmp/editor/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
+				</copy>
+
+				<copy todir="tmp/editor/alloyeditor" overwrite="true" preservelastmodified="true">
+					<fileset dir="${html.js.dir}/editor/alloyeditor_diffs" />
+				</copy>
+
+				<delete dir="tmp/editor/_tmp" />
+			</then>
+			<else>
+				<copy todir="tmp/editor/alloyeditor" preservelastmodified="true">
+					<fileset dir="${html.js.dir}/editor/alloyeditor_diffs" />
+				</copy>
+			</else>
+		</if>
+	</target>
+
+	<target name="build-ckeditor">
+		<if>
+			<not>
+				<uptodate
+					srcfile="${third.party.dir}/${ckeditor.file}"
+					targetfile="tmp/editor/ckeditor"
+				/>
+			</not>
+			<then>
+				<delete dir="tmp/editor/ckeditor" />
+
+				<unzip src="${third.party.dir}/${ckeditor.file}" dest="tmp/editor" />
+
+				<copy todir="tmp/editor/ckeditor" overwrite="true" preservelastmodified="true">
+					<fileset dir="${html.js.dir}/editor/ckeditor_diffs" />
+				</copy>
+
+				<antcall target="build-ckeditor-plugins-scayt" />
+
+				<antcall target="build-ckeditor-plugins-wsc" />
+			</then>
+			<else>
+				<copy todir="tmp/editor/ckeditor" preservelastmodified="true">
+					<fileset dir="${html.js.dir}/editor/ckeditor_diffs" />
+				</copy>
+			</else>
+		</if>
+	</target>
+
+	<target name="build-ckeditor-plugins-bbcode">
+		<concat destfile="${html.js.dir}/editor/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
+			<filelist
+				dir="${html.js.dir}/editor/ckeditor_diffs/plugins/bbcode"
+				files="bbcode_utils.js,lexer.js,parser.js,converter.js"
+			/>
+		</concat>
+	</target>
+
+	<target name="build-ckeditor-plugins-scayt">
+		<if>
+			<not>
+				<available file="${third.party.dir}/${scayt.file}" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="${third.party.dir}/${scayt.file}"
+					src="http://download.ckeditor.com/scayt/releases/${scayt.file}"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="tmp/editor/ckeditor/plugins"
+			src="${third.party.dir}/${scayt.file}"
+		/>
+	</target>
+
+	<target name="build-ckeditor-plugins-wsc">
+		<if>
+			<not>
+				<available file="${third.party.dir}/${wsc.file}" />
+			</not>
+			<then>
+				<mirrors-get
+					dest="${third.party.dir}/${wsc.file}"
+					src="http://download.ckeditor.com/wsc/releases/${wsc.file}"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="tmp/editor/ckeditor/plugins"
+			src="${third.party.dir}/${wsc.file}"
+		/>
+	</target>
+
+	<target name="build-tinymce">
+		<if>
+			<not>
+				<uptodate
+					srcfile="${third.party.dir}/${tinymce.file}"
+					targetfile="tmp/editor/tiny_mce"
+				/>
+			</not>
+			<then>
+				<delete dir="tmp/editor/tiny_mce" />
+				<delete dir="tmp/editor/tinymce" />
+
+				<unzip src="${third.party.dir}/${tinymce.file}" dest="tmp/editor" />
+
+				<move todir="tmp/editor/tiny_mce" preservelastmodified="true">
+					<fileset dir="tmp/editor/tinymce/js/tinymce">
+						<include name="*/**" />
+					</fileset>
+				</move>
+
+				<copy todir="tmp/editor/tiny_mce" overwrite="true" preservelastmodified="true">
+					<fileset dir="${html.js.dir}/editor/tiny_mce_diffs" />
+				</copy>
+
+				<delete dir="tmp/editor/tinymce" />
+			</then>
+		</if>
+	</target>
+
+	<target name="jar" depends="build-common.compile,build-alloy,build-alloy-editor,build-ckeditor,build-tinymce">
+		<jar-macro
+			module.dir="${basedir}"
+		/>
+	</target>
+</project>

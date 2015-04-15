@@ -80,6 +80,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.bootstrap.ModuleFrameworkImpl">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.cache">
 		<priority value="WARN" />
 	</category>

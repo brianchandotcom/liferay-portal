@@ -135,8 +135,7 @@ public class PortletStagingBackgroundTaskExecutor
 				markBackgroundTask(_backgroundTaskId, "exported");
 
 				LayoutLocalServiceUtil.importPortletDataDeletions(
-					userId, targetPlid, targetGroupId, portletId, parameterMap,
-					larFile);
+					_exportImportConfiguration, larFile);
 
 				missingReferences =
 					LayoutLocalServiceUtil.validateImportPortletInfo(

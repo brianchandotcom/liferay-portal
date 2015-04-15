@@ -82,8 +82,8 @@ public class PortletImportBackgroundTaskExecutor
 				TransactionHandlerUtil.invoke(
 					transactionAttribute,
 					new PortletImportCallable(
-						file, parameterMap, portletId, targetGroupId,
-						targetPlid, userId));
+						exportImportConfiguration, file, parameterMap,
+						portletId, targetGroupId, targetPlid, userId));
 			}
 			catch (Throwable t) {
 				if (_log.isDebugEnabled()) {
@@ -109,9 +109,11 @@ public class PortletImportBackgroundTaskExecutor
 	private class PortletImportCallable implements Callable<Void> {
 
 		public PortletImportCallable(
-			File file, Map<String, String[]> parameterMap, String portletId,
+			ExportImportConfiguration exportImportConfiguration, File file,
+			Map<String, String[]> parameterMap, String portletId,
 			long targetGroupId, long targetPlid, long userId) {
 
+			_exportImportConfiguration = exportImportConfiguration;
 			_file = file;
 			_parameterMap = parameterMap;
 			_portletId = portletId;
@@ -123,8 +125,7 @@ public class PortletImportBackgroundTaskExecutor
 		@Override
 		public Void call() throws PortalException {
 			LayoutLocalServiceUtil.importPortletDataDeletions(
-				_userId, _targetPlid, _targetGroupId, _portletId, _parameterMap,
-				_file);
+				_exportImportConfiguration, _file);
 
 			LayoutLocalServiceUtil.importPortletInfo(
 				_userId, _targetPlid, _targetGroupId, _portletId, _parameterMap,
@@ -133,6 +134,7 @@ public class PortletImportBackgroundTaskExecutor
 			return null;
 		}
 
+		private final ExportImportConfiguration _exportImportConfiguration;
 		private final File _file;
 		private final Map<String, String[]> _parameterMap;
 		private final String _portletId;

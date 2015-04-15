@@ -2035,15 +2035,25 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public void importPortletDataDeletions(
-			long userId, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException {
 
 		try {
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			long userId = MapUtil.getLong(settingsMap, "userId");
+			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+			String portletId = MapUtil.getString(settingsMap, "portletId");
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)settingsMap.get("parameterMap");
+
 			PortletImporter portletImporter = PortletImporter.getInstance();
 
 			portletImporter.importPortletDataDeletions(
-				userId, plid, groupId, portletId, parameterMap, file);
+				userId, targetPlid, targetGroupId, portletId, parameterMap,
+				file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();

@@ -201,8 +201,9 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 			ps = con.prepareStatement(
 				"select " + verifiableResourcedModel.getPrimaryKeyColumnName() +
-					", userId from " + verifiableResourcedModel.getTableName() +
-						" where companyId = " + role.getCompanyId());
+					", " + verifiableResourcedModel.getUserIdColumnName() +
+						" from " + verifiableResourcedModel.getTableName() +
+							" where companyId = " + role.getCompanyId());
 
 			rs = ps.executeQuery();
 

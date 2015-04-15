@@ -93,7 +93,6 @@
 		<execute function="AssertClick" locator1="CPCategoriesAdd#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 

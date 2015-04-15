@@ -76,6 +76,8 @@ public class SyncFile extends StateAwareModel {
 
 	public static final int UI_EVENT_FILE_NAME_TOO_LONG = 10;
 
+	public static final int UI_EVENT_INVALID_FILE_EXTENSION = 23;
+
 	public static final int UI_EVENT_INVALID_FILE_NAME = 11;
 
 	public static final int UI_EVENT_INVALID_PERMISSIONS = 12;

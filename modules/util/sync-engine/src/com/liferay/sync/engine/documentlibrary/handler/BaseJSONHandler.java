@@ -133,6 +133,17 @@ public class BaseJSONHandler extends BaseHandler {
 			SyncFileService.update(syncFile);
 		}
 		else if (exception.equals(
+					"com.liferay.portlet.documentlibrary." +
+						"FileExtensionException")) {
+
+			SyncFile syncFile = getLocalSyncFile();
+
+			syncFile.setState(SyncFile.STATE_ERROR);
+			syncFile.setUiEvent(SyncFile.UI_EVENT_INVALID_FILE_EXTENSION);
+
+			SyncFileService.update(syncFile);
+		}
+		else if (exception.equals(
 					"com.liferay.portlet.documentlibrary.FileNameException") ||
 				 exception.equals(
 					 "com.liferay.portlet.documentlibrary." +

@@ -696,7 +696,7 @@
 			if (cite && cite.length) {
 				cite = BBCodeUtil.escape(cite);
 
-				result = '<blockquote><p><cite>' + cite + '</cite>';
+				result += '<cite>' + cite + '</cite>';
 			}
 
 			instance._result.push(result);

@@ -52,7 +52,9 @@ public class PortalWebResourcesUtil {
 		}
 
 		try {
-			URL url = getPortalWebResources().getServletContext().getResource(path);
+			ServletContext servletContext = getServletContext();
+
+			URL url = servletContext.getResource(path);
 
 			if (url != null) {
 				return true;

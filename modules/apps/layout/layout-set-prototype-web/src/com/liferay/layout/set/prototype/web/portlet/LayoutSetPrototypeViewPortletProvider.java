@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.set.prototype.web.provider;
+package com.liferay.layout.set.prototype.web.portlet;
 
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
-import com.liferay.portal.kernel.provider.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 

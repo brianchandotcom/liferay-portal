@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -569,25 +570,47 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			companyId, portletId, parameterMap, startDate, endDate);
 	}
 
+	@Override
+	public File exportPortletInfoAsFile(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
+
+		Layout layout = layoutLocalService.getLayout(sourcePlid);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), layout.getGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		return layoutLocalService.exportPortletInfoAsFile(
+			exportImportConfiguration);
+	}
+
 	/**
 	 * Exports the portlet information (categories, permissions, ... etc.) as a
 	 * file.
 	 *
-	 * @param  plid the primary key of the layout
-	 * @param  groupId the primary key of the group
-	 * @param  portletId the primary key of the portlet
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information to export. For information on the keys used in the
-	 *         map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  startDate the export's start date
-	 * @param  endDate the export's end date
-	 * @return the portlet information as a file
-	 * @throws PortalException if a layout, group, or portlet with the primary
-	 *         key could not be found, it the group did not have permission to
-	 *         manage the layouts involved, or if some other portal exception
-	 *         occurred
+	 * @param      plid the primary key of the layout
+	 * @param      groupId the primary key of the group
+	 * @param      portletId the primary key of the portlet
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information to export. For information on the keys used in
+	 *             the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      startDate the export's start date
+	 * @param      endDate the export's end date
+	 * @return     the portlet information as a file
+	 * @throws     PortalException if a layout, group, or portlet with the
+	 *             primary key could not be found, it the group did not have
+	 *             permission to manage the layouts involved, or if some other
+	 *             portal exception occurred
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public File exportPortletInfoAsFile(
 			long plid, long groupId, String portletId,

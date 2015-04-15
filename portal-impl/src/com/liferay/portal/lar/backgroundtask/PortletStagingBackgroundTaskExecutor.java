@@ -17,14 +17,12 @@ package com.liferay.portal.lar.backgroundtask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
@@ -127,18 +125,12 @@ public class PortletStagingBackgroundTaskExecutor
 			Map<String, String[]> parameterMap =
 				(Map<String, String[]>)settingsMap.get("parameterMap");
 
-			long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
-			long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-			DateRange dateRange = ExportImportDateUtil.getDateRange(
-				_exportImportConfiguration);
-
 			File larFile = null;
 			MissingReferences missingReferences = null;
 
 			try {
 				larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-					sourcePlid, sourceGroupId, portletId, parameterMap,
-					dateRange.getStartDate(), dateRange.getEndDate());
+					_exportImportConfiguration);
 
 				markBackgroundTask(_backgroundTaskId, "exported");
 

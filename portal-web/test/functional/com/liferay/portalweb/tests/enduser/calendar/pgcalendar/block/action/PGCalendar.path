@@ -558,7 +558,7 @@
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_DAY_VIEW</td>
 	<td>//td[contains(@class,'scheduler-view-day-table-col scheduler-view-day-table-colday scheduler-today')]//div[@class='scheduler-event-content' and contains(.,'${key_eventTitle}')]</td>
-	<td></td>1
+	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_APPROVED</td>

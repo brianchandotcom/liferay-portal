@@ -34,7 +34,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="ADTAssetPublisher" priority="3">
+	<command known-issues="LPS-51696" name="ADTAssetPublisher" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -478,7 +478,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTTagsNavigationPortlet" priority="3">
+	<command known-issues="LPS-51696" name="ADTTagsNavigationPortlet" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">

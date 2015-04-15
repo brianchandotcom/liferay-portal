@@ -654,7 +654,7 @@
 		<execute macro="User#loginPG" />
 	</command>
 
-	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
+	<command known-issues="LPS-54869" name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>

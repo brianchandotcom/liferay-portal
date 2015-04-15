@@ -74,7 +74,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreDeleteWikiFrontpage" priority="5">
+	<command known-issues="LPS-54930" name="RestoreDeleteWikiFrontpage" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>

@@ -65,7 +65,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFrontPageTag" priority="5">
+	<command known-issues="LPS-54823" name="AddFrontPageTag" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -281,7 +281,7 @@
 		</execute>
 	</command>
 
-	<command name="DisplayDocumentTagViaAP" priority="5">
+	<command known-issues="LPS-54823" name="DisplayDocumentTagViaAP" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -939,7 +939,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewTagCloudIncrease" priority="5">
+	<command known-issues="LPS-54823" name="ViewTagCloudIncrease" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>

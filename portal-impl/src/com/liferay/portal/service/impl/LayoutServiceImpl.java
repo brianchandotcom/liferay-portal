@@ -523,21 +523,23 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Exports the portlet information (categories, permissions, ... etc.) as a
 	 * byte array.
 	 *
-	 * @param  plid the primary key of the layout
-	 * @param  groupId the primary key of the group
-	 * @param  portletId the primary key of the portlet
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information to export. For information on the keys used in the
-	 *         map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  startDate the export's start date
-	 * @param  endDate the export's end date
-	 * @return the portlet information as a byte array
-	 * @throws PortalException if a layout, group, or portlet with the primary
-	 *         key could not be found, if the group did not have permission to
-	 *         manage the layouts involved, or if some other portal exception
-	 *         occurred
+	 * @param      plid the primary key of the layout
+	 * @param      groupId the primary key of the group
+	 * @param      portletId the primary key of the portlet
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information to export. For information on the keys used in
+	 *             the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      startDate the export's start date
+	 * @param      endDate the export's end date
+	 * @return     the portlet information as a byte array
+	 * @throws     PortalException if a layout, group, or portlet with the
+	 *             primary key could not be found, if the group did not have
+	 *             permission to manage the layouts involved, or if some other
+	 *             portal exception occurred
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public byte[] exportPortletInfo(
 			long plid, long groupId, String portletId,
@@ -554,6 +556,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			plid, groupId, portletId, parameterMap, startDate, endDate);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public byte[] exportPortletInfo(
 			long companyId, String portletId,
@@ -627,6 +633,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			plid, groupId, portletId, parameterMap, startDate, endDate);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public File exportPortletInfoAsFile(
 			String portletId, Map<String, String[]> parameterMap,

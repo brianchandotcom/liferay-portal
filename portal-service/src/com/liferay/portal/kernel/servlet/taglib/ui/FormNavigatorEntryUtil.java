@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -100,6 +101,10 @@ public class FormNavigatorEntryUtil {
 		Object formModelBean) {
 
 		List<FormNavigatorEntry> filterFormNavigatorEntries = new ArrayList<>();
+
+		if (ListUtil.isEmpty(formNavigatorEntries)) {
+			return filterFormNavigatorEntries;
+		}
 
 		for (FormNavigatorEntry formNavigatorEntry : formNavigatorEntries) {
 			if (formNavigatorEntry.isVisible(user, formModelBean)) {

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+package com.liferay.portal.kernel.servlet;
 
-<liferay-util:include page="/html/js/editor/ckeditor.jsp">
-	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_bbcode.jsp" />
-</liferay-util:include>
+import javax.servlet.ServletContext;
+
+/**
+ * @author Peter Fellwock
+ */
+public interface PortalWebResources {
+
+	public String getContextPath();
+
+	public long getLastModified();
+
+	public ServletContext getServletContext();
+
+}

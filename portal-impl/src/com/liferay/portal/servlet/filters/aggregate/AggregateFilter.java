@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -260,7 +261,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String bundleDirName = PropsUtil.get(
 			PropsKeys.JAVASCRIPT_BUNDLE_DIR, new Filter(bundleId));
 
-		URL bundleDirURL = _servletContext.getResource(bundleDirName);
+		ServletContext portalWebResourcesServletContext =
+			PortalWebResourcesUtil.getServletContext();
+
+		URL bundleDirURL = portalWebResourcesServletContext.getResource(
+			bundleDirName);
 
 		if (bundleDirURL == null) {
 			return null;
@@ -276,7 +281,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			boolean staleCache = false;
 
 			for (String fileName : fileNames) {
-				URL resourceURL = _servletContext.getResource(
+				URL resourceURL = portalWebResourcesServletContext.getResource(
 					bundleDirName.concat(StringPool.SLASH).concat(fileName));
 
 				if (resourceURL == null) {
@@ -312,7 +317,9 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 		else {
 			content = aggregateJavaScript(
-				new ServletPaths(_servletContext, bundleDirName), fileNames);
+				new ServletPaths(
+					portalWebResourcesServletContext, bundleDirName),
+				fileNames);
 		}
 
 		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
@@ -511,6 +518,19 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String content = StringUtil.read(urlConnection.getInputStream());
 
 		return getJavaScriptContent(resourceURL.toString(), content);
+	}
+
+	@Override
+	protected boolean isModuleRequest(HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+
+		String contextPath = PortalWebResourcesUtil.getContextPath();
+
+		if (requestURI.startsWith(contextPath)) {
+			return false;
+		}
+
+		return super.isModuleRequest(request);
 	}
 
 	@Override

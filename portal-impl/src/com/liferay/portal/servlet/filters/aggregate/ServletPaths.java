@@ -16,7 +16,6 @@ package com.liferay.portal.servlet.filters.aggregate;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -53,9 +51,7 @@ public class ServletPaths {
 		return resourcePath;
 	}
 
-	public ServletPaths(ServletContext servletContext, String resourcePath)
-		throws MalformedURLException {
-
+	public ServletPaths(ServletContext servletContext, String resourcePath) {
 		if (servletContext == null) {
 			throw new NullPointerException("Servlet context is null");
 		}
@@ -65,13 +61,6 @@ public class ServletPaths {
 		}
 
 		_servletContext = servletContext;
-
-		String rootPath = ServletContextUtil.getRootPath(_servletContext);
-
-		if (resourcePath.startsWith(rootPath)) {
-			resourcePath = resourcePath.substring(rootPath.length());
-		}
-
 		_resourcePath = resourcePath;
 	}
 

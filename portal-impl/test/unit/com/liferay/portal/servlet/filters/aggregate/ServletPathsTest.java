@@ -69,7 +69,7 @@ public class ServletPathsTest {
 	}
 
 	@Test
-	public void testConstructor() throws MalformedURLException {
+	public void testConstructor() {
 		try {
 			new ServletPaths(null, null);
 
@@ -91,10 +91,8 @@ public class ServletPathsTest {
 		ServletContext servletContext = _prepareServletContext(
 			new MockServletContext());
 
-		String rootPath = ServletContextUtil.getRootPath(servletContext);
-
 		ServletPaths servletPaths = new ServletPaths(
-			servletContext, rootPath + "/test1/test2/");
+			servletContext, "/test1/test2/");
 
 		Assert.assertEquals("/test1/test2/", servletPaths.getResourcePath());
 
@@ -104,7 +102,7 @@ public class ServletPathsTest {
 	}
 
 	@Test
-	public void testDown() throws MalformedURLException {
+	public void testDown() {
 		ServletContext servletContext = _prepareServletContext(
 			new MockServletContext());
 

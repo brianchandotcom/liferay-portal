@@ -1449,12 +1449,12 @@
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
-			<var name="contentName" value="User Segment Content Display" />
+			<var name="mainApplication" value="User Segment Content Display" />
 			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
-			<var name="contentName" value="Campaign Content Display" />
+			<var name="mainApplication" value="Campaign Content Display" />
 			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
 		</execute>
 

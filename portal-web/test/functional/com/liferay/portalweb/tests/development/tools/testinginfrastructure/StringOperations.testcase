@@ -2,7 +2,9 @@
 	<property name="testcase.url" value="" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="GetFirstNumber" priority="5">
+	<!-- Depreciated. Removing ftl methods -->
+
+	<!-- <command name="GetFirstNumber" priority="5">
 		<echo message="Test getFirstNumber()" />
 
 		<var name="string" value="abc1de" />
@@ -20,7 +22,7 @@
 			<var name="actual" value="${string?getFirstNumber()}" />
 			<var name="expected" value="1" />
 		</execute>
-	</command>
+	</command> -->
 
 	<command name="GetIPAddress" priority="5">
 		<echo message="Test getIPAddress()" />

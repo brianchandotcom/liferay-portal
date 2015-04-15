@@ -1633,6 +1633,39 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					String strippedQuotesLine = stripQuotes(
 						trimmedLine, CharPool.QUOTE);
 
+					strippedQuotesLine = stripQuotes(
+						strippedQuotesLine, CharPool.APOSTROPHE);
+
+					if (!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+						strippedQuotesLine.contains(
+							StringPool.CLOSE_CURLY_BRACE)) {
+
+						int closeCurlyBraceCount = StringUtil.count(
+							strippedQuotesLine, StringPool.CLOSE_CURLY_BRACE);
+						int openCurlyBraceCount = StringUtil.count(
+							strippedQuotesLine, StringPool.OPEN_CURLY_BRACE);
+
+						int leadingTabCount = getLeadingTabCount(line);
+
+						if ((closeCurlyBraceCount > openCurlyBraceCount) &&
+							(leadingTabCount > 0)) {
+
+							String indent = StringPool.BLANK;
+
+							for (int i = 0; i < leadingTabCount - 1; i++) {
+								indent += StringPool.TAB;
+							}
+
+							int x = line.lastIndexOf(
+								StringPool.CLOSE_CURLY_BRACE);
+
+							return StringUtil.replace(
+								content, "\n" + line + "\n",
+								"\n" + line.substring(0, x) + "\n" + indent +
+									line.substring(x) + "\n");
+						}
+					}
+
 					if (trimmedLine.endsWith(StringPool.PLUS) &&
 						!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
 

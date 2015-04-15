@@ -142,6 +142,7 @@ else {
 
 			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, dlSearchContainer);
 
+			assetEntryQuery.setEnablePermissions(true);
 			assetEntryQuery.setExcludeZeroViewCount(false);
 
 			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);

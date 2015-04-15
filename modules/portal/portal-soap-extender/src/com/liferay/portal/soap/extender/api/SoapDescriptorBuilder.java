@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.configuration;
+package com.liferay.portal.soap.extender.api;
 
-import aQute.bnd.annotation.metatype.Meta;
+import java.util.Map;
+
+import javax.xml.namespace.QName;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Meta.OCD(
-	factory = true,
-	id = "com.liferay.portal.soap.extender.configuration.SoapExtenderConfiguration"
-)
-public interface SoapExtenderConfiguration {
+public interface SoapDescriptorBuilder {
 
-	@Meta.AD(required = false)
-	public String[] contextPaths();
+	public SoapDescriptor buildDescriptor(
+		Map<String, Object> properties, Object service);
 
-	@Meta.AD(name = "soap.descriptor.builder", required = false)
-	public String descriptorBuilderFilter();
+	public interface SoapDescriptor {
+		public QName getEndpointName();
 
-	@Meta.AD(name = "jaxws.handlers.filters", required = false)
-	public String[] handlers();
+		public String getPublicationAddress();
 
-	@Meta.AD(name = "jaxws.service.filters", required = false)
-	public String[] serviceFilters();
+		public Class<?> getServiceClass();
+
+		public String getWsdlLocation();
+
+	}
 
 }

@@ -12,29 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.configuration;
+package com.liferay.portal.ws.configuration;
 
-import aQute.bnd.annotation.metatype.Meta;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Meta.OCD(
-	factory = true,
-	id = "com.liferay.portal.soap.extender.configuration.SoapExtenderConfiguration"
-)
-public interface SoapExtenderConfiguration {
+public class ExtensionManager {
 
-	@Meta.AD(required = false)
-	public String[] contextPaths();
+	public Map<Class<?>, Object> getExtensions() {
+		return _extensions;
+	}
 
-	@Meta.AD(name = "soap.descriptor.builder", required = false)
-	public String descriptorBuilderFilter();
+	protected void addExtension(
+		Map<String, Object> properties, Object extension) {
 
-	@Meta.AD(name = "jaxws.handlers.filters", required = false)
-	public String[] handlers();
+		Class<?> extensionClass = (Class<?>)properties.get(
+			"soap.extension.class");
 
-	@Meta.AD(name = "jaxws.service.filters", required = false)
-	public String[] serviceFilters();
+		_extensions.put(extensionClass, extension);
+	}
+
+	protected void removeExtension(Object extension) {
+	}
+
+	private final Map<Class<?>, Object> _extensions = new HashMap<>();
 
 }

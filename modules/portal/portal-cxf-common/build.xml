@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="portal-dependencymanager-fragment" />
+	<property name="osgi.runtime.dependencies" value="org.apache.felix.dependencymanager.jar,org.apache.felix.dependencymanager.shell.jar,org.apache.felix.scr.jar" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

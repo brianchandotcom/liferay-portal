@@ -47,7 +47,7 @@ public class SampleComponentHandler
 	}
 
 	@Override
-	public void close(MessageContext context) {
+	public void close(MessageContext messageContext) {
 	}
 
 	@Override

@@ -12,32 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.configuration;
+package com.liferay.portal.ws.configuration;
 
-import java.util.HashMap;
-import java.util.Map;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class ExtensionManager {
+@Meta.OCD(
+	factory = true,
+	id = "com.liferay.portal.ws.configuration.WebServicePublisherConfiguration"
+)
+public interface CXFEndpointPublisherConfiguration {
 
-	public Map<Class<?>, Object> getExtensions() {
-		return _extensions;
-	}
+	@Meta.AD(required = true)
+	public String contextPath();
 
-	protected void addExtension(
-		Map<String, Object> properties, Object extension) {
-
-		Class<?> extensionClass = (Class<?>)properties.get(
-			"soap.extension.class");
-
-		_extensions.put(extensionClass, extension);
-	}
-
-	protected void removeExtension(Object extension) {
-	}
-
-	private final Map<Class<?>, Object> _extensions = new HashMap<>();
+	@Meta.AD(name = "required.extensions", required = false)
+	public String[] extensions();
 
 }

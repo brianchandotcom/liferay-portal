@@ -20,21 +20,14 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Carlos Sierra Andrés
  */
 @Meta.OCD(
-	factory = true,
-	id = "com.liferay.portal.soap.extender.configuration.SoapExtenderConfiguration"
+	id = "com.liferay.portal.soap.extender.configuration.JaxwsApiConfiguration"
 )
-public interface SoapExtenderConfiguration {
+public interface JaxwsApiConfiguration {
 
-	@Meta.AD(required = false)
-	public String[] contextPaths();
+	@Meta.AD(required = true)
+	public String contextPath();
 
-	@Meta.AD(name = "soap.descriptor.builder", required = false)
-	public String descriptorBuilderFilter();
-
-	@Meta.AD(name = "jaxws.handlers.filters", required = false)
-	public String[] handlers();
-
-	@Meta.AD(name = "jaxws.service.filters", required = false)
-	public String[] serviceFilters();
+	@Meta.AD(deflt = "10000", required = true)
+	public long timeout();
 
 }

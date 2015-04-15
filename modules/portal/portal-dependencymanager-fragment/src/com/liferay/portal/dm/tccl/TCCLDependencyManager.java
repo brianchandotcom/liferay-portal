@@ -12,29 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.configuration;
+package com.liferay.portal.dm.tccl;
 
-import aQute.bnd.annotation.metatype.Meta;
+import org.apache.felix.dm.DependencyManager;
+import org.apache.felix.dm.ServiceDependency;
+import org.apache.felix.dm.impl.Logger;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Meta.OCD(
-	factory = true,
-	id = "com.liferay.portal.soap.extender.configuration.SoapExtenderConfiguration"
-)
-public interface SoapExtenderConfiguration {
+public class TCCLDependencyManager extends DependencyManager {
 
-	@Meta.AD(required = false)
-	public String[] contextPaths();
+	public TCCLDependencyManager(BundleContext bundleContext) {
+		super(bundleContext);
+	}
 
-	@Meta.AD(name = "soap.descriptor.builder", required = false)
-	public String descriptorBuilderFilter();
+	public ServiceDependency createTCCLServiceDependency() {
+		return new ServiceReferenceTCCLServiceDependency(
+			getBundleContext(), _logger);
+	}
 
-	@Meta.AD(name = "jaxws.handlers.filters", required = false)
-	public String[] handlers();
-
-	@Meta.AD(name = "jaxws.service.filters", required = false)
-	public String[] serviceFilters();
+	private final Logger _logger = new Logger(getBundleContext());
 
 }

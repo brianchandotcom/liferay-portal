@@ -226,7 +226,8 @@ public class PoshiRunnerGetterUtil {
 
 			if (parameterString.contains("#")) {
 				parameters = new String[] {
-					PoshiRunnerContext.getPathLocator(parameterString)};
+					PoshiRunnerContext.getPathLocator(parameterString)
+				};
 			}
 			else {
 				parameters = parameterString.split(",");

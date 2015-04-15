@@ -246,8 +246,7 @@ public class WikiTestUtil {
 		grandchildPage = WikiPageLocalServiceUtil.getPageByPageId(
 			grandchildPage.getPageId());
 
-		return new WikiPage[] {
-			page, redirectPage, childPage, grandchildPage};
+		return new WikiPage[] {page, redirectPage, childPage, grandchildPage};
 	}
 
 	public static WikiPage[] addRenamedTrashedPage(

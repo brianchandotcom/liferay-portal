@@ -138,7 +138,8 @@ public class ConfigurationBeanSettingsTest extends PowerMockito {
 
 		public String[] stringArrayValue() {
 			return new String[] {
-				"string value 0", "string value 1", "string value 2" };
+				"string value 0", "string value 1", "string value 2"
+			};
 		}
 
 		public String stringValue() {

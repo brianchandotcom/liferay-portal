@@ -426,7 +426,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			_stagingGroup, layout.getPlid());
 
 		long[] selectedLayoutIds = new long[] {
-			layout.getLayoutId(), childLayout.getLayoutId()};
+			layout.getLayoutId(), childLayout.getLayoutId()
+		};
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(

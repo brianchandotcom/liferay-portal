@@ -1548,7 +1548,8 @@ public class PortletPreferencesLocalServiceTest {
 					classLoaderBeanHandler.getBean(), "getPreferences",
 					new Class[] {
 						long.class, long.class, int.class, long.class,
-						String.class, String.class, boolean.class},
+						String.class, String.class, boolean.class
+					},
 					companyId, ownerId, ownerType, plid, portletId, null,
 					_strict);
 			}

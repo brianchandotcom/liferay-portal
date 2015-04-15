@@ -89,7 +89,8 @@ public class AggregateResourceBundleTest {
 
 				for (int i = 0; i < contents.length; i++) {
 					contents[i] = new Object[] {
-						keysAndValues[i / 2], keysAndValues[(i / 2) + 1]};
+						keysAndValues[i / 2], keysAndValues[(i / 2) + 1]
+					};
 				}
 
 				return contents;

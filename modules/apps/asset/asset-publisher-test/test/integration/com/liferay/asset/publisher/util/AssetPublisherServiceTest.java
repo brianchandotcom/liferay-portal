@@ -117,9 +117,10 @@ public class AssetPublisherServiceTest {
 
 		addAssetVocabulary();
 
-		long[] allCategoyIds =
-			{_assetCategoryIds[0], _assetCategoryIds[1], _assetCategoryIds[2],
-				_assetCategoryIds[3]};
+		long[] allCategoyIds = {
+			_assetCategoryIds[0], _assetCategoryIds[1], _assetCategoryIds[2],
+			_assetCategoryIds[3]
+		};
 
 		String[] allAssetTagNames = {_ASSET_TAG_NAMES[0], _ASSET_TAG_NAMES[1]};
 

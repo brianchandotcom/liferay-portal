@@ -90,7 +90,8 @@ public class AnnotatedObjectEncoderTest {
 			ReflectionTestUtil.invokeBridge(
 				annotatedObjectEncoder, "encode",
 				new Class<?>[] {
-					ChannelHandlerContext.class, Object.class, ByteBuf.class},
+					ChannelHandlerContext.class, Object.class, ByteBuf.class
+				},
 				null, date, byteBuf);
 		}
 		else {

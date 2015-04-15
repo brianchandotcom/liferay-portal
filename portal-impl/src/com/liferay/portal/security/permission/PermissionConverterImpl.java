@@ -68,7 +68,8 @@ public class PermissionConverterImpl implements PermissionConverter {
 
 		if (role.getType() == RoleConstants.TYPE_REGULAR) {
 			scopes = new int[] {
-				ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP};
+				ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP
+			};
 		}
 		else if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 				 (role.getType() == RoleConstants.TYPE_PROVIDER) ||

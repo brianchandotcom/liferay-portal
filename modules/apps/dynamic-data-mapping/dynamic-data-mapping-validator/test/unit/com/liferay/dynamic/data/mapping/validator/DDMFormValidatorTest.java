@@ -274,7 +274,8 @@ public class DDMFormValidatorTest {
 			new HashSet<String>(
 				Arrays.asList(
 					new String[] {
-						DDMFormFieldType.TEXT, DDMFormFieldType.SELECT}))
+						DDMFormFieldType.TEXT, DDMFormFieldType.SELECT
+					}))
 		);
 
 		DDMFormFieldTypeRegistryUtil ddmFormFieldTypeRegistryUtil =

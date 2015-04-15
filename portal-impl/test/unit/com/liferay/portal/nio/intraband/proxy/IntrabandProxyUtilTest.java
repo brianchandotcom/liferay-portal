@@ -739,7 +739,8 @@ public class IntrabandProxyUtilTest {
 						this, "_sendResponse",
 						new Class<?>[] {
 							RegistrationReference.class, Datagram.class,
-							RPCResponse.class},
+							RPCResponse.class
+						},
 						registrationReference, datagram,
 						new RPCResponse("syncCall"));
 				}
@@ -1778,14 +1779,14 @@ public class IntrabandProxyUtilTest {
 		_assertDeclaredMethod(
 			skeletonClass, "dispatch",
 			new Class<?>[] {
-				RegistrationReference.class, Datagram.class,
-				Deserializer.class},
+				RegistrationReference.class, Datagram.class, Deserializer.class
+			},
 			Modifier.PUBLIC, void.class);
 		_assertDeclaredMethod(
 			skeletonClass, "doDispatch",
 			new Class<?>[] {
-				RegistrationReference.class, Datagram.class,
-				Deserializer.class},
+				RegistrationReference.class, Datagram.class, Deserializer.class
+			},
 			Modifier.PROTECTED, void.class, Exception.class);
 		_assertDeclaredMethod(
 			skeletonClass, "_getProxyMethodSignatures", new Class<?>[0],
@@ -1797,8 +1798,8 @@ public class IntrabandProxyUtilTest {
 		_assertDeclaredMethod(
 			skeletonClass, "_sendResponse",
 			new Class<?>[] {
-				RegistrationReference.class, Datagram.class,
-				RPCResponse.class},
+				RegistrationReference.class, Datagram.class, RPCResponse.class
+			},
 			Modifier.PRIVATE, void.class);
 		_assertDeclaredMethod(
 			skeletonClass, "_unknownMethodIndex", new Class<?>[] {int.class},
@@ -1876,7 +1877,8 @@ public class IntrabandProxyUtilTest {
 		Assert.assertArrayEquals(
 			new Class<?>[] {
 				String.class, RegistrationReference.class,
-				ExceptionHandler.class},
+				ExceptionHandler.class
+			},
 			constructor.getParameterTypes());
 
 		// Methods

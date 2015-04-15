@@ -265,8 +265,8 @@ public class PortalImplCanonicalURLTest {
 		throws Exception {
 
 		testCanonicalURL(
-			"localhost", "localhost", _group, _layout1, new Locale[] {
-				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			"localhost", "localhost", _group, _layout1,
+			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
 			LocaleUtil.SPAIN, "/es", StringPool.BLANK, false);
 	}
 

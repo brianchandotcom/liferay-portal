@@ -130,7 +130,8 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 				long layoutId = rs.getLong("layoutId");
 
 				layout = new Object[] {
-					groupId, companyId, privateLayout, layoutId};
+					groupId, companyId, privateLayout, layoutId
+				};
 			}
 		}
 		finally {

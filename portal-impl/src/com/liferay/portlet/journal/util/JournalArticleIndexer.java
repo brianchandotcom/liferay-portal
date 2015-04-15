@@ -510,8 +510,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		JournalArticle article = null;
 
 		if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-			article =
-				JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
+			article = JournalArticleLocalServiceUtil.fetchJournalArticle(
+				classPK);
 		}
 		else {
 			article =

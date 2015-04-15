@@ -1384,6 +1384,14 @@ that were used to decide what sections would be displayed in the `form-navigator
 have been removed:
 
 `layout.set.form.update`
+`sites.form.add.advanced`
+`sites.form.add.main`
+`sites.form.add.miscellaneous`
+`sites.form.add.seo`
+`sites.form.update.advanced`
+`sites.form.update.main`
+`sites.form.update.miscellaneous`
+`sites.form.update.seo`
 
 The sections and categories of form navigators are now OSGi components.
 

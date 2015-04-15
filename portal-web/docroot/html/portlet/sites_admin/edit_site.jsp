@@ -75,62 +75,6 @@ if (layoutSetPrototypeId > 0) {
 
 boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 
-String[] mainSections = PropsValues.SITES_FORM_ADD_MAIN;
-String[] seoSections = PropsValues.SITES_FORM_ADD_SEO;
-String[] advancedSections = PropsValues.SITES_FORM_ADD_ADVANCED;
-String[] miscellaneousSections = PropsValues.SITES_FORM_ADD_MISCELLANEOUS;
-
-if (group != null) {
-	mainSections = PropsValues.SITES_FORM_UPDATE_MAIN;
-	seoSections = PropsValues.SITES_FORM_UPDATE_SEO;
-	advancedSections = PropsValues.SITES_FORM_UPDATE_ADVANCED;
-	miscellaneousSections = PropsValues.SITES_FORM_UPDATE_MISCELLANEOUS;
-}
-
-String[] analyticsTypes = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES, StringPool.NEW_LINE);
-
-if ((analyticsTypes.length == 0) && ArrayUtil.contains(advancedSections, "analytics")) {
-	advancedSections = ArrayUtil.remove(advancedSections, "analytics");
-}
-
-int contentSharingWithChildrenEnabledEnabled = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
-
-if ((contentSharingWithChildrenEnabledEnabled == 0) && ArrayUtil.contains(advancedSections, "content-sharing")) {
-	advancedSections = ArrayUtil.remove(advancedSections, "content-sharing");
-}
-
-boolean trashEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.TRASH_ENABLED);
-
-if (!trashEnabled && ArrayUtil.contains(advancedSections, "recycle-bin")) {
-	advancedSections = ArrayUtil.remove(advancedSections, "recycle-bin");
-}
-
-PortletRatingsDefinitionDisplayContextHelper portletRatingsDefinitionDisplayContextHelper = new PortletRatingsDefinitionDisplayContextHelper();
-
-if (!portletRatingsDefinitionDisplayContextHelper.showRatingsSection(miscellaneousSections)) {
-	miscellaneousSections = ArrayUtil.remove(miscellaneousSections, "ratings");
-}
-
-if ((group != null) && group.isCompany()) {
-	mainSections = ArrayUtil.remove(mainSections, "categorization");
-	mainSections = ArrayUtil.remove(mainSections, "site-url");
-	mainSections = ArrayUtil.remove(mainSections, "site-template");
-
-	seoSections = new String[0];
-
-	advancedSections = ArrayUtil.remove(advancedSections, "default-user-associations");
-	advancedSections = ArrayUtil.remove(advancedSections, "analytics");
-	advancedSections = ArrayUtil.remove(advancedSections, "content-sharing");
-
-	miscellaneousSections = new String[0];
-}
-
-if ((group != null) && (group.hasStagingGroup() || (group.hasRemoteStagingGroup() && !PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED))) {
-	advancedSections = ArrayUtil.remove(advancedSections, "staging");
-}
-
-String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};
-
 if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 	if (group != null) {
 		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
@@ -207,10 +151,8 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 
 	<liferay-ui:form-navigator
 		backURL="<%= backURL %>"
-		categorySections="<%= categorySections %>"
 		formModelBean="<%= group %>"
 		id="<%= FormNavigatorConstants.SITES_FORM %>"
-		jspPath="/html/portlet/sites_admin/site/"
 		showButtons="<%= true %>"
 	/>
 </aui:form>

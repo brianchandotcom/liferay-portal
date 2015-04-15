@@ -422,7 +422,7 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.pushFilePath(classCommandName, "function");
 
-		CommandLoggerHandler.startCommandLine(executeElement);
+		CommandLoggerHandler.startCommand(executeElement);
 		SummaryLoggerHandler.startSummary(executeElement);
 
 		Element commandElement = PoshiRunnerContext.getFunctionCommandElement(
@@ -432,7 +432,7 @@ public class PoshiRunnerExecutor {
 			parseElement(commandElement);
 		}
 		catch (Exception e) {
-			CommandLoggerHandler.failCommandLine(executeElement);
+			CommandLoggerHandler.failCommand(executeElement);
 			SummaryLoggerHandler.failSummary(executeElement, e.getMessage());
 
 			throw e;
@@ -442,7 +442,7 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.popFilePath();
 
-		CommandLoggerHandler.passCommandLine(executeElement);
+		CommandLoggerHandler.passCommand(executeElement);
 		SummaryLoggerHandler.passSummary(executeElement);
 	}
 

@@ -45,6 +45,47 @@ public final class CommandLoggerHandler {
 		}
 
 		_commandElement = element;
+
+		_commandLoggerElement = _getCommandLoggerElement(element);
+
+		_commandLogLoggerElement.addChildLoggerElement(_commandLoggerElement);
+	}
+
+	private static LoggerElement _getCommandLoggerElement(Element element) {
+		LoggerElement commandLoggerElement = new LoggerElement();
+
+		commandLoggerElement.setClassName("command-line linkable");
+		commandLoggerElement.setName("div");
+
+		commandLoggerElement.addChildLoggerElement(
+			_getLineContainerLoggerElement(element));
+
+		return commandLoggerElement;
+	}
+
+	private static LoggerElement _getLineContainerLoggerElement(
+		Element element) {
+
+		LoggerElement lineContainerLoggerElement = new LoggerElement();
+
+		lineContainerLoggerElement.setClassName("line-container");
+
+		LoggerElement miscLoggerElement = new LoggerElement();
+
+		miscLoggerElement.setClassName("misc");
+		miscLoggerElement.setName("span");
+
+		LoggerElement commandNameLoggerElement = new LoggerElement();
+
+		commandNameLoggerElement.setClassName("command-name");
+		commandNameLoggerElement.setName("span");
+		commandNameLoggerElement.setText(element.attributeValue("function"));
+
+		lineContainerLoggerElement.addChildLoggerElement(miscLoggerElement);
+		lineContainerLoggerElement.addChildLoggerElement(
+			commandNameLoggerElement);
+
+		return lineContainerLoggerElement;
 	}
 
 	private static boolean _isCommand(Element element) {
@@ -68,6 +109,7 @@ public final class CommandLoggerHandler {
 	}
 
 	private static Element _commandElement;
+	private static LoggerElement _commandLoggerElement;
 	private static final LoggerElement _commandLogLoggerElement =
 		new LoggerElement("commandLog");
 

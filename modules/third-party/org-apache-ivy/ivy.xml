@@ -17,6 +17,6 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="internal->default" name="ivy" org="org.apache.ivy" rev="2.3.0" />
+		<dependency conf="internal->default" name="ivy" org="org.apache.ivy" rev="2.4.0" />
 	</dependencies>
 </ivy-module>

@@ -16,6 +16,7 @@ package com.liferay.pmd.rules.junit;
 
 import java.util.List;
 
+import net.sourceforge.pmd.lang.ast.Node;
 import net.sourceforge.pmd.lang.java.ast.ASTBlock;
 import net.sourceforge.pmd.lang.java.ast.ASTCatchStatement;
 import net.sourceforge.pmd.lang.java.ast.ASTClassOrInterfaceDeclaration;
@@ -44,40 +45,44 @@ public class AssertFailJUnitRule extends AbstractJUnitRule {
 	}
 
 	@Override
-	public Object visit(ASTStatementExpression expression, Object data) {
-		if (isAssertFailStatement(expression)) {
-			ASTTryStatement tryStatement = expression.getFirstParentOfType(
-				ASTTryStatement.class);
+	public Object visit(
+		ASTStatementExpression astStatementExpression, Object data) {
 
-			if (tryStatement == null) {
-				addViolation(data, expression);
+		if (!isAssertFailStatement(astStatementExpression)) {
+			return data;
+		}
 
-				return data;
-			}
+		ASTTryStatement astTryStatement =
+			astStatementExpression.getFirstParentOfType(ASTTryStatement.class);
 
-			ASTCatchStatement catchStatement = expression.getFirstParentOfType(
+		if (astTryStatement == null) {
+			addViolation(data, astStatementExpression);
+
+			return data;
+		}
+
+		ASTCatchStatement astCatchStatement =
+			astStatementExpression.getFirstParentOfType(
 				ASTCatchStatement.class);
 
-			if (catchStatement != null) {
-				addViolation(data, expression);
+		if (astCatchStatement != null) {
+			addViolation(data, astStatementExpression);
 
-				return data;
-			}
+			return data;
+		}
 
-			ASTBlock tryBlock = tryStatement.getFirstChildOfType(
-				ASTBlock.class);
+		ASTBlock astBlock = astTryStatement.getFirstChildOfType(ASTBlock.class);
 
-			List<ASTStatementExpression> statementExpressions =
-				tryBlock.findDescendantsOfType(ASTStatementExpression.class);
+		List<ASTStatementExpression> astStatementExpressions =
+			astBlock.findDescendantsOfType(ASTStatementExpression.class);
 
-			ASTStatementExpression lastStatementExpression =
-				statementExpressions.get(statementExpressions.size() - 1);
+		ASTStatementExpression lastASTStatementExpression =
+			astStatementExpressions.get(astStatementExpressions.size() - 1);
 
-			if (!lastStatementExpression.equals(expression)) {
-				addViolation(data, expression);
+		if (!lastASTStatementExpression.equals(astStatementExpression)) {
+			addViolation(data, astStatementExpression);
 
-				return data;
-			}
+			return data;
 		}
 
 		return data;
@@ -86,32 +91,53 @@ public class AssertFailJUnitRule extends AbstractJUnitRule {
 	/**
 	 * Tells if the expression is an assert.fail statement
 	 */
-	private boolean isAssertFailStatement(ASTStatementExpression expression) {
-		if (expression!= null && expression.jjtGetNumChildren()>0 &&
-			(expression.jjtGetChild(0) instanceof ASTPrimaryExpression)) {
+	private boolean isAssertFailStatement(
+		ASTStatementExpression astStatementExpression) {
 
-			ASTPrimaryExpression astPrimaryExpression =
-				(ASTPrimaryExpression)expression.jjtGetChild(0);
+		if ((astStatementExpression == null) ||
+			(astStatementExpression.jjtGetNumChildren() == 0)) {
 
-			if (astPrimaryExpression.jjtGetNumChildren()> 0 &&
-				astPrimaryExpression.jjtGetChild(0)
-					instanceof ASTPrimaryPrefix) {
+			return false;
+		}
 
-				ASTPrimaryPrefix pp =
-					(ASTPrimaryPrefix)astPrimaryExpression.jjtGetChild(0);
+		Node node = astStatementExpression.jjtGetChild(0);
 
-				if (pp.jjtGetNumChildren()>0 &&
-					pp.jjtGetChild(0) instanceof ASTName) {
+		if (!(node instanceof ASTPrimaryExpression)) {
+			return false;
+		}
 
-					String img = ((ASTName)pp.jjtGetChild(0)).getImage();
+		ASTPrimaryExpression astPrimaryExpression = (ASTPrimaryExpression)node;
 
-					if ((img != null) &&
-						(img.equals("fail") || img.equals("Assert.fail"))) {
+		if (astPrimaryExpression.jjtGetNumChildren() == 0) {
+			return false;
+		}
 
-						return true;
-					}
-				}
-			}
+		node = astPrimaryExpression.jjtGetChild(0);
+
+		if (!(node instanceof ASTPrimaryPrefix)) {
+			return false;
+		}
+
+		ASTPrimaryPrefix astPrimaryPrefix = (ASTPrimaryPrefix)node;
+
+		if (astPrimaryPrefix.jjtGetNumChildren() == 0) {
+			return false;
+		}
+
+		node = astPrimaryPrefix.jjtGetChild(0);
+
+		if (!(node instanceof ASTName)) {
+			return false;
+		}
+
+		ASTName astName = (ASTName)node;
+
+		String image = astName.getImage();
+
+		if ((image != null) &&
+			(image.equals("fail") || image.equals("Assert.fail"))) {
+
+			return true;
 		}
 
 		return false;

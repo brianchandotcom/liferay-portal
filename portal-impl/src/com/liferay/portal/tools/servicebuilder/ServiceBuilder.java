@@ -4403,7 +4403,14 @@ public class ServiceBuilder {
 		fileName = StringUtil.replace(
 			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-		int pos = fileName.lastIndexOf("/src/") + 5;
+		int pos = 0;
+
+		if (fileName.contains(_implDir)) {
+			pos = _implDir.length() + 1;
+		}
+		else {
+			pos = _apiDir.length() + 1;
+		}
 
 		String fullyQualifiedClassName = StringUtil.replace(
 			fileName.substring(pos, fileName.length() - 5), CharPool.SLASH,

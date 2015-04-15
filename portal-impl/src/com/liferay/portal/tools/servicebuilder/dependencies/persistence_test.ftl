@@ -231,7 +231,7 @@ public class ${entity.name}PersistenceTest {
 				<#elseif column.type == "Date">
 					RandomTestUtil.nextDate()
 				<#elseif column.type == "Blob">
-					 new${column.methodName}Blob
+					new${column.methodName}Blob
 				<#elseif column.type == "Map">
 					new HashMap<String, Serializable>()
 				<#elseif column.type == "String">
@@ -682,7 +682,6 @@ public class ${entity.name}PersistenceTest {
 		Assert.assertEquals(new${entity.name}, ${entity.varNames}.get(new${entity.name}.getPrimaryKey()));
 	}
 
-
 	@Test
 	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
@@ -952,7 +951,7 @@ public class ${entity.name}PersistenceTest {
 				<#elseif column.type == "Map">
 					new HashMap<String, Serializable>()
 				<#elseif column.type == "String">
-	                RandomTestUtil.randomString()
+					RandomTestUtil.randomString()
 				</#if>
 
 				);
@@ -1197,7 +1196,7 @@ public class ${entity.name}PersistenceTest {
 						<#elseif column.type == "Date">
 							RandomTestUtil.nextDate()
 						<#elseif column.type == "String">
-	                        RandomTestUtil.randomString()
+							RandomTestUtil.randomString()
 						<#elseif column.type == "Map">
 							new HashMap();
 						</#if>

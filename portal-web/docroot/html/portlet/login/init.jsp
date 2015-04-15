@@ -50,6 +50,8 @@ page import="com.liferay.portal.security.auth.AuthException" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinition" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinitionFactory" %><%@
 page import="com.liferay.portal.security.auth.FullNameField" %><%@
+page import="com.liferay.portal.security.auth.ScreenNameValidator" %><%@
+page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
 page import="com.liferay.portlet.login.util.LoginUtil" %>
 
 <%

@@ -16,6 +16,8 @@ package com.liferay.portal.security.auth.bundle.screennamevalidatorfactory;
 
 import com.liferay.portal.security.auth.ScreenNameValidator;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -26,6 +28,16 @@ import org.osgi.service.component.annotations.Component;
 	property = {"service.ranking:Integer=" + Integer.MAX_VALUE}
 )
 public class TestScreenNameValidator implements ScreenNameValidator {
+
+	@Override
+	public String getDescription(Locale locale) {
+		return locale.toString();
+	}
+
+	@Override
+	public String getJSValidation() {
+		return "testJSValidation";
+	}
 
 	@Override
 	public boolean validate(long companyId, String screenName) {

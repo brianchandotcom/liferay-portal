@@ -2639,6 +2639,8 @@ public interface PropsKeys {
 
 	public static final String USERS_SCREEN_NAME_GENERATOR = "users.screen.name.generator";
 
+	public static final String USERS_SCREEN_NAME_SPECIAL_CHARACTERS = "users.screen.name.special.characters";
+
 	public static final String USERS_SCREEN_NAME_VALIDATOR = "users.screen.name.validator";
 
 	public static final String USERS_SEARCH_WITH_INDEX = "users.search.with.index";

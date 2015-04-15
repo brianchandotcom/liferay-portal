@@ -97,16 +97,6 @@ else {
 
 			<liferay-ui:message arguments="<%= sb.toString() %>" key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields" translateArguments="<%= false %>" />
 		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= UserScreenNameException.MustBeAlphaNumeric.class %>" focusField="screenName">
-
-			<%
-			UserScreenNameException.MustBeAlphaNumeric usn = (UserScreenNameException.MustBeAlphaNumeric)errorException;
-			%>
-
-			<liferay-ui:message arguments="<%= usn.getValidSpecialCharsAsString() %>" key="please-enter-a-valid-alphanumeric-screen-name" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
 		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeDuplicate.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken" />
 		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNull.class %>" focusField="screenName" message="the-screen-name-cannot-be-blank" />
 		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNumeric.class %>" focusField="screenName" message="the-screen-name-cannot-contain-only-numeric-values" />
@@ -114,7 +104,16 @@ else {
 		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeReservedForAnonymous.class %>" focusField="screenName" message="the-screen-name-you-requested-is-reserved-for-the-anonymous-user" />
 		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeUsedByGroup.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken-by-a-site" />
 		<liferay-ui:error exception="<%= UserScreenNameException.MustProduceValidFriendlyURL.class %>" focusField="screenName" message="the-screen-name-you-requested-must-produce-a-valid-friendly-url" />
-		<liferay-ui:error exception="<%= UserScreenNameException.MustValidate.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />
+		<liferay-ui:error exception="<%= UserScreenNameException.MustValidate.class %>" focusField="screenName">
+
+			<%
+			UserScreenNameException.MustValidate usne = (UserScreenNameException.MustValidate)errorException;
+
+			String key = usne.screenNameValidator.getDescription(locale);
+			%>
+
+			<liferay-ui:message key="<%= key %>" />
+		</liferay-ui:error>
 
 		<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || (selUser != null) %>">
 			<c:choose>
@@ -123,7 +122,16 @@ else {
 				</c:when>
 				<c:otherwise>
 					<aui:input name="screenName">
-						<aui:validator name="alphanum" />
+
+						<%
+						ScreenNameValidator screenNameValidator = ScreenNameValidatorFactory.getInstance();
+						%>
+
+						<c:if test="<%= !screenNameValidator.getJSValidation().isEmpty() %>">
+							<aui:validator errorMessage="<%= screenNameValidator.getDescription(locale) %>" name="custom">
+								<%= screenNameValidator.getJSValidation() %>
+							</aui:validator>
+						</c:if>
 					</aui:input>
 				</c:otherwise>
 			</c:choose>

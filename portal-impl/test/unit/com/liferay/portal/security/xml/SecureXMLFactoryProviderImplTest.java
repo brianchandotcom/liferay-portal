@@ -54,10 +54,8 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 	public static void setUpClass() throws Exception {
 		_xmlBombBillionLaughsXML = readDependency(
 			"xml-bomb-billion-laughs.xml");
-
 		_xmlBombQuadraticBlowupXML = readDependency(
 			"xml-bomb-quadratic-blowup.xml");
-
 		_xxeGeneralEntitiesXML = readDependency("xxe-general-entities.xml");
 		_xxeGeneralEntitiesXML2 = readDependency("xxe-general-entities-2.xml");
 		_xxeParameterEntitiesXML = readDependency("xxe-parameter-entities.xml");
@@ -73,6 +71,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 	@Test
 	public void testNewDocumentBuilderFactory() throws Throwable {
 		XMLSecurityTest documentBuilderTestCase = new XMLSecurityTest() {
+
 			@Override
 			public void run(String xml) throws Exception {
 				DocumentBuilderFactory documentBuilderFactory =
@@ -83,6 +82,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 
 				documentBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 			}
+
 		};
 
 		// billion laughs
@@ -172,6 +172,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 	@Test
 	public void testNewXMLInputFactory() throws Throwable {
 		XMLSecurityTest xmlInputFactoryTest = new XMLSecurityTest() {
+
 			@Override
 			public void run(String xml) throws Exception {
 				XMLEventReader xmlEventReader =
@@ -182,6 +183,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 					xmlEventReader.next();
 				}
 			}
+
 		};
 
 		// billion laughs
@@ -264,6 +266,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 	@Test
 	public void testNewXMLReader() throws Throwable {
 		XMLSecurityTest xmlReaderTest = new XMLSecurityTest() {
+
 			@Override
 			public void run(String xml) throws Exception {
 				XMLReader xmlReader = _secureXMLFactoryProvider.newXMLReader();
@@ -273,23 +276,28 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 						((StripDoctypeXMLReader)xmlReader).getXmlReader();
 				}
 
-				xmlReader.setContentHandler(new DefaultHandler() {
-					int contentLenght = 0;
+				xmlReader.setContentHandler(
+					new DefaultHandler() {
 
-					@Override
-					public void characters(char[] ch, int start, int length) {
-						contentLenght += length;
+						@Override
+						public void characters(
+							char[] ch, int start, int length) {
 
-						// Test for 10 MB only
+							_contentLenght += length;
 
-						if (contentLenght > 10*1024*1024) {
-							throw new RuntimeException(new OutOfMemoryError());
+							if (_contentLenght > (1024 * 1024 * 10)) {
+								throw new RuntimeException(
+									new OutOfMemoryError());
+							}
 						}
-					}
-				});
+
+						private int _contentLenght = 0;
+
+					});
 
 				xmlReader.parse(new InputSource(new StringReader(xml)));
 			}
+
 		};
 
 		// billion laughs
@@ -393,18 +401,21 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 				Assert.fail(failMessage);
 			}
 		}
-		catch (Throwable e) {
+		catch (Throwable t) {
 			if (expectedException == null) {
-				throw e;
+				throw t;
 			}
 
-			Throwable cause = e;
+			Throwable cause = t;
+
 			while (cause.getCause() != null) {
 				cause = cause.getCause();
 			}
 
-			if (!cause.getClass().isAssignableFrom(expectedException)) {
-				throw e;
+			Class<?> causeClass = cause.getClass();
+
+			if (!causeClass.isAssignableFrom(expectedException)) {
+				throw t;
 			}
 		}
 	}

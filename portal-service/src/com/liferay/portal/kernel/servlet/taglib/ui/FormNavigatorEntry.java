@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Sergio González
  */
-public interface FormNavigatorEntry {
+public interface FormNavigatorEntry<T> {
 
 	public String getCategoryKey();
 
@@ -34,7 +34,7 @@ public interface FormNavigatorEntry {
 
 	public String getLabel();
 
-	public boolean isVisible(User user, Object formModelBean);
+	public boolean isVisible(User user, T formModelBean);
 
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException;

@@ -33,39 +33,40 @@ import java.util.List;
  */
 public class FormNavigatorEntryUtil {
 
-	public static List<FormNavigatorEntry> getFormNavigatorEntries(
+	public static <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
 		String formNavigatorId, String categoryKey, User user,
-		Object formModelBean) {
+		T formModelBean) {
 
-		List<FormNavigatorEntry> formNavigatorEntries =
-			_instance._formNavigatorEntries.getService(
+		List<FormNavigatorEntry<T>> formNavigatorEntries =
+			(List)_instance._formNavigatorEntries.getService(
 				_getKey(formNavigatorId, categoryKey));
 
 		return filterVisibleFormNavigatorEntries(
 			formNavigatorEntries, user, formModelBean);
 	}
 
-	public static List<FormNavigatorEntry> getFormNavigatorEntries(
-		String formNavigatorId, User user, Object formModelBean) {
+	public static <T> List<FormNavigatorEntry<T>> getFormNavigatorEntries(
+		String formNavigatorId, User user, T formModelBean) {
 
-		List<FormNavigatorEntry> formNavigatorEntries =
-			_instance._formNavigatorEntries.getService(
+		List<FormNavigatorEntry<T>> formNavigatorEntries =
+			(List)_instance._formNavigatorEntries.getService(
 				_getKey(formNavigatorId, null));
 
 		return filterVisibleFormNavigatorEntries(
 			formNavigatorEntries, user, formModelBean);
 	}
 
-	public static String[] getKeys(
+	public static <T> String[] getKeys(
 		String formNavigatorId, String categoryKey, User user,
-		Object formModelBean) {
+		T formModelBean) {
 
 		List<String> keys = new ArrayList<>();
 
-		List<FormNavigatorEntry> formNavigatorEntries = getFormNavigatorEntries(
-			formNavigatorId, categoryKey, user, formModelBean);
+		List<FormNavigatorEntry<T>> formNavigatorEntries =
+			getFormNavigatorEntries(
+				formNavigatorId, categoryKey, user, formModelBean);
 
-		for (FormNavigatorEntry formNavigatorEntry : formNavigatorEntries) {
+		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
 			String key = formNavigatorEntry.getKey();
 
 			if (Validator.isNotNull(key)) {
@@ -76,16 +77,17 @@ public class FormNavigatorEntryUtil {
 		return keys.toArray(new String[keys.size()]);
 	}
 
-	public static String[] getLabels(
+	public static <T> String[] getLabels(
 		String formNavigatorId, String categoryKey, User user,
-		Object formModelBean) {
+		T formModelBean) {
 
 		List<String> labels = new ArrayList<>();
 
-		List<FormNavigatorEntry> formNavigatorEntries = getFormNavigatorEntries(
-			formNavigatorId, categoryKey, user, formModelBean);
+		List<FormNavigatorEntry<T>> formNavigatorEntries =
+			getFormNavigatorEntries(
+				formNavigatorId, categoryKey, user, formModelBean);
 
-		for (FormNavigatorEntry formNavigatorEntry : formNavigatorEntries) {
+		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
 			String label = formNavigatorEntry.getLabel();
 
 			if (Validator.isNotNull(label)) {
@@ -96,17 +98,19 @@ public class FormNavigatorEntryUtil {
 		return labels.toArray(new String[labels.size()]);
 	}
 
-	protected static List<FormNavigatorEntry> filterVisibleFormNavigatorEntries(
-		List<FormNavigatorEntry> formNavigatorEntries, User user,
-		Object formModelBean) {
+	protected static <T> List<FormNavigatorEntry<T>>
+		filterVisibleFormNavigatorEntries(
+			List<FormNavigatorEntry<T>> formNavigatorEntries, User user,
+			T formModelBean) {
 
-		List<FormNavigatorEntry> filterFormNavigatorEntries = new ArrayList<>();
+		List<FormNavigatorEntry<T>> filterFormNavigatorEntries =
+			new ArrayList<>();
 
 		if (ListUtil.isEmpty(formNavigatorEntries)) {
 			return filterFormNavigatorEntries;
 		}
 
-		for (FormNavigatorEntry formNavigatorEntry : formNavigatorEntries) {
+		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
 			if (formNavigatorEntry.isVisible(user, formModelBean)) {
 				filterFormNavigatorEntries.add(formNavigatorEntry);
 			}

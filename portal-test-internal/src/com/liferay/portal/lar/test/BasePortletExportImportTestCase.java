@@ -318,9 +318,24 @@ public abstract class BasePortletExportImportTestCase
 
 		MapUtil.merge(getImportParameterMap(), importParameterMap);
 
+		settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
+				user.getUserId(), importedLayout.getPlid(),
+				importedGroup.getGroupId(), portletId, importParameterMap,
+				StringPool.BLANK, user.getLocale(), user.getTimeZone(),
+				StringPool.BLANK);
+
+		exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					user.getUserId(), importedGroup.getGroupId(),
+					StringPool.BLANK, StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
 		LayoutLocalServiceUtil.importPortletDataDeletions(
-			TestPropsValues.getUserId(), importedLayout.getPlid(),
-			importedGroup.getGroupId(), portletId, importParameterMap, larFile);
+			exportImportConfiguration, larFile);
 
 		LayoutLocalServiceUtil.importPortletInfo(
 			TestPropsValues.getUserId(), importedLayout.getPlid(),

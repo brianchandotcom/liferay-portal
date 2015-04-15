@@ -101,9 +101,7 @@ public abstract class ScriptingExecutorTestCase extends PowerMockito {
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/" + name);
 
-		String script = StringUtil.read(inputStream);
-
-		return script;
+		return StringUtil.read(inputStream);
 	}
 
 	@Mock

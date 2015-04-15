@@ -117,7 +117,8 @@ public class RoleFinderTest {
 
 		Assert.assertTrue(
 			"The method findByC_N_S_P_A should have returned the role " +
-				_arbitraryRole.getRoleId(), exists);
+				_arbitraryRole.getRoleId(),
+			exists);
 	}
 
 	@SuppressWarnings("PMD.JUnitUseAssertFailPropertly")

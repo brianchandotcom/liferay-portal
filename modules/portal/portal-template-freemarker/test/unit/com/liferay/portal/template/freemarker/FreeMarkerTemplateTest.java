@@ -273,8 +273,8 @@ public class FreeMarkerTemplateTest {
 
 			Assert.fail();
 		}
-		catch (TemplateException e) {
-			String message = e.getMessage();
+		catch (TemplateException te) {
+			String message = te.getMessage();
 
 			Assert.assertTrue(message.contains(_WRONG_ERROR_TEMPLATE_ID));
 		}

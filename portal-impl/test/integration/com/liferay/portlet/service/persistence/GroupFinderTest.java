@@ -126,7 +126,8 @@ public class GroupFinderTest {
 
 		Assert.assertTrue(
 			"The method findByC_C_N_D should have returned the group " +
-				_group.getGroupId(), exists);
+				_group.getGroupId(),
+			exists);
 	}
 
 	@Test
@@ -150,7 +151,8 @@ public class GroupFinderTest {
 
 		Assert.assertTrue(
 			"The method findByC_C_N_D should have returned the group " +
-				_group.getGroupId(), exists);
+				_group.getGroupId(),
+			exists);
 	}
 
 	@Test

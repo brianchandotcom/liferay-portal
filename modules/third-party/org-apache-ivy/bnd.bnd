@@ -1,5 +1,5 @@
 Bundle-SymbolicName: org.apache.ivy
-Bundle-Version: 2.3.0.LIFERAY-PATCHED-1
+Bundle-Version: 2.4.0.LIFERAY-PATCHED-1
 Export-Package:\
 	fr.jayasoft.ivy.ant,\
 	org.apache.ivy.*

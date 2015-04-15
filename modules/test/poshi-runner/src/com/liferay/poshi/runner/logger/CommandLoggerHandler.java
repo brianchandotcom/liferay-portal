@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.runner.util.Validator;
+
 import org.dom4j.Element;
 
 /**
@@ -21,15 +23,55 @@ import org.dom4j.Element;
  */
 public final class CommandLoggerHandler {
 
-	public static void failCommandLine(Element element) {
+	public static void failCommand(Element element) {
+		if (!_isCurrentCommand(element)) {
+			return;
+		}
+
+		_commandElement = null;
 	}
 
-	public static void passCommandLine(Element element) {
+	public static void passCommand(Element element) {
+		if (!_isCurrentCommand(element)) {
+			return;
+		}
+
+		_commandElement = null;
 	}
 
-	public static void startCommandLine(Element element) {
+	public static void startCommand(Element element) {
+		if (!_isCommand(element)) {
+			return;
+		}
+
+		_commandElement = element;
 	}
 
+	private static boolean _isCommand(Element element) {
+		if (!Validator.equals(element.getName(), "execute")) {
+			return false;
+		}
+
+		if (Validator.isNull(element.attributeValue("function"))) {
+			return false;
+		}
+
+		if (_commandElement != null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static boolean _isCurrentCommand(Element element) {
+		if (element == _commandElement) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static Element _commandElement = null;
 	private static final LoggerElement _commandLogLoggerElement =
 		new LoggerElement("commandLog");
 

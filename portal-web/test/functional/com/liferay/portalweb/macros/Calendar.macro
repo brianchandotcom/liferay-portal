@@ -692,7 +692,7 @@
 
 		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_WEEK_NUMBER" />
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="Pause" locator1="30000" />
+		<execute function="Pause" locator1="3000" />
 
 		<var name="key_weekNumber" value="${weekNumber?increment()}" />
 

@@ -560,15 +560,17 @@ public class PoshiRunnerValidation {
 				"Invalid testcase class " + className);
 		}
 
-		String commandElementKey = "testcase#" + testName;
+		if (testName.contains("#")) {
+			String commandElementKey = "testcase#" + testName;
 
-		if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
-			String commandName =
-				PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
-					testName);
+			if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
+				String commandName =
+					PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+						testName);
 
-			throw new PoshiRunnerException(
-				"Invalid testcase command " + commandName);
+				throw new PoshiRunnerException(
+					"Invalid testcase command " + commandName);
+			}
 		}
 	}
 

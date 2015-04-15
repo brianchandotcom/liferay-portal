@@ -52,7 +52,7 @@ public class PoshiRunner {
 		else {
 			String className = testName;
 
-			Element rootElement = PoshiRunnerContext.getTestcaseRootElement(
+			Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
 				className);
 
 			List<Element> commandElements = rootElement.elements("command");
@@ -107,7 +107,7 @@ public class PoshiRunner {
 	private void _runClassCommandName(String classCommandName)
 		throws Exception {
 
-		Element rootElement = PoshiRunnerContext.getTestcaseRootElement(
+		Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
 			_testClassName);
 
 		List<Element> varElements = rootElement.elements("var");
@@ -121,12 +121,12 @@ public class PoshiRunner {
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
-		Element commandElement = PoshiRunnerContext.getTestcaseCommandElement(
+		Element commandElement = PoshiRunnerContext.getTestCaseCommandElement(
 			classCommandName);
 
 		if (commandElement != null) {
 			PoshiRunnerStackTraceUtil.pushFilePath(
-				classCommandName, "testcase");
+				classCommandName, "test-case");
 
 			PoshiRunnerExecutor.parseElement(commandElement);
 

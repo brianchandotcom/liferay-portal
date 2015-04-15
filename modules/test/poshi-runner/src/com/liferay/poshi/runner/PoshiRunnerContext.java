@@ -139,12 +139,12 @@ public class PoshiRunnerContext {
 		return _seleniumParameterCounts.get(commandName);
 	}
 
-	public static Element getTestcaseCommandElement(String classCommandName) {
-		return _commandElements.get("testcase#" + classCommandName);
+	public static Element getTestCaseCommandElement(String classCommandName) {
+		return _commandElements.get("test-case#" + classCommandName);
 	}
 
-	public static Element getTestcaseRootElement(String className) {
-		return _rootElements.get("testcase#" + className);
+	public static Element getTestCaseRootElement(String className) {
+		return _rootElements.get("test-case#" + className);
 	}
 
 	public static boolean isCommandElement(String commandElementKey) {
@@ -302,6 +302,10 @@ public class PoshiRunnerContext {
 
 			if (classType.equals("action") || classType.equals("function") ||
 				classType.equals("macro") || classType.equals("testcase")) {
+
+				if (classType.equals("testcase")) {
+					classType = "test-case";
+				}
 
 				Element rootElement =
 					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);

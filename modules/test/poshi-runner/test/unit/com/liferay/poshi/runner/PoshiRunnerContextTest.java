@@ -156,7 +156,7 @@ public class PoshiRunnerContextTest extends TestCase {
 
 	@Test
 	public void testGetTestcaseCommandElement() {
-		Element element = PoshiRunnerContext.getTestcaseCommandElement(
+		Element element = PoshiRunnerContext.getTestCaseCommandElement(
 			"Testcase#test");
 
 		Assert.assertEquals(
@@ -166,7 +166,7 @@ public class PoshiRunnerContextTest extends TestCase {
 
 	@Test
 	public void testGetTestcaseRootElement() {
-		Element element = PoshiRunnerContext.getTestcaseRootElement("Testcase");
+		Element element = PoshiRunnerContext.getTestCaseRootElement("Testcase");
 
 		Assert.assertEquals(
 			"getTestcaseRootElement is failing", "definition",

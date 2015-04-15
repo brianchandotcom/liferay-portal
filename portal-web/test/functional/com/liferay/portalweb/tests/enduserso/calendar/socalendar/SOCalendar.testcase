@@ -1512,7 +1512,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addRSVPPG">
+		<execute macro="CalendarEvent#addRSVP">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="rsvp" value="Yes" />
 		</execute>

@@ -51,6 +51,7 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
+import com.liferay.portlet.journal.util.JournalContentUtil;
 
 import java.util.List;
 
@@ -314,6 +315,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, articleElement);
 		}
+
+		JournalContentUtil.clearCache();
 
 		return portletPreferences;
 	}

@@ -29,7 +29,7 @@ import net.sourceforge.pmd.lang.java.rule.junit.AbstractJUnitRule;
 /**
  * @author Cristina González
  */
-public class JUnitUseAssertFailPropertly extends AbstractJUnitRule {
+public class AssertFailJUnitRule extends AbstractJUnitRule {
 
 	@Override
 	public Object visit(

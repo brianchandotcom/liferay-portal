@@ -10,10 +10,10 @@
 		These rules deal with different problems that can occur with JUnit tests in Liferay.
 	</description>
 	<rule
-			class="com.liferay.pmd.rules.junit.JUnitUseAssertFailPropertly"
+			class="com.liferay.pmd.rules.junit.AssertFailJUnitRule"
 			language="java"
 			message="Don't declare Assert.fail inside a catch statement"
-			name="JUnitUseAssertFailPropertly"
+			name="AssertFailJUnitRule"
 			since="0.1">
 		<description>
 			Detect when a Assert.fail is used improperly.

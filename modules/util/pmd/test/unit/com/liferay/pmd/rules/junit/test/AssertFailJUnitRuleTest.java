@@ -19,11 +19,11 @@ import net.sourceforge.pmd.testframework.SimpleAggregatorTst;
 /**
  * @author Cristina González
  */
-public class JUnitUseAssertFailPropertlyTest extends SimpleAggregatorTst {
+public class AssertFailJUnitRuleTest extends SimpleAggregatorTst {
 
 	@Override
 	public void setUp() {
-		addRule(_RULESET, "JUnitUseAssertFailPropertly");
+		addRule(_RULESET, "AssertFailJUnitRule");
 	}
 
 	private static final String _RULESET = "java-junit-liferay";

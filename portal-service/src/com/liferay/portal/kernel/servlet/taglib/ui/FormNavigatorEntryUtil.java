@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -34,34 +35,36 @@ import javax.servlet.http.HttpServletRequest;
 public class FormNavigatorEntryUtil {
 
 	public static List<FormNavigatorEntry> getFormNavigatorEntries(
-		String formNavigatorId, HttpServletRequest request) {
+		String formNavigatorId, User user, Object formModelBean) {
 
 		List<FormNavigatorEntry> formNavigatorEntries =
 			_instance._formNavigatorEntries.getService(
 				_getKey(formNavigatorId, null));
 
-		return filterVisibleFormNavigatorEntries(formNavigatorEntries, request);
+		return filterVisibleFormNavigatorEntries(
+			formNavigatorEntries, user, formModelBean);
 	}
 
 	public static List<FormNavigatorEntry> getFormNavigatorEntries(
-		String formNavigatorId, String categoryKey,
-		HttpServletRequest request) {
+		String formNavigatorId, String categoryKey, User user,
+		Object formModelBean) {
 
 		List<FormNavigatorEntry> formNavigatorEntries =
 			_instance._formNavigatorEntries.getService(
 				_getKey(formNavigatorId, categoryKey));
 
-		return filterVisibleFormNavigatorEntries(formNavigatorEntries, request);
+		return filterVisibleFormNavigatorEntries(
+			formNavigatorEntries, user, formModelBean);
 	}
 
 	public static String[] getKeys(
-		String formNavigatorId, String categoryKey,
-		HttpServletRequest request) {
+		String formNavigatorId, String categoryKey, User user,
+		Object formModelBean) {
 
 		List<String> keys = new ArrayList<>();
 
 		List<FormNavigatorEntry> formNavigatorEntries = getFormNavigatorEntries(
-			formNavigatorId, categoryKey, request);
+			formNavigatorId, categoryKey, user, formModelBean);
 
 		for (FormNavigatorEntry formNavigatorEntry : formNavigatorEntries) {
 			String key = formNavigatorEntry.getKey();
@@ -75,13 +78,13 @@ public class FormNavigatorEntryUtil {
 	}
 
 	public static String[] getLabels(
-		String formNavigatorId, String categoryKey,
-		HttpServletRequest request) {
+		String formNavigatorId, String categoryKey, User user,
+		Object formModelBean) {
 
 		List<String> labels = new ArrayList<>();
 
 		List<FormNavigatorEntry> formNavigatorEntries = getFormNavigatorEntries(
-			formNavigatorId, categoryKey, request);
+			formNavigatorId, categoryKey, user, formModelBean);
 
 		for (FormNavigatorEntry formNavigatorEntry : formNavigatorEntries) {
 			String label = formNavigatorEntry.getLabel();
@@ -95,13 +98,13 @@ public class FormNavigatorEntryUtil {
 	}
 
 	protected static List<FormNavigatorEntry> filterVisibleFormNavigatorEntries(
-		List<FormNavigatorEntry> formNavigatorEntries,
-		HttpServletRequest request) {
+		List<FormNavigatorEntry> formNavigatorEntries, User user,
+		Object formModelBean) {
 
 		List<FormNavigatorEntry> filterFormNavigatorEntries = new ArrayList<>();
 
 		for (FormNavigatorEntry formNavigatorEntry : formNavigatorEntries) {
-			if (formNavigatorEntry.isVisible(request)) {
+			if (formNavigatorEntry.isVisible(user, formModelBean)) {
 				filterFormNavigatorEntries.add(formNavigatorEntry);
 			}
 		}

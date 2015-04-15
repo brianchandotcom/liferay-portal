@@ -1550,6 +1550,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The bean edited in the form.</description>
+			<name>formModelBean</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A name for the form.</description>
 			<name>formName</name>
 			<required>false</required>

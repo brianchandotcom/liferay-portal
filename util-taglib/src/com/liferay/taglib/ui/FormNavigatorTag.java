@@ -17,6 +17,8 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +58,10 @@ public class FormNavigatorTag extends IncludeTag {
 		_displayStyle = displayStyle;
 	}
 
+	public void setFormModelBean(Object formModelBean) {
+		_formModelBean = formModelBean;
+	}
+
 	public void setFormName(String formName) {
 		_formName = formName;
 	}
@@ -90,6 +96,7 @@ public class FormNavigatorTag extends IncludeTag {
 		_categoryNames = null;
 		_categorySections = null;
 		_displayStyle = "form";
+		_formModelBean = null;
 		_formName = "fm";
 		_htmlBottom = null;
 		_htmlTop = null;
@@ -114,10 +121,13 @@ public class FormNavigatorTag extends IncludeTag {
 		return FormNavigatorCategoryUtil.getLabels(_id);
 	}
 
-	protected String[][] getCategorySectionKeys(HttpServletRequest request) {
+	protected String[][] getCategorySectionKeys() {
 		if (_categorySections != null) {
 			return _categorySections;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String[] categoryKeys = getCategoryKeys();
 
@@ -128,16 +138,20 @@ public class FormNavigatorTag extends IncludeTag {
 
 			categorySectionKeys = ArrayUtil.append(
 				categorySectionKeys,
-				FormNavigatorEntryUtil.getKeys(_id, categoryKey, request));
+				FormNavigatorEntryUtil.getKeys(
+					_id, categoryKey, themeDisplay.getUser(), _formModelBean));
 		}
 
 		return categorySectionKeys;
 	}
 
-	protected String[][] getCategorySectionLabels(HttpServletRequest request) {
+	protected String[][] getCategorySectionLabels() {
 		if (_categorySections != null) {
 			return _categorySections;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String[] categoryKeys = getCategoryKeys();
 
@@ -148,7 +162,8 @@ public class FormNavigatorTag extends IncludeTag {
 
 			categorySectionLabels = ArrayUtil.append(
 				categorySectionLabels,
-				FormNavigatorEntryUtil.getLabels(_id, categoryKey, request));
+				FormNavigatorEntryUtil.getLabels(
+					_id, categoryKey, themeDisplay.getUser(), _formModelBean));
 		}
 
 		return categorySectionLabels;
@@ -180,10 +195,10 @@ public class FormNavigatorTag extends IncludeTag {
 			"liferay-ui:form-navigator:categoryLabels", getCategoryLabels());
 		request.setAttribute(
 			"liferay-ui:form-navigator:categorySectionKeys",
-			getCategorySectionKeys(request));
+			getCategorySectionKeys());
 		request.setAttribute(
 			"liferay-ui:form-navigator:categorySectionLabels",
-			getCategorySectionLabels(request));
+			getCategorySectionLabels());
 		request.setAttribute(
 			"liferay-ui:form-navigator:displayStyle", _displayStyle);
 		request.setAttribute("liferay-ui:form-navigator:formName", _formName);
@@ -207,6 +222,7 @@ public class FormNavigatorTag extends IncludeTag {
 	private String[] _categoryNames;
 	private String[][] _categorySections;
 	private String _displayStyle = "form";
+	private Object _formModelBean;
 	private String _formName = "fm";
 	private String _htmlBottom;
 	private String _htmlTop;

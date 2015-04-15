@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import com.liferay.portal.model.User;
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +34,7 @@ public interface FormNavigatorEntry {
 
 	public String getLabel();
 
-	public boolean isVisible(HttpServletRequest request);
+	public boolean isVisible(User user, Object formModelBean);
 
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException;

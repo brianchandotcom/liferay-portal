@@ -54,8 +54,8 @@ public final class CommandLoggerHandler {
 	private static LoggerElement _getCommandLoggerElement(Element element) {
 		LoggerElement commandLoggerElement = new LoggerElement();
 
-		commandLoggerElement.setClassName("command-line linkable");
-		commandLoggerElement.setName("div");
+		commandLoggerElement.setClassName("line-group linkable");
+		commandLoggerElement.setName("li");
 
 		commandLoggerElement.addChildLoggerElement(
 			_getLineContainerLoggerElement(element));

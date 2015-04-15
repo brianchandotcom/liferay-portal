@@ -14,13 +14,8 @@
 
 package com.liferay.sass.compiler.ruby;
 
-import java.io.File;
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import jodd.io.ZipUtil;
 
 import org.jruby.RubyInstanceConfig;
 import org.jruby.RubyInstanceConfig.CompileMode;
@@ -88,7 +83,7 @@ public class JRubyScriptingContainer {
 	private static final String _RUBY_LIB_PATH =
 		System.getProperty("java.io.tmpdir") + "/liferay/ruby";
 
-	private List<String> _loadPaths;
+	private final List<String> _loadPaths;
 	private final ScriptingContainer _scriptingContainer;
 
 }

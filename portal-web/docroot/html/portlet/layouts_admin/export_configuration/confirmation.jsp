@@ -95,9 +95,8 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 							StringBundler sb = new StringBundler();
 
 							long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-							boolean privateLayout = MapUtil.getBoolean(settingsMap, "privateLayout");
 
-							long[] allLayoutIds = ExportImportHelperUtil.getAllLayoutIds(sourceGroupId, privateLayout);
+							long[] allLayoutIds = ExportImportHelperUtil.getAllLayoutIds(sourceGroupId);
 
 							if (ArrayUtil.containsAll(layoutIds, allLayoutIds)) {
 								sb.append(LanguageUtil.get(locale, "all-pages"));

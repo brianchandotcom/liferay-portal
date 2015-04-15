@@ -46,8 +46,8 @@
 			"instanceId": "nast",
 			"name": "Link_to_Page5224",
 			"value": {
-				"en_US": "{\"groupId\":10192,\"layoutId\":1,\"privateLayout\":false}",
-				"pt_BR": "{\"groupId\":10192,\"layoutId\":2,\"privateLayout\":false}"
+				"en_US": "{\"groupId\":10192,\"layoutId\":1}",
+				"pt_BR": "{\"groupId\":10192,\"layoutId\":2}"
 			}
 		}, 
 		{

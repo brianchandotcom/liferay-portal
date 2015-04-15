@@ -48,15 +48,14 @@ public class LayoutListUtil {
 			ThreadLocalCacheManager.getThreadLocalCache(
 				Lifecycle.REQUEST, LayoutListUtil.class.getName());
 
-		String cacheKey = buildCacheKey(
-			groupId, privateLayout, rootNodeName, locale);
+		String cacheKey = buildCacheKey(groupId, rootNodeName, locale);
 
 		List<LayoutDescription> layoutDescriptions = threadLocalCache.get(
 			cacheKey);
 
 		if (layoutDescriptions == null) {
 			layoutDescriptions = doGetLayoutDescriptions(
-				groupId, privateLayout, rootNodeName, locale);
+				groupId, rootNodeName, locale);
 
 			threadLocalCache.put(cacheKey, layoutDescriptions);
 		}
@@ -65,14 +64,11 @@ public class LayoutListUtil {
 	}
 
 	protected static String buildCacheKey(
-		long groupId, boolean privateLayout, String rootNodeName,
-		Locale locale) {
+		long groupId, String rootNodeName, Locale locale) {
 
 		StringBundler sb = new StringBundler(7);
 
 		sb.append(StringUtil.toHexString(groupId));
-		sb.append(StringPool.POUND);
-		sb.append(privateLayout);
 		sb.append(StringPool.POUND);
 		sb.append(rootNodeName);
 		sb.append(StringPool.POUND);
@@ -82,13 +78,12 @@ public class LayoutListUtil {
 	}
 
 	protected static List<LayoutDescription> doGetLayoutDescriptions(
-		long groupId, boolean privateLayout, String rootNodeName,
-		Locale locale) {
+		long groupId, String rootNodeName, Locale locale) {
 
 		List<LayoutDescription> layoutDescriptions = new ArrayList<>();
 
 		List<Layout> layouts = new ArrayList<>(
-			LayoutLocalServiceUtil.getLayouts(groupId, privateLayout));
+			LayoutLocalServiceUtil.getLayouts(groupId));
 
 		Deque<ObjectValuePair<Layout, Integer>> deque = new LinkedList<>();
 

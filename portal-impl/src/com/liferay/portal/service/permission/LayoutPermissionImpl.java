@@ -77,14 +77,11 @@ public class LayoutPermissionImpl
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String actionId)
+			PermissionChecker permissionChecker, long groupId, long layoutId,
+			String actionId)
 		throws PortalException {
 
-		if (!contains(
-				permissionChecker, groupId, privateLayout, layoutId,
-				actionId)) {
-
+		if (!contains(permissionChecker, groupId, layoutId, actionId)) {
 			throw new PrincipalException();
 		}
 	}
@@ -168,21 +165,9 @@ public class LayoutPermissionImpl
 		return contains(permissionChecker, layout, actionId);
 	}
 
-	@Override
-	public boolean contains(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String actionId)
-		throws PortalException {
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			groupId, privateLayout, layoutId);
-
-		return contains(permissionChecker, layout, actionId);
-	}
-
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
-	 *             long, boolean, long, String)}
+	 *             long, long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -192,8 +177,18 @@ public class LayoutPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker, groupId, privateLayout, layoutId, actionId);
+		return contains(permissionChecker, groupId, layoutId, actionId);
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, long layoutId,
+			String actionId)
+		throws PortalException {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(groupId, layoutId);
+
+		return contains(permissionChecker, layout, actionId);
 	}
 
 	@Override
@@ -308,8 +303,7 @@ public class LayoutPermissionImpl
 
 			while (parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 				Layout parentLayout = LayoutLocalServiceUtil.getLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					parentLayoutId);
+					layout.getGroupId(), parentLayoutId);
 
 				if (contains(permissionChecker, parentLayout, actionId)) {
 					return true;
@@ -328,10 +322,6 @@ public class LayoutPermissionImpl
 		if (resourcePermissionsCount == 0) {
 			boolean addGroupPermission = true;
 			boolean addGuestPermission = true;
-
-			if (layout.isPrivateLayout()) {
-				addGuestPermission = false;
-			}
 
 			ResourceLocalServiceUtil.addResources(
 				layout.getCompanyId(), layout.getGroupId(), 0,
@@ -448,19 +438,6 @@ public class LayoutPermissionImpl
 			if (!groupUser.isActive()) {
 				return false;
 			}
-
-			if (layout.isPrivateLayout()) {
-				if (GroupPermissionUtil.contains(
-						permissionChecker, group, ActionKeys.MANAGE_LAYOUTS) ||
-					UserPermissionUtil.contains(
-						permissionChecker, groupUserId,
-						groupUser.getOrganizationIds(), ActionKeys.UPDATE)) {
-
-					return true;
-				}
-
-				return false;
-			}
 		}
 
 		// If the current group is staging, only users with editorial rights can
@@ -488,9 +465,7 @@ public class LayoutPermissionImpl
 				return true;
 			}
 
-			if (layout.isPrivateLayout() &&
-				!permissionChecker.isGroupMember(group.getGroupId())) {
-
+			if (!permissionChecker.isGroupMember(group.getGroupId())) {
 				return false;
 			}
 		}
@@ -572,8 +547,7 @@ public class LayoutPermissionImpl
 		// user
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			layout.getGroupId(), LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		for (Layout curLayout : layouts) {
 			if (containsWithoutViewableGroup(

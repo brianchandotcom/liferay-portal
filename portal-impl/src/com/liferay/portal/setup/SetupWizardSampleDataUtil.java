@@ -77,7 +77,7 @@ public class SetupWizardSampleDataUtil {
 			organization.getGroupId(), "/liferay");
 
 		Layout extranetLayout = LayoutLocalServiceUtil.addLayout(
-			defaultUser.getUserId(), organization.getGroupId(), false,
+			defaultUser.getUserId(), organization.getGroupId(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Liferay, Inc. Extranet",
 			null, null, LayoutConstants.TYPE_PORTLET, false, "/extranet",
 			new ServiceContext());
@@ -89,11 +89,11 @@ public class SetupWizardSampleDataUtil {
 			0, PortletKeys.MESSAGE_BOARDS, "column-2", -1, false);
 
 		LayoutLocalServiceUtil.updateLayout(
-			extranetLayout.getGroupId(), false, extranetLayout.getLayoutId(),
+			extranetLayout.getGroupId(), extranetLayout.getLayoutId(),
 			extranetLayout.getTypeSettings());
 
 		Layout intranetLayout = LayoutLocalServiceUtil.addLayout(
-			defaultUser.getUserId(), organization.getGroupId(), true,
+			defaultUser.getUserId(), organization.getGroupId(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Liferay, Inc. Intranet",
 			null, null, LayoutConstants.TYPE_PORTLET, false, "/intranet",
 			new ServiceContext());
@@ -104,7 +104,7 @@ public class SetupWizardSampleDataUtil {
 			0, PortletKeys.MESSAGE_BOARDS, "column-2", -1, false);
 
 		LayoutLocalServiceUtil.updateLayout(
-			intranetLayout.getGroupId(), true, intranetLayout.getLayoutId(),
+			intranetLayout.getGroupId(), intranetLayout.getLayoutId(),
 			intranetLayout.getTypeSettings());
 
 		User user = UserLocalServiceUtil.fetchUserByEmailAddress(

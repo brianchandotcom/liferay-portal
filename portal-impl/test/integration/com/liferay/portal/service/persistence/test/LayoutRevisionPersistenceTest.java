@@ -141,8 +141,6 @@ public class LayoutRevisionPersistenceTest {
 
 		newLayoutRevision.setPlid(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setPrivateLayout(RandomTestUtil.randomBoolean());
-
 		newLayoutRevision.setName(RandomTestUtil.randomString());
 
 		newLayoutRevision.setTitle(RandomTestUtil.randomString());
@@ -209,8 +207,6 @@ public class LayoutRevisionPersistenceTest {
 			newLayoutRevision.getMajor());
 		Assert.assertEquals(existingLayoutRevision.getPlid(),
 			newLayoutRevision.getPlid());
-		Assert.assertEquals(existingLayoutRevision.getPrivateLayout(),
-			newLayoutRevision.getPrivateLayout());
 		Assert.assertEquals(existingLayoutRevision.getName(),
 			newLayoutRevision.getName());
 		Assert.assertEquals(existingLayoutRevision.getTitle(),
@@ -427,12 +423,12 @@ public class LayoutRevisionPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "layoutSetBranchId", true,
 			"layoutBranchId", true, "parentLayoutRevisionId", true, "head",
-			true, "major", true, "plid", true, "privateLayout", true, "name",
-			true, "title", true, "description", true, "keywords", true,
-			"robots", true, "typeSettings", true, "iconImageId", true,
-			"themeId", true, "colorSchemeId", true, "wapThemeId", true,
-			"wapColorSchemeId", true, "css", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			true, "major", true, "plid", true, "name", true, "title", true,
+			"description", true, "keywords", true, "robots", true,
+			"typeSettings", true, "iconImageId", true, "themeId", true,
+			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
+			true, "css", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -684,8 +680,6 @@ public class LayoutRevisionPersistenceTest {
 		layoutRevision.setMajor(RandomTestUtil.randomBoolean());
 
 		layoutRevision.setPlid(RandomTestUtil.nextLong());
-
-		layoutRevision.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		layoutRevision.setName(RandomTestUtil.randomString());
 

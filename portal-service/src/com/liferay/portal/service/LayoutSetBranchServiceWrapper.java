@@ -33,14 +33,12 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 
 	@Override
 	public com.liferay.portal.model.LayoutSetBranch addLayoutSetBranch(
-		long groupId, boolean privateLayout, java.lang.String name,
-		java.lang.String description, boolean master,
-		long copyLayoutSetBranchId,
+		long groupId, java.lang.String name, java.lang.String description,
+		boolean master, long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetBranchService.addLayoutSetBranch(groupId,
-			privateLayout, name, description, master, copyLayoutSetBranchId,
-			serviceContext);
+		return _layoutSetBranchService.addLayoutSetBranch(groupId, name,
+			description, master, copyLayoutSetBranchId, serviceContext);
 	}
 
 	@Override
@@ -61,9 +59,8 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 
 	@Override
 	public java.util.List<com.liferay.portal.model.LayoutSetBranch> getLayoutSetBranches(
-		long groupId, boolean privateLayout) {
-		return _layoutSetBranchService.getLayoutSetBranches(groupId,
-			privateLayout);
+		long groupId) {
+		return _layoutSetBranchService.getLayoutSetBranches(groupId);
 	}
 
 	@Override

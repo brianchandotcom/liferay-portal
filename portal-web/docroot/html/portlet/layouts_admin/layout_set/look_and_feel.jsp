@@ -19,7 +19,6 @@
 <%
 long groupId = layoutsAdminDisplayContext.getGroupId();
 long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
-boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 Theme selTheme = layoutSet.getTheme();

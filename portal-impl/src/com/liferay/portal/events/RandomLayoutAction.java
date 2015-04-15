@@ -75,7 +75,7 @@ public class RandomLayoutAction extends Action {
 				themeDisplay.getCompanyId(), GroupConstants.GUEST);
 
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				generalGuestGroup.getGroupId(), false);
+				generalGuestGroup.getGroupId());
 
 			if (!layouts.isEmpty()) {
 				Layout randomLayout = layouts.get(

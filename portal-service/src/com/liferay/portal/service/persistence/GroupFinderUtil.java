@@ -63,9 +63,8 @@ public class GroupFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> findByNoLayouts(
-		long classNameId, boolean privateLayout, int start, int end) {
-		return getFinder()
-				   .findByNoLayouts(classNameId, privateLayout, start, end);
+		long classNameId, int start, int end) {
+		return getFinder().findByNoLayouts(classNameId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> findByNullFriendlyURL() {

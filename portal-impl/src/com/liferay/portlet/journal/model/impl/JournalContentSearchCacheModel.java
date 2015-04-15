@@ -64,7 +64,7 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{contentSearchId=");
 		sb.append(contentSearchId);
@@ -72,8 +72,6 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
 		sb.append(", layoutId=");
 		sb.append(layoutId);
 		sb.append(", portletId=");
@@ -92,7 +90,6 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 		journalContentSearchImpl.setContentSearchId(contentSearchId);
 		journalContentSearchImpl.setGroupId(groupId);
 		journalContentSearchImpl.setCompanyId(companyId);
-		journalContentSearchImpl.setPrivateLayout(privateLayout);
 		journalContentSearchImpl.setLayoutId(layoutId);
 
 		if (portletId == null) {
@@ -119,7 +116,6 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 		contentSearchId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
-		privateLayout = objectInput.readBoolean();
 		layoutId = objectInput.readLong();
 		portletId = objectInput.readUTF();
 		articleId = objectInput.readUTF();
@@ -131,7 +127,6 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 		objectOutput.writeLong(contentSearchId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
-		objectOutput.writeBoolean(privateLayout);
 		objectOutput.writeLong(layoutId);
 
 		if (portletId == null) {
@@ -152,7 +147,6 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 	public long contentSearchId;
 	public long groupId;
 	public long companyId;
-	public boolean privateLayout;
 	public long layoutId;
 	public String portletId;
 	public String articleId;

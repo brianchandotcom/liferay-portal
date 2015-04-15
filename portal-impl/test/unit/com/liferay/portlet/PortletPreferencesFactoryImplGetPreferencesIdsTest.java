@@ -71,7 +71,6 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 		_layout.setCompanyId(RandomTestUtil.randomLong());
 		_layout.setPlid(RandomTestUtil.randomLong());
-		_layout.setPrivateLayout(true);
 	}
 
 	@Test
@@ -226,9 +225,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 	}
 
 	@Test(expected = PrincipalException.class)
-	public void testPreferencesWithModeEditGuestInPrivateLayout()
-		throws Exception {
-
+	public void testPreferencesWithModeEditGuest() throws Exception {
 		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
 
 		Mockito.when(
@@ -257,10 +254,8 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 	@Test(expected = PrincipalException.class)
 	public void
-			testPreferencesWithModeEditGuestInPublicLayoutWithoutPermission()
+			testPreferencesWithModeEditGuestWithoutPermission()
 		throws Exception {
-
-		_layout.setPrivateLayout(false);
 
 		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
 
@@ -289,10 +284,8 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 	}
 
 	@Test
-	public void testPreferencesWithModeEditGuestInPublicLayoutWithPermission()
+	public void testPreferencesWithModeEditGuestWithPermission()
 		throws Exception {
-
-		_layout.setPrivateLayout(false);
 
 		PowerMockito.mockStatic(PortletLocalServiceUtil.class);
 

@@ -123,16 +123,14 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				return methodInvocation.proceed();
 			}
 
-			boolean privateLayout = (Boolean)arguments[1];
 			long parentLayoutId = (Long)arguments[2];
 
 			try {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-					groupId, privateLayout);
+					groupId);
 
 				mergeLayoutSetPrototypeLayouts(
-					method, arguments, group, layoutSet, privateLayout,
-					workflowEnabled);
+					method, arguments, group, layoutSet, workflowEnabled);
 
 				List<Layout> layouts = (List<Layout>)methodInvocation.proceed();
 
@@ -218,8 +216,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			Group userGroupGroup = userGroup.getGroup();
 
 			List<Layout> userGroupLayouts = LayoutLocalServiceUtil.getLayouts(
-				userGroupGroup.getGroupId(), layoutSet.isPrivateLayout(),
-				parentLayoutId);
+				userGroupGroup.getGroupId(), parentLayoutId);
 
 			for (Layout userGroupLayout : userGroupLayouts) {
 				Layout virtualLayout = new VirtualLayout(
@@ -232,9 +229,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		return layouts;
 	}
 
-	protected List<Layout> getPrototypeLinkedLayouts(
-		long groupId, boolean privateLayout) {
-
+	protected List<Layout> getPrototypeLinkedLayouts(long groupId) {
 		Class<?> clazz = getClass();
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
@@ -248,11 +243,6 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			"layoutPrototypeUuid");
 
 		dynamicQuery.add(layoutPrototypeUuidProperty.isNotNull());
-
-		Property privateLayoutProperty = PropertyFactoryUtil.forName(
-			"privateLayout");
-
-		dynamicQuery.add(privateLayoutProperty.eq(privateLayout));
 
 		Property sourcePrototypeLayoutUuidProperty =
 			PropertyFactoryUtil.forName("sourcePrototypeLayoutUuid");
@@ -279,7 +269,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 	protected void mergeLayoutSetPrototypeLayouts(
 		Method method, Object[] arguments, Group group, LayoutSet layoutSet,
-		boolean privateLayout, boolean workflowEnabled) {
+		boolean workflowEnabled) {
 
 		try {
 			if (!SitesUtil.isLayoutSetMergeable(group, layoutSet)) {

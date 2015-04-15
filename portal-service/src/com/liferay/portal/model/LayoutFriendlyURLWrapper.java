@@ -63,7 +63,6 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("plid", getPlid());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("languageId", getLanguageId());
 
@@ -130,12 +129,6 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 
 		if (plid != null) {
 			setPlid(plid);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		String friendlyURL = (String)attributes.get("friendlyURL");
@@ -273,16 +266,6 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	}
 
 	/**
-	* Returns the private layout of this layout friendly u r l.
-	*
-	* @return the private layout of this layout friendly u r l
-	*/
-	@Override
-	public boolean getPrivateLayout() {
-		return _layoutFriendlyURL.getPrivateLayout();
-	}
-
-	/**
 	* Returns the user ID of this layout friendly u r l.
 	*
 	* @return the user ID of this layout friendly u r l
@@ -340,16 +323,6 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	@Override
 	public boolean isNew() {
 		return _layoutFriendlyURL.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this layout friendly u r l is private layout.
-	*
-	* @return <code>true</code> if this layout friendly u r l is private layout; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPrivateLayout() {
-		return _layoutFriendlyURL.isPrivateLayout();
 	}
 
 	@Override
@@ -488,16 +461,6 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	@Override
 	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
 		_layoutFriendlyURL.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets whether this layout friendly u r l is private layout.
-	*
-	* @param privateLayout the private layout of this layout friendly u r l
-	*/
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_layoutFriendlyURL.setPrivateLayout(privateLayout);
 	}
 
 	/**

@@ -130,7 +130,7 @@ public class SitesImpl implements Sites {
 		LayoutSet layoutSet = layout.getLayoutSet();
 
 		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+			layoutSet.getGroupId());
 
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
@@ -240,17 +240,16 @@ public class SitesImpl implements Sites {
 			"layoutPrototypeUuid", layoutPrototype.getUuid());
 
 		targetLayout = LayoutLocalServiceUtil.updateLayout(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(), targetLayout.getParentLayoutId(),
-			targetLayout.getNameMap(), targetLayout.getTitleMap(),
-			targetLayout.getDescriptionMap(), targetLayout.getKeywordsMap(),
-			targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
-			targetLayout.getHidden(), targetLayout.getFriendlyURLMap(),
-			targetLayout.getIconImage(), null, serviceContext);
+			targetLayout.getGroupId(), targetLayout.getLayoutId(),
+			targetLayout.getParentLayoutId(), targetLayout.getNameMap(),
+			targetLayout.getTitleMap(), targetLayout.getDescriptionMap(),
+			targetLayout.getKeywordsMap(), targetLayout.getRobotsMap(),
+			layoutPrototypeLayout.getType(), targetLayout.getHidden(),
+			targetLayout.getFriendlyURLMap(), targetLayout.getIconImage(), null,
+			serviceContext);
 
 		targetLayout = LayoutLocalServiceUtil.updateLayout(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(),
+			targetLayout.getGroupId(), targetLayout.getLayoutId(),
 			layoutPrototypeLayout.getTypeSettings());
 
 		copyPortletPermissions(targetLayout, layoutPrototypeLayout);
@@ -292,13 +291,12 @@ public class SitesImpl implements Sites {
 			new String[] {Boolean.FALSE.toString()});
 
 		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			sourceLayout.getGroupId(), sourceLayout.isPrivateLayout(),
-			new long[] {sourceLayout.getLayoutId()}, parameterMap, null, null);
+			sourceLayout.getGroupId(), new long[] {sourceLayout.getLayoutId()},
+			parameterMap, null, null);
 
 		try {
 			LayoutLocalServiceUtil.importLayouts(
-				userId, targetLayout.getGroupId(),
-				targetLayout.isPrivateLayout(), parameterMap, file);
+				userId, targetLayout.getGroupId(), parameterMap, file);
 		}
 		finally {
 			file.delete();
@@ -310,14 +308,14 @@ public class SitesImpl implements Sites {
 		throws Exception {
 
 		LayoutLocalServiceUtil.updateLookAndFeel(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(), sourceLayout.getThemeId(),
-			sourceLayout.getColorSchemeId(), sourceLayout.getCss(), false);
+			targetLayout.getGroupId(), targetLayout.getLayoutId(),
+			sourceLayout.getThemeId(), sourceLayout.getColorSchemeId(),
+			sourceLayout.getCss(), false);
 
 		LayoutLocalServiceUtil.updateLookAndFeel(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(), sourceLayout.getWapThemeId(),
-			sourceLayout.getWapColorSchemeId(), sourceLayout.getCss(), true);
+			targetLayout.getGroupId(), targetLayout.getLayoutId(),
+			sourceLayout.getWapThemeId(), sourceLayout.getWapColorSchemeId(),
+			sourceLayout.getCss(), true);
 	}
 
 	@Override
@@ -348,10 +346,7 @@ public class SitesImpl implements Sites {
 			for (Role role : roles) {
 				String roleName = role.getName();
 
-				if (roleName.equals(RoleConstants.ADMINISTRATOR) ||
-					(targetLayout.isPrivateLayout() &&
-					 roleName.equals(RoleConstants.GUEST))) {
-
+				if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
 					continue;
 				}
 
@@ -472,20 +467,17 @@ public class SitesImpl implements Sites {
 		long plid = ParamUtil.getLong(request, "plid");
 
 		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 		long layoutId = ParamUtil.getLong(request, "layoutId");
 
 		Layout layout = null;
 
 		if (plid <= 0) {
-			layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, layoutId);
+			layout = LayoutLocalServiceUtil.getLayout(groupId, layoutId);
 		}
 		else {
 			layout = LayoutLocalServiceUtil.getLayout(plid);
 
 			groupId = layout.getGroupId();
-			privateLayout = layout.isPrivateLayout();
 			layoutId = layout.getLayoutId();
 		}
 
@@ -511,10 +503,9 @@ public class SitesImpl implements Sites {
 				layoutType.getConfigurationActionDelete(), request, response);
 		}
 
-		if (group.isGuest() && !layout.isPrivateLayout() &&
-			layout.isRootLayout() &&
+		if (group.isGuest() && layout.isRootLayout() &&
 			(LayoutLocalServiceUtil.getLayoutsCount(
-				group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) == 1)) {
+				group, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) == 1)) {
 
 			throw new RequiredLayoutException(
 				RequiredLayoutException.AT_LEAST_ONE);
@@ -523,8 +514,7 @@ public class SitesImpl implements Sites {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			request);
 
-		LayoutServiceUtil.deleteLayout(
-			groupId, privateLayout, layoutId, serviceContext);
+		LayoutServiceUtil.deleteLayout(groupId, layoutId, serviceContext);
 
 		long newPlid = layout.getParentPlid();
 
@@ -532,7 +522,7 @@ public class SitesImpl implements Sites {
 			LayoutSet layoutSet = layout.getLayoutSet();
 
 			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				layoutSet.getGroupId(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (firstLayout != null) {
@@ -565,14 +555,13 @@ public class SitesImpl implements Sites {
 		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
 
 		List<Layout> layoutSetPrototypeLayouts =
-			LayoutLocalServiceUtil.getLayouts(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+			LayoutLocalServiceUtil.getLayouts(layoutSet.getGroupId());
 
 		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
 			serviceContext);
 
 		return LayoutLocalServiceUtil.exportLayoutsAsFile(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+			layoutSet.getGroupId(),
 			ExportImportHelperUtil.getLayoutIds(layoutSetPrototypeLayouts),
 			parameterMap, null, null);
 	}
@@ -607,7 +596,7 @@ public class SitesImpl implements Sites {
 
 			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layout.getSourcePrototypeLayoutUuid(),
-				layoutSetPrototype.getGroupId(), true);
+				layoutSetPrototype.getGroupId());
 		}
 		catch (Exception e) {
 			_log.error(
@@ -757,8 +746,7 @@ public class SitesImpl implements Sites {
 			for (String uuid : StringUtil.split(uuids)) {
 				Layout layout =
 					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						uuid, layoutSet.getGroupId(),
-						layoutSet.isPrivateLayout());
+						uuid, layoutSet.getGroupId());
 
 				layouts.add(layout);
 			}
@@ -806,8 +794,7 @@ public class SitesImpl implements Sites {
 			parameterMap, layoutSet, serviceContext);
 
 		LayoutServiceUtil.importLayouts(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), parameterMap,
-			inputStream);
+			layoutSet.getGroupId(), parameterMap, inputStream);
 	}
 
 	@Override
@@ -844,11 +831,9 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public boolean isFirstLayout(
-		long groupId, boolean privateLayout, long layoutId) {
-
+	public boolean isFirstLayout(long groupId, long layoutId) {
 		Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		if ((firstLayout != null) && (firstLayout.getLayoutId() == layoutId )) {
 			return true;
@@ -1126,7 +1111,7 @@ public class SitesImpl implements Sites {
 			Layout sourcePrototypeLayout =
 				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 					sourcePrototypeLayoutUuid,
-					layoutSetPrototypeGroup.getGroupId(), true);
+					layoutSetPrototypeGroup.getGroupId());
 
 			if (sourcePrototypeLayout != null) {
 				doMergeLayoutPrototypeLayout(
@@ -1237,8 +1222,8 @@ public class SitesImpl implements Sites {
 			removeMergeFailFriendlyURLLayouts(layoutSet);
 
 			importLayoutSetPrototype(
-				layoutSetPrototype, layoutSet.getGroupId(),
-				layoutSet.isPrivateLayout(), parameterMap, importData);
+				layoutSetPrototype, layoutSet.getGroupId(), parameterMap,
+				importData);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1343,7 +1328,6 @@ public class SitesImpl implements Sites {
 
 		LayoutServiceUtil.updateLayout(
 			layoutPrototypeLayout.getGroupId(),
-			layoutPrototypeLayout.getPrivateLayout(),
 			layoutPrototypeLayout.getLayoutId(),
 			layoutPrototypeLayout.getTypeSettings());
 	}
@@ -1379,7 +1363,6 @@ public class SitesImpl implements Sites {
 
 		LayoutSetServiceUtil.updateSettings(
 			layoutSetPrototypeLayoutSet.getGroupId(),
-			layoutSetPrototypeLayoutSet.getPrivateLayout(),
 			layoutSetPrototypeLayoutSet.getSettings());
 	}
 
@@ -1400,8 +1383,7 @@ public class SitesImpl implements Sites {
 
 		Layout targetScopeLayout =
 			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				targetLayout.getUuid(), targetLayout.getGroupId(),
-				targetLayout.isPrivateLayout());
+				targetLayout.getUuid(), targetLayout.getGroupId());
 
 		if (!targetScopeLayout.hasScopeGroup()) {
 			GroupLocalServiceUtil.addGroup(
@@ -1434,18 +1416,13 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public void updateLayoutSetPrototypesLinks(
-			Group group, long publicLayoutSetPrototypeId,
-			long privateLayoutSetPrototypeId,
-			boolean publicLayoutSetPrototypeLinkEnabled,
-			boolean privateLayoutSetPrototypeLinkEnabled)
+			Group group, long layoutSetPrototypeId,
+			boolean layoutSetPrototypeLinkEnabled)
 		throws Exception {
 
 		updateLayoutSetPrototypeLink(
-			group.getGroupId(), true, privateLayoutSetPrototypeId,
-			privateLayoutSetPrototypeLinkEnabled);
-		updateLayoutSetPrototypeLink(
-			group.getGroupId(), false, publicLayoutSetPrototypeId,
-			publicLayoutSetPrototypeLinkEnabled);
+			group.getGroupId(), layoutSetPrototypeId,
+			layoutSetPrototypeLinkEnabled);
 	}
 
 	/**
@@ -1728,8 +1705,7 @@ public class SitesImpl implements Sites {
 
 	protected void importLayoutSetPrototype(
 			LayoutSetPrototype layoutSetPrototype, long groupId,
-			boolean privateLayout, Map<String, String[]> parameterMap,
-			boolean importData)
+			Map<String, String[]> parameterMap, boolean importData)
 		throws PortalException {
 
 		File file = null;
@@ -1766,10 +1742,10 @@ public class SitesImpl implements Sites {
 		if (file == null) {
 			List<Layout> layoutSetPrototypeLayouts =
 				LayoutLocalServiceUtil.getLayouts(
-					layoutSetPrototype.getGroupId(), true);
+					layoutSetPrototype.getGroupId());
 
 			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-				layoutSetPrototype.getGroupId(), true,
+				layoutSetPrototype.getGroupId(),
 				ExportImportHelperUtil.getLayoutIds(layoutSetPrototypeLayouts),
 				parameterMap, null, null);
 
@@ -1780,7 +1756,7 @@ public class SitesImpl implements Sites {
 			layoutSetPrototype.getCompanyId());
 
 		LayoutLocalServiceUtil.importLayouts(
-			userId, groupId, privateLayout, parameterMap, file);
+			userId, groupId, parameterMap, file);
 
 		if (newFile) {
 			try {
@@ -1815,40 +1791,21 @@ public class SitesImpl implements Sites {
 			return;
 		}
 
-		if (targetLayoutSet.isPrivateLayout()) {
-			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				serviceContext, "privateLayoutSetPrototypeLinkEnabled", true);
+		boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			serviceContext, "publicLayoutSetPrototypeLinkEnabled");
 
-			if (!privateLayoutSetPrototypeLinkEnabled) {
-				privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-					serviceContext, "layoutSetPrototypeLinkEnabled");
-			}
-
-			parameterMap.put(
-				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-				new String[] {
-					String.valueOf(privateLayoutSetPrototypeLinkEnabled)
-				});
+		if (!layoutSetPrototypeLinkEnabled) {
+			layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				serviceContext, "layoutSetPrototypeLinkEnabled", true);
 		}
-		else {
-			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				serviceContext, "publicLayoutSetPrototypeLinkEnabled");
 
-			if (!publicLayoutSetPrototypeLinkEnabled) {
-				publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-					serviceContext, "layoutSetPrototypeLinkEnabled", true);
-			}
-
-			parameterMap.put(
-				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-				new String[] {
-					String.valueOf(publicLayoutSetPrototypeLinkEnabled)
-				});
-		}
+		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+			new String[] {String.valueOf(layoutSetPrototypeLinkEnabled)});
 	}
 
 	protected void updateLayoutSetPrototypeLink(
-			long groupId, boolean privateLayout, long layoutSetPrototypeId,
+			long groupId, long layoutSetPrototypeId,
 			boolean layoutSetPrototypeLinkEnabled)
 		throws Exception {
 
@@ -1871,24 +1828,21 @@ public class SitesImpl implements Sites {
 						getLayoutSetPrototypesParameters(true);
 
 					importLayoutSetPrototype(
-						layoutSetPrototype, groupId, privateLayout,
-						parameterMap, true);
+						layoutSetPrototype, groupId, parameterMap, true);
 				}
 			}
 		}
 
 		LayoutSetServiceUtil.updateLayoutSetPrototypeLinkEnabled(
-			groupId, privateLayout, layoutSetPrototypeLinkEnabled,
-			layoutSetPrototypeUuid);
+			groupId, layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
 
-		LayoutLocalServiceUtil.updatePriorities(groupId, privateLayout);
+		LayoutLocalServiceUtil.updatePriorities(groupId);
 
 		// Force propagation from site template to site. See LPS-48206.
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId);
 
 		mergeLayoutSetPrototypeLayouts(group, layoutSet);
 	}

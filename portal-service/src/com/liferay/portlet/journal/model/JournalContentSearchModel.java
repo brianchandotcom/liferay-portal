@@ -103,27 +103,6 @@ public interface JournalContentSearchModel extends BaseModel<JournalContentSearc
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the private layout of this journal content search.
-	 *
-	 * @return the private layout of this journal content search
-	 */
-	public boolean getPrivateLayout();
-
-	/**
-	 * Returns <code>true</code> if this journal content search is private layout.
-	 *
-	 * @return <code>true</code> if this journal content search is private layout; <code>false</code> otherwise
-	 */
-	public boolean isPrivateLayout();
-
-	/**
-	 * Sets whether this journal content search is private layout.
-	 *
-	 * @param privateLayout the private layout of this journal content search
-	 */
-	public void setPrivateLayout(boolean privateLayout);
-
-	/**
 	 * Returns the layout ID of this journal content search.
 	 *
 	 * @return the layout ID of this journal content search

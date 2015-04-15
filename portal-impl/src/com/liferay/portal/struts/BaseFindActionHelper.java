@@ -291,20 +291,11 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 			HttpServletRequest request, long groupId, long plid)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		if ((groupId == layout.getGroupId()) ||
-			(group.getParentGroupId() == layout.getGroupId()) ||
-			(layout.isPrivateLayout() &&
-			 !SitesUtil.isUserGroupLayoutSetViewable(
-				 permissionChecker, layout.getGroup()))) {
+			(group.getParentGroupId() == layout.getGroupId())) {
 
 			return layout;
 		}

@@ -163,13 +163,7 @@ private String _getLayoutBreadcrumb(Layout layout, Locale locale) throws Excepti
 
 	StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
 
-	if (layout.isPrivateLayout()) {
-		sb.append(LanguageUtil.get(locale, "private-pages"));
-	}
-	else {
-		sb.append(LanguageUtil.get(locale, "public-pages"));
-	}
-
+	sb.append(LanguageUtil.get(locale, "pages"));
 	sb.append(StringPool.SPACE);
 	sb.append(StringPool.GREATER_THAN);
 	sb.append(StringPool.SPACE);

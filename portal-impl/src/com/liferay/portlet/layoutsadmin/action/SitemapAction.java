@@ -60,8 +60,6 @@ public class SitemapAction extends Action {
 				WebKeys.THEME_DISPLAY);
 
 			long groupId = ParamUtil.getLong(request, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				request, "privateLayout");
 
 			LayoutSet layoutSet = null;
 
@@ -72,8 +70,7 @@ public class SitemapAction extends Action {
 					groupId = group.getLiveGroupId();
 				}
 
-				layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-					groupId, privateLayout);
+				layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId);
 			}
 			else {
 				String host = PortalUtil.getHost(request);
@@ -100,13 +97,12 @@ public class SitemapAction extends Action {
 						themeDisplay.getCompanyId(), groupName);
 
 					layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-						group.getGroupId(), false);
+						group.getGroupId());
 				}
 			}
 
 			String sitemap = SitemapUtil.getSitemap(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				themeDisplay);
+				layoutSet.getGroupId(), themeDisplay);
 
 			ServletResponseUtil.sendFile(
 				request, response, null, sitemap.getBytes(StringPool.UTF8),

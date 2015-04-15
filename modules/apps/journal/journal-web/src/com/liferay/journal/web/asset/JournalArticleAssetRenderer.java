@@ -305,8 +305,7 @@ public class JournalArticleAssetRenderer
 			}
 
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-				LayoutSetLocalServiceUtil.getLayoutSet(
-					group.getGroupId(), layout.isPrivateLayout()),
+				LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId()),
 				themeDisplay);
 
 			return PortalUtil.addPreservedParameters(
@@ -318,15 +317,13 @@ public class JournalArticleAssetRenderer
 
 		List<Long> hitLayoutIds =
 			JournalContentSearchLocalServiceUtil.getLayoutIds(
-				_article.getGroupId(), layout.isPrivateLayout(),
-				_article.getArticleId());
+				_article.getGroupId(), _article.getArticleId());
 
 		if (!hitLayoutIds.isEmpty()) {
 			Long hitLayoutId = hitLayoutIds.get(0);
 
 			Layout hitLayout = LayoutLocalServiceUtil.getLayout(
-				_article.getGroupId(), layout.isPrivateLayout(),
-				hitLayoutId.longValue());
+				_article.getGroupId(), hitLayoutId.longValue());
 
 			return PortalUtil.getLayoutURL(hitLayout, themeDisplay);
 		}

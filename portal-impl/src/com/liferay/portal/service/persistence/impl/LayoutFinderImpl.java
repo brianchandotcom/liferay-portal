@@ -102,7 +102,7 @@ public class LayoutFinderImpl
 	}
 
 	@Override
-	public List<Layout> findByScopeGroup(long groupId, boolean privateLayout) {
+	public List<Layout> findByScopeGroup(long groupId) {
 		Session session = null;
 
 		try {
@@ -117,7 +117,6 @@ public class LayoutFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(privateLayout);
 
 			return q.list(true);
 		}

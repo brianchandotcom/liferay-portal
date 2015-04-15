@@ -40,16 +40,16 @@ public class PortalImplLayoutFullURLTest extends PortalImplBaseURLTestCase {
 
 	@Test
 	public void testFromCompanyVirtualHost() throws Exception {
-		LayoutSet publicLayoutSet = publicLayout.getLayoutSet();
+		LayoutSet layoutSet = layout.getLayoutSet();
 
 		VirtualHostLocalServiceUtil.updateVirtualHost(
-			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
+			company.getCompanyId(), layoutSet.getLayoutSetId(),
 			VIRTUAL_HOSTNAME);
 
 		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, publicLayout, "company.com");
+			company, group, layout, "company.com");
 
-		new URL(PortalUtil.getLayoutFullURL(publicLayout, themeDisplay));
+		new URL(PortalUtil.getLayoutFullURL(layout, themeDisplay));
 	}
 
 }

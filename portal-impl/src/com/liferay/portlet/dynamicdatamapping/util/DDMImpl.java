@@ -306,11 +306,9 @@ public class DDMImpl implements DDM {
 				valueString);
 
 			long groupId = jsonObject.getLong("groupId");
-			boolean privateLayout = jsonObject.getBoolean("privateLayout");
 			long layoutId = jsonObject.getLong("layoutId");
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, layoutId);
+			Layout layout = LayoutLocalServiceUtil.getLayout(groupId, layoutId);
 
 			fieldValue = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
 		}

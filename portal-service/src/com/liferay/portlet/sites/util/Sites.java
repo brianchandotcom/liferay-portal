@@ -151,8 +151,7 @@ public interface Sites {
 
 	public boolean isContentSharingWithChildrenEnabled(Group group);
 
-	public boolean isFirstLayout(
-		long groupId, boolean privateLayout, long layoutId);
+	public boolean isFirstLayout(long groupId, long layoutId);
 
 	public boolean isLayoutDeleteable(Layout layout);
 
@@ -216,10 +215,8 @@ public interface Sites {
 		throws Exception;
 
 	public void updateLayoutSetPrototypesLinks(
-			Group group, long publicLayoutSetPrototypeId,
-			long privateLayoutSetPrototypeId,
-			boolean publicLayoutSetPrototypeLinkEnabled,
-			boolean privateLayoutSetPrototypeLinkEnabled)
+			Group group, long layoutSetPrototypeId,
+			boolean layoutSetPrototypeLinkEnabled)
 		throws Exception;
 
 }

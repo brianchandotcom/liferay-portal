@@ -59,8 +59,6 @@ public class LayoutExportBackgroundTaskExecutor
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
 		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-		boolean privateLayout = MapUtil.getBoolean(
-			settingsMap, "privateLayout");
 		long[] layoutIds = GetterUtil.getLongValues(
 			settingsMap.get("layoutIds"));
 		Map<String, String[]> parameterMap =
@@ -79,8 +77,8 @@ public class LayoutExportBackgroundTaskExecutor
 		sb.append(".lar");
 
 		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			groupId, privateLayout, layoutIds, parameterMap,
-			dateRange.getStartDate(), dateRange.getEndDate());
+			groupId, layoutIds, parameterMap, dateRange.getStartDate(),
+			dateRange.getEndDate());
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), sb.toString(),
@@ -91,7 +89,7 @@ public class LayoutExportBackgroundTaskExecutor
 
 		if (updateLastPublishDate) {
 			ExportImportDateUtil.updateLastPublishDate(
-				groupId, privateLayout, dateRange, dateRange.getEndDate());
+				groupId, dateRange, dateRange.getEndDate());
 		}
 
 		return BackgroundTaskResult.SUCCESS;

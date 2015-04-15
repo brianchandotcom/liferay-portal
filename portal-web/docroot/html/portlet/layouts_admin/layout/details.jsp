@@ -48,7 +48,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	String virtualHostname = layoutSet.getVirtualHostname();
 
 	if (Validator.isNull(virtualHostname) || (friendlyURLBase.indexOf(virtualHostname) == -1)) {
-		friendlyURLBase.append(group.getPathFriendlyURL(layoutsAdminDisplayContext.isPrivateLayout(), themeDisplay));
+		friendlyURLBase.append(group.getPathFriendlyURL(themeDisplay));
 		friendlyURLBase.append(group.getFriendlyURL());
 	}
 	%>

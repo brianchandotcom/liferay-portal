@@ -238,72 +238,63 @@ public class LayoutUtil {
 	}
 
 	/**
-	* Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
+	* Returns the layout where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @return the matching layout
 	* @throws NoSuchLayoutException if a matching layout could not be found
 	*/
-	public static Layout findByUUID_G_P(java.lang.String uuid, long groupId,
-		boolean privateLayout) throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence().findByUUID_G_P(uuid, groupId, privateLayout);
+	public static Layout findByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.NoSuchLayoutException {
+		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
 	/**
-	* Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the layout where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	*/
-	public static Layout fetchByUUID_G_P(java.lang.String uuid, long groupId,
-		boolean privateLayout) {
-		return getPersistence().fetchByUUID_G_P(uuid, groupId, privateLayout);
+	public static Layout fetchByUUID_G(java.lang.String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
-	* Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the layout where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	*/
-	public static Layout fetchByUUID_G_P(java.lang.String uuid, long groupId,
-		boolean privateLayout, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByUUID_G_P(uuid, groupId, privateLayout,
-			retrieveFromCache);
+	public static Layout fetchByUUID_G(java.lang.String uuid, long groupId,
+		boolean retrieveFromCache) {
+		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
 	/**
-	* Removes the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; from the database.
+	* Removes the layout where uuid = &#63; and groupId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @return the layout that was removed
 	*/
-	public static Layout removeByUUID_G_P(java.lang.String uuid, long groupId,
-		boolean privateLayout) throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence().removeByUUID_G_P(uuid, groupId, privateLayout);
+	public static Layout removeByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.portal.NoSuchLayoutException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
 	/**
-	* Returns the number of layouts where uuid = &#63; and groupId = &#63; and privateLayout = &#63;.
+	* Returns the number of layouts where uuid = &#63; and groupId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @return the number of matching layouts
 	*/
-	public static int countByUUID_G_P(java.lang.String uuid, long groupId,
-		boolean privateLayout) {
-		return getPersistence().countByUUID_G_P(uuid, groupId, privateLayout);
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -1167,978 +1158,645 @@ public class LayoutUtil {
 	}
 
 	/**
-	* Returns all the layouts where groupId = &#63; and privateLayout = &#63;.
+	* Returns the layout where groupId = &#63; and layoutId = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @return the matching layouts
+	* @param layoutId the layout ID
+	* @return the matching layout
+	* @throws NoSuchLayoutException if a matching layout could not be found
 	*/
-	public static List<Layout> findByG_P(long groupId, boolean privateLayout) {
-		return getPersistence().findByG_P(groupId, privateLayout);
+	public static Layout findByG_L(long groupId, long layoutId)
+		throws com.liferay.portal.NoSuchLayoutException {
+		return getPersistence().findByG_L(groupId, layoutId);
 	}
 
 	/**
-	* Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63;.
+	* Returns the layout where groupId = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param layoutId the layout ID
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public static Layout fetchByG_L(long groupId, long layoutId) {
+		return getPersistence().fetchByG_L(groupId, layoutId);
+	}
+
+	/**
+	* Returns the layout where groupId = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param layoutId the layout ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public static Layout fetchByG_L(long groupId, long layoutId,
+		boolean retrieveFromCache) {
+		return getPersistence().fetchByG_L(groupId, layoutId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the layout where groupId = &#63; and layoutId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param layoutId the layout ID
+	* @return the layout that was removed
+	*/
+	public static Layout removeByG_L(long groupId, long layoutId)
+		throws com.liferay.portal.NoSuchLayoutException {
+		return getPersistence().removeByG_L(groupId, layoutId);
+	}
+
+	/**
+	* Returns the number of layouts where groupId = &#63; and layoutId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutId the layout ID
+	* @return the number of matching layouts
+	*/
+	public static int countByG_L(long groupId, long layoutId) {
+		return getPersistence().countByG_L(groupId, layoutId);
+	}
+
+	/**
+	* Returns all the layouts where groupId = &#63; and parentLayoutId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentLayoutId the parent layout ID
+	* @return the matching layouts
+	*/
+	public static List<Layout> findByG_P(long groupId, long parentLayoutId) {
+		return getPersistence().findByG_P(groupId, parentLayoutId);
+	}
+
+	/**
+	* Returns a range of all the layouts where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param start the lower bound of the range of layouts
 	* @param end the upper bound of the range of layouts (not inclusive)
 	* @return the range of matching layouts
 	*/
-	public static List<Layout> findByG_P(long groupId, boolean privateLayout,
+	public static List<Layout> findByG_P(long groupId, long parentLayoutId,
 		int start, int end) {
-		return getPersistence().findByG_P(groupId, privateLayout, start, end);
+		return getPersistence().findByG_P(groupId, parentLayoutId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63;.
+	* Returns an ordered range of all the layouts where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param start the lower bound of the range of layouts
 	* @param end the upper bound of the range of layouts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layouts
 	*/
-	public static List<Layout> findByG_P(long groupId, boolean privateLayout,
+	public static List<Layout> findByG_P(long groupId, long parentLayoutId,
 		int start, int end, OrderByComparator<Layout> orderByComparator) {
 		return getPersistence()
-				   .findByG_P(groupId, privateLayout, start, end,
+				   .findByG_P(groupId, parentLayoutId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the first layout in the ordered set where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout
 	* @throws NoSuchLayoutException if a matching layout could not be found
 	*/
-	public static Layout findByG_P_First(long groupId, boolean privateLayout,
+	public static Layout findByG_P_First(long groupId, long parentLayoutId,
 		OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException {
 		return getPersistence()
-				   .findByG_P_First(groupId, privateLayout, orderByComparator);
+				   .findByG_P_First(groupId, parentLayoutId, orderByComparator);
 	}
 
 	/**
-	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the first layout in the ordered set where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	*/
-	public static Layout fetchByG_P_First(long groupId, boolean privateLayout,
+	public static Layout fetchByG_P_First(long groupId, long parentLayoutId,
 		OrderByComparator<Layout> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_P_First(groupId, privateLayout, orderByComparator);
+				   .fetchByG_P_First(groupId, parentLayoutId, orderByComparator);
 	}
 
 	/**
-	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the last layout in the ordered set where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout
 	* @throws NoSuchLayoutException if a matching layout could not be found
 	*/
-	public static Layout findByG_P_Last(long groupId, boolean privateLayout,
+	public static Layout findByG_P_Last(long groupId, long parentLayoutId,
 		OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException {
 		return getPersistence()
-				   .findByG_P_Last(groupId, privateLayout, orderByComparator);
+				   .findByG_P_Last(groupId, parentLayoutId, orderByComparator);
 	}
 
 	/**
-	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the last layout in the ordered set where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	*/
-	public static Layout fetchByG_P_Last(long groupId, boolean privateLayout,
+	public static Layout fetchByG_P_Last(long groupId, long parentLayoutId,
 		OrderByComparator<Layout> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_P_Last(groupId, privateLayout, orderByComparator);
+				   .fetchByG_P_Last(groupId, parentLayoutId, orderByComparator);
 	}
 
 	/**
-	* Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* @param plid the primary key of the current layout
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout
 	* @throws NoSuchLayoutException if a layout with the primary key could not be found
 	*/
 	public static Layout[] findByG_P_PrevAndNext(long plid, long groupId,
-		boolean privateLayout, OrderByComparator<Layout> orderByComparator)
+		long parentLayoutId, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException {
 		return getPersistence()
-				   .findByG_P_PrevAndNext(plid, groupId, privateLayout,
+				   .findByG_P_PrevAndNext(plid, groupId, parentLayoutId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
+	* Returns all the layouts that the user has permission to view where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @return the matching layouts that the user has permission to view
 	*/
-	public static List<Layout> filterFindByG_P(long groupId,
-		boolean privateLayout) {
-		return getPersistence().filterFindByG_P(groupId, privateLayout);
+	public static List<Layout> filterFindByG_P(long groupId, long parentLayoutId) {
+		return getPersistence().filterFindByG_P(groupId, parentLayoutId);
 	}
 
 	/**
-	* Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
+	* Returns a range of all the layouts that the user has permission to view where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param start the lower bound of the range of layouts
 	* @param end the upper bound of the range of layouts (not inclusive)
 	* @return the range of matching layouts that the user has permission to view
 	*/
 	public static List<Layout> filterFindByG_P(long groupId,
-		boolean privateLayout, int start, int end) {
+		long parentLayoutId, int start, int end) {
 		return getPersistence()
-				   .filterFindByG_P(groupId, privateLayout, start, end);
+				   .filterFindByG_P(groupId, parentLayoutId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63;.
+	* Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param start the lower bound of the range of layouts
 	* @param end the upper bound of the range of layouts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layouts that the user has permission to view
 	*/
 	public static List<Layout> filterFindByG_P(long groupId,
-		boolean privateLayout, int start, int end,
+		long parentLayoutId, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
 		return getPersistence()
-				   .filterFindByG_P(groupId, privateLayout, start, end,
+				   .filterFindByG_P(groupId, parentLayoutId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
+	* Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* @param plid the primary key of the current layout
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout
 	* @throws NoSuchLayoutException if a layout with the primary key could not be found
 	*/
 	public static Layout[] filterFindByG_P_PrevAndNext(long plid, long groupId,
-		boolean privateLayout, OrderByComparator<Layout> orderByComparator)
+		long parentLayoutId, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException {
 		return getPersistence()
-				   .filterFindByG_P_PrevAndNext(plid, groupId, privateLayout,
+				   .filterFindByG_P_PrevAndNext(plid, groupId, parentLayoutId,
 			orderByComparator);
 	}
 
 	/**
-	* Removes all the layouts where groupId = &#63; and privateLayout = &#63; from the database.
+	* Removes all the layouts where groupId = &#63; and parentLayoutId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	*/
-	public static void removeByG_P(long groupId, boolean privateLayout) {
-		getPersistence().removeByG_P(groupId, privateLayout);
+	public static void removeByG_P(long groupId, long parentLayoutId) {
+		getPersistence().removeByG_P(groupId, parentLayoutId);
 	}
 
 	/**
-	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63;.
+	* Returns the number of layouts where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @return the number of matching layouts
 	*/
-	public static int countByG_P(long groupId, boolean privateLayout) {
-		return getPersistence().countByG_P(groupId, privateLayout);
+	public static int countByG_P(long groupId, long parentLayoutId) {
+		return getPersistence().countByG_P(groupId, parentLayoutId);
 	}
 
 	/**
-	* Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
+	* Returns the number of layouts that the user has permission to view where groupId = &#63; and parentLayoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param parentLayoutId the parent layout ID
 	* @return the number of matching layouts that the user has permission to view
 	*/
-	public static int filterCountByG_P(long groupId, boolean privateLayout) {
-		return getPersistence().filterCountByG_P(groupId, privateLayout);
+	public static int filterCountByG_P(long groupId, long parentLayoutId) {
+		return getPersistence().filterCountByG_P(groupId, parentLayoutId);
 	}
 
 	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
+	* Returns all the layouts where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @return the matching layout
-	* @throws NoSuchLayoutException if a matching layout could not be found
-	*/
-	public static Layout findByG_P_L(long groupId, boolean privateLayout,
-		long layoutId) throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence().findByG_P_L(groupId, privateLayout, layoutId);
-	}
-
-	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @return the matching layout, or <code>null</code> if a matching layout could not be found
-	*/
-	public static Layout fetchByG_P_L(long groupId, boolean privateLayout,
-		long layoutId) {
-		return getPersistence().fetchByG_P_L(groupId, privateLayout, layoutId);
-	}
-
-	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching layout, or <code>null</code> if a matching layout could not be found
-	*/
-	public static Layout fetchByG_P_L(long groupId, boolean privateLayout,
-		long layoutId, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByG_P_L(groupId, privateLayout, layoutId,
-			retrieveFromCache);
-	}
-
-	/**
-	* Removes the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @return the layout that was removed
-	*/
-	public static Layout removeByG_P_L(long groupId, boolean privateLayout,
-		long layoutId) throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence().removeByG_P_L(groupId, privateLayout, layoutId);
-	}
-
-	/**
-	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @return the number of matching layouts
-	*/
-	public static int countByG_P_L(long groupId, boolean privateLayout,
-		long layoutId) {
-		return getPersistence().countByG_P_L(groupId, privateLayout, layoutId);
-	}
-
-	/**
-	* Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @return the matching layouts
 	*/
-	public static List<Layout> findByG_P_P(long groupId, boolean privateLayout,
-		long parentLayoutId) {
-		return getPersistence()
-				   .findByG_P_P(groupId, privateLayout, parentLayoutId);
+	public static List<Layout> findByG_T(long groupId, java.lang.String type) {
+		return getPersistence().findByG_T(groupId, type);
 	}
 
 	/**
-	* Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns a range of all the layouts where groupId = &#63; and type = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @param start the lower bound of the range of layouts
 	* @param end the upper bound of the range of layouts (not inclusive)
 	* @return the range of matching layouts
 	*/
-	public static List<Layout> findByG_P_P(long groupId, boolean privateLayout,
-		long parentLayoutId, int start, int end) {
-		return getPersistence()
-				   .findByG_P_P(groupId, privateLayout, parentLayoutId, start,
-			end);
+	public static List<Layout> findByG_T(long groupId, java.lang.String type,
+		int start, int end) {
+		return getPersistence().findByG_T(groupId, type, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns an ordered range of all the layouts where groupId = &#63; and type = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @param start the lower bound of the range of layouts
 	* @param end the upper bound of the range of layouts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layouts
 	*/
-	public static List<Layout> findByG_P_P(long groupId, boolean privateLayout,
-		long parentLayoutId, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
+	public static List<Layout> findByG_T(long groupId, java.lang.String type,
+		int start, int end, OrderByComparator<Layout> orderByComparator) {
 		return getPersistence()
-				   .findByG_P_P(groupId, privateLayout, parentLayoutId, start,
-			end, orderByComparator);
+				   .findByG_T(groupId, type, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns the first layout in the ordered set where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout
 	* @throws NoSuchLayoutException if a matching layout could not be found
 	*/
-	public static Layout findByG_P_P_First(long groupId, boolean privateLayout,
-		long parentLayoutId, OrderByComparator<Layout> orderByComparator)
+	public static Layout findByG_T_First(long groupId, java.lang.String type,
+		OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence()
-				   .findByG_P_P_First(groupId, privateLayout, parentLayoutId,
-			orderByComparator);
+		return getPersistence().findByG_T_First(groupId, type, orderByComparator);
 	}
 
 	/**
-	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns the first layout in the ordered set where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	*/
-	public static Layout fetchByG_P_P_First(long groupId,
-		boolean privateLayout, long parentLayoutId,
+	public static Layout fetchByG_T_First(long groupId, java.lang.String type,
 		OrderByComparator<Layout> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_P_P_First(groupId, privateLayout, parentLayoutId,
-			orderByComparator);
+				   .fetchByG_T_First(groupId, type, orderByComparator);
 	}
 
 	/**
-	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns the last layout in the ordered set where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout
 	* @throws NoSuchLayoutException if a matching layout could not be found
 	*/
-	public static Layout findByG_P_P_Last(long groupId, boolean privateLayout,
-		long parentLayoutId, OrderByComparator<Layout> orderByComparator)
+	public static Layout findByG_T_Last(long groupId, java.lang.String type,
+		OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence()
-				   .findByG_P_P_Last(groupId, privateLayout, parentLayoutId,
-			orderByComparator);
+		return getPersistence().findByG_T_Last(groupId, type, orderByComparator);
 	}
 
 	/**
-	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns the last layout in the ordered set where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	*/
-	public static Layout fetchByG_P_P_Last(long groupId, boolean privateLayout,
-		long parentLayoutId, OrderByComparator<Layout> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_P_P_Last(groupId, privateLayout, parentLayoutId,
-			orderByComparator);
+	public static Layout fetchByG_T_Last(long groupId, java.lang.String type,
+		OrderByComparator<Layout> orderByComparator) {
+		return getPersistence().fetchByG_T_Last(groupId, type, orderByComparator);
 	}
 
 	/**
-	* Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and type = &#63;.
 	*
 	* @param plid the primary key of the current layout
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout
 	* @throws NoSuchLayoutException if a layout with the primary key could not be found
 	*/
-	public static Layout[] findByG_P_P_PrevAndNext(long plid, long groupId,
-		boolean privateLayout, long parentLayoutId,
-		OrderByComparator<Layout> orderByComparator)
+	public static Layout[] findByG_T_PrevAndNext(long plid, long groupId,
+		java.lang.String type, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException {
 		return getPersistence()
-				   .findByG_P_P_PrevAndNext(plid, groupId, privateLayout,
-			parentLayoutId, orderByComparator);
+				   .findByG_T_PrevAndNext(plid, groupId, type, orderByComparator);
 	}
 
 	/**
-	* Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns all the layouts that the user has permission to view where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @return the matching layouts that the user has permission to view
 	*/
-	public static List<Layout> filterFindByG_P_P(long groupId,
-		boolean privateLayout, long parentLayoutId) {
-		return getPersistence()
-				   .filterFindByG_P_P(groupId, privateLayout, parentLayoutId);
+	public static List<Layout> filterFindByG_T(long groupId,
+		java.lang.String type) {
+		return getPersistence().filterFindByG_T(groupId, type);
 	}
 
 	/**
-	* Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns a range of all the layouts that the user has permission to view where groupId = &#63; and type = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @param start the lower bound of the range of layouts
 	* @param end the upper bound of the range of layouts (not inclusive)
 	* @return the range of matching layouts that the user has permission to view
 	*/
-	public static List<Layout> filterFindByG_P_P(long groupId,
-		boolean privateLayout, long parentLayoutId, int start, int end) {
-		return getPersistence()
-				   .filterFindByG_P_P(groupId, privateLayout, parentLayoutId,
-			start, end);
+	public static List<Layout> filterFindByG_T(long groupId,
+		java.lang.String type, int start, int end) {
+		return getPersistence().filterFindByG_T(groupId, type, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
+	* Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and type = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
+	* @param type the type
 	* @param start the lower bound of the range of layouts
 	* @param end the upper bound of the range of layouts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layouts that the user has permission to view
 	*/
-	public static List<Layout> filterFindByG_P_P(long groupId,
-		boolean privateLayout, long parentLayoutId, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_P_P(groupId, privateLayout, parentLayoutId,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	*
-	* @param plid the primary key of the current layout
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next layout
-	* @throws NoSuchLayoutException if a layout with the primary key could not be found
-	*/
-	public static Layout[] filterFindByG_P_P_PrevAndNext(long plid,
-		long groupId, boolean privateLayout, long parentLayoutId,
-		OrderByComparator<Layout> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence()
-				   .filterFindByG_P_P_PrevAndNext(plid, groupId, privateLayout,
-			parentLayoutId, orderByComparator);
-	}
-
-	/**
-	* Removes all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
-	*/
-	public static void removeByG_P_P(long groupId, boolean privateLayout,
-		long parentLayoutId) {
-		getPersistence().removeByG_P_P(groupId, privateLayout, parentLayoutId);
-	}
-
-	/**
-	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
-	* @return the number of matching layouts
-	*/
-	public static int countByG_P_P(long groupId, boolean privateLayout,
-		long parentLayoutId) {
-		return getPersistence()
-				   .countByG_P_P(groupId, privateLayout, parentLayoutId);
-	}
-
-	/**
-	* Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param parentLayoutId the parent layout ID
-	* @return the number of matching layouts that the user has permission to view
-	*/
-	public static int filterCountByG_P_P(long groupId, boolean privateLayout,
-		long parentLayoutId) {
-		return getPersistence()
-				   .filterCountByG_P_P(groupId, privateLayout, parentLayoutId);
-	}
-
-	/**
-	* Returns all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @return the matching layouts
-	*/
-	public static List<Layout> findByG_P_T(long groupId, boolean privateLayout,
-		java.lang.String type) {
-		return getPersistence().findByG_P_T(groupId, privateLayout, type);
-	}
-
-	/**
-	* Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @param start the lower bound of the range of layouts
-	* @param end the upper bound of the range of layouts (not inclusive)
-	* @return the range of matching layouts
-	*/
-	public static List<Layout> findByG_P_T(long groupId, boolean privateLayout,
-		java.lang.String type, int start, int end) {
-		return getPersistence()
-				   .findByG_P_T(groupId, privateLayout, type, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @param start the lower bound of the range of layouts
-	* @param end the upper bound of the range of layouts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching layouts
-	*/
-	public static List<Layout> findByG_P_T(long groupId, boolean privateLayout,
+	public static List<Layout> filterFindByG_T(long groupId,
 		java.lang.String type, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
 		return getPersistence()
-				   .findByG_P_T(groupId, privateLayout, type, start, end,
-			orderByComparator);
+				   .filterFindByG_T(groupId, type, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching layout
-	* @throws NoSuchLayoutException if a matching layout could not be found
-	*/
-	public static Layout findByG_P_T_First(long groupId, boolean privateLayout,
-		java.lang.String type, OrderByComparator<Layout> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence()
-				   .findByG_P_T_First(groupId, privateLayout, type,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching layout, or <code>null</code> if a matching layout could not be found
-	*/
-	public static Layout fetchByG_P_T_First(long groupId,
-		boolean privateLayout, java.lang.String type,
-		OrderByComparator<Layout> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_P_T_First(groupId, privateLayout, type,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching layout
-	* @throws NoSuchLayoutException if a matching layout could not be found
-	*/
-	public static Layout findByG_P_T_Last(long groupId, boolean privateLayout,
-		java.lang.String type, OrderByComparator<Layout> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence()
-				   .findByG_P_T_Last(groupId, privateLayout, type,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching layout, or <code>null</code> if a matching layout could not be found
-	*/
-	public static Layout fetchByG_P_T_Last(long groupId, boolean privateLayout,
-		java.lang.String type, OrderByComparator<Layout> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_P_T_Last(groupId, privateLayout, type,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63;.
+	* Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and type = &#63;.
 	*
 	* @param plid the primary key of the current layout
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout
 	* @throws NoSuchLayoutException if a layout with the primary key could not be found
 	*/
-	public static Layout[] findByG_P_T_PrevAndNext(long plid, long groupId,
-		boolean privateLayout, java.lang.String type,
-		OrderByComparator<Layout> orderByComparator)
+	public static Layout[] filterFindByG_T_PrevAndNext(long plid, long groupId,
+		java.lang.String type, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutException {
 		return getPersistence()
-				   .findByG_P_T_PrevAndNext(plid, groupId, privateLayout, type,
+				   .filterFindByG_T_PrevAndNext(plid, groupId, type,
 			orderByComparator);
 	}
 
 	/**
-	* Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
+	* Removes all the layouts where groupId = &#63; and type = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param type the type
-	* @return the matching layouts that the user has permission to view
 	*/
-	public static List<Layout> filterFindByG_P_T(long groupId,
-		boolean privateLayout, java.lang.String type) {
-		return getPersistence().filterFindByG_P_T(groupId, privateLayout, type);
+	public static void removeByG_T(long groupId, java.lang.String type) {
+		getPersistence().removeByG_T(groupId, type);
 	}
 
 	/**
-	* Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
+	* Returns the number of layouts where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @param start the lower bound of the range of layouts
-	* @param end the upper bound of the range of layouts (not inclusive)
-	* @return the range of matching layouts that the user has permission to view
-	*/
-	public static List<Layout> filterFindByG_P_T(long groupId,
-		boolean privateLayout, java.lang.String type, int start, int end) {
-		return getPersistence()
-				   .filterFindByG_P_T(groupId, privateLayout, type, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @param start the lower bound of the range of layouts
-	* @param end the upper bound of the range of layouts (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching layouts that the user has permission to view
-	*/
-	public static List<Layout> filterFindByG_P_T(long groupId,
-		boolean privateLayout, java.lang.String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_P_T(groupId, privateLayout, type, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* @param plid the primary key of the current layout
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next layout
-	* @throws NoSuchLayoutException if a layout with the primary key could not be found
-	*/
-	public static Layout[] filterFindByG_P_T_PrevAndNext(long plid,
-		long groupId, boolean privateLayout, java.lang.String type,
-		OrderByComparator<Layout> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence()
-				   .filterFindByG_P_T_PrevAndNext(plid, groupId, privateLayout,
-			type, orderByComparator);
-	}
-
-	/**
-	* Removes all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param type the type
-	*/
-	public static void removeByG_P_T(long groupId, boolean privateLayout,
-		java.lang.String type) {
-		getPersistence().removeByG_P_T(groupId, privateLayout, type);
-	}
-
-	/**
-	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param type the type
 	* @return the number of matching layouts
 	*/
-	public static int countByG_P_T(long groupId, boolean privateLayout,
-		java.lang.String type) {
-		return getPersistence().countByG_P_T(groupId, privateLayout, type);
+	public static int countByG_T(long groupId, java.lang.String type) {
+		return getPersistence().countByG_T(groupId, type);
 	}
 
 	/**
-	* Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
+	* Returns the number of layouts that the user has permission to view where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param type the type
 	* @return the number of matching layouts that the user has permission to view
 	*/
-	public static int filterCountByG_P_T(long groupId, boolean privateLayout,
-		java.lang.String type) {
-		return getPersistence().filterCountByG_P_T(groupId, privateLayout, type);
+	public static int filterCountByG_T(long groupId, java.lang.String type) {
+		return getPersistence().filterCountByG_T(groupId, type);
 	}
 
 	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
+	* Returns the layout where groupId = &#63; and friendlyURL = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param friendlyURL the friendly u r l
 	* @return the matching layout
 	* @throws NoSuchLayoutException if a matching layout could not be found
 	*/
-	public static Layout findByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL)
+	public static Layout findByG_F(long groupId, java.lang.String friendlyURL)
 		throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence().findByG_P_F(groupId, privateLayout, friendlyURL);
+		return getPersistence().findByG_F(groupId, friendlyURL);
 	}
 
 	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the layout where groupId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param friendlyURL the friendly u r l
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	*/
-	public static Layout fetchByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL) {
-		return getPersistence().fetchByG_P_F(groupId, privateLayout, friendlyURL);
+	public static Layout fetchByG_F(long groupId, java.lang.String friendlyURL) {
+		return getPersistence().fetchByG_F(groupId, friendlyURL);
 	}
 
 	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the layout where groupId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param friendlyURL the friendly u r l
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	*/
-	public static Layout fetchByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL, boolean retrieveFromCache) {
+	public static Layout fetchByG_F(long groupId, java.lang.String friendlyURL,
+		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByG_P_F(groupId, privateLayout, friendlyURL,
+				   .fetchByG_F(groupId, friendlyURL, retrieveFromCache);
+	}
+
+	/**
+	* Removes the layout where groupId = &#63; and friendlyURL = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param friendlyURL the friendly u r l
+	* @return the layout that was removed
+	*/
+	public static Layout removeByG_F(long groupId, java.lang.String friendlyURL)
+		throws com.liferay.portal.NoSuchLayoutException {
+		return getPersistence().removeByG_F(groupId, friendlyURL);
+	}
+
+	/**
+	* Returns the number of layouts where groupId = &#63; and friendlyURL = &#63;.
+	*
+	* @param groupId the group ID
+	* @param friendlyURL the friendly u r l
+	* @return the number of matching layouts
+	*/
+	public static int countByG_F(long groupId, java.lang.String friendlyURL) {
+		return getPersistence().countByG_F(groupId, friendlyURL);
+	}
+
+	/**
+	* Returns the layout where groupId = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	* @return the matching layout
+	* @throws NoSuchLayoutException if a matching layout could not be found
+	*/
+	public static Layout findByG_SPLU(long groupId,
+		java.lang.String sourcePrototypeLayoutUuid)
+		throws com.liferay.portal.NoSuchLayoutException {
+		return getPersistence().findByG_SPLU(groupId, sourcePrototypeLayoutUuid);
+	}
+
+	/**
+	* Returns the layout where groupId = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public static Layout fetchByG_SPLU(long groupId,
+		java.lang.String sourcePrototypeLayoutUuid) {
+		return getPersistence().fetchByG_SPLU(groupId, sourcePrototypeLayoutUuid);
+	}
+
+	/**
+	* Returns the layout where groupId = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public static Layout fetchByG_SPLU(long groupId,
+		java.lang.String sourcePrototypeLayoutUuid, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_SPLU(groupId, sourcePrototypeLayoutUuid,
 			retrieveFromCache);
 	}
 
 	/**
-	* Removes the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
+	* Removes the layout where groupId = &#63; and sourcePrototypeLayoutUuid = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param friendlyURL the friendly u r l
-	* @return the layout that was removed
-	*/
-	public static Layout removeByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL)
-		throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence()
-				   .removeByG_P_F(groupId, privateLayout, friendlyURL);
-	}
-
-	/**
-	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param friendlyURL the friendly u r l
-	* @return the number of matching layouts
-	*/
-	public static int countByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL) {
-		return getPersistence().countByG_P_F(groupId, privateLayout, friendlyURL);
-	}
-
-	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	* @return the matching layout
-	* @throws NoSuchLayoutException if a matching layout could not be found
-	*/
-	public static Layout findByG_P_SPLU(long groupId, boolean privateLayout,
-		java.lang.String sourcePrototypeLayoutUuid)
-		throws com.liferay.portal.NoSuchLayoutException {
-		return getPersistence()
-				   .findByG_P_SPLU(groupId, privateLayout,
-			sourcePrototypeLayoutUuid);
-	}
-
-	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	* @return the matching layout, or <code>null</code> if a matching layout could not be found
-	*/
-	public static Layout fetchByG_P_SPLU(long groupId, boolean privateLayout,
-		java.lang.String sourcePrototypeLayoutUuid) {
-		return getPersistence()
-				   .fetchByG_P_SPLU(groupId, privateLayout,
-			sourcePrototypeLayoutUuid);
-	}
-
-	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching layout, or <code>null</code> if a matching layout could not be found
-	*/
-	public static Layout fetchByG_P_SPLU(long groupId, boolean privateLayout,
-		java.lang.String sourcePrototypeLayoutUuid, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByG_P_SPLU(groupId, privateLayout,
-			sourcePrototypeLayoutUuid, retrieveFromCache);
-	}
-
-	/**
-	* Removes the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
 	* @return the layout that was removed
 	*/
-	public static Layout removeByG_P_SPLU(long groupId, boolean privateLayout,
+	public static Layout removeByG_SPLU(long groupId,
 		java.lang.String sourcePrototypeLayoutUuid)
 		throws com.liferay.portal.NoSuchLayoutException {
 		return getPersistence()
-				   .removeByG_P_SPLU(groupId, privateLayout,
-			sourcePrototypeLayoutUuid);
+				   .removeByG_SPLU(groupId, sourcePrototypeLayoutUuid);
 	}
 
 	/**
-	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63;.
+	* Returns the number of layouts where groupId = &#63; and sourcePrototypeLayoutUuid = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param sourcePrototypeLayoutUuid the source prototype layout uuid
 	* @return the number of matching layouts
 	*/
-	public static int countByG_P_SPLU(long groupId, boolean privateLayout,
+	public static int countByG_SPLU(long groupId,
 		java.lang.String sourcePrototypeLayoutUuid) {
-		return getPersistence()
-				   .countByG_P_SPLU(groupId, privateLayout,
-			sourcePrototypeLayoutUuid);
+		return getPersistence().countByG_SPLU(groupId, sourcePrototypeLayoutUuid);
 	}
 
 	/**

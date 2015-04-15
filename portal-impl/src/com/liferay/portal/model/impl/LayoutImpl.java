@@ -208,8 +208,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		while (true) {
 			if (!layout.isRootLayout()) {
 				layout = LayoutLocalServiceUtil.getLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getParentLayoutId());
+					layout.getGroupId(), layout.getParentLayoutId());
 			}
 			else {
 				layoutId = layout.getLayoutId();
@@ -237,8 +236,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		while (true) {
 			if (!layout.isRootLayout()) {
 				layout = LayoutLocalServiceUtil.getLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getParentLayoutId());
+					layout.getGroupId(), layout.getParentLayoutId());
 			}
 			else {
 				plid = layout.getPlid();
@@ -266,8 +264,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		while (!layout.isRootLayout()) {
 			layout = LayoutLocalServiceUtil.getLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getParentLayoutId());
+				layout.getGroupId(), layout.getParentLayoutId());
 
 			layouts.add(layout);
 		}
@@ -283,8 +280,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public List<Layout> getChildren() {
-		return LayoutLocalServiceUtil.getLayouts(
-			getGroupId(), isPrivateLayout(), getLayoutId());
+		return LayoutLocalServiceUtil.getLayouts(getGroupId(), getLayoutId());
 	}
 
 	/**
@@ -554,8 +550,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public LayoutSet getLayoutSet() throws PortalException {
 		if (_layoutSet == null) {
-			_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				getGroupId(), isPrivateLayout());
+			_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(getGroupId());
 		}
 
 		return _layoutSet;
@@ -590,8 +585,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return null;
 		}
 
-		return LayoutLocalServiceUtil.fetchLayout(
-			getGroupId(), isPrivateLayout(), linkToLayoutId);
+		return LayoutLocalServiceUtil.fetchLayout(getGroupId(), linkToLayoutId);
 	}
 
 	/**
@@ -608,7 +602,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
-			getGroupId(), isPrivateLayout(), getParentLayoutId());
+			getGroupId(), getParentLayoutId());
 
 		return layout.getPlid();
 	}
@@ -773,7 +767,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			}
 
 			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
-				getGroupId(), isPrivateLayout(), parentLayoutId);
+				getGroupId(), parentLayoutId);
 
 			parentLayoutId = parentLayout.getParentLayoutId();
 		}
@@ -789,8 +783,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public boolean hasChildren() {
-		return LayoutLocalServiceUtil.hasLayouts(
-			getGroupId(), isPrivateLayout(), getLayoutId());
+		return LayoutLocalServiceUtil.hasLayouts(getGroupId(), getLayoutId());
 	}
 
 	@Override
@@ -965,7 +958,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public boolean isPublicLayout() {
-		return !isPrivateLayout();
+		return true;
 	}
 
 	/**
@@ -1108,13 +1101,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public void setLayoutSet(LayoutSet layoutSet) {
 		_layoutSet = layoutSet;
-	}
-
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		super.setPrivateLayout(privateLayout);
-
-		_layoutSet = null;
 	}
 
 	@Override

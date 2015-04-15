@@ -19,7 +19,7 @@
 <%
 String rootNodeName = StringPool.BLANK;
 
-List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(layout.getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
+List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(layout.getGroupId(), false, rootNodeName, locale);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

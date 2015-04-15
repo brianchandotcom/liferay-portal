@@ -53,11 +53,11 @@ public class StagingUtil {
 
 	public static String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
-		boolean secureConnection, long remoteGroupId, boolean privateLayout) {
+		boolean secureConnection, long remoteGroupId) {
 
 		return getStaging().buildRemoteURL(
 			remoteAddress, remotePort, remotePathContext, secureConnection,
-			remoteGroupId, privateLayout);
+			remoteGroupId);
 	}
 
 	public static String buildRemoteURL(
@@ -126,24 +126,9 @@ public class StagingUtil {
 		getStaging().copyRemoteLayouts(exportImportConfigurationId);
 	}
 
-	public static void copyRemoteLayouts(
-			long sourceGroupId, boolean privateLayout,
-			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId,
-			boolean remotePrivateLayout)
-		throws PortalException {
-
-		getStaging().copyRemoteLayouts(
-			sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			remoteGroupId, remotePrivateLayout);
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #copyRemoteLayouts(long,
-	 *             boolean, Map, Map, String, int, String, boolean, long,
-	 *             boolean)}
+	 *             Map, Map, String, int, String, boolean, long)}
 	 */
 	@Deprecated
 	public static void copyRemoteLayouts(
@@ -160,11 +145,22 @@ public class StagingUtil {
 			remoteGroupId, remotePrivateLayout, startDate, endDate);
 	}
 
-	public static void deleteLastImportSettings(
-			Group liveGroup, boolean privateLayout)
+	public static void copyRemoteLayouts(
+			long sourceGroupId, Map<Long, Boolean> layoutIdMap,
+			Map<String, String[]> parameterMap, String remoteAddress,
+			int remotePort, String remotePathContext, boolean secureConnection,
+			long remoteGroupId)
 		throws PortalException {
 
-		getStaging().deleteLastImportSettings(liveGroup, privateLayout);
+		getStaging().copyRemoteLayouts(
+			sourceGroupId, layoutIdMap, parameterMap, remoteAddress, remotePort,
+			remotePathContext, secureConnection, remoteGroupId);
+	}
+
+	public static void deleteLastImportSettings(Group liveGroup)
+		throws PortalException {
+
+		getStaging().deleteLastImportSettings(liveGroup);
 	}
 
 	public static void deleteRecentLayoutRevisionId(
@@ -437,20 +433,9 @@ public class StagingUtil {
 		getStaging().publishLayouts(userId, exportImportConfigurationId);
 	}
 
-	public static void publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		getStaging().publishLayouts(
-			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
-			parameterMap);
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, long[], Map)}
+	 *             long, long[], Map)}
 	 */
 	@Deprecated
 	public static void publishLayouts(
@@ -466,7 +451,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, long[], Map)}
+	 *             long, Map)}
 	 */
 	@Deprecated
 	public static void publishLayouts(
@@ -480,18 +465,9 @@ public class StagingUtil {
 			parameterMap, startDate, endDate);
 	}
 
-	public static void publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		getStaging().publishLayouts(
-			userId, sourceGroupId, targetGroupId, privateLayout, parameterMap);
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, Map)}
+	 *             long, long[], Map)}
 	 */
 	@Deprecated
 	public static void publishLayouts(
@@ -503,6 +479,25 @@ public class StagingUtil {
 		getStaging().publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout, parameterMap,
 			startDate, endDate);
+	}
+
+	public static void publishLayouts(
+			long userId, long sourceGroupId, long targetGroupId,
+			long[] layoutIds,
+			Map<String, String[]> parameterMap)
+		throws PortalException {
+
+		getStaging().publishLayouts(
+			userId, sourceGroupId, targetGroupId, layoutIds, parameterMap);
+	}
+
+	public static void publishLayouts(
+			long userId, long sourceGroupId, long targetGroupId,
+			Map<String, String[]> parameterMap)
+		throws PortalException {
+
+		getStaging().publishLayouts(
+			userId, sourceGroupId, targetGroupId, parameterMap);
 	}
 
 	public static void publishPortlet(
@@ -655,7 +650,7 @@ public class StagingUtil {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portal.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
-	 *             long, boolean, com.liferay.portal.kernel.util.DateRange,
+	 *             long, com.liferay.portal.kernel.util.DateRange,
 	 *             Date)}
 	 */
 	@Deprecated

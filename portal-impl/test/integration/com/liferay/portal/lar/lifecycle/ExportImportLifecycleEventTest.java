@@ -87,7 +87,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 		try {
 			layoutExporter.exportLayoutsAsFile(
-				0, false, new long[0], _parameterMap, new Date(), new Date());
+				0, new long[0], _parameterMap, new Date(), new Date());
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -106,7 +106,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 		try {
 			layoutImporter.importLayouts(
-				TestPropsValues.getUserId(), 0, false, _parameterMap, null);
+				TestPropsValues.getUserId(), 0, _parameterMap, null);
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -124,7 +124,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			StagingUtil.publishLayouts(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.nextInt(), false, new long[0], _parameterMap);
+				RandomTestUtil.nextInt(), new long[0], _parameterMap);
 		}
 		catch (Throwable t) {
 			if (_log.isInfoEnabled()) {
@@ -201,7 +201,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@Test
 	public void testSuccessfulLayoutLocalPublishing() throws Exception {
-		LayoutTestUtil.addLayout(_group, false);
+		LayoutTestUtil.addLayout(_group);
 
 		JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -209,7 +209,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_liveGroup.getGroupId(), false, null, _parameterMap);
+			_liveGroup.getGroupId(), null, _parameterMap);
 
 		Assert.assertTrue(
 			_firedExportImportLifecycleEventsMap.containsKey(

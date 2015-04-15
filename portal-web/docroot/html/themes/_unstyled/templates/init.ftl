@@ -221,11 +221,7 @@
 		<#assign css_class = css_class + " signed-out" />
 	</#if>
 
-	<#if layout.isPublicLayout()>
-		<#assign css_class = css_class + " public-page" />
-	<#else>
-		<#assign css_class = css_class + " private-page" />
-	</#if>
+	<#assign css_class = css_class + " page" />
 
 	<#if page_group.isLayoutPrototype()>
 		<#assign css_class = css_class + " page-template" />
@@ -247,23 +243,9 @@
 
 	<#assign css_class = css_class + " " + site_type />
 
-	<#assign site_default_public_url = htmlUtil.escape(page_group.getDisplayURL(theme_display, false)) />
-
-	<#assign community_default_public_url = site_default_public_url />
-
-	<#assign site_default_private_url = htmlUtil.escape(page_group.getDisplayURL(theme_display, true)) />
-
-	<#assign community_default_private_url = site_default_private_url />
-
-	<#assign site_default_url = site_default_public_url />
+	<#assign site_default_url = htmlUtil.escape(page_group.getDisplayURL(theme_display)) />
 
 	<#assign community_default_url = site_default_url />
-
-	<#if layout.isPrivateLayout()>
-		<#assign site_default_url = site_default_private_url />
-
-		<#assign community_default_url = site_default_url />
-	</#if>
 </#if>
 
 <#assign the_title = "" />

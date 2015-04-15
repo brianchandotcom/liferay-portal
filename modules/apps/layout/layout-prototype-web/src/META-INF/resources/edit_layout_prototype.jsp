@@ -78,7 +78,7 @@ request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 					message="open-page-template"
 					method="get"
 					target="_blank"
-					url="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>"
+					url="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay) %>"
 				/>
 			</aui:field-wrapper>
 		</c:if>

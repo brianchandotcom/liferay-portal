@@ -2874,6 +2874,569 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	private static final String _FINDER_COLUMN_PLID_PLID_2 = "layoutFriendlyURL.plid = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_F = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
+			LayoutFriendlyURLImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
+			LayoutFriendlyURLImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
+			new String[] { Long.class.getName(), String.class.getName() },
+			LayoutFriendlyURLModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutFriendlyURLModelImpl.FRIENDLYURL_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_F = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutFriendlyURLModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the layout friendly u r ls where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 * @return the matching layout friendly u r ls
+	 */
+	@Override
+	public List<LayoutFriendlyURL> findByG_F(long groupId, String friendlyURL) {
+		return findByG_F(groupId, friendlyURL, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout friendly u r ls where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 * @param start the lower bound of the range of layout friendly u r ls
+	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @return the range of matching layout friendly u r ls
+	 */
+	@Override
+	public List<LayoutFriendlyURL> findByG_F(long groupId, String friendlyURL,
+		int start, int end) {
+		return findByG_F(groupId, friendlyURL, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout friendly u r ls where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 * @param start the lower bound of the range of layout friendly u r ls
+	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout friendly u r ls
+	 */
+	@Override
+	public List<LayoutFriendlyURL> findByG_F(long groupId, String friendlyURL,
+		int start, int end,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F;
+			finderArgs = new Object[] { groupId, friendlyURL };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_F;
+			finderArgs = new Object[] {
+					groupId, friendlyURL,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<LayoutFriendlyURL> list = (List<LayoutFriendlyURL>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (LayoutFriendlyURL layoutFriendlyURL : list) {
+				if ((groupId != layoutFriendlyURL.getGroupId()) ||
+						!Validator.equals(friendlyURL,
+							layoutFriendlyURL.getFriendlyURL())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE);
+
+			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
+
+			boolean bindFriendlyURL = false;
+
+			if (friendlyURL == null) {
+				query.append(_FINDER_COLUMN_G_F_FRIENDLYURL_1);
+			}
+			else if (friendlyURL.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_FRIENDLYURL_3);
+			}
+			else {
+				bindFriendlyURL = true;
+
+				query.append(_FINDER_COLUMN_G_F_FRIENDLYURL_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LayoutFriendlyURLModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindFriendlyURL) {
+					qPos.add(friendlyURL);
+				}
+
+				if (!pagination) {
+					list = (List<LayoutFriendlyURL>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutFriendlyURL>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout friendly u r l in the ordered set where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout friendly u r l
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 */
+	@Override
+	public LayoutFriendlyURL findByG_F_First(long groupId, String friendlyURL,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator)
+		throws NoSuchLayoutFriendlyURLException {
+		LayoutFriendlyURL layoutFriendlyURL = fetchByG_F_First(groupId,
+				friendlyURL, orderByComparator);
+
+		if (layoutFriendlyURL != null) {
+			return layoutFriendlyURL;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", friendlyURL=");
+		msg.append(friendlyURL);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutFriendlyURLException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout friendly u r l in the ordered set where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 */
+	@Override
+	public LayoutFriendlyURL fetchByG_F_First(long groupId, String friendlyURL,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
+		List<LayoutFriendlyURL> list = findByG_F(groupId, friendlyURL, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout friendly u r l in the ordered set where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout friendly u r l
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 */
+	@Override
+	public LayoutFriendlyURL findByG_F_Last(long groupId, String friendlyURL,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator)
+		throws NoSuchLayoutFriendlyURLException {
+		LayoutFriendlyURL layoutFriendlyURL = fetchByG_F_Last(groupId,
+				friendlyURL, orderByComparator);
+
+		if (layoutFriendlyURL != null) {
+			return layoutFriendlyURL;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", friendlyURL=");
+		msg.append(friendlyURL);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLayoutFriendlyURLException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout friendly u r l in the ordered set where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 */
+	@Override
+	public LayoutFriendlyURL fetchByG_F_Last(long groupId, String friendlyURL,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
+		int count = countByG_F(groupId, friendlyURL);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutFriendlyURL> list = findByG_F(groupId, friendlyURL,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param layoutFriendlyURLId the primary key of the current layout friendly u r l
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout friendly u r l
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 */
+	@Override
+	public LayoutFriendlyURL[] findByG_F_PrevAndNext(long layoutFriendlyURLId,
+		long groupId, String friendlyURL,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator)
+		throws NoSuchLayoutFriendlyURLException {
+		LayoutFriendlyURL layoutFriendlyURL = findByPrimaryKey(layoutFriendlyURLId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutFriendlyURL[] array = new LayoutFriendlyURLImpl[3];
+
+			array[0] = getByG_F_PrevAndNext(session, layoutFriendlyURL,
+					groupId, friendlyURL, orderByComparator, true);
+
+			array[1] = layoutFriendlyURL;
+
+			array[2] = getByG_F_PrevAndNext(session, layoutFriendlyURL,
+					groupId, friendlyURL, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutFriendlyURL getByG_F_PrevAndNext(Session session,
+		LayoutFriendlyURL layoutFriendlyURL, long groupId, String friendlyURL,
+		OrderByComparator<LayoutFriendlyURL> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE);
+
+		query.append(_FINDER_COLUMN_G_F_GROUPID_2);
+
+		boolean bindFriendlyURL = false;
+
+		if (friendlyURL == null) {
+			query.append(_FINDER_COLUMN_G_F_FRIENDLYURL_1);
+		}
+		else if (friendlyURL.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_F_FRIENDLYURL_3);
+		}
+		else {
+			bindFriendlyURL = true;
+
+			query.append(_FINDER_COLUMN_G_F_FRIENDLYURL_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutFriendlyURLModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindFriendlyURL) {
+			qPos.add(friendlyURL);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutFriendlyURL);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutFriendlyURL> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout friendly u r ls where groupId = &#63; and friendlyURL = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 */
+	@Override
+	public void removeByG_F(long groupId, String friendlyURL) {
+		for (LayoutFriendlyURL layoutFriendlyURL : findByG_F(groupId,
+				friendlyURL, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(layoutFriendlyURL);
+		}
+	}
+
+	/**
+	 * Returns the number of layout friendly u r ls where groupId = &#63; and friendlyURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param friendlyURL the friendly u r l
+	 * @return the number of matching layout friendly u r ls
+	 */
+	@Override
+	public int countByG_F(long groupId, String friendlyURL) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_F;
+
+		Object[] finderArgs = new Object[] { groupId, friendlyURL };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE);
+
+			query.append(_FINDER_COLUMN_G_F_GROUPID_2);
+
+			boolean bindFriendlyURL = false;
+
+			if (friendlyURL == null) {
+				query.append(_FINDER_COLUMN_G_F_FRIENDLYURL_1);
+			}
+			else if (friendlyURL.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_FRIENDLYURL_3);
+			}
+			else {
+				bindFriendlyURL = true;
+
+				query.append(_FINDER_COLUMN_G_F_FRIENDLYURL_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindFriendlyURL) {
+					qPos.add(friendlyURL);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_F_GROUPID_2 = "layoutFriendlyURL.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_FRIENDLYURL_1 = "layoutFriendlyURL.friendlyURL IS NULL";
+	private static final String _FINDER_COLUMN_G_F_FRIENDLYURL_2 = "layoutFriendlyURL.friendlyURL = ?";
+	private static final String _FINDER_COLUMN_G_F_FRIENDLYURL_3 = "(layoutFriendlyURL.friendlyURL IS NULL OR layoutFriendlyURL.friendlyURL = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_P_F = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
 			LayoutFriendlyURLImpl.class,
@@ -3695,665 +4258,47 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	private static final String _FINDER_COLUMN_P_L_LANGUAGEID_1 = "layoutFriendlyURL.languageId IS NULL";
 	private static final String _FINDER_COLUMN_P_L_LANGUAGEID_2 = "layoutFriendlyURL.languageId = ?";
 	private static final String _FINDER_COLUMN_P_L_LANGUAGEID_3 = "(layoutFriendlyURL.languageId IS NULL OR layoutFriendlyURL.languageId = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_F = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
-			LayoutFriendlyURLImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_F",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_F = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
-			LayoutFriendlyURLImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_F",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			LayoutFriendlyURLModelImpl.GROUPID_COLUMN_BITMASK |
-			LayoutFriendlyURLModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
-			LayoutFriendlyURLModelImpl.FRIENDLYURL_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_F = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutFriendlyURLModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_F",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			});
-
-	/**
-	 * Returns all the layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @return the matching layout friendly u r ls
-	 */
-	@Override
-	public List<LayoutFriendlyURL> findByG_P_F(long groupId,
-		boolean privateLayout, String friendlyURL) {
-		return findByG_P_F(groupId, privateLayout, friendlyURL,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @return the range of matching layout friendly u r ls
-	 */
-	@Override
-	public List<LayoutFriendlyURL> findByG_P_F(long groupId,
-		boolean privateLayout, String friendlyURL, int start, int end) {
-		return findByG_P_F(groupId, privateLayout, friendlyURL, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout friendly u r ls
-	 */
-	@Override
-	public List<LayoutFriendlyURL> findByG_P_F(long groupId,
-		boolean privateLayout, String friendlyURL, int start, int end,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_F;
-			finderArgs = new Object[] { groupId, privateLayout, friendlyURL };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_F;
-			finderArgs = new Object[] {
-					groupId, privateLayout, friendlyURL,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<LayoutFriendlyURL> list = (List<LayoutFriendlyURL>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutFriendlyURL layoutFriendlyURL : list) {
-				if ((groupId != layoutFriendlyURL.getGroupId()) ||
-						(privateLayout != layoutFriendlyURL.getPrivateLayout()) ||
-						!Validator.equals(friendlyURL,
-							layoutFriendlyURL.getFriendlyURL())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(5);
-			}
-
-			query.append(_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE);
-
-			query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
-
-			boolean bindFriendlyURL = false;
-
-			if (friendlyURL == null) {
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_1);
-			}
-			else if (friendlyURL.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
-			}
-			else {
-				bindFriendlyURL = true;
-
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(LayoutFriendlyURLModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(privateLayout);
-
-				if (bindFriendlyURL) {
-					qPos.add(friendlyURL);
-				}
-
-				if (!pagination) {
-					list = (List<LayoutFriendlyURL>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LayoutFriendlyURL>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByG_P_F_First(long groupId,
-		boolean privateLayout, String friendlyURL,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-		LayoutFriendlyURL layoutFriendlyURL = fetchByG_P_F_First(groupId,
-				privateLayout, friendlyURL, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", privateLayout=");
-		msg.append(privateLayout);
-
-		msg.append(", friendlyURL=");
-		msg.append(friendlyURL);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchLayoutFriendlyURLException(msg.toString());
-	}
-
-	/**
-	 * Returns the first layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByG_P_F_First(long groupId,
-		boolean privateLayout, String friendlyURL,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-		List<LayoutFriendlyURL> list = findByG_P_F(groupId, privateLayout,
-				friendlyURL, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByG_P_F_Last(long groupId,
-		boolean privateLayout, String friendlyURL,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-		LayoutFriendlyURL layoutFriendlyURL = fetchByG_P_F_Last(groupId,
-				privateLayout, friendlyURL, orderByComparator);
-
-		if (layoutFriendlyURL != null) {
-			return layoutFriendlyURL;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", privateLayout=");
-		msg.append(privateLayout);
-
-		msg.append(", friendlyURL=");
-		msg.append(friendlyURL);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchLayoutFriendlyURLException(msg.toString());
-	}
-
-	/**
-	 * Returns the last layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL fetchByG_P_F_Last(long groupId,
-		boolean privateLayout, String friendlyURL,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator) {
-		int count = countByG_P_F(groupId, privateLayout, friendlyURL);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutFriendlyURL> list = findByG_P_F(groupId, privateLayout,
-				friendlyURL, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly u r l
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL[] findByG_P_F_PrevAndNext(
-		long layoutFriendlyURLId, long groupId, boolean privateLayout,
-		String friendlyURL,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws NoSuchLayoutFriendlyURLException {
-		LayoutFriendlyURL layoutFriendlyURL = findByPrimaryKey(layoutFriendlyURLId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutFriendlyURL[] array = new LayoutFriendlyURLImpl[3];
-
-			array[0] = getByG_P_F_PrevAndNext(session, layoutFriendlyURL,
-					groupId, privateLayout, friendlyURL, orderByComparator, true);
-
-			array[1] = layoutFriendlyURL;
-
-			array[2] = getByG_P_F_PrevAndNext(session, layoutFriendlyURL,
-					groupId, privateLayout, friendlyURL, orderByComparator,
-					false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected LayoutFriendlyURL getByG_P_F_PrevAndNext(Session session,
-		LayoutFriendlyURL layoutFriendlyURL, long groupId,
-		boolean privateLayout, String friendlyURL,
-		OrderByComparator<LayoutFriendlyURL> orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE);
-
-		query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
-
-		boolean bindFriendlyURL = false;
-
-		if (friendlyURL == null) {
-			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_1);
-		}
-		else if (friendlyURL.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
-		}
-		else {
-			bindFriendlyURL = true;
-
-			query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(LayoutFriendlyURLModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(privateLayout);
-
-		if (bindFriendlyURL) {
-			qPos.add(friendlyURL);
-		}
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutFriendlyURL);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<LayoutFriendlyURL> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 */
-	@Override
-	public void removeByG_P_F(long groupId, boolean privateLayout,
-		String friendlyURL) {
-		for (LayoutFriendlyURL layoutFriendlyURL : findByG_P_F(groupId,
-				privateLayout, friendlyURL, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
-			remove(layoutFriendlyURL);
-		}
-	}
-
-	/**
-	 * Returns the number of layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @return the number of matching layout friendly u r ls
-	 */
-	@Override
-	public int countByG_P_F(long groupId, boolean privateLayout,
-		String friendlyURL) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P_F;
-
-		Object[] finderArgs = new Object[] { groupId, privateLayout, friendlyURL };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE);
-
-			query.append(_FINDER_COLUMN_G_P_F_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2);
-
-			boolean bindFriendlyURL = false;
-
-			if (friendlyURL == null) {
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_1);
-			}
-			else if (friendlyURL.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
-			}
-			else {
-				bindFriendlyURL = true;
-
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(privateLayout);
-
-				if (bindFriendlyURL) {
-					qPos.add(friendlyURL);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_P_F_GROUPID_2 = "layoutFriendlyURL.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_F_PRIVATELAYOUT_2 = "layoutFriendlyURL.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_1 = "layoutFriendlyURL.friendlyURL IS NULL";
-	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_2 = "layoutFriendlyURL.friendlyURL = ?";
-	private static final String _FINDER_COLUMN_G_P_F_FRIENDLYURL_3 = "(layoutFriendlyURL.friendlyURL IS NULL OR layoutFriendlyURL.friendlyURL = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_F_L = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_F_L = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutFriendlyURLModelImpl.FINDER_CACHE_ENABLED,
 			LayoutFriendlyURLImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_P_F_L",
+			"fetchByG_F_L",
 			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), String.class.getName()
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
 			},
 			LayoutFriendlyURLModelImpl.GROUPID_COLUMN_BITMASK |
-			LayoutFriendlyURLModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
 			LayoutFriendlyURLModelImpl.FRIENDLYURL_COLUMN_BITMASK |
 			LayoutFriendlyURLModelImpl.LANGUAGEID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_F_L = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_F_L = new FinderPath(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutFriendlyURLModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_F_L",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F_L",
 			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), String.class.getName()
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
 			});
 
 	/**
-	 * Returns the layout friendly u r l where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
+	 * Returns the layout friendly u r l where groupId = &#63; and friendlyURL = &#63; and languageId = &#63; or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly u r l
 	 * @param languageId the language ID
 	 * @return the matching layout friendly u r l
 	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
 	 */
 	@Override
-	public LayoutFriendlyURL findByG_P_F_L(long groupId, boolean privateLayout,
-		String friendlyURL, String languageId)
-		throws NoSuchLayoutFriendlyURLException {
-		LayoutFriendlyURL layoutFriendlyURL = fetchByG_P_F_L(groupId,
-				privateLayout, friendlyURL, languageId);
+	public LayoutFriendlyURL findByG_F_L(long groupId, String friendlyURL,
+		String languageId) throws NoSuchLayoutFriendlyURLException {
+		LayoutFriendlyURL layoutFriendlyURL = fetchByG_F_L(groupId,
+				friendlyURL, languageId);
 
 		if (layoutFriendlyURL == null) {
-			StringBundler msg = new StringBundler(10);
+			StringBundler msg = new StringBundler(8);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("groupId=");
 			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
 
 			msg.append(", friendlyURL=");
 			msg.append(friendlyURL);
@@ -4374,43 +4319,37 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout friendly u r l where groupId = &#63; and friendlyURL = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly u r l
 	 * @param languageId the language ID
 	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
 	 */
 	@Override
-	public LayoutFriendlyURL fetchByG_P_F_L(long groupId,
-		boolean privateLayout, String friendlyURL, String languageId) {
-		return fetchByG_P_F_L(groupId, privateLayout, friendlyURL, languageId,
-			true);
+	public LayoutFriendlyURL fetchByG_F_L(long groupId, String friendlyURL,
+		String languageId) {
+		return fetchByG_F_L(groupId, friendlyURL, languageId, true);
 	}
 
 	/**
-	 * Returns the layout friendly u r l where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout friendly u r l where groupId = &#63; and friendlyURL = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly u r l
 	 * @param languageId the language ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
 	 */
 	@Override
-	public LayoutFriendlyURL fetchByG_P_F_L(long groupId,
-		boolean privateLayout, String friendlyURL, String languageId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] {
-				groupId, privateLayout, friendlyURL, languageId
-			};
+	public LayoutFriendlyURL fetchByG_F_L(long groupId, String friendlyURL,
+		String languageId, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, friendlyURL, languageId };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_P_F_L,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_F_L,
 					finderArgs, this);
 		}
 
@@ -4418,7 +4357,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)result;
 
 			if ((groupId != layoutFriendlyURL.getGroupId()) ||
-					(privateLayout != layoutFriendlyURL.getPrivateLayout()) ||
 					!Validator.equals(friendlyURL,
 						layoutFriendlyURL.getFriendlyURL()) ||
 					!Validator.equals(languageId,
@@ -4428,40 +4366,38 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(6);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_F_L_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_F_L_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_G_F_L_GROUPID_2);
 
 			boolean bindFriendlyURL = false;
 
 			if (friendlyURL == null) {
-				query.append(_FINDER_COLUMN_G_P_F_L_FRIENDLYURL_1);
+				query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURL_1);
 			}
 			else if (friendlyURL.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_F_L_FRIENDLYURL_3);
+				query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURL_3);
 			}
 			else {
 				bindFriendlyURL = true;
 
-				query.append(_FINDER_COLUMN_G_P_F_L_FRIENDLYURL_2);
+				query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURL_2);
 			}
 
 			boolean bindLanguageId = false;
 
 			if (languageId == null) {
-				query.append(_FINDER_COLUMN_G_P_F_L_LANGUAGEID_1);
+				query.append(_FINDER_COLUMN_G_F_L_LANGUAGEID_1);
 			}
 			else if (languageId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_F_L_LANGUAGEID_3);
+				query.append(_FINDER_COLUMN_G_F_L_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				query.append(_FINDER_COLUMN_G_P_F_L_LANGUAGEID_2);
+				query.append(_FINDER_COLUMN_G_F_L_LANGUAGEID_2);
 			}
 
 			String sql = query.toString();
@@ -4477,8 +4413,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 				qPos.add(groupId);
 
-				qPos.add(privateLayout);
-
 				if (bindFriendlyURL) {
 					qPos.add(friendlyURL);
 				}
@@ -4490,7 +4424,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 				List<LayoutFriendlyURL> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_F_L,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_L,
 						finderArgs, list);
 				}
 				else {
@@ -4501,19 +4435,18 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 					cacheResult(layoutFriendlyURL);
 
 					if ((layoutFriendlyURL.getGroupId() != groupId) ||
-							(layoutFriendlyURL.getPrivateLayout() != privateLayout) ||
 							(layoutFriendlyURL.getFriendlyURL() == null) ||
 							!layoutFriendlyURL.getFriendlyURL()
 												  .equals(friendlyURL) ||
 							(layoutFriendlyURL.getLanguageId() == null) ||
 							!layoutFriendlyURL.getLanguageId().equals(languageId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_F_L,
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_L,
 							finderArgs, layoutFriendlyURL);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_F_L,
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_L,
 					finderArgs);
 
 				throw processException(e);
@@ -4532,80 +4465,72 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes the layout friendly u r l where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; from the database.
+	 * Removes the layout friendly u r l where groupId = &#63; and friendlyURL = &#63; and languageId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly u r l
 	 * @param languageId the language ID
 	 * @return the layout friendly u r l that was removed
 	 */
 	@Override
-	public LayoutFriendlyURL removeByG_P_F_L(long groupId,
-		boolean privateLayout, String friendlyURL, String languageId)
-		throws NoSuchLayoutFriendlyURLException {
-		LayoutFriendlyURL layoutFriendlyURL = findByG_P_F_L(groupId,
-				privateLayout, friendlyURL, languageId);
+	public LayoutFriendlyURL removeByG_F_L(long groupId, String friendlyURL,
+		String languageId) throws NoSuchLayoutFriendlyURLException {
+		LayoutFriendlyURL layoutFriendlyURL = findByG_F_L(groupId, friendlyURL,
+				languageId);
 
 		return remove(layoutFriendlyURL);
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63;.
+	 * Returns the number of layout friendly u r ls where groupId = &#63; and friendlyURL = &#63; and languageId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly u r l
 	 * @param languageId the language ID
 	 * @return the number of matching layout friendly u r ls
 	 */
 	@Override
-	public int countByG_P_F_L(long groupId, boolean privateLayout,
-		String friendlyURL, String languageId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P_F_L;
+	public int countByG_F_L(long groupId, String friendlyURL, String languageId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_F_L;
 
-		Object[] finderArgs = new Object[] {
-				groupId, privateLayout, friendlyURL, languageId
-			};
+		Object[] finderArgs = new Object[] { groupId, friendlyURL, languageId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_F_L_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_F_L_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_G_F_L_GROUPID_2);
 
 			boolean bindFriendlyURL = false;
 
 			if (friendlyURL == null) {
-				query.append(_FINDER_COLUMN_G_P_F_L_FRIENDLYURL_1);
+				query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURL_1);
 			}
 			else if (friendlyURL.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_F_L_FRIENDLYURL_3);
+				query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURL_3);
 			}
 			else {
 				bindFriendlyURL = true;
 
-				query.append(_FINDER_COLUMN_G_P_F_L_FRIENDLYURL_2);
+				query.append(_FINDER_COLUMN_G_F_L_FRIENDLYURL_2);
 			}
 
 			boolean bindLanguageId = false;
 
 			if (languageId == null) {
-				query.append(_FINDER_COLUMN_G_P_F_L_LANGUAGEID_1);
+				query.append(_FINDER_COLUMN_G_F_L_LANGUAGEID_1);
 			}
 			else if (languageId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_F_L_LANGUAGEID_3);
+				query.append(_FINDER_COLUMN_G_F_L_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				query.append(_FINDER_COLUMN_G_P_F_L_LANGUAGEID_2);
+				query.append(_FINDER_COLUMN_G_F_L_LANGUAGEID_2);
 			}
 
 			String sql = query.toString();
@@ -4620,8 +4545,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				qPos.add(privateLayout);
 
 				if (bindFriendlyURL) {
 					qPos.add(friendlyURL);
@@ -4648,14 +4571,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_P_F_L_GROUPID_2 = "layoutFriendlyURL.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_F_L_PRIVATELAYOUT_2 = "layoutFriendlyURL.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_F_L_FRIENDLYURL_1 = "layoutFriendlyURL.friendlyURL IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_P_F_L_FRIENDLYURL_2 = "layoutFriendlyURL.friendlyURL = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_F_L_FRIENDLYURL_3 = "(layoutFriendlyURL.friendlyURL IS NULL OR layoutFriendlyURL.friendlyURL = '') AND ";
-	private static final String _FINDER_COLUMN_G_P_F_L_LANGUAGEID_1 = "layoutFriendlyURL.languageId IS NULL";
-	private static final String _FINDER_COLUMN_G_P_F_L_LANGUAGEID_2 = "layoutFriendlyURL.languageId = ?";
-	private static final String _FINDER_COLUMN_G_P_F_L_LANGUAGEID_3 = "(layoutFriendlyURL.languageId IS NULL OR layoutFriendlyURL.languageId = '')";
+	private static final String _FINDER_COLUMN_G_F_L_GROUPID_2 = "layoutFriendlyURL.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_L_FRIENDLYURL_1 = "layoutFriendlyURL.friendlyURL IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_F_L_FRIENDLYURL_2 = "layoutFriendlyURL.friendlyURL = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_L_FRIENDLYURL_3 = "(layoutFriendlyURL.friendlyURL IS NULL OR layoutFriendlyURL.friendlyURL = '') AND ";
+	private static final String _FINDER_COLUMN_G_F_L_LANGUAGEID_1 = "layoutFriendlyURL.languageId IS NULL";
+	private static final String _FINDER_COLUMN_G_F_L_LANGUAGEID_2 = "layoutFriendlyURL.languageId = ?";
+	private static final String _FINDER_COLUMN_G_F_L_LANGUAGEID_3 = "(layoutFriendlyURL.languageId IS NULL OR layoutFriendlyURL.languageId = '')";
 
 	public LayoutFriendlyURLPersistenceImpl() {
 		setModelClass(LayoutFriendlyURL.class);
@@ -4682,10 +4604,9 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 				layoutFriendlyURL.getPlid(), layoutFriendlyURL.getLanguageId()
 			}, layoutFriendlyURL);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_F_L,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_L,
 			new Object[] {
 				layoutFriendlyURL.getGroupId(),
-				layoutFriendlyURL.getPrivateLayout(),
 				layoutFriendlyURL.getFriendlyURL(),
 				layoutFriendlyURL.getLanguageId()
 			}, layoutFriendlyURL);
@@ -4787,14 +4708,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 			args = new Object[] {
 					layoutFriendlyURL.getGroupId(),
-					layoutFriendlyURL.getPrivateLayout(),
 					layoutFriendlyURL.getFriendlyURL(),
 					layoutFriendlyURL.getLanguageId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_F_L, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_L, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_F_L, args,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_L, args,
 				layoutFriendlyURL);
 		}
 		else {
@@ -4827,17 +4747,16 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			}
 
 			if ((layoutFriendlyURLModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_P_F_L.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_G_F_L.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutFriendlyURL.getGroupId(),
-						layoutFriendlyURL.getPrivateLayout(),
 						layoutFriendlyURL.getFriendlyURL(),
 						layoutFriendlyURL.getLanguageId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_F_L, args,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_L, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_F_L, args,
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_L, args,
 					layoutFriendlyURL);
 			}
 		}
@@ -4884,25 +4803,23 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 		args = new Object[] {
 				layoutFriendlyURL.getGroupId(),
-				layoutFriendlyURL.getPrivateLayout(),
 				layoutFriendlyURL.getFriendlyURL(),
 				layoutFriendlyURL.getLanguageId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_F_L, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_F_L, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_L, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_L, args);
 
 		if ((layoutFriendlyURLModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_G_P_F_L.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_G_F_L.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					layoutFriendlyURLModelImpl.getOriginalGroupId(),
-					layoutFriendlyURLModelImpl.getOriginalPrivateLayout(),
 					layoutFriendlyURLModelImpl.getOriginalFriendlyURL(),
 					layoutFriendlyURLModelImpl.getOriginalLanguageId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_F_L, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_F_L, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_L, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F_L, args);
 		}
 	}
 
@@ -5145,6 +5062,27 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			}
 
 			if ((layoutFriendlyURLModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						layoutFriendlyURLModelImpl.getOriginalGroupId(),
+						layoutFriendlyURLModelImpl.getOriginalFriendlyURL()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F,
+					args);
+
+				args = new Object[] {
+						layoutFriendlyURLModelImpl.getGroupId(),
+						layoutFriendlyURLModelImpl.getFriendlyURL()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F,
+					args);
+			}
+
+			if ((layoutFriendlyURLModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutFriendlyURLModelImpl.getOriginalPlid(),
@@ -5162,29 +5100,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_F, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_P_F,
-					args);
-			}
-
-			if ((layoutFriendlyURLModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_F.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						layoutFriendlyURLModelImpl.getOriginalGroupId(),
-						layoutFriendlyURLModelImpl.getOriginalPrivateLayout(),
-						layoutFriendlyURLModelImpl.getOriginalFriendlyURL()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_F, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_F,
-					args);
-
-				args = new Object[] {
-						layoutFriendlyURLModelImpl.getGroupId(),
-						layoutFriendlyURLModelImpl.getPrivateLayout(),
-						layoutFriendlyURLModelImpl.getFriendlyURL()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_F, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_F,
 					args);
 			}
 		}
@@ -5222,7 +5137,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		layoutFriendlyURLImpl.setCreateDate(layoutFriendlyURL.getCreateDate());
 		layoutFriendlyURLImpl.setModifiedDate(layoutFriendlyURL.getModifiedDate());
 		layoutFriendlyURLImpl.setPlid(layoutFriendlyURL.getPlid());
-		layoutFriendlyURLImpl.setPrivateLayout(layoutFriendlyURL.isPrivateLayout());
 		layoutFriendlyURLImpl.setFriendlyURL(layoutFriendlyURL.getFriendlyURL());
 		layoutFriendlyURLImpl.setLanguageId(layoutFriendlyURL.getLanguageId());
 

@@ -147,27 +147,6 @@ public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel {
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the private layout of this layout set.
-	 *
-	 * @return the private layout of this layout set
-	 */
-	public boolean getPrivateLayout();
-
-	/**
-	 * Returns <code>true</code> if this layout set is private layout.
-	 *
-	 * @return <code>true</code> if this layout set is private layout; <code>false</code> otherwise
-	 */
-	public boolean isPrivateLayout();
-
-	/**
-	 * Sets whether this layout set is private layout.
-	 *
-	 * @param privateLayout the private layout of this layout set
-	 */
-	public void setPrivateLayout(boolean privateLayout);
-
-	/**
 	 * Returns the logo ID of this layout set.
 	 *
 	 * @return the logo ID of this layout set

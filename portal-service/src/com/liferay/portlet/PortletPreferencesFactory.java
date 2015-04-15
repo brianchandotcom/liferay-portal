@@ -135,7 +135,7 @@ public interface PortletPreferencesFactory {
 
 	public Map<Long, PortletPreferences> getPortletSetupMap(
 		long companyId, long groupId, long ownerId, int ownerType,
-		String portletId, boolean privateLayout);
+		String portletId);
 
 	public PortletPreferences getPreferences(HttpServletRequest request);
 

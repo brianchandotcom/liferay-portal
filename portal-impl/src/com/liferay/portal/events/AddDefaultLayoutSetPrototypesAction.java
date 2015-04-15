@@ -90,8 +90,7 @@ public class AddDefaultLayoutSetPrototypesAction
 		ServiceContext serviceContext = new ServiceContext();
 
 		LayoutLocalServiceUtil.deleteLayouts(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			serviceContext);
+			layoutSet.getGroupId(), serviceContext);
 
 		return layoutSetPrototype.getLayoutSet();
 	}

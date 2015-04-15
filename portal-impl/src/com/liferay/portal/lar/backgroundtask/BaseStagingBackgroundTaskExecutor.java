@@ -61,9 +61,7 @@ public abstract class BaseStagingBackgroundTaskExecutor
 		backgroundTaskStatus.clearAttributes();
 	}
 
-	protected void initThreadLocals(long groupId, boolean privateLayout)
-		throws PortalException {
-
+	protected void initThreadLocals(long groupId) throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.popServiceContext();
 
@@ -71,8 +69,7 @@ public abstract class BaseStagingBackgroundTaskExecutor
 			serviceContext = new ServiceContext();
 		}
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId);
 
 		serviceContext.setCompanyId(layoutSet.getCompanyId());
 		serviceContext.setSignedIn(false);

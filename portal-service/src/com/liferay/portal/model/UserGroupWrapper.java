@@ -210,6 +210,12 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		return _userGroup.getGroupId();
 	}
 
+	@Override
+	public int getLayoutsPageCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userGroup.getLayoutsPageCount();
+	}
+
 	/**
 	* Returns the modified date of this user group.
 	*
@@ -265,18 +271,6 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		return _userGroup.getPrimaryKeyObj();
 	}
 
-	@Override
-	public int getPrivateLayoutsPageCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroup.getPrivateLayoutsPageCount();
-	}
-
-	@Override
-	public int getPublicLayoutsPageCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroup.getPublicLayoutsPageCount();
-	}
-
 	/**
 	* Returns the user group ID of this user group.
 	*
@@ -328,15 +322,9 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	@Override
-	public boolean hasPrivateLayouts()
+	public boolean hasLayouts()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroup.hasPrivateLayouts();
-	}
-
-	@Override
-	public boolean hasPublicLayouts()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroup.hasPublicLayouts();
+		return _userGroup.hasLayouts();
 	}
 
 	@Override

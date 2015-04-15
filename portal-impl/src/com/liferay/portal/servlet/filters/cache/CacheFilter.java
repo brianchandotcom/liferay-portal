@@ -183,29 +183,12 @@ public class CacheFilter extends BasePortalFilter {
 		}
 
 		long groupId = 0;
-		boolean privateLayout = false;
 
 		try {
 			Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
 				companyId, friendlyURL);
 
 			groupId = group.getGroupId();
-
-			if (servletPath.startsWith(
-					PropsValues.
-						LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING) ||
-				servletPath.startsWith(
-					PropsValues.
-						LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING)) {
-
-				privateLayout = true;
-			}
-			else if (servletPath.startsWith(
-						PropsValues.
-							LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING)) {
-
-				privateLayout = false;
-			}
 		}
 		catch (NoSuchLayoutException nsle) {
 			if (_log.isWarnEnabled()) {
@@ -230,8 +213,7 @@ public class CacheFilter extends BasePortalFilter {
 
 		if (Validator.isNull(friendlyURL)) {
 			try {
-				long plid = LayoutLocalServiceUtil.getDefaultPlid(
-					groupId, privateLayout);
+				long plid = LayoutLocalServiceUtil.getDefaultPlid(groupId);
 
 				return plid;
 			}
@@ -249,7 +231,7 @@ public class CacheFilter extends BasePortalFilter {
 
 		try {
 			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-				groupId, privateLayout, friendlyURL);
+				groupId, friendlyURL);
 
 			return layout.getPlid();
 		}

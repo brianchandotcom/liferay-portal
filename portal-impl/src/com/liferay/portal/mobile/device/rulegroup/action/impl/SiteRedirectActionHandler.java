@@ -119,8 +119,7 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 				return null;
 			}
 
-			layout = LayoutLocalServiceUtil.fetchLayout(
-				group.getDefaultPublicPlid());
+			layout = LayoutLocalServiceUtil.fetchLayout(group.getDefaultPlid());
 		}
 
 		if (layout != null) {

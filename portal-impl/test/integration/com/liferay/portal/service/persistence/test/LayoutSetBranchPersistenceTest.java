@@ -131,8 +131,6 @@ public class LayoutSetBranchPersistenceTest {
 
 		newLayoutSetBranch.setModifiedDate(RandomTestUtil.nextDate());
 
-		newLayoutSetBranch.setPrivateLayout(RandomTestUtil.randomBoolean());
-
 		newLayoutSetBranch.setName(RandomTestUtil.randomString());
 
 		newLayoutSetBranch.setDescription(RandomTestUtil.randomString());
@@ -179,8 +177,6 @@ public class LayoutSetBranchPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutSetBranch.getModifiedDate()),
 			Time.getShortTimestamp(newLayoutSetBranch.getModifiedDate()));
-		Assert.assertEquals(existingLayoutSetBranch.getPrivateLayout(),
-			newLayoutSetBranch.getPrivateLayout());
 		Assert.assertEquals(existingLayoutSetBranch.getName(),
 			newLayoutSetBranch.getName());
 		Assert.assertEquals(existingLayoutSetBranch.getDescription(),
@@ -220,12 +216,13 @@ public class LayoutSetBranchPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P() {
+	public void testCountByG_N() {
 		try {
-			_persistence.countByG_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean());
+			_persistence.countByG_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
+			_persistence.countByG_N(0L, StringPool.NULL);
+
+			_persistence.countByG_N(0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -233,30 +230,12 @@ public class LayoutSetBranchPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_N() {
+	public void testCountByG_M() {
 		try {
-			_persistence.countByG_P_N(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), StringPool.BLANK);
-
-			_persistence.countByG_P_N(0L, RandomTestUtil.randomBoolean(),
-				StringPool.NULL);
-
-			_persistence.countByG_P_N(0L, RandomTestUtil.randomBoolean(),
-				(String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testCountByG_P_M() {
-		try {
-			_persistence.countByG_P_M(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
-
-			_persistence.countByG_P_M(0L, RandomTestUtil.randomBoolean(),
+			_persistence.countByG_M(RandomTestUtil.nextLong(),
 				RandomTestUtil.randomBoolean());
+
+			_persistence.countByG_M(0L, RandomTestUtil.randomBoolean());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -312,12 +291,11 @@ public class LayoutSetBranchPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("LayoutSetBranch",
 			"mvccVersion", true, "layoutSetBranchId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "privateLayout", true, "name", true,
-			"description", true, "master", true, "logoId", true, "themeId",
-			true, "colorSchemeId", true, "wapThemeId", true,
-			"wapColorSchemeId", true, "css", true, "settings", true,
-			"layoutSetPrototypeUuid", true, "layoutSetPrototypeLinkEnabled",
-			true);
+			true, "modifiedDate", true, "name", true, "description", true,
+			"master", true, "logoId", true, "themeId", true, "colorSchemeId",
+			true, "wapThemeId", true, "wapColorSchemeId", true, "css", true,
+			"settings", true, "layoutSetPrototypeUuid", true,
+			"layoutSetPrototypeLinkEnabled", true);
 	}
 
 	@Test
@@ -531,9 +509,6 @@ public class LayoutSetBranchPersistenceTest {
 		Assert.assertEquals(existingLayoutSetBranch.getGroupId(),
 			ReflectionTestUtil.invoke(existingLayoutSetBranch,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingLayoutSetBranch.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingLayoutSetBranch,
-				"getOriginalPrivateLayout", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingLayoutSetBranch.getName(),
 				ReflectionTestUtil.invoke(existingLayoutSetBranch,
 					"getOriginalName", new Class<?>[0])));
@@ -557,8 +532,6 @@ public class LayoutSetBranchPersistenceTest {
 		layoutSetBranch.setCreateDate(RandomTestUtil.nextDate());
 
 		layoutSetBranch.setModifiedDate(RandomTestUtil.nextDate());
-
-		layoutSetBranch.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		layoutSetBranch.setName(RandomTestUtil.randomString());
 

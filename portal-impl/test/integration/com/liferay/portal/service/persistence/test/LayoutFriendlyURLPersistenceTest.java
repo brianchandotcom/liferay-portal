@@ -135,8 +135,6 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		newLayoutFriendlyURL.setPlid(RandomTestUtil.nextLong());
 
-		newLayoutFriendlyURL.setPrivateLayout(RandomTestUtil.randomBoolean());
-
 		newLayoutFriendlyURL.setFriendlyURL(RandomTestUtil.randomString());
 
 		newLayoutFriendlyURL.setLanguageId(RandomTestUtil.randomString());
@@ -167,8 +165,6 @@ public class LayoutFriendlyURLPersistenceTest {
 			Time.getShortTimestamp(newLayoutFriendlyURL.getModifiedDate()));
 		Assert.assertEquals(existingLayoutFriendlyURL.getPlid(),
 			newLayoutFriendlyURL.getPlid());
-		Assert.assertEquals(existingLayoutFriendlyURL.getPrivateLayout(),
-			newLayoutFriendlyURL.getPrivateLayout());
 		Assert.assertEquals(existingLayoutFriendlyURL.getFriendlyURL(),
 			newLayoutFriendlyURL.getFriendlyURL());
 		Assert.assertEquals(existingLayoutFriendlyURL.getLanguageId(),
@@ -256,6 +252,20 @@ public class LayoutFriendlyURLPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_F() {
+		try {
+			_persistence.countByG_F(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByG_F(0L, StringPool.NULL);
+
+			_persistence.countByG_F(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByP_F() {
 		try {
 			_persistence.countByP_F(RandomTestUtil.nextLong(), StringPool.BLANK);
@@ -284,34 +294,14 @@ public class LayoutFriendlyURLPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_F() {
+	public void testCountByG_F_L() {
 		try {
-			_persistence.countByG_P_F(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), StringPool.BLANK);
+			_persistence.countByG_F_L(RandomTestUtil.nextLong(),
+				StringPool.BLANK, StringPool.BLANK);
 
-			_persistence.countByG_P_F(0L, RandomTestUtil.randomBoolean(),
-				StringPool.NULL);
+			_persistence.countByG_F_L(0L, StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByG_P_F(0L, RandomTestUtil.randomBoolean(),
-				(String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testCountByG_P_F_L() {
-		try {
-			_persistence.countByG_P_F_L(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), StringPool.BLANK,
-				StringPool.BLANK);
-
-			_persistence.countByG_P_F_L(0L, RandomTestUtil.randomBoolean(),
-				StringPool.NULL, StringPool.NULL);
-
-			_persistence.countByG_P_F_L(0L, RandomTestUtil.randomBoolean(),
-				(String)null, (String)null);
+			_persistence.countByG_F_L(0L, (String)null, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -357,7 +347,7 @@ public class LayoutFriendlyURLPersistenceTest {
 			"mvccVersion", true, "uuid", true, "layoutFriendlyURLId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "plid", true,
-			"privateLayout", true, "friendlyURL", true, "languageId", true);
+			"friendlyURL", true, "languageId", true);
 	}
 
 	@Test
@@ -587,9 +577,6 @@ public class LayoutFriendlyURLPersistenceTest {
 		Assert.assertEquals(existingLayoutFriendlyURL.getGroupId(),
 			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingLayoutFriendlyURL.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
-				"getOriginalPrivateLayout", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingLayoutFriendlyURL.getFriendlyURL(),
 				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
@@ -623,8 +610,6 @@ public class LayoutFriendlyURLPersistenceTest {
 		layoutFriendlyURL.setModifiedDate(RandomTestUtil.nextDate());
 
 		layoutFriendlyURL.setPlid(RandomTestUtil.nextLong());
-
-		layoutFriendlyURL.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		layoutFriendlyURL.setFriendlyURL(RandomTestUtil.randomString());
 

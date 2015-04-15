@@ -170,10 +170,6 @@ public class ServicePreAction extends Action {
 		// Paths
 
 		String contextPath = PortalUtil.getPathContext();
-		String friendlyURLPrivateGroupPath =
-			PortalUtil.getPathFriendlyURLPrivateGroup();
-		String friendlyURLPrivateUserPath =
-			PortalUtil.getPathFriendlyURLPrivateUser();
 		String friendlyURLPublicPath = PortalUtil.getPathFriendlyURLPublic();
 		String imagePath = dynamicResourcesCDNHost.concat(
 			PortalUtil.getPathImage());
@@ -185,20 +181,12 @@ public class ServicePreAction extends Action {
 			if (Validator.isNotNull(contextPath)) {
 				String i18nContextPath = contextPath.concat(i18nPath);
 
-				friendlyURLPrivateGroupPath = StringUtil.replaceFirst(
-					friendlyURLPrivateGroupPath, contextPath, i18nContextPath);
-				friendlyURLPrivateUserPath = StringUtil.replaceFirst(
-					friendlyURLPrivateUserPath, contextPath, i18nContextPath);
 				friendlyURLPublicPath = StringUtil.replaceFirst(
 					friendlyURLPublicPath, contextPath, i18nContextPath);
 				mainPath = StringUtil.replaceFirst(
 					mainPath, contextPath, i18nContextPath);
 			}
 			else {
-				friendlyURLPrivateGroupPath = i18nPath.concat(
-					friendlyURLPrivateGroupPath);
-				friendlyURLPrivateUserPath = i18nPath.concat(
-					friendlyURLPrivateUserPath);
 				friendlyURLPublicPath = i18nPath.concat(friendlyURLPublicPath);
 				mainPath = i18nPath.concat(mainPath);
 			}
@@ -334,13 +322,10 @@ public class ServicePreAction extends Action {
 		}
 		else {
 			long groupId = ParamUtil.getLong(request, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				request, "privateLayout");
 			long layoutId = ParamUtil.getLong(request, "layoutId");
 
 			if ((groupId > 0) && (layoutId > 0)) {
-				layout = LayoutLocalServiceUtil.getLayout(
-					groupId, privateLayout, layoutId);
+				layout = LayoutLocalServiceUtil.getLayout(groupId, layoutId);
 			}
 		}
 
@@ -422,7 +407,7 @@ public class ServicePreAction extends Action {
 
 			if (viewableStaging) {
 				layouts = LayoutLocalServiceUtil.getLayouts(
-					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getGroupId(),
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 			}
 			else if ((!viewableGroup || !viewableSourceGroup) &&
@@ -447,9 +432,7 @@ public class ServicePreAction extends Action {
 
 				sb.append("User ");
 				sb.append(user.getUserId());
-				sb.append(" is not allowed to access the ");
-				sb.append(layout.isPrivateLayout() ? "private": "public");
-				sb.append(" pages of group ");
+				sb.append(" is not allowed to access the pages of group ");
 				sb.append(layout.getGroupId());
 
 				if (_log.isWarnEnabled()) {
@@ -466,7 +449,7 @@ public class ServicePreAction extends Action {
 			}
 			else {
 				layouts = LayoutLocalServiceUtil.getLayouts(
-					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getGroupId(),
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 				if (!group.isControlPanel()) {
@@ -550,15 +533,6 @@ public class ServicePreAction extends Action {
 
 					if (logoId == 0) {
 						logoId = layoutSet.getLiveLogoId();
-					}
-				}
-				else {
-					LayoutSet siblingLayoutSet =
-						LayoutSetLocalServiceUtil.getLayoutSet(
-							layout.getGroupId(), !layout.isPrivateLayout());
-
-					if (siblingLayoutSet.isLogo()) {
-						logoId = siblingLayoutSet.getLogoId();
 					}
 				}
 
@@ -813,9 +787,6 @@ public class ServicePreAction extends Action {
 		themeDisplay.setPathCms(contextPath.concat("/cms"));
 		themeDisplay.setPathContext(contextPath);
 		themeDisplay.setPathFlash(contextPath.concat("/flash"));
-		themeDisplay.setPathFriendlyURLPrivateGroup(
-			friendlyURLPrivateGroupPath);
-		themeDisplay.setPathFriendlyURLPrivateUser(friendlyURLPrivateUserPath);
 		themeDisplay.setPathFriendlyURLPublic(friendlyURLPublicPath);
 		themeDisplay.setPathImage(imagePath);
 		themeDisplay.setPathJavaScript(contextPath.concat("/html/js"));
@@ -899,7 +870,7 @@ public class ServicePreAction extends Action {
 
 		// URLs
 
-		String urlControlPanel = friendlyURLPrivateGroupPath.concat(
+		String urlControlPanel = friendlyURLPublicPath.concat(
 			GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 
 		if (Validator.isNotNull(doAsUserId)) {
@@ -1007,13 +978,7 @@ public class ServicePreAction extends Action {
 				pageSettingsURL.setParameter(
 					"struts_action", "/group_pages/edit_layouts");
 
-				if (layout.isPrivateLayout()) {
-					pageSettingsURL.setParameter("tabs1", "private-pages");
-				}
-				else {
-					pageSettingsURL.setParameter("tabs1", "public-pages");
-				}
-
+				pageSettingsURL.setParameter("tabs1", "pages");
 				pageSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
 				pageSettingsURL.setParameter("selPlid", String.valueOf(plid));
@@ -1152,14 +1117,7 @@ public class ServicePreAction extends Action {
 				siteMapSettingsURL.setDoAsGroupId(scopeGroupId);
 				siteMapSettingsURL.setParameter(
 					"struts_action", "/group_pages/edit_layouts");
-
-				if (layout.isPrivateLayout()) {
-					siteMapSettingsURL.setParameter("tabs1", "private-pages");
-				}
-				else {
-					siteMapSettingsURL.setParameter("tabs1", "public-pages");
-				}
-
+				siteMapSettingsURL.setParameter("tabs1", "pages");
 				siteMapSettingsURL.setParameter(
 					"groupId", String.valueOf(scopeGroupId));
 				siteMapSettingsURL.setPortletMode(PortletMode.VIEW);
@@ -1210,14 +1168,7 @@ public class ServicePreAction extends Action {
 
 					publishToLiveURL.setParameter(
 						"struts_action", "/layouts_admin/publish_layouts");
-
-					if (layout.isPrivateLayout()) {
-						publishToLiveURL.setParameter("tabs1", "private-pages");
-					}
-					else {
-						publishToLiveURL.setParameter("tabs1", "public-pages");
-					}
-
+					publishToLiveURL.setParameter("tabs1", "pages");
 					publishToLiveURL.setParameter(
 						"groupId", String.valueOf(scopeGroupId));
 					publishToLiveURL.setParameter(
@@ -1352,7 +1303,7 @@ public class ServicePreAction extends Action {
 	}
 
 	protected void addDefaultLayoutsByLAR(
-			long userId, long groupId, boolean privateLayout, File larFile)
+			long userId, long groupId, File larFile)
 		throws PortalException {
 
 		Map<String, String[]> parameterMap = new HashMap<>();
@@ -1389,105 +1340,7 @@ public class ServicePreAction extends Action {
 			new String[] {Boolean.TRUE.toString()});
 
 		LayoutLocalServiceUtil.importLayouts(
-			userId, groupId, privateLayout, parameterMap, larFile);
-	}
-
-	protected void addDefaultUserPrivateLayoutByProperties(
-			long userId, long groupId)
-		throws PortalException {
-
-		String friendlyURL = getFriendlyURL(
-			PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		Layout layout = LayoutLocalServiceUtil.addLayout(
-			userId, groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_NAME, StringPool.BLANK,
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
-			serviceContext);
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		layoutTypePortlet.setLayoutTemplateId(
-			0, PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_TEMPLATE_ID, false);
-
-		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
-
-		for (String columnId : layoutTemplate.getColumns()) {
-			String keyPrefix = PropsKeys.DEFAULT_USER_PRIVATE_LAYOUT_PREFIX;
-
-			String portletIds = PropsUtil.get(keyPrefix.concat(columnId));
-
-			layoutTypePortlet.addPortletIds(
-				0, StringUtil.split(portletIds), columnId, false);
-		}
-
-		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
-
-		boolean updateLayoutSet = false;
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_REGULAR_THEME_ID)) {
-
-			layoutSet.setThemeId(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_REGULAR_THEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.
-					DEFAULT_USER_PRIVATE_LAYOUT_REGULAR_COLOR_SCHEME_ID)) {
-
-			layoutSet.setColorSchemeId(
-				PropsValues.
-					DEFAULT_USER_PRIVATE_LAYOUT_REGULAR_COLOR_SCHEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_WAP_THEME_ID)) {
-
-			layoutSet.setWapThemeId(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_WAP_THEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (Validator.isNotNull(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_WAP_COLOR_SCHEME_ID)) {
-
-			layoutSet.setWapColorSchemeId(
-				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_WAP_COLOR_SCHEME_ID);
-
-			updateLayoutSet = true;
-		}
-
-		if (updateLayoutSet) {
-			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-		}
-	}
-
-	protected void addDefaultUserPrivateLayouts(User user)
-		throws PortalException {
-
-		Group userGroup = user.getGroup();
-
-		if (privateLARFile != null) {
-			addDefaultLayoutsByLAR(
-				user.getUserId(), userGroup.getGroupId(), true, privateLARFile);
-		}
-		else {
-			addDefaultUserPrivateLayoutByProperties(
-				user.getUserId(), userGroup.getGroupId());
-		}
+			userId, groupId, parameterMap, larFile);
 	}
 
 	protected void addDefaultUserPublicLayoutByProperties(
@@ -1500,7 +1353,7 @@ public class ServicePreAction extends Action {
 		ServiceContext serviceContext = new ServiceContext();
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
-			userId, groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			userId, groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_NAME, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			serviceContext);
@@ -1523,7 +1376,7 @@ public class ServicePreAction extends Action {
 		}
 
 		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getGroupId(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
 		boolean updateLayoutSet = false;
@@ -1579,23 +1432,12 @@ public class ServicePreAction extends Action {
 
 		if (publicLARFile != null) {
 			addDefaultLayoutsByLAR(
-				user.getUserId(), userGroup.getGroupId(), false, publicLARFile);
+				user.getUserId(), userGroup.getGroupId(), publicLARFile);
 		}
 		else {
 			addDefaultUserPublicLayoutByProperties(
 				user.getUserId(), userGroup.getGroupId());
 		}
-	}
-
-	protected void deleteDefaultUserPrivateLayouts(User user)
-		throws PortalException {
-
-		Group userGroup = user.getGroup();
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		LayoutLocalServiceUtil.deleteLayouts(
-			userGroup.getGroupId(), true, serviceContext);
 	}
 
 	protected void deleteDefaultUserPublicLayouts(User user)
@@ -1606,7 +1448,7 @@ public class ServicePreAction extends Action {
 		ServiceContext serviceContext = new ServiceContext();
 
 		LayoutLocalServiceUtil.deleteLayouts(
-			userGroup.getGroupId(), false, serviceContext);
+			userGroup.getGroupId(), serviceContext);
 	}
 
 	protected Object[] getDefaultLayout(
@@ -1623,7 +1465,7 @@ public class ServicePreAction extends Action {
 
 		if (layoutSet != null) {
 			layouts = LayoutLocalServiceUtil.getLayouts(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				layoutSet.getGroupId(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			Group group = null;
@@ -1634,9 +1476,9 @@ public class ServicePreAction extends Action {
 				group = layout.getGroup();
 			}
 
-			if ((layout != null) && layout.isPrivateLayout()) {
+			if (layout != null) {
 				layouts = LayoutLocalServiceUtil.getLayouts(
-					group.getGroupId(), false,
+					group.getGroupId(),
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 				if (!layouts.isEmpty()) {
@@ -1652,7 +1494,7 @@ public class ServicePreAction extends Action {
 				Group liveGroup = group.getLiveGroup();
 
 				layouts = LayoutLocalServiceUtil.getLayouts(
-					liveGroup.getGroupId(), false,
+					liveGroup.getGroupId(),
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 				if (!layouts.isEmpty()) {
@@ -1671,14 +1513,8 @@ public class ServicePreAction extends Action {
 			Group userGroup = user.getGroup();
 
 			layouts = LayoutLocalServiceUtil.getLayouts(
-				userGroup.getGroupId(), true,
+				userGroup.getGroupId(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (layouts.isEmpty()) {
-				layouts = LayoutLocalServiceUtil.getLayouts(
-					userGroup.getGroupId(), false,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-			}
 
 			if (!layouts.isEmpty()) {
 				layout = layouts.get(0);
@@ -1698,14 +1534,8 @@ public class ServicePreAction extends Action {
 
 				for (Group group : groups) {
 					layouts = LayoutLocalServiceUtil.getLayouts(
-						group.getGroupId(), true,
+						group.getGroupId(),
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					if (layouts.isEmpty()) {
-						layouts = LayoutLocalServiceUtil.getLayouts(
-							group.getGroupId(), false,
-							LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-					}
 
 					if (!layouts.isEmpty()) {
 						layout = layouts.get(0);
@@ -1724,7 +1554,7 @@ public class ServicePreAction extends Action {
 				user.getCompanyId(), GroupConstants.GUEST);
 
 			layouts = LayoutLocalServiceUtil.getLayouts(
-				guestGroup.getGroupId(), false,
+				guestGroup.getGroupId(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (!layouts.isEmpty()) {
@@ -1860,29 +1690,6 @@ public class ServicePreAction extends Action {
 	}
 
 	protected void initImportLARFiles() {
-		String privateLARFileName =
-			PropsValues.DEFAULT_USER_PRIVATE_LAYOUTS_LAR;
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Reading private LAR file " + privateLARFileName);
-		}
-
-		if (Validator.isNotNull(privateLARFileName)) {
-			privateLARFile = new File(privateLARFileName);
-
-			if (!privateLARFile.exists()) {
-				_log.error(
-					"Private LAR file " + privateLARFile + " does not exist");
-
-				privateLARFile = null;
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Using private LAR file " + privateLARFileName);
-				}
-			}
-		}
-
 		String publicLARFileName = PropsValues.DEFAULT_USER_PUBLIC_LAYOUTS_LAR;
 
 		if (_log.isDebugEnabled()) {
@@ -1919,40 +1726,13 @@ public class ServicePreAction extends Action {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	protected boolean isViewableCommunity(
-			User user, long groupId, boolean privateLayout,
-			PermissionChecker permissionChecker)
-		throws PortalException {
-
-		return LayoutPermissionUtil.contains(
-			permissionChecker, groupId, privateLayout, 0, ActionKeys.VIEW);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	protected boolean isViewableGroup(
-			User user, long groupId, boolean privateLayout, long layoutId,
-			String controlPanelCategory, PermissionChecker permissionChecker)
-		throws PortalException {
-
-		return LayoutPermissionUtil.contains(
-			permissionChecker, groupId, privateLayout, layoutId,
-			ActionKeys.VIEW);
-	}
-
 	protected List<Layout> mergeAdditionalLayouts(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
 			List<Layout> layouts, long doAsGroupId, String controlPanelCategory)
 		throws PortalException {
 
-		if ((layout == null) || layout.isPrivateLayout()) {
+		if (layout == null) {
 			return layouts;
 		}
 
@@ -1975,7 +1755,7 @@ public class ServicePreAction extends Action {
 			}
 
 			List<Layout> guestLayouts = LayoutLocalServiceUtil.getLayouts(
-				guestGroup.getGroupId(), false,
+				guestGroup.getGroupId(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			Object[] viewableLayouts = getViewableLayouts(
@@ -2026,7 +1806,7 @@ public class ServicePreAction extends Action {
 
 				List<Layout> previousLayouts =
 					LayoutLocalServiceUtil.getLayouts(
-						previousGroupId.longValue(), false,
+						previousGroupId.longValue(),
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 				Object[] viewableLayouts = getViewableLayouts(
@@ -2285,65 +2065,6 @@ public class ServicePreAction extends Action {
 	protected void updateUserLayouts(User user) throws Exception {
 		Boolean hasPowerUserRole = null;
 
-		// Private layouts
-
-		boolean addDefaultUserPrivateLayouts = false;
-
-		if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED &&
-			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE) {
-
-			addDefaultUserPrivateLayouts = true;
-
-			if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED) {
-				if (hasPowerUserRole == null) {
-					hasPowerUserRole = hasPowerUserRole(user);
-				}
-
-				if (!hasPowerUserRole.booleanValue()) {
-					addDefaultUserPrivateLayouts = false;
-				}
-			}
-		}
-
-		Boolean hasPrivateLayouts = null;
-
-		if (addDefaultUserPrivateLayouts) {
-			hasPrivateLayouts = LayoutLocalServiceUtil.hasLayouts(
-				user, true, false);
-
-			if (!hasPrivateLayouts) {
-				addDefaultUserPrivateLayouts(user);
-			}
-		}
-
-		boolean deleteDefaultUserPrivateLayouts = false;
-
-		if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
-			deleteDefaultUserPrivateLayouts = true;
-		}
-		else if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED) {
-			if (hasPowerUserRole == null) {
-				hasPowerUserRole = hasPowerUserRole(user);
-			}
-
-			if (!hasPowerUserRole.booleanValue()) {
-				deleteDefaultUserPrivateLayouts = true;
-			}
-		}
-
-		if (deleteDefaultUserPrivateLayouts) {
-			if (hasPrivateLayouts == null) {
-				hasPrivateLayouts = LayoutLocalServiceUtil.hasLayouts(
-					user, true, false);
-			}
-
-			if (hasPrivateLayouts) {
-				deleteDefaultUserPrivateLayouts(user);
-			}
-		}
-
-		// Public pages
-
 		boolean addDefaultUserPublicLayouts = false;
 
 		if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED &&
@@ -2365,8 +2086,7 @@ public class ServicePreAction extends Action {
 		Boolean hasPublicLayouts = null;
 
 		if (addDefaultUserPublicLayouts) {
-			hasPublicLayouts = LayoutLocalServiceUtil.hasLayouts(
-				user, false, false);
+			hasPublicLayouts = LayoutLocalServiceUtil.hasLayouts(user, false);
 
 			if (!hasPublicLayouts) {
 				addDefaultUserPublicLayouts(user);
@@ -2391,7 +2111,7 @@ public class ServicePreAction extends Action {
 		if (deleteDefaultUserPublicLayouts) {
 			if (hasPublicLayouts == null) {
 				hasPublicLayouts = LayoutLocalServiceUtil.hasLayouts(
-					user, false, false);
+					user, false);
 			}
 
 			if (hasPublicLayouts) {

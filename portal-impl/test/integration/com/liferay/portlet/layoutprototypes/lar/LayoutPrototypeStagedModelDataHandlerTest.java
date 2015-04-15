@@ -149,8 +149,7 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 
 		Layout importedLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layout.getUuid(), importedLayoutPrototype.getGroupId(),
-				layout.isPrivateLayout());
+				layout.getUuid(), importedLayoutPrototype.getGroupId());
 
 		Assert.assertNotNull(importedLayout);
 		Assert.assertEquals(

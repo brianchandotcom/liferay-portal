@@ -26,7 +26,6 @@ long groupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:layou
 boolean incomplete = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:incomplete"));
 String modules = (String)request.getAttribute("liferay-ui:layouts-tree:modules");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:layouts-tree:portletURL");
-boolean privateLayout = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:privateLayout"));
 String rootNodeName = (String)request.getAttribute("liferay-ui:layouts-tree:rootNodeName");
 boolean saveState = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:saveState"));
 boolean selectableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:selectableTree"));
@@ -67,7 +66,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 	<%
 	long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
 
-	JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId));
+	JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId));
 	%>
 
 	var TreeViewType = Liferay.LayoutsTree;
@@ -95,8 +94,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 				defaultParentLayoutId: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
 				expand: <%= expandFirstNode %>,
 				groupId: <%= groupId %>,
-				label: '<%= HtmlUtil.escapeJS(rootNodeName) %>',
-				privateLayout: <%= privateLayout %>
+				label: '<%= HtmlUtil.escapeJS(rootNodeName) %>'
 			},
 			selPlid: '<%= selPlid %>'
 		}

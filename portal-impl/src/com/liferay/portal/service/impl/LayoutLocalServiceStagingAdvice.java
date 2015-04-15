@@ -113,12 +113,11 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 	}
 
 	public void deleteLayout(
-			LayoutLocalService layoutLocalService, long groupId,
-			boolean privateLayout, long layoutId, ServiceContext serviceContext)
+			LayoutLocalService layoutLocalService, long groupId, long layoutId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		Layout layout = layoutLocalService.getLayout(
-			groupId, privateLayout, layoutId);
+		Layout layout = layoutLocalService.getLayout(groupId, layoutId);
 
 		deleteLayout(layoutLocalService, layout, true, serviceContext);
 	}
@@ -158,8 +157,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			else if (arguments.length == 4) {
 				deleteLayout(
 					(LayoutLocalService)thisObject, (Long)arguments[0],
-					(Boolean)arguments[1], (Long)arguments[2],
-					(ServiceContext)arguments[3]);
+					(Long)arguments[2], (ServiceContext)arguments[3]);
 			}
 			else {
 				return wrapReturnValue(
@@ -193,7 +191,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 			returnValue = updateLayout(
 				(LayoutLocalService)thisObject, (Long)arguments[0],
-				(Boolean)arguments[1], (Long)arguments[2], (Long)arguments[3],
+				(Long)arguments[2], (Long)arguments[3],
 				(Map<Locale, String>)arguments[4],
 				(Map<Locale, String>)arguments[5],
 				(Map<Locale, String>)arguments[6],
@@ -232,33 +230,31 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 	}
 
 	public Layout updateLayout(
-			LayoutLocalService layoutLocalService, long groupId,
-			boolean privateLayout, long layoutId, long parentLayoutId,
-			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
-			Map<Locale, String> robotsMap, String type, boolean hidden,
-			Map<Locale, String> friendlyURLMap, boolean iconImage,
-			byte[] iconBytes, ServiceContext serviceContext)
+			LayoutLocalService layoutLocalService, long groupId, long layoutId,
+			long parentLayoutId, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+			String type, boolean hidden, Map<Locale, String> friendlyURLMap,
+			boolean iconImage, byte[] iconBytes, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout
 
 		parentLayoutId = layoutLocalServiceHelper.getParentLayoutId(
-			groupId, privateLayout, parentLayoutId);
+			groupId, parentLayoutId);
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 		friendlyURLMap = layoutLocalServiceHelper.getFriendlyURLMap(
-			groupId, privateLayout, layoutId, StringPool.BLANK, friendlyURLMap);
+			groupId, layoutId, StringPool.BLANK, friendlyURLMap);
 		String friendlyURL = friendlyURLMap.get(LocaleUtil.getSiteDefault());
 
 		layoutLocalServiceHelper.validate(
-			groupId, privateLayout, layoutId, parentLayoutId, name, type,
-			hidden, friendlyURLMap);
+			groupId, layoutId, parentLayoutId, name, type, hidden,
+			friendlyURLMap);
 
 		layoutLocalServiceHelper.validateParentLayoutId(
-			groupId, privateLayout, layoutId, parentLayoutId);
+			groupId, layoutId, parentLayoutId);
 
-		Layout originalLayout = LayoutUtil.findByG_P_L(
-			groupId, privateLayout, layoutId);
+		Layout originalLayout = LayoutUtil.findByG_L(groupId, layoutId);
 
 		Layout layout = wrapLayout(originalLayout);
 
@@ -267,14 +263,14 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 		if (layoutRevision == null) {
 			return layoutLocalService.updateLayout(
-				groupId, privateLayout, layoutId, parentLayoutId, nameMap,
-				titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden,
+				groupId, layoutId, parentLayoutId, nameMap, titleMap,
+				descriptionMap, keywordsMap, robotsMap, type, hidden,
 				friendlyURLMap, iconImage, iconBytes, serviceContext);
 		}
 
 		if (parentLayoutId != originalLayout.getParentLayoutId()) {
 			int priority = layoutLocalServiceHelper.getNextPriority(
-				groupId, privateLayout, parentLayoutId,
+				groupId, parentLayoutId,
 				originalLayout.getSourcePrototypeLayoutUuid(), -1);
 
 			originalLayout.setPriority(priority);
@@ -306,7 +302,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		LayoutFriendlyURLLocalServiceUtil.updateLayoutFriendlyURLs(
 			originalLayout.getUserId(), originalLayout.getCompanyId(),
 			originalLayout.getGroupId(), originalLayout.getPlid(),
-			originalLayout.isPrivateLayout(), friendlyURLMap, serviceContext);
+			friendlyURLMap, serviceContext);
 
 		boolean hasWorkflowTask = StagingUtil.hasWorkflowTask(
 			serviceContext.getUserId(), layoutRevision);
@@ -330,12 +326,11 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 	}
 
 	public Layout updateLayout(
-			LayoutLocalService layoutLocalService, long groupId,
-			boolean privateLayout, long layoutId, String typeSettings)
+			LayoutLocalService layoutLocalService, long groupId, long layoutId,
+			String typeSettings)
 		throws PortalException {
 
-		Layout layout = LayoutUtil.findByG_P_L(
-			groupId, privateLayout, layoutId);
+		Layout layout = LayoutUtil.findByG_L(groupId, layoutId);
 
 		layout = wrapLayout(layout);
 
@@ -344,7 +339,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 		if (layoutRevision == null) {
 			return layoutLocalService.updateLayout(
-				groupId, privateLayout, layoutId, typeSettings);
+				groupId, layoutId, typeSettings);
 		}
 
 		layout.setTypeSettings(typeSettings);
@@ -377,13 +372,11 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 	}
 
 	public Layout updateLookAndFeel(
-			LayoutLocalService layoutLocalService, long groupId,
-			boolean privateLayout, long layoutId, String themeId,
-			String colorSchemeId, String css, boolean wapTheme)
+			LayoutLocalService layoutLocalService, long groupId, long layoutId,
+			String themeId, String colorSchemeId, String css, boolean wapTheme)
 		throws PortalException {
 
-		Layout layout = LayoutUtil.findByG_P_L(
-			groupId, privateLayout, layoutId);
+		Layout layout = LayoutUtil.findByG_L(groupId, layoutId);
 
 		layout = wrapLayout(layout);
 
@@ -392,8 +385,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 		if (layoutRevision == null) {
 			return layoutLocalService.updateLookAndFeel(
-				groupId, privateLayout, layoutId, themeId, colorSchemeId, css,
-				wapTheme);
+				groupId, layoutId, themeId, colorSchemeId, css, wapTheme);
 		}
 
 		if (wapTheme) {

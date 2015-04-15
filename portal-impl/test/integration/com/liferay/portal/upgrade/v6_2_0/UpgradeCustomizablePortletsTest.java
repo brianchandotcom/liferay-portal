@@ -204,7 +204,7 @@ public class UpgradeCustomizablePortletsTest
 
 		_groups.add(group);
 
-		return LayoutTestUtil.addLayout(group, false);
+		return LayoutTestUtil.addLayout(group);
 	}
 
 	protected PortalPreferencesWrapper getPortalPreferences(

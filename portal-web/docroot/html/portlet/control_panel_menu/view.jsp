@@ -69,8 +69,7 @@
 
 					Group curSite = themeDisplay.getSiteGroup();
 
-					scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), false));
-					scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), true));
+					scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId()));
 
 					String scopeLabel = null;
 

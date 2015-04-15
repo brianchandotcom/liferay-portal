@@ -144,9 +144,6 @@
 					isControlPanel: function() {
 						return <%= layout.isTypeControlPanel() %>;
 					},
-					isPrivateLayout: function() {
-						return '<%= layout.isPrivateLayout() %>';
-					},
 					isVirtualLayout: function() {
 						return <%= (layout instanceof VirtualLayout) %>;
 					},

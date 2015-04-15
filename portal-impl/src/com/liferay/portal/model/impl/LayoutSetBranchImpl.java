@@ -58,8 +58,7 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		}
 
 		try {
-			_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				getGroupId(), getPrivateLayout());
+			_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(getGroupId());
 
 			LayoutSetStagingHandler layoutSetStagingHandler =
 				LayoutStagingUtil.getLayoutSetStagingHandler(_layoutSet);

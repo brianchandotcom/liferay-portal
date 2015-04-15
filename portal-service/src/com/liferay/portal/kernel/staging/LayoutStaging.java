@@ -38,6 +38,6 @@ public interface LayoutStaging {
 
 	public boolean isBranchingLayout(Layout layout);
 
-	public boolean isBranchingLayoutSet(Group group, boolean privateLayout);
+	public boolean isBranchingLayoutSet(Group group);
 
 }

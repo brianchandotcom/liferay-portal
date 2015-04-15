@@ -195,7 +195,7 @@ public class EditUserAction extends PortletAction {
 						Layout layout = themeDisplay.getLayout();
 
 						String friendlyURLPath = group.getPathFriendlyURL(
-							layout.isPrivateLayout(), themeDisplay);
+							themeDisplay);
 
 						String oldPath =
 							friendlyURLPath + StringPool.SLASH + oldScreenName;
@@ -446,19 +446,14 @@ public class EditUserAction extends PortletAction {
 				announcementsDeliveries, serviceContext);
 		}
 
-		long publicLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "publicLayoutSetPrototypeId");
-		long privateLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "privateLayoutSetPrototypeId");
-		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "publicLayoutSetPrototypeLinkEnabled");
-		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "privateLayoutSetPrototypeLinkEnabled");
+		long layoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutSetPrototypeId");
+		boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "layoutSetPrototypeLinkEnabled");
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
-			user.getGroup(), publicLayoutSetPrototypeId,
-			privateLayoutSetPrototypeId, publicLayoutSetPrototypeLinkEnabled,
-			privateLayoutSetPrototypeLinkEnabled);
+			user.getGroup(), layoutSetPrototypeId,
+			layoutSetPrototypeLinkEnabled);
 
 		return user;
 	}
@@ -748,24 +743,14 @@ public class EditUserAction extends PortletAction {
 				themeDisplay.getPermissionChecker(), group.getGroupId(),
 				ActionKeys.UPDATE);
 
-			long publicLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "publicLayoutSetPrototypeId");
-			long privateLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "privateLayoutSetPrototypeId");
-			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "publicLayoutSetPrototypeLinkEnabled");
-			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
+			long layoutSetPrototypeId = ParamUtil.getLong(
+				actionRequest, "layoutSetPrototypeId");
+			boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				actionRequest, "layoutSetPrototypeLinkEnabled");
 
-			if (hasGroupUpdatePermission &&
-				((publicLayoutSetPrototypeId > 0) ||
-				 (privateLayoutSetPrototypeId > 0))) {
-
+			if (hasGroupUpdatePermission && (layoutSetPrototypeId > 0)) {
 				SitesUtil.updateLayoutSetPrototypesLinks(
-					group, publicLayoutSetPrototypeId,
-					privateLayoutSetPrototypeId,
-					publicLayoutSetPrototypeLinkEnabled,
-					privateLayoutSetPrototypeLinkEnabled);
+					group, layoutSetPrototypeId, layoutSetPrototypeLinkEnabled);
 			}
 		}
 

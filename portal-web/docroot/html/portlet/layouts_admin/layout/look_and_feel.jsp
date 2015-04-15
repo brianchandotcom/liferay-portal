@@ -20,7 +20,6 @@
 Group group = layoutsAdminDisplayContext.getGroup();
 long groupId = layoutsAdminDisplayContext.getGroupId();
 long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
-boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
@@ -33,7 +32,7 @@ ColorScheme selColorScheme = null;
 Theme selWapTheme = null;
 ColorScheme selWapColorScheme = null;
 
-LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
+LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId);
 
 if (selLayout != null) {
 	selTheme = selLayout.getTheme();

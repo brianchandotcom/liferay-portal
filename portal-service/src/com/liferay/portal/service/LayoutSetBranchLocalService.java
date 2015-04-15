@@ -57,8 +57,8 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 		com.liferay.portal.model.LayoutSetBranch layoutSetBranch);
 
 	public com.liferay.portal.model.LayoutSetBranch addLayoutSetBranch(
-		long userId, long groupId, boolean privateLayout,
-		java.lang.String name, java.lang.String description, boolean master,
+		long userId, long groupId, java.lang.String name,
+		java.lang.String description, boolean master,
 		long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -99,11 +99,10 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	public com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
 		long layoutSetBranchId) throws PortalException;
 
-	public void deleteLayoutSetBranches(long groupId, boolean privateLayout)
-		throws PortalException;
+	public void deleteLayoutSetBranches(long groupId) throws PortalException;
 
-	public void deleteLayoutSetBranches(long groupId, boolean privateLayout,
-		boolean includeMaster) throws PortalException;
+	public void deleteLayoutSetBranches(long groupId, boolean includeMaster)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -180,7 +179,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch fetchLayoutSetBranch(
-		long groupId, boolean privateLayout, java.lang.String name);
+		long groupId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch fetchLayoutSetBranch(
@@ -198,8 +197,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getLayoutSetBranch(
-		long groupId, boolean privateLayout, java.lang.String name)
-		throws PortalException;
+		long groupId, java.lang.String name) throws PortalException;
 
 	/**
 	* Returns the layout set branch with the primary key.
@@ -214,7 +212,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.LayoutSetBranch> getLayoutSetBranches(
-		long groupId, boolean privateLayout);
+		long groupId);
 
 	/**
 	* Returns a range of all the layout set branchs.
@@ -241,27 +239,27 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getMasterLayoutSetBranch(
-		long groupId, boolean privateLayout) throws PortalException;
+		long groupId) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
+		long userId, long groupId, long layoutSetId, long layoutSetBranchId)
+		throws PortalException;
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getUserLayoutSetBranch(long,
-	long, boolean, long, long)}
+	long, long, long)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout, long layoutSetBranchId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
-		long userId, long groupId, boolean privateLayout, long layoutSetId,
-		long layoutSetBranchId) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSetBranch mergeLayoutSetBranch(
 		long layoutSetBranchId, long mergeLayoutSetBranchId,

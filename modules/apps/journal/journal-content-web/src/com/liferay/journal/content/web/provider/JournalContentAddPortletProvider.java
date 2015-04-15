@@ -76,8 +76,8 @@ public class JournalContentAddPortletProvider implements AddPortletProvider {
 		Layout layout = themeDisplay.getLayout();
 
 		_journalContentSearchLocal.updateContentSearch(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			portletId, article.getArticleId(), true);
+			layout.getGroupId(), layout.getLayoutId(), portletId,
+			article.getArticleId(), true);
 	}
 
 	@Reference

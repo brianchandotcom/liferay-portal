@@ -146,7 +146,7 @@ AUI.add(
 
 						var root = host.get('root');
 
-						var key = treeId + ':' + root.groupId + ':' + root.privateLayout + ':Pagination';
+						var key = treeId + ':' + root.groupId + ':Pagination';
 
 						instance._invokeSessionClick(
 							{
@@ -284,7 +284,6 @@ AUI.add(
 						data = A.merge(
 							{
 								groupId: root.groupId,
-								privateLayout: root.privateLayout,
 								recursive: true,
 								treeId: treeId
 							},

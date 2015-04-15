@@ -65,17 +65,17 @@ public class JournalContentSearchLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId) {
+	public void deleteArticleContentSearch(long groupId, long layoutId,
+		java.lang.String portletId) {
 		_journalContentSearchLocalService.deleteArticleContentSearch(groupId,
-			privateLayout, layoutId, portletId);
+			layoutId, portletId);
 	}
 
 	@Override
-	public void deleteArticleContentSearch(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId, java.lang.String articleId) {
+	public void deleteArticleContentSearch(long groupId, long layoutId,
+		java.lang.String portletId, java.lang.String articleId) {
 		_journalContentSearchLocalService.deleteArticleContentSearch(groupId,
-			privateLayout, layoutId, portletId, articleId);
+			layoutId, portletId, articleId);
 	}
 
 	@Override
@@ -112,16 +112,14 @@ public class JournalContentSearchLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteLayoutContentSearches(long groupId,
-		boolean privateLayout, long layoutId) {
+	public void deleteLayoutContentSearches(long groupId, long layoutId) {
 		_journalContentSearchLocalService.deleteLayoutContentSearches(groupId,
-			privateLayout, layoutId);
+			layoutId);
 	}
 
 	@Override
-	public void deleteOwnerContentSearches(long groupId, boolean privateLayout) {
-		_journalContentSearchLocalService.deleteOwnerContentSearches(groupId,
-			privateLayout);
+	public void deleteOwnerContentSearches(long groupId) {
+		_journalContentSearchLocalService.deleteOwnerContentSearches(groupId);
 	}
 
 	/**
@@ -303,9 +301,8 @@ public class JournalContentSearchLocalServiceWrapper
 
 	@Override
 	public java.util.List<java.lang.Long> getLayoutIds(long groupId,
-		boolean privateLayout, java.lang.String articleId) {
-		return _journalContentSearchLocalService.getLayoutIds(groupId,
-			privateLayout, articleId);
+		java.lang.String articleId) {
+		return _journalContentSearchLocalService.getLayoutIds(groupId, articleId);
 	}
 
 	@Override
@@ -314,10 +311,9 @@ public class JournalContentSearchLocalServiceWrapper
 	}
 
 	@Override
-	public int getLayoutIdsCount(long groupId, boolean privateLayout,
-		java.lang.String articleId) {
+	public int getLayoutIdsCount(long groupId, java.lang.String articleId) {
 		return _journalContentSearchLocalService.getLayoutIdsCount(groupId,
-			privateLayout, articleId);
+			articleId);
 	}
 
 	@Override
@@ -345,29 +341,29 @@ public class JournalContentSearchLocalServiceWrapper
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalContentSearch updateContentSearch(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String articleId)
+		long groupId, long layoutId, java.lang.String portletId,
+		java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalContentSearchLocalService.updateContentSearch(groupId,
-			privateLayout, layoutId, portletId, articleId);
+			layoutId, portletId, articleId);
 	}
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalContentSearch updateContentSearch(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String articleId, boolean purge)
+		long groupId, long layoutId, java.lang.String portletId,
+		java.lang.String articleId, boolean purge)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalContentSearchLocalService.updateContentSearch(groupId,
-			privateLayout, layoutId, portletId, articleId, purge);
+			layoutId, portletId, articleId, purge);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalContentSearch> updateContentSearch(
-		long groupId, boolean privateLayout, long layoutId,
-		java.lang.String portletId, java.lang.String[] articleIds)
+		long groupId, long layoutId, java.lang.String portletId,
+		java.lang.String[] articleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalContentSearchLocalService.updateContentSearch(groupId,
-			privateLayout, layoutId, portletId, articleIds);
+			layoutId, portletId, articleIds);
 	}
 
 	/**

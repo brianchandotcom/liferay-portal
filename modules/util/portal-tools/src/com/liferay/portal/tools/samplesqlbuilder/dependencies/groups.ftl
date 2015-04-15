@@ -11,7 +11,7 @@
 
 <@insertGroup
 	_groupModel = dataFactory.guestGroupModel
-	_publicPageCount = 1
+	_pageCount = 1
 />
 
 <#list dataFactory.groupModels as groupModel>
@@ -38,19 +38,19 @@
 		_parentDLFolderId = 0
 	/>
 
-	<#assign publicLayoutModels = dataFactory.newPublicLayoutModels(groupId)>
+	<#assign layoutModels = dataFactory.newLayoutModels(groupId)>
 
-	<#list publicLayoutModels as publicLayoutModel >
+	<#list layoutModels as layoutModel >
 		<@insertLayout
-			_layoutModel = publicLayoutModel
+			_layoutModel = layoutModel
 		/>
 	</#list>
 
-	<#assign publicPageCount = publicLayoutModels?size + dataFactory.maxDDLRecordSetCount + dataFactory.maxJournalArticleCount>
+	<#assign pageCount = layoutModels?size + dataFactory.maxDDLRecordSetCount + dataFactory.maxJournalArticleCount>
 
 	<@insertGroup
 		_groupModel = groupModel
-		_publicPageCount = publicPageCount
+		_pageCount = pageCount
 	/>
 
 	${repositoryCSVWriter.write(groupId + ", " + groupModel.name + "\n")}

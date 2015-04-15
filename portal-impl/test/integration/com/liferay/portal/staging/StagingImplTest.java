@@ -107,12 +107,12 @@ public class StagingImplTest {
 		Group stagingGroup = _group.getStagingGroup();
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			_group.getGroupId(), false);
+			_group.getGroupId());
 
 		Assert.assertNull(ExportImportDateUtil.getLastPublishDate(layoutSet));
 
 		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			stagingGroup.getGroupId(), false);
+			stagingGroup.getGroupId());
 
 		Assert.assertNotNull(
 			ExportImportDateUtil.getLastPublishDate(layoutSet));
@@ -214,23 +214,14 @@ public class StagingImplTest {
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("branchingPrivate")));
-		Assert.assertTrue(
-			GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("branchingPublic")));
+				typeSettingsProperties.getProperty("branching")));
 
 		Group stagingGroup = _group.getStagingGroup();
 
 		LayoutSetBranch layoutSetBranch =
 			LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-				stagingGroup.getGroupId(), false,
+				stagingGroup.getGroupId(),
 				LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-		Assert.assertNotNull(layoutSetBranch);
-
-		layoutSetBranch = LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-			stagingGroup.getGroupId(), true,
-			LayoutSetBranchConstants.MASTER_BRANCH_NAME);
 
 		Assert.assertNotNull(layoutSetBranch);
 	}
@@ -243,8 +234,7 @@ public class StagingImplTest {
 			_group, false);
 
 		StagingLocalServiceUtil.enableLocalStaging(
-			TestPropsValues.getUserId(), _group, branching, branching,
-			serviceContext);
+			TestPropsValues.getUserId(), _group, branching, serviceContext);
 
 		Group stagingGroup = _group.getStagingGroup();
 
@@ -320,7 +310,7 @@ public class StagingImplTest {
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			_group.getGroupId(), false, parameters);
+			_group.getGroupId(), parameters);
 
 		// Retrieve content from live after publishing
 

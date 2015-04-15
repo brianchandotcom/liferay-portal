@@ -163,13 +163,22 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public long getDefaultPrivatePlid() {
-		return getDefaultPlid(true);
-	}
+	public long getDefaultPlid() {
+		try {
+			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+				getGroupId(), LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-	@Override
-	public long getDefaultPublicPlid() {
-		return getDefaultPlid(false);
+			if (firstLayout != null) {
+				return firstLayout.getPlid();
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
+		}
+
+		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	@Override
@@ -270,34 +279,18 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public String getDisplayURL(ThemeDisplay themeDisplay) {
-		return getDisplayURL(themeDisplay, false);
-	}
-
-	@Override
-	public String getDisplayURL(
-		ThemeDisplay themeDisplay, boolean privateLayout) {
-
-		if (!privateLayout && (getPublicLayoutsPageCount() > 0)) {
-			try {
-				String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-					getPublicLayoutSet(), themeDisplay);
-
-				return PortalUtil.addPreservedParameters(
-					themeDisplay, groupFriendlyURL);
-			}
-			catch (PortalException pe) {
-			}
+		if (!hasLayouts()) {
+			return StringPool.BLANK;
 		}
-		else if (privateLayout && (getPrivateLayoutsPageCount() > 0)) {
-			try {
-				String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-					getPrivateLayoutSet(), themeDisplay);
 
-				return PortalUtil.addPreservedParameters(
-					themeDisplay, groupFriendlyURL);
-			}
-			catch (PortalException pe) {
-			}
+		try {
+			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
+				getLayoutSet(), themeDisplay);
+
+			return PortalUtil.addPreservedParameters(
+				themeDisplay, groupFriendlyURL);
+		}
+		catch (PortalException pe) {
 		}
 
 		return StringPool.BLANK;
@@ -347,30 +340,25 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public String getLayoutRootNodeName(boolean privateLayout, Locale locale) {
-		String pagesName = null;
+	public String getLayoutRootNodeName(Locale locale) {
+		return LanguageUtil.get(locale, "pages");
+	}
 
-		if (isLayoutPrototype() || isLayoutSetPrototype() || isUserGroup()) {
-			pagesName = "pages";
+	@Override
+	public LayoutSet getLayoutSet() {
+		return LayoutSetLocalServiceUtil.fetchLayoutSet(getGroupId());
+	}
+
+	@Override
+	public int getLayoutsPageCount() {
+		try {
+			return LayoutLocalServiceUtil.getLayoutsCount(this, false);
 		}
-		else if (privateLayout) {
-			if (isUser()) {
-				pagesName = "my-dashboard";
-			}
-			else {
-				pagesName = "private-pages";
-			}
-		}
-		else {
-			if (isUser()) {
-				pagesName = "my-profile";
-			}
-			else {
-				pagesName = "public-pages";
-			}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
-		return LanguageUtil.get(locale, pagesName);
+		return 0;
 	}
 
 	@Override
@@ -467,74 +455,8 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public String getPathFriendlyURL(
-		boolean privateLayout, ThemeDisplay themeDisplay) {
-
-		if (privateLayout) {
-			if (isUser()) {
-				return themeDisplay.getPathFriendlyURLPrivateUser();
-			}
-			else {
-				return themeDisplay.getPathFriendlyURLPrivateGroup();
-			}
-		}
-		else {
-			return themeDisplay.getPathFriendlyURLPublic();
-		}
-	}
-
-	@Override
-	public LayoutSet getPrivateLayoutSet() {
-		LayoutSet layoutSet = null;
-
-		try {
-			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				getGroupId(), true);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return layoutSet;
-	}
-
-	@Override
-	public int getPrivateLayoutsPageCount() {
-		try {
-			return LayoutLocalServiceUtil.getLayoutsCount(this, true);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return 0;
-	}
-
-	@Override
-	public LayoutSet getPublicLayoutSet() {
-		LayoutSet layoutSet = null;
-
-		try {
-			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				getGroupId(), false);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return layoutSet;
-	}
-
-	@Override
-	public int getPublicLayoutsPageCount() {
-		try {
-			return LayoutLocalServiceUtil.getLayoutsCount(this, false);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return 0;
+	public String getPathFriendlyURL(ThemeDisplay themeDisplay) {
+		return themeDisplay.getPathFriendlyURLPublic();
 	}
 
 	@Override
@@ -726,32 +648,22 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
+	public boolean hasLayouts() {
+		if (getLayoutsPageCount() > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
 	public boolean hasLocalOrRemoteStagingGroup() {
 		if (hasRemoteStagingGroup() || hasStagingGroup()) {
 			return true;
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean hasPrivateLayouts() {
-		if (getPrivateLayoutsPageCount() > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean hasPublicLayouts() {
-		if (getPublicLayoutsPageCount() > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	@Override
@@ -897,8 +809,7 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public boolean isShowSite(
-			PermissionChecker permissionChecker, boolean privateSite)
+	public boolean isShowSite(PermissionChecker permissionChecker)
 		throws PortalException {
 
 		if (!isControlPanel() && !isSite() && !isUser()) {
@@ -909,8 +820,7 @@ public class GroupImpl extends GroupBaseImpl {
 
 		Layout defaultLayout = null;
 
-		int siteLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
-			this, privateSite);
+		int siteLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(this);
 
 		if (siteLayoutsCount == 0) {
 			boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(
@@ -918,49 +828,27 @@ public class GroupImpl extends GroupBaseImpl {
 				RoleConstants.POWER_USER, true);
 
 			if (isSite()) {
-				if (privateSite) {
-					showSite =
-						PropsValues.MY_SITES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS;
-				}
-				else {
-					showSite =
-						PropsValues.MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
-				}
+				showSite =
+					PropsValues.MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
 			}
 			else if (isOrganization()) {
 				showSite = false;
 			}
 			else if (isUser()) {
-				if (privateSite) {
-					showSite =
-						PropsValues.
-							MY_SITES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS;
+				showSite =
+					PropsValues.MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS;
 
-					if (PropsValues.
-							LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED &&
-						!hasPowerUserRole) {
+				if (PropsValues.
+						LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED &&
+					!hasPowerUserRole) {
 
-						showSite = false;
-					}
-				}
-				else {
-					showSite =
-						PropsValues.
-							MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS;
-
-					if (PropsValues.
-							LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED &&
-						!hasPowerUserRole) {
-
-						showSite = false;
-					}
+					showSite = false;
 				}
 			}
 		}
 		else {
 			defaultLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				getGroupId(), privateSite,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+				getGroupId(), LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if ((defaultLayout != null ) &&
 				!LayoutPermissionUtil.contains(
@@ -1089,25 +977,6 @@ public class GroupImpl extends GroupBaseImpl {
 		_typeSettingsProperties = typeSettingsProperties;
 
 		super.setTypeSettings(_typeSettingsProperties.toString());
-	}
-
-	protected long getDefaultPlid(boolean privateLayout) {
-		try {
-			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				getGroupId(), privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (firstLayout != null) {
-				return firstLayout.getPlid();
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
-			}
-		}
-
-		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	protected boolean hasClassName(Class<?> clazz) {

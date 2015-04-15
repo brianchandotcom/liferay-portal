@@ -364,12 +364,9 @@ public class ImportLayoutsAction extends PortletAction {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
 
 		LayoutServiceUtil.importLayoutsInBackground(
-			fileName, groupId, privateLayout, actionRequest.getParameterMap(),
-			inputStream);
+			fileName, groupId, actionRequest.getParameterMap(), inputStream);
 	}
 
 	protected void validateFile(
@@ -424,12 +421,9 @@ public class ImportLayoutsAction extends PortletAction {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
 
 		return LayoutServiceUtil.validateImportLayoutsFile(
-			groupId, privateLayout, actionRequest.getParameterMap(),
-			inputStream);
+			groupId, actionRequest.getParameterMap(), inputStream);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

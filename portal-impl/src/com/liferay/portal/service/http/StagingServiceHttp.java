@@ -115,7 +115,7 @@ public class StagingServiceHttp {
 	}
 
 	public static void publishStagingRequest(HttpPrincipal httpPrincipal,
-		long stagingRequestId, boolean privateLayout,
+		long stagingRequestId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -124,7 +124,7 @@ public class StagingServiceHttp {
 					_publishStagingRequestParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					stagingRequestId, privateLayout, parameterMap);
+					stagingRequestId, parameterMap);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -215,7 +215,7 @@ public class StagingServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _publishStagingRequestParameterTypes2 = new Class[] {
-			long.class, boolean.class, java.util.Map.class
+			long.class, java.util.Map.class
 		};
 	private static final Class<?>[] _updateStagingRequestParameterTypes3 = new Class[] {
 			long.class, java.lang.String.class, byte[].class

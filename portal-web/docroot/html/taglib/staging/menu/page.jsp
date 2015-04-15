@@ -38,7 +38,7 @@ List<LayoutSetBranch> layoutSetBranches = null;
 String publishDialogTitle = null;
 
 if (!group.isCompany()) {
-	layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
+	layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId());
 }
 
 if (group.isStaged() && group.isStagedRemotely()) {
@@ -64,10 +64,8 @@ String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 <liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<liferay-portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
 	<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
-	<liferay-portlet:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
 	<liferay-portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<liferay-portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<liferay-portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 	<liferay-portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 </liferay-portlet:renderURL>
 

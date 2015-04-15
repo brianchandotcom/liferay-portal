@@ -202,12 +202,10 @@ public class MDRActionStagedModelDataHandler
 
 		long groupId = GetterUtil.getLong(
 			typeSettingsProperties.getProperty("groupId"));
-		boolean privateLayout = GetterUtil.getBoolean(
-			actionElement.attributeValue("private-layout"));
 
 		try {
 			Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				layoutUuid, groupId, privateLayout);
+				layoutUuid, groupId);
 
 			typeSettingsProperties.setProperty(
 				"plid", String.valueOf(layout.getPlid()));

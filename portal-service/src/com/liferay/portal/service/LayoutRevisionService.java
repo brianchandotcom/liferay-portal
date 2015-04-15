@@ -48,13 +48,13 @@ public interface LayoutRevisionService extends BaseService {
 	public com.liferay.portal.model.LayoutRevision addLayoutRevision(
 		long userId, long layoutSetBranchId, long layoutBranchId,
 		long parentLayoutRevisionId, boolean head, long plid,
-		long portletPreferencesPlid, boolean privateLayout,
-		java.lang.String name, java.lang.String title,
-		java.lang.String description, java.lang.String keywords,
-		java.lang.String robots, java.lang.String typeSettings,
-		boolean iconImage, long iconImageId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String wapThemeId,
-		java.lang.String wapColorSchemeId, java.lang.String css,
+		long portletPreferencesPlid, java.lang.String name,
+		java.lang.String title, java.lang.String description,
+		java.lang.String keywords, java.lang.String robots,
+		java.lang.String typeSettings, boolean iconImage, long iconImageId,
+		java.lang.String themeId, java.lang.String colorSchemeId,
+		java.lang.String wapThemeId, java.lang.String wapColorSchemeId,
+		java.lang.String css,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

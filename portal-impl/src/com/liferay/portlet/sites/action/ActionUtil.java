@@ -218,7 +218,7 @@ public class ActionUtil
 		}
 
 		LayoutServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getGroupId(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}
 

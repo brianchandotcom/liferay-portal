@@ -1315,8 +1315,8 @@ public class JournalPortlet extends MVCPortlet {
 		Layout layout = themeDisplay.getLayout();
 
 		_journalContentSearchLocalService.updateContentSearch(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			portletResource, articleId, true);
+			layout.getGroupId(), layout.getLayoutId(), portletResource,
+			articleId, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);

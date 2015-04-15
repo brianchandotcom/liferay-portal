@@ -46,8 +46,7 @@ public class PortalImplBaseURLTestCase {
 
 		group = GroupTestUtil.addGroup();
 
-		privateLayout = LayoutTestUtil.addLayout(group, true);
-		publicLayout = LayoutTestUtil.addLayout(group);
+		layout = LayoutTestUtil.addLayout(group);
 	}
 
 	protected ThemeDisplay initThemeDisplay(
@@ -93,7 +92,6 @@ public class PortalImplBaseURLTestCase {
 	@DeleteAfterTestRun
 	protected Group group;
 
-	protected Layout privateLayout;
-	protected Layout publicLayout;
+	protected Layout layout;
 
 }

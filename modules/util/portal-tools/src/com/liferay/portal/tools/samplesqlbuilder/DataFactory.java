@@ -1696,14 +1696,26 @@ public class DataFactory {
 		return layoutModel;
 	}
 
+	public List<LayoutModel> newLayoutModels(long groupId) {
+		List<LayoutModel> layoutModels = new ArrayList<>();
+
+		layoutModels.add(newLayoutModel(groupId, "welcome", "58,", "47,"));
+		layoutModels.add(newLayoutModel(groupId, "blogs", "", "33,"));
+		layoutModels.add(
+			newLayoutModel(groupId, "document_library", "", "20,"));
+		layoutModels.add(newLayoutModel(groupId, "forums", "", "19,"));
+		layoutModels.add(
+			newLayoutModel(groupId, "wiki", "", "36_WAR_wikiweb,"));
+
+		return layoutModels;
+	}
+
 	public List<LayoutSetModel> newLayoutSetModels(
-		long groupId, int publicLayoutSetPageCount) {
+		long groupId, int layoutSetPageCount) {
 
 		List<LayoutSetModel> layoutSetModels = new ArrayList<>(2);
 
-		layoutSetModels.add(newLayoutSetModel(groupId, true, 0));
-		layoutSetModels.add(
-			newLayoutSetModel(groupId, false, publicLayoutSetPageCount));
+		layoutSetModels.add(newLayoutSetModel(groupId, layoutSetPageCount));
 
 		return layoutSetModels;
 	}
@@ -1992,20 +2004,6 @@ public class DataFactory {
 		return newPortletPreferencesModel(
 			plid, portletId,
 			_portletPreferencesFactory.toXML(jxPortletPreferences));
-	}
-
-	public List<LayoutModel> newPublicLayoutModels(long groupId) {
-		List<LayoutModel> layoutModels = new ArrayList<>();
-
-		layoutModels.add(newLayoutModel(groupId, "welcome", "58,", "47,"));
-		layoutModels.add(newLayoutModel(groupId, "blogs", "", "33,"));
-		layoutModels.add(
-			newLayoutModel(groupId, "document_library", "", "20,"));
-		layoutModels.add(newLayoutModel(groupId, "forums", "", "19,"));
-		layoutModels.add(
-			newLayoutModel(groupId, "wiki", "", "36_WAR_wikiweb,"));
-
-		return layoutModels;
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -2698,9 +2696,7 @@ public class DataFactory {
 		return groupModel;
 	}
 
-	protected LayoutSetModel newLayoutSetModel(
-		long groupId, boolean privateLayout, int pageCount) {
-
+	protected LayoutSetModel newLayoutSetModel(long groupId, int pageCount) {
 		LayoutSetModel layoutSetModel = new LayoutSetModelImpl();
 
 		layoutSetModel.setLayoutSetId(_counter.get());
@@ -2708,7 +2704,6 @@ public class DataFactory {
 		layoutSetModel.setCompanyId(_companyId);
 		layoutSetModel.setCreateDate(new Date());
 		layoutSetModel.setModifiedDate(new Date());
-		layoutSetModel.setPrivateLayout(privateLayout);
 		layoutSetModel.setThemeId("classic");
 		layoutSetModel.setColorSchemeId("01");
 		layoutSetModel.setWapThemeId("mobile");

@@ -91,7 +91,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			{ "head", Types.BOOLEAN },
 			{ "major", Types.BOOLEAN },
 			{ "plid", Types.BIGINT },
-			{ "privateLayout", Types.BOOLEAN },
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
@@ -109,7 +108,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutRevision (mvccVersion LONG default 0,layoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,privateLayout BOOLEAN,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutRevision (mvccVersion LONG default 0,layoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutRevision";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutRevision.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutRevision.modifiedDate DESC";
@@ -160,7 +159,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		model.setHead(soapModel.getHead());
 		model.setMajor(soapModel.getMajor());
 		model.setPlid(soapModel.getPlid());
-		model.setPrivateLayout(soapModel.getPrivateLayout());
 		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
@@ -255,7 +253,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		attributes.put("head", getHead());
 		attributes.put("major", getMajor());
 		attributes.put("plid", getPlid());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
@@ -364,12 +361,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 		if (plid != null) {
 			setPlid(plid);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		String name = (String)attributes.get("name");
@@ -714,22 +705,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	public long getOriginalPlid() {
 		return _originalPlid;
-	}
-
-	@JSON
-	@Override
-	public boolean getPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_privateLayout = privateLayout;
 	}
 
 	@JSON
@@ -1693,7 +1668,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		layoutRevisionImpl.setHead(getHead());
 		layoutRevisionImpl.setMajor(getMajor());
 		layoutRevisionImpl.setPlid(getPlid());
-		layoutRevisionImpl.setPrivateLayout(getPrivateLayout());
 		layoutRevisionImpl.setName(getName());
 		layoutRevisionImpl.setTitle(getTitle());
 		layoutRevisionImpl.setDescription(getDescription());
@@ -1852,8 +1826,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 		layoutRevisionCacheModel.plid = getPlid();
 
-		layoutRevisionCacheModel.privateLayout = getPrivateLayout();
-
 		layoutRevisionCacheModel.name = getName();
 
 		String name = layoutRevisionCacheModel.name;
@@ -1970,7 +1942,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -2000,8 +1972,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		sb.append(getMajor());
 		sb.append(", plid=");
 		sb.append(getPlid());
-		sb.append(", privateLayout=");
-		sb.append(getPrivateLayout());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", title=");
@@ -2041,7 +2011,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(97);
+		StringBundler sb = new StringBundler(94);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutRevision");
@@ -2102,10 +2072,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		sb.append(
 			"<column><column-name>plid</column-name><column-value><![CDATA[");
 		sb.append(getPlid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
-		sb.append(getPrivateLayout());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -2205,7 +2171,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	private long _plid;
 	private long _originalPlid;
 	private boolean _setOriginalPlid;
-	private boolean _privateLayout;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _title;

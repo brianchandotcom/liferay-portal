@@ -42,15 +42,12 @@ import javax.portlet.PortletRequest;
 @ProviderType
 public class ExportImportHelperUtil {
 
-	public static long[] getAllLayoutIds(long groupId, boolean privateLayout) {
-		return getExportImportHelper().getAllLayoutIds(groupId, privateLayout);
+	public static long[] getAllLayoutIds(long groupId) {
+		return getExportImportHelper().getAllLayoutIds(groupId);
 	}
 
-	public static Map<Long, Boolean> getAllLayoutIdsMap(
-		long groupId, boolean privateLayout) {
-
-		return getExportImportHelper().getAllLayoutIdsMap(
-			groupId, privateLayout);
+	public static Map<Long, Boolean> getAllLayoutIdsMap(long groupId) {
+		return getExportImportHelper().getAllLayoutIdsMap(groupId);
 	}
 
 	/**
@@ -70,7 +67,7 @@ public class ExportImportHelperUtil {
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
 	 *             ExportImportDateUtil#getDateRange(PortletRequest, long,
-	 *             boolean, long, String, String)}
+	 *             long, String, String)}
 	 */
 	@Deprecated
 	public static DateRange getDateRange(
@@ -279,10 +276,10 @@ public class ExportImportHelperUtil {
 	}
 
 	public static String getSelectedLayoutsJSON(
-		long groupId, boolean privateLayout, String selectedNodes) {
+		long groupId, String selectedNodes) {
 
 		return getExportImportHelper().getSelectedLayoutsJSON(
-			groupId, privateLayout, selectedNodes);
+			groupId, selectedNodes);
 	}
 
 	public static FileEntry getTempFileEntry(

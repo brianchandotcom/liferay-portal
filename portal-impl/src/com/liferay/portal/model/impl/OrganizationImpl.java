@@ -205,6 +205,25 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
+	public int getLayoutsPageCount() {
+		try {
+			Group group = getGroup();
+
+			if (group == null) {
+				return 0;
+			}
+			else {
+				return group.getLayoutsPageCount();
+			}
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		return 0;
+	}
+
+	@Override
 	public Organization getParentOrganization() throws PortalException {
 		if (getParentOrganizationId() ==
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
@@ -242,44 +261,6 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 		return PortalPreferencesLocalServiceUtil.getPreferences(
 			ownerId, ownerType);
-	}
-
-	@Override
-	public int getPrivateLayoutsPageCount() {
-		try {
-			Group group = getGroup();
-
-			if (group == null) {
-				return 0;
-			}
-			else {
-				return group.getPrivateLayoutsPageCount();
-			}
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-
-		return 0;
-	}
-
-	@Override
-	public int getPublicLayoutsPageCount() {
-		try {
-			Group group = getGroup();
-
-			if (group == null) {
-				return 0;
-			}
-			else {
-				return group.getPublicLayoutsPageCount();
-			}
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-
-		return 0;
 	}
 
 	@Override
@@ -326,18 +307,8 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	@Override
-	public boolean hasPrivateLayouts() {
-		if (getPrivateLayoutsPageCount() > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean hasPublicLayouts() {
-		if (getPublicLayoutsPageCount() > 0) {
+	public boolean hasLayouts() {
+		if (getLayoutsPageCount() > 0) {
 			return true;
 		}
 		else {

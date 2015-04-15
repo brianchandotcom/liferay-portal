@@ -365,10 +365,6 @@ public class PortalImpl implements Portal {
 			ContextPathUtil.getContextPath(
 				PortalContextLoaderListener.getPortalServletContextPath()));
 
-		_pathFriendlyURLPrivateGroup =
-			_pathContext + _PRIVATE_GROUP_SERVLET_MAPPING;
-		_pathFriendlyURLPrivateUser =
-			_pathContext + _PRIVATE_USER_SERVLET_MAPPING;
 		_pathFriendlyURLPublic = _pathContext + _PUBLIC_GROUP_SERVLET_MAPPING;
 		_pathImage = _pathContext + PATH_IMAGE;
 		_pathMain = _pathContext + PATH_MAIN;
@@ -975,8 +971,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public LayoutQueryStringComposite getActualLayoutQueryStringComposite(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			long groupId, String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException {
 
 		Layout layout = null;
@@ -988,23 +984,19 @@ public class PortalImpl implements Portal {
 			// We need to ensure that virtual layouts are merged
 
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+				groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (!layouts.isEmpty()) {
 				layout = layouts.get(0);
 			}
 			else {
-				throw new NoSuchLayoutException(
-					"{groupId=" + groupId + ", privateLayout=" + privateLayout +
-						"}");
+				throw new NoSuchLayoutException("{groupId=" + groupId + "}");
 			}
 		}
 		else {
 			LayoutQueryStringComposite layoutQueryStringComposite =
 				getPortletFriendlyURLMapperLayoutQueryStringComposite(
-					groupId, privateLayout, friendlyURL, params,
-					requestContext);
+					groupId, friendlyURL, params, requestContext);
 
 			layout = layoutQueryStringComposite.getLayout();
 			layoutQueryStringCompositeFriendlyURL =
@@ -1018,8 +1010,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
@@ -1031,8 +1023,7 @@ public class PortalImpl implements Portal {
 
 				try {
 					actualURL = getJournalArticleActualURL(
-						groupId, privateLayout, mainPath, friendlyURL, params,
-						requestContext);
+						groupId, mainPath, friendlyURL, params, requestContext);
 				}
 				catch (Exception e) {
 					throw new NoSuchLayoutException(e);
@@ -1043,8 +1034,7 @@ public class PortalImpl implements Portal {
 
 				try {
 					actualURL = getVirtualLayoutActualURL(
-						groupId, privateLayout, mainPath, friendlyURL, params,
-						requestContext);
+						groupId, mainPath, friendlyURL, params, requestContext);
 				}
 				catch (Exception e) {
 					throw new NoSuchLayoutException(e);
@@ -1054,8 +1044,7 @@ public class PortalImpl implements Portal {
 
 		if (actualURL == null) {
 			actualURL = getLayoutActualURL(
-				groupId, privateLayout, mainPath, friendlyURL, params,
-				requestContext);
+				groupId, mainPath, friendlyURL, params, requestContext);
 		}
 
 		return actualURL;
@@ -1349,9 +1338,7 @@ public class PortalImpl implements Portal {
 			groups.add(0, organization.getGroup());
 		}
 
-		if (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
-			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
-
+		if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
 			groups.add(
 				0, GroupLocalServiceUtil.getUserGroup(companyId, userId));
 		}
@@ -1706,7 +1693,7 @@ public class PortalImpl implements Portal {
 			getPortalURL(
 				company.getVirtualHostname(), getPortalServerPort(false),
 				false));
-		sb.append(getPathFriendlyURLPrivateGroup());
+		sb.append(getPathFriendlyURLPublic());
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
@@ -1738,7 +1725,7 @@ public class PortalImpl implements Portal {
 			companyId, GroupConstants.CONTROL_PANEL);
 
 		return LayoutLocalServiceUtil.getDefaultPlid(
-			controlPanelGroup.getGroupId(), true);
+			controlPanelGroup.getGroupId());
 	}
 
 	@Override
@@ -1871,7 +1858,7 @@ public class PortalImpl implements Portal {
 
 		try {
 			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-				themeDisplay.getScopeGroupId(), false,
+				themeDisplay.getScopeGroupId(),
 				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
 
 			return getLayoutURL(layout, themeDisplay);
@@ -2594,10 +2581,6 @@ public class PortalImpl implements Portal {
 	@Override
 	public int[] getGroupFriendlyURLIndex(String requestURI) {
 		if (requestURI.startsWith(
-				_PRIVATE_GROUP_SERVLET_MAPPING + StringPool.SLASH) ||
-			requestURI.startsWith(
-				_PRIVATE_USER_SERVLET_MAPPING + StringPool.SLASH) ||
-			requestURI.startsWith(
 				_PUBLIC_GROUP_SERVLET_MAPPING + StringPool.SLASH)) {
 
 			int x = requestURI.indexOf(StringPool.SLASH, 1);
@@ -2774,8 +2757,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getJournalArticleActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
@@ -2786,8 +2769,7 @@ public class PortalImpl implements Portal {
 			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
 				groupId, urlTitle);
 
-		Layout layout = getJournalArticleLayout(
-			groupId, privateLayout, friendlyURL);
+		Layout layout = getJournalArticleLayout(groupId, friendlyURL);
 
 		String layoutActualURL = getLayoutActualURL(layout, mainPath);
 
@@ -2882,8 +2864,7 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public Layout getJournalArticleLayout(
-			long groupId, boolean privateLayout, String friendlyURL)
+	public Layout getJournalArticleLayout(long groupId, String friendlyURL)
 		throws PortalException {
 
 		String urlTitle = friendlyURL.substring(
@@ -2894,7 +2875,7 @@ public class PortalImpl implements Portal {
 				groupId, urlTitle);
 
 		return LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			journalArticle.getLayoutUuid(), groupId, privateLayout);
+			journalArticle.getLayoutUuid(), groupId);
 	}
 
 	@Override
@@ -2935,24 +2916,22 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL)
+			long groupId, String mainPath, String friendlyURL)
 		throws PortalException {
 
-		return getLayoutActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, null, null);
+		return getLayoutActualURL(groupId, mainPath, friendlyURL, null, null);
 	}
 
 	@Override
 	public String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
 		LayoutQueryStringComposite actualLayoutQueryStringComposite =
 			getActualLayoutQueryStringComposite(
-				groupId, privateLayout, friendlyURL, params, requestContext);
+				groupId, friendlyURL, params, requestContext);
 
 		Layout layout = actualLayoutQueryStringComposite.getLayout();
 		String queryString = actualLayoutQueryStringComposite.getQueryString();
@@ -3020,8 +2999,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			long groupId, String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException {
 
 		Layout layout = null;
@@ -3032,8 +3011,7 @@ public class PortalImpl implements Portal {
 					JournalArticleConstants.CANONICAL_URL_SEPARATOR)) {
 
 				try {
-					layout = getJournalArticleLayout(
-						groupId, privateLayout, friendlyURL);
+					layout = getJournalArticleLayout(groupId, friendlyURL);
 				}
 				catch (Exception e) {
 					throw new NoSuchLayoutException(e);
@@ -3045,7 +3023,7 @@ public class PortalImpl implements Portal {
 				try {
 					LayoutFriendlyURLComposite layoutFriendlyURLComposite =
 						getVirtualLayoutFriendlyURLComposite(
-							privateLayout, friendlyURL, params, requestContext);
+							friendlyURL, params, requestContext);
 
 					layout = layoutFriendlyURLComposite.getLayout();
 					layoutFriendlyURL =
@@ -3060,8 +3038,7 @@ public class PortalImpl implements Portal {
 		if (layout == null) {
 			LayoutQueryStringComposite layoutQueryStringComposite =
 				getActualLayoutQueryStringComposite(
-					groupId, privateLayout, friendlyURL, params,
-					requestContext);
+					groupId, friendlyURL, params, requestContext);
 
 			layout = layoutQueryStringComposite.getLayout();
 			layoutFriendlyURL = layoutQueryStringComposite.getFriendlyURL();
@@ -3141,19 +3118,7 @@ public class PortalImpl implements Portal {
 			virtualHostname, getPortalServerPort(secure), secure);
 
 		sb.append(portalURL);
-
-		if (layout.isPrivateLayout()) {
-			if (group.isUser()) {
-				sb.append(getPathFriendlyURLPrivateUser());
-			}
-			else {
-				sb.append(getPathFriendlyURLPrivateGroup());
-			}
-		}
-		else {
-			sb.append(getPathFriendlyURLPublic());
-		}
-
+		sb.append(getPathFriendlyURLPublic());
 		sb.append(group.getFriendlyURL());
 		sb.append(layout.getFriendlyURL());
 
@@ -3220,19 +3185,7 @@ public class PortalImpl implements Portal {
 
 		Group group = GroupLocalServiceUtil.getGroup(layoutSet.getGroupId());
 
-		String friendlyURL = null;
-
-		if (layoutSet.isPrivateLayout()) {
-			if (group.isUser()) {
-				friendlyURL = _PRIVATE_USER_SERVLET_MAPPING;
-			}
-			else {
-				friendlyURL = _PRIVATE_GROUP_SERVLET_MAPPING;
-			}
-		}
-		else {
-			friendlyURL = _PUBLIC_GROUP_SERVLET_MAPPING;
-		}
+		String friendlyURL = _PUBLIC_GROUP_SERVLET_MAPPING;
 
 		if (themeDisplay.isI18n()) {
 			friendlyURL = themeDisplay.getI18nPath() + friendlyURL;
@@ -3787,16 +3740,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String getPathFriendlyURLPrivateGroup() {
-		return _pathFriendlyURLPrivateGroup;
-	}
-
-	@Override
-	public String getPathFriendlyURLPrivateUser() {
-		return _pathFriendlyURLPrivateUser;
-	}
-
-	@Override
 	public String getPathFriendlyURLPublic() {
 		return _pathFriendlyURLPublic;
 	}
@@ -3835,19 +3778,9 @@ public class PortalImpl implements Portal {
 			return LayoutConstants.DEFAULT_PLID;
 		}
 
-		boolean privateLayout = true;
-
 		String urlPrefix = StringPool.SLASH + urlParts[1];
 
-		if (_PUBLIC_GROUP_SERVLET_MAPPING.equals(urlPrefix)) {
-			privateLayout = false;
-		}
-		else if (_PRIVATE_GROUP_SERVLET_MAPPING.equals(urlPrefix) ||
-				 _PRIVATE_USER_SERVLET_MAPPING.equals(urlPrefix)) {
-
-			privateLayout = true;
-		}
-		else {
+		if (!_PUBLIC_GROUP_SERVLET_MAPPING.equals(urlPrefix)) {
 			return LayoutConstants.DEFAULT_PLID;
 		}
 
@@ -3873,11 +3806,11 @@ public class PortalImpl implements Portal {
 				layoutFriendlyURL = StringPool.SLASH + urlParts[3];
 
 				layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-					group.getGroupId(), privateLayout, layoutFriendlyURL);
+					group.getGroupId(), layoutFriendlyURL);
 			}
 			else {
 				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-					group.getGroupId(), privateLayout,
+					group.getGroupId(),
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
 
 				if (!layouts.isEmpty()) {
@@ -3897,8 +3830,7 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public long getPlidFromPortletId(
-			long groupId, boolean privateLayout, String portletId)
+	public long getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException {
 
 		long plid = LayoutConstants.DEFAULT_PLID;
@@ -3907,8 +3839,6 @@ public class PortalImpl implements Portal {
 
 		sb.append(groupId);
 		sb.append(StringPool.SPACE);
-		sb.append(privateLayout);
-		sb.append(StringPool.SPACE);
 		sb.append(portletId);
 
 		String key = sb.toString();
@@ -3916,7 +3846,7 @@ public class PortalImpl implements Portal {
 		Long plidObj = _plidToPortletIdMap.get(key);
 
 		if (plidObj == null) {
-			plid = doGetPlidFromPortletId(groupId, privateLayout, portletId);
+			plid = doGetPlidFromPortletId(groupId, portletId);
 
 			if (plid != LayoutConstants.DEFAULT_PLID) {
 				_plidToPortletIdMap.put(key, plid);
@@ -3945,26 +3875,12 @@ public class PortalImpl implements Portal {
 			if (!validPlid) {
 				_plidToPortletIdMap.remove(key);
 
-				plid = doGetPlidFromPortletId(
-					groupId, privateLayout, portletId);
+				plid = doGetPlidFromPortletId(groupId, portletId);
 
 				if (plid != LayoutConstants.DEFAULT_PLID) {
 					_plidToPortletIdMap.put(key, plid);
 				}
 			}
-		}
-
-		return plid;
-	}
-
-	@Override
-	public long getPlidFromPortletId(long groupId, String portletId)
-		throws PortalException {
-
-		long plid = getPlidFromPortletId(groupId, false, portletId);
-
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			plid = getPlidFromPortletId(groupId, true, portletId);
 		}
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
@@ -4332,8 +4248,8 @@ public class PortalImpl implements Portal {
 
 	public LayoutQueryStringComposite
 		getPortletFriendlyURLMapperLayoutQueryStringComposite(
-			long groupId, boolean privateLayout, String url,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			long groupId, String url, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException {
 
 		boolean foundFriendlyURLMapper = false;
@@ -4465,7 +4381,7 @@ public class PortalImpl implements Portal {
 		}
 
 		Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-			groupId, privateLayout, friendlyURL);
+			groupId, friendlyURL);
 
 		return new LayoutQueryStringComposite(layout, friendlyURL, queryString);
 	}
@@ -4828,8 +4744,7 @@ public class PortalImpl implements Portal {
 
 					Layout liveGroupLayout =
 						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-								layout.getUuid(), liveGroup.getGroupId(),
-								layout.isPrivateLayout());
+							layout.getUuid(), liveGroup.getGroupId());
 
 					if ((liveGroupLayout != null) &&
 						liveGroupLayout.hasScopeGroup()) {
@@ -4902,8 +4817,7 @@ public class PortalImpl implements Portal {
 
 			Layout scopeLayout =
 				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					scopeLayoutUuid, layout.getGroupId(),
-					layout.isPrivateLayout());
+					scopeLayoutUuid, layout.getGroupId());
 
 			Group scopeGroup = scopeLayout.getScopeGroup();
 
@@ -5957,8 +5871,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getVirtualLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
@@ -6001,8 +5915,8 @@ public class PortalImpl implements Portal {
 		}
 
 		String actualURL = getActualURL(
-			group.getGroupId(), privateLayout, mainPath, layoutFriendlyURL,
-			params, requestContext);
+			group.getGroupId(), mainPath, layoutFriendlyURL, params,
+			requestContext);
 
 		return HttpUtil.addParameter(
 			HttpUtil.removeParameter(actualURL, "p_v_l_s_g_id"), "p_v_l_s_g_id",
@@ -6011,8 +5925,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public LayoutFriendlyURLComposite getVirtualLayoutFriendlyURLComposite(
-			boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException {
 
 		// Group friendly URL
@@ -6043,8 +5957,7 @@ public class PortalImpl implements Portal {
 
 		LayoutQueryStringComposite layoutQueryStringComposite =
 			getActualLayoutQueryStringComposite(
-				group.getGroupId(), privateLayout, layoutFriendlyURL, params,
-				requestContext);
+				group.getGroupId(), layoutFriendlyURL, params, requestContext);
 
 		return new LayoutFriendlyURLComposite(
 			layoutQueryStringComposite.getLayout(), layoutFriendlyURL);
@@ -6555,10 +6468,6 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public boolean isLayoutSitemapable(Layout layout) {
-		if (layout.isPrivateLayout()) {
-			return false;
-		}
-
 		LayoutType layoutType = layout.getLayoutType();
 
 		return layoutType.isSitemapable();
@@ -7550,7 +7459,7 @@ public class PortalImpl implements Portal {
 		if (portletActions) {
 			Group layoutGroup = layout.getGroup();
 
-			if (layout.isPrivateLayout() && !layoutGroup.isLayoutPrototype() &&
+			if (!layoutGroup.isLayoutPrototype() &&
 				!layoutGroup.isLayoutSetPrototype()) {
 
 				addGuestPermissions = false;
@@ -7629,8 +7538,7 @@ public class PortalImpl implements Portal {
 		return null;
 	}
 
-	protected long doGetPlidFromPortletId(
-			long groupId, boolean privateLayout, String portletId)
+	protected long doGetPlidFromPortletId(long groupId, String portletId)
 		throws PortalException {
 
 		long scopeGroupId = groupId;
@@ -7651,7 +7559,7 @@ public class PortalImpl implements Portal {
 		long plid = LayoutConstants.DEFAULT_PLID;
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
+			groupId, LayoutConstants.TYPE_PORTLET);
 
 		for (Layout layout : layouts) {
 			LayoutTypePortlet layoutTypePortlet =
@@ -7884,8 +7792,6 @@ public class PortalImpl implements Portal {
 
 		Group group = layoutSet.getGroup();
 
-		boolean privateLayoutSet = layoutSet.getPrivateLayout();
-
 		String portalURL = themeDisplay.getPortalURL();
 
 		boolean useGroupVirtualHostName = false;
@@ -7904,8 +7810,7 @@ public class PortalImpl implements Portal {
 				refererPlid);
 
 			if ((refererLayout != null) &&
-				((refererLayout.getGroupId() != group.getGroupId()) ||
-				 (refererLayout.isPrivateLayout() != privateLayoutSet))) {
+				(refererLayout.getGroupId() != group.getGroupId())) {
 
 				useGroupVirtualHostName = false;
 			}
@@ -7943,7 +7848,7 @@ public class PortalImpl implements Portal {
 			}
 			else {
 				LayoutSet curLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-					themeDisplay.getSiteGroupId(), privateLayoutSet);
+					themeDisplay.getSiteGroupId());
 
 				if (canonicalURL ||
 					((layoutSet.getLayoutSetId() !=
@@ -7985,19 +7890,7 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		String friendlyURL = null;
-
-		if (privateLayoutSet) {
-			if (group.isUser()) {
-				friendlyURL = _PRIVATE_USER_SERVLET_MAPPING;
-			}
-			else {
-				friendlyURL = _PRIVATE_GROUP_SERVLET_MAPPING;
-			}
-		}
-		else {
-			friendlyURL = _PUBLIC_GROUP_SERVLET_MAPPING;
-		}
+		String friendlyURL = _PUBLIC_GROUP_SERVLET_MAPPING;
 
 		StringBundler sb = new StringBundler(6);
 
@@ -8130,18 +8023,7 @@ public class PortalImpl implements Portal {
 
 		Group group = layout.getGroup();
 
-		if (layout.isPrivateLayout()) {
-			if (group.isUser()) {
-				sb.append(_PRIVATE_USER_SERVLET_MAPPING);
-			}
-			else {
-				sb.append(_PRIVATE_GROUP_SERVLET_MAPPING);
-			}
-		}
-		else {
-			sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
-		}
-
+		sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
 		sb.append(group.getFriendlyURL());
 		sb.append(layout.getFriendlyURL(themeDisplay.getLocale()));
 
@@ -8428,12 +8310,6 @@ public class PortalImpl implements Portal {
 
 	private static final String _LOCALHOST = "localhost";
 
-	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;
-
-	private static final String _PRIVATE_USER_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
-
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
 
@@ -8463,8 +8339,6 @@ public class PortalImpl implements Portal {
 	private final EditDiscussionAction _editDiscussionAction =
 		new EditDiscussionAction();
 	private final String _pathContext;
-	private final String _pathFriendlyURLPrivateGroup;
-	private final String _pathFriendlyURLPrivateUser;
 	private final String _pathFriendlyURLPublic;
 	private final String _pathImage;
 	private final String _pathMain;

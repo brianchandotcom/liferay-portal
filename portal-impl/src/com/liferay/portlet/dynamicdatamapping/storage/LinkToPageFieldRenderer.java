@@ -81,13 +81,11 @@ public class LinkToPageFieldRenderer extends BaseFieldRenderer {
 		}
 
 		long groupId = jsonObject.getLong("groupId");
-		boolean privateLayout = jsonObject.getBoolean("privateLayout");
 		long layoutId = jsonObject.getLong("layoutId");
 
 		try {
 			return LayoutServiceUtil.getLayoutName(
-				groupId, privateLayout, layoutId,
-				LanguageUtil.getLanguageId(locale));
+				groupId, layoutId, LanguageUtil.getLanguageId(locale));
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchLayoutException ||

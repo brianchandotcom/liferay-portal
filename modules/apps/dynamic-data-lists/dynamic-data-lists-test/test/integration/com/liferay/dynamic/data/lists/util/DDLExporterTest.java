@@ -269,13 +269,12 @@ public class DDLExporterTest {
 
 	protected String createLinkToPageDDMFormFieldValue() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), "Link to Page content", false);
+			_group.getGroupId(), "Link to Page content");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("groupId", layout.getGroupId());
 		jsonObject.put("layoutId", layout.getLayoutId());
-		jsonObject.put("privateLayout", layout.getPrivateLayout());
 
 		return jsonObject.toString();
 	}

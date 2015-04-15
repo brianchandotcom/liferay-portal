@@ -42,7 +42,7 @@ public interface GroupFinder {
 	public java.util.List<com.liferay.portal.model.Group> findByLiveGroups();
 
 	public java.util.List<com.liferay.portal.model.Group> findByNoLayouts(
-		long classNameId, boolean privateLayout, int start, int end);
+		long classNameId, int start, int end);
 
 	public java.util.List<com.liferay.portal.model.Group> findByNullFriendlyURL();
 

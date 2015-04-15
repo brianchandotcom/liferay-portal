@@ -116,10 +116,9 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 	}
 
 	protected File exportLayoutsAsFile(
-			long sourceGroupId, boolean privateLayout,
-			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			long remoteGroupId, Date startDate, Date endDate,
-			HttpPrincipal httpPrincipal)
+			long sourceGroupId, Map<Long, Boolean> layoutIdMap,
+			Map<String, String[]> parameterMap, long remoteGroupId,
+			Date startDate, Date endDate, HttpPrincipal httpPrincipal)
 		throws PortalException {
 
 		List<Layout> layouts = new ArrayList<>();
@@ -157,8 +156,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
 
 		return LayoutLocalServiceUtil.exportLayoutsAsFile(
-			sourceGroupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
+			sourceGroupId, layoutIds, parameterMap, startDate, endDate);
 	}
 
 	/**
@@ -175,12 +173,11 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 		while (parentLayoutId > 0) {
 			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
-				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
+				layout.getGroupId(), parentLayoutId);
 
 			try {
 				LayoutServiceHttp.getLayoutByUuidAndGroupId(
-					httpPrincipal, parentLayout.getUuid(), remoteGroupId,
-					parentLayout.getPrivateLayout());
+					httpPrincipal, parentLayout.getUuid(), remoteGroupId);
 
 				// If one parent is found, all others are assumed to exist
 
@@ -225,10 +222,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 				long sourceGroupId = MapUtil.getLong(
 					settingsMap, "sourceGroupId");
-				boolean privateLayout = MapUtil.getBoolean(
-					settingsMap, "privateLayout");
 
-				initThreadLocals(sourceGroupId, privateLayout);
+				initThreadLocals(sourceGroupId);
 
 				Map<Long, Boolean> layoutIdMap =
 					(Map<Long, Boolean>)settingsMap.get("layoutIdMap");
@@ -250,9 +245,9 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					"httpPrincipal");
 
 				file = exportLayoutsAsFile(
-					sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-					remoteGroupId, dateRange.getStartDate(),
-					dateRange.getEndDate(), httpPrincipal);
+					sourceGroupId, layoutIdMap, parameterMap, remoteGroupId,
+					dateRange.getStartDate(), dateRange.getEndDate(),
+					httpPrincipal);
 
 				String checksum = FileUtil.getMD5Checksum(file);
 
@@ -298,8 +293,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				markBackgroundTask(_backgroundTaskId, "exported");
 
 				StagingServiceHttp.publishStagingRequest(
-					httpPrincipal, stagingRequestId, privateLayout,
-					parameterMap);
+					httpPrincipal, stagingRequestId, parameterMap);
 			}
 			catch (IOException ioe) {
 				deleteTempLarOnFailure(file);

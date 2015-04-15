@@ -63,8 +63,6 @@ public class LayoutImportBackgroundTaskExecutor
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
 		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-		boolean privateLayout = MapUtil.getBoolean(
-			settingsMap, "privateLayout");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 
@@ -82,8 +80,7 @@ public class LayoutImportBackgroundTaskExecutor
 				TransactionHandlerUtil.invoke(
 					transactionAttribute,
 					new LayoutImportCallable(
-						file, parameterMap, privateLayout, targetGroupId,
-						userId));
+						file, parameterMap, targetGroupId, userId));
 			}
 			catch (Throwable t) {
 				if (_log.isDebugEnabled()) {
@@ -109,12 +106,11 @@ public class LayoutImportBackgroundTaskExecutor
 	private class LayoutImportCallable implements Callable<Void> {
 
 		public LayoutImportCallable(
-			File file, Map<String, String[]> parameterMap,
-			boolean privateLayout, long targetGroupId, long userId) {
+			File file, Map<String, String[]> parameterMap, long targetGroupId,
+			long userId) {
 
 			_file = file;
 			_parameterMap = parameterMap;
-			_privateLayout = privateLayout;
 			_targetGroupId = targetGroupId;
 			_userId = userId;
 		}
@@ -122,17 +118,16 @@ public class LayoutImportBackgroundTaskExecutor
 		@Override
 		public Void call() throws PortalException {
 			LayoutLocalServiceUtil.importLayoutsDataDeletions(
-				_userId, _targetGroupId, _privateLayout, _parameterMap, _file);
+				_userId, _targetGroupId, _parameterMap, _file);
 
 			LayoutLocalServiceUtil.importLayouts(
-				_userId, _targetGroupId, _privateLayout, _parameterMap, _file);
+				_userId, _targetGroupId, _parameterMap, _file);
 
 			return null;
 		}
 
 		private final File _file;
 		private final Map<String, String[]> _parameterMap;
-		private final boolean _privateLayout;
 		private final long _targetGroupId;
 		private final long _userId;
 

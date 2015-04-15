@@ -43,7 +43,6 @@ public class LayoutSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setPrivateLayout(model.getPrivateLayout());
 		soapModel.setLayoutId(model.getLayoutId());
 		soapModel.setParentLayoutId(model.getParentLayoutId());
 		soapModel.setName(model.getName());
@@ -187,18 +186,6 @@ public class LayoutSoap implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-	}
-
-	public boolean getPrivateLayout() {
-		return _privateLayout;
-	}
-
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	public void setPrivateLayout(boolean privateLayout) {
-		_privateLayout = privateLayout;
 	}
 
 	public long getLayoutId() {
@@ -387,7 +374,6 @@ public class LayoutSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private boolean _privateLayout;
 	private long _layoutId;
 	private long _parentLayoutId;
 	private String _name;

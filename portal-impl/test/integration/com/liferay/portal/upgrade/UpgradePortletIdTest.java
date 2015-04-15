@@ -113,7 +113,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 	protected Layout addLayout() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		return LayoutTestUtil.addLayout(group, false);
+		return LayoutTestUtil.addLayout(group);
 	}
 
 	protected void addPortletPreferences(Layout layout, String portletId)
@@ -163,7 +163,7 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 		}
 
 		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getGroupId(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
 		doUpgrade();

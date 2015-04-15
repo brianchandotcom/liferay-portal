@@ -146,15 +146,13 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			if (Validator.isNotNull(layoutUuid)) {
 				Layout layout =
 					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						layoutUuid, portletDataContext.getScopeGroupId(),
-						portletDataContext.isPrivateLayout());
+						layoutUuid, portletDataContext.getScopeGroupId());
 
 				classPK = layout.getPrimaryKey();
 			}
 			else {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-					portletDataContext.getScopeGroupId(),
-					portletDataContext.isPrivateLayout());
+					portletDataContext.getScopeGroupId());
 
 				classPK = layoutSet.getLayoutSetId();
 			}

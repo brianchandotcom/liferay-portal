@@ -85,8 +85,8 @@ public class JournalContentPortletLayoutListener
 			}
 
 			JournalContentSearchLocalServiceUtil.updateContentSearch(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, articleId, true);
+				layout.getGroupId(), layout.getLayoutId(), portletId, articleId,
+				true);
 		}
 		catch (Exception e) {
 			throw new PortletLayoutListenerException(e);
@@ -124,8 +124,8 @@ public class JournalContentPortletLayoutListener
 			}
 
 			JournalContentSearchLocalServiceUtil.deleteArticleContentSearch(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, articleId);
+				layout.getGroupId(), layout.getLayoutId(), portletId,
+				articleId);
 
 			String[] runtimePortletIds = getRuntimePortletIds(
 				layout.getCompanyId(), layout.getGroupId(), articleId);
@@ -159,15 +159,14 @@ public class JournalContentPortletLayoutListener
 
 			if (Validator.isNull(articleId)) {
 				JournalContentSearchLocalServiceUtil.deleteArticleContentSearch(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), portletId);
+					layout.getGroupId(), layout.getLayoutId(), portletId);
 
 				return;
 			}
 
 			JournalContentSearchLocalServiceUtil.updateContentSearch(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, articleId, true);
+				layout.getGroupId(), layout.getLayoutId(), portletId, articleId,
+				true);
 		}
 		catch (Exception e) {
 			throw new PortletLayoutListenerException(e);

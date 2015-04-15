@@ -310,23 +310,22 @@ public class PortalUtil {
 
 	public static LayoutQueryStringComposite
 		getActualLayoutQueryStringComposite(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			long groupId, String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException {
 
 		return getPortal().getActualLayoutQueryStringComposite(
-			groupId, privateLayout, friendlyURL, params, requestContext);
+			groupId, friendlyURL, params, requestContext);
 	}
 
 	public static String getActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
 		return getPortal().getActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
+			groupId, mainPath, friendlyURL, params, requestContext);
 	}
 
 	/**
@@ -1109,22 +1108,20 @@ public class PortalUtil {
 	}
 
 	public static String getJournalArticleActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
 		return getPortal().getJournalArticleActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
+			groupId, mainPath, friendlyURL, params, requestContext);
 	}
 
 	public static Layout getJournalArticleLayout(
-			long groupId, boolean privateLayout, String friendlyURL)
+			long groupId, String friendlyURL)
 		throws PortalException {
 
-		return getPortal().getJournalArticleLayout(
-			groupId, privateLayout, friendlyURL);
+		return getPortal().getJournalArticleLayout(groupId, friendlyURL);
 	}
 
 	public static String getJsSafePortletId(String portletId) {
@@ -1140,23 +1137,20 @@ public class PortalUtil {
 	}
 
 	public static String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL)
+			long groupId, String mainPath, String friendlyURL)
 		throws PortalException {
 
-		return getPortal().getLayoutActualURL(
-			groupId, privateLayout, mainPath, friendlyURL);
+		return getPortal().getLayoutActualURL(groupId, mainPath, friendlyURL);
 	}
 
 	public static String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
 		return getPortal().getLayoutActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
+			groupId, mainPath, friendlyURL, params, requestContext);
 	}
 
 	public static String getLayoutFriendlyURL(
@@ -1174,12 +1168,12 @@ public class PortalUtil {
 	}
 
 	public static LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			long groupId, String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException {
 
 		return getPortal().getLayoutFriendlyURLComposite(
-			groupId, privateLayout, friendlyURL, params, requestContext);
+			groupId, friendlyURL, params, requestContext);
 	}
 
 	public static String getLayoutFullURL(
@@ -1374,14 +1368,6 @@ public class PortalUtil {
 		return getPortal().getPathContext(contextPath);
 	}
 
-	public static String getPathFriendlyURLPrivateGroup() {
-		return getPortal().getPathFriendlyURLPrivateGroup();
-	}
-
-	public static String getPathFriendlyURLPrivateUser() {
-		return getPortal().getPathFriendlyURLPrivateUser();
-	}
-
 	public static String getPathFriendlyURLPublic() {
 		return getPortal().getPathFriendlyURLPublic();
 	}
@@ -1406,14 +1392,6 @@ public class PortalUtil {
 		long companyId, String friendlyURL) {
 
 		return getPortal().getPlidFromFriendlyURL(companyId, friendlyURL);
-	}
-
-	public static long getPlidFromPortletId(
-			long groupId, boolean privateLayout, String portletId)
-		throws PortalException {
-
-		return getPortal().getPlidFromPortletId(
-			groupId, privateLayout, portletId);
 	}
 
 	public static long getPlidFromPortletId(long groupId, String portletId)
@@ -2034,24 +2012,23 @@ public class PortalUtil {
 	}
 
 	public static String getVirtualLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
 		return getPortal().getVirtualLayoutActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, params,
-			requestContext);
+			groupId, mainPath, friendlyURL, params, requestContext);
 	}
 
 	public static LayoutFriendlyURLComposite
 		getVirtualLayoutFriendlyURLComposite(
-			boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException {
 
 		return getPortal().getVirtualLayoutFriendlyURLComposite(
-			privateLayout, friendlyURL, params, requestContext);
+			friendlyURL, params, requestContext);
 	}
 
 	public static String getWidgetURL(

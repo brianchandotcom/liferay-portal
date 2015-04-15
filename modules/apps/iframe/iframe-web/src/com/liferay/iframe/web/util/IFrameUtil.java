@@ -92,10 +92,6 @@ public class IFrameUtil {
 			return true;
 		}
 
-		if (layout.isPrivateLayout() && layout.getGroup().isUser()) {
-			return true;
-		}
-
 		try {
 			Role role = RoleLocalServiceUtil.getRole(
 				themeDisplay.getCompanyId(), roleName);

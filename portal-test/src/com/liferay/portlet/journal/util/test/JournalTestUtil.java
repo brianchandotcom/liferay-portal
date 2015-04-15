@@ -864,26 +864,10 @@ public class JournalTestUtil {
 	private static String _getFeedFriendlyURL(long groupId, long plid)
 		throws Exception {
 
-		String friendlyURL = StringPool.BLANK;
-
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		if (layout.isPrivateLayout()) {
-			if (group.isUser()) {
-				friendlyURL = friendlyURL.concat(
-					PortalUtil.getPathFriendlyURLPrivateUser());
-			}
-			else {
-				friendlyURL = friendlyURL.concat(
-					PortalUtil.getPathFriendlyURLPrivateGroup());
-			}
-		}
-		else {
-			friendlyURL = friendlyURL.concat(
-				PortalUtil.getPathFriendlyURLPublic());
-		}
-
+		String friendlyURL = PortalUtil.getPathFriendlyURLPublic();
 		friendlyURL = friendlyURL.concat(group.getFriendlyURL());
 		friendlyURL = friendlyURL.concat(layout.getFriendlyURL());
 

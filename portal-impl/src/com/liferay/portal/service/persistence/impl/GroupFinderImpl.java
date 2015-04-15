@@ -381,9 +381,7 @@ public class GroupFinderImpl
 	}
 
 	@Override
-	public List<Group> findByNoLayouts(
-		long classNameId, boolean privateLayout, int start, int end) {
-
+	public List<Group> findByNoLayouts(long classNameId, int start, int end) {
 		Session session = null;
 
 		try {
@@ -398,7 +396,6 @@ public class GroupFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(classNameId);
-			qPos.add(privateLayout);
 
 			return q.list(true);
 		}

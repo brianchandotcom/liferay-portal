@@ -55,9 +55,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public int getChildrenWithLayoutsCount(boolean site);
 
-	public long getDefaultPrivatePlid();
-
-	public long getDefaultPublicPlid();
+	public long getDefaultPlid();
 
 	public java.util.List<com.liferay.portal.model.Group> getDescendants(
 		boolean site);
@@ -71,17 +69,16 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 
-	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay,
-		boolean privateLayout);
-
 	public java.lang.String getIconCssClass();
 
 	public java.lang.String getIconURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 
-	public java.lang.String getLayoutRootNodeName(boolean privateLayout,
-		java.util.Locale locale);
+	public java.lang.String getLayoutRootNodeName(java.util.Locale locale);
+
+	public com.liferay.portal.model.LayoutSet getLayoutSet();
+
+	public int getLayoutsPageCount();
 
 	public com.liferay.portal.model.Group getLiveGroup();
 
@@ -95,16 +92,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getParentLiveGroupTypeSettingsProperties();
 
-	public java.lang.String getPathFriendlyURL(boolean privateLayout,
+	public java.lang.String getPathFriendlyURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
-
-	public com.liferay.portal.model.LayoutSet getPrivateLayoutSet();
-
-	public int getPrivateLayoutsPageCount();
-
-	public com.liferay.portal.model.LayoutSet getPublicLayoutSet();
-
-	public int getPublicLayoutsPageCount();
 
 	public long getRemoteLiveGroupId();
 
@@ -128,11 +117,9 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean hasAncestor(long groupId);
 
+	public boolean hasLayouts();
+
 	public boolean hasLocalOrRemoteStagingGroup();
-
-	public boolean hasPrivateLayouts();
-
-	public boolean hasPublicLayouts();
 
 	public boolean hasRemoteStagingGroup();
 
@@ -175,8 +162,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public boolean isRoot();
 
 	public boolean isShowSite(
-		com.liferay.portal.security.permission.PermissionChecker permissionChecker,
-		boolean privateSite)
+		com.liferay.portal.security.permission.PermissionChecker permissionChecker)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isStaged();

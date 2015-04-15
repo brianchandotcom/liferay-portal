@@ -412,12 +412,6 @@ public class PortletRequestModel implements Serializable {
 			themeDisplayModelMap.put(
 				"path-context", _themeDisplayModel.getPathContext());
 			themeDisplayModelMap.put(
-				"path-friendly-url-private-group",
-				_themeDisplayModel.getPathFriendlyURLPrivateGroup());
-			themeDisplayModelMap.put(
-				"path-friendly-url-private-user",
-				_themeDisplayModel.getPathFriendlyURLPrivateUser());
-			themeDisplayModelMap.put(
 				"path-friendly-url-public",
 				_themeDisplayModel.getPathFriendlyURLPublic());
 			themeDisplayModelMap.put(
@@ -570,12 +564,6 @@ public class PortletRequestModel implements Serializable {
 				"locale", _themeDisplayModel.getLocale());
 			themeDisplayElement.addElement(
 				"path-context", _themeDisplayModel.getPathContext());
-			themeDisplayElement.addElement(
-				"path-friendly-url-private-group",
-				_themeDisplayModel.getPathFriendlyURLPrivateGroup());
-			themeDisplayElement.addElement(
-				"path-friendly-url-private-user",
-				_themeDisplayModel.getPathFriendlyURLPrivateUser());
 			themeDisplayElement.addElement(
 				"path-friendly-url-public",
 				_themeDisplayModel.getPathFriendlyURLPublic());

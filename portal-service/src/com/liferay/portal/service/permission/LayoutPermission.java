@@ -35,8 +35,8 @@ public interface LayoutPermission {
 		throws PortalException;
 
 	public void check(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String actionId)
+			PermissionChecker permissionChecker, long groupId, long layoutId,
+			String actionId)
 		throws PortalException;
 
 	public void check(
@@ -73,19 +73,19 @@ public interface LayoutPermission {
 			String controlPanelCategory, String actionId)
 		throws PortalException;
 
-	public boolean contains(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String actionId)
-		throws PortalException;
-
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
-	 *             long, boolean, long, String)}
+	 *             long, long, String)}
 	 */
 	@Deprecated
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId,
 			boolean privateLayout, long layoutId, String controlPanelCategory,
+			String actionId)
+		throws PortalException;
+
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, long layoutId,
 			String actionId)
 		throws PortalException;
 

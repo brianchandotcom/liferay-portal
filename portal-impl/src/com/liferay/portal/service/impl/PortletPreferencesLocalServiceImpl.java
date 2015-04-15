@@ -190,10 +190,10 @@ public class PortletPreferencesLocalServiceImpl
 	@Override
 	public List<PortletPreferences> getPortletPreferences(
 		long companyId, long groupId, long ownerId, int ownerType,
-		String portletId, boolean privateLayout) {
+		String portletId) {
 
-		return portletPreferencesFinder.findByC_G_O_O_P_P(
-			companyId, groupId, ownerId, ownerType, portletId, privateLayout);
+		return portletPreferencesFinder.findByC_G_O_O_P(
+			companyId, groupId, ownerId, ownerType, portletId);
 	}
 
 	@Override

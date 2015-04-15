@@ -41,14 +41,13 @@ public class LayoutSetBranchServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutSetBranchServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.model.LayoutSetBranch addLayoutSetBranch(
-		long groupId, boolean privateLayout, java.lang.String name,
-		java.lang.String description, boolean master,
-		long copyLayoutSetBranchId,
+		long groupId, java.lang.String name, java.lang.String description,
+		boolean master, long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addLayoutSetBranch(groupId, privateLayout, name,
-			description, master, copyLayoutSetBranchId, serviceContext);
+				   .addLayoutSetBranch(groupId, name, description, master,
+			copyLayoutSetBranchId, serviceContext);
 	}
 
 	public static void deleteLayoutSetBranch(long layoutSetBranchId)
@@ -66,8 +65,8 @@ public class LayoutSetBranchServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.LayoutSetBranch> getLayoutSetBranches(
-		long groupId, boolean privateLayout) {
-		return getService().getLayoutSetBranches(groupId, privateLayout);
+		long groupId) {
+		return getService().getLayoutSetBranches(groupId);
 	}
 
 	public static com.liferay.portal.model.LayoutSetBranch mergeLayoutSetBranch(

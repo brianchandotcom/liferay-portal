@@ -119,14 +119,10 @@ User selUser = (User)request.getAttribute("user.selUser");
 				<%
 				long logoId = 0;
 
-				LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, false);
-				LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, true);
+				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId);
 
-				if (publicLayoutSet.getLogoId() > 0) {
-					logoId = publicLayoutSet.getLogoId();
-				}
-				else if (privateLayoutSet.getLogoId() > 0) {
-					logoId = privateLayoutSet.getLogoId();
+				if (layoutSet.getLogoId() > 0) {
+					logoId = layoutSet.getLogoId();
 				}
 				%>
 

@@ -38,7 +38,7 @@ String redirect = null;
 LayoutSet layoutSet = (LayoutSet)request.getAttribute(WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
 if (layoutSet != null) {
-	long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+	long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(layoutSet.getGroupId());
 
 	if (defaultPlid != LayoutConstants.DEFAULT_PLID) {
 		Layout layout = LayoutLocalServiceUtil.getLayout(defaultPlid);

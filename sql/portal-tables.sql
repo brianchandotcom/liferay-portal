@@ -909,7 +909,6 @@ create table JournalContentSearch (
 	contentSearchId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
-	privateLayout BOOLEAN,
 	layoutId LONG,
 	portletId VARCHAR(200) null,
 	articleId VARCHAR(75) null
@@ -976,7 +975,6 @@ create table Layout (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	privateLayout BOOLEAN,
 	layoutId LONG,
 	parentLayoutId LONG,
 	name STRING null,
@@ -1025,7 +1023,6 @@ create table LayoutFriendlyURL (
 	createDate DATE null,
 	modifiedDate DATE null,
 	plid LONG,
-	privateLayout BOOLEAN,
 	friendlyURL VARCHAR(255) null,
 	languageId VARCHAR(75) null
 );
@@ -1060,7 +1057,6 @@ create table LayoutRevision (
 	head BOOLEAN,
 	major BOOLEAN,
 	plid LONG,
-	privateLayout BOOLEAN,
 	name STRING null,
 	title STRING null,
 	description STRING null,
@@ -1086,7 +1082,6 @@ create table LayoutSet (
 	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
-	privateLayout BOOLEAN,
 	logoId LONG,
 	themeId VARCHAR(75) null,
 	colorSchemeId VARCHAR(75) null,
@@ -1108,7 +1103,6 @@ create table LayoutSetBranch (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	privateLayout BOOLEAN,
 	name VARCHAR(75) null,
 	description STRING null,
 	master BOOLEAN,

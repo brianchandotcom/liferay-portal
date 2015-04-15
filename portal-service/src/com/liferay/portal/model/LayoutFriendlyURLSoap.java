@@ -43,7 +43,6 @@ public class LayoutFriendlyURLSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setPlid(model.getPlid());
-		soapModel.setPrivateLayout(model.getPrivateLayout());
 		soapModel.setFriendlyURL(model.getFriendlyURL());
 		soapModel.setLanguageId(model.getLanguageId());
 
@@ -181,18 +180,6 @@ public class LayoutFriendlyURLSoap implements Serializable {
 		_plid = plid;
 	}
 
-	public boolean getPrivateLayout() {
-		return _privateLayout;
-	}
-
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	public void setPrivateLayout(boolean privateLayout) {
-		_privateLayout = privateLayout;
-	}
-
 	public String getFriendlyURL() {
 		return _friendlyURL;
 	}
@@ -219,7 +206,6 @@ public class LayoutFriendlyURLSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _plid;
-	private boolean _privateLayout;
 	private String _friendlyURL;
 	private String _languageId;
 }

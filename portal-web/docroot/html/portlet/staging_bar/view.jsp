@@ -46,33 +46,33 @@ if (layout != null) {
 	String liveFriendlyURL = null;
 
 	if (liveGroup != null) {
-		liveLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
+		liveLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId());
 
 		if (liveLayout != null) {
 			liveFriendlyURL = PortalUtil.getLayoutFriendlyURL(liveLayout, themeDisplay);
 		}
-		else if ((layout.isPrivateLayout() && (liveGroup.getPrivateLayoutsPageCount() > 0)) || (layout.isPublicLayout() && (liveGroup.getPublicLayoutsPageCount() > 0))) {
-			liveFriendlyURL = liveGroup.getDisplayURL(themeDisplay, layout.isPrivateLayout());
+		else if (layout.isPublicLayout() && liveGroup.hasLayouts()) {
+			liveFriendlyURL = liveGroup.getDisplayURL(themeDisplay);
 		}
 	}
 
 	String stagingFriendlyURL = null;
 
 	if (stagingGroup != null) {
-		Layout stagingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layout.getUuid(), stagingGroup.getGroupId(), layout.isPrivateLayout());
+		Layout stagingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layout.getUuid(), stagingGroup.getGroupId());
 
 		if (stagingLayout != null) {
 			stagingFriendlyURL = PortalUtil.getLayoutFriendlyURL(stagingLayout, themeDisplay);
 		}
 		else {
-			stagingFriendlyURL = stagingGroup.getDisplayURL(themeDisplay, layout.isPrivateLayout());
+			stagingFriendlyURL = stagingGroup.getDisplayURL(themeDisplay);
 		}
 	}
 
 	List<LayoutSetBranch> layoutSetBranches = null;
 
 	if (group.isStagingGroup() || group.isStagedRemotely()) {
-		layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), layout.isPrivateLayout());
+		layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId());
 	}
 	%>
 
@@ -87,7 +87,6 @@ if (layout != null) {
 									<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
 
 										<%
-										request.setAttribute(WebKeys.PRIVATE_LAYOUT, privateLayout);
 										request.setAttribute("view.jsp-layoutBranch", layoutBranch);
 										request.setAttribute("view.jsp-layoutRevision", layoutRevision);
 										request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
@@ -125,7 +124,6 @@ if (layout != null) {
 												<c:otherwise>
 
 													<%
-													request.setAttribute("privateLayout", privateLayout);
 													request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
 													%>
 
@@ -160,7 +158,7 @@ if (layout != null) {
 					boolean secureConnection = GetterUtil.getBoolean(typeSettingsProperties.getProperty("secureConnection"));
 					long remoteGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("remoteGroupId"));
 
-					String remoteURL = StagingUtil.buildRemoteURL(remoteAddress, remotePort, remotePathContext, secureConnection, remoteGroupId, layout.isPrivateLayout());
+					String remoteURL = StagingUtil.buildRemoteURL(remoteAddress, remotePort, remotePathContext, secureConnection, remoteGroupId);
 					%>
 
 					<aui:nav-item cssClass="remote-live-link" href="<%= remoteURL %>" iconCssClass="icon-external-link-sign" label="go-to-remote-live" />

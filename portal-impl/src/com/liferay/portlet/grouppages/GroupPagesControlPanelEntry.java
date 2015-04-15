@@ -61,14 +61,11 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker)
 		throws Exception {
 
-		if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED &&
-			!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
-
+		if (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
 			return true;
 		}
 
-		if ((PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
-			 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) &&
+		if (PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED &&
 			!RoleLocalServiceUtil.hasUserRole(
 				permissionChecker.getUserId(), permissionChecker.getCompanyId(),
 				RoleConstants.POWER_USER, true)) {

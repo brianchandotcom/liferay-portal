@@ -35,10 +35,6 @@ public class ThemeDisplayModel {
 		_languageId = themeDisplay.getLanguageId();
 		_locale = themeDisplay.getLocale();
 		_pathContext = themeDisplay.getPathContext();
-		_pathFriendlyURLPrivateGroup =
-			themeDisplay.getPathFriendlyURLPrivateGroup();
-		_pathFriendlyURLPrivateUser =
-			themeDisplay.getPathFriendlyURLPrivateUser();
 		_pathFriendlyURLPublic = themeDisplay.getPathFriendlyURLPublic();
 		_pathImage = themeDisplay.getPathImage();
 		_pathMain = themeDisplay.getPathMain();
@@ -94,14 +90,6 @@ public class ThemeDisplayModel {
 
 	public String getPathContext() {
 		return _pathContext;
-	}
-
-	public String getPathFriendlyURLPrivateGroup() {
-		return _pathFriendlyURLPrivateGroup;
-	}
-
-	public String getPathFriendlyURLPrivateUser() {
-		return _pathFriendlyURLPrivateUser;
 	}
 
 	public String getPathFriendlyURLPublic() {
@@ -172,8 +160,6 @@ public class ThemeDisplayModel {
 	private final String _languageId;
 	private final Locale _locale;
 	private final String _pathContext;
-	private final String _pathFriendlyURLPrivateGroup;
-	private final String _pathFriendlyURLPrivateUser;
 	private final String _pathFriendlyURLPublic;
 	private final String _pathImage;
 	private final String _pathMain;

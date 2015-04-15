@@ -75,8 +75,6 @@ scopeURL.setParameter("redirect", redirect);
 scopeURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 scopeURL.setParameter("portletResource", portletResource);
 
-int pos = 0;
-
 String tabs1Names = StringPool.BLANK;
 String[] tabs1URLs = new String[0];
 

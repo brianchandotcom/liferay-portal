@@ -239,17 +239,15 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the layout matching the UUID, group, and privacy.
+	 * Returns the layout matching the UUID and group.
 	 *
 	 * @param uuid the layout's UUID
 	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchLayoutByUuidAndGroupId(String uuid, long groupId,
-		boolean privateLayout) {
-		return layoutPersistence.fetchByUUID_G_P(uuid, groupId, privateLayout);
+	public Layout fetchLayoutByUuidAndGroupId(String uuid, long groupId) {
+		return layoutPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -387,18 +385,17 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the layout matching the UUID, group, and privacy.
+	 * Returns the layout matching the UUID and group.
 	 *
 	 * @param uuid the layout's UUID
 	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
 	 * @return the matching layout
 	 * @throws PortalException if a matching layout could not be found
 	 */
 	@Override
-	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId,
-		boolean privateLayout) throws PortalException {
-		return layoutPersistence.findByUUID_G_P(uuid, groupId, privateLayout);
+	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException {
+		return layoutPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

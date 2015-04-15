@@ -96,11 +96,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 		long plid = LayoutConstants.DEFAULT_PLID;
 
 		if (category.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-			plid = group.getDefaultPublicPlid();
-
-			if (plid == LayoutConstants.DEFAULT_PLID) {
-				plid = group.getDefaultPrivatePlid();
-			}
+			plid = group.getDefaultPlid();
 		}
 
 		return plid;

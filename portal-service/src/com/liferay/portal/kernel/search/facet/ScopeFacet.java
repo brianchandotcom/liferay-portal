@@ -55,19 +55,10 @@ public class ScopeFacet extends MultiValueFacet {
 
 			groupIds.add(groupId);
 
-			List<Layout> publicLayouts =
-				LayoutLocalServiceUtil.getScopeGroupLayouts(groupId, false);
+			List<Layout> layouts = LayoutLocalServiceUtil.getScopeGroupLayouts(
+				groupId);
 
-			for (Layout layout :publicLayouts) {
-				Group group = layout.getScopeGroup();
-
-				groupIds.add(group.getGroupId());
-			}
-
-			List<Layout> privateLayouts =
-				LayoutLocalServiceUtil.getScopeGroupLayouts(groupId, true);
-
-			for (Layout layout : privateLayouts) {
+			for (Layout layout : layouts) {
 				Group group = layout.getScopeGroup();
 
 				groupIds.add(group.getGroupId());

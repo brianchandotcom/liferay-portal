@@ -237,10 +237,10 @@ public class PortletPreferencesFactoryUtil {
 
 	public static Map<Long, PortletPreferences> getPortletSetupMap(
 		long companyId, long groupId, long ownerId, int ownerType,
-		String portletId, boolean privateLayout) {
+		String portletId) {
 
 		return getPortletPreferencesFactory().getPortletSetupMap(
-			companyId, groupId, ownerId, ownerType, portletId, privateLayout);
+			companyId, groupId, ownerId, ownerType, portletId);
 	}
 
 	public static PortletPreferences getPreferences(

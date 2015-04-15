@@ -42,7 +42,6 @@ public class LayoutSetBranchSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setPrivateLayout(model.getPrivateLayout());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setMaster(model.getMaster());
@@ -173,18 +172,6 @@ public class LayoutSetBranchSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public boolean getPrivateLayout() {
-		return _privateLayout;
-	}
-
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	public void setPrivateLayout(boolean privateLayout) {
-		_privateLayout = privateLayout;
-	}
-
 	public String getName() {
 		return _name;
 	}
@@ -298,7 +285,6 @@ public class LayoutSetBranchSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private boolean _privateLayout;
 	private String _name;
 	private String _description;
 	private boolean _master;

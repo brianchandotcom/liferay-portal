@@ -280,16 +280,14 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 	var applicationAdapter = $('#<portlet:namespace />customJspServletContextName');
 
 	if (applicationAdapter.length) {
-		var publicPages = $('#<portlet:namespace />publicLayoutSetPrototypeId');
-		var privatePages = $('#<portlet:namespace />privateLayoutSetPrototypeId');
+		var pages = $('#<portlet:namespace />layoutSetPrototypeId');
 
 		var toggleCompatibleSiteTemplates = function(event) {
 			var siteTemplate = applicationAdapter.val();
 
 			var options = $();
 
-			options = options.add(publicPages.find('option[data-servletContextName]'));
-			options = options.add(privatePages.find('option[data-servletContextName]'));
+			options = options.add(pages.find('option[data-servletContextName]'));
 
 			options.prop('disabled', false);
 

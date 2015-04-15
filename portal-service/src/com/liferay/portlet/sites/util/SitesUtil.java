@@ -209,10 +209,8 @@ public class SitesUtil {
 		return getSites().isContentSharingWithChildrenEnabled(group);
 	}
 
-	public static boolean isFirstLayout(
-		long groupId, boolean privateLayout, long layoutId) {
-
-		return getSites().isFirstLayout(groupId, privateLayout, layoutId);
+	public static boolean isFirstLayout(long groupId, long layoutId) {
+		return getSites().isFirstLayout(groupId, layoutId);
 	}
 
 	public static boolean isLayoutDeleteable(Layout layout) {
@@ -328,16 +326,12 @@ public class SitesUtil {
 	}
 
 	public static void updateLayoutSetPrototypesLinks(
-			Group group, long publicLayoutSetPrototypeId,
-			long privateLayoutSetPrototypeId,
-			boolean publicLayoutSetPrototypeLinkEnabled,
-			boolean privateLayoutSetPrototypeLinkEnabled)
+			Group group, long layoutSetPrototypeId,
+			boolean layoutSetPrototypeLinkEnabled)
 		throws Exception {
 
 		getSites().updateLayoutSetPrototypesLinks(
-			group, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId,
-			publicLayoutSetPrototypeLinkEnabled,
-			privateLayoutSetPrototypeLinkEnabled);
+			group, layoutSetPrototypeId, layoutSetPrototypeLinkEnabled);
 	}
 
 	public void setSites(Sites sites) {

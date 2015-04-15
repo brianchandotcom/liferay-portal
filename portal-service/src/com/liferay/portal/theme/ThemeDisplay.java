@@ -512,26 +512,6 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * Returns the URL for the site's private layout set. This method typically
-	 * returns <code>/group</code>.
-	 *
-	 * @return the URL for the site's private layout set
-	 */
-	public String getPathFriendlyURLPrivateGroup() {
-		return _pathFriendlyURLPrivateGroup;
-	}
-
-	/**
-	 * Returns the URL for the user's private page set. This method typically
-	 * returns <code>/user</code>.
-	 *
-	 * @return the URL for the user's private page set
-	 */
-	public String getPathFriendlyURLPrivateUser() {
-		return _pathFriendlyURLPrivateUser;
-	}
-
-	/**
 	 * Returns the URL for the site's public page set. This method typically
 	 * returns <code>/web</code>.
 	 *
@@ -1510,18 +1490,6 @@ public class ThemeDisplay
 		_pathFlash = pathFlash;
 	}
 
-	public void setPathFriendlyURLPrivateGroup(
-		String pathFriendlyURLPrivateGroup) {
-
-		_pathFriendlyURLPrivateGroup = pathFriendlyURLPrivateGroup;
-	}
-
-	public void setPathFriendlyURLPrivateUser(
-		String pathFriendlyURLPrivateUser) {
-
-		_pathFriendlyURLPrivateUser = pathFriendlyURLPrivateUser;
-	}
-
 	public void setPathFriendlyURLPublic(String pathFriendlyURLPublic) {
 		_pathFriendlyURLPublic = pathFriendlyURLPublic;
 	}
@@ -1935,8 +1903,6 @@ public class ThemeDisplay
 	private String _pathColorSchemeImages = StringPool.BLANK;
 	private String _pathContext = StringPool.BLANK;
 	private String _pathFlash = StringPool.BLANK;
-	private String _pathFriendlyURLPrivateGroup = StringPool.BLANK;
-	private String _pathFriendlyURLPrivateUser = StringPool.BLANK;
 	private String _pathFriendlyURLPublic = StringPool.BLANK;
 	private String _pathImage = StringPool.BLANK;
 	private String _pathJavaScript = StringPool.BLANK;

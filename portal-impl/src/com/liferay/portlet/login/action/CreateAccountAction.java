@@ -188,7 +188,7 @@ public class CreateAccountAction extends PortletAction {
 
 		try {
 			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-				themeDisplay.getScopeGroupId(), false,
+				themeDisplay.getScopeGroupId(),
 				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
 
 			String redirect = PortalUtil.getLayoutURL(layout, themeDisplay);

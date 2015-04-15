@@ -35,7 +35,7 @@ if (!layout.isTypeControlPanel()) {
 				targetLayout = LayoutLocalServiceUtil.getLayout(liveGroup.getClassPK());
 			}
 			else {
-				targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(exportableLayout.getUuid(), liveGroup.getGroupId(), exportableLayout.isPrivateLayout());
+				targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(exportableLayout.getUuid(), liveGroup.getGroupId());
 			}
 		}
 		catch (NoSuchLayoutException nsle) {
@@ -112,7 +112,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 						<%
 						PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
 
-						PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, exportableLayout.getPlid(), false);
+						PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, exportableLayout.getPlid());
 						%>
 
 						<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
@@ -171,7 +171,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 						<c:if test="<%= !portletDataHandler.isDisplayPortlet() %>">
 
 							<%
-							DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, themeDisplay.getScopeGroupId(), false, exportableLayout.getPlid(), selPortlet.getPortletId(), ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
+							DateRange dateRange = ExportImportDateUtil.getDateRange(renderRequest, themeDisplay.getScopeGroupId(), exportableLayout.getPlid(), selPortlet.getPortletId(), ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
 
 							Date startDate = dateRange.getStartDate();
 							Date endDate = dateRange.getEndDate();

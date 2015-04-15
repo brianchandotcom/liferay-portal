@@ -57,7 +57,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("logoId", getLogoId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
@@ -109,12 +108,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		Long logoId = (Long)attributes.get("logoId");
@@ -394,16 +387,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	/**
-	* Returns the private layout of this layout set.
-	*
-	* @return the private layout of this layout set
-	*/
-	@Override
-	public boolean getPrivateLayout() {
-		return _layoutSet.getPrivateLayout();
-	}
-
-	/**
 	* Returns the settings of this layout set.
 	*
 	* @return the settings of this layout set
@@ -528,16 +511,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	@Override
 	public boolean isNew() {
 		return _layoutSet.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this layout set is private layout.
-	*
-	* @return <code>true</code> if this layout set is private layout; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPrivateLayout() {
-		return _layoutSet.isPrivateLayout();
 	}
 
 	@Override
@@ -714,16 +687,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	@Override
 	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
 		_layoutSet.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets whether this layout set is private layout.
-	*
-	* @param privateLayout the private layout of this layout set
-	*/
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_layoutSet.setPrivateLayout(privateLayout);
 	}
 
 	/**

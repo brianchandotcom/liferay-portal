@@ -255,13 +255,9 @@ public abstract class BaseSocialActivityInterpreter
 
 			String groupDisplayURL = StringPool.BLANK;
 
-			if (group.hasPublicLayouts()) {
+			if (group.hasLayouts()) {
 				groupDisplayURL = group.getDisplayURL(
-					serviceContext.getThemeDisplay(), false);
-			}
-			else if (group.hasPrivateLayouts()) {
-				groupDisplayURL = group.getDisplayURL(
-					serviceContext.getThemeDisplay(), true);
+					serviceContext.getThemeDisplay());
 			}
 			else {
 				return HtmlUtil.escape(groupName);
@@ -299,11 +295,8 @@ public abstract class BaseSocialActivityInterpreter
 
 			String groupDisplayURL = StringPool.BLANK;
 
-			if (group.hasPublicLayouts()) {
-				groupDisplayURL = group.getDisplayURL(themeDisplay, false);
-			}
-			else if (group.hasPrivateLayouts()) {
-				groupDisplayURL = group.getDisplayURL(themeDisplay, true);
+			if (group.hasLayouts()) {
+				groupDisplayURL = group.getDisplayURL(themeDisplay);
 			}
 			else {
 				return HtmlUtil.escape(groupName);

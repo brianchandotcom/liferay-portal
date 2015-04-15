@@ -53,9 +53,7 @@ import java.util.List;
 public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	@Override
-	public LayoutSet addLayoutSet(long groupId, boolean privateLayout)
-		throws PortalException {
-
+	public LayoutSet addLayoutSet(long groupId) throws PortalException {
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		Date now = new Date();
@@ -68,7 +66,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSet.setCompanyId(group.getCompanyId());
 		layoutSet.setCreateDate(now);
 		layoutSet.setModifiedDate(now);
-		layoutSet.setPrivateLayout(privateLayout);
 
 		layoutSet = initLayoutSet(layoutSet);
 
@@ -78,21 +75,18 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteLayoutSet(
-			long groupId, boolean privateLayout, ServiceContext serviceContext)
+	public void deleteLayoutSet(long groupId, ServiceContext serviceContext)
 		throws PortalException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
+		LayoutSet layoutSet = layoutSetPersistence.fetchByGroupId(groupId);
 
 		// Layouts
 
 		serviceContext.setAttribute("updatePageCount", Boolean.FALSE);
 
-		layoutLocalService.deleteLayouts(
-			groupId, privateLayout, serviceContext);
+		layoutLocalService.deleteLayouts(groupId, serviceContext);
 
 		// Logo
 
@@ -122,7 +116,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSetPersistence.update(layoutSet);
 		}
 		else {
-			layoutSetPersistence.removeByG_P(groupId, privateLayout);
+			layoutSetPersistence.removeByGroupId(groupId);
 		}
 
 		// Virtual host
@@ -151,10 +145,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	@Override
-	public LayoutSet getLayoutSet(long groupId, boolean privateLayout)
-		throws PortalException {
-
-		return layoutSetPersistence.findByG_P(groupId, privateLayout);
+	public LayoutSet getLayoutSet(long groupId) throws PortalException {
+		return layoutSetPersistence.findByGroupId(groupId);
 	}
 
 	@Override
@@ -214,14 +206,13 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		throws PortalException {
 
 		updateLayoutSetPrototypeLinkEnabled(
-			groupId, privateLayout, layoutSetPrototypeLinkEnabled, null);
+			groupId, layoutSetPrototypeLinkEnabled, null);
 	}
 
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout set is private to the group
 	 * @param  layoutSetPrototypeLinkEnabled whether the layout set prototype is
 	 *         link enabled
 	 * @param  layoutSetPrototypeUuid the uuid of the layout set prototype to
@@ -230,13 +221,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	 */
 	@Override
 	public void updateLayoutSetPrototypeLinkEnabled(
-			long groupId, boolean privateLayout,
-			boolean layoutSetPrototypeLinkEnabled,
+			long groupId, boolean layoutSetPrototypeLinkEnabled,
 			String layoutSetPrototypeUuid)
 		throws PortalException {
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
+		LayoutSet layoutSet = layoutSetPersistence.fetchByGroupId(groupId);
 
 		if (Validator.isNull(layoutSetPrototypeUuid)) {
 			layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
@@ -254,12 +243,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	@Override
-	public LayoutSet updateLogo(
-			long groupId, boolean privateLayout, boolean logo, byte[] bytes)
+	public LayoutSet updateLogo(long groupId, boolean logo, byte[] bytes)
 		throws PortalException {
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
+		LayoutSet layoutSet = layoutSetPersistence.fetchByGroupId(groupId);
 
 		layoutSet.setModifiedDate(new Date());
 
@@ -269,8 +256,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	@Override
-	public LayoutSet updateLogo(
-			long groupId, boolean privateLayout, boolean logo, File file)
+	public LayoutSet updateLogo(long groupId, boolean logo, File file)
 		throws PortalException {
 
 		byte[] bytes = null;
@@ -282,21 +268,19 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			throw new SystemException(ioe);
 		}
 
-		return updateLogo(groupId, privateLayout, logo, bytes);
+		return updateLogo(groupId, logo, bytes);
 	}
 
 	@Override
-	public LayoutSet updateLogo(
-			long groupId, boolean privateLayout, boolean logo, InputStream is)
+	public LayoutSet updateLogo(long groupId, boolean logo, InputStream is)
 		throws PortalException {
 
-		return updateLogo(groupId, privateLayout, logo, is, true);
+		return updateLogo(groupId, logo, is, true);
 	}
 
 	@Override
 	public LayoutSet updateLogo(
-			long groupId, boolean privateLayout, boolean logo, InputStream is,
-			boolean cleanUpStream)
+			long groupId, boolean logo, InputStream is, boolean cleanUpStream)
 		throws PortalException {
 
 		byte[] bytes = null;
@@ -308,17 +292,16 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			throw new SystemException(ioe);
 		}
 
-		return updateLogo(groupId, privateLayout, logo, bytes);
+		return updateLogo(groupId, logo, bytes);
 	}
 
 	@Override
 	public LayoutSet updateLookAndFeel(
-			long groupId, boolean privateLayout, String themeId,
-			String colorSchemeId, String css, boolean wapTheme)
+			long groupId, String themeId, String colorSchemeId, String css,
+			boolean wapTheme)
 		throws PortalException {
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
+		LayoutSet layoutSet = layoutSetPersistence.fetchByGroupId(groupId);
 
 		layoutSet.setModifiedDate(new Date());
 
@@ -348,8 +331,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 				PropsKeys.THEME_SYNC_ON_GROUP,
 				PropsValues.THEME_SYNC_ON_GROUP)) {
 
-			LayoutSet otherLayoutSet = layoutSetPersistence.findByG_P(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+			LayoutSet otherLayoutSet = layoutSetPersistence.fetchByGroupId(
+				layoutSet.getGroupId());
 
 			if (wapTheme) {
 				otherLayoutSet.setWapThemeId(themeId);
@@ -367,24 +350,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void updateLookAndFeel(
-			long groupId, String themeId, String colorSchemeId, String css,
-			boolean wapTheme)
-		throws PortalException {
+	public LayoutSet updatePageCount(long groupId) throws PortalException {
+		int pageCount = layoutPersistence.countByGroupId(groupId);
 
-		updateLookAndFeel(
-			groupId, false, themeId, colorSchemeId, css, wapTheme);
-		updateLookAndFeel(groupId, true, themeId, colorSchemeId, css, wapTheme);
-	}
-
-	@Override
-	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
-		throws PortalException {
-
-		int pageCount = layoutPersistence.countByG_P(groupId, privateLayout);
-
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
+		LayoutSet layoutSet = layoutSetPersistence.fetchByGroupId(groupId);
 
 		layoutSet.setModifiedDate(new Date());
 		layoutSet.setPageCount(pageCount);
@@ -395,12 +364,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	@Override
-	public LayoutSet updateSettings(
-			long groupId, boolean privateLayout, String settings)
+	public LayoutSet updateSettings(long groupId, String settings)
 		throws PortalException {
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
+		LayoutSet layoutSet = layoutSetPersistence.fetchByGroupId(groupId);
 
 		layoutSet.setModifiedDate(new Date());
 		layoutSet.setSettings(settings);
@@ -411,8 +378,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	@Override
-	public LayoutSet updateVirtualHost(
-			long groupId, boolean privateLayout, String virtualHostname)
+	public LayoutSet updateVirtualHost(long groupId, String virtualHostname)
 		throws PortalException {
 
 		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
@@ -423,8 +389,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			throw new LayoutSetVirtualHostException();
 		}
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
+		LayoutSet layoutSet = layoutSetPersistence.fetchByGroupId(groupId);
 
 		if (Validator.isNotNull(virtualHostname)) {
 			VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
@@ -461,19 +426,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		Group group = layoutSet.getGroup();
 
-		boolean privateLayout = layoutSet.isPrivateLayout();
-
 		if (group.isStagingGroup()) {
-			LayoutSet liveLayoutSet = null;
-
 			Group liveGroup = group.getLiveGroup();
 
-			if (privateLayout) {
-				liveLayoutSet = liveGroup.getPrivateLayoutSet();
-			}
-			else {
-				liveLayoutSet = liveGroup.getPublicLayoutSet();
-			}
+			LayoutSet liveLayoutSet = liveGroup.getLayoutSet();
 
 			layoutSet.setLogoId(liveLayoutSet.getLogoId());
 

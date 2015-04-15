@@ -38,12 +38,11 @@ else {
 
 boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty("inheritLocales"), true);
 
-LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
-LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
+LayoutSet layoutSet = liveGroup.getLayoutSet();
 
 boolean disabledLocaleInput = false;
 
-if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayoutSetPrototypeLinkEnabled()) {
+if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
 	disabledLocaleInput = true;
 }
 %>

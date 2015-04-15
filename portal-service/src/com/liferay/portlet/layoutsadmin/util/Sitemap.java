@@ -24,8 +24,7 @@ public interface Sitemap {
 
 	public String encodeXML(String input);
 
-	public String getSitemap(
-			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
+	public String getSitemap(long groupId, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 }

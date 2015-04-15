@@ -34,13 +34,12 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 		<%
 		for (Group mySiteGroup : mySiteGroups) {
-			boolean showPublicSite = mySiteGroup.isShowSite(permissionChecker, false);
-			boolean showPrivateSite = mySiteGroup.isShowSite(permissionChecker, true);
+			boolean showSite = mySiteGroup.isShowSite(permissionChecker);
 
 			Group siteGroup = mySiteGroup;
 		%>
 
-			<c:if test="<%= showPublicSite || showPrivateSite %>">
+			<c:if test="<%= showSite %>">
 				<c:choose>
 					<c:when test='<%= PropsValues.MY_SITES_DISPLAY_STYLE.equals("simple") %>'>
 
@@ -86,8 +85,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 						long stagingGroupId = 0;
 
-						boolean showPublicSiteStaging = false;
-						boolean showPrivateSiteStaging = false;
+						boolean showSiteStaging = false;
 
 						if (mySiteGroup.hasStagingGroup()) {
 							Group stagingGroup = mySiteGroup.getStagingGroup();
@@ -95,27 +93,23 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 							stagingGroupId = stagingGroup.getGroupId();
 
 							if (GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.VIEW_STAGING)) {
-								if ((mySiteGroup.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0)) {
-									showPublicSiteStaging = true;
-								}
-
-								if ((mySiteGroup.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0)) {
-									showPrivateSiteStaging = true;
+								if (!mySiteGroup.hasLayouts() && stagingGroup.hasLayouts()) {
+									showSiteStaging = true;
 								}
 							}
 						}
 						%>
 
-						<c:if test="<%= showPublicSite && ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) %>">
+						<c:if test="<%= showSite && (mySiteGroup.hasLayouts() || showSiteStaging) %>">
 
 							<%
-							if (showPublicSiteStaging) {
+							if (showSiteStaging) {
 								siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
 							}
 							%>
 
 							<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
-								<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" onclick="Liferay.Util.forcePost(this); return false;">
+								<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay)) %>" onclick="Liferay.Util.forcePost(this); return false;">
 
 									<%
 									String siteName = StringPool.BLANK;
@@ -127,7 +121,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 										siteName = mySiteGroup.getDescriptiveName(locale);
 									}
 
-									if (showPublicSiteStaging) {
+									if (showSiteStaging) {
 										StringBundler sb = new StringBundler(5);
 
 										sb.append(HtmlUtil.escape(siteName));
@@ -138,66 +132,9 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 										siteName = sb.toString();
 									}
-
-									if ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) {
-										iconCssClass = "icon-eye-open";
-									}
 									%>
 
 									<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
-
-									<c:if test="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
-										<span class="badge site-type"><liferay-ui:message key="public" /></span>
-									</c:if>
-								</a>
-							</li>
-						</c:if>
-
-						<c:if test="<%= showPrivateSite && ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) %>">
-
-							<%
-							siteGroup = mySiteGroup;
-
-							if (showPrivateSiteStaging) {
-								siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
-							}
-							%>
-
-							<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">
-								<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" onclick="Liferay.Util.forcePost(this); return false;">
-
-									<%
-									String siteName = StringPool.BLANK;
-
-									if (mySiteGroup.isUser()) {
-										siteName = LanguageUtil.get(request, "my-dashboard");
-									}
-									else {
-										siteName = mySiteGroup.getDescriptiveName(locale);
-									}
-
-									if (showPrivateSiteStaging) {
-										StringBundler sb = new StringBundler(5);
-
-										sb.append(siteName);
-										sb.append(StringPool.SPACE);
-										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(LanguageUtil.get(request, "staging"));
-										sb.append(StringPool.CLOSE_PARENTHESIS);
-
-										siteName = sb.toString();
-									}
-
-									if ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) {
-										iconCssClass = "icon-eye-close";
-									}
-									%>
-
-									<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
-
-									<c:if test="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
-										<span class="badge site-type"><liferay-ui:message key="private" /></span>
-									</c:if>
 								</a>
 							</li>
 						</c:if>
@@ -205,35 +142,21 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 					<c:when test='<%= PropsValues.MY_SITES_DISPLAY_STYLE.equals("classic") %>'>
 
 						<%
-						String publicAddPageHREF = null;
-						String privateAddPageHREF = null;
+						String addPageHREF = null;
 
 						if (mySiteGroup.isSite() && GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.ADD_LAYOUT)) {
-							publicAddPageHREF = mySiteGroup.getDisplayURL(themeDisplay, false);
-							privateAddPageHREF = mySiteGroup.getDisplayURL(themeDisplay, true);
+							addPageHREF = mySiteGroup.getDisplayURL(themeDisplay);
 						}
 						else if (mySiteGroup.isUser()) {
-							PortletURL publicAddPageURL = new PortletURLImpl(request, PortletKeys.MY_ACCOUNT, plid, PortletRequest.RENDER_PHASE);
+							PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.MY_ACCOUNT, plid, PortletRequest.RENDER_PHASE);
 
-							publicAddPageURL.setParameter("struts_action", "/my_account/edit_layouts");
-							publicAddPageURL.setParameter("tabs1", "public-pages");
-							publicAddPageURL.setParameter("redirect", currentURL);
-							publicAddPageURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-							publicAddPageURL.setPortletMode(PortletMode.VIEW);
-							publicAddPageURL.setWindowState(WindowState.MAXIMIZED);
+							addPageURL.setParameter("struts_action", "/my_account/edit_layouts");
+							addPageURL.setParameter("redirect", currentURL);
+							addPageURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
+							addPageURL.setPortletMode(PortletMode.VIEW);
+							addPageURL.setWindowState(WindowState.MAXIMIZED);
 
-							publicAddPageHREF = publicAddPageURL.toString();
-
-							PortletURL privateAddPageURL = new PortletURLImpl(request, PortletKeys.MY_ACCOUNT, plid, PortletRequest.RENDER_PHASE);
-
-							privateAddPageURL.setParameter("struts_action", "/my_account/edit_layouts");
-							privateAddPageURL.setParameter("tabs1", "private-pages");
-							privateAddPageURL.setParameter("redirect", currentURL);
-							privateAddPageURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-							privateAddPageURL.setPortletMode(PortletMode.VIEW);
-							privateAddPageURL.setWindowState(WindowState.MAXIMIZED);
-
-							privateAddPageHREF = privateAddPageURL.toString();
+							addPageHREF = addPageURL.toString();
 						}
 
 						boolean selectedSite = false;
@@ -269,42 +192,22 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									</h3>
 
 									<ul>
-										<c:if test="<%= showPublicSite %>">
+										<c:if test="<%= showSite %>">
 											<li>
-												<a href="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) ? HtmlUtil.escape(mySiteGroup.getDisplayURL(themeDisplay, false)) : "javascript:;" %>"
+												<a href="<%= mySiteGroup.hasLayouts() ? HtmlUtil.escape(mySiteGroup.getDisplayURL(themeDisplay)) : "javascript:;" %>"
 
 												<c:if test="<%= mySiteGroup.isUser() %>">
-													id="my-site-public-pages"
+													id="my-site-pages"
 												</c:if>
 
-												<c:if test="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) %>">
+												<c:if test="<%= mySiteGroup.hasLayouts() %>">
 													onclick="Liferay.Util.forcePost(this); return false;"
 												</c:if>
 
-												><liferay-ui:message key="public-pages" /> <span class="page-count">(<%= mySiteGroup.getPublicLayoutsPageCount() %>)</span></a>
+												><liferay-ui:message key="pages" /> <span class="page-count">(<%= mySiteGroup.getLayoutsPageCount() %>)</span></a>
 
-												<c:if test="<%= publicAddPageHREF != null %>">
-													<a class="add-page" href="<%= HtmlUtil.escape(publicAddPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;"><liferay-ui:message key="manage-pages" /></a>
-												</c:if>
-											</li>
-										</c:if>
-
-										<c:if test="<%= showPrivateSite %>">
-											<li>
-												<a href="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) ? HtmlUtil.escape(mySiteGroup.getDisplayURL(themeDisplay, true)) : "javascript:;" %>"
-
-												<c:if test="<%= mySiteGroup.isUser() %>">
-													id="my-site-private-pages"
-												</c:if>
-
-												<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
-													onclick="Liferay.Util.forcePost(this); return false;"
-												</c:if>
-
-												><liferay-ui:message key="private-pages" /> <span class="page-count">(<%= mySiteGroup.getPrivateLayoutsPageCount() %>)</span></a>
-
-												<c:if test="<%= privateAddPageHREF != null %>">
-													<a class="add-page" href="<%= HtmlUtil.escape(privateAddPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;"><liferay-ui:message key="manage-pages" /></a>
+												<c:if test="<%= addPageHREF != null %>">
+													<a class="add-page" href="<%= HtmlUtil.escape(addPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;"><liferay-ui:message key="manage-pages" /></a>
 												</c:if>
 											</li>
 										</c:if>

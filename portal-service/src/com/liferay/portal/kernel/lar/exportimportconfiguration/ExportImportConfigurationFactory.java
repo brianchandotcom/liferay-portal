@@ -49,39 +49,34 @@ public class ExportImportConfigurationFactory {
 
 		long sourceGroupId = ParamUtil.getLong(portletRequest, "sourceGroupId");
 		long targetGroupId = ParamUtil.getLong(portletRequest, "targetGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			portletRequest, "privateLayout");
 
 		Map<String, String[]> parameterMap = getDefaultPublishingParameters(
 			portletRequest);
 
 		return buildDefaultLocalPublishingExportImportConfiguration(
-			themeDisplay.getUser(), sourceGroupId, targetGroupId, privateLayout,
-			parameterMap);
+			themeDisplay.getUser(), sourceGroupId, targetGroupId, parameterMap);
 	}
 
 	public static ExportImportConfiguration
 			buildDefaultLocalPublishingExportImportConfiguration(
-				User user, long sourceGroupId, long targetGroupId,
-				boolean privateLayout)
+				User user, long sourceGroupId, long targetGroupId)
 		throws PortalException {
 
 		return buildDefaultLocalPublishingExportImportConfiguration(
-			user, sourceGroupId, targetGroupId, privateLayout,
+			user, sourceGroupId, targetGroupId,
 			getDefaultPublishingParameters());
 	}
 
 	public static ExportImportConfiguration
 			buildDefaultLocalPublishingExportImportConfiguration(
 				User user, long sourceGroupId, long targetGroupId,
-				boolean privateLayout, Map<String, String[]> parameterMap)
+				Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), sourceGroupId, targetGroupId, privateLayout,
-				ExportImportHelperUtil.getAllLayoutIds(
-					sourceGroupId, privateLayout),
+				user.getUserId(), sourceGroupId, targetGroupId,
+				ExportImportHelperUtil.getAllLayoutIds(sourceGroupId),
 				parameterMap, user.getLocale(), user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.
@@ -102,8 +97,6 @@ public class ExportImportConfigurationFactory {
 			WebKeys.THEME_DISPLAY);
 
 		long sourceGroupId = ParamUtil.getLong(portletRequest, "sourceGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			portletRequest, "privateLayout");
 		String remoteAddress = ParamUtil.getString(
 			portletRequest, "remoteAddress");
 		int remotePort = ParamUtil.getInteger(portletRequest, "remotePort");
@@ -117,22 +110,20 @@ public class ExportImportConfigurationFactory {
 			portletRequest);
 
 		return buildDefaultRemotePublishingExportImportConfiguration(
-			themeDisplay.getUser(), sourceGroupId, privateLayout, remoteAddress,
-			remotePort, remotePathContext, secureConnection, remoteGroupId,
-			parameterMap);
+			themeDisplay.getUser(), sourceGroupId, remoteAddress, remotePort,
+			remotePathContext, secureConnection, remoteGroupId, parameterMap);
 	}
 
 	public static ExportImportConfiguration
 			buildDefaultRemotePublishingExportImportConfiguration(
-				User user, long sourceGroupId, boolean privateLayout,
-				String remoteAddress, int remotePort, String remotePathContext,
+				User user, long sourceGroupId, String remoteAddress,
+				int remotePort, String remotePathContext,
 				boolean secureConnection, long remoteGroupId)
 		throws PortalException {
 
 		return buildDefaultRemotePublishingExportImportConfiguration(
-			user, sourceGroupId, privateLayout, remoteAddress, remotePort,
-			remotePathContext, secureConnection, remoteGroupId,
-			getDefaultPublishingParameters());
+			user, sourceGroupId, remoteAddress, remotePort, remotePathContext,
+			secureConnection, remoteGroupId, getDefaultPublishingParameters());
 	}
 
 	public static Map<String, String[]> getDefaultPublishingParameters(
@@ -184,20 +175,19 @@ public class ExportImportConfigurationFactory {
 
 	protected static ExportImportConfiguration
 			buildDefaultRemotePublishingExportImportConfiguration(
-				User user, long sourceGroupId, boolean privateLayout,
-				String remoteAddress, int remotePort, String remotePathContext,
+				User user, long sourceGroupId, String remoteAddress,
+				int remotePort, String remotePathContext,
 				boolean secureConnection, long remoteGroupId,
 				Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), sourceGroupId, privateLayout,
-				ExportImportHelperUtil.getAllLayoutIdsMap(
-					sourceGroupId, privateLayout),
+				user.getUserId(), sourceGroupId,
+				ExportImportHelperUtil.getAllLayoutIdsMap(sourceGroupId),
 				parameterMap, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId, privateLayout,
-				user.getLocale(), user.getTimeZone());
+				secureConnection, remoteGroupId, user.getLocale(),
+				user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.
 			addExportImportConfiguration(

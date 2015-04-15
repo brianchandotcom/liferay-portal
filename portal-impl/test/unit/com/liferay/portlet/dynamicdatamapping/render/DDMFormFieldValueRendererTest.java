@@ -243,7 +243,6 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("groupId", RandomTestUtil.randomLong());
-		jsonObject.put("privateLayout", RandomTestUtil.randomBoolean());
 		jsonObject.put("layoutId", RandomTestUtil.randomLong());
 
 		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
@@ -471,16 +470,14 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 		when(
 			LayoutServiceUtil.getLayoutName(
-				Matchers.anyLong(), Matchers.anyBoolean(), Matchers.anyLong(),
-				Matchers.eq("en_US"))
+				Matchers.anyLong(), Matchers.anyLong(), Matchers.eq("en_US"))
 		).thenReturn(
 			"Layout Name"
 		);
 
 		when(
 			LayoutServiceUtil.getLayoutName(
-				Matchers.anyLong(), Matchers.anyBoolean(), Matchers.anyLong(),
-				Matchers.eq("pt_BR"))
+				Matchers.anyLong(), Matchers.anyLong(), Matchers.eq("pt_BR"))
 		).thenReturn(
 			"Nome da Pagina"
 		);

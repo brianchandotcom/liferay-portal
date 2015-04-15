@@ -244,23 +244,9 @@
 
 	#set ($css_class = $css_class + " " + $site_type)
 
-	#set ($site_default_public_url = $htmlUtil.escape($page_group.getDisplayURL($theme_display, false)))
-
-	#set ($community_default_public_url = $site_default_public_url)
-
-	#set ($site_default_private_url = $htmlUtil.escape($page_group.getDisplayURL($theme_display, true)))
-
-	#set ($community_default_private_url = $site_default_private_url)
-
-	#set ($site_default_url = $site_default_public_url)
+	#set ($site_default_url = $htmlUtil.escape($page_group.getDisplayURL($theme_display)))
 
 	#set ($community_default_url = $site_default_url)
-
-	#if ($layout.isPrivateLayout())
-		#set ($site_default_url = $site_default_private_url)
-
-		#set ($community_default_url = $site_default_url)
-	#end
 #end
 
 #set ($the_title = "")

@@ -159,9 +159,7 @@ public class PermissionImporter {
 
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			if (!group.isLayoutPrototype() && !group.isLayoutSetPrototype() &&
-				layout.isPrivateLayout()) {
-
+			if (!group.isLayoutPrototype() && !group.isLayoutSetPrototype()) {
 				String roleName = role.getName();
 
 				if (roleName.equals(RoleConstants.GUEST)) {

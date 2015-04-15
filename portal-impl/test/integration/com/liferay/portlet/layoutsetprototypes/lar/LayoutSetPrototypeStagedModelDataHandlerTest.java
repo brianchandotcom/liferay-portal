@@ -143,7 +143,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			dependentStagedModelsMap, LayoutPrototype.class, _layoutPrototype);
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			_layoutPrototype.getGroupId(), true,
+			_layoutPrototype.getGroupId(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		Assert.assertEquals(1, layouts.size());
@@ -179,7 +179,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			RandomTestUtil.randomString());
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			_layoutSetPrototype.getGroupId(), true,
+			_layoutSetPrototype.getGroupId(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		Assert.assertEquals(1, layouts.size());
@@ -193,7 +193,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 			dependentStagedModelsMap);
 
 		Layout prototypedLayout = LayoutTestUtil.addLayout(
-			_layoutSetPrototype.getGroupId(), true, layoutPrototype, true);
+			_layoutSetPrototype.getGroupId(), layoutPrototype, true);
 
 		addLayout(LayoutSetPrototype.class, prototypedLayout);
 		addLayoutFriendlyURLs(
@@ -364,7 +364,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		Layout importedLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layoutSetPrototypeLayout.getUuid(),
-				importedLayoutSetPrototype.getGroupId(), true);
+				importedLayoutSetPrototype.getGroupId());
 
 		Assert.assertNotNull(importedLayout);
 		Assert.assertEquals(
@@ -383,7 +383,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		for (Layout layout : layouts) {
 			Layout importedLayout =
 				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-					layout.getUuid(), groupId, layout.getPrivateLayout());
+					layout.getUuid(), groupId);
 
 			Assert.assertNotNull(importedLayout);
 			Assert.assertEquals(

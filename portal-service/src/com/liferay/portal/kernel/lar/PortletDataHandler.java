@@ -96,13 +96,11 @@ public interface PortletDataHandler {
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes();
 
 	public PortletDataHandlerControl[] getExportConfigurationControls(
-			long companyId, long groupId, Portlet portlet,
-			boolean privateLayout)
+			long companyId, long groupId, Portlet portlet)
 		throws Exception;
 
 	public PortletDataHandlerControl[] getExportConfigurationControls(
-			long companyId, long groupId, Portlet portlet, long plid,
-			boolean privateLayout)
+			long companyId, long groupId, Portlet portlet, long plid)
 		throws Exception;
 
 	/**

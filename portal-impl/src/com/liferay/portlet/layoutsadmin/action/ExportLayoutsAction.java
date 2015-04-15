@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -76,24 +75,14 @@ public class ExportLayoutsAction extends PortletAction {
 
 		try {
 			long groupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
 			long[] layoutIds = getLayoutIds(actionRequest);
 
-			String taskName = StringPool.BLANK;
-
-			if (privateLayout) {
-				taskName = LanguageUtil.get(
-					actionRequest.getLocale(), "private-pages");
-			}
-			else {
-				taskName = LanguageUtil.get(
-					actionRequest.getLocale(), "public-pages");
-			}
+			String taskName = LanguageUtil.get(
+				actionRequest.getLocale(), "pages");
 
 			LayoutServiceUtil.exportLayoutsAsFileInBackground(
-				taskName, groupId, privateLayout, layoutIds,
-				actionRequest.getParameterMap(), null, null);
+				taskName, groupId, layoutIds, actionRequest.getParameterMap(),
+				null, null);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

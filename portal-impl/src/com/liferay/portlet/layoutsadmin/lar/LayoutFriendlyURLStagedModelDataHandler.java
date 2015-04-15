@@ -135,7 +135,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 					LayoutFriendlyURLLocalServiceUtil.addLayoutFriendlyURL(
 						userId, portletDataContext.getCompanyId(),
 						portletDataContext.getScopeGroupId(), plid,
-						portletDataContext.isPrivateLayout(), friendlyURL,
+						friendlyURL,
 						layoutFriendlyURL.getLanguageId(), serviceContext);
 			}
 			else {
@@ -143,7 +143,6 @@ public class LayoutFriendlyURLStagedModelDataHandler
 					LayoutFriendlyURLLocalServiceUtil.updateLayoutFriendlyURL(
 						userId, portletDataContext.getCompanyId(),
 						portletDataContext.getScopeGroupId(), plid,
-						portletDataContext.isPrivateLayout(),
 						layoutFriendlyURL.getFriendlyURL(),
 						layoutFriendlyURL.getLanguageId(), serviceContext);
 			}
@@ -156,7 +155,6 @@ public class LayoutFriendlyURLStagedModelDataHandler
 				LayoutFriendlyURLLocalServiceUtil.addLayoutFriendlyURL(
 					userId, portletDataContext.getCompanyId(),
 					portletDataContext.getScopeGroupId(), plid,
-					portletDataContext.isPrivateLayout(),
 					layoutFriendlyURL.getFriendlyURL(),
 					layoutFriendlyURL.getLanguageId(), serviceContext);
 		}
@@ -195,7 +193,6 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			LayoutFriendlyURL duplicateLayoutFriendlyURL =
 				LayoutFriendlyURLLocalServiceUtil.fetchLayoutFriendlyURL(
 					portletDataContext.getScopeGroupId(),
-					layoutFriendlyURL.isPrivateLayout(),
 					layoutFriendlyURL.getFriendlyURL(),
 					layoutFriendlyURL.getLanguageId());
 

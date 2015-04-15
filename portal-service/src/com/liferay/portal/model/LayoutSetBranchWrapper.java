@@ -60,7 +60,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("master", getMaster());
@@ -126,12 +125,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		String name = (String)attributes.get("name");
@@ -407,16 +400,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	}
 
 	/**
-	* Returns the private layout of this layout set branch.
-	*
-	* @return the private layout of this layout set branch
-	*/
-	@Override
-	public boolean getPrivateLayout() {
-		return _layoutSetBranch.getPrivateLayout();
-	}
-
-	/**
 	* Returns the settings of this layout set branch.
 	*
 	* @return the settings of this layout set branch
@@ -565,16 +548,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	@Override
 	public boolean isNew() {
 		return _layoutSetBranch.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this layout set branch is private layout.
-	*
-	* @return <code>true</code> if this layout set branch is private layout; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPrivateLayout() {
-		return _layoutSetBranch.isPrivateLayout();
 	}
 
 	@Override
@@ -765,16 +738,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	@Override
 	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
 		_layoutSetBranch.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets whether this layout set branch is private layout.
-	*
-	* @param privateLayout the private layout of this layout set branch
-	*/
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_layoutSetBranch.setPrivateLayout(privateLayout);
 	}
 
 	/**

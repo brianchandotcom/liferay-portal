@@ -602,8 +602,7 @@ public class AssetPublisherExportImportTest
 
 		Layout importedSecondLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				secondLayout.getUuid(), importedGroup.getGroupId(),
-				importedLayout.isPrivateLayout());
+				secondLayout.getUuid(), importedGroup.getGroupId());
 
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 
@@ -647,8 +646,7 @@ public class AssetPublisherExportImportTest
 
 		Layout importedSecondLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				secondLayout.getUuid(), importedGroup.getGroupId(),
-				importedLayout.isPrivateLayout());
+				secondLayout.getUuid(), importedGroup.getGroupId());
 
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 
@@ -688,22 +686,20 @@ public class AssetPublisherExportImportTest
 	@Override
 	protected void exportImportPortlet(String portletId) throws Exception {
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			layout.getGroupId(), layout.isPrivateLayout());
+			layout.getGroupId());
 
 		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			ExportImportHelperUtil.getLayoutIds(layouts),
+			layout.getGroupId(), ExportImportHelperUtil.getLayoutIds(layouts),
 			getExportParameterMap(), null, null);
 
 		// Import site LAR
 
 		LayoutLocalServiceUtil.importLayouts(
 			TestPropsValues.getUserId(), importedGroup.getGroupId(),
-			layout.isPrivateLayout(), getImportParameterMap(), larFile);
+			getImportParameterMap(), larFile);
 
 		importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			layout.getUuid(), importedGroup.getGroupId(),
-			layout.isPrivateLayout());
+			layout.getUuid(), importedGroup.getGroupId());
 
 		Assert.assertNotNull(importedLayout);
 	}

@@ -1208,7 +1208,7 @@ public class MainServlet extends ActionServlet {
 
 				Group group = layout.getGroup();
 
-				plid = group.getDefaultPublicPlid();
+				plid = group.getDefaultPlid();
 
 				if ((plid == LayoutConstants.DEFAULT_PLID) ||
 					group.isStagingGroup()) {
@@ -1216,7 +1216,7 @@ public class MainServlet extends ActionServlet {
 					Group guestGroup = GroupLocalServiceUtil.getGroup(
 						layout.getCompanyId(), GroupConstants.GUEST);
 
-					plid = guestGroup.getDefaultPublicPlid();
+					plid = guestGroup.getDefaultPlid();
 				}
 
 				redirect = HttpUtil.addParameter(redirect, "p_l_id", plid);
@@ -1279,7 +1279,6 @@ public class MainServlet extends ActionServlet {
 
 		dynamicRequest.setParameter("groupId", StringPool.BLANK);
 		dynamicRequest.setParameter("layoutId", StringPool.BLANK);
-		dynamicRequest.setParameter("privateLayout", StringPool.BLANK);
 
 		PortalUtil.sendError(status, (Exception)t, dynamicRequest, response);
 	}

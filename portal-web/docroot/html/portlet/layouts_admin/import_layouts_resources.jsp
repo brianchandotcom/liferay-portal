@@ -28,7 +28,6 @@ else {
 	group = (Group)request.getAttribute(WebKeys.GROUP);
 }
 
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 
 FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME);
@@ -116,7 +115,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 	<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 	<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 </portlet:actionURL>
 
@@ -125,7 +123,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 		<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 		<portlet:param name="tabs2" value="current-and-previous" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 		<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 	</portlet:renderURL>
 
@@ -386,7 +383,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 					<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 					<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 				</portlet:renderURL>
 

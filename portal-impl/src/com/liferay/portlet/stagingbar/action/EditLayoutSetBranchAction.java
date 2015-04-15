@@ -199,8 +199,6 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 			actionRequest, "layoutSetBranchId");
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		long copyLayoutSetBranchId = ParamUtil.getLong(
@@ -212,8 +210,8 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 
 		if (layoutSetBranchId <= 0) {
 			LayoutSetBranchServiceUtil.addLayoutSetBranch(
-				groupId, privateLayout, name, description, false,
-				copyLayoutSetBranchId, serviceContext);
+				groupId, name, description, false, copyLayoutSetBranchId,
+				serviceContext);
 
 			SessionMessages.add(actionRequest, "sitePageVariationAdded");
 		}

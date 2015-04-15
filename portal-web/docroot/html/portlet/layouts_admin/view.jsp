@@ -77,28 +77,6 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 		</c:if>
 
 		<%
-		String tabs1URL = String.valueOf(layoutsAdminDisplayContext.getRedirectURL());
-
-		if (liveGroup.isUser()) {
-			PortletURL userTabs1URL = renderResponse.createRenderURL();
-
-			userTabs1URL.setParameter("struts_action", "/my_pages/edit_layouts");
-			userTabs1URL.setParameter("tabs1", layoutsAdminDisplayContext.getTabs1());
-			userTabs1URL.setParameter("backURL", layoutsAdminDisplayContext.getBackURL());
-			userTabs1URL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
-
-			tabs1URL = userTabs1URL.toString();
-		}
-		%>
-
-		<liferay-ui:tabs
-			names="<%= layoutsAdminDisplayContext.getTabs1Names() %>"
-			param="tabs1"
-			url="<%= tabs1URL %>"
-			value="<%= layoutsAdminDisplayContext.getTabs1() %>"
-		/>
-
-		<%
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(layoutsAdminDisplayContext.getTabs1(), TextFormatter.O)), String.valueOf(layoutsAdminDisplayContext.getRedirectURL()));
 		%>
 
@@ -131,22 +109,10 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 					LayoutSetBranch layoutSetBranch = null;
 
 					if (layoutSetBranchId > 0) {
-						try {
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
-						}
-						catch (NoSuchLayoutSetBranchException nslsbe) {
-						}
+						layoutSetBranch = LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(layoutSetBranchId);
 					}
 
-					if (layoutSetBranch == null) {
-						try {
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
-						}
-						catch (NoSuchLayoutSetBranchException nslsbe) {
-						}
-					}
-
-					List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
+					List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(layoutsAdminDisplayContext.getStagingGroupId());
 					%>
 
 					<c:choose>
@@ -167,7 +133,6 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 												<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
 												<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getRedirectURL()) %>" />
 												<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
-												<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
 												<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
 											</portlet:actionURL>
 
@@ -183,10 +148,6 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 						</c:when>
 					</c:choose>
 
-					<%
-					request.setAttribute(WebKeys.PRIVATE_LAYOUT, layoutsAdminDisplayContext.isPrivateLayout());
-					%>
-
 					<liferay-staging:menu cssClass="manage-pages-branch-menu" extended="<%= true %>" icon="/common/tool.png" message="" selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>" showManageBranches="<%= true %>"  />
 				</c:if>
 
@@ -197,7 +158,6 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 				<liferay-ui:layouts-tree
 					groupId="<%= layoutsAdminDisplayContext.getGroupId() %>"
 					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
-					privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
 					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
 					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
 					selectedLayoutIds="<%= selectedLayoutIds %>"

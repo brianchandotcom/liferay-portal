@@ -351,13 +351,8 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public long getDefaultPrivatePlid() {
-		return _group.getDefaultPrivatePlid();
-	}
-
-	@Override
-	public long getDefaultPublicPlid() {
-		return _group.getDefaultPublicPlid();
+	public long getDefaultPlid() {
+		return _group.getDefaultPlid();
 	}
 
 	@Override
@@ -463,13 +458,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public java.lang.String getDisplayURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay,
-		boolean privateLayout) {
-		return _group.getDisplayURL(themeDisplay, privateLayout);
-	}
-
-	@Override
 	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
 		return _group.getExpandoBridge();
 	}
@@ -526,9 +514,18 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public java.lang.String getLayoutRootNodeName(boolean privateLayout,
-		java.util.Locale locale) {
-		return _group.getLayoutRootNodeName(privateLayout, locale);
+	public java.lang.String getLayoutRootNodeName(java.util.Locale locale) {
+		return _group.getLayoutRootNodeName(locale);
+	}
+
+	@Override
+	public com.liferay.portal.model.LayoutSet getLayoutSet() {
+		return _group.getLayoutSet();
+	}
+
+	@Override
+	public int getLayoutsPageCount() {
+		return _group.getLayoutsPageCount();
 	}
 
 	@Override
@@ -686,9 +683,9 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public java.lang.String getPathFriendlyURL(boolean privateLayout,
+	public java.lang.String getPathFriendlyURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
-		return _group.getPathFriendlyURL(privateLayout, themeDisplay);
+		return _group.getPathFriendlyURL(themeDisplay);
 	}
 
 	/**
@@ -704,26 +701,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _group.getPrimaryKeyObj();
-	}
-
-	@Override
-	public com.liferay.portal.model.LayoutSet getPrivateLayoutSet() {
-		return _group.getPrivateLayoutSet();
-	}
-
-	@Override
-	public int getPrivateLayoutsPageCount() {
-		return _group.getPrivateLayoutsPageCount();
-	}
-
-	@Override
-	public com.liferay.portal.model.LayoutSet getPublicLayoutSet() {
-		return _group.getPublicLayoutSet();
-	}
-
-	@Override
-	public int getPublicLayoutsPageCount() {
-		return _group.getPublicLayoutsPageCount();
 	}
 
 	@Override
@@ -836,18 +813,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public boolean hasLayouts() {
+		return _group.hasLayouts();
+	}
+
+	@Override
 	public boolean hasLocalOrRemoteStagingGroup() {
 		return _group.hasLocalOrRemoteStagingGroup();
-	}
-
-	@Override
-	public boolean hasPrivateLayouts() {
-		return _group.hasPrivateLayouts();
-	}
-
-	@Override
-	public boolean hasPublicLayouts() {
-		return _group.hasPublicLayouts();
 	}
 
 	@Override
@@ -990,10 +962,9 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	@Override
 	public boolean isShowSite(
-		com.liferay.portal.security.permission.PermissionChecker permissionChecker,
-		boolean privateSite)
+		com.liferay.portal.security.permission.PermissionChecker permissionChecker)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _group.isShowSite(permissionChecker, privateSite);
+		return _group.isShowSite(permissionChecker);
 	}
 
 	/**

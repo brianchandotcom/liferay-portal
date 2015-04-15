@@ -182,13 +182,11 @@ public class EditLayoutsAction extends PortletAction {
 
 				if (plid <= 0) {
 					long groupId = ParamUtil.getLong(actionRequest, "groupId");
-					boolean privateLayout = ParamUtil.getBoolean(
-						actionRequest, "privateLayout");
 					long layoutId = ParamUtil.getLong(
 						actionRequest, "layoutId");
 
 					layout = LayoutLocalServiceUtil.getLayout(
-						groupId, privateLayout, layoutId);
+						groupId, layoutId);
 
 					plid = layout.getPlid();
 				}
@@ -706,11 +704,8 @@ public class EditLayoutsAction extends PortletAction {
 			actionRequest);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId);
 
 		long layoutSetBranchId = ParamUtil.getLong(
 			actionRequest, "layoutSetBranchId");
@@ -734,12 +729,9 @@ public class EditLayoutsAction extends PortletAction {
 		throws PortalException {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
 		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			groupId, privateLayout, layoutId);
+		Layout layout = LayoutLocalServiceUtil.getLayout(groupId, layoutId);
 
 		for (String key : themeSettings.keySet()) {
 			ThemeSetting themeSetting = themeSettings.get(key);
@@ -790,8 +782,6 @@ public class EditLayoutsAction extends PortletAction {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
 		long parentLayoutId = ParamUtil.getLong(
 			actionRequest, "parentLayoutId");
 		long[] layoutIds = StringUtil.split(
@@ -801,7 +791,7 @@ public class EditLayoutsAction extends PortletAction {
 			actionRequest);
 
 		LayoutServiceUtil.setLayouts(
-			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
+			groupId, parentLayoutId, layoutIds, serviceContext);
 	}
 
 	protected Object[] updateLayout(
@@ -820,8 +810,6 @@ public class EditLayoutsAction extends PortletAction {
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 		long stagingGroupId = ParamUtil.getLong(
 			actionRequest, "stagingGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
 		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
 		long parentLayoutId = ParamUtil.getLong(
 			uploadPortletRequest, "parentLayoutId");
@@ -876,10 +864,10 @@ public class EditLayoutsAction extends PortletAction {
 
 			if (inheritFromParentLayoutId && (parentLayoutId > 0)) {
 				Layout parentLayout = LayoutLocalServiceUtil.getLayout(
-					groupId, privateLayout, parentLayoutId);
+					groupId, parentLayoutId);
 
 				layout = LayoutServiceUtil.addLayout(
-					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
+					groupId, parentLayoutId, nameMap, titleMap,
 					parentLayout.getDescriptionMap(),
 					parentLayout.getKeywordsMap(), parentLayout.getRobotsMap(),
 					parentLayout.getType(), parentLayout.getTypeSettings(),
@@ -909,9 +897,8 @@ public class EditLayoutsAction extends PortletAction {
 					"layoutPrototypeUuid", layoutPrototype.getUuid());
 
 				layout = LayoutServiceUtil.addLayout(
-					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-					descriptionMap, keywordsMap, robotsMap,
-					LayoutConstants.TYPE_PORTLET,
+					groupId, parentLayoutId, nameMap, titleMap, descriptionMap,
+					keywordsMap, robotsMap, LayoutConstants.TYPE_PORTLET,
 					typeSettingsProperties.toString(), hidden, friendlyURLMap,
 					serviceContext);
 
@@ -932,7 +919,7 @@ public class EditLayoutsAction extends PortletAction {
 				if (copyLayoutId > 0) {
 					try {
 						copyLayout = LayoutLocalServiceUtil.getLayout(
-							groupId, privateLayout, copyLayoutId);
+							groupId, copyLayoutId);
 
 						if (copyLayout.isTypePortlet()) {
 							LayoutTypePortlet copyLayoutTypePortlet =
@@ -950,8 +937,8 @@ public class EditLayoutsAction extends PortletAction {
 				}
 
 				layout = LayoutServiceUtil.addLayout(
-					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-					descriptionMap, keywordsMap, robotsMap, type,
+					groupId, parentLayoutId, nameMap, titleMap, descriptionMap,
+					keywordsMap, robotsMap, type,
 					typeSettingsProperties.toString(), hidden, friendlyURLMap,
 					serviceContext);
 
@@ -962,8 +949,7 @@ public class EditLayoutsAction extends PortletAction {
 					themeDisplay.getUserId(), layoutTemplateId);
 
 				LayoutServiceUtil.updateLayout(
-					groupId, privateLayout, layout.getLayoutId(),
-					layout.getTypeSettings());
+					groupId, layout.getLayoutId(), layout.getTypeSettings());
 
 				if (copyLayout != null) {
 					if (copyLayout.isTypePortlet()) {
@@ -981,15 +967,14 @@ public class EditLayoutsAction extends PortletAction {
 
 			// Update layout
 
-			layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, layoutId);
+			layout = LayoutLocalServiceUtil.getLayout(groupId, layoutId);
 
 			oldFriendlyURL = layout.getFriendlyURL(themeDisplay.getLocale());
 
 			layout = LayoutServiceUtil.updateLayout(
-				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
-				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
-				hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
+				groupId, layoutId, layout.getParentLayoutId(), nameMap,
+				titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden,
+				friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
 
@@ -1023,7 +1008,7 @@ public class EditLayoutsAction extends PortletAction {
 
 					try {
 						Layout copyLayout = LayoutLocalServiceUtil.getLayout(
-							groupId, privateLayout, copyLayoutId);
+							groupId, copyLayoutId);
 
 						if (copyLayout.isTypePortlet()) {
 							layoutTypeSettingsProperties =
@@ -1045,8 +1030,7 @@ public class EditLayoutsAction extends PortletAction {
 						formTypeSettingsProperties);
 
 					LayoutServiceUtil.updateLayout(
-						groupId, privateLayout, layoutId,
-						layout.getTypeSettings());
+						groupId, layoutId, layout.getTypeSettings());
 				}
 			}
 			else {
@@ -1056,7 +1040,7 @@ public class EditLayoutsAction extends PortletAction {
 					layout.getTypeSettingsProperties());
 
 				LayoutServiceUtil.updateLayout(
-					groupId, privateLayout, layoutId, layout.getTypeSettings());
+					groupId, layoutId, layout.getTypeSettings());
 			}
 
 			String[] removeEmbeddedPortletIds = ParamUtil.getParameterValues(
@@ -1079,8 +1063,7 @@ public class EditLayoutsAction extends PortletAction {
 
 		updateLookAndFeel(
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-			stagingGroupId, privateLayout, layout.getLayoutId(),
-			layoutTypeSettingsProperties);
+			stagingGroupId, layout.getLayoutId(), layoutTypeSettingsProperties);
 
 		return new Object[] {layout, oldFriendlyURL};
 	}
@@ -1132,7 +1115,6 @@ public class EditLayoutsAction extends PortletAction {
 					enableLayoutRevision.getLayoutRevisionId(), false,
 					layoutRevision.getPlid(),
 					lastLayoutRevision.getLayoutRevisionId(),
-					lastLayoutRevision.isPrivateLayout(),
 					lastLayoutRevision.getName(), lastLayoutRevision.getTitle(),
 					lastLayoutRevision.getDescription(),
 					lastLayoutRevision.getKeywords(),
@@ -1156,7 +1138,7 @@ public class EditLayoutsAction extends PortletAction {
 
 	protected void updateLookAndFeel(
 			ActionRequest actionRequest, long companyId, long liveGroupId,
-			long stagingGroupId, boolean privateLayout, long layoutId,
+			long stagingGroupId, long layoutId,
 			UnicodeProperties typeSettingsProperties)
 		throws Exception {
 
@@ -1199,12 +1181,11 @@ public class EditLayoutsAction extends PortletAction {
 			}
 
 			LayoutServiceUtil.updateLayout(
-				groupId, privateLayout, layoutId,
-				typeSettingsProperties.toString());
+				groupId, layoutId, typeSettingsProperties.toString());
 
 			LayoutServiceUtil.updateLookAndFeel(
-				groupId, privateLayout, layoutId, deviceThemeId,
-				deviceColorSchemeId, deviceCss, deviceWapTheme);
+				groupId, layoutId, deviceThemeId, deviceColorSchemeId,
+				deviceCss, deviceWapTheme);
 		}
 	}
 
@@ -1224,7 +1205,7 @@ public class EditLayoutsAction extends PortletAction {
 			if (layout.isTypeLinkToLayout() || layout.isTypeURL()) {
 				try {
 					layout = LayoutLocalServiceUtil.fetchFirstLayout(
-						layout.getGroupId(), layout.getPrivateLayout(),
+						layout.getGroupId(),
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 				}
 				catch (Exception e) {

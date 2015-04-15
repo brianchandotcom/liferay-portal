@@ -40,10 +40,9 @@ public class LayoutSetLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutSetLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.model.LayoutSet addLayoutSet(
-		long groupId, boolean privateLayout)
+	public static com.liferay.portal.model.LayoutSet addLayoutSet(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addLayoutSet(groupId, privateLayout);
+		return getService().addLayoutSet(groupId);
 	}
 
 	/**
@@ -68,10 +67,10 @@ public class LayoutSetLocalServiceUtil {
 		return getService().createLayoutSet(layoutSetId);
 	}
 
-	public static void deleteLayoutSet(long groupId, boolean privateLayout,
+	public static void deleteLayoutSet(long groupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteLayoutSet(groupId, privateLayout, serviceContext);
+		getService().deleteLayoutSet(groupId, serviceContext);
 	}
 
 	/**
@@ -208,12 +207,6 @@ public class LayoutSetLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.portal.model.LayoutSet getLayoutSet(
-		long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayoutSet(groupId, privateLayout);
-	}
-
 	/**
 	* Returns the layout set with the primary key.
 	*
@@ -293,6 +286,25 @@ public class LayoutSetLocalServiceUtil {
 	/**
 	* Updates the state of the layout set prototype link.
 	*
+	* @param groupId the primary key of the group
+	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
+	link enabled
+	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
+	link with
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void updateLayoutSetPrototypeLinkEnabled(long groupId,
+		boolean layoutSetPrototypeLinkEnabled,
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateLayoutSetPrototypeLinkEnabled(groupId,
+			layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
+	}
+
+	/**
+	* Updates the state of the layout set prototype link.
+	*
 	* <p>
 	* This method can disable the layout set prototype's link by setting
 	* <code>layoutSetPrototypeLinkEnabled</code> to <code>false</code>.
@@ -321,86 +333,55 @@ public class LayoutSetLocalServiceUtil {
 			layoutSetPrototypeLinkEnabled);
 	}
 
-	/**
-	* Updates the state of the layout set prototype link.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout set is private to the group
-	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
-	link enabled
-	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
-	link with
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static void updateLayoutSetPrototypeLinkEnabled(long groupId,
-		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
-		java.lang.String layoutSetPrototypeUuid)
+	public static com.liferay.portal.model.LayoutSet updateLogo(long groupId,
+		boolean logo, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.updateLayoutSetPrototypeLinkEnabled(groupId, privateLayout,
-			layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
+		return getService().updateLogo(groupId, logo, bytes);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, byte[] bytes)
+		boolean logo, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateLogo(groupId, privateLayout, logo, bytes);
+		return getService().updateLogo(groupId, logo, file);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.File file)
+		boolean logo, java.io.InputStream is)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateLogo(groupId, privateLayout, logo, file);
+		return getService().updateLogo(groupId, logo, is);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream is)
+		boolean logo, java.io.InputStream is, boolean cleanUpStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateLogo(groupId, privateLayout, logo, is);
-	}
-
-	public static com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream is,
-		boolean cleanUpStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateLogo(groupId, privateLayout, logo, is, cleanUpStream);
+		return getService().updateLogo(groupId, logo, is, cleanUpStream);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateLookAndFeel(
-		long groupId, boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateLookAndFeel(groupId, privateLayout, themeId,
-			colorSchemeId, css, wapTheme);
-	}
-
-	public static void updateLookAndFeel(long groupId,
-		java.lang.String themeId, java.lang.String colorSchemeId,
+		long groupId, java.lang.String themeId, java.lang.String colorSchemeId,
 		java.lang.String css, boolean wapTheme)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.updateLookAndFeel(groupId, themeId, colorSchemeId, css, wapTheme);
+		return getService()
+				   .updateLookAndFeel(groupId, themeId, colorSchemeId, css,
+			wapTheme);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updatePageCount(
-		long groupId, boolean privateLayout)
+		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updatePageCount(groupId, privateLayout);
+		return getService().updatePageCount(groupId);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateSettings(
-		long groupId, boolean privateLayout, java.lang.String settings)
+		long groupId, java.lang.String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateSettings(groupId, privateLayout, settings);
+		return getService().updateSettings(groupId, settings);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateVirtualHost(
-		long groupId, boolean privateLayout, java.lang.String virtualHostname)
+		long groupId, java.lang.String virtualHostname)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateVirtualHost(groupId, privateLayout, virtualHostname);
+		return getService().updateVirtualHost(groupId, virtualHostname);
 	}
 
 	public static LayoutSetLocalService getService() {

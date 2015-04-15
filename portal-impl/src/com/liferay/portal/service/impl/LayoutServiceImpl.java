@@ -115,8 +115,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             found, if the group did not have permission to manage the
 	 *             layouts involved, if layout values were invalid, or if a
 	 *             portal exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #addLayout(long, boolean,
-	 *             long, Map, Map, Map, Map, Map, String, String, boolean, Map,
+	 * @deprecated As of 6.2.0, replaced by {@link #addLayout(long, long,
+	 *             Map, Map, Map, Map, Map, String, String, boolean, Map,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -138,12 +138,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 		else {
 			LayoutPermissionUtil.check(
-				permissionChecker, groupId, privateLayout, parentLayoutId,
+				permissionChecker, groupId, parentLayoutId,
 				ActionKeys.ADD_LAYOUT);
 		}
 
 		return layoutLocalService.addLayout(
-			getUserId(), groupId, privateLayout, parentLayoutId, localeNamesMap,
+			getUserId(), groupId, false, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURL, serviceContext);
 	}
@@ -159,7 +159,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the primary key of the parent layout (optionally
 	 *         {@link
 	 *         com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
@@ -194,7 +193,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
+			long groupId, long parentLayoutId,
 			Map<Locale, String> localeNamesMap,
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
@@ -211,12 +210,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 		else {
 			LayoutPermissionUtil.check(
-				permissionChecker, groupId, privateLayout, parentLayoutId,
+				permissionChecker, groupId, parentLayoutId,
 				ActionKeys.ADD_LAYOUT);
 		}
 
 		return layoutLocalService.addLayout(
-			getUserId(), groupId, privateLayout, parentLayoutId, localeNamesMap,
+			getUserId(), groupId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
 			typeSettings, hidden, friendlyURLMap, serviceContext);
 	}
@@ -233,7 +232,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the primary key of the parent layout (optionally
 	 *         {@link
 	 *         com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
@@ -263,9 +261,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			String name, String title, String description, String type,
-			boolean hidden, String friendlyURL, ServiceContext serviceContext)
+			long groupId, long parentLayoutId, String name, String title,
+			String description, String type, boolean hidden, String friendlyURL,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -276,13 +274,13 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 		else {
 			LayoutPermissionUtil.check(
-				permissionChecker, groupId, privateLayout, parentLayoutId,
+				permissionChecker, groupId, parentLayoutId,
 				ActionKeys.ADD_LAYOUT);
 		}
 
 		return layoutLocalService.addLayout(
-			getUserId(), groupId, privateLayout, parentLayoutId, name, title,
-			description, type, hidden, friendlyURL, serviceContext);
+			getUserId(), groupId, parentLayoutId, name, title, description,
+			type, hidden, friendlyURL, serviceContext);
 	}
 
 	@Override
@@ -305,7 +303,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * layouts, and associated resources.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the primary key of the layout
 	 * @param  serviceContext the service context to be applied
 	 * @throws PortalException if the user did not have permission to delete the
@@ -314,16 +311,13 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public void deleteLayout(
-			long groupId, boolean privateLayout, long layoutId,
-			ServiceContext serviceContext)
+			long groupId, long layoutId, ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.DELETE);
+			getPermissionChecker(), groupId, layoutId, ActionKeys.DELETE);
 
-		layoutLocalService.deleteLayout(
-			groupId, privateLayout, layoutId, serviceContext);
+		layoutLocalService.deleteLayout(groupId, layoutId, serviceContext);
 	}
 
 	/**
@@ -364,7 +358,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * byte array.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutIds the primary keys of the layouts to be exported
 	 * @param  parameterMap the mapping of parameters indicating which
 	 *         information to export. For information on the keys used in the
@@ -379,23 +372,21 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public byte[] exportLayouts(
-			long groupId, boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			long groupId, long[] layoutIds, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.exportLayouts(
-			groupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
+			groupId, layoutIds, parameterMap, startDate, endDate);
 	}
 
 	/**
 	 * Exports all layouts that match the criteria as a byte array.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parameterMap the mapping of parameters indicating which
 	 *         information to export. For information on the keys used in the
 	 *         map see {@link
@@ -409,22 +400,21 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public byte[] exportLayouts(
-			long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			long groupId, Map<String, String[]> parameterMap, Date startDate,
+			Date endDate)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.exportLayouts(
-			groupId, privateLayout, parameterMap, startDate, endDate);
+			groupId, parameterMap, startDate, endDate);
 	}
 
 	/**
 	 * Exports all layouts that match the primary keys and criteria as a file.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutIds the primary keys of the layouts to be exported
 	 *         (optionally <code>null</code>)
 	 * @param  parameterMap the mapping of parameters indicating which
@@ -440,16 +430,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public File exportLayoutsAsFile(
-			long groupId, boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			long groupId, long[] layoutIds, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.exportLayoutsAsFile(
-			groupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
+			groupId, layoutIds, parameterMap, startDate, endDate);
 	}
 
 	@Override
@@ -482,25 +471,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), exportImportConfigurationId);
 	}
 
-	@Override
-	public long exportLayoutsAsFileInBackground(
-			String taskName, long groupId, boolean privateLayout,
-			long[] layoutIds, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate)
-		throws PortalException {
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
-
-		return layoutLocalService.exportLayoutsAsFileInBackground(
-			getUserId(), taskName, groupId, privateLayout, layoutIds,
-			parameterMap, startDate, endDate);
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #exportLayoutsAsFileInBackground(String, long, boolean,
-	 *             long[], Map, Date, Date)}
+	 *             #exportLayoutsAsFileInBackground(String, long, long[], Map,
+	 *             Date, Date)}
 	 */
 	@Deprecated
 	@Override
@@ -514,8 +488,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.exportLayoutsAsFileInBackground(
-			getUserId(), taskName, groupId, privateLayout, layoutIds,
-			parameterMap, startDate, endDate, fileName);
+			getUserId(), taskName, groupId, layoutIds, parameterMap, startDate,
+			endDate, fileName);
+	}
+
+	@Override
+	public long exportLayoutsAsFileInBackground(
+			String taskName, long groupId, long[] layoutIds,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.exportLayoutsAsFileInBackground(
+			getUserId(), taskName, groupId, layoutIds, parameterMap, startDate,
+			endDate);
 	}
 
 	/**
@@ -685,7 +673,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  scopeGroupId the primary key of the scope group. See {@link
 	 *         com.liferay.portal.service.ServiceContext#getScopeGroupId()}.
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  portletId the primary key of the portlet
 	 * @return Returns the primary key of the default layout group; {@link
 	 *         com.liferay.portal.model.LayoutConstants#DEFAULT_PLID} otherwise
@@ -693,9 +680,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         key could not be found
 	 */
 	@Override
+	@ThreadLocalCachable
 	public long getDefaultPlid(
-			long groupId, long scopeGroupId, boolean privateLayout,
-			String portletId)
+			long groupId, long scopeGroupId, String portletId)
 		throws PortalException {
 
 		if (groupId <= 0) {
@@ -719,7 +706,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			PortletPreferencesFactoryUtil.getPortletSetupMap(
 				scopeGroup.getCompanyId(), groupId,
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, portletId, privateLayout);
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, portletId);
 
 		for (Map.Entry<Long, javax.portlet.PortletPreferences> entry :
 				jxPortletPreferencesMap.entrySet()) {
@@ -786,39 +773,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return LayoutConstants.DEFAULT_PLID;
 	}
 
-	@Override
-	@ThreadLocalCachable
-	public long getDefaultPlid(
-			long groupId, long scopeGroupId, String portletId)
-		throws PortalException {
-
-		long plid = getDefaultPlid(groupId, scopeGroupId, false, portletId);
-
-		if (plid == 0) {
-			plid = getDefaultPlid(groupId, scopeGroupId, true, portletId);
-		}
-
-		return plid;
-	}
-
 	/**
 	 * Returns the layout matching the UUID, group, and privacy.
 	 *
 	 * @param  uuid the layout's UUID
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @return the matching layout
 	 * @throws PortalException if a matching layout could not be found, if the
 	 *         user did not have permission to view the layout, or if some other
 	 *         portal exception occurred
 	 */
 	@Override
-	public Layout getLayoutByUuidAndGroupId(
-			String uuid, long groupId, boolean privateLayout)
+	public Layout getLayoutByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
 
 		Layout layout = layoutLocalService.getLayoutByUuidAndGroupId(
-			uuid, groupId, privateLayout);
+			uuid, groupId);
 
 		LayoutPermissionUtil.check(
 			getPermissionChecker(), layout, ActionKeys.VIEW);
@@ -830,7 +800,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Returns the name of the layout.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the primary key of the layout
 	 * @param  languageId the primary key of the language. For more information
 	 *         See {@link java.util.Locale}.
@@ -838,13 +807,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @throws PortalException if a matching layout could not be found
 	 */
 	@Override
-	public String getLayoutName(
-			long groupId, boolean privateLayout, long layoutId,
-			String languageId)
+	public String getLayoutName(long groupId, long layoutId, String languageId)
 		throws PortalException {
 
-		Layout layout = layoutLocalService.getLayout(
-			groupId, privateLayout, layoutId);
+		Layout layout = layoutLocalService.getLayout(groupId, layoutId);
 
 		return layout.getName(languageId);
 	}
@@ -869,36 +835,30 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
-	public List<Layout> getLayouts(long groupId, boolean privateLayout) {
-		return layoutPersistence.filterFindByG_P(groupId, privateLayout);
+	public List<Layout> getLayouts(long groupId) {
+		return layoutPersistence.filterFindByGroupId(groupId);
+	}
+
+	@Override
+	public List<Layout> getLayouts(long groupId, long parentLayoutId) {
+		return layoutPersistence.filterFindByG_P(groupId, parentLayoutId);
 	}
 
 	@Override
 	public List<Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId) {
-
-		return layoutPersistence.filterFindByG_P_P(
-			groupId, privateLayout, parentLayoutId);
-	}
-
-	@Override
-	public List<Layout> getLayouts(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			boolean incomplete, int start, int end)
+			long groupId, long parentLayoutId, boolean incomplete, int start,
+			int end)
 		throws PortalException {
 
 		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete, start, end);
+			groupId, parentLayoutId, incomplete, start, end);
 
 		return filterLayouts(layouts);
 	}
 
 	@Override
-	public int getLayoutsCount(
-		long groupId, boolean privateLayout, long parentLayoutId) {
-
-		return layoutPersistence.filterCountByG_P_P(
-			groupId, privateLayout, parentLayoutId);
+	public int getLayoutsCount(long groupId, long parentLayoutId) {
+		return layoutPersistence.filterCountByG_P(groupId, parentLayoutId);
 	}
 
 	@Override
@@ -917,7 +877,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Imports the layouts from the byte array.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parameterMap the mapping of parameters indicating which
 	 *         information will be imported. For information on the keys used in
 	 *         the map see {@link
@@ -930,22 +889,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public void importLayouts(
-			long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, byte[] bytes)
+			long groupId, Map<String, String[]> parameterMap, byte[] bytes)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		layoutLocalService.importLayouts(
-			getUserId(), groupId, privateLayout, parameterMap, bytes);
+			getUserId(), groupId, parameterMap, bytes);
 	}
 
 	/**
 	 * Imports the layouts from the file.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parameterMap the mapping of parameters indicating which
 	 *         information will be imported. For information on the keys used in
 	 *         the map see {@link
@@ -958,22 +915,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public void importLayouts(
-			long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, File file)
+			long groupId, Map<String, String[]> parameterMap, File file)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		layoutLocalService.importLayouts(
-			getUserId(), groupId, privateLayout, parameterMap, file);
+			getUserId(), groupId, parameterMap, file);
 	}
 
 	/**
 	 * Imports the layouts from the input stream.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parameterMap the mapping of parameters indicating which
 	 *         information will be imported. For information on the keys used in
 	 *         the map see {@link
@@ -986,42 +941,40 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public void importLayouts(
-			long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, InputStream is)
+			long groupId, Map<String, String[]> parameterMap, InputStream is)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		layoutLocalService.importLayouts(
-			getUserId(), groupId, privateLayout, parameterMap, is);
+			getUserId(), groupId, parameterMap, is);
 	}
 
 	@Override
 	public long importLayoutsInBackground(
-			String taskName, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, File file)
+			String taskName, long groupId, Map<String, String[]> parameterMap,
+			File file)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.importLayoutsInBackground(
-			getUserId(), taskName, groupId, privateLayout, parameterMap, file);
+			getUserId(), taskName, groupId, parameterMap, file);
 	}
 
 	@Override
 	public long importLayoutsInBackground(
-			String taskName, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, InputStream inputStream)
+			String taskName, long groupId, Map<String, String[]> parameterMap,
+			InputStream inputStream)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.importLayoutsInBackground(
-			getUserId(), taskName, groupId, privateLayout, parameterMap,
-			inputStream);
+			getUserId(), taskName, groupId, parameterMap, inputStream);
 	}
 
 	/**
@@ -1193,7 +1146,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *
 	 * @param  sourceGroupId the primary key of the source group
 	 * @param  targetGroupId the primary key of the target group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutIds the layouts considered for publishing, specified by the
 	 *         layout IDs
 	 * @param  parameterMap the mapping of parameters indicating which
@@ -1216,9 +1168,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public void schedulePublishToLive(
-			long sourceGroupId, long targetGroupId, boolean privateLayout,
-			long[] layoutIds, Map<String, String[]> parameterMap, String scope,
-			Date startDate, Date endDate, String groupName, String cronText,
+			long sourceGroupId, long targetGroupId, long[] layoutIds,
+			Map<String, String[]> parameterMap, String scope, Date startDate,
+			Date endDate, String groupName, String cronText,
 			Date schedulerStartDate, Date schedulerEndDate, String description)
 		throws PortalException {
 
@@ -1233,8 +1185,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				getUserId(), sourceGroupId, targetGroupId, privateLayout,
-				layoutIds, parameterMap, user.getLocale(), user.getTimeZone());
+				getUserId(), sourceGroupId, targetGroupId, layoutIds,
+				parameterMap, user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.addExportImportConfiguration(
@@ -1255,7 +1207,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *
 	 * @param      sourceGroupId the primary key of the source group
 	 * @param      targetGroupId the primary key of the target group
-	 * @param      privateLayout whether the layout is private to the group
 	 * @param      layoutIdMap the layouts considered for publishing, specified
 	 *             by the layout IDs and booleans indicating whether they have
 	 *             children
@@ -1279,13 +1230,13 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @throws     PortalException if the group did not have permission to
 	 *             manage and publish
 	 * @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
-	 *             long, boolean, long[], Map, String, Date, Date, String,
-	 *             String, Date, Date, String)}
+	 *             long, long[], Map, String, Date, Date, String, String, Date,
+	 *             Date, String)}
 	 */
 	@Deprecated
 	@Override
 	public void schedulePublishToLive(
-			long sourceGroupId, long targetGroupId, boolean privateLayout,
+			long sourceGroupId, long targetGroupId,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 			String scope, Date startDate, Date endDate, String groupName,
 			String cronText, Date schedulerStartDate, Date schedulerEndDate,
@@ -1293,7 +1244,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		schedulePublishToLive(
-			sourceGroupId, targetGroupId, privateLayout,
+			sourceGroupId, targetGroupId,
 			ExportImportHelperUtil.getLayoutIds(layoutIdMap, targetGroupId),
 			parameterMap, scope, startDate, endDate, groupName, cronText,
 			schedulerStartDate, schedulerEndDate, description);
@@ -1303,7 +1254,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Schedules a range of layouts to be stored.
 	 *
 	 * @param  sourceGroupId the primary key of the source group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutIdMap the layouts considered for publishing, specified by
 	 *         the layout IDs and booleans indicating whether they have children
 	 * @param  parameterMap the mapping of parameters indicating which
@@ -1314,7 +1264,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  remotePathContext the remote path context
 	 * @param  secureConnection whether the connection is secure
 	 * @param  remoteGroupId the primary key of the remote group
-	 * @param  remotePrivateLayout whether remote group's layout is private
 	 * @param  startDate the start date
 	 * @param  endDate the end date
 	 * @param  groupName the group name. Optionally {@link
@@ -1330,13 +1279,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public void schedulePublishToRemote(
-			long sourceGroupId, boolean privateLayout,
-			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId,
-			boolean remotePrivateLayout, Date startDate, Date endDate,
-			String groupName, String cronText, Date schedulerStartDate,
-			Date schedulerEndDate, String description)
+			long sourceGroupId, Map<Long, Boolean> layoutIdMap,
+			Map<String, String[]> parameterMap, String remoteAddress,
+			int remotePort, String remotePathContext, boolean secureConnection,
+			long remoteGroupId, Date startDate, Date endDate, String groupName,
+			String cronText, Date schedulerStartDate, Date schedulerEndDate,
+			String description)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
@@ -1350,10 +1298,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				getUserId(), sourceGroupId, privateLayout, layoutIdMap,
-				parameterMap, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId, remotePrivateLayout,
-				user.getLocale(), user.getTimeZone());
+				getUserId(), sourceGroupId, layoutIdMap, parameterMap,
+				remoteAddress, remotePort, remotePathContext, secureConnection,
+				remoteGroupId, user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.addExportImportConfiguration(
@@ -1374,7 +1321,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * the parent layout.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the primary key of the parent layout
 	 * @param  layoutIds the primary keys of the layouts
 	 * @param  serviceContext the service context to be applied
@@ -1386,15 +1332,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public void setLayouts(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			long[] layoutIds, ServiceContext serviceContext)
+			long groupId, long parentLayoutId, long[] layoutIds,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		layoutLocalService.setLayouts(
-			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
+			groupId, parentLayoutId, layoutIds, serviceContext);
 	}
 
 	/**
@@ -1457,7 +1403,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Updates the layout with additional parameters.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the primary key of the layout
 	 * @param  parentLayoutId the primary key of the layout's new parent layout
 	 * @param  localeNamesMap the layout's locales and localized names
@@ -1488,8 +1433,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public Layout updateLayout(
-			long groupId, boolean privateLayout, long layoutId,
-			long parentLayoutId, Map<Locale, String> localeNamesMap,
+			long groupId, long layoutId, long parentLayoutId,
+			Map<Locale, String> localeNamesMap,
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
@@ -1498,20 +1443,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), groupId, layoutId, ActionKeys.UPDATE);
 
 		return layoutLocalService.updateLayout(
-			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
-			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, friendlyURLMap, iconImage, iconBytes, serviceContext);
+			groupId, layoutId, parentLayoutId, localeNamesMap, localeTitlesMap,
+			descriptionMap, keywordsMap, robotsMap, type, hidden,
+			friendlyURLMap, iconImage, iconBytes, serviceContext);
 	}
 
 	/**
 	 * Updates the layout with additional parameters.
 	 *
 	 * @param      groupId the primary key of the group
-	 * @param      privateLayout whether the layout is private to the group
 	 * @param      layoutId the primary key of the layout
 	 * @param      parentLayoutId the primary key of the layout's new parent
 	 *             layout
@@ -1541,15 +1484,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             update the layout, if a unique friendly URL could not be
 	 *             generated, if a valid parent layout ID to use could not be
 	 *             found, or if the layout parameters were invalid
-	 * @deprecated As of 6.2.0, replaced by {@link #updateLayout(long, boolean,
-	 *             long, long, Map, Map, Map, Map, Map, String, boolean, Map,
-	 *             boolean, byte[], ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #updateLayout(long, long,
+	 *             long, Map, Map, Map, Map, Map, String, boolean, Map, boolean,
+	 *             byte[], ServiceContext)}
 	 */
 	@Deprecated
 	@Override
 	public Layout updateLayout(
-			long groupId, boolean privateLayout, long layoutId,
-			long parentLayoutId, Map<Locale, String> localeNamesMap,
+			long groupId, long layoutId, long parentLayoutId,
+			Map<Locale, String> localeNamesMap,
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
@@ -1558,11 +1501,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), groupId, layoutId, ActionKeys.UPDATE);
 
 		return layoutLocalService.updateLayout(
-			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
+			groupId, false, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURL, iconImage, iconBytes, serviceContext);
 	}
@@ -1571,7 +1513,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Updates the layout replacing its type settings.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the primary key of the layout
 	 * @param  typeSettings the settings to load the unicode properties object.
 	 *         See {@link com.liferay.portal.kernel.util.UnicodeProperties
@@ -1581,24 +1522,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         user did not have permission to update the layout
 	 */
 	@Override
-	public Layout updateLayout(
-			long groupId, boolean privateLayout, long layoutId,
-			String typeSettings)
+	public Layout updateLayout(long groupId, long layoutId, String typeSettings)
 		throws PortalException {
 
 		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), groupId, layoutId, ActionKeys.UPDATE);
 
-		return layoutLocalService.updateLayout(
-			groupId, privateLayout, layoutId, typeSettings);
+		return layoutLocalService.updateLayout(groupId, layoutId, typeSettings);
 	}
 
 	/**
 	 * Updates the look and feel of the layout.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the primary key of the layout
 	 * @param  themeId the primary key of the layout's new theme
 	 * @param  colorSchemeId the primary key of the layout's new color scheme
@@ -1611,13 +1547,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public Layout updateLookAndFeel(
-			long groupId, boolean privateLayout, long layoutId, String themeId,
-			String colorSchemeId, String css, boolean wapTheme)
+			long groupId, long layoutId, String themeId, String colorSchemeId,
+			String css, boolean wapTheme)
 		throws PortalException {
 
 		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), groupId, layoutId, ActionKeys.UPDATE);
 
 		if (Validator.isNotNull(themeId)) {
 			pluginSettingLocalService.checkPermission(
@@ -1625,8 +1560,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		return layoutLocalService.updateLookAndFeel(
-			groupId, privateLayout, layoutId, themeId, colorSchemeId, css,
-			wapTheme);
+			groupId, layoutId, themeId, colorSchemeId, css, wapTheme);
 	}
 
 	/**
@@ -1634,7 +1568,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * privacy.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the primary key of the layout
 	 * @param  name the layout's new name
 	 * @param  languageId the primary key of the language. For more information
@@ -1646,16 +1579,14 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public Layout updateName(
-			long groupId, boolean privateLayout, long layoutId, String name,
-			String languageId)
+			long groupId, long layoutId, String name, String languageId)
 		throws PortalException {
 
 		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), groupId, layoutId, ActionKeys.UPDATE);
 
 		return layoutLocalService.updateName(
-			groupId, privateLayout, layoutId, name, languageId);
+			groupId, layoutId, name, languageId);
 	}
 
 	/**
@@ -1678,34 +1609,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), plid, ActionKeys.UPDATE);
 
 		return layoutLocalService.updateName(plid, name, languageId);
-	}
-
-	/**
-	 * Updates the parent layout ID of the layout matching the group, layout ID,
-	 * and privacy.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  layoutId the primary key of the layout
-	 * @param  parentLayoutId the primary key to be assigned to the parent
-	 *         layout
-	 * @return the matching layout
-	 * @throws PortalException if a valid parent layout ID to use could not be
-	 *         found, if a matching layout could not be found, or if the user
-	 *         did not have permission to update the layout
-	 */
-	@Override
-	public Layout updateParentLayoutId(
-			long groupId, boolean privateLayout, long layoutId,
-			long parentLayoutId)
-		throws PortalException {
-
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
-
-		return layoutLocalService.updateParentLayoutId(
-			groupId, privateLayout, layoutId, parentLayoutId);
 	}
 
 	/**
@@ -1733,6 +1636,31 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
+	 * Updates the parent layout ID of the layout matching the group, layout ID,
+	 * and privacy.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  layoutId the primary key of the layout
+	 * @param  parentLayoutId the primary key to be assigned to the parent
+	 *         layout
+	 * @return the matching layout
+	 * @throws PortalException if a valid parent layout ID to use could not be
+	 *         found, if a matching layout could not be found, or if the user
+	 *         did not have permission to update the layout
+	 */
+	@Override
+	public Layout updateParentLayoutId(
+			long groupId, long layoutId, long parentLayoutId)
+		throws PortalException {
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), groupId, layoutId, ActionKeys.UPDATE);
+
+		return layoutLocalService.updateParentLayoutId(
+			groupId, layoutId, parentLayoutId);
+	}
+
+	/**
 	 * Updates the parent layout ID and priority of the layout.
 	 *
 	 * @param  plid the primary key of the layout
@@ -1748,59 +1676,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutLocalService.updateParentLayoutIdAndPriority(
 			plid, parentPlid, priority);
-	}
-
-	/**
-	 * Updates the priority of the layout matching the group, layout ID, and
-	 * privacy.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  layoutId the primary key of the layout
-	 * @param  priority the layout's new priority
-	 * @return the updated layout
-	 * @throws PortalException if a matching layout could not be found or if the
-	 *         user did not have permission to update the layout
-	 */
-	@Override
-	public Layout updatePriority(
-			long groupId, boolean privateLayout, long layoutId, int priority)
-		throws PortalException {
-
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
-
-		return layoutLocalService.updatePriority(
-			groupId, privateLayout, layoutId, priority);
-	}
-
-	/**
-	 * Updates the priority of the layout matching the group, layout ID, and
-	 * privacy, setting the layout's priority based on the priorities of the
-	 * next and previous layouts.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  layoutId the primary key of the layout
-	 * @param  nextLayoutId the primary key of the next layout
-	 * @param  previousLayoutId the primary key of the previous layout
-	 * @return the updated layout
-	 * @throws PortalException if a matching layout could not be found or if the
-	 *         user did not have permission to update the layout
-	 */
-	@Override
-	public Layout updatePriority(
-			long groupId, boolean privateLayout, long layoutId,
-			long nextLayoutId, long previousLayoutId)
-		throws PortalException {
-
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
-
-		return layoutLocalService.updatePriority(
-			groupId, privateLayout, layoutId, nextLayoutId, previousLayoutId);
 	}
 
 	/**
@@ -1822,30 +1697,76 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.updatePriority(plid, priority);
 	}
 
+	/**
+	 * Updates the priority of the layout matching the group, layout ID, and
+	 * privacy.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  layoutId the primary key of the layout
+	 * @param  priority the layout's new priority
+	 * @return the updated layout
+	 * @throws PortalException if a matching layout could not be found or if the
+	 *         user did not have permission to update the layout
+	 */
 	@Override
-	public MissingReferences validateImportLayoutsFile(
-			long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, File file)
+	public Layout updatePriority(long groupId, long layoutId, int priority)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), groupId, layoutId, ActionKeys.UPDATE);
 
-		return layoutLocalService.validateImportLayoutsFile(
-			getUserId(), groupId, privateLayout, parameterMap, file);
+		return layoutLocalService.updatePriority(groupId, layoutId, priority);
+	}
+
+	/**
+	 * Updates the priority of the layout matching the group, layout ID, and
+	 * privacy, setting the layout's priority based on the priorities of the
+	 * next and previous layouts.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  layoutId the primary key of the layout
+	 * @param  nextLayoutId the primary key of the next layout
+	 * @param  previousLayoutId the primary key of the previous layout
+	 * @return the updated layout
+	 * @throws PortalException if a matching layout could not be found or if the
+	 *         user did not have permission to update the layout
+	 */
+	@Override
+	public Layout updatePriority(
+			long groupId, long layoutId, long nextLayoutId,
+			long previousLayoutId)
+		throws PortalException {
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), groupId, layoutId, ActionKeys.UPDATE);
+
+		return layoutLocalService.updatePriority(
+			groupId, layoutId, nextLayoutId, previousLayoutId);
 	}
 
 	@Override
 	public MissingReferences validateImportLayoutsFile(
-			long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, InputStream inputStream)
+			long groupId, Map<String, String[]> parameterMap, File file)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.validateImportLayoutsFile(
-			getUserId(), groupId, privateLayout, parameterMap, inputStream);
+			getUserId(), groupId, parameterMap, file);
+	}
+
+	@Override
+	public MissingReferences validateImportLayoutsFile(
+			long groupId, Map<String, String[]> parameterMap,
+			InputStream inputStream)
+		throws PortalException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.validateImportLayoutsFile(
+			getUserId(), groupId, parameterMap, inputStream);
 	}
 
 	@Override

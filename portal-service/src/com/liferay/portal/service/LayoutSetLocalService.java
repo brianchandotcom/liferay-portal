@@ -45,8 +45,8 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetLocalServiceUtil} to access the layout set local service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutSetLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.LayoutSet addLayoutSet(long groupId,
-		boolean privateLayout) throws PortalException;
+	public com.liferay.portal.model.LayoutSet addLayoutSet(long groupId)
+		throws PortalException;
 
 	/**
 	* Adds the layout set to the database. Also notifies the appropriate model listeners.
@@ -66,7 +66,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portal.model.LayoutSet createLayoutSet(long layoutSetId);
 
-	public void deleteLayoutSet(long groupId, boolean privateLayout,
+	public void deleteLayoutSet(long groupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -181,10 +181,6 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSet getLayoutSet(long groupId,
-		boolean privateLayout) throws PortalException;
-
 	/**
 	* Returns the layout set with the primary key.
 	*
@@ -252,6 +248,20 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	/**
 	* Updates the state of the layout set prototype link.
 	*
+	* @param groupId the primary key of the group
+	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
+	link enabled
+	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
+	link with
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
+		boolean layoutSetPrototypeLinkEnabled,
+		java.lang.String layoutSetPrototypeUuid) throws PortalException;
+
+	/**
+	* Updates the state of the layout set prototype link.
+	*
 	* <p>
 	* This method can disable the layout set prototype's link by setting
 	* <code>layoutSetPrototypeLinkEnabled</code> to <code>false</code>.
@@ -276,54 +286,29 @@ public interface LayoutSetLocalService extends BaseLocalService,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
 		throws PortalException;
 
-	/**
-	* Updates the state of the layout set prototype link.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout set is private to the group
-	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
-	link enabled
-	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
-	link with
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
-		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
-		java.lang.String layoutSetPrototypeUuid) throws PortalException;
+	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
+		boolean logo, byte[] bytes) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, byte[] bytes)
+		boolean logo, java.io.File file) throws PortalException;
+
+	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
+		boolean logo, java.io.InputStream is) throws PortalException;
+
+	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
+		boolean logo, java.io.InputStream is, boolean cleanUpStream)
 		throws PortalException;
-
-	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.File file)
-		throws PortalException;
-
-	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream is)
-		throws PortalException;
-
-	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream is,
-		boolean cleanUpStream) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,
-		boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
-		throws PortalException;
+		java.lang.String themeId, java.lang.String colorSchemeId,
+		java.lang.String css, boolean wapTheme) throws PortalException;
 
-	public void updateLookAndFeel(long groupId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+	public com.liferay.portal.model.LayoutSet updatePageCount(long groupId)
 		throws PortalException;
-
-	public com.liferay.portal.model.LayoutSet updatePageCount(long groupId,
-		boolean privateLayout) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateSettings(long groupId,
-		boolean privateLayout, java.lang.String settings)
-		throws PortalException;
+		java.lang.String settings) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateVirtualHost(long groupId,
-		boolean privateLayout, java.lang.String virtualHostname)
-		throws PortalException;
+		java.lang.String virtualHostname) throws PortalException;
 }

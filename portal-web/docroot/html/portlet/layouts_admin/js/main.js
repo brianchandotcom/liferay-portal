@@ -782,12 +782,6 @@ AUI.add(
 								portletURL.setParameter('liveGroupId', liveGroupIdNode.val());
 							}
 
-							var privateLayoutNode = instance.byId('privateLayout');
-
-							if (privateLayoutNode) {
-								portletURL.setParameter('privateLayout', privateLayoutNode.val());
-							}
-
 							var rootNodeNameNode = instance.byId('rootNodeName');
 
 							if (rootNodeNameNode) {

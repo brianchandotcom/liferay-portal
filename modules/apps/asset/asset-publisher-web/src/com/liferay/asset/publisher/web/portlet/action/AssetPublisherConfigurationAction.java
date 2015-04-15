@@ -544,7 +544,7 @@ public class AssetPublisherConfigurationAction
 		}
 
 		layout = LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getGroupId(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {

@@ -21,7 +21,6 @@ long groupId = ParamUtil.getLong(request, "groupId");
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
 boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
@@ -32,7 +31,6 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 </liferay-portlet:renderURL>
 
 <%
@@ -57,7 +55,6 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 					<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				</portlet:renderURL>
 
 				<aui:nav-item href="<%= addPublishConfigurationURL %>" iconCssClass="icon-plus" label="new" />
@@ -93,7 +90,6 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 				<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:search-container-column-text

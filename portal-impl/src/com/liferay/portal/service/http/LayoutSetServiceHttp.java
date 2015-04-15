@@ -54,7 +54,7 @@ import com.liferay.portal.service.LayoutSetServiceUtil;
 @ProviderType
 public class LayoutSetServiceHttp {
 	public static void updateLayoutSetPrototypeLinkEnabled(
-		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
+		HttpPrincipal httpPrincipal, long groupId,
 		boolean layoutSetPrototypeLinkEnabled,
 		java.lang.String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,8 +64,7 @@ public class LayoutSetServiceHttp {
 					_updateLayoutSetPrototypeLinkEnabledParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, layoutSetPrototypeLinkEnabled,
-					layoutSetPrototypeUuid);
+					layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -86,14 +85,14 @@ public class LayoutSetServiceHttp {
 	}
 
 	public static void updateLogo(HttpPrincipal httpPrincipal, long groupId,
-		boolean privateLayout, boolean logo, byte[] bytes)
+		boolean logo, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, logo, bytes);
+					logo, bytes);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -114,14 +113,14 @@ public class LayoutSetServiceHttp {
 	}
 
 	public static void updateLogo(HttpPrincipal httpPrincipal, long groupId,
-		boolean privateLayout, boolean logo, java.io.File file)
+		boolean logo, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, logo, file);
+					logo, file);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -142,14 +141,14 @@ public class LayoutSetServiceHttp {
 	}
 
 	public static void updateLogo(HttpPrincipal httpPrincipal, long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream inputStream)
+		boolean logo, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, logo, inputStream);
+					logo, inputStream);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -170,15 +169,14 @@ public class LayoutSetServiceHttp {
 	}
 
 	public static void updateLogo(HttpPrincipal httpPrincipal, long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream inputStream,
-		boolean cleanUpStream)
+		boolean logo, java.io.InputStream inputStream, boolean cleanUpStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLogo", _updateLogoParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, logo, inputStream, cleanUpStream);
+					logo, inputStream, cleanUpStream);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -199,16 +197,15 @@ public class LayoutSetServiceHttp {
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateLookAndFeel(
-		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-		java.lang.String themeId, java.lang.String colorSchemeId,
-		java.lang.String css, boolean wapTheme)
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String themeId,
+		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateLookAndFeel", _updateLookAndFeelParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, themeId, colorSchemeId, css, wapTheme);
+					themeId, colorSchemeId, css, wapTheme);
 
 			Object returnObj = null;
 
@@ -233,15 +230,14 @@ public class LayoutSetServiceHttp {
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateSettings(
-		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-		java.lang.String settings)
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateSettings", _updateSettingsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, settings);
+					settings);
 
 			Object returnObj = null;
 
@@ -266,15 +262,14 @@ public class LayoutSetServiceHttp {
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateVirtualHost(
-		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-		java.lang.String virtualHost)
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String virtualHost)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutSetServiceUtil.class,
 					"updateVirtualHost", _updateVirtualHostParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					privateLayout, virtualHost);
+					virtualHost);
 
 			Object returnObj = null;
 
@@ -300,30 +295,27 @@ public class LayoutSetServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetServiceHttp.class);
 	private static final Class<?>[] _updateLayoutSetPrototypeLinkEnabledParameterTypes0 =
-		new Class[] {
-			long.class, boolean.class, boolean.class, java.lang.String.class
-		};
+		new Class[] { long.class, boolean.class, java.lang.String.class };
 	private static final Class<?>[] _updateLogoParameterTypes1 = new Class[] {
-			long.class, boolean.class, boolean.class, byte[].class
+			long.class, boolean.class, byte[].class
 		};
 	private static final Class<?>[] _updateLogoParameterTypes2 = new Class[] {
-			long.class, boolean.class, boolean.class, java.io.File.class
+			long.class, boolean.class, java.io.File.class
 		};
 	private static final Class<?>[] _updateLogoParameterTypes3 = new Class[] {
-			long.class, boolean.class, boolean.class, java.io.InputStream.class
+			long.class, boolean.class, java.io.InputStream.class
 		};
 	private static final Class<?>[] _updateLogoParameterTypes4 = new Class[] {
-			long.class, boolean.class, boolean.class, java.io.InputStream.class,
-			boolean.class
+			long.class, boolean.class, java.io.InputStream.class, boolean.class
 		};
 	private static final Class<?>[] _updateLookAndFeelParameterTypes5 = new Class[] {
-			long.class, boolean.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class
+			long.class, java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, boolean.class
 		};
 	private static final Class<?>[] _updateSettingsParameterTypes6 = new Class[] {
-			long.class, boolean.class, java.lang.String.class
+			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateVirtualHostParameterTypes7 = new Class[] {
-			long.class, boolean.class, java.lang.String.class
+			long.class, java.lang.String.class
 		};
 }

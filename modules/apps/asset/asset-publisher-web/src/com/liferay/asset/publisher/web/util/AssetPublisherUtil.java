@@ -891,8 +891,7 @@ public class AssetPublisherUtil {
 			AssetPublisherWebConfigurationValues.EMAIL_FROM_NAME);
 	}
 
-	public static long getGroupIdFromScopeId(
-			String scopeId, long siteGroupId, boolean privateLayout)
+	public static long getGroupIdFromScopeId(String scopeId, long siteGroupId)
 		throws PortalException {
 
 		if (scopeId.startsWith(SCOPE_ID_CHILD_GROUP_PREFIX)) {
@@ -933,7 +932,7 @@ public class AssetPublisherUtil {
 
 			Layout scopeIdLayout =
 				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					layoutUuid, siteGroupId, privateLayout);
+					layoutUuid, siteGroupId);
 
 			Group scopeIdGroup = null;
 
@@ -968,7 +967,7 @@ public class AssetPublisherUtil {
 			long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
 
 			Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
-				siteGroupId, privateLayout, scopeIdLayoutId);
+				siteGroupId, scopeIdLayoutId);
 
 			Group scopeIdGroup = scopeIdLayout.getScopeGroup();
 
@@ -1010,8 +1009,7 @@ public class AssetPublisherUtil {
 
 		for (String scopeId : scopeIds) {
 			try {
-				long groupId = getGroupIdFromScopeId(
-					scopeId, scopeGroupId, layout.isPrivateLayout());
+				long groupId = getGroupIdFromScopeId(scopeId, scopeGroupId);
 
 				groupIds.add(groupId);
 			}
@@ -1074,8 +1072,7 @@ public class AssetPublisherUtil {
 			long companyGroupId, Layout layout)
 		throws PortalException {
 
-		long groupId = getGroupIdFromScopeId(
-			scopeId, layout.getGroupId(), layout.isPrivateLayout());
+		long groupId = getGroupIdFromScopeId(scopeId, layout.getGroupId());
 
 		if (scopeId.startsWith(SCOPE_ID_CHILD_GROUP_PREFIX)) {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);

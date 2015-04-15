@@ -118,8 +118,8 @@ public class PortletTCKStrutsAction extends BaseStrutsAction {
 			}
 
 			LayoutLocalServiceUtil.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getTypeSettings());
+				layout.getGroupId(), layout.getLayoutId(),
+				layout.getTypeSettings());
 
 			request.setAttribute(
 				WebKeys.FORWARD_URL,

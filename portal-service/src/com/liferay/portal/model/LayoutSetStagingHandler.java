@@ -140,12 +140,11 @@ public class LayoutSetStagingHandler
 		if (serviceContext.isSignedIn()) {
 			return LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
 				serviceContext.getUserId(), layoutSet.getGroupId(),
-				layoutSet.isPrivateLayout(), layoutSet.getLayoutSetId(),
-				layoutSetBranchId);
+				layoutSet.getLayoutSetId(), layoutSetBranchId);
 		}
 
 		return LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+			layoutSet.getGroupId());
 	}
 
 	private Object _toEscapedModel() {

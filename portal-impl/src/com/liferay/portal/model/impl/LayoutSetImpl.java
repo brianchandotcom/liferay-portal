@@ -78,10 +78,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 		_companyFallbackVirtualHostname = StringPool.BLANK;
 
-		if (Validator.isNotNull(
-				PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME) &&
-			!isPrivateLayout()) {
-
+		if (Validator.isNotNull(PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
 			Group group = GroupLocalServiceUtil.fetchGroup(
 				getCompanyId(), PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
@@ -159,14 +156,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 		Group liveGroup = group.getLiveGroup();
 
-		LayoutSet liveLayoutSet = null;
-
-		if (isPrivateLayout()) {
-			liveLayoutSet = liveGroup.getPrivateLayoutSet();
-		}
-		else {
-			liveLayoutSet = liveGroup.getPublicLayoutSet();
-		}
+		LayoutSet liveLayoutSet = liveGroup.getLayoutSet();
 
 		return liveLayoutSet.getLogoId();
 	}

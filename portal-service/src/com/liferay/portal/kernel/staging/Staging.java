@@ -52,7 +52,7 @@ public interface Staging {
 
 	public String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
-		boolean secureConnection, long remoteGroupId, boolean privateLayout);
+		boolean secureConnection, long remoteGroupId);
 
 	public String buildRemoteURL(UnicodeProperties typeSettingsProperties);
 
@@ -93,18 +93,9 @@ public interface Staging {
 	public void copyRemoteLayouts(long exportImportConfigurationId)
 		throws PortalException;
 
-	public void copyRemoteLayouts(
-			long sourceGroupId, boolean privateLayout,
-			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId,
-			boolean remotePrivateLayout)
-		throws PortalException;
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #copyRemoteLayouts(long,
-	 *             boolean, Map, Map, String, int, String, boolean, long,
-	 *             boolean)}
+	 *             Map, Map, String, int, String, boolean, long)}
 	 */
 	@Deprecated
 	public void copyRemoteLayouts(
@@ -115,7 +106,14 @@ public interface Staging {
 			boolean remotePrivateLayout, Date startDate, Date endDate)
 		throws PortalException;
 
-	public void deleteLastImportSettings(Group liveGroup, boolean privateLayout)
+	public void copyRemoteLayouts(
+			long sourceGroupId, Map<Long, Boolean> layoutIdMap,
+			Map<String, String[]> parameterMap, String remoteAddress,
+			int remotePort, String remotePathContext, boolean secureConnection,
+			long remoteGroupId)
+		throws PortalException;
+
+	public void deleteLastImportSettings(Group liveGroup)
 		throws PortalException;
 
 	public void deleteRecentLayoutRevisionId(
@@ -280,15 +278,9 @@ public interface Staging {
 	public void publishLayouts(long userId, long exportImportConfigurationId)
 		throws PortalException;
 
-	public void publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap)
-		throws PortalException;
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, long[], Map)}
+	 *             long, long[], Map)}
 	 */
 	@Deprecated
 	public void publishLayouts(
@@ -299,7 +291,7 @@ public interface Staging {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, long[], Map)}
+	 *             long, long[], Map)}
 	 */
 	@Deprecated
 	public void publishLayouts(
@@ -308,20 +300,26 @@ public interface Staging {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws PortalException;
 
-	public void publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, Map<String, String[]> parameterMap)
-		throws PortalException;
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishLayouts(long, long,
-	 *             long, boolean, Map)}
+	 *             long, Map)}
 	 */
 	@Deprecated
 	public void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, Map<String, String[]> parameterMap,
 			Date startDate, Date endDate)
+		throws PortalException;
+
+	public void publishLayouts(
+			long userId, long sourceGroupId, long targetGroupId,
+			long[] layoutIds,
+			Map<String, String[]> parameterMap)
+		throws PortalException;
+
+	public void publishLayouts(
+			long userId, long sourceGroupId, long targetGroupId,
+			Map<String, String[]> parameterMap)
 		throws PortalException;
 
 	public void publishPortlet(
@@ -402,8 +400,7 @@ public interface Staging {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.portal.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
-	 *             long, boolean, com.liferay.portal.kernel.util.DateRange,
-	 *             Date)}
+	 *             long, com.liferay.portal.kernel.util.DateRange, Date)}
 	 */
 	@Deprecated
 	public void updateLastPublishDate(

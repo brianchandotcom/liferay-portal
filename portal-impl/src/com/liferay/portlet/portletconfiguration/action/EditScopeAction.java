@@ -172,8 +172,7 @@ public class EditScopeAction extends PortletAction {
 
 			Layout scopeLayout =
 				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-					scopeLayoutUuid, layout.getGroupId(),
-					layout.isPrivateLayout());
+					scopeLayoutUuid, layout.getGroupId());
 
 			if (!scopeLayout.hasScopeGroup()) {
 				Map<Locale, String> nameMap = new HashMap<>();
@@ -231,8 +230,7 @@ public class EditScopeAction extends PortletAction {
 
 			Layout scopeLayout =
 				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-					scopeLayoutUuid, layout.getGroupId(),
-					layout.isPrivateLayout());
+					scopeLayoutUuid, layout.getGroupId());
 
 			if (scopeLayout != null) {
 				scopeName = scopeLayout.getName(themeDisplay.getLocale());

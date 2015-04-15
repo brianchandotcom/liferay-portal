@@ -79,7 +79,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -93,8 +93,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
 		sb.append(", logoId=");
 		sb.append(logoId);
 		sb.append(", themeId=");
@@ -143,7 +141,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 			layoutSetImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		layoutSetImpl.setPrivateLayout(privateLayout);
 		layoutSetImpl.setLogoId(logoId);
 
 		if (themeId == null) {
@@ -217,7 +214,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		privateLayout = objectInput.readBoolean();
 		logoId = objectInput.readLong();
 		themeId = objectInput.readUTF();
 		colorSchemeId = objectInput.readUTF();
@@ -242,7 +238,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-		objectOutput.writeBoolean(privateLayout);
 		objectOutput.writeLong(logoId);
 
 		if (themeId == null) {
@@ -308,7 +303,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;
-	public boolean privateLayout;
 	public long logoId;
 	public String themeId;
 	public String colorSchemeId;

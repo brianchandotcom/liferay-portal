@@ -91,7 +91,7 @@ public class PortalImplCanonicalURLTest {
 		friendlyURLMap.put(LocaleUtil.US, "/home1");
 
 		_layout1 = LayoutTestUtil.addLayout(
-			_group.getGroupId(), false, nameMap, friendlyURLMap);
+			_group.getGroupId(), nameMap, friendlyURLMap);
 
 		nameMap = new HashMap<>();
 
@@ -106,7 +106,7 @@ public class PortalImplCanonicalURLTest {
 		friendlyURLMap.put(LocaleUtil.US, "/home2");
 
 		_layout2 = LayoutTestUtil.addLayout(
-			_group.getGroupId(), false, nameMap, friendlyURLMap);
+			_group.getGroupId(), nameMap, friendlyURLMap);
 
 		if (_defaultGroup == null) {
 			_defaultGroup = GroupLocalServiceUtil.getGroup(
@@ -114,7 +114,7 @@ public class PortalImplCanonicalURLTest {
 				PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
 			_defaultGrouplayout1 = LayoutLocalServiceUtil.fetchFirstLayout(
-				_defaultGroup.getGroupId(), false,
+				_defaultGroup.getGroupId(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (_defaultGrouplayout1 == null) {
@@ -356,7 +356,7 @@ public class PortalImplCanonicalURLTest {
 
 		themeDisplay.setCompany(company);
 
-		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
+		themeDisplay.setLayoutSet(group.getLayoutSet());
 		themeDisplay.setServerPort(80);
 		themeDisplay.setSiteGroupId(group.getGroupId());
 

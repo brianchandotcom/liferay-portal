@@ -94,7 +94,7 @@ public class ServiceContextFactory {
 			serviceContext.setScopeGroupId(guestGroup.getGroupId());
 
 			long plid = LayoutLocalServiceUtil.getDefaultPlid(
-				serviceContext.getScopeGroupId(), false);
+				serviceContext.getScopeGroupId());
 
 			serviceContext.setPlid(plid);
 
@@ -120,10 +120,6 @@ public class ServiceContextFactory {
 
 		serviceContext.setPortalURL(PortalUtil.getPortalURL(request));
 		serviceContext.setPathMain(PortalUtil.getPathMain());
-		serviceContext.setPathFriendlyURLPrivateGroup(
-			PortalUtil.getPathFriendlyURLPrivateGroup());
-		serviceContext.setPathFriendlyURLPrivateUser(
-			PortalUtil.getPathFriendlyURLPrivateUser());
 		serviceContext.setPathFriendlyURLPublic(
 			PortalUtil.getPathFriendlyURLPublic());
 
@@ -303,10 +299,6 @@ public class ServiceContextFactory {
 			serviceContext.setLayoutFullURL(
 				PortalUtil.getLayoutFullURL(themeDisplay));
 			serviceContext.setLayoutURL(PortalUtil.getLayoutURL(themeDisplay));
-			serviceContext.setPathFriendlyURLPrivateGroup(
-				PortalUtil.getPathFriendlyURLPrivateGroup());
-			serviceContext.setPathFriendlyURLPrivateUser(
-				PortalUtil.getPathFriendlyURLPrivateUser());
 			serviceContext.setPathFriendlyURLPublic(
 				PortalUtil.getPathFriendlyURLPublic());
 			serviceContext.setPathMain(PortalUtil.getPathMain());

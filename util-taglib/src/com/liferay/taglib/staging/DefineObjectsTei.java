@@ -40,9 +40,6 @@ public class DefineObjectsTei extends TagExtraInfo {
 		new VariableInfo(
 			"liveGroupId", Long.class.getName(), true, VariableInfo.AT_END),
 		new VariableInfo(
-			"privateLayout", Boolean.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
 			"scopeGroup", Group.class.getName(), true, VariableInfo.AT_END),
 		new VariableInfo(
 			"scopeGroupId", Long.class.getName(), true, VariableInfo.AT_END),

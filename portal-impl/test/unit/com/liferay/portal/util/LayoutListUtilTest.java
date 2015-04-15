@@ -73,8 +73,7 @@ public class LayoutListUtilTest extends PowerMockito {
 		addLayouts(0, 0);
 
 		when(
-			LayoutLocalServiceUtil.getLayouts(
-				Mockito.anyLong(), Mockito.anyBoolean())
+			LayoutLocalServiceUtil.getLayouts(Mockito.anyLong())
 		).thenReturn(
 			_layouts
 		);

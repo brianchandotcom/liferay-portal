@@ -130,7 +130,7 @@ public class LayoutStagedModelDataHandlerTest
 			portletDataContext, exportedLayout);
 
 		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			linkedLayout.getUuid(), liveGroup.getGroupId(), false);
+			linkedLayout.getUuid(), liveGroup.getGroupId());
 
 		LayoutFriendlyURL linkedLayoutFriendlyURL =
 			linkedLayoutFriendlyURLs.get(0);
@@ -139,7 +139,7 @@ public class LayoutStagedModelDataHandlerTest
 			linkedLayoutFriendlyURL.getUuid(), liveGroup.getGroupId());
 
 		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			layout.getUuid(), liveGroup.getGroupId(), false);
+			layout.getUuid(), liveGroup.getGroupId());
 
 		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
 
@@ -203,7 +203,7 @@ public class LayoutStagedModelDataHandlerTest
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
 			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				uuid, group.getGroupId(), false);
+				uuid, group.getGroupId());
 		}
 		catch (Exception e) {
 			return null;
@@ -246,7 +246,7 @@ public class LayoutStagedModelDataHandlerTest
 		Layout parentLayout = (Layout)dependentStagedModels.get(0);
 
 		LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			parentLayout.getUuid(), group.getGroupId(), false);
+			parentLayout.getUuid(), group.getGroupId());
 
 		List<LayoutFriendlyURL> parentLayoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(

@@ -79,7 +79,7 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -109,8 +109,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		sb.append(major);
 		sb.append(", plid=");
 		sb.append(plid);
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", title=");
@@ -185,7 +183,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		layoutRevisionImpl.setHead(head);
 		layoutRevisionImpl.setMajor(major);
 		layoutRevisionImpl.setPlid(plid);
-		layoutRevisionImpl.setPrivateLayout(privateLayout);
 
 		if (name == null) {
 			layoutRevisionImpl.setName(StringPool.BLANK);
@@ -304,7 +301,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		head = objectInput.readBoolean();
 		major = objectInput.readBoolean();
 		plid = objectInput.readLong();
-		privateLayout = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -347,7 +343,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		objectOutput.writeBoolean(head);
 		objectOutput.writeBoolean(major);
 		objectOutput.writeLong(plid);
-		objectOutput.writeBoolean(privateLayout);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -455,7 +450,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 	public boolean head;
 	public boolean major;
 	public long plid;
-	public boolean privateLayout;
 	public String name;
 	public String title;
 	public String description;

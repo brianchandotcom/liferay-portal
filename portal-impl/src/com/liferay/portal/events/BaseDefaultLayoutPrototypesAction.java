@@ -64,7 +64,6 @@ public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			group.getCreatorUserId(), group.getGroupId(),
-			layoutSet.isPrivateLayout(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, null, null, null,
 			null, LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
 			friendlyURLMap, serviceContext);
@@ -106,7 +105,7 @@ public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 
 	protected void updateLayout(Layout layout) throws Exception {
 		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getGroupId(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}
 

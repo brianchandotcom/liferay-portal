@@ -289,6 +289,11 @@ public class OrganizationWrapper implements Organization,
 		return _organization.getGroupId();
 	}
 
+	@Override
+	public int getLayoutsPageCount() {
+		return _organization.getLayoutsPageCount();
+	}
+
 	/**
 	* Returns the logo ID of this organization.
 	*
@@ -378,16 +383,6 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public java.io.Serializable getPrimaryKeyObj() {
 		return _organization.getPrimaryKeyObj();
-	}
-
-	@Override
-	public int getPrivateLayoutsPageCount() {
-		return _organization.getPrivateLayoutsPageCount();
-	}
-
-	@Override
-	public int getPublicLayoutsPageCount() {
-		return _organization.getPublicLayoutsPageCount();
 	}
 
 	/**
@@ -508,13 +503,8 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public boolean hasPrivateLayouts() {
-		return _organization.hasPrivateLayouts();
-	}
-
-	@Override
-	public boolean hasPublicLayouts() {
-		return _organization.hasPublicLayouts();
+	public boolean hasLayouts() {
+		return _organization.hasLayouts();
 	}
 
 	@Override

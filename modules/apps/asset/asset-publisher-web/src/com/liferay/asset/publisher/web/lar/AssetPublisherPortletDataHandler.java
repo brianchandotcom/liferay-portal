@@ -337,8 +337,7 @@ public class AssetPublisherPortletDataHandler
 				long scopeIdLayoutId = GetterUtil.getLong(scopeIdSuffix);
 
 				Layout scopeIdLayout = LayoutLocalServiceUtil.getLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					scopeIdLayoutId);
+					layout.getGroupId(), scopeIdLayoutId);
 
 				newValues[i] =
 					AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX +

@@ -33,11 +33,10 @@ public class SitemapUtil {
 		return _sitemap;
 	}
 
-	public static String getSitemap(
-			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
+	public static String getSitemap(long groupId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return getSitemap().getSitemap(groupId, privateLayout, themeDisplay);
+		return getSitemap().getSitemap(groupId, themeDisplay);
 	}
 
 	public void setSitemap(Sitemap sitemap) {

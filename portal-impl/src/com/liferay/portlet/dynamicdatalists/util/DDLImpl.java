@@ -147,14 +147,11 @@ public class DDLImpl implements DDL {
 						String.valueOf(fieldValue));
 
 				long groupId = fieldValueJSONObject.getLong("groupId");
-				boolean privateLayout = fieldValueJSONObject.getBoolean(
-					"privateLayout");
 				long layoutId = fieldValueJSONObject.getLong("layoutId");
 				Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
 				String layoutName = getLayoutName(
-					groupId, privateLayout, layoutId,
-					LanguageUtil.getLanguageId(locale));
+					groupId, layoutId, LanguageUtil.getLanguageId(locale));
 
 				fieldValueJSONObject.put("name", layoutName);
 
@@ -449,11 +446,11 @@ public class DDLImpl implements DDL {
 	}
 
 	protected String getLayoutName(
-		long groupId, boolean privateLayout, long layoutId, String languageId) {
+		long groupId, long layoutId, String languageId) {
 
 		try {
 			return LayoutServiceUtil.getLayoutName(
-				groupId, privateLayout, layoutId, languageId);
+				groupId, layoutId, languageId);
 		}
 		catch (Exception e) {
 			return LanguageUtil.format(

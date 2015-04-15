@@ -171,8 +171,7 @@ public class LayoutExporter {
 		throws Exception {
 
 		File file = exportLayoutsAsFile(
-			groupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
+			groupId, layoutIds, parameterMap, startDate, endDate);
 
 		try {
 			return FileUtil.getBytes(file);
@@ -183,8 +182,8 @@ public class LayoutExporter {
 	}
 
 	public File exportLayoutsAsFile(
-			long groupId, boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			long groupId, long[] layoutIds, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
 		throws Exception {
 
 		PortletDataContext portletDataContext = null;
@@ -193,7 +192,7 @@ public class LayoutExporter {
 			ExportImportThreadLocal.setLayoutExportInProcess(true);
 
 			portletDataContext = getPortletDataContext(
-				groupId, privateLayout, parameterMap, startDate, endDate);
+				groupId, parameterMap, startDate, endDate);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_STARTED,
@@ -244,8 +243,7 @@ public class LayoutExporter {
 		}
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			portletDataContext.getGroupId(),
-			portletDataContext.isPrivateLayout());
+			portletDataContext.getGroupId());
 
 		long companyId = layoutSet.getCompanyId();
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
@@ -314,9 +312,6 @@ public class LayoutExporter {
 		headerElement.addAttribute(
 			"user-personal-site-group-id",
 			String.valueOf(portletDataContext.getUserPersonalSiteGroupId()));
-		headerElement.addAttribute(
-			"private-layout",
-			String.valueOf(portletDataContext.isPrivateLayout()));
 
 		Group group = layoutSet.getGroup();
 
@@ -398,8 +393,7 @@ public class LayoutExporter {
 		Map<String, Object[]> portletIds = new LinkedHashMap<>();
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			portletDataContext.getGroupId(),
-			portletDataContext.isPrivateLayout());
+			portletDataContext.getGroupId());
 
 		if (group.isStagingGroup()) {
 			group = group.getLiveGroup();
@@ -617,8 +611,7 @@ public class LayoutExporter {
 			TransactionCommitCallbackRegistryUtil.registerCallback(
 				new UpdateLayoutSetLastPublishDateCallable(
 					portletDataContext.getDateRange(),
-					portletDataContext.getGroupId(),
-					portletDataContext.isPrivateLayout()));
+					portletDataContext.getGroupId()));
 		}
 
 		portletDataContext.addZipEntry(
@@ -710,8 +703,7 @@ public class LayoutExporter {
 
 					scopeLayout =
 						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-							scopeLayoutUuid, portletDataContext.getGroupId(),
-							portletDataContext.isPrivateLayout());
+							scopeLayoutUuid, portletDataContext.getGroupId());
 
 					if (scopeLayout == null) {
 						continue;
@@ -743,20 +735,15 @@ public class LayoutExporter {
 	}
 
 	protected PortletDataContext getPortletDataContext(
-			long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			long groupId, Map<String, String[]> parameterMap, Date startDate,
+			Date endDate)
 		throws PortalException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createExportPortletDataContext(
-				group.getCompanyId(), groupId, parameterMap, startDate, endDate,
-				ZipWriterFactoryUtil.getZipWriter());
-
-		portletDataContext.setPrivateLayout(privateLayout);
-
-		return portletDataContext;
+		return PortletDataContextFactoryUtil.createExportPortletDataContext(
+			group.getCompanyId(), groupId, parameterMap, startDate, endDate,
+			ZipWriterFactoryUtil.getZipWriter());
 	}
 
 	private LayoutExporter() {
@@ -779,11 +766,10 @@ public class LayoutExporter {
 		implements Callable<Void> {
 
 		public UpdateLayoutSetLastPublishDateCallable(
-			DateRange dateRange, long groupId, boolean privateLayout) {
+			DateRange dateRange, long groupId) {
 
 			_dateRange = dateRange;
 			_groupId = groupId;
-			_privateLayout = privateLayout;
 		}
 
 		@Override
@@ -802,12 +788,11 @@ public class LayoutExporter {
 				Group stagingGroup = group.getStagingGroup();
 
 				ExportImportDateUtil.updateLastPublishDate(
-					stagingGroup.getGroupId(), _privateLayout, _dateRange,
-					endDate);
+					stagingGroup.getGroupId(), _dateRange, endDate);
 			}
 			else {
 				ExportImportDateUtil.updateLastPublishDate(
-					_groupId, _privateLayout, _dateRange, endDate);
+					_groupId, _dateRange, endDate);
 			}
 
 			return null;
@@ -815,7 +800,6 @@ public class LayoutExporter {
 
 		private final DateRange _dateRange;
 		private final long _groupId;
-		private final boolean _privateLayout;
 
 	}
 

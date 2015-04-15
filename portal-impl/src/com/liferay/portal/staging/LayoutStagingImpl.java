@@ -98,8 +98,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 	@Override
 	public boolean isBranchingLayout(Layout layout) {
 		try {
-			return isBranchingLayoutSet(
-				layout.getGroup(), layout.isPrivateLayout());
+			return isBranchingLayoutSet(layout.getGroup());
 		}
 		catch (Exception e) {
 			throw new IllegalStateException(e);
@@ -107,7 +106,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 	}
 
 	@Override
-	public boolean isBranchingLayoutSet(Group group, boolean privateLayout) {
+	public boolean isBranchingLayoutSet(Group group) {
 		boolean isStagingGroup = false;
 
 		if (group.isStagingGroup() && !group.isStagedRemotely()) {
@@ -123,16 +122,8 @@ public class LayoutStagingImpl implements LayoutStaging {
 			return false;
 		}
 
-		boolean branchingEnabled = false;
-
-		if (privateLayout) {
-			branchingEnabled = GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("branchingPrivate"));
-		}
-		else {
-			branchingEnabled = GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("branchingPublic"));
-		}
+		boolean branchingEnabled = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("branching"));
 
 		if (!branchingEnabled || !group.isStaged() ||
 			(!group.isStagedRemotely() && !isStagingGroup)) {
@@ -148,7 +139,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 
 		try {
 			LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
-				stagingGroup.getGroupId(), privateLayout);
+				stagingGroup.getGroupId());
 
 			return true;
 		}

@@ -270,16 +270,11 @@ public class EditOrganizationAction extends PortletAction {
 
 		// Layout set prototypes
 
-		long publicLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "publicLayoutSetPrototypeId");
-		long privateLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "privateLayoutSetPrototypeId");
-		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "publicLayoutSetPrototypeLinkEnabled",
-			(publicLayoutSetPrototypeId > 0));
-		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "privateLayoutSetPrototypeLinkEnabled",
-			(privateLayoutSetPrototypeId > 0));
+		long layoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutSetPrototypeId");
+		boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "layoutSetPrototypeLinkEnabled",
+			(layoutSetPrototypeId > 0));
 
 		Group organizationGroup = organization.getGroup();
 
@@ -288,10 +283,8 @@ public class EditOrganizationAction extends PortletAction {
 				ActionKeys.UPDATE)) {
 
 			SitesUtil.updateLayoutSetPrototypesLinks(
-				organizationGroup, publicLayoutSetPrototypeId,
-				privateLayoutSetPrototypeId,
-				publicLayoutSetPrototypeLinkEnabled,
-				privateLayoutSetPrototypeLinkEnabled);
+				organizationGroup, layoutSetPrototypeId,
+				layoutSetPrototypeLinkEnabled);
 		}
 
 		// Reminder queries

@@ -654,18 +654,8 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		User user = TestPropsValues.getUser();
 
-		layouts.put(
-			_PRIVATE_LAYOUT,
-			LayoutTestUtil.addLayout(group, true));
-		layouts.put(
-			_PRIVATE_USER_LAYOUT,
-			LayoutTestUtil.addLayout(user.getGroupId(), true));
-		layouts.put(
-			_PUBLIC_LAYOUT,
-			LayoutTestUtil.addLayout(group, false));
-		layouts.put(
-			_PUBLIC_USER_LAYOUT,
-			LayoutTestUtil.addLayout(user.getGroupId(), false));
+		layouts.put(_LAYOUT, LayoutTestUtil.addLayout(group));
+		layouts.put(_USER_LAYOUT, LayoutTestUtil.addLayout(user.getGroupId()));
 
 		return layouts;
 	}
@@ -700,7 +690,6 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		}
 
 		jsonObject.put("layoutId", String.valueOf(layout.getLayoutId()));
-		jsonObject.put("privateLayout", layout.isPrivateLayout());
 
 		return jsonObject.toString();
 	}
@@ -881,25 +870,20 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 			String content, Map<String, Layout> layoutsMap)
 		throws Exception {
 
-		Layout privateLayout = layoutsMap.get(_PRIVATE_LAYOUT);
-		Layout privateUserLayout = layoutsMap.get(_PRIVATE_USER_LAYOUT);
-		Layout publicLayout = layoutsMap.get(_PUBLIC_LAYOUT);
-		Layout publicUserLayout = layoutsMap.get(_PUBLIC_USER_LAYOUT);
+		Layout layout = layoutsMap.get(_LAYOUT);
+		Layout userLayout = layoutsMap.get(_USER_LAYOUT);
 
 		return StringUtil.replace(
 			content,
 			new String[] {
-				"[$GROUP_ID$]", "[$GROUP_ID_USER$]", "[$LAYOUT_ID_PRIVATE$]",
-				"[$LAYOUT_ID_PRIVATE_USER$]", "[$LAYOUT_ID_PUBLIC$]",
-				"[$LAYOUT_ID_PUBLIC_USER$]"
+				"[$GROUP_ID$]", "[$GROUP_ID_USER$]", "[$LAYOUT_ID$]",
+				"[$LAYOUT_ID_USER$]"
 			},
 			new String[] {
-				String.valueOf(privateLayout.getGroupId()),
-				String.valueOf(privateUserLayout.getGroupId()),
-				String.valueOf(privateLayout.getLayoutId()),
-				String.valueOf(privateUserLayout.getLayoutId()),
-				String.valueOf(publicLayout.getLayoutId()),
-				String.valueOf(publicUserLayout.getLayoutId())
+				String.valueOf(layout.getGroupId()),
+				String.valueOf(userLayout.getGroupId()),
+				String.valueOf(layout.getLayoutId()),
+				String.valueOf(userLayout.getLayoutId())
 			});
 	}
 
@@ -963,13 +947,9 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		ddmXMLImpl.validateXML(xsd);
 	}
 
-	private static final String _PRIVATE_LAYOUT = "privateLayout";
+	private static final String _LAYOUT = "layout";
 
-	private static final String _PRIVATE_USER_LAYOUT = "privateUserLayout";
-
-	private static final String _PUBLIC_LAYOUT = "publicLayout";
-
-	private static final String _PUBLIC_USER_LAYOUT = "publicUserLayout";
+	private static final String _USER_LAYOUT = "userLayout";
 
 	private DDMStructure _ddmStructure;
 	private final Locale _enLocale = LocaleUtil.fromLanguageId("en_US");

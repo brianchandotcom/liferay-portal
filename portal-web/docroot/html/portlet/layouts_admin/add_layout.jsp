@@ -20,7 +20,6 @@
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 Long groupId = layoutsAdminDisplayContext.getGroupId();
-boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
@@ -28,7 +27,6 @@ if (layout.isTypeControlPanel()) {
 	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
 		selLayout = LayoutLocalServiceUtil.getLayout(layoutsAdminDisplayContext.getSelPlid());
 
-		privateLayout = selLayout.isPrivateLayout();
 		parentPlid = selLayout.getPlid();
 		parentLayoutId = selLayout.getLayoutId();
 	}
@@ -36,7 +34,6 @@ if (layout.isTypeControlPanel()) {
 else {
 	selLayout = layout;
 
-	privateLayout = selLayout.isPrivateLayout();
 	parentPlid = layout.getParentPlid();
 	parentLayoutId = layout.getParentLayoutId();
 }
@@ -71,7 +68,6 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 	<aui:input id="addLayoutCMD" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= editLayoutRenderURL %>" />
 	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
-	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input id="addLayoutParentPlid" name="parentPlid" type="hidden" value="<%= parentPlid %>" />
 	<aui:input id="addLayoutParentLayoutId" name="parentLayoutId" type="hidden" value="<%= parentLayoutId %>" />
 	<aui:input id="addLayoutType" name="type" type="hidden" value="portlet" />
@@ -172,7 +168,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 					<%
 					liferayPortletRequest.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutsAdminDisplayContext.getLayoutDescriptions());
 
-					int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(layoutsAdminDisplayContext.getGroup(), privateLayout);
+					int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(layoutsAdminDisplayContext.getGroup(), false);
 
 					for (String type : types) {
 						if (type.equals("portlet")) {

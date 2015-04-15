@@ -84,7 +84,7 @@
 									Set<Group> visibleGroups = new LinkedHashSet<Group>();
 
 									for (Group childGroup : childGroups) {
-										if (childGroup.hasPublicLayouts()) {
+										if (childGroup.hasLayouts()) {
 											visibleGroups.add(childGroup);
 										}
 										else if (GroupLocalServiceUtil.hasUserGroup(user.getUserId(), childGroup.getGroupId())) {
@@ -107,14 +107,7 @@
 									>
 
 										<%
-										LayoutSet layoutSet = null;
-
-										if (childGroup.hasPublicLayouts()) {
-											layoutSet = childGroup.getPublicLayoutSet();
-										}
-										else {
-											layoutSet = childGroup.getPrivateLayoutSet();
-										}
+										LayoutSet layoutSet = childGroup.getLayoutSet();
 										%>
 
 										<liferay-ui:app-view-entry
@@ -228,7 +221,7 @@ private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branch
 
 		if (childGroup.getGroupId() != themeDisplay.getScopeGroupId()) {
 			sb.append("href=\"");
-			sb.append(HtmlUtil.escapeHREF(childGroup.getDisplayURL(themeDisplay, !childGroup.hasPublicLayouts())));
+			sb.append(HtmlUtil.escapeHREF(childGroup.getDisplayURL(themeDisplay)));
 			sb.append("\"");
 		}
 

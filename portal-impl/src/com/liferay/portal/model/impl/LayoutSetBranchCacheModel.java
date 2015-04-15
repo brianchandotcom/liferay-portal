@@ -79,7 +79,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -97,8 +97,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -158,8 +156,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		else {
 			layoutSetBranchImpl.setModifiedDate(new Date(modifiedDate));
 		}
-
-		layoutSetBranchImpl.setPrivateLayout(privateLayout);
 
 		if (name == null) {
 			layoutSetBranchImpl.setName(StringPool.BLANK);
@@ -244,7 +240,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		privateLayout = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		master = objectInput.readBoolean();
@@ -277,7 +272,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-		objectOutput.writeBoolean(privateLayout);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -356,7 +350,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public boolean privateLayout;
 	public String name;
 	public String description;
 	public boolean master;

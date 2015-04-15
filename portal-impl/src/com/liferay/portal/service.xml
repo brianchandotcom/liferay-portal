@@ -725,7 +725,6 @@
 
 		<!-- Other fields -->
 
-		<column name="privateLayout" type="boolean" />
 		<column name="layoutId" type="long" accessor="true" />
 		<column name="parentLayoutId" type="long" />
 		<column name="name" type="String" localized="true" />
@@ -772,33 +771,24 @@
 		<finder name="SourcePrototypeLayoutUuid" return-type="Collection">
 			<finder-column name="sourcePrototypeLayoutUuid" />
 		</finder>
-		<finder name="G_P" return-type="Collection">
+		<finder name="G_L" return-type="Layout" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
-		</finder>
-		<finder name="G_P_L" return-type="Layout" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
 			<finder-column name="layoutId" />
 		</finder>
-		<finder name="G_P_P" return-type="Collection">
+		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
 			<finder-column name="parentLayoutId" />
 		</finder>
-		<finder name="G_P_T" return-type="Collection">
+		<finder name="G_T" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_P_F" return-type="Layout" unique="true">
+		<finder name="G_F" return-type="Layout" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
 			<finder-column name="friendlyURL" />
 		</finder>
-		<finder name="G_P_SPLU" return-type="Layout">
+		<finder name="G_SPLU" return-type="Layout">
 			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
 			<finder-column name="sourcePrototypeLayoutUuid" />
 		</finder>
 
@@ -896,7 +886,6 @@
 		<!-- Other fields -->
 
 		<column name="plid" type="long" />
-		<column name="privateLayout" type="boolean" />
 		<column name="friendlyURL" type="String" />
 		<column name="languageId" type="String" />
 
@@ -911,6 +900,10 @@
 		<finder name="Plid" return-type="Collection">
 			<finder-column name="plid" />
 		</finder>
+		<finder name="G_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="friendlyURL" />
+		</finder>
 		<finder name="P_F" return-type="Collection">
 			<finder-column name="plid" />
 			<finder-column name="friendlyURL" />
@@ -919,14 +912,8 @@
 			<finder-column name="plid" />
 			<finder-column name="languageId" />
 		</finder>
-		<finder name="G_P_F" return-type="Collection">
+		<finder name="G_F_L" return-type="LayoutFriendlyURL" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
-			<finder-column name="friendlyURL" />
-		</finder>
-		<finder name="G_P_F_L" return-type="LayoutFriendlyURL" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
 			<finder-column name="friendlyURL" />
 			<finder-column name="languageId" />
 		</finder>
@@ -1000,7 +987,6 @@
 		<column name="head" type="boolean" />
 		<column name="major" type="boolean" />
 		<column name="plid" type="long" />
-		<column name="privateLayout" type="boolean" />
 		<column name="name" type="String" localized="true" />
 		<column name="title" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
@@ -1103,7 +1089,6 @@
 
 		<!-- Other fields -->
 
-		<column name="privateLayout" type="boolean" />
 		<column name="logoId" type="long" />
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
@@ -1117,15 +1102,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
+		<finder name="GroupId" return-type="LayoutSet" unique="true">
 			<finder-column name="groupId" />
 		</finder>
 		<finder name="LayoutSetPrototypeUuid" return-type="Collection">
 			<finder-column name="layoutSetPrototypeUuid" />
-		</finder>
-		<finder name="G_P" return-type="LayoutSet" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
 		</finder>
 
 		<!-- References -->
@@ -1157,7 +1138,6 @@
 
 		<!-- Other fields -->
 
-		<column name="privateLayout" type="boolean" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="master" type="boolean" />
@@ -1182,18 +1162,12 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_P" return-type="Collection">
+		<finder name="G_N" return-type="LayoutSetBranch" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
-		</finder>
-		<finder name="G_P_N" return-type="LayoutSetBranch" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="G_P_M" return-type="Collection">
+		<finder name="G_M" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
 			<finder-column name="master" />
 		</finder>
 

@@ -17,7 +17,7 @@
 			<#assign selectedLayoutGroupId = scopeGroupId>
 		</#if>
 
-		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
+		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getLong("layoutId"))!"">
 
 		<#if (validator.isNotNull(selectedLayout))>
 			<#assign selectedPlid = selectedLayout.getPlid()>
@@ -38,14 +38,12 @@
 		<@getLayoutsOptions
 			groupId = scopeGroupId
 			parentLayoutId = 0
-			privateLayout = false
 			selectedPlid = selectedPlid
 		/>
 
 		<@getLayoutsOptions
 			groupId = scopeGroupId
 			parentLayoutId = 0
-			privateLayout = true
 			selectedPlid = selectedPlid
 		/>
 	</@aui.select>
@@ -58,7 +56,7 @@
 	level = 0
 	selected = false
 >
-	<#assign layoutJSON = escapeAttribute("{ \"layoutId\": ${layout.getLayoutId()}, \"groupId\": ${layout.getGroupId()}, \"privateLayout\": ${layout.isPrivateLayout()?string} }")>
+	<#assign layoutJSON = escapeAttribute("{ \"layoutId\": ${layout.getLayoutId()}, \"groupId\": ${layout.getGroupId()} }")>
 
 	<@aui.option selected=selected useModelValue=false value=layoutJSON>
 		<#list 0..level as i>
@@ -72,15 +70,14 @@
 <#macro getLayoutsOptions
 	groupId
 	parentLayoutId
-	privateLayout
 	selectedPlid
 	level = 0
 >
-	<#assign layouts = layoutService.getLayouts(groupId, privateLayout, parentLayoutId)>
+	<#assign layouts = layoutService.getLayouts(groupId, parentLayoutId)>
 
 	<#if (layouts?size > 0)>
 		<#if (level == 0)>
-			<optgroup label="<#if (privateLayout)>${languageUtil.get(requestedLocale, "private-pages")}<#else>${languageUtil.get(requestedLocale, "public-pages")}</#if>">
+			<optgroup label="${languageUtil.get(requestedLocale, "pages")}">
 		</#if>
 
 		<#list layouts as curLayout>
@@ -94,7 +91,6 @@
 				groupId = scopeGroupId
 				level = level + 1
 				parentLayoutId = curLayout.getLayoutId()
-				privateLayout = privateLayout
 				selectedPlid = selectedPlid
 			/>
 		</#list>

@@ -76,7 +76,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "privateLayout", Types.BOOLEAN },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "master", Types.BOOLEAN },
@@ -90,7 +89,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			{ "layoutSetPrototypeUuid", Types.VARCHAR },
 			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (mvccVersion LONG default 0,layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (mvccVersion LONG default 0,layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,master BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSetBranch";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutSetBranch.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutSetBranch.name ASC";
@@ -109,7 +108,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 	public static final long MASTER_COLUMN_BITMASK = 2L;
 	public static final long NAME_COLUMN_BITMASK = 4L;
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -132,7 +130,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setPrivateLayout(soapModel.getPrivateLayout());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setMaster(soapModel.getMaster());
@@ -218,7 +215,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("master", getMaster());
@@ -287,12 +283,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		String name = (String)attributes.get("name");
@@ -489,34 +479,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-	}
-
-	@JSON
-	@Override
-	public boolean getPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
-
-		if (!_setOriginalPrivateLayout) {
-			_setOriginalPrivateLayout = true;
-
-			_originalPrivateLayout = _privateLayout;
-		}
-
-		_privateLayout = privateLayout;
-	}
-
-	public boolean getOriginalPrivateLayout() {
-		return _originalPrivateLayout;
 	}
 
 	@JSON
@@ -768,7 +730,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchImpl.setUserName(getUserName());
 		layoutSetBranchImpl.setCreateDate(getCreateDate());
 		layoutSetBranchImpl.setModifiedDate(getModifiedDate());
-		layoutSetBranchImpl.setPrivateLayout(getPrivateLayout());
 		layoutSetBranchImpl.setName(getName());
 		layoutSetBranchImpl.setDescription(getDescription());
 		layoutSetBranchImpl.setMaster(getMaster());
@@ -845,10 +806,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 		layoutSetBranchModelImpl._setOriginalGroupId = false;
 
-		layoutSetBranchModelImpl._originalPrivateLayout = layoutSetBranchModelImpl._privateLayout;
-
-		layoutSetBranchModelImpl._setOriginalPrivateLayout = false;
-
 		layoutSetBranchModelImpl._originalName = layoutSetBranchModelImpl._name;
 
 		layoutSetBranchModelImpl._originalMaster = layoutSetBranchModelImpl._master;
@@ -897,8 +854,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		else {
 			layoutSetBranchCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
-
-		layoutSetBranchCacheModel.privateLayout = getPrivateLayout();
 
 		layoutSetBranchCacheModel.name = getName();
 
@@ -984,7 +939,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1002,8 +957,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", privateLayout=");
-		sb.append(getPrivateLayout());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -1035,7 +988,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutSetBranch");
@@ -1072,10 +1025,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
-		sb.append(getPrivateLayout());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1145,9 +1094,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private boolean _privateLayout;
-	private boolean _originalPrivateLayout;
-	private boolean _setOriginalPrivateLayout;
 	private String _name;
 	private String _originalName;
 	private String _description;

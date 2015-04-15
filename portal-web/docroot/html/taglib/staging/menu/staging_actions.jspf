@@ -51,7 +51,6 @@
 				<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
 				<portlet:param name="tabs2" value="current-and-previous" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:renderURL>
 
@@ -64,7 +63,6 @@
 				<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="localPublishing" value="<%= String.valueOf(liveGroup.isStaged() && !liveGroup.isStagedRemotely()) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
 				<portlet:param name="remotePort" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
 				<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
@@ -186,7 +184,6 @@
 			<portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 			</portlet:renderURL>
 

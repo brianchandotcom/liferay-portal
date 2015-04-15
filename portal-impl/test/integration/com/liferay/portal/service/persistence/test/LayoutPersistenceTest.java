@@ -133,8 +133,6 @@ public class LayoutPersistenceTest {
 
 		newLayout.setModifiedDate(RandomTestUtil.nextDate());
 
-		newLayout.setPrivateLayout(RandomTestUtil.randomBoolean());
-
 		newLayout.setLayoutId(RandomTestUtil.nextLong());
 
 		newLayout.setParentLayoutId(RandomTestUtil.nextLong());
@@ -197,8 +195,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayout.getModifiedDate()),
 			Time.getShortTimestamp(newLayout.getModifiedDate()));
-		Assert.assertEquals(existingLayout.getPrivateLayout(),
-			newLayout.getPrivateLayout());
 		Assert.assertEquals(existingLayout.getLayoutId(),
 			newLayout.getLayoutId());
 		Assert.assertEquals(existingLayout.getParentLayoutId(),
@@ -251,16 +247,14 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByUUID_G_P() {
+	public void testCountByUUID_G() {
 		try {
-			_persistence.countByUUID_G_P(StringPool.BLANK,
-				RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+			_persistence.countByUUID_G(StringPool.BLANK,
+				RandomTestUtil.nextLong());
 
-			_persistence.countByUUID_G_P(StringPool.NULL, 0L,
-				RandomTestUtil.randomBoolean());
+			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
-			_persistence.countByUUID_G_P((String)null, 0L,
-				RandomTestUtil.randomBoolean());
+			_persistence.countByUUID_G((String)null, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -347,12 +341,25 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_L() {
+		try {
+			_persistence.countByG_L(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
+
+			_persistence.countByG_L(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByG_P() {
 		try {
 			_persistence.countByG_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean());
+				RandomTestUtil.nextLong());
 
-			_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
+			_persistence.countByG_P(0L, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -360,12 +367,13 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_L() {
+	public void testCountByG_T() {
 		try {
-			_persistence.countByG_P_L(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
+			_persistence.countByG_T(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByG_P_L(0L, RandomTestUtil.randomBoolean(), 0L);
+			_persistence.countByG_T(0L, StringPool.NULL);
+
+			_persistence.countByG_T(0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -373,12 +381,13 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_P() {
+	public void testCountByG_F() {
 		try {
-			_persistence.countByG_P_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
+			_persistence.countByG_F(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByG_P_P(0L, RandomTestUtil.randomBoolean(), 0L);
+			_persistence.countByG_F(0L, StringPool.NULL);
+
+			_persistence.countByG_F(0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -386,50 +395,14 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_T() {
+	public void testCountByG_SPLU() {
 		try {
-			_persistence.countByG_P_T(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), StringPool.BLANK);
+			_persistence.countByG_SPLU(RandomTestUtil.nextLong(),
+				StringPool.BLANK);
 
-			_persistence.countByG_P_T(0L, RandomTestUtil.randomBoolean(),
-				StringPool.NULL);
+			_persistence.countByG_SPLU(0L, StringPool.NULL);
 
-			_persistence.countByG_P_T(0L, RandomTestUtil.randomBoolean(),
-				(String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testCountByG_P_F() {
-		try {
-			_persistence.countByG_P_F(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), StringPool.BLANK);
-
-			_persistence.countByG_P_F(0L, RandomTestUtil.randomBoolean(),
-				StringPool.NULL);
-
-			_persistence.countByG_P_F(0L, RandomTestUtil.randomBoolean(),
-				(String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testCountByG_P_SPLU() {
-		try {
-			_persistence.countByG_P_SPLU(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), StringPool.BLANK);
-
-			_persistence.countByG_P_SPLU(0L, RandomTestUtil.randomBoolean(),
-				StringPool.NULL);
-
-			_persistence.countByG_P_SPLU(0L, RandomTestUtil.randomBoolean(),
-				(String)null);
+			_persistence.countByG_SPLU(0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -484,13 +457,12 @@ public class LayoutPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Layout", "mvccVersion",
 			true, "uuid", true, "plid", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "privateLayout", true, "layoutId", true,
-			"parentLayoutId", true, "name", true, "title", true, "description",
-			true, "keywords", true, "robots", true, "type", true,
-			"typeSettings", true, "hidden", true, "friendlyURL", true,
-			"iconImageId", true, "themeId", true, "colorSchemeId", true,
-			"wapThemeId", true, "wapColorSchemeId", true, "css", true,
-			"priority", true, "layoutPrototypeUuid", true,
+			"modifiedDate", true, "layoutId", true, "parentLayoutId", true,
+			"name", true, "title", true, "description", true, "keywords", true,
+			"robots", true, "type", true, "typeSettings", true, "hidden", true,
+			"friendlyURL", true, "iconImageId", true, "themeId", true,
+			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
+			true, "css", true, "priority", true, "layoutPrototypeUuid", true,
 			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
 			true);
 	}
@@ -702,9 +674,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(existingLayout.getGroupId(),
 			ReflectionTestUtil.invoke(existingLayout, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertEquals(existingLayout.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingLayout,
-				"getOriginalPrivateLayout", new Class<?>[0]));
 
 		Assert.assertEquals(existingLayout.getIconImageId(),
 			ReflectionTestUtil.invoke(existingLayout, "getOriginalIconImageId",
@@ -713,9 +682,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(existingLayout.getGroupId(),
 			ReflectionTestUtil.invoke(existingLayout, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertEquals(existingLayout.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingLayout,
-				"getOriginalPrivateLayout", new Class<?>[0]));
 		Assert.assertEquals(existingLayout.getLayoutId(),
 			ReflectionTestUtil.invoke(existingLayout, "getOriginalLayoutId",
 				new Class<?>[0]));
@@ -723,9 +689,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(existingLayout.getGroupId(),
 			ReflectionTestUtil.invoke(existingLayout, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertEquals(existingLayout.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingLayout,
-				"getOriginalPrivateLayout", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingLayout.getFriendlyURL(),
 				ReflectionTestUtil.invoke(existingLayout,
 					"getOriginalFriendlyURL", new Class<?>[0])));
@@ -733,9 +696,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(existingLayout.getGroupId(),
 			ReflectionTestUtil.invoke(existingLayout, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertEquals(existingLayout.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingLayout,
-				"getOriginalPrivateLayout", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingLayout.getSourcePrototypeLayoutUuid(),
 				ReflectionTestUtil.invoke(existingLayout,
@@ -762,8 +722,6 @@ public class LayoutPersistenceTest {
 		layout.setCreateDate(RandomTestUtil.nextDate());
 
 		layout.setModifiedDate(RandomTestUtil.nextDate());
-
-		layout.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		layout.setLayoutId(RandomTestUtil.nextLong());
 

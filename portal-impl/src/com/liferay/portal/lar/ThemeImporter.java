@@ -73,8 +73,7 @@ public class ThemeImporter {
 		String css = GetterUtil.getString(headerElement.elementText("css"));
 
 		LayoutSetLocalServiceUtil.updateLookAndFeel(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), themeId,
-			colorSchemeId, css, false);
+			layoutSet.getGroupId(), themeId, colorSchemeId, css, false);
 	}
 
 	private ThemeImporter() {

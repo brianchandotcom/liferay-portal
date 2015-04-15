@@ -35,8 +35,7 @@ public class ContentHits {
 		return _showListed;
 	}
 
-	public void recordHits(
-			Hits hits, long groupId, boolean privateLayout, int start, int end)
+	public void recordHits(Hits hits, long groupId, int start, int end)
 		throws Exception {
 
 		// This can later be optimized according to LEP-915.
@@ -54,7 +53,7 @@ public class ContentHits {
 
 			int layoutIdsCount =
 				JournalContentSearchLocalServiceUtil.getLayoutIdsCount(
-					groupId, privateLayout, articleId);
+					groupId, articleId);
 
 			if ((layoutIdsCount > 0) ||
 				(!isShowListed() && (articleGroupId == groupId))) {

@@ -236,27 +236,6 @@ public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
 	public void setPlid(long plid);
 
 	/**
-	 * Returns the private layout of this layout friendly u r l.
-	 *
-	 * @return the private layout of this layout friendly u r l
-	 */
-	public boolean getPrivateLayout();
-
-	/**
-	 * Returns <code>true</code> if this layout friendly u r l is private layout.
-	 *
-	 * @return <code>true</code> if this layout friendly u r l is private layout; <code>false</code> otherwise
-	 */
-	public boolean isPrivateLayout();
-
-	/**
-	 * Sets whether this layout friendly u r l is private layout.
-	 *
-	 * @param privateLayout the private layout of this layout friendly u r l
-	 */
-	public void setPrivateLayout(boolean privateLayout);
-
-	/**
 	 * Returns the friendly u r l of this layout friendly u r l.
 	 *
 	 * @return the friendly u r l of this layout friendly u r l

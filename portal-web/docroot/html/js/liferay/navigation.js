@@ -723,8 +723,7 @@ AUI.add(
 						groupId: themeDisplay.getSiteGroupId(),
 						layoutId: tab.getData(STR_LAYOUT_ID),
 						layoutSetBranchId: instance.get('layoutSetBranchId'),
-						p_auth: Liferay.authToken,
-						privateLayout: themeDisplay.isPrivateLayout()
+						p_auth: Liferay.authToken
 					};
 
 					A.io.request(
@@ -792,8 +791,7 @@ AUI.add(
 								languageId: themeDisplay.getLanguageId(),
 								layoutId: themeDisplay.getLayoutId(),
 								name: pageTitle,
-								p_auth: Liferay.authToken,
-								privateLayout: themeDisplay.isPrivateLayout()
+								p_auth: Liferay.authToken
 							};
 
 							onSuccess = function(event, id, obj) {
@@ -872,8 +870,7 @@ AUI.add(
 					layoutId: node.getData(STR_LAYOUT_ID),
 					nextLayoutId: nextLayoutId,
 					p_auth: Liferay.authToken,
-					previousLayoutId: previousLayoutId,
-					privateLayout: themeDisplay.isPrivateLayout()
+					previousLayoutId: previousLayoutId
 				};
 
 				var processMovePageFailure = function(result) {

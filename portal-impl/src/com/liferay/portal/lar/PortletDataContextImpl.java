@@ -1748,11 +1748,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
 	public boolean isStagedModelCounted(StagedModel stagedModel) {
 		StagedModelType stagedModelType = stagedModel.getStagedModelType();
 
@@ -1874,11 +1869,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		else {
 			_rootPortletId = null;
 		}
-	}
-
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_privateLayout = privateLayout;
 	}
 
 	@Override
@@ -2489,7 +2479,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _plid;
 	private String _portletId;
 	private final Set<String> _primaryKeys = new HashSet<>();
-	private boolean _privateLayout;
 	private final Set<String> _references = new HashSet<>();
 	private String _rootPortletId;
 	private final Set<String> _scopedPrimaryKeys = new HashSet<>();

@@ -61,11 +61,9 @@ public class StagingServiceUtil {
 	}
 
 	public static void publishStagingRequest(long stagingRequestId,
-		boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.publishStagingRequest(stagingRequestId, privateLayout, parameterMap);
+		getService().publishStagingRequest(stagingRequestId, parameterMap);
 	}
 
 	/**

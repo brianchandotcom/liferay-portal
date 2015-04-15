@@ -560,12 +560,7 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 		}
 
 		long plid = LayoutServiceUtil.getDefaultPlid(
-			layoutGroupId, scopeGroupId, false, portletId);
-
-		if (plid == 0) {
-			plid = LayoutServiceUtil.getDefaultPlid(
-				layoutGroupId, scopeGroupId, true, portletId);
-		}
+			layoutGroupId, scopeGroupId, portletId);
 
 		if (plid == 0) {
 			if (layout != null) {

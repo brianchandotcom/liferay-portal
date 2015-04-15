@@ -39,8 +39,6 @@ if (selPlid > 0) {
 
 if (selLayout != null) {
 	group = selLayout.getGroup();
-
-	privateLayout = selLayout.isPrivateLayout();
 }
 %>
 

@@ -27,7 +27,7 @@ Summary summary = (Summary)objArray[1];
 String articleId = doc.get(Field.ARTICLE_ID);
 long articleGroupId = GetterUtil.getLong(doc.get(Field.GROUP_ID));
 
-List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.getGroupId(), layout.isPrivateLayout(), articleId);
+List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.getGroupId(), false, articleId);
 %>
 
 <%= summary.getHighlightedContent() %><br />
@@ -43,11 +43,11 @@ List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.get
 			Layout hitLayout = null;
 
 			try {
-				hitLayout = LayoutLocalServiceUtil.getLayout(layout.getGroupId(), layout.isPrivateLayout(), hitLayoutId.longValue());
+				hitLayout = LayoutLocalServiceUtil.getLayout(layout.getGroupId(), false, hitLayoutId.longValue());
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Journal content search is stale and contains layout {" + layout.getGroupId() + ", " + layout.isPrivateLayout() + ", " + hitLayoutId.longValue() + "}");
+					_log.warn("Journal content search is stale and contains layout {" + layout.getGroupId() + ", " + false + ", " + hitLayoutId.longValue() + "}");
 				}
 
 				continue;

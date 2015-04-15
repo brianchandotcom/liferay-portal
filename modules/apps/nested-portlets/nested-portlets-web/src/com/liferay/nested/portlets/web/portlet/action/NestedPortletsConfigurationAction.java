@@ -173,7 +173,7 @@ public class NestedPortletsConfigurationAction
 		layoutTypePortlet.setStateMax(StringPool.BLANK);
 
 		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getGroupId(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}
 

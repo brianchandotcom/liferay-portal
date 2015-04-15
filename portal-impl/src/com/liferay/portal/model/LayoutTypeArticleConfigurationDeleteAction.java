@@ -37,12 +37,9 @@ public class LayoutTypeArticleConfigurationDeleteAction extends Action {
 
 		try {
 			long groupId = ParamUtil.getLong(request, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				request, "privateLayout");
 			long layoutId = ParamUtil.getLong(request, "layoutId");
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, layoutId);
+			Layout layout = LayoutLocalServiceUtil.getLayout(groupId, layoutId);
 
 			UnicodeProperties typeSettingsProperties =
 				layout.getTypeSettingsProperties();
@@ -54,8 +51,8 @@ public class LayoutTypeArticleConfigurationDeleteAction extends Action {
 			}
 
 			JournalContentSearchLocalServiceUtil.deleteArticleContentSearch(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), StringPool.BLANK, articleId);
+				layout.getGroupId(), layout.getLayoutId(), StringPool.BLANK,
+				articleId);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);

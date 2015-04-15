@@ -126,8 +126,6 @@ public class LayoutSetPersistenceTest {
 
 		newLayoutSet.setModifiedDate(RandomTestUtil.nextDate());
 
-		newLayoutSet.setPrivateLayout(RandomTestUtil.randomBoolean());
-
 		newLayoutSet.setLogoId(RandomTestUtil.nextLong());
 
 		newLayoutSet.setThemeId(RandomTestUtil.randomString());
@@ -166,8 +164,6 @@ public class LayoutSetPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutSet.getModifiedDate()),
 			Time.getShortTimestamp(newLayoutSet.getModifiedDate()));
-		Assert.assertEquals(existingLayoutSet.getPrivateLayout(),
-			newLayoutSet.getPrivateLayout());
 		Assert.assertEquals(existingLayoutSet.getLogoId(),
 			newLayoutSet.getLogoId());
 		Assert.assertEquals(existingLayoutSet.getThemeId(),
@@ -216,19 +212,6 @@ public class LayoutSetPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P() {
-		try {
-			_persistence.countByG_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean());
-
-			_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		LayoutSet newLayoutSet = addLayoutSet();
 
@@ -264,11 +247,11 @@ public class LayoutSetPersistenceTest {
 	protected OrderByComparator<LayoutSet> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutSet", "mvccVersion",
 			true, "layoutSetId", true, "groupId", true, "companyId", true,
-			"createDate", true, "modifiedDate", true, "privateLayout", true,
-			"logoId", true, "themeId", true, "colorSchemeId", true,
-			"wapThemeId", true, "wapColorSchemeId", true, "css", true,
-			"pageCount", true, "settings", true, "layoutSetPrototypeUuid",
-			true, "layoutSetPrototypeLinkEnabled", true);
+			"createDate", true, "modifiedDate", true, "logoId", true,
+			"themeId", true, "colorSchemeId", true, "wapThemeId", true,
+			"wapColorSchemeId", true, "css", true, "pageCount", true,
+			"settings", true, "layoutSetPrototypeUuid", true,
+			"layoutSetPrototypeLinkEnabled", true);
 	}
 
 	@Test
@@ -480,9 +463,6 @@ public class LayoutSetPersistenceTest {
 		Assert.assertEquals(existingLayoutSet.getGroupId(),
 			ReflectionTestUtil.invoke(existingLayoutSet, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertEquals(existingLayoutSet.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingLayoutSet,
-				"getOriginalPrivateLayout", new Class<?>[0]));
 	}
 
 	protected LayoutSet addLayoutSet() throws Exception {
@@ -499,8 +479,6 @@ public class LayoutSetPersistenceTest {
 		layoutSet.setCreateDate(RandomTestUtil.nextDate());
 
 		layoutSet.setModifiedDate(RandomTestUtil.nextDate());
-
-		layoutSet.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		layoutSet.setLogoId(RandomTestUtil.nextLong());
 

@@ -29,7 +29,6 @@ page import="com.liferay.portal.LayoutNameException" %><%@
 page import="com.liferay.portal.LayoutPrototypeException" %><%@
 page import="com.liferay.portal.LayoutTypeException" %><%@
 page import="com.liferay.portal.NoSuchGroupException" %><%@
-page import="com.liferay.portal.NoSuchLayoutSetBranchException" %><%@
 page import="com.liferay.portal.RemoteExportException" %><%@
 page import="com.liferay.portal.RemoteOptionsException" %><%@
 page import="com.liferay.portal.RequiredLayoutException" %><%@

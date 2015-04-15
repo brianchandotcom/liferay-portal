@@ -43,9 +43,8 @@ public interface StagingLocalService extends BaseLocalService {
 	 * Never modify or reference this interface directly. Always use {@link StagingLocalServiceUtil} to access the staging local service. Add custom service methods to {@link com.liferay.portal.service.impl.StagingLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void checkDefaultLayoutSetBranches(long userId,
-		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
-		boolean branchingPrivate, boolean remote,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.model.Group liveGroup, boolean branching,
+		boolean remote, com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public void cleanUpStagingRequest(long stagingRequestId)
@@ -64,16 +63,15 @@ public interface StagingLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public void enableLocalStaging(long userId,
-		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
-		boolean branchingPrivate,
+		com.liferay.portal.model.Group liveGroup, boolean branching,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public void enableRemoteStaging(long userId,
-		com.liferay.portal.model.Group stagingGroup, boolean branchingPublic,
-		boolean branchingPrivate, java.lang.String remoteAddress,
-		int remotePort, java.lang.String remotePathContext,
-		boolean secureConnection, long remoteGroupId,
+		com.liferay.portal.model.Group stagingGroup, boolean branching,
+		java.lang.String remoteAddress, int remotePort,
+		java.lang.String remotePathContext, boolean secureConnection,
+		long remoteGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -85,7 +83,7 @@ public interface StagingLocalService extends BaseLocalService {
 	public java.lang.String getBeanIdentifier();
 
 	public com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
-		long userId, long stagingRequestId, boolean privateLayout,
+		long userId, long stagingRequestId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws PortalException;
 

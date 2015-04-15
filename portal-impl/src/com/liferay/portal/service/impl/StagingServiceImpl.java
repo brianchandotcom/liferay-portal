@@ -51,14 +51,14 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 
 	@Override
 	public void publishStagingRequest(
-			long stagingRequestId, boolean privateLayout,
+			long stagingRequestId,
 			Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		checkPermission(stagingRequestId);
 
 		stagingLocalService.publishStagingRequest(
-			getUserId(), stagingRequestId, privateLayout, parameterMap);
+			getUserId(), stagingRequestId, parameterMap);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	 *             boolean, java.util.Map)}
+	 *             java.util.Map)}
 	 */
 	@Deprecated
 	@Override

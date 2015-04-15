@@ -205,27 +205,6 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the private layout of this layout set branch.
-	 *
-	 * @return the private layout of this layout set branch
-	 */
-	public boolean getPrivateLayout();
-
-	/**
-	 * Returns <code>true</code> if this layout set branch is private layout.
-	 *
-	 * @return <code>true</code> if this layout set branch is private layout; <code>false</code> otherwise
-	 */
-	public boolean isPrivateLayout();
-
-	/**
-	 * Sets whether this layout set branch is private layout.
-	 *
-	 * @param privateLayout the private layout of this layout set branch
-	 */
-	public void setPrivateLayout(boolean privateLayout);
-
-	/**
 	 * Returns the name of this layout set branch.
 	 *
 	 * @return the name of this layout set branch

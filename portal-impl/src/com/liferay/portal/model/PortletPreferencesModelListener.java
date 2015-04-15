@@ -56,7 +56,7 @@ public class PortletPreferencesModelListener
 			Layout layout = LayoutUtil.fetchByPrimaryKey(
 				portletPreferences.getPlid());
 
-			if ((layout != null) && !layout.isPrivateLayout()) {
+			if (layout != null) {
 				companyId = layout.getCompanyId();
 			}
 			else {
@@ -64,9 +64,7 @@ public class PortletPreferencesModelListener
 					LayoutRevisionUtil.fetchByPrimaryKey(
 						portletPreferences.getPlid());
 
-				if ((layoutRevision != null) &&
-					!layoutRevision.isPrivateLayout()) {
-
+				if (layoutRevision != null) {
 					companyId = layoutRevision.getCompanyId();
 				}
 			}

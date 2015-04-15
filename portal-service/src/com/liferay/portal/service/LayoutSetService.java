@@ -72,7 +72,6 @@ public interface LayoutSetService extends BaseService {
 	* </p>
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout set is private to the group
 	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
 	link enabled
 	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
@@ -80,32 +79,29 @@ public interface LayoutSetService extends BaseService {
 	* @throws PortalException if a portal exception occurred
 	*/
 	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
-		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
+		boolean layoutSetPrototypeLinkEnabled,
 		java.lang.String layoutSetPrototypeUuid) throws PortalException;
 
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		byte[] bytes) throws PortalException;
+	public void updateLogo(long groupId, boolean logo, byte[] bytes)
+		throws PortalException;
 
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
-		java.io.File file) throws PortalException;
+	public void updateLogo(long groupId, boolean logo, java.io.File file)
+		throws PortalException;
 
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
+	public void updateLogo(long groupId, boolean logo,
 		java.io.InputStream inputStream) throws PortalException;
 
-	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
+	public void updateLogo(long groupId, boolean logo,
 		java.io.InputStream inputStream, boolean cleanUpStream)
 		throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,
-		boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
-		throws PortalException;
+		java.lang.String themeId, java.lang.String colorSchemeId,
+		java.lang.String css, boolean wapTheme) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateSettings(long groupId,
-		boolean privateLayout, java.lang.String settings)
-		throws PortalException;
+		java.lang.String settings) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateVirtualHost(long groupId,
-		boolean privateLayout, java.lang.String virtualHost)
-		throws PortalException;
+		java.lang.String virtualHost) throws PortalException;
 }

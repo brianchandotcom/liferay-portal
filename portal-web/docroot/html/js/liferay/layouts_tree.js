@@ -369,8 +369,6 @@ AUI.add(
 								p_auth: Liferay.authToken,
 								p_l_id: themeDisplay.getPlid(),
 								p_p_id: '88',
-								parentLayoutId: instance.extractLayoutId(node),
-								privateLayout: instance.get('root').privateLayout,
 								selPlid: instance.get('selPlid'),
 								treeId: instance._treeId
 							};

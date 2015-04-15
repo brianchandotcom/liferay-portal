@@ -110,7 +110,6 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(selGroup.getGroupId()) %>" />
 					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(selLayout.isPrivateLayout()) %>" />
 				</portlet:renderURL>
 
 				<aui:nav-item href="<%= addPagesURL %>" iconCssClass="icon-plus" label="add-child-page" />
@@ -196,7 +195,6 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 	<aui:input name="liveGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
 	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 

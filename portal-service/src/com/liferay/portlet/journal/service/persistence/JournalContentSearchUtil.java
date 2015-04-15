@@ -111,6 +111,142 @@ public class JournalContentSearchUtil {
 	}
 
 	/**
+	* Returns all the journal content searchs where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching journal content searchs
+	*/
+	public static List<JournalContentSearch> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	* Returns a range of all the journal content searchs where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of journal content searchs
+	* @param end the upper bound of the range of journal content searchs (not inclusive)
+	* @return the range of matching journal content searchs
+	*/
+	public static List<JournalContentSearch> findByGroupId(long groupId,
+		int start, int end) {
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal content searchs where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of journal content searchs
+	* @param end the upper bound of the range of journal content searchs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal content searchs
+	*/
+	public static List<JournalContentSearch> findByGroupId(long groupId,
+		int start, int end,
+		OrderByComparator<JournalContentSearch> orderByComparator) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first journal content search in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal content search
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
+	*/
+	public static JournalContentSearch findByGroupId_First(long groupId,
+		OrderByComparator<JournalContentSearch> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchContentSearchException {
+		return getPersistence().findByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the first journal content search in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	*/
+	public static JournalContentSearch fetchByGroupId_First(long groupId,
+		OrderByComparator<JournalContentSearch> orderByComparator) {
+		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal content search in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal content search
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
+	*/
+	public static JournalContentSearch findByGroupId_Last(long groupId,
+		OrderByComparator<JournalContentSearch> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchContentSearchException {
+		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal content search in the ordered set where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	*/
+	public static JournalContentSearch fetchByGroupId_Last(long groupId,
+		OrderByComparator<JournalContentSearch> orderByComparator) {
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63;.
+	*
+	* @param contentSearchId the primary key of the current journal content search
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal content search
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
+	*/
+	public static JournalContentSearch[] findByGroupId_PrevAndNext(
+		long contentSearchId, long groupId,
+		OrderByComparator<JournalContentSearch> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchContentSearchException {
+		return getPersistence()
+				   .findByGroupId_PrevAndNext(contentSearchId, groupId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the journal content searchs where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	*/
+	public static void removeByGroupId(long groupId) {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of journal content searchs where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching journal content searchs
+	*/
+	public static int countByGroupId(long groupId) {
+		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
 	* Returns all the journal content searchs where portletId = &#63;.
 	*
 	* @param portletId the portlet ID
@@ -401,159 +537,154 @@ public class JournalContentSearchUtil {
 	}
 
 	/**
-	* Returns all the journal content searchs where groupId = &#63; and privateLayout = &#63;.
+	* Returns all the journal content searchs where groupId = &#63; and layoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	* @return the matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByG_P(long groupId,
-		boolean privateLayout) {
-		return getPersistence().findByG_P(groupId, privateLayout);
+	public static List<JournalContentSearch> findByG_L(long groupId,
+		long layoutId) {
+		return getPersistence().findByG_L(groupId, layoutId);
 	}
 
 	/**
-	* Returns a range of all the journal content searchs where groupId = &#63; and privateLayout = &#63;.
+	* Returns a range of all the journal content searchs where groupId = &#63; and layoutId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	* @param start the lower bound of the range of journal content searchs
 	* @param end the upper bound of the range of journal content searchs (not inclusive)
 	* @return the range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByG_P(long groupId,
-		boolean privateLayout, int start, int end) {
-		return getPersistence().findByG_P(groupId, privateLayout, start, end);
+	public static List<JournalContentSearch> findByG_L(long groupId,
+		long layoutId, int start, int end) {
+		return getPersistence().findByG_L(groupId, layoutId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63;.
+	* Returns an ordered range of all the journal content searchs where groupId = &#63; and layoutId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	* @param start the lower bound of the range of journal content searchs
 	* @param end the upper bound of the range of journal content searchs (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByG_P(long groupId,
-		boolean privateLayout, int start, int end,
+	public static List<JournalContentSearch> findByG_L(long groupId,
+		long layoutId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
-				   .findByG_P(groupId, privateLayout, start, end,
-			orderByComparator);
+				   .findByG_L(groupId, layoutId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the first journal content search in the ordered set where groupId = &#63; and layoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch findByG_P_First(long groupId,
-		boolean privateLayout,
-		OrderByComparator<JournalContentSearch> orderByComparator)
+	public static JournalContentSearch findByG_L_First(long groupId,
+		long layoutId, OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchContentSearchException {
 		return getPersistence()
-				   .findByG_P_First(groupId, privateLayout, orderByComparator);
+				   .findByG_L_First(groupId, layoutId, orderByComparator);
 	}
 
 	/**
-	* Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the first journal content search in the ordered set where groupId = &#63; and layoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch fetchByG_P_First(long groupId,
-		boolean privateLayout,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
+	public static JournalContentSearch fetchByG_L_First(long groupId,
+		long layoutId, OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_P_First(groupId, privateLayout, orderByComparator);
+				   .fetchByG_L_First(groupId, layoutId, orderByComparator);
 	}
 
 	/**
-	* Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the last journal content search in the ordered set where groupId = &#63; and layoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch findByG_P_Last(long groupId,
-		boolean privateLayout,
-		OrderByComparator<JournalContentSearch> orderByComparator)
+	public static JournalContentSearch findByG_L_Last(long groupId,
+		long layoutId, OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchContentSearchException {
 		return getPersistence()
-				   .findByG_P_Last(groupId, privateLayout, orderByComparator);
+				   .findByG_L_Last(groupId, layoutId, orderByComparator);
 	}
 
 	/**
-	* Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the last journal content search in the ordered set where groupId = &#63; and layoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch fetchByG_P_Last(long groupId,
-		boolean privateLayout,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
+	public static JournalContentSearch fetchByG_L_Last(long groupId,
+		long layoutId, OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_P_Last(groupId, privateLayout, orderByComparator);
+				   .fetchByG_L_Last(groupId, layoutId, orderByComparator);
 	}
 
 	/**
-	* Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	* Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and layoutId = &#63;.
 	*
 	* @param contentSearchId the primary key of the current journal content search
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal content search
 	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
-	public static JournalContentSearch[] findByG_P_PrevAndNext(
-		long contentSearchId, long groupId, boolean privateLayout,
+	public static JournalContentSearch[] findByG_L_PrevAndNext(
+		long contentSearchId, long groupId, long layoutId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchContentSearchException {
 		return getPersistence()
-				   .findByG_P_PrevAndNext(contentSearchId, groupId,
-			privateLayout, orderByComparator);
+				   .findByG_L_PrevAndNext(contentSearchId, groupId, layoutId,
+			orderByComparator);
 	}
 
 	/**
-	* Removes all the journal content searchs where groupId = &#63; and privateLayout = &#63; from the database.
+	* Removes all the journal content searchs where groupId = &#63; and layoutId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	*/
-	public static void removeByG_P(long groupId, boolean privateLayout) {
-		getPersistence().removeByG_P(groupId, privateLayout);
+	public static void removeByG_L(long groupId, long layoutId) {
+		getPersistence().removeByG_L(groupId, layoutId);
 	}
 
 	/**
-	* Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63;.
+	* Returns the number of journal content searchs where groupId = &#63; and layoutId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
 	* @return the number of matching journal content searchs
 	*/
-	public static int countByG_P(long groupId, boolean privateLayout) {
-		return getPersistence().countByG_P(groupId, privateLayout);
+	public static int countByG_L(long groupId, long layoutId) {
+		return getPersistence().countByG_L(groupId, layoutId);
 	}
 
 	/**
@@ -712,399 +843,46 @@ public class JournalContentSearchUtil {
 	}
 
 	/**
-	* Returns all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
+	* Returns all the journal content searchs where groupId = &#63; and layoutId = &#63; and portletId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @return the matching journal content searchs
-	*/
-	public static List<JournalContentSearch> findByG_P_L(long groupId,
-		boolean privateLayout, long layoutId) {
-		return getPersistence().findByG_P_L(groupId, privateLayout, layoutId);
-	}
-
-	/**
-	* Returns a range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param start the lower bound of the range of journal content searchs
-	* @param end the upper bound of the range of journal content searchs (not inclusive)
-	* @return the range of matching journal content searchs
-	*/
-	public static List<JournalContentSearch> findByG_P_L(long groupId,
-		boolean privateLayout, long layoutId, int start, int end) {
-		return getPersistence()
-				   .findByG_P_L(groupId, privateLayout, layoutId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param start the lower bound of the range of journal content searchs
-	* @param end the upper bound of the range of journal content searchs (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching journal content searchs
-	*/
-	public static List<JournalContentSearch> findByG_P_L(long groupId,
-		boolean privateLayout, long layoutId, int start, int end,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-		return getPersistence()
-				   .findByG_P_L(groupId, privateLayout, layoutId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching journal content search
-	* @throws NoSuchContentSearchException if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch findByG_P_L_First(long groupId,
-		boolean privateLayout, long layoutId,
-		OrderByComparator<JournalContentSearch> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchContentSearchException {
-		return getPersistence()
-				   .findByG_P_L_First(groupId, privateLayout, layoutId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch fetchByG_P_L_First(long groupId,
-		boolean privateLayout, long layoutId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_P_L_First(groupId, privateLayout, layoutId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal content search
-	* @throws NoSuchContentSearchException if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch findByG_P_L_Last(long groupId,
-		boolean privateLayout, long layoutId,
-		OrderByComparator<JournalContentSearch> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchContentSearchException {
-		return getPersistence()
-				   .findByG_P_L_Last(groupId, privateLayout, layoutId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch fetchByG_P_L_Last(long groupId,
-		boolean privateLayout, long layoutId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_P_L_Last(groupId, privateLayout, layoutId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	*
-	* @param contentSearchId the primary key of the current journal content search
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next journal content search
-	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
-	*/
-	public static JournalContentSearch[] findByG_P_L_PrevAndNext(
-		long contentSearchId, long groupId, boolean privateLayout,
-		long layoutId, OrderByComparator<JournalContentSearch> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchContentSearchException {
-		return getPersistence()
-				   .findByG_P_L_PrevAndNext(contentSearchId, groupId,
-			privateLayout, layoutId, orderByComparator);
-	}
-
-	/**
-	* Removes all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	*/
-	public static void removeByG_P_L(long groupId, boolean privateLayout,
-		long layoutId) {
-		getPersistence().removeByG_P_L(groupId, privateLayout, layoutId);
-	}
-
-	/**
-	* Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @return the number of matching journal content searchs
-	*/
-	public static int countByG_P_L(long groupId, boolean privateLayout,
-		long layoutId) {
-		return getPersistence().countByG_P_L(groupId, privateLayout, layoutId);
-	}
-
-	/**
-	* Returns all the journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	* @return the matching journal content searchs
-	*/
-	public static List<JournalContentSearch> findByG_P_A(long groupId,
-		boolean privateLayout, java.lang.String articleId) {
-		return getPersistence().findByG_P_A(groupId, privateLayout, articleId);
-	}
-
-	/**
-	* Returns a range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	* @param start the lower bound of the range of journal content searchs
-	* @param end the upper bound of the range of journal content searchs (not inclusive)
-	* @return the range of matching journal content searchs
-	*/
-	public static List<JournalContentSearch> findByG_P_A(long groupId,
-		boolean privateLayout, java.lang.String articleId, int start, int end) {
-		return getPersistence()
-				   .findByG_P_A(groupId, privateLayout, articleId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	* @param start the lower bound of the range of journal content searchs
-	* @param end the upper bound of the range of journal content searchs (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching journal content searchs
-	*/
-	public static List<JournalContentSearch> findByG_P_A(long groupId,
-		boolean privateLayout, java.lang.String articleId, int start, int end,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-		return getPersistence()
-				   .findByG_P_A(groupId, privateLayout, articleId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching journal content search
-	* @throws NoSuchContentSearchException if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch findByG_P_A_First(long groupId,
-		boolean privateLayout, java.lang.String articleId,
-		OrderByComparator<JournalContentSearch> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchContentSearchException {
-		return getPersistence()
-				   .findByG_P_A_First(groupId, privateLayout, articleId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch fetchByG_P_A_First(long groupId,
-		boolean privateLayout, java.lang.String articleId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_P_A_First(groupId, privateLayout, articleId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal content search
-	* @throws NoSuchContentSearchException if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch findByG_P_A_Last(long groupId,
-		boolean privateLayout, java.lang.String articleId,
-		OrderByComparator<JournalContentSearch> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchContentSearchException {
-		return getPersistence()
-				   .findByG_P_A_Last(groupId, privateLayout, articleId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch fetchByG_P_A_Last(long groupId,
-		boolean privateLayout, java.lang.String articleId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_P_A_Last(groupId, privateLayout, articleId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	*
-	* @param contentSearchId the primary key of the current journal content search
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next journal content search
-	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
-	*/
-	public static JournalContentSearch[] findByG_P_A_PrevAndNext(
-		long contentSearchId, long groupId, boolean privateLayout,
-		java.lang.String articleId,
-		OrderByComparator<JournalContentSearch> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchContentSearchException {
-		return getPersistence()
-				   .findByG_P_A_PrevAndNext(contentSearchId, groupId,
-			privateLayout, articleId, orderByComparator);
-	}
-
-	/**
-	* Removes all the journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	*/
-	public static void removeByG_P_A(long groupId, boolean privateLayout,
-		java.lang.String articleId) {
-		getPersistence().removeByG_P_A(groupId, privateLayout, articleId);
-	}
-
-	/**
-	* Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63; and articleId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param articleId the article ID
-	* @return the number of matching journal content searchs
-	*/
-	public static int countByG_P_A(long groupId, boolean privateLayout,
-		java.lang.String articleId) {
-		return getPersistence().countByG_P_A(groupId, privateLayout, articleId);
-	}
-
-	/**
-	* Returns all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @return the matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByG_P_L_P(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId) {
-		return getPersistence()
-				   .findByG_P_L_P(groupId, privateLayout, layoutId, portletId);
+	public static List<JournalContentSearch> findByG_L_P(long groupId,
+		long layoutId, java.lang.String portletId) {
+		return getPersistence().findByG_L_P(groupId, layoutId, portletId);
 	}
 
 	/**
-	* Returns a range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	* Returns a range of all the journal content searchs where groupId = &#63; and layoutId = &#63; and portletId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param start the lower bound of the range of journal content searchs
 	* @param end the upper bound of the range of journal content searchs (not inclusive)
 	* @return the range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByG_P_L_P(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		int start, int end) {
+	public static List<JournalContentSearch> findByG_L_P(long groupId,
+		long layoutId, java.lang.String portletId, int start, int end) {
 		return getPersistence()
-				   .findByG_P_L_P(groupId, privateLayout, layoutId, portletId,
-			start, end);
+				   .findByG_L_P(groupId, layoutId, portletId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	* Returns an ordered range of all the journal content searchs where groupId = &#63; and layoutId = &#63; and portletId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalContentSearchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param start the lower bound of the range of journal content searchs
@@ -1112,233 +890,211 @@ public class JournalContentSearchUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal content searchs
 	*/
-	public static List<JournalContentSearch> findByG_P_L_P(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		int start, int end,
+	public static List<JournalContentSearch> findByG_L_P(long groupId,
+		long layoutId, java.lang.String portletId, int start, int end,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 		return getPersistence()
-				   .findByG_P_L_P(groupId, privateLayout, layoutId, portletId,
-			start, end, orderByComparator);
+				   .findByG_L_P(groupId, layoutId, portletId, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	* Returns the first journal content search in the ordered set where groupId = &#63; and layoutId = &#63; and portletId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch findByG_P_L_P_First(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		OrderByComparator<JournalContentSearch> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchContentSearchException {
-		return getPersistence()
-				   .findByG_P_L_P_First(groupId, privateLayout, layoutId,
-			portletId, orderByComparator);
-	}
-
-	/**
-	* Returns the first journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param portletId the portlet ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch fetchByG_P_L_P_First(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_P_L_P_First(groupId, privateLayout, layoutId,
-			portletId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param portletId the portlet ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal content search
-	* @throws NoSuchContentSearchException if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch findByG_P_L_P_Last(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		OrderByComparator<JournalContentSearch> orderByComparator)
-		throws com.liferay.portlet.journal.NoSuchContentSearchException {
-		return getPersistence()
-				   .findByG_P_L_P_Last(groupId, privateLayout, layoutId,
-			portletId, orderByComparator);
-	}
-
-	/**
-	* Returns the last journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param portletId the portlet ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
-	*/
-	public static JournalContentSearch fetchByG_P_L_P_Last(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		OrderByComparator<JournalContentSearch> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_P_L_P_Last(groupId, privateLayout, layoutId,
-			portletId, orderByComparator);
-	}
-
-	/**
-	* Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
-	*
-	* @param contentSearchId the primary key of the current journal content search
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param layoutId the layout ID
-	* @param portletId the portlet ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next journal content search
-	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
-	*/
-	public static JournalContentSearch[] findByG_P_L_P_PrevAndNext(
-		long contentSearchId, long groupId, boolean privateLayout,
+	public static JournalContentSearch findByG_L_P_First(long groupId,
 		long layoutId, java.lang.String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator)
 		throws com.liferay.portlet.journal.NoSuchContentSearchException {
 		return getPersistence()
-				   .findByG_P_L_P_PrevAndNext(contentSearchId, groupId,
-			privateLayout, layoutId, portletId, orderByComparator);
+				   .findByG_L_P_First(groupId, layoutId, portletId,
+			orderByComparator);
 	}
 
 	/**
-	* Removes all the journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; from the database.
+	* Returns the first journal content search in the ordered set where groupId = &#63; and layoutId = &#63; and portletId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
+	* @param layoutId the layout ID
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	*/
+	public static JournalContentSearch fetchByG_L_P_First(long groupId,
+		long layoutId, java.lang.String portletId,
+		OrderByComparator<JournalContentSearch> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_L_P_First(groupId, layoutId, portletId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last journal content search in the ordered set where groupId = &#63; and layoutId = &#63; and portletId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutId the layout ID
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal content search
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
+	*/
+	public static JournalContentSearch findByG_L_P_Last(long groupId,
+		long layoutId, java.lang.String portletId,
+		OrderByComparator<JournalContentSearch> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchContentSearchException {
+		return getPersistence()
+				   .findByG_L_P_Last(groupId, layoutId, portletId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last journal content search in the ordered set where groupId = &#63; and layoutId = &#63; and portletId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutId the layout ID
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal content search, or <code>null</code> if a matching journal content search could not be found
+	*/
+	public static JournalContentSearch fetchByG_L_P_Last(long groupId,
+		long layoutId, java.lang.String portletId,
+		OrderByComparator<JournalContentSearch> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_L_P_Last(groupId, layoutId, portletId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the journal content searchs before and after the current journal content search in the ordered set where groupId = &#63; and layoutId = &#63; and portletId = &#63;.
+	*
+	* @param contentSearchId the primary key of the current journal content search
+	* @param groupId the group ID
+	* @param layoutId the layout ID
+	* @param portletId the portlet ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal content search
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
+	*/
+	public static JournalContentSearch[] findByG_L_P_PrevAndNext(
+		long contentSearchId, long groupId, long layoutId,
+		java.lang.String portletId,
+		OrderByComparator<JournalContentSearch> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchContentSearchException {
+		return getPersistence()
+				   .findByG_L_P_PrevAndNext(contentSearchId, groupId, layoutId,
+			portletId, orderByComparator);
+	}
+
+	/**
+	* Removes all the journal content searchs where groupId = &#63; and layoutId = &#63; and portletId = &#63; from the database.
+	*
+	* @param groupId the group ID
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	*/
-	public static void removeByG_P_L_P(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId) {
-		getPersistence()
-			.removeByG_P_L_P(groupId, privateLayout, layoutId, portletId);
+	public static void removeByG_L_P(long groupId, long layoutId,
+		java.lang.String portletId) {
+		getPersistence().removeByG_L_P(groupId, layoutId, portletId);
 	}
 
 	/**
-	* Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63;.
+	* Returns the number of journal content searchs where groupId = &#63; and layoutId = &#63; and portletId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @return the number of matching journal content searchs
 	*/
-	public static int countByG_P_L_P(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId) {
-		return getPersistence()
-				   .countByG_P_L_P(groupId, privateLayout, layoutId, portletId);
+	public static int countByG_L_P(long groupId, long layoutId,
+		java.lang.String portletId) {
+		return getPersistence().countByG_L_P(groupId, layoutId, portletId);
 	}
 
 	/**
-	* Returns the journal content search where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; or throws a {@link NoSuchContentSearchException} if it could not be found.
+	* Returns the journal content search where groupId = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; or throws a {@link NoSuchContentSearchException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param articleId the article ID
 	* @return the matching journal content search
 	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch findByG_P_L_P_A(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId)
+	public static JournalContentSearch findByG_L_P_A(long groupId,
+		long layoutId, java.lang.String portletId, java.lang.String articleId)
 		throws com.liferay.portlet.journal.NoSuchContentSearchException {
 		return getPersistence()
-				   .findByG_P_L_P_A(groupId, privateLayout, layoutId,
-			portletId, articleId);
+				   .findByG_L_P_A(groupId, layoutId, portletId, articleId);
 	}
 
 	/**
-	* Returns the journal content search where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the journal content search where groupId = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param articleId the article ID
 	* @return the matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch fetchByG_P_L_P_A(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId) {
+	public static JournalContentSearch fetchByG_L_P_A(long groupId,
+		long layoutId, java.lang.String portletId, java.lang.String articleId) {
 		return getPersistence()
-				   .fetchByG_P_L_P_A(groupId, privateLayout, layoutId,
-			portletId, articleId);
+				   .fetchByG_L_P_A(groupId, layoutId, portletId, articleId);
 	}
 
 	/**
-	* Returns the journal content search where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the journal content search where groupId = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param articleId the article ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal content search, or <code>null</code> if a matching journal content search could not be found
 	*/
-	public static JournalContentSearch fetchByG_P_L_P_A(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId, boolean retrieveFromCache) {
+	public static JournalContentSearch fetchByG_L_P_A(long groupId,
+		long layoutId, java.lang.String portletId, java.lang.String articleId,
+		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByG_P_L_P_A(groupId, privateLayout, layoutId,
-			portletId, articleId, retrieveFromCache);
+				   .fetchByG_L_P_A(groupId, layoutId, portletId, articleId,
+			retrieveFromCache);
 	}
 
 	/**
-	* Removes the journal content search where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; from the database.
+	* Removes the journal content search where groupId = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param articleId the article ID
 	* @return the journal content search that was removed
 	*/
-	public static JournalContentSearch removeByG_P_L_P_A(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String portletId,
-		java.lang.String articleId)
+	public static JournalContentSearch removeByG_L_P_A(long groupId,
+		long layoutId, java.lang.String portletId, java.lang.String articleId)
 		throws com.liferay.portlet.journal.NoSuchContentSearchException {
 		return getPersistence()
-				   .removeByG_P_L_P_A(groupId, privateLayout, layoutId,
-			portletId, articleId);
+				   .removeByG_L_P_A(groupId, layoutId, portletId, articleId);
 	}
 
 	/**
-	* Returns the number of journal content searchs where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63;.
+	* Returns the number of journal content searchs where groupId = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param privateLayout the private layout
 	* @param layoutId the layout ID
 	* @param portletId the portlet ID
 	* @param articleId the article ID
 	* @return the number of matching journal content searchs
 	*/
-	public static int countByG_P_L_P_A(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String portletId, java.lang.String articleId) {
+	public static int countByG_L_P_A(long groupId, long layoutId,
+		java.lang.String portletId, java.lang.String articleId) {
 		return getPersistence()
-				   .countByG_P_L_P_A(groupId, privateLayout, layoutId,
-			portletId, articleId);
+				   .countByG_L_P_A(groupId, layoutId, portletId, articleId);
 	}
 
 	/**

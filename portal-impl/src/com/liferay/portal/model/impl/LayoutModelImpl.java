@@ -86,7 +86,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "privateLayout", Types.BOOLEAN },
 			{ "layoutId", Types.BIGINT },
 			{ "parentLayoutId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
@@ -109,7 +108,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "layoutPrototypeLinkEnabled", Types.BOOLEAN },
 			{ "sourcePrototypeLayoutUuid", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -132,11 +131,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public static final long LAYOUTID_COLUMN_BITMASK = 16L;
 	public static final long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 32L;
 	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 64L;
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 128L;
-	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 256L;
-	public static final long TYPE_COLUMN_BITMASK = 512L;
-	public static final long UUID_COLUMN_BITMASK = 1024L;
-	public static final long PRIORITY_COLUMN_BITMASK = 2048L;
+	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 128L;
+	public static final long TYPE_COLUMN_BITMASK = 256L;
+	public static final long UUID_COLUMN_BITMASK = 512L;
+	public static final long PRIORITY_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -160,7 +158,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setPrivateLayout(soapModel.getPrivateLayout());
 		model.setLayoutId(soapModel.getLayoutId());
 		model.setParentLayoutId(soapModel.getParentLayoutId());
 		model.setName(soapModel.getName());
@@ -255,7 +252,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("parentLayoutId", getParentLayoutId());
 		attributes.put("name", getName());
@@ -340,12 +336,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		Long layoutId = (Long)attributes.get("layoutId");
@@ -633,34 +623,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-	}
-
-	@JSON
-	@Override
-	public boolean getPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
-
-		if (!_setOriginalPrivateLayout) {
-			_setOriginalPrivateLayout = true;
-
-			_originalPrivateLayout = _privateLayout;
-		}
-
-		_privateLayout = privateLayout;
-	}
-
-	public boolean getOriginalPrivateLayout() {
-		return _originalPrivateLayout;
 	}
 
 	@JSON
@@ -1667,7 +1629,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setUserName(getUserName());
 		layoutImpl.setCreateDate(getCreateDate());
 		layoutImpl.setModifiedDate(getModifiedDate());
-		layoutImpl.setPrivateLayout(getPrivateLayout());
 		layoutImpl.setLayoutId(getLayoutId());
 		layoutImpl.setParentLayoutId(getParentLayoutId());
 		layoutImpl.setName(getName());
@@ -1781,10 +1742,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._setOriginalCompanyId = false;
 
-		layoutModelImpl._originalPrivateLayout = layoutModelImpl._privateLayout;
-
-		layoutModelImpl._setOriginalPrivateLayout = false;
-
 		layoutModelImpl._originalLayoutId = layoutModelImpl._layoutId;
 
 		layoutModelImpl._setOriginalLayoutId = false;
@@ -1855,8 +1812,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		else {
 			layoutCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
-
-		layoutCacheModel.privateLayout = getPrivateLayout();
 
 		layoutCacheModel.layoutId = getLayoutId();
 
@@ -1997,7 +1952,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -2017,8 +1972,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", privateLayout=");
-		sb.append(getPrivateLayout());
 		sb.append(", layoutId=");
 		sb.append(getLayoutId());
 		sb.append(", parentLayoutId=");
@@ -2068,7 +2021,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(97);
+		StringBundler sb = new StringBundler(94);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Layout");
@@ -2109,10 +2062,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
-		sb.append(getPrivateLayout());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>layoutId</column-name><column-value><![CDATA[");
@@ -2222,9 +2171,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private boolean _privateLayout;
-	private boolean _originalPrivateLayout;
-	private boolean _setOriginalPrivateLayout;
 	private long _layoutId;
 	private long _originalLayoutId;
 	private boolean _setOriginalLayoutId;

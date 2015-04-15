@@ -242,7 +242,6 @@
 			WHERE
 				(Group_.classNameId = ?) AND
 				(Group_.type_ != 4) AND
-				(LayoutSet.privateLayout = ?) AND
 				(LayoutSet.pageCount = 0)
 		]]>
 	</sql>
@@ -401,7 +400,6 @@
 					(LayoutSet.groupId = Group_.groupId)
 			WHERE
 				(Group_.liveGroupId = 0) AND
-				(LayoutSet.privateLayout = ?) AND
 				(LayoutSet.pageCount != 0)
 		]]>
 	</sql>
@@ -535,8 +533,7 @@
 					(Group_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]) AND
 					(Group_.classPK = Layout.plid)
 			WHERE
-				(Layout.groupId = ?) AND
-				(Layout.privateLayout = ?)
+				(Layout.groupId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.LayoutFinder.findByC_P_P">
@@ -887,8 +884,7 @@
 				(
 					(PortletPreferences.portletId = ?) OR
 					(PortletPreferences.portletId LIKE ?)
-				) AND
-				(Layout.privateLayout = ?)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourceBlockFinder.findByC_G_N_R">

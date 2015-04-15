@@ -223,7 +223,7 @@ public class PortalInstances {
 					companyId, PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-					group.getGroupId(), false);
+					group.getGroupId());
 
 				if (Validator.isNull(layoutSet.getVirtualHostname())) {
 					request.setAttribute(

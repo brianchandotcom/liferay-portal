@@ -21,8 +21,7 @@ Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 long liveGroupId = ((Long)request.getAttribute("site.liveGroupId")).longValue();
 UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribute("site.liveGroupTypeSettings");
 
-LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
-LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
+LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId());
 
 boolean liveGroupRemoteStaging = liveGroup.hasRemoteStagingGroup() && PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED;
 boolean stagedLocally = liveGroup.isStaged() && !liveGroup.isStagedRemotely();
@@ -108,7 +107,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 <liferay-ui:error-marker key="errorSection" value="staging" />
 
 <c:choose>
-	<c:when test="<%= privateLayoutSet.isLayoutSetPrototypeLinkActive() || publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
+	<c:when test="<%= layoutSet.isLayoutSetPrototypeLinkActive() %>">
 		<div class="alert alert-info">
 			<liferay-ui:message key="staging-cannot-be-used-for-this-site-because-the-propagation-of-changes-from-the-site-template-is-enabled" />
 			<c:choose>
@@ -196,9 +195,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 
 			<c:if test="<%= !liveGroup.isCompany() && !liveGroupRemoteStaging %>">
 				<aui:fieldset helpMessage="page-versioning-help" label="page-versioning">
-					<aui:input label="enabled-on-public-pages" name="branchingPublic" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>' />
-
-					<aui:input label="enabled-on-private-pages" name="branchingPrivate" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate")) %>' />
+					<aui:input label="enabled-on-pages" name="branchingPublic" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>' />
 				</aui:fieldset>
 			</c:if>
 

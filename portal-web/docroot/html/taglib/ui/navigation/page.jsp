@@ -88,7 +88,7 @@ private void _buildNavigation(Layout rootLayout, Layout selLayout, List<Layout> 
 		childLayouts = rootLayout.getChildren(themeDisplay.getPermissionChecker());
 	}
 	else {
-		childLayouts = LayoutLocalServiceUtil.getLayouts(selLayout.getGroupId(), selLayout.isPrivateLayout(), LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		childLayouts = LayoutLocalServiceUtil.getLayouts(selLayout.getGroupId(), LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 	}
 
 	if (childLayouts.isEmpty()) {

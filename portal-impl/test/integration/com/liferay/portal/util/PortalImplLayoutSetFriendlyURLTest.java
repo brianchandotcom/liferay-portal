@@ -61,7 +61,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 			field.set(null, defaultGroup.getName());
 
 			ThemeDisplay themeDisplay = initThemeDisplay(
-				company, group, publicLayout, LOCALHOST, VIRTUAL_HOSTNAME);
+				company, group, layout, LOCALHOST, VIRTUAL_HOSTNAME);
 
 			Layout layout = LayoutTestUtil.addLayout(defaultGroup);
 
@@ -85,7 +85,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 		themeDisplay.setDoAsUserId("impersonated");
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), false);
+			group.getGroupId());
 
 		String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
 			layoutSet, themeDisplay);

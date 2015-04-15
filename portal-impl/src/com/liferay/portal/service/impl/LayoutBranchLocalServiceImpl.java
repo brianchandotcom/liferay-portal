@@ -92,12 +92,12 @@ public class LayoutBranchLocalServiceImpl
 			layoutBranch.getLayoutBranchId(),
 			LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, false,
 			layoutRevision.getPlid(), layoutRevision.getLayoutRevisionId(),
-			layoutRevision.isPrivateLayout(), layoutRevision.getName(),
-			layoutRevision.getTitle(), layoutRevision.getDescription(),
-			layoutRevision.getKeywords(), layoutRevision.getRobots(),
-			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
-			layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-			layoutRevision.getColorSchemeId(), layoutRevision.getWapThemeId(),
+			layoutRevision.getName(), layoutRevision.getTitle(),
+			layoutRevision.getDescription(), layoutRevision.getKeywords(),
+			layoutRevision.getRobots(), layoutRevision.getTypeSettings(),
+			layoutRevision.getIconImage(), layoutRevision.getIconImageId(),
+			layoutRevision.getThemeId(), layoutRevision.getColorSchemeId(),
+			layoutRevision.getWapThemeId(),
 			layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);
 

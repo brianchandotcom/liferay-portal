@@ -23,7 +23,6 @@ Group group = layoutsAdminDisplayContext.getGroup();
 Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
 long groupId = layoutsAdminDisplayContext.getGroupId();
 long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
-boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
@@ -31,22 +30,7 @@ String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
 
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
-int pagesCount = 0;
-
-if (selGroup.isLayoutSetPrototype()) {
-	privateLayout = true;
-}
-
-if (privateLayout) {
-	if (group != null) {
-		pagesCount = group.getPrivateLayoutsPageCount();
-	}
-}
-else {
-	if (group != null) {
-		pagesCount = group.getPublicLayoutsPageCount();
-	}
-}
+int pagesCount = group.getLayoutsPageCount();
 
 String[] mainSections = PropsValues.LAYOUT_SET_FORM_UPDATE;
 
@@ -70,14 +54,13 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<c:if test="<%= hasViewPagesPermission %>">
-			<aui:nav-item href="<%= group.getDisplayURL(themeDisplay, privateLayout) %>" iconCssClass="icon-file" label="view-pages" target="_blank" />
+			<aui:nav-item href="<%= group.getDisplayURL(themeDisplay) %>" iconCssClass="icon-file" label="view-pages" target="_blank" />
 		</c:if>
 		<c:if test="<%= hasAddPageLayoutsPermission %>">
 			<portlet:renderURL var="addPagesURL">
 				<portlet:param name="struts_action" value="/layouts_admin/add_layout" />
 				<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item href="<%= addPagesURL %>" iconCssClass="icon-plus" label="add-page" />
@@ -88,7 +71,6 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 			</portlet:renderURL>
 
@@ -98,7 +80,6 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 			</portlet:renderURL>
 
@@ -128,7 +109,6 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
 	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input name="layoutSetId" type="hidden" value="<%= selLayoutSet.getLayoutSetId() %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 

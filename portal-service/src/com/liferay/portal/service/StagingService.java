@@ -59,7 +59,6 @@ public interface StagingService extends BaseService {
 	public java.lang.String getBeanIdentifier();
 
 	public void publishStagingRequest(long stagingRequestId,
-		boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws PortalException;
 

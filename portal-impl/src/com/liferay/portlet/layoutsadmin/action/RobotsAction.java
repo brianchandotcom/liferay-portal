@@ -73,7 +73,7 @@ public class RobotsAction extends Action {
 						company.getCompanyId(),
 						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
-					layoutSet = defaultGroup.getPublicLayoutSet();
+					layoutSet = defaultGroup.getLayoutSet();
 				}
 			}
 

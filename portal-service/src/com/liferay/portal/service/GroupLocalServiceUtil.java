@@ -1044,17 +1044,14 @@ public class GroupLocalServiceUtil {
 	* </p>
 	*
 	* @param className the entity's class name
-	* @param privateLayout whether to include groups with private layout sets
-	or non-private layout sets
 	* @param start the lower bound of the range of groups to return
 	* @param end the upper bound of the range of groups to return (not
 	inclusive)
 	* @return the range of matching groups
 	*/
 	public static java.util.List<com.liferay.portal.model.Group> getNoLayoutsGroups(
-		java.lang.String className, boolean privateLayout, int start, int end) {
-		return getService()
-				   .getNoLayoutsGroups(className, privateLayout, start, end);
+		java.lang.String className, int start, int end) {
+		return getService().getNoLayoutsGroups(className, start, end);
 	}
 
 	/**

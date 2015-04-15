@@ -54,8 +54,6 @@ public class LayoutsLocalPublisherMessageListener
 		long userId = MapUtil.getLong(settingsMap, "userId");
 		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
 		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-		boolean privateLayout = MapUtil.getBoolean(
-			settingsMap, "privateLayout");
 		long[] layoutIds = GetterUtil.getLongValues(
 			settingsMap.get("layoutIds"));
 		Map<String, String[]> parameterMap =
@@ -65,8 +63,7 @@ public class LayoutsLocalPublisherMessageListener
 
 		try {
 			StagingUtil.publishLayouts(
-				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
-				parameterMap);
+				userId, sourceGroupId, targetGroupId, layoutIds, parameterMap);
 		}
 		finally {
 			resetThreadLocals();

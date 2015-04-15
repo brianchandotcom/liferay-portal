@@ -22,7 +22,7 @@
 			<#assign fieldLayoutGroupId = scopeGroupId>
 		</#if>
 
-		<#assign fieldLayout = layoutLocalService.fetchLayout(fieldLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
+		<#assign fieldLayout = layoutLocalService.fetchLayout(fieldLayoutGroupId, fieldLayoutJSONObject.getLong("layoutId"))!"">
 
 		<#if (fieldLayout?? && fieldLayout != "")>
 			<a href="${fieldLayout.getRegularURL(request)}">${escape(fieldLayout.getName(requestedLocale))}</a>

@@ -262,9 +262,9 @@ public class PortletPreferencesLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
 		long companyId, long groupId, long ownerId, int ownerType,
-		java.lang.String portletId, boolean privateLayout) {
+		java.lang.String portletId) {
 		return _portletPreferencesLocalService.getPortletPreferences(companyId,
-			groupId, ownerId, ownerType, portletId, privateLayout);
+			groupId, ownerId, ownerType, portletId);
 	}
 
 	@Override

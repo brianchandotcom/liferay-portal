@@ -56,8 +56,7 @@ public class PortletContainerUtil {
 
 			try {
 				layouts = LayoutLocalServiceUtil.getLayouts(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					LayoutConstants.TYPE_PORTLET);
+					layout.getGroupId(), LayoutConstants.TYPE_PORTLET);
 			}
 			catch (SystemException se) {
 				throw new PortletContainerException(se);

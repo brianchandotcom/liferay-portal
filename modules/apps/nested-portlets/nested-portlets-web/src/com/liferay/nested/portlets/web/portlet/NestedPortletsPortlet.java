@@ -211,8 +211,8 @@ public class NestedPortletsPortlet extends MVCPortlet {
 
 			try {
 				LayoutLocalServiceUtil.updateLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), layout.getTypeSettings());
+					layout.getGroupId(), layout.getLayoutId(),
+					layout.getTypeSettings());
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

@@ -96,7 +96,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 			if (pathArray.length == 2) {
 				try {
 					LayoutLocalServiceUtil.getFriendlyURLLayout(
-						groupId, false, friendlyURL);
+						groupId, friendlyURL);
 				}
 				catch (NoSuchLayoutException nsle) {
 					return true;
@@ -115,8 +115,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		if (PortalInstances.isVirtualHostsIgnorePath(friendlyURL) ||
 			friendlyURL.startsWith(_PATH_MODULE_SLASH) ||
-			friendlyURL.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING_SLASH) ||
-			friendlyURL.startsWith(_PRIVATE_USER_SERVLET_MAPPING_SLASH) ||
 			friendlyURL.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING_SLASH)) {
 
 			return false;
@@ -281,9 +279,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 					return;
 				}
 
-				if (group.isGuest() && friendlyURL.equals(StringPool.SLASH) &&
-					!layoutSet.isPrivateLayout()) {
-
+				if (group.isGuest() && friendlyURL.equals(StringPool.SLASH)) {
 					String homeURL = PortalUtil.getRelativeHomeURL(request);
 
 					if (Validator.isNotNull(homeURL)) {
@@ -291,17 +287,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 					}
 				}
 				else {
-					if (layoutSet.isPrivateLayout()) {
-						if (group.isUser()) {
-							forwardURL.append(_PRIVATE_USER_SERVLET_MAPPING);
-						}
-						else {
-							forwardURL.append(_PRIVATE_GROUP_SERVLET_MAPPING);
-						}
-					}
-					else {
-						forwardURL.append(_PUBLIC_GROUP_SERVLET_MAPPING);
-					}
+					forwardURL.append(_PUBLIC_GROUP_SERVLET_MAPPING);
 
 					forwardURL.append(group.getFriendlyURL());
 				}
@@ -330,18 +316,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 	private static final String _PATH_MODULE_SLASH =
 		Portal.PATH_MODULE + StringPool.SLASH;
-
-	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;
-
-	private static final String _PRIVATE_GROUP_SERVLET_MAPPING_SLASH =
-		_PRIVATE_GROUP_SERVLET_MAPPING + StringPool.SLASH;
-
-	private static final String _PRIVATE_USER_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
-
-	private static final String _PRIVATE_USER_SERVLET_MAPPING_SLASH =
-		_PRIVATE_USER_SERVLET_MAPPING + StringPool.SLASH;
 
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;

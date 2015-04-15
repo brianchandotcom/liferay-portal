@@ -110,10 +110,6 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setLayoutFullURL(getLayoutFullURL());
 		serviceContext.setLayoutURL(getLayoutURL());
 		serviceContext.setModifiedDate(getModifiedDate());
-		serviceContext.setPathFriendlyURLPrivateGroup(
-			getPathFriendlyURLPrivateGroup());
-		serviceContext.setPathFriendlyURLPrivateUser(
-			getPathFriendlyURLPrivateUser());
 		serviceContext.setPathFriendlyURLPublic(getPathFriendlyURLPublic());
 		serviceContext.setPathMain(getPathMain());
 		serviceContext.setPlid(getPlid());
@@ -167,7 +163,7 @@ public class ServiceContext implements Cloneable, Serializable {
 				if (roleName.equals(RoleConstants.GUEST) &&
 					!guestUnsupportedActions.contains(action) &&
 					guestDefaultActions.contains(action) &&
-					siteGroup.hasPublicLayouts()) {
+					siteGroup.hasLayouts()) {
 
 					guestPermissions.add(action);
 				}
@@ -520,14 +516,6 @@ public class ServiceContext implements Cloneable, Serializable {
 		else {
 			return new Date();
 		}
-	}
-
-	public String getPathFriendlyURLPrivateGroup() {
-		return _pathFriendlyURLPrivateGroup;
-	}
-
-	public String getPathFriendlyURLPrivateUser() {
-		return _pathFriendlyURLPrivateUser;
 	}
 
 	public String getPathFriendlyURLPublic() {
@@ -936,20 +924,6 @@ public class ServiceContext implements Cloneable, Serializable {
 			setModifiedDate(serviceContext.getModifiedDate());
 		}
 
-		if (Validator.isNotNull(
-				serviceContext.getPathFriendlyURLPrivateGroup())) {
-
-			setPathFriendlyURLPrivateGroup(
-				serviceContext.getPathFriendlyURLPrivateGroup());
-		}
-
-		if (Validator.isNotNull(
-				serviceContext.getPathFriendlyURLPrivateUser())) {
-
-			setPathFriendlyURLPrivateUser(
-				serviceContext.getPathFriendlyURLPrivateUser());
-		}
-
 		if (Validator.isNotNull(serviceContext.getPathFriendlyURLPublic())) {
 			setPathFriendlyURLPublic(serviceContext.getPathFriendlyURLPublic());
 		}
@@ -1326,18 +1300,6 @@ public class ServiceContext implements Cloneable, Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public void setPathFriendlyURLPrivateGroup(
-		String pathFriendlyURLPrivateGroup) {
-
-		_pathFriendlyURLPrivateGroup = pathFriendlyURLPrivateGroup;
-	}
-
-	public void setPathFriendlyURLPrivateUser(
-		String pathFriendlyURLPrivateUser) {
-
-		_pathFriendlyURLPrivateUser = pathFriendlyURLPrivateUser;
-	}
-
 	public void setPathFriendlyURLPublic(String pathFriendlyURLPublic) {
 		_pathFriendlyURLPublic = pathFriendlyURLPublic;
 	}
@@ -1540,8 +1502,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	private String _layoutFullURL;
 	private String _layoutURL;
 	private Date _modifiedDate;
-	private String _pathFriendlyURLPrivateGroup;
-	private String _pathFriendlyURLPrivateUser;
 	private String _pathFriendlyURLPublic;
 	private String _pathMain;
 	private long _plid;

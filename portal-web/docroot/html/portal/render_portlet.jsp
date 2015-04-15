@@ -62,7 +62,6 @@ else {
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
 
 Group group = null;
-boolean privateLayout = false;
 
 if (layout instanceof VirtualLayout) {
 	VirtualLayout virtualLayout = (VirtualLayout)layout;
@@ -70,11 +69,9 @@ if (layout instanceof VirtualLayout) {
 	Layout sourceLayout = virtualLayout.getSourceLayout();
 
 	group = sourceLayout.getGroup();
-	privateLayout = sourceLayout.isPrivateLayout();
 }
 else {
 	group = layout.getGroup();
-	privateLayout = layout.isPrivateLayout();
 }
 
 long portletItemId = ParamUtil.getLong(request, "p_p_i_id");
@@ -251,7 +248,7 @@ if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_DEFAULTS
 }
 
 if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_GUEST)) {
-	if (showEditIcon && !layout.isPrivateLayout() && themeDisplay.isShowAddContentIcon()) {
+	if (showEditIcon && themeDisplay.isShowAddContentIcon()) {
 		showEditGuestIcon = true;
 	}
 }

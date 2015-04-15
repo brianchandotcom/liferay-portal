@@ -61,7 +61,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("parentLayoutId", getParentLayoutId());
 		attributes.put("name", getName());
@@ -143,12 +142,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		Long layoutId = (Long)attributes.get("layoutId");
@@ -963,16 +956,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.getPriority();
 	}
 
-	/**
-	* Returns the private layout of this layout.
-	*
-	* @return the private layout of this layout
-	*/
-	@Override
-	public boolean getPrivateLayout() {
-		return _layout.getPrivateLayout();
-	}
-
 	@Override
 	public java.lang.String getRegularURL(
 		javax.servlet.http.HttpServletRequest request)
@@ -1482,16 +1465,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
-	* Returns <code>true</code> if this layout is private layout.
-	*
-	* @return <code>true</code> if this layout is private layout; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPrivateLayout() {
-		return _layout.isPrivateLayout();
-	}
-
-	/**
 	* Returns <code>true</code> if the current layout is part of the public
 	* {@link LayoutSet}.
 	*
@@ -1996,16 +1969,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	@Override
 	public void setPriority(int priority) {
 		_layout.setPriority(priority);
-	}
-
-	/**
-	* Sets whether this layout is private layout.
-	*
-	* @param privateLayout the private layout of this layout
-	*/
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_layout.setPrivateLayout(privateLayout);
 	}
 
 	/**

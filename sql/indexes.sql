@@ -303,8 +303,7 @@ create unique index IX_84AB0309 on JournalArticleResource (uuid_, groupId);
 
 create index IX_9207CB31 on JournalContentSearch (articleId);
 create index IX_6838E427 on JournalContentSearch (groupId, articleId);
-create index IX_7CC7D73E on JournalContentSearch (groupId, privateLayout, articleId);
-create unique index IX_C3AA93B8 on JournalContentSearch (groupId, privateLayout, layoutId, portletId, articleId);
+create unique index IX_CD4FE26F on JournalContentSearch (groupId, layoutId, portletId, articleId);
 create index IX_8DAF8A35 on JournalContentSearch (portletId);
 
 create unique index IX_65576CBC on JournalFeed (groupId, feedId);
@@ -322,22 +321,22 @@ create index IX_96F1BE5F on JournalFolders_DDMStructures (folderId);
 create index IX_6159D3DC on JournalFolders_DDMStructures (structureId);
 
 create index IX_C7FBC998 on Layout (companyId);
-create unique index IX_BC2C4231 on Layout (groupId, privateLayout, friendlyURL);
-create unique index IX_7162C27C on Layout (groupId, privateLayout, layoutId);
-create index IX_6DE88B06 on Layout (groupId, privateLayout, parentLayoutId);
-create index IX_8CE8C0D9 on Layout (groupId, privateLayout, sourcePrototypeLayoutUuid);
-create index IX_1A1B61D2 on Layout (groupId, privateLayout, type_);
+create unique index IX_A82A601A on Layout (groupId, friendlyURL);
+create unique index IX_594E9533 on Layout (groupId, layoutId);
+create index IX_26C3387D on Layout (groupId, parentLayoutId);
+create index IX_4823D302 on Layout (groupId, sourcePrototypeLayoutUuid);
+create index IX_6EDC627B on Layout (groupId, type_);
 create index IX_23922F7D on Layout (iconImageId);
 create index IX_B529BFD3 on Layout (layoutPrototypeUuid);
 create index IX_39A18ECC on Layout (sourcePrototypeLayoutUuid);
 create index IX_2CE4BE84 on Layout (uuid_, companyId);
-create unique index IX_E118C537 on Layout (uuid_, groupId, privateLayout);
+create unique index IX_CED31606 on Layout (uuid_, groupId);
 
 create index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);
 create unique index IX_FD57097D on LayoutBranch (layoutSetBranchId, plid, name);
 
 create index IX_EAB317C8 on LayoutFriendlyURL (companyId);
-create unique index IX_A6FC2B28 on LayoutFriendlyURL (groupId, privateLayout, friendlyURL, languageId);
+create unique index IX_8F384531 on LayoutFriendlyURL (groupId, friendlyURL, languageId);
 create index IX_59051329 on LayoutFriendlyURL (plid, friendlyURL);
 create unique index IX_C5762E72 on LayoutFriendlyURL (plid, languageId);
 create index IX_F4321A54 on LayoutFriendlyURL (uuid_, companyId);
@@ -354,11 +353,11 @@ create index IX_70DA9ECB on LayoutRevision (layoutSetBranchId, plid, status);
 create index IX_7FFAE700 on LayoutRevision (layoutSetBranchId, status);
 create index IX_8EC3D2BC on LayoutRevision (plid, status);
 
-create unique index IX_48550691 on LayoutSet (groupId, privateLayout);
+create unique index IX_A40B8BEC on LayoutSet (groupId);
 create index IX_72BBA8B7 on LayoutSet (layoutSetPrototypeUuid);
 
-create index IX_CCF0DA29 on LayoutSetBranch (groupId, privateLayout, master);
-create unique index IX_5FF18552 on LayoutSetBranch (groupId, privateLayout, name);
+create index IX_D0DE0A40 on LayoutSetBranch (groupId, master);
+create unique index IX_38C9CF29 on LayoutSetBranch (groupId, name);
 
 create index IX_9178FC71 on LayoutSetPrototype (companyId, active_);
 create index IX_D9FFCA84 on LayoutSetPrototype (uuid_, companyId);

@@ -65,10 +65,9 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 
 		LayoutLocalServiceUtil.addLayout(
 			TestPropsValues.getUserId(), liveGroup.getGroupId(),
-			layout.getPrivateLayout(), layout.getParentLayoutId(),
-			layout.getName(), layout.getTitle(), layout.getDescription(),
-			layout.getType(), layout.getHidden(), layout.getFriendlyURL(),
-			serviceContext);
+			layout.getParentLayoutId(), layout.getName(), layout.getTitle(),
+			layout.getDescription(), layout.getType(), layout.getHidden(),
+			layout.getFriendlyURL(), serviceContext);
 	}
 
 	@Override

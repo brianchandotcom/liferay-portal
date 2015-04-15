@@ -225,27 +225,6 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the private layout of this layout.
-	 *
-	 * @return the private layout of this layout
-	 */
-	public boolean getPrivateLayout();
-
-	/**
-	 * Returns <code>true</code> if this layout is private layout.
-	 *
-	 * @return <code>true</code> if this layout is private layout; <code>false</code> otherwise
-	 */
-	public boolean isPrivateLayout();
-
-	/**
-	 * Sets whether this layout is private layout.
-	 *
-	 * @param privateLayout the private layout of this layout
-	 */
-	public void setPrivateLayout(boolean privateLayout);
-
-	/**
 	 * Returns the layout ID of this layout.
 	 *
 	 * @return the layout ID of this layout

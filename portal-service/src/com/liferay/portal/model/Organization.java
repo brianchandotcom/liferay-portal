@@ -70,16 +70,14 @@ public interface Organization extends OrganizationModel, PersistedModel,
 
 	public long getGroupId();
 
+	public int getLayoutsPageCount();
+
 	public com.liferay.portal.model.Organization getParentOrganization()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getParentOrganizationName();
 
 	public javax.portlet.PortletPreferences getPreferences();
-
-	public int getPrivateLayoutsPageCount();
-
-	public int getPublicLayoutsPageCount();
 
 	public java.util.Set<java.lang.String> getReminderQueryQuestions(
 		java.util.Locale locale);
@@ -93,9 +91,7 @@ public interface Organization extends OrganizationModel, PersistedModel,
 
 	public int getTypeOrder();
 
-	public boolean hasPrivateLayouts();
-
-	public boolean hasPublicLayouts();
+	public boolean hasLayouts();
 
 	public boolean hasSuborganizations();
 

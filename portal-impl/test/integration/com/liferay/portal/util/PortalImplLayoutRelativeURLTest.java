@@ -47,42 +47,39 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		LayoutSet publicLayoutSet = publicLayout.getLayoutSet();
+		LayoutSet layoutSet = layout.getLayoutSet();
 
 		VirtualHostLocalServiceUtil.updateVirtualHost(
-			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
+			company.getCompanyId(), layoutSet.getLayoutSetId(),
 			VIRTUAL_HOSTNAME);
 
-		privateLayoutRelativeURL =
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
-				group.getFriendlyURL() + privateLayout.getFriendlyURL();
-		publicLayoutRelativeURL =
+		layoutRelativeURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				group.getFriendlyURL() + publicLayout.getFriendlyURL();
+				group.getFriendlyURL() + layout.getFriendlyURL();
 	}
 
 	@Test
 	public void testGetLayoutRelativeURL() throws Exception {
 		testGetLayoutRelativeURL(
-			initThemeDisplay(company, group, privateLayout, LOCALHOST),
-			privateLayout, privateLayoutRelativeURL);
+			initThemeDisplay(company, group, layout, LOCALHOST), layout,
+			layoutRelativeURL);
 		testGetLayoutRelativeURL(
 			initThemeDisplay(
-				company, group, privateLayout, LOCALHOST, VIRTUAL_HOSTNAME),
-			privateLayout, privateLayoutRelativeURL);
+				company, group, layout, LOCALHOST, VIRTUAL_HOSTNAME),
+			layout, layoutRelativeURL);
 		testGetLayoutRelativeURL(
-			initThemeDisplay(company, group, publicLayout, LOCALHOST),
-			publicLayout, publicLayoutRelativeURL);
+			initThemeDisplay(company, group, layout, LOCALHOST), layout,
+			layoutRelativeURL);
 
-		String publicLayoutFriendlyURL = publicLayout.getFriendlyURL();
-		String layoutRelativeURL = PortalUtil.getLayoutRelativeURL(
-			publicLayout,
+		String curLayoutFriendlyURL = layout.getFriendlyURL();
+		String curLayoutRelativeURL = PortalUtil.getLayoutRelativeURL(
+			layout,
 			initThemeDisplay(
-				company, group, publicLayout, LOCALHOST, VIRTUAL_HOSTNAME));
+				company, group, layout, LOCALHOST, VIRTUAL_HOSTNAME));
 
 		Assert.assertTrue(
-			publicLayoutFriendlyURL.equals(layoutRelativeURL) ||
-			publicLayoutRelativeURL.equals(layoutRelativeURL));
+			curLayoutFriendlyURL.equals(layoutRelativeURL) ||
+			curLayoutRelativeURL.equals(layoutRelativeURL));
 	}
 
 	protected void testGetLayoutRelativeURL(
@@ -104,7 +101,7 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 		themeDisplay.setRefererPlid(1);
 
 		try {
-			PortalUtil.getLayoutRelativeURL(privateLayout, themeDisplay);
+			PortalUtil.getLayoutRelativeURL(layout, themeDisplay);
 
 			Assert.fail();
 		}
@@ -112,7 +109,6 @@ public class PortalImplLayoutRelativeURLTest extends PortalImplBaseURLTestCase {
 		}
 	}
 
-	protected String privateLayoutRelativeURL;
-	protected String publicLayoutRelativeURL;
+	protected String layoutRelativeURL;
 
 }

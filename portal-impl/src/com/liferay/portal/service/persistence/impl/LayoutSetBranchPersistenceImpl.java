@@ -927,77 +927,333 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "layoutSetBranch.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
+			LayoutSetBranchImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
+			new String[] { Long.class.getName(), String.class.getName() },
+			LayoutSetBranchModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutSetBranchModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_N = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the layout set branch where groupId = &#63; and name = &#63; or throws a {@link NoSuchLayoutSetBranchException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching layout set branch
+	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
+	 */
+	@Override
+	public LayoutSetBranch findByG_N(long groupId, String name)
+		throws NoSuchLayoutSetBranchException {
+		LayoutSetBranch layoutSetBranch = fetchByG_N(groupId, name);
+
+		if (layoutSetBranch == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchLayoutSetBranchException(msg.toString());
+		}
+
+		return layoutSetBranch;
+	}
+
+	/**
+	 * Returns the layout set branch where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
+	 */
+	@Override
+	public LayoutSetBranch fetchByG_N(long groupId, String name) {
+		return fetchByG_N(groupId, name, true);
+	}
+
+	/**
+	 * Returns the layout set branch where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
+	 */
+	@Override
+	public LayoutSetBranch fetchByG_N(long groupId, String name,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, name };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_N,
+					finderArgs, this);
+		}
+
+		if (result instanceof LayoutSetBranch) {
+			LayoutSetBranch layoutSetBranch = (LayoutSetBranch)result;
+
+			if ((groupId != layoutSetBranch.getGroupId()) ||
+					!Validator.equals(name, layoutSetBranch.getName())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
+
+			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_N_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_N_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				List<LayoutSetBranch> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+						finderArgs, list);
+				}
+				else {
+					LayoutSetBranch layoutSetBranch = list.get(0);
+
+					result = layoutSetBranch;
+
+					cacheResult(layoutSetBranch);
+
+					if ((layoutSetBranch.getGroupId() != groupId) ||
+							(layoutSetBranch.getName() == null) ||
+							!layoutSetBranch.getName().equals(name)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+							finderArgs, layoutSetBranch);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (LayoutSetBranch)result;
+		}
+	}
+
+	/**
+	 * Removes the layout set branch where groupId = &#63; and name = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the layout set branch that was removed
+	 */
+	@Override
+	public LayoutSetBranch removeByG_N(long groupId, String name)
+		throws NoSuchLayoutSetBranchException {
+		LayoutSetBranch layoutSetBranch = findByG_N(groupId, name);
+
+		return remove(layoutSetBranch);
+	}
+
+	/**
+	 * Returns the number of layout set branchs where groupId = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the number of matching layout set branchs
+	 */
+	@Override
+	public int countByG_N(long groupId, String name) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_N;
+
+		Object[] finderArgs = new Object[] { groupId, name };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUTSETBRANCH_WHERE);
+
+			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_N_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_N_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "layoutSetBranch.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_N_NAME_1 = "layoutSetBranch.name IS NULL";
+	private static final String _FINDER_COLUMN_G_N_NAME_2 = "layoutSetBranch.name = ?";
+	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(layoutSetBranch.name IS NULL OR layoutSetBranch.name = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_M = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
 			LayoutSetBranchImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByG_P",
+			"findByG_M",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_M = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
 			LayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M",
 			new String[] { Long.class.getName(), Boolean.class.getName() },
 			LayoutSetBranchModelImpl.GROUPID_COLUMN_BITMASK |
-			LayoutSetBranchModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
+			LayoutSetBranchModelImpl.MASTER_COLUMN_BITMASK |
 			LayoutSetBranchModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_P = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_M = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_M",
 			new String[] { Long.class.getName(), Boolean.class.getName() });
 
 	/**
-	 * Returns all the layout set branchs where groupId = &#63; and privateLayout = &#63;.
+	 * Returns all the layout set branchs where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @return the matching layout set branchs
 	 */
 	@Override
-	public List<LayoutSetBranch> findByG_P(long groupId, boolean privateLayout) {
-		return findByG_P(groupId, privateLayout, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+	public List<LayoutSetBranch> findByG_M(long groupId, boolean master) {
+		return findByG_M(groupId, master, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns a range of all the layout set branchs where groupId = &#63; and privateLayout = &#63;.
+	 * Returns a range of all the layout set branchs where groupId = &#63; and master = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetBranchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param start the lower bound of the range of layout set branchs
 	 * @param end the upper bound of the range of layout set branchs (not inclusive)
 	 * @return the range of matching layout set branchs
 	 */
 	@Override
-	public List<LayoutSetBranch> findByG_P(long groupId, boolean privateLayout,
+	public List<LayoutSetBranch> findByG_M(long groupId, boolean master,
 		int start, int end) {
-		return findByG_P(groupId, privateLayout, start, end, null);
+		return findByG_M(groupId, master, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the layout set branchs where groupId = &#63; and privateLayout = &#63;.
+	 * Returns an ordered range of all the layout set branchs where groupId = &#63; and master = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetBranchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param start the lower bound of the range of layout set branchs
 	 * @param end the upper bound of the range of layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layout set branchs
 	 */
 	@Override
-	public List<LayoutSetBranch> findByG_P(long groupId, boolean privateLayout,
+	public List<LayoutSetBranch> findByG_M(long groupId, boolean master,
 		int start, int end, OrderByComparator<LayoutSetBranch> orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1006,13 +1262,13 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P;
-			finderArgs = new Object[] { groupId, privateLayout };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_M;
+			finderArgs = new Object[] { groupId, master };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_M;
 			finderArgs = new Object[] {
-					groupId, privateLayout,
+					groupId, master,
 					
 					start, end, orderByComparator
 				};
@@ -1024,7 +1280,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		if ((list != null) && !list.isEmpty()) {
 			for (LayoutSetBranch layoutSetBranch : list) {
 				if ((groupId != layoutSetBranch.getGroupId()) ||
-						(privateLayout != layoutSetBranch.getPrivateLayout())) {
+						(master != layoutSetBranch.getMaster())) {
 					list = null;
 
 					break;
@@ -1045,9 +1301,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 			query.append(_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_M_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_G_M_MASTER_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1071,7 +1327,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 				qPos.add(groupId);
 
-				qPos.add(privateLayout);
+				qPos.add(master);
 
 				if (!pagination) {
 					list = (List<LayoutSetBranch>)QueryUtil.list(q,
@@ -1104,20 +1360,20 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	/**
-	 * Returns the first layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the first layout set branch in the ordered set where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout set branch
 	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
 	 */
 	@Override
-	public LayoutSetBranch findByG_P_First(long groupId, boolean privateLayout,
+	public LayoutSetBranch findByG_M_First(long groupId, boolean master,
 		OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
-		LayoutSetBranch layoutSetBranch = fetchByG_P_First(groupId,
-				privateLayout, orderByComparator);
+		LayoutSetBranch layoutSetBranch = fetchByG_M_First(groupId, master,
+				orderByComparator);
 
 		if (layoutSetBranch != null) {
 			return layoutSetBranch;
@@ -1130,8 +1386,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
-		msg.append(privateLayout);
+		msg.append(", master=");
+		msg.append(master);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1139,18 +1395,17 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	/**
-	 * Returns the first layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the first layout set branch in the ordered set where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
 	 */
 	@Override
-	public LayoutSetBranch fetchByG_P_First(long groupId,
-		boolean privateLayout,
+	public LayoutSetBranch fetchByG_M_First(long groupId, boolean master,
 		OrderByComparator<LayoutSetBranch> orderByComparator) {
-		List<LayoutSetBranch> list = findByG_P(groupId, privateLayout, 0, 1,
+		List<LayoutSetBranch> list = findByG_M(groupId, master, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1161,20 +1416,20 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the last layout set branch in the ordered set where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout set branch
 	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
 	 */
 	@Override
-	public LayoutSetBranch findByG_P_Last(long groupId, boolean privateLayout,
+	public LayoutSetBranch findByG_M_Last(long groupId, boolean master,
 		OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
-		LayoutSetBranch layoutSetBranch = fetchByG_P_Last(groupId,
-				privateLayout, orderByComparator);
+		LayoutSetBranch layoutSetBranch = fetchByG_M_Last(groupId, master,
+				orderByComparator);
 
 		if (layoutSetBranch != null) {
 			return layoutSetBranch;
@@ -1187,8 +1442,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
-		msg.append(privateLayout);
+		msg.append(", master=");
+		msg.append(master);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1196,24 +1451,24 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the last layout set branch in the ordered set where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
 	 */
 	@Override
-	public LayoutSetBranch fetchByG_P_Last(long groupId, boolean privateLayout,
+	public LayoutSetBranch fetchByG_M_Last(long groupId, boolean master,
 		OrderByComparator<LayoutSetBranch> orderByComparator) {
-		int count = countByG_P(groupId, privateLayout);
+		int count = countByG_M(groupId, master);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<LayoutSetBranch> list = findByG_P(groupId, privateLayout,
-				count - 1, count, orderByComparator);
+		List<LayoutSetBranch> list = findByG_M(groupId, master, count - 1,
+				count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1223,18 +1478,18 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	/**
-	 * Returns the layout set branchs before and after the current layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the layout set branchs before and after the current layout set branch in the ordered set where groupId = &#63; and master = &#63;.
 	 *
 	 * @param layoutSetBranchId the primary key of the current layout set branch
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout set branch
 	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
 	 */
 	@Override
-	public LayoutSetBranch[] findByG_P_PrevAndNext(long layoutSetBranchId,
-		long groupId, boolean privateLayout,
+	public LayoutSetBranch[] findByG_M_PrevAndNext(long layoutSetBranchId,
+		long groupId, boolean master,
 		OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
 		LayoutSetBranch layoutSetBranch = findByPrimaryKey(layoutSetBranchId);
@@ -1246,13 +1501,13 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 			LayoutSetBranch[] array = new LayoutSetBranchImpl[3];
 
-			array[0] = getByG_P_PrevAndNext(session, layoutSetBranch, groupId,
-					privateLayout, orderByComparator, true);
+			array[0] = getByG_M_PrevAndNext(session, layoutSetBranch, groupId,
+					master, orderByComparator, true);
 
 			array[1] = layoutSetBranch;
 
-			array[2] = getByG_P_PrevAndNext(session, layoutSetBranch, groupId,
-					privateLayout, orderByComparator, false);
+			array[2] = getByG_M_PrevAndNext(session, layoutSetBranch, groupId,
+					master, orderByComparator, false);
 
 			return array;
 		}
@@ -1264,8 +1519,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		}
 	}
 
-	protected LayoutSetBranch getByG_P_PrevAndNext(Session session,
-		LayoutSetBranch layoutSetBranch, long groupId, boolean privateLayout,
+	protected LayoutSetBranch getByG_M_PrevAndNext(Session session,
+		LayoutSetBranch layoutSetBranch, long groupId, boolean master,
 		OrderByComparator<LayoutSetBranch> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1279,9 +1534,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 		query.append(_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
 
-		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_M_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
+		query.append(_FINDER_COLUMN_G_M_MASTER_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1353,7 +1608,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 		qPos.add(groupId);
 
-		qPos.add(privateLayout);
+		qPos.add(master);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(layoutSetBranch);
@@ -1374,59 +1629,56 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	/**
-	 * Returns all the layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
+	 * Returns all the layout set branchs that the user has permission to view where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @return the matching layout set branchs that the user has permission to view
 	 */
 	@Override
-	public List<LayoutSetBranch> filterFindByG_P(long groupId,
-		boolean privateLayout) {
-		return filterFindByG_P(groupId, privateLayout, QueryUtil.ALL_POS,
+	public List<LayoutSetBranch> filterFindByG_M(long groupId, boolean master) {
+		return filterFindByG_M(groupId, master, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
+	 * Returns a range of all the layout set branchs that the user has permission to view where groupId = &#63; and master = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetBranchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param start the lower bound of the range of layout set branchs
 	 * @param end the upper bound of the range of layout set branchs (not inclusive)
 	 * @return the range of matching layout set branchs that the user has permission to view
 	 */
 	@Override
-	public List<LayoutSetBranch> filterFindByG_P(long groupId,
-		boolean privateLayout, int start, int end) {
-		return filterFindByG_P(groupId, privateLayout, start, end, null);
+	public List<LayoutSetBranch> filterFindByG_M(long groupId, boolean master,
+		int start, int end) {
+		return filterFindByG_M(groupId, master, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the layout set branchs that the user has permissions to view where groupId = &#63; and privateLayout = &#63;.
+	 * Returns an ordered range of all the layout set branchs that the user has permissions to view where groupId = &#63; and master = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetBranchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param start the lower bound of the range of layout set branchs
 	 * @param end the upper bound of the range of layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layout set branchs that the user has permission to view
 	 */
 	@Override
-	public List<LayoutSetBranch> filterFindByG_P(long groupId,
-		boolean privateLayout, int start, int end,
-		OrderByComparator<LayoutSetBranch> orderByComparator) {
+	public List<LayoutSetBranch> filterFindByG_M(long groupId, boolean master,
+		int start, int end, OrderByComparator<LayoutSetBranch> orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P(groupId, privateLayout, start, end,
-				orderByComparator);
+			return findByG_M(groupId, master, start, end, orderByComparator);
 		}
 
 		StringBundler query = null;
@@ -1446,9 +1698,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_M_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
+		query.append(_FINDER_COLUMN_G_M_MASTER_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2);
@@ -1495,7 +1747,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 			qPos.add(groupId);
 
-			qPos.add(privateLayout);
+			qPos.add(master);
 
 			return (List<LayoutSetBranch>)QueryUtil.list(q, getDialect(),
 				start, end);
@@ -1509,23 +1761,23 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	/**
-	 * Returns the layout set branchs before and after the current layout set branch in the ordered set of layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the layout set branchs before and after the current layout set branch in the ordered set of layout set branchs that the user has permission to view where groupId = &#63; and master = &#63;.
 	 *
 	 * @param layoutSetBranchId the primary key of the current layout set branch
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout set branch
 	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
 	 */
 	@Override
-	public LayoutSetBranch[] filterFindByG_P_PrevAndNext(
-		long layoutSetBranchId, long groupId, boolean privateLayout,
+	public LayoutSetBranch[] filterFindByG_M_PrevAndNext(
+		long layoutSetBranchId, long groupId, boolean master,
 		OrderByComparator<LayoutSetBranch> orderByComparator)
 		throws NoSuchLayoutSetBranchException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P_PrevAndNext(layoutSetBranchId, groupId,
-				privateLayout, orderByComparator);
+			return findByG_M_PrevAndNext(layoutSetBranchId, groupId, master,
+				orderByComparator);
 		}
 
 		LayoutSetBranch layoutSetBranch = findByPrimaryKey(layoutSetBranchId);
@@ -1537,13 +1789,13 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 			LayoutSetBranch[] array = new LayoutSetBranchImpl[3];
 
-			array[0] = filterGetByG_P_PrevAndNext(session, layoutSetBranch,
-					groupId, privateLayout, orderByComparator, true);
+			array[0] = filterGetByG_M_PrevAndNext(session, layoutSetBranch,
+					groupId, master, orderByComparator, true);
 
 			array[1] = layoutSetBranch;
 
-			array[2] = filterGetByG_P_PrevAndNext(session, layoutSetBranch,
-					groupId, privateLayout, orderByComparator, false);
+			array[2] = filterGetByG_M_PrevAndNext(session, layoutSetBranch,
+					groupId, master, orderByComparator, false);
 
 			return array;
 		}
@@ -1555,8 +1807,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		}
 	}
 
-	protected LayoutSetBranch filterGetByG_P_PrevAndNext(Session session,
-		LayoutSetBranch layoutSetBranch, long groupId, boolean privateLayout,
+	protected LayoutSetBranch filterGetByG_M_PrevAndNext(Session session,
+		LayoutSetBranch layoutSetBranch, long groupId, boolean master,
 		OrderByComparator<LayoutSetBranch> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1575,9 +1827,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_M_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
+		query.append(_FINDER_COLUMN_G_M_MASTER_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2);
@@ -1679,7 +1931,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 		qPos.add(groupId);
 
-		qPos.add(privateLayout);
+		qPos.add(master);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(layoutSetBranch);
@@ -1700,31 +1952,31 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	/**
-	 * Removes all the layout set branchs where groupId = &#63; and privateLayout = &#63; from the database.
+	 * Removes all the layout set branchs where groupId = &#63; and master = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 */
 	@Override
-	public void removeByG_P(long groupId, boolean privateLayout) {
-		for (LayoutSetBranch layoutSetBranch : findByG_P(groupId,
-				privateLayout, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeByG_M(long groupId, boolean master) {
+		for (LayoutSetBranch layoutSetBranch : findByG_M(groupId, master,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(layoutSetBranch);
 		}
 	}
 
 	/**
-	 * Returns the number of layout set branchs where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the number of layout set branchs where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @return the number of matching layout set branchs
 	 */
 	@Override
-	public int countByG_P(long groupId, boolean privateLayout) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P;
+	public int countByG_M(long groupId, boolean master) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_M;
 
-		Object[] finderArgs = new Object[] { groupId, privateLayout };
+		Object[] finderArgs = new Object[] { groupId, master };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -1734,9 +1986,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 			query.append(_SQL_COUNT_LAYOUTSETBRANCH_WHERE);
 
-			query.append(_FINDER_COLUMN_G_P_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_M_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
+			query.append(_FINDER_COLUMN_G_M_MASTER_2);
 
 			String sql = query.toString();
 
@@ -1751,7 +2003,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 				qPos.add(groupId);
 
-				qPos.add(privateLayout);
+				qPos.add(master);
 
 				count = (Long)q.uniqueResult();
 
@@ -1771,25 +2023,25 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	}
 
 	/**
-	 * Returns the number of layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
+	 * Returns the number of layout set branchs that the user has permission to view where groupId = &#63; and master = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param privateLayout the private layout
+	 * @param master the master
 	 * @return the number of matching layout set branchs that the user has permission to view
 	 */
 	@Override
-	public int filterCountByG_P(long groupId, boolean privateLayout) {
+	public int filterCountByG_M(long groupId, boolean master) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P(groupId, privateLayout);
+			return countByG_M(groupId, master);
 		}
 
 		StringBundler query = new StringBundler(3);
 
 		query.append(_FILTER_SQL_COUNT_LAYOUTSETBRANCH_WHERE);
 
-		query.append(_FINDER_COLUMN_G_P_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_M_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
+		query.append(_FINDER_COLUMN_G_M_MASTER_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				LayoutSetBranch.class.getName(),
@@ -1809,1255 +2061,6 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 
 			qPos.add(groupId);
 
-			qPos.add(privateLayout);
-
-			Long count = (Long)q.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "layoutSetBranch.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_PRIVATELAYOUT_2 = "layoutSetBranch.privateLayout = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_N = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			LayoutSetBranchImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_P_N",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			LayoutSetBranchModelImpl.GROUPID_COLUMN_BITMASK |
-			LayoutSetBranchModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
-			LayoutSetBranchModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_N = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_N",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			});
-
-	/**
-	 * Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or throws a {@link NoSuchLayoutSetBranchException} if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param name the name
-	 * @return the matching layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch findByG_P_N(long groupId, boolean privateLayout,
-		String name) throws NoSuchLayoutSetBranchException {
-		LayoutSetBranch layoutSetBranch = fetchByG_P_N(groupId, privateLayout,
-				name);
-
-		if (layoutSetBranch == null) {
-			StringBundler msg = new StringBundler(8);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", privateLayout=");
-			msg.append(privateLayout);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchLayoutSetBranchException(msg.toString());
-		}
-
-		return layoutSetBranch;
-	}
-
-	/**
-	 * Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param name the name
-	 * @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch fetchByG_P_N(long groupId, boolean privateLayout,
-		String name) {
-		return fetchByG_P_N(groupId, privateLayout, name, true);
-	}
-
-	/**
-	 * Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param name the name
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch fetchByG_P_N(long groupId, boolean privateLayout,
-		String name, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { groupId, privateLayout, name };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_P_N,
-					finderArgs, this);
-		}
-
-		if (result instanceof LayoutSetBranch) {
-			LayoutSetBranch layoutSetBranch = (LayoutSetBranch)result;
-
-			if ((groupId != layoutSetBranch.getGroupId()) ||
-					(privateLayout != layoutSetBranch.getPrivateLayout()) ||
-					!Validator.equals(name, layoutSetBranch.getName())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(5);
-
-			query.append(_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
-
-			query.append(_FINDER_COLUMN_G_P_N_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_N_PRIVATELAYOUT_2);
-
-			boolean bindName = false;
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_P_N_NAME_1);
-			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				query.append(_FINDER_COLUMN_G_P_N_NAME_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(privateLayout);
-
-				if (bindName) {
-					qPos.add(name);
-				}
-
-				List<LayoutSetBranch> list = q.list();
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_N,
-						finderArgs, list);
-				}
-				else {
-					LayoutSetBranch layoutSetBranch = list.get(0);
-
-					result = layoutSetBranch;
-
-					cacheResult(layoutSetBranch);
-
-					if ((layoutSetBranch.getGroupId() != groupId) ||
-							(layoutSetBranch.getPrivateLayout() != privateLayout) ||
-							(layoutSetBranch.getName() == null) ||
-							!layoutSetBranch.getName().equals(name)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_N,
-							finderArgs, layoutSetBranch);
-					}
-				}
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_N,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (LayoutSetBranch)result;
-		}
-	}
-
-	/**
-	 * Removes the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param name the name
-	 * @return the layout set branch that was removed
-	 */
-	@Override
-	public LayoutSetBranch removeByG_P_N(long groupId, boolean privateLayout,
-		String name) throws NoSuchLayoutSetBranchException {
-		LayoutSetBranch layoutSetBranch = findByG_P_N(groupId, privateLayout,
-				name);
-
-		return remove(layoutSetBranch);
-	}
-
-	/**
-	 * Returns the number of layout set branchs where groupId = &#63; and privateLayout = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param name the name
-	 * @return the number of matching layout set branchs
-	 */
-	@Override
-	public int countByG_P_N(long groupId, boolean privateLayout, String name) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P_N;
-
-		Object[] finderArgs = new Object[] { groupId, privateLayout, name };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_COUNT_LAYOUTSETBRANCH_WHERE);
-
-			query.append(_FINDER_COLUMN_G_P_N_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_N_PRIVATELAYOUT_2);
-
-			boolean bindName = false;
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_P_N_NAME_1);
-			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_P_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				query.append(_FINDER_COLUMN_G_P_N_NAME_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(privateLayout);
-
-				if (bindName) {
-					qPos.add(name);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_P_N_GROUPID_2 = "layoutSetBranch.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_N_PRIVATELAYOUT_2 = "layoutSetBranch.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_N_NAME_1 = "layoutSetBranch.name IS NULL";
-	private static final String _FINDER_COLUMN_G_P_N_NAME_2 = "layoutSetBranch.name = ?";
-	private static final String _FINDER_COLUMN_G_P_N_NAME_3 = "(layoutSetBranch.name IS NULL OR layoutSetBranch.name = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_M = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			LayoutSetBranchImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByG_P_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_M = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED,
-			LayoutSetBranchImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			LayoutSetBranchModelImpl.GROUPID_COLUMN_BITMASK |
-			LayoutSetBranchModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
-			LayoutSetBranchModelImpl.MASTER_COLUMN_BITMASK |
-			LayoutSetBranchModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_P_M = new FinderPath(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			});
-
-	/**
-	 * Returns all the layout set branchs where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @return the matching layout set branchs
-	 */
-	@Override
-	public List<LayoutSetBranch> findByG_P_M(long groupId,
-		boolean privateLayout, boolean master) {
-		return findByG_P_M(groupId, privateLayout, master, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout set branchs where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetBranchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param start the lower bound of the range of layout set branchs
-	 * @param end the upper bound of the range of layout set branchs (not inclusive)
-	 * @return the range of matching layout set branchs
-	 */
-	@Override
-	public List<LayoutSetBranch> findByG_P_M(long groupId,
-		boolean privateLayout, boolean master, int start, int end) {
-		return findByG_P_M(groupId, privateLayout, master, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout set branchs where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetBranchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param start the lower bound of the range of layout set branchs
-	 * @param end the upper bound of the range of layout set branchs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout set branchs
-	 */
-	@Override
-	public List<LayoutSetBranch> findByG_P_M(long groupId,
-		boolean privateLayout, boolean master, int start, int end,
-		OrderByComparator<LayoutSetBranch> orderByComparator) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_M;
-			finderArgs = new Object[] { groupId, privateLayout, master };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P_M;
-			finderArgs = new Object[] {
-					groupId, privateLayout, master,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<LayoutSetBranch> list = (List<LayoutSetBranch>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutSetBranch layoutSetBranch : list) {
-				if ((groupId != layoutSetBranch.getGroupId()) ||
-						(privateLayout != layoutSetBranch.getPrivateLayout()) ||
-						(master != layoutSetBranch.getMaster())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(5);
-			}
-
-			query.append(_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
-
-			query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_M_PRIVATELAYOUT_2);
-
-			query.append(_FINDER_COLUMN_G_P_M_MASTER_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(privateLayout);
-
-				qPos.add(master);
-
-				if (!pagination) {
-					list = (List<LayoutSetBranch>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LayoutSetBranch>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch findByG_P_M_First(long groupId,
-		boolean privateLayout, boolean master,
-		OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws NoSuchLayoutSetBranchException {
-		LayoutSetBranch layoutSetBranch = fetchByG_P_M_First(groupId,
-				privateLayout, master, orderByComparator);
-
-		if (layoutSetBranch != null) {
-			return layoutSetBranch;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", privateLayout=");
-		msg.append(privateLayout);
-
-		msg.append(", master=");
-		msg.append(master);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchLayoutSetBranchException(msg.toString());
-	}
-
-	/**
-	 * Returns the first layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch fetchByG_P_M_First(long groupId,
-		boolean privateLayout, boolean master,
-		OrderByComparator<LayoutSetBranch> orderByComparator) {
-		List<LayoutSetBranch> list = findByG_P_M(groupId, privateLayout,
-				master, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch findByG_P_M_Last(long groupId,
-		boolean privateLayout, boolean master,
-		OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws NoSuchLayoutSetBranchException {
-		LayoutSetBranch layoutSetBranch = fetchByG_P_M_Last(groupId,
-				privateLayout, master, orderByComparator);
-
-		if (layoutSetBranch != null) {
-			return layoutSetBranch;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", privateLayout=");
-		msg.append(privateLayout);
-
-		msg.append(", master=");
-		msg.append(master);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchLayoutSetBranchException(msg.toString());
-	}
-
-	/**
-	 * Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout set branch, or <code>null</code> if a matching layout set branch could not be found
-	 */
-	@Override
-	public LayoutSetBranch fetchByG_P_M_Last(long groupId,
-		boolean privateLayout, boolean master,
-		OrderByComparator<LayoutSetBranch> orderByComparator) {
-		int count = countByG_P_M(groupId, privateLayout, master);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<LayoutSetBranch> list = findByG_P_M(groupId, privateLayout,
-				master, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the layout set branchs before and after the current layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param layoutSetBranchId the primary key of the current layout set branch
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	@Override
-	public LayoutSetBranch[] findByG_P_M_PrevAndNext(long layoutSetBranchId,
-		long groupId, boolean privateLayout, boolean master,
-		OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws NoSuchLayoutSetBranchException {
-		LayoutSetBranch layoutSetBranch = findByPrimaryKey(layoutSetBranchId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutSetBranch[] array = new LayoutSetBranchImpl[3];
-
-			array[0] = getByG_P_M_PrevAndNext(session, layoutSetBranch,
-					groupId, privateLayout, master, orderByComparator, true);
-
-			array[1] = layoutSetBranch;
-
-			array[2] = getByG_P_M_PrevAndNext(session, layoutSetBranch,
-					groupId, privateLayout, master, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected LayoutSetBranch getByG_P_M_PrevAndNext(Session session,
-		LayoutSetBranch layoutSetBranch, long groupId, boolean privateLayout,
-		boolean master, OrderByComparator<LayoutSetBranch> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
-
-		query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_P_M_PRIVATELAYOUT_2);
-
-		query.append(_FINDER_COLUMN_G_P_M_MASTER_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(privateLayout);
-
-		qPos.add(master);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutSetBranch);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<LayoutSetBranch> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @return the matching layout set branchs that the user has permission to view
-	 */
-	@Override
-	public List<LayoutSetBranch> filterFindByG_P_M(long groupId,
-		boolean privateLayout, boolean master) {
-		return filterFindByG_P_M(groupId, privateLayout, master,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetBranchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param start the lower bound of the range of layout set branchs
-	 * @param end the upper bound of the range of layout set branchs (not inclusive)
-	 * @return the range of matching layout set branchs that the user has permission to view
-	 */
-	@Override
-	public List<LayoutSetBranch> filterFindByG_P_M(long groupId,
-		boolean privateLayout, boolean master, int start, int end) {
-		return filterFindByG_P_M(groupId, privateLayout, master, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout set branchs that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutSetBranchModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param start the lower bound of the range of layout set branchs
-	 * @param end the upper bound of the range of layout set branchs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout set branchs that the user has permission to view
-	 */
-	@Override
-	public List<LayoutSetBranch> filterFindByG_P_M(long groupId,
-		boolean privateLayout, boolean master, int start, int end,
-		OrderByComparator<LayoutSetBranch> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P_M(groupId, privateLayout, master, start, end,
-				orderByComparator);
-		}
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
-		}
-		else {
-			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_P_M_PRIVATELAYOUT_2);
-
-		query.append(_FINDER_COLUMN_G_P_M_MASTER_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(LayoutSetBranchModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				LayoutSetBranch.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				q.addEntity(_FILTER_ENTITY_ALIAS, LayoutSetBranchImpl.class);
-			}
-			else {
-				q.addEntity(_FILTER_ENTITY_TABLE, LayoutSetBranchImpl.class);
-			}
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			qPos.add(privateLayout);
-
-			qPos.add(master);
-
-			return (List<LayoutSetBranch>)QueryUtil.list(q, getDialect(),
-				start, end);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the layout set branchs before and after the current layout set branch in the ordered set of layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param layoutSetBranchId the primary key of the current layout set branch
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	@Override
-	public LayoutSetBranch[] filterFindByG_P_M_PrevAndNext(
-		long layoutSetBranchId, long groupId, boolean privateLayout,
-		boolean master, OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws NoSuchLayoutSetBranchException {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P_M_PrevAndNext(layoutSetBranchId, groupId,
-				privateLayout, master, orderByComparator);
-		}
-
-		LayoutSetBranch layoutSetBranch = findByPrimaryKey(layoutSetBranchId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutSetBranch[] array = new LayoutSetBranchImpl[3];
-
-			array[0] = filterGetByG_P_M_PrevAndNext(session, layoutSetBranch,
-					groupId, privateLayout, master, orderByComparator, true);
-
-			array[1] = layoutSetBranch;
-
-			array[2] = filterGetByG_P_M_PrevAndNext(session, layoutSetBranch,
-					groupId, privateLayout, master, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected LayoutSetBranch filterGetByG_P_M_PrevAndNext(Session session,
-		LayoutSetBranch layoutSetBranch, long groupId, boolean privateLayout,
-		boolean master, OrderByComparator<LayoutSetBranch> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE);
-		}
-		else {
-			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_P_M_PRIVATELAYOUT_2);
-
-		query.append(_FINDER_COLUMN_G_P_M_MASTER_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(LayoutSetBranchModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				LayoutSetBranch.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutSetBranchImpl.class);
-		}
-		else {
-			q.addEntity(_FILTER_ENTITY_TABLE, LayoutSetBranchImpl.class);
-		}
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(privateLayout);
-
-		qPos.add(master);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutSetBranch);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<LayoutSetBranch> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the layout set branchs where groupId = &#63; and privateLayout = &#63; and master = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 */
-	@Override
-	public void removeByG_P_M(long groupId, boolean privateLayout,
-		boolean master) {
-		for (LayoutSetBranch layoutSetBranch : findByG_P_M(groupId,
-				privateLayout, master, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null)) {
-			remove(layoutSetBranch);
-		}
-	}
-
-	/**
-	 * Returns the number of layout set branchs where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @return the number of matching layout set branchs
-	 */
-	@Override
-	public int countByG_P_M(long groupId, boolean privateLayout, boolean master) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P_M;
-
-		Object[] finderArgs = new Object[] { groupId, privateLayout, master };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_COUNT_LAYOUTSETBRANCH_WHERE);
-
-			query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_M_PRIVATELAYOUT_2);
-
-			query.append(_FINDER_COLUMN_G_P_M_MASTER_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(privateLayout);
-
-				qPos.add(master);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param master the master
-	 * @return the number of matching layout set branchs that the user has permission to view
-	 */
-	@Override
-	public int filterCountByG_P_M(long groupId, boolean privateLayout,
-		boolean master) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P_M(groupId, privateLayout, master);
-		}
-
-		StringBundler query = new StringBundler(4);
-
-		query.append(_FILTER_SQL_COUNT_LAYOUTSETBRANCH_WHERE);
-
-		query.append(_FINDER_COLUMN_G_P_M_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_P_M_PRIVATELAYOUT_2);
-
-		query.append(_FINDER_COLUMN_G_P_M_MASTER_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				LayoutSetBranch.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			qPos.add(privateLayout);
-
 			qPos.add(master);
 
 			Long count = (Long)q.uniqueResult();
@@ -3072,9 +2075,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		}
 	}
 
-	private static final String _FINDER_COLUMN_G_P_M_GROUPID_2 = "layoutSetBranch.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_M_PRIVATELAYOUT_2 = "layoutSetBranch.privateLayout = ? AND ";
-	private static final String _FINDER_COLUMN_G_P_M_MASTER_2 = "layoutSetBranch.master = ?";
+	private static final String _FINDER_COLUMN_G_M_GROUPID_2 = "layoutSetBranch.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_M_MASTER_2 = "layoutSetBranch.master = ?";
 
 	public LayoutSetBranchPersistenceImpl() {
 		setModelClass(LayoutSetBranch.class);
@@ -3091,11 +2093,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			LayoutSetBranchImpl.class, layoutSetBranch.getPrimaryKey(),
 			layoutSetBranch);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_N,
-			new Object[] {
-				layoutSetBranch.getGroupId(), layoutSetBranch.getPrivateLayout(),
-				layoutSetBranch.getName()
-			}, layoutSetBranch);
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+			new Object[] { layoutSetBranch.getGroupId(), layoutSetBranch.getName() },
+			layoutSetBranch);
 
 		layoutSetBranch.resetOriginalValues();
 	}
@@ -3174,30 +2174,26 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	protected void cacheUniqueFindersCache(LayoutSetBranch layoutSetBranch) {
 		if (layoutSetBranch.isNew()) {
 			Object[] args = new Object[] {
-					layoutSetBranch.getGroupId(),
-					layoutSetBranch.getPrivateLayout(),
-					layoutSetBranch.getName()
+					layoutSetBranch.getGroupId(), layoutSetBranch.getName()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_N, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_N, args,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
 				layoutSetBranch);
 		}
 		else {
 			LayoutSetBranchModelImpl layoutSetBranchModelImpl = (LayoutSetBranchModelImpl)layoutSetBranch;
 
 			if ((layoutSetBranchModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_P_N.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						layoutSetBranch.getGroupId(),
-						layoutSetBranch.getPrivateLayout(),
-						layoutSetBranch.getName()
+						layoutSetBranch.getGroupId(), layoutSetBranch.getName()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_N, args,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_N, args,
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
 					layoutSetBranch);
 			}
 		}
@@ -3207,23 +2203,21 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		LayoutSetBranchModelImpl layoutSetBranchModelImpl = (LayoutSetBranchModelImpl)layoutSetBranch;
 
 		Object[] args = new Object[] {
-				layoutSetBranch.getGroupId(), layoutSetBranch.getPrivateLayout(),
-				layoutSetBranch.getName()
+				layoutSetBranch.getGroupId(), layoutSetBranch.getName()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_N, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_N, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
 
 		if ((layoutSetBranchModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_G_P_N.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					layoutSetBranchModelImpl.getOriginalGroupId(),
-					layoutSetBranchModelImpl.getOriginalPrivateLayout(),
 					layoutSetBranchModelImpl.getOriginalName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_N, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_P_N, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
 		}
 	}
 
@@ -3382,46 +2376,23 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			}
 
 			if ((layoutSetBranchModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_M.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutSetBranchModelImpl.getOriginalGroupId(),
-						layoutSetBranchModelImpl.getOriginalPrivateLayout()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
-					args);
-
-				args = new Object[] {
-						layoutSetBranchModelImpl.getGroupId(),
-						layoutSetBranchModelImpl.getPrivateLayout()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P,
-					args);
-			}
-
-			if ((layoutSetBranchModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_M.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						layoutSetBranchModelImpl.getOriginalGroupId(),
-						layoutSetBranchModelImpl.getOriginalPrivateLayout(),
 						layoutSetBranchModelImpl.getOriginalMaster()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_M, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_M,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_M, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_M,
 					args);
 
 				args = new Object[] {
 						layoutSetBranchModelImpl.getGroupId(),
-						layoutSetBranchModelImpl.getPrivateLayout(),
 						layoutSetBranchModelImpl.getMaster()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_M, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_P_M,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_M, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_M,
 					args);
 			}
 		}
@@ -3456,7 +2427,6 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		layoutSetBranchImpl.setUserName(layoutSetBranch.getUserName());
 		layoutSetBranchImpl.setCreateDate(layoutSetBranch.getCreateDate());
 		layoutSetBranchImpl.setModifiedDate(layoutSetBranch.getModifiedDate());
-		layoutSetBranchImpl.setPrivateLayout(layoutSetBranch.isPrivateLayout());
 		layoutSetBranchImpl.setName(layoutSetBranch.getName());
 		layoutSetBranchImpl.setDescription(layoutSetBranch.getDescription());
 		layoutSetBranchImpl.setMaster(layoutSetBranch.isMaster());

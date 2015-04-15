@@ -55,8 +55,6 @@ public class LayoutsRemotePublisherMessageListener
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
 		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-		boolean privateLayout = MapUtil.getBoolean(
-			settingsMap, "privateLayout");
 		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)settingsMap.get(
 			"layoutIdMap");
 		Map<String, String[]> parameterMap =
@@ -68,8 +66,6 @@ public class LayoutsRemotePublisherMessageListener
 		boolean secureConnection = MapUtil.getBoolean(
 			settingsMap, "secureConnection");
 		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
-		boolean remotePrivateLayout = MapUtil.getBoolean(
-			settingsMap, "remotePrivateLayout");
 
 		initThreadLocals(userId, parameterMap);
 
@@ -79,9 +75,8 @@ public class LayoutsRemotePublisherMessageListener
 
 		try {
 			StagingUtil.copyRemoteLayouts(
-				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-				remoteAddress, remotePort, remotePathContext, secureConnection,
-				remoteGroupId, remotePrivateLayout);
+				sourceGroupId, layoutIdMap, parameterMap, remoteAddress,
+				remotePort, remotePathContext, secureConnection, remoteGroupId);
 		}
 		finally {
 			resetThreadLocals();

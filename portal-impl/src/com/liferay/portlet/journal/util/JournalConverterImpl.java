@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -486,18 +484,11 @@ public class JournalConverterImpl implements JournalConverter {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			if (values.length > 2) {
+			if (values.length > 1) {
 				jsonObject.put("groupId", values[2]);
 			}
 
 			jsonObject.put("layoutId", values[0]);
-
-			if (values[1].equals("public")) {
-				jsonObject.put("privateLayout", false);
-			}
-			else {
-				jsonObject.put("privateLayout", true);
-			}
 
 			serializable = jsonObject.toString();
 		}
@@ -789,29 +780,10 @@ public class JournalConverterImpl implements JournalConverter {
 
 			String layoutId = jsonObject.getString("layoutId");
 
-			boolean privateLayout = jsonObject.getBoolean("privateLayout");
-
-			StringBundler sb = new StringBundler((groupId > 0) ? 5 : 3);
+			StringBundler sb = new StringBundler((groupId > 0) ? 4 : 2);
 
 			sb.append(layoutId);
 			sb.append(StringPool.AT);
-
-			if (privateLayout) {
-				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-				if (group == null) {
-					sb.append("private");
-				}
-				else if (group.isUser()) {
-					sb.append("private-user");
-				}
-				else {
-					sb.append("private-group");
-				}
-			}
-			else {
-				sb.append("public");
-			}
 
 			if (groupId > 0) {
 				sb.append(StringPool.AT);

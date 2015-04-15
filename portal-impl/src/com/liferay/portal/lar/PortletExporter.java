@@ -392,8 +392,6 @@ public class PortletExporter {
 			"user-personal-site-group-id",
 			String.valueOf(portletDataContext.getUserPersonalSiteGroupId()));
 		headerElement.addAttribute(
-			"private-layout", String.valueOf(layout.isPrivateLayout()));
-		headerElement.addAttribute(
 			"root-portlet-id", portletDataContext.getRootPortletId());
 
 		Element missingReferencesElement = rootElement.addElement(
@@ -663,8 +661,6 @@ public class PortletExporter {
 			"scope-layout-type", portletDataContext.getScopeType());
 		portletElement.addAttribute(
 			"scope-layout-uuid", portletDataContext.getScopeLayoutUuid());
-		portletElement.addAttribute(
-			"private-layout", String.valueOf(layout.isPrivateLayout()));
 
 		// Data
 
@@ -1212,8 +1208,7 @@ public class PortletExporter {
 
 				if (layout != null) {
 					layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-						layout.getUuid(), group.getGroupId(),
-						layout.isPrivateLayout());
+						layout.getUuid(), group.getGroupId());
 				}
 			}
 

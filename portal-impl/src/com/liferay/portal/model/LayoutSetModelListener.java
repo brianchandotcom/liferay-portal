@@ -37,9 +37,7 @@ public class LayoutSetModelListener extends BaseModelListener<LayoutSet> {
 			return;
 		}
 
-		if (!layoutSet.isPrivateLayout()) {
-			CacheUtil.clearCache(layoutSet.getCompanyId());
-		}
+		CacheUtil.clearCache(layoutSet.getCompanyId());
 	}
 
 }

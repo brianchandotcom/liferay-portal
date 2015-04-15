@@ -157,7 +157,7 @@ public class PortalImplAlternateURLTest {
 
 		themeDisplay.setCompany(company);
 
-		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
+		themeDisplay.setLayoutSet(group.getLayoutSet());
 		themeDisplay.setPortalURL(portalURL);
 
 		return themeDisplay;
@@ -175,7 +175,7 @@ public class PortalImplAlternateURLTest {
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), "welcome", false);
+			_group.getGroupId(), "welcome");
 
 		String canonicalURL = generateURL(
 			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),

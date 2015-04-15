@@ -56,10 +56,8 @@ public class LayoutStagingUtil {
 		return getLayoutStaging().isBranchingLayout(layout);
 	}
 
-	public static boolean isBranchingLayoutSet(
-		Group group, boolean privateLayout) {
-
-		return getLayoutStaging().isBranchingLayoutSet(group, privateLayout);
+	public static boolean isBranchingLayoutSet(Group group) {
+		return getLayoutStaging().isBranchingLayoutSet(group);
 	}
 
 	public void setLayoutStaging(LayoutStaging layoutStaging) {

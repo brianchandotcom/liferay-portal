@@ -79,7 +79,7 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,8 +99,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
 		sb.append(", layoutId=");
 		sb.append(layoutId);
 		sb.append(", parentLayoutId=");
@@ -187,7 +185,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 			layoutImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		layoutImpl.setPrivateLayout(privateLayout);
 		layoutImpl.setLayoutId(layoutId);
 		layoutImpl.setParentLayoutId(parentLayoutId);
 
@@ -320,7 +317,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		privateLayout = objectInput.readBoolean();
 		layoutId = objectInput.readLong();
 		parentLayoutId = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -370,7 +366,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-		objectOutput.writeBoolean(privateLayout);
 		objectOutput.writeLong(layoutId);
 		objectOutput.writeLong(parentLayoutId);
 
@@ -497,7 +492,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public boolean privateLayout;
 	public long layoutId;
 	public long parentLayoutId;
 	public String name;

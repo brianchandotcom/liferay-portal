@@ -97,11 +97,10 @@ public class LayoutSetPrototypeExportImportTest
 					RandomTestUtil.randomString());
 
 			LayoutTestUtil.addLayout(
-				exportedLayoutSetPrototypeGroup, true, exportedLayoutPrototype,
-				true);
+				exportedLayoutSetPrototypeGroup, exportedLayoutPrototype, true);
 		}
 		else {
-			LayoutTestUtil.addLayout(exportedLayoutSetPrototypeGroup, true);
+			LayoutTestUtil.addLayout(exportedLayoutSetPrototypeGroup);
 		}
 
 		exportImportPortlet(PortletKeys.LAYOUT_SET_PROTOTYPE);
@@ -116,8 +115,8 @@ public class LayoutSetPrototypeExportImportTest
 			importedLayoutSetPrototype.getGroup();
 
 		Assert.assertEquals(
-			exportedLayoutSetPrototypeGroup.getPrivateLayoutsPageCount(),
-			importedLayoutSetPrototypeGroup.getPrivateLayoutsPageCount());
+			exportedLayoutSetPrototypeGroup.getLayoutsPageCount(),
+			importedLayoutSetPrototypeGroup.getLayoutsPageCount());
 	}
 
 	@Override

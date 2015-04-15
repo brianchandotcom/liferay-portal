@@ -3640,7 +3640,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (layout != null) {
 				Group group = layout.getGroup();
 
-				if (!layout.isPrivateLayout() && !group.isUser()) {
+				if (!group.isUser()) {
 					verifyEmailAddressURL +=
 						"&p_l_id=" + serviceContext.getPlid();
 				}

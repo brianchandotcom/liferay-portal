@@ -121,8 +121,6 @@ public class JournalContentSearchPersistenceTest {
 
 		newJournalContentSearch.setCompanyId(RandomTestUtil.nextLong());
 
-		newJournalContentSearch.setPrivateLayout(RandomTestUtil.randomBoolean());
-
 		newJournalContentSearch.setLayoutId(RandomTestUtil.nextLong());
 
 		newJournalContentSearch.setPortletId(RandomTestUtil.randomString());
@@ -139,14 +137,24 @@ public class JournalContentSearchPersistenceTest {
 			newJournalContentSearch.getGroupId());
 		Assert.assertEquals(existingJournalContentSearch.getCompanyId(),
 			newJournalContentSearch.getCompanyId());
-		Assert.assertEquals(existingJournalContentSearch.getPrivateLayout(),
-			newJournalContentSearch.getPrivateLayout());
 		Assert.assertEquals(existingJournalContentSearch.getLayoutId(),
 			newJournalContentSearch.getLayoutId());
 		Assert.assertEquals(existingJournalContentSearch.getPortletId(),
 			newJournalContentSearch.getPortletId());
 		Assert.assertEquals(existingJournalContentSearch.getArticleId(),
 			newJournalContentSearch.getArticleId());
+	}
+
+	@Test
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+			_persistence.countByGroupId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -178,12 +186,12 @@ public class JournalContentSearchPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P() {
+	public void testCountByG_L() {
 		try {
-			_persistence.countByG_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean());
+			_persistence.countByG_L(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-			_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
+			_persistence.countByG_L(0L, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -205,12 +213,14 @@ public class JournalContentSearchPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_L() {
+	public void testCountByG_L_P() {
 		try {
-			_persistence.countByG_P_L(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
+			_persistence.countByG_L_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByG_P_L(0L, RandomTestUtil.randomBoolean(), 0L);
+			_persistence.countByG_L_P(0L, 0L, StringPool.NULL);
+
+			_persistence.countByG_L_P(0L, 0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -218,52 +228,14 @@ public class JournalContentSearchPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_A() {
+	public void testCountByG_L_P_A() {
 		try {
-			_persistence.countByG_P_A(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), StringPool.BLANK);
+			_persistence.countByG_L_P_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
 
-			_persistence.countByG_P_A(0L, RandomTestUtil.randomBoolean(),
-				StringPool.NULL);
+			_persistence.countByG_L_P_A(0L, 0L, StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByG_P_A(0L, RandomTestUtil.randomBoolean(),
-				(String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testCountByG_P_L_P() {
-		try {
-			_persistence.countByG_P_L_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong(),
-				StringPool.BLANK);
-
-			_persistence.countByG_P_L_P(0L, RandomTestUtil.randomBoolean(), 0L,
-				StringPool.NULL);
-
-			_persistence.countByG_P_L_P(0L, RandomTestUtil.randomBoolean(), 0L,
-				(String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testCountByG_P_L_P_A() {
-		try {
-			_persistence.countByG_P_L_P_A(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong(),
-				StringPool.BLANK, StringPool.BLANK);
-
-			_persistence.countByG_P_L_P_A(0L, RandomTestUtil.randomBoolean(),
-				0L, StringPool.NULL, StringPool.NULL);
-
-			_persistence.countByG_P_L_P_A(0L, RandomTestUtil.randomBoolean(),
-				0L, (String)null, (String)null);
+			_persistence.countByG_L_P_A(0L, 0L, (String)null, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -308,8 +280,7 @@ public class JournalContentSearchPersistenceTest {
 	protected OrderByComparator<JournalContentSearch> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalContentSearch",
 			"contentSearchId", true, "groupId", true, "companyId", true,
-			"privateLayout", true, "layoutId", true, "portletId", true,
-			"articleId", true);
+			"layoutId", true, "portletId", true, "articleId", true);
 	}
 
 	@Test
@@ -525,9 +496,6 @@ public class JournalContentSearchPersistenceTest {
 		Assert.assertEquals(existingJournalContentSearch.getGroupId(),
 			ReflectionTestUtil.invoke(existingJournalContentSearch,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingJournalContentSearch.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingJournalContentSearch,
-				"getOriginalPrivateLayout", new Class<?>[0]));
 		Assert.assertEquals(existingJournalContentSearch.getLayoutId(),
 			ReflectionTestUtil.invoke(existingJournalContentSearch,
 				"getOriginalLayoutId", new Class<?>[0]));
@@ -550,8 +518,6 @@ public class JournalContentSearchPersistenceTest {
 		journalContentSearch.setGroupId(RandomTestUtil.nextLong());
 
 		journalContentSearch.setCompanyId(RandomTestUtil.nextLong());
-
-		journalContentSearch.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		journalContentSearch.setLayoutId(RandomTestUtil.nextLong());
 

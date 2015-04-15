@@ -29,7 +29,7 @@ else if (scopeType.equals("company")) {
 	group = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId());
 }
 else if (scopeType.equals("layout")) {
-	for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
+	for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGroupId())) {
 		if (scopeLayoutUuid.equals(scopeGroupLayout.getUuid())) {
 			group = GroupLocalServiceUtil.getLayoutGroup(scopeGroupLayout.getCompanyId(), scopeGroupLayout.getPlid());
 
@@ -48,7 +48,7 @@ availableGroups.add(group);
 availableGroups.add(themeDisplay.getSiteGroup());
 availableGroups.add(company.getGroup());
 
-for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGroupId(), layout.isPrivateLayout())) {
+for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layout.getGroupId())) {
 	availableGroups.add(scopeGroupLayout.getScopeGroup());
 }
 %>

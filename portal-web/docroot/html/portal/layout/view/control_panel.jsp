@@ -132,20 +132,11 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 												<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
 											</h1>
 
-											<c:if test="<%= group.hasPrivateLayouts() || group.hasPublicLayouts() %>">
+											<c:if test="<%= group.hasLayouts() %>">
 												<ul class="visit-links">
 													<li><liferay-ui:message key="visit" />:</li>
 
-													<c:choose>
-														<c:when test="<%= group.hasPrivateLayouts() && group.hasPublicLayouts() %>">
-															<li><a href="<%= group.getDisplayURL(themeDisplay, false) %>"><liferay-ui:message key="public-pages" /></a></li>
-															<li class="divider"></li>
-															<li><a href="<%= group.getDisplayURL(themeDisplay, true) %>"><liferay-ui:message key="private-pages" /></a></li>
-														</c:when>
-														<c:otherwise>
-															<li><a href="<%= group.getDisplayURL(themeDisplay, group.hasPrivateLayouts()) %>"><liferay-ui:message key="site-pages" /></a></li>
-														</c:otherwise>
-													</c:choose>
+													<li><a href="<%= group.getDisplayURL(themeDisplay) %>"><liferay-ui:message key="pages" /></a></li>
 												</ul>
 											</c:if>
 										</div>

@@ -105,7 +105,7 @@ public class LayoutPrototypeLocalServiceImpl
 			friendlyURLMap.put(LocaleUtil.getSiteDefault(), "/layout");
 
 			layoutLocalService.addLayout(
-				userId, group.getGroupId(), true,
+				userId, group.getGroupId(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 				layoutPrototype.getNameMap(), null, null, null, null,
 				LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,

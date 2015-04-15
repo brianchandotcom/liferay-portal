@@ -42,12 +42,12 @@ public class LayoutPermissionUtil {
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String actionId)
+			PermissionChecker permissionChecker, long groupId, long layoutId,
+			String actionId)
 		throws PortalException {
 
 		getLayoutPermission().check(
-			permissionChecker, groupId, privateLayout, layoutId, actionId);
+			permissionChecker, groupId, layoutId, actionId);
 	}
 
 	public static void check(
@@ -104,18 +104,9 @@ public class LayoutPermissionUtil {
 			permissionChecker, layout, controlPanelCategory, actionId);
 	}
 
-	public static boolean contains(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String actionId)
-		throws PortalException {
-
-		return getLayoutPermission().contains(
-			permissionChecker, groupId, privateLayout, layoutId, actionId);
-	}
-
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
-	 *             long, boolean, long, String)}
+	 *             long, long, String)}
 	 */
 	@Deprecated
 	public static boolean contains(
@@ -127,6 +118,15 @@ public class LayoutPermissionUtil {
 		return getLayoutPermission().contains(
 			permissionChecker, groupId, privateLayout, layoutId,
 			controlPanelCategory, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId, long layoutId,
+			String actionId)
+		throws PortalException {
+
+		return getLayoutPermission().contains(
+			permissionChecker, groupId, layoutId, actionId);
 	}
 
 	public static boolean contains(

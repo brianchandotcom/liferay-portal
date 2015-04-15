@@ -169,8 +169,8 @@ public class TestPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext.getPlid());
 
 			JournalContentSearchLocalServiceUtil.updateContentSearch(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, articleId, true);
+				layout.getGroupId(), layout.getLayoutId(), portletId, articleId,
+				true);
 		}
 		else {
 			portletPreferences.setValue("groupId", StringPool.BLANK);

@@ -132,9 +132,8 @@ public class VerifyJournal extends VerifyProcess {
 				JournalContentSearch contentSearch = contentSearches.get(0);
 
 				JournalContentSearchLocalServiceUtil.updateContentSearch(
-					contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
-					contentSearch.getLayoutId(), contentSearch.getPortletId(),
-					articleId, true);
+					contentSearch.getGroupId(), contentSearch.getLayoutId(),
+					contentSearch.getPortletId(), articleId, true);
 			}
 		}
 		finally {

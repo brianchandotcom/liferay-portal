@@ -252,7 +252,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 			List<Layout> layoutSetPrototypeLayouts =
 				LayoutLocalServiceUtil.getLayouts(
-					layoutSetPrototype.getGroupId(), true);
+					layoutSetPrototype.getGroupId());
 
 			Element layoutSetPrototypeElement =
 				portletDataContext.getExportDataElement(layoutSetPrototype);

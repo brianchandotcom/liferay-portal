@@ -76,19 +76,19 @@ public class PortalImplActualURLTest {
 		_group = userGroup.getGroup();
 
 		Layout homeLayout = LayoutLocalServiceUtil.addLayout(
-			serviceContext.getUserId(), _group.getGroupId(), true,
+			serviceContext.getUserId(), _group.getGroupId(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
 		LayoutLocalServiceUtil.addLayout(
-			serviceContext.getUserId(), _group.getGroupId(), true,
+			serviceContext.getUserId(), _group.getGroupId(),
 			homeLayout.getLayoutId(), "Child Layout", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
 		String actualURL = PortalUtil.getActualURL(
-			userGroup.getGroup().getGroupId(), true, Portal.PATH_MAIN,
+			userGroup.getGroup().getGroupId(), Portal.PATH_MAIN,
 			"/~/" + userGroup.getUserGroupId() + "/child-layout",
 			new HashMap<String, String[]>(), getRequestContext());
 
@@ -96,7 +96,7 @@ public class PortalImplActualURLTest {
 
 		try {
 			PortalUtil.getActualURL(
-				userGroup.getGroup().getGroupId(), true, Portal.PATH_MAIN,
+				userGroup.getGroup().getGroupId(), Portal.PATH_MAIN,
 				"/~/" + userGroup.getUserGroupId() +
 					"/non-existing-child-layout",
 				new HashMap<String, String[]>(), getRequestContext());
@@ -122,13 +122,13 @@ public class PortalImplActualURLTest {
 			true, true, serviceContext);
 
 		LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			"Test " + RandomTestUtil.nextInt(), StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
@@ -147,7 +147,7 @@ public class PortalImplActualURLTest {
 			portletId);
 
 		layout = LayoutServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getGroupId(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
 		Map<Locale, String> titleMap = new HashMap<>();
@@ -166,15 +166,14 @@ public class PortalImplActualURLTest {
 			serviceContext);
 
 		String actualURL = PortalUtil.getActualURL(
-			_group.getGroupId(), false, Portal.PATH_MAIN,
-			"/-/test-journal-article", new HashMap<String, String[]>(),
-			getRequestContext());
+			_group.getGroupId(), Portal.PATH_MAIN, "/-/test-journal-article",
+			new HashMap<String, String[]>(), getRequestContext());
 
 		Assert.assertNotNull(actualURL);
 
 		try {
 			PortalUtil.getActualURL(
-				_group.getGroupId(), false, Portal.PATH_MAIN,
+				_group.getGroupId(), Portal.PATH_MAIN,
 				"/-/non-existing-test-journal-article",
 				new HashMap<String, String[]>(), getRequestContext());
 

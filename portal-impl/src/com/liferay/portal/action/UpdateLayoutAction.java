@@ -254,8 +254,8 @@ public class UpdateLayoutAction extends JSONAction {
 			layoutTypePortlet.resetStates();
 
 			layout = LayoutServiceUtil.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getTypeSettings());
+				layout.getGroupId(), layout.getLayoutId(),
+				layout.getTypeSettings());
 		}
 		else {
 			LayoutClone layoutClone = LayoutCloneFactory.getInstance();

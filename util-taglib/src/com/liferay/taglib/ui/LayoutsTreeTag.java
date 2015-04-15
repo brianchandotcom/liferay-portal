@@ -69,10 +69,6 @@ public class LayoutsTreeTag extends IncludeTag {
 		_portletURL = portletURL;
 	}
 
-	public void setPrivateLayout(boolean privateLayout) {
-		_privateLayout = privateLayout;
-	}
-
 	public void setRootNodeName(String rootNodeName) {
 		_rootNodeName = rootNodeName;
 	}
@@ -106,7 +102,6 @@ public class LayoutsTreeTag extends IncludeTag {
 		_groupId = 0;
 		_incomplete = true;
 		_portletURL = null;
-		_privateLayout = false;
 		_rootNodeName = null;
 		_saveState = true;
 		_selectableTree = false;
@@ -129,7 +124,7 @@ public class LayoutsTreeTag extends IncludeTag {
 
 		for (long checkedLayoutId : StringUtil.split(checkedLayoutIds, 0L)) {
 			Layout checkedLayout = LayoutLocalServiceUtil.fetchLayout(
-				_groupId, _privateLayout, checkedLayoutId);
+				_groupId, checkedLayoutId);
 
 			if (checkedLayout != null) {
 				checkedNodesJSONArray.put(
@@ -193,9 +188,6 @@ public class LayoutsTreeTag extends IncludeTag {
 		request.setAttribute("liferay-ui:layouts-tree:modules", getModules());
 		request.setAttribute("liferay-ui:layouts-tree:portletURL", _portletURL);
 		request.setAttribute(
-			"liferay-ui:layouts-tree:privateLayout",
-			String.valueOf(_privateLayout));
-		request.setAttribute(
 			"liferay-ui:layouts-tree:rootNodeName", _rootNodeName);
 		request.setAttribute(
 			"liferay-ui:layouts-tree:saveState", String.valueOf(_saveState));
@@ -220,7 +212,6 @@ public class LayoutsTreeTag extends IncludeTag {
 	private long _groupId;
 	private boolean _incomplete = true;
 	private PortletURL _portletURL;
-	private boolean _privateLayout;
 	private String _rootNodeName;
 	private boolean _saveState = true;
 	private boolean _selectableTree;

@@ -51,8 +51,8 @@ public class LayoutRevisionLocalServiceImpl
 	public LayoutRevision addLayoutRevision(
 			long userId, long layoutSetBranchId, long layoutBranchId,
 			long parentLayoutRevisionId, boolean head, long plid,
-			long portletPreferencesPlid, boolean privateLayout, String name,
-			String title, String description, String keywords, String robots,
+			long portletPreferencesPlid, String name, String title,
+			String description, String keywords, String robots,
 			String typeSettings, boolean iconImage, long iconImageId,
 			String themeId, String colorSchemeId, String wapThemeId,
 			String wapColorSchemeId, String css, ServiceContext serviceContext)
@@ -83,7 +83,6 @@ public class LayoutRevisionLocalServiceImpl
 		layoutRevision.setParentLayoutRevisionId(parentLayoutRevisionId);
 		layoutRevision.setHead(head);
 		layoutRevision.setPlid(plid);
-		layoutRevision.setPrivateLayout(privateLayout);
 		layoutRevision.setName(name);
 		layoutRevision.setTitle(title);
 		layoutRevision.setDescription(description);
@@ -423,8 +422,6 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setHead(false);
 			layoutRevision.setLayoutBranchId(layoutBranchId);
 			layoutRevision.setPlid(oldLayoutRevision.getPlid());
-			layoutRevision.setPrivateLayout(
-				oldLayoutRevision.isPrivateLayout());
 			layoutRevision.setName(name);
 			layoutRevision.setTitle(title);
 			layoutRevision.setDescription(description);

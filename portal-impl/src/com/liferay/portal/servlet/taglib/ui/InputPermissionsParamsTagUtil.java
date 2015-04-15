@@ -89,7 +89,7 @@ public class InputPermissionsParamsTagUtil {
 				boolean guestChecked = false;
 
 				if (layoutGroup.isControlPanel()) {
-					if (!group.hasPrivateLayouts() &&
+					if (!group.hasLayouts() &&
 						guestDefaultActions.contains(action)) {
 
 						guestChecked = true;
@@ -154,7 +154,7 @@ public class InputPermissionsParamsTagUtil {
 		if (layoutGroup.isControlPanel()) {
 			Group group = themeDisplay.getScopeGroup();
 
-			if (!group.hasPrivateLayouts() &&
+			if (!group.hasLayouts() &&
 				guestDefaultActions.contains(ActionKeys.VIEW)) {
 
 				return RoleConstants.GUEST;

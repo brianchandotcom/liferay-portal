@@ -422,7 +422,6 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="layoutId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="parentLayoutId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -475,7 +474,6 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="plid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="friendlyURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
@@ -514,7 +512,6 @@
 		<property name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="major" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="plid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -542,7 +539,6 @@
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="themeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="colorSchemeId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -566,7 +562,6 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="master" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
@@ -2014,7 +2009,6 @@
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="layoutId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="portletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />

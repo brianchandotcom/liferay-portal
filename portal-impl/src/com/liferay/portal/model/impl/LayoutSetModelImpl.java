@@ -71,7 +71,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "privateLayout", Types.BOOLEAN },
 			{ "logoId", Types.BIGINT },
 			{ "themeId", Types.VARCHAR },
 			{ "colorSchemeId", Types.VARCHAR },
@@ -83,7 +82,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			{ "layoutSetPrototypeUuid", Types.VARCHAR },
 			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutSet (mvccVersion LONG default 0,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,pageCount INTEGER,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSet (mvccVersion LONG default 0,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,pageCount INTEGER,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutSet.layoutSetId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutSet.layoutSetId ASC";
@@ -101,8 +100,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 	public static final long LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK = 2L;
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 4L;
-	public static final long LAYOUTSETID_COLUMN_BITMASK = 8L;
+	public static final long LAYOUTSETID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -123,7 +121,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setPrivateLayout(soapModel.getPrivateLayout());
 		model.setLogoId(soapModel.getLogoId());
 		model.setThemeId(soapModel.getThemeId());
 		model.setColorSchemeId(soapModel.getColorSchemeId());
@@ -204,7 +201,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("logoId", getLogoId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
@@ -259,12 +255,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		Long logoId = (Long)attributes.get("logoId");
@@ -406,34 +396,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-	}
-
-	@JSON
-	@Override
-	public boolean getPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
-
-		if (!_setOriginalPrivateLayout) {
-			_setOriginalPrivateLayout = true;
-
-			_originalPrivateLayout = _privateLayout;
-		}
-
-		_privateLayout = privateLayout;
-	}
-
-	public boolean getOriginalPrivateLayout() {
-		return _originalPrivateLayout;
 	}
 
 	@JSON
@@ -649,7 +611,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		layoutSetImpl.setCompanyId(getCompanyId());
 		layoutSetImpl.setCreateDate(getCreateDate());
 		layoutSetImpl.setModifiedDate(getModifiedDate());
-		layoutSetImpl.setPrivateLayout(getPrivateLayout());
 		layoutSetImpl.setLogoId(getLogoId());
 		layoutSetImpl.setThemeId(getThemeId());
 		layoutSetImpl.setColorSchemeId(getColorSchemeId());
@@ -726,10 +687,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 		layoutSetModelImpl._setOriginalGroupId = false;
 
-		layoutSetModelImpl._originalPrivateLayout = layoutSetModelImpl._privateLayout;
-
-		layoutSetModelImpl._setOriginalPrivateLayout = false;
-
 		layoutSetModelImpl._originalLayoutSetPrototypeUuid = layoutSetModelImpl._layoutSetPrototypeUuid;
 
 		setCompanyFallbackVirtualHostname(null);
@@ -768,8 +725,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		else {
 			layoutSetCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
-
-		layoutSetCacheModel.privateLayout = getPrivateLayout();
 
 		layoutSetCacheModel.logoId = getLogoId();
 
@@ -843,7 +798,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -857,8 +812,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", privateLayout=");
-		sb.append(getPrivateLayout());
 		sb.append(", logoId=");
 		sb.append(getLogoId());
 		sb.append(", themeId=");
@@ -886,7 +839,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutSet");
@@ -915,10 +868,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
-		sb.append(getPrivateLayout());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>logoId</column-name><column-value><![CDATA[");
@@ -978,9 +927,6 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private boolean _privateLayout;
-	private boolean _originalPrivateLayout;
-	private boolean _setOriginalPrivateLayout;
 	private long _logoId;
 	private String _themeId;
 	private String _colorSchemeId;

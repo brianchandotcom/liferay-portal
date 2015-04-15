@@ -49,12 +49,12 @@ public class PortletPreferencesFinderUtil {
 		return getFinder().fetchByPrimaryKeys(primaryKeys);
 	}
 
-	public static java.util.List<com.liferay.portal.model.PortletPreferences> findByC_G_O_O_P_P(
+	public static java.util.List<com.liferay.portal.model.PortletPreferences> findByC_G_O_O_P(
 		long companyId, long groupId, long ownerId, int ownerType,
-		java.lang.String portletId, boolean privateLayout) {
+		java.lang.String portletId) {
 		return getFinder()
-				   .findByC_G_O_O_P_P(companyId, groupId, ownerId, ownerType,
-			portletId, privateLayout);
+				   .findByC_G_O_O_P(companyId, groupId, ownerId, ownerType,
+			portletId);
 	}
 
 	public static PortletPreferencesFinder getFinder() {

@@ -53,18 +53,6 @@ public interface ExportImportHelper {
 	public static final String DATA_HANDLER_PATH_CONTEXT =
 		"@data_handler_path_context@";
 
-	public static final String DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING =
-		"@data_handler_private_group_servlet_mapping@";
-
-	public static final String DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL =
-		"@data_handler_private_layout_set_secure_url@";
-
-	public static final String DATA_HANDLER_PRIVATE_LAYOUT_SET_URL =
-		"@data_handler_private_layout_set_url@";
-
-	public static final String DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING =
-		"@data_handler_private_user_servlet_mapping@";
-
 	public static final String DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL =
 		"@data_handler_public_layout_set_secure_url@";
 
@@ -77,10 +65,9 @@ public interface ExportImportHelper {
 	public static final String TEMP_FOLDER_NAME =
 		ExportImportHelper.class.getName();
 
-	public long[] getAllLayoutIds(long groupId, boolean privateLayout);
+	public long[] getAllLayoutIds(long groupId);
 
-	public Map<Long, Boolean> getAllLayoutIdsMap(
-		long groupId, boolean privateLayout);
+	public Map<Long, Boolean> getAllLayoutIdsMap(long groupId);
 
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
@@ -95,7 +82,7 @@ public interface ExportImportHelper {
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
 	 *             ExportImportDateUtil#getDateRange(PortletRequest, long,
-	 *             boolean, long, String, String)}
+	 *             long, String, String)}
 	 */
 	@Deprecated
 	public DateRange getDateRange(
@@ -214,8 +201,7 @@ public interface ExportImportHelper {
 			final StagedModelType stagedModelType)
 		throws PortalException;
 
-	public String getSelectedLayoutsJSON(
-		long groupId, boolean privateLayout, String selectedNodes);
+	public String getSelectedLayoutsJSON(long groupId, String selectedNodes);
 
 	public FileEntry getTempFileEntry(
 			long groupId, long userId, String folderName)

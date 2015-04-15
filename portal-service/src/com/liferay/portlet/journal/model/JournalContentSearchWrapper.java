@@ -56,7 +56,6 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 		attributes.put("contentSearchId", getContentSearchId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("articleId", getArticleId());
@@ -82,12 +81,6 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 
 		if (companyId != null) {
 			setCompanyId(companyId);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		Long layoutId = (Long)attributes.get("layoutId");
@@ -200,16 +193,6 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 		return _journalContentSearch.getPrimaryKeyObj();
 	}
 
-	/**
-	* Returns the private layout of this journal content search.
-	*
-	* @return the private layout of this journal content search
-	*/
-	@Override
-	public boolean getPrivateLayout() {
-		return _journalContentSearch.getPrivateLayout();
-	}
-
 	@Override
 	public int hashCode() {
 		return _journalContentSearch.hashCode();
@@ -228,16 +211,6 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	@Override
 	public boolean isNew() {
 		return _journalContentSearch.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this journal content search is private layout.
-	*
-	* @return <code>true</code> if this journal content search is private layout; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPrivateLayout() {
-		return _journalContentSearch.isPrivateLayout();
 	}
 
 	@Override
@@ -346,16 +319,6 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	@Override
 	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
 		_journalContentSearch.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets whether this journal content search is private layout.
-	*
-	* @param privateLayout the private layout of this journal content search
-	*/
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_journalContentSearch.setPrivateLayout(privateLayout);
 	}
 
 	@Override

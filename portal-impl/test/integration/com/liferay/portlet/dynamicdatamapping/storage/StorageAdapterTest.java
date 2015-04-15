@@ -297,14 +297,12 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
 		List<Serializable> enValues = ListUtil.fromArray(
-			new Serializable[] {
-				"{\"layoutId\":\"1\",\"privateLayout\":false}"});
+			new Serializable[] {"{\"layoutId\":\"1\"}"});
 
 		dataMap.put(_enLocale, enValues);
 
 		List<Serializable> ptValues = ListUtil.fromArray(
-			new Serializable[] {
-				"{\"layoutId\":\"2\",\"privateLayout\":true}"});
+			new Serializable[] {"{\"layoutId\":\"2\"}"});
 
 		dataMap.put(_ptLocale, ptValues);
 

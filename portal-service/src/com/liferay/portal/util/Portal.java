@@ -261,13 +261,13 @@ public interface Portal {
 	public String getAbsoluteURL(HttpServletRequest request, String url);
 
 	public LayoutQueryStringComposite getActualLayoutQueryStringComposite(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			long groupId, String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException;
 
 	public String getActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException;
 
@@ -775,13 +775,12 @@ public interface Portal {
 		Locale locale, String defaultI18nPathLanguageId);
 
 	public String getJournalArticleActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException;
 
-	public Layout getJournalArticleLayout(
-			long groupId, boolean privateLayout, String friendlyURL)
+	public Layout getJournalArticleLayout(long groupId, String friendlyURL)
 		throws PortalException;
 
 	public String getJsSafePortletId(String portletId);
@@ -791,13 +790,12 @@ public interface Portal {
 	public String getLayoutActualURL(Layout layout, String mainPath);
 
 	public String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL)
+			long groupId, String mainPath, String friendlyURL)
 		throws PortalException;
 
 	public String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException;
 
@@ -809,8 +807,8 @@ public interface Portal {
 		throws PortalException;
 
 	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
-			long groupId, boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			long groupId, String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException;
 
 	public String getLayoutFullURL(Layout layout, ThemeDisplay themeDisplay)
@@ -901,10 +899,6 @@ public interface Portal {
 
 	public String getPathContext(String contextPath);
 
-	public String getPathFriendlyURLPrivateGroup();
-
-	public String getPathFriendlyURLPrivateUser();
-
 	public String getPathFriendlyURLPublic();
 
 	public String getPathImage();
@@ -916,10 +910,6 @@ public interface Portal {
 	public String getPathProxy();
 
 	public long getPlidFromFriendlyURL(long companyId, String friendlyURL);
-
-	public long getPlidFromPortletId(
-			long groupId, boolean privateLayout, String portletId)
-		throws PortalException;
 
 	public long getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException;
@@ -1243,14 +1233,14 @@ public interface Portal {
 	public String getVirtualHostname(LayoutSet layoutSet);
 
 	public String getVirtualLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL, Map<String, String[]> params,
+			long groupId, String mainPath, String friendlyURL,
+			Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException;
 
 	public LayoutFriendlyURLComposite getVirtualLayoutFriendlyURLComposite(
-			boolean privateLayout, String friendlyURL,
-			Map<String, String[]> params, Map<String, Object> requestContext)
+			String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
 		throws PortalException;
 
 	public String getWidgetURL(Portlet portlet, ThemeDisplay themeDisplay)

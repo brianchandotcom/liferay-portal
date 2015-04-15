@@ -48,7 +48,7 @@ public class ThemeServiceTest {
 
 	@Test
 	public void testGetTheme() throws Exception {
-		LayoutSet layoutSet = _group.getPublicLayoutSet();
+		LayoutSet layoutSet = _group.getLayoutSet();
 
 		Theme theme = ThemeLocalServiceUtil.getTheme(
 			_group.getCompanyId(), layoutSet.getThemeId(), false);

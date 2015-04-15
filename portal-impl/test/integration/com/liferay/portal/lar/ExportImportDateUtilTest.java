@@ -172,8 +172,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			_layoutSet.getGroupId(), _layoutSet.isPrivateLayout(), dateRange,
-			endDate);
+			_layoutSet.getGroupId(), dateRange, endDate);
 
 		_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			_layoutSet.getLayoutSetId());
@@ -224,8 +223,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			_layoutSet.getGroupId(), _layoutSet.isPrivateLayout(), dateRange,
-			endDate);
+			_layoutSet.getGroupId(), dateRange, endDate);
 
 		_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			_layoutSet.getLayoutSetId());
@@ -272,8 +270,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			_layoutSet.getGroupId(), _layoutSet.isPrivateLayout(), dateRange,
-			endDate);
+			_layoutSet.getGroupId(), dateRange, endDate);
 
 		_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			_layoutSet.getLayoutSetId());
@@ -318,8 +315,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			_layoutSet.getGroupId(), _layoutSet.isPrivateLayout(), dateRange,
-			endDate);
+			_layoutSet.getGroupId(), dateRange, endDate);
 
 		_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			_layoutSet.getLayoutSetId());
@@ -366,8 +362,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			_layoutSet.getGroupId(), _layoutSet.isPrivateLayout(), dateRange,
-			endDate);
+			_layoutSet.getGroupId(), dateRange, endDate);
 
 		_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			_layoutSet.getLayoutSetId());
@@ -387,8 +382,7 @@ public class ExportImportDateUtilTest {
 		dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			_layoutSet.getGroupId(), _layoutSet.isPrivateLayout(), dateRange,
-			endDate);
+			_layoutSet.getGroupId(), dateRange, endDate);
 
 		_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			_layoutSet.getLayoutSetId());
@@ -448,8 +442,7 @@ public class ExportImportDateUtilTest {
 			"last-publish-date", String.valueOf(lastPublishDate.getTime()));
 
 		LayoutSetLocalServiceUtil.updateSettings(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			settingsProperties.toString());
+			layoutSet.getGroupId(), settingsProperties.toString());
 	}
 
 	protected void updateLastPublishDate(

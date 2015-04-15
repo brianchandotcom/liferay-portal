@@ -120,14 +120,14 @@ public class StagingLocalizationTest {
 			ExportImportConfigurationParameterMapFactory.buildParameterMap();
 
 		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			_sourceGroup.getGroupId(), false, null, parameterMap,
+			_sourceGroup.getGroupId(), null, parameterMap,
 			new Date(System.currentTimeMillis() - Time.MINUTE), new Date());
 
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), languageIds, defaultLanguageId);
 
 		LayoutLocalServiceUtil.importLayouts(
-			TestPropsValues.getUserId(), _targetGroup.getGroupId(), false,
+			TestPropsValues.getUserId(), _targetGroup.getGroupId(),
 			parameterMap, file);
 
 		JournalArticleResource articleResource =

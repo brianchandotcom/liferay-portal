@@ -84,9 +84,7 @@ public class InputPermissionsParamsTag extends TagSupport {
 				boolean guestChecked = false;
 
 				if (layoutGroup.isControlPanel()) {
-					if (!group.hasPrivateLayouts() &&
-						guestDefaultActions.contains(action)) {
-
+					if (guestDefaultActions.contains(action)) {
 						guestChecked = true;
 					}
 				}
@@ -147,11 +145,7 @@ public class InputPermissionsParamsTag extends TagSupport {
 			ResourceActionsUtil.getModelResourceGuestDefaultActions(modelName);
 
 		if (layoutGroup.isControlPanel()) {
-			Group group = themeDisplay.getScopeGroup();
-
-			if (!group.hasPrivateLayouts() &&
-				guestDefaultActions.contains(ActionKeys.VIEW)) {
-
+			if (guestDefaultActions.contains(ActionKeys.VIEW)) {
 				return RoleConstants.GUEST;
 			}
 		}

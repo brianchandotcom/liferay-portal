@@ -178,18 +178,15 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public PortletDataHandlerControl[] getExportConfigurationControls(
-			long companyId, long groupId, Portlet portlet,
-			boolean privateLayout)
+			long companyId, long groupId, Portlet portlet)
 		throws Exception {
 
-		return getExportConfigurationControls(
-			companyId, groupId, portlet, -1, privateLayout);
+		return getExportConfigurationControls(companyId, groupId, portlet, -1);
 	}
 
 	@Override
 	public PortletDataHandlerControl[] getExportConfigurationControls(
-			long companyId, long groupId, Portlet portlet, long plid,
-			boolean privateLayout)
+			long companyId, long groupId, Portlet portlet, long plid)
 		throws Exception {
 
 		List<PortletDataHandlerBoolean> configurationControls =

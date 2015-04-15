@@ -866,8 +866,6 @@ public interface GroupLocalService extends BaseLocalService,
 	* </p>
 	*
 	* @param className the entity's class name
-	* @param privateLayout whether to include groups with private layout sets
-	or non-private layout sets
 	* @param start the lower bound of the range of groups to return
 	* @param end the upper bound of the range of groups to return (not
 	inclusive)
@@ -875,7 +873,7 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getNoLayoutsGroups(
-		java.lang.String className, boolean privateLayout, int start, int end);
+		java.lang.String className, int start, int end);
 
 	/**
 	* Returns all non-system groups having <code>null</code> or empty friendly

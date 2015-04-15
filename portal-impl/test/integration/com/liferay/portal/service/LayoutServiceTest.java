@@ -76,12 +76,12 @@ public class LayoutServiceTest {
 
 		try {
 			LayoutLocalServiceUtil.updateLayout(
-				_group.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getParentLayoutId(),
-				layout.getNameMap(), layout.getTitleMap(),
-				layout.getDescriptionMap(), layout.getKeywordsMap(),
-				layout.getRobotsMap(), layout.getType(), layout.isHidden(),
-				friendlyURLMap, layout.getIconImage(), null, serviceContext);
+				_group.getGroupId(), layout.getLayoutId(),
+				layout.getParentLayoutId(), layout.getNameMap(),
+				layout.getTitleMap(), layout.getDescriptionMap(),
+				layout.getKeywordsMap(), layout.getRobotsMap(),
+				layout.getType(), layout.isHidden(), friendlyURLMap,
+				layout.getIconImage(), null, serviceContext);
 		}
 		catch (NoSuchUserException nsue) {
 			Assert.fail(ExceptionUtils.getStackTrace(nsue));

@@ -32,10 +32,9 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.LayoutSet addLayoutSet(long groupId,
-		boolean privateLayout)
+	public com.liferay.portal.model.LayoutSet addLayoutSet(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.addLayoutSet(groupId, privateLayout);
+		return _layoutSetLocalService.addLayoutSet(groupId);
 	}
 
 	/**
@@ -62,11 +61,10 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 	}
 
 	@Override
-	public void deleteLayoutSet(long groupId, boolean privateLayout,
+	public void deleteLayoutSet(long groupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutSetLocalService.deleteLayoutSet(groupId, privateLayout,
-			serviceContext);
+		_layoutSetLocalService.deleteLayoutSet(groupId, serviceContext);
 	}
 
 	/**
@@ -214,13 +212,6 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 		return _layoutSetLocalService.getBeanIdentifier();
 	}
 
-	@Override
-	public com.liferay.portal.model.LayoutSet getLayoutSet(long groupId,
-		boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.getLayoutSet(groupId, privateLayout);
-	}
-
 	/**
 	* Returns the layout set with the primary key.
 	*
@@ -306,6 +297,25 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 	/**
 	* Updates the state of the layout set prototype link.
 	*
+	* @param groupId the primary key of the group
+	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
+	link enabled
+	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
+	link with
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
+		boolean layoutSetPrototypeLinkEnabled,
+		java.lang.String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(groupId,
+			layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
+	}
+
+	/**
+	* Updates the state of the layout set prototype link.
+	*
 	* <p>
 	* This method can disable the layout set prototype's link by setting
 	* <code>layoutSetPrototypeLinkEnabled</code> to <code>false</code>.
@@ -334,97 +344,62 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 			privateLayout, layoutSetPrototypeLinkEnabled);
 	}
 
-	/**
-	* Updates the state of the layout set prototype link.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout set is private to the group
-	* @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
-	link enabled
-	* @param layoutSetPrototypeUuid the uuid of the layout set prototype to
-	link with
-	* @throws PortalException if a portal exception occurred
-	*/
 	@Override
-	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
-		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
-		java.lang.String layoutSetPrototypeUuid)
+	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
+		boolean logo, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(groupId,
-			privateLayout, layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
+		return _layoutSetLocalService.updateLogo(groupId, logo, bytes);
 	}
 
 	@Override
 	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, byte[] bytes)
+		boolean logo, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.updateLogo(groupId, privateLayout, logo,
-			bytes);
+		return _layoutSetLocalService.updateLogo(groupId, logo, file);
 	}
 
 	@Override
 	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.File file)
+		boolean logo, java.io.InputStream is)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.updateLogo(groupId, privateLayout, logo,
-			file);
+		return _layoutSetLocalService.updateLogo(groupId, logo, is);
 	}
 
 	@Override
 	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream is)
+		boolean logo, java.io.InputStream is, boolean cleanUpStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.updateLogo(groupId, privateLayout, logo,
-			is);
-	}
-
-	@Override
-	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream is,
-		boolean cleanUpStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.updateLogo(groupId, privateLayout, logo,
-			is, cleanUpStream);
+		return _layoutSetLocalService.updateLogo(groupId, logo, is,
+			cleanUpStream);
 	}
 
 	@Override
 	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,
-		boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
+		java.lang.String themeId, java.lang.String colorSchemeId,
+		java.lang.String css, boolean wapTheme)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.updateLookAndFeel(groupId, privateLayout,
-			themeId, colorSchemeId, css, wapTheme);
-	}
-
-	@Override
-	public void updateLookAndFeel(long groupId, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutSetLocalService.updateLookAndFeel(groupId, themeId,
+		return _layoutSetLocalService.updateLookAndFeel(groupId, themeId,
 			colorSchemeId, css, wapTheme);
 	}
 
 	@Override
-	public com.liferay.portal.model.LayoutSet updatePageCount(long groupId,
-		boolean privateLayout)
+	public com.liferay.portal.model.LayoutSet updatePageCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.updatePageCount(groupId, privateLayout);
+		return _layoutSetLocalService.updatePageCount(groupId);
 	}
 
 	@Override
 	public com.liferay.portal.model.LayoutSet updateSettings(long groupId,
-		boolean privateLayout, java.lang.String settings)
+		java.lang.String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.updateSettings(groupId, privateLayout,
-			settings);
+		return _layoutSetLocalService.updateSettings(groupId, settings);
 	}
 
 	@Override
 	public com.liferay.portal.model.LayoutSet updateVirtualHost(long groupId,
-		boolean privateLayout, java.lang.String virtualHostname)
+		java.lang.String virtualHostname)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetLocalService.updateVirtualHost(groupId, privateLayout,
-			virtualHostname);
+		return _layoutSetLocalService.updateVirtualHost(groupId, virtualHostname);
 	}
 
 	/**

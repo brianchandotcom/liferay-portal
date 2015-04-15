@@ -78,7 +78,7 @@ public class LayoutFriendlyURLServiceTest {
 		friendlyURLMap.put(LocaleUtil.US, "/englishurl");
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), false, nameMap, friendlyURLMap);
+			_group.getGroupId(), nameMap, friendlyURLMap);
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
@@ -121,7 +121,7 @@ public class LayoutFriendlyURLServiceTest {
 		friendlyURLMap.put(LocaleUtil.US, "/englishurl");
 
 		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), false, nameMap, friendlyURLMap);
+			_group.getGroupId(), nameMap, friendlyURLMap);
 
 		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
 

@@ -251,18 +251,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		Map<String, String[]> parameterMap = getLayoutTemplatesParameters();
 
-		File[] files = exportLayouts(userGroupId, parameterMap);
+		File file = exportLayouts(userGroupId, parameterMap);
 
 		try {
-			importLayouts(userId, parameterMap, files[0], files[1]);
+			importLayouts(userId, parameterMap, file);
 		}
 		finally {
-			if (files[0] != null) {
-				files[0].delete();
-			}
-
-			if (files[1] != null) {
-				files[1].delete();
+			if (file != null) {
+				file.delete();
 			}
 		}
 	}
@@ -284,22 +280,18 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		Map<String, String[]> parameterMap = getLayoutTemplatesParameters();
 
-		File[] files = exportLayouts(userGroupId, parameterMap);
+		File file = exportLayouts(userGroupId, parameterMap);
 
 		try {
 			for (long userId : userIds) {
 				if (!userGroupPersistence.containsUser(userGroupId, userId)) {
-					importLayouts(userId, parameterMap, files[0], files[1]);
+					importLayouts(userId, parameterMap, file);
 				}
 			}
 		}
 		finally {
-			if (files[0] != null) {
-				files[0].delete();
-			}
-
-			if (files[1] != null) {
-				files[1].delete();
+			if (file != null) {
+				file.delete();
 			}
 		}
 	}
@@ -1006,28 +998,21 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return searchContext;
 	}
 
-	protected File[] exportLayouts(
+	protected File exportLayouts(
 			long userGroupId, Map<String, String[]> parameterMap)
 		throws PortalException {
-
-		File[] files = new File[2];
 
 		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
 			userGroupId);
 
 		Group group = userGroup.getGroup();
 
-		if (userGroup.hasPrivateLayouts()) {
-			files[0] = layoutLocalService.exportLayoutsAsFile(
-				group.getGroupId(), true, null, parameterMap, null, null);
+		if (userGroup.hasLayouts()) {
+			return layoutLocalService.exportLayoutsAsFile(
+				group.getGroupId(), null, parameterMap, null, null);
 		}
 
-		if (userGroup.hasPublicLayouts()) {
-			files[1] = layoutLocalService.exportLayoutsAsFile(
-				group.getGroupId(), false, null, parameterMap, null, null);
-		}
-
-		return files;
+		return null;
 	}
 
 	protected Map<String, String[]> getLayoutTemplatesParameters() {
@@ -1090,22 +1075,16 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	protected void importLayouts(
-			long userId, Map<String, String[]> parameterMap,
-			File privateLayoutsFile, File publicLayoutsFile)
+			long userId, Map<String, String[]> parameterMap, File layoutsFile)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		long groupId = user.getGroupId();
 
-		if (privateLayoutsFile != null) {
+		if (layoutsFile != null) {
 			layoutLocalService.importLayouts(
-				userId, groupId, true, parameterMap, privateLayoutsFile);
-		}
-
-		if (publicLayoutsFile != null) {
-			layoutLocalService.importLayouts(
-				userId, groupId, false, parameterMap, publicLayoutsFile);
+				userId, groupId, parameterMap, layoutsFile);
 		}
 	}
 

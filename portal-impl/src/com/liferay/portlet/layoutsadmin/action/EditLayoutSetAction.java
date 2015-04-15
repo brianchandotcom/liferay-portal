@@ -175,28 +175,25 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 		long stagingGroupId = ParamUtil.getLong(
 			actionRequest, "stagingGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			layoutSetId);
 
-		updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
+		updateLogo(actionRequest, liveGroupId, stagingGroupId);
 
 		updateLookAndFeel(
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-			stagingGroupId, privateLayout, layoutSet.getSettingsProperties());
+			stagingGroupId, layoutSet.getSettingsProperties());
 
 		updateMergePages(actionRequest, liveGroupId);
 
 		updateSettings(
-			actionRequest, liveGroupId, stagingGroupId, privateLayout,
+			actionRequest, liveGroupId, stagingGroupId,
 			layoutSet.getSettingsProperties());
 	}
 
 	protected void updateLogo(
-			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
-			boolean privateLayout)
+			ActionRequest actionRequest, long liveGroupId, long stagingGroupId)
 		throws Exception {
 
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
@@ -218,14 +215,12 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 			groupId = stagingGroupId;
 		}
 
-		LayoutSetServiceUtil.updateLogo(
-			groupId, privateLayout, !deleteLogo, logoBytes);
+		LayoutSetServiceUtil.updateLogo(groupId, !deleteLogo, logoBytes);
 	}
 
 	protected void updateLookAndFeel(
 			ActionRequest actionRequest, long companyId, long liveGroupId,
-			long stagingGroupId, boolean privateLayout,
-			UnicodeProperties typeSettingsProperties)
+			long stagingGroupId, UnicodeProperties typeSettingsProperties)
 		throws Exception {
 
 		String[] devices = StringUtil.split(
@@ -257,8 +252,8 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 			}
 
 			LayoutSetServiceUtil.updateLookAndFeel(
-				groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
-				deviceCss, deviceWapTheme);
+				groupId, deviceThemeId, deviceColorSchemeId, deviceCss,
+				deviceWapTheme);
 		}
 	}
 
@@ -282,7 +277,7 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 
 	protected void updateSettings(
 			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
-			boolean privateLayout, UnicodeProperties settingsProperties)
+			UnicodeProperties settingsProperties)
 		throws Exception {
 
 		UnicodeProperties typeSettingsProperties =
@@ -298,7 +293,7 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 		}
 
 		LayoutSetServiceUtil.updateSettings(
-			groupId, privateLayout, settingsProperties.toString());
+			groupId, settingsProperties.toString());
 	}
 
 }

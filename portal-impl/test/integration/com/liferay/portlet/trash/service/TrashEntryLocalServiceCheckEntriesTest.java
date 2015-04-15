@@ -164,7 +164,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		User user = UserTestUtil.getAdminUser(companyId);
 
 		StagingLocalServiceUtil.enableLocalStaging(
-			user.getUserId(), group, false, false,
+			user.getUserId(), group, false,
 			ServiceContextTestUtil.getServiceContext(group, user.getUserId()));
 
 		deleteTrashEntries(group.getStagingGroup());
@@ -181,7 +181,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 			ServiceContextTestUtil.getServiceContext(group, user.getUserId());
 
 		StagingLocalServiceUtil.enableLocalStaging(
-			user.getUserId(), group, false, false, serviceContext);
+			user.getUserId(), group, false, serviceContext);
 
 		group = createLayoutGroup(group.getStagingGroup());
 
@@ -199,7 +199,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 			ServiceContextTestUtil.getServiceContext(group, user.getUserId());
 
 		StagingLocalServiceUtil.enableLocalStaging(
-			user.getUserId(), group, false, false, serviceContext);
+			user.getUserId(), group, false, serviceContext);
 
 		Group stagingGroup = group.getStagingGroup();
 

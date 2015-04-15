@@ -50,12 +50,12 @@ Group group = layoutSetPrototype.getGroup();
 			/>
 		</c:if>
 
-		<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
+		<c:if test="<%= group.hasLayouts() %>">
 			<liferay-ui:icon
 				iconCssClass="icon-search"
 				message="view-pages"
 				target="_blank"
-				url="<%= group.getDisplayURL(themeDisplay, true) %>"
+				url="<%= group.getDisplayURL(themeDisplay) %>"
 			/>
 		</c:if>
 	</c:if>
@@ -83,7 +83,6 @@ Group group = layoutSetPrototype.getGroup();
 			<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="rootNodeName" value="<%= layoutSetPrototype.getName(locale) %>" />
 			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
@@ -100,7 +99,6 @@ Group group = layoutSetPrototype.getGroup();
 		<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="rootNodeName" value="<%= layoutSetPrototype.getName(locale) %>" />
 			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>

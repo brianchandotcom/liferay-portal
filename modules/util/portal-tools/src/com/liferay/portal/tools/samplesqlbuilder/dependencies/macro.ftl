@@ -138,14 +138,14 @@
 	<#local layoutSetModels = dataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
 
 	<#list layoutSetModels as layoutSetModel>
-		insert into LayoutSet values (${layoutSetModel.mvccVersion}, ${layoutSetModel.layoutSetId}, ${layoutSetModel.groupId}, ${layoutSetModel.companyId}, '${dataFactory.getDateString(layoutSetModel.createDate)}', '${dataFactory.getDateString(layoutSetModel.modifiedDate)}', ${layoutSetModel.privateLayout?string}, ${layoutSetModel.logoId}, '${layoutSetModel.themeId}', '${layoutSetModel.colorSchemeId}', '${layoutSetModel.wapThemeId}', '${layoutSetModel.wapColorSchemeId}', '${layoutSetModel.css}', ${layoutSetModel.pageCount}, '${layoutSetModel.settings}', '${layoutSetModel.layoutSetPrototypeUuid}', ${layoutSetModel.layoutSetPrototypeLinkEnabled?string});
+		insert into LayoutSet values (${layoutSetModel.mvccVersion}, ${layoutSetModel.layoutSetId}, ${layoutSetModel.groupId}, ${layoutSetModel.companyId}, '${dataFactory.getDateString(layoutSetModel.createDate)}', '${dataFactory.getDateString(layoutSetModel.modifiedDate)}', ${layoutSetModel.logoId}, '${layoutSetModel.themeId}', '${layoutSetModel.colorSchemeId}', '${layoutSetModel.wapThemeId}', '${layoutSetModel.wapColorSchemeId}', '${layoutSetModel.css}', ${layoutSetModel.pageCount}, '${layoutSetModel.settings}', '${layoutSetModel.layoutSetPrototypeUuid}', ${layoutSetModel.layoutSetPrototypeLinkEnabled?string});
 	</#list>
 </#macro>
 
 <#macro insertLayout
 	_layoutModel
 >
-	insert into Layout values (${_layoutModel.mvccVersion}, '${_layoutModel.uuid}', ${_layoutModel.plid}, ${_layoutModel.groupId}, ${_layoutModel.companyId}, ${_layoutModel.userId}, '${_layoutModel.userName}', '${dataFactory.getDateString(_layoutModel.createDate)}', '${dataFactory.getDateString(_layoutModel.modifiedDate)}', ${_layoutModel.privateLayout?string}, ${_layoutModel.layoutId}, ${_layoutModel.parentLayoutId}, '${_layoutModel.name}', '${_layoutModel.title}', '${_layoutModel.description}', '${_layoutModel.keywords}', '${_layoutModel.robots}', '${_layoutModel.type}', '${_layoutModel.typeSettings}', ${_layoutModel.hidden?string}, '${_layoutModel.friendlyURL}', ${_layoutModel.iconImageId}, '${_layoutModel.themeId}', '${_layoutModel.colorSchemeId}', '${_layoutModel.wapThemeId}', '${_layoutModel.wapColorSchemeId}', '${_layoutModel.css}', ${_layoutModel.priority}, '${_layoutModel.layoutPrototypeUuid}', ${_layoutModel.layoutPrototypeLinkEnabled?string}, '${_layoutModel.sourcePrototypeLayoutUuid}');
+	insert into Layout values (${_layoutModel.mvccVersion}, '${_layoutModel.uuid}', ${_layoutModel.plid}, ${_layoutModel.groupId}, ${_layoutModel.companyId}, ${_layoutModel.userId}, '${_layoutModel.userName}', '${dataFactory.getDateString(_layoutModel.createDate)}', '${dataFactory.getDateString(_layoutModel.modifiedDate)}', ${_layoutModel.layoutId}, ${_layoutModel.parentLayoutId}, '${_layoutModel.name}', '${_layoutModel.title}', '${_layoutModel.description}', '${_layoutModel.keywords}', '${_layoutModel.robots}', '${_layoutModel.type}', '${_layoutModel.typeSettings}', ${_layoutModel.hidden?string}, '${_layoutModel.friendlyURL}', ${_layoutModel.iconImageId}, '${_layoutModel.themeId}', '${_layoutModel.colorSchemeId}', '${_layoutModel.wapThemeId}', '${_layoutModel.wapColorSchemeId}', '${_layoutModel.css}', ${_layoutModel.priority}, '${_layoutModel.layoutPrototypeUuid}', ${_layoutModel.layoutPrototypeLinkEnabled?string}, '${_layoutModel.sourcePrototypeLayoutUuid}');
 
 	<@insertResourcePermissions
 		_entry = _layoutModel
@@ -153,7 +153,7 @@
 
 	<#local layoutFriendlyURLModel = dataFactory.newLayoutFriendlyURLModel(_layoutModel)>
 
-	insert into LayoutFriendlyURL values (${layoutFriendlyURLModel.mvccVersion}, '${layoutFriendlyURLModel.uuid}', ${layoutFriendlyURLModel.layoutFriendlyURLId}, ${layoutFriendlyURLModel.groupId}, ${layoutFriendlyURLModel.companyId}, ${layoutFriendlyURLModel.userId}, '${layoutFriendlyURLModel.userName}', '${dataFactory.getDateString(layoutFriendlyURLModel.createDate)}', '${dataFactory.getDateString(layoutFriendlyURLModel.modifiedDate)}', ${layoutFriendlyURLModel.plid}, ${layoutFriendlyURLModel.privateLayout?string}, '${layoutFriendlyURLModel.friendlyURL}', '${layoutFriendlyURLModel.languageId}');
+	insert into LayoutFriendlyURL values (${layoutFriendlyURLModel.mvccVersion}, '${layoutFriendlyURLModel.uuid}', ${layoutFriendlyURLModel.layoutFriendlyURLId}, ${layoutFriendlyURLModel.groupId}, ${layoutFriendlyURLModel.companyId}, ${layoutFriendlyURLModel.userId}, '${layoutFriendlyURLModel.userName}', '${dataFactory.getDateString(layoutFriendlyURLModel.createDate)}', '${dataFactory.getDateString(layoutFriendlyURLModel.modifiedDate)}', ${layoutFriendlyURLModel.plid}, '${layoutFriendlyURLModel.friendlyURL}', '${layoutFriendlyURLModel.languageId}');
 </#macro>
 
 <#macro insertMBDiscussion

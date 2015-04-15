@@ -42,17 +42,17 @@ else {
 	<aui:option disabled="<%= true %>" label="select-a-page" selected="<%= actionPlid == 0 %>" value="" />
 
 	<%
-	List<Layout> publicLayouts = LayoutServiceUtil.getLayouts(actionGroupId, false);
+	List<Layout> curLayouts = LayoutServiceUtil.getLayouts(actionGroupId);
 	%>
 
-	<c:if test="<%= !publicLayouts.isEmpty() %>">
-		<aui:option disabled="<%= true %>" label="public-pages" value="0" />
+	<c:if test="<%= !curLayouts.isEmpty() %>">
+		<aui:option disabled="<%= true %>" label="pages" value="0" />
 
 		<%
-		for (Layout publicLayout : publicLayouts) {
+		for (Layout curLayout : curLayouts) {
 		%>
 
-			<aui:option label="<%= HtmlUtil.escape(publicLayout.getName(locale)) %>" selected="<%= publicLayout.getPlid() == actionPlid %>" value="<%= publicLayout.getPlid() %>" />
+			<aui:option label="<%= HtmlUtil.escape(curLayout.getName(locale)) %>" selected="<%= curLayout.getPlid() == actionPlid %>" value="<%= curLayout.getPlid() %>" />
 
 		<%
 		}
@@ -60,26 +60,7 @@ else {
 
 	</c:if>
 
-	<%
-	List<Layout> privateLayouts = LayoutServiceUtil.getLayouts(actionGroupId, true);
-	%>
-
-	<c:if test="<%= !privateLayouts.isEmpty() %>">
-		<aui:option disabled="<%= true %>" label="private-pages" value="0" />
-
-		<%
-		for (Layout privateLayout : privateLayouts) {
-		%>
-
-			<aui:option label="<%= HtmlUtil.escape(privateLayout.getName(locale)) %>" selected="<%= privateLayout.getPlid() == actionPlid %>" value="<%= privateLayout.getPlid() %>" />
-
-		<%
-		}
-		%>
-
-	</c:if>
-
-	<c:if test="<%= publicLayouts.isEmpty() && privateLayouts.isEmpty() %>">
+	<c:if test="<%= curLayouts.isEmpty() %>">
 		<aui:option disabled="<%= true %>" label="no-available-pages" value="0" />
 	</c:if>
 </aui:select>

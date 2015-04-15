@@ -151,10 +151,9 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		_portletDataContextExport.setExportDataRootElement(rootElement);
 
-		_stagingPrivateLayout = LayoutTestUtil.addLayout(_stagingGroup, true);
-		_stagingPublicLayout = LayoutTestUtil.addLayout(_stagingGroup, false);
+		_stagingLayout = LayoutTestUtil.addLayout(_stagingGroup);
 
-		_portletDataContextExport.setPlid(_stagingPublicLayout.getPlid());
+		_portletDataContextExport.setPlid(_stagingLayout.getPlid());
 
 		_portletDataContextImport =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
@@ -165,9 +164,9 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		_portletDataContextImport.setImportDataRootElement(rootElement);
 
-		_livePublicLayout = LayoutTestUtil.addLayout(_liveGroup, false);
+		_liveLayout = LayoutTestUtil.addLayout(_liveGroup);
 
-		_portletDataContextImport.setPlid(_livePublicLayout.getPlid());
+		_portletDataContextImport.setPlid(_liveLayout.getPlid());
 
 		_portletDataContextImport.setSourceGroupId(_stagingGroup.getGroupId());
 
@@ -278,9 +277,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		portalUtil.setPortal(portalImpl);
 
-		_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING =
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
-
 		setFinalStaticField(
 			PropsValues.class.getField(
 				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
@@ -297,9 +293,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, content, true);
 
-		Assert.assertFalse(
-			content.contains(
-				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING));
 		Assert.assertFalse(
 			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING));
@@ -307,25 +300,11 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Assert.assertFalse(content.contains(PortalUtil.getPathContext()));
 		Assert.assertFalse(content.contains("/en/en"));
 
-		setFinalStaticField(
-			PropsValues.class.getDeclaredField(
-				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
-			_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
-
-		setFinalStaticField(
-			ExportImportHelperImpl.class.getDeclaredField(
-				"_PRIVATE_USER_SERVLET_MAPPING"),
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
-				StringPool.SLASH);
-
 		portalUtil.setPortal(new PortalImpl());
 	}
 
 	@Test
 	public void testExportLayoutReferencesWithoutContext() throws Exception {
-		_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING =
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
-
 		setFinalStaticField(
 			PropsValues.class.getField(
 				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
@@ -344,40 +323,22 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		Assert.assertFalse(
 			content.contains(
-				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING));
-		Assert.assertFalse(
-			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING));
 		Assert.assertFalse(content.contains(_stagingGroup.getFriendlyURL()));
 		Assert.assertFalse(content.contains("/en/en"));
-
-		setFinalStaticField(
-			PropsValues.class.getDeclaredField(
-				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
-			_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
-
-		setFinalStaticField(
-			ExportImportHelperImpl.class.getDeclaredField(
-				"_PRIVATE_USER_SERVLET_MAPPING"),
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
-				StringPool.SLASH);
 	}
 
 	@Test
 	public void testExportLinksToLayouts() throws Exception {
 		String content = replaceLinksToLayoutsParameters(
-			getContent("layout_links.txt"), _stagingPrivateLayout,
-			_stagingPublicLayout);
+			getContent("layout_links.txt"), _stagingLayout);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, content, true);
 
-		assertLinksToLayouts(content, _stagingPrivateLayout, 0);
+		assertLinksToLayouts(content, _stagingLayout, 0);
 		assertLinksToLayouts(
-			content, _stagingPrivateLayout, _stagingPrivateLayout.getGroupId());
-		assertLinksToLayouts(content, _stagingPublicLayout, 0);
-		assertLinksToLayouts(
-			content, _stagingPublicLayout, _stagingPublicLayout.getGroupId());
+			content, _stagingLayout, _stagingLayout.getGroupId());
 	}
 
 	@Test
@@ -386,8 +347,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		Group group = user.getGroup();
 
-		Layout privateLayout = LayoutTestUtil.addLayout(group, true);
-		Layout publicLayout = LayoutTestUtil.addLayout(group, false);
+		Layout layout = LayoutTestUtil.addLayout(group);
 
 		PortletDataContext portletDataContextExport =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
@@ -405,17 +365,13 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		rootElement.addElement("entry");
 
 		String content = replaceLinksToLayoutsParameters(
-			getContent("layout_links_user_group.txt"), privateLayout,
-			publicLayout);
+			getContent("layout_links_user_group.txt"), layout);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContextExport, journalArticle, content, true);
 
-		assertLinksToLayouts(content, privateLayout, 0);
-		assertLinksToLayouts(
-			content, privateLayout, privateLayout.getGroupId());
-		assertLinksToLayouts(content, publicLayout, 0);
-		assertLinksToLayouts(content, publicLayout, publicLayout.getGroupId());
+		assertLinksToLayouts(content, layout, 0);
+		assertLinksToLayouts(content, layout, layout.getGroupId());
 	}
 
 	@Test
@@ -430,7 +386,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
-				_stagingGroup.getGroupId(), false,
+				_stagingGroup.getGroupId(),
 				StringUtil.merge(selectedLayoutIds));
 
 		JSONArray selectedLayoutsJSONArray = JSONFactoryUtil.createJSONArray(
@@ -455,7 +411,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
-				_stagingGroup.getGroupId(), false,
+				_stagingGroup.getGroupId(),
 				StringUtil.merge(selectedLayoutIds));
 
 		JSONArray selectedLayoutsJSONArray = JSONFactoryUtil.createJSONArray(
@@ -478,8 +434,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
-				_stagingGroup.getGroupId(), false,
-				StringUtil.merge(new long[0]));
+				_stagingGroup.getGroupId(), StringUtil.merge(new long[0]));
 
 		JSONArray selectedLayoutsJSONArray = JSONFactoryUtil.createJSONArray(
 			selectedLayoutsJSON);
@@ -500,7 +455,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
-				_stagingGroup.getGroupId(), false,
+				_stagingGroup.getGroupId(),
 				StringUtil.merge(selectedLayoutIds));
 
 		JSONArray selectedLayoutsJSONArray = JSONFactoryUtil.createJSONArray(
@@ -564,8 +519,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	@Test
 	public void testImportLinksToLayouts() throws Exception {
 		String content = replaceLinksToLayoutsParameters(
-			getContent("layout_links.txt"), _stagingPrivateLayout,
-			_stagingPublicLayout);
+			getContent("layout_links.txt"), _stagingLayout);
 
 		String originalContent = content;
 
@@ -581,35 +535,26 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testImportLinksToLayoutsIdsReplacement() throws Exception {
-		LayoutTestUtil.addLayout(_liveGroup, true);
-		LayoutTestUtil.addLayout(_liveGroup, false);
+		LayoutTestUtil.addLayout(_liveGroup);
 
-		exportImportLayouts(true);
-		exportImportLayouts(false);
+		exportImportLayouts();
 
-		Layout importedPrivateLayout =
+		Layout importedLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				_stagingPrivateLayout.getUuid(), _liveGroup.getGroupId(), true);
-		Layout importedPublicLayout =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				_stagingPublicLayout.getUuid(), _liveGroup.getGroupId(), false);
+				_stagingLayout.getUuid(), _liveGroup.getGroupId());
 
 		Map<Long, Long> layoutPlids =
 			(Map<Long, Long>)_portletDataContextImport.getNewPrimaryKeysMap(
 				Layout.class);
 
-		layoutPlids.put(
-			_stagingPrivateLayout.getPlid(), importedPrivateLayout.getPlid());
-		layoutPlids.put(
-			_stagingPublicLayout.getPlid(), importedPublicLayout.getPlid());
+		layoutPlids.put(_stagingLayout.getPlid(), importedLayout.getPlid());
 
 		String content = getContent("layout_links_ids_replacement.txt");
 
 		String expectedContent = replaceLinksToLayoutsParameters(
-			content, importedPrivateLayout, importedPublicLayout);
+			content, importedLayout);
 
-		content = replaceLinksToLayoutsParameters(
-			content, _stagingPrivateLayout, _stagingPublicLayout);
+		content = replaceLinksToLayoutsParameters(content, _stagingLayout);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel, content, true);
@@ -664,21 +609,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-		if (layout.isPrivateLayout()) {
-			if (group == null) {
-				sb.append("private");
-			}
-			else if (group.isUser()) {
-				sb.append("private-user");
-			}
-			else {
-				sb.append("private-group");
-			}
-		}
-		else {
-			sb.append("public");
-		}
-
 		sb.append(CharPool.AT);
 		sb.append(layout.getPlid());
 
@@ -692,17 +622,17 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Assert.assertTrue(content.contains(sb.toString()));
 	}
 
-	protected void exportImportLayouts(boolean privateLayout) throws Exception {
+	protected void exportImportLayouts() throws Exception {
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			_stagingGroup.getGroupId(), privateLayout);
+			_stagingGroup.getGroupId());
 
 		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			_stagingGroup.getGroupId(), privateLayout,
+			_stagingGroup.getGroupId(),
 			ExportImportHelperUtil.getLayoutIds(layouts),
 			new HashMap<String, String[]>(), null, null);
 
 		LayoutLocalServiceUtil.importLayouts(
-			TestPropsValues.getUserId(), _liveGroup.getGroupId(), privateLayout,
+			TestPropsValues.getUserId(), _liveGroup.getGroupId(),
 			new HashMap<String, String[]>(), larFile);
 	}
 
@@ -738,19 +668,16 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	}
 
 	protected String replaceLinksToLayoutsParameters(
-		String content, Layout privateLayout, Layout publicLayout) {
+		String content, Layout layout) {
 
 		return StringUtil.replace(
 			content,
 			new String[] {
-				"[$GROUP_ID_PRIVATE$]", "[$GROUP_ID_PUBLIC$]",
-				"[$LAYOUT_ID_PRIVATE$]", "[$LAYOUT_ID_PUBLIC$]"
+				"[$GROUP_ID$]", "[$LAYOUT_ID$]"
 			},
 			new String[] {
-				String.valueOf(privateLayout.getGroupId()),
-				String.valueOf(publicLayout.getGroupId()),
-				String.valueOf(privateLayout.getLayoutId()),
-				String.valueOf(publicLayout.getLayoutId())
+				String.valueOf(layout.getGroupId()),
+				String.valueOf(layout.getLayoutId())
 			});
 	}
 
@@ -760,8 +687,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			new String[] {
 				"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$IMAGE_ID$]",
 				"[$LIVE_GROUP_ID$]", "[$PATH_CONTEXT$]",
-				"[$PATH_FRIENDLY_URL_PRIVATE_GROUP$]",
-				"[$PATH_FRIENDLY_URL_PRIVATE_USER$]",
 				"[$PATH_FRIENDLY_URL_PUBLIC$]", "[$TITLE$]", "[$UUID$]"
 			},
 			new String[] {
@@ -770,8 +695,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 				String.valueOf(fileEntry.getFileEntryId()),
 				String.valueOf(fileEntry.getGroupId()),
 				PortalUtil.getPathContext(),
-				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
-				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING,
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				fileEntry.getTitle(), fileEntry.getUuid()
 			});
@@ -836,14 +759,12 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		field.set(null, newValue);
 	}
 
-	private static String _OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
-
 	private FileEntry _fileEntry;
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;
 
-	private Layout _livePublicLayout;
+	private Layout _liveLayout;
 	private final Pattern _pattern = Pattern.compile("href=|\\{|\\[");
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
@@ -852,8 +773,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	@DeleteAfterTestRun
 	private Group _stagingGroup;
 
-	private Layout _stagingPrivateLayout;
-	private Layout _stagingPublicLayout;
+	private Layout _stagingLayout;
 
 	private class TestReaderWriter implements ZipReader, ZipWriter {
 

@@ -32,12 +32,11 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 
 	@Override
 	public void checkDefaultLayoutSetBranches(long userId,
-		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
-		boolean branchingPrivate, boolean remote,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.model.Group liveGroup, boolean branching,
+		boolean remote, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.checkDefaultLayoutSetBranches(userId, liveGroup,
-			branchingPublic, branchingPrivate, remote, serviceContext);
+			branching, remote, serviceContext);
 	}
 
 	@Override
@@ -72,25 +71,24 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 
 	@Override
 	public void enableLocalStaging(long userId,
-		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
-		boolean branchingPrivate,
+		com.liferay.portal.model.Group liveGroup, boolean branching,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingLocalService.enableLocalStaging(userId, liveGroup,
-			branchingPublic, branchingPrivate, serviceContext);
+		_stagingLocalService.enableLocalStaging(userId, liveGroup, branching,
+			serviceContext);
 	}
 
 	@Override
 	public void enableRemoteStaging(long userId,
-		com.liferay.portal.model.Group stagingGroup, boolean branchingPublic,
-		boolean branchingPrivate, java.lang.String remoteAddress,
-		int remotePort, java.lang.String remotePathContext,
-		boolean secureConnection, long remoteGroupId,
+		com.liferay.portal.model.Group stagingGroup, boolean branching,
+		java.lang.String remoteAddress, int remotePort,
+		java.lang.String remotePathContext, boolean secureConnection,
+		long remoteGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.enableRemoteStaging(userId, stagingGroup,
-			branchingPublic, branchingPrivate, remoteAddress, remotePort,
-			remotePathContext, secureConnection, remoteGroupId, serviceContext);
+			branching, remoteAddress, remotePort, remotePathContext,
+			secureConnection, remoteGroupId, serviceContext);
 	}
 
 	/**
@@ -105,11 +103,11 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
-		long userId, long stagingRequestId, boolean privateLayout,
+		long userId, long stagingRequestId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _stagingLocalService.publishStagingRequest(userId,
-			stagingRequestId, privateLayout, parameterMap);
+			stagingRequestId, parameterMap);
 	}
 
 	/**

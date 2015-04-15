@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
@@ -82,21 +81,10 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 		for (JournalContentSearch contentSearch : contentSearches) {
 			if (LayoutPermissionUtil.contains(
 					permissionChecker, contentSearch.getGroupId(),
-					contentSearch.isPrivateLayout(),
 					contentSearch.getLayoutId(), ActionKeys.VIEW)) {
 
-				if (contentSearch.isPrivateLayout()) {
-					if (!GroupLocalServiceUtil.hasUserGroup(
-							themeDisplay.getUserId(),
-							contentSearch.getGroupId())) {
-
-						continue;
-					}
-				}
-
 				Layout hitLayout = LayoutLocalServiceUtil.getLayout(
-					contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
-					contentSearch.getLayoutId());
+					contentSearch.getGroupId(), contentSearch.getLayoutId());
 
 				return PortalUtil.getLayoutURL(hitLayout, themeDisplay);
 			}
@@ -118,8 +106,7 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 
 		if (Validator.isNotNull(article.getLayoutUuid())) {
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-				LayoutSetLocalServiceUtil.getLayoutSet(
-					article.getGroupId(), false),
+				LayoutSetLocalServiceUtil.getLayoutSet(article.getGroupId()),
 				themeDisplay);
 
 			return groupFriendlyURL.concat(
@@ -131,19 +118,18 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 
 		List<Long> hitLayoutIds =
 			JournalContentSearchLocalServiceUtil.getLayoutIds(
-				layout.getGroupId(), layout.isPrivateLayout(), articleId);
+				layout.getGroupId(), articleId);
 
 		for (Long hitLayoutId : hitLayoutIds) {
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();
 
 			if (LayoutPermissionUtil.contains(
-					permissionChecker, layout.getGroupId(),
-					layout.isPrivateLayout(), hitLayoutId, ActionKeys.VIEW)) {
+					permissionChecker, layout.getGroupId(), hitLayoutId,
+					ActionKeys.VIEW)) {
 
 				Layout hitLayout = LayoutLocalServiceUtil.getLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					hitLayoutId.longValue());
+					layout.getGroupId(), hitLayoutId.longValue());
 
 				return PortalUtil.getLayoutURL(hitLayout, themeDisplay);
 			}

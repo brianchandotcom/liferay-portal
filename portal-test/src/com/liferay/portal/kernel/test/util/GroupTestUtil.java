@@ -183,7 +183,7 @@ public class GroupTestUtil {
 		}
 
 		StagingLocalServiceUtil.enableLocalStaging(
-			TestPropsValues.getUserId(), group, false, false, serviceContext);
+			TestPropsValues.getUserId(), group, false, serviceContext);
 	}
 
 	public static Group updateDisplaySettings(

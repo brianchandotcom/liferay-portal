@@ -107,11 +107,8 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			<%
 			String rowURL = StringPool.BLANK;
 
-			if (group.getPublicLayoutsPageCount() > 0) {
-				rowURL = group.getDisplayURL(themeDisplay, false);
-			}
-			else if (tabs1.equals("my-sites") && (group.getPrivateLayoutsPageCount() > 0)) {
-				rowURL = group.getDisplayURL(themeDisplay, true);
+			if (group.hasLayouts()) {
+				rowURL = group.getDisplayURL(themeDisplay);
 			}
 			%>
 

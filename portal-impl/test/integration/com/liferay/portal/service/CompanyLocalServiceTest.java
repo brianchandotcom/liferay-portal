@@ -213,8 +213,7 @@ public class CompanyLocalServiceTest {
 			companyId, userId, RandomTestUtil.randomString());
 
 		SitesUtil.updateLayoutSetPrototypesLinks(
-			group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
-			false);
+			group, layoutSetPrototype.getLayoutSetPrototypeId(), true);
 
 		addUser(
 			companyId, userId, group.getGroupId(),

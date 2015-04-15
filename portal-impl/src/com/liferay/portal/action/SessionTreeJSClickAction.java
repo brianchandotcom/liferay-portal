@@ -63,17 +63,13 @@ public class SessionTreeJSClickAction extends Action {
 
 				if (plid == LayoutConstants.DEFAULT_PLID) {
 					long groupId = ParamUtil.getLong(request, "groupId");
-					boolean privateLayout = ParamUtil.getBoolean(
-						request, "privateLayout");
 
 					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-						groupId, privateLayout,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+						groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 					for (Layout layout : layouts) {
 						SessionTreeJSClicks.openLayoutNodes(
-							request, treeId, layout.isPrivateLayout(),
-							layout.getLayoutId(), true);
+							request, treeId, layout.getLayoutId(), true);
 					}
 				}
 				else {
@@ -83,8 +79,7 @@ public class SessionTreeJSClickAction extends Action {
 					Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 					SessionTreeJSClicks.openLayoutNodes(
-						request, treeId, layout.isPrivateLayout(),
-						layout.getLayoutId(), recursive);
+						request, treeId, layout.getLayoutId(), recursive);
 				}
 			}
 			else if (cmd.equals("layoutCollapse")) {
@@ -94,17 +89,13 @@ public class SessionTreeJSClickAction extends Action {
 
 				if (plid == LayoutConstants.DEFAULT_PLID) {
 					long groupId = ParamUtil.getLong(request, "groupId");
-					boolean privateLayout = ParamUtil.getBoolean(
-						request, "privateLayout");
 
 					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-						groupId, privateLayout,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+						groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 					for (Layout layout : layouts) {
 						SessionTreeJSClicks.closeLayoutNodes(
-							request, treeId, layout.isPrivateLayout(),
-							layout.getLayoutId(), true);
+							request, treeId, layout.getLayoutId(), true);
 					}
 				}
 				else {
@@ -114,8 +105,7 @@ public class SessionTreeJSClickAction extends Action {
 					Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 					SessionTreeJSClicks.closeLayoutNodes(
-						request, treeId, layout.isPrivateLayout(),
-						layout.getLayoutId(), recursive);
+						request, treeId, layout.getLayoutId(), recursive);
 				}
 			}
 			else if (cmd.equals("layoutUncollapse")) {

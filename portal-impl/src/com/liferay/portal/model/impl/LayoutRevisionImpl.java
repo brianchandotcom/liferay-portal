@@ -109,8 +109,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 	@Override
 	public LayoutSet getLayoutSet() throws PortalException {
-		return LayoutSetLocalServiceUtil.getLayoutSet(
-			getGroupId(), isPrivateLayout());
+		return LayoutSetLocalServiceUtil.getLayoutSet(getGroupId());
 	}
 
 	@Override

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<Layout> rootLayouts = LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout(), rootLayoutId);
+List<Layout> rootLayouts = LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), false, rootLayoutId);
 %>
 
 <liferay-ui:ddm-template-renderer className="<%= LayoutSet.class.getName() %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= rootLayouts %>">

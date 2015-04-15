@@ -66,7 +66,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		attributes.put("head", getHead());
 		attributes.put("major", getMajor());
 		attributes.put("plid", getPlid());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
@@ -172,12 +171,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 
 		if (plid != null) {
 			setPlid(plid);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		String name = (String)attributes.get("name");
@@ -753,16 +746,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		return _layoutRevision.getPrimaryKeyObj();
 	}
 
-	/**
-	* Returns the private layout of this layout revision.
-	*
-	* @return the private layout of this layout revision
-	*/
-	@Override
-	public boolean getPrivateLayout() {
-		return _layoutRevision.getPrivateLayout();
-	}
-
 	@Override
 	public java.lang.String getRegularURL(
 		javax.servlet.http.HttpServletRequest request)
@@ -1221,16 +1204,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	/**
-	* Returns <code>true</code> if this layout revision is private layout.
-	*
-	* @return <code>true</code> if this layout revision is private layout; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPrivateLayout() {
-		return _layoutRevision.isPrivateLayout();
-	}
-
-	/**
 	* Returns <code>true</code> if this layout revision is scheduled.
 	*
 	* @return <code>true</code> if this layout revision is scheduled; <code>false</code> otherwise
@@ -1637,16 +1610,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	@Override
 	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
 		_layoutRevision.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets whether this layout revision is private layout.
-	*
-	* @param privateLayout the private layout of this layout revision
-	*/
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_layoutRevision.setPrivateLayout(privateLayout);
 	}
 
 	/**

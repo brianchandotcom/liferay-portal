@@ -310,38 +310,20 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		</#if>
 
 		<#if entity.hasUuid() && entity.hasColumn("groupId") && (entity.name != "Group")>
-			<#if entity.name == "Layout">
-				/**
-				 * Returns the ${entity.humanName} matching the UUID, group, and privacy.
-				 *
-				 * @param uuid the ${entity.humanName}'s UUID
-				 * @param groupId the primary key of the group
-				 * @param privateLayout whether the ${entity.humanName} is private to the group
-				 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
-				<#list serviceBaseExceptions as exception>
-				 * @throws ${exception}
-				</#list>
-				 */
-				@Override
-				public ${entity.name} fetch${entity.name}ByUuidAndGroupId(String uuid, long groupId, boolean privateLayout) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-					return ${entity.varName}Persistence.fetchByUUID_G_P(uuid, groupId, privateLayout);
-				}
-			<#else>
-				/**
-				 * Returns the ${entity.humanName} matching the UUID and group.
-				 *
-				 * @param uuid the ${entity.humanName}'s UUID
-				 * @param groupId the primary key of the group
-				 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
-				<#list serviceBaseExceptions as exception>
-				 * @throws ${exception}
-				</#list>
-				 */
-				@Override
-				public ${entity.name} fetch${entity.name}ByUuidAndGroupId(String uuid, long groupId) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-					return ${entity.varName}Persistence.fetchByUUID_G(uuid, groupId);
-				}
-			</#if>
+			/**
+			 * Returns the ${entity.humanName} matching the UUID and group.
+			 *
+			 * @param uuid the ${entity.humanName}'s UUID
+			 * @param groupId the primary key of the group
+			 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
+			<#list serviceBaseExceptions as exception>
+			 * @throws ${exception}
+			</#list>
+			 */
+			@Override
+			public ${entity.name} fetch${entity.name}ByUuidAndGroupId(String uuid, long groupId) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+				return ${entity.varName}Persistence.fetchByUUID_G(uuid, groupId);
+			}
 		</#if>
 
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "get" + entity.name, [entity.PKClassName], ["PortalException"])>
@@ -576,46 +558,24 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		</#if>
 
 		<#if entity.hasUuid() && entity.hasColumn("groupId") && (entity.name != "Group")>
-			<#if entity.name == "Layout">
-				/**
-				 * Returns the ${entity.humanName} matching the UUID, group, and privacy.
-				 *
-				 * @param uuid the ${entity.humanName}'s UUID
-				 * @param groupId the primary key of the group
-				 * @param privateLayout whether the ${entity.humanName} is private to the group
-				 * @return the matching ${entity.humanName}
-				<#list serviceBaseExceptions as exception>
-				<#if exception == "PortalException">
-				 * @throws PortalException if a matching ${entity.humanName} could not be found
-				<#else>
-				 * @throws ${exception}
-				</#if>
-				</#list>
-				 */
-				@Override
-				public ${entity.name} get${entity.name}ByUuidAndGroupId(String uuid, long groupId, boolean privateLayout) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-					return ${entity.varName}Persistence.findByUUID_G_P(uuid, groupId, privateLayout);
-				}
+			/**
+			 * Returns the ${entity.humanName} matching the UUID and group.
+			 *
+			 * @param uuid the ${entity.humanName}'s UUID
+			 * @param groupId the primary key of the group
+			 * @return the matching ${entity.humanName}
+			<#list serviceBaseExceptions as exception>
+			<#if exception == "PortalException">
+			 * @throws PortalException if a matching ${entity.humanName} could not be found
 			<#else>
-				/**
-				 * Returns the ${entity.humanName} matching the UUID and group.
-				 *
-				 * @param uuid the ${entity.humanName}'s UUID
-				 * @param groupId the primary key of the group
-				 * @return the matching ${entity.humanName}
-				<#list serviceBaseExceptions as exception>
-				<#if exception == "PortalException">
-				 * @throws PortalException if a matching ${entity.humanName} could not be found
-				<#else>
-				 * @throws ${exception}
-				</#if>
-				</#list>
-				 */
-				@Override
-				public ${entity.name} get${entity.name}ByUuidAndGroupId(String uuid, long groupId) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-					return ${entity.varName}Persistence.findByUUID_G(uuid, groupId);
-				}
+			 * @throws ${exception}
 			</#if>
+			</#list>
+			 */
+			@Override
+			public ${entity.name} get${entity.name}ByUuidAndGroupId(String uuid, long groupId) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+				return ${entity.varName}Persistence.findByUUID_G(uuid, groupId);
+			}
 		</#if>
 
 		/**

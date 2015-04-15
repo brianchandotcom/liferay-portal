@@ -57,15 +57,9 @@ public interface UserGroup extends UserGroupModel, PersistedModel {
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public int getPrivateLayoutsPageCount()
+	public int getLayoutsPageCount()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public int getPublicLayoutsPageCount()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public boolean hasPrivateLayouts()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public boolean hasPublicLayouts()
+	public boolean hasLayouts()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

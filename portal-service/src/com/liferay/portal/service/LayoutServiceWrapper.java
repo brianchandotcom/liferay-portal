@@ -41,70 +41,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* </p>
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param parentLayoutId the primary key of the parent layout
-	(optionally {@link
-	com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
-	* @param localeNamesMap the layout's locales and localized names
-	* @param localeTitlesMap the layout's locales and localized titles
-	* @param descriptionMap the layout's locales and localized
-	descriptions
-	* @param keywordsMap the layout's locales and localized keywords
-	* @param robotsMap the layout's locales and localized robots
-	* @param type the layout's type (optionally {@link
-	com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
-	possible types can be found in {@link
-	com.liferay.portal.model.LayoutConstants}.
-	* @param hidden whether the layout is hidden
-	* @param friendlyURL the layout's locales and localized friendly URLs.
-	To see how the URL is normalized when accessed, see {@link
-	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
-	String)}.
-	* @param serviceContext the service context to be applied. Must set
-	the UUID for the layout. Can set the creation date,
-	modification date, and expando bridge attributes for the
-	layout. For layouts that belong to a layout set prototype, an
-	attribute named <code>layoutUpdateable</code> can be used to
-	specify whether site administrators can modify this page
-	within their site.
-	* @return the layout
-	* @throws PortalException if a group with the primary key could not be
-	found, if the group did not have permission to manage the
-	layouts involved, if layout values were invalid, or if a
-	portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #addLayout(long, boolean,
-	long, Map, Map, Map, Map, Map, String, String, boolean, Map,
-	ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Layout addLayout(long groupId,
-		boolean privateLayout, long parentLayoutId,
-		java.util.Map<java.util.Locale, java.lang.String> localeNamesMap,
-		java.util.Map<java.util.Locale, java.lang.String> localeTitlesMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
-		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.addLayout(groupId, privateLayout, parentLayoutId,
-			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
-			robotsMap, type, hidden, friendlyURL, serviceContext);
-	}
-
-	/**
-	* Adds a layout with additional parameters.
-	*
-	* <p>
-	* This method handles the creation of the layout including its resources,
-	* metadata, and internal data structures. It is not necessary to make
-	* subsequent calls to any methods to setup default groups, resources, ...
-	* etc.
-	* </p>
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param parentLayoutId the primary key of the parent layout (optionally
 	{@link
 	com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
@@ -139,7 +75,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout addLayout(long groupId,
-		boolean privateLayout, long parentLayoutId,
+		long parentLayoutId,
 		java.util.Map<java.util.Locale, java.lang.String> localeNamesMap,
 		java.util.Map<java.util.Locale, java.lang.String> localeTitlesMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -149,7 +85,7 @@ public class LayoutServiceWrapper implements LayoutService,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.addLayout(groupId, privateLayout, parentLayoutId,
+		return _layoutService.addLayout(groupId, parentLayoutId,
 			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
 			robotsMap, type, typeSettings, hidden, friendlyURLMap,
 			serviceContext);
@@ -167,7 +103,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* </p>
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param parentLayoutId the primary key of the parent layout (optionally
 	{@link
 	com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
@@ -197,13 +132,76 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout addLayout(long groupId,
-		boolean privateLayout, long parentLayoutId, java.lang.String name,
-		java.lang.String title, java.lang.String description,
+		long parentLayoutId, java.lang.String name, java.lang.String title,
+		java.lang.String description, java.lang.String type, boolean hidden,
+		java.lang.String friendlyURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutService.addLayout(groupId, parentLayoutId, name, title,
+			description, type, hidden, friendlyURL, serviceContext);
+	}
+
+	/**
+	* Adds a layout with additional parameters.
+	*
+	* <p>
+	* This method handles the creation of the layout including its resources,
+	* metadata, and internal data structures. It is not necessary to make
+	* subsequent calls to any methods to setup default groups, resources, ...
+	* etc.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param parentLayoutId the primary key of the parent layout
+	(optionally {@link
+	com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	* @param localeNamesMap the layout's locales and localized names
+	* @param localeTitlesMap the layout's locales and localized titles
+	* @param descriptionMap the layout's locales and localized
+	descriptions
+	* @param keywordsMap the layout's locales and localized keywords
+	* @param robotsMap the layout's locales and localized robots
+	* @param type the layout's type (optionally {@link
+	com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
+	possible types can be found in {@link
+	com.liferay.portal.model.LayoutConstants}.
+	* @param hidden whether the layout is hidden
+	* @param friendlyURL the layout's locales and localized friendly URLs.
+	To see how the URL is normalized when accessed, see {@link
+	com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	String)}.
+	* @param serviceContext the service context to be applied. Must set
+	the UUID for the layout. Can set the creation date,
+	modification date, and expando bridge attributes for the
+	layout. For layouts that belong to a layout set prototype, an
+	attribute named <code>layoutUpdateable</code> can be used to
+	specify whether site administrators can modify this page
+	within their site.
+	* @return the layout
+	* @throws PortalException if a group with the primary key could not be
+	found, if the group did not have permission to manage the
+	layouts involved, if layout values were invalid, or if a
+	portal exception occurred
+	* @deprecated As of 6.2.0, replaced by {@link #addLayout(long, long,
+	Map, Map, Map, Map, Map, String, String, boolean, Map,
+	ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.model.Layout addLayout(long groupId,
+		boolean privateLayout, long parentLayoutId,
+		java.util.Map<java.util.Locale, java.lang.String> localeNamesMap,
+		java.util.Map<java.util.Locale, java.lang.String> localeTitlesMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> keywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutService.addLayout(groupId, privateLayout, parentLayoutId,
-			name, title, description, type, hidden, friendlyURL, serviceContext);
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, hidden, friendlyURL, serviceContext);
 	}
 
 	@Override
@@ -220,7 +218,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* layouts, and associated resources.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param serviceContext the service context to be applied
 	* @throws PortalException if the user did not have permission to delete the
@@ -228,11 +225,10 @@ public class LayoutServiceWrapper implements LayoutService,
 	other portal exception occurred
 	*/
 	@Override
-	public void deleteLayout(long groupId, boolean privateLayout,
-		long layoutId, com.liferay.portal.service.ServiceContext serviceContext)
+	public void deleteLayout(long groupId, long layoutId,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutService.deleteLayout(groupId, privateLayout, layoutId,
-			serviceContext);
+		_layoutService.deleteLayout(groupId, layoutId, serviceContext);
 	}
 
 	/**
@@ -264,7 +260,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* byte array.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutIds the primary keys of the layouts to be exported
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in the
@@ -278,20 +273,18 @@ public class LayoutServiceWrapper implements LayoutService,
 	manage the layouts, or if some other portal exception occurred
 	*/
 	@Override
-	public byte[] exportLayouts(long groupId, boolean privateLayout,
-		long[] layoutIds,
+	public byte[] exportLayouts(long groupId, long[] layoutIds,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.exportLayouts(groupId, privateLayout, layoutIds,
-			parameterMap, startDate, endDate);
+		return _layoutService.exportLayouts(groupId, layoutIds, parameterMap,
+			startDate, endDate);
 	}
 
 	/**
 	* Exports all layouts that match the criteria as a byte array.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in the
 	map see {@link
@@ -304,19 +297,18 @@ public class LayoutServiceWrapper implements LayoutService,
 	layouts, or if some other portal exception occurred
 	*/
 	@Override
-	public byte[] exportLayouts(long groupId, boolean privateLayout,
+	public byte[] exportLayouts(long groupId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.exportLayouts(groupId, privateLayout,
-			parameterMap, startDate, endDate);
+		return _layoutService.exportLayouts(groupId, parameterMap, startDate,
+			endDate);
 	}
 
 	/**
 	* Exports all layouts that match the primary keys and criteria as a file.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutIds the primary keys of the layouts to be exported
 	(optionally <code>null</code>)
 	* @param parameterMap the mapping of parameters indicating which
@@ -331,13 +323,12 @@ public class LayoutServiceWrapper implements LayoutService,
 	manage the layouts, or if some other portal exception occurred
 	*/
 	@Override
-	public java.io.File exportLayoutsAsFile(long groupId,
-		boolean privateLayout, long[] layoutIds,
+	public java.io.File exportLayoutsAsFile(long groupId, long[] layoutIds,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.exportLayoutsAsFile(groupId, privateLayout,
-			layoutIds, parameterMap, startDate, endDate);
+		return _layoutService.exportLayoutsAsFile(groupId, layoutIds,
+			parameterMap, startDate, endDate);
 	}
 
 	@Override
@@ -356,18 +347,18 @@ public class LayoutServiceWrapper implements LayoutService,
 
 	@Override
 	public long exportLayoutsAsFileInBackground(java.lang.String taskName,
-		long groupId, boolean privateLayout, long[] layoutIds,
+		long groupId, long[] layoutIds,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutService.exportLayoutsAsFileInBackground(taskName,
-			groupId, privateLayout, layoutIds, parameterMap, startDate, endDate);
+			groupId, layoutIds, parameterMap, startDate, endDate);
 	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#exportLayoutsAsFileInBackground(String, long, boolean,
-	long[], Map, Date, Date)}
+	#exportLayoutsAsFileInBackground(String, long, long[], Map,
+	Date, Date)}
 	*/
 	@Deprecated
 	@Override
@@ -504,20 +495,12 @@ public class LayoutServiceWrapper implements LayoutService,
 		return _layoutService.getBeanIdentifier();
 	}
 
-	@Override
-	public long getDefaultPlid(long groupId, long scopeGroupId,
-		java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.getDefaultPlid(groupId, scopeGroupId, portletId);
-	}
-
 	/**
 	* Returns the primary key of the default layout for the group.
 	*
 	* @param groupId the primary key of the group
 	* @param scopeGroupId the primary key of the scope group. See {@link
 	com.liferay.portal.service.ServiceContext#getScopeGroupId()}.
-	* @param privateLayout whether the layout is private to the group
 	* @param portletId the primary key of the portlet
 	* @return Returns the primary key of the default layout group; {@link
 	com.liferay.portal.model.LayoutConstants#DEFAULT_PLID} otherwise
@@ -526,10 +509,9 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public long getDefaultPlid(long groupId, long scopeGroupId,
-		boolean privateLayout, java.lang.String portletId)
+		java.lang.String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.getDefaultPlid(groupId, scopeGroupId,
-			privateLayout, portletId);
+		return _layoutService.getDefaultPlid(groupId, scopeGroupId, portletId);
 	}
 
 	/**
@@ -537,7 +519,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	*
 	* @param uuid the layout's UUID
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @return the matching layout
 	* @throws PortalException if a matching layout could not be found, if the
 	user did not have permission to view the layout, or if some other
@@ -545,17 +526,15 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout getLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId, boolean privateLayout)
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.getLayoutByUuidAndGroupId(uuid, groupId,
-			privateLayout);
+		return _layoutService.getLayoutByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
 	* Returns the name of the layout.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param languageId the primary key of the language. For more information
 	See {@link java.util.Locale}.
@@ -563,11 +542,10 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @throws PortalException if a matching layout could not be found
 	*/
 	@Override
-	public java.lang.String getLayoutName(long groupId, boolean privateLayout,
-		long layoutId, java.lang.String languageId)
+	public java.lang.String getLayoutName(long groupId, long layoutId,
+		java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.getLayoutName(groupId, privateLayout, layoutId,
-			languageId);
+		return _layoutService.getLayoutName(groupId, layoutId, languageId);
 	}
 
 	/**
@@ -590,30 +568,27 @@ public class LayoutServiceWrapper implements LayoutService,
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
-		long groupId, boolean privateLayout) {
-		return _layoutService.getLayouts(groupId, privateLayout);
+		long groupId) {
+		return _layoutService.getLayouts(groupId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId) {
-		return _layoutService.getLayouts(groupId, privateLayout, parentLayoutId);
+		long groupId, long parentLayoutId) {
+		return _layoutService.getLayouts(groupId, parentLayoutId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean incomplete, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.getLayouts(groupId, privateLayout,
-			parentLayoutId, incomplete, start, end);
+		long groupId, long parentLayoutId, boolean incomplete, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutService.getLayouts(groupId, parentLayoutId, incomplete,
+			start, end);
 	}
 
 	@Override
-	public int getLayoutsCount(long groupId, boolean privateLayout,
-		long parentLayoutId) {
-		return _layoutService.getLayoutsCount(groupId, privateLayout,
-			parentLayoutId);
+	public int getLayoutsCount(long groupId, long parentLayoutId) {
+		return _layoutService.getLayoutsCount(groupId, parentLayoutId);
 	}
 
 	@Override
@@ -627,7 +602,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* Imports the layouts from the byte array.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys used in
 	the map see {@link
@@ -639,18 +613,17 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @see com.liferay.portal.lar.LayoutImporter
 	*/
 	@Override
-	public void importLayouts(long groupId, boolean privateLayout,
+	public void importLayouts(long groupId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutService.importLayouts(groupId, privateLayout, parameterMap, bytes);
+		_layoutService.importLayouts(groupId, parameterMap, bytes);
 	}
 
 	/**
 	* Imports the layouts from the file.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys used in
 	the map see {@link
@@ -662,18 +635,17 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @see com.liferay.portal.lar.LayoutImporter
 	*/
 	@Override
-	public void importLayouts(long groupId, boolean privateLayout,
+	public void importLayouts(long groupId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutService.importLayouts(groupId, privateLayout, parameterMap, file);
+		_layoutService.importLayouts(groupId, parameterMap, file);
 	}
 
 	/**
 	* Imports the layouts from the input stream.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys used in
 	the map see {@link
@@ -685,31 +657,31 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @see com.liferay.portal.lar.LayoutImporter
 	*/
 	@Override
-	public void importLayouts(long groupId, boolean privateLayout,
+	public void importLayouts(long groupId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream is)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutService.importLayouts(groupId, privateLayout, parameterMap, is);
+		_layoutService.importLayouts(groupId, parameterMap, is);
 	}
 
 	@Override
 	public long importLayoutsInBackground(java.lang.String taskName,
-		long groupId, boolean privateLayout,
+		long groupId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutService.importLayoutsInBackground(taskName, groupId,
-			privateLayout, parameterMap, file);
+			parameterMap, file);
 	}
 
 	@Override
 	public long importLayoutsInBackground(java.lang.String taskName,
-		long groupId, boolean privateLayout,
+		long groupId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutService.importLayoutsInBackground(taskName, groupId,
-			privateLayout, parameterMap, inputStream);
+			parameterMap, inputStream);
 	}
 
 	/**
@@ -825,7 +797,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	*
 	* @param sourceGroupId the primary key of the source group
 	* @param targetGroupId the primary key of the target group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutIdMap the layouts considered for publishing, specified
 	by the layout IDs and booleans indicating whether they have
 	children
@@ -849,13 +820,12 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @throws PortalException if the group did not have permission to
 	manage and publish
 	* @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
-	long, boolean, long[], Map, String, Date, Date, String,
-	String, Date, Date, String)}
+	long, long[], Map, String, Date, Date, String, String, Date,
+	Date, String)}
 	*/
 	@Deprecated
 	@Override
 	public void schedulePublishToLive(long sourceGroupId, long targetGroupId,
-		boolean privateLayout,
 		java.util.Map<java.lang.Long, java.lang.Boolean> layoutIdMap,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.lang.String scope, java.util.Date startDate,
@@ -864,9 +834,8 @@ public class LayoutServiceWrapper implements LayoutService,
 		java.util.Date schedulerEndDate, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutService.schedulePublishToLive(sourceGroupId, targetGroupId,
-			privateLayout, layoutIdMap, parameterMap, scope, startDate,
-			endDate, groupName, cronText, schedulerStartDate, schedulerEndDate,
-			description);
+			layoutIdMap, parameterMap, scope, startDate, endDate, groupName,
+			cronText, schedulerStartDate, schedulerEndDate, description);
 	}
 
 	/**
@@ -874,7 +843,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	*
 	* @param sourceGroupId the primary key of the source group
 	* @param targetGroupId the primary key of the target group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutIds the layouts considered for publishing, specified by the
 	layout IDs
 	* @param parameterMap the mapping of parameters indicating which
@@ -897,7 +865,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public void schedulePublishToLive(long sourceGroupId, long targetGroupId,
-		boolean privateLayout, long[] layoutIds,
+		long[] layoutIds,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.lang.String scope, java.util.Date startDate,
 		java.util.Date endDate, java.lang.String groupName,
@@ -905,16 +873,14 @@ public class LayoutServiceWrapper implements LayoutService,
 		java.util.Date schedulerEndDate, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutService.schedulePublishToLive(sourceGroupId, targetGroupId,
-			privateLayout, layoutIds, parameterMap, scope, startDate, endDate,
-			groupName, cronText, schedulerStartDate, schedulerEndDate,
-			description);
+			layoutIds, parameterMap, scope, startDate, endDate, groupName,
+			cronText, schedulerStartDate, schedulerEndDate, description);
 	}
 
 	/**
 	* Schedules a range of layouts to be stored.
 	*
 	* @param sourceGroupId the primary key of the source group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutIdMap the layouts considered for publishing, specified by
 	the layout IDs and booleans indicating whether they have children
 	* @param parameterMap the mapping of parameters indicating which
@@ -925,7 +891,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param remotePathContext the remote path context
 	* @param secureConnection whether the connection is secure
 	* @param remoteGroupId the primary key of the remote group
-	* @param remotePrivateLayout whether remote group's layout is private
 	* @param startDate the start date
 	* @param endDate the end date
 	* @param groupName the group name. Optionally {@link
@@ -941,22 +906,19 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public void schedulePublishToRemote(long sourceGroupId,
-		boolean privateLayout,
 		java.util.Map<java.lang.Long, java.lang.Boolean> layoutIdMap,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.lang.String remoteAddress, int remotePort,
 		java.lang.String remotePathContext, boolean secureConnection,
-		long remoteGroupId, boolean remotePrivateLayout,
-		java.util.Date startDate, java.util.Date endDate,
+		long remoteGroupId, java.util.Date startDate, java.util.Date endDate,
 		java.lang.String groupName, java.lang.String cronText,
 		java.util.Date schedulerStartDate, java.util.Date schedulerEndDate,
 		java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutService.schedulePublishToRemote(sourceGroupId, privateLayout,
-			layoutIdMap, parameterMap, remoteAddress, remotePort,
-			remotePathContext, secureConnection, remoteGroupId,
-			remotePrivateLayout, startDate, endDate, groupName, cronText,
-			schedulerStartDate, schedulerEndDate, description);
+		_layoutService.schedulePublishToRemote(sourceGroupId, layoutIdMap,
+			parameterMap, remoteAddress, remotePort, remotePathContext,
+			secureConnection, remoteGroupId, startDate, endDate, groupName,
+			cronText, schedulerStartDate, schedulerEndDate, description);
 	}
 
 	/**
@@ -974,7 +936,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* the parent layout.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param parentLayoutId the primary key of the parent layout
 	* @param layoutIds the primary keys of the layouts
 	* @param serviceContext the service context to be applied
@@ -985,12 +946,11 @@ public class LayoutServiceWrapper implements LayoutService,
 	portal exception occurred
 	*/
 	@Override
-	public void setLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, long[] layoutIds,
+	public void setLayouts(long groupId, long parentLayoutId, long[] layoutIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_layoutService.setLayouts(groupId, privateLayout, parentLayoutId,
-			layoutIds, serviceContext);
+		_layoutService.setLayouts(groupId, parentLayoutId, layoutIds,
+			serviceContext);
 	}
 
 	/**
@@ -1040,7 +1000,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* Updates the layout with additional parameters.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param parentLayoutId the primary key of the layout's new parent
 	layout
@@ -1070,14 +1029,14 @@ public class LayoutServiceWrapper implements LayoutService,
 	update the layout, if a unique friendly URL could not be
 	generated, if a valid parent layout ID to use could not be
 	found, or if the layout parameters were invalid
-	* @deprecated As of 6.2.0, replaced by {@link #updateLayout(long, boolean,
-	long, long, Map, Map, Map, Map, Map, String, boolean, Map,
-	boolean, byte[], ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #updateLayout(long, long,
+	long, Map, Map, Map, Map, Map, String, boolean, Map, boolean,
+	byte[], ServiceContext)}
 	*/
 	@Deprecated
 	@Override
 	public com.liferay.portal.model.Layout updateLayout(long groupId,
-		boolean privateLayout, long layoutId, long parentLayoutId,
+		long layoutId, long parentLayoutId,
 		java.util.Map<java.util.Locale, java.lang.String> localeNamesMap,
 		java.util.Map<java.util.Locale, java.lang.String> localeTitlesMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -1087,17 +1046,16 @@ public class LayoutServiceWrapper implements LayoutService,
 		java.lang.Boolean iconImage, byte[] iconBytes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.updateLayout(groupId, privateLayout, layoutId,
-			parentLayoutId, localeNamesMap, localeTitlesMap, descriptionMap,
-			keywordsMap, robotsMap, type, hidden, friendlyURL, iconImage,
-			iconBytes, serviceContext);
+		return _layoutService.updateLayout(groupId, layoutId, parentLayoutId,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, hidden, friendlyURL, iconImage, iconBytes,
+			serviceContext);
 	}
 
 	/**
 	* Updates the layout with additional parameters.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param parentLayoutId the primary key of the layout's new parent layout
 	* @param localeNamesMap the layout's locales and localized names
@@ -1128,7 +1086,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout updateLayout(long groupId,
-		boolean privateLayout, long layoutId, long parentLayoutId,
+		long layoutId, long parentLayoutId,
 		java.util.Map<java.util.Locale, java.lang.String> localeNamesMap,
 		java.util.Map<java.util.Locale, java.lang.String> localeTitlesMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -1139,17 +1097,16 @@ public class LayoutServiceWrapper implements LayoutService,
 		boolean iconImage, byte[] iconBytes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.updateLayout(groupId, privateLayout, layoutId,
-			parentLayoutId, localeNamesMap, localeTitlesMap, descriptionMap,
-			keywordsMap, robotsMap, type, hidden, friendlyURLMap, iconImage,
-			iconBytes, serviceContext);
+		return _layoutService.updateLayout(groupId, layoutId, parentLayoutId,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, hidden, friendlyURLMap, iconImage, iconBytes,
+			serviceContext);
 	}
 
 	/**
 	* Updates the layout replacing its type settings.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param typeSettings the settings to load the unicode properties object.
 	See {@link com.liferay.portal.kernel.util.UnicodeProperties
@@ -1160,17 +1117,15 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout updateLayout(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String typeSettings)
+		long layoutId, java.lang.String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.updateLayout(groupId, privateLayout, layoutId,
-			typeSettings);
+		return _layoutService.updateLayout(groupId, layoutId, typeSettings);
 	}
 
 	/**
 	* Updates the look and feel of the layout.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param themeId the primary key of the layout's new theme
 	* @param colorSchemeId the primary key of the layout's new color scheme
@@ -1183,11 +1138,11 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout updateLookAndFeel(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String themeId,
+		long layoutId, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.updateLookAndFeel(groupId, privateLayout,
-			layoutId, themeId, colorSchemeId, css, wapTheme);
+		return _layoutService.updateLookAndFeel(groupId, layoutId, themeId,
+			colorSchemeId, css, wapTheme);
 	}
 
 	/**
@@ -1195,7 +1150,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* privacy.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param name the layout's new name
 	* @param languageId the primary key of the language. For more information
@@ -1207,11 +1161,9 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout updateName(long groupId,
-		boolean privateLayout, long layoutId, java.lang.String name,
-		java.lang.String languageId)
+		long layoutId, java.lang.String name, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.updateName(groupId, privateLayout, layoutId,
-			name, languageId);
+		return _layoutService.updateName(groupId, layoutId, name, languageId);
 	}
 
 	/**
@@ -1238,7 +1190,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* and privacy.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param parentLayoutId the primary key to be assigned to the parent
 	layout
@@ -1249,10 +1200,10 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout updateParentLayoutId(long groupId,
-		boolean privateLayout, long layoutId, long parentLayoutId)
+		long layoutId, long parentLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.updateParentLayoutId(groupId, privateLayout,
-			layoutId, parentLayoutId);
+		return _layoutService.updateParentLayoutId(groupId, layoutId,
+			parentLayoutId);
 	}
 
 	/**
@@ -1299,7 +1250,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* next and previous layouts.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param nextLayoutId the primary key of the next layout
 	* @param previousLayoutId the primary key of the previous layout
@@ -1309,11 +1259,10 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout updatePriority(long groupId,
-		boolean privateLayout, long layoutId, long nextLayoutId,
-		long previousLayoutId)
+		long layoutId, long nextLayoutId, long previousLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.updatePriority(groupId, privateLayout, layoutId,
-			nextLayoutId, previousLayoutId);
+		return _layoutService.updatePriority(groupId, layoutId, nextLayoutId,
+			previousLayoutId);
 	}
 
 	/**
@@ -1321,7 +1270,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* privacy.
 	*
 	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
 	* @param layoutId the primary key of the layout
 	* @param priority the layout's new priority
 	* @return the updated layout
@@ -1330,10 +1278,9 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public com.liferay.portal.model.Layout updatePriority(long groupId,
-		boolean privateLayout, long layoutId, int priority)
+		long layoutId, int priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.updatePriority(groupId, privateLayout, layoutId,
-			priority);
+		return _layoutService.updatePriority(groupId, layoutId, priority);
 	}
 
 	/**
@@ -1354,22 +1301,22 @@ public class LayoutServiceWrapper implements LayoutService,
 
 	@Override
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
-		long groupId, boolean privateLayout,
+		long groupId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.validateImportLayoutsFile(groupId, privateLayout,
-			parameterMap, file);
+		return _layoutService.validateImportLayoutsFile(groupId, parameterMap,
+			file);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
-		long groupId, boolean privateLayout,
+		long groupId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutService.validateImportLayoutsFile(groupId, privateLayout,
-			parameterMap, inputStream);
+		return _layoutService.validateImportLayoutsFile(groupId, parameterMap,
+			inputStream);
 	}
 
 	@Override

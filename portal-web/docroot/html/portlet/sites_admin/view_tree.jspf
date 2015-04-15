@@ -228,7 +228,7 @@ if (group != null) {
 	<c:if test="<%= group != null %>">
 
 		<%
-		LayoutSet layoutSet = group.getPublicLayoutSet();
+		LayoutSet layoutSet = group.getLayoutSet();
 		%>
 
 		<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">

@@ -116,12 +116,12 @@ public class BreadcrumbUtil {
 		Group group = GroupLocalServiceUtil.getGroup(
 			themeDisplay.getCompanyId(), GroupConstants.GUEST);
 
-		if (group.getPublicLayoutsPageCount() == 0) {
+		if (!group.hasLayouts()) {
 			return null;
 		}
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), false);
+			group.getGroupId());
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
@@ -262,14 +262,7 @@ public class BreadcrumbUtil {
 			}
 		}
 
-		int layoutsPageCount = 0;
-
-		if (layoutSet.isPrivateLayout()) {
-			layoutsPageCount = group.getPrivateLayoutsPageCount();
-		}
-		else {
-			layoutsPageCount = group.getPublicLayoutsPageCount();
-		}
+		int layoutsPageCount = group.getLayoutsPageCount();
 
 		if ((layoutsPageCount > 0) && !group.isGuest()) {
 			String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
@@ -347,7 +340,7 @@ public class BreadcrumbUtil {
 
 			if (parentGroup != null) {
 				return LayoutSetLocalServiceUtil.getLayoutSet(
-					parentGroup.getGroupId(), layoutSet.isPrivateLayout());
+					parentGroup.getGroupId());
 			}
 		}
 		else if (group.isUser()) {
@@ -363,7 +356,7 @@ public class BreadcrumbUtil {
 				Group parentGroup = organization.getGroup();
 
 				return LayoutSetLocalServiceUtil.getLayoutSet(
-					parentGroup.getGroupId(), layoutSet.isPrivateLayout());
+					parentGroup.getGroupId());
 			}
 		}
 

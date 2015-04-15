@@ -164,8 +164,6 @@ public interface WebKeys {
 
 	public static final String PORTLET_SESSION_ATTRIBUTES = "PORTLET_SESSION_ATTRIBUTES_";
 
-	public static final String PRIVATE_LAYOUT = "PRIVATE_LAYOUT";
-
 	public static final String REDIRECT = "REDIRECT";
 
 	public static final String REFERER = "referer";

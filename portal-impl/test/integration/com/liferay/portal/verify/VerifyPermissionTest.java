@@ -135,14 +135,7 @@ public class VerifyPermissionTest extends BaseVerifyProcessTestCase {
 		Group userGroup = user.getGroup();
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			userGroup.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (layouts.isEmpty()) {
-			layouts = LayoutLocalServiceUtil.getLayouts(
-				userGroup.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-		}
+			userGroup.getGroupId(), LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		Layout layout = layouts.get(0);
 

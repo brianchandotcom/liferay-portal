@@ -301,7 +301,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="privateLayout" type="boolean" />
 		<field name="layoutId" type="long" />
 		<field name="parentLayoutId" type="long" />
 		<field name="name" type="String" localized="true">
@@ -376,7 +375,6 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="plid" type="long" />
-		<field name="privateLayout" type="boolean" />
 		<field name="friendlyURL" type="String">
 			<hint name="max-length">255</hint>
 		</field>
@@ -417,7 +415,6 @@
 		<field name="head" type="boolean" />
 		<field name="major" type="boolean" />
 		<field name="plid" type="long" />
-		<field name="privateLayout" type="boolean" />
 		<field name="name" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 			<validator name="required" />
@@ -453,7 +450,6 @@
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="privateLayout" type="boolean" />
 		<field name="logoId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />
@@ -478,7 +474,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="privateLayout" type="boolean" />
 		<field name="name" type="String">
 			<validator name="rangeLength">[4,100]</validator>
 			<validator name="required" />
@@ -1986,7 +1981,6 @@
 		<field name="contentSearchId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
-		<field name="privateLayout" type="boolean" />
 		<field name="layoutId" type="long" />
 		<field name="portletId" type="String">
 			<hint name="max-length">200</hint>

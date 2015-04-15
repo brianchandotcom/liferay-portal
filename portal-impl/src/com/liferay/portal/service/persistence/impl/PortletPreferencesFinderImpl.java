@@ -56,10 +56,10 @@ public class PortletPreferencesFinderImpl
 	public static final String FIND_BY_PORTLET_ID =
 		PortletPreferencesFinder.class.getName() + ".findByPortletId";
 
-	public static final String FIND_BY_C_G_O_O_P_P =
+	public static final String FIND_BY_C_G_O_O_P =
 		PortletPreferencesFinder.class.getName() + ".findByC_G_O_O_P_P";
 
-	public static final FinderPath FINDER_PATH_FIND_BY_C_G_O_O_P_P =
+	public static final FinderPath FINDER_PATH_FIND_BY_C_G_O_O_P =
 		new FinderPath(
 			PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
@@ -70,7 +70,7 @@ public class PortletPreferencesFinderImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName(),
-				String.class.getName(), Boolean.class.getName()
+				String.class.getName()
 			}
 		);
 
@@ -247,17 +247,17 @@ public class PortletPreferencesFinderImpl
 	}
 
 	@Override
-	public List<PortletPreferences> findByC_G_O_O_P_P(
+	public List<PortletPreferences> findByC_G_O_O_P(
 		long companyId, long groupId, long ownerId, int ownerType,
-		String portletId, boolean privateLayout) {
+		String portletId) {
 
 		Object[] finderArgs = {
-			companyId, groupId, ownerId, ownerType, portletId, privateLayout
+			companyId, groupId, ownerId, ownerType, portletId
 		};
 
 		List<PortletPreferences> list =
 			(List<PortletPreferences>)FinderCacheUtil.getResult(
-				FINDER_PATH_FIND_BY_C_G_O_O_P_P, finderArgs, this);
+				FINDER_PATH_FIND_BY_C_G_O_O_P, finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
 			for (PortletPreferences portletPreferences : list) {
@@ -279,7 +279,7 @@ public class PortletPreferencesFinderImpl
 			try {
 				session = openSession();
 
-				String sql = CustomSQLUtil.get(FIND_BY_C_G_O_O_P_P);
+				String sql = CustomSQLUtil.get(FIND_BY_C_G_O_O_P);
 
 				SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -293,18 +293,17 @@ public class PortletPreferencesFinderImpl
 				qPos.add(ownerType);
 				qPos.add(portletId);
 				qPos.add(portletId.concat("_INSTANCE_%"));
-				qPos.add(privateLayout);
 
 				list = q.list(true);
 
 				PortletPreferencesUtil.cacheResult(list);
 
 				FinderCacheUtil.putResult(
-					FINDER_PATH_FIND_BY_C_G_O_O_P_P, finderArgs, list);
+					FINDER_PATH_FIND_BY_C_G_O_O_P, finderArgs, list);
 			}
 			catch (Exception e) {
 				FinderCacheUtil.removeResult(
-					FINDER_PATH_FIND_BY_C_G_O_O_P_P, finderArgs);
+					FINDER_PATH_FIND_BY_C_G_O_O_P, finderArgs);
 
 				throw new SystemException(e);
 			}

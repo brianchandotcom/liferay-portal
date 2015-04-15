@@ -123,7 +123,7 @@ public class BlogsUtil {
 			"[$BLOGS_ENTRY_USER_URL$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(),
-				"the-public-site-url-of-the-user-who-added-the-blog-entry"));
+				"the-site-url-of-the-user-who-added-the-blog-entry"));
 		definitionTerms.put(
 			"[$BLOGS_ENTRY_URL$]",
 			LanguageUtil.get(themeDisplay.getLocale(), "the-blog-entry-url"));

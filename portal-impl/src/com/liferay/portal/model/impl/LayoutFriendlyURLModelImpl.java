@@ -75,11 +75,10 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "plid", Types.BIGINT },
-			{ "privateLayout", Types.BOOLEAN },
 			{ "friendlyURL", Types.VARCHAR },
 			{ "languageId", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutFriendlyURL (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,privateLayout BOOLEAN,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutFriendlyURL (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutFriendlyURL";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutFriendlyURL.layoutFriendlyURLId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutFriendlyURL.layoutFriendlyURLId ASC";
@@ -100,9 +99,8 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 	public static final long LANGUAGEID_COLUMN_BITMASK = 8L;
 	public static final long PLID_COLUMN_BITMASK = 16L;
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 32L;
-	public static final long UUID_COLUMN_BITMASK = 64L;
-	public static final long LAYOUTFRIENDLYURLID_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long LAYOUTFRIENDLYURLID_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.LayoutFriendlyURL"));
 
@@ -153,7 +151,6 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("plid", getPlid());
-		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("languageId", getLanguageId());
 
@@ -223,12 +220,6 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 		if (plid != null) {
 			setPlid(plid);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
 		}
 
 		String friendlyURL = (String)attributes.get("friendlyURL");
@@ -415,33 +406,6 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 	}
 
 	@Override
-	public boolean getPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
-	@Override
-	public void setPrivateLayout(boolean privateLayout) {
-		_columnBitmask |= PRIVATELAYOUT_COLUMN_BITMASK;
-
-		if (!_setOriginalPrivateLayout) {
-			_setOriginalPrivateLayout = true;
-
-			_originalPrivateLayout = _privateLayout;
-		}
-
-		_privateLayout = privateLayout;
-	}
-
-	public boolean getOriginalPrivateLayout() {
-		return _originalPrivateLayout;
-	}
-
-	@Override
 	public String getFriendlyURL() {
 		if (_friendlyURL == null) {
 			return StringPool.BLANK;
@@ -538,7 +502,6 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 		layoutFriendlyURLImpl.setCreateDate(getCreateDate());
 		layoutFriendlyURLImpl.setModifiedDate(getModifiedDate());
 		layoutFriendlyURLImpl.setPlid(getPlid());
-		layoutFriendlyURLImpl.setPrivateLayout(getPrivateLayout());
 		layoutFriendlyURLImpl.setFriendlyURL(getFriendlyURL());
 		layoutFriendlyURLImpl.setLanguageId(getLanguageId());
 
@@ -617,10 +580,6 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 		layoutFriendlyURLModelImpl._setOriginalPlid = false;
 
-		layoutFriendlyURLModelImpl._originalPrivateLayout = layoutFriendlyURLModelImpl._privateLayout;
-
-		layoutFriendlyURLModelImpl._setOriginalPrivateLayout = false;
-
 		layoutFriendlyURLModelImpl._originalFriendlyURL = layoutFriendlyURLModelImpl._friendlyURL;
 
 		layoutFriendlyURLModelImpl._originalLanguageId = layoutFriendlyURLModelImpl._languageId;
@@ -678,8 +637,6 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 		layoutFriendlyURLCacheModel.plid = getPlid();
 
-		layoutFriendlyURLCacheModel.privateLayout = getPrivateLayout();
-
 		layoutFriendlyURLCacheModel.friendlyURL = getFriendlyURL();
 
 		String friendlyURL = layoutFriendlyURLCacheModel.friendlyURL;
@@ -701,7 +658,7 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -723,8 +680,6 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 		sb.append(getModifiedDate());
 		sb.append(", plid=");
 		sb.append(getPlid());
-		sb.append(", privateLayout=");
-		sb.append(getPrivateLayout());
 		sb.append(", friendlyURL=");
 		sb.append(getFriendlyURL());
 		sb.append(", languageId=");
@@ -736,7 +691,7 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutFriendlyURL");
@@ -783,10 +738,6 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 		sb.append(getPlid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
-		sb.append(getPrivateLayout());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>friendlyURL</column-name><column-value><![CDATA[");
 		sb.append(getFriendlyURL());
 		sb.append("]]></column-value></column>");
@@ -821,9 +772,6 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 	private long _plid;
 	private long _originalPlid;
 	private boolean _setOriginalPlid;
-	private boolean _privateLayout;
-	private boolean _originalPrivateLayout;
-	private boolean _setOriginalPrivateLayout;
 	private String _friendlyURL;
 	private String _originalFriendlyURL;
 	private String _languageId;

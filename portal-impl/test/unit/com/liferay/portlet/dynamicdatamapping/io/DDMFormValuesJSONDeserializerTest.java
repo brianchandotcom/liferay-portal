@@ -311,7 +311,6 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		expectedJSONObject.put("groupId", 10192);
 		expectedJSONObject.put("layoutId", 1);
-		expectedJSONObject.put("privateLayout", false);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), value.getString(LocaleUtil.US),
@@ -321,7 +320,6 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 
 		expectedJSONObject.put("groupId", 10192);
 		expectedJSONObject.put("layoutId", 2);
-		expectedJSONObject.put("privateLayout", false);
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toString(), value.getString(LocaleUtil.BRAZIL),

@@ -36,8 +36,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SessionTreeJSClicks {
 
 	public static void closeLayoutNodes(
-		HttpServletRequest request, String treeId, boolean privateLayout,
-		long layoutId, boolean recursive) {
+		HttpServletRequest request, String treeId, long layoutId,
+		boolean recursive) {
 
 		try {
 			List<String> layoutIds = new ArrayList<>();
@@ -45,7 +45,7 @@ public class SessionTreeJSClicks {
 			layoutIds.add(String.valueOf(layoutId));
 
 			if (recursive) {
-				getLayoutIds(request, privateLayout, layoutId, layoutIds);
+				getLayoutIds(request, layoutId, layoutIds);
 			}
 
 			closeNodes(
@@ -116,8 +116,8 @@ public class SessionTreeJSClicks {
 	}
 
 	public static void openLayoutNodes(
-		HttpServletRequest request, String treeId, boolean privateLayout,
-		long layoutId, boolean recursive) {
+		HttpServletRequest request, String treeId, long layoutId,
+		boolean recursive) {
 
 		try {
 			List<String> layoutIds = new ArrayList<>();
@@ -125,7 +125,7 @@ public class SessionTreeJSClicks {
 			layoutIds.add(String.valueOf(layoutId));
 
 			if (recursive) {
-				getLayoutIds(request, privateLayout, layoutId, layoutIds);
+				getLayoutIds(request, layoutId, layoutIds);
 			}
 
 			openNodes(
@@ -185,20 +185,19 @@ public class SessionTreeJSClicks {
 	}
 
 	protected static List<String> getLayoutIds(
-			HttpServletRequest request, boolean privateLayout,
-			long parentLayoutId, List<String> layoutIds)
+			HttpServletRequest request, long parentLayoutId,
+			List<String> layoutIds)
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId);
+			groupId, parentLayoutId);
 
 		for (Layout layout : layouts) {
 			layoutIds.add(String.valueOf(layout.getLayoutId()));
 
-			getLayoutIds(
-				request, privateLayout, layout.getLayoutId(), layoutIds);
+			getLayoutIds(request, layout.getLayoutId(), layoutIds);
 		}
 
 		return layoutIds;

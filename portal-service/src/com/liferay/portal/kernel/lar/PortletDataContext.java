@@ -635,8 +635,6 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean isPerformDirectBinaryImport();
 
-	public boolean isPrivateLayout();
-
 	public boolean isStagedModelCounted(StagedModel stagedModel);
 
 	public boolean isWithinDateRange(Date modifiedDate);
@@ -679,8 +677,6 @@ public interface PortletDataContext extends Serializable {
 		PortletDataContextListener portletDataContextListener);
 
 	public void setPortletId(String portletId);
-
-	public void setPrivateLayout(boolean privateLayout);
 
 	public void setScopeGroupId(long scopeGroupId);
 

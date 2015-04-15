@@ -40,14 +40,11 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 	}
 
 	protected synchronized void clusteredInit() throws Exception {
-		ClusterMasterExecutor clusterMasterExecutor =
-			_serviceTracker.getService();
-
-		if ((clusterMasterExecutor == null) || !_portalInitialized) {
+		if ((_clusterMasterExecutor == null) || !_portalInitialized) {
 			return;
 		}
 
-		clusterMasterExecutor.initialize();
+		_clusterMasterExecutor.initialize();
 
 		SchedulerEngineHelperUtil.start();
 	}
@@ -72,6 +69,7 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerLifecycle.class);
 
+	private volatile ClusterMasterExecutor _clusterMasterExecutor;
 	private volatile boolean _portalInitialized;
 	private final ServiceTracker<ClusterMasterExecutor, ClusterMasterExecutor>
 		_serviceTracker;
@@ -86,8 +84,7 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			ClusterMasterExecutor clusterMasterExecutor = registry.getService(
-				serviceReference);
+			_clusterMasterExecutor = registry.getService(serviceReference);
 
 			try {
 				clusteredInit();
@@ -98,7 +95,7 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 				}
 			}
 
-			return clusterMasterExecutor;
+			return _clusterMasterExecutor;
 		}
 
 		@Override
@@ -111,6 +108,8 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 		public void removedService(
 			ServiceReference<ClusterMasterExecutor> serviceReference,
 			ClusterMasterExecutor clusterMasterExecutor) {
+
+			_clusterMasterExecutor = null;
 		}
 
 	}

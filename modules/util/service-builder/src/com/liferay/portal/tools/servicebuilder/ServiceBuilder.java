@@ -128,6 +128,18 @@ public class ServiceBuilder {
 
 	public static final String AUTHOR = "Brian Wing Shun Chan";
 
+	public static final String MODEL_HINTS_CONFIGS =
+		"classpath*:META-INF/portal-model-hints.xml," +
+			"META-INF/portal-model-hints.xml," +
+				"classpath*:META-INF/ext-model-hints.xml," +
+					"META-INF/portlet-model-hints.xml";
+
+	public static final String READ_ONLY_PREFIXES =
+		"fetch,get,has,is,load,reindex,search";
+
+	public static final String RESOURCE_ACTION_CONFIGS =
+		"META-INF/resource-actions/default.xml,resource-actions/default.xml";
+
 	public static String getContent(String fileName) throws Exception {
 		Document document = _getContentDocument(fileName);
 
@@ -249,7 +261,7 @@ public class ServiceBuilder {
 		String[] modelHintsConfigs = StringUtil.split(
 			GetterUtil.getString(
 				arguments.get("service.model.hints.configs"),
-				_MODEL_HINTS_CONFIGS));
+				MODEL_HINTS_CONFIGS));
 		String modelHintsFileName = arguments.get("service.model.hints.file");
 		boolean osgiModule = GetterUtil.getBoolean(
 			arguments.get("service.osgi.module"));
@@ -258,12 +270,12 @@ public class ServiceBuilder {
 		String[] readOnlyPrefixes = StringUtil.split(
 			GetterUtil.getString(
 				arguments.get("service.read.only.prefixes"),
-				_READ_ONLY_PREFIXES));
+				READ_ONLY_PREFIXES));
 		String remotingFileName = arguments.get("service.remoting.file");
 		String[] resourceActionsConfigs = StringUtil.split(
 			GetterUtil.getString(
 				arguments.get("service.resource.actions.configs"),
-				_RESOURCE_ACTION_CONFIGS));
+				RESOURCE_ACTION_CONFIGS));
 		String resourcesDir = arguments.get("service.resources.dir");
 		String springFileName = arguments.get("service.spring.file");
 		String[] springNamespaces = StringUtil.split(
@@ -276,7 +288,7 @@ public class ServiceBuilder {
 		String targetEntityName = arguments.get("service.target.entity.name");
 		String testDir = arguments.get("service.test.dir");
 
-		Set<String> resourceActionModels = _readResourceActionModels(
+		Set<String> resourceActionModels = readResourceActionModels(
 			implDir, resourceActionsConfigs);
 
 		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
@@ -299,8 +311,8 @@ public class ServiceBuilder {
 				springNamespaces, sqlDir, sqlFileName, sqlIndexesFileName,
 				sqlSequencesFileName, targetEntityName, testDir, true);
 		}
-		catch (Exception e) {
-			System.out.println(
+		catch (Throwable t) {
+			String message =
 				"Please set these arguments. Sample values are:\n" +
 				"\n" +
 				"\tservice.api.dir=${basedir}/../portal-service/src\n" +
@@ -312,14 +324,14 @@ public class ServiceBuilder {
 				"\tservice.hbm.file=${basedir}/src/META-INF/portal-hbm.xml\n" +
 				"\tservice.impl.dir=${basedir}/src\n" +
 				"\tservice.input.file=${service.file}\n" +
-				"\tservice.model.hints.configs=" + _MODEL_HINTS_CONFIGS + "\n" +
+				"\tservice.model.hints.configs=" + MODEL_HINTS_CONFIGS + "\n" +
 				"\tservice.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml\n" +
 				"\tservice.osgi.module=false\n" +
 				"\tservice.plugin.name=\n" +
 				"\tservice.props.util=com.liferay.portal.util.PropsUtil\n" +
-				"\tservice.read.only.prefixes=" + _READ_ONLY_PREFIXES + "\n" +
+				"\tservice.read.only.prefixes=" + READ_ONLY_PREFIXES + "\n" +
 				"\tservice.remoting.file=${basedir}/../portal-web/docroot/WEB-INF/remoting-servlet.xml\n" +
-				"\tservice.resource.actions.configs=" + _RESOURCE_ACTION_CONFIGS + "\n" +
+				"\tservice.resource.actions.configs=" + RESOURCE_ACTION_CONFIGS + "\n" +
 				"\tservice.resources.dir=${basedir}/src\n" +
 				"\tservice.spring.file=${basedir}/src/META-INF/portal-spring.xml\n" +
 				"\tservice.spring.namespaces=beans\n" +
@@ -374,19 +386,84 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.service_util=" + _TPL_ROOT + "service_util.ftl\n"+
 				"\t-Dservice.tpl.service_wrapper=" + _TPL_ROOT + "service_wrapper.ftl\n"+
 				"\t-Dservice.tpl.spring_xml=" + _TPL_ROOT + "spring_xml.ftl\n"+
-				"\t-Dservice.tpl.spring_xml_session=" + _TPL_ROOT + "spring_xml_session.ftl");
+				"\t-Dservice.tpl.spring_xml_session=" + _TPL_ROOT + "spring_xml_session.ftl";
 
-			ArgumentsUtil.processMainException(arguments, e);
+			if (t instanceof ServiceBuilderException) {
+				ServiceBuilderException serviceBuilderException =
+					(ServiceBuilderException)t;
+
+				System.err.println(
+					serviceBuilderException.getServiceBuilderMessage());
+			}
+			else if (t instanceof Exception) {
+				System.out.println(message);
+
+				ArgumentsUtil.processMainException(arguments, (Exception)t);
+			}
+			else {
+				t.printStackTrace();
+			}
 		}
 
 		try {
 			ClearThreadLocalUtil.clearThreadLocal();
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Throwable t) {
+			t.printStackTrace();
 		}
 
 		Introspector.flushCaches();
+	}
+
+	public static Set<String> readResourceActionModels(
+			String implDir, String[] resourceActionsConfigs)
+		throws Exception {
+
+		Set<String> resourceActionModels = new HashSet<>();
+
+		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
+
+		for (String config : resourceActionsConfigs) {
+			if (config.startsWith("classpath*:")) {
+				String name = config.substring("classpath*:".length());
+
+				Enumeration<URL> enu = classLoader.getResources(name);
+
+				while (enu.hasMoreElements()) {
+					URL url = enu.nextElement();
+
+					InputStream inputStream = url.openStream();
+
+					_readResourceActionModels(
+						implDir, inputStream, resourceActionModels);
+				}
+			}
+			else {
+				InputStream inputStream = classLoader.getResourceAsStream(
+					config);
+
+				if (inputStream == null) {
+					File file = new File(config);
+
+					if (!file.exists()) {
+						file = new File(implDir, config);
+					}
+
+					if (!file.exists()) {
+						continue;
+					}
+
+					inputStream = new FileInputStream(file);
+				}
+
+				try (InputStream curInputStream = inputStream) {
+					_readResourceActionModels(
+						implDir, inputStream, resourceActionModels);
+				}
+			}
+		}
+
+		return resourceActionModels;
 	}
 
 	public static String toHumanName(String name) {
@@ -478,14 +555,13 @@ public class ServiceBuilder {
 			jalopyXmlFile = new File("../../misc/jalopy.xml");
 		}
 
-		if (!jalopyXmlFile.exists()) {
-			jalopyXmlFile = _readJalopyXmlFromClassLoader();
-		}
-
-		try {
+		if (jalopyXmlFile.exists()) {
 			Jalopy.setConvention(jalopyXmlFile);
 		}
-		catch (FileNotFoundException fnfe) {
+		else {
+			URL url = _readJalopyXmlFromClassLoader();
+
+			Jalopy.setConvention(url);
 		}
 
 		if (jalopySettings == null) {
@@ -1150,7 +1226,7 @@ public class ServiceBuilder {
 			pos = _ejbList.indexOf(new Entity(name));
 
 			if (pos == -1) {
-				throw new RuntimeException(
+				throw new ServiceBuilderException(
 					"Cannot find " + name + " in " +
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
@@ -1169,7 +1245,7 @@ public class ServiceBuilder {
 			pos = _ejbList.indexOf(new Entity(refEntity));
 
 			if (pos == -1) {
-				throw new RuntimeException(
+				throw new ServiceBuilderException(
 					"Cannot find " + refEntity + " in " +
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
@@ -1195,9 +1271,19 @@ public class ServiceBuilder {
 
 			ClassLoader classLoader = getClass().getClassLoader();
 
-			FileUtils.write(
-				refFile,
-				StringUtil.read(classLoader, refPackageDir + "/service.xml"));
+			String refContent = null;
+
+			try {
+				refContent = StringUtil.read(
+					classLoader, refPackageDir + "/service.xml");
+			}
+			catch (IOException ioe) {
+				throw new ServiceBuilderException(
+					"Cannot find " + refEntity + " in " +
+						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
+			}
+
+			FileUtils.write(refFile, refContent);
 
 			useTempFile = true;
 		}
@@ -1885,18 +1971,17 @@ public class ServiceBuilder {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
 
-	private static File _readJalopyXmlFromClassLoader() {
+	private static URL _readJalopyXmlFromClassLoader() {
 		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
 
 		URL url = classLoader.getResource("jalopy.xml");
 
-		try {
-			return new File(url.toURI());
-		}
-		catch (Exception e) {
+		if (url == null) {
 			throw new RuntimeException(
-				"Unable to load jalopy.xml from the class loader", e);
+				"Unable to load jalopy.xml from the class loader.");
 		}
+
+		return url;
 	}
 
 	private static void _readResourceActionModels(
@@ -1914,7 +1999,7 @@ public class ServiceBuilder {
 
 		for (Element resourceElement : resourceElements) {
 			resourceActionModels.addAll(
-				_readResourceActionModels(
+				readResourceActionModels(
 					implDir,
 					new String[] {resourceElement.attributeValue("file")}));
 		}
@@ -1927,57 +2012,6 @@ public class ServiceBuilder {
 		for (Node node : nodes) {
 			resourceActionModels.add(node.getText().trim());
 		}
-	}
-
-	private static Set<String> _readResourceActionModels(
-			String implDir, String[] resourceActionsConfigs)
-		throws Exception {
-
-		Set<String> resourceActionModels = new HashSet<>();
-
-		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
-
-		for (String config : resourceActionsConfigs) {
-			if (config.startsWith("classpath*:")) {
-				String name = config.substring("classpath*:".length());
-
-				Enumeration<URL> enu = classLoader.getResources(name);
-
-				while (enu.hasMoreElements()) {
-					URL url = enu.nextElement();
-
-					InputStream inputStream = url.openStream();
-
-					_readResourceActionModels(
-						implDir, inputStream, resourceActionModels);
-				}
-			}
-			else {
-				InputStream inputStream = classLoader.getResourceAsStream(
-					config);
-
-				if (inputStream == null) {
-					File file = new File(config);
-
-					if (!file.exists()) {
-						file = new File(implDir, config);
-					}
-
-					if (!file.exists()) {
-						continue;
-					}
-
-					inputStream = new FileInputStream(file);
-				}
-
-				try (InputStream curInputStream = inputStream) {
-					_readResourceActionModels(
-						implDir, inputStream, resourceActionModels);
-				}
-			}
-		}
-
-		return resourceActionModels;
 	}
 
 	private static String _stripFullyQualifiedClassNames(String content)
@@ -5329,7 +5363,7 @@ public class ServiceBuilder {
 			Entity referenceEntity = getEntity(referenceName);
 
 			if (referenceEntity == null) {
-				throw new RuntimeException(
+				throw new ServiceBuilderException(
 					"Unable to resolve reference " + referenceName + " in " +
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
@@ -5350,17 +5384,6 @@ public class ServiceBuilder {
 			_createSQLTables(updateSQLFile, createTableSQL, entity, false);
 		}
 	}
-
-	private static final String _MODEL_HINTS_CONFIGS =
-		"classpath*:META-INF/portal-model-hints.xml,META-INF" +
-			"/portal-model-hints.xml,classpath*:META-INF" +
-				"/ext-model-hints.xml,META-INF/portlet-model-hints.xml";
-
-	private static final String _READ_ONLY_PREFIXES =
-		"fetch,get,has,is,load,reindex,search";
-
-	private static final String _RESOURCE_ACTION_CONFIGS =
-		"META-INF/resource-actions/default.xml,resource-actions/default.xml";
 
 	private static final int _SESSION_TYPE_LOCAL = 1;
 

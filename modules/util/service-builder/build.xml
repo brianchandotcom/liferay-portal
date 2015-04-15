@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/tools" />
+
+	<target name="deploy">
+		<deploy
+			module.dir="${basedir}"
+		/>
+
+		<copy file="${plugin.file}" tofile="../../../lib/development/${plugin.name}.jar" />
+	</target>
+
+	<target name="jar">
+		<mkdir dir="tmp" />
+
+		<property file="bnd.bnd" />
+		<property name="ivy.pom.version" value="${Bundle-Version}" />
+
+		<makepom artifactpackaging="maven-plugin" conf="default,runtime" ivyfile="ivy.xml" pomfile="tmp/pom.xml" xmlns="antlib:org.apache.ivy.ant">
+			<mapping conf="default" scope="runtime" />
+		</makepom>
+
+		<jar-macro
+			module.dir="${basedir}"
+		/>
+	</target>
+</project>

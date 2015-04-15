@@ -1537,6 +1537,10 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.isSupportsEmbeddedPortlets();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public boolean isTypeArticle() {
 		return _layout.isTypeArticle();

@@ -35,7 +35,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	protected void format() throws Exception {
 		String[] excludes = new String[] {
 			"**\\journal\\dependencies\\template.ftl",
-			"**\\servicebuilder\\dependencies\\props.ftl"
+			"**\\service\\builder\\dependencies\\props.ftl"
 		};
 		String[] includes = new String[] {"**\\*.ftl"};
 

@@ -12,21 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.kernel.provider;
+package com.liferay.trash.web.portlet;
+
+import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.trash.web.constants.TrashPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-public interface PortletProvider {
+@Component(
+	immediate = true,
+	property = {
+		"model.class.name=com.liferay.portlet.trash.model.TrashEntry"
+	},
+	service = ViewPortletProvider.class
+)
+public class TrashViewPortletProvider implements ViewPortletProvider {
 
-	public static final String CLASS_NAME_ANY = "any-class-name";
-
-	public String getPortletId();
-
-	public enum Action {
-
-		ADD, BROWSE, EDIT, VIEW
-
+	@Override
+	public String getPortletId() {
+		return TrashPortletKeys.TRASH;
 	}
 
 }

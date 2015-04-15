@@ -12,28 +12,10 @@
  * details.
  */
 
-package com.liferay.site.browser.web.provider;
-
-import com.liferay.portal.kernel.provider.BrowsePortletProvider;
-import com.liferay.site.browser.web.constants.SiteBrowserPortletKeys;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.portal.kernel.portlet;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
-@Component(
-	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portal.model.Group"
-	},
-	service = BrowsePortletProvider.class
-)
-public class SiteBrowserPortletProvider implements BrowsePortletProvider {
-
-	@Override
-	public String getPortletId() {
-		return SiteBrowserPortletKeys.SITE_BROWSER;
-	}
-
+public interface EditPortletProvider extends PortletProvider {
 }

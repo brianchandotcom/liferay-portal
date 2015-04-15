@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.site.navigation.breadcrumb.web.provider;
+package com.liferay.journal.web.portlet;
 
-import com.liferay.portal.kernel.provider.ViewPortletProvider;
-import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.portlet.EditPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
 	},
-	service = ViewPortletProvider.class
+	service = EditPortletProvider.class
 )
-public class BreadcrumbEntryViewPortletProvider implements ViewPortletProvider {
+public class JournalEditPortletProvider implements EditPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return BreadcrumbPortletKeys.BREADCRUMB;
+		return JournalPortletKeys.JOURNAL;
 	}
 
 }

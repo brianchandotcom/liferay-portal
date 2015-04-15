@@ -12,10 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.kernel.provider;
+package com.liferay.site.navigation.breadcrumb.web.provider;
+
+import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
  */
-public interface ViewPortletProvider extends PortletProvider {
+@Component(
+	immediate = true,
+	property = {
+		"model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
+	},
+	service = ViewPortletProvider.class
+)
+public class BreadcrumbEntryViewPortletProvider implements ViewPortletProvider {
+
+	@Override
+	public String getPortletId() {
+		return BreadcrumbPortletKeys.BREADCRUMB;
+	}
+
 }

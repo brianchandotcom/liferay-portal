@@ -14,8 +14,8 @@
 
 package com.liferay.journal.ratings.definition;
 
-import com.liferay.portal.kernel.provider.PortletProvider;
-import com.liferay.portal.kernel.provider.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;

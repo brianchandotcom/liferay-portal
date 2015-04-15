@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.provider;
+package com.liferay.site.browser.web.portlet;
 
-import com.liferay.asset.browser.web.constants.AssetBrowserPortletKeys;
-import com.liferay.portal.kernel.provider.BrowsePortletProvider;
-import com.liferay.portal.kernel.provider.PortletProvider;
+import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
+import com.liferay.site.browser.web.constants.SiteBrowserPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,15 +25,15 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=" + PortletProvider.CLASS_NAME_ANY
+		"model.class.name=com.liferay.portal.model.Group"
 	},
 	service = BrowsePortletProvider.class
 )
-public class AssetBrowserPortletProvider implements BrowsePortletProvider {
+public class SiteBrowserPortletProvider implements BrowsePortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return AssetBrowserPortletKeys.ASSET_BROWSER;
+		return SiteBrowserPortletKeys.SITE_BROWSER;
 	}
 
 }

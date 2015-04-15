@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.journal.content.web.provider;
+package com.liferay.journal.content.web.portlet;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.asset.JournalArticleAssetRendererFactory;
-import com.liferay.portal.kernel.provider.AddPortletProvider;
+import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;

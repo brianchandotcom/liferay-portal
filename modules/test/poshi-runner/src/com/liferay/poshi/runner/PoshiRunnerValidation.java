@@ -125,6 +125,12 @@ public class PoshiRunnerValidation {
 
 		String classCommandName = element.attributeValue(classType);
 
+		if (classType.equals("macro-desktop") ||
+			classType.equals("macro-mobile")) {
+
+			classType = "macro";
+		}
+
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 				classCommandName);
@@ -222,7 +228,25 @@ public class PoshiRunnerValidation {
 			_validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
 
-			_validateMacroContext(element, filePath);
+			_validateMacroContext(element, "macro", filePath);
+		}
+		else if (Validator.isNotNull(element.attributeValue("macro-desktop"))) {
+			List<String> possibleAttributeNames = Arrays.asList(
+				"line-number", "macro-desktop", "macro-mobile");
+
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
+
+			_validateMacroContext(element, "macro-desktop", filePath);
+		}
+		else if (Validator.isNotNull(element.attributeValue("macro-mobile"))) {
+			List<String> possibleAttributeNames = Arrays.asList(
+				"line-number", "macro-desktop", "macro-mobile");
+
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
+
+			_validateMacroContext(element, "macro-mobile", filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("selenium"))) {
 			List<String> possibleAttributeNames = Arrays.asList(
@@ -248,7 +272,9 @@ public class PoshiRunnerValidation {
 
 		if (!childElements.isEmpty()) {
 			if (Validator.isNotNull(element.attributeValue("function")) ||
-				Validator.isNotNull(element.attributeValue("macro"))) {
+				Validator.isNotNull(element.attributeValue("macro")) ||
+				Validator.isNotNull(element.attributeValue("macro-desktop")) ||
+				Validator.isNotNull(element.attributeValue("macro-mobile"))) {
 
 				for (Element childElement : childElements) {
 					if (StringUtils.equals(childElement.getName(), "var")) {
@@ -354,10 +380,11 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	private static void _validateMacroContext(Element element, String filePath)
+	private static void _validateMacroContext(
+			Element element, String macroType, String filePath)
 		throws PoshiRunnerException {
 
-		_validateClassCommandName(element, "macro", filePath);
+		_validateClassCommandName(element, macroType, filePath);
 	}
 
 	private static void _validateMacroFile(Element element, String filePath)

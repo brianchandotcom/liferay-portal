@@ -120,22 +120,26 @@ public class RoleFinderTest {
 			exists);
 	}
 
-	@SuppressWarnings("PMD.JUnitUseAssertFailPropertly")
 	@Test
 	public void testFindByR_N_A() throws Exception {
 		List<Role> roles = RoleFinderUtil.findByR_N_A(
 			_resourceBlock.getResourceBlockId(), _resourceBlock.getName(),
 			_modelResourceAction.getActionId());
 
+		boolean exists = false;
+
 		for (Role role : roles) {
 			if (role.getRoleId() == _arbitraryRole.getRoleId()) {
-				return;
+				exists = true;
+
+				break;
 			}
 		}
 
-		Assert.fail(
+		Assert.assertTrue(
 			"The method findByR_N_A should have returned the role " +
-				_arbitraryRole.getRoleId());
+				_arbitraryRole.getRoleId(),
+			exists);
 	}
 
 	protected static ResourceAction getModelResourceAction()

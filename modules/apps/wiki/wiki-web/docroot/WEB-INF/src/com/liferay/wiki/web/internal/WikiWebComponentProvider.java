@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.provider;
+package com.liferay.wiki.web.internal;
 
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;

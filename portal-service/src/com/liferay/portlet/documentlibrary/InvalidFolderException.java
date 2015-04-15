@@ -29,24 +29,9 @@ public class InvalidFolderException extends PortalException {
 
 	public static final int CANNOT_MOVE_INTO_ITSELF = 2;
 
-	public InvalidFolderException() {
-	}
-
 	public InvalidFolderException(int type, long folderId) {
 		_type = type;
 		_folderId = folderId;
-	}
-
-	public InvalidFolderException(String msg) {
-		super(msg);
-	}
-
-	public InvalidFolderException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public InvalidFolderException(Throwable cause) {
-		super(cause);
 	}
 
 	public long getFolderId() {
@@ -64,7 +49,7 @@ public class InvalidFolderException extends PortalException {
 		return null;
 	}
 
-	private long _folderId;
-	private int _type;
+	private final long _folderId;
+	private final int _type;
 
 }

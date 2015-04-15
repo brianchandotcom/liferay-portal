@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sass.compiler.ruby;
+package com.liferay.ruby.sass.compiler;
 
 import java.io.InputStream;
 
@@ -119,7 +119,7 @@ public class RubySassCompiler {
 	}
 
 	private static final String _SCRIPT_PATH =
-		"com/liferay/sass/compiler/ruby/dependencies/main.rb";
+		"com/liferay/ruby/sass/compiler/dependencies/main.rb";
 
 	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 

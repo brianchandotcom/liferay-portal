@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sass.compiler.ruby;
+package com.liferay.ruby.sass.compiler;
 
 /**
  * @author David Truong

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sass.compiler.ruby;
+package com.liferay.ruby.sass.compiler;
 
 import java.util.ArrayList;
 import java.util.List;

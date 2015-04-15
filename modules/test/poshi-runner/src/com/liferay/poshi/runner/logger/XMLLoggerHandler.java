@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.logger;
 
+import org.dom4j.Element;
+
 /**
  * @author Michael Hashimoto
  */
@@ -53,6 +55,26 @@ public final class XMLLoggerHandler {
 		lineContainerLoggerElement.addChildLoggerElement(lineLoggerElement);
 
 		xmlLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
+	}
+
+	private static LoggerElement _getBtnContainerLoggerElement(
+		Element element) {
+
+		LoggerElement btnContainerLoggerElement = new LoggerElement();
+
+		btnContainerLoggerElement.setClassName("btn-container");
+		btnContainerLoggerElement.setName("div");
+
+		LoggerElement lineNumberLoggerElement = new LoggerElement();
+
+		lineNumberLoggerElement.setClassName("line-number");
+		lineNumberLoggerElement.setName("div");
+		lineNumberLoggerElement.setText(element.attributeValue("line-number"));
+
+		btnContainerLoggerElement.addChildLoggerElement(
+			lineNumberLoggerElement);
+
+		return btnContainerLoggerElement;
 	}
 
 	private static LoggerElement _getChildContainerLoggerElement() {

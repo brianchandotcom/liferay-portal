@@ -271,23 +271,6 @@ public class LayoutTestUtil {
 		return newPortletId;
 	}
 
-	public static Layout addTypeArticleLayout(long groupId, String articleId)
-		throws Exception {
-
-		Layout layout = addLayout(groupId, false);
-
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty("article-id", articleId);
-
-		layout.setType(LayoutConstants.TYPE_ARTICLE);
-
-		LayoutLocalServiceUtil.updateLayout(layout);
-
-		return layout;
-	}
-
 	public static Layout addTypeLinkToLayoutLayout(
 			long groupId, long linkedToLayoutId)
 		throws Exception {

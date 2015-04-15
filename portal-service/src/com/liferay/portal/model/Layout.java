@@ -412,6 +412,10 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*/
 	public boolean isSupportsEmbeddedPortlets();
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated()
 	public boolean isTypeArticle();
 
 	public boolean isTypeControlPanel();

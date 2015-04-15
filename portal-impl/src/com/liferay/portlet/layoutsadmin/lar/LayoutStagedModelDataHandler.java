@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
@@ -74,10 +73,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
@@ -287,10 +282,7 @@ public class LayoutStagedModelDataHandler
 			exportLayoutIconImage(portletDataContext, layout, layoutElement);
 		}
 
-		if (layout.isTypeArticle()) {
-			exportJournalArticle(portletDataContext, layout);
-		}
-		else if (layout.isTypeLinkToLayout()) {
+		if (layout.isTypeLinkToLayout()) {
 			exportLinkedLayout(portletDataContext, layout, layoutElement);
 		}
 
@@ -572,15 +564,10 @@ public class LayoutStagedModelDataHandler
 			PortletDataHandlerKeys.PORTLETS_MERGE_MODE,
 			PortletDataHandlerKeys.PORTLETS_MERGE_MODE_REPLACE);
 
-		if (layout.isTypeArticle()) {
-			importJournalArticle(portletDataContext, layout);
-
-			updateTypeSettings(importedLayout, layout);
-		}
-		else if (layout.isTypePortlet() &&
-				 Validator.isNotNull(layout.getTypeSettings()) &&
-				 !portletsMergeMode.equals(
-					 PortletDataHandlerKeys.PORTLETS_MERGE_MODE_REPLACE)) {
+		if (layout.isTypePortlet() &&
+			Validator.isNotNull(layout.getTypeSettings()) &&
+			!portletsMergeMode.equals(
+				PortletDataHandlerKeys.PORTLETS_MERGE_MODE_REPLACE)) {
 
 			mergePortlets(
 				importedLayout, layout.getTypeSettings(), portletsMergeMode);
@@ -647,54 +634,6 @@ public class LayoutStagedModelDataHandler
 		importLayoutFriendlyURLs(portletDataContext, layout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
-	}
-
-	protected void exportJournalArticle(
-			PortletDataContext portletDataContext, Layout layout)
-		throws Exception {
-
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		String articleId = typeSettingsProperties.getProperty(
-			"article-id", StringPool.BLANK);
-
-		long articleGroupId = layout.getGroupId();
-
-		if (Validator.isNull(articleId)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No article id found in typeSettings of layout " +
-						layout.getPlid());
-			}
-		}
-
-		JournalArticle article = null;
-
-		try {
-			article = JournalArticleLocalServiceUtil.getLatestArticle(
-				articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
-		}
-		catch (NoSuchArticleException nsae) {
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("No approved article found with group id ");
-				sb.append(articleGroupId);
-				sb.append(" and layout id ");
-				sb.append(articleId);
-
-				_log.warn(sb.toString());
-			}
-		}
-
-		if (article == null) {
-			return;
-		}
-
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, layout, article,
-			PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 	}
 
 	protected void exportLayoutIconImage(
@@ -972,42 +911,6 @@ public class LayoutStagedModelDataHandler
 
 		LayoutLocalServiceUtil.updateAsset(
 			userId, importedLayout, assetCategoryIds, assetTagNames);
-	}
-
-	protected void importJournalArticle(
-			PortletDataContext portletDataContext, Layout layout)
-		throws Exception {
-
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		String articleId = typeSettingsProperties.getProperty(
-			"article-id", StringPool.BLANK);
-
-		if (Validator.isNull(articleId)) {
-			return;
-		}
-
-		List<Element> referenceDataElements =
-			portletDataContext.getReferenceDataElements(
-				layout, JournalArticle.class);
-
-		if (!referenceDataElements.isEmpty()) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, referenceDataElements.get(0));
-		}
-
-		Map<String, String> articleIds =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				JournalArticle.class + ".articleId");
-
-		articleId = MapUtil.getString(articleIds, articleId, articleId);
-
-		typeSettingsProperties.setProperty("article-id", articleId);
-
-		JournalContentSearchLocalServiceUtil.updateContentSearch(
-			portletDataContext.getScopeGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId(), StringPool.BLANK, articleId, true);
 	}
 
 	protected void importLayoutFriendlyURLs(

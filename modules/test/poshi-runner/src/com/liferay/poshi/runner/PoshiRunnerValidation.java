@@ -35,6 +35,8 @@ import org.dom4j.Element;
 public class PoshiRunnerValidation {
 
 	public static void validate() throws PoshiRunnerException {
+		_validateTestname();
+
 		String[] filePathsArray = PoshiRunnerContext.getFilePathsArray();
 
 		for (String filePath : filePathsArray) {
@@ -487,6 +489,29 @@ public class PoshiRunnerValidation {
 		throws PoshiRunnerException {
 
 		_validateDefinitionElement(element, filePath);
+	}
+
+	private static void _validateTestname() throws PoshiRunnerException {
+		String testName = PropsValues.TEST_NAME;
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(testName);
+
+		if (!PoshiRunnerContext.isRootElement("testcase#" + className)) {
+			throw new PoshiRunnerException (
+				"Invalid testcase class " + className);
+		}
+
+		String commandElementKey = "testcase#" + testName;
+
+		if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
+			String commandName =
+				PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+					testName);
+
+			throw new PoshiRunnerException(
+				"Invalid testcase command " + commandName);
+		}
 	}
 
 	private static void _validateVarElement(Element element, String filePath)

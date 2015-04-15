@@ -14,6 +14,9 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.runner.PoshiRunnerContext;
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
+import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import org.dom4j.Element;
@@ -39,7 +42,7 @@ public final class CommandLoggerHandler {
 		_commandElement = null;
 	}
 
-	public static void startCommand(Element element) {
+	public static void startCommand(Element element) throws Exception {
 		if (!_isCommand(element)) {
 			return;
 		}
@@ -51,7 +54,9 @@ public final class CommandLoggerHandler {
 		_commandLogLoggerElement.addChildLoggerElement(_commandLoggerElement);
 	}
 
-	private static LoggerElement _getCommandLoggerElement(Element element) {
+	private static LoggerElement _getCommandLoggerElement(Element element)
+		throws Exception {
+
 		LoggerElement commandLoggerElement = new LoggerElement();
 
 		commandLoggerElement.setClassName("line-group linkable");
@@ -63,30 +68,81 @@ public final class CommandLoggerHandler {
 		return commandLoggerElement;
 	}
 
-	private static LoggerElement _getLineContainerLoggerElement(
-		Element element) {
+	private static LoggerElement _getLineContainerLoggerElement(Element element)
+		throws Exception {
 
 		LoggerElement lineContainerLoggerElement = new LoggerElement();
 
 		lineContainerLoggerElement.setClassName("line-container");
-
-		LoggerElement commandNameLoggerElement = new LoggerElement();
-
-		commandNameLoggerElement.setClassName("command-name");
-		commandNameLoggerElement.setName("span");
-		commandNameLoggerElement.setText(element.attributeValue("function"));
-
-		lineContainerLoggerElement.addChildLoggerElement(
-			commandNameLoggerElement);
-
-		LoggerElement miscLoggerElement = new LoggerElement();
-
-		miscLoggerElement.setClassName("misc");
-		miscLoggerElement.setName("span");
-
-		lineContainerLoggerElement.addChildLoggerElement(miscLoggerElement);
+		lineContainerLoggerElement.setText(_getLineContainerText(element));
 
 		return lineContainerLoggerElement;
+	}
+
+	private static String _getLineContainerText(Element element)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getLineItemText("misc", "Running "));
+
+		String classCommandName = element.attributeValue("function");
+
+		String commandNameText = "<b>" + classCommandName + "</b>";
+
+		sb.append(_getLineItemText("command-name", commandNameText));
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		int functionLocatorCount = PoshiRunnerContext.getFunctionLocatorCount(
+			className);
+
+		for (int i = 0; i < functionLocatorCount; i++) {
+			String locatorKey = "locator" + (i + 1);
+
+			if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(locatorKey)) {
+				sb.append(_getLineItemText("misc", " with "));
+				sb.append(_getLineItemText("param-type", locatorKey));
+				sb.append(_getLineItemText("misc", "&nbsp;"));
+
+				String paramValueText =
+					PoshiRunnerVariablesUtil.getValueFromCommandMap(locatorKey);
+
+				paramValueText = "<b>" + paramValueText + "</b>";
+
+				sb.append(_getLineItemText("param-value", paramValueText));
+			}
+
+			String valueKey = "value" + (i + 1);
+
+			if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(valueKey)) {
+				sb.append(_getLineItemText("misc", " with "));
+				sb.append(_getLineItemText("param-type", valueKey));
+				sb.append(_getLineItemText("misc", "&nbsp;"));
+
+				String paramValueText =
+					PoshiRunnerVariablesUtil.getValueFromCommandMap(valueKey);
+
+				paramValueText = "<b>" + paramValueText + "</b>";
+
+				sb.append(_getLineItemText("param-value", paramValueText));
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private static String _getLineItemText(String className, String text) {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName(className);
+		loggerElement.setID(null);
+		loggerElement.setName("span");
+		loggerElement.setText(text);
+
+		return loggerElement.toString();
 	}
 
 	private static boolean _isCommand(Element element) {

@@ -507,10 +507,13 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
+		JournalArticle article = null;
 
-		if (article == null) {
+		if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			article = JournalArticleLocalServiceUtil.fetchJournalArticle(
+				classPK);
+		}
+		else {
 			article =
 				JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
 					classPK);

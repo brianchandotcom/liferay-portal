@@ -1030,27 +1030,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>149</portlet-name>
-		<display-name>Site Templates</display-name>
-		<portlet-class>com.liferay.portlet.layoutsetprototypes.LayoutSetPrototypePortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/layout_set_prototypes/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/layout_set_prototypes/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>150</portlet-name>
 		<display-name>Workflow Tasks</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
@@ -1724,27 +1703,6 @@
 		<init-param>
 			<name>view-action</name>
 			<value>/site_admin/view_teams</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>192</portlet-name>
-		<display-name>Site Template Settings</display-name>
-		<portlet-class>com.liferay.portlet.layoutsetprototypes.LayoutSetPrototypePortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/layout_set_prototypes/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/layout_set_prototypes/edit_layout_set_prototype.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

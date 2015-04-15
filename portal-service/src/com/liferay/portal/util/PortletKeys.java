@@ -85,8 +85,6 @@ public class PortletKeys {
 	public static final String JOURNAL =
 		"com_liferay_journal_web_portlet_JournalPortlet";
 
-	public static final String LAYOUT_SET_PROTOTYPE = "149";
-
 	public static final String LAYOUTS_ADMIN = "88";
 
 	public static final String LIFERAY_PORTAL = "LIFERAY_PORTAL";
@@ -176,8 +174,6 @@ public class PortletKeys {
 	public static final String SITE_SETTINGS = "165";
 
 	public static final String SITE_TEAMS_ADMIN = "191";
-
-	public static final String SITE_TEMPLATE_SETTINGS = "192";
 
 	public static final String SITES_ADMIN = "134";
 

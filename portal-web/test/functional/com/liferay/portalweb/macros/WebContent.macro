@@ -1386,7 +1386,7 @@
 		</execute>
 
 		<for list="${documentTypes}" param="documentType">
-			<var name="documentTypeUppercase" value="${documentType?uppercase()}" />
+			<var method="StringUtil#upperCase(${documentType})" name="documentTypeUppercase" />
 
 			<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherAsset#DOCUMENT_CONVERSION_${documentTypeUppercase}" value1="${documentTypeUppercase}" />
 			<execute function="AssertElementPresent" locator1="PGAssetpublisherAsset#DOCUMENT_CONVERSION_${documentTypeUppercase}_ICON" />
@@ -1607,7 +1607,7 @@
 		</execute>
 
 		<for list="${documentTypes}" param="documentType">
-			<var name="documentTypeUppercase" value="${documentType?uppercase()}" />
+			<var method="StringUtil#upperCase(${documentType})" name="documentTypeUppercase" />
 
 			<execute function="AssertElementNotPresent" locator1="PGAssetpublisherAsset#DOCUMENT_CONVERSION_${documentTypeUppercase}" />
 		</for>

@@ -135,6 +135,32 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		}
 	}
 
+	public void updateTeamUserGroups(ActionRequest actionRequest)
+		throws Exception {
+
+		long teamId = ParamUtil.getLong(actionRequest, "teamId");
+
+		long[] addUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
+		long[] removeUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
+
+		UserGroupServiceUtil.addTeamUserGroups(teamId, addUserGroupIds);
+		UserGroupServiceUtil.unsetTeamUserGroups(teamId, removeUserGroupIds);
+	}
+
+	public void updateTeamUsers(ActionRequest actionRequest) throws Exception {
+		long teamId = ParamUtil.getLong(actionRequest, "teamId");
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		UserServiceUtil.addTeamUsers(teamId, addUserIds);
+		UserServiceUtil.unsetTeamUsers(teamId, removeUserIds);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -162,34 +188,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		}
 
 		return false;
-	}
-
-	protected void updateTeamUserGroups(ActionRequest actionRequest)
-		throws Exception {
-
-		long teamId = ParamUtil.getLong(actionRequest, "teamId");
-
-		long[] addUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
-
-		UserGroupServiceUtil.addTeamUserGroups(teamId, addUserGroupIds);
-		UserGroupServiceUtil.unsetTeamUserGroups(teamId, removeUserGroupIds);
-	}
-
-	protected void updateTeamUsers(ActionRequest actionRequest)
-		throws Exception {
-
-		long teamId = ParamUtil.getLong(actionRequest, "teamId");
-
-		long[] addUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
-		long[] removeUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
-
-		UserServiceUtil.addTeamUsers(teamId, addUserIds);
-		UserServiceUtil.unsetTeamUsers(teamId, removeUserIds);
 	}
 
 }

@@ -901,7 +901,9 @@ public class GroupImpl extends GroupBaseImpl {
 			PermissionChecker permissionChecker, boolean privateSite)
 		throws PortalException {
 
-		if (!isControlPanel() && !isSite() && !isUser()) {
+		if (!isControlPanel() && !isUserPersonalPanel() && !isSite() &&
+			!isUser()) {
+
 			return false;
 		}
 

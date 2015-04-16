@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/layout/view/init.jsp" %>
+package com.liferay.productivity.center.constants;
 
-<aui:container cssClass="panel-manage-frontpage">
-	<aui:row>
-		<aui:col cssClass="panel-page-menu" width="<%= 25 %>">
-			<liferay-portlet:runtime portletName="<%= ProductivityCenterPortletKeys.PRODUCTIVITY_CENTER %>" />
-		</aui:col>
-		<aui:col width="<%= 75 %>">
-			<productivity-center-ui:panel-content portletId="<%= themeDisplay.getPpid() %>" servletContext="<%= application %>" />
-		</aui:col>
-	</aui:row>
-</aui:container>
+/**
+ * @author Adolfo Pérez
+ */
+public class ProductivityCenterPortletKeys {
+
+	public static final String PRODUCTIVITY_CENTER =
+		"com_liferay_productivity_center_portlet_ProductivityCenterPortlet";
+
+}

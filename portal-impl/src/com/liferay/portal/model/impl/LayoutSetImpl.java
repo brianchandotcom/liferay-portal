@@ -330,16 +330,18 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 	protected Theme getTheme(String device) {
 		boolean controlPanel = false;
+		boolean userPersonalPanel = false;
 
 		try {
 			Group group = getGroup();
 
 			controlPanel = group.isControlPanel();
+			userPersonalPanel = group.isUserPersonalPanel();
 		}
 		catch (Exception e) {
 		}
 
-		if (controlPanel) {
+		if (controlPanel || userPersonalPanel) {
 			String themeId = PrefsPropsUtil.getString(
 				getCompanyId(),
 				PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);

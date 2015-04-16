@@ -91,7 +91,8 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 			Group layoutGroup = layout.getGroup();
 
 			if (!layoutGroup.isStagingGroup() &&
-				!layoutGroup.isControlPanel()) {
+				!layoutGroup.isControlPanel() &&
+				!layoutGroup.isUserPersonalPanel()) {
 
 				searchContext.setIncludeStagingGroups(false);
 			}

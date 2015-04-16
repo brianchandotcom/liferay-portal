@@ -212,7 +212,7 @@ if (!portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 		boolean supportsConfigurationLAR = portlet.getConfigurationActionInstance() != null;
 		boolean supportsDataLAR = !(portlet.getPortletDataHandlerInstance() instanceof DefaultConfigurationPortletDataHandler);
 
-		if (supportsConfigurationLAR || supportsDataLAR || !group.isControlPanel()) {
+		if (supportsConfigurationLAR || supportsDataLAR || (!group.isControlPanel() && !group.isUserPersonalPanel())) {
 			showExportImportIcon = true;
 		}
 
@@ -713,7 +713,7 @@ if (themeDisplay.isWidget()) {
 	portletDisplay.setShowBackIcon(false);
 }
 
-if (group.isControlPanel()) {
+if (group.isControlPanel() || group.isUserPersonalPanel()) {
 	portletDisplay.setShowBackIcon(false);
 	portletDisplay.setShowConfigurationIcon(false);
 	portletDisplay.setShowMaxIcon(false);

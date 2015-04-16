@@ -25,5 +25,6 @@
 		<dependency name="org.freemarker" org="com.liferay" rev="2.3.17.LIFERAY-PATCHED-1" transitive="false" />
 		<dependency name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" transitive="false" />
 		<dependency conf="internal->default;provided" name="ant" org="org.apache.ant" rev="1.9.3" transitive="false" />
+		<dependency conf="internal->default;provided" name="maven-plugin-api" org="org.apache.maven" rev="3.0.4" transitive="false" />
 	</dependencies>
 </ivy-module>

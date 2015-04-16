@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.wiki.engine.creole.util.test.CreoleTestUtil;
 import com.liferay.wiki.parser.creole.visitor.impl.XhtmlTranslationVisitor;
-import com.liferay.wiki.service.provider.WikiServiceComponentProvider;
+import com.liferay.wiki.service.util.WikiServiceComponentProvider;
 
 import org.junit.After;
 import org.junit.Assert;

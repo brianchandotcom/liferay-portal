@@ -53,7 +53,7 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.web.provider.WikiWebComponentProvider;
+import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

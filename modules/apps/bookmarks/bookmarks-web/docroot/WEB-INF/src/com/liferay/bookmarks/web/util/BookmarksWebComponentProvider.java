@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.settings;
+package com.liferay.bookmarks.web.util;
 
 import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.SettingsFactory;

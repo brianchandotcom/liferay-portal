@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.service.provider;
+package com.liferay.wiki.web.util;
 
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
@@ -28,22 +28,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true
 )
-public class WikiServiceComponentProvider {
+public class WikiWebComponentProvider {
 
-	public static WikiServiceComponentProvider
-		getWikiServiceComponentProvider() {
-
-		return _wikiServiceComponentProvider;
-	}
-
-	@Activate
-	public void activate() {
-		_wikiServiceComponentProvider = this;
-	}
-
-	@Deactivate
-	public void deactivate() {
-		_wikiServiceComponentProvider = null;
+	public static WikiWebComponentProvider getWikiWebComponentProvider() {
+		return _wikiWebComponentProvider;
 	}
 
 	public SettingsFactory getSettingsFactory() {
@@ -54,16 +42,26 @@ public class WikiServiceComponentProvider {
 		return _wikiGroupServiceConfiguration;
 	}
 
-	@Reference
-	public void setWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+	@Activate
+	protected void activate() {
+		_wikiWebComponentProvider = this;
+	}
 
-		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	@Deactivate
+	protected void deactivate() {
+		_wikiWebComponentProvider = null;
 	}
 
 	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
+	}
+
+	@Reference
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
 	protected void unsetWikiGroupServiceConfiguration(
@@ -72,7 +70,7 @@ public class WikiServiceComponentProvider {
 		_wikiGroupServiceConfiguration = null;
 	}
 
-	private static WikiServiceComponentProvider _wikiServiceComponentProvider;
+	private static WikiWebComponentProvider _wikiWebComponentProvider;
 
 	private SettingsFactory _settingsFactory;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;

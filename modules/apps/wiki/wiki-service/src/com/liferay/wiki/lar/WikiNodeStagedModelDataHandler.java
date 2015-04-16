@@ -26,7 +26,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
-import com.liferay.wiki.service.provider.WikiServiceComponentProvider;
+import com.liferay.wiki.service.util.WikiServiceComponentProvider;
 
 import java.util.List;
 import java.util.Map;

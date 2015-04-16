@@ -41,8 +41,8 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
-import com.liferay.wiki.web.provider.WikiWebComponentProvider;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
+import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

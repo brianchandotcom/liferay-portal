@@ -35,7 +35,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.service.provider.WikiServiceComponentProvider;
+import com.liferay.wiki.service.util.WikiServiceComponentProvider;
 import com.liferay.wiki.settings.WikiGroupServiceSettings;
 import com.liferay.wiki.util.WikiUtil;
 

@@ -31,7 +31,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.web.provider.WikiWebComponentProvider;
+import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;

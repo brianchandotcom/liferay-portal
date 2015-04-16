@@ -41,7 +41,7 @@ import com.liferay.wiki.parser.creole.ast.table.TableHeaderNode;
 import com.liferay.wiki.parser.creole.ast.table.TableNode;
 import com.liferay.wiki.parser.creole.parser.Creole10Lexer;
 import com.liferay.wiki.parser.creole.parser.Creole10Parser;
-import com.liferay.wiki.service.provider.WikiServiceComponentProvider;
+import com.liferay.wiki.service.util.WikiServiceComponentProvider;
 
 import java.io.IOException;
 import java.io.InputStream;

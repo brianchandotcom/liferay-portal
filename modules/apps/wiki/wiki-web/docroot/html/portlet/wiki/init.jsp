@@ -58,8 +58,8 @@ page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSetti
 page import="com.liferay.wiki.web.display.context.logic.WikiVisualizationHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiRequestHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiURLHelper" %><%@
-page import="com.liferay.wiki.web.provider.WikiWebComponentProvider" %><%@
-page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %>
+page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %><%@
+page import="com.liferay.wiki.web.util.WikiWebComponentProvider" %>
 
 <%
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);

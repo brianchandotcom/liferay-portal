@@ -596,6 +596,10 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String upperCase(String s) {
+		return toUpperCase(s);
+	}
+
 	public static String upperCaseFirstLetter(String s) {
 		char[] chars = s.toCharArray();
 

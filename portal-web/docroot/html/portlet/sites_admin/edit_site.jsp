@@ -207,7 +207,6 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 
 	<liferay-ui:form-navigator
 		backURL="<%= backURL %>"
-		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		formModelBean="<%= group %>"
 		id="<%= FormNavigatorConstants.SITES_FORM %>"
@@ -303,7 +302,3 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 		toggleCompatibleSiteTemplates();
 	}
 </aui:script>
-
-<%!
-private static final String[] _CATEGORY_NAMES = {"basic-information", "search-engine-optimization", "advanced", "miscellaneous"};
-%>

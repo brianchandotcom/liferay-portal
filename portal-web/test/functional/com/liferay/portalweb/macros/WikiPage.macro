@@ -1280,7 +1280,6 @@
 		<execute function="AssertTextEquals" locator1="PGWiki#DETAILS_BUTTON" value1="Details" />
 		<execute function="AssertTextEquals" locator1="PGWiki#PRINT_BUTTON" value1="Print" />
 		<execute function="AssertElementPresent" locator1="PGWiki#COMMENTS_DROP_DOWN" />
-		<execute function="AssertElementPresent" locator1="PGWiki#COMMENTS_BE_THE_FIRST_LINK" />
 		<execute function="AssertElementPresent" locator1="PGWiki#COMMENTS_SUBSCRIBE_TO_COMMENTS_LINK" />
 		<execute function="AssertElementPresent" locator1="PGWiki#RATINGS_LABEL" />
 		<execute function="AssertElementPresent" locator1="PGWiki#RATINGS_AVERAGE" />

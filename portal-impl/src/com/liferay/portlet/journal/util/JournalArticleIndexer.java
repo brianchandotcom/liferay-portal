@@ -511,9 +511,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 			JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
 
 		if (article == null) {
-			article =
-				JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
-					classPK);
+			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				classPK);
 		}
 
 		if (article != null) {

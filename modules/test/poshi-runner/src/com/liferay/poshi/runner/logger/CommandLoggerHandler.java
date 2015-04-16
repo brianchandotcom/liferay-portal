@@ -34,6 +34,16 @@ public final class CommandLoggerHandler {
 		_commandElement = null;
 	}
 
+	public static void logClassCommandName(String classCommandName) {
+		LoggerElement dividerLineLoggerElement = new LoggerElement();
+
+		dividerLineLoggerElement.setClassName("divider-line");
+		dividerLineLoggerElement.setText(classCommandName);
+
+		_commandLogLoggerElement.addChildLoggerElement(
+			dividerLineLoggerElement);
+	}
+
 	public static void passCommand(Element element) {
 		if (!_isCurrentCommand(element)) {
 			return;

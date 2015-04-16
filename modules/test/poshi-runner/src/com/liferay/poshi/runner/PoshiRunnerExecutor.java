@@ -577,11 +577,34 @@ public class PoshiRunnerExecutor {
 				varValue = element.getText();
 			}
 		}
+		else {
+			Matcher matcher = _variableMethodPattern.matcher(varValue);
+
+			if (matcher.find()) {
+				String method = matcher.group(2);
+				String variable = matcher.group(1);
+
+				if (method.startsWith("length")) {
+					if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(
+							variable)) {
+
+						variable =
+							PoshiRunnerVariablesUtil.getValueFromCommandMap(
+								variable);
+					}
+					else {
+						throw new Exception("No such variable " + variable);
+					}
+
+					varValue = String.valueOf(variable.length());
+				}
+			}
+		}
 
 		String replacedVarValue = PoshiRunnerVariablesUtil.replaceCommandVars(
 			varValue);
 
-		Matcher matcher = _pattern.matcher(replacedVarValue);
+		Matcher matcher = _variablePattern.matcher(replacedVarValue);
 
 		if (matcher.matches() && replacedVarValue.equals(varValue)) {
 			return;
@@ -623,7 +646,10 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
-	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 	private static Object _returnObject;
+	private static final Pattern _variableMethodPattern = Pattern.compile(
+		"\\$\\{([\\S]*)\\?([\\S]*)\\}");
+	private static final Pattern _variablePattern = Pattern.compile(
+		"\\$\\{([^}]*)\\}");
 
 }

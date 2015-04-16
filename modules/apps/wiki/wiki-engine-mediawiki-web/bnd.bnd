@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Wiki Engine MediaWiki Web
+Bundle-SymbolicName: com.liferay.wiki.engine.mediawiki.web
+Bundle-Version: 1.0.0
+Export-Package:
+Import-Package:\
+	!net.sf.ehcache.*,\
+	!org.apache.commons.dbcp.*,\
+	!org.apache.commons.pool.impl.*,\
+	!org.incava.util.diff.*,\
+	*
+Include-Resource:\
+	classes,\
+	../wiki-engine-input-editor-common/classes,\
+	@../../../../lib/portal/jamwiki-core.jar
+Web-ContextPath: /wiki-engine-mediawiki

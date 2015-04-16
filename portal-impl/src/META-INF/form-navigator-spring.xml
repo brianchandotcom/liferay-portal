@@ -20,4 +20,7 @@
 	<bean id="com.liferay.portal.servlet.taglib.ui.SitesBasicInformationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.SitesBasicInformationFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.SitesMiscellaneousFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.SitesMiscellaneousFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.SitesSEOFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.SitesSEOFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.UserIdentificationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.UserIdentificationFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.UserMiscellaneousFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.UserMiscellaneousFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.UserUserInformationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.UserUserInformationFormNavigatorCategory" />
 </beans>

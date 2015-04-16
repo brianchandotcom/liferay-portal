@@ -53,7 +53,7 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 			"/com/liferay/poshi/runner/dependencies/Test.testcase");
 
 		Assert.assertEquals(
-			"getClassTypeFromFilePath is failing", "testcase", classType);
+			"getClassTypeFromFilePath is failing", "test-case", classType);
 	}
 
 	@Test

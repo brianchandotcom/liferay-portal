@@ -515,6 +515,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_VIEW_MONTH_DATE</td>
+	<td>//div[@class='scheduler-base-view-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_MONTH_WEEK_NUMBER</td>
+	<td>xpath=(//div[@class='scheduler-view-table-row'])[${key_weekNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

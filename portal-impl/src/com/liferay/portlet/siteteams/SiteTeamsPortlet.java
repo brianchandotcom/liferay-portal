@@ -15,13 +15,18 @@
 package com.liferay.portlet.siteteams;
 
 import com.liferay.portal.DuplicateTeamException;
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.TeamNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.TeamServiceUtil;
+import com.liferay.portal.service.UserGroupServiceUtil;
+import com.liferay.portal.service.UserServiceUtil;
 
 import java.io.IOException;
 
@@ -39,76 +44,10 @@ public class SiteTeamsPortlet extends MVCPortlet {
 	public void deleteTeam(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
 		TeamServiceUtil.deleteTeam(teamId);
-	}
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals("team_user_groups")) {
-				updateTeamUserGroups(actionRequest);
-			}
-			else if (cmd.equals("team_users")) {
-				updateTeamUsers(actionRequest);
-			}
-
-			if (Validator.isNotNull(cmd)) {
-				String redirect = ParamUtil.getString(
-					actionRequest, "assignmentsRedirect");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchTeamException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.sites_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getTeam(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchGroupException ||
-				e instanceof NoSuchTeamException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.sites_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest, "portlet.sites_admin.edit_team_assignments"));
 	}
 
 	public void editTeam(
@@ -135,7 +74,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		}
 	}
 
-	public void updateTeamUserGroups(ActionRequest actionRequest)
+	public void editTeamUserGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
@@ -147,9 +87,17 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		UserGroupServiceUtil.addTeamUserGroups(teamId, addUserGroupIds);
 		UserGroupServiceUtil.unsetTeamUserGroups(teamId, removeUserGroupIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	public void updateTeamUsers(ActionRequest actionRequest) throws Exception {
+	public void editTeamUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
 		long[] addUserIds = StringUtil.split(
@@ -159,6 +107,11 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		UserServiceUtil.addTeamUsers(teamId, addUserIds);
 		UserServiceUtil.unsetTeamUsers(teamId, removeUserIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	@Override
@@ -179,6 +132,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof DuplicateTeamException ||
+			cause instanceof NoSuchGroupException ||
 			cause instanceof NoSuchTeamException ||
 			cause instanceof PrincipalException ||
 			cause instanceof TeamNameException ||

@@ -98,14 +98,13 @@ public final class XMLLoggerHandler {
 		closingLineContainerLoggerElement.setClassName("line-container");
 		closingLineContainerLoggerElement.setName("div");
 
-		closingLineContainerLoggerElement.addChildLoggerElement(
-			_getLineLoggerElement("misc", "&lt;/"));
+		StringBuilder sb = new StringBuilder();
 
-		closingLineContainerLoggerElement.addChildLoggerElement(
-			_getLineLoggerElement("action-type", element.getName()));
+		sb.append(_getLineItemText("misc", "&lt;/"));
+		sb.append(_getLineItemText("action-type", element.getName()));
+		sb.append(_getLineItemText("misc", "&gt;"));
 
-		closingLineContainerLoggerElement.addChildLoggerElement(
-			_getLineLoggerElement("misc", "&gt;"));
+		closingLineContainerLoggerElement.setText(sb.toString());
 
 		return closingLineContainerLoggerElement;
 	}
@@ -118,11 +117,10 @@ public final class XMLLoggerHandler {
 		lineContainerLoggerElement.setClassName("line-container");
 		lineContainerLoggerElement.setName("div");
 
-		lineContainerLoggerElement.addChildLoggerElement(
-			_getLineLoggerElement("misc", "&lt;"));
+		StringBuilder sb = new StringBuilder();
 
-		lineContainerLoggerElement.addChildLoggerElement(
-			_getLineLoggerElement("action-type", element.getName()));
+		sb.append(_getLineItemText("misc", "&lt;"));
+		sb.append(_getLineItemText("action-type", element.getName()));
 
 		List<Attribute> attributes = element.attributes();
 
@@ -133,46 +131,36 @@ public final class XMLLoggerHandler {
 				continue;
 			}
 
-			lineContainerLoggerElement.addChildLoggerElement(
-				_getLineLoggerElement("tag-type", attributeName));
-
-			lineContainerLoggerElement.addChildLoggerElement(
-				_getLineLoggerElement("misc", "="));
-
-			lineContainerLoggerElement.addChildLoggerElement(
-				_getLineLoggerElement("misc quote", "\""));
-
-			lineContainerLoggerElement.addChildLoggerElement(
-				_getLineLoggerElement("name", attribute.getValue()));
-
-			lineContainerLoggerElement.addChildLoggerElement(
-				_getLineLoggerElement("misc quote", "\""));
+			sb.append(_getLineItemText("tag-type", attributeName));
+			sb.append(_getLineItemText("misc", "="));
+			sb.append(_getLineItemText("misc quote", "\""));
+			sb.append(_getLineItemText("name", attribute.getValue()));
+			sb.append(_getLineItemText("misc quote", "\""));
 		}
 
 		List<Element> elements = element.elements();
 
 		if (elements.isEmpty()) {
-			lineContainerLoggerElement.addChildLoggerElement(
-				_getLineLoggerElement("misc", "/&gt;"));
+			sb.append(_getLineItemText("misc", "/&gt;"));
 		}
 		else {
-			lineContainerLoggerElement.addChildLoggerElement(
-				_getLineLoggerElement("misc", "&gt;"));
+			sb.append(_getLineItemText("misc", "&gt;"));
 		}
+
+		lineContainerLoggerElement.setText(sb.toString());
 
 		return lineContainerLoggerElement;
 	}
 
-	private static LoggerElement _getLineLoggerElement(
-		String className, String text) {
+	private static String _getLineItemText(String className, String text) {
+		LoggerElement loggerElement = new LoggerElement();
 
-		LoggerElement lineLoggerElement = new LoggerElement();
+		loggerElement.setClassName(className);
+		loggerElement.setID(null);
+		loggerElement.setName("span");
+		loggerElement.setText(text);
 
-		lineLoggerElement.setClassName(className);
-		lineLoggerElement.setName("span");
-		lineLoggerElement.setText(text);
-
-		return lineLoggerElement;
+		return loggerElement.toString();
 	}
 
 }

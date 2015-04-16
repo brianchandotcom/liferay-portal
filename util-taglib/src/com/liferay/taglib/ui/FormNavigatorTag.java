@@ -112,7 +112,13 @@ public class FormNavigatorTag extends IncludeTag {
 			return _categoryNames;
 		}
 
-		return FormNavigatorCategoryUtil.getKeys(_id);
+		String[] categoryKeys = FormNavigatorCategoryUtil.getKeys(_id);
+
+		if (ArrayUtil.isEmpty(categoryKeys)) {
+			return new String[] {""};
+		}
+
+		return categoryKeys;
 	}
 
 	protected String[] getCategoryLabels(Locale locale) {
@@ -120,7 +126,14 @@ public class FormNavigatorTag extends IncludeTag {
 			return _categoryNames;
 		}
 
-		return FormNavigatorCategoryUtil.getLabels(_id, locale);
+		String[] categoryLabels = FormNavigatorCategoryUtil.getLabels(
+			_id, locale);
+
+		if (ArrayUtil.isEmpty(categoryLabels)) {
+			categoryLabels = new String[] {""};
+		}
+
+		return categoryLabels;
 	}
 
 	protected String[][] getCategorySectionKeys() {
@@ -133,7 +146,7 @@ public class FormNavigatorTag extends IncludeTag {
 
 		String[] categoryKeys = getCategoryKeys();
 
-		String[][] categorySectionKeys = new String[categoryKeys.length][];
+		String[][] categorySectionKeys = new String[0][];
 
 		for (int i = 0; i < categoryKeys.length; i++) {
 			String categoryKey = categoryKeys[i];
@@ -157,7 +170,7 @@ public class FormNavigatorTag extends IncludeTag {
 
 		String[] categoryKeys = getCategoryKeys();
 
-		String[][] categorySectionLabels = new String[categoryKeys.length][];
+		String[][] categorySectionLabels = new String[0][];
 
 		for (int i = 0; i < categoryKeys.length; i++) {
 			String categoryKey = categoryKeys[i];

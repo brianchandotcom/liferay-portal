@@ -48,7 +48,7 @@ int messagesCount = messages.size();
 <section>
 	<div class="hide lfr-message-response" id="<portlet:namespace />discussionStatusMessages"></div>
 
-	<c:if test="<%= messageDisplay.isDiscussionMaxComments() %>">
+	<c:if test="<%= commentSectionDisplayContext.isDiscussionMaxComments() %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message key="maximum-number-of-comments-has-been-reached" />
 		</div>
@@ -80,7 +80,7 @@ int messagesCount = messages.size();
 
 				<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
-						<c:if test="<%= !messageDisplay.isDiscussionMaxComments() %>">
+						<c:if test="<%= !commentSectionDisplayContext.isDiscussionMaxComments() %>">
 							<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
 								<aui:input name="messageId0" type="hidden" value="<%= message.getMessageId() %>" />
 								<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
@@ -116,7 +116,7 @@ int messagesCount = messages.size();
 							</c:choose>
 						</c:if>
 
-						<c:if test="<%= !messageDisplay.isDiscussionMaxComments() %>">
+						<c:if test="<%= !commentSectionDisplayContext.isDiscussionMaxComments() %>">
 							<aui:input name="emailAddress" type="hidden" />
 
 							<c:choose>

@@ -41,6 +41,16 @@ public class MBCommentSectionDisplayContext
 	}
 
 	@Override
+	public boolean isDiscussionMaxComments() throws PortalException {
+		if (_discussionMaxComments == null) {
+			_discussionMaxComments =
+				getMBMessageDisplay().isDiscussionMaxComments();
+		}
+
+		return _discussionMaxComments;
+	}
+
+	@Override
 	public boolean isDiscussionVisible() throws PortalException {
 		return (getMessagesCount() > 1) || hasViewPermission();
 	}
@@ -83,6 +93,7 @@ public class MBCommentSectionDisplayContext
 			_discussionRequestHelper.getUserId(), ActionKeys.VIEW);
 	}
 
+	private Boolean _discussionMaxComments;
 	private MBMessageDisplay _discussionMessageDisplay;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private Integer _messagesCount;

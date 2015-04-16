@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.logger.CommandLoggerHandler;
 import com.liferay.poshi.runner.logger.LoggerUtil;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.PropsValues;
@@ -135,15 +136,22 @@ public class PoshiRunner {
 	}
 
 	private void _runCommand() throws Exception {
+		CommandLoggerHandler.logClassCommandName(_testClassCommandName);
+
 		_runClassCommandName(_testClassCommandName);
 	}
 
 	private void _runSetUp() throws Exception {
+		CommandLoggerHandler.logClassCommandName(_testClassName + "#set-up");
+
 		_runClassCommandName(_testClassName + "#set-up");
 	}
 
 	private void _runTearDown() throws Exception {
 		try {
+			CommandLoggerHandler.logClassCommandName(
+				_testClassName + "#tear-down");
+
 			_runClassCommandName(_testClassName + "#tear-down");
 		}
 		catch (Exception e) {

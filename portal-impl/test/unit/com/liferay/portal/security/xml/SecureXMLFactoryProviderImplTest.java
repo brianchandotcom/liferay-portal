@@ -56,9 +56,10 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			"xml-bomb-billion-laughs.xml");
 		_xmlBombQuadraticBlowupXML = readDependency(
 			"xml-bomb-quadratic-blowup.xml");
-		_xxeGeneralEntitiesXML = readDependency("xxe-general-entities.xml");
+		_xxeGeneralEntitiesXML1 = readDependency("xxe-general-entities-1.xml");
 		_xxeGeneralEntitiesXML2 = readDependency("xxe-general-entities-2.xml");
-		_xxeParameterEntitiesXML = readDependency("xxe-parameter-entities.xml");
+		_xxeParameterEntitiesXML1 = readDependency(
+			"xxe-parameter-entities-1.xml");
 		_xxeParameterEntitiesXML2 = readDependency(
 			"xxe-parameter-entities-2.xml");
 	}
@@ -96,7 +97,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			SAXParseException.class,
 			"Vulnerable to Quadratic Blowup XML attack!");
 		runXMLSecurityTest(
-			documentBuilderTestCase, _xxeGeneralEntitiesXML,
+			documentBuilderTestCase, _xxeGeneralEntitiesXML1,
 			ConnectException.class,
 			"General Entities XXE attack using SYSTEM entity doesn't work!",
 			SAXParseException.class,
@@ -108,7 +109,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			SAXParseException.class,
 			"Vulnerable to General Entities XXE attack using PUBLIC entity!");
 		runXMLSecurityTest(
-			documentBuilderTestCase, _xxeParameterEntitiesXML,
+			documentBuilderTestCase, _xxeParameterEntitiesXML1,
 			ConnectException.class,
 			"Parameter Entities XXE using SYSTEM entity doesn't work!",
 			SAXParseException.class,
@@ -147,7 +148,8 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			OutOfMemoryError.class, "Quadratic Blowup XML attack doesn't work!",
 			null, "Vulnerable to Quadratic Blowup XML attack!");
 		runXMLSecurityTest(
-			xmlInputFactoryTest, _xxeGeneralEntitiesXML, ConnectException.class,
+			xmlInputFactoryTest, _xxeGeneralEntitiesXML1,
+			ConnectException.class,
 			"General Entities XXE attack using SYSTEM entity doesn't work!",
 			null,
 			"Vulnerable to General Entities XXE attack using SYSTEM entity!");
@@ -158,7 +160,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			null,
 			"Vulnerable to  General Entities XXE attack using PUBLIC entity!");
 		runXMLSecurityTest(
-			xmlInputFactoryTest, _xxeParameterEntitiesXML,
+			xmlInputFactoryTest, _xxeParameterEntitiesXML1,
 			ConnectException.class,
 			"Parameter Entities XXE using SYSTEM entity doesn't work!", null,
 			"Vulnerable to Parameter Entities XXE using SYSTEM entity!");
@@ -217,7 +219,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			SAXParseException.class,
 			"Vulnerable to Quadratic Blowup XML attack!");
 		runXMLSecurityTest(
-			xmlReaderTest, _xxeGeneralEntitiesXML, ConnectException.class,
+			xmlReaderTest, _xxeGeneralEntitiesXML1, ConnectException.class,
 			"General Entities XXE attack using SYSTEM entity doesn't work!",
 			SAXParseException.class,
 			"Vulnerable to General Entities XXE attack using SYSTEM entity!");
@@ -227,7 +229,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			SAXParseException.class,
 			"Vulnerable to General Entities XXE attack using PUBLIC entity!");
 		runXMLSecurityTest(
-			xmlReaderTest, _xxeParameterEntitiesXML, ConnectException.class,
+			xmlReaderTest, _xxeParameterEntitiesXML1, ConnectException.class,
 			"Parameter Entities XXE using SYSTEM entity doesn't work!",
 			SAXParseException.class,
 			"Vulnerable to Parameter Entities XXE using SYSTEM entity!");
@@ -300,9 +302,9 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 
 	private static String _xmlBombBillionLaughsXML;
 	private static String _xmlBombQuadraticBlowupXML;
-	private static String _xxeGeneralEntitiesXML;
+	private static String _xxeGeneralEntitiesXML1;
 	private static String _xxeGeneralEntitiesXML2;
-	private static String _xxeParameterEntitiesXML;
+	private static String _xxeParameterEntitiesXML1;
 	private static String _xxeParameterEntitiesXML2;
 
 	private SecureXMLFactoryProviderImpl _secureXMLFactoryProvider;

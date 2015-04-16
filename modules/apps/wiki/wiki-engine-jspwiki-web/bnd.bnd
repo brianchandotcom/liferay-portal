@@ -1,0 +1,26 @@
+Bundle-Name: Liferay Wiki Engine JSPWiki Web
+Bundle-SymbolicName: com.liferay.wiki.engine.jspwiki.web
+Bundle-Version: 1.0.0
+Export-Package:
+Import-Package:\
+	!junit.framework.*,\
+	!net.sf.akismet.*,\
+	!net.sourceforge.stripes.*,\
+	!org.apache.commons.jrcs.*,\
+	!org.apache.lucene.*,\
+	!org.apache.xerces.framework,\
+	!org.apache.xmlrpc.*,\
+	!org.freshcookies.test.*,\
+	!org.intabulas.sandler.*,\
+	!org.jgroups.*,\
+	*
+Include-Resource:\
+	classes,\
+	../wiki-engine-input-editor-common/classes,\
+	@../../../../lib/portal/ecs.jar,\
+	@../../../../lib/portal/freshcookies-security.jar,\
+	@../../../../lib/portal/jsonrpc.jar,\
+	@../../../../lib/portal/jspwiki.jar,\
+	@../../../../lib/portal/oro.jar,\
+	@../../../../lib/portal/oscache.jar
+Web-ContextPath: /wiki-engine-jspwiki-web

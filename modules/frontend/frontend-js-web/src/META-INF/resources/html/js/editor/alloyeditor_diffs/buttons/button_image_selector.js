@@ -1,3 +1,5 @@
+/* global React, AlloyEditor */
+
 (function() {
 	'use strict';
 

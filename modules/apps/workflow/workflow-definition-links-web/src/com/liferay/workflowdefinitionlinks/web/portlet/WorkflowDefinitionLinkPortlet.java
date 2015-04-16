@@ -14,11 +14,14 @@
 
 package com.liferay.workflowdefinitionlinks.web.portlet;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
 
 /**
@@ -48,4 +51,8 @@ import com.liferay.portal.util.PortletKeys;
 	service = { WorkflowDefinitionLinkPortlet.class, Portlet.class })
 public class WorkflowDefinitionLinkPortlet extends MVCPortlet {
 
+	public void testURL(ActionRequest req, ActionResponse resp) throws Exception {
+		
+		resp.sendRedirect(ParamUtil.getString(req, "redirect"));
+	}
 }

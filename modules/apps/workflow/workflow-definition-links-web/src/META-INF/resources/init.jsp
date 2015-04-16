@@ -47,6 +47,7 @@
 <%@ page import="javax.portlet.PortletMode" %>
 <%@ page import="javax.portlet.WindowState" %>
 <%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.ActionRequest" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Iterator" %>

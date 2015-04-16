@@ -34,7 +34,7 @@
 
 		<c:choose>
 			<c:when test='<%= tabs1.equals("default-configuration") %>'>
-				<liferay-util:include page="/html/portlet/workflow_definition_links/view.jsp" />
+				<liferay-util:include page="/view.jsp" portletId="<%= PortletKeys.WORKFLOW_CONFIGURATION %>" />
 			</c:when>
 			<c:when test='<%= tabs1.equals("submissions") %>'>
 				<liferay-util:include page="/html/portlet/workflow_instances/view.jsp" />

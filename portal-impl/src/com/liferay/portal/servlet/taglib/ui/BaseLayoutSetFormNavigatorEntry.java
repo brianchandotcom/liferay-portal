@@ -12,33 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
+package com.liferay.portal.servlet.taglib.ui;
 
-import com.liferay.portal.model.User;
-
-import java.io.IOException;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.LayoutSet;
 
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Sergio González
  */
-public interface FormNavigatorEntry<T> {
+public abstract class BaseLayoutSetFormNavigatorEntry
+	extends BaseFormNavigatorEntry<LayoutSet> {
 
-	public String getCategoryKey();
+	@Override
+	public String getCategoryKey() {
+		return StringPool.BLANK;
+	}
 
-	public String getFormNavigatorId();
+	@Override
+	public String getFormNavigatorId() {
+		return FormNavigatorConstants.LAYOUT_SET_FORM;
+	}
 
-	public String getKey();
+	@Override
+	public abstract String getKey();
 
-	public String getLabel(Locale locale);
-
-	public boolean isVisible(User user, T formModelBean);
-
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
+	@Override
+	public abstract String getLabel(Locale locale);
 
 }

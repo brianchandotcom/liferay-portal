@@ -14,31 +14,21 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import com.liferay.portal.model.User;
-
-import java.io.IOException;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * @author Sergio González
  */
-public interface FormNavigatorEntry<T> {
+public class FormNavigatorConstants {
 
-	public String getCategoryKey();
+	public static final String COMPANY_SETTINGS_FORM = "company.settings.form";
 
-	public String getFormNavigatorId();
+	public static final String LAYOUT_FORM = "layout.form";
 
-	public String getKey();
+	public static final String LAYOUT_SET_FORM = "layout.set.form";
 
-	public String getLabel(Locale locale);
+	public static final String ORGANIZATIONS_FORM = "organizations.form";
 
-	public boolean isVisible(User user, T formModelBean);
+	public static final String SITES_FORM = "sites.form";
 
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
+	public static final String USERS_FORM = "users.form";
 
 }

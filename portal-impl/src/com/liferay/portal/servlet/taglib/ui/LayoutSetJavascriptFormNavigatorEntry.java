@@ -12,33 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
+package com.liferay.portal.servlet.taglib.ui;
 
-import com.liferay.portal.model.User;
-
-import java.io.IOException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Sergio González
  */
-public interface FormNavigatorEntry<T> {
+@OSGiBeanProperties(property = {"service.ranking:Integer=30"})
+public class LayoutSetJavascriptFormNavigatorEntry
+	extends BaseLayoutSetFormNavigatorEntry {
 
-	public String getCategoryKey();
+	@Override
+	public String getKey() {
+		return "javascript";
+	}
 
-	public String getFormNavigatorId();
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "javascript");
+	}
 
-	public String getKey();
-
-	public String getLabel(Locale locale);
-
-	public boolean isVisible(User user, T formModelBean);
-
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
+	@Override
+	protected String getJspPath() {
+		return "/html/portlet/layouts_admin/layout_set/javascript.jsp";
+	}
 
 }

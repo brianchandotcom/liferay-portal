@@ -279,12 +279,11 @@ if (selUser != null) {
 
 	<liferay-ui:form-navigator
 		backURL="<%= backURL %>"
-		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		formModelBean="<%= selUser %>"
 		htmlBottom="<%= htmlBottom %>"
 		htmlTop="<%= htmlTop %>"
-		id="users.form"
+		id="<%= FormNavigatorConstants.USERS_FORM %>"
 		jspPath="/html/portlet/users_admin/user/"
 	/>
 </aui:form>
@@ -306,7 +305,3 @@ if (selUser != null) {
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>
-
-<%!
-private static final String[] _CATEGORY_NAMES = {"user-information", "identification", "miscellaneous"};
-%>

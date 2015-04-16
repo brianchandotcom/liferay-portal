@@ -65,11 +65,10 @@ request.setAttribute("websites.classPK", company.getAccountId());
 	</liferay-util:buffer>
 
 	<liferay-ui:form-navigator
-		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		formModelBean="<%= company %>"
 		htmlTop="<%= htmlTop %>"
-		id="company.settings.form"
+		id="<%= FormNavigatorConstants.COMPANY_SETTINGS_FORM %>"
 		jspPath="/html/portlet/portal_settings/"
 		showButtons="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>"
 	/>
@@ -105,7 +104,3 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
 	}
 </aui:script>
-
-<%!
-private static final String[] _CATEGORY_NAMES = {"configuration", "identification", "miscellaneous", "social"};
-%>

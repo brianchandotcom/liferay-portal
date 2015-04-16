@@ -133,11 +133,10 @@ else {
 
 	<liferay-ui:form-navigator
 		backURL="<%= backURL %>"
-		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		formModelBean="<%= organization %>"
 		htmlTop="<%= htmlTop %>"
-		id="organizations.form"
+		id="<%= FormNavigatorConstants.ORGANIZATIONS_FORM %>"
 		jspPath="/html/portlet/users_admin/organization/"
 	/>
 </aui:form>
@@ -147,7 +146,3 @@ else {
 		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
 	}
 </aui:script>
-
-<%!
-private static final String[] _CATEGORY_NAMES = {"organization-information", "identification", "miscellaneous"};
-%>

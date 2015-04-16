@@ -48,18 +48,6 @@ else {
 	}
 }
 
-String[] mainSections = PropsValues.LAYOUT_SET_FORM_UPDATE;
-
-if (!company.isSiteLogo()) {
-	mainSections = ArrayUtil.remove(mainSections, "logo");
-}
-
-if (group.isGuest()) {
-	mainSections = ArrayUtil.remove(mainSections, "advanced");
-}
-
-String[][] categorySections = {mainSections};
-
 boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 boolean hasAddPageLayoutsPermission = GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_LAYOUT);
@@ -133,11 +121,8 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<liferay-ui:form-navigator
-		categoryNames="<%= _CATEGORY_NAMES %>"
-		categorySections="<%= categorySections %>"
 		formModelBean="<%= selLayoutSet %>"
-		id="layout.set.form"
-		jspPath="/html/portlet/layouts_admin/layout_set/"
+		id="<%= FormNavigatorConstants.LAYOUT_SET_FORM %>"
 		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
 	/>
 </aui:form>
@@ -153,7 +138,3 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 		submitForm(form);
 	}
 </aui:script>
-
-<%!
-private static final String[] _CATEGORY_NAMES = {""};
-%>

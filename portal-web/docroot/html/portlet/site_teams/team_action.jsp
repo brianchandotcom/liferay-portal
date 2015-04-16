@@ -25,7 +25,7 @@ Team team = (Team)row.getObject();
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_team" />
+			<portlet:param name="mvcPath" value="/html/portlet/site_teams/edit_team.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
 		</portlet:renderURL>
@@ -71,7 +71,7 @@ Team team = (Team)row.getObject();
 
 	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignMembersURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_team_assignments" />
+			<portlet:param name="mvcPath" value="/html/portlet/site_teams/edit_team_assignments.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
 		</portlet:renderURL>
@@ -84,15 +84,13 @@ Team team = (Team)row.getObject();
 	</c:if>
 
 	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_team" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deleteTeam" var="deleteTeamURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
+			url="<%= deleteTeamURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

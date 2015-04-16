@@ -41,12 +41,9 @@ if (group.isOrganization()) {
 	title='<%= ((team == null) ? LanguageUtil.get(request, "new-team") : HtmlUtil.escape(team.getName())) %>'
 />
 
-<portlet:actionURL var="editTeamURL">
-	<portlet:param name="struts_action" value="/sites_admin/edit_team" />
-</portlet:actionURL>
+<portlet:actionURL name="editTeam" var="editTeamURL" />
 
-<aui:form action="<%= editTeamURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveTeam();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<aui:form action="<%= editTeamURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="teamId" type="hidden" value="<%= teamId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -72,14 +69,6 @@ if (group.isOrganization()) {
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveTeam() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (team == null) ? Constants.ADD : Constants.UPDATE %>';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>
 
 <%
 if (group.isOrganization()) {

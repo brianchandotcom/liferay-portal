@@ -36,7 +36,7 @@ if (group.isOrganization()) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/sites_admin/edit_team_assignments");
+portletURL.setParameter("mvcPath", "/html/portlet/site_teams/edit_team_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
@@ -70,12 +70,9 @@ request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
 	url="<%= portletURL.toString() %>"
 />
 
-<portlet:actionURL var="editAssignmentsURL">
-	<portlet:param name="struts_action" value="/sites_admin/edit_team_assignments" />
-</portlet:actionURL>
+<portlet:actionURL name="editTeamAssignment" var="editAssignmentsURL" />
 
 <aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -98,7 +95,6 @@ request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
 
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= Constants.CMD %>').val('team_user_groups');
 		form.fm('assignmentsRedirect').val(assignmentsRedirect);
 		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
@@ -111,7 +107,6 @@ request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
 
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= Constants.CMD %>').val('team_users');
 		form.fm('assignmentsRedirect').val(assignmentsRedirect);
 		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));

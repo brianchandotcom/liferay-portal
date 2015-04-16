@@ -161,7 +161,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.action.package.prefix=com.liferay.journal.web.portlet.action",
 		"javax.portlet.init-param.config-template=/configuration.jsp",
-		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.single-page-application-cacheable=false",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",

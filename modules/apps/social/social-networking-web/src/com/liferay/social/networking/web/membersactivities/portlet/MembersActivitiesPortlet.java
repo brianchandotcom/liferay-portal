@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.info.short-title=Members' Activities",
 		"javax.portlet.info.title=Members' Activities",
 		"javax.portlet.init-param.config-template=/members_activities/configuration.jsp",
-		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.view-template=/members_activities/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",

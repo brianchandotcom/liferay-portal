@@ -52,7 +52,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.short-title=Meetups",
 		"javax.portlet.info.title=Meetups",
 		"javax.portlet.init-param.clear-request-parameters=true",
-		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.view-template=/meetups/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",

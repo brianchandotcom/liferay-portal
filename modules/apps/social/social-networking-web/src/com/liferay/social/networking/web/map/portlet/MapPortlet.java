@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Map", "javax.portlet.expiration-cache=0",
 		"javax.portlet.info.keywords=Map", "javax.portlet.info.short-title=Map",
 		"javax.portlet.info.title=Map",
-		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.view-template=/map/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",

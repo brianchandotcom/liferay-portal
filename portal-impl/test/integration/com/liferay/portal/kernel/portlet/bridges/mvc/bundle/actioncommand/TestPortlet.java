@@ -25,7 +25,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + TestPortlet.PORTLET_NAME},
+	property = {
+		"javax.portlet.init-param.copy-request-parameters=false",
+		"javax.portlet.name=" + TestPortlet.PORTLET_NAME
+	},
 	service = Portlet.class
 )
 public class TestPortlet extends MVCPortlet {

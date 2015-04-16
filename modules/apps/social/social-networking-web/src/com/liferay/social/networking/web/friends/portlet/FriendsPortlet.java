@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.info.keywords=Friends",
 		"javax.portlet.info.short-title=Friends",
 		"javax.portlet.info.title=Friends",
-		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.view-template=/friends/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",

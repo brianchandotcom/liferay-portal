@@ -55,7 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Currency Converter",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.edit-guest-template=/edit.jsp",
 		"javax.portlet.init-param.edit-template=/edit.jsp",
 		"javax.portlet.init-param.template-path=/",

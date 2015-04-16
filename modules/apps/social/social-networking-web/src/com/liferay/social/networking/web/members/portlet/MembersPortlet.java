@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.info.keywords=Members",
 		"javax.portlet.info.short-title=Members",
 		"javax.portlet.info.title=Members",
-		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.view-template=/members/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref.role-name=administrator",

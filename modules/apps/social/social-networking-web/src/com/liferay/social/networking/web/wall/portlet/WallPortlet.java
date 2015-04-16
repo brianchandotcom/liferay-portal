@@ -50,7 +50,6 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 		"javax.portlet.display-name=Wall", "javax.portlet.expiration-cache=0",
 		"javax.portlet.info.short-title=Wall", "javax.portlet.info.title=Wall",
 		"javax.portlet.init-param.clear-request-parameters=true",
-		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.view-template=/wall/view.jsp",
 		"javax.portlet.keywords=Wall",
 		"javax.portlet.resource-bundle=content.Language",

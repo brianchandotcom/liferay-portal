@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.siteteams;
+package com.liferay.site.teams.web.portlet;
 
 import com.liferay.portal.DuplicateTeamException;
 import com.liferay.portal.NoSuchGroupException;

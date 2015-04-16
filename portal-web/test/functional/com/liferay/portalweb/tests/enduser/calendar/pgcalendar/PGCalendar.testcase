@@ -2384,6 +2384,13 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea3@liferay.com" />
+			<var name="userFirstName" value="userfn3" />
+			<var name="userLastName" value="userln3" />
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -2402,6 +2409,15 @@
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea3@liferay.com" />
+			<var name="userScreenName" value="usersn3" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -2413,7 +2429,7 @@
 			<var name="eventType" value="Regular" />
 			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
-			<var name="resourceNameList" value="userfn1 userln1,userfn2 userln2" />
+			<var name="resourceNameList" value="userfn1 userln1,userfn2 userln2,userfn3 userln3" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -2445,6 +2461,20 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea3@liferay.com" />
+			<var name="userLoginFullName" value="userfn3 userln3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addRSVP">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="rsvp" value="Yes" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
@@ -2459,6 +2489,10 @@
 
 		<execute macro="CalendarEvent#viewRSVPPending">
 			<var name="resourceName" value="Liferay" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewRSVPAccepted">
+			<var name="resourceName" value="userfn3 userln3" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewRSVPDeclined">

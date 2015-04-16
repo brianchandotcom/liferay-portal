@@ -293,19 +293,17 @@ public class PoshiRunnerContext {
 				filePath = filePath.replace("/", "\\");
 			}
 
+			_filePaths.put(
+				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
+				filePath);
+
 			String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
 				filePath);
 			String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
 				filePath);
 
-			_filePaths.put(className + "." + classType, filePath);
-
 			if (classType.equals("action") || classType.equals("function") ||
-				classType.equals("macro") || classType.equals("testcase")) {
-
-				if (classType.equals("testcase")) {
-					classType = "test-case";
-				}
+				classType.equals("macro") || classType.equals("test-case")) {
 
 				Element rootElement =
 					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);

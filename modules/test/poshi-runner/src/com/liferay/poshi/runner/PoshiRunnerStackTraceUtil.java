@@ -76,9 +76,12 @@ public final class PoshiRunnerStackTraceUtil {
 				className);
 		}
 
+		String fileExtension =
+			PoshiRunnerGetterUtil.getFileExtensionFromClassType(classType);
+
 		_filePaths.push(
 			PoshiRunnerContext.getFilePathFromFileName(
-				className + "." + classType));
+				className + "." + fileExtension));
 	}
 
 	public static void pushStackTrace(String lineNumber) {

@@ -621,6 +621,12 @@
 			<var name="viewType" value="Month" />
 		</execute>
 
+		<!--
+		To ensure the desired month will always be reached, click "Previous"
+		until it reaches our baseline of February 2015. Then click "Next" until
+		it reaches ${dateMonth}.
+		-->
+
 		<while>
 			<condition function="IsTextNotEqual" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_DATE" value1="February 2015" />
 			<then>

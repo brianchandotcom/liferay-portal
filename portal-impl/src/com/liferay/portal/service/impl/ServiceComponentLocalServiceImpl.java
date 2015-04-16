@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableListener;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -334,7 +335,7 @@ public class ServiceComponentLocalServiceImpl
 
 				db.runSQLTemplateString(tablesSQL, true, false);
 
-				upgradeModels(classLoader, previousServiceComponent);
+				upgradeModels(classLoader, previousServiceComponent, tablesSQL);
 			}
 
 			if (!sequencesSQL.equals(
@@ -357,6 +358,23 @@ public class ServiceComponentLocalServiceImpl
 				db.runSQLTemplateString(indexesSQL, true, false);
 			}
 		}
+	}
+
+	protected List<String> getChangedTables(
+		List<String> tables1, List<String> tables2) {
+
+		List<String> changedModels = new ArrayList<>();
+
+		tables1.removeAll(tables2);
+
+		for (String tables : tables1) {
+			int startPos = tables.indexOf("create table ");
+			int endPos = tables.indexOf(" (");
+
+			changedModels.add(tables.substring(startPos + 13, endPos));
+		}
+
+		return changedModels;
 	}
 
 	protected List<String> getModels(ClassLoader classLoader)
@@ -402,6 +420,11 @@ public class ServiceComponentLocalServiceImpl
 		}
 
 		return models;
+	}
+
+	protected List<String> getTables(String tablesSQL) {
+		return ListUtil.toList(
+			StringUtil.split(tablesSQL, StringPool.SEMICOLON));
 	}
 
 	protected UpgradeTableListener getUpgradeTableListener(
@@ -458,8 +481,14 @@ public class ServiceComponentLocalServiceImpl
 	}
 
 	protected void upgradeModels(
-			ClassLoader classLoader, ServiceComponent previousServiceComponent)
+			ClassLoader classLoader, ServiceComponent previousServiceComponent,
+			String tablesSQL)
 		throws Exception {
+
+		String previousTablesSQL = previousServiceComponent.getTablesSQL();
+
+		List<String> changedTables = getChangedTables(
+			getTables(tablesSQL), getTables(previousTablesSQL));
 
 		List<String> models = getModels(classLoader);
 
@@ -478,6 +507,11 @@ public class ServiceComponentLocalServiceImpl
 			Field dataSourceField = modelClass.getField("DATA_SOURCE");
 
 			String tableName = (String)tableNameField.get(null);
+
+			if (!changedTables.contains(tableName)) {
+				continue;
+			}
+
 			Object[][] tableColumns = (Object[][])tableColumnsField.get(null);
 			String tableSQLCreate = (String)tableSQLCreateField.get(null);
 			String dataSource = (String)dataSourceField.get(null);

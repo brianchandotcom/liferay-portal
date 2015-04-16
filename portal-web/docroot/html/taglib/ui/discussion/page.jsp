@@ -21,6 +21,8 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 
+CommentSectionDisplayContext commentSectionDisplayContext = new MBCommentSectionDisplayContext(discussionRequestHelper);
+
 boolean assetEntryVisible = discussionRequestHelper.isAssetEntryVisible();
 String className = discussionRequestHelper.getClassName();
 long classPK = discussionRequestHelper.getClassPK();
@@ -52,7 +54,7 @@ int messagesCount = messages.size();
 		</div>
 	</c:if>
 
-	<c:if test="<%= (messagesCount > 1) || MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
+	<c:if test="<%= commentSectionDisplayContext.isDiscussionVisible() %>">
 		<div class="taglib-discussion" id="<portlet:namespace />discussionContainer">
 			<aui:form action="<%= formAction %>" method="post" name="<%= formName %>">
 				<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />

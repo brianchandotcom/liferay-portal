@@ -123,7 +123,8 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 			jsonObject.put("srcNode", name);
 		}
 
-		jsonObject.put("removePlugins", "toolbar,elementspath,resize,liststyle,link");
+		jsonObject.put(
+			"removePlugins", "toolbar,elementspath,resize,liststyle,link");
 
 		JSONObject toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
 

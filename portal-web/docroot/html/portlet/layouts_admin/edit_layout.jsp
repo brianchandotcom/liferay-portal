@@ -275,7 +275,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					categorySections="<%= categorySections %>"
 					displayStyle="<%= displayStyle %>"
 					formModelBean="<%= selLayout %>"
-					id="layout.form"
+					id="<%= FormNavigatorConstants.LAYOUT_FORM %>"
 					jspPath="/html/portlet/layouts_admin/layout/"
 					showButtons="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
 				/>

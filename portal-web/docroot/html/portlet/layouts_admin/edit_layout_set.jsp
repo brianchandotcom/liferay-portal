@@ -136,7 +136,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		formModelBean="<%= selLayoutSet %>"
-		id="layout.set.form"
+		id="<%= FormNavigatorConstants.LAYOUT_SET_FORM %>"
 		jspPath="/html/portlet/layouts_admin/layout_set/"
 		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
 	/>

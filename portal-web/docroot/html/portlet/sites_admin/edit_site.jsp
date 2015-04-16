@@ -210,7 +210,7 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		formModelBean="<%= group %>"
-		id="sites.form"
+		id="<%= FormNavigatorConstants.SITES_FORM %>"
 		jspPath="/html/portlet/sites_admin/site/"
 		showButtons="<%= true %>"
 	/>

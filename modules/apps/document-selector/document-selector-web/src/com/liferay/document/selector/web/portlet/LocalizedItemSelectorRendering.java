@@ -14,6 +14,7 @@
 
 package com.liferay.document.selector.web.portlet;
 
+import com.liferay.document.selector.ItemSelectorRendering;
 import com.liferay.document.selector.ItemSelectorView;
 import com.liferay.document.selector.ItemSelectorViewRenderer;
 
@@ -28,27 +29,29 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera
  */
-public class ItemSelectorViewRenderers {
+public class LocalizedItemSelectorRendering {
 
-	public static ItemSelectorViewRenderers get(PortletRequest portletRequest) {
-		return (ItemSelectorViewRenderers)portletRequest.getAttribute(
-			ItemSelectorViewRenderers.class.getName());
+	public static LocalizedItemSelectorRendering get(
+		PortletRequest portletRequest) {
+
+		return (LocalizedItemSelectorRendering)portletRequest.getAttribute(
+			LocalizedItemSelectorRendering.class.getName());
 	}
 
-	public ItemSelectorViewRenderers(
-		Locale locale,
-		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderersList) {
+	public LocalizedItemSelectorRendering(
+		Locale locale, ItemSelectorRendering itemSelectorRendering) {
 
 		_locale = locale;
+		_itemSelectorRendering = itemSelectorRendering;
 
-		for (ItemSelectorViewRenderer<?> itemSelectorViewRenderer :
-				itemSelectorViewRenderersList) {
+		for (ItemSelectorViewRenderer itemSelectorViewRenderer :
+				itemSelectorRendering.getItemSelectorViewRenderers()) {
 
 			add(itemSelectorViewRenderer);
 		}
 	}
 
-	public void add(ItemSelectorViewRenderer<?> itemSelectorViewRenderer) {
+	public void add(ItemSelectorViewRenderer itemSelectorViewRenderer) {
 		ItemSelectorView<?> itemSelectorView =
 			itemSelectorViewRenderer.getItemSelectorView();
 
@@ -58,10 +61,16 @@ public class ItemSelectorViewRenderers {
 		_titles.add(title);
 	}
 
-	public ItemSelectorViewRenderer<?> getItemSelectorViewRenderer(
-		String title) {
+	public String getItemSelectedCallback() {
+		return _itemSelectorRendering.getItemSelectedCallback();
+	}
 
+	public ItemSelectorViewRenderer getItemSelectorViewRenderer(String title) {
 		return _itemSelectorViewRenderers.get(title);
+	}
+
+	public String getSelectedTab() {
+		return _itemSelectorRendering.getSelectedTab();
 	}
 
 	public List<String> getTitles() {
@@ -70,10 +79,11 @@ public class ItemSelectorViewRenderers {
 
 	public void store(PortletRequest portletRequest) {
 		portletRequest.setAttribute(
-			ItemSelectorViewRenderers.class.getName(), this);
+			LocalizedItemSelectorRendering.class.getName(), this);
 	}
 
-	private final Map<String, ItemSelectorViewRenderer<?>>
+	private final ItemSelectorRendering _itemSelectorRendering;
+	private final Map<String, ItemSelectorViewRenderer>
 		_itemSelectorViewRenderers = new HashMap<>();
 	private final Locale _locale;
 	private final List<String> _titles = new ArrayList<>();

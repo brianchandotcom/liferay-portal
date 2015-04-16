@@ -1012,14 +1012,6 @@
 		<put name="portlet_content" value="/portlet/sites_admin/edit_site_assignments.jsp" />
 	</definition>
 
-	<definition name="portlet.sites_admin.edit_team" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/edit_team.jsp" />
-	</definition>
-
-	<definition name="portlet.sites_admin.edit_team_assignments" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/edit_team_assignments.jsp" />
-	</definition>
-
 	<definition name="portlet.sites_admin.edit_user_group_roles" extends="portlet.sites_admin">
 		<put name="portlet_content" value="/portlet/sites_admin/edit_user_group_roles.jsp" />
 	</definition>
@@ -1050,10 +1042,6 @@
 
 	<definition name="portlet.sites_admin.view_membership_requests" extends="portlet.sites_admin">
 		<put name="portlet_content" value="/portlet/sites_admin/view_membership_requests.jsp" />
-	</definition>
-
-	<definition name="portlet.sites_admin.view_teams" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/view_teams.jsp" />
 	</definition>
 
 	<!-- Sites Directory -->

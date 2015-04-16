@@ -25,8 +25,6 @@ Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
 
 Group group = (Group)request.getAttribute("edit_team_assignments.jsp-group");
 
-Organization organization = (Organization)request.getAttribute("edit_team_assignments.jsp-organization");
-
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
 %>
 

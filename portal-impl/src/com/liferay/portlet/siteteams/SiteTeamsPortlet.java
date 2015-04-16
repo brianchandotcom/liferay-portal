@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.sites.action;
+package com.liferay.portlet.siteteams;
 
 import com.liferay.portal.DuplicateTeamException;
 import com.liferay.portal.NoSuchGroupException;
@@ -26,6 +26,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.TeamServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.sites.action.ActionUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -40,7 +41,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditTeamAction extends PortletAction {
+public class SiteTeamsPortlet extends PortletAction {
 
 	@Override
 	public void processAction(

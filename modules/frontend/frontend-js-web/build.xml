@@ -7,7 +7,7 @@
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 
 	<property name="alloy.version" value="3.0.1" />
-	<property name="alloyeditor.version" value="0.2.5" />
+	<property name="alloyeditor.version" value="0.2.6" />
 	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
 	<property name="html.js.dir" value="src/META-INF/resources/html/js" />
 	<property name="scayt.file" value="scayt_4.4.5.zip" />
@@ -159,9 +159,26 @@
 					<fileset dir="tmp/META-INF/resources/html/js/editor/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
 				</copy>
 
-				<copy todir="tmp/META-INF/resources/html/js/editor/alloyeditor" overwrite="true" preservelastmodified="true">
+				<copy todir="tmp/META-INF/resources/html/js/editor/alloyeditor" preservelastmodified="true">
 					<fileset dir="${html.js.dir}/editor/alloyeditor_diffs" />
 				</copy>
+
+				<for param="file">
+					<path>
+						<fileset dir="tmp/META-INF/resources/html/js/editor/alloyeditor" includes="alloy-editor*.js" />
+					</path>
+					<sequential>
+						<var name="filename" unset="true" />
+						<basename property="filename" file="@{file}" suffix=".js" />
+
+						<concat destfile="tmp/META-INF/resources/html/js/editor/alloyeditor/liferay-${filename}.js">
+							<fileset file="@{file}" />
+							<fileset dir="${html.js.dir}/editor/alloyeditor_diffs/buttons" >
+								<include name="**/*.js" />
+							</fileset>
+						</concat>
+					</sequential>
+				</for>
 
 				<delete dir="tmp/META-INF/resources/html/js/editor/_tmp" />
 			</then>
@@ -169,6 +186,23 @@
 				<copy todir="tmp/META-INF/resources/html/js/editor/alloyeditor" preservelastmodified="true">
 					<fileset dir="${html.js.dir}/editor/alloyeditor_diffs" />
 				</copy>
+
+				<for param="file">
+					<path>
+						<fileset dir="tmp/META-INF/resources/html/js/editor/alloyeditor" includes="alloy-editor*.js" />
+					</path>
+					<sequential>
+						<var name="filename" unset="true" />
+						<basename property="filename" file="@{file}" suffix=".js" />
+
+						<concat destfile="tmp/META-INF/resources/html/js/editor/alloyeditor/liferay-${filename}.js">
+							<fileset file="@{file}" />
+							<fileset dir="${html.js.dir}/editor/alloyeditor_diffs/buttons" >
+								<include name="**/*.js" />
+							</fileset>
+						</concat>
+					</sequential>
+				</for>
 			</else>
 		</if>
 	</target>

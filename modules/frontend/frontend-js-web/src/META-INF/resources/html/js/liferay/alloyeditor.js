@@ -62,7 +62,9 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._alloyEditor = new A.AlloyEditor(instance.get('editorConfig'));
+						var editorConfig = instance.get('editorConfig');
+
+						instance._alloyEditor = AlloyEditor.editable(editorConfig.srcNode, editorConfig);
 					},
 
 					bindUI: function() {

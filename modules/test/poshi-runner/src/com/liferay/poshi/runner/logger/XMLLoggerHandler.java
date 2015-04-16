@@ -14,6 +14,9 @@
 
 package com.liferay.poshi.runner.logger;
 
+import java.util.List;
+
+import org.dom4j.Attribute;
 import org.dom4j.Element;
 
 /**
@@ -85,6 +88,79 @@ public final class XMLLoggerHandler {
 		childContainerLoggerElement.setName("ul");
 
 		return childContainerLoggerElement;
+	}
+
+	private static LoggerElement _getClosingLineContainerLoggerElement(
+		Element element) {
+
+		LoggerElement closingLineContainerLoggerElement = new LoggerElement();
+
+		closingLineContainerLoggerElement.setClassName("line-container");
+		closingLineContainerLoggerElement.setName("div");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getLineItemText("misc", "&lt;/"));
+		sb.append(_getLineItemText("action-type", element.getName()));
+		sb.append(_getLineItemText("misc", "&gt;"));
+
+		closingLineContainerLoggerElement.setText(sb.toString());
+
+		return closingLineContainerLoggerElement;
+	}
+
+	private static LoggerElement _getLineContainerLoggerElement(
+		Element element) {
+
+		LoggerElement lineContainerLoggerElement = new LoggerElement();
+
+		lineContainerLoggerElement.setClassName("line-container");
+		lineContainerLoggerElement.setName("div");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getLineItemText("misc", "&lt;"));
+		sb.append(_getLineItemText("action-type", element.getName()));
+
+		List<Attribute> attributes = element.attributes();
+
+		for (Attribute attribute : attributes) {
+			String attributeName = attribute.getName();
+
+			if (attributeName.equals("line-number")) {
+				continue;
+			}
+
+			sb.append(_getLineItemText("tag-type", attributeName));
+			sb.append(_getLineItemText("misc", "="));
+			sb.append(_getLineItemText("misc quote", "\""));
+			sb.append(_getLineItemText("name", attribute.getValue()));
+			sb.append(_getLineItemText("misc quote", "\""));
+		}
+
+		List<Element> elements = element.elements();
+
+		if (elements.isEmpty()) {
+			sb.append(_getLineItemText("misc", "/&gt;"));
+		}
+		else {
+			sb.append(_getLineItemText("misc", "&gt;"));
+		}
+
+		lineContainerLoggerElement.setText(sb.toString());
+
+		return lineContainerLoggerElement;
+	}
+
+	private static String _getLineItemText(String className, String text) {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName(className);
+		loggerElement.setID(null);
+		loggerElement.setName("span");
+		loggerElement.setText(text);
+
+		return loggerElement.toString();
 	}
 
 }

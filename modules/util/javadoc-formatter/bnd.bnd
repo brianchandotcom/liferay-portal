@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Javadoc Formatter
 Bundle-SymbolicName: com.liferay.javadoc.formatter
 Bundle-Version: 1.0.0
+Import-Package:\
+	!org.gradle.api.*,\
+	*
 Include-Resource:\
 	classes,\
 	@../../../lib/portal/xercesImpl.jar!/org/apache/xerces/xni/XNIException.class,\

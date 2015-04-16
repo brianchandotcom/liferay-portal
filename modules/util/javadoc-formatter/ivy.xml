@@ -17,6 +17,9 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency conf="internal->default;provided" name="gradle-base-services" org="org.gradle" rev="2.0" transitive="false" />
+		<dependency conf="internal->default;provided" name="gradle-core" org="org.gradle" rev="2.0" transitive="false" />
+		<dependency conf="internal->default;provided" name="groovy-all" org="org.codehaus.groovy" rev="2.0.1" transitive="false" />
 		<dependency name="ant" org="org.apache.ant" rev="1.9.3" transitive="false" />
 		<dependency name="commons-io" org="commons-io" rev="2.1" />
 		<dependency name="dom4j" org="dom4j" rev="1.6.1" transitive="false" />

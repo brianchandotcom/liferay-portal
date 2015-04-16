@@ -262,7 +262,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		}
 	);
 
-	<%@ include file="/html/js/editor/ckeditor/ckconfig-ext.jsp" %>
+	<%@ include file="/html/js/editor/ckeditor_diffs/ckconfig-ext.jsp" %>
 };
 
 window['<%= HtmlUtil.escapeJS(name) %>Config']();

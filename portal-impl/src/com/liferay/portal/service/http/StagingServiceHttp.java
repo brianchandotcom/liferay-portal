@@ -114,8 +114,9 @@ public class StagingServiceHttp {
 		}
 	}
 
-	public static void publishStagingRequest(HttpPrincipal httpPrincipal,
-		long stagingRequestId, boolean privateLayout,
+	public static com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+		HttpPrincipal httpPrincipal, long stagingRequestId,
+		boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -126,8 +127,10 @@ public class StagingServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					stagingRequestId, privateLayout, parameterMap);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -136,6 +139,8 @@ public class StagingServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (com.liferay.portal.kernel.lar.MissingReferences)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

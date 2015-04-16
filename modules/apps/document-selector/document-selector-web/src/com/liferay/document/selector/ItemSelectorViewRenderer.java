@@ -14,32 +14,21 @@
 
 package com.liferay.document.selector;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
+
 /**
  * @author Iván Zaera
  */
-public class ItemSelectorViewRenderer<T extends ItemSelectorCriterion> {
+public interface ItemSelectorViewRenderer {
 
-	public ItemSelectorViewRenderer(
-		ItemSelectorView<T> itemSelectorView, T itemSelectorCriterion) {
+	public ItemSelectorCriterion getItemSelectorCriterion();
 
-		_itemSelectorView = itemSelectorView;
-		_itemSelectorCriterion = itemSelectorCriterion;
-	}
+	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView();
 
-	public String getHTML(String itemSelectedCallback) {
-		return _itemSelectorView.getHTML(
-			_itemSelectorCriterion, itemSelectedCallback);
-	}
-
-	public T getItemSelectorCriterion() {
-		return _itemSelectorCriterion;
-	}
-
-	public ItemSelectorView<T> getItemSelectorView() {
-		return _itemSelectorView;
-	}
-
-	private final T _itemSelectorCriterion;
-	private final ItemSelectorView<T> _itemSelectorView;
+	public void renderHTML(PageContext pageContext)
+		throws IOException, ServletException;
 
 }

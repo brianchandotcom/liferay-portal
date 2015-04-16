@@ -54,6 +54,31 @@ Command line:
 
 	ant build-service
 
+## Maven
+
+	<repositories>
+		<repository>
+			<id>liferay-maven-repository</id>
+			<name>Liferay Maven Repository</name>
+			<url>http://cdn.repository.liferay.com/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<plugins>
+		<plugin>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.portal.tools.service.builder</artifactId>
+			<version>1.1.0</version>
+			<configuration>
+				<apiDir>../api/src/main/java</apiDir>
+			</configuration>
+		</plugin>
+	</plugins>
+
+Command line:
+
+	mvn com.liferay:com.liferay.portal.tools.service.builder:build-service
+
 ## Configuration
 
 Service builder has the following fields and defaults (same for all plugins):

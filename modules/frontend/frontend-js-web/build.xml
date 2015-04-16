@@ -278,6 +278,16 @@
 		</if>
 	</target>
 
+	<target name="compile-jsp" depends="jar">
+		<unzip src="${plugin.file}" dest="tmp-jspc" />
+
+		<compile-jsp
+			compile.jsp.docroot.dir="tmp-jspc/META-INF/resources"
+		/>
+
+		<delete dir="tmp-jspc" />
+	</target>
+
 	<target name="jar" depends="build-common.compile,build-alloy,build-alloy-editor,build-ckeditor,build-tinymce">
 		<jar-macro
 			module.dir="${basedir}"

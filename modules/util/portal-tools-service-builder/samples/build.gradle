@@ -1,0 +1,24 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath 'com.liferay:com.liferay.portal.tools.service.builder:1.1.0'
+	}
+}
+
+apply plugin: 'com.liferay.portal.tools.service.builder'
+
+serviceBuilder {
+	apiDir="../tmp/api"
+	hbmFileName="../tmp/src/META-INF/portal-hbm.xml"
+	implDir="../tmp/src"
+	inputFileName="service.xml"
+	modelHintsFileName="../tmp/src/META-INF/portal-model-hints.xml"
+	resourcesDir="../tmp/src"
+	springFileName="../tmp/src/META-INF/portal-spring.xml"
+	sqlDir="../tmp/sql"
+	testDir="../tmp/test/integration"
+}

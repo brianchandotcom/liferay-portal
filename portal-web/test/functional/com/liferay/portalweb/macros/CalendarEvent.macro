@@ -1310,11 +1310,16 @@
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+			<condition function="IsElementPresent" locator1="xpath=(//td[contains(@class,'scheduler-view-day-table-col scheduler-view-day-table-colday scheduler-today')]//div[@class='scheduler-event-content' and contains(.,'${key_eventTitle}')])[${i}]" />
 			<then>
-				<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
-				<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
-				<var name="i" value="${i?increment()}" />
+				<if>
+					<condition function="IsElementPresent#isVisible" locator1="xpath=(//td[contains(@class,'scheduler-view-day-table-col scheduler-view-day-table-colday scheduler-today')]//div[@class='scheduler-event-content' and contains(.,'${key_eventTitle}')])[${i}]" />
+					<then>
+						<execute function="AssertTextEquals" locator1="xpath=(//td[contains(@class,'scheduler-view-day-table-col scheduler-view-day-table-colday scheduler-today')]//div[@class='scheduler-event-content' and contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
+
+						<var name="i" value="${i?increment()}" />
+					</then>
+				</if>
 			</then>
 		</while>
 	</command>
@@ -1458,6 +1463,7 @@
 					<condition function="IsElementPresent#isVisible" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
 					<then>
 						<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
+
 						<var name="i" value="${i?increment()}" />
 					</then>
 					<elseif>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">WC</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>WC</td>
-</tr>
 <!---->
 <tr>
 	<td>NAVBAR_CONTAINER</td>

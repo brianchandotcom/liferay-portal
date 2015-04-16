@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/site_teams/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -68,7 +68,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			<aui:nav cssClass="navbar-nav">
 				<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_TEAMS) %>">
 					<portlet:renderURL var="addTeamURL">
-						<portlet:param name="mvcPath" value="/html/portlet/site_teams/edit_team.jsp" />
+						<portlet:param name="mvcPath" value="/edit_team.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					</portlet:renderURL>
@@ -100,7 +100,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			if (TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.UPDATE)) {
 				rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/html/portlet/site_teams/edit_team.jsp");
+				rowURL.setParameter("mvcPath", "/edit_team.jsp");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("teamId", String.valueOf(team.getTeamId()));
 			}
@@ -120,7 +120,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/site_teams/team_action.jsp"
+				path="/team_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

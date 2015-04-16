@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/site_teams/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");
@@ -38,7 +38,7 @@ if (group.isOrganization()) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/site_teams/edit_team_assignments.jsp");
+portletURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
@@ -74,10 +74,10 @@ request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("users") %>'>
-		<liferay-util:include page="/html/portlet/site_teams/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("user-groups") %>'>
-		<liferay-util:include page="/html/portlet/site_teams/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>
 

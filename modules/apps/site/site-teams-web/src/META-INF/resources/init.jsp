@@ -25,4 +25,4 @@ page import="com.liferay.portlet.sitesadmin.search.TeamSearch" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserGroupTeamChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserTeamChecker" %>
 
-<%@ include file="/html/portlet/site_teams/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

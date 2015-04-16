@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Wiki Engine Creole Web
+Bundle-SymbolicName: com.liferay.wiki.engine.creole.web
+Bundle-Version: 1.0.0
+Export-Package:
+Import-Package: *
+Include-Resource:\
+	classes,\
+	../wiki-engine-input-editor-common/classes,\
+	@../../../../lib/portal/antlr2.jar,\
+	@../../../../lib/portal/antlr3.jar,\
+	@../../../../lib/portal/stringtemplate.jar
+Web-ContextPath: /wiki-engine-creole-web

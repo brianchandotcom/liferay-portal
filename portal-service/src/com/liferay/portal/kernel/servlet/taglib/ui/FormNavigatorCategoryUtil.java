@@ -23,6 +23,7 @@ import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,7 +35,14 @@ public class FormNavigatorCategoryUtil {
 	public static List<FormNavigatorCategory> getFormNavigatorCategories(
 		String formNavigatorId) {
 
-		return _instance._formNavigatorCategories.getService(formNavigatorId);
+		List<FormNavigatorCategory> formNavigatorCategories =
+			_instance._formNavigatorCategories.getService(formNavigatorId);
+
+		if (formNavigatorCategories != null) {
+			return formNavigatorCategories;
+		}
+
+		return Collections.emptyList();
 	}
 
 	public static String[] getKeys(String formNavigatorId) {

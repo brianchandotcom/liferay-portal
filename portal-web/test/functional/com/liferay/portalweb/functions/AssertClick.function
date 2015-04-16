@@ -155,7 +155,7 @@
 	</command>
 
 	<command name="assertTextClickAtViewHistory">
-		<execute argument1="//div[@id='_15_articleToolbar']//div/a[contains(.,'View History')]" selenium="waitForVisible" />
+		<execute argument1="//div[contains(@id,'articleToolbar')]/div/a[contains(.,'View History')]" selenium="waitForVisible" />
 
 		<execute argument1="1000" selenium="pause" />
 

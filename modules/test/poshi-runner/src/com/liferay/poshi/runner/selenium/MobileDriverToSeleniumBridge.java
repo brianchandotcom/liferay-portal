@@ -1023,8 +1023,6 @@ public class MobileDriverToSeleniumBridge
 			}
 		}
 		else if (PropsValues.MOBILE_DEVICE_TYPE.equals("ios")) {
-			context("NATIVE_APP");
-
 			TouchAction touchAction = new TouchAction(this);
 
 			int screenPositionX = WebDriverHelper.getElementPositionCenterX(
@@ -1035,6 +1033,8 @@ public class MobileDriverToSeleniumBridge
 			int screenPositionY =
 				WebDriverHelper.getElementPositionCenterY(this, locator) +
 					navigationBarHeight;
+
+			context("NATIVE_APP");
 
 			touchAction.tap(screenPositionX, screenPositionY);
 

@@ -303,6 +303,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 		form.fm('<%= Constants.CMD %>').val('move-selection-down');
 		form.fm('assetEntryOrder').val(assetEntryOrder);
+		form.fm('redirect').val('<%= currentURL %>');
 
 		submitForm(form);
 	}
@@ -312,6 +313,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 
 		form.fm('<%= Constants.CMD %>').val('move-selection-up');
 		form.fm('assetEntryOrder').val(assetEntryOrder);
+		form.fm('redirect').val('<%= currentURL %>');
 
 		submitForm(form);
 	}

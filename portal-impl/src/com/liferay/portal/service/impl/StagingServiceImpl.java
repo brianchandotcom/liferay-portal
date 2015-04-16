@@ -50,14 +50,14 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	}
 
 	@Override
-	public void publishStagingRequest(
+	public MissingReferences publishStagingRequest(
 			long stagingRequestId, boolean privateLayout,
 			Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		checkPermission(stagingRequestId);
 
-		stagingLocalService.publishStagingRequest(
+		return stagingLocalService.publishStagingRequest(
 			getUserId(), stagingRequestId, privateLayout, parameterMap);
 	}
 

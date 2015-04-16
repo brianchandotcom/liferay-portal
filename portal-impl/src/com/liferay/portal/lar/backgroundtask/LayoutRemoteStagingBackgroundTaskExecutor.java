@@ -302,7 +302,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 				markBackgroundTask(_backgroundTaskId, "exported");
 
-				StagingServiceHttp.publishStagingRequest(
+				missingReferences = StagingServiceHttp.publishStagingRequest(
 					httpPrincipal, stagingRequestId, privateLayout,
 					parameterMap);
 			}

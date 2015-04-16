@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Raymond Augé
  */
-public class DynamicQueryTest {
+public class DynamicQueryPACLTest {
 
 	@ClassRule
 	@Rule

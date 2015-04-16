@@ -193,15 +193,17 @@ public class LoggerElement {
 			sb.append("\"");
 		}
 
-		sb.append(" id=\"");
-		sb.append(_id);
-		sb.append("\"");
+		if (Validator.isNotNull(_id)) {
+			sb.append(" id=\"");
+			sb.append(_id);
+			sb.append("\"");
+		}
 
 		boolean hasChildren = _childLoggerElements.size() > 0;
 		boolean hasText = Validator.isNotNull(_text);
 
 		if (hasChildren || hasText) {
-			sb.append(">\n");
+			sb.append(">");
 
 			if (hasText) {
 				sb.append(_text);
@@ -215,10 +217,10 @@ public class LoggerElement {
 
 			sb.append("</");
 			sb.append(_name);
-			sb.append(">\n");
+			sb.append(">");
 		}
 		else {
-			sb.append(" />\n");
+			sb.append(" />");
 		}
 
 		return sb.toString();

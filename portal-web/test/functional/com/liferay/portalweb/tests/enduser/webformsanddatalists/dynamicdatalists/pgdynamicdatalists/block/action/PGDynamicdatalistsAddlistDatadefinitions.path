@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
-	<td>PGDynamicdatalistsAddlistDatadefinitions</td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

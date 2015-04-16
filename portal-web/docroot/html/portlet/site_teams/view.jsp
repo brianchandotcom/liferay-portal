@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_teams/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -121,7 +121,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/sites_admin/team_action.jsp"
+				path="/html/portlet/site_teams/team_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

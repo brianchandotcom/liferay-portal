@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_teams/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");
@@ -84,10 +84,10 @@ request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
 
 	<c:choose>
 		<c:when test='<%= tabs1.equals("users") %>'>
-			<liferay-util:include page="/html/portlet/sites_admin/edit_team_assignments_users.jsp" />
+			<liferay-util:include page="/html/portlet/site_teams/edit_team_assignments_users.jsp" />
 		</c:when>
 		<c:when test='<%= tabs1.equals("user-groups") %>'>
-			<liferay-util:include page="/html/portlet/sites_admin/edit_team_assignments_user_groups.jsp" />
+			<liferay-util:include page="/html/portlet/site_teams/edit_team_assignments_user_groups.jsp" />
 		</c:when>
 	</c:choose>
 </aui:form>

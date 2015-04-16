@@ -99,27 +99,30 @@ public class JavadocFormatter {
 	}
 
 	public JavadocFormatter(Map<String, String> arguments) throws Exception {
-		_author = GetterUtil.getString(arguments.get("javadoc.author"));
+		String author = GetterUtil.getString(arguments.get("javadoc.author"));
 
-		if (Validator.isNull(_author) || _author.startsWith("$")) {
-			_author = "Brian Wing Shun Chan";
+		if (Validator.isNull(author) || author.startsWith("$")) {
+			author = "Brian Wing Shun Chan";
 		}
+
+		_author = author;
 
 		String init = arguments.get("javadoc.init");
 
-		if (Validator.isNotNull(init) && !init.startsWith("$")) {
-			_initializeMissingJavadocs = GetterUtil.getBoolean(init);
+		_initializeMissingJavadocs = GetterUtil.getBoolean(init);
+
+		String inputDir = GetterUtil.getString(
+			arguments.get("javadoc.input.dir"));
+
+		if (Validator.isNull(inputDir) || inputDir.startsWith("$")) {
+			inputDir = "./";
 		}
 
-		_inputDir = GetterUtil.getString(arguments.get("javadoc.input.dir"));
-
-		if (Validator.isNull(_inputDir) || _inputDir.startsWith("$")) {
-			_inputDir = "./";
+		if (!inputDir.endsWith("/")) {
+			inputDir += "/";
 		}
 
-		if (!_inputDir.endsWith("/")) {
-			_inputDir += "/";
-		}
+		_inputDir = inputDir;
 
 		System.out.println("Input directory is " + _inputDir);
 
@@ -129,23 +132,31 @@ public class JavadocFormatter {
 			limits = new String[] {StringPool.BLANK};
 		}
 
+		_languagePropertiesFile = new File("src/content/Language.properties");
+
+		if (_languagePropertiesFile.exists()) {
+			_languageProperties = new Properties();
+
+			_languageProperties.load(
+				new FileInputStream(_languagePropertiesFile.getAbsolutePath()));
+		}
+
 		_lowestSupportedJavaVersion = GetterUtil.getDouble(
 			arguments.get("javadoc.lowest.supported.java.version"), 1.7);
 
-		_outputFilePrefix = GetterUtil.getString(
+		String outputFilePrefix = GetterUtil.getString(
 			arguments.get("javadoc.output.file.prefix"));
 
-		if (Validator.isNull(_outputFilePrefix) ||
-			_outputFilePrefix.startsWith("$")) {
+		if (Validator.isNull(outputFilePrefix) ||
+			outputFilePrefix.startsWith("$")) {
 
-			_outputFilePrefix = "javadocs";
+			outputFilePrefix = "javadocs";
 		}
 
-		String update = arguments.get("javadoc.update");
+		_outputFilePrefix = outputFilePrefix;
 
-		if (Validator.isNotNull(update) && !update.startsWith("$")) {
-			_updateJavadocs = GetterUtil.getBoolean(update);
-		}
+		_updateJavadocs = GetterUtil.getBoolean(
+			arguments.get("javadoc.update"));
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -195,17 +206,6 @@ public class JavadocFormatter {
 				}
 
 				System.out.println(sb.toString());
-			}
-
-			_languagePropertiesFile = new File(
-				"src/content/Language.properties");
-
-			if (_languagePropertiesFile.exists()) {
-				_languageProperties = new Properties();
-
-				_languageProperties.load(
-					new FileInputStream(
-						_languagePropertiesFile.getAbsolutePath()));
 			}
 
 			for (String fileName : fileNames) {
@@ -894,28 +894,6 @@ public class JavadocFormatter {
 		return XMLFormatter.toString(node);
 	}
 
-	private boolean _hasAnnotation(
-		AbstractBaseJavaEntity abstractBaseJavaEntity, String annotationName) {
-
-		Annotation[] annotations = abstractBaseJavaEntity.getAnnotations();
-
-		if (annotations == null) {
-			return false;
-		}
-
-		for (int i = 0; i < annotations.length; i++) {
-			Type type = annotations[i].getType();
-
-			JavaClass javaClass = type.getJavaClass();
-
-			if (annotationName.equals(javaClass.getName())) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private String _getCDATA(AbstractJavaEntity abstractJavaEntity) {
 		return _getCDATA(abstractJavaEntity.getComment());
 	}
@@ -1442,6 +1420,10 @@ public class JavadocFormatter {
 		return sb.toString();
 	}
 
+	private SAXReader _getSAXReader() {
+		return SAXReaderFactory.getSAXReader(null, false, false);
+	}
+
 	private String _getSpacesIndent(int length) {
 		String indent = StringPool.BLANK;
 
@@ -1462,6 +1444,28 @@ public class JavadocFormatter {
 		}
 
 		return typeValue;
+	}
+
+	private boolean _hasAnnotation(
+		AbstractBaseJavaEntity abstractBaseJavaEntity, String annotationName) {
+
+		Annotation[] annotations = abstractBaseJavaEntity.getAnnotations();
+
+		if (annotations == null) {
+			return false;
+		}
+
+		for (int i = 0; i < annotations.length; i++) {
+			Type type = annotations[i].getType();
+
+			JavaClass javaClass = type.getJavaClass();
+
+			if (annotationName.equals(javaClass.getName())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _hasGeneratedTag(String content) {
@@ -2114,21 +2118,16 @@ public class JavadocFormatter {
 		return text;
 	}
 
-	private SAXReader _getSAXReader() {
-		return SAXReaderFactory.getSAXReader(null, false, false);
-	}
-
-	private String _inputDir;
-	private boolean _initializeMissingJavadocs;
-	private Map<String, Tuple> _javadocxXmlTuples =
-		new HashMap<String, Tuple>();
+	private final String _author;
+	private final boolean _initializeMissingJavadocs;
+	private final String _inputDir;
+	private final Map<String, Tuple> _javadocxXmlTuples = new HashMap<>();
 	private Properties _languageProperties;
-	private File _languagePropertiesFile;
-	private double _lowestSupportedJavaVersion;
-	private String _outputFilePrefix;
-	private Pattern _paragraphTagPattern = Pattern.compile(
+	private final File _languagePropertiesFile;
+	private final double _lowestSupportedJavaVersion;
+	private final String _outputFilePrefix;
+	private final Pattern _paragraphTagPattern = Pattern.compile(
 		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
-	private boolean _updateJavadocs;
-	private String _author;
+	private final boolean _updateJavadocs;
 
 }

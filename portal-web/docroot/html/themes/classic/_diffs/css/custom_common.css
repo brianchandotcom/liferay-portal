@@ -1103,27 +1103,6 @@ body.yui3-skin-sam .yui3-widget-mask {
 
 /* ---------- Alloy editor ---------- */
 
-.alloy-editor-toolbar {
-	.alloy-editor-button {
-		background-color: #215EC0;
-		background-image: none;
-		border-width: 0;
-		line-height: normal;
-	}
-
-	&.alloy-editor-toolbar-styles {
-		.link-wrapper .input-container input {
-			border-width: 0;
-			margin: 0;
-			padding: 0;
-		}
-	}
-}
-
-.alloy-editor-tooltip-link .link-container .icon-link-container {
-	line-height: 20px;
-}
-
 .alloy-editor-switch .btn {
 	background-color: #DDD;
 	border-color: transparent;

@@ -39,7 +39,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 
 	<liferay-ui:tabs
 		names="my-sites,available-sites"
-		url="<%= portletURL.toString() %>"
+		portletURL="<%= portletURL %>"
 	/>
 
 	<liferay-ui:search-container

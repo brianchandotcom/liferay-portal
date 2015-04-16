@@ -19,6 +19,14 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	portletURL.setParameter("tabs1", "available-sites");
+
+	redirect = portletURL.toString();
+}
+
 long groupId = ParamUtil.getLong(request, "groupId");
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);

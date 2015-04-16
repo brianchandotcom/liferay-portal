@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/maximized/membership-request/{groupId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/post_membership_request.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/membership-request/{groupId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/post_membership_request.jsp</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/maximized/sites/{tabs1}</pattern>
+		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="p_p_state_rcv" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/sites/{tabs1}</pattern>
+		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="p_p_state_rcv" />
+	</route>
+	<route>
+		<pattern>/sites</pattern>
+		<ignored-parameter name="mvcPath" />
+	</route>
+	<route>
+		<pattern></pattern>
+		<ignored-parameter name="mvcPath" />
+	</route>
+</routes>

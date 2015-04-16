@@ -1368,6 +1368,13 @@
 		<execute macro="Page#openURL" />
 
 		<if>
+			<isset var="loginViaDockbar" />
+			<then>
+				<execute function="AssertClick" locator1="Dockbar#USER_SIGN_IN" value1="Sign In" />
+			</then>
+		</if>
+
+		<if>
 			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />
 			<then>
 				<execute macro="User#logoutPG" />

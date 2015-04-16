@@ -26,24 +26,12 @@ public class ServiceBuilderBean {
 		return _apiDir;
 	}
 
-	public boolean isAutoImportDefaultReferences() {
-		return _autoImportDefaultReferences;
-	}
-
-	public boolean isAutoNamespaceTables() {
-		return _autoNamespaceTables;
-	}
-
 	public String getBeanLocatorUtil() {
 		return _beanLocatorUtil;
 	}
 
 	public long getBuildNumber() {
 		return _buildNumber;
-	}
-
-	public boolean isBuildNumberIncrement() {
-		return _buildNumberIncrement;
 	}
 
 	public String getHbmFileName() {
@@ -64,10 +52,6 @@ public class ServiceBuilderBean {
 
 	public String getModelHintsFileName() {
 		return _modelHintsFileName;
-	}
-
-	public boolean isOsgiModule() {
-		return _osgiModule;
 	}
 
 	public String getPluginName() {
@@ -124,6 +108,22 @@ public class ServiceBuilderBean {
 
 	public String getTestDir() {
 		return _testDir;
+	}
+
+	public boolean isAutoImportDefaultReferences() {
+		return _autoImportDefaultReferences;
+	}
+
+	public boolean isAutoNamespaceTables() {
+		return _autoNamespaceTables;
+	}
+
+	public boolean isBuildNumberIncrement() {
+		return _buildNumberIncrement;
+	}
+
+	public boolean isOsgiModule() {
+		return _osgiModule;
 	}
 
 	public void setApiDir(String apiDir) {
@@ -271,6 +271,7 @@ public class ServiceBuilderBean {
 					"can be used.");
 		}
 
+		_readOnlyPrefixesSet = true;
 		_readOnlyPrefixes = readOnlyPrefixes;
 	}
 
@@ -281,6 +282,7 @@ public class ServiceBuilderBean {
 					"mergeResourceActionsConfigs can be used.");
 		}
 
+		_resourceActionsConfigsSet = true;
 		_resourceActionsConfigs = resourceActionsConfigs;
 	}
 

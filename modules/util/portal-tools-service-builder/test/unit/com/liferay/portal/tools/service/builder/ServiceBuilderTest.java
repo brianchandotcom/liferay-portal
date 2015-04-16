@@ -89,7 +89,8 @@ public class ServiceBuilderTest {
 		String pluginName = "bookmarks-service";
 		String propsUtil = "com.liferay.portal.util.PropsUtil";
 		String[] readOnlyPrefixes = new String[] {
-			"fetch", "get", "has", "is", "load", "reindex", "search"};
+			"fetch", "get", "has", "is", "load", "reindex", "search"
+		};
 		String remotingFileName = basePath.resolve(
 			"resource/META-INF/remoting-servlet.xml").toString();
 		String resourcesDir = basePath.resolve("impl/src").toString();
@@ -109,7 +110,8 @@ public class ServiceBuilderTest {
 
 		String[] modelHintsConfigs = new String[] {
 			"classpath*:META-INF/portal-model-hints.xml",
-			modelHintsUrl.getFile()};
+			modelHintsUrl.getFile()
+		};
 
 		ModelHintsImpl modelHintsImpl = new ModelHintsImpl();
 
@@ -181,7 +183,8 @@ public class ServiceBuilderTest {
 		String pluginName = "bookmarks-service";
 		String propsUtil = "com.liferay.portal.util.PropsUtil";
 		String[] readOnlyPrefixes = new String[] {
-			"fetch", "get", "has", "is", "load", "reindex", "search"};
+			"fetch", "get", "has", "is", "load", "reindex", "search"
+		};
 		String remotingFileName = basePath.resolve(
 			"resource/META-INF/remoting-servlet.xml").toString();
 		String resourcesDir = basePath.resolve("impl/src").toString();
@@ -201,7 +204,8 @@ public class ServiceBuilderTest {
 
 		String[] modelHintsConfigs = new String[] {
 			"classpath*:META-INF/portal-model-hints.xml",
-			modelHintsUrl.getFile()};
+			modelHintsUrl.getFile()
+		};
 
 		ModelHintsImpl modelHintsImpl = new ModelHintsImpl();
 
@@ -257,7 +261,8 @@ public class ServiceBuilderTest {
 			@Override
 			public void call() throws Exception {
 				String[] args = new String[] {
-					"tools.throw.main.exception=false"};
+					"tools.throw.main.exception=false"
+				};
 
 				ServiceBuilder.main(args);
 			}
@@ -338,7 +343,8 @@ public class ServiceBuilderTest {
 			@Override
 			public void call() throws Exception {
 				String[] args = new String[] {
-					"tools.throw.main.exception=false"};
+					"tools.throw.main.exception=false"
+				};
 
 				ServiceBuilder.main(args);
 			}

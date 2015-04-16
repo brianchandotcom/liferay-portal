@@ -520,13 +520,6 @@ public class ServiceBuilder {
 	}
 
 	public static void writeFile(
-			File file, String content, String author, Set<String> modifiedFiles)
-		throws IOException {
-
-		writeFile(file, content, author, null, modifiedFiles);
-	}
-
-	public static void writeFile(
 			File file, String content, String author,
 			Map<String, Object> jalopySettings, Set<String> modifiedFiles)
 		throws IOException {
@@ -643,6 +636,13 @@ public class ServiceBuilder {
 		writeFileRaw(file, newContent, modifiedFiles);
 
 		tempFile.deleteOnExit();
+	}
+
+	public static void writeFile(
+			File file, String content, String author, Set<String> modifiedFiles)
+		throws IOException {
+
+		writeFile(file, content, author, null, modifiedFiles);
 	}
 
 	public static void writeFileRaw(

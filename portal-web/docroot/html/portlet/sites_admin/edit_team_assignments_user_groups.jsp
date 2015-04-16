@@ -44,7 +44,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
 	<liferay-ui:search-form
-		page="/html/portlet/users_admin/user_group_search.jsp"
+		page="/html/portlet/user_groups_admin/user_group_search.jsp"
 	/>
 
 	<%
@@ -57,15 +57,30 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 	if (tabs2.equals("current")) {
 		userGroupParams.put("userGroupsTeams", new Long(team.getTeamId()));
 	}
-
-	total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-	searchContainer.setTotal(total);
 	%>
 
-	<liferay-ui:search-container-results
-		results="<%= UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-	/>
+	<liferay-ui:search-container-results>
+
+		<%
+		if (searchTerms.isAdvancedSearch()) {
+			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator());
+
+			searchContainer.setTotal(total);
+
+			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		}
+		else {
+			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
+
+			searchContainer.setTotal(total);
+
+			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		}
+
+		searchContainer.setResults(results);
+		%>
+
+	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.UserGroup"

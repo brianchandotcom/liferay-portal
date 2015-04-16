@@ -105,6 +105,7 @@
 		</execute>
 
 		<execute macro="User#firstLoginPG">
+			<var name="loginViaDockbar" value="true" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
@@ -835,6 +836,7 @@
 
 		<execute macro="WebContent#viewConversionLinksPGViaAP">
 			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
+			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -862,6 +864,7 @@
 
 		<execute macro="WebContent#viewConversionLinksPGViaAP">
 			<var name="documentTypes" value="doc,pdf,txt" />
+			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -871,6 +874,7 @@
 
 		<execute macro="WebContent#viewNoConversionLinksPGViaAP">
 			<var name="documentTypes" value="odt,rtf,sxw" />
+			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -889,6 +893,7 @@
 
 		<execute macro="WebContent#viewNoConversionLinksPGViaAP">
 			<var name="documentTypes" value="doc,odt,pdf,rtf,sxw,txt" />
+			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>

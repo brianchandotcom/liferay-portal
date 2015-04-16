@@ -61,6 +61,20 @@ public class StagingServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+		long stagingRequestId,
+		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .publishStagingRequest(stagingRequestId,
+			exportImportConfiguration);
+	}
+
+	/**
+	* @throws PortalException
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	public static com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
 		long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {

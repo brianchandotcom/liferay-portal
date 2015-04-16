@@ -1695,14 +1695,14 @@
 	<portlet>
 		<portlet-name>191</portlet-name>
 		<display-name>Site Teams Admin</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.siteteams.SiteTeamsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/site_admin/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/site_admin/view_teams</value>
+			<name>view-template</name>
+			<value>/html/portlet/site_teams/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

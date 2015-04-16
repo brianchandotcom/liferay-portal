@@ -360,4 +360,8 @@ public interface RepositoryLocalService extends BaseLocalService,
 
 	public void updateRepository(long repositoryId, java.lang.String name,
 		java.lang.String description) throws PortalException;
+
+	public void updateRepository(long repositoryId,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
+		throws PortalException;
 }

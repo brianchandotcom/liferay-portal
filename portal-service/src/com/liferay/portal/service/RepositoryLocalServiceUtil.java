@@ -430,6 +430,12 @@ public class RepositoryLocalServiceUtil {
 		getService().updateRepository(repositoryId, name, description);
 	}
 
+	public static void updateRepository(long repositoryId,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateRepository(repositoryId, typeSettingsProperties);
+	}
+
 	public static RepositoryLocalService getService() {
 		if (_service == null) {
 			_service = (RepositoryLocalService)PortalBeanLocatorUtil.locate(RepositoryLocalService.class.getName());

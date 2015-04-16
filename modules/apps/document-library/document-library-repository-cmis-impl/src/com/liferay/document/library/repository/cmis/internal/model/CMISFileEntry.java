@@ -35,8 +35,8 @@ import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
-import com.liferay.portal.service.persistence.LockUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -319,7 +319,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 		User user = getUser(checkedOutBy);
 
-		Lock lock = LockUtil.create(0);
+		Lock lock = LockLocalServiceUtil.createLock(0);
 
 		lock.setCompanyId(getCompanyId());
 

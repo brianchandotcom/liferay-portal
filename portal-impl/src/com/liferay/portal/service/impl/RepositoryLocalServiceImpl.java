@@ -349,6 +349,19 @@ public class RepositoryLocalServiceImpl
 		dlFolderPersistence.update(dlFolder);
 	}
 
+	@Override
+	public void updateRepository(
+			long repositoryId, UnicodeProperties typeSettingsProperties)
+		throws PortalException {
+
+		Repository repository = repositoryPersistence.findByPrimaryKey(
+			repositoryId);
+
+		repository.setTypeSettingsProperties(typeSettingsProperties);
+
+		repositoryPersistence.update(repository);
+	}
+
 	protected long getDLFolderId(
 			User user, long groupId, long repositoryId, long parentFolderId,
 			String name, String description, boolean hidden,

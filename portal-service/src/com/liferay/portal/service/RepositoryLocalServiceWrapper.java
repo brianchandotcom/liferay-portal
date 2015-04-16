@@ -463,6 +463,14 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 		_repositoryLocalService.updateRepository(repositoryId, name, description);
 	}
 
+	@Override
+	public void updateRepository(long repositoryId,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_repositoryLocalService.updateRepository(repositoryId,
+			typeSettingsProperties);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

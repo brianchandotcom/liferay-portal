@@ -1,3 +1,5 @@
+/* global AlloyEditor */
+
 AUI.add(
 	'liferay-alloy-editor',
 	function(A) {

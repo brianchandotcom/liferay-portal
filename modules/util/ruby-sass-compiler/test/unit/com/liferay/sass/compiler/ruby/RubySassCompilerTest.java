@@ -23,17 +23,36 @@ import org.junit.Test;
 public class RubySassCompilerTest {
 
 	@Test
+	public void testCompileFile() throws Exception {
+		try (RubySassCompiler rubySassCompiler = new RubySassCompiler()) {
+			Assert.assertNotNull(rubySassCompiler);
+
+			String expectedOutput = "foo {\n  margin: 42px; }\n";
+
+			String inputPath =
+				System.getProperty("user.dir") + "/test-classes/unit/" +
+				"com/liferay/sass/compiler/ruby/dependencies/input.scss";
+
+			String actualOutput = rubySassCompiler.compileFile(inputPath);
+
+			Assert.assertEquals(expectedOutput, actualOutput);
+
+		}
+	}
+
+	@Test
 	public void testCompileString() throws Exception {
-		RubySassCompiler rubySassCompiler = new RubySassCompiler();
+		try (RubySassCompiler rubySassCompiler = new RubySassCompiler()) {
+			Assert.assertNotNull(rubySassCompiler);
 
-		Assert.assertNotNull(rubySassCompiler);
+			String expectedOutput = "foo {\n  margin: 42px; }\n";
 
-		String expectedOutput = "foo {\n  margin: 42px; }\n";
+			String actualOutput = rubySassCompiler.compileString(
+				"foo { margin: 21px * 2; }", "");
 
-		String actualOutput = rubySassCompiler.compileString(
-			"foo { margin: 21px * 2; }", "");
+			Assert.assertEquals(expectedOutput, actualOutput);
 
-		Assert.assertEquals(expectedOutput, actualOutput);
+		}
 	}
 
 }

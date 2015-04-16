@@ -27,6 +27,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.TeamServiceUtil;
 import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.site.teams.web.upgrade.SiteTeamsWebUpgrade;
 
 import java.io.IOException;
 
@@ -38,6 +39,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -170,6 +172,11 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSiteTeamsWebUpgrade(
+		SiteTeamsWebUpgrade siteTeamsWebUpgrade) {
 	}
 
 }

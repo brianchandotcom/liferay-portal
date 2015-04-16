@@ -22,6 +22,7 @@
 	<classpathentry kind="lib" path="lib/dom4j.jar" />
 	<classpathentry kind="lib" path="lib/jalopy.jar" />
 	<classpathentry kind="lib" path="lib/jaxen.jar" />
+	<classpathentry kind="lib" path="lib/maven-plugin-api.jar" />
 	<classpathentry kind="lib" path="lib/org.freemarker.jar" />
 	<classpathentry kind="lib" path="lib/qdox.jar" />
 	<classpathentry kind="output" path="bin" />

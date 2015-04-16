@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import java.util.Locale;
+
 /**
  * @author Sergio González
  */
@@ -23,6 +25,6 @@ public interface FormNavigatorCategory {
 
 	public String getKey();
 
-	public String getLabel();
+	public String getLabel(Locale locale);
 
 }

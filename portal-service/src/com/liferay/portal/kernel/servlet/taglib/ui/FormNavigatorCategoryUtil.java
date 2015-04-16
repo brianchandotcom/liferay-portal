@@ -24,6 +24,7 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Sergio González
@@ -55,7 +56,7 @@ public class FormNavigatorCategoryUtil {
 		return keys.toArray(new String[keys.size()]);
 	}
 
-	public static String[] getLabels(String formNavigatorId) {
+	public static String[] getLabels(String formNavigatorId, Locale locale) {
 		List<String> labels = new ArrayList<>();
 
 		List<FormNavigatorCategory> formNavigatorCategories =
@@ -64,7 +65,7 @@ public class FormNavigatorCategoryUtil {
 		for (FormNavigatorCategory formNavigatorCategory :
 				formNavigatorCategories) {
 
-			String label = formNavigatorCategory.getLabel();
+			String label = formNavigatorCategory.getLabel(locale);
 
 			if (Validator.isNotNull(label)) {
 				labels.add(label);

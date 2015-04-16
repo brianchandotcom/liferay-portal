@@ -13,6 +13,9 @@
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsIdentificationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsIdentificationFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsMiscellaneousFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsMiscellaneousFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsSocialFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsSocialFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationIdentificationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.OrganizationIdentificationFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationMiscellaneousFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.OrganizationMiscellaneousFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationOrganizationInformationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.OrganizationOrganizationInformationFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.SitesAdvancedFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.SitesAdvancedFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.SitesBasicInformationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.SitesBasicInformationFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.SitesMiscellaneousFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.SitesMiscellaneousFormNavigatorCategory" />

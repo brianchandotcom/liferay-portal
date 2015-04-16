@@ -87,6 +87,12 @@ import org.dom4j.io.XMLWriter;
  */
 public class JavadocFormatter {
 
+	public static final String AUTHOR = "Brian Wing Shun Chan";
+
+	public static final double LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
+
+	public static final String OUTPUT_FILE_PREFIX = "javadocs";
+
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
@@ -102,7 +108,7 @@ public class JavadocFormatter {
 		String author = GetterUtil.getString(arguments.get("javadoc.author"));
 
 		if (Validator.isNull(author) || author.startsWith("$")) {
-			author = "Brian Wing Shun Chan";
+			author = AUTHOR;
 		}
 
 		_author = author;
@@ -142,7 +148,8 @@ public class JavadocFormatter {
 		}
 
 		_lowestSupportedJavaVersion = GetterUtil.getDouble(
-			arguments.get("javadoc.lowest.supported.java.version"), 1.7);
+			arguments.get("javadoc.lowest.supported.java.version"),
+			LOWEST_SUPPORTED_JAVA_VERSION);
 
 		String outputFilePrefix = GetterUtil.getString(
 			arguments.get("javadoc.output.file.prefix"));
@@ -150,7 +157,7 @@ public class JavadocFormatter {
 		if (Validator.isNull(outputFilePrefix) ||
 			outputFilePrefix.startsWith("$")) {
 
-			outputFilePrefix = "javadocs";
+			outputFilePrefix = OUTPUT_FILE_PREFIX;
 		}
 
 		_outputFilePrefix = outputFilePrefix;

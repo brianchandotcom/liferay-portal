@@ -32,13 +32,41 @@ import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.control-panel-entry-category=site_administration.users",
+		"com.liferay.portlet.control-panel-entry-weight=2.0",
+		"com.liferay.portlet.css-class-wrapper=portlet-communities",
+		"com.liferay.portlet.icon=/icons/site_memberships_admin.png",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.system=true",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Site Teams Admin",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class SiteTeamsPortlet extends MVCPortlet {
 
 	public void deleteTeam(

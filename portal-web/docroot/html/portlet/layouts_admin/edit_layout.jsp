@@ -271,7 +271,6 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 			<c:if test="<%= !selGroup.hasLocalOrRemoteStagingGroup() || selGroup.isStagingGroup() %>">
 				<liferay-ui:form-navigator
-					categoryNames="<%= _CATEGORY_NAMES %>"
 					categorySections="<%= categorySections %>"
 					displayStyle="<%= displayStyle %>"
 					formModelBean="<%= selLayout %>"
@@ -303,7 +302,3 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 		submitForm(form);
 	}
 </aui:script>
-
-<%!
-private static final String[] _CATEGORY_NAMES = {""};
-%>

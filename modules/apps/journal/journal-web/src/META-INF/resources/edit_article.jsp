@@ -274,7 +274,6 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 				</liferay-util:buffer>
 
 				<liferay-ui:form-navigator
-					categoryNames="<%= _CATEGORY_NAMES %>"
 					categorySections="<%= categorySections %>"
 					formModelBean="<%= article %>"
 					formName="fm1"
@@ -348,7 +347,3 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 		);
 	</aui:script>
 </c:if>
-
-<%!
-private static final String[] _CATEGORY_NAMES = {""};
-%>

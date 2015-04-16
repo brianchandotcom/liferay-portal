@@ -79,30 +79,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 
-		<script type="text/javascript">
-			YUI.applyConfig(
-				{
-					groups: {
-						AlloyEditor: {
-							base: Liferay.AUI.getJavaScriptRootPath() + '/editor/alloyeditor/',
-							combine: Liferay.AUI.getCombine(),
-							comboBase: Liferay.AUI.getComboPath(),
-							modules: {
-								'button-imageselector': {
-									path: 'buttons/button_image_selector.js',
-									requires: [
-										'aui-base',
-										'button-base'
-									]
-								}
-							},
-							root: Liferay.AUI.getJavaScriptRootPath() + '/editor/alloyeditor/'
-						}
-					}
-				}
-			);
-		</script>
-
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/alloyeditor/liferay-alloy-editor-no-ckeditor-min.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 		<script type="text/javascript">

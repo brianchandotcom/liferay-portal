@@ -403,9 +403,12 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPSitepagesImport#CONTINUE_BUTTON" value1="Continue" />
-		<execute function="AssertClick" locator1="CPSitepagesImport#CONTINUE_BUTTON" value1="Continue" />
-		<execute function="AssertClick" locator1="CPSitepagesImport#IMPORT_BUTTON" value1="Import" />
+		<execute function="AssertClickNoError" locator1="CPSitepagesImport#CONTINUE_BUTTON" value1="Continue" />
+		<execute function="Pause" locator1="5000" />
+		<execute function="AssertClickNoError" locator1="CPSitepagesImport#CONTINUE_BUTTON" value1="Continue" />
+		<execute function="Pause" locator1="5000" />
+		<execute function="AssertClickNoError" locator1="CPSitepagesImport#IMPORT_BUTTON" value1="Import" />
+		<execute function="Pause" locator1="5000" />
 		<execute function="AssertTextEquals" locator1="CPSitepagesImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -489,9 +492,12 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="BasePortletImport#CONTINUE_BUTTON" value1="Continue" />
-				<execute function="AssertClick" locator1="BasePortletImport#CONTINUE_BUTTON" value1="Continue" />
-				<execute function="AssertClick" locator1="BasePortletImport#IMPORT_BUTTON" value1="Import" />
+				<execute function="AssertClickNoError" locator1="BasePortletImport#CONTINUE_BUTTON" value1="Continue" />
+				<execute function="Pause" locator1="5000" />
+				<execute function="AssertClickNoError" locator1="BasePortletImport#CONTINUE_BUTTON" value1="Continue" />
+				<execute function="Pause" locator1="5000" />
+				<execute function="AssertClickNoError" locator1="BasePortletImport#IMPORT_BUTTON" value1="Import" />
+				<execute function="Pause" locator1="5000" />
 				<execute function="AssertTextEquals" locator1="BasePortletImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
@@ -517,8 +523,9 @@
 			<else>
 				<execute function="AssertTextEquals" locator1="CPSitepagesImport#FILE_TITLE" value1="${larFileName}" />
 				<execute function="AssertClickNoError" locator1="CPSitepagesImport#CONTINUE_BUTTON" value1="Continue" />
-				<execute function="Pause" locator1="1000" />
+				<execute function="Pause" locator1="5000" />
 				<execute function="AssertClickNoError" locator1="CPSitepagesImport#CONTINUE_BUTTON" value1="Continue" />
+				<execute function="Pause" locator1="5000" />
 				<execute function="AssertClickNoError" locator1="CPSitepagesImport#IMPORT_BUTTON" value1="Import" />
 				<execute function="Pause" locator1="5000" />
 				<execute function="AssertTextEquals" locator1="CPSitepagesImport#FILE_NAME" value1="${larFileName}" />

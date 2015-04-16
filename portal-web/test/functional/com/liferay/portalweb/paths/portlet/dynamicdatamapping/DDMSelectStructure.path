@@ -67,37 +67,37 @@
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_ID</td>
-	<td>//tr[contains(.,'${key_structureName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[count(//th[contains(.,'ID')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_ID_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[2])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[count(//th[contains(.,'ID')]/preceding-sibling::th) + 1])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_NAME</td>
-	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[3]/a[1]</td>
+	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[count(//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[3])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[count(//th[contains(.,'Name')]/preceding-sibling::th) + 1])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_structureName}')]/td[4]/a</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[count(//th[contains(.,'Description')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[4])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[count(//th[contains(.,'Description')]/preceding-sibling::th) + 1])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_MODIFIED_DATE</td>
-	<td>//tr[contains(.,'${key_structureName}')]/td[6]/a</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[count(//th[contains(.,'Modified Date')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,12 +107,12 @@
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[5]/button[contains(.,'Choose')])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td/button[contains(.,'Choose')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_ACTIONS</td>
-	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[7]/div/a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
+	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td/div/a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
 <tr>

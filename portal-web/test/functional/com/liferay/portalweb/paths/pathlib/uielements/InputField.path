@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>DISPLAY_DATE</td>
-	<td>//input[contains(@id,'84') and contains(@id,'displayDate')]</td>
+	<td>//input[contains(@id,'displayDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_DATE_TIME</td>
-	<td>//input[contains(@id,'84') and contains(@id,'displayDateTime')]</td>
+	<td>//input[contains(@id,'displayDateTime')]</td>
 	<td></td>
 </tr>
 <tr>

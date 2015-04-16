@@ -1257,7 +1257,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54798" name="ViewCannotAddDuplicateSubCategory" priority="5">
+	<command name="ViewCannotAddDuplicateSubCategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

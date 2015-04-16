@@ -125,7 +125,8 @@
 
 		<execute function="Type" locator1="CPCategoriesAdd#NAME_FIELD" value1=" " />
 		<execute function="AssertClick" locator1="CPCategoriesAdd#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPCategoriesAdd#ERROR_MESSAGE" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPCategoriesAdd#NAME_FIELD_ERROR" value1="Name Required" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPCategoriesAdd#NAME_FIELD_ERROR" value1="This field is required." />
 	</command>
 
 	<command name="deleteByActionsCP">

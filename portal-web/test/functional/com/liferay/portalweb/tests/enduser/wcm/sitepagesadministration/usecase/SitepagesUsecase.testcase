@@ -1167,7 +1167,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54747" name="WebContentAdministrationSitesPageTypes" priority="3">
+	<command name="WebContentAdministrationSitesPageTypes" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

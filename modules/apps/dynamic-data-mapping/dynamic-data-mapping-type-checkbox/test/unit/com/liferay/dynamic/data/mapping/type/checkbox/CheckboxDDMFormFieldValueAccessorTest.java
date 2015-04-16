@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type;
+package com.liferay.dynamic.data.mapping.type.checkbox;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
@@ -25,47 +25,53 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Marcellus Tavares
+ * @author Renato Rego
  */
-public class TextDDMFormFieldValueAccessorTest {
+public class CheckboxDDMFormFieldValueAccessorTest {
 
 	@Test
 	public void testGetWithLocalizedValue() {
 		Value value = new LocalizedValue(LocaleUtil.US);
 
-		value.addString(LocaleUtil.BRAZIL, "Portuguese value");
-		value.addString(LocaleUtil.US, "English value");
+		value.addString(LocaleUtil.BRAZIL, "true");
+		value.addString(LocaleUtil.US, "false");
 
 		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue("Text", value);
+			DDMFormValuesTestUtil.createDDMFormFieldValue("Checkbox", value);
 
-		TextDDMFormFieldValueAccessor textDDMFormFieldValueAccessor =
-			new TextDDMFormFieldValueAccessor(LocaleUtil.US);
-
-		Assert.assertEquals(
-			"English value",
-			textDDMFormFieldValueAccessor.get(ddmFormFieldValue));
-
-		textDDMFormFieldValueAccessor = new TextDDMFormFieldValueAccessor(
-			LocaleUtil.BRAZIL);
+		CheckboxDDMFormFieldValueAccessor checkboxDDMFormFieldValueAccessor =
+			new CheckboxDDMFormFieldValueAccessor(LocaleUtil.BRAZIL);
 
 		Assert.assertEquals(
-			"Portuguese value",
-			textDDMFormFieldValueAccessor.get(ddmFormFieldValue));
+			Boolean.TRUE,
+			checkboxDDMFormFieldValueAccessor.get(ddmFormFieldValue));
+
+		checkboxDDMFormFieldValueAccessor =
+			new CheckboxDDMFormFieldValueAccessor(LocaleUtil.US);
+
+		Assert.assertEquals(
+			Boolean.FALSE,
+			checkboxDDMFormFieldValueAccessor.get(ddmFormFieldValue));
 	}
 
 	@Test
 	public void testGetWithUnlocalizedValue() {
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"Text", new UnlocalizedValue("Scott Joplin"));
+				"Checkbox", new UnlocalizedValue("true"));
 
-		TextDDMFormFieldValueAccessor textDDMFormFieldValueAccessor =
-			new TextDDMFormFieldValueAccessor(LocaleUtil.US);
+		CheckboxDDMFormFieldValueAccessor checkboxDDMFormFieldValueAccessor =
+			new CheckboxDDMFormFieldValueAccessor(LocaleUtil.US);
 
 		Assert.assertEquals(
-			"Scott Joplin",
-			textDDMFormFieldValueAccessor.get(ddmFormFieldValue));
+			Boolean.TRUE,
+			checkboxDDMFormFieldValueAccessor.get(ddmFormFieldValue));
+
+		ddmFormFieldValue.setValue(new UnlocalizedValue("false"));
+
+		Assert.assertEquals(
+			Boolean.FALSE,
+			checkboxDDMFormFieldValueAccessor.get(ddmFormFieldValue));
 	}
 
 }

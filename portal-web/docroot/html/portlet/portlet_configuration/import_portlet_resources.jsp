@@ -357,8 +357,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
 			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 			form: document.<portlet:namespace />fm1,
+			locale: '<%= locale.toLanguageTag() %>',
 			namespace: '<portlet:namespace />',
-			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>'
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
+			timeZone: '<%= timeZone.getID() %>'
 		}
 	);
 </aui:script>

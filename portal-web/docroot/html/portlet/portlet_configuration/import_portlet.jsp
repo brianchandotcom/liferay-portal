@@ -73,9 +73,11 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 		{
 			form: document.<portlet:namespace />fm1,
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
+			locale: '<%= locale.toLanguageTag() %>',
 			namespace: '<portlet:namespace />',
 			processesNode: '#importProcesses',
-			processesResourceURL: '<%= importProcessesURL.toString() %>'
+			processesResourceURL: '<%= importProcessesURL.toString() %>',
+			timeZone: '<%= timeZone.getID() %>'
 		}
 	);
 </aui:script>

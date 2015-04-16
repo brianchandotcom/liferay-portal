@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+>
+	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsConfigurationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsConfigurationFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsIdentificationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsIdentificationFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsMiscellaneousFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsMiscellaneousFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsSocialFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsSocialFormNavigatorCategory" />
+</beans>

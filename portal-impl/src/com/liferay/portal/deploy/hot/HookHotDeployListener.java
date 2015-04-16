@@ -55,6 +55,8 @@ import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.servlet.TryFinallyFilter;
 import com.liferay.portal.kernel.servlet.WrapHttpServletRequestFilter;
 import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.struts.path.AuthPublicPath;
@@ -111,6 +113,7 @@ import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portal.servlet.taglib.ui.DeprecatedFormNavigatorEntry;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.CustomJspRegistryUtil;
@@ -1170,6 +1173,223 @@ public class HookHotDeployListener
 		}
 	}
 
+	protected void initFormNavigatorEntries(
+			String servletContextName, Properties portalProperties)
+		throws Exception {
+
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(
+					COMPANY_SETTINGS_FORM_CONFIGURATION)),
+			servletContextName, "configuration",
+			FormNavigatorConstants.COMPANY_SETTINGS_FORM,
+			"/html/portlet/portal_settings/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(
+					COMPANY_SETTINGS_FORM_IDENTIFICATION)),
+			servletContextName, "identification",
+			FormNavigatorConstants.COMPANY_SETTINGS_FORM,
+			"/html/portlet/portal_settings/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(
+					COMPANY_SETTINGS_FORM_MISCELLANEOUS)),
+			servletContextName, "miscellaneous",
+			FormNavigatorConstants.COMPANY_SETTINGS_FORM,
+			"/html/portlet/portal_settings/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(COMPANY_SETTINGS_FORM_SOCIAL)),
+			servletContextName, "social",
+			FormNavigatorConstants.COMPANY_SETTINGS_FORM,
+			"/html/portlet/portal_settings/");
+
+		initFormNavigatorEntry(
+			StringUtil.split(portalProperties.getProperty(LAYOUT_FORM_ADD)),
+			servletContextName, StringPool.BLANK,
+			FormNavigatorConstants.LAYOUT_FORM,
+			"/html/portlet/layouts_admin/layout/");
+		initFormNavigatorEntry(
+			StringUtil.split(portalProperties.getProperty(LAYOUT_FORM_UPDATE)),
+			servletContextName, StringPool.BLANK,
+			FormNavigatorConstants.LAYOUT_FORM,
+			"/html/portlet/layouts_admin/layout/");
+
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(LAYOUT_SET_FORM_UPDATE)),
+			servletContextName, StringPool.BLANK,
+			FormNavigatorConstants.LAYOUT_SET_FORM,
+			"/html/portlet/layouts_admin/layout_set/");
+
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(
+					ORGANIZATIONS_FORM_ADD_IDENTIFICATION)),
+			servletContextName, "identification",
+			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			"/html/portlet/users_admin/organization/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(ORGANIZATIONS_FORM_ADD_MAIN)),
+			servletContextName, "organization-information",
+			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			"/html/portlet/users_admin/organization/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(
+					ORGANIZATIONS_FORM_ADD_MISCELLANEOUS)),
+			servletContextName, "miscellaneous",
+			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			"/html/portlet/users_admin/organization/");
+
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(
+					ORGANIZATIONS_FORM_UPDATE_IDENTIFICATION)),
+			servletContextName, "identification",
+			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			"/html/portlet/users_admin/organization/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(ORGANIZATIONS_FORM_UPDATE_MAIN)),
+			servletContextName, "organization-information",
+			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			"/html/portlet/users_admin/organization/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(
+					ORGANIZATIONS_FORM_UPDATE_MISCELLANEOUS)),
+			servletContextName, "miscellaneous",
+			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			"/html/portlet/users_admin/organization/");
+
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(SITES_FORM_ADD_ADVANCED)),
+			servletContextName, "advanced", FormNavigatorConstants.SITES_FORM,
+			"/html/portlet/sites_admin/site/");
+		initFormNavigatorEntry(
+			StringUtil.split(portalProperties.getProperty(SITES_FORM_ADD_MAIN)),
+			servletContextName, "basic-information",
+			FormNavigatorConstants.SITES_FORM,
+			"/html/portlet/sites_admin/site/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(SITES_FORM_ADD_MISCELLANEOUS)),
+			servletContextName, "miscellaneous",
+			FormNavigatorConstants.SITES_FORM,
+			"/html/portlet/sites_admin/site/");
+		initFormNavigatorEntry(
+			StringUtil.split(portalProperties.getProperty(SITES_FORM_ADD_SEO)),
+			servletContextName, "search-engine-optimization",
+			FormNavigatorConstants.SITES_FORM,
+			"/html/portlet/sites_admin/site/");
+
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(SITES_FORM_UPDATE_ADVANCED)),
+			servletContextName, "advanced", FormNavigatorConstants.SITES_FORM,
+			"/html/portlet/sites_admin/site/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(SITES_FORM_UPDATE_MAIN)),
+			servletContextName, "basic-information",
+			FormNavigatorConstants.SITES_FORM,
+			"/html/portlet/sites_admin/site/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(SITES_FORM_UPDATE_MISCELLANEOUS)),
+			servletContextName, "miscellaneous",
+			FormNavigatorConstants.SITES_FORM,
+			"/html/portlet/sites_admin/site/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(SITES_FORM_UPDATE_SEO)),
+			servletContextName, "search-engine-optimization",
+			FormNavigatorConstants.SITES_FORM,
+			"/html/portlet/sites_admin/site/");
+
+		initFormNavigatorEntry(
+			StringUtil.split(portalProperties.getProperty(USERS_FORM_ADD_MAIN)),
+			servletContextName, "user-information",
+			FormNavigatorConstants.USERS_FORM,
+			"/html/portlet/users_admin/user/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(USERS_FORM_ADD_IDENTIFICATION)),
+			servletContextName, "identification",
+			FormNavigatorConstants.USERS_FORM,
+			"/html/portlet/users_admin/user/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(USERS_FORM_ADD_MISCELLANEOUS)),
+			servletContextName, "miscellaneous",
+			FormNavigatorConstants.USERS_FORM,
+			"/html/portlet/users_admin/user/");
+
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(USERS_FORM_UPDATE_IDENTIFICATION)),
+			servletContextName, "identification",
+			FormNavigatorConstants.USERS_FORM,
+			"/html/portlet/users_admin/user/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(USERS_FORM_UPDATE_MAIN)),
+			servletContextName, "user-information",
+			FormNavigatorConstants.USERS_FORM,
+			"/html/portlet/users_admin/user/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(USERS_FORM_UPDATE_MISCELLANEOUS)),
+			servletContextName, "miscellaneous",
+			FormNavigatorConstants.USERS_FORM,
+			"/html/portlet/users_admin/user/");
+
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(
+					USERS_FORM_MY_ACCOUNT_IDENTIFICATION)),
+			servletContextName, "identification",
+			FormNavigatorConstants.USERS_FORM,
+			"/html/portlet/users_admin/user/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(USERS_FORM_MY_ACCOUNT_MAIN)),
+			servletContextName, "user-information",
+			FormNavigatorConstants.USERS_FORM,
+			"/html/portlet/users_admin/user/");
+		initFormNavigatorEntry(
+			StringUtil.split(
+				portalProperties.getProperty(
+					USERS_FORM_MY_ACCOUNT_MISCELLANEOUS)),
+			servletContextName, "miscellaneous",
+			FormNavigatorConstants.USERS_FORM,
+			"/html/portlet/users_admin/user/");
+	}
+
+	protected void initFormNavigatorEntry(
+		String[] formNavigatorSections, String servletContextName,
+		String categoryKey, String formNavigatorId, String jspPath) {
+
+		for (int i = 0; i < formNavigatorSections.length; i++) {
+			String formNavigatorSection = formNavigatorSections[i];
+
+			FormNavigatorEntry deprecatedFormNavigatorEntry =
+				new DeprecatedFormNavigatorEntry(
+					formNavigatorSection, formNavigatorSection, categoryKey,
+					formNavigatorId, jspPath);
+
+			registerService(
+				servletContextName,
+				formNavigatorId + categoryKey + formNavigatorSection,
+				FormNavigatorEntry.class, deprecatedFormNavigatorEntry,
+				"service.ranking", -i);
+		}
+	}
+
 	protected void initHotDeployListeners(
 			String servletContextName, ClassLoader portletClassLoader,
 			Properties portalProperties)
@@ -1435,6 +1655,7 @@ public class HookHotDeployListener
 			servletContextName, portletClassLoader, portalProperties);
 		initAuthVerifiers(
 			servletContextName, portletClassLoader, portalProperties);
+		initFormNavigatorEntries(servletContextName, portalProperties);
 		initHotDeployListeners(
 			servletContextName, portletClassLoader, portalProperties);
 		initModelListeners(

@@ -46,6 +46,7 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 
 		jsonObject.put("allowedContent", "a");
 		jsonObject.put("disallowedContent", "br");
+		jsonObject.put("extraPlugins", "placeholder");
 
 		JSONObject toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
 

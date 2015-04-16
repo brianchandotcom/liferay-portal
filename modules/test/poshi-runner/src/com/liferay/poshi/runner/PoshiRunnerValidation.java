@@ -70,10 +70,10 @@ public class PoshiRunnerValidation {
 				_validatePathFile(element, filePath);
 			}
 			else if (classType.equals("testcase")) {
-				Element element = PoshiRunnerContext.getTestcaseRootElement(
+				Element element = PoshiRunnerContext.getTestCaseRootElement(
 					className);
 
-				_validateTestcaseFile(element, filePath);
+				_validateTestCaseFile(element, filePath);
 			}
 		}
 	}
@@ -482,7 +482,7 @@ public class PoshiRunnerValidation {
 		_parseElements(element, filePath);
 	}
 
-	private static void _validateTestcaseFile(Element element, String filePath)
+	private static void _validateTestCaseFile(Element element, String filePath)
 		throws PoshiRunnerException {
 
 		_validateDefinitionElement(element, filePath);
@@ -555,13 +555,13 @@ public class PoshiRunnerValidation {
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(testName);
 
-		if (!PoshiRunnerContext.isRootElement("testcase#" + className)) {
+		if (!PoshiRunnerContext.isRootElement("test-case#" + className)) {
 			throw new PoshiRunnerException (
-				"Invalid testcase class " + className);
+				"Invalid test case class " + className);
 		}
 
 		if (testName.contains("#")) {
-			String commandElementKey = "testcase#" + testName;
+			String commandElementKey = "test-case#" + testName;
 
 			if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
 				String commandName =
@@ -569,7 +569,7 @@ public class PoshiRunnerValidation {
 						testName);
 
 				throw new PoshiRunnerException(
-					"Invalid testcase command " + commandName);
+					"Invalid test case command " + commandName);
 			}
 		}
 	}

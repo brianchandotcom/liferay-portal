@@ -83,10 +83,20 @@ public class PoshiRunnerGetterUtil {
 		return filePath.substring(x + 1, y);
 	}
 
-	public static String getClassTypeFromFilePath(String filePath) {
-		int x = filePath.lastIndexOf(".");
+	public static String getClassTypeFromFileExtension(String fileExtension) {
+		String classType = fileExtension;
 
-		return filePath.substring(x + 1);
+		if (fileExtension.equals("testcase")) {
+			classType = "test-case";
+		}
+
+		return classType;
+	}
+
+	public static String getClassTypeFromFilePath(String filePath) {
+		String fileExtension = getFileExtensionFromFilePath(filePath);
+
+		return getClassTypeFromFileExtension(fileExtension);
 	}
 
 	public static String getCommandNameFromClassCommandName(
@@ -102,6 +112,22 @@ public class PoshiRunnerGetterUtil {
 		return classCommandName.substring(x + 1);
 	}
 
+	public static String getFileExtensionFromClassType(String classType) {
+		String fileExtension = classType;
+
+		if (fileExtension.equals("test-case")) {
+			fileExtension = "testcase";
+		}
+
+		return fileExtension;
+	}
+
+	public static String getFileExtensionFromFilePath(String filePath) {
+		int x = filePath.lastIndexOf(".");
+
+		return filePath.substring(x + 1);
+	}
+
 	public static String getFileNameFromClassKey(String classKey) {
 		int x = classKey.indexOf("#");
 		int y = classKey.length();
@@ -109,7 +135,14 @@ public class PoshiRunnerGetterUtil {
 		String classType = classKey.substring(0, x);
 		String className = classKey.substring(x + 1, y);
 
-		return className + "." + classType;
+		return className + "." + getFileExtensionFromClassType(classType);
+	}
+
+	public static String getFileNameFromFilePath(String filePath) {
+		String className = getClassNameFromFilePath(filePath);
+		String fileExtension = getFileExtensionFromFilePath(filePath);
+
+		return className + "." + fileExtension;
 	}
 
 	public static String getProjectDir() {

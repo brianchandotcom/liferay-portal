@@ -139,12 +139,12 @@ public class PoshiRunnerContext {
 		return _seleniumParameterCounts.get(commandName);
 	}
 
-	public static Element getTestcaseCommandElement(String classCommandName) {
-		return _commandElements.get("testcase#" + classCommandName);
+	public static Element getTestCaseCommandElement(String classCommandName) {
+		return _commandElements.get("test-case#" + classCommandName);
 	}
 
-	public static Element getTestcaseRootElement(String className) {
-		return _rootElements.get("testcase#" + className);
+	public static Element getTestCaseRootElement(String className) {
+		return _rootElements.get("test-case#" + className);
 	}
 
 	public static boolean isCommandElement(String commandElementKey) {
@@ -293,15 +293,17 @@ public class PoshiRunnerContext {
 				filePath = filePath.replace("/", "\\");
 			}
 
+			_filePaths.put(
+				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
+				filePath);
+
 			String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
 				filePath);
 			String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
 				filePath);
 
-			_filePaths.put(className + "." + classType, filePath);
-
 			if (classType.equals("action") || classType.equals("function") ||
-				classType.equals("macro") || classType.equals("testcase")) {
+				classType.equals("macro") || classType.equals("test-case")) {
 
 				Element rootElement =
 					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);

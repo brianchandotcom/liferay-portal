@@ -155,21 +155,21 @@ public class PoshiRunnerContextTest extends TestCase {
 	}
 
 	@Test
-	public void testGetTestcaseCommandElement() {
-		Element element = PoshiRunnerContext.getTestcaseCommandElement(
-			"Testcase#test");
+	public void testGetTestCaseCommandElement() {
+		Element element = PoshiRunnerContext.getTestCaseCommandElement(
+			"Test#test");
 
 		Assert.assertEquals(
-			"getTestcaseCommandElement is failing", "test",
+			"getTestCaseCommandElement is failing", "test",
 			element.attributeValue("name"));
 	}
 
 	@Test
-	public void testGetTestcaseRootElement() {
-		Element element = PoshiRunnerContext.getTestcaseRootElement("Testcase");
+	public void testGetTestCaseRootElement() {
+		Element element = PoshiRunnerContext.getTestCaseRootElement("Test");
 
 		Assert.assertEquals(
-			"getTestcaseRootElement is failing", "definition",
+			"getTestCaseRootElement is failing", "definition",
 			element.getName());
 	}
 

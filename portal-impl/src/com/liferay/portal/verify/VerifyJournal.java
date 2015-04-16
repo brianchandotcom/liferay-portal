@@ -534,17 +534,27 @@ public class VerifyJournal extends VerifyProcess {
 				JournalArticle article =
 					JournalArticleLocalServiceUtil.getArticle(id);
 
-				Document document = SAXReaderUtil.read(article.getContent());
+				try {
+					Document document = SAXReaderUtil.read(
+						article.getContent());
 
-				Element rootElement = document.getRootElement();
+					Element rootElement = document.getRootElement();
 
-				for (Element element : rootElement.elements()) {
-					updateElement(article.getGroupId(), element);
+					for (Element element : rootElement.elements()) {
+						updateElement(article.getGroupId(), element);
+					}
+
+					article.setContent(document.asXML());
+
+					JournalArticleLocalServiceUtil.updateJournalArticle(
+						article);
 				}
-
-				article.setContent(document.asXML());
-
-				JournalArticleLocalServiceUtil.updateJournalArticle(article);
+				catch (Exception e) {
+					_log.error(
+						"Unable to update content for article " +
+							article.getId(),
+						e);
+				}
 			}
 		}
 		finally {

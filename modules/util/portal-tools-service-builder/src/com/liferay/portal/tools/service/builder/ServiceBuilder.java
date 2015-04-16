@@ -302,7 +302,7 @@ public class ServiceBuilder {
 		modelHintsUtil.setModelHints(modelHintsImpl);
 
 		try {
-			new ServiceBuilder(
+			ServiceBuilder serviceBuilder = new ServiceBuilder(
 				apiDir, autoImportDefaultReferences, autoNamespaceTables,
 				beanLocatorUtil, buildNumber, buildNumberIncrement, hbmFileName,
 				implDir, inputFileName, modelHintsFileName, osgiModule,
@@ -310,6 +310,11 @@ public class ServiceBuilder {
 				resourceActionModels, resourcesDir, springFileName,
 				springNamespaces, sqlDir, sqlFileName, sqlIndexesFileName,
 				sqlSequencesFileName, targetEntityName, testDir, true);
+
+			String modifiedFiles = StringUtil.merge(
+				serviceBuilder.getModifiedFiles());
+
+			System.setProperty("service.modified.files", modifiedFiles);
 		}
 		catch (Throwable t) {
 			String message =
@@ -504,19 +509,23 @@ public class ServiceBuilder {
 		return humanName;
 	}
 
-	public static void writeFile(File file, String content) throws IOException {
-		writeFile(file, content, AUTHOR);
-	}
-
-	public static void writeFile(File file, String content, String author)
+	public static void writeFile(
+			File file, String content, Set<String> modifiedFiles)
 		throws IOException {
 
-		writeFile(file, content, author, null);
+		writeFile(file, content, AUTHOR, modifiedFiles);
+	}
+
+	public static void writeFile(
+			File file, String content, String author, Set<String> modifiedFiles)
+		throws IOException {
+
+		writeFile(file, content, author, null, modifiedFiles);
 	}
 
 	public static void writeFile(
 			File file, String content, String author,
-			Map<String, Object> jalopySettings)
+			Map<String, Object> jalopySettings, Set<String> modifiedFiles)
 		throws IOException {
 
 		String packagePath = _getPackagePath(file);
@@ -628,12 +637,13 @@ public class ServiceBuilder {
 		newContent = newContent.substring(0, newContent.length() - 2) + "\n\n}";
 		*/
 
-		writeFileRaw(file, newContent);
+		writeFileRaw(file, newContent, modifiedFiles);
 
 		tempFile.deleteOnExit();
 	}
 
-	public static void writeFileRaw(File file, String content)
+	public static void writeFileRaw(
+			File file, String content, Set<String> modifiedFiles)
 		throws IOException {
 
 		// Write file if and only if the file has changed
@@ -642,6 +652,8 @@ public class ServiceBuilder {
 			!content.equals(FileUtils.readFileToString(file))) {
 
 			FileUtils.write(file, content);
+
+			modifiedFiles.add(file.getAbsolutePath());
 
 			System.out.println("Writing " + file);
 		}
@@ -1312,6 +1324,8 @@ public class ServiceBuilder {
 
 		_entityPool.put(name, entity);
 
+		_modifiedFiles.addAll(serviceBuilder.getModifiedFiles());
+
 		if (useTempFile) {
 			refFile.deleteOnExit();
 		}
@@ -1415,6 +1429,10 @@ public class ServiceBuilder {
 		}
 
 		return mappingEntitiesPKList;
+	}
+
+	public Set<String> getModifiedFiles() {
+		return _modifiedFiles;
 	}
 
 	public String getNoSuchEntityException(Entity entity) {
@@ -2135,7 +2153,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" +
 				entity.getName() + "ActionableDynamicQuery.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createBlobModels(Entity entity) throws Exception {
@@ -2172,7 +2190,7 @@ public class ServiceBuilder {
 				_serviceOutputPath + "/model/" + entity.getName() +
 					col.getMethodName() + "BlobModel.java");
 
-			writeFile(blobModelFile, content, _author);
+			writeFile(blobModelFile, content, _author, _modifiedFiles);
 		}
 	}
 
@@ -2191,7 +2209,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" +
 				entity.getPKClassName() + ".java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createExceptions(List<String> exceptions) throws Exception {
@@ -2235,7 +2253,7 @@ public class ServiceBuilder {
 
 				content = StringUtil.replace(content, "\r\n", "\n");
 
-				writeFileRaw(exceptionFile, content);
+				writeFileRaw(exceptionFile, content, _modifiedFiles);
 			}
 
 			if (exception.startsWith("NoSuch")) {
@@ -2248,7 +2266,7 @@ public class ServiceBuilder {
 						content, "kernel.exception.NoSuchModelException",
 						"NoSuchModelException");
 
-					writeFileRaw(exceptionFile, content);
+					writeFileRaw(exceptionFile, content, _modifiedFiles);
 				}
 			}
 		}
@@ -2276,7 +2294,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" +
 				entity.getName() + "ExportActionableDynamicQuery.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createExtendedModel(Entity entity) throws Exception {
@@ -2319,7 +2337,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + ".java");
 
-		writeFile(modelFile, content, _author);
+		writeFile(modelFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createExtendedModelBaseImpl(Entity entity) throws Exception {
@@ -2336,7 +2354,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_outputPath + "/model/impl/" + entity.getName() + "BaseImpl.java");
 
-		writeFile(modelFile, content, _author);
+		writeFile(modelFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createExtendedModelImpl(Entity entity) throws Exception {
@@ -2361,10 +2379,10 @@ public class ServiceBuilder {
 					"ModelImpl\\s+implements\\s+" + entity.getName(),
 				"extends " + entity.getName() + "BaseImpl");
 
-			writeFileRaw(modelFile, content);
+			writeFileRaw(modelFile, content, _modifiedFiles);
 		}
 		else {
-			writeFile(modelFile, content, _author);
+			writeFile(modelFile, content, _author, _modifiedFiles);
 		}
 	}
 
@@ -2394,7 +2412,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
 				"Finder.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createFinderUtil(Entity entity) throws Exception {
@@ -2423,7 +2441,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
 				"FinderUtil.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createHbm(Entity entity) {
@@ -2531,7 +2549,7 @@ public class ServiceBuilder {
 					newContent.substring(lastClass);
 		}
 
-		writeFileRaw(xmlFile, _formatXml(newContent));
+		writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFiles);
 	}
 
 	private void _createModel(Entity entity) throws Exception {
@@ -2548,7 +2566,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + "Model.java");
 
-		writeFile(modelFile, content, _author);
+		writeFile(modelFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createModelCache(Entity entity) throws Exception {
@@ -2570,7 +2588,7 @@ public class ServiceBuilder {
 			_outputPath + "/model/impl/" + entity.getName() +
 				"CacheModel.java");
 
-		writeFile(modelFile, content, _author);
+		writeFile(modelFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createModelClp(Entity entity) throws Exception {
@@ -2623,7 +2641,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + "Clp.java");
 
-		writeFile(modelFile, content, _author);
+		writeFile(modelFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createModelHintsXml() throws Exception {
@@ -2670,7 +2688,7 @@ public class ServiceBuilder {
 					newContent.substring(lastModel);
 		}
 
-		writeFileRaw(xmlFile, _formatXml(newContent));
+		writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFiles);
 	}
 
 	private void _createModelImpl(Entity entity) throws Exception {
@@ -2691,7 +2709,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_outputPath + "/model/impl/" + entity.getName() + "ModelImpl.java");
 
-		writeFile(modelFile, content, _author);
+		writeFile(modelFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createModelSoap(Entity entity) throws Exception {
@@ -2708,7 +2726,7 @@ public class ServiceBuilder {
 
 		// Write file
 
-		writeFile(modelFile, content, _author);
+		writeFile(modelFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createModelWrapper(Entity entity) throws Exception {
@@ -2743,7 +2761,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + "Wrapper.java");
 
-		writeFile(modelFile, content, _author);
+		writeFile(modelFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createPersistence(Entity entity) throws Exception {
@@ -2766,7 +2784,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
 				"Persistence.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createPersistenceImpl(Entity entity) throws Exception {
@@ -2789,7 +2807,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/persistence/impl/" + entity.getName() +
 				"PersistenceImpl.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 
 		ejbFile = new File(
 			_outputPath + "/service/persistence/" + entity.getName() +
@@ -2817,7 +2835,7 @@ public class ServiceBuilder {
 			_testOutputPath + "/service/persistence/test/" + entity.getName() +
 				"PersistenceTest.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 
 		ejbFile = new File(
 			_testOutputPath + "/service/persistence/" + entity.getName() +
@@ -2850,7 +2868,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
 				"Util.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createPool(Entity entity) {
@@ -2917,7 +2935,7 @@ public class ServiceBuilder {
 
 		// Write file
 
-		writeFileRaw(propsFile, content);
+		writeFileRaw(propsFile, content, _modifiedFiles);
 	}
 
 	private void _createRemotingXml() throws Exception {
@@ -3002,7 +3020,7 @@ public class ServiceBuilder {
 			}
 		}
 
-		writeFileRaw(outputFile, _formatXml(newContent));
+		writeFileRaw(outputFile, _formatXml(newContent), _modifiedFiles);
 	}
 
 	private void _createService(Entity entity, int sessionType)
@@ -3059,7 +3077,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "Service.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createServiceBaseImpl(Entity entity, int sessionType)
@@ -3091,7 +3109,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/base/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceBaseImpl.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createServiceClp(Entity entity, int sessionType)
@@ -3123,7 +3141,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceClp.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createServiceClpInvoker(Entity entity, int sessionType)
@@ -3172,7 +3190,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/base/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceClpInvoker.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createServiceClpMessageListener() throws Exception {
@@ -3194,7 +3212,7 @@ public class ServiceBuilder {
 		File ejbFile = new File(
 			_serviceOutputPath + "/service/messaging/ClpMessageListener.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createServiceClpSerializer(List<String> exceptions)
@@ -3218,7 +3236,7 @@ public class ServiceBuilder {
 		File ejbFile = new File(
 			_serviceOutputPath + "/service/ClpSerializer.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createServiceFactory(Entity entity, int sessionType) {
@@ -3266,7 +3284,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/http/" + entity.getName() +
 				"ServiceHttp.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createServiceImpl(Entity entity, int sessionType)
@@ -3288,7 +3306,7 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "ServiceImpl.java");
 
 		if (!ejbFile.exists()) {
-			writeFile(ejbFile, content, _author);
+			writeFile(ejbFile, content, _author, _modifiedFiles);
 		}
 	}
 
@@ -3340,7 +3358,7 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplServicePropsUtil, context);
 
-		writeFile(file, content);
+		writeFile(file, content, _modifiedFiles);
 	}
 
 	private void _createServiceSoap(Entity entity) throws Exception {
@@ -3365,7 +3383,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/http/" + entity.getName() +
 				"ServiceSoap.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createServiceUtil(Entity entity, int sessionType)
@@ -3393,7 +3411,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceUtil.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createServiceWrapper(Entity entity, int sessionType)
@@ -3421,7 +3439,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceWrapper.java");
 
-		writeFile(ejbFile, content, _author);
+		writeFile(ejbFile, content, _author, _modifiedFiles);
 	}
 
 	private void _createSpringXml() throws Exception {
@@ -3496,7 +3514,7 @@ public class ServiceBuilder {
 					newContent.substring(lastSession);
 		}
 
-		writeFileRaw(xmlFile, _formatXml(newContent));
+		writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFiles);
 	}
 
 	private void _createSQLIndexes() throws Exception {
@@ -3615,7 +3633,7 @@ public class ServiceBuilder {
 			sb.setIndex(sb.index() - 2);
 		}
 
-		writeFileRaw(sqlFile, sb.toString());
+		writeFileRaw(sqlFile, sb.toString(), _modifiedFiles);
 
 		// indexes.properties
 
@@ -3647,7 +3665,7 @@ public class ServiceBuilder {
 					content.substring(0, x) + newCreateTableString +
 						content.substring(y + 2);
 
-				writeFileRaw(sqlFile, content);
+				writeFileRaw(sqlFile, content, _modifiedFiles);
 			}
 		}
 		else if (addMissingTables) {
@@ -3683,7 +3701,7 @@ public class ServiceBuilder {
 					sb.append(newCreateTableString);
 				}
 
-				writeFileRaw(sqlFile, sb.toString());
+				writeFileRaw(sqlFile, sb.toString(), _modifiedFiles);
 			}
 		}
 	}
@@ -3768,7 +3786,7 @@ public class ServiceBuilder {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		writeFileRaw(sqlFile, sb.toString());
+		writeFileRaw(sqlFile, sb.toString(), _modifiedFiles);
 	}
 
 	private void _createSQLTables() throws Exception {
@@ -3821,7 +3839,7 @@ public class ServiceBuilder {
 
 		String content = FileUtils.readFileToString(sqlFile);
 
-		writeFileRaw(sqlFile, content.trim());
+		writeFileRaw(sqlFile, content.trim(), _modifiedFiles);
 	}
 
 	private void _createSQLTables(
@@ -3882,7 +3900,7 @@ public class ServiceBuilder {
 					sb.append(newCreateTableString);
 				}
 
-				writeFileRaw(sqlFile, sb.toString());
+				writeFileRaw(sqlFile, sb.toString(), _modifiedFiles);
 			}
 		}
 	}
@@ -4830,7 +4848,7 @@ public class ServiceBuilder {
 				content, "package " + _packagePath + ".service.persistence;",
 				sb.toString());
 
-			writeFileRaw(newFinderImpl, content);
+			writeFileRaw(newFinderImpl, content, _modifiedFiles);
 		}
 
 		if (newFinderImpl.exists()) {
@@ -5417,6 +5435,7 @@ public class ServiceBuilder {
 	private String _implDir;
 	private Map<String, JavaClass> _javaClasses = new HashMap<>();
 	private String _modelHintsFileName;
+	private Set<String> _modifiedFiles = new HashSet<>();
 	private boolean _mvccEnabled;
 	private boolean _osgiModule;
 	private String _outputPath;

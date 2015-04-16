@@ -37,6 +37,17 @@ import org.dom4j.Element;
  */
 public class PoshiRunnerContext {
 
+	public static void clearFiles() {
+		_actionExtendClassName.clear();
+		_commandElements.clear();
+		_commandSummaries.clear();
+		_filePaths.clear();
+		_functionLocatorCounts.clear();
+		_pathLocators.clear();
+		_rootElements.clear();
+		_seleniumParameterCounts.clear();
+	}
+
 	public static List<Element> getActionCaseElements(String classCommandName) {
 		List<Element> actionCaseElements = new ArrayList<>();
 

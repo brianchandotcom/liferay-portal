@@ -4,10 +4,12 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	!javax.portlet.*,\
 	!javax.servlet.*,\
+	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
 	*
 Include-Resource:\
 	classes,\
+	{META-INF/maven/plugin.xml=src/META-INF/maven/plugin.xml},\
 	@../../../lib/portal/xercesImpl.jar!/org/apache/xerces/xni/XNIException.class,\
 	@../../../portal-impl/portal-impl.jar!/META-INF/portal-model-hints.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/counter/service.xml,\

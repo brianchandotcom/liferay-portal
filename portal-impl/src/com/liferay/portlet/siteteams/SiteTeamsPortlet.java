@@ -43,6 +43,12 @@ import org.apache.struts.action.ActionMapping;
  */
 public class SiteTeamsPortlet extends PortletAction {
 
+	public void deleteTeam(ActionRequest actionRequest) throws Exception {
+		long teamId = ParamUtil.getLong(actionRequest, "teamId");
+
+		TeamServiceUtil.deleteTeam(teamId);
+	}
+
 	@Override
 	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -117,13 +123,7 @@ public class SiteTeamsPortlet extends PortletAction {
 			getForward(renderRequest, "portlet.sites_admin.edit_team"));
 	}
 
-	protected void deleteTeam(ActionRequest actionRequest) throws Exception {
-		long teamId = ParamUtil.getLong(actionRequest, "teamId");
-
-		TeamServiceUtil.deleteTeam(teamId);
-	}
-
-	protected void updateTeam(ActionRequest actionRequest) throws Exception {
+	public void updateTeam(ActionRequest actionRequest) throws Exception {
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");

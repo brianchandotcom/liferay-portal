@@ -311,8 +311,8 @@ public class ServiceBuilder {
 				springNamespaces, sqlDir, sqlFileName, sqlIndexesFileName,
 				sqlSequencesFileName, targetEntityName, testDir, true);
 		}
-		catch (Exception e) {
-			System.out.println(
+		catch (Throwable t) {
+			String message =
 				"Please set these arguments. Sample values are:\n" +
 				"\n" +
 				"\tservice.api.dir=${basedir}/../portal-service/src\n" +
@@ -386,16 +386,30 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.service_util=" + _TPL_ROOT + "service_util.ftl\n"+
 				"\t-Dservice.tpl.service_wrapper=" + _TPL_ROOT + "service_wrapper.ftl\n"+
 				"\t-Dservice.tpl.spring_xml=" + _TPL_ROOT + "spring_xml.ftl\n"+
-				"\t-Dservice.tpl.spring_xml_session=" + _TPL_ROOT + "spring_xml_session.ftl");
+				"\t-Dservice.tpl.spring_xml_session=" + _TPL_ROOT + "spring_xml_session.ftl";
 
-			ArgumentsUtil.processMainException(arguments, e);
+			if (t instanceof ServiceBuilderException) {
+				ServiceBuilderException serviceBuilderException =
+					(ServiceBuilderException)t;
+
+				System.err.println(
+					serviceBuilderException.getServiceBuilderMessage());
+			}
+			else if (t instanceof Exception) {
+				System.out.println(message);
+
+				ArgumentsUtil.processMainException(arguments, (Exception)t);
+			}
+			else {
+				t.printStackTrace();
+			}
 		}
 
 		try {
 			ClearThreadLocalUtil.clearThreadLocal();
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Throwable t) {
+			t.printStackTrace();
 		}
 
 		Introspector.flushCaches();
@@ -1220,7 +1234,7 @@ public class ServiceBuilder {
 			pos = _ejbList.indexOf(new Entity(name));
 
 			if (pos == -1) {
-				throw new RuntimeException(
+				throw new ServiceBuilderException(
 					"Cannot find " + name + " in " +
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
@@ -1239,7 +1253,7 @@ public class ServiceBuilder {
 			pos = _ejbList.indexOf(new Entity(refEntity));
 
 			if (pos == -1) {
-				throw new RuntimeException(
+				throw new ServiceBuilderException(
 					"Cannot find " + refEntity + " in " +
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
@@ -1265,9 +1279,19 @@ public class ServiceBuilder {
 
 			ClassLoader classLoader = getClass().getClassLoader();
 
-			FileUtils.write(
-				refFile,
-				StringUtil.read(classLoader, refPackageDir + "/service.xml"));
+			String refContent = null;
+
+			try {
+				refContent = StringUtil.read(
+					classLoader, refPackageDir + "/service.xml");
+			}
+			catch (IOException ioe) {
+				throw new ServiceBuilderException(
+					"Cannot find " + refEntity + " in " +
+						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
+			}
+
+			FileUtils.write(refFile, refContent);
 
 			useTempFile = true;
 		}
@@ -5347,7 +5371,7 @@ public class ServiceBuilder {
 			Entity referenceEntity = getEntity(referenceName);
 
 			if (referenceEntity == null) {
-				throw new RuntimeException(
+				throw new ServiceBuilderException(
 					"Unable to resolve reference " + referenceName + " in " +
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}

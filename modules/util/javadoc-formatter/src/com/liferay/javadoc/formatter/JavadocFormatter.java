@@ -15,6 +15,7 @@
 package com.liferay.javadoc.formatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -23,13 +24,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReader;
-import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.xml.SAXReaderImpl;
-import com.liferay.util.xml.DocUtil;
+import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.xml.SAXReaderFactory;
+import com.liferay.util.xml.Dom4jDocUtil;
+import com.liferay.util.xml.XMLFormatter;
+import com.liferay.util.xml.XMLSafeReader;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.AbstractBaseJavaEntity;
@@ -69,7 +68,16 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.DirectoryScanner;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,6 +99,12 @@ public class JavadocFormatter {
 	}
 
 	public JavadocFormatter(Map<String, String> arguments) throws Exception {
+		_author = GetterUtil.getString(arguments.get("javadoc.author"));
+
+		if (Validator.isNull(_author) || _author.startsWith("$")) {
+			_author = "Brian Wing Shun Chan";
+		}
+
 		String init = arguments.get("javadoc.init");
 
 		if (Validator.isNotNull(init) && !init.startsWith("$")) {
@@ -99,7 +113,7 @@ public class JavadocFormatter {
 
 		_inputDir = GetterUtil.getString(arguments.get("javadoc.input.dir"));
 
-		if (_inputDir.startsWith("$")) {
+		if (Validator.isNull(_inputDir) || _inputDir.startsWith("$")) {
 			_inputDir = "./";
 		}
 
@@ -111,10 +125,19 @@ public class JavadocFormatter {
 
 		String[] limits = StringUtil.split(arguments.get("javadoc.limit"), ",");
 
+		if (limits.length == 0) {
+			limits = new String[] {StringPool.BLANK};
+		}
+
+		_lowestSupportedJavaVersion = GetterUtil.getDouble(
+			arguments.get("javadoc.lowest.supported.java.version"), 1.7);
+
 		_outputFilePrefix = GetterUtil.getString(
 			arguments.get("javadoc.output.file.prefix"));
 
-		if (_outputFilePrefix.startsWith("$")) {
+		if (Validator.isNull(_outputFilePrefix) ||
+			_outputFilePrefix.startsWith("$")) {
+
 			_outputFilePrefix = "javadocs";
 		}
 
@@ -212,14 +235,15 @@ public class JavadocFormatter {
 			Element javadocsXmlRootElement =
 				javadocsXmlDocument.getRootElement();
 
-			javadocsXmlRootElement.sortElementsByChildElement(
-				"javadoc", "type");
+			_sortElementsByChildElement(
+				javadocsXmlRootElement, "javadoc", "type");
 
-			String newJavadocsXmlContent =
-				javadocsXmlDocument.formattedString();
+			String newJavadocsXmlContent = _formattedString(
+				javadocsXmlDocument);
 
 			if (!oldJavadocsXmlContent.equals(newJavadocsXmlContent)) {
-				_fileUtil.write(javadocsXmlFile, newJavadocsXmlContent);
+				FileUtils.writeStringToFile(
+					javadocsXmlFile, newJavadocsXmlContent);
 			}
 
 			_detachUnnecessaryTypes(javadocsXmlRootElement);
@@ -231,17 +255,17 @@ public class JavadocFormatter {
 			String oldJavadocsRuntimeXmlContent = StringPool.BLANK;
 
 			if (javadocsRuntimeXmlFile.exists()) {
-				oldJavadocsRuntimeXmlContent = _fileUtil.read(
+				oldJavadocsRuntimeXmlContent = FileUtils.readFileToString(
 					javadocsRuntimeXmlFile);
 			}
 
-			String newJavadocsRuntimeXmlContent =
-				javadocsXmlDocument.compactString();
+			String newJavadocsRuntimeXmlContent = _compactString(
+				javadocsXmlDocument);
 
 			if (!oldJavadocsRuntimeXmlContent.equals(
 					newJavadocsRuntimeXmlContent)) {
 
-				_fileUtil.write(
+				FileUtils.writeStringToFile(
 					javadocsRuntimeXmlFile, newJavadocsRuntimeXmlContent);
 			}
 		}
@@ -307,8 +331,7 @@ public class JavadocFormatter {
 		}
 
 		if (!comment.contains("* @deprecated ") ||
-			ServiceBuilder.hasAnnotation(
-				abstractBaseJavaEntity, "Deprecated")) {
+			_hasAnnotation(abstractBaseJavaEntity, "Deprecated")) {
 
 			return comment;
 		}
@@ -338,7 +361,7 @@ public class JavadocFormatter {
 		if ((docletTags.length == 0) && name.equals("author")) {
 			Element element = parentElement.addElement(name);
 
-			element.addCDATA(ServiceBuilder.AUTHOR);
+			element.addCDATA(_author);
 		}
 	}
 
@@ -541,7 +564,7 @@ public class JavadocFormatter {
 
 		Element fieldElement = rootElement.addElement("field");
 
-		DocUtil.add(fieldElement, "name", javaField.getName());
+		Dom4jDocUtil.add(fieldElement, "name", javaField.getName());
 
 		String comment = _getCDATA(javaField);
 
@@ -562,7 +585,7 @@ public class JavadocFormatter {
 
 		Element methodElement = rootElement.addElement("method");
 
-		DocUtil.add(methodElement, "name", javaMethod.getName());
+		Dom4jDocUtil.add(methodElement, "name", javaMethod.getName());
 
 		String comment = _getCDATA(javaMethod);
 
@@ -601,13 +624,13 @@ public class JavadocFormatter {
 
 		Element paramElement = methodElement.addElement("param");
 
-		DocUtil.add(paramElement, "name", name);
-		DocUtil.add(paramElement, "type", _getTypeValue(javaParameter));
+		Dom4jDocUtil.add(paramElement, "name", name);
+		Dom4jDocUtil.add(paramElement, "type", _getTypeValue(javaParameter));
 
 		if (value != null) {
 			value = value.substring(name.length());
 
-			DocUtil.add(paramElement, "required", true);
+			Dom4jDocUtil.add(paramElement, "required", true);
 		}
 
 		value = _trimMultilineText(value);
@@ -655,7 +678,7 @@ public class JavadocFormatter {
 
 			comment = GetterUtil.getString(returnDocletTag.getValue());
 
-			DocUtil.add(returnElement, "required", true);
+			Dom4jDocUtil.add(returnElement, "required", true);
 		}
 
 		comment = _trimMultilineText(comment);
@@ -690,13 +713,13 @@ public class JavadocFormatter {
 
 		Element throwsElement = methodElement.addElement("throws");
 
-		DocUtil.add(throwsElement, "name", name);
-		DocUtil.add(throwsElement, "type", exceptionType.getValue());
+		Dom4jDocUtil.add(throwsElement, "name", name);
+		Dom4jDocUtil.add(throwsElement, "type", exceptionType.getValue());
 
 		if (value != null) {
 			value = value.substring(name.length());
 
-			DocUtil.add(throwsElement, "required", true);
+			Dom4jDocUtil.add(throwsElement, "required", true);
 		}
 
 		value = _trimMultilineText(value);
@@ -763,6 +786,20 @@ public class JavadocFormatter {
 		}
 
 		return comment;
+	}
+
+	private String _compactString(Node node) throws IOException {
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		OutputFormat outputFormat = OutputFormat.createCompactFormat();
+
+		XMLWriter xmlWriter = new XMLWriter(
+			unsyncByteArrayOutputStream, outputFormat);
+
+		xmlWriter.write(node);
+
+		return unsyncByteArrayOutputStream.toString(StringPool.UTF8);
 	}
 
 	private void _detachUnnecessaryTypes(Element rootElement) {
@@ -851,6 +888,32 @@ public class JavadocFormatter {
 			"(?i)(?<!<code>|\\w)(null|false|true)(?!\\w)", "<code>$1</code>");
 
 		return text;
+	}
+
+	private String _formattedString(Node node) throws IOException {
+		return XMLFormatter.toString(node);
+	}
+
+	private boolean _hasAnnotation(
+		AbstractBaseJavaEntity abstractBaseJavaEntity, String annotationName) {
+
+		Annotation[] annotations = abstractBaseJavaEntity.getAnnotations();
+
+		if (annotations == null) {
+			return false;
+		}
+
+		for (int i = 0; i < annotations.length; i++) {
+			Type type = annotations[i].getType();
+
+			JavaClass javaClass = type.getJavaClass();
+
+			if (annotationName.equals(javaClass.getName())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private String _getCDATA(AbstractJavaEntity abstractJavaEntity) {
@@ -1111,12 +1174,13 @@ public class JavadocFormatter {
 	}
 
 	private Document _getJavadocDocument(JavaClass javaClass) throws Exception {
-		Element rootElement = _saxReader.createElement("javadoc");
+		Element rootElement = DocumentHelper.createElement("javadoc");
 
-		Document document = _saxReader.createDocument(rootElement);
+		Document document = DocumentHelper.createDocument(rootElement);
 
-		DocUtil.add(rootElement, "name", javaClass.getName());
-		DocUtil.add(rootElement, "type", javaClass.getFullyQualifiedName());
+		Dom4jDocUtil.add(rootElement, "name", javaClass.getName());
+		Dom4jDocUtil.add(
+			rootElement, "type", javaClass.getFullyQualifiedName());
 
 		_addClassCommentElement(rootElement, javaClass);
 		_addDocletElements(rootElement, javaClass, "author");
@@ -1204,14 +1268,17 @@ public class JavadocFormatter {
 			srcDirName, "META-INF/" + _outputFilePrefix + "-all.xml");
 
 		if (!javadocsXmlFile.exists()) {
-			_fileUtil.write(
+			FileUtils.writeStringToFile(
 				javadocsXmlFile,
 				"<?xml version=\"1.0\"?>\n\n<javadocs>\n</javadocs>");
 		}
 
-		String javadocsXmlContent = _fileUtil.read(javadocsXmlFile);
+		String javadocsXmlContent = FileUtils.readFileToString(javadocsXmlFile);
 
-		Document javadocsXmlDocument = _saxReader.read(javadocsXmlContent);
+		SAXReader saxReader = _getSAXReader();
+
+		Document javadocsXmlDocument = saxReader.read(
+			new XMLSafeReader(javadocsXmlContent));
 
 		tuple = new Tuple(
 			srcDirName, javadocsXmlFile, javadocsXmlContent,
@@ -1554,7 +1621,7 @@ public class JavadocFormatter {
 				double sinceJava = GetterUtil.getDouble(
 					annotationValue.getParameterValue());
 
-				if (sinceJava > _LOWEST_SUPPORTED_JAVA_VERSION) {
+				if (sinceJava > _lowestSupportedJavaVersion) {
 					return true;
 				}
 			}
@@ -1636,6 +1703,60 @@ public class JavadocFormatter {
 		return content.trim();
 	}
 
+	private void _sortElementsByChildElement(
+		Element element, String elementName, String childElementName) {
+
+		Map<String, Element> elementsMap = new TreeMap<>();
+
+		List<Element> elements = element.elements();
+
+		for (Element curElement : elements) {
+			curElement.detach();
+
+			if (elementName.equals(curElement.getName())) {
+				String childElementValue = curElement.elementText(
+					childElementName);
+
+				elementsMap.put(childElementValue, curElement);
+			}
+		}
+
+		for (Element curElement : elements) {
+			if (elementName.equals(curElement.getName())) {
+				break;
+			}
+
+			element.add(curElement);
+		}
+
+		for (Map.Entry<String, Element> entry : elementsMap.entrySet()) {
+			Element curElement = entry.getValue();
+
+			element.add(curElement);
+		}
+
+		boolean foundLastElementWithElementName = false;
+
+		for (int i = 0; i < elements.size(); i++) {
+			Element curElement = elements.get(i);
+
+			if (!foundLastElementWithElementName) {
+				if (elementName.equals(curElement.getName())) {
+					if ((i + 1) < elements.size()) {
+						Element nextElement = elements.get(i + 1);
+
+						if (!elementName.equals(nextElement.getName())) {
+							foundLastElementWithElementName = true;
+						}
+					}
+				}
+			}
+			else {
+				element.add(curElement);
+			}
+		}
+	}
+
 	private String _trimMultilineText(String text) {
 		String[] lines = StringUtil.splitLines(text);
 
@@ -1689,8 +1810,8 @@ public class JavadocFormatter {
 					javaClassDocument.getRootElement();
 
 				if (Validator.equals(
-						javadocElement.formattedString(),
-						javaClassRootElement.formattedString())) {
+						_formattedString(javadocElement),
+						_formattedString(javaClassRootElement))) {
 
 					return;
 				}
@@ -1759,7 +1880,7 @@ public class JavadocFormatter {
 
 			// Handle override tag insertion
 
-			if (!ServiceBuilder.hasAnnotation(javaMethod, "Override")) {
+			if (!_hasAnnotation(javaMethod, "Override")) {
 				if (_isOverrideMethod(
 						javaClass, javaMethod, ancestorJavaClassTuples)) {
 
@@ -1827,7 +1948,8 @@ public class JavadocFormatter {
 		if (!originalContent.equals(formattedContent)) {
 			File file = new File(_inputDir + fileName);
 
-			_fileUtil.write(file, formattedContent.getBytes(StringPool.UTF8));
+			FileUtils.writeByteArrayToFile(
+				file, formattedContent.getBytes(StringPool.UTF8));
 
 			System.out.println("Writing " + file);
 		}
@@ -1992,20 +2114,21 @@ public class JavadocFormatter {
 		return text;
 	}
 
-	private static final double _LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
+	private SAXReader _getSAXReader() {
+		return SAXReaderFactory.getSAXReader(null, false, false);
+	}
 
-	private static FileImpl _fileUtil = FileImpl.getInstance();
-	private static final SAXReader _saxReader = new SAXReaderImpl();
-
-	private boolean _initializeMissingJavadocs;
 	private String _inputDir;
+	private boolean _initializeMissingJavadocs;
 	private Map<String, Tuple> _javadocxXmlTuples =
 		new HashMap<String, Tuple>();
 	private Properties _languageProperties;
 	private File _languagePropertiesFile;
+	private double _lowestSupportedJavaVersion;
 	private String _outputFilePrefix;
 	private Pattern _paragraphTagPattern = Pattern.compile(
 		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
 	private boolean _updateJavadocs;
+	private String _author;
 
 }

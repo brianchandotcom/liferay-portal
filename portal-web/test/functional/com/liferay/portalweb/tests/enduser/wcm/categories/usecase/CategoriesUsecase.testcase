@@ -370,7 +370,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWCFailWithRequiredVocabularyAssetType" priority="3">
+	<command known-issues="LPS-54823" name="AddWCFailWithRequiredVocabularyAssetType" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -410,7 +410,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWCWithOptionalVocabularyAssetType" priority="3">
+	<command known-issues="LPS-54823" name="AddWCWithOptionalVocabularyAssetType" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -559,7 +559,7 @@
 		</execute>
 	</command>
 
-	<command name="DisableMultipleCategories" priority="4">
+	<command known-issues="LPS-54823" name="DisableMultipleCategories" priority="4">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -654,7 +654,7 @@
 		</for>
 	</command>
 
-	<command name="DuplicateCategoriesViaWebContentCopy" priority="3">
+	<command known-issues="LPS-54823" name="DuplicateCategoriesViaWebContentCopy" priority="3">
 		<var name="categoryName" value="Category Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="webContentContent" value="Web Content Content" />
@@ -694,7 +694,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportWCWithCategoryViaAP" priority="4">
+	<command known-issues="LPS-54823" name="ExportImportWCWithCategoryViaAP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -996,7 +996,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchEditedCategory" priority="4">
+	<command known-issues="LPS-54823" name="SearchEditedCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

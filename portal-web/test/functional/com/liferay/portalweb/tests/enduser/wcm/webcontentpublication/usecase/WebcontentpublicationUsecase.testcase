@@ -1341,7 +1341,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
+	<command known-issues="LPS-54823" name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1439,7 +1439,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAuthorChangeViaAP" priority="3">
+	<command known-issues="LPS-54712" name="ViewAuthorChangeViaAP" priority="3">
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
 			<var name="metadataField" value="Author" />

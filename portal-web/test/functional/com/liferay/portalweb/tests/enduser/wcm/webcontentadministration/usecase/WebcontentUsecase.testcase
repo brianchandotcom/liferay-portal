@@ -706,7 +706,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingPublishExpiredWebContentViaWCD" priority="4">
+	<command known-issues="LPS-54823" name="StagingPublishExpiredWebContentViaWCD" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

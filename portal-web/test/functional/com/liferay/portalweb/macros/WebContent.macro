@@ -252,7 +252,7 @@
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="Web Content Content" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="CPWebcontentCategorization#VOCABULARY" value1="${vocabularyName} (Required)" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontentCategorization#VOCABULARY" value1="${vocabularyName} Required" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontent#ALERT_MESSAGE" value1="Your request failed to complete." />
 		<execute function="AssertTextEquals" locator1="CPWebcontent#CATEGORY_ALERT_MESSAGE" value1="Please select at least one category for ${vocabularyName}." />
@@ -542,6 +542,7 @@
 		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 
 		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="PGWebcontentdisplayEditwebcontent#ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${webContentTranslationLanguage}" />
+		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="PGWebcontentdisplayEditwebcontent#AVAILABLE_TRANSLATION" value1="${webContentTranslationLanguage}" />
 		<execute function="Type" locator1="PGWebcontentdisplayEditwebcontent#TITLE_FIELD" value1="${webContentTranslationTitle}" />
 		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGWebcontentdisplayEditwebcontent#CONTENT_FIELD" value1="${webContentTranslationContent}" />
 		<execute function="AssertTextEquals#assertTextWaitForCKEditor" locator1="PGWebcontentdisplayEditwebcontent#AVAILABLE_TRANSLATION" value1="${webContentTranslationLanguage}" />

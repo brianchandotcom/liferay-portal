@@ -10,7 +10,7 @@
 		<execute macro="PageTemplate#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LRQA-14658" name="AddPageTemplate" priority="5">
+	<command known-issues="LPS-51156" name="AddPageTemplate" priority="5">
 		<var name="pageTemplateActive" value="Yes" />
 		<var name="pageTemplateName" value="Page Template Name" />
 
@@ -68,7 +68,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-14658" name="DeletePageTemplate" priority="5">
+	<command known-issues="LPS-51156" name="DeletePageTemplate" priority="5">
 		<var name="pageTemplateName" value="Page Template Name" />
 
 		<execute macro="Page#gotoCP">
@@ -115,7 +115,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-14658" name="LocalizeDefaultPageTemplates" priority="5">
+	<command known-issues="LPS-51156" name="LocalizeDefaultPageTemplates" priority="5">
 		<var name="pageTemplateName" value="Page Template Name" />
 
 		<execute macro="Page#gotoCP">

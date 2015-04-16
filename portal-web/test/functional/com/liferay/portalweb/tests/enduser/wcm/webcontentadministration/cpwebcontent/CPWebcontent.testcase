@@ -322,7 +322,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentExpirationDate" priority="4">
+	<command known-issues="LPS-51687" name="AddWebContentExpirationDate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

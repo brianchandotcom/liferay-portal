@@ -520,6 +520,7 @@
 			<var name="portletCategoryName" value="Configuration" />
 			<var name="portletCategoryName2" value="Users" />
 			<var name="portletNames" value="Site Settings,Social Activities,Workflow Configuration" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -553,6 +554,7 @@
 
 		<execute macro="Site#viewSiteClonedFromSiteTemplateCP">
 			<var name="clonedFromTemplate" value="true" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -652,7 +654,7 @@
 		<execute macro="User#loginPG" />
 	</command>
 
-	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
+	<command known-issues="LPS-54869" name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>

@@ -564,6 +564,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addViewableByCP">
+			<var name="viewableBy" value="Anyone (Guest Role)" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -583,6 +584,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addViewableByCP">
+			<var name="viewableBy" value="Owner" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -602,6 +604,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addViewableByCP">
+			<var name="viewableBy" value="Site Members" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 

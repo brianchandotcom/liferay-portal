@@ -41,7 +41,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 	var="userSearchContainer"
 >
 	<liferay-ui:search-form
-		page="/html/portlet/users_admin/user_search.jsp"
+		page="/html/portlet/site_teams/user_search.jsp"
 	/>
 
 	<%

@@ -16,7 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.messageboards.model.MBDiscussion" %><%@
+<%@ page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper" %><%@
+page import="com.liferay.portlet.messageboards.model.MBDiscussion" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %><%@
 page import="com.liferay.portlet.messageboards.model.MBThread" %><%@
 page import="com.liferay.portlet.messageboards.model.MBTreeWalker" %><%@

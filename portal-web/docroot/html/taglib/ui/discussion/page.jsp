@@ -19,18 +19,20 @@
 <%
 String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
-boolean assetEntryVisible = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:assetEntryVisible"));
-String className = (String)request.getAttribute("liferay-ui:discussion:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:classPK"));
-String formAction = (String)request.getAttribute("liferay-ui:discussion:formAction");
-String formName = (String)request.getAttribute("liferay-ui:discussion:formName");
-boolean hideControls = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:hideControls"));
-String paginationURL = (String)request.getAttribute("liferay-ui:discussion:paginationURL");
-String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
-long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
-boolean ratingsEnabled = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
-String redirect = (String)request.getAttribute("liferay-ui:discussion:redirect");
-long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
+DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
+
+boolean assetEntryVisible = discussionRequestHelper.isAssetEntryVisible();
+String className = discussionRequestHelper.getClassName();
+long classPK = discussionRequestHelper.getClassPK();
+String formAction = discussionRequestHelper.getFormAction();
+String formName = discussionRequestHelper.getFormName();
+boolean hideControls = discussionRequestHelper.isHideControls();
+String paginationURL = discussionRequestHelper.getPaginationURL();
+String permissionClassName = discussionRequestHelper.getPermissionClassName();
+long permissionClassPK = discussionRequestHelper.getPermissionClassPK();
+boolean ratingsEnabled = discussionRequestHelper.isRatingsEnabled();
+String redirect = discussionRequestHelper.getRedirect();
+long userId = discussionRequestHelper.getUserId();
 
 MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
 

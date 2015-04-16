@@ -268,7 +268,7 @@
 	@include respond-to(phone, tablet) {
 		.search-button, .search-input, .search-select {
 			font-size: 17px;
-			height: 39px;
+			height: 37px;
 		}
 	}
 }

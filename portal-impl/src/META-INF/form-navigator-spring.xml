@@ -13,6 +13,11 @@
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsIdentificationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsIdentificationFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsMiscellaneousFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsMiscellaneousFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsSocialFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsSocialFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetLookAndFeelFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetLookAndFeelFormNavigatorEntry" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetAdvancedFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetAdvancedFormNavigatorEntry" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetJavascriptFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetJavascriptFormNavigatorEntry" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetLogoFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetLogoFormNavigatorEntry" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetMobileDeviceRulesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetMobileDeviceRulesFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationIdentificationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.OrganizationIdentificationFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationMiscellaneousFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.OrganizationMiscellaneousFormNavigatorCategory" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationOrganizationInformationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.OrganizationOrganizationInformationFormNavigatorCategory" />

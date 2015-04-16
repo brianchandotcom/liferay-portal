@@ -1066,7 +1066,7 @@ public class VerifyProperties extends VerifyProcess {
 		"jpa.provider.property.eclipselink.logging.level",
 		"jpa.provider.property.eclipselink.logging.timestamp",
 		"language.display.style.options", "layout.reset.portlet.ids",
-		"layout.types", "lucene.analyzer",
+		"layout.set.form.update", "layout.types", "lucene.analyzer",
 		"lucene.cluster.index.loading.sync.timeout", "lucene.file.extractor",
 		"lucene.file.extractor.regexp.strip", "lucene.replicate.write",
 		"lucene.store.jdbc.auto.clean.up",

@@ -1347,12 +1347,10 @@ modules provide more flexibility and can be included in any app.
 The `ScreenNameValidator` interface has new methods `getDescription(Locale locale)`
 and `getJSValidation()`.
 
-
 #### Who is affected?
 
 This affects developers who have implemented custom screen name validator with
 the `ScreenNameValidator` interface.
-
 
 #### How should I update my code?
 
@@ -1372,5 +1370,50 @@ names.
 
 In addition, developers can now specify custom input validator for the screen name
 on the client side by providing a JavaScript validator in `getJSValidation()`.
+
+---------------------------------------
+
+### Removed portal properties to display sections in form navigators
+- **Date:** 2015-Apr-16
+- **JIRA Ticket:** LPS-54903
+
+#### What changed?
+
+The following portal properties (and the equivalent `PropsKeys` and `PropsValues`)
+that were used to decide what sections would be displayed in the `form-navigator`
+have been removed:
+
+`layout.set.form.update`
+
+The sections and categories of form navigators are now OSGi components.
+
+#### Who is affected?
+
+Administrators who may have added, removed or reorder sections through those
+portal properties. Developers using the constants defined in `PropsKeys` or
+`PropsValues` for those portal properties will also be affected.
+
+#### How should I update my code?
+
+Since those properties no longer exist you cannot rely on them. References to
+the constants of `PropsKeys` and `PropsValues` will need to be updated. You can
+use `FormNavigatorCategoryUtil` and `FormNavigatorEntryUtil` to obtain a list of
+the available sections and categories for a form navigator instance.
+
+Changes to remove or reorder specific sections will need to be done through
+OSGi console to update the service ranking or stop the components.
+
+Adding new sections with Liferay Hooks will still work as a legacy feature, but
+we recommend to use OSGi components to add new sections.
+
+#### Why was this change made?
+
+The old mechanism to add new sections to `form-navigator` taglibs was very
+limited because it could only depend on portal for services and utils due to the
+new section was rendered from the portal classloader.
+
+We need a way to add new sections and categories to `form-navigator` taglibs via
+OSGi plugins in a more extensible way, allowing the developer including the new
+section to access to their own utils and services.
 
 ---------------------------------------

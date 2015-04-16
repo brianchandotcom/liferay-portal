@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELD_ERROR</td>
+	<td>//div[contains(@class,'form-group') and contains(@class,'has-error')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//span[contains(@id,'description')]/textarea</td>
 	<td></td>

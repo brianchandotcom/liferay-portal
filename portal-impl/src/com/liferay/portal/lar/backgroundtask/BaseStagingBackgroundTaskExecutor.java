@@ -116,6 +116,10 @@ public abstract class BaseStagingBackgroundTaskExecutor
 		BackgroundTaskResult backgroundTaskResult = new BackgroundTaskResult(
 			BackgroundTaskConstants.STATUS_SUCCESSFUL);
 
+		if (missingReferences == null) {
+			return backgroundTaskResult;
+		}
+
 		Map<String, MissingReference> weakMissingReferences =
 			missingReferences.getWeakMissingReferences();
 

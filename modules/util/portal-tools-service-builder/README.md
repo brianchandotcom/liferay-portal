@@ -79,6 +79,31 @@ Command line:
 
 	mvn com.liferay:com.liferay.portal.tools.service.builder:build-service
 
+## Gradle
+
+	buildscript {
+		repositories {
+			maven {
+				url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+			}
+			mavenCentral()
+		}
+
+		dependencies {
+			classpath 'com.liferay:com.liferay.portal.tools.service.builder:1.1.0'
+		}
+	}
+
+	apply plugin: 'com.liferay.portal.tools.service.builder'
+
+	serviceBuilder {
+		apiDir="../api/src/main/java"
+	}
+
+Executing the command line:
+
+	gradle buildService
+
 ## Configuration
 
 Service builder has the following fields and defaults (same for all plugins):

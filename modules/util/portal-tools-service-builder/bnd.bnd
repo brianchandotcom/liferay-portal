@@ -6,6 +6,7 @@ Import-Package:\
 	!javax.servlet.*,\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
+	!org.gradle.api.*,\
 	*
 Include-Resource:\
 	classes,\

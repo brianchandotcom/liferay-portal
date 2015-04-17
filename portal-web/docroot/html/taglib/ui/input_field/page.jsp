@@ -379,7 +379,7 @@ if (hints != null) {
 
 			boolean localized = ModelHintsUtil.isLocalized(model, field);
 
-			Locale[] availableLocales = null;
+			Set<Locale> availableLocales = null;
 
 			String xml = StringPool.BLANK;
 

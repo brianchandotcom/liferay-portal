@@ -97,7 +97,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 	</liferay-ui:error>
 
 	<%
-	Locale[] siteAvailableLocales = LanguageUtil.getAvailableLocales(liveGroup.getGroupId());
+	Set<Locale> siteAvailableLocales = LanguageUtil.getAvailableLocales(liveGroup.getGroupId());
 	%>
 
 	<aui:fieldset cssClass="default-language" label="default-language">
@@ -136,7 +136,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 		List rightList = new ArrayList();
 
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-			if (!ArrayUtil.contains(siteAvailableLocales, availableLocale)) {
+			if (!siteAvailableLocales.contains(availableLocale)) {
 				rightList.add(new KeyValuePair(LocaleUtil.toLanguageId(availableLocale), availableLocale.getDisplayName(locale)));
 			}
 		}

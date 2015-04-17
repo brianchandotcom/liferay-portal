@@ -20,8 +20,6 @@
 String currentURL = PortalUtil.getCurrentURL(request);
 
 Locale userLocale = user.getLocale();
-
-Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 %>
 
 <c:if test="<%= !locale.equals(user.getLocale()) %>">
@@ -29,7 +27,7 @@ Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSit
 
 	<%= LanguageUtil.format(userLocale, "this-page-is-displayed-in-x", locale.getDisplayName(userLocale), false) %>
 
-	<c:if test="<%= ArrayUtil.contains(availableLocales, userLocale) %>">
+	<c:if test="<%= LanguageUtil.isAvailableLocale(userLocale) %>">
 
 		<%
 		String displayPreferredLanguageURLString = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + currentURL + "&languageId=" + user.getLanguageId() + "&persistState=false&showUserLocaleOptionsMessage=false";

@@ -25,7 +25,7 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-Locale[] locales = LanguageUtil.getAvailableLocales();
+Set<Locale> locales = LanguageUtil.getAvailableLocales();
 
 if ((organization != null) && Validator.isNull(reminderQueries)) {
 	reminderQueries = StringUtil.merge(organization.getReminderQueryQuestions(defaultLocale), StringPool.NEW_LINE);
@@ -47,15 +47,15 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 		<aui:option value="" />
 
 		<%
-		for (int i = 0; i < locales.length; i++) {
-			if (locales[i].equals(defaultLocale)) {
+		for (Locale curLocale : locales) {
+			if (curLocale.equals(defaultLocale)) {
 				continue;
 			}
 
-			String curReminderQueries = reminderQueriesMap.get(locales[i]);
+			String curReminderQueries = reminderQueriesMap.get(curLocale);
 
 			if ((organization != null) && Validator.isNull(curReminderQueries)) {
-				curReminderQueries = StringUtil.merge(organization.getReminderQueryQuestions(locales[i]), StringPool.NEW_LINE);
+				curReminderQueries = StringUtil.merge(organization.getReminderQueryQuestions(curLocale), StringPool.NEW_LINE);
 			}
 
 			String style = StringPool.BLANK;
@@ -65,7 +65,7 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 			}
 		%>
 
-			<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= (currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i]))) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
+			<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= (currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale))) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
 		<%
 		}
@@ -74,19 +74,19 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizedParameter(
 	</aui:select>
 
 	<%
-	for (int i = 0; i < locales.length; i++) {
-		if (locales[i].equals(defaultLocale)) {
+	for (Locale curLocale : locales) {
+		if (curLocale.equals(defaultLocale)) {
 			continue;
 		}
 
-		String curReminderQueries = reminderQueriesMap.get(locales[i]);
+		String curReminderQueries = reminderQueriesMap.get(curLocale);
 
 		if ((organization != null) && Validator.isNull(curReminderQueries)) {
-			curReminderQueries = StringUtil.merge(organization.getReminderQueryQuestions(locales[i]), StringPool.NEW_LINE);
+			curReminderQueries = StringUtil.merge(organization.getReminderQueryQuestions(curLocale), StringPool.NEW_LINE);
 		}
 	%>
 
-		<aui:input name='<%= "reminderQueries_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value="<%= curReminderQueries %>" />
+		<aui:input name='<%= "reminderQueries_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= curReminderQueries %>" />
 
 	<%
 	}

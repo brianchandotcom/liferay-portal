@@ -58,12 +58,10 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 								<aui:select inlineField="<%= true %>" label="" name="lfr-portlet-language" title="language">
 
 									<%
-									Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
-
-									for (int i = 0; i < locales.length; i++) {
+									for (Locale curLocale : LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) {
 									%>
 
-										<aui:option label="<%= locales[i].getDisplayName(locale) %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
+										<aui:option label="<%= curLocale.getDisplayName(locale) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
 									<%
 									}

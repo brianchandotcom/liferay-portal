@@ -56,7 +56,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 PortletURL searchURL = wikiURLHelper.getSearchURL();
 %>
 
-<aui:form action="<%= searchURL.toString() %>" method="get" name="fm">
+<aui:form action="<%= searchURL %>" method="get" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<%

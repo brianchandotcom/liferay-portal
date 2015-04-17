@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -26,8 +28,10 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -41,6 +45,20 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return FileEntry.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		try {
+			contextObjects.put("dlUtil", DLUtil.getDL());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		return contextObjects;
 	}
 
 	@Override
@@ -74,6 +92,8 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"document", FileEntry.class, "curFileEntry", "title");
 
+		templateVariableGroup.addVariable("dl-util", DLUtil.class, "dlUtil");
+
 		String[] restrictedVariables = getRestrictedVariables(language);
 
 		TemplateVariableGroup documentServicesTemplateVariableGroup =
@@ -96,5 +116,8 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 	protected String getTemplatesConfigPath() {
 		return PropsValues.DL_DISPLAY_TEMPLATES_CONFIG;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DocumentLibraryPortletDisplayTemplateHandler.class);
 
 }

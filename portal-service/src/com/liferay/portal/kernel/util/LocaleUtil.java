@@ -170,7 +170,9 @@ public class LocaleUtil {
 		return getInstance()._toBCP47LanguageIds(languageIds);
 	}
 
-	public static String[] toDisplayNames(Locale[] locales, Locale locale) {
+	public static String[] toDisplayNames(
+		Collection<Locale> locales, Locale locale) {
+
 		return getInstance()._toDisplayNames(locales, locale);
 	}
 
@@ -449,11 +451,15 @@ public class LocaleUtil {
 		return bcp47LanguageIds;
 	}
 
-	private String[] _toDisplayNames(Locale[] locales, Locale locale) {
-		String[] displayNames = new String[locales.length];
+	private String[] _toDisplayNames(
+		Collection<Locale> locales, Locale locale) {
 
-		for (int i = 0; i < locales.length; i++) {
-			displayNames[i] = locales[i].getDisplayName(locale);
+		String[] displayNames = new String[locales.size()];
+
+		int i = 0;
+
+		for (Locale tempLocale : locales) {
+			displayNames[i++] = tempLocale.getDisplayName(locale);
 		}
 
 		return displayNames;

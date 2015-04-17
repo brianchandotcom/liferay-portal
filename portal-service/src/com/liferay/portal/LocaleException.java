@@ -16,6 +16,7 @@ package com.liferay.portal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -57,11 +58,11 @@ public class LocaleException extends PortalException {
 		_type = type;
 	}
 
-	public Locale[] getSourceAvailableLocales() {
+	public Collection<Locale> getSourceAvailableLocales() {
 		return _sourceAvailableLocales;
 	}
 
-	public Locale[] getTargetAvailableLocales() {
+	public Collection<Locale> getTargetAvailableLocales() {
 		return _targetAvailableLocales;
 	}
 
@@ -69,16 +70,20 @@ public class LocaleException extends PortalException {
 		return _type;
 	}
 
-	public void setSourceAvailableLocales(Locale[] sourceAvailableLocales) {
+	public void setSourceAvailableLocales(
+		Collection<Locale> sourceAvailableLocales) {
+
 		_sourceAvailableLocales = sourceAvailableLocales;
 	}
 
-	public void setTargetAvailableLocales(Locale[] targetAvailableLocales) {
+	public void setTargetAvailableLocales(
+		Collection<Locale> targetAvailableLocales) {
+
 		_targetAvailableLocales = targetAvailableLocales;
 	}
 
-	private Locale[] _sourceAvailableLocales;
-	private Locale[] _targetAvailableLocales;
+	private Collection<Locale> _sourceAvailableLocales;
+	private Collection<Locale> _targetAvailableLocales;
 	private final int _type;
 
 }

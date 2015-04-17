@@ -24,6 +24,8 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("lifera
 MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
 
+CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionRequestHelper, message);
+
 int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
 MBMessage rootMessage = (MBMessage)request.getAttribute("liferay-ui:discussion:rootMessage");
@@ -37,7 +39,7 @@ request.setAttribute("liferay-ui:discussion:index", new Integer(index));
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<c:if test="<%= !(!message.isApproved() && ((message.getUserId() != user.getUserId()) || user.isDefaultUser()) && !permissionChecker.isGroupAdmin(scopeGroupId)) && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, discussionRequestHelper.getPermissionClassName(), discussionRequestHelper.getPermissionClassPK(), discussionRequestHelper.getUserId(), ActionKeys.VIEW) %>">
+<c:if test="<%= commentTreeDisplayContext.isDiscussionVisible() %>">
 	<article class="lfr-discussion">
 		<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
 			<a name="<%= randomNamespace %>message_<%= message.getMessageId() %>"></a>

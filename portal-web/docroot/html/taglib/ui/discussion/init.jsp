@@ -17,7 +17,9 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext" %><%@
+page import="com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.context.MBCommentSectionDisplayContext" %><%@
+page import="com.liferay.portlet.messageboards.comment.context.MBCommentTreeDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper" %><%@
 page import="com.liferay.portlet.messageboards.model.MBDiscussion" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %><%@

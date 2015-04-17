@@ -74,15 +74,15 @@ public class ItemSelectorImpl implements ItemSelector {
 		String itemSelectedCallback = getValue(
 			parameters, PARAMETER_ITEM_SELECTED_CALLBACK);
 
+		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
+			new ArrayList<>();
+
 		List<ItemSelectorCriterion> itemSelectorCriteria =
 			getItemSelectorCriteria(parameters);
 
 		ItemSelectorCriterion[] itemSelectorCriteriaArray =
 			itemSelectorCriteria.toArray(
 				new ItemSelectorCriterion[itemSelectorCriteria.size()]);
-
-		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
-			new ArrayList<>();
 
 		for (int i = 0; i < itemSelectorCriteria.size(); i++) {
 			ItemSelectorCriterion itemSelectorCriterion =

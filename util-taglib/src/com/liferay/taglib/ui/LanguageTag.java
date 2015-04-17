@@ -198,7 +198,6 @@ public class LanguageTag extends IncludeTag {
 			getLanguageEntries(
 				getLocales(), _displayCurrentLocale, getFormAction(), _name));
 		request.setAttribute("liferay-ui:language:languageId", _languageId);
-		request.setAttribute("liferay-ui:language:locales", getLocales());
 		request.setAttribute("liferay-ui:language:name", _name);
 	}
 

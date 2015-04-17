@@ -159,54 +159,31 @@
 					<fileset dir="tmp/META-INF/resources/html/js/editor/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
 				</copy>
 
-				<copy todir="tmp/META-INF/resources/html/js/editor/alloyeditor" preservelastmodified="true">
-					<fileset dir="${html.js.dir}/editor/alloyeditor_diffs" />
-				</copy>
-
-				<for param="alloy.editor.file">
-					<path>
-						<fileset dir="tmp/META-INF/resources/html/js/editor/alloyeditor" includes="alloy-editor*.js" />
-					</path>
-					<sequential>
-						<basename property="alloy.editor.file.name" file="@{alloy.editor.file}" suffix=".js" />
-
-						<concat destfile="tmp/META-INF/resources/html/js/editor/alloyeditor/liferay-${alloy.editor.file.name}.js">
-							<fileset file="@{alloy.editor.file}" />
-							<fileset dir="${html.js.dir}/editor/alloyeditor_diffs/buttons" >
-								<include name="**/*.js" />
-							</fileset>
-						</concat>
-
-						<var name="alloy.editor.file.name" unset="true" />
-					</sequential>
-				</for>
-
 				<delete dir="tmp/META-INF/resources/html/js/editor/_tmp" />
 			</then>
-			<else>
-				<copy todir="tmp/META-INF/resources/html/js/editor/alloyeditor" preservelastmodified="true">
-					<fileset dir="${html.js.dir}/editor/alloyeditor_diffs" />
-				</copy>
-
-				<for param="alloy.editor.file">
-					<path>
-						<fileset dir="tmp/META-INF/resources/html/js/editor/alloyeditor" includes="alloy-editor*.js" />
-					</path>
-					<sequential>
-						<basename property="alloy.editor.file.name" file="@{alloy.editor.file}" suffix=".js" />
-
-						<concat destfile="tmp/META-INF/resources/html/js/editor/alloyeditor/liferay-${alloy.editor.file.name}.js">
-							<fileset file="@{alloy.editor.file}" />
-							<fileset dir="${html.js.dir}/editor/alloyeditor_diffs/buttons" >
-								<include name="**/*.js" />
-							</fileset>
-						</concat>
-
-						<var name="alloy.editor.file.name" unset="true" />
-					</sequential>
-				</for>
-			</else>
 		</if>
+
+		<copy todir="tmp/META-INF/resources/html/js/editor/alloyeditor" preservelastmodified="true">
+			<fileset dir="${html.js.dir}/editor/alloyeditor_diffs" />
+		</copy>
+
+		<for param="alloy.editor.file">
+			<path>
+				<fileset dir="tmp/META-INF/resources/html/js/editor/alloyeditor" includes="alloy-editor*.js" />
+			</path>
+			<sequential>
+				<basename property="alloy.editor.file.name" file="@{alloy.editor.file}" suffix=".js" />
+
+				<concat destfile="tmp/META-INF/resources/html/js/editor/alloyeditor/liferay-${alloy.editor.file.name}.js">
+					<fileset file="@{alloy.editor.file}" />
+					<fileset dir="${html.js.dir}/editor/alloyeditor_diffs/buttons" >
+						<include name="**/*.js" />
+					</fileset>
+				</concat>
+
+				<var name="alloy.editor.file.name" unset="true" />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="build-ckeditor">

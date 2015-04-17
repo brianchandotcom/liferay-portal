@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.bookmarks.model.BookmarksEntry">
+		<field name="uuid" type="String" />
+		<field name="entryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="resourceBlockId" type="long" />
+		<field name="folderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="url" type="String">
+			<hint-collection name="URL" />
+			<validator name="required" />
+			<validator name="url" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="visits" type="int" />
+		<field name="priority" type="int">
+			<hint name="display-width">20</hint>
+		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.bookmarks.model.BookmarksFolder">
+		<field name="uuid" type="String" />
+		<field name="folderId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="resourceBlockId" type="long" />
+		<field name="parentFolderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+</model-hints>

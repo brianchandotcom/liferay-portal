@@ -509,7 +509,7 @@ public class LanguageImpl implements Language, Serializable {
 
 		if (Validator.isNotNull(languageId)) {
 			if (_localesMap.containsKey(languageId) ||
-				_charEncodings.containsKey(languageId)) {
+				_charEncodings.contains(languageId)) {
 
 				return languageId;
 			}
@@ -823,7 +823,7 @@ public class LanguageImpl implements Language, Serializable {
 			}
 		}
 
-		_charEncodings = new HashMap<>();
+		_charEncodings = new HashSet<>();
 		_duplicateLanguageCodes = new HashSet<>();
 		_locales = new Locale[languageIds.length];
 		_localesMap = new HashMap<>(languageIds.length);
@@ -834,7 +834,7 @@ public class LanguageImpl implements Language, Serializable {
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 
-			_charEncodings.put(locale.toString(), StringPool.UTF8);
+			_charEncodings.add(locale.toString());
 
 			String language = languageId;
 
@@ -1026,7 +1026,7 @@ public class LanguageImpl implements Language, Serializable {
 			});
 	}
 
-	private final Map<String, String> _charEncodings;
+	private final Set<String> _charEncodings;
 	private final Set<String> _duplicateLanguageCodes;
 	private final Map<Long, Map<String, Locale>> _groupLanguageCodeLocalesMap =
 		new HashMap<>();

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
+import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -36,8 +37,10 @@ public class MBCommentSectionDisplayContext
 	implements CommentSectionDisplayContext {
 
 	public MBCommentSectionDisplayContext(
+		DiscussionTaglibHelper discussionTaglibHelper,
 		DiscussionRequestHelper discussionRequestHelper) {
 
+		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
 	}
 
@@ -61,7 +64,7 @@ public class MBCommentSectionDisplayContext
 
 	@Override
 	public boolean isControlsVisible() {
-		if (_discussionRequestHelper.isHideControls()) {
+		if (_discussionTaglibHelper.isHideControls()) {
 			return false;
 		}
 
@@ -69,9 +72,9 @@ public class MBCommentSectionDisplayContext
 			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
-			_discussionRequestHelper.getPermissionClassName(),
-			_discussionRequestHelper.getPermissionClassPK(),
-			_discussionRequestHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
+			_discussionTaglibHelper.getPermissionClassName(),
+			_discussionTaglibHelper.getPermissionClassPK(),
+			_discussionTaglibHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
 	}
 
 	@Override
@@ -93,10 +96,10 @@ public class MBCommentSectionDisplayContext
 		if (_discussionMessageDisplay == null) {
 			_discussionMessageDisplay =
 				MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-					_discussionRequestHelper.getUserId(),
+					_discussionTaglibHelper.getUserId(),
 					_discussionRequestHelper.getScopeGroupId(),
-					_discussionRequestHelper.getClassName(),
-					_discussionRequestHelper.getClassPK(),
+					_discussionTaglibHelper.getClassName(),
+					_discussionTaglibHelper.getClassPK(),
 					WorkflowConstants.STATUS_ANY,
 					new MessageThreadComparator());
 		}
@@ -130,14 +133,15 @@ public class MBCommentSectionDisplayContext
 			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
-			_discussionRequestHelper.getPermissionClassName(),
-			_discussionRequestHelper.getPermissionClassPK(),
-			_discussionRequestHelper.getUserId(), ActionKeys.VIEW);
+			_discussionTaglibHelper.getPermissionClassName(),
+			_discussionTaglibHelper.getPermissionClassPK(),
+			_discussionTaglibHelper.getUserId(), ActionKeys.VIEW);
 	}
 
 	private Boolean _discussionMaxComments;
 	private MBMessageDisplay _discussionMessageDisplay;
 	private final DiscussionRequestHelper _discussionRequestHelper;
+	private final DiscussionTaglibHelper _discussionTaglibHelper;
 	private Integer _messagesCount;
 	private MBMessage _rootMessage;
 	private MBThread _thread;

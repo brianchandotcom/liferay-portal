@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/ui/discussion/init.jsp" %>
 
 <%
+DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("liferay-ui:discussion:messageDisplay");
@@ -24,7 +25,7 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("lifera
 MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
 
-CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionRequestHelper, message);
+CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, message);
 
 int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");

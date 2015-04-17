@@ -36,7 +36,39 @@ import javax.servlet.jsp.tagext.TagSupport;
  */
 public class RenderURLParamsTag extends TagSupport {
 
-	public static String doTag(
+	public static String doTag(PortletURL portletURL, PageContext pageContext)
+		throws Exception {
+
+		return _doTag(portletURL, null, pageContext);
+	}
+
+	public static String doTag(String varImpl, PageContext pageContext)
+		throws Exception {
+
+		return _doTag(null, varImpl, pageContext);
+	}
+
+	@Override
+	public int doEndTag() throws JspException {
+		try {
+			_doTag(_portletURL, _varImpl, pageContext);
+
+			return EVAL_PAGE;
+		}
+		catch (Exception e) {
+			throw new JspException(e);
+		}
+	}
+
+	public void setPortletURL(PortletURL portletURL) {
+		_portletURL = portletURL;
+	}
+
+	public void setVarImpl(String varImpl) {
+		_varImpl = varImpl;
+	}
+
+	private static String _doTag(
 			PortletURL portletURL, String varImpl, PageContext pageContext)
 		throws Exception {
 
@@ -55,37 +87,6 @@ public class RenderURLParamsTag extends TagSupport {
 		}
 
 		return params;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #doTag(PortletURL, String,
-	 *             PageContext)}
-	 */
-	@Deprecated
-	public static String doTag(String varImpl, PageContext pageContext)
-		throws Exception {
-
-		return doTag(null, varImpl, pageContext);
-	}
-
-	@Override
-	public int doEndTag() throws JspException {
-		try {
-			doTag(_portletURL, _varImpl, pageContext);
-
-			return EVAL_PAGE;
-		}
-		catch (Exception e) {
-			throw new JspException(e);
-		}
-	}
-
-	public void setPortletURL(PortletURL portletURL) {
-		_portletURL = portletURL;
-	}
-
-	public void setVarImpl(String varImpl) {
-		_varImpl = varImpl;
 	}
 
 	private static String _toParamsString(

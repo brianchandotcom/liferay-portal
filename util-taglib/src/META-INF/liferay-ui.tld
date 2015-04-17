@@ -346,110 +346,135 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a UI component for displaying search results of entries in app view.</description>
 		<name>app-view-search-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewSearchEntryTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<description>The file path for the action JSP page.</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The Service Context for the action JSP page.</description>
 			<name>actionJspServletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0.</description>
 			<name>containerIcon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The name of the container that the entry is in such as the name of a folder.</description>
 			<name>containerName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0.</description>
 			<name>containerSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The type of container the entry is in such as <![CDATA[<code>Folder</code>]]>.</description>
 			<name>containerType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A CSS class for styling this component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A description of the entry.</description>
 			<name>description</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A list of objects containing information such as content, user id, and title of entry file attachments.</description>
 			<name>fileEntryTuples</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the entry is able to be highlighted where it matches the query terms.</description>
 			<name>highlightEnabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether the entry is locked. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>locked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>A list of objects containing information such as content, author, and status of entry messages. An example of a message is a comment made by one user on another user's blog post.</description>
 			<name>mbMessages</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The query terms of the search.</description>
 			<name>queryTerms</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The checkbox input ID to be used for the entry row checker. This number is a Java long.</description>
 			<name>rowCheckerId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The name to be used as for entry row checker.</description>
 			<name>rowCheckerName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the entry is selectable via checkbox. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showCheckbox</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The current status of the entry as represented by an integer. Options are <![CDATA[<code>-1: STATUS_ANY</code>]]>, <![CDATA[<code>0: STATUS_APPROVED</code>]]>, <![CDATA[<code>1: ACTION_PUBLISH</code>]]>, <![CDATA[<code>2: STATUS_DRAFT</code>]]>, and <![CDATA[<code>4: STATUS_DENIED</code>]]>.</description>
 			<name>status</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The source URL for the entry thumbnail image.</description>
 			<name>thumbnailSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The title of the entry.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The URL used to view the full entry.</description>
 			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The current and past versions of the entry.</description>
 			<name>versions</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

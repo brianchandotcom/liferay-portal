@@ -184,11 +184,11 @@ public class LanguageUtil {
 		return getLanguage().get(resourceBundle, key, defaultValue);
 	}
 
-	public static Locale[] getAvailableLocales() {
+	public static Set<Locale> getAvailableLocales() {
 		return getLanguage().getAvailableLocales();
 	}
 
-	public static Locale[] getAvailableLocales(long groupId) {
+	public static Set<Locale> getAvailableLocales(long groupId) {
 		return getLanguage().getAvailableLocales(groupId);
 	}
 

@@ -449,12 +449,12 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
-	public Locale[] getAvailableLocales() {
-		return _getInstance()._locales;
+	public Set<Locale> getAvailableLocales() {
+		return _getInstance()._localesSet;
 	}
 
 	@Override
-	public Locale[] getAvailableLocales(long groupId) {
+	public Set<Locale> getAvailableLocales(long groupId) {
 		if (groupId <= 0) {
 			return getAvailableLocales();
 		}
@@ -467,15 +467,15 @@ public class LanguageImpl implements Language, Serializable {
 		catch (Exception e) {
 		}
 
-		Locale[] locales = _groupLocalesMap.get(groupId);
+		Set<Locale> localesSet = _groupLocalesSet.get(groupId);
 
-		if (locales != null) {
-			return locales;
+		if (localesSet != null) {
+			return localesSet;
 		}
 
 		_initGroupLocales(groupId);
 
-		return _groupLocalesMap.get(groupId);
+		return _groupLocalesSet.get(groupId);
 	}
 
 	@Override
@@ -671,9 +671,7 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public boolean isAvailableLocale(long groupId, String languageId) {
-		Locale[] locales = getAvailableLocales(groupId);
-
-		for (Locale locale : locales) {
+		for (Locale locale : getAvailableLocales(groupId)) {
 			if (languageId.equals(locale.toString())) {
 				return true;
 			}
@@ -684,9 +682,7 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public boolean isAvailableLocale(String languageId) {
-		Locale[] locales = getAvailableLocales();
-
-		for (Locale locale : locales) {
+		for (Locale locale : getAvailableLocales()) {
 			if (languageId.equals(locale.toString())) {
 				return true;
 			}
@@ -814,7 +810,6 @@ public class LanguageImpl implements Language, Serializable {
 
 		_charEncodings = new HashSet<>();
 		_duplicateLanguageCodes = new HashSet<>();
-		_locales = new Locale[languageIds.length];
 		_localesMap = new HashMap<>(languageIds.length);
 		_localesSet = new HashSet<>(languageIds.length);
 
@@ -836,8 +831,6 @@ public class LanguageImpl implements Language, Serializable {
 			if (_localesMap.containsKey(language)) {
 				_duplicateLanguageCodes.add(language);
 			}
-
-			_locales[i] = locale;
 
 			if (!_localesMap.containsKey(language)) {
 				_localesMap.put(language, locale);
@@ -953,7 +946,6 @@ public class LanguageImpl implements Language, Serializable {
 			languageIds = PropsValues.LOCALES_ENABLED;
 		}
 
-		Locale[] locales = new Locale[languageIds.length];
 		Map<String, Locale> localesMap = new HashMap<>(languageIds.length);
 		Set<Locale> localesSet = new HashSet<>(languageIds.length);
 
@@ -970,8 +962,6 @@ public class LanguageImpl implements Language, Serializable {
 				language = languageId.substring(0, pos);
 			}
 
-			locales[i] = locale;
-
 			if (!localesMap.containsKey(language)) {
 				localesMap.put(language, locale);
 			}
@@ -980,13 +970,11 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		_groupLanguageCodeLocalesMap.put(groupId, localesMap);
-		_groupLocalesMap.put(groupId, locales);
 		_groupLocalesSet.put(groupId, localesSet);
 	}
 
 	private void _resetAvailableGroupLocales(long groupId) {
 		_groupLanguageCodeLocalesMap.remove(groupId);
-		_groupLocalesMap.remove(groupId);
 		_groupLocalesSet.remove(groupId);
 	}
 
@@ -1023,9 +1011,7 @@ public class LanguageImpl implements Language, Serializable {
 	private final Set<String> _duplicateLanguageCodes;
 	private final Map<Long, Map<String, Locale>> _groupLanguageCodeLocalesMap =
 		new HashMap<>();
-	private final Map<Long, Locale[]> _groupLocalesMap = new HashMap<>();
 	private final Map<Long, Set<Locale>> _groupLocalesSet = new HashMap<>();
-	private final Locale[] _locales;
 	private final Set<Locale> _localesBetaSet;
 	private final Map<String, Locale> _localesMap;
 	private final Set<Locale> _localesSet;

@@ -177,6 +177,12 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 		populateMessageFromThreadLocals(message);
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Sending message: " + message + " from destination: " +
+					getName() + " to messageListeners: " + messageListeners);
+		}
+
 		dispatch(messageListeners, message);
 	}
 

@@ -76,6 +76,11 @@ public class InvokerMessageListener implements MessageListener {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return _messageListener.toString();
+	}
+
 	private final ClassLoader _classLoader;
 	private final MessageListener _messageListener;
 

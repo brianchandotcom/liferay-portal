@@ -1477,7 +1477,7 @@
 			</not>
 			<then>
 				<var locator="CPBlogsEntry#ENTRY_STATS_VIEW_COUNT" name="entryViewCount" />
-				<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
+				<var method="selenium#getFirstNumber(${entryViewCount})" name="entryViewCount" />
 			</then>
 		</if>
 
@@ -1518,7 +1518,7 @@
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 
 		<var locator="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" name="entryViewCount" />
-		<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
+		<var method="selenium#getFirstNumber(${entryViewCount})" name="entryViewCount" />
 
 		<if>
 			<equals arg1="${entryViewCount}" arg2="1" />

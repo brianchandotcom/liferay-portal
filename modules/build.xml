@@ -13,12 +13,12 @@
 		<dirset dir="apps/currency-converter" includes="*" />
 		<dirset dir="apps/dictionary" includes="*" />
 		<dirset dir="apps/document-library" includes="*" />
-		<dirset dir="apps/item-selector" includes="*" />
 		<dirset dir="apps/dynamic-data-lists" includes="*" />
 		<dirset dir="apps/dynamic-data-mapping" includes="*" />
 		<dirset dir="apps/hello-velocity" includes="*" />
 		<dirset dir="apps/iframe" includes="*" />
 		<dirset dir="apps/invitation" includes="*" />
+		<dirset dir="apps/item-selector" includes="*" />
 		<dirset dir="apps/journal" includes="*" />
 		<dirset dir="apps/layout" includes="*" />
 		<dirset dir="apps/loan-calculator" includes="*" />

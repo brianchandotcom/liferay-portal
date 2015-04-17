@@ -1143,7 +1143,7 @@
 		</execute>
 	</command>
 
-	<command name="ValidateRelatedAssetsAdvancedSearchFunction" priority="3">
+	<command known-issues="LPS-55060,LPS-55061" name="ValidateRelatedAssetsAdvancedSearchFunction" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>

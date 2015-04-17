@@ -14,19 +14,26 @@
 
 package com.liferay.portal.tools.wsdd.builder;
 
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
+import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.ant.Java2WsddTask;
+import com.liferay.util.xml.XMLSafeReader;
 
 import java.io.File;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.util.List;
 import java.util.Map;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,11 +43,10 @@ public class WSDDBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		ToolDependencies.wireBasic();
-
 		try {
 			WSDDBuilder wsddBuilder = new WSDDBuilder();
 
+			wsddBuilder._classPath = arguments.get("wsdd.class.path");
 			wsddBuilder._fileName = arguments.get("wsdd.input.file");
 			wsddBuilder._outputPath = arguments.get("wsdd.output.path");
 			wsddBuilder._serverConfigFileName = arguments.get(
@@ -56,19 +62,24 @@ public class WSDDBuilder {
 	}
 
 	public void build() throws Exception {
-		if (!FileUtil.exists(_serverConfigFileName)) {
+		File serverConfigFile = new File(_serverConfigFileName);
+
+		if (!serverConfigFile.exists()) {
 			ClassLoader classLoader = getClass().getClassLoader();
 
 			String serverConfigContent = StringUtil.read(
 				classLoader,
-				"com/liferay/portal/tools/dependencies/server-config.wsdd");
+				"com/liferay/portal/tools/wsdd/builder/dependencies/" +
+					"server-config.wsdd");
 
-			FileUtil.write(_serverConfigFileName, serverConfigContent);
+			_writeFile(serverConfigFile, serverConfigContent);
 		}
+
+		SAXReader saxReader = _getSAXReader();
 
 		String content = ServiceBuilder.getContent(_fileName);
 
-		Document document = SAXReaderUtil.read(content, true);
+		Document document = saxReader.read(new XMLSafeReader(content));
 
 		Element rootElement = document.getRootElement();
 
@@ -135,17 +146,37 @@ public class WSDDBuilder {
 
 		serviceName += ("_" + entityName + "Service");
 
-		String[] wsdds = Java2WsddTask.generateWsdd(className, serviceName);
+		String[] wsdds = Java2WsddTask.generateWsdd(
+			className, _classPath, serviceName);
 
-		FileUtil.write(
+		_writeFile(
 			new File(_outputPath + "/" + entityName + "Service_deploy.wsdd"),
-			wsdds[0], true);
+			wsdds[0]);
 
-		FileUtil.write(
+		_writeFile(
 			new File(_outputPath + "/" + entityName + "Service_undeploy.wsdd"),
-			wsdds[1], true);
+			wsdds[1]);
 	}
 
+	private SAXReader _getSAXReader() {
+		return SAXReaderFactory.getSAXReader(null, false, false);
+	}
+
+	private void _writeFile(File file, String content) throws Exception {
+		Path path = file.toPath();
+
+		String oldContent = null;
+
+		if (file.exists()) {
+			oldContent = new String(Files.readAllBytes(path));
+		}
+
+		if (!content.equals(oldContent)) {
+			Files.write(path, content.getBytes(StringPool.UTF8));
+		}
+	}
+
+	private String _classPath;
 	private String _fileName;
 	private String _outputPath;
 	private String _packagePath;

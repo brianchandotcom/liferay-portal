@@ -12,21 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.tools.wsdd.merger;
+package com.liferay.portal.tools.wsdd.builder;
 
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.xml.SAXReaderFactory;
+import com.liferay.util.xml.XMLFormatter;
 
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.Files;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,8 +39,6 @@ import java.util.TreeMap;
 public class WSDDMerger {
 
 	public static void main(String[] args) {
-		ToolDependencies.wireBasic();
-
 		new WSDDMerger(args[0], args[1]);
 	}
 
@@ -46,7 +49,9 @@ public class WSDDMerger {
 
 		File sourceFile = new File(source);
 
-		Document document = SAXReaderUtil.read(sourceFile);
+		SAXReader saxReader = _getSAXReader();
+
+		Document document = saxReader.read(sourceFile);
 
 		Element rootElement = document.getRootElement();
 
@@ -60,7 +65,9 @@ public class WSDDMerger {
 
 		File destinationFile = new File(destination);
 
-		document = SAXReaderUtil.read(destinationFile);
+		document = saxReader.read(destinationFile);
+
+		String oldContent = XMLFormatter.toString(document);
 
 		rootElement = document.getRootElement();
 
@@ -90,11 +97,14 @@ public class WSDDMerger {
 			rootElement.add(serviceElement);
 		}
 
-		String content = document.formattedString();
+		String content = XMLFormatter.toString(document);
 
-		content = StringUtil.replace(content, "\"/>", "\" />");
+		if (!content.equals(oldContent)) {
+			content = StringUtil.replace(content, "\"/>", "\" />");
 
-		FileUtil.write(destination, content, true);
+			Files.write(
+				destinationFile.toPath(), content.getBytes(StringPool.UTF8));
+		}
 	}
 
 	public WSDDMerger(String source, String destination) {
@@ -104,6 +114,10 @@ public class WSDDMerger {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static SAXReader _getSAXReader() {
+		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
 
 }

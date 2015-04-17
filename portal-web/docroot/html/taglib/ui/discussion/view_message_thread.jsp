@@ -58,7 +58,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		</div>
 
 		<div class="lfr-discussion-body">
-			<c:if test="<%= (message != null) && !message.isApproved() %>">
+			<c:if test="<%= commentTreeDisplayContext.isWorkflowStatusVisible() %>">
 				<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
 				<div>

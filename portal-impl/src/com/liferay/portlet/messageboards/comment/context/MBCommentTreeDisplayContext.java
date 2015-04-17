@@ -45,6 +45,11 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		return hasViewPermission();
 	}
 
+	@Override
+	public boolean isWorkflowStatusVisible() throws PortalException {
+		return (_message != null) && !_message.isApproved();
+	}
+
 	protected User getUser() {
 		ThemeDisplay themeDisplay = _discussionRequestHelper.getThemeDisplay();
 

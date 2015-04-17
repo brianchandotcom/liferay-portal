@@ -2,28 +2,6 @@
 	<property name="testcase.url" value="" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<!-- Depreciated. Removing ftl methods -->
-
-	<!-- <command name="GetFirstNumber" priority="5">
-		<echo message="Test getFirstNumber()" />
-
-		<var name="string" value="abc1de" />
-
-		<var name="stringFirstNumber" value="${string?getFirstNumber()}" />
-
-		<execute macro="TestUtils#assertEquals">
-			<var name="actual" value="${stringFirstNumber}" />
-			<var name="expected" value="1" />
-		</execute>
-
-		<echo message="Test getFirstNumber() used inline" />
-
-		<execute macro="TestUtils#assertEquals">
-			<var name="actual" value="${string?getFirstNumber()}" />
-			<var name="expected" value="1" />
-		</execute>
-	</command> -->
-
 	<command name="GetIPAddress" priority="5">
 		<echo message="Test getIPAddress()" />
 

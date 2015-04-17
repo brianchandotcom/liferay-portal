@@ -19,9 +19,9 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-Team team = (Team)request.getAttribute(WebKeys.TEAM);
+long teamId = ParamUtil.getLong(request, "teamId");
 
-long teamId = BeanParamUtil.getLong(team, request, "teamId");
+Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
 long groupId = BeanParamUtil.getLong(team, request, "groupId");
 

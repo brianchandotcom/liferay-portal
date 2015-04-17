@@ -34,7 +34,7 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	public String getTitle(Locale locale);
 
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			T itemSelectorCriterion, PortletURL portletURL,
 			String itemSelectedCallback)
 		throws IOException, ServletException;

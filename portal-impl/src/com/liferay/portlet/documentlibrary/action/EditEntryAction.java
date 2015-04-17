@@ -136,7 +136,6 @@ public class EditEntryAction extends PortletAction {
 			}
 			else if (e instanceof DuplicateFileException ||
 					 e instanceof DuplicateFolderNameException ||
-					 e instanceof InvalidFolderException ||
 					 e instanceof SourceFileNameException) {
 
 				if (e instanceof DuplicateFileException) {
@@ -150,7 +149,8 @@ public class EditEntryAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
+					 e instanceof AssetTagException ||
+					 e instanceof InvalidFolderException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}

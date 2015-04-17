@@ -112,7 +112,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		InvalidFolderException ife = (InvalidFolderException)errorException;
 		%>
 
-		<liferay-ui:message arguments="<%= GetterUtil.getString(ife.getFolderId()) %>" key="<%= ife.getMessageKey() %>" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= String.valueOf(ife.getFolderId()) %>" key="<%= ife.getMessageKey() %>" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />

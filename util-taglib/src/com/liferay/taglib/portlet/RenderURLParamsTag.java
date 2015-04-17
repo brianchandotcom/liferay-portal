@@ -57,11 +57,11 @@ public class RenderURLParamsTag extends TagSupport {
 		return params;
 	}
 
-	@Deprecated
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #doTag(PortletURL, String,
 	 *             PageContext)}
 	 */
+	@Deprecated
 	public static String doTag(String varImpl, PageContext pageContext)
 		throws Exception {
 

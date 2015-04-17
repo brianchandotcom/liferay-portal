@@ -159,79 +159,49 @@ public class BlogsStatsUserPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
-		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
-	public void testCountByUserId() {
-		try {
-			_persistence.countByUserId(RandomTestUtil.nextLong());
+	public void testCountByUserId() throws Exception {
+		_persistence.countByUserId(RandomTestUtil.nextLong());
 
-			_persistence.countByUserId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByUserId(0L);
 	}
 
 	@Test
-	public void testCountByG_U() {
-		try {
-			_persistence.countByG_U(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByG_U() throws Exception {
+		_persistence.countByG_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByG_U(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_U(0L, 0L);
 	}
 
 	@Test
-	public void testCountByG_NotE() {
-		try {
-			_persistence.countByG_NotE(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt());
+	public void testCountByG_NotE() throws Exception {
+		_persistence.countByG_NotE(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-			_persistence.countByG_NotE(0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_NotE(0L, 0);
 	}
 
 	@Test
-	public void testCountByC_NotE() {
-		try {
-			_persistence.countByC_NotE(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt());
+	public void testCountByC_NotE() throws Exception {
+		_persistence.countByC_NotE(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-			_persistence.countByC_NotE(0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_NotE(0L, 0);
 	}
 
 	@Test
-	public void testCountByU_L() {
-		try {
-			_persistence.countByU_L(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextDate());
+	public void testCountByU_L() throws Exception {
+		_persistence.countByU_L(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate());
 
-			_persistence.countByU_L(0L, RandomTestUtil.nextDate());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByU_L(0L, RandomTestUtil.nextDate());
 	}
 
 	@Test
@@ -258,13 +228,8 @@ public class BlogsStatsUserPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<BlogsStatsUser> getOrderByComparator() {

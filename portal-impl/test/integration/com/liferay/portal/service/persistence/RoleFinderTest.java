@@ -104,15 +104,20 @@ public class RoleFinderTest {
 			_resourcePermission.getScope(), _resourcePermission.getPrimKey(),
 			_arbitraryResourceAction.getActionId());
 
+		boolean exists = false;
+
 		for (Role role : roles) {
 			if (role.getRoleId() == _arbitraryRole.getRoleId()) {
-				return;
+				exists = true;
+
+				break;
 			}
 		}
 
-		Assert.fail(
+		Assert.assertTrue(
 			"The method findByC_N_S_P_A should have returned the role " +
-				_arbitraryRole.getRoleId());
+				_arbitraryRole.getRoleId(),
+			exists);
 	}
 
 	@Test
@@ -121,15 +126,20 @@ public class RoleFinderTest {
 			_resourceBlock.getResourceBlockId(), _resourceBlock.getName(),
 			_modelResourceAction.getActionId());
 
+		boolean exists = false;
+
 		for (Role role : roles) {
 			if (role.getRoleId() == _arbitraryRole.getRoleId()) {
-				return;
+				exists = true;
+
+				break;
 			}
 		}
 
-		Assert.fail(
+		Assert.assertTrue(
 			"The method findByR_N_A should have returned the role " +
-				_arbitraryRole.getRoleId());
+				_arbitraryRole.getRoleId(),
+			exists);
 	}
 
 	protected static ResourceAction getModelResourceAction()

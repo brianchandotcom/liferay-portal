@@ -168,46 +168,31 @@ public class PortletItemPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C() {
-		try {
-			_persistence.countByG_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByG_C() throws Exception {
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByG_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
-	public void testCountByG_P_C() {
-		try {
-			_persistence.countByG_P_C(RandomTestUtil.nextLong(),
-				StringPool.BLANK, RandomTestUtil.nextLong());
+	public void testCountByG_P_C() throws Exception {
+		_persistence.countByG_P_C(RandomTestUtil.nextLong(), StringPool.BLANK,
+			RandomTestUtil.nextLong());
 
-			_persistence.countByG_P_C(0L, StringPool.NULL, 0L);
+		_persistence.countByG_P_C(0L, StringPool.NULL, 0L);
 
-			_persistence.countByG_P_C(0L, (String)null, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_P_C(0L, (String)null, 0L);
 	}
 
 	@Test
-	public void testCountByG_N_P_C() {
-		try {
-			_persistence.countByG_N_P_C(RandomTestUtil.nextLong(),
-				StringPool.BLANK, StringPool.BLANK, RandomTestUtil.nextLong());
+	public void testCountByG_N_P_C() throws Exception {
+		_persistence.countByG_N_P_C(RandomTestUtil.nextLong(),
+			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.nextLong());
 
-			_persistence.countByG_N_P_C(0L, StringPool.NULL, StringPool.NULL, 0L);
+		_persistence.countByG_N_P_C(0L, StringPool.NULL, StringPool.NULL, 0L);
 
-			_persistence.countByG_N_P_C(0L, (String)null, (String)null, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_N_P_C(0L, (String)null, (String)null, 0L);
 	}
 
 	@Test
@@ -235,13 +220,8 @@ public class PortletItemPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<PortletItem> getOrderByComparator() {

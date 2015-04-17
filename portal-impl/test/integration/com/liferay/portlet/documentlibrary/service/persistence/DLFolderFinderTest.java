@@ -286,6 +286,12 @@ public class DLFolderFinderTest {
 		Assert.assertEquals(3, results.size());
 
 		for (Object result : results) {
+			Assert.assertTrue(
+				String.valueOf(result.getClass()),
+				result instanceof DLFileEntry ||
+					result instanceof DLFileShortcut ||
+					result instanceof DLFolder);
+
 			if (result instanceof DLFileEntry) {
 				DLFileEntry dlFileEntry = (DLFileEntry)result;
 
@@ -302,9 +308,6 @@ public class DLFolderFinderTest {
 				DLFolder dlFolder = (DLFolder)result;
 
 				Assert.assertEquals("Folder B", dlFolder.getName());
-			}
-			else {
-				Assert.fail(String.valueOf(result.getClass()));
 			}
 		}
 	}

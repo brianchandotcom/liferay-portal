@@ -606,8 +606,6 @@ public class GroupServiceTest {
 			group1.isManualMembership(), group1.getMembershipRestriction(),
 			group1.getFriendlyURL(), group1.isInheritContent(),
 			group1.isActive(), ServiceContextTestUtil.getServiceContext());
-
-		Assert.fail("A child group cannot be its parent group");
 	}
 
 	@Test(expected = GroupParentException.MustNotHaveChildParent.class)
@@ -626,8 +624,6 @@ public class GroupServiceTest {
 			group1.isManualMembership(), group1.getMembershipRestriction(),
 			group1.getFriendlyURL(), group1.isInheritContent(),
 			group1.isActive(), ServiceContextTestUtil.getServiceContext());
-
-		Assert.fail("A child group cannot be its parent group");
 	}
 
 	@Test(expected = GroupParentException.MustNotHaveStagingParent.class)
@@ -648,8 +644,6 @@ public class GroupServiceTest {
 			stagingGroup.getFriendlyURL(), stagingGroup.isInheritContent(),
 			stagingGroup.isActive(),
 			ServiceContextTestUtil.getServiceContext());
-
-		Assert.fail("A group cannot have its live group as parent");
 	}
 
 	@Test(expected = GroupParentException.MustNotBeOwnParent.class)
@@ -662,8 +656,6 @@ public class GroupServiceTest {
 			group.isManualMembership(), group.getMembershipRestriction(),
 			group.getFriendlyURL(), group.isInheritContent(), group.isActive(),
 			ServiceContextTestUtil.getServiceContext());
-
-		Assert.fail("A group cannot be its own parent");
 	}
 
 	@Test
@@ -900,40 +892,40 @@ public class GroupServiceTest {
 			try {
 				GroupTestUtil.addGroup(group1.getGroupId(), serviceContext);
 
-				if (!hasManageSubsitePermisionOnGroup1 && !hasManageSite1) {
-					Assert.fail("The user should not be able to add this site");
-				}
+				Assert.assertTrue(
+					"The user should not be able to add this site",
+					hasManageSubsitePermisionOnGroup1 || hasManageSite1);
 			}
 			catch (PrincipalException pe) {
-				if (hasManageSubsitePermisionOnGroup1 || hasManageSite1) {
-					Assert.fail("The user should be able to add this site");
-				}
+				Assert.assertFalse(
+					"The user should be able to add this site",
+					hasManageSubsitePermisionOnGroup1 || hasManageSite1);
 			}
 
 			try {
 				GroupTestUtil.addGroup(group11.getGroupId(), serviceContext);
 
-				if (!hasManageSubsitePermisionOnGroup11 && !hasManageSite1) {
-					Assert.fail("The user should not be able to add this site");
-				}
+				Assert.assertTrue(
+					"The user should not be able to add this site",
+					hasManageSubsitePermisionOnGroup11 || hasManageSite1);
 			}
 			catch (PrincipalException pe) {
-				if (hasManageSubsitePermisionOnGroup11 || hasManageSite1) {
-					Assert.fail("The user should be able to add this site");
-				}
+				Assert.assertFalse(
+					"The user should be able to add this site",
+					hasManageSubsitePermisionOnGroup11 || hasManageSite1);
 			}
 
 			try {
 				GroupTestUtil.addGroup(group111.getGroupId(), serviceContext);
 
-				if (!hasManageSubsitePermisionOnGroup111 && !hasManageSite1) {
-					Assert.fail("The user should not be able to add this site");
-				}
+				Assert.assertTrue(
+					"The user should not be able to add this site",
+					hasManageSubsitePermisionOnGroup111 || hasManageSite1);
 			}
 			catch (PrincipalException pe) {
-				if (hasManageSubsitePermisionOnGroup111 || hasManageSite1) {
-					Assert.fail("The user should be able to add this site");
-				}
+				Assert.assertFalse(
+					"The user should be able to add this site",
+					hasManageSubsitePermisionOnGroup111 || hasManageSite1);
 			}
 		}
 
@@ -941,47 +933,42 @@ public class GroupServiceTest {
 			try {
 				GroupServiceUtil.updateGroup(group1.getGroupId(), "");
 
-				if (!hasManageSite1) {
-					Assert.fail(
-						"The user should not be able to update this site");
-				}
+				Assert.assertTrue(
+					"The user should not be able to update this site",
+					hasManageSite1);
 			}
 			catch (PrincipalException pe) {
-				if (hasManageSite1) {
-					Assert.fail("The user should be able to update this site");
-				}
+				Assert.assertFalse(
+					"The user should be able to update this site",
+					hasManageSite1);
 			}
 
 			try {
 				GroupServiceUtil.updateGroup(group11.getGroupId(), "");
 
-				if (!hasManageSubsitePermisionOnGroup1 && !hasManageSite1 &&
-					!hasManageSite11) {
-
-					Assert.fail(
-						"The user should not be able to update this site");
-				}
+				Assert.assertTrue(
+					"The user should not be able to update this site",
+					hasManageSubsitePermisionOnGroup1 || hasManageSite1 ||
+						hasManageSite11);
 			}
 			catch (PrincipalException pe) {
-				if (hasManageSubsitePermisionOnGroup1 || hasManageSite1 ||
-					hasManageSite11) {
-
-					Assert.fail("The user should be able to update this site");
-				}
+				Assert.assertFalse(
+					"The user should be able to update this site",
+					hasManageSubsitePermisionOnGroup1 || hasManageSite1 ||
+						hasManageSite11);
 			}
 
 			try {
 				GroupServiceUtil.updateGroup(group111.getGroupId(), "");
 
-				if (!hasManageSubsitePermisionOnGroup11 && !hasManageSite1) {
-					Assert.fail(
-						"The user should not be able to update this site");
-				}
+				Assert.assertTrue(
+					"The user should not be able to update this site",
+					hasManageSubsitePermisionOnGroup11 || hasManageSite1);
 			}
 			catch (PrincipalException pe) {
-				if (hasManageSubsitePermisionOnGroup1 || hasManageSite1) {
-					Assert.fail("The user should be able to update this site");
-				}
+				Assert.assertFalse(
+					"The user should be able to update this site",
+					hasManageSubsitePermisionOnGroup1 || hasManageSite1);
 			}
 		}
 	}
@@ -1016,13 +1003,14 @@ public class GroupServiceTest {
 		for (Group selectableGroup : selectableGroups) {
 			long selectableGroupId = selectableGroup.getGroupId();
 
-			if (selectableGroupId == group.getGroupId()) {
-				Assert.fail("A group cannot be its own parent");
-			}
-			else if (staging) {
-				if (selectableGroupId == group.getLiveGroupId()) {
-					Assert.fail("A group cannot have its live group as parent");
-				}
+			Assert.assertNotEquals(
+				"A group cannot be its own parent", group.getGroupId(),
+				selectableGroupId);
+
+			if (staging) {
+				Assert.assertNotEquals(
+					"A group cannot have its live group as parent",
+					group.getLiveGroupId(), selectableGroupId);
 			}
 		}
 	}
@@ -1045,14 +1033,10 @@ public class GroupServiceTest {
 			GroupTestUtil.updateDisplaySettings(
 				group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
-			if (expectFailure) {
-				Assert.fail();
-			}
+			Assert.assertFalse(expectFailure);
 		}
 		catch (LocaleException le) {
-			if (!expectFailure) {
-				Assert.fail();
-			}
+			Assert.assertTrue(expectFailure);
 		}
 		finally {
 			CompanyTestUtil.resetCompanyLocales(

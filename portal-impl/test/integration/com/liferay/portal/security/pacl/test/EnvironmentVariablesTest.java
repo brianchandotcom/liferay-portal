@@ -32,12 +32,7 @@ public class EnvironmentVariablesTest {
 
 	@Test
 	public void test1() throws Exception {
-		try {
-			System.getenv("JAVA_HOME");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		System.getenv("JAVA_HOME");
 	}
 
 	@Test

@@ -262,19 +262,12 @@ public class RepositoryTest {
 		catch (Exception e) {
 		}
 
-		try {
-			LocalRepository localRepository =
-				RepositoryServiceUtil.getLocalRepositoryImpl(
-					repository.getRepositoryId());
+		LocalRepository localRepository =
+			RepositoryServiceUtil.getLocalRepositoryImpl(
+				repository.getRepositoryId());
 
-			localRepository.getFileEntry(fileEntryIds[2]);
-			localRepository.getFileEntry(fileEntryIds[3]);
-		}
-		catch (Exception e) {
-			Assert.fail(
-				"Should not be able to get file entry from repository " +
-					repository.getRepositoryId());
-		}
+		localRepository.getFileEntry(fileEntryIds[2]);
+		localRepository.getFileEntry(fileEntryIds[3]);
 	}
 
 	@Test
@@ -326,19 +319,12 @@ public class RepositoryTest {
 		catch (Exception e) {
 		}
 
-		try {
-			LocalRepository localRepository =
-				RepositoryServiceUtil.getLocalRepositoryImpl(
-					repository2.getRepositoryId());
+		LocalRepository localRepository =
+			RepositoryServiceUtil.getLocalRepositoryImpl(
+				repository2.getRepositoryId());
 
-			localRepository.getFileEntry(fileEntryIds[2]);
-			localRepository.getFileEntry(fileEntryIds[3]);
-		}
-		catch (Exception e) {
-			Assert.fail(
-				"Should not be able to get file entry from repository " +
-					repository2.getRepositoryId());
-		}
+		localRepository.getFileEntry(fileEntryIds[2]);
+		localRepository.getFileEntry(fileEntryIds[3]);
 	}
 
 	protected long[] populateRepository(long repositoryId) throws Exception {

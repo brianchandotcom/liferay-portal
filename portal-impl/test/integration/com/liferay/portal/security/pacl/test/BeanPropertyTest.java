@@ -65,32 +65,17 @@ public class BeanPropertyTest {
 
 	@Test
 	public void testGet3() throws Exception {
-		try {
-			LanguageUtil.getLanguage();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		LanguageUtil.getLanguage();
 	}
 
 	@Test
 	public void testGet4() throws Exception {
-		try {
-			PortalRuntimePermission.checkGetBeanProperty(PortalUtil.class);
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortalRuntimePermission.checkGetBeanProperty(PortalUtil.class);
 	}
 
 	@Test
 	public void testGet5() throws Exception {
-		try {
-			LanguageUtil.getLocale("en_US");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		LanguageUtil.getLocale("en_US");
 	}
 
 	@Test
@@ -125,17 +110,12 @@ public class BeanPropertyTest {
 
 	@Test
 	public void testSet3() throws Exception {
-		try {
-			PortalCustomSQLUtil portalCustomSQLUtil = new PortalCustomSQLUtil();
+		PortalCustomSQLUtil portalCustomSQLUtil = new PortalCustomSQLUtil();
 
-			PortalCustomSQL portalCustomSQL =
-				PortalCustomSQLUtil.getPortalCustomSQL();
+		PortalCustomSQL portalCustomSQL =
+			PortalCustomSQLUtil.getPortalCustomSQL();
 
-			portalCustomSQLUtil.setPortalCustomSQL(portalCustomSQL);
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		portalCustomSQLUtil.setPortalCustomSQL(portalCustomSQL);
 	}
 
 }

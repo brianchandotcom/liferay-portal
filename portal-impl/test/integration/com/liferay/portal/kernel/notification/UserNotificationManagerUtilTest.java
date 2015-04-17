@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.notification;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.notification.bundle.usernotificationmanagerutil.TestUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -72,26 +73,20 @@ public class UserNotificationManagerUtilTest {
 	}
 
 	@Test
-	public void testInterpret() {
-		try {
-			UserNotificationEvent userNotificationEvent =
-				new UserNotificationEventImpl();
+	public void testInterpret() throws PortalException {
+		UserNotificationEvent userNotificationEvent =
+			new UserNotificationEventImpl();
 
-			userNotificationEvent.setType(
-				TestUserNotificationHandler.PORTLET_ID);
+		userNotificationEvent.setType(TestUserNotificationHandler.PORTLET_ID);
 
-			UserNotificationFeedEntry userNotificationFeedEntry =
-				UserNotificationManagerUtil.interpret(
-					TestUserNotificationHandler.SELECTOR, userNotificationEvent,
-					null);
+		UserNotificationFeedEntry userNotificationFeedEntry =
+			UserNotificationManagerUtil.interpret(
+				TestUserNotificationHandler.SELECTOR, userNotificationEvent,
+				null);
 
-			Assert.assertEquals(
-				TestUserNotificationHandler.LINK,
-				userNotificationFeedEntry.getLink());
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(
+			TestUserNotificationHandler.LINK,
+			userNotificationFeedEntry.getLink());
 	}
 
 	@Test
@@ -104,7 +99,7 @@ public class UserNotificationManagerUtilTest {
 			Assert.assertTrue(deliver);
 		}
 		catch (Exception e) {
-			Assert.fail();
+			throw new Error(e);
 		}
 	}
 

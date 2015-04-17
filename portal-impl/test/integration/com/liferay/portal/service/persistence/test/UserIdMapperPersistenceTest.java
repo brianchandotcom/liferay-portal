@@ -145,43 +145,28 @@ public class UserIdMapperPersistenceTest {
 	}
 
 	@Test
-	public void testCountByUserId() {
-		try {
-			_persistence.countByUserId(RandomTestUtil.nextLong());
+	public void testCountByUserId() throws Exception {
+		_persistence.countByUserId(RandomTestUtil.nextLong());
 
-			_persistence.countByUserId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByUserId(0L);
 	}
 
 	@Test
-	public void testCountByU_T() {
-		try {
-			_persistence.countByU_T(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByU_T() throws Exception {
+		_persistence.countByU_T(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByU_T(0L, StringPool.NULL);
+		_persistence.countByU_T(0L, StringPool.NULL);
 
-			_persistence.countByU_T(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByU_T(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByT_E() {
-		try {
-			_persistence.countByT_E(StringPool.BLANK, StringPool.BLANK);
+	public void testCountByT_E() throws Exception {
+		_persistence.countByT_E(StringPool.BLANK, StringPool.BLANK);
 
-			_persistence.countByT_E(StringPool.NULL, StringPool.NULL);
+		_persistence.countByT_E(StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByT_E((String)null, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_E((String)null, (String)null);
 	}
 
 	@Test
@@ -209,13 +194,8 @@ public class UserIdMapperPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<UserIdMapper> getOrderByComparator() {

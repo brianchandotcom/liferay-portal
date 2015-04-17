@@ -144,41 +144,26 @@ public class TrashVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByEntryId() {
-		try {
-			_persistence.countByEntryId(RandomTestUtil.nextLong());
+	public void testCountByEntryId() throws Exception {
+		_persistence.countByEntryId(RandomTestUtil.nextLong());
 
-			_persistence.countByEntryId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByEntryId(0L);
 	}
 
 	@Test
-	public void testCountByE_C() {
-		try {
-			_persistence.countByE_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByE_C() throws Exception {
+		_persistence.countByE_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByE_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByE_C(0L, 0L);
 	}
 
 	@Test
-	public void testCountByC_C() {
-		try {
-			_persistence.countByC_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByC_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
@@ -205,13 +190,8 @@ public class TrashVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<TrashVersion> getOrderByComparator() {

@@ -1961,8 +1961,9 @@ public class TableMapperTest {
 				Assert.assertSame(
 					_associationClassPKs[index], associationClassPK);
 			}
-			else if (_markers[index]) {
-				Assert.fail("Called onAfterAddAssociation");
+			else {
+				Assert.assertFalse(
+					"Called onAfterAddAssociation", _markers[index]);
 			}
 		}
 

@@ -172,29 +172,19 @@ public class DDMTemplateVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByTemplateId() {
-		try {
-			_persistence.countByTemplateId(RandomTestUtil.nextLong());
+	public void testCountByTemplateId() throws Exception {
+		_persistence.countByTemplateId(RandomTestUtil.nextLong());
 
-			_persistence.countByTemplateId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByTemplateId(0L);
 	}
 
 	@Test
-	public void testCountByT_V() {
-		try {
-			_persistence.countByT_V(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByT_V() throws Exception {
+		_persistence.countByT_V(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByT_V(0L, StringPool.NULL);
+		_persistence.countByT_V(0L, StringPool.NULL);
 
-			_persistence.countByT_V(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_V(0L, (String)null);
 	}
 
 	@Test
@@ -222,13 +212,8 @@ public class DDMTemplateVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DDMTemplateVersion> getOrderByComparator() {

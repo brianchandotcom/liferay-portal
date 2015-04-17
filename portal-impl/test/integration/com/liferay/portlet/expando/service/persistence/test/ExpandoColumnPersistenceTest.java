@@ -150,43 +150,28 @@ public class ExpandoColumnPersistenceTest {
 	}
 
 	@Test
-	public void testCountByTableId() {
-		try {
-			_persistence.countByTableId(RandomTestUtil.nextLong());
+	public void testCountByTableId() throws Exception {
+		_persistence.countByTableId(RandomTestUtil.nextLong());
 
-			_persistence.countByTableId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByTableId(0L);
 	}
 
 	@Test
-	public void testCountByT_N() {
-		try {
-			_persistence.countByT_N(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByT_N() throws Exception {
+		_persistence.countByT_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByT_N(0L, StringPool.NULL);
+		_persistence.countByT_N(0L, StringPool.NULL);
 
-			_persistence.countByT_N(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_N(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByT_NArrayable() {
-		try {
-			_persistence.countByT_N(RandomTestUtil.nextLong(),
-				new String[] {
-					RandomTestUtil.randomString(), StringPool.BLANK,
-					StringPool.NULL, null, null
-				});
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+	public void testCountByT_NArrayable() throws Exception {
+		_persistence.countByT_N(RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
+				null, null
+			});
 	}
 
 	@Test
@@ -213,13 +198,8 @@ public class ExpandoColumnPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<ExpandoColumn> getOrderByComparator() {

@@ -167,61 +167,41 @@ public class DLContentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_R() {
-		try {
-			_persistence.countByC_R(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByC_R() throws Exception {
+		_persistence.countByC_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByC_R(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_R(0L, 0L);
 	}
 
 	@Test
-	public void testCountByC_R_P() {
-		try {
-			_persistence.countByC_R_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByC_R_P() throws Exception {
+		_persistence.countByC_R_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByC_R_P(0L, 0L, StringPool.NULL);
+		_persistence.countByC_R_P(0L, 0L, StringPool.NULL);
 
-			_persistence.countByC_R_P(0L, 0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_R_P(0L, 0L, (String)null);
 	}
 
 	@Test
-	public void testCountByC_R_LikeP() {
-		try {
-			_persistence.countByC_R_LikeP(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByC_R_LikeP() throws Exception {
+		_persistence.countByC_R_LikeP(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByC_R_LikeP(0L, 0L, StringPool.NULL);
+		_persistence.countByC_R_LikeP(0L, 0L, StringPool.NULL);
 
-			_persistence.countByC_R_LikeP(0L, 0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_R_LikeP(0L, 0L, (String)null);
 	}
 
 	@Test
-	public void testCountByC_R_P_V() {
-		try {
-			_persistence.countByC_R_P_V(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
+	public void testCountByC_R_P_V() throws Exception {
+		_persistence.countByC_R_P_V(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
 
-			_persistence.countByC_R_P_V(0L, 0L, StringPool.NULL, StringPool.NULL);
+		_persistence.countByC_R_P_V(0L, 0L, StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByC_R_P_V(0L, 0L, (String)null, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_R_P_V(0L, 0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -248,13 +228,8 @@ public class DLContentPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DLContent> getOrderByComparator() {

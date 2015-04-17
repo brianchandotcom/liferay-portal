@@ -159,55 +159,35 @@ public class CompanyPersistenceTest {
 	}
 
 	@Test
-	public void testCountByWebId() {
-		try {
-			_persistence.countByWebId(StringPool.BLANK);
+	public void testCountByWebId() throws Exception {
+		_persistence.countByWebId(StringPool.BLANK);
 
-			_persistence.countByWebId(StringPool.NULL);
+		_persistence.countByWebId(StringPool.NULL);
 
-			_persistence.countByWebId((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByWebId((String)null);
 	}
 
 	@Test
-	public void testCountByMx() {
-		try {
-			_persistence.countByMx(StringPool.BLANK);
+	public void testCountByMx() throws Exception {
+		_persistence.countByMx(StringPool.BLANK);
 
-			_persistence.countByMx(StringPool.NULL);
+		_persistence.countByMx(StringPool.NULL);
 
-			_persistence.countByMx((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByMx((String)null);
 	}
 
 	@Test
-	public void testCountByLogoId() {
-		try {
-			_persistence.countByLogoId(RandomTestUtil.nextLong());
+	public void testCountByLogoId() throws Exception {
+		_persistence.countByLogoId(RandomTestUtil.nextLong());
 
-			_persistence.countByLogoId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByLogoId(0L);
 	}
 
 	@Test
-	public void testCountBySystem() {
-		try {
-			_persistence.countBySystem(RandomTestUtil.randomBoolean());
+	public void testCountBySystem() throws Exception {
+		_persistence.countBySystem(RandomTestUtil.randomBoolean());
 
-			_persistence.countBySystem(RandomTestUtil.randomBoolean());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countBySystem(RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -234,13 +214,8 @@ public class CompanyPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<Company> getOrderByComparator() {

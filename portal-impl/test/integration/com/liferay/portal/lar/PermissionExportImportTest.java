@@ -209,9 +209,7 @@ public class PermissionExportImportTest extends PowerMockito {
 				}
 			}
 
-			if (!foundActionId) {
-				Assert.fail("Unable to import permissions");
-			}
+			Assert.assertTrue("Unable to import permissions", foundActionId);
 		}
 	}
 

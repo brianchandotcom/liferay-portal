@@ -200,29 +200,19 @@ public class ShoppingCouponPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
-		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
-	public void testCountByCode() {
-		try {
-			_persistence.countByCode(StringPool.BLANK);
+	public void testCountByCode() throws Exception {
+		_persistence.countByCode(StringPool.BLANK);
 
-			_persistence.countByCode(StringPool.NULL);
+		_persistence.countByCode(StringPool.NULL);
 
-			_persistence.countByCode((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCode((String)null);
 	}
 
 	@Test
@@ -249,13 +239,8 @@ public class ShoppingCouponPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<ShoppingCoupon> getOrderByComparator() {

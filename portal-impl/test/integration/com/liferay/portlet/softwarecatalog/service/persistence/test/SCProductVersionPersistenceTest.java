@@ -173,29 +173,19 @@ public class SCProductVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByProductEntryId() {
-		try {
-			_persistence.countByProductEntryId(RandomTestUtil.nextLong());
+	public void testCountByProductEntryId() throws Exception {
+		_persistence.countByProductEntryId(RandomTestUtil.nextLong());
 
-			_persistence.countByProductEntryId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByProductEntryId(0L);
 	}
 
 	@Test
-	public void testCountByDirectDownloadURL() {
-		try {
-			_persistence.countByDirectDownloadURL(StringPool.BLANK);
+	public void testCountByDirectDownloadURL() throws Exception {
+		_persistence.countByDirectDownloadURL(StringPool.BLANK);
 
-			_persistence.countByDirectDownloadURL(StringPool.NULL);
+		_persistence.countByDirectDownloadURL(StringPool.NULL);
 
-			_persistence.countByDirectDownloadURL((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByDirectDownloadURL((String)null);
 	}
 
 	@Test
@@ -223,13 +213,8 @@ public class SCProductVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<SCProductVersion> getOrderByComparator() {

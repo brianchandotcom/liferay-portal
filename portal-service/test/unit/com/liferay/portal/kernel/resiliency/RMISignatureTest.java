@@ -57,17 +57,21 @@ public class RMISignatureTest {
 
 		Method[] methods = rmiClass.getDeclaredMethods();
 
-		method:
 		for (Method method : methods) {
+			boolean exists = false;
+
 			Class<?>[] exceptionTypes = method.getExceptionTypes();
 
 			for (Class<?> exceptionType : exceptionTypes) {
 				if (RemoteException.class.isAssignableFrom(exceptionType)) {
-					continue method;
+					exists = true;
+
+					break;
 				}
 			}
 
-			Assert.fail(method + " does not throw " + RemoteException.class);
+			Assert.assertTrue(
+				method + " does not throw " + RemoteException.class, exists);
 		}
 	}
 

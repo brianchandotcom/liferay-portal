@@ -187,200 +187,129 @@ public class BackgroundTaskPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
-		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
-	public void testCountByCompanyId() {
-		try {
-			_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-			_persistence.countByCompanyId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
-	public void testCountByStatus() {
-		try {
-			_persistence.countByStatus(RandomTestUtil.nextInt());
+	public void testCountByStatus() throws Exception {
+		_persistence.countByStatus(RandomTestUtil.nextInt());
 
-			_persistence.countByStatus(0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByStatus(0);
 	}
 
 	@Test
-	public void testCountByG_T() {
-		try {
-			_persistence.countByG_T(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByG_T(0L, StringPool.NULL);
+		_persistence.countByG_T(0L, StringPool.NULL);
 
-			_persistence.countByG_T(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_T(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByG_TArrayable() {
-		try {
-			_persistence.countByG_T(RandomTestUtil.nextLong(),
-				new String[] {
-					RandomTestUtil.randomString(), StringPool.BLANK,
-					StringPool.NULL, null, null
-				});
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+	public void testCountByG_TArrayable() throws Exception {
+		_persistence.countByG_T(RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
+				null, null
+			});
 	}
 
 	@Test
-	public void testCountByG_S() {
-		try {
-			_persistence.countByG_S(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt());
+	public void testCountByG_S() throws Exception {
+		_persistence.countByG_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-			_persistence.countByG_S(0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_S(0L, 0);
 	}
 
 	@Test
-	public void testCountByT_S() {
-		try {
-			_persistence.countByT_S(StringPool.BLANK, RandomTestUtil.nextInt());
+	public void testCountByT_S() throws Exception {
+		_persistence.countByT_S(StringPool.BLANK, RandomTestUtil.nextInt());
 
-			_persistence.countByT_S(StringPool.NULL, 0);
+		_persistence.countByT_S(StringPool.NULL, 0);
 
-			_persistence.countByT_S((String)null, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_S((String)null, 0);
 	}
 
 	@Test
-	public void testCountByT_SArrayable() {
-		try {
-			_persistence.countByT_S(new String[] {
-					RandomTestUtil.randomString(), StringPool.BLANK,
-					StringPool.NULL, null, null
-				}, RandomTestUtil.nextInt());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+	public void testCountByT_SArrayable() throws Exception {
+		_persistence.countByT_S(new String[] {
+				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
+				null, null
+			}, RandomTestUtil.nextInt());
 	}
 
 	@Test
-	public void testCountByG_N_T() {
-		try {
-			_persistence.countByG_N_T(RandomTestUtil.nextLong(),
-				StringPool.BLANK, StringPool.BLANK);
+	public void testCountByG_N_T() throws Exception {
+		_persistence.countByG_N_T(RandomTestUtil.nextLong(), StringPool.BLANK,
+			StringPool.BLANK);
 
-			_persistence.countByG_N_T(0L, StringPool.NULL, StringPool.NULL);
+		_persistence.countByG_N_T(0L, StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByG_N_T(0L, (String)null, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_N_T(0L, (String)null, (String)null);
 	}
 
 	@Test
-	public void testCountByG_T_C() {
-		try {
-			_persistence.countByG_T_C(RandomTestUtil.nextLong(),
-				StringPool.BLANK, RandomTestUtil.randomBoolean());
+	public void testCountByG_T_C() throws Exception {
+		_persistence.countByG_T_C(RandomTestUtil.nextLong(), StringPool.BLANK,
+			RandomTestUtil.randomBoolean());
 
-			_persistence.countByG_T_C(0L, StringPool.NULL,
-				RandomTestUtil.randomBoolean());
+		_persistence.countByG_T_C(0L, StringPool.NULL,
+			RandomTestUtil.randomBoolean());
 
-			_persistence.countByG_T_C(0L, (String)null,
-				RandomTestUtil.randomBoolean());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_T_C(0L, (String)null,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
-	public void testCountByG_T_CArrayable() {
-		try {
-			_persistence.countByG_T_C(RandomTestUtil.nextLong(),
-				new String[] {
-					RandomTestUtil.randomString(), StringPool.BLANK,
-					StringPool.NULL, null, null
-				}, RandomTestUtil.randomBoolean());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+	public void testCountByG_T_CArrayable() throws Exception {
+		_persistence.countByG_T_C(RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
+				null, null
+			}, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
-	public void testCountByG_T_S() {
-		try {
-			_persistence.countByG_T_S(RandomTestUtil.nextLong(),
-				StringPool.BLANK, RandomTestUtil.nextInt());
+	public void testCountByG_T_S() throws Exception {
+		_persistence.countByG_T_S(RandomTestUtil.nextLong(), StringPool.BLANK,
+			RandomTestUtil.nextInt());
 
-			_persistence.countByG_T_S(0L, StringPool.NULL, 0);
+		_persistence.countByG_T_S(0L, StringPool.NULL, 0);
 
-			_persistence.countByG_T_S(0L, (String)null, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_T_S(0L, (String)null, 0);
 	}
 
 	@Test
-	public void testCountByG_T_SArrayable() {
-		try {
-			_persistence.countByG_T_S(RandomTestUtil.nextLong(),
-				new String[] {
-					RandomTestUtil.randomString(), StringPool.BLANK,
-					StringPool.NULL, null, null
-				}, RandomTestUtil.nextInt());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+	public void testCountByG_T_SArrayable() throws Exception {
+		_persistence.countByG_T_S(RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
+				null, null
+			}, RandomTestUtil.nextInt());
 	}
 
 	@Test
-	public void testCountByG_N_T_C() {
-		try {
-			_persistence.countByG_N_T_C(RandomTestUtil.nextLong(),
-				StringPool.BLANK, StringPool.BLANK,
-				RandomTestUtil.randomBoolean());
+	public void testCountByG_N_T_C() throws Exception {
+		_persistence.countByG_N_T_C(RandomTestUtil.nextLong(),
+			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomBoolean());
 
-			_persistence.countByG_N_T_C(0L, StringPool.NULL, StringPool.NULL,
-				RandomTestUtil.randomBoolean());
+		_persistence.countByG_N_T_C(0L, StringPool.NULL, StringPool.NULL,
+			RandomTestUtil.randomBoolean());
 
-			_persistence.countByG_N_T_C(0L, (String)null, (String)null,
-				RandomTestUtil.randomBoolean());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_N_T_C(0L, (String)null, (String)null,
+			RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -408,13 +337,8 @@ public class BackgroundTaskPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<BackgroundTask> getOrderByComparator() {

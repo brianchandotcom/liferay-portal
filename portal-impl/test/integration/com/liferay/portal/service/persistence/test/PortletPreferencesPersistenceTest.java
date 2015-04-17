@@ -149,116 +149,76 @@ public class PortletPreferencesPersistenceTest {
 	}
 
 	@Test
-	public void testCountByPlid() {
-		try {
-			_persistence.countByPlid(RandomTestUtil.nextLong());
+	public void testCountByPlid() throws Exception {
+		_persistence.countByPlid(RandomTestUtil.nextLong());
 
-			_persistence.countByPlid(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByPlid(0L);
 	}
 
 	@Test
-	public void testCountByPortletId() {
-		try {
-			_persistence.countByPortletId(StringPool.BLANK);
+	public void testCountByPortletId() throws Exception {
+		_persistence.countByPortletId(StringPool.BLANK);
 
-			_persistence.countByPortletId(StringPool.NULL);
+		_persistence.countByPortletId(StringPool.NULL);
 
-			_persistence.countByPortletId((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByPortletId((String)null);
 	}
 
 	@Test
-	public void testCountByO_P() {
-		try {
-			_persistence.countByO_P(RandomTestUtil.nextInt(), StringPool.BLANK);
+	public void testCountByO_P() throws Exception {
+		_persistence.countByO_P(RandomTestUtil.nextInt(), StringPool.BLANK);
 
-			_persistence.countByO_P(0, StringPool.NULL);
+		_persistence.countByO_P(0, StringPool.NULL);
 
-			_persistence.countByO_P(0, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByO_P(0, (String)null);
 	}
 
 	@Test
-	public void testCountByP_P() {
-		try {
-			_persistence.countByP_P(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByP_P() throws Exception {
+		_persistence.countByP_P(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByP_P(0L, StringPool.NULL);
+		_persistence.countByP_P(0L, StringPool.NULL);
 
-			_persistence.countByP_P(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByP_P(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByO_O_P() {
-		try {
-			_persistence.countByO_O_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
+	public void testCountByO_O_P() throws Exception {
+		_persistence.countByO_O_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
 
-			_persistence.countByO_O_P(0L, 0, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByO_O_P(0L, 0, 0L);
 	}
 
 	@Test
-	public void testCountByO_O_PI() {
-		try {
-			_persistence.countByO_O_PI(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt(), StringPool.BLANK);
+	public void testCountByO_O_PI() throws Exception {
+		_persistence.countByO_O_PI(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), StringPool.BLANK);
 
-			_persistence.countByO_O_PI(0L, 0, StringPool.NULL);
+		_persistence.countByO_O_PI(0L, 0, StringPool.NULL);
 
-			_persistence.countByO_O_PI(0L, 0, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByO_O_PI(0L, 0, (String)null);
 	}
 
 	@Test
-	public void testCountByO_P_P() {
-		try {
-			_persistence.countByO_P_P(RandomTestUtil.nextInt(),
-				RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByO_P_P() throws Exception {
+		_persistence.countByO_P_P(RandomTestUtil.nextInt(),
+			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByO_P_P(0, 0L, StringPool.NULL);
+		_persistence.countByO_P_P(0, 0L, StringPool.NULL);
 
-			_persistence.countByO_P_P(0, 0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByO_P_P(0, 0L, (String)null);
 	}
 
 	@Test
-	public void testCountByO_O_P_P() {
-		try {
-			_persistence.countByO_O_P_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt(), RandomTestUtil.nextLong(),
-				StringPool.BLANK);
+	public void testCountByO_O_P_P() throws Exception {
+		_persistence.countByO_O_P_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.nextLong(),
+			StringPool.BLANK);
 
-			_persistence.countByO_O_P_P(0L, 0, 0L, StringPool.NULL);
+		_persistence.countByO_O_P_P(0L, 0, 0L, StringPool.NULL);
 
-			_persistence.countByO_O_P_P(0L, 0, 0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByO_O_P_P(0L, 0, 0L, (String)null);
 	}
 
 	@Test
@@ -286,13 +246,8 @@ public class PortletPreferencesPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<PortletPreferences> getOrderByComparator() {

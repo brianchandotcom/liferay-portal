@@ -133,17 +133,12 @@ public class ClassNamePersistenceTest {
 	}
 
 	@Test
-	public void testCountByValue() {
-		try {
-			_persistence.countByValue(StringPool.BLANK);
+	public void testCountByValue() throws Exception {
+		_persistence.countByValue(StringPool.BLANK);
 
-			_persistence.countByValue(StringPool.NULL);
+		_persistence.countByValue(StringPool.NULL);
 
-			_persistence.countByValue((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByValue((String)null);
 	}
 
 	@Test
@@ -170,13 +165,8 @@ public class ClassNamePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<ClassName> getOrderByComparator() {

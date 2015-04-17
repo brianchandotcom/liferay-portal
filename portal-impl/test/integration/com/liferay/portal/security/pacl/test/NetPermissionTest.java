@@ -50,22 +50,17 @@ public class NetPermissionTest {
 
 	@Test
 	public void test2() throws Exception {
-		try {
-			new URL(
-				Http.HTTP, "localhost", 80, ".",
-				new URLStreamHandler() {
+		new URL(
+			Http.HTTP, "localhost", 80, ".",
+			new URLStreamHandler() {
 
-					@Override
-					protected URLConnection openConnection(URL url) {
-						return null;
-					}
-
+				@Override
+				protected URLConnection openConnection(URL url) {
+					return null;
 				}
-			);
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+
+			}
+		);
 	}
 
 	@Test

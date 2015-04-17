@@ -42,12 +42,7 @@ public class BeanLocatorTest {
 
 	@Test
 	public void testPlugin1() throws Exception {
-		try {
-			PortletBeanLocatorUtil.getBeanLocator("a-test-hook");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortletBeanLocatorUtil.getBeanLocator("a-test-hook");
 	}
 
 	@Test
@@ -74,25 +69,15 @@ public class BeanLocatorTest {
 
 	@Test
 	public void testPlugin4() throws Exception {
-		try {
-			PortletBeanLocatorUtil.locate("a-test-hook", "liferayDataSource");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortletBeanLocatorUtil.locate("a-test-hook", "liferayDataSource");
 	}
 
 	@Test
 	public void testPlugin5() throws Exception {
-		try {
-			BeanLocator beanLocator = PortletBeanLocatorUtil.getBeanLocator(
-				"a-test-hook");
+		BeanLocator beanLocator = PortletBeanLocatorUtil.getBeanLocator(
+			"a-test-hook");
 
-			PortletBeanLocatorUtil.setBeanLocator("a-test-hook", beanLocator);
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortletBeanLocatorUtil.setBeanLocator("a-test-hook", beanLocator);
 	}
 
 	@Test
@@ -111,15 +96,10 @@ public class BeanLocatorTest {
 
 	@Test
 	public void testPlugin7() throws Exception {
-		try {
-			BeanLocator beanLocator = PortletBeanLocatorUtil.getBeanLocator(
-				"a-test-hook");
+		BeanLocator beanLocator = PortletBeanLocatorUtil.getBeanLocator(
+			"a-test-hook");
 
-			PortletBeanLocatorUtil.setBeanLocator("flash-portlet", beanLocator);
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortletBeanLocatorUtil.setBeanLocator("flash-portlet", beanLocator);
 	}
 
 	@Test
@@ -160,22 +140,12 @@ public class BeanLocatorTest {
 
 	@Test
 	public void testPortal4() throws Exception {
-		try {
-			PortalBeanLocatorUtil.locate(SAXReaderUtil.class);
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortalBeanLocatorUtil.locate(SAXReaderUtil.class);
 	}
 
 	@Test
 	public void testPortal5() throws Exception {
-		try {
-			PortalBeanLocatorUtil.locate(SAXReaderUtil.class.getName());
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		PortalBeanLocatorUtil.locate(SAXReaderUtil.class.getName());
 	}
 
 	@Test

@@ -396,6 +396,8 @@ public abstract class BaseUserNotificationTestCase {
 			int notificationType, int deliveryType, boolean deliver)
 		throws Exception {
 
+		boolean exists = false;
+
 		for (UserNotificationDelivery userNotificationDelivery :
 				userNotificationDeliveries) {
 
@@ -411,10 +413,12 @@ public abstract class BaseUserNotificationTestCase {
 					userNotificationDelivery.getUserNotificationDeliveryId(),
 					deliver);
 
-			return;
+			exists = true;
+
+			break;
 		}
 
-		Assert.fail("User notification does not exist");
+		Assert.assertTrue("User notification does not exist", exists);
 	}
 
 	protected void updateUserNotificationsDelivery(boolean deliver)

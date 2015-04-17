@@ -237,104 +237,64 @@ public class AssetEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
-		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
-	public void testCountByCompanyId() {
-		try {
-			_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-			_persistence.countByCompanyId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
-	public void testCountByVisible() {
-		try {
-			_persistence.countByVisible(RandomTestUtil.randomBoolean());
+	public void testCountByVisible() throws Exception {
+		_persistence.countByVisible(RandomTestUtil.randomBoolean());
 
-			_persistence.countByVisible(RandomTestUtil.randomBoolean());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByVisible(RandomTestUtil.randomBoolean());
 	}
 
 	@Test
-	public void testCountByPublishDate() {
-		try {
-			_persistence.countByPublishDate(RandomTestUtil.nextDate());
+	public void testCountByPublishDate() throws Exception {
+		_persistence.countByPublishDate(RandomTestUtil.nextDate());
 
-			_persistence.countByPublishDate(RandomTestUtil.nextDate());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByPublishDate(RandomTestUtil.nextDate());
 	}
 
 	@Test
-	public void testCountByExpirationDate() {
-		try {
-			_persistence.countByExpirationDate(RandomTestUtil.nextDate());
+	public void testCountByExpirationDate() throws Exception {
+		_persistence.countByExpirationDate(RandomTestUtil.nextDate());
 
-			_persistence.countByExpirationDate(RandomTestUtil.nextDate());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByExpirationDate(RandomTestUtil.nextDate());
 	}
 
 	@Test
-	public void testCountByLayoutUuid() {
-		try {
-			_persistence.countByLayoutUuid(StringPool.BLANK);
+	public void testCountByLayoutUuid() throws Exception {
+		_persistence.countByLayoutUuid(StringPool.BLANK);
 
-			_persistence.countByLayoutUuid(StringPool.NULL);
+		_persistence.countByLayoutUuid(StringPool.NULL);
 
-			_persistence.countByLayoutUuid((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByLayoutUuid((String)null);
 	}
 
 	@Test
-	public void testCountByG_CU() {
-		try {
-			_persistence.countByG_CU(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByG_CU() throws Exception {
+		_persistence.countByG_CU(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByG_CU(0L, StringPool.NULL);
+		_persistence.countByG_CU(0L, StringPool.NULL);
 
-			_persistence.countByG_CU(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_CU(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByC_C() {
-		try {
-			_persistence.countByC_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByC_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
@@ -361,13 +321,8 @@ public class AssetEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<AssetEntry> getOrderByComparator() {

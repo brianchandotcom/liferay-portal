@@ -142,15 +142,10 @@ public class ImagePersistenceTest {
 	}
 
 	@Test
-	public void testCountByLtSize() {
-		try {
-			_persistence.countByLtSize(RandomTestUtil.nextInt());
+	public void testCountByLtSize() throws Exception {
+		_persistence.countByLtSize(RandomTestUtil.nextInt());
 
-			_persistence.countByLtSize(0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByLtSize(0);
 	}
 
 	@Test
@@ -177,13 +172,8 @@ public class ImagePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<Image> getOrderByComparator() {

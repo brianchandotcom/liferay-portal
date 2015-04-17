@@ -231,7 +231,7 @@ public class ${entity.name}PersistenceTest {
 				<#elseif column.type == "Date">
 					RandomTestUtil.nextDate()
 				<#elseif column.type == "Blob">
-					 new${column.methodName}Blob
+					new${column.methodName}Blob
 				<#elseif column.type == "Map">
 					new HashMap<String, Serializable>()
 				<#elseif column.type == "String">
@@ -263,8 +263,7 @@ public class ${entity.name}PersistenceTest {
 
 	<#list entity.getFinderList() as finder>
 		@Test
-		public void testCountBy${finder.name}() {
-			try {
+		public void testCountBy${finder.name}() throws Exception {
 				_persistence.countBy${finder.name}(
 
 				<#assign hasString = false>
@@ -346,69 +345,60 @@ public class ${entity.name}PersistenceTest {
 					</#list>
 
 				);
-			}
-			catch (Exception e) {
-				Assert.fail(e.getMessage());
-			}
 		}
 
 		<#if finder.hasArrayableOperator()>
 			@Test
-			public void testCountBy${finder.name}Arrayable() {
-				try {
-					_persistence.countBy${finder.name}(
+			public void testCountBy${finder.name}Arrayable() throws Exception {
+				_persistence.countBy${finder.name}(
 
-					<#list finder.getColumns() as finderCol>
-						<#if finderCol.hasArrayableOperator()>
-							new ${finderCol.type}[]{
+				<#list finder.getColumns() as finderCol>
+					<#if finderCol.hasArrayableOperator()>
+						new ${finderCol.type}[]{
 
-							<#if finderCol.type == "boolean">
-								RandomTestUtil.randomBoolean()
-							<#elseif finderCol.type == "double">
-								RandomTestUtil.nextDouble(), 0D
-							<#elseif finderCol.type == "int">
-								RandomTestUtil.nextInt(), 0
-							<#elseif finderCol.type == "long">
-								RandomTestUtil.nextLong(), 0L
-							<#elseif finderCol.type == "Date">
-								RandomTestUtil.nextDate(), null
-							<#elseif finderCol.type == "String">
-								RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL, null, null
-							<#else>
-								null
-							</#if>
+						<#if finderCol.type == "boolean">
+							RandomTestUtil.randomBoolean()
+						<#elseif finderCol.type == "double">
+							RandomTestUtil.nextDouble(), 0D
+						<#elseif finderCol.type == "int">
+							RandomTestUtil.nextInt(), 0
+						<#elseif finderCol.type == "long">
+							RandomTestUtil.nextLong(), 0L
+						<#elseif finderCol.type == "Date">
+							RandomTestUtil.nextDate(), null
+						<#elseif finderCol.type == "String">
+							RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL, null, null
 						<#else>
-							<#if finderCol.type == "boolean">
-								RandomTestUtil.randomBoolean()
-							<#elseif finderCol.type == "double">
-								RandomTestUtil.nextDouble()
-							<#elseif finderCol.type == "int">
-								RandomTestUtil.nextInt()
-							<#elseif finderCol.type == "long">
-								RandomTestUtil.nextLong()
-							<#elseif finderCol.type == "Date">
-								RandomTestUtil.nextDate()
-							<#elseif finderCol.type == "String">
-								RandomTestUtil.randomString()
-							<#else>
-								null
-							</#if>
+							null
 						</#if>
-
-						<#if finderCol.hasArrayableOperator()>
-							}
+					<#else>
+						<#if finderCol.type == "boolean">
+							RandomTestUtil.randomBoolean()
+						<#elseif finderCol.type == "double">
+							RandomTestUtil.nextDouble()
+						<#elseif finderCol.type == "int">
+							RandomTestUtil.nextInt()
+						<#elseif finderCol.type == "long">
+							RandomTestUtil.nextLong()
+						<#elseif finderCol.type == "Date">
+							RandomTestUtil.nextDate()
+						<#elseif finderCol.type == "String">
+							RandomTestUtil.randomString()
+						<#else>
+							null
 						</#if>
+					</#if>
 
-						<#if finderCol_has_next>
-							,
-						</#if>
-					</#list>
+					<#if finderCol.hasArrayableOperator()>
+						}
+					</#if>
 
-					);
-				}
-				catch (Exception e) {
-					Assert.fail(e.getMessage());
-				}
+					<#if finderCol_has_next>
+						,
+					</#if>
+				</#list>
+
+				);
 			}
 		</#if>
 	</#list>
@@ -470,24 +460,14 @@ public class ${entity.name}PersistenceTest {
 	<#if !entity.hasCompoundPK()>
 		@Test
 		public void testFindAll() throws Exception {
-			try {
-				_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
-			}
-			catch (Exception e) {
-				Assert.fail(e.getMessage());
-			}
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 		}
 
 		<#list entity.getFinderList() as finder>
 			<#if (finder.name == "GroupId") && entity.isPermissionCheckEnabled(finder)>
 				@Test
 				public void testFilterFindByGroupId() throws Exception {
-					try {
-						_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
-					}
-					catch (Exception e) {
-						Assert.fail(e.getMessage());
-					}
+					_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 				}
 
 				<#break>
@@ -701,7 +681,6 @@ public class ${entity.name}PersistenceTest {
 		Assert.assertEquals(1, ${entity.varNames}.size());
 		Assert.assertEquals(new${entity.name}, ${entity.varNames}.get(new${entity.name}.getPrimaryKey()));
 	}
-
 
 	@Test
 	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
@@ -972,7 +951,7 @@ public class ${entity.name}PersistenceTest {
 				<#elseif column.type == "Map">
 					new HashMap<String, Serializable>()
 				<#elseif column.type == "String">
-	                RandomTestUtil.randomString()
+					RandomTestUtil.randomString()
 				</#if>
 
 				);
@@ -1217,7 +1196,7 @@ public class ${entity.name}PersistenceTest {
 						<#elseif column.type == "Date">
 							RandomTestUtil.nextDate()
 						<#elseif column.type == "String">
-	                        RandomTestUtil.randomString()
+							RandomTestUtil.randomString()
 						<#elseif column.type == "Map">
 							new HashMap();
 						</#if>

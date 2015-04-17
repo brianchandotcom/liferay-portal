@@ -153,132 +153,82 @@ public class ExpandoValuePersistenceTest {
 	}
 
 	@Test
-	public void testCountByTableId() {
-		try {
-			_persistence.countByTableId(RandomTestUtil.nextLong());
+	public void testCountByTableId() throws Exception {
+		_persistence.countByTableId(RandomTestUtil.nextLong());
 
-			_persistence.countByTableId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByTableId(0L);
 	}
 
 	@Test
-	public void testCountByColumnId() {
-		try {
-			_persistence.countByColumnId(RandomTestUtil.nextLong());
+	public void testCountByColumnId() throws Exception {
+		_persistence.countByColumnId(RandomTestUtil.nextLong());
 
-			_persistence.countByColumnId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByColumnId(0L);
 	}
 
 	@Test
-	public void testCountByRowId() {
-		try {
-			_persistence.countByRowId(RandomTestUtil.nextLong());
+	public void testCountByRowId() throws Exception {
+		_persistence.countByRowId(RandomTestUtil.nextLong());
 
-			_persistence.countByRowId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByRowId(0L);
 	}
 
 	@Test
-	public void testCountByT_C() {
-		try {
-			_persistence.countByT_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByT_C() throws Exception {
+		_persistence.countByT_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByT_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_C(0L, 0L);
 	}
 
 	@Test
-	public void testCountByT_R() {
-		try {
-			_persistence.countByT_R(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByT_R() throws Exception {
+		_persistence.countByT_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByT_R(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_R(0L, 0L);
 	}
 
 	@Test
-	public void testCountByT_CPK() {
-		try {
-			_persistence.countByT_CPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByT_CPK() throws Exception {
+		_persistence.countByT_CPK(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByT_CPK(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_CPK(0L, 0L);
 	}
 
 	@Test
-	public void testCountByC_R() {
-		try {
-			_persistence.countByC_R(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByC_R() throws Exception {
+		_persistence.countByC_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByC_R(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_R(0L, 0L);
 	}
 
 	@Test
-	public void testCountByC_C() {
-		try {
-			_persistence.countByC_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByC_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
-	public void testCountByT_C_C() {
-		try {
-			_persistence.countByT_C_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByT_C_C() throws Exception {
+		_persistence.countByT_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-			_persistence.countByT_C_C(0L, 0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_C_C(0L, 0L, 0L);
 	}
 
 	@Test
-	public void testCountByT_C_D() {
-		try {
-			_persistence.countByT_C_D(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByT_C_D() throws Exception {
+		_persistence.countByT_C_D(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByT_C_D(0L, 0L, StringPool.NULL);
+		_persistence.countByT_C_D(0L, 0L, StringPool.NULL);
 
-			_persistence.countByT_C_D(0L, 0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_C_D(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -305,13 +255,8 @@ public class ExpandoValuePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<ExpandoValue> getOrderByComparator() {

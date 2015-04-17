@@ -140,54 +140,34 @@ public class RegionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCountryId() {
-		try {
-			_persistence.countByCountryId(RandomTestUtil.nextLong());
+	public void testCountByCountryId() throws Exception {
+		_persistence.countByCountryId(RandomTestUtil.nextLong());
 
-			_persistence.countByCountryId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCountryId(0L);
 	}
 
 	@Test
-	public void testCountByActive() {
-		try {
-			_persistence.countByActive(RandomTestUtil.randomBoolean());
+	public void testCountByActive() throws Exception {
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
 
-			_persistence.countByActive(RandomTestUtil.randomBoolean());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
 	}
 
 	@Test
-	public void testCountByC_R() {
-		try {
-			_persistence.countByC_R(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByC_R() throws Exception {
+		_persistence.countByC_R(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByC_R(0L, StringPool.NULL);
+		_persistence.countByC_R(0L, StringPool.NULL);
 
-			_persistence.countByC_R(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_R(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByC_A() {
-		try {
-			_persistence.countByC_A(RandomTestUtil.nextLong(),
-				RandomTestUtil.randomBoolean());
+	public void testCountByC_A() throws Exception {
+		_persistence.countByC_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
 
-			_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -214,13 +194,8 @@ public class RegionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<Region> getOrderByComparator() {

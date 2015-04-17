@@ -293,8 +293,8 @@ public class DLImpl implements DL {
 		if (strutsAction.equals("/document_library/select_file_entry") ||
 			strutsAction.equals("/document_library/select_folder") ||
 			strutsAction.equals("/document_library_display/select_folder") ||
-			strutsAction.equals("/item_selector/view") ||
-			strutsAction.equals("/image_gallery_display/select_folder")) {
+			strutsAction.equals("/image_gallery_display/select_folder") ||
+			strutsAction.equals("/item_selector/view")) {
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);

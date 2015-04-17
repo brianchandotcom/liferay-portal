@@ -38,10 +38,6 @@ AUI.add(
 		var ImageSelector = A.Component.create(
 			{
 				ATTRS: {
-					itemSelectorURL: {
-						validator: Lang.isString
-					},
-
 					errorNode: {
 						validator: Lang.isString
 					},
@@ -53,6 +49,10 @@ AUI.add(
 					fileNameNode: {
 						validator: Lang.isString,
 						value: '.file-name'
+					},
+
+					itemSelectorURL: {
+						validator: Lang.isString
 					},
 
 					maxFileSize: {

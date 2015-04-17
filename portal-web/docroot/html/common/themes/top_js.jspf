@@ -117,8 +117,8 @@
 
 			PortletKeys: {
 				DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
-				ITEM_SELECTOR: '<%= PortletKeys.ITEM_SELECTOR %>',
 				DYNAMIC_DATA_MAPPING: '<%= PortletKeys.DYNAMIC_DATA_MAPPING %>',
+				ITEM_SELECTOR: '<%= PortletKeys.ITEM_SELECTOR %>',
 				PORTLET_CONFIGURATION: '<%= PortletKeys.PORTLET_CONFIGURATION %>',
 				PORTLET_SHARING: '<%= PortletKeys.PORTLET_SHARING %>'
 			},

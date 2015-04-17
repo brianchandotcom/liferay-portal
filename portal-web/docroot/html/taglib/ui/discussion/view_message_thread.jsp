@@ -161,7 +161,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<%= msgBody %>
 				</div>
 
-				<c:if test="<%= !discussionRequestHelper.isHideControls() && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, discussionRequestHelper.getPermissionClassName(), discussionRequestHelper.getPermissionClassPK(), message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
+				<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
 					<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
 						<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentsEditor" contents="<%= message.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "editReplyBody" + index %>' />
 

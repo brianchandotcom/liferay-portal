@@ -46,6 +46,15 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 	}
 
 	@Override
+	public boolean isEditControlsVisible() throws PortalException {
+		if (_discussionRequestHelper.isHideControls()) {
+			return false;
+		}
+
+		return hasUpdatePermission();
+	}
+
+	@Override
 	public boolean isWorkflowStatusVisible() throws PortalException {
 		return (_message != null) && !_message.isApproved();
 	}
@@ -54,6 +63,17 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		ThemeDisplay themeDisplay = _discussionRequestHelper.getThemeDisplay();
 
 		return themeDisplay.getUser();
+	}
+
+	protected boolean hasUpdatePermission() throws PortalException {
+		return MBDiscussionPermission.contains(
+			_discussionRequestHelper.getPermissionChecker(),
+			_discussionRequestHelper.getCompanyId(),
+			_discussionRequestHelper.getScopeGroupId(),
+			_discussionRequestHelper.getPermissionClassName(),
+			_discussionRequestHelper.getPermissionClassPK(),
+			_message.getMessageId(), _message.getUserId(),
+			ActionKeys.UPDATE_DISCUSSION);
 	}
 
 	protected boolean hasViewPermission() {

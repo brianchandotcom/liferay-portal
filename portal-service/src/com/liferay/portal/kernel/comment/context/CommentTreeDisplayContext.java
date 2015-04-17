@@ -23,6 +23,8 @@ public interface CommentTreeDisplayContext {
 
 	public boolean isDiscussionVisible() throws PortalException;
 
+	public boolean isEditControlsVisible() throws PortalException;
+
 	public boolean isWorkflowStatusVisible() throws PortalException;
 
 }

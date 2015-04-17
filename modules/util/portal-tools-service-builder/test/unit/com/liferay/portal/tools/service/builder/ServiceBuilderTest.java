@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ModelHintsUtil;
 
@@ -284,37 +285,43 @@ public class ServiceBuilderTest {
 
 		Path basePath = baseDir.toPath();
 
-		String[] args = append(
-			getBaseArgs(baseUrl),
-			"service.api.dir=" + basePath.resolve("api").toString(),
-			"service.auto.import.default.references=true",
-			"service.auto.namespace.tables=false",
-			"service.bean.locator.util=" +
-				"com.liferay.portal.kernel.bean.PortalBeanLocatorUtil",
-			"service.build.number=1", "service.build.number.increment=true",
-			"service.hbm.file=" + basePath.resolve(
-				"resource/portal-hbm.xml").toString(),
-			"service.impl.dir=" + basePath.resolve("impl").toString(),
-			"service.input.file=" + serviceUrl.getPath(),
-			"service.model.hints.configs=" +
-				"classpath*:META-INF/portal-model-hints.xml," +
-				modelHintsUrl.getFile(),
-			"service.model.hints.file=" + basePath.resolve(
-				"resource/portal-model-hints.xml").toString(),
-			"service.osgi.module=false", "service.plugin.name=",
-			"service.props.util=com.liferay.portal.util.PropsUtil",
-			"service.resource.actions.configs=" + resourceActionsUrl.getFile(),
-			"service.remoting.file=" + basePath.resolve(
-				"resource/remoting-servlet.xml").toString(),
-			"service.resources.dir=" + basePath.resolve("impl").toString(),
-			"service.spring.file=" + basePath.resolve(
-				"resource/portal-spring.xml").toString(),
-			"service.spring.namespaces=beans",
-			"service.sql.dir=" + basePath.resolve("sql").toString(),
-			"service.sql.file=portal-tables.sql",
-			"service.sql.indexes.file=indexes.sql",
-			"service.sql.sequences.file=sequences.sql",
-			"service.test.dir=" + basePath.resolve("test").toString());
+		String[] args = getBaseArgs(baseUrl);
+
+		args = ArrayUtil.append(
+			args,
+			new String[] {
+				"service.api.dir=" + basePath.resolve("api").toString(),
+				"service.auto.import.default.references=true",
+				"service.auto.namespace.tables=false",
+				"service.bean.locator.util=" +
+					"com.liferay.portal.kernel.bean.PortalBeanLocatorUtil",
+				"service.build.number=1", "service.build.number.increment=true",
+				"service.hbm.file=" + basePath.resolve(
+					"resource/portal-hbm.xml").toString(),
+				"service.impl.dir=" + basePath.resolve("impl").toString(),
+				"service.input.file=" + serviceUrl.getPath(),
+				"service.model.hints.configs=" +
+					"classpath*:META-INF/portal-model-hints.xml," +
+					modelHintsUrl.getFile(),
+				"service.model.hints.file=" + basePath.resolve(
+					"resource/portal-model-hints.xml").toString(),
+				"service.osgi.module=false", "service.plugin.name=",
+				"service.props.util=com.liferay.portal.util.PropsUtil",
+				"service.resource.actions.configs=" +
+					resourceActionsUrl.getFile(),
+				"service.remoting.file=" + basePath.resolve(
+					"resource/remoting-servlet.xml").toString(),
+				"service.resources.dir=" + basePath.resolve("impl").toString(),
+				"service.spring.file=" + basePath.resolve(
+					"resource/portal-spring.xml").toString(),
+				"service.spring.namespaces=beans",
+				"service.sql.dir=" + basePath.resolve("sql").toString(),
+				"service.sql.file=portal-tables.sql",
+				"service.sql.indexes.file=indexes.sql",
+				"service.sql.sequences.file=sequences.sql",
+				"service.test.dir=" + basePath.resolve("test").toString()
+			}
+		);
 
 		if (_debugProcess) {
 			System.out.println(
@@ -358,17 +365,6 @@ public class ServiceBuilderTest {
 
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-	private String[] append(String[] args1, String ... args2) {
-		int newLength = args1.length + args2.length;
-
-		String[] newArgs = new String[newLength];
-
-		System.arraycopy(args1, 0, newArgs, 0, args1.length);
-		System.arraycopy(args2, 0, newArgs, args1.length, args2.length);
-
-		return newArgs;
-	}
 
 	private UnsyncByteArrayOutputStream call(Quietly call) throws Exception {
 		PrintStream originalErr = System.err;

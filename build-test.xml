@@ -4839,7 +4839,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<arg line="log -1 --pretty=format:%cd HEAD" />
 		</exec>
 
-		<loadfile property="copyright.content" srcFile="${project.dir}/portal-impl/src/com/liferay/portal/tools/servicebuilder/dependencies/copyright.txt" />
+		<loadfile property="copyright.content" srcFile="${project.dir}/modules/util/portal-tools-service-builder/src/com/liferay/portal/tools/service/builder/dependencies/copyright.txt" />
 
 		<echo file="${app.server.dir}/webapps/ROOT/html/common/themes/bottom-test.jsp"><![CDATA[<%--
 ${copyright.content}

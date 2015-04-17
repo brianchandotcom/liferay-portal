@@ -532,6 +532,13 @@ public class ResourcePermissionLocalServiceUtil {
 				   .getRoleResourcePermissions(roleId, scopes, start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Role> getRoles(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRoles(companyId, name, scope, primKey, actionId);
+	}
+
 	/**
 	* Returns all the resource permissions where scope = any &#63;.
 	*
@@ -660,6 +667,12 @@ public class ResourcePermissionLocalServiceUtil {
 		return getService().hasResourcePermission(resources, roleIds, actionId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getRolesWithResourcePermission(long, String, int, String,
+	String}
+	*/
+	@Deprecated
 	public static boolean[] hasResourcePermissions(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
 		long[] roleIds, java.lang.String actionId)

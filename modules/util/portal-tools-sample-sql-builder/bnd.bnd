@@ -1,3 +1,5 @@
 Bundle-Name: Liferay Portal Tools Sample SQL Builder
 Bundle-SymbolicName: com.liferay.portal.tools.sample.sql.builder
 Bundle-Version: 1.0.0
+Include-Resource:\
+	classes

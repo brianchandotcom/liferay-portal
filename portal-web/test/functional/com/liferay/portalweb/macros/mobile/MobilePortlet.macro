@@ -17,7 +17,7 @@
 				</or>
 			</not>
 			<then>
-				<var name="i" value="${i?increment()}" />
+				<var method="MathUtil#sum(${i}, 1)" name="i" />
 
 				<echo message="The xpath ${portletTypeKey} could not be found. Refreshing the page. Attempt number ${i}..." />
 

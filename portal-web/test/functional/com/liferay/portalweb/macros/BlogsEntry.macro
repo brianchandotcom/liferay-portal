@@ -424,8 +424,7 @@
 		</if>
 
 		<var locator="PGBlogsAdd#DISPLAY_DATE_DATE_MINUTE" name="displayDateMinute" />
-		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
-		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
+		<var method="MathUtil#sum(displayDateMinute, 2)" name="displayDateMinuteFuture" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
 
 		<if>
@@ -1501,7 +1500,7 @@
 
 		<execute function="AssertClick" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
-		<var name="entryViewCount" value="${entryViewCount?increment()}" />
+		<var method="MathUtil#sum(${entryViewCount}, 1)" name="entryViewCount" />
 
 		<execute function="AssertTextEquals" locator1="CPBlogsEntry#ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
 	</command>
@@ -1534,7 +1533,7 @@
 
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 
-		<var name="entryViewCount" value="${entryViewCount?increment()}" />
+		<var method="MathUtil#sum(${entryViewCount}, 1)" name="entryViewCount" />
 
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
 	</command>

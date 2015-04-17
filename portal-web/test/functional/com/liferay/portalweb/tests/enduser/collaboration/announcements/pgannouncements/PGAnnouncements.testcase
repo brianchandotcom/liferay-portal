@@ -98,8 +98,7 @@
 		<var name="displayDateAMPM" value="${displayDateAMPM?replace('1', 'PM')}" />
 
 		<var attribute="value" locator="//input[@id='_84_displayDateMinute']" name="displayDateMinute" />
-		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
-		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
+		<var method="MathUtil#sum(${displayDateMinute}, 2)" name="displayDateMinuteFuture" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
 
 		<if>

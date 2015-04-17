@@ -678,8 +678,7 @@
 		<var name="displayDateAMPM" value="${displayDateAMPM?replace('1', 'PM')}" />
 
 		<var attribute="value" locator="//input[@id='_88_schedulerStartDateMinute']" name="displayDateMinute" />
-		<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
-		<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
+		<var method="MathUtil#sum(${displayDateMinute}, 2)" name="i" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
 
 		<if>

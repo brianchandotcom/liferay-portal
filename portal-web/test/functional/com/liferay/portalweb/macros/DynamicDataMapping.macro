@@ -219,7 +219,7 @@
 		<var name="i" value="0" />
 
 		<for list="${fieldOptionsNames}" param="fieldOptionsName">
-			<var name="i" value="${i?increment()}" />
+			<var method="MathUtil#sum(${i}, 1)" name="i" />
 
 			<execute function="Type" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}" value1="${fieldOptionsName}" />
 		</for>
@@ -227,7 +227,7 @@
 		<var name="j" value="0" />
 
 		<for list="${fieldOptionsValues}" param="fieldOptionsValue">
-			<var name="j" value="${j?increment()}" />
+			<var method="MathUtil#sum(${j}, 1)" name="j" />
 
 			<execute function="Type" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}" value1="${fieldOptionsValue}" />
 		</for>
@@ -582,7 +582,7 @@
 				<var name="i" value="0" />
 
 				<for list="${fieldOptionsNames}" param="fieldOptionsName">
-					<var name="i" value="${i?increment()}" />
+					<var method="MathUtil#sum(${i}, 1)" name="i" />
 
 					<execute function="AssertTextEquals" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}" value1="${fieldOptionsName}" />
 				</for>
@@ -590,7 +590,7 @@
 				<var name="j" value="0" />
 
 				<for list="${fieldOptionsValues}" param="fieldOptionsValue">
-					<var name="j" value="${j?increment()}" />
+					<var method="MathUtil#sum(${j}, 1)" name="j" />
 
 					<execute function="AssertTextEquals" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}" value1="${fieldOptionsValue}" />
 				</for>

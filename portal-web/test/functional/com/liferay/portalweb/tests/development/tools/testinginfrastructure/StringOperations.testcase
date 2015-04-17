@@ -15,7 +15,7 @@
 
 		<var name="number" value="1" />
 
-		<var name="numberIncremented" value="${number?increment()}" />
+		<var method="MathUtil#sum(${number}, 1)" name="numberIncremented" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${numberIncremented}" />
@@ -25,7 +25,7 @@
 		<echo message="Test increment() used inline" />
 
 		<execute macro="TestUtils#assertEquals">
-			<var name="actual" value="${number?increment()}" />
+			<var method="MathUtil#sum(${number}, 1)" name="actual" />
 			<var name="expected" value="2" />
 		</execute>
 	</command>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.javadocformatter;
+package com.liferay.javadoc.formatter;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

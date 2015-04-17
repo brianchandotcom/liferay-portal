@@ -938,7 +938,7 @@
 			<execute function="Click" locator1="PGCalendarAddevent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST" value1="${resourceName}" />
 
 			<execute macro="CalendarEvent#viewRSVPPending">
-				<var name="resourceName" value="${resourceName}" />=
+				<var name="resourceName" value="${resourceName}" />
 			</execute>
 		</for>
 	</command>

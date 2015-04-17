@@ -1,6 +1,6 @@
-Bundle-Name: Liferay Item Selector for Wiki Attachments
-Bundle-SymbolicName: com.liferay.wiki.item.selector.web.attachment
+Bundle-Name: Liferay Wiki Item Selector Web
+Bundle-SymbolicName: com.liferay.wiki.item.selector.web
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.wiki.item.selector.web.attachment
+Export-Package: com.liferay.wiki.item.selector.web
 Include-Resource: classes
 Web-ContextPath: /wiki-item-selector-web

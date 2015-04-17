@@ -2850,6 +2850,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ExportImportConfiguration" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portal" entity="Resource" />

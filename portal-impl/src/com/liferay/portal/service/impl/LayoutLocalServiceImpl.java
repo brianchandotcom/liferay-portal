@@ -761,19 +761,22 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Exports layouts with the primary keys and criteria as a byte array.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  layoutIds the primary keys of the layouts to be exported
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information to export. For information on the keys used in the
-	 *         map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  startDate the export's start date
-	 * @param  endDate the export's end date
-	 * @return the layouts as a byte array
-	 * @throws PortalException if a group or any layout with the primary key
-	 *         could not be found, or if some other portal exception occurred
+	 * @param      groupId the primary key of the group
+	 * @param      privateLayout whether the layout is private to the group
+	 * @param      layoutIds the primary keys of the layouts to be exported
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information to export. For information on the keys used in
+	 *             the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      startDate the export's start date
+	 * @param      endDate the export's end date
+	 * @return     the layouts as a byte array
+	 * @throws     PortalException if a group or any layout with the primary key
+	 *             could not be found, or if some other portal exception
+	 *             occurred
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public byte[] exportLayouts(
 			long groupId, boolean privateLayout, long[] layoutIds,
@@ -798,18 +801,20 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Exports all layouts that match the criteria as a byte array.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information to export. For information on the keys used in the
-	 *         map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  startDate the export's start date
-	 * @param  endDate the export's end date
-	 * @return the layout as a byte array
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found or if some other portal exception occurred
+	 * @param      groupId the primary key of the group
+	 * @param      privateLayout whether the layout is private to the group
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information to export. For information on the keys used in
+	 *             the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      startDate the export's start date
+	 * @param      endDate the export's end date
+	 * @return     the layout as a byte array
+	 * @throws     PortalException if a group with the primary key could not be
+	 *             found or if some other portal exception occurred
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public byte[] exportLayouts(
 			long groupId, boolean privateLayout,
@@ -820,35 +825,30 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			groupId, privateLayout, null, parameterMap, startDate, endDate);
 	}
 
-	/**
-	 * Exports the layouts that match the primary keys and criteria as a file.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  layoutIds the primary keys of the layouts to be exported
-	 *         (optionally <code>null</code>)
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information to export. For information on the keys used in the
-	 *         map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  startDate the export's start date
-	 * @param  endDate the export's end date
-	 * @return the layouts as a File
-	 * @throws PortalException if a group or any layout with the primary key
-	 *         could not be found, or if some other portal exception occurred
-	 */
 	@Override
 	public File exportLayoutsAsFile(
-			long groupId, boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
 		try {
 			LayoutExporter layoutExporter = LayoutExporter.getInstance();
 
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+			boolean privateLayout = MapUtil.getBoolean(
+				settingsMap, "privateLayout");
+			long[] layoutIds = GetterUtil.getLongValues(
+				settingsMap.get("layoutIds"));
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)settingsMap.get("parameterMap");
+			DateRange dateRange = ExportImportDateUtil.getDateRange(
+				exportImportConfiguration);
+
 			return layoutExporter.exportLayoutsAsFile(
-				groupId, privateLayout, layoutIds, parameterMap, startDate,
-				endDate);
+				sourceGroupId, privateLayout, layoutIds, parameterMap,
+				dateRange.getStartDate(), dateRange.getEndDate());
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -859,6 +859,35 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	/**
+	 * Exports the layouts that match the primary keys and criteria as a file.
+	 *
+	 * @param      groupId the primary key of the group
+	 * @param      privateLayout whether the layout is private to the group
+	 * @param      layoutIds the primary keys of the layouts to be exported
+	 *             (optionally <code>null</code>)
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information to export. For information on the keys used in
+	 *             the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      startDate the export's start date
+	 * @param      endDate the export's end date
+	 * @return     the layouts as a File
+	 * @throws     PortalException if a group or any layout with the primary key
+	 *             could not be found, or if some other portal exception
+	 *             occurred
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public File exportLayoutsAsFile(
+			long groupId, boolean privateLayout, long[] layoutIds,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

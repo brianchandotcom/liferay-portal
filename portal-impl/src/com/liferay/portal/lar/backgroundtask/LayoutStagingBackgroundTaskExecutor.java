@@ -22,13 +22,11 @@ import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConst
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -91,16 +89,11 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			initThreadLocals(sourceGroupId, privateLayout);
 
-			long[] layoutIds = GetterUtil.getLongValues(
-				settingsMap.get("layoutIds"));
 			Map<String, String[]> parameterMap =
 				(Map<String, String[]>)settingsMap.get("parameterMap");
-			DateRange dateRange = ExportImportDateUtil.getDateRange(
-				exportImportConfiguration);
 
 			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-				sourceGroupId, privateLayout, layoutIds, parameterMap,
-				dateRange.getStartDate(), dateRange.getEndDate());
+				exportImportConfiguration);
 
 			markBackgroundTask(
 				backgroundTask.getBackgroundTaskId(), "exported");

@@ -33,10 +33,12 @@ public class ItemSelectorRenderingImpl implements ItemSelectorRendering {
 		_itemSelectorViewRenderers = itemSelectorViewRenderers;
 	}
 
+	@Override
 	public String getItemSelectedCallback() {
 		return _itemSelectedCallback;
 	}
 
+	@Override
 	public List<ItemSelectorViewRenderer> getItemSelectorViewRenderers() {
 		return _itemSelectorViewRenderers;
 	}

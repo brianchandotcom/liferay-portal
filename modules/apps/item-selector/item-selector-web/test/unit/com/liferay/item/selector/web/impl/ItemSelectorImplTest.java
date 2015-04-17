@@ -23,8 +23,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactory;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import java.util.List;
@@ -106,7 +104,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetItemSelectorRendering() throws IOException {
+	public void testGetItemSelectorRendering() {
 		_setUpItemSelectionCriterionHandlers();
 
 		PortletRequest portletRequest = getMockPortletRequest();
@@ -135,7 +133,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			_mediaItemSelectorCriterion.getMaxSize(),
 			mediaItemSelectorCriterion.getMaxSize());
 		Assert.assertTrue(
-			(ItemSelectorView)
+			(ItemSelectorView<?>)
 				mediaItemSelectorViewRenderer.getItemSelectorView()
 					instanceof MediaItemSelectorView);
 
@@ -150,7 +148,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			_flickrItemSelectorCriterion.getUser(),
 			flickrItemSelectorCriterion.getUser());
 		Assert.assertTrue(
-			(ItemSelectorView)
+			(ItemSelectorView<?>)
 				flickrItemSelectorViewRenderer.getItemSelectorView()
 					instanceof FlickrItemSelectorView);
 

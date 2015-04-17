@@ -31,7 +31,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +47,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
 import org.apache.commons.beanutils.BeanUtils;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -68,7 +66,6 @@ public class ItemSelectorImpl implements ItemSelector {
 	public static final String PARAMETER_SELECTED_TAB = "selectedTab";
 
 	@Override
-	@SuppressWarnings("rawtypes")
 	public ItemSelectorRendering getItemSelectorRendering(
 		PortletRequest portletRequest) {
 
@@ -366,6 +363,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
 	)
+	@SuppressWarnings("rawtypes")
 	protected <T extends ItemSelectorCriterion> void
 		setItemSelectionCriterionHandler(
 			ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {

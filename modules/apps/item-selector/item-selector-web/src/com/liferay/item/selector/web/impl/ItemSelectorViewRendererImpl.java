@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.Writer;
 
 import javax.portlet.PortletURL;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
@@ -46,14 +45,17 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 		_itemSelectedCallback = itemSelectedCallback;
 	}
 
+	@Override
 	public ItemSelectorCriterion getItemSelectorCriterion() {
 		return _itemSelectorCriterion;
 	}
 
+	@Override
 	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView() {
 		return _itemSelectorView;
 	}
 
+	@Override
 	public void renderHTML(PageContext pageContext)
 		throws IOException, ServletException {
 

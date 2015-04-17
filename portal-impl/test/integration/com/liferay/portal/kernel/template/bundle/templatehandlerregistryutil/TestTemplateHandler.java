@@ -40,6 +40,11 @@ public class TestTemplateHandler implements TemplateHandler {
 	}
 
 	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		return Collections.emptyMap();
+	}
+
+	@Override
 	public List<Element> getDefaultTemplateElements() {
 		return Collections.emptyList();
 	}

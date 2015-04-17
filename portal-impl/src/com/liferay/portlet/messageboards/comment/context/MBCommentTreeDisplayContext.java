@@ -16,15 +16,20 @@ package com.liferay.portlet.messageboards.comment.context;
 
 import com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
+
+import java.util.Locale;
 
 /**
  * @author Adolfo Pérez
@@ -38,6 +43,29 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
 		_message = message;
+	}
+
+	@Override
+	public String getPublishButtonLabel(Locale locale) throws PortalException {
+		String publishButtonLabel = LanguageUtil.get(
+			_discussionRequestHelper.getRequest(), "publish");
+
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+				_discussionRequestHelper.getCompanyId(),
+				_discussionRequestHelper.getScopeGroupId(),
+				MBDiscussion.class.getName())) {
+
+			if (_message.isPending()) {
+				publishButtonLabel = "save";
+			}
+			else {
+				publishButtonLabel = LanguageUtil.get(
+					_discussionRequestHelper.getRequest(),
+					"submit-for-publication");
+			}
+		}
+
+		return publishButtonLabel;
 	}
 
 	@Override

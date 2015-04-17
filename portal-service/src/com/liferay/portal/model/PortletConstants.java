@@ -80,8 +80,13 @@ public class PortletConstants {
 	 * @return the properly assembled portlet ID
 	 */
 	public static String assemblePortletId(String portletId, long userId) {
-		PortletInstance portletInstance = new PortletInstance(
-			portletId, userId);
+		PortletInstance portletInstance = null;
+
+		String instanceId = getInstanceId(portletId);
+		String rootPortletId = getRootPortletId(portletId);
+
+		portletInstance = new PortletInstance(
+			rootPortletId, userId, instanceId);
 
 		return portletInstance.getPortletInstanceKey();
 	}
@@ -100,10 +105,10 @@ public class PortletConstants {
 	public static String assemblePortletId(
 		String portletId, long userId, String instanceId) {
 
-		String portletName = getRootPortletId(portletId);
+		String rootPortletId = getRootPortletId(portletId);
 
 		PortletInstance portletInstance = new PortletInstance(
-			portletName, userId, instanceId);
+			rootPortletId, userId, instanceId);
 
 		return portletInstance.getPortletInstanceKey();
 	}
@@ -176,7 +181,7 @@ public class PortletConstants {
 		PortletInstance portletInstance1 = new PortletInstance(portletId1);
 		PortletInstance portletInstance2 = new PortletInstance(portletId2);
 
-		return portletInstance1.hasIdenticalRootPortletId(portletInstance2);
+		return portletInstance1.hasIdenticalPortletName(portletInstance2);
 	}
 
 	/**

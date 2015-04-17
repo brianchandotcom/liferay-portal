@@ -331,7 +331,7 @@ public class PortletPreferencesFinderImpl
 		PortletInstance portletInstance = new PortletInstance(
 			portletPreferencesPortletId);
 
-		return portletInstance.hasIdenticalRootPortletId(portletId);
+		return portletInstance.hasIdenticalPortletName(portletId);
 	}
 
 	private static final String _OWNER_ID_SQL =

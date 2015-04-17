@@ -141,9 +141,8 @@ public class FindActionTest {
 
 		preferenceMap.put("assetLinkBehavior", new String[] {"viewInPortlet"});
 
-		PortletInstance portletInstance = new PortletInstance(
-			com.liferay.portlet.util.test.PortletKeys.TEST,
-			RandomTestUtil.randomString());
+		PortletInstance portletInstance = PortletInstance.newInstanceFor(
+			com.liferay.portlet.util.test.PortletKeys.TEST);
 
 		_testPortletId = portletInstance.getPortletInstanceKey();
 

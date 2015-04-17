@@ -100,11 +100,11 @@ public class PortletInstance {
 		return _userId;
 	}
 
-	public boolean hasIdenticalRootPortletId(PortletInstance portletInstance) {
-		return hasIdenticalRootPortletId(portletInstance.getPortletName());
+	public boolean hasIdenticalPortletName(PortletInstance portletInstance) {
+		return hasIdenticalPortletName(portletInstance.getPortletName());
 	}
 
-	public boolean hasIdenticalRootPortletId(String portletName) {
+	public boolean hasIdenticalPortletName(String portletName) {
 		return _portletName.equals(portletName);
 	}
 

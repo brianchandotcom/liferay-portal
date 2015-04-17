@@ -31,12 +31,18 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jorge Ferrer
  */
 @ProviderType
 public abstract class BaseTemplateHandler implements TemplateHandler {
+
+	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		return Collections.emptyMap();
+	}
 
 	@Override
 	public List<Element> getDefaultTemplateElements() throws Exception {

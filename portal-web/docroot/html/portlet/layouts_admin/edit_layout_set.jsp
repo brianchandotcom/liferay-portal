@@ -122,7 +122,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 	<liferay-ui:form-navigator
 		formModelBean="<%= selLayoutSet %>"
-		id="<%= FormNavigatorConstants.LAYOUT_SET_FORM %>"
+		id="<%= FormNavigatorConstants.LAYOUT_SET_FORM_NAVIGATOR_ID %>"
 		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
 	/>
 </aui:form>

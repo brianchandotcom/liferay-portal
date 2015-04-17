@@ -19,16 +19,18 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
  */
 public class FormNavigatorConstants {
 
-	public static final String COMPANY_SETTINGS_FORM = "company.settings.form";
+	public static final String COMPANY_SETTINGS_FORM_NAVIGATOR_ID =
+		"company.settings.form";
 
-	public static final String LAYOUT_FORM = "layout.form";
+	public static final String LAYOUT_FORM_NAVIGATOR_ID = "layout.form";
 
-	public static final String LAYOUT_SET_FORM = "layout.set.form";
+	public static final String LAYOUT_SET_FORM_NAVIGATOR_ID = "layout.set.form";
 
-	public static final String ORGANIZATIONS_FORM = "organizations.form";
+	public static final String ORGANIZATIONS_FORM_NAVIGATOR_ID =
+		"organizations.form";
 
-	public static final String SITES_FORM = "sites.form";
+	public static final String SITES_FORM_NAVIGATOR_ID = "sites.form";
 
-	public static final String USERS_FORM = "users.form";
+	public static final String USERS_FORM_NAVIGATOR_ID = "users.form";
 
 }

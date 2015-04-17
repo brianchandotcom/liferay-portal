@@ -30,7 +30,7 @@ public class OrganizationOrganizationInformationFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.ORGANIZATIONS_FORM;
+		return FormNavigatorConstants.ORGANIZATIONS_FORM_NAVIGATOR_ID;
 	}
 
 	@Override

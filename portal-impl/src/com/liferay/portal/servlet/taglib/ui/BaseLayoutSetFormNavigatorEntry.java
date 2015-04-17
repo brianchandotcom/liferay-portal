@@ -34,7 +34,7 @@ public abstract class BaseLayoutSetFormNavigatorEntry
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.LAYOUT_SET_FORM;
+		return FormNavigatorConstants.LAYOUT_SET_FORM_NAVIGATOR_ID;
 	}
 
 	@Override

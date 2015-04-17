@@ -234,63 +234,61 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 	</c:when>
 	<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
-		<aui:row>
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				title="<%= topLink %>"
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			title="<%= topLink %>"
+		/>
+
+		<%
+		long groupFileEntriesUserId = 0;
+
+		if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
+			groupFileEntriesUserId = user.getUserId();
+
+			status = WorkflowConstants.STATUS_ANY;
+		}
+		%>
+
+		<liferay-ui:search-container
+			delta="<%= dlPortletInstanceSettings.getFileEntriesPerPage() %>"
+			deltaConfigurable="<%= false %>"
+			emptyResultsMessage="there-are-no-documents"
+			iteratorURL="<%= portletURL %>"
+			total="<%= DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status) %>"
+		>
+
+			<liferay-ui:search-container-results
+				results="<%= DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
 			/>
 
-			<%
-			long groupFileEntriesUserId = 0;
-
-			if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
-				groupFileEntriesUserId = user.getUserId();
-
-				status = WorkflowConstants.STATUS_ANY;
-			}
-			%>
-
-			<liferay-ui:search-container
-				delta="<%= dlPortletInstanceSettings.getFileEntriesPerPage() %>"
-				deltaConfigurable="<%= false %>"
-				emptyResultsMessage="there-are-no-documents"
-				iteratorURL="<%= portletURL %>"
-				total="<%= DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status) %>"
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.repository.model.FileEntry"
+				escapedModel="<%= true %>"
+				keyProperty="fileEntryId"
+				modelVar="fileEntry"
 			>
 
-				<liferay-ui:search-container-results
-					results="<%= DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
-				/>
+				<%
+				DLFileShortcut fileShortcut = null;
 
-				<liferay-ui:search-container-row
-					className="com.liferay.portal.kernel.repository.model.FileEntry"
-					escapedModel="<%= true %>"
-					keyProperty="fileEntryId"
-					modelVar="fileEntry"
-				>
+				String rowHREF = null;
 
-					<%
-					DLFileShortcut fileShortcut = null;
+				if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW)) {
+					PortletURL viewFileEntryURL = renderResponse.createRenderURL();
 
-					String rowHREF = null;
+					viewFileEntryURL.setParameter("struts_action", "/document_library_display/view_file_entry");
+					viewFileEntryURL.setParameter("redirect", currentURL);
+					viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
-					if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW)) {
-						PortletURL viewFileEntryURL = renderResponse.createRenderURL();
+					rowHREF = viewFileEntryURL.toString();
+				}
+				%>
 
-						viewFileEntryURL.setParameter("struts_action", "/document_library_display/view_file_entry");
-						viewFileEntryURL.setParameter("redirect", currentURL);
-						viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+				<%@ include file="/html/portlet/document_library/file_entry_columns.jspf" %>
+			</liferay-ui:search-container-row>
 
-						rowHREF = viewFileEntryURL.toString();
-					}
-					%>
-
-					<%@ include file="/html/portlet/document_library/file_entry_columns.jspf" %>
-				</liferay-ui:search-container-row>
-
-				<liferay-ui:search-iterator />
-			</liferay-ui:search-container>
-		</aui:row>
+			<liferay-ui:search-iterator />
+		</liferay-ui:search-container>
 
 		<%
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, topLink), currentURL);

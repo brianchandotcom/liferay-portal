@@ -2,24 +2,6 @@
 	<var name="password" value="test" />
 	<var name="userEmailAddress" value="test@liferay.com" />
 
-	<command name="apiAxisView">
-		<execute function="Open" locator1="Home#API_AXIS_URL" />
-
-		<execute function="AssertTextPresent" value1="And now... Some Services" />
-		<execute function="AssertTextPresent" value1="Portal_LayoutBranchService" />
-		<execute function="AssertTextPresent" value1="Portal_AccountService" />
-		<execute function="AssertTextPresent" value1="Portal_CompanyService" />
-	</command>
-
-	<command name="apiJsonwsAddressView">
-		<execute function="Open" locator1="Home#API_JSON_URL" />
-
-		<execute function="Click" locator1="Jsonwebservices#ADDRESS_ADD_ADDRESS" />
-
-		<execute function="AssertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/address/add-address" />
-		<execute function="AssertElementPresent" locator1="JsonwebservicesAddress#INVOKE_BUTTON" />
-	</command>
-
 	<command name="apiJsonwsUserView">
 		<execute function="Open" locator1="Home#API_JSON_URL" />
 
@@ -27,25 +9,6 @@
 
 		<execute function="AssertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/user/update-user" />
 		<execute function="AssertElementPresent" locator1="JsonwebservicesAddress#INVOKE_BUTTON" />
-	</command>
-
-	<command name="apiJsonwsView">
-		<execute function="Open" locator1="Home#API_JSON_URL" />
-
-		<execute function="AssertTextEquals" locator1="Jsonwebservices#INFO_MESSAGE" value1="Please select a method on the left." />
-		<execute function="AssertTextEquals" locator1="Jsonwebservices#SITE_NAME" value1="JSONWS API" />
-		<execute function="AssertElementPresent" locator1="Jsonwebservices#SEARCH" />
-		<execute function="AssertElementPresent" locator1="Jsonwebservices#ADDRESS" />
-		<execute function="AssertElementPresent" locator1="Jsonwebservices#WIKI_PAGE" />
-	</command>
-
-	<command name="apiJsonwsWikiView">
-		<execute function="Open" locator1="Home#API_JSON_URL" />
-
-		<execute function="Click" locator1="Jsonwebservices#WIKI_PAGE_ADD_PAGE" />
-
-		<execute function="AssertTextEquals" locator1="JsonwebservicesWiki#API_METHOD" value1="/wikipage/add-page" />
-		<execute function="AssertElementPresent" locator1="JsonwebservicesWiki#INVOKE_BUTTON" />
 	</command>
 
 	<command name="editJsonwsUserView">

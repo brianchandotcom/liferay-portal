@@ -101,22 +101,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--WIKI_PAGE-->
-<tr>
-	<td>WIKI_PAGE</td>
-	<td>//div[@id='apiServiceWikiPageServiceImplPanelContent']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_ADD_PAGE</td>
-	<td>//div[@id='apiServiceWikiPageServiceImplPanelContent']/div/ul/li/a[contains(.,'add-page')]</td>
-	<td>Wiki Add Page</td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SECURITY_TEST_PAGE-->
 <tr>
 	<td>SECURITY_TEST_PAGE_POPULATED</td>

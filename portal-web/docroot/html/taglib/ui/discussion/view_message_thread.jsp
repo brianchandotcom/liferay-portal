@@ -25,6 +25,8 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("lifera
 MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
 
+Comment comment = new MBCommentImpl(message, themeDisplay.getPathThemeImages());
+
 CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, message);
 
 int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
@@ -32,6 +34,8 @@ String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:ran
 MBMessage rootMessage = (MBMessage)request.getAttribute("liferay-ui:discussion:rootMessage");
 List<RatingsEntry> ratingsEntries = (List<RatingsEntry>)request.getAttribute("liferay-ui:discussion:ratingsEntries");
 List<RatingsStats> ratingsStatsList = (List<RatingsStats>)request.getAttribute("liferay-ui:discussion:ratingsStatsList");
+
+Comment rootComment = new MBCommentImpl(rootMessage, themeDisplay.getPathThemeImages());
 
 index++;
 
@@ -42,19 +46,19 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 <c:if test="<%= commentTreeDisplayContext.isDiscussionVisible() %>">
 	<article class="lfr-discussion">
-		<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
-			<a name="<%= randomNamespace %>message_<%= message.getMessageId() %>"></a>
+		<div id="<%= randomNamespace %>messageScroll<%= comment.getCommentId() %>">
+			<a name="<%= randomNamespace %>message_<%= comment.getCommentId() %>"></a>
 
-			<aui:input name='<%= "messageId" + index %>' type="hidden" value="<%= message.getMessageId() %>" />
-			<aui:input name='<%= "parentMessageId" + index %>' type="hidden" value="<%= message.getMessageId() %>" />
+			<aui:input name='<%= "messageId" + index %>' type="hidden" value="<%= comment.getCommentId() %>" />
+			<aui:input name='<%= "parentMessageId" + index %>' type="hidden" value="<%= comment.getCommentId() %>" />
 		</div>
 
 		<div class="lfr-discussion-details">
 			<liferay-ui:user-display
-				author="<%= discussionTaglibHelper.getUserId() == message.getUserId() %>"
+				author="<%= discussionTaglibHelper.getUserId() == comment.getUserId() %>"
 				displayStyle="2"
 				showUserName="<%= false %>"
-				userId="<%= message.getUserId() %>"
+				userId="<%= comment.getUserId() %>"
 			/>
 		</div>
 
@@ -63,7 +67,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
 				<div>
-					<aui:workflow-status model="<%= MBDiscussion.class %>" status="<%= message.getStatus() %>" />
+					<aui:workflow-status model="<%= MBDiscussion.class %>" status="<%= comment.getStatus() %>" />
 				</div>
 			</c:if>
 
@@ -71,37 +75,38 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<header class="lfr-discussion-message-author">
 
 					<%
-					User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
+					User messageUser = UserLocalServiceUtil.fetchUser(comment.getUserId());
 					%>
 
 					<aui:a href="<%= (messageUser != null) ? messageUser.getDisplayURL(themeDisplay) : null %>">
-						<%= HtmlUtil.escape(message.getUserName()) %>
+						<%= HtmlUtil.escape(comment.getUserName()) %>
 
-						<c:if test="<%= message.getUserId() == user.getUserId() %>">
+						<c:if test="<%= comment.getUserId() == user.getUserId() %>">
 							(<liferay-ui:message key="you" />)
 						</c:if>
 					</aui:a>
 
 					<%
-					Date createDate = message.getCreateDate();
+					Date createDate = comment.getCreateDate();
 
 					String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 					%>
 
 					<c:choose>
-						<c:when test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
+						<c:when test="<%= comment.getParentCommentId() == rootComment.getCommentId() %>">
 							<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" />
 						</c:when>
 						<c:otherwise>
 
 							<%
-							MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParentMessageId());
+							MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(comment.getParentCommentId());
+							Comment parentComment = new MBCommentImpl(parentMessage, themeDisplay.getPathThemeImages());
 							%>
 
 							<liferay-util:buffer var="buffer">
 
 								<%
-								User parentMessageUser = UserLocalServiceUtil.fetchUser(parentMessage.getUserId());
+								User parentMessageUser = UserLocalServiceUtil.fetchUser(parentComment.getUserId());
 
 								boolean male = (parentMessageUser == null) ? true : parentMessageUser.isMale();
 								long portraitId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
@@ -110,15 +115,15 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<span>
 									<div class="lfr-discussion-reply-user-avatar">
-										<img alt="<%= HtmlUtil.escapeAttribute(parentMessage.getUserName()) %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), male, portraitId, userUuid) %>" width="30" />
+										<img alt="<%= HtmlUtil.escapeAttribute(parentComment.getUserName()) %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), male, portraitId, userUuid) %>" width="30" />
 									</div>
 
 									<div class="lfr-discussion-reply-user-name">
-										<%= parentMessage.getUserName() %>
+										<%= parentComment.getUserName() %>
 									</div>
 
 									<div class="lfr-discussion-reply-creation-date">
-										<%= dateFormatDateTime.format(parentMessage.getCreateDate()) %>
+										<%= dateFormatDateTime.format(parentComment.getCreateDate()) %>
 									</div>
 								</span>
 							</liferay-util:buffer>
@@ -129,9 +134,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							sb.append("<a class=\"lfr-discussion-parent-link\" data-title=\"");
 							sb.append(HtmlUtil.escape(buffer));
 							sb.append("\" data-metaData=\"");
-							sb.append(HtmlUtil.escape(parentMessage.getBody()));
+							sb.append(HtmlUtil.escape(parentComment.getBody()));
 							sb.append("\">");
-							sb.append(HtmlUtil.escape(parentMessage.getUserName()));
+							sb.append(HtmlUtil.escape(parentComment.getUserName()));
 							sb.append("</a>");
 							%>
 
@@ -140,7 +145,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</c:choose>
 
 					<%
-					Date modifiedDate = message.getModifiedDate();
+					Date modifiedDate = comment.getModifiedDate();
 					%>
 
 					<c:if test="<%= createDate.before(modifiedDate) %>">
@@ -150,26 +155,18 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</c:if>
 				</header>
 
-				<%
-				String msgBody = message.getBody();
-
-				if (message.isFormatBBCode()) {
-					msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
-				}
-				%>
-
 				<div class="lfr-discussion-message-body" id='<portlet:namespace /><%= randomNamespace + "discussionMessage" + index %>'>
-					<%= msgBody %>
+					<%= comment.getTranslatedBody() %>
 				</div>
 
 				<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
 					<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-						<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentsEditor" contents="<%= message.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "editReplyBody" + index %>' />
+						<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentsEditor" contents="<%= comment.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "editReplyBody" + index %>' />
 
-						<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= message.getBody() %>" />
+						<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= comment.getBody() %>" />
 
 						<%
-						boolean pending = message.isPending();
+						boolean pending = comment.isPending();
 
 						String publishButtonLabel = LanguageUtil.get(request, "publish");
 
@@ -200,13 +197,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<c:if test="<%= commentTreeDisplayContext.isRatingsVisible() %>">
 
 					<%
-					RatingsEntry ratingsEntry = _getRatingsEntry(ratingsEntries, message.getMessageId());
-					RatingsStats ratingStats = _getRatingsStats(ratingsStatsList, message.getMessageId());
+					RatingsEntry ratingsEntry = _getRatingsEntry(ratingsEntries, comment.getCommentId());
+					RatingsStats ratingStats = _getRatingsStats(ratingsStatsList, comment.getCommentId());
 					%>
 
 					<liferay-ui:ratings
 						className="<%= MBDiscussion.class.getName() %>"
-						classPK="<%= message.getMessageId() %>"
+						classPK="<%= comment.getCommentId() %>"
 						ratingsEntry="<%= ratingsEntry %>"
 						ratingsStats="<%= ratingStats %>"
 					/>

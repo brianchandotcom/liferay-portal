@@ -363,6 +363,27 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
+	public String get(
+		HttpServletRequest request, ResourceBundle resourceBundle, String key) {
+
+		return get(request, resourceBundle, key, key);
+	}
+
+	@Override
+	public String get(
+		HttpServletRequest request, ResourceBundle resourceBundle, String key,
+		String defaultValue) {
+
+		String value = _get(resourceBundle, key);
+
+		if (value != null) {
+			return value;
+		}
+
+		return get(request, key, defaultValue);
+	}
+
+	@Override
 	public String get(HttpServletRequest request, String key) {
 		return get(request, key, key);
 	}

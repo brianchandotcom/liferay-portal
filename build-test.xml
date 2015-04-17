@@ -5375,6 +5375,24 @@ if (ppstate.equals("normal")) {
 			</else>
 		</if>
 
+		<if>
+			<equals arg1="${database.type}" arg2="hsql" />
+			<then>
+				<antcall target="rebuild-database" inheritAll="false">
+					<param name="database.type" value="mysql" />
+				</antcall>
+
+				<echo file="portal-impl/classes/portal-ext.properties">liferay.home=${liferay.home}
+
+jdbc.default.jndi.name=
+
+jdbc.default.driverClassName=${database.mysql.driver}
+jdbc.default.url=${database.mysql.url}
+jdbc.default.username=${database.mysql.username}
+jdbc.default.password=${database.mysql.password}</echo>
+			</then>
+		</if>
+
 		<antcall target="copy-optional-jars" inheritAll="false">
 			<param name="todir" value="${app.server.lib.global.dir}" />
 		</antcall>

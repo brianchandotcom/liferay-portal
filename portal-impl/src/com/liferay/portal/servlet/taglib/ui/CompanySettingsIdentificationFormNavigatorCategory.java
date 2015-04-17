@@ -35,7 +35,8 @@ public class CompanySettingsIdentificationFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return "identification";
+		return
+			FormNavigatorConstants.COMPANY_SETTINGS_IDENTIFICATION_CATEGORY_KEY;
 	}
 
 	@Override

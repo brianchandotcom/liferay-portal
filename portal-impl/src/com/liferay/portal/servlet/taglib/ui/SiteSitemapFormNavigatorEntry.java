@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -29,7 +30,7 @@ public class SiteSitemapFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return "search-engine-optimization";
+		return FormNavigatorConstants.SITES_SEO_CATEGORY_KEY;
 	}
 
 	@Override

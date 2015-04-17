@@ -35,7 +35,7 @@ public class CompanySettingsSocialFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return "social";
+		return FormNavigatorConstants.COMPANY_SETTINGS_SOCIAL_CATEGORY_KEY;
 	}
 
 	@Override

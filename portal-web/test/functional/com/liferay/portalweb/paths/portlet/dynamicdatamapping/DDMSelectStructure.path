@@ -57,12 +57,12 @@
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_ALL_CHECKBOX</td>
-	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//input[@name='_166_allRowIds']</td>
+	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1]/input[@name='_166_rowIds'])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1]/input[contains(@name,'rowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>

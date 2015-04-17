@@ -151,7 +151,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_CHOOSE</td>
+	<td>TEMPLATE_TABLE_CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_templateName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>

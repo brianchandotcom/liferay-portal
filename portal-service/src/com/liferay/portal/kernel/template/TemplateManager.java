@@ -26,6 +26,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface TemplateManager {
 
+	public void addContextObjects(
+		Map<String, Object> contextObjects,
+		Map<String, Object> newContextObjects);
+
 	public void addStaticClassSupport(
 		Map<String, Object> contextObjects, String variableName,
 		Class<?> variableClass);

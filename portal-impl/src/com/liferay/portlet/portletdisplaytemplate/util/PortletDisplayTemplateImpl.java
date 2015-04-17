@@ -400,29 +400,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			TemplateHandlerRegistryUtil.getTemplateHandler(
 				ddmTemplate.getClassNameId());
 
-		if (templateHandler instanceof BasePortletDisplayTemplateHandler) {
-			BasePortletDisplayTemplateHandler portletDisplayTemplateHandler =
-				(BasePortletDisplayTemplateHandler)templateHandler;
-
-			Map<String, Object> customContextObjects =
-				portletDisplayTemplateHandler.getCustomContextObjects();
-
-			for (String variableName : customContextObjects.keySet()) {
-				if (contextObjects.containsKey(variableName)) {
-					continue;
-				}
-
-				Object object = customContextObjects.get(variableName);
-
-				if (object instanceof Class) {
-					templateManager.addStaticClassSupport(
-						contextObjects, variableName, (Class<?>)object);
-				}
-				else {
-					contextObjects.put(variableName, object);
-				}
-			}
-		}
+		templateManager.addContextObjects(
+			contextObjects, templateHandler.getCustomContextObjects());
 
 		// Taglibs
 

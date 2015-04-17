@@ -17,5 +17,17 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/activation.jar" />
+	<classpathentry kind="lib" path="lib/ant-launcher.jar" />
+	<classpathentry kind="lib" path="lib/ant.jar" />
+	<classpathentry kind="lib" path="lib/axis-ant.jar" />
+	<classpathentry kind="lib" path="lib/axis-jaxrpc.jar" />
+	<classpathentry kind="lib" path="lib/axis-saaj.jar" />
+	<classpathentry kind="lib" path="lib/axis-wsdl4j.jar" />
+	<classpathentry kind="lib" path="lib/axis.jar" />
+	<classpathentry kind="lib" path="lib/commons-discovery.jar" />
+	<classpathentry kind="lib" path="lib/dom4j.jar" />
+	<classpathentry kind="lib" path="lib/mail.jar" />
+	<classpathentry kind="lib" path="lib/xml-apis.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

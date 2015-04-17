@@ -36,6 +36,28 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BaseTemplateManager implements TemplateManager {
 
 	@Override
+	public void addContextObjects(
+		Map<String, Object> contextObjects,
+		Map<String, Object> newContextObjects) {
+
+		for (String variableName : newContextObjects.keySet()) {
+			if (contextObjects.containsKey(variableName)) {
+				continue;
+			}
+
+			Object object = newContextObjects.get(variableName);
+
+			if (object instanceof Class) {
+				addStaticClassSupport(
+					contextObjects, variableName, (Class<?>)object);
+			}
+			else {
+				contextObjects.put(variableName, object);
+			}
+		}
+	}
+
+	@Override
 	public void addStaticClassSupport(
 		Map<String, Object> contextObjects, String variableName,
 		Class<?> variableClass) {

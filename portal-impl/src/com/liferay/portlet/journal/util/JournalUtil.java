@@ -34,6 +34,10 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -69,7 +73,6 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -1370,9 +1373,22 @@ public class JournalUtil {
 			String langType, boolean propagateException)
 		throws Exception {
 
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(langType);
+
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				JournalArticle.class.getName());
+
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		templateManager.addContextObjects(
+			contextObjects, templateHandler.getCustomContextObjects());
+
 		return _transformer.transform(
-			themeDisplay, tokens, viewMode, languageId, document,
-			portletRequestModel, script, langType, propagateException);
+			themeDisplay, contextObjects, tokens, viewMode, languageId,
+			document, portletRequestModel, script, langType,
+			propagateException);
 	}
 
 	private static void _addElementOptions(
@@ -1828,8 +1844,9 @@ public class JournalUtil {
 	private static Map<String, String> _customTokens;
 	private static final Pattern _friendlyURLPattern = Pattern.compile(
 		"[^a-z0-9_-]");
-	private static final Transformer _transformer = new Transformer(
-		PropsKeys.JOURNAL_TRANSFORMER_LISTENER,
-		PropsKeys.JOURNAL_ERROR_TEMPLATE, true);
+	private static final JournalTransformer _transformer =
+		new JournalTransformer(
+			PropsKeys.JOURNAL_TRANSFORMER_LISTENER,
+			PropsKeys.JOURNAL_ERROR_TEMPLATE, true);
 
 }

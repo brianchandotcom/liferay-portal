@@ -56,7 +56,6 @@ import java.io.Serializable;
 
 import java.text.MessageFormat;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -544,18 +543,8 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
-	public Locale[] getSupportedLocales() {
-		List<Locale> supportedLocales = new ArrayList<>();
-
-		Locale[] locales = getAvailableLocales();
-
-		for (Locale locale : locales) {
-			if (!isBetaLocale(locale)) {
-				supportedLocales.add(locale);
-			}
-		}
-
-		return supportedLocales.toArray(new Locale[supportedLocales.size()]);
+	public Set<Locale> getSupportedLocales() {
+		return _getInstance()._supportedLocalesSet;
 	}
 
 	@Override
@@ -866,6 +855,10 @@ public class LanguageImpl implements Language, Serializable {
 
 			_localesBetaSet.add(locale);
 		}
+
+		_supportedLocalesSet = new HashSet<>(_localesSet);
+
+		_supportedLocalesSet.removeAll(_localesBetaSet);
 	}
 
 	private String _escapePattern(String pattern) {
@@ -1036,5 +1029,6 @@ public class LanguageImpl implements Language, Serializable {
 	private final Set<Locale> _localesBetaSet;
 	private final Map<String, Locale> _localesMap;
 	private final Set<Locale> _localesSet;
+	private final Set<Locale> _supportedLocalesSet;
 
 }

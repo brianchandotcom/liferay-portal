@@ -38,12 +38,46 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 	}
 
 	@Override
+	public boolean isActionControlsVisible() throws PortalException {
+		if (_discussionRequestHelper.isHideControls()) {
+			return false;
+		}
+
+		return !TrashUtil.isInTrash(
+			_message.getClassName(), _message.getClassPK());
+	}
+
+	@Override
+	public boolean isDeleteActionControlVisible() throws PortalException {
+		return MBDiscussionPermission.contains(
+			_discussionRequestHelper.getPermissionChecker(),
+			_discussionRequestHelper.getCompanyId(),
+			_discussionRequestHelper.getScopeGroupId(),
+			_discussionRequestHelper.getPermissionClassName(),
+			_discussionRequestHelper.getPermissionClassPK(),
+			_message.getMessageId(), _message.getUserId(),
+			ActionKeys.DELETE_DISCUSSION);
+	}
+
+	@Override
 	public boolean isDiscussionVisible() throws PortalException {
 		if (!_message.isApproved() && !isCommentAuthor() && !isGroupAdmin()) {
 			return false;
 		}
 
 		return hasViewPermission();
+	}
+
+	@Override
+	public boolean isEditActionControlVisible() throws PortalException {
+		return MBDiscussionPermission.contains(
+			_discussionRequestHelper.getPermissionChecker(),
+			_discussionRequestHelper.getCompanyId(),
+			_discussionRequestHelper.getScopeGroupId(),
+			_discussionRequestHelper.getPermissionClassName(),
+			_discussionRequestHelper.getPermissionClassPK(),
+			_message.getMessageId(), _message.getUserId(),
+			ActionKeys.UPDATE_DISCUSSION);
 	}
 
 	@Override
@@ -63,6 +97,17 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 		return !TrashUtil.isInTrash(
 			_message.getClassName(), _message.getClassPK());
+	}
+
+	@Override
+	public boolean isReplyActionControlVisible() throws PortalException {
+		return MBDiscussionPermission.contains(
+			_discussionRequestHelper.getPermissionChecker(),
+			_discussionRequestHelper.getCompanyId(),
+			_discussionRequestHelper.getScopeGroupId(),
+			_discussionRequestHelper.getPermissionClassName(),
+			_discussionRequestHelper.getPermissionClassPK(),
+			_discussionRequestHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
 	}
 
 	@Override

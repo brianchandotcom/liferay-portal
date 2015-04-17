@@ -211,8 +211,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					/>
 				</c:if>
 
-				<c:if test="<%= !discussionRequestHelper.isHideControls() && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
-					<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, discussionRequestHelper.getPermissionClassName(), discussionRequestHelper.getPermissionClassPK(), discussionRequestHelper.getUserId(), ActionKeys.ADD_DISCUSSION) %>">
+				<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() %>">
+					<c:if test="<%= commentTreeDisplayContext.isReplyActionControlVisible() %>">
 
 						<%
 						String taglibPostReplyURL = "javascript:"
@@ -243,7 +243,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<ul class="lfr-discussion-actions">
 						<c:if test="<%= index > 0 %>">
 
-							<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, discussionRequestHelper.getPermissionClassName(), discussionRequestHelper.getPermissionClassPK(), message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
+							<c:if test="<%= commentTreeDisplayContext.isEditActionControlVisible() %>">
 
 								<%
 								String taglibEditURL = "javascript:"
@@ -261,7 +261,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</li>
 							</c:if>
 
-							<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, discussionRequestHelper.getPermissionClassName(), discussionRequestHelper.getPermissionClassPK(), message.getMessageId(), message.getUserId(), ActionKeys.DELETE_DISCUSSION) %>">
+							<c:if test="<%= commentTreeDisplayContext.isDeleteActionControlVisible() %>">
 
 								<%
 								String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + index + ");";

@@ -24,7 +24,6 @@ page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionRe
 page import="com.liferay.portlet.messageboards.model.MBDiscussion" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %><%@
 page import="com.liferay.portlet.messageboards.model.MBTreeWalker" %><%@
-page import="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" %><%@
 page import="com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator" %><%@
 page import="com.liferay.portlet.ratings.model.RatingsEntry" %><%@
 page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@

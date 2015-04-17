@@ -21,11 +21,19 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface CommentTreeDisplayContext {
 
+	public boolean isActionControlsVisible() throws PortalException;
+
+	public boolean isDeleteActionControlVisible() throws PortalException;
+
 	public boolean isDiscussionVisible() throws PortalException;
+
+	public boolean isEditActionControlVisible() throws PortalException;
 
 	public boolean isEditControlsVisible() throws PortalException;
 
 	public boolean isRatingsVisible() throws PortalException;
+
+	public boolean isReplyActionControlVisible() throws PortalException;
 
 	public boolean isWorkflowStatusVisible() throws PortalException;
 

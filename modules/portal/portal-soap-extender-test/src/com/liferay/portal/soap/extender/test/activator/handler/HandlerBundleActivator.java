@@ -46,8 +46,12 @@ public class HandlerBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
-		_greeterBundleActivator.stop(bundleContext);
+	public void stop(BundleContext bundleContext) {
+		try {
+			_greeterBundleActivator.stop(bundleContext);
+		}
+		catch (Exception e) {
+		}
 
 		_serviceRegistration.unregister();
 	}

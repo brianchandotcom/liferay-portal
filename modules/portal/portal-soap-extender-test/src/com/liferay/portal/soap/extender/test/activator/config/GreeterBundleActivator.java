@@ -89,8 +89,12 @@ public class GreeterBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
-		_configAdminBundleActivator.stop(bundleContext);
+	public void stop(BundleContext bundleContext) {
+		try {
+			_configAdminBundleActivator.stop(bundleContext);
+		}
+		catch (Exception e) {
+		}
 
 		_serviceRegistration.unregister();
 	}

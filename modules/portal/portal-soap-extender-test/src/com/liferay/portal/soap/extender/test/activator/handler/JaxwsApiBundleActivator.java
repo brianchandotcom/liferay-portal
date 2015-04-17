@@ -53,8 +53,12 @@ public class JaxwsApiBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
-		_configAdminActivator.stop(bundleContext);
+	public void stop(BundleContext bundleContext) {
+		try {
+			_configAdminActivator.stop(bundleContext);
+		}
+		catch (Exception e) {
+		}
 
 		_endpoint.stop();
 	}

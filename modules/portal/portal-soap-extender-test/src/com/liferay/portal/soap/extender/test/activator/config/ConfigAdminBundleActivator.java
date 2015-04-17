@@ -76,12 +76,24 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext context) throws Exception {
-		_jaxwsApiConfiguration.delete();
+	public void stop(BundleContext context) {
+		try {
+			_jaxwsApiConfiguration.delete();
+		}
+		catch (Exception e) {
+		}
 
-		_soapConfiguration.delete();
+		try {
+			_soapConfiguration.delete();
+		}
+		catch (Exception e) {
+		}
 
-		_cxfConfiguration.delete();
+		try {
+			_cxfConfiguration.delete();
+		}
+		catch (Exception e) {
+		}
 	}
 
 	private Configuration _cxfConfiguration;

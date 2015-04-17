@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,6 +33,8 @@ import com.liferay.portal.util.PortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -99,6 +102,12 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 				}
 			}
 
+			try {
+				documentSelectorURL.setWindowState(LiferayWindowState.POP_UP);
+			}
+			catch (WindowStateException wse) {
+			}
+
 			jsonObject.put(
 				"filebrowserBrowseUrl", documentSelectorURL.toString());
 			jsonObject.put(
@@ -111,8 +120,11 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 				"filebrowserImageBrowseUrl",
 				documentSelectorURL.toString() + "&Type=image");
 
-			jsonObject.put("srcNode", "#" + name);
+			jsonObject.put("srcNode", name);
 		}
+
+		jsonObject.put(
+			"removePlugins", "toolbar,elementspath,resize,liststyle,link");
 
 		JSONObject toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
 

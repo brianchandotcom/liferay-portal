@@ -1,81 +1,83 @@
-AUI.add(
-	'button-imageselector',
-	function(A) {
-		var Lang = A.Lang;
+/* global React, AlloyEditor */
 
-		var STR_EDITOR = 'editor';
+(function() {
+	'use strict';
 
-		var STR_HOST = 'host';
+	var ButtonImage = React.createClass(
+		{
+			displayName: 'ButtonImage',
 
-		var BtnImageselector = A.Base.create(
-			'imageselector',
-			A.Plugin.Base,
-			[A.ButtonBase],
-			{
-				TPL_CONTENT: '<i class="alloy-editor-icon-image-sign"></i>',
+			propTypes: {
+				editor: React.PropTypes.object.isRequired,
+				imageTPL: React.PropTypes.string
+			},
 
-				TPL_IMAGE: '<img src="{src}" />',
+			getDefaultProps: function() {
+				return {
+					imageTPL: CKEDITOR.template('<img src="{src}" />')
+				};
+			},
 
-				initializer: function() {
-					var instance = this;
+			statics: {
+				key: 'image'
+			},
 
-					var CKEDITORTemplate = CKEDITOR.template;
-
-					instance._imageTPL = new CKEDITORTemplate(instance.TPL_IMAGE);
-
-					instance._onDocumentSelectedFn = A.bind('_onDocumentSelected', instance);
-				},
-
-				_onClick: function(event) {
-					var instance = this;
-
-					var editor = instance.get(STR_HOST).get(STR_EDITOR);
-
-					var eventName = editor.name + 'selectDocument';
-
-					Liferay.Util.selectEntity(
+			render: function() {
+				return (
+					React.createElement(
+						'button',
 						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true
-							},
-							eventName: eventName,
-							id: eventName,
-							title: Liferay.Language.get('select-image'),
-							uri: editor.config.filebrowserImageBrowseUrl
+							className: 'alloy-editor-button',
+							'data-type': 'button-image',
+							onClick: this._handleClick,
+							tabIndex: this.props.tabIndex
 						},
-						instance._onDocumentSelectedFn
-					);
-				},
-
-				_onDocumentSelected: function(event) {
-					var instance = this;
-
-					var editor = instance.get(STR_HOST).get(STR_EDITOR);
-
-					var image = CKEDITOR.dom.element.createFromHtml(
-						instance._imageTPL.output(
+						React.createElement(
+							'span',
 							{
-								src: event.url
+								className: 'alloy-editor-icon-image'
 							}
 						)
-					);
-
-					A.soon(A.bind('insertElement', editor, image));
-				}
+					)
+				);
 			},
-			{
-				NAME: 'imageselector',
 
-				NS: 'imageselector'
+			_handleClick: function() {
+				var editor = this.props.editor.get('nativeEditor');
+
+				var eventName = editor.name + 'selectDocument';
+
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true
+						},
+						eventName: eventName,
+						id: eventName,
+						title: Liferay.Language.get('select-image'),
+						uri: editor.config.filebrowserImageBrowseUrl
+					},
+					this._onDocumentSelectedFn
+				);
+			},
+
+			_onDocumentSelected: function(event) {
+				var instance = this;
+
+				var image = CKEDITOR.dom.element.createFromHtml(
+					this.props.imageTPL.output(
+						{
+							src: event.url
+						}
+					)
+				);
+
+				this.props.editor.get('nativeEditor').insertElement(image);
 			}
-		);
+		}
+	);
 
-		A.ButtonImageselector = BtnImageselector;
-	},
-	'',
-	{
-		requires: ['button-base', 'timers']
-	}
-);
+	AlloyEditor.Buttons[ButtonImage.key] = AlloyEditor.ButtonImage = ButtonImage;
+}());

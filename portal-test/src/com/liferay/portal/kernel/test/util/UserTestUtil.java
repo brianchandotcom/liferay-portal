@@ -188,9 +188,10 @@ public class UserTestUtil {
 
 	public static User addUser(long groupId, Locale locale) throws Exception {
 		return addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			RandomTestUtil.randomString(), false, locale,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new long[] {groupId});
+			new long[] {groupId}, ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(
@@ -251,8 +252,10 @@ public class UserTestUtil {
 		throws Exception {
 
 		return addUser(
-			screenName, autoScreenName, "ServiceTestSuite", "ServiceTestSuite",
-			groupIds);
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			screenName, autoScreenName, LocaleUtil.getDefault(),
+			"ServiceTestSuite", "ServiceTestSuite", groupIds,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(
@@ -261,8 +264,9 @@ public class UserTestUtil {
 		throws Exception {
 
 		return addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			screenName, autoScreenName, LocaleUtil.getDefault(), firstName,
-			lastName, groupIds);
+			lastName, groupIds, ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(String screenName, long groupId)

@@ -111,6 +111,8 @@ import com.liferay.portal.security.auth.EmailAddressGenerator;
 import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.security.auth.EmailAddressValidator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
+import com.liferay.portal.security.auth.FullNameDefinition;
+import com.liferay.portal.security.auth.FullNameDefinitionFactory;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.FullNameValidator;
@@ -765,7 +767,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		validate(
 			companyId, userId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, openId, firstName,
-			middleName, lastName, organizationIds);
+			middleName, lastName, organizationIds, locale);
 
 		if (!autoPassword) {
 			if (Validator.isNull(password1) || Validator.isNull(password2)) {
@@ -4521,7 +4523,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			validate(
 				companyId, user.getUserId(), autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, openId, firstName,
-				middleName, lastName, null);
+				middleName, lastName, null, locale);
 
 			if (!autoPassword) {
 				if (Validator.isNull(password1) ||
@@ -5285,9 +5287,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getCompanyId(), userId);
 		}
 
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
 		validate(
 			userId, screenName, emailAddress, openId, firstName, middleName,
-			lastName, smsSn);
+			lastName, smsSn, locale);
 
 		if (Validator.isNotNull(newPassword1) ||
 			Validator.isNotNull(newPassword2)) {
@@ -6463,7 +6467,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long companyId, long userId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
 			String emailAddress, String openId, String firstName,
-			String middleName, String lastName, long[] organizationIds)
+			String middleName, String lastName, long[] organizationIds,
+			Locale locale)
 		throws PortalException {
 
 		validateCompanyMaxUsers(companyId);
@@ -6493,7 +6498,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		validateOpenId(companyId, userId, openId);
 
-		validateFullName(companyId, firstName, middleName, lastName);
+		validateFullName(companyId, firstName, middleName, lastName, locale);
 
 		if (organizationIds != null) {
 			for (long organizationId : organizationIds) {
@@ -6510,7 +6515,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	protected void validate(
 			long userId, String screenName, String emailAddress, String openId,
-			String firstName, String middleName, String lastName, String smsSn)
+			String firstName, String middleName, String lastName, String smsSn,
+			Locale locale)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -6537,7 +6543,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 			validateFullName(
-				user.getCompanyId(), firstName, middleName, lastName);
+				user.getCompanyId(), firstName, middleName, lastName, locale);
 		}
 
 		if (Validator.isNotNull(smsSn) && !Validator.isEmailAddress(smsSn)) {
@@ -6627,16 +6633,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	protected void validateFullName(
 			long companyId, String firstName, String middleName,
-			String lastName)
+			String lastName, Locale locale)
 		throws PortalException {
+
+		FullNameDefinition fullNameDefinition =
+			FullNameDefinitionFactory.getInstance(locale);
 
 		if (Validator.isNull(firstName)) {
 			throw new ContactNameException.MustHaveFirstName();
 		}
+		else if (Validator.isNull(middleName) &&
+				 fullNameDefinition.isFieldRequired("middle-name")) {
+
+			throw new ContactNameException.MustHaveMiddleName();
+		}
 		else if (Validator.isNull(lastName) &&
-				 PrefsPropsUtil.getBoolean(
-					 companyId, PropsKeys.USERS_LAST_NAME_REQUIRED,
-					 PropsValues.USERS_LAST_NAME_REQUIRED)) {
+				 fullNameDefinition.isFieldRequired("last-name")) {
 
 			throw new ContactNameException.MustHaveLastName();
 		}

@@ -135,47 +135,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</java>
 	</target>-->
 
-	<target name="build-bobo-browse-jar">
-		<mirrors-get dest="release-3.2.0.zip" src="https://codeload.github.com/senseidb/bobo/zip/release-3.2.0" />
-
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<unzip
-			dest="${tstamp.value}"
-			src="release-3.2.0.zip"
-		/>
-
-		<delete file="release-3.2.0.zip" />
-
-		<patch patchfile="${project.dir}/lib/portal/bobo-browse/LPS-28980.patch"
-			dir="${tstamp.value}/bobo-release-3.2.0"
-			strip="1"
-		/>
-
-		<patch patchfile="${project.dir}/lib/portal/bobo-browse/LPS-38192.patch"
-			dir="${tstamp.value}/bobo-release-3.2.0"
-			strip="1"
-		/>
-
-		<patch patchfile="${project.dir}/lib/portal/bobo-browse/LPS-43688.patch"
-		   dir="${tstamp.value}/bobo-release-3.2.0"
-		   strip="1"
-		/>
-
-		<artifact:mvn pom="${tstamp.value}/bobo-release-3.2.0/bobo-browse/pom.xml">
-			<arg value="package" />
-		</artifact:mvn>
-
-		<move
-			file="${tstamp.value}/bobo-release-3.2.0/bobo-browse/target/bobo-browse-3.2.0.jar"
-			tofile="${project.dir}/lib/portal/bobo-browse.jar.new"
-		/>
-
-		<delete dir="${tstamp.value}" />
-	</target>
-
 	<target name="build-css">
 		<ant dir="../portal-web" target="build-css" />
 	</target>

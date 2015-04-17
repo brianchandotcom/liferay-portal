@@ -41,6 +41,12 @@ if (Validator.isNotNull(scriptContent)) {
 
 							Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, classPK, language, locale);
 
+							TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(templateHandlerClassNameId);
+
+							Class<?> clazz = (templateHandler != null) ? templateHandler.getClass() : ddmDisplay.getClass();
+
+							ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale, clazz.getClassLoader());
+
 							for (TemplateVariableGroup templateVariableGroup : templateVariableGroups.values()) {
 								if (templateVariableGroup.isEmpty()) {
 									continue;
@@ -55,8 +61,11 @@ if (Validator.isNotNull(scriptContent)) {
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, language)) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, templateVariableDefinition)) %>">
-													<liferay-ui:message key="<%= templateVariableDefinition.getLabel() %>" /><c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
+												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, language)) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, resourceBundle, templateVariableDefinition)) %>">
+
+													<%= LanguageUtil.get(request, resourceBundle, templateVariableDefinition.getLabel()) %>
+
+													<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>
 											</li>
 
@@ -598,14 +607,14 @@ private String _getPaletteItemTitle(HttpServletRequest request, String label, Cl
 	return sb.toString();
 }
 
-private String _getPaletteItemTitle(HttpServletRequest request, TemplateVariableDefinition templateVariableDefinition) {
+private String _getPaletteItemTitle(HttpServletRequest request, ResourceBundle resourceBundle, TemplateVariableDefinition templateVariableDefinition) {
 	StringBundler sb = new StringBundler(12);
 
 	String help = templateVariableDefinition.getHelp();
 
 	if (Validator.isNotNull(help)) {
 		sb.append("<p>");
-		sb.append(LanguageUtil.get(request, help));
+		sb.append(LanguageUtil.get(request, resourceBundle, help));
 		sb.append("</p>");
 	}
 

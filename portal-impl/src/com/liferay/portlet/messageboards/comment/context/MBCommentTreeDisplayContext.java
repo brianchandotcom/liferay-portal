@@ -21,6 +21,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
+import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -31,15 +32,17 @@ import com.liferay.portlet.trash.util.TrashUtil;
 public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	public MBCommentTreeDisplayContext(
+		DiscussionTaglibHelper discussionTaglibHelper,
 		DiscussionRequestHelper discussionRequestHelper, MBMessage message) {
 
+		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
 		_message = message;
 	}
 
 	@Override
 	public boolean isActionControlsVisible() throws PortalException {
-		if (_discussionRequestHelper.isHideControls()) {
+		if (_discussionTaglibHelper.isHideControls()) {
 			return false;
 		}
 
@@ -53,8 +56,8 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
-			_discussionRequestHelper.getPermissionClassName(),
-			_discussionRequestHelper.getPermissionClassPK(),
+			_discussionTaglibHelper.getPermissionClassName(),
+			_discussionTaglibHelper.getPermissionClassPK(),
 			_message.getMessageId(), _message.getUserId(),
 			ActionKeys.DELETE_DISCUSSION);
 	}
@@ -74,15 +77,15 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
-			_discussionRequestHelper.getPermissionClassName(),
-			_discussionRequestHelper.getPermissionClassPK(),
+			_discussionTaglibHelper.getPermissionClassName(),
+			_discussionTaglibHelper.getPermissionClassPK(),
 			_message.getMessageId(), _message.getUserId(),
 			ActionKeys.UPDATE_DISCUSSION);
 	}
 
 	@Override
 	public boolean isEditControlsVisible() throws PortalException {
-		if (_discussionRequestHelper.isHideControls()) {
+		if (_discussionTaglibHelper.isHideControls()) {
 			return false;
 		}
 
@@ -91,7 +94,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	@Override
 	public boolean isRatingsVisible() throws PortalException {
-		if (!_discussionRequestHelper.isRatingsEnabled()) {
+		if (!_discussionTaglibHelper.isRatingsEnabled()) {
 			return false;
 		}
 
@@ -105,9 +108,9 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
-			_discussionRequestHelper.getPermissionClassName(),
-			_discussionRequestHelper.getPermissionClassPK(),
-			_discussionRequestHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
+			_discussionTaglibHelper.getPermissionClassName(),
+			_discussionTaglibHelper.getPermissionClassPK(),
+			_discussionTaglibHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
 	}
 
 	@Override
@@ -126,8 +129,8 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
-			_discussionRequestHelper.getPermissionClassName(),
-			_discussionRequestHelper.getPermissionClassPK(),
+			_discussionTaglibHelper.getPermissionClassName(),
+			_discussionTaglibHelper.getPermissionClassPK(),
 			_message.getMessageId(), _message.getUserId(),
 			ActionKeys.UPDATE_DISCUSSION);
 	}
@@ -137,9 +140,9 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
-			_discussionRequestHelper.getPermissionClassName(),
-			_discussionRequestHelper.getPermissionClassPK(),
-			_discussionRequestHelper.getUserId(), ActionKeys.VIEW);
+			_discussionTaglibHelper.getPermissionClassName(),
+			_discussionTaglibHelper.getPermissionClassPK(),
+			_discussionTaglibHelper.getUserId(), ActionKeys.VIEW);
 	}
 
 	protected boolean isCommentAuthor() {
@@ -163,6 +166,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 	}
 
 	private final DiscussionRequestHelper _discussionRequestHelper;
+	private final DiscussionTaglibHelper _discussionTaglibHelper;
 	private final MBMessage _message;
 
 }

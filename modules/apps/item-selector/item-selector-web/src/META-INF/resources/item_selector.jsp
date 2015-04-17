@@ -28,8 +28,7 @@ LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSel
 	}
 </aui:script>
 
-<liferay-ui:tabs names="<%= StringUtil.merge(localizedItemSelectorRendering.getTitles()) %>"
-	refresh="<%= false %>" type="pills" value="<%= localizedItemSelectorRendering.getSelectedTab() %>">
+<liferay-ui:tabs names="<%= StringUtil.merge(localizedItemSelectorRendering.getTitles()) %>" refresh="<%= false %>" type="pills" value="<%= localizedItemSelectorRendering.getSelectedTab() %>">
 
 	<%
 	for (String title : localizedItemSelectorRendering.getTitles()) {

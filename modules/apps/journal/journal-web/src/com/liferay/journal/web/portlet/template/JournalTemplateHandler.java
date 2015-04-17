@@ -19,6 +19,8 @@ import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -33,7 +35,9 @@ import com.liferay.portlet.dynamicdatamapping.template.DDMTemplateVariableCodeHa
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalService;
 import com.liferay.portlet.journal.service.JournalArticleService;
+import com.liferay.portlet.journal.util.JournalContentUtil;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -53,6 +57,21 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		try {
+			contextObjects.put(
+				"journalContentUtil", JournalContentUtil.getJournalContent());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		return contextObjects;
 	}
 
 	@Override
@@ -92,6 +111,13 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			super.getTemplateVariableGroups(classPK, language, locale);
 
+		TemplateVariableGroup fieldsTemplateVariableGroup =
+			templateVariableGroups.get("fields");
+
+		fieldsTemplateVariableGroup.addVariable(
+			"journal-content-util", JournalContentUtil.class,
+			"journalContentUtil");
+
 		String[] restrictedVariables = getRestrictedVariables(language);
 
 		TemplateVariableGroup journalServicesTemplateVariableGroup =
@@ -116,6 +142,9 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	protected TemplateVariableCodeHandler getTemplateVariableCodeHandler() {
 		return _templateVariableCodeHandler;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalTemplateHandler.class);
 
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(

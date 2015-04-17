@@ -37,7 +37,11 @@ LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSel
 
 		<liferay-ui:section>
 			<div>
-				<% itemSelectorViewRenderer.renderHTML(pageContext); %>
+
+				<%
+				itemSelectorViewRenderer.renderHTML(pageContext);
+				%>
+
 			</div>
 		</liferay-ui:section>
 

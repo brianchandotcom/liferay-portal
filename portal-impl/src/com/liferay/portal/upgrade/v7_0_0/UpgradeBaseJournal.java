@@ -256,9 +256,7 @@ public abstract class UpgradeBaseJournal extends UpgradeDynamicDataMapping {
 
 		Map<Locale, String> localizationMap = new HashMap<>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			localizationMap.put(locale, LanguageUtil.get(locale, key));
 		}
 

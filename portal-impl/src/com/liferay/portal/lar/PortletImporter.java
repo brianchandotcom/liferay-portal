@@ -1285,12 +1285,10 @@ public class PortletImporter {
 				StringUtil.split(
 					headerElement.attributeValue("available-locales")));
 
-			Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales(
-				PortalUtil.getSiteGroupId(groupId));
-
 			for (Locale sourceAvailableLocale : sourceAvailableLocales) {
-				if (!ArrayUtil.contains(
-						targetAvailableLocales, sourceAvailableLocale)) {
+				if (!LanguageUtil.isAvailableLocale(
+						PortalUtil.getSiteGroupId(groupId),
+						sourceAvailableLocale)) {
 
 					LocaleException le = new LocaleException(
 						LocaleException.TYPE_EXPORT_IMPORT,
@@ -1298,7 +1296,9 @@ public class PortletImporter {
 							"available in company " + companyId);
 
 					le.setSourceAvailableLocales(sourceAvailableLocales);
-					le.setTargetAvailableLocales(targetAvailableLocales);
+					le.setTargetAvailableLocales(
+						LanguageUtil.getAvailableLocales(
+							PortalUtil.getSiteGroupId(groupId)));
 
 					throw le;
 				}

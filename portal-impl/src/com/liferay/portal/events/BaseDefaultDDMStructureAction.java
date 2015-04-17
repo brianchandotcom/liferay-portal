@@ -92,9 +92,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			Map<Locale, String> nameMap = new HashMap<>();
 			Map<Locale, String> descriptionMap = new HashMap<>();
 
-			Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
-
-			for (Locale curLocale : locales) {
+			for (Locale curLocale : LanguageUtil.getAvailableLocales(groupId)) {
 				nameMap.put(curLocale, LanguageUtil.get(curLocale, name));
 				descriptionMap.put(
 					curLocale, LanguageUtil.get(curLocale, description));

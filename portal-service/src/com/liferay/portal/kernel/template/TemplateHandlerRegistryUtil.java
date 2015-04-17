@@ -219,9 +219,7 @@ public class TemplateHandlerRegistryUtil {
 
 			Map<Locale, String> map = new HashMap<>();
 
-			Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
-
-			for (Locale locale : locales) {
+			for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 				ResourceBundle resourceBundle = ResourceBundle.getBundle(
 					"content.Language", locale, classLoader);
 

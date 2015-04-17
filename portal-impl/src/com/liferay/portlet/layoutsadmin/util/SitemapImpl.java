@@ -190,10 +190,9 @@ public class SitemapImpl implements Sitemap {
 
 		Map<Locale, String> alternateURLs = new HashMap<>();
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales(
-			layout.getGroupId());
+		for (Locale availableLocale : LanguageUtil.getAvailableLocales(
+				layout.getGroupId())) {
 
-		for (Locale availableLocale : availableLocales) {
 			String alternateURL = PortalUtil.getAlternateURL(
 				canonicalURL, themeDisplay, availableLocale, layout);
 

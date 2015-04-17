@@ -91,9 +91,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs = new ArrayList<>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
 
 			if (Validator.isNull(friendlyURL)) {
@@ -268,9 +266,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		List<LayoutFriendlyURL> layoutFriendlyURLs = new ArrayList<>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
 			String languageId = LocaleUtil.toLanguageId(locale);
 

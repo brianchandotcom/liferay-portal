@@ -16,7 +16,6 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -32,7 +31,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.admin.util.AdminUtil;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,10 +63,9 @@ public class UpdateLanguageAction extends Action {
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		List<Locale> availableLocales = ListUtil.fromArray(
-			LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()));
+		if (LanguageUtil.isAvailableLocale(
+				themeDisplay.getSiteGroupId(), locale)) {
 
-		if (availableLocales.contains(locale)) {
 			boolean persistState = ParamUtil.getBoolean(
 				request, "persistState", true);
 

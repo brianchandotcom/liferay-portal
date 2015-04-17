@@ -181,9 +181,7 @@ public class UpgradeLayout extends UpgradeProcess {
 
 		String xml = null;
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			String value = typeSettingsProperties.getProperty(

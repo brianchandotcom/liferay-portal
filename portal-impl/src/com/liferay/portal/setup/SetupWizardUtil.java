@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -37,7 +36,6 @@ import java.io.IOException;
 
 import java.sql.Connection;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,10 +102,7 @@ public class SetupWizardUtil {
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		List<Locale> availableLocales = ListUtil.fromArray(
-			LanguageUtil.getAvailableLocales());
-
-		if (!availableLocales.contains(locale)) {
+		if (!LanguageUtil.isAvailableLocale(locale)) {
 			return;
 		}
 

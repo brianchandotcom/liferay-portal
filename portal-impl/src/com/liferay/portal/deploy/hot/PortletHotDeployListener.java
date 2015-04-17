@@ -554,9 +554,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			"language.bundle");
 
 		if (Validator.isNotNull(languageBundleName)) {
-			Locale[] locales = LanguageUtil.getAvailableLocales();
-
-			for (Locale locale : locales) {
+			for (Locale locale : LanguageUtil.getAvailableLocales()) {
 				ResourceBundle resourceBundle = ResourceBundle.getBundle(
 					languageBundleName, locale, classLoader);
 

@@ -23,6 +23,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 /**
  * @author Adolfo Pérez
@@ -52,6 +53,16 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		}
 
 		return hasUpdatePermission();
+	}
+
+	@Override
+	public boolean isRatingsVisible() throws PortalException {
+		if (!_discussionRequestHelper.isRatingsEnabled()) {
+			return false;
+		}
+
+		return !TrashUtil.isInTrash(
+			_message.getClassName(), _message.getClassPK());
 	}
 
 	@Override

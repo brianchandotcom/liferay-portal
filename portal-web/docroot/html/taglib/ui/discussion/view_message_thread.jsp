@@ -196,7 +196,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			</div>
 
 			<div class="lfr-discussion-controls">
-				<c:if test="<%= discussionRequestHelper.isRatingsEnabled() && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
+				<c:if test="<%= commentTreeDisplayContext.isRatingsVisible() %>">
 
 					<%
 					RatingsEntry ratingsEntry = _getRatingsEntry(ratingsEntries, message.getMessageId());

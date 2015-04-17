@@ -35,7 +35,8 @@ public class CompanySettingsConfigurationFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return "configuration";
+		return
+			FormNavigatorConstants.COMPANY_SETTINGS_CONFIGURATION_CATEGORY_KEY;
 	}
 
 	@Override

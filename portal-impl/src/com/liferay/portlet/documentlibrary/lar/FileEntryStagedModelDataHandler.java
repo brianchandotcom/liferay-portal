@@ -751,32 +751,13 @@ public class FileEntryStagedModelDataHandler
 			}
 		}
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			DLFileEntry.class.getName());
+		if (fileEntry.isInTrash() || fileEntry.isInTrashContainer()) {
+			PortletDataException pde = new PortletDataException(
+				PortletDataException.STATUS_IN_TRASH);
 
-		if (trashHandler != null) {
-			try {
-				if (trashHandler.isInTrash(fileEntry.getFileEntryId()) ||
-					trashHandler.isInTrashContainer(
-						fileEntry.getFileEntryId())) {
+			pde.setStagedModel(fileEntry);
 
-					throw new PortletDataException(
-						PortletDataException.STATUS_IN_TRASH);
-				}
-			}
-			catch (PortletDataException pde) {
-				throw pde;
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to check trash status for file entry " +
-							fileEntry.getFileEntryId());
-				}
-			}
+			throw pde;
 		}
 	}
 

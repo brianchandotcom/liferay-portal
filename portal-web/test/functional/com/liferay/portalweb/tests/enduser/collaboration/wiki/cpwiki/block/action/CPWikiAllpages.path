@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>WIKI_PAGE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]//td/div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

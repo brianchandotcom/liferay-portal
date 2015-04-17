@@ -921,7 +921,7 @@ AUI.add(
 						portletURL.setParameter('refererPortletName', '');
 						portletURL.setParameter('mvcPath', '/view.jsp');
 						portletURL.setParameter('tabs1Names', 'documents');
-						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_SELECTOR);
+						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
 						portletURL.setWindowState('pop_up');
 
 						return portletURL.toString();

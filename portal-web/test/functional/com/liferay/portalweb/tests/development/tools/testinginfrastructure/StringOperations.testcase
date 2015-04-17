@@ -111,7 +111,7 @@
 
 		<var name="string" value="abCDe" />
 
-		<var name="stringUppercased" value="${string?uppercase()}" />
+		<var method="StringUtil#upperCase(${string})" name="stringUppercased" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${stringUppercased}" />
@@ -121,7 +121,7 @@
 		<echo message="Test uppercase() used inline" />
 
 		<execute macro="TestUtils#assertEquals">
-			<var name="actual" value="${string?uppercase()}" />
+			<var method="StringUtil#upperCase(${string})" name="actual" />
 			<var name="expected" value="ABCDE" />
 		</execute>
 	</command>

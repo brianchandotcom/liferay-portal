@@ -36,6 +36,7 @@ import com.liferay.portlet.journal.service.JournalArticleService;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -56,8 +57,11 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", locale);
+
 		String portletTitle = PortalUtil.getPortletTitle(
-			JournalPortletKeys.JOURNAL, locale);
+			JournalPortletKeys.JOURNAL, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));

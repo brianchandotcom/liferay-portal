@@ -56,7 +56,6 @@ import java.io.Serializable;
 
 import java.text.MessageFormat;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -509,7 +508,7 @@ public class LanguageImpl implements Language, Serializable {
 
 		if (Validator.isNotNull(languageId)) {
 			if (_localesMap.containsKey(languageId) ||
-				_charEncodings.containsKey(languageId)) {
+				_charEncodings.contains(languageId)) {
 
 				return languageId;
 			}
@@ -544,18 +543,8 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
-	public Locale[] getSupportedLocales() {
-		List<Locale> supportedLocales = new ArrayList<>();
-
-		Locale[] locales = getAvailableLocales();
-
-		for (Locale locale : locales) {
-			if (!isBetaLocale(locale)) {
-				supportedLocales.add(locale);
-			}
-		}
-
-		return supportedLocales.toArray(new Locale[supportedLocales.size()]);
+	public Set<Locale> getSupportedLocales() {
+		return _getInstance()._supportedLocalesSet;
 	}
 
 	@Override
@@ -823,7 +812,7 @@ public class LanguageImpl implements Language, Serializable {
 			}
 		}
 
-		_charEncodings = new HashMap<>();
+		_charEncodings = new HashSet<>();
 		_duplicateLanguageCodes = new HashSet<>();
 		_locales = new Locale[languageIds.length];
 		_localesMap = new HashMap<>(languageIds.length);
@@ -834,7 +823,7 @@ public class LanguageImpl implements Language, Serializable {
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 
-			_charEncodings.put(locale.toString(), StringPool.UTF8);
+			_charEncodings.add(locale.toString());
 
 			String language = languageId;
 
@@ -866,6 +855,10 @@ public class LanguageImpl implements Language, Serializable {
 
 			_localesBetaSet.add(locale);
 		}
+
+		_supportedLocalesSet = new HashSet<>(_localesSet);
+
+		_supportedLocalesSet.removeAll(_localesBetaSet);
 	}
 
 	private String _escapePattern(String pattern) {
@@ -1026,7 +1019,7 @@ public class LanguageImpl implements Language, Serializable {
 			});
 	}
 
-	private final Map<String, String> _charEncodings;
+	private final Set<String> _charEncodings;
 	private final Set<String> _duplicateLanguageCodes;
 	private final Map<Long, Map<String, Locale>> _groupLanguageCodeLocalesMap =
 		new HashMap<>();
@@ -1036,5 +1029,6 @@ public class LanguageImpl implements Language, Serializable {
 	private final Set<Locale> _localesBetaSet;
 	private final Map<String, Locale> _localesMap;
 	private final Set<Locale> _localesSet;
+	private final Set<Locale> _supportedLocalesSet;
 
 }

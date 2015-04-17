@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -483,7 +484,9 @@ public class LocalizationImpl implements Localization {
 			locales = LanguageUtil.getAvailableLocales();
 		}
 		else {
-			locales = LanguageUtil.getSupportedLocales();
+			Set<Locale> localesSet = LanguageUtil.getSupportedLocales();
+
+			locales = localesSet.toArray(new Locale[localesSet.size()]);
 		}
 
 		for (Locale locale : locales) {

@@ -38,7 +38,7 @@ AUI.add(
 		var ImageSelector = A.Component.create(
 			{
 				ATTRS: {
-					documentSelectorURL: {
+					itemSelectorURL: {
 						validator: Lang.isString
 					},
 
@@ -218,7 +218,7 @@ AUI.add(
 								eventName: instance.ns('selectImage'),
 								id: instance.ns('selectImage'),
 								title: Liferay.Language.get('select-image'),
-								uri: instance.get('documentSelectorURL')
+								uri: instance.get('itemSelectorURL')
 							},
 							instance._updateImageDataFn
 						);

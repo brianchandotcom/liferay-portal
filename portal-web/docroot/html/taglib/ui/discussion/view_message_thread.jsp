@@ -103,7 +103,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							Comment parentComment = new MBCommentImpl(parentMessage, themeDisplay.getPathThemeImages());
 							%>
 
-							<liferay-util:buffer var="buffer">
+							<liferay-util:buffer var="parentCommentUserBuffer">
 
 								<%
 								User parentMessageUser = UserLocalServiceUtil.fetchUser(parentComment.getUserId());
@@ -128,19 +128,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</span>
 							</liferay-util:buffer>
 
-							<%
-							StringBundler sb = new StringBundler(7);
+							<liferay-util:buffer var="parentCommentBodyBuffer">
+								<a class="lfr-discussion-parent-link" data-metadata="<%= HtmlUtil.escape(parentComment.getBody()) %>" data-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>">
+									<%= HtmlUtil.escape(parentComment.getUserName()) %>
+								</a>
+							</liferay-util:buffer>
 
-							sb.append("<a class=\"lfr-discussion-parent-link\" data-title=\"");
-							sb.append(HtmlUtil.escape(buffer));
-							sb.append("\" data-metaData=\"");
-							sb.append(HtmlUtil.escape(parentComment.getBody()));
-							sb.append("\">");
-							sb.append(HtmlUtil.escape(parentComment.getUserName()));
-							sb.append("</a>");
-							%>
-
-							<%= LanguageUtil.format(request, "x-ago-in-reply-to-x", new Object[] {createDateDescription, sb.toString()}, false) %>
+							<%= LanguageUtil.format(request, "x-ago-in-reply-to-x", new Object[] {createDateDescription, parentCommentBodyBuffer}, false) %>
 						</c:otherwise>
 					</c:choose>
 

@@ -23,20 +23,7 @@ DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(re
 
 CommentSectionDisplayContext commentSectionDisplayContext = new MBCommentSectionDisplayContext(discussionRequestHelper);
 
-boolean assetEntryVisible = discussionRequestHelper.isAssetEntryVisible();
-String className = discussionRequestHelper.getClassName();
-long classPK = discussionRequestHelper.getClassPK();
-String formAction = discussionRequestHelper.getFormAction();
-String formName = discussionRequestHelper.getFormName();
-boolean hideControls = discussionRequestHelper.isHideControls();
-String paginationURL = discussionRequestHelper.getPaginationURL();
-String permissionClassName = discussionRequestHelper.getPermissionClassName();
-long permissionClassPK = discussionRequestHelper.getPermissionClassPK();
-boolean ratingsEnabled = discussionRequestHelper.isRatingsEnabled();
-String redirect = discussionRequestHelper.getRedirect();
-long userId = discussionRequestHelper.getUserId();
-
-MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
+MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(discussionRequestHelper.getUserId(), scopeGroupId, discussionRequestHelper.getClassName(), discussionRequestHelper.getClassPK(), WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
 
 MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
@@ -55,17 +42,17 @@ int messagesCount = messages.size();
 
 	<c:if test="<%= commentSectionDisplayContext.isDiscussionVisible() %>">
 		<div class="taglib-discussion" id="<portlet:namespace />discussionContainer">
-			<aui:form action="<%= formAction %>" method="post" name="<%= formName %>">
+			<aui:form action="<%= discussionRequestHelper.getFormAction() %>" method="post" name="<%= discussionRequestHelper.getFormName() %>">
 				<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 				<aui:input id="<%= randomNamespace + Constants.CMD %>" name="<%= Constants.CMD %>" type="hidden" />
-				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-				<aui:input name="contentURL" type="hidden" value="<%= PortalUtil.getCanonicalURL(redirect, themeDisplay, layout) %>" />
-				<aui:input name="assetEntryVisible" type="hidden" value="<%= assetEntryVisible %>" />
-				<aui:input name="className" type="hidden" value="<%= className %>" />
-				<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
-				<aui:input name="permissionClassName" type="hidden" value="<%= permissionClassName %>" />
-				<aui:input name="permissionClassPK" type="hidden" value="<%= permissionClassPK %>" />
-				<aui:input name="permissionOwnerId" type="hidden" value="<%= String.valueOf(userId) %>" />
+				<aui:input name="redirect" type="hidden" value="<%= discussionRequestHelper.getRedirect() %>" />
+				<aui:input name="contentURL" type="hidden" value="<%= PortalUtil.getCanonicalURL(discussionRequestHelper.getRedirect(), themeDisplay, layout) %>" />
+				<aui:input name="assetEntryVisible" type="hidden" value="<%= discussionRequestHelper.isAssetEntryVisible() %>" />
+				<aui:input name="className" type="hidden" value="<%= discussionRequestHelper.getClassName() %>" />
+				<aui:input name="classPK" type="hidden" value="<%= discussionRequestHelper.getClassPK() %>" />
+				<aui:input name="permissionClassName" type="hidden" value="<%= discussionRequestHelper.getPermissionClassName() %>" />
+				<aui:input name="permissionClassPK" type="hidden" value="<%= discussionRequestHelper.getPermissionClassPK() %>" />
+				<aui:input name="permissionOwnerId" type="hidden" value="<%= String.valueOf(discussionRequestHelper.getUserId()) %>" />
 				<aui:input name="messageId" type="hidden" />
 				<aui:input name="threadId" type="hidden" value="<%= commentSectionDisplayContext.getThreadId() %>" />
 				<aui:input name="parentMessageId" type="hidden" />
@@ -87,7 +74,7 @@ int messagesCount = messages.size();
 						</c:if>
 
 						<%
-						boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), className, classPK);
+						boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), discussionRequestHelper.getClassName(), discussionRequestHelper.getClassPK());
 
 						String subscriptionURL = "javascript:" + randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
@@ -233,7 +220,7 @@ int messagesCount = messages.size();
 			}
 
 			function <%= randomNamespace %>afterLogin(emailAddress, anonymousAccount) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionRequestHelper.getFormName()) %>');
 
 				form.fm('emailAddress').val(emailAddress);
 
@@ -241,7 +228,7 @@ int messagesCount = messages.size();
 			}
 
 			function <%= randomNamespace %>deleteMessage(i) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionRequestHelper.getFormName()) %>');
 
 				var messageId = form.fm('messageId' + i).val();
 
@@ -282,7 +269,7 @@ int messagesCount = messages.size();
 			}
 
 			function <%= randomNamespace %>postReply(i) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionRequestHelper.getFormName()) %>');
 
 				var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i];
 
@@ -403,7 +390,7 @@ int messagesCount = messages.size();
 			}
 
 			function <%= randomNamespace %>subscribeToComments(subscribe) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionRequestHelper.getFormName()) %>');
 
 				var cmd = '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>';
 
@@ -417,7 +404,7 @@ int messagesCount = messages.size();
 			}
 
 			function <%= randomNamespace %>updateMessage(i, pending) {
-				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionRequestHelper.getFormName()) %>');
 
 				var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i];
 
@@ -441,26 +428,26 @@ int messagesCount = messages.size();
 			$('#<%= namespace %>moreComments').on(
 				'click',
 				function(event) {
-					var form = $('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+					var form = $('#<%= namespace %><%= HtmlUtil.escapeJS(discussionRequestHelper.getFormName()) %>');
 
 					var data = Liferay.Util.ns(
 						'<portlet:namespace />',
 						{
-							className: '<%= className %>',
-							classPK: <%= classPK %>,
-							hideControls: '<%= hideControls %>',
+							className: '<%= discussionRequestHelper.getClassName() %>',
+							classPK: <%= discussionRequestHelper.getClassPK() %>,
+							hideControls: '<%= discussionRequestHelper.isHideControls() %>',
 							index: form.fm('index').val(),
-							permissionClassName: '<%= permissionClassName %>',
-							permissionClassPK: '<%= permissionClassPK %>',
+							permissionClassName: '<%= discussionRequestHelper.getPermissionClassName() %>',
+							permissionClassPK: '<%= discussionRequestHelper.getPermissionClassPK() %>',
 							randomNamespace: '<%= randomNamespace %>',
-							ratingsEnabled: '<%= ratingsEnabled %>',
+							ratingsEnabled: '<%= discussionRequestHelper.isRatingsEnabled() %>',
 							rootIndexPage: form.fm('rootIndexPage').val(),
-							userId: '<%= userId %>'
+							userId: '<%= discussionRequestHelper.getUserId() %>'
 						}
 					);
 
 					$.ajax(
-						'<%= paginationURL %>',
+						'<%= discussionRequestHelper.getPaginationURL() %>',
 						{
 							data: data,
 							error: function() {

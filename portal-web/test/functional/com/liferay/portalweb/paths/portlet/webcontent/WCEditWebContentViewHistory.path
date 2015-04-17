@@ -13,21 +13,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<tr>
-	<td>EXPIRE_BUTTON</td>
-	<td>//button[contains(.,'Expire')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_BUTTON</td>
-	<td>//button[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VERSIONS_TABLE-->
 <tr>
 	<td>VERSIONS_TABLE_TITLE</td>
@@ -62,27 +47,6 @@
 <tr>
 	<td>VERSIONS_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]/td/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ACTIONS_MENULIST-->
-<tr>
-	<td>ACTIONS_MENULIST_PREVIEW</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Preview')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIONS_MENULIST_COPY</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Copy')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIONS_MENULIST_DELETE</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -29,6 +29,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEVER_EXPIRE</td>
+	<td>//input[contains(@name,'neverExpire')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEVER_REVIEW</td>
+	<td>//input[contains(@name,'neverReview')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS</td>
 	<td>//label[contains(.,'Permissions')]/input[contains(@id,'PERMISSIONS')]</td>
 	<td></td>

@@ -155,32 +155,6 @@
 	<td>//tr[contains(.,'${key_templateName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--TEMPLATE_MENULIST-->
-<tr>
-	<td>TEMPLATE_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_MENULIST_PERMISSIONS</td>
-	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_MENULIST_COPY</td>
-	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_MENULIST_DELETE</td>
-	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

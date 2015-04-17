@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVIEW_DATE</td>
+	<td>//input[contains(@id,'reviewDate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/select</td>
 	<td></td>

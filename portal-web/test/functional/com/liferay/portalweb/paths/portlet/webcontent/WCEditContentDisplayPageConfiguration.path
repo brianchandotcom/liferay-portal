@@ -39,16 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_BUTTON</td>
-	<td>//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CANCEL_BUTTON</td>
-	<td>//a[contains(@class,'btn-cancel')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

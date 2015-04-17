@@ -149,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_DEFAULT_VALUES</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit Default Values')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRE</td>
 	<td>//a[@role='menuitem' and contains(.,'Expire')]</td>
 	<td></td>
@@ -201,6 +206,11 @@
 <tr>
 	<td>MANAGE_SITE_PAGES</td>
 	<td>//a[@role='menuitem' and contains(.,'Manage Site Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_TEMPLATES</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Templates')]</td>
 	<td></td>
 </tr>
 <tr>

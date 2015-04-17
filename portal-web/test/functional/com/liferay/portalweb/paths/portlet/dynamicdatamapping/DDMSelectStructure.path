@@ -120,42 +120,6 @@
 	<td>xpath=(//a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--DDM_STRUCTURE_MENULIST-->
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit Default Values')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_MANAGE_TEMPLATES</td>
-	<td>//a[@role='menuitem' and contains(.,'Manage Templates')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_PERMISSIONS</td>
-	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_COPY</td>
-	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_DELETE</td>
-	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

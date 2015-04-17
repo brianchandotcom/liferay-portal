@@ -387,7 +387,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			itemSelectorCriterionClass.getName());
 	}
 
-	private List<ItemSelectorCriterion> getItemSelectorCriteria(
+	protected List<ItemSelectorCriterion> getItemSelectorCriteria(
 		Map<String, String[]> parameters) {
 
 		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();

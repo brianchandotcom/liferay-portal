@@ -147,15 +147,15 @@ public class I18nServlet extends HttpServlet {
 			return null;
 		}
 
-		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
+		String i18nPath = StringPool.SLASH + i18nLanguageId;
 
-		String i18nLanguageCode = locale.getLanguage();
+		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
 
 		if (Validator.isNull(locale.getCountry())) {
 
 			// Locales must contain the country code
 
-			locale = LanguageUtil.getLocale(i18nLanguageCode);
+			locale = LanguageUtil.getLocale(locale.getLanguage());
 
 			i18nLanguageId = LocaleUtil.toLanguageId(locale);
 		}
@@ -166,10 +166,8 @@ public class I18nServlet extends HttpServlet {
 			_log.debug("Redirect " + redirect);
 		}
 
-		String i18nPath = StringPool.SLASH + i18nLanguageId;
-
 		return new String[] {
-			i18nLanguageCode, i18nLanguageId, i18nPath, redirect
+			locale.getLanguage(), i18nLanguageId, i18nPath, redirect
 		};
 	}
 

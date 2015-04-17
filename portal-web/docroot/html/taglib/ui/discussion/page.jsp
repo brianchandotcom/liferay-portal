@@ -38,7 +38,6 @@ long userId = discussionRequestHelper.getUserId();
 
 MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
 
-MBThread thread = messageDisplay.getThread();
 MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
 List<MBMessage> messages = treeWalker.getMessages();
@@ -68,7 +67,7 @@ int messagesCount = messages.size();
 				<aui:input name="permissionClassPK" type="hidden" value="<%= permissionClassPK %>" />
 				<aui:input name="permissionOwnerId" type="hidden" value="<%= String.valueOf(userId) %>" />
 				<aui:input name="messageId" type="hidden" />
-				<aui:input name="threadId" type="hidden" value="<%= thread.getThreadId() %>" />
+				<aui:input name="threadId" type="hidden" value="<%= commentSectionDisplayContext.getThreadId() %>" />
 				<aui:input name="parentMessageId" type="hidden" />
 				<aui:input name="body" type="hidden" />
 				<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
@@ -81,9 +80,9 @@ int messagesCount = messages.size();
 				<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
 						<c:if test="<%= !commentSectionDisplayContext.isDiscussionMaxComments() %>">
-							<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
-								<aui:input name="messageId0" type="hidden" value="<%= message.getMessageId() %>" />
-								<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
+							<div id="<%= randomNamespace %>messageScroll<%= commentSectionDisplayContext.getRootMessageId() %>">
+								<aui:input name="messageId0" type="hidden" value="<%= commentSectionDisplayContext.getRootMessageId() %>" />
+								<aui:input name="parentMessageId0" type="hidden" value="<%= commentSectionDisplayContext.getRootMessageId() %>" />
 							</div>
 						</c:if>
 
@@ -120,13 +119,13 @@ int messagesCount = messages.size();
 							<aui:input name="emailAddress" type="hidden" />
 
 							<c:choose>
-								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(discussionRequestHelper.getCompanyId()) %>">
 									<aui:row fluid="<%= true %>">
 										<div class="lfr-discussion-details">
 											<liferay-ui:user-display
 												displayStyle="2"
 												showUserName="<%= false %>"
-												userId="<%= user.getUserId() %>"
+												userId="<%= discussionRequestHelper.getUserId() %>"
 											/>
 										</div>
 
@@ -168,7 +167,7 @@ int messagesCount = messages.size();
 							}
 						}
 
-						List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), MBDiscussion.class.getName(), classPKs);
+						List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(discussionRequestHelper.getUserId(), MBDiscussion.class.getName(), classPKs);
 						List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDiscussion.class.getName(), classPKs);
 
 						int[] range = treeWalker.getChildrenRange(rootMessage);

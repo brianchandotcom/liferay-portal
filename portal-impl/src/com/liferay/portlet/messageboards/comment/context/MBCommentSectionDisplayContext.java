@@ -21,6 +21,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
@@ -38,6 +39,24 @@ public class MBCommentSectionDisplayContext
 		DiscussionRequestHelper discussionRequestHelper) {
 
 		_discussionRequestHelper = discussionRequestHelper;
+	}
+
+	@Override
+	public long getRootMessageId() throws PortalException {
+		if (_rootMessage == null) {
+			_rootMessage = getTreeWalker().getRoot();
+		}
+
+		return _rootMessage.getMessageId();
+	}
+
+	@Override
+	public long getThreadId() throws PortalException {
+		if (_thread == null) {
+			_thread = getMBMessageDisplay().getThread();
+		}
+
+		return _thread.getThreadId();
 	}
 
 	@Override
@@ -83,6 +102,14 @@ public class MBCommentSectionDisplayContext
 		return _messagesCount;
 	}
 
+	protected MBTreeWalker getTreeWalker() throws PortalException {
+		if (_treeWalker == null) {
+			_treeWalker = getMBMessageDisplay().getTreeWalker();
+		}
+
+		return _treeWalker;
+	}
+
 	protected boolean hasViewPermission() {
 		return MBDiscussionPermission.contains(
 			_discussionRequestHelper.getPermissionChecker(),
@@ -97,5 +124,8 @@ public class MBCommentSectionDisplayContext
 	private MBMessageDisplay _discussionMessageDisplay;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private Integer _messagesCount;
+	private MBMessage _rootMessage;
+	private MBThread _thread;
+	private MBTreeWalker _treeWalker;
 
 }

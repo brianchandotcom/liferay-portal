@@ -63,19 +63,49 @@ public class DynamicQueryImpl implements DynamicQuery {
 
 		_criteria = _detachedCriteria.getExecutableCriteria(hibernateSession);
 
-		if ((_start == null) || (_end == null)) {
+		// If none of them are set then return
+
+		if ((_start == null) && (_end == null)) {
 			return;
 		}
 
-		int start = _start.intValue();
-		int end = _end.intValue();
+		int start = (_start == null) ? QueryUtil.ALL_POS : _start.intValue();
+		int end = (_end == null) ? QueryUtil.ALL_POS : _end.intValue();
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
+
+			// If both of them are ALL_POS then return
+
 			return;
+		}
+		else if ((start < QueryUtil.ALL_POS) && (end < QueryUtil.ALL_POS)) {
+
+			// If they are invalid then make sure to return nothing
+
+			_criteria = _criteria.setFirstResult(0);
+			_criteria = _criteria.setMaxResults(0);
+		}
+
+		// Adjust start if the value is ALL_POS
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		// Calculate end value
+
+		if (start <= end) {
+			end = end - start;
+		}
+		else if (((start > end) && (end > 0)) || (end < QueryUtil.ALL_POS)) {
+			end = 0;
 		}
 
 		_criteria = _criteria.setFirstResult(start);
-		_criteria = _criteria.setMaxResults(end - start);
+
+		if (end >= 0) {
+			_criteria = _criteria.setMaxResults(end);
+		}
 	}
 
 	public DetachedCriteria getDetachedCriteria() {

@@ -260,6 +260,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INVITATIONS_DECLINED</td>
+	<td>//div[contains(@id,'calendarListDeclined')]/div/div[contains(.,'${key_resource}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_MAYBE</td>
+	<td>//div[contains(@id,'calendarListMaybe')]/div/div[contains(.,'${key_resource}')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -73,7 +73,6 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -1845,8 +1844,9 @@ public class JournalUtil {
 	private static Map<String, String> _customTokens;
 	private static final Pattern _friendlyURLPattern = Pattern.compile(
 		"[^a-z0-9_-]");
-	private static final Transformer _transformer = new Transformer(
-		PropsKeys.JOURNAL_TRANSFORMER_LISTENER,
-		PropsKeys.JOURNAL_ERROR_TEMPLATE, true);
+	private static final JournalTransformer _transformer =
+		new JournalTransformer(
+			PropsKeys.JOURNAL_TRANSFORMER_LISTENER,
+			PropsKeys.JOURNAL_ERROR_TEMPLATE, true);
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -30,7 +31,7 @@ public class SiteSiteTemplateFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return "basic-information";
+		return FormNavigatorConstants.SITES_BASIC_INFORMATION_CATEGORY_KEY;
 	}
 
 	@Override

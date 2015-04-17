@@ -35,7 +35,7 @@ public class UserUserInformationFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return "user-information";
+		return FormNavigatorConstants.USER_USER_INFORMATION_CATEGORY_KEY;
 	}
 
 	@Override

@@ -35,7 +35,9 @@ public class OrganizationOrganizationInformationFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return "organization-information";
+		return
+			FormNavigatorConstants.
+				ORGANIZATION_ORGANIZATION_INFORMATION_CATEGORY_KEY;
 	}
 
 	@Override

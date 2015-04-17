@@ -34,7 +34,7 @@ public class SitesSEOFormNavigatorCategory implements FormNavigatorCategory {
 
 	@Override
 	public String getKey() {
-		return "search-engine-optimization";
+		return FormNavigatorConstants.SITES_SEO_CATEGORY_KEY;
 	}
 
 	@Override

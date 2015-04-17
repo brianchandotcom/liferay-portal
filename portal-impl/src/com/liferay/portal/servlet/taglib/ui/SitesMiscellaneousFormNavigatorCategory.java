@@ -35,7 +35,7 @@ public class SitesMiscellaneousFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return "miscellaneous";
+		return FormNavigatorConstants.SITES_MISCELLANEOUS_CATEGORY_KEY;
 	}
 
 	@Override

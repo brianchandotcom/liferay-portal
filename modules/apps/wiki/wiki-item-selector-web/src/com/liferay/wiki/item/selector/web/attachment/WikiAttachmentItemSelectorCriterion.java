@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.item.selector.web.attachment;
 
-import com.liferay.document.selector.BaseItemSelectorCriterion;
+import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.net.URL;

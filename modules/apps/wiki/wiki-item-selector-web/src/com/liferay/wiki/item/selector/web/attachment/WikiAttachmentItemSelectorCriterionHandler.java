@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.item.selector.web.attachment;
 
-import com.liferay.document.selector.ItemSelectorCriterionHandler;
-import com.liferay.document.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorCriterionHandler;
+import com.liferay.item.selector.ItemSelectorView;
 
 import java.util.ArrayList;
 import java.util.List;

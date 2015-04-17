@@ -87,17 +87,6 @@ public class LanguagePortletDisplayTemplateHandler
 			"languages", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"language", LanguageEntry.class, "curLanguage", "longDisplayName");
 
-		String[] restrictedVariables = getRestrictedVariables(language);
-
-		TemplateVariableGroup documentServicesTemplateVariableGroup =
-			new TemplateVariableGroup("document-services", restrictedVariables);
-
-		documentServicesTemplateVariableGroup.setAutocompleteEnabled(false);
-
-		templateVariableGroups.put(
-			documentServicesTemplateVariableGroup.getLabel(),
-			documentServicesTemplateVariableGroup);
-
 		return templateVariableGroups;
 	}
 

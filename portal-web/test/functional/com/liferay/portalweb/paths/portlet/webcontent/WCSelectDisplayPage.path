@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>WCEditContentDisplayPageConfiguration</title>
+<title>WCSelectDisplayPage</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">WCEditContentDisplayPageConfiguration</td></tr>
+<tr><td rowspan="1" colspan="3">WCSelectDisplayPage</td></tr>
 </thead>
 <tbody>
 <tr>

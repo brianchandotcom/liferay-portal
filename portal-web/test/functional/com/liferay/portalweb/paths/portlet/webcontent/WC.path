@@ -15,11 +15,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PARENT_FOLDER_NAME</td>
-	<td>//a[contains(@id,'parentFolderName')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

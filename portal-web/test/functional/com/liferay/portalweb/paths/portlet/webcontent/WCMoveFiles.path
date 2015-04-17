@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>WCMoveFiles</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WCMoveFiles</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARENT_FOLDER_NAME</td>
+	<td>//a[contains(@id,'parentFolderName')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

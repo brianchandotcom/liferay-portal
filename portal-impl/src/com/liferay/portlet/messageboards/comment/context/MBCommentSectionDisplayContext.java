@@ -47,7 +47,9 @@ public class MBCommentSectionDisplayContext
 	@Override
 	public long getRootMessageId() throws PortalException {
 		if (_rootMessage == null) {
-			_rootMessage = getTreeWalker().getRoot();
+			MBTreeWalker treeWalker = getTreeWalker();
+
+			_rootMessage = treeWalker.getRoot();
 		}
 
 		return _rootMessage.getMessageId();
@@ -56,7 +58,9 @@ public class MBCommentSectionDisplayContext
 	@Override
 	public long getThreadId() throws PortalException {
 		if (_thread == null) {
-			_thread = getMBMessageDisplay().getThread();
+			MBMessageDisplay messageDisplay = getMBMessageDisplay();
+
+			_thread = messageDisplay.getThread();
 		}
 
 		return _thread.getThreadId();
@@ -80,8 +84,9 @@ public class MBCommentSectionDisplayContext
 	@Override
 	public boolean isDiscussionMaxComments() throws PortalException {
 		if (_discussionMaxComments == null) {
-			_discussionMaxComments =
-				getMBMessageDisplay().isDiscussionMaxComments();
+			MBMessageDisplay messageDisplay = getMBMessageDisplay();
+
+			_discussionMaxComments = messageDisplay.isDiscussionMaxComments();
 		}
 
 		return _discussionMaxComments;
@@ -112,6 +117,7 @@ public class MBCommentSectionDisplayContext
 			MBMessageDisplay messageDisplay = getMBMessageDisplay();
 
 			MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
+
 			List<MBMessage> messages = treeWalker.getMessages();
 
 			_messagesCount = messages.size();
@@ -122,7 +128,9 @@ public class MBCommentSectionDisplayContext
 
 	protected MBTreeWalker getTreeWalker() throws PortalException {
 		if (_treeWalker == null) {
-			_treeWalker = getMBMessageDisplay().getTreeWalker();
+			MBMessageDisplay messageDisplay = getMBMessageDisplay();
+
+			_treeWalker = messageDisplay.getTreeWalker();
 		}
 
 		return _treeWalker;

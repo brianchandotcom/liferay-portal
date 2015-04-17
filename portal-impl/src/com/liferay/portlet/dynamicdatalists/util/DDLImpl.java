@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -341,6 +345,16 @@ public class DDLImpl implements DDL {
 
 		contextObjects.put(
 			TemplateConstants.CLASS_NAME_ID, ddmTemplate.getClassNameId());
+
+		TemplateManager templateManager =
+			TemplateManagerUtil.getTemplateManager(ddmTemplate.getLanguage());
+
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				DDLRecordSet.class.getName());
+
+		templateManager.addContextObjects(
+			contextObjects, templateHandler.getCustomContextObjects());
 
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(),

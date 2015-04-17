@@ -81,13 +81,11 @@ import com.liferay.portal.util.SessionClicks_IW;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
 import com.liferay.portlet.expando.service.ExpandoRowLocalService;
 import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
-import com.liferay.portlet.journal.util.JournalContentUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -440,15 +438,6 @@ public class TemplateContextHelper {
 			_log.error(se, se);
 		}
 
-		// Document library util
-
-		try {
-			variables.put("dlUtil", DLUtil.getDL());
-		}
-		catch (SecurityException se) {
-			_log.error(se, se);
-		}
-
 		// Expando column service
 
 		try {
@@ -534,16 +523,6 @@ public class TemplateContextHelper {
 
 		try {
 			variables.put("imageToolUtil", ImageToolUtil.getImageTool());
-		}
-		catch (SecurityException se) {
-			_log.error(se, se);
-		}
-
-		// Journal content util
-
-		try {
-			variables.put(
-				"journalContentUtil", JournalContentUtil.getJournalContent());
 		}
 		catch (SecurityException se) {
 			_log.error(se, se);

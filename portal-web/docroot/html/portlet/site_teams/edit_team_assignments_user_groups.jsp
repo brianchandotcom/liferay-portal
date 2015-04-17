@@ -17,9 +17,13 @@
 <%@ include file="/html/portlet/site_teams/init.jsp" %>
 
 <%
+String tabs1 = (String)request.getAttribute("edit_team_assignments.jsp-tabs1");
+
 String tabs2 = (String)request.getAttribute("edit_team_assignments.jsp-tabs2");
 
 int cur = (Integer)request.getAttribute("edit_team_assignments.jsp-cur");
+
+String redirect = (String)request.getAttribute("edit_team_assignments.jsp-redirect");
 
 Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
 
@@ -27,9 +31,6 @@ Group group = (Group)request.getAttribute("edit_team_assignments.jsp-group");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
 %>
-
-<aui:input name="addUserGroupIds" type="hidden" />
-<aui:input name="removeUserGroupIds" type="hidden" />
 
 <liferay-ui:tabs
 	names="current,available"
@@ -41,9 +42,20 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 	rowChecker="<%= new UserGroupTeamChecker(renderResponse, team) %>"
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
-	<liferay-ui:search-form
-		page="/html/portlet/site_teams/user_group_search.jsp"
-	/>
+	<portlet:renderURL var="searchURL">
+		<portlet:param name="mvcPath" value="/edit_team_assignments.jsp" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="tabs1" value="<%= tabs1 %>" />
+		<portlet:param name="tabs2" value="<%= tabs2 %>" />
+		<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
+	</portlet:renderURL>
+
+	<aui:form action="<%= searchURL %>" name="searchFm">
+		<liferay-ui:search-form
+			page="/html/portlet/site_teams/user_group_search.jsp"
+			servletContext="<%= application %>"
+		/>
+	</aui:form>
 
 	<%
 	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
@@ -99,15 +111,41 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 		/>
 	</liferay-ui:search-container-row>
 
-	<div class="separator"><!-- --></div>
+	<portlet:actionURL name="editTeamUserGroups" var="editTeamUserGroupsURL" />
 
-	<%
-	portletURL.setParameter("cur", String.valueOf(cur));
+	<aui:form action="<%= editTeamUserGroupsURL %>" method="post" name="fm">
+		<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
+		<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="assignmentsRedirect" type="hidden" />
+		<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
+		<aui:input name="addUserGroupIds" type="hidden" />
+		<aui:input name="removeUserGroupIds" type="hidden" />
 
-	String taglibOnClick = renderResponse.getNamespace() + "updateTeamUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-	%>
+		<div class="separator"><!-- --></div>
 
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+		<%
+		portletURL.setParameter("cur", String.valueOf(cur));
 
-	<liferay-ui:search-iterator />
+		String taglibOnClick = renderResponse.getNamespace() + "updateTeamUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+		%>
+
+		<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+
+		<liferay-ui:search-iterator />
+	</aui:form>
 </liferay-ui:search-container>
+
+<aui:script>
+	function <portlet:namespace />updateTeamUserGroups(assignmentsRedirect) {
+		var Util = Liferay.Util;
+
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('assignmentsRedirect').val(assignmentsRedirect);
+		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+		submitForm(form);
+	}
+</aui:script>

@@ -28,12 +28,12 @@ long teamId = ParamUtil.getLong(request, "teamId");
 
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
-Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
+Group group = GroupLocalServiceUtil.fetchGroup(team.getGroupId());
 
 Organization organization = null;
 
 if (group.isOrganization()) {
-	organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
+	organization = OrganizationLocalServiceUtil.fetchOrganization(group.getOrganizationId());
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -72,50 +72,14 @@ request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
 	url="<%= portletURL.toString() %>"
 />
 
-<portlet:actionURL name="editTeamAssignment" var="editAssignmentsURL" />
-
-<aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
-	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
-
-	<c:choose>
-		<c:when test='<%= tabs1.equals("users") %>'>
-			<liferay-util:include page="/html/portlet/site_teams/edit_team_assignments_users.jsp" />
-		</c:when>
-		<c:when test='<%= tabs1.equals("user-groups") %>'>
-			<liferay-util:include page="/html/portlet/site_teams/edit_team_assignments_user_groups.jsp" />
-		</c:when>
-	</c:choose>
-</aui:form>
-
-<aui:script>
-	function <portlet:namespace />updateTeamUserGroups(assignmentsRedirect) {
-		var Util = Liferay.Util;
-
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-		submitForm(form);
-	}
-
-	function <portlet:namespace />updateTeamUsers(assignmentsRedirect) {
-		var Util = Liferay.Util;
-
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-		submitForm(form);
-	}
-</aui:script>
+<c:choose>
+	<c:when test='<%= tabs1.equals("users") %>'>
+		<liferay-util:include page="/html/portlet/site_teams/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test='<%= tabs1.equals("user-groups") %>'>
+		<liferay-util:include page="/html/portlet/site_teams/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
+	</c:when>
+</c:choose>
 
 <%
 if (group.isOrganization()) {

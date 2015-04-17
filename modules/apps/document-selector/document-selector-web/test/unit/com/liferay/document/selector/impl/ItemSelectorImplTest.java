@@ -14,16 +14,29 @@
 
 package com.liferay.document.selector.impl;
 
+import com.liferay.document.selector.ItemSelectorRendering;
+import com.liferay.document.selector.ItemSelectorView;
 import com.liferay.document.selector.ItemSelectorViewRenderer;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLFactory;
+import com.liferay.portlet.PortletURLFactoryUtil;
+
+import java.io.IOException;
 
 import java.net.URL;
 
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 
@@ -44,18 +57,38 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		_mediaItemSelectorCriterion.setFileExtension("jpg");
 		_mediaItemSelectorCriterion.setMaxSize(2048);
+
+		PortletURLFactory portletURLFactory = mock(PortletURLFactory.class);
+
+		LiferayPortletURL mockLiferayPortletURL = mock(LiferayPortletURL.class);
+
+		when(
+			portletURLFactory.create(
+				Mockito.any(PortletRequest.class), Mockito.anyString(),
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			mockLiferayPortletURL
+		);
+
+		new PortletURLFactoryUtil().setPortletURLFactory(portletURLFactory);
 	}
 
 	@Test
 	public void testGetItemSelectorParameters() {
 		Map<String, String[]> parameters =
 			_itemSelectorImpl.getItemSelectorParameters(
-				_mediaItemSelectorCriterion, _flickrItemSelectorCriterion);
+				"itemSelectedCallback", _mediaItemSelectorCriterion,
+				_flickrItemSelectorCriterion);
+
+		Assert.assertEquals(
+			"itemSelectedCallback",
+			parameters.get(ItemSelectorImpl.PARAMETER_ITEM_SELECTED_CALLBACK)[0]
+		);
 
 		Assert.assertEquals(
 			MediaItemSelectorCriterion.class.getName() + "," +
 				FlickrItemSelectorCriterion.class.getName(),
-			parameters.get("criteria")[0]);
+			parameters.get(ItemSelectorImpl.PARAMETER_CRITERIA)[0]);
 		Assert.assertNull(parameters.get("0_desiredReturnTypes"));
 		Assert.assertEquals(
 			String.valueOf(_mediaItemSelectorCriterion.getMaxSize()),
@@ -68,27 +101,32 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(
 			_flickrItemSelectorCriterion.getUser(),
 			parameters.get("1_user")[0]);
-		Assert.assertEquals(5, parameters.size());
+
+		Assert.assertEquals(6, parameters.size());
 	}
 
 	@Test
-	public void testGetItemSelectorViewsWithCriteria() {
+	public void testGetItemSelectorRendering() throws IOException {
 		_setUpItemSelectionCriterionHandlers();
 
-		Map<String, String[]> parameters =
-			_itemSelectorImpl.getItemSelectorParameters(
-				_mediaItemSelectorCriterion, _flickrItemSelectorCriterion);
+		PortletRequest portletRequest = getMockPortletRequest();
 
-		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
-			_itemSelectorImpl.getItemSelectorViewRenderers(parameters);
+		ItemSelectorRendering itemSelectorRendering =
+			_itemSelectorImpl.getItemSelectorRendering(portletRequest);
 
-		ItemSelectorViewRenderer<MediaItemSelectorCriterion>
-			mediaItemSelectorViewRenderer =
-				(ItemSelectorViewRenderer<MediaItemSelectorCriterion>)
-					itemSelectorViewRenderers.get(0);
+		Assert.assertEquals(
+			"itemSelectedCallback",
+			itemSelectorRendering.getItemSelectedCallback());
+
+		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
+			itemSelectorRendering.getItemSelectorViewRenderers();
+
+		ItemSelectorViewRenderer mediaItemSelectorViewRenderer =
+			itemSelectorViewRenderers.get(0);
 
 		MediaItemSelectorCriterion mediaItemSelectorCriterion =
-			mediaItemSelectorViewRenderer.getItemSelectorCriterion();
+			(MediaItemSelectorCriterion)
+				mediaItemSelectorViewRenderer.getItemSelectorCriterion();
 
 		Assert.assertEquals(
 			_mediaItemSelectorCriterion.getFileExtension(),
@@ -96,26 +134,52 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(
 			_mediaItemSelectorCriterion.getMaxSize(),
 			mediaItemSelectorCriterion.getMaxSize());
-		Assert.assertEquals(
-			MediaItemSelectorView.HTML,
-			mediaItemSelectorViewRenderer.getHTML("itemSelectedCallback"));
+		Assert.assertTrue(
+			(ItemSelectorView)
+				mediaItemSelectorViewRenderer.getItemSelectorView()
+					instanceof MediaItemSelectorView);
 
-		ItemSelectorViewRenderer<FlickrItemSelectorCriterion>
-			flickrItemSelectorViewRenderer =
-				(ItemSelectorViewRenderer<FlickrItemSelectorCriterion>)
-					itemSelectorViewRenderers.get(1);
+		ItemSelectorViewRenderer flickrItemSelectorViewRenderer =
+			itemSelectorViewRenderers.get(1);
 
 		FlickrItemSelectorCriterion flickrItemSelectorCriterion =
-			flickrItemSelectorViewRenderer.getItemSelectorCriterion();
+			(FlickrItemSelectorCriterion)
+				flickrItemSelectorViewRenderer.getItemSelectorCriterion();
 
 		Assert.assertEquals(
 			_flickrItemSelectorCriterion.getUser(),
 			flickrItemSelectorCriterion.getUser());
-		Assert.assertEquals(
-			FlickrItemSelectorView.HTML,
-			flickrItemSelectorViewRenderer.getHTML("itemSelectedCallback"));
+		Assert.assertTrue(
+			(ItemSelectorView)
+				flickrItemSelectorViewRenderer.getItemSelectorView()
+					instanceof FlickrItemSelectorView);
 
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
+	}
+
+	protected PortletRequest getMockPortletRequest() {
+		Map<String, String[]> parameters =
+			_itemSelectorImpl.getItemSelectorParameters(
+				"itemSelectedCallback", _mediaItemSelectorCriterion,
+				_flickrItemSelectorCriterion);
+
+		PortletRequest portletRequest = mock(PortletRequest.class);
+
+		when(
+			portletRequest.getParameterMap()
+		).thenReturn(
+			parameters
+		);
+
+		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+
+		when(
+			portletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		return portletRequest;
 	}
 
 	private void _setUpItemSelectionCriterionHandlers() {

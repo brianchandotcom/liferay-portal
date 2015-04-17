@@ -14,7 +14,7 @@
 
 			getDefaultProps: function() {
 				return {
-					imageTPL: CKEDITOR.template('<img src="{src}" />')
+					imageTPL: new CKEDITOR.template('<img src="{src}" />')
 				};
 			},
 
@@ -59,22 +59,31 @@
 						title: Liferay.Language.get('select-image'),
 						uri: editor.config.filebrowserImageBrowseUrl
 					},
-					this._onDocumentSelectedFn
+					this._onDocumentSelected
 				);
 			},
 
 			_onDocumentSelected: function(event) {
 				var instance = this;
 
-				var image = CKEDITOR.dom.element.createFromHtml(
-					this.props.imageTPL.output(
-						{
-							src: event.url
-						}
-					)
-				);
+				var editor = instance.props.editor.get('nativeEditor');
 
-				this.props.editor.get('nativeEditor').insertElement(image);
+				var eventName = editor.name + 'selectDocument';
+
+				Liferay.Util.getWindow(eventName).onceAfter(
+					'visibleChange',
+					function() {
+						var image = CKEDITOR.dom.element.createFromHtml(
+							instance.props.imageTPL.output(
+								{
+									src: event.url
+								}
+							)
+						);
+
+						editor.insertElement(image);
+					}
+				);
 			}
 		}
 	);

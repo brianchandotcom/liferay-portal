@@ -99,6 +99,7 @@ import com.liferay.portlet.journal.util.JournalContentUtil;
 import java.io.File;
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -1281,9 +1282,10 @@ public class PortletImporter {
 			portlet.getPortletDataHandlerInstance();
 
 		if (portletDataHandler.isDataLocalized()) {
-			Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
-				StringUtil.split(
-					headerElement.attributeValue("available-locales")));
+			List<Locale> sourceAvailableLocales = Arrays.asList(
+				LocaleUtil.fromLanguageIds(
+					StringUtil.split(
+						headerElement.attributeValue("available-locales"))));
 
 			for (Locale sourceAvailableLocale : sourceAvailableLocales) {
 				if (!LanguageUtil.isAvailableLocale(

@@ -27,6 +27,8 @@ import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -114,8 +116,8 @@ public class LanguageTag extends IncludeTag {
 	}
 
 	protected List<LanguageEntry> getLanguageEntries(
-		Locale[] locales, boolean displayCurrentLocale, String formAction,
-		String parameterName) {
+		Collection<Locale> locales, boolean displayCurrentLocale,
+		String formAction, String parameterName) {
 
 		List<LanguageEntry> languageEntries = new ArrayList<>();
 
@@ -166,9 +168,9 @@ public class LanguageTag extends IncludeTag {
 		return languageEntries;
 	}
 
-	protected Locale[] getLocales() {
+	protected Collection<Locale> getLocales() {
 		if (ArrayUtil.isNotEmpty(_languageIds)) {
-			return LocaleUtil.fromLanguageIds(_languageIds);
+			return Arrays.asList(LocaleUtil.fromLanguageIds(_languageIds));
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

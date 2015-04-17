@@ -57,11 +57,15 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -534,27 +538,23 @@ public class GroupServiceTest {
 		Group group = GroupTestUtil.addGroup();
 
 		Assert.assertTrue(LanguageUtil.isInheritLocales(group.getGroupId()));
-
-		Locale[] portalAvailableLocales = LanguageUtil.getAvailableLocales();
-
-		Locale[] groupAvailableLocales = LanguageUtil.getAvailableLocales(
-			group.getGroupId());
-
-		Assert.assertArrayEquals(portalAvailableLocales, groupAvailableLocales);
+		Assert.assertEquals(
+			LanguageUtil.getAvailableLocales(),
+			LanguageUtil.getAvailableLocales(group.getGroupId()));
 	}
 
 	@Test
 	public void testInvalidChangeAvailableLanguageIds() throws Exception {
 		testUpdateDisplaySettings(
-			new Locale[] {LocaleUtil.SPAIN, LocaleUtil.US},
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.US}, null, true);
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US),
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.US), null, true);
 	}
 
 	@Test
 	public void testInvalidChangeDefaultLanguageId() throws Exception {
 		testUpdateDisplaySettings(
-			new Locale[] {LocaleUtil.SPAIN, LocaleUtil.US},
-			new Locale[] {LocaleUtil.SPAIN, LocaleUtil.US}, LocaleUtil.GERMANY,
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US),
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US), LocaleUtil.GERMANY,
 			true);
 	}
 
@@ -684,14 +684,14 @@ public class GroupServiceTest {
 	public void testUpdateAvailableLocales() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Locale[] availableLocales =
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US};
+		List<Locale> availableLocales = Arrays.asList(
+			LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US);
 
 		group = GroupTestUtil.updateDisplaySettings(
 			group.getGroupId(), availableLocales, null);
 
-		Assert.assertArrayEquals(
-			availableLocales,
+		Assert.assertEquals(
+			new HashSet<>(availableLocales),
 			LanguageUtil.getAvailableLocales(group.getGroupId()));
 	}
 
@@ -777,15 +777,15 @@ public class GroupServiceTest {
 	@Test
 	public void testValidChangeAvailableLanguageIds() throws Exception {
 		testUpdateDisplaySettings(
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
-			new Locale[] {LocaleUtil.SPAIN, LocaleUtil.US}, null, false);
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US), null, false);
 	}
 
 	@Test
 	public void testValidChangeDefaultLanguageId() throws Exception {
 		testUpdateDisplaySettings(
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.GERMANY, false);
 	}
 
@@ -1027,11 +1027,12 @@ public class GroupServiceTest {
 	}
 
 	protected void testUpdateDisplaySettings(
-			Locale[] portalAvailableLocales, Locale[] groupAvailableLocales,
-			Locale groupDefaultLocale, boolean expectFailure)
+			Collection<Locale> portalAvailableLocales,
+			Collection<Locale> groupAvailableLocales, Locale groupDefaultLocale,
+			boolean expectFailure)
 		throws Exception {
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
 
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), portalAvailableLocales,

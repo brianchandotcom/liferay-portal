@@ -40,9 +40,12 @@ import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -168,10 +171,10 @@ public class StagingLocalizationTest {
 		}
 	}
 
-	private Locale[] _availableLocales;
+	private Set<Locale> _availableLocales;
 	private Locale _defaultLocale;
-	private final Locale[] _locales =
-		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
+	private final List<Locale> _locales = Arrays.asList(
+		LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN);
 
 	@DeleteAfterTestRun
 	private Group _sourceGroup;

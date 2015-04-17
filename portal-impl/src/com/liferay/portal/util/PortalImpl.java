@@ -1061,16 +1061,6 @@ public class PortalImpl implements Portal {
 		return actualURL;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             LanguageUtil#getAvailableLocales}
-	 */
-	@Deprecated
-	@Override
-	public Locale[] getAlternateLocales(HttpServletRequest request) {
-		return LanguageUtil.getAvailableLocales();
-	}
-
 	@Override
 	public String getAlternateURL(
 			String canonicalURL, ThemeDisplay themeDisplay, Locale locale,

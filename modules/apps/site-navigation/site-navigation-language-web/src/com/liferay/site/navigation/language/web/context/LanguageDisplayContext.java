@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
-import java.util.Locale;
-
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,10 +47,8 @@ public class LanguageDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales(
-			themeDisplay.getSiteGroupId());
-
-		_availableLanguageIds = LocaleUtil.toLanguageIds(availableLocales);
+		_availableLanguageIds = LocaleUtil.toLanguageIds(
+			LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()));
 
 		return _availableLanguageIds;
 	}

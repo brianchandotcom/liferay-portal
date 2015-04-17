@@ -87,6 +87,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -1500,9 +1501,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					LocaleException.TYPE_DISPLAY_SETTINGS);
 
 				le.setSourceAvailableLocales(
-					LocaleUtil.fromLanguageIds(PropsValues.LOCALES));
+					Arrays.asList(
+						LocaleUtil.fromLanguageIds(PropsValues.LOCALES)));
 				le.setTargetAvailableLocales(
-					LocaleUtil.fromLanguageIds(languageIdsArray));
+					Arrays.asList(
+						LocaleUtil.fromLanguageIds(languageIdsArray)));
 
 				throw le;
 			}

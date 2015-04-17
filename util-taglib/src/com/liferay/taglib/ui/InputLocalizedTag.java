@@ -22,6 +22,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputLocalizedTag extends IncludeTag {
 
-	public Locale[] getAvailableLocales() {
+	public Set<Locale> getAvailableLocales() {
 		return _availableLocales;
 	}
 
@@ -42,7 +43,7 @@ public class InputLocalizedTag extends IncludeTag {
 		_autoSize = autoSize;
 	}
 
-	public void setAvailableLocales(Locale[] availableLocales) {
+	public void setAvailableLocales(Set<Locale> availableLocales) {
 		_availableLocales = availableLocales;
 	}
 
@@ -133,7 +134,7 @@ public class InputLocalizedTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		Locale[] availableLocales = _availableLocales;
+		Set<Locale> availableLocales = _availableLocales;
 
 		if (availableLocales == null) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -197,7 +198,7 @@ public class InputLocalizedTag extends IncludeTag {
 
 	private boolean _autoFocus;
 	private boolean _autoSize;
-	private Locale[] _availableLocales;
+	private Set<Locale> _availableLocales;
 	private String _cssClass;
 	private String _defaultLanguageId;
 	private boolean _disabled;

@@ -44,6 +44,7 @@ import java.text.Format;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Alexander Chow
@@ -58,7 +59,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		long groupId = GetterUtil.getLong(
 			document.get(com.liferay.portal.kernel.search.Field.GROUP_ID));
 
-		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
+		Set<Locale> locales = LanguageUtil.getAvailableLocales(groupId);
 
 		Fields fields = toFields(ddmStructure, ddmFormValues);
 

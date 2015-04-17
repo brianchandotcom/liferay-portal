@@ -466,15 +466,13 @@ public class LocalizationImpl implements Localization {
 
 		map.put(defaultLocale, defaultValue);
 
-		Locale[] locales = null;
+		Set<Locale> locales = null;
 
 		if (includeBetaLocales) {
 			locales = LanguageUtil.getAvailableLocales();
 		}
 		else {
-			Set<Locale> localesSet = LanguageUtil.getSupportedLocales();
-
-			locales = localesSet.toArray(new Locale[localesSet.size()]);
+			locales = LanguageUtil.getSupportedLocales();
 		}
 
 		for (Locale locale : locales) {
@@ -739,7 +737,7 @@ public class LocalizationImpl implements Localization {
 
 			xmlStreamWriter.writeStartElement("root");
 
-			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
 
 			xmlStreamWriter.writeAttribute(
 				"available-locales", StringUtil.merge(availableLocales));

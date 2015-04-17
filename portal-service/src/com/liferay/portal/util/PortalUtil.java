@@ -330,17 +330,6 @@ public class PortalUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.kernel.language.LanguageUtil#getAvailableLocales}
-	 */
-	@Deprecated
-	public static Locale[] getAlternateLocales(HttpServletRequest request)
-		throws PortalException {
-
-		return getPortal().getAlternateLocales(request);
-	}
-
-	/**
 	 * Returns the alternate URL for the requested canonical URL in the given
 	 * locale.
 	 *

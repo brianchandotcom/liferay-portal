@@ -1,3 +1,32 @@
 .lfr-ddm-container .field-wrapper-content label {
 	font-weight: bold;
 }
+
+.form-control.error-field {
+  border-color: #a94442;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.form-control.error-field:focus {
+  border-color: #843534;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+}
+
+.form-control.success-field {
+  border-color: #3c763d;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.form-control.success-field:focus {
+  border-color: #2b542c;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #67b168;
+}
+
+.form-control.warning-field {
+  border-color: #8a6d3b;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+.form-control.warning-field:focus {
+  border-color: #66512c;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #c0a16b;
+}

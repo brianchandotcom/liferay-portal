@@ -130,6 +130,19 @@ public class Transformer {
 
 	public String transform(
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
+			Map<String, String> tokens, String viewMode, String languageId,
+			Document document, PortletRequestModel portletRequestModel,
+			String script, String langType, boolean propagateException)
+		throws Exception {
+
+		return doTransform(
+			themeDisplay, contextObjects, tokens, viewMode, languageId,
+			document, portletRequestModel, script, langType,
+			propagateException);
+	}
+
+	public String transform(
+			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
 			String script, String langType,
 			UnsyncStringWriter unsyncStringWriter)
 		throws Exception {
@@ -210,7 +223,7 @@ public class Transformer {
 		throws Exception {
 
 		return doTransform(
-			themeDisplay, tokens, viewMode, languageId, document,
+			themeDisplay, null, tokens, viewMode, languageId, document,
 			portletRequestModel, script, langType, false);
 	}
 
@@ -222,15 +235,15 @@ public class Transformer {
 		throws Exception {
 
 		return doTransform(
-			themeDisplay, tokens, viewMode, languageId, document,
+			themeDisplay, null, tokens, viewMode, languageId, document,
 			portletRequestModel, script, langType, propagateException);
 	}
 
 	protected String doTransform(
-			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, Document document,
-			PortletRequestModel portletRequestModel, String script,
-			String langType, boolean propagateException)
+			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
+			Map<String, String> tokens, String viewMode, String languageId,
+			Document document, PortletRequestModel portletRequestModel,
+			String script, String langType, boolean propagateException)
 		throws Exception {
 
 		// Setup listeners
@@ -327,6 +340,12 @@ public class Transformer {
 
 			Template template = getTemplate(
 				templateId, tokens, languageId, document, script, langType);
+
+			if (contextObjects != null) {
+				for (String key : contextObjects.keySet()) {
+					template.put(key, contextObjects.get(key));
+				}
+			}
 
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

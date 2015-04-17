@@ -40,6 +40,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.suggest.Suggest;
 import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.SuggestBuilders;
 import org.elasticsearch.search.suggest.phrase.PhraseSuggestionBuilder;
 import org.elasticsearch.search.suggest.term.TermSuggestionBuilder;
 
@@ -68,8 +69,8 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 		stopWatch.start();
 
 		SuggestBuilder.SuggestionBuilder<TermSuggestionBuilder>
-			suggestionBuilder = SuggestBuilder.termSuggestion(
-				_REQUEST_TYPE_SPELL_CHECK);
+			suggestionBuilder = SuggestBuilders.termSuggestion(
+			_REQUEST_TYPE_SPELL_CHECK);
 
 		Suggest.Suggestion<?> suggestion = getSuggestion(
 			searchContext, suggestionBuilder, DocumentTypes.SPELL_CHECK,
@@ -125,7 +126,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 		stopWatch.start();
 
 		SuggestBuilder.SuggestionBuilder<PhraseSuggestionBuilder>
-			suggestionBuilder = SuggestBuilder.phraseSuggestion(
+			suggestionBuilder = SuggestBuilders.phraseSuggestion(
 				_REQUEST_TYPE_KEYWORD_QUERY);
 
 		Suggest.Suggestion<?> suggestion = getSuggestion(

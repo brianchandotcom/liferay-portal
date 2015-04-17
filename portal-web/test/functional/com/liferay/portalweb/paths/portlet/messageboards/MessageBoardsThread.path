@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>MBThread</title>
+<title>MessageBoardsThread</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">MBThread</td></tr>
+<tr><td rowspan="1" colspan="3">MessageBoardsThread</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>MBThread</td>
+	<td>MessageBoardsThread</td>
 </tr>
 <tr>
 	<td></td>

@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>MBRemovedAttachments</title>
+<title>MessageBoardsRemovedAttachments</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">MBRemovedAttachments</td></tr>
+<tr><td rowspan="1" colspan="3">MessageBoardsRemovedAttachments</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>MBRemovedAttachments</td>
+	<td>MessageBoardsRemovedAttachments</td>
 </tr>
 <tr>
 	<td></td>

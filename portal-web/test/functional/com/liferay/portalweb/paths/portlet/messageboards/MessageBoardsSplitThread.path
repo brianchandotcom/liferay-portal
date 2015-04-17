@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>MBSplitThread</title>
+<title>MessageBoardsSplitThread</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">MBSplitThread</td></tr>
+<tr><td rowspan="1" colspan="3">MessageBoardsSplitThread</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>MBSplitThread</td>
+	<td>MessageBoardsSplitThread</td>
 </tr>
 <tr>
 	<td></td>

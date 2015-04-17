@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>MBSelectCategory</title>
+<title>MessageBoardsSelectCategory</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">MBSelectCategory</td></tr>
+<tr><td rowspan="1" colspan="3">MessageBoardsSelectCategory</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>MBSelectCategory</td>
+	<td>MessageBoardsSelectCategory</td>
 </tr>
 <tr>
 	<td></td>

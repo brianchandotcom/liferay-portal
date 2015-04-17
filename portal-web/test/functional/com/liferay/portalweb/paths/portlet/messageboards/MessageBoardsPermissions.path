@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>MBPermissions</title>
+<title>MessageBoardsPermissions</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">MBPermissions</td></tr>
+<tr><td rowspan="1" colspan="3">MessageBoardsPermissions</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>MBPermissions</td>
+	<td>MessageBoardsPermissions</td>
 </tr>
 <tr>
 	<td></td>

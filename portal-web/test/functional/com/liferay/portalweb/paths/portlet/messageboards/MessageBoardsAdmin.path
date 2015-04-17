@@ -1,21 +1,21 @@
 <html>
 <head>
-<title>MBAdmin</title>
+<title>MessageBoardsAdmin</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">MBAdmin</td></tr>
+<tr><td rowspan="1" colspan="3">MessageBoardsAdmin</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>MBAdmin</td>
+	<td>MessageBoardsAdmin</td>
 </tr>
 <tr>
 	<td></td>
-	<td></td>	
+	<td></td>
 	<td></td>
 </tr>
 <tr>

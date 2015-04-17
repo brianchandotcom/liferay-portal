@@ -45,8 +45,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERAL_MESSAGE_FORMAT_DROPDOWN_OPTION</td>
+	<td>//select[contains(.,'${key_messageFormat}')]</td>
 	<td></td>
-	<td></td>	
+</tr>
+<tr>
+	<td>GENERAL_THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX</td>
+	<td>//input[contains(@id,'threadAsQuestionByDefaultCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--EMAIL_FROM-->
@@ -67,7 +77,7 @@
 </tr>
 <tr>
 	<td></td>
-	<td></td>	
+	<td></td>
 	<td></td>
 </tr>
 <!--MESSAGE_ADDED_EMAIL-->
@@ -78,7 +88,7 @@
 </tr>
 <tr>
 	<td></td>
-	<td></td>	
+	<td></td>
 	<td></td>
 </tr>
 <!--MESSAGE_UPDATED_EMAIL-->
@@ -89,7 +99,7 @@
 </tr>
 <tr>
 	<td></td>
-	<td></td>	
+	<td></td>
 	<td></td>
 </tr>
 <!--SETUP_NAVIGATION-->

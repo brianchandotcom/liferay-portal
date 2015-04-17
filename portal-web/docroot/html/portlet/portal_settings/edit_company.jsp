@@ -68,7 +68,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		categorySections="<%= categorySections %>"
 		formModelBean="<%= company %>"
 		htmlTop="<%= htmlTop %>"
-		id="<%= FormNavigatorConstants.COMPANY_SETTINGS_FORM %>"
+		id="<%= FormNavigatorConstants.COMPANY_SETTINGS_FORM_NAVIGATOR_ID %>"
 		jspPath="/html/portlet/portal_settings/"
 		showButtons="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>"
 	/>

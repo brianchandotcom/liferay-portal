@@ -30,12 +30,12 @@ public class UserMiscellaneousFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.USERS_FORM;
+		return FormNavigatorConstants.USERS_FORM_NAVIGATOR_ID;
 	}
 
 	@Override
 	public String getKey() {
-		return "miscellaneous";
+		return FormNavigatorConstants.USER_MISCELLANEOUS_CATEGORY_KEY;
 	}
 
 	@Override

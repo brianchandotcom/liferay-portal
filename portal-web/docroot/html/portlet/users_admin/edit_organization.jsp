@@ -136,7 +136,7 @@ else {
 		categorySections="<%= categorySections %>"
 		formModelBean="<%= organization %>"
 		htmlTop="<%= htmlTop %>"
-		id="<%= FormNavigatorConstants.ORGANIZATIONS_FORM %>"
+		id="<%= FormNavigatorConstants.ORGANIZATIONS_FORM_NAVIGATOR_ID %>"
 		jspPath="/html/portlet/users_admin/organization/"
 	/>
 </aui:form>

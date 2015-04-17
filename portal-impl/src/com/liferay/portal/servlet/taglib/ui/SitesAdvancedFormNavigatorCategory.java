@@ -30,12 +30,12 @@ public class SitesAdvancedFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.SITES_FORM;
+		return FormNavigatorConstants.SITES_FORM_NAVIGATOR_ID;
 	}
 
 	@Override
 	public String getKey() {
-		return "advanced";
+		return FormNavigatorConstants.SITES_ADVANCED_CATEGORY_KEY;
 	}
 
 	@Override

@@ -30,12 +30,12 @@ public class UserUserInformationFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.USERS_FORM;
+		return FormNavigatorConstants.USERS_FORM_NAVIGATOR_ID;
 	}
 
 	@Override
 	public String getKey() {
-		return "user-information";
+		return FormNavigatorConstants.USER_USER_INFORMATION_CATEGORY_KEY;
 	}
 
 	@Override

@@ -30,12 +30,12 @@ public class SitesBasicInformationFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.SITES_FORM;
+		return FormNavigatorConstants.SITES_FORM_NAVIGATOR_ID;
 	}
 
 	@Override
 	public String getKey() {
-		return "basic-information";
+		return FormNavigatorConstants.SITES_BASIC_INFORMATION_CATEGORY_KEY;
 	}
 
 	@Override

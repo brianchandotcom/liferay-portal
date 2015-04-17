@@ -77,7 +77,7 @@ int messagesCount = messages.size();
 				MBMessage message = rootMessage;
 				%>
 
-				<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
+				<c:if test="<%= commentSectionDisplayContext.isControlsVisible() %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
 						<c:if test="<%= !commentSectionDisplayContext.isDiscussionMaxComments() %>">
 							<div id="<%= randomNamespace %>messageScroll<%= commentSectionDisplayContext.getRootMessageId() %>">

@@ -60,6 +60,21 @@ public class MBCommentSectionDisplayContext
 	}
 
 	@Override
+	public boolean isControlsVisible() {
+		if (_discussionRequestHelper.isHideControls()) {
+			return false;
+		}
+
+		return MBDiscussionPermission.contains(
+			_discussionRequestHelper.getPermissionChecker(),
+			_discussionRequestHelper.getCompanyId(),
+			_discussionRequestHelper.getScopeGroupId(),
+			_discussionRequestHelper.getPermissionClassName(),
+			_discussionRequestHelper.getPermissionClassPK(),
+			_discussionRequestHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
+	}
+
+	@Override
 	public boolean isDiscussionMaxComments() throws PortalException {
 		if (_discussionMaxComments == null) {
 			_discussionMaxComments =

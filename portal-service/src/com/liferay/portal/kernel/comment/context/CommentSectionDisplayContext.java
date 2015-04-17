@@ -25,6 +25,8 @@ public interface CommentSectionDisplayContext {
 
 	public long getThreadId() throws PortalException;
 
+	public boolean isControlsVisible() throws PortalException;
+
 	public boolean isDiscussionMaxComments() throws PortalException;
 
 	public boolean isDiscussionVisible() throws PortalException;

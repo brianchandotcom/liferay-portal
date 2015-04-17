@@ -49,9 +49,9 @@ public class MediaItemSelectorView
 			PortletURL portletURL, String itemSelectedCallback)
 		throws IOException {
 
-		PrintWriter writer = response.getWriter();
+		PrintWriter printWriter = response.getWriter();
 
-		writer.print(
+		printWriter.print(
 			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
 	}
 

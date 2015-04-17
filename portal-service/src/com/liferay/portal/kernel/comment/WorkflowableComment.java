@@ -14,27 +14,19 @@
 
 package com.liferay.portal.kernel.comment;
 
-import java.util.Date;
-
 /**
  * @author Adolfo Pérez
  */
-public interface Comment {
+public interface WorkflowableComment {
 
-	public String getBody();
+	public long getCompanyId();
 
-	public long getCommentId();
+	public long getGroupId();
 
-	public Date getCreateDate();
+	public Class<?> getModelClass();
 
-	public Date getModifiedDate();
+	public long getPrimaryKey();
 
-	public long getParentCommentId();
-
-	public String getTranslatedBody();
-
-	public long getUserId();
-
-	public String getUserName();
+	public int getStatus();
 
 }

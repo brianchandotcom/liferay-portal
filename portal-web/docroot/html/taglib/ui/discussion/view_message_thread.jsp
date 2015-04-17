@@ -64,10 +64,15 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 		<div class="lfr-discussion-body">
 			<c:if test="<%= commentTreeDisplayContext.isWorkflowStatusVisible() %>">
-				<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
+
+				<%
+				WorkflowableComment workflowableComment = (WorkflowableComment)comment;
+				%>
+
+				<aui:model-context bean="<%= workflowableComment %>" model="<%= workflowableComment.getModelClass() %>" />
 
 				<div>
-					<aui:workflow-status model="<%= MBDiscussion.class %>" status="<%= comment.getStatus() %>" />
+					<aui:workflow-status model="<%= MBDiscussion.class %>" status="<%= workflowableComment.getStatus() %>" />
 				</div>
 			</c:if>
 

@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.comment.Comment" %><%@
+page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
 page import="com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext" %><%@
 page import="com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.MBCommentImpl" %><%@

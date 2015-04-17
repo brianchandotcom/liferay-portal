@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
@@ -23,7 +24,7 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public class MBCommentImpl implements Comment {
+public class MBCommentImpl implements Comment, WorkflowableComment {
 
 	public MBCommentImpl(MBMessage message, String pathThemeImages) {
 		_message = message;
@@ -41,8 +42,23 @@ public class MBCommentImpl implements Comment {
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _message.getCompanyId();
+	}
+
+	@Override
 	public Date getCreateDate() {
 		return _message.getCreateDate();
+	}
+
+	@Override
+	public long getGroupId() {
+		return _message.getGroupId();
+	}
+
+	@Override
+	public Class<?> getModelClass() {
+		return MBMessage.class;
 	}
 
 	@Override
@@ -53,6 +69,11 @@ public class MBCommentImpl implements Comment {
 	@Override
 	public long getParentCommentId() {
 		return _message.getParentMessageId();
+	}
+
+	@Override
+	public long getPrimaryKey() {
+		return _message.getPrimaryKey();
 	}
 
 	@Override

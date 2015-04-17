@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ENTRY</td>
+	<td>//button[contains(.,'Add Entry')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_FOLDER</td>
 	<td>//a[contains(.,'Add Folder')]</td>
 	<td></td>
@@ -26,11 +31,6 @@
 <tr>
 	<td>ADD_PAGE</td>
 	<td>//button[contains(.,'Add Page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_ENTRY</td>
-	<td>//button[contains(.,'Add Entry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -129,13 +129,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PARENT_FOLDER_SELECT</td>
-	<td>//button[contains(@id,'selecFolderButton')]</td>
+	<td>PARENT_FOLDER_REMOVE</td>
+	<td>//button[contains(@id,'removeFolderButton')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PARENT_FOLDER_REMOVE</td>
-	<td>//button[contains(@id,'removeFolderButton')]</td>
+	<td>PARENT_FOLDER_SELECT</td>
+	<td>//button[contains(@id,'selecFolderButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -156,11 +156,6 @@
 <tr>
 	<td>RESTORE</td>
 	<td>//button[contains(.,'Restore')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBMIT_FOR_PUBLICATION</td>
-	<td>//button[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -196,6 +191,11 @@
 <tr>
 	<td>SEND</td>
 	<td>//button[contains(.,'Send')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT_FOR_PUBLICATION</td>
+	<td>//button[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>

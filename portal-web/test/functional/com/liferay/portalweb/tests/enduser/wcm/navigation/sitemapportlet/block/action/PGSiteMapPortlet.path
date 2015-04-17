@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>SITE_MAP_PAGE_DISPLAY</td>
-	<td>//div[@class='portlet-body']/ul/li/a[contains(.,'${pageName}')]</td>
+	<td>//div[@class='portlet-content']//h3[contains(.,'${pageName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_MAP_CHILD_PAGE_DISPLAY</td>
-	<td>//div[@class='portlet-body']/ul/li/ul/li/a[contains(.,'${childPageName}')]</td>
+	<td>//div[@class='portlet-content']//ul[@class='child-pages']/li/a[contains(.,'${childPageName}')]</td>
 	<td></td>
 </tr>
 <tr>

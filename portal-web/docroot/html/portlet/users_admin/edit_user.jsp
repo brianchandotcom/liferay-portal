@@ -283,7 +283,7 @@ if (selUser != null) {
 		formModelBean="<%= selUser %>"
 		htmlBottom="<%= htmlBottom %>"
 		htmlTop="<%= htmlTop %>"
-		id="<%= FormNavigatorConstants.USERS_FORM_NAVIGATOR_ID %>"
+		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS %>"
 		jspPath="/html/portlet/users_admin/user/"
 	/>
 </aui:form>

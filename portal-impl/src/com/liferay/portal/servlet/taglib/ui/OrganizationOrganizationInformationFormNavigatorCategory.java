@@ -30,14 +30,14 @@ public class OrganizationOrganizationInformationFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.ORGANIZATIONS_FORM_NAVIGATOR_ID;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS;
 	}
 
 	@Override
 	public String getKey() {
 		return
 			FormNavigatorConstants.
-				ORGANIZATION_ORGANIZATION_INFORMATION_CATEGORY_KEY;
+				CATEGORY_KEY_ORGANIZATION_ORGANIZATION_INFORMATION;
 	}
 
 	@Override

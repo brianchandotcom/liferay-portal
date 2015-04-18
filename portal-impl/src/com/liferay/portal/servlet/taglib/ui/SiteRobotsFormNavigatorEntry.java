@@ -30,7 +30,7 @@ public class SiteRobotsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.SITES_SEO_CATEGORY_KEY;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_SEO;
 	}
 
 	@Override

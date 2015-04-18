@@ -152,7 +152,7 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 	<liferay-ui:form-navigator
 		backURL="<%= backURL %>"
 		formModelBean="<%= group %>"
-		id="<%= FormNavigatorConstants.SITES_FORM_NAVIGATOR_ID %>"
+		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES %>"
 		showButtons="<%= true %>"
 	/>
 </aui:form>

@@ -31,7 +31,7 @@ public class SiteSiteTemplateFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.SITES_BASIC_INFORMATION_CATEGORY_KEY;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION;
 	}
 
 	@Override

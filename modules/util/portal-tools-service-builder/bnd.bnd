@@ -10,7 +10,25 @@ Include-Resource:\
 	@../../../lib/portal/xercesImpl.jar!/org/apache/xerces/xni/XNIException.class,\
 	@../../../portal-impl/portal-impl.jar!/META-INF/portal-model-hints.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/counter/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/mail/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/announcements/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/asset/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/blogs/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/calendar/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/documentlibrary/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/dynamicdatalists/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/dynamicdatamapping/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/expando/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/flags/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/journal/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/messageboards/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/mobiledevicerules/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/ratings/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/shopping/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/social/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/softwarecatalog/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/trash/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/model/BaseModelHintsImpl.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\

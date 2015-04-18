@@ -122,6 +122,8 @@ public class EmbeddedElasticsearchConnection
 		ImmutableSettings.Builder builder) {
 
 		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
+		builder.put(
+			"http.cors.enabled", elasticsearchConfiguration.httpCORSEnabled());
 		builder.put("http.enabled", elasticsearchConfiguration.httpEnabled());
 		builder.put("index.number_of_replicas", 0);
 		builder.put("index.number_of_shards", 1);

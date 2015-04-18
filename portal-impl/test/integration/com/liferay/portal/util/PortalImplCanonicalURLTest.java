@@ -35,6 +35,8 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -235,7 +237,7 @@ public class PortalImplCanonicalURLTest {
 
 		testCanonicalURL(
 			"localhost", "localhost", _group, _layout1,
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.SPAIN, "/en", StringPool.BLANK, false);
 	}
 
@@ -246,7 +248,7 @@ public class PortalImplCanonicalURLTest {
 
 		testCanonicalURL(
 			"localhost", "localhost", _group, _layout1,
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.SPAIN, "/en", "/casa1", true);
 	}
 
@@ -256,7 +258,7 @@ public class PortalImplCanonicalURLTest {
 
 		testCanonicalURL(
 			"localhost", "localhost", _group, _layout2,
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.SPAIN, "/en", "/casa2", false);
 	}
 
@@ -266,7 +268,7 @@ public class PortalImplCanonicalURLTest {
 
 		testCanonicalURL(
 			"localhost", "localhost", _group, _layout1,
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.SPAIN, "/es", StringPool.BLANK, false);
 	}
 
@@ -277,7 +279,7 @@ public class PortalImplCanonicalURLTest {
 
 		testCanonicalURL(
 			"localhost", "localhost", _group, _layout1,
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.SPAIN, "/es", "/casa1", true);
 	}
 
@@ -287,7 +289,7 @@ public class PortalImplCanonicalURLTest {
 
 		testCanonicalURL(
 			"localhost", "localhost", _group, _layout2,
-			new Locale[] {LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
 			LocaleUtil.SPAIN, "/es", "/casa2", false);
 	}
 
@@ -379,7 +381,7 @@ public class PortalImplCanonicalURLTest {
 
 	protected void testCanonicalURL(
 			String virtualHostname, String portalDomain, Group group,
-			Layout layout, Locale[] groupAvailableLocales,
+			Layout layout, Collection<Locale> groupAvailableLocales,
 			Locale groupDefaultLocale, String i18nPath,
 			String expectedLayoutFriendlyURL, boolean forceLayoutFriendlyURL)
 		throws Exception {

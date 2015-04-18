@@ -38,6 +38,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -302,8 +304,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		throws Exception {
 
 		testAvailableLocales(
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
-			new Locale[] {LocaleUtil.US, LocaleUtil.GERMANY}, true);
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN),
+			Arrays.asList(LocaleUtil.US, LocaleUtil.GERMANY), true);
 	}
 
 	@Test
@@ -372,8 +374,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		throws Exception {
 
 		testAvailableLocales(
-			new Locale[] {LocaleUtil.US, LocaleUtil.US},
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.US},
+			Arrays.asList(LocaleUtil.US, LocaleUtil.US),
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.US),
 			false);
 	}
 
@@ -455,8 +457,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	protected void testAvailableLocales(
-			Locale[] sourceAvailableLocales, Locale[] targetAvailableLocales,
-			boolean expectFailure)
+			Collection<Locale> sourceAvailableLocales,
+			Collection<Locale> targetAvailableLocales, boolean expectFailure)
 		throws Exception {
 
 		group = GroupTestUtil.updateDisplaySettings(

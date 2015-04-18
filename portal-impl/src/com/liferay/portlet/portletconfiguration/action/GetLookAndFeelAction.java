@@ -79,10 +79,9 @@ public class GetLookAndFeelAction extends JSONAction {
 		JSONObject defaultPortletTitlesJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales(
-			themeDisplay.getSiteGroupId());
+		for (Locale locale : LanguageUtil.getAvailableLocales(
+				themeDisplay.getSiteGroupId())) {
 
-		for (Locale locale : availableLocales) {
 			String rootPortletId = PortletConstants.getRootPortletId(portletId);
 			String languageId = LocaleUtil.toLanguageId(locale);
 

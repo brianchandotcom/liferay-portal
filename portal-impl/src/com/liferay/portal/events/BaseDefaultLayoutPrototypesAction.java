@@ -50,9 +50,7 @@ public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			nameMap.put(locale, LanguageUtil.get(locale, nameKey));
 		}
 

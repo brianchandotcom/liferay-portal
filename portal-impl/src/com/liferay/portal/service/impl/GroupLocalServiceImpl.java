@@ -4574,19 +4574,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			String defaultLanguageId, String languageIds)
 		throws PortalException {
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
-
-		String[] availableLanguageIds = LocaleUtil.toLanguageIds(
-			availableLocales);
-
 		String[] languageIdsArray = StringUtil.split(languageIds);
 
 		for (String languageId : languageIdsArray) {
-			if (!ArrayUtil.contains(availableLanguageIds, languageId)) {
+			if (!LanguageUtil.isAvailableLocale(
+					LocaleUtil.fromLanguageId(languageId))) {
+
 				LocaleException le = new LocaleException(
 					LocaleException.TYPE_DISPLAY_SETTINGS);
 
-				le.setSourceAvailableLocales(availableLocales);
+				le.setSourceAvailableLocales(
+					LanguageUtil.getAvailableLocales());
 				le.setTargetAvailableLocales(
 					LocaleUtil.fromLanguageIds(languageIdsArray));
 
@@ -4598,7 +4596,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			LocaleException le = new LocaleException(
 				LocaleException.TYPE_DEFAULT);
 
-			le.setSourceAvailableLocales(availableLocales);
+			le.setSourceAvailableLocales(LanguageUtil.getAvailableLocales());
 			le.setTargetAvailableLocales(
 				LocaleUtil.fromLanguageIds(languageIdsArray));
 

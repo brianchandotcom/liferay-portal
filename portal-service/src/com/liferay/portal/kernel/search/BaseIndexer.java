@@ -1678,9 +1678,7 @@ public abstract class BaseIndexer implements Indexer {
 	protected Set<String> getLocalizedCountryNames(Country country) {
 		Set<String> countryNames = new HashSet<>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String countryName = country.getName(locale);
 
 			countryName = StringUtil.toLowerCase(countryName);
@@ -1829,13 +1827,12 @@ public abstract class BaseIndexer implements Indexer {
 	protected Map<Locale, String> populateMap(
 		AssetEntry assetEntry, Map<Locale, String> map) {
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales(
-			assetEntry.getGroupId());
-
 		String defaultValue = map.get(
 			LocaleUtil.fromLanguageId(assetEntry.getDefaultLanguageId()));
 
-		for (Locale availableLocale : availableLocales) {
+		for (Locale availableLocale : LanguageUtil.getAvailableLocales(
+				assetEntry.getGroupId())) {
+
 			if (!map.containsKey(availableLocale) ||
 				Validator.isNull(map.get(availableLocale))) {
 

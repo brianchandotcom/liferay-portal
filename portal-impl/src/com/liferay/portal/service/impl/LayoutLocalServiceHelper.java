@@ -120,9 +120,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 		Map<Locale, String> newFriendlyURLMap = new HashMap<>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
 
 			if (Validator.isNotNull(friendlyURL)) {
@@ -376,9 +374,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			}
 		}
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : availableLocales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String languageId = StringUtil.toLowerCase(
 				LocaleUtil.toLanguageId(locale));
 

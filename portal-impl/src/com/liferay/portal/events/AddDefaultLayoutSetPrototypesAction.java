@@ -72,9 +72,7 @@ public class AddDefaultLayoutSetPrototypesAction
 		Map<Locale, String> nameMap = new HashMap<>();
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			nameMap.put(locale, LanguageUtil.get(locale, nameKey));
 			descriptionMap.put(
 				locale, LanguageUtil.get(locale, descriptionKey));

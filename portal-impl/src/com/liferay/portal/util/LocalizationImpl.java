@@ -72,11 +72,9 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public Object deserialize(JSONObject jsonObject) {
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
 		Map<Locale, String> map = new HashMap<>();
 
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			String value = jsonObject.getString(languageId);
@@ -110,9 +108,7 @@ public class LocalizationImpl implements Localization {
 		String className, long classPK, Locale contentDefaultLocale,
 		Locale[] contentAvailableLocales) {
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
-
-		if (ArrayUtil.contains(availableLocales, contentDefaultLocale)) {
+		if (LanguageUtil.isAvailableLocale(contentDefaultLocale)) {
 			return contentDefaultLocale;
 		}
 
@@ -123,7 +119,7 @@ public class LocalizationImpl implements Localization {
 		}
 
 		for (Locale contentAvailableLocale : contentAvailableLocales) {
-			if (ArrayUtil.contains(availableLocales, contentAvailableLocale)) {
+			if (LanguageUtil.isAvailableLocale(contentAvailableLocale)) {
 				return contentAvailableLocale;
 			}
 		}
@@ -347,11 +343,9 @@ public class LocalizationImpl implements Localization {
 	public Map<Locale, String> getLocalizationMap(
 		HttpServletRequest request, String parameter) {
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
 		Map<Locale, String> map = new HashMap<>();
 
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String localizedParameter = getLocalizedName(
 				parameter, LocaleUtil.toLanguageId(locale));
 
@@ -373,11 +367,9 @@ public class LocalizationImpl implements Localization {
 		PortletPreferences preferences, String preferenceName,
 		String propertyName) {
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
 		Map<Locale, String> map = new HashMap<>();
 
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String localizedPreference = getLocalizedName(
 				preferenceName, LocaleUtil.toLanguageId(locale));
 
@@ -416,11 +408,9 @@ public class LocalizationImpl implements Localization {
 		PortletRequest portletRequest, String parameter,
 		Map<Locale, String> defaultValues) {
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
 		Map<Locale, String> map = new HashMap<>();
 
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String localizedParameter = getLocalizedName(
 				parameter, LocaleUtil.toLanguageId(locale));
 
@@ -443,11 +433,9 @@ public class LocalizationImpl implements Localization {
 	public Map<Locale, String> getLocalizationMap(
 		String xml, boolean useDefault) {
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
 		Map<Locale, String> map = new HashMap<>();
 
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			String value = getLocalization(xml, languageId, useDefault);
@@ -545,11 +533,10 @@ public class LocalizationImpl implements Localization {
 
 		String xml = null;
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			String localizedKey = getLocalizedName(parameter, languageId);
@@ -967,9 +954,7 @@ public class LocalizationImpl implements Localization {
 		Map<Locale, String> localizationMap, String xml, String key,
 		String defaultLanguageId) {
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String value = localizationMap.get(locale);
 
 			String languageId = LocaleUtil.toLanguageId(locale);

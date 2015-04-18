@@ -79,11 +79,10 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale[] locales = LanguageUtil.getAvailableLocales(
-			themeDisplay.getSiteGroupId());
+		for (Locale locale : LanguageUtil.getAvailableLocales(
+				themeDisplay.getSiteGroupId())) {
 
-		for (int i = 0; i < locales.length; i++) {
-			String languageId = LocaleUtil.toLanguageId(locales[i]);
+			String languageId = LocaleUtil.toLanguageId(locale);
 
 			List<String> priorities = new ArrayList<>();
 
@@ -117,10 +116,9 @@ public class ConfigurationActionImpl extends SettingsConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale[] locales = LanguageUtil.getAvailableLocales(
-			themeDisplay.getSiteGroupId());
+		for (Locale locale : LanguageUtil.getAvailableLocales(
+				themeDisplay.getSiteGroupId())) {
 
-		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			String[] ranks = StringUtil.splitLines(

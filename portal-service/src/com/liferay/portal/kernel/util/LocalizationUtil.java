@@ -240,9 +240,7 @@ public class LocalizationUtil {
 
 		List<Locale> modifiedLocales = new ArrayList<>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String oldValue = oldMap.get(locale);
 			String newValue = newMap.get(locale);
 

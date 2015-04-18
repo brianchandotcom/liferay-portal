@@ -1249,18 +1249,16 @@ public class LayoutImporter {
 			StringUtil.split(
 				headerElement.attributeValue("available-locales")));
 
-		Locale[] targetAvailableLocales = LanguageUtil.getAvailableLocales(
-			groupId);
-
 		for (Locale sourceAvailableLocale : sourceAvailableLocales) {
-			if (!ArrayUtil.contains(
-					targetAvailableLocales, sourceAvailableLocale)) {
+			if (!LanguageUtil.isAvailableLocale(
+					groupId, sourceAvailableLocale)) {
 
 				LocaleException le = new LocaleException(
 					LocaleException.TYPE_EXPORT_IMPORT);
 
 				le.setSourceAvailableLocales(sourceAvailableLocales);
-				le.setTargetAvailableLocales(targetAvailableLocales);
+				le.setTargetAvailableLocales(
+					LanguageUtil.getAvailableLocales(groupId));
 
 				throw le;
 			}

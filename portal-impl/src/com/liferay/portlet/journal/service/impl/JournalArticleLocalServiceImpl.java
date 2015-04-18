@@ -7433,9 +7433,7 @@ public class JournalArticleLocalServiceImpl
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
 			LocalizationUtil.getDefaultLanguageId(content));
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales(groupId);
-
-		if (!ArrayUtil.contains(availableLocales, articleDefaultLocale)) {
+		if (!LanguageUtil.isAvailableLocale(groupId, articleDefaultLocale)) {
 			LocaleException le = new LocaleException(
 				LocaleException.TYPE_CONTENT,
 				"The locale " + articleDefaultLocale +
@@ -7444,7 +7442,8 @@ public class JournalArticleLocalServiceImpl
 			Locale[] sourceAvailableLocales = {articleDefaultLocale};
 
 			le.setSourceAvailableLocales(sourceAvailableLocales);
-			le.setTargetAvailableLocales(availableLocales);
+			le.setTargetAvailableLocales(
+				LanguageUtil.getAvailableLocales(groupId));
 
 			throw le;
 		}

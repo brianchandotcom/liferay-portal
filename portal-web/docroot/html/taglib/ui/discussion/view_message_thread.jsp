@@ -51,7 +51,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 		<div class="lfr-discussion-details">
 			<liferay-ui:user-display
-				author="<%= discussionRequestHelper.getUserId() == message.getUserId() %>"
+				author="<%= discussionTaglibHelper.getUserId() == message.getUserId() %>"
 				displayStyle="2"
 				showUserName="<%= false %>"
 				userId="<%= message.getUserId() %>"

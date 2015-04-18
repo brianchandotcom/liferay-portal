@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.test.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -72,8 +73,7 @@ public class UserTestUtil {
 	public static User addGroupUser(Group group, String roleName)
 		throws Exception {
 
-		User groupUser = addUser(
-			RandomTestUtil.randomString(), group.getGroupId());
+		User groupUser = addUser(group.getGroupId());
 
 		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), roleName);
@@ -111,8 +111,7 @@ public class UserTestUtil {
 			Organization organization, String roleName)
 		throws Exception {
 
-		User organizationUser = addUser(
-			RandomTestUtil.randomString(), organization.getGroupId());
+		User organizationUser = addUser(organization.getGroupId());
 
 		long[] userIds = {organizationUser.getUserId()};
 
@@ -130,7 +129,12 @@ public class UserTestUtil {
 
 	public static User addUser() throws Exception {
 		return addUser(
-			RandomTestUtil.randomString(), TestPropsValues.getGroupId());
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			new long[] {TestPropsValues.getGroupId()},
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(boolean secure) throws Exception {
@@ -186,17 +190,28 @@ public class UserTestUtil {
 		}
 	}
 
+	public static User addUser(long... groupIds) throws Exception {
+		return addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), groupIds,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	public static User addUser(long groupId, Locale locale) throws Exception {
 		return addUser(
-			RandomTestUtil.randomString(), false, locale,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new long[] {groupId});
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
+			locale, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {groupId},
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(
-			long companyId, long userId, String screenName,
-			boolean autoScreenName, Locale locale, String firstName,
-			String lastName, long[] groupIds, ServiceContext serviceContext)
+			long companyId, long userId, String screenName, Locale locale,
+			String firstName, String lastName, long[] groupIds,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.fetchUserByScreenName(
@@ -229,51 +244,31 @@ public class UserTestUtil {
 
 		return UserLocalServiceUtil.addUser(
 			userId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			Validator.isNull(screenName), screenName, emailAddress, facebookId,
+			openId, locale, firstName, middleName, lastName, prefixId, suffixId,
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
 	}
 
 	public static User addUser(
-			String screenName, boolean autoScreenName, Locale locale,
-			String firstName, String lastName, long[] groupIds)
+			String screenName, Locale locale, String firstName, String lastName,
+			long[] groupIds)
 		throws Exception {
 
 		return addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			screenName, autoScreenName, locale, firstName, lastName, groupIds,
+			screenName, locale, firstName, lastName, groupIds,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public static User addUser(
-			String screenName, boolean autoScreenName, long[] groupIds)
+	public static User addUser(String screenName, long... groupIds)
 		throws Exception {
 
 		return addUser(
-			screenName, autoScreenName, "ServiceTestSuite", "ServiceTestSuite",
-			groupIds);
-	}
-
-	public static User addUser(
-			String screenName, boolean autoScreenName, String firstName,
-			String lastName, long[] groupIds)
-		throws Exception {
-
-		return addUser(
-			screenName, autoScreenName, LocaleUtil.getDefault(), firstName,
-			lastName, groupIds);
-	}
-
-	public static User addUser(String screenName, long groupId)
-		throws Exception {
-
-		if (Validator.isNull(screenName)) {
-			return addUser(null, true, new long[] {groupId});
-		}
-		else {
-			return addUser(screenName, false, new long[] {groupId});
-		}
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			screenName, LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), groupIds,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User getAdminUser(long companyId) throws PortalException {

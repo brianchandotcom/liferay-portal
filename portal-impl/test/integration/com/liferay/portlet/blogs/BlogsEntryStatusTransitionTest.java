@@ -78,8 +78,7 @@ public class BlogsEntryStatusTransitionTest {
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
 
-		user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), group.getGroupId());
+		user = UserTestUtil.addUser(group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

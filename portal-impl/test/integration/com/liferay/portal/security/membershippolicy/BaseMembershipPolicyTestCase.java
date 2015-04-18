@@ -83,8 +83,7 @@ public abstract class BaseMembershipPolicyTestCase {
 	}
 
 	protected long[] addUsers() throws Exception {
-		User user1 = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), group.getGroupId());
+		User user1 = UserTestUtil.addUser(group.getGroupId());
 
 		_userIds[0] = user1.getUserId();
 

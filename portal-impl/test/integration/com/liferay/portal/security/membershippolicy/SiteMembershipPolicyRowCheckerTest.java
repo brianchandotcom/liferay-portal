@@ -15,7 +15,6 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
@@ -167,8 +166,7 @@ public class SiteMembershipPolicyRowCheckerTest
 		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
 			renderResponse, forbiddenGroup);
 
-		User user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), forbiddenGroupId);
+		User user = UserTestUtil.addUser(forbiddenGroupId);
 
 		Assert.assertFalse(siteMembershipChecker.isDisabled(user));
 	}
@@ -207,8 +205,7 @@ public class SiteMembershipPolicyRowCheckerTest
 		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
 			renderResponse, requiredGroup);
 
-		User user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), requiredGroupId);
+		User user = UserTestUtil.addUser(requiredGroupId);
 
 		Assert.assertTrue(siteMembershipChecker.isDisabled(user));
 	}

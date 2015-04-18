@@ -46,7 +46,7 @@
 <!--ATTACHMENTS-->
 <tr>
 	<td>ATTACHMENTS_BROWSE_FIELD</td>
-	<td>//input[@id='_162_msgFile1']</td>
+	<td>//input[contains(@id,'_msgFile1')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -17,15 +17,15 @@
 <%@ include file="/html/taglib/ui/discussion/init.jsp" %>
 
 <%
-boolean hideControls = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:discussion:hideControls"));
+DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
+DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
+
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("liferay-ui:discussion:messageDisplay");
-String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
-long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
-boolean ratingsEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
-long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
 
 MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
+
+CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, message);
 
 int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
@@ -40,7 +40,7 @@ request.setAttribute("liferay-ui:discussion:index", new Integer(index));
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<c:if test="<%= !(!message.isApproved() && ((message.getUserId() != user.getUserId()) || user.isDefaultUser()) && !permissionChecker.isGroupAdmin(scopeGroupId)) && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
+<c:if test="<%= commentTreeDisplayContext.isDiscussionVisible() %>">
 	<article class="lfr-discussion">
 		<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
 			<a name="<%= randomNamespace %>message_<%= message.getMessageId() %>"></a>
@@ -51,7 +51,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 		<div class="lfr-discussion-details">
 			<liferay-ui:user-display
-				author="<%= userId == message.getUserId() %>"
+				author="<%= discussionTaglibHelper.getUserId() == message.getUserId() %>"
 				displayStyle="2"
 				showUserName="<%= false %>"
 				userId="<%= message.getUserId() %>"
@@ -59,7 +59,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		</div>
 
 		<div class="lfr-discussion-body">
-			<c:if test="<%= (message != null) && !message.isApproved() %>">
+			<c:if test="<%= commentTreeDisplayContext.isWorkflowStatusVisible() %>">
 				<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
 				<div>
@@ -162,7 +162,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<%= msgBody %>
 				</div>
 
-				<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
+				<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
 					<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
 						<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentsEditor" contents="<%= message.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "editReplyBody" + index %>' />
 
@@ -197,7 +197,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			</div>
 
 			<div class="lfr-discussion-controls">
-				<c:if test="<%= ratingsEnabled && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
+				<c:if test="<%= commentTreeDisplayContext.isRatingsVisible() %>">
 
 					<%
 					RatingsEntry ratingsEntry = _getRatingsEntry(ratingsEntries, message.getMessageId());
@@ -212,8 +212,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					/>
 				</c:if>
 
-				<c:if test="<%= !hideControls && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
-					<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
+				<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() %>">
+					<c:if test="<%= commentTreeDisplayContext.isReplyActionControlVisible() %>">
 
 						<%
 						String taglibPostReplyURL = "javascript:"
@@ -244,7 +244,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<ul class="lfr-discussion-actions">
 						<c:if test="<%= index > 0 %>">
 
-							<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
+							<c:if test="<%= commentTreeDisplayContext.isEditActionControlVisible() %>">
 
 								<%
 								String taglibEditURL = "javascript:"
@@ -262,7 +262,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</li>
 							</c:if>
 
-							<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.DELETE_DISCUSSION) %>">
+							<c:if test="<%= commentTreeDisplayContext.isDeleteActionControlVisible() %>">
 
 								<%
 								String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + index + ");";

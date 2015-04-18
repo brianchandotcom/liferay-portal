@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -60,8 +59,7 @@ public class MBBanStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		User user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), TestPropsValues.getGroupId());
+		User user = UserTestUtil.addUser(TestPropsValues.getGroupId());
 
 		return MBBanLocalServiceUtil.addBan(
 			TestPropsValues.getUserId(), user.getUserId(), serviceContext);

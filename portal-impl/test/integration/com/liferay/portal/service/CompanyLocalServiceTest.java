@@ -24,6 +24,7 @@ import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.RequiredCompanyException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -554,7 +555,8 @@ public class CompanyLocalServiceTest {
 		throws Exception {
 
 		return UserTestUtil.addUser(
-			companyId, userId, RandomTestUtil.randomString(),
+			companyId, userId,
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new long[] {groupId},
 			serviceContext);

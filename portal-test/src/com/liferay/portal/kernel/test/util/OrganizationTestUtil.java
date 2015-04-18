@@ -82,7 +82,7 @@ public class OrganizationTestUtil {
 			long parentOrganizationId, String name, boolean site)
 		throws Exception {
 
-		User user = UserTestUtil.addUser(RandomTestUtil.randomString(), null);
+		User user = UserTestUtil.addUser(null);
 
 		return OrganizationLocalServiceUtil.addOrganization(
 			user.getUserId(), parentOrganizationId, name, site);

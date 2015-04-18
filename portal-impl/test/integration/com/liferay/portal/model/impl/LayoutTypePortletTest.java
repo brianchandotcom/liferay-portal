@@ -162,8 +162,7 @@ public class LayoutTypePortletTest {
 	public void testAddPortletIdCheckColumn() throws Exception {
 		Layout layout = _layoutTypePortlet.getLayout();
 
-		_user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), layout.getGroupId());
+		_user = UserTestUtil.addUser(layout.getGroupId());
 
 		String portletId = PortletKeys.TEST;
 
@@ -189,8 +188,7 @@ public class LayoutTypePortletTest {
 	public void testAddPortletIdColumn2() throws Exception {
 		Layout layout = _layoutTypePortlet.getLayout();
 
-		_user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), layout.getGroupId());
+		_user = UserTestUtil.addUser(layout.getGroupId());
 
 		String portletId = PortletKeys.TEST;
 
@@ -221,8 +219,7 @@ public class LayoutTypePortletTest {
 	public void testAddPortletIdWithInvalidId() throws Exception {
 		Layout layout = _layoutTypePortlet.getLayout();
 
-		_user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), layout.getGroupId());
+		_user = UserTestUtil.addUser(layout.getGroupId());
 
 		String portletId = RandomTestUtil.randomString();
 
@@ -236,8 +233,7 @@ public class LayoutTypePortletTest {
 	public void testAddPortletIdWithValidId() throws Exception {
 		Layout layout = _layoutTypePortlet.getLayout();
 
-		_user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), layout.getGroupId());
+		_user = UserTestUtil.addUser(layout.getGroupId());
 
 		String portletId = PortletKeys.TEST;
 
@@ -251,8 +247,7 @@ public class LayoutTypePortletTest {
 	public void testGetAllPortlets() throws Exception {
 		Layout layout = _layoutTypePortlet.getLayout();
 
-		_user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), layout.getGroupId());
+		_user = UserTestUtil.addUser(layout.getGroupId());
 
 		final String portletId = _layoutTypePortlet.addPortletId(
 			_user.getUserId(), PortletKeys.TEST);

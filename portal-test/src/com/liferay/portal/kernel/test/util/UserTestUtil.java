@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.test.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -72,8 +73,7 @@ public class UserTestUtil {
 	public static User addGroupUser(Group group, String roleName)
 		throws Exception {
 
-		User groupUser = addUser(
-			RandomTestUtil.randomString(), group.getGroupId());
+		User groupUser = addUser(group.getGroupId());
 
 		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), roleName);
@@ -111,8 +111,7 @@ public class UserTestUtil {
 			Organization organization, String roleName)
 		throws Exception {
 
-		User organizationUser = addUser(
-			RandomTestUtil.randomString(), organization.getGroupId());
+		User organizationUser = addUser(organization.getGroupId());
 
 		long[] userIds = {organizationUser.getUserId()};
 
@@ -131,8 +130,9 @@ public class UserTestUtil {
 	public static User addUser() throws Exception {
 		return addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			new long[] {TestPropsValues.getGroupId()},
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -190,12 +190,22 @@ public class UserTestUtil {
 		}
 	}
 
+	public static User addUser(long... groupIds) throws Exception {
+		return addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), groupIds,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	public static User addUser(long groupId, Locale locale) throws Exception {
 		return addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), locale,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new long[] {groupId}, ServiceContextTestUtil.getServiceContext());
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
+			locale, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {groupId},
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(

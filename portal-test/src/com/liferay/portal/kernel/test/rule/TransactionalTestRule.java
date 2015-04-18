@@ -37,7 +37,7 @@ public class TransactionalTestRule implements TestRule {
 		new TransactionalTestRule();
 
 	public TransactionalTestRule() {
-		this(Propagation.SUPPORTS);
+		this(Propagation.REQUIRED);
 	}
 
 	public TransactionalTestRule(Propagation propagation) {

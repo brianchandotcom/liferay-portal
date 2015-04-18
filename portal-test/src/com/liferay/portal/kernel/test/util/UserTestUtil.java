@@ -272,12 +272,14 @@ public class UserTestUtil {
 	public static User addUser(String screenName, long groupId)
 		throws Exception {
 
+		boolean autoScreenName = false;
+
 		if (Validator.isNull(screenName)) {
-			return addUser(null, true, new long[] {groupId});
+			screenName = null;
+			autoScreenName = true;
 		}
-		else {
-			return addUser(screenName, false, new long[] {groupId});
-		}
+
+		return addUser(screenName, autoScreenName, new long[] {groupId});
 	}
 
 	public static User getAdminUser(long companyId) throws PortalException {

@@ -130,7 +130,11 @@ public class UserTestUtil {
 
 	public static User addUser() throws Exception {
 		return addUser(
-			RandomTestUtil.randomString(), TestPropsValues.getGroupId());
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new long[] {TestPropsValues.getGroupId()},
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(boolean secure) throws Exception {
@@ -250,7 +254,11 @@ public class UserTestUtil {
 	public static User addUser(String screenName, long groupId)
 		throws Exception {
 
-		return addUser(screenName, new long[] {groupId});
+		return addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			screenName, LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {groupId},
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(String screenName, long[] groupIds)

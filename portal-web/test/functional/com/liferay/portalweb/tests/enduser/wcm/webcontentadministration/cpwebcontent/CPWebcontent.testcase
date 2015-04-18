@@ -871,7 +871,7 @@
 		</execute>
 	</command>
 
-	<command name="PublishDraftWebContent" priority="4">
+	<command known-issues="LPS-51687" name="PublishDraftWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

@@ -193,11 +193,8 @@
 			<var name="portletName" value="Tags" />
 		</execute>
 
-		<var name="tagEntryNull" value=" " />
-
-		<execute macro="Tag#addCP">
-			<var name="tagEntry" value="${tagEntryNull}" />
-			<var name="tagNameVariation" value="Variation" />
+		<execute macro="Tag#addWithNullTitleCP">
+			<var name="tagEntry" value=" " />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

@@ -23,7 +23,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddAudioViaWebContent" priority="4">
+	<command known-issues="LPS-55073" name="AddAudioViaWebContent" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
@@ -96,7 +96,7 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
-	<command name="AddContentWithTitleAndAllFieldsNull" priority="5">
+	<command known-issues="WCM-260" name="AddContentWithTitleAndAllFieldsNull" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

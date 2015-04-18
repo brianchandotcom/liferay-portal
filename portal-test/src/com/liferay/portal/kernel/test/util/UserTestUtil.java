@@ -254,8 +254,8 @@ public class UserTestUtil {
 		return addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			screenName, autoScreenName, LocaleUtil.getDefault(),
-			"ServiceTestSuite", "ServiceTestSuite", groupIds,
-			ServiceContextTestUtil.getServiceContext());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			groupIds, ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(

@@ -951,7 +951,7 @@
 	<command name="removeViewPermissionsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_PERMISSIONS" value1="Permissions" />
 
@@ -1241,9 +1241,9 @@
 
 	<command name="viewFriendlyURLPG">
 		<var name="entryTitleURL" value="${entryTitle?replace(' ', '-')}" />
-		<var name="entryTitleURL" value="${entryTitleURL?lowercase()}" />
+		<var method="StringUtil#lowerCase(${entryTitleURL})" name="entryTitleURL" />
 		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
-		<var name="pageNameURL" value="${pageNameURL?lowercase()}" />
+		<var method="StringUtil#lowerCase(${pageNameURL})" name="pageNameURL" />
 
 		<var name="friendlyURL" value="http://localhost:8080/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}" />
 
@@ -1255,9 +1255,9 @@
 
 	<command name="viewFriendlyURLViaRecentBloggersPG">
 		<var name="entryTitleURL" value="${entryTitle?replace(' ', '-')}" />
-		<var name="entryTitleURL" value="${entryTitleURL?lowercase()}" />
+		<var method="StringUtil#lowerCase(${entryTitleURL})" name="entryTitleURL" />
 		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
-		<var name="pageNameURL" value="${pageNameURL?lowercase()}" />
+		<var method="StringUtil#lowerCase(${pageNameURL})" name="pageNameURL" />
 
 		<var name="friendlyURL" value="http://localhost:8080/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}" />
 
@@ -1440,8 +1440,8 @@
 			<isset var="tagNameList" />
 			<then>
 				<for list="${tagNameList}" param="tagName">
-					<var name="key_tagName" value="${tagName?lowercase()}" />
-					<var name="tagName" value="${tagName?lowercase()}" />
+					<var method="StringUtil#lowerCase(${tagName})" name="tagName" />
+					<var name="key_tagName" value="tagName" />
 
 					<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TAG" value1="${tagName}" />
 					<execute function="AssertClick" locator1="PGBlogs#ENTRY_TAG" value1="${tagName}" />
@@ -1450,8 +1450,8 @@
 				</for>
 			</then>
 			<else>
-				<var name="key_tagName" value="${tagName?lowercase()}" />
-				<var name="tagName" value="${tagName?lowercase()}" />
+				<var method="StringUtil#lowerCase(${tagName})" name="tagName" />
+				<var name="key_tagName" value="tagName" />
 
 				<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TAG" value1="${tagName}" />
 				<execute function="AssertClick" locator1="PGBlogs#ENTRY_TAG" value1="${tagName}" />
@@ -1541,7 +1541,7 @@
 	<command name="viewViewPermissionsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_PERMISSIONS" value1="Permissions" />
 

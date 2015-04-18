@@ -567,7 +567,7 @@
 	</command>
 
 	<command name="removeViewPermissionsPG">
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute function="Click" locator1="PGMessageboards#THREAD_TABLE_ACTIONS" />
@@ -1160,8 +1160,8 @@
 	</command>
 
 	<command name="viewTagPG">
-		<var name="key_tagName" value="${tagName?lowercase()}" />
-		<var name="tagName" value="${tagName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${tagName})" name="tagName" />
+		<var name="key_tagName" value="tagName" />
 
 		<if>
 			<equals arg1="${messageTagNumber}" arg2="1" />

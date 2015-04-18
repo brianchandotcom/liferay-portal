@@ -95,7 +95,7 @@
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
 		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
-		<var name="pageNameURL" value="/${pageNameURL?lowercase()}" />
+		<var method="StringUtil#lowerCase(/${pageNameURL})" name="pageNameURL" />
 
 		<execute function="AssertClick" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_CONTINUE_READING_BUTTON" value1="CONTINUE READING" />
 
@@ -114,7 +114,7 @@
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
 		<var name="pageNameURL" value="${pageName?replace(' ', '-')}" />
-		<var name="pageNameURL" value="/${pageNameURL?lowercase()}" />
+		<var method="StringUtil#lowerCase(/${pageNameURL})" name="pageNameURL" />
 
 		<var name="key_pageNameURL" value="${pageNameURL}" />
 

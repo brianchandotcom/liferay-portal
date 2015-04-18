@@ -4,7 +4,7 @@
 			<var name="roleName" value="${roleName}" />
 
 			<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-			<var name="key_roleName" value="${key_roleName?lowercase()}" />
+			<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 			<if>
 				<equals arg1="${addOrRemoveViewPermission}" arg2="Add" />
@@ -29,7 +29,7 @@
 			<var name="roleName" value="${roleName}" />
 
 			<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-			<var name="key_roleName" value="${key_roleName?lowercase()}" />
+			<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 			<if>
 				<or>
@@ -327,14 +327,14 @@
 
 	<command name="viewPermissionsChecked">
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="AssertChecked" locator1="Permissions#${permissionDefinitionKey}" />
 	</command>
 
 	<command name="viewPermissionsRemoved">
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="AssertNotChecked" locator1="Permissions#${permissionDefinitionKey}" />
 	</command>

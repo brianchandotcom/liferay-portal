@@ -198,7 +198,7 @@
 	<command name="removeViewPermissionsPG">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
-		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="Click" locator1="PGMessageboards#CATEGORY_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="PGMessageboards#CATEGORY_MENULIST_PERMISSIONS" value1="Permissions" />

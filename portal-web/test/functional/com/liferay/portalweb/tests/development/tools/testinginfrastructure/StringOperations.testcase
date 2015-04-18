@@ -55,7 +55,7 @@
 
 		<var name="string" value="abCDe" />
 
-		<var name="stringLowercased" value="${string?lowercase()}" />
+		<var method="StringUtil#lowerCase(${string})" name="stringLowercased" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${stringLowercased}" />
@@ -65,7 +65,7 @@
 		<echo message="Test lowercase() used inline" />
 
 		<execute macro="TestUtils#assertEquals">
-			<var name="actual" value="${string?lowercase()}" />
+			<var method="StringUtil#lowerCase(${string})" name="actual" />
 			<var name="expected" value="abcde" />
 		</execute>
 	</command>

@@ -69,12 +69,12 @@
 
 		<execute function="ScrollWebElementIntoView" locator1="Dynamicdatamapping#FIELDS_LINK" />
 
-		<var name="key_field" value="${field?lowercase()}" />
+		<var method="StringUtil#lowerCase(${field})" name="key_field" />
 
 		<execute function="SikuliMouseMove" locator1="Dynamicdatamapping#FIELDS_FIELD_PNG" />
 		<execute function="SikuliLeftMouseDown" />
 
-		<var name="key_formField" value="${parentField?lowercase()}" />
+		<var method="StringUtil#lowerCase(${parentField})" name="key_formField" />
 
 		<execute function="SikuliMouseMove" locator1="Dynamicdatamapping#FORM_FIELD_PNG" />
 		<execute function="SikuliLeftMouseUp" />

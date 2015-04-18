@@ -29,12 +29,12 @@ public class SitesSEOFormNavigatorCategory implements FormNavigatorCategory {
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.SITES_FORM_NAVIGATOR_ID;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
 	}
 
 	@Override
 	public String getKey() {
-		return FormNavigatorConstants.SITES_SEO_CATEGORY_KEY;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_SEO;
 	}
 
 	@Override

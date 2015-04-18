@@ -30,12 +30,12 @@ public class SitesMiscellaneousFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.SITES_FORM;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
 	}
 
 	@Override
 	public String getKey() {
-		return "miscellaneous";
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_MISCELLANEOUS;
 	}
 
 	@Override

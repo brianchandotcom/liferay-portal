@@ -25,7 +25,7 @@ public abstract class BaseSiteFormNavigatorEntry
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.SITES_FORM;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
 	}
 
 }

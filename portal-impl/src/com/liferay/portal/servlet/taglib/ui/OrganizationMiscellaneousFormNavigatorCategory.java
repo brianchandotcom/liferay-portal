@@ -30,12 +30,12 @@ public class OrganizationMiscellaneousFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.ORGANIZATIONS_FORM;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS;
 	}
 
 	@Override
 	public String getKey() {
-		return "miscellaneous";
+		return FormNavigatorConstants.CATEGORY_KEY_ORGANIZATION_MISCELLANEOUS;
 	}
 
 	@Override

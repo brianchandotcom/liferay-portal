@@ -506,6 +506,7 @@
 		<var name="key_dateNumber" value="${dateNumber}" />
 
 		<execute function="AssertElementPresent" locator1="PGCalendar#SMALL_CALENDAR_SPECIFIC_BUSY_DAY" />
+
 		<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_SPECIFIC_BUSY_DAY" />
 	</command>
 

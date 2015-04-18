@@ -968,6 +968,7 @@
 		<var name="key_dayOfWeek" value="${dayOfWeek}" />
 
 		<execute function="Click" locator1="PGCalendar#SCHEDULER_SPECIFIC_DAY" />
+
 		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="e.g., Dinner at Brian's" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE_GUEST" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE" />
@@ -1263,7 +1264,7 @@
 
 	<command name="tearDown">
 		<if>
-			<isset var="Marketplace" />
+			<equals arg1="${marketplace}" arg2="true" />
 			<then>
 				<execute macro="Page#addPG">
 					<var name="pageName" value="Marketplace Calendar Testing" />

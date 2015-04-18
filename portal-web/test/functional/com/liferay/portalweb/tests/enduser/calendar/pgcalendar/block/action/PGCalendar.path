@@ -542,7 +542,7 @@
 <!--SCHEDULER-->
 <tr>
 	<td>SCHEDULER_SPECIFIC_DAY</td>
-	<td>xPath=(//div[@class=&quot;scheduler-view-day-table-col-shim&quot;])[${key_dayOfWeek}]</td>
+	<td>xpath=(//div[@class='scheduler-view-day-table-col-shim'])[${key_dayOfWeek}]</td>
 	<td></td>
 </tr>
 <tr>

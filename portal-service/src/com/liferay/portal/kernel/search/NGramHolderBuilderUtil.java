@@ -14,7 +14,9 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -42,24 +44,26 @@ public class NGramHolderBuilderUtil {
 	}
 
 	public static NGramHolderBuilder getNGramHolderBuilder() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			NGramHolderBuilderUtil.class);
-
-		if (_nGramHolderBuilder == null) {
+		if (_instance._serviceTracker.getService() == null) {
 			return _defaultNGramHolderBuilder;
 		}
 
-		return _nGramHolderBuilder;
+		return _instance._serviceTracker.getService();
 	}
 
-	public void setNGramHolderBuilder(NGramHolderBuilder nGramHolderBuilder) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private NGramHolderBuilderUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_nGramHolderBuilder = nGramHolderBuilder;
+		_serviceTracker = registry.trackServices(NGramHolderBuilder.class);
 	}
+
+	private static final NGramHolderBuilderUtil _instance =
+		new NGramHolderBuilderUtil();
 
 	private static final NGramHolderBuilder _defaultNGramHolderBuilder =
 		new NullNGramHolderBuilder();
-	private static NGramHolderBuilder _nGramHolderBuilder;
+
+	private final ServiceTracker<NGramHolderBuilder, NGramHolderBuilder>
+		_serviceTracker;
 
 }

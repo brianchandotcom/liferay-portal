@@ -250,12 +250,7 @@ public class ServiceTestUtil {
 
 		_deleteDirectories();
 
-		// Lucene
-
 		try {
-			FileUtil.mkdirs(
-				PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
-
 			SearchEngineUtil.initialize(TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
@@ -327,14 +322,6 @@ public class ServiceTestUtil {
 
 		FileUtil.deltree(
 			PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
-
-		try {
-			FileUtil.deltree(
-				PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	private static void _replaceWithSynchronousDestination(String name) {

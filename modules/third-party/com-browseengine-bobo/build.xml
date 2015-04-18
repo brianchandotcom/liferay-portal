@@ -41,6 +41,6 @@
 			module.dir="${basedir}"
 		/>
 
-		<copy file="${plugin.file}" tofile="../../../lib/portal/bobo-browse.jar" />
+		<copy file="${plugin.file}" tofile="../../../modules/portal/portal-search-lucene/lib/bobo-browse.jar" />
 	</target>
 </project>

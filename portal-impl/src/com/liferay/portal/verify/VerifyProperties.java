@@ -722,6 +722,46 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.ldap"
 		},
 
+		// Lucene Search Engine
+
+		new String[] {
+			"lucene.analyzer.max.tokens", "analyzer.max.tokens",
+			"com.liferay.portal.search.lucene"
+		},
+		new String[] {
+			"lucene.buffer.size", "buffer.size",
+			"com.liferay.portal.search.lucene"
+		},
+		new String[] {
+			"lucene.commit.batch.size", "commit.batch.size",
+			"com.liferay.portal.search.lucene"
+		},
+		new String[] {
+			"lucene.commit.time.interval", "commit.time.interval",
+			"com.liferay.portal.search.lucene"
+		},
+		new String[] {"lucene.dir", "dir", "com.liferay.portal.search.lucene"},
+		new String[] {
+			"lucene.merge.factor", "merge.factor",
+			"com.liferay.portal.search.lucene"
+		},
+		new String[] {
+			"lucene.merge.policy", "merge.policy",
+			"com.liferay.portal.search.lucene"
+		},
+		new String[] {
+			"lucene.merge.scheduler", "merge.scheduler",
+			"com.liferay.portal.search.lucene"
+		},
+		new String[] {
+			"lucene.store.type", "store.type",
+			"com.liferay.portal.search.lucene"
+		},
+		new String[] {
+			"lucene.store.type.file.force.mmap", "store.type.file.force.mmp",
+			"com.liferay.portal.search.lucene"
+		},
+
 		// Monitoring
 
 		new String[] {

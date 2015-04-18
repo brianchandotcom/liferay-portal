@@ -1,0 +1,19 @@
+Bundle-Name: Liferay Portal Search Lucene
+Bundle-SymbolicName: com.liferay.portal.search.lucene
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	@lib/bobo-browse.jar,\
+	@lib/icu4j.jar,\
+	@lib/jakarta-regexp.jar,\
+	@lib/lucene-analyzers.jar,\
+	@lib/lucene-core.jar,\
+	@lib/lucene-grouping.jar,\
+	@lib/lucene-highlighter.jar,\
+	@lib/lucene-icu.jar,\
+	@lib/lucene-join.jar,\
+	@lib/lucene-memory.jar,\
+	@lib/lucene-misc.jar,\
+	@lib/lucene-queries.jar,\
+	@lib/lucene-queryparser.jar,\
+	@lib/lucene-spellchecker.jar

@@ -353,7 +353,6 @@
 				<classpath mode="compile">lib/portal/bcmail.jar</classpath>
 				<classpath mode="compile">lib/portal/bcprov.jar</classpath>
 				<classpath mode="compile">lib/portal/bnd.jar</classpath>
-				<classpath mode="compile">lib/portal/bobo-browse.jar</classpath>
 				<classpath mode="compile">lib/portal/boilerpipe.jar</classpath>
 				<classpath mode="compile">lib/portal/bsh.jar</classpath>
 				<classpath mode="compile">lib/portal/bsf.jar</classpath>
@@ -466,17 +465,6 @@
 				<classpath mode="compile">lib/portal/liferay-yui-compressor.jar</classpath>
 				<classpath mode="compile">lib/portal/log4j.jar</classpath>
 				<classpath mode="compile">lib/portal/log4j-extras.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-analyzers.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-core.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-grouping.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-highlighter.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-icu.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-join.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-memory.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-misc.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-queries.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-queryparser.jar</classpath>
-				<classpath mode="compile">lib/portal/lucene-spellchecker.jar</classpath>
 				<classpath mode="compile">lib/portal/mchange-commons-java.jar</classpath>
 				<classpath mode="compile">lib/portal/metadata-extractor.jar</classpath>
 				<classpath mode="compile">lib/portal/mime4j-core.jar</classpath>

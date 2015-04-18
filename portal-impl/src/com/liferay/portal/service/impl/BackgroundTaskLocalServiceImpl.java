@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,6 +45,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -82,9 +84,13 @@ public class BackgroundTaskLocalServiceImpl
 			StringUtil.merge(servletContextNames));
 		backgroundTask.setTaskExecutorClassName(taskExecutorClass.getName());
 
-		if (taskContextMap != null) {
-			backgroundTask.setTaskContextMap(taskContextMap);
+		if (taskContextMap == null) {
+			taskContextMap = new HashMap<>();
 		}
+
+		_backgroundTaskThreadLocalManager.serializeThreadLocals(taskContextMap);
+
+		backgroundTask.setTaskContextMap(taskContextMap);
 
 		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_NEW);
 
@@ -165,6 +171,9 @@ public class BackgroundTaskLocalServiceImpl
 		backgroundTask.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		if (taskContextMap != null) {
+			_backgroundTaskThreadLocalManager.serializeThreadLocals(
+				taskContextMap);
+
 			backgroundTask.setTaskContextMap(taskContextMap);
 		}
 
@@ -523,5 +532,8 @@ public class BackgroundTaskLocalServiceImpl
 
 	@BeanReference(type = BackgroundTaskStatusRegistry.class)
 	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
+
+	@BeanReference(type = BackgroundTaskThreadLocalManager.class)
+	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
 
 }

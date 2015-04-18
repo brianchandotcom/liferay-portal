@@ -28,6 +28,10 @@
 			<bean class="com.liferay.portal.audit.AuditMessageFactoryImpl" />
 		</property>
 	</bean>
+
+	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager" class="com.liferay.portal.backgroundtask.BackgroundTaskThreadLocalManagerImpl">
+		<property name="permissionCheckerFactory" ref="com.liferay.portal.security.permission.PermissionCheckerFactory" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry" class="com.liferay.portal.backgroundtask.BackgroundTaskStatusRegistryImpl" />
 	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil" class="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil">
 		<property name="backgroundTaskStatusRegistry" ref="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry" />
@@ -642,10 +646,9 @@
 			<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.security.permission.PermissionCheckerFactory" class="com.liferay.portal.security.permission.PermissionCheckerFactoryImpl" />
 	<bean id="com.liferay.portal.security.permission.PermissionCheckerFactoryUtil" class="com.liferay.portal.security.permission.PermissionCheckerFactoryUtil">
-		<property name="permissionCheckerFactory">
-			<bean class="com.liferay.portal.security.permission.PermissionCheckerFactoryImpl" />
-		</property>
+		<property name="permissionCheckerFactory" ref="com.liferay.portal.security.permission.PermissionCheckerFactory" />
 	</bean>
 	<bean id="com.liferay.portal.security.permission.PermissionConverterUtil" class="com.liferay.portal.security.permission.PermissionConverterUtil">
 		<property name="permissionConverter">

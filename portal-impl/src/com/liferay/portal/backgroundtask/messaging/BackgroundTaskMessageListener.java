@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
 import com.liferay.portal.kernel.backgroundtask.ClassLoaderAwareBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.SerialBackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.ThreadLocalAwareBackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -42,6 +44,12 @@ import com.liferay.portal.util.ClassLoaderUtil;
  * @author Michael C. Han
  */
 public class BackgroundTaskMessageListener extends BaseMessageListener {
+
+	public void setBackgroundTaskThreadLocalManager(
+		BackgroundTaskThreadLocalManager backgroundTaskThreadLocalManager) {
+
+		_backgroundTaskThreadLocalManager = backgroundTaskThreadLocalManager;
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -178,10 +186,15 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				backgroundTaskExecutor);
 		}
 
+		backgroundTaskExecutor = new ThreadLocalAwareBackgroundTaskExecutor(
+			backgroundTaskExecutor, _backgroundTaskThreadLocalManager);
+
 		return backgroundTaskExecutor;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskMessageListener.class);
+
+	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
 
 }

@@ -75,7 +75,9 @@
 	<!-- Listeners -->
 
 	<bean id="messageListener.async_service" class="com.liferay.portal.messaging.async.AsyncMessageListener" />
-	<bean id="messageListener.background_task" class="com.liferay.portal.backgroundtask.messaging.BackgroundTaskMessageListener" />
+	<bean id="messageListener.background_task" class="com.liferay.portal.backgroundtask.messaging.BackgroundTaskMessageListener">
+		<property name="backgroundTaskThreadLocalManager" ref="com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager" />
+	</bean>
 	<bean id="messageListener.background_task_queuing" class="com.liferay.portal.backgroundtask.messaging.BackgroundTaskQueuingMessageListener" />
 	<bean id="messageListener.convert_process" class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" />
 	<bean id="messageListener.document_library_audio_processor" class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" />

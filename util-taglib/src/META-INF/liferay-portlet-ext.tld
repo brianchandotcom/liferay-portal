@@ -332,8 +332,13 @@
 		<tag-class>com.liferay.taglib.portlet.RenderURLParamsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>portletURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>varImpl</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

@@ -52,7 +52,7 @@ public class WikiURLHelper {
 	}
 
 	public PortletURL getSearchURL() {
-		PortletURL searchURL = _renderResponse.createActionURL();
+		PortletURL searchURL = _renderResponse.createRenderURL();
 
 		searchURL.setParameter("struts_action", "/wiki/search");
 

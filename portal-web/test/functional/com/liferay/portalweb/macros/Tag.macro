@@ -200,7 +200,9 @@
 		<execute function="AssertClick" locator1="CPTags#TOOLBAR_ADD" value1="Add Tag" />
 
 		<execute function="Type" locator1="CPTagsAdd#NAME_FIELD" value1="${tagEntry}" />
+
 		<execute function="AssertClick" locator1="CPTagsAdd#SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPTagsAdd#NAME_FIELD_ERROR" value1="Name Required" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPTagsAdd#NAME_FIELD_ERROR" value1="This field is required." />
 	</command>

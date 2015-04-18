@@ -19,8 +19,8 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
@@ -132,9 +132,8 @@ public class EmbeddedElasticsearchConnection
 		builder.put("node.local", true);
 		builder.put(
 			"path.data",
-			PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");
-		builder.put(
-			"path.logs", PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/logs");
+			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");
+		builder.put("path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
 		builder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 
@@ -146,9 +145,15 @@ public class EmbeddedElasticsearchConnection
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setProps(Props props) {
+		_props = props;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);
 
 	private Node _node;
+	private Props _props;
 
 }

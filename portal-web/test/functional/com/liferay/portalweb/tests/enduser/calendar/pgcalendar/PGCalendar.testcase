@@ -31,7 +31,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_GENERIC" />
 			<then>
-				<execute macro="CalendarEvent#tearDownPG" />
+				<execute macro="CalendarEvent#tearDown" />
 			</then>
 		</if>
 
@@ -381,6 +381,40 @@
 			<var name="site" value="${site}" />
 			<var name="user" value="${user}" />
 		</execute>
+	</command>
+
+	<command name="AddCalendarEventRegularOnSpecificDayOfWeekViaScheduler" priority="5">
+		<var name="eventTitle" value="Calendar Event Regular Title" />
+		<var name="eventType" value="Regular" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#goToSpecificDayViaSmallCalendar">
+			<var name="dateNumber" value="8" />
+		</execute>
+
+		<execute macro="CalendarEvent#goToAddOnSpecifcDayOfWeekViaWeekView">
+			<var name="dayOfWeek" value="2" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#goToBusyDayViaSmallCalendar" />
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#tearDownOnBusyDayInCurrentMonth" />
 	</command>
 
 	<command name="AddCalendarEventRegularRSVPYes" priority="5">
@@ -978,11 +1012,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#viewMonthSmallCalendar">
+		<execute macro="Calendar#goToMonthViaSmallCalendar">
 			<var name="dateMonth" value="February 2016" />
 		</execute>
 
-		<execute macro="Calendar#viewBusyDaySmallCalendar">
+		<execute macro="Calendar#goToSpecificBusyDayViaSmallCalendar">
 			<var name="dateNumber" value="2" />
 		</execute>
 
@@ -1391,11 +1425,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#viewMonthSmallCalendar">
+		<execute macro="Calendar#goToMonthViaSmallCalendar">
 			<var name="dateMonth" value="February 2015" />
 		</execute>
 
-		<execute macro="Calendar#viewBusyDaySmallCalendar">
+		<execute macro="Calendar#goToSpecificBusyDayViaSmallCalendar">
 			<var name="dateNumber" value="2" />
 		</execute>
 
@@ -1413,11 +1447,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#viewMonthSmallCalendar">
+		<execute macro="Calendar#goToMonthViaSmallCalendar">
 			<var name="dateMonth" value="February 2015" />
 		</execute>
 
-		<execute macro="Calendar#viewBusyDaySmallCalendar">
+		<execute macro="Calendar#goToSpecificBusyDayViaSmallCalendar">
 			<var name="dateNumber" value="3" />
 		</execute>
 

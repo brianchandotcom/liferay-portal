@@ -23,7 +23,7 @@
 			<var name="pageName" value="Calendar Test Page" />
 		</execute>
 
-		<execute macro="CalendarEvent#tearDownPG" />
+		<execute macro="CalendarEvent#tearDown" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>

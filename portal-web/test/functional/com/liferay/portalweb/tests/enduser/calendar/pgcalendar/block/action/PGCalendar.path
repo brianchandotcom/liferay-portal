@@ -127,6 +127,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SMALL_CALENDAR_SPECIFIC_DAY</td>
+	<td>//td[contains(@class,'yui3-calendar-day') and contains(text(),'${key_dateNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SMALL_CALENDAR_PREVIOUS</td>
 	<td>//a[contains(@class,'yui3-calendarnav-prevmonth')]</td>
 	<td></td>
@@ -138,6 +143,11 @@
 </tr>
 <tr>
 	<td>SMALL_CALENDAR_BUSY_DAY</td>
+	<td>//td[contains(@class,'yui3-calendar-day') and contains(@class,'lfr-busy-day')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SMALL_CALENDAR_SPECIFIC_BUSY_DAY</td>
 	<td>//td[contains(@class,'yui3-calendar-day') and contains(@class,'lfr-busy-day') and contains(text(),'${key_dateNumber}')]</td>
 	<td></td>
 </tr>
@@ -529,6 +539,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SCHEDULER-->
+<tr>
+	<td>SCHEDULER_SPECIFIC_DAY</td>
+	<td>xpath=(//div[@class='scheduler-view-day-table-col-shim'])[${key_dayOfWeek}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SCHEDULER_EVENT-->
 <tr>
 	<td>SCHEDULER_EVENT_ALL_DAY_FIELD_PNG</td>
@@ -657,6 +678,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT_DIALOG_BOX_WHEN_LABEL</td>
+	<td>//tr/td[contains(.,'When:')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_DIALOG_BOX_WHEN_FIELD</td>
+	<td>//tr/td/label[@class='scheduler-event-recorder-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_LABEL</td>
+	<td>//tr/td[contains(.,'Calendar:')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT</td>
 	<td>//select[@name='calendarId']</td>
 	<td></td>
@@ -689,6 +725,11 @@
 <tr>
 	<td>SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON</td>
 	<td>//form[@id='schedulerEventRecorderForm']//button[@id='deleteBtn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 </tbody>

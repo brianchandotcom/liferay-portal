@@ -105,7 +105,7 @@
 			<then>
 				<execute function="Click" locator1="//div[@id='navigation']//li[contains(.,'Calendar')]/a/span" />
 
-				<execute macro="CalendarEvent#tearDownPG" />
+				<execute macro="CalendarEvent#tearDown" />
 			</then>
 		</if>
 	</command>

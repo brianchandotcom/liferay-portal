@@ -64,8 +64,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAG</td>
+	<td>//div[contains(@class,'lfr-tags-selector-content')]//span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_REMOVE</td>
+	<td>//li[contains(.,'${key_tagName}')]//i[contains(@class,'icon') and contains(@class,'icon-remove')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAGS_FIELD</td>
 	<td>//input[contains(@id,'assetTagNames')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_AUTOCOMPLETE</td>
+	<td>//div[contains(@class,'autocomplete-results-content')]//li[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

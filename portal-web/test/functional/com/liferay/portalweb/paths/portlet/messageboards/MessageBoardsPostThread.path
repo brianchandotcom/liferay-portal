@@ -39,68 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_AS_DRAFT_BUTTON</td>
-	<td>//button[@id='_19_saveButton' and contains(.,'Save as Draft')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'Preview')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_19_publishButton' and contains(.,'Publish')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
-	<td>//button[@id='_19_publishButton' and contains(.,'Submit for Publication')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CANCEL_BUTTON</td>
-	<td>//a[contains(@class,'btn-cancel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ERROR_MESSAGE_1</td>
-	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ERROR_MESSAGE_2</td>
-	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PERMISSIONS-->
-<tr>
-	<td>PERMISSIONS_VIEWABLE_BY_DROPDOWN</td>
-	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PERMISSIONS-->
-<tr>
-	<td>PERMISSIONS_VIEWABLE_BY_DROPDOWN</td>
-	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -154,58 +92,6 @@
 <tr>
 	<td>ATTACHMENTS_REMOVE_LINK</td>
 	<td>//a[contains(@id,'removeExisting1')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CATEGORIZATION-->
-<tr>
-	<td>CATEGORIZATION_TOGGLE</td>
-	<td>//div[@class='panel-toggle' and contains(.,'Categorization')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CATEGORIZATION_TAG-->
-<tr>
-	<td>CATEGORIZATION_TAG</td>
-	<td>//div[contains(@class,'lfr-tags-selector-content')]//span[contains(.,'${key_tagName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_TAG_REMOVE</td>
-	<td>//li[contains(.,'${key_tagName}')]//i[contains(@class,'icon') and contains(@class,'icon-remove')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_TAGS_FIELD</td>
-	<td>//input[@title='Add Tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_TAG_AUTOCOMPLETE</td>
-	<td>//div[contains(@class,'autocomplete-results-content')]//li[contains(.,'${key_tagName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_TAGS_ADD_BUTTON</td>
-	<td>//button[@title='Add Tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_TAGS_SELECT_BUTTON</td>
-	<td>//button[@title='Select Tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_TAGS_SUGGESTIONS_BUTTON</td>
-	<td>//button[@title='Suggestions']</td>
 	<td></td>
 </tr>
 </tbody>

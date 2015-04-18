@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEWABLE_AS_SELECT</td>
 	<td>//select[contains(@id,'_inputPermissionsViewRole')]</td>
 	<td></td>
@@ -81,6 +91,11 @@
 <tr>
 	<td>GUEST_PERMISSIONS_CHECKBOX</td>
 	<td>//tr[contains(.,'Guest')]//input[@value='PERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_REPLY_TO_MESSAGE_CHECKBOX</td>
+	<td>//tr[contains(.,'Guest')]/input[contains(@type,'checkbox') and contains(@name,'ACTION_REPLY_TO_MESSAGE')]</td>
 	<td></td>
 </tr>
 <tr>

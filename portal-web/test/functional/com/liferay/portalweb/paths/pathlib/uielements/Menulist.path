@@ -184,6 +184,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCK_THREAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Lock Thread')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td></td>
@@ -274,6 +279,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESTORE</td>
+	<td>//a[@role='menuitem' and contains(.,'Restore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS</td>
+	<td>//a[@role='menuitem' and contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SALES_PRESENTATION</td>
 	<td>//a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
 	<td></td>
@@ -336,6 +351,16 @@
 <tr>
 	<td>TEMPLATES</td>
 	<td>//a[@role='menuitem' and contains(.,'Templates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNLOCK_THREAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Unlock Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNSUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Unsubscribe')]</td>
 	<td></td>
 </tr>
 <tr>

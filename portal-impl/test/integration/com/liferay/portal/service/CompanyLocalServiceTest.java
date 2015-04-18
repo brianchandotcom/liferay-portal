@@ -554,7 +554,7 @@ public class CompanyLocalServiceTest {
 		throws Exception {
 
 		return UserTestUtil.addUser(
-			companyId, userId, RandomTestUtil.randomString(), false,
+			companyId, userId, RandomTestUtil.randomString(),
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new long[] {groupId},
 			serviceContext);

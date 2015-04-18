@@ -57,11 +57,11 @@ public class SocialRelationLocalServiceTest {
 		// Users
 
 		for (int i = 0; i < 9; i++) {
-			_dlcUsers[i] = UserTestUtil.addUser("dlc" + (i + 1), false, null);
+			_dlcUsers[i] = UserTestUtil.addUser("dlc" + (i + 1), null);
 		}
 
 		for (int i = 0; i < 9; i++) {
-			_fraUsers[i] = UserTestUtil.addUser("fra" + (i + 1), false, null);
+			_fraUsers[i] = UserTestUtil.addUser("fra" + (i + 1), null);
 		}
 
 		// Friend

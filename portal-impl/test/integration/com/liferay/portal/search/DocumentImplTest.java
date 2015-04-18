@@ -107,7 +107,7 @@ public class DocumentImplTest {
 				"user", StringPool.BLANK);
 
 			User user = UserTestUtil.addUser(
-				screenName, false, firstName, "Smith", null);
+				screenName, firstName, "Smith", null);
 
 			_indexer.reindex(user);
 		}

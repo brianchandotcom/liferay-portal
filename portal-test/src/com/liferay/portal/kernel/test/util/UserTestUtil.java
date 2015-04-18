@@ -189,15 +189,15 @@ public class UserTestUtil {
 	public static User addUser(long groupId, Locale locale) throws Exception {
 		return addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), false, locale,
+			RandomTestUtil.randomString(), locale,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {groupId}, ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(
-			long companyId, long userId, String screenName,
-			boolean autoScreenName, Locale locale, String firstName,
-			String lastName, long[] groupIds, ServiceContext serviceContext)
+			long companyId, long userId, String screenName, Locale locale,
+			String firstName, String lastName, long[] groupIds,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.fetchUserByScreenName(
@@ -230,56 +230,48 @@ public class UserTestUtil {
 
 		return UserLocalServiceUtil.addUser(
 			userId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			Validator.isNull(screenName), screenName, emailAddress, facebookId,
+			openId, locale, firstName, middleName, lastName, prefixId, suffixId,
+			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
 	}
 
 	public static User addUser(
-			String screenName, boolean autoScreenName, Locale locale,
-			String firstName, String lastName, long[] groupIds)
+			String screenName, Locale locale, String firstName, String lastName,
+			long[] groupIds)
 		throws Exception {
 
 		return addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			screenName, autoScreenName, locale, firstName, lastName, groupIds,
+			screenName, locale, firstName, lastName, groupIds,
 			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static User addUser(
-			String screenName, boolean autoScreenName, long[] groupIds)
-		throws Exception {
-
-		return addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			screenName, autoScreenName, LocaleUtil.getDefault(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			groupIds, ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static User addUser(
-			String screenName, boolean autoScreenName, String firstName,
-			String lastName, long[] groupIds)
-		throws Exception {
-
-		return addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			screenName, autoScreenName, LocaleUtil.getDefault(), firstName,
-			lastName, groupIds, ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User addUser(String screenName, long groupId)
 		throws Exception {
 
-		boolean autoScreenName = false;
+		return addUser(screenName, new long[] {groupId});
+	}
 
-		if (Validator.isNull(screenName)) {
-			screenName = null;
-			autoScreenName = true;
-		}
+	public static User addUser(String screenName, long[] groupIds)
+		throws Exception {
 
-		return addUser(screenName, autoScreenName, new long[] {groupId});
+		return addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			screenName, LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), groupIds,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static User addUser(
+			String screenName, String firstName, String lastName,
+			long[] groupIds)
+		throws Exception {
+
+		return addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			screenName, LocaleUtil.getDefault(), firstName, lastName, groupIds,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static User getAdminUser(long companyId) throws PortalException {

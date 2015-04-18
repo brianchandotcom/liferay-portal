@@ -194,8 +194,8 @@ public class I18nFilterTest {
 
 		if (userLocale != null) {
 			User user = UserTestUtil.addUser(
-				RandomTestUtil.randomString(), true, userLocale,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, userLocale, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
 				new long[] {_group.getGroupId()});
 
 			_mockHttpServletRequest.setAttribute(WebKeys.USER, user);

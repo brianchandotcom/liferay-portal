@@ -14,10 +14,15 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.exception.BulkException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.model.LayoutVerifiableModel;
 import com.liferay.portal.verify.model.VerifiableUUIDModel;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
@@ -42,6 +47,17 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		VerifyUUID.verify(new LayoutVerifiableModel());
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog =
+					"Unable to process runnable: Unknown column 'Unknown' " +
+						"in 'field list'",
+				expectedType = ExpectedType.EXACT
+			)
+		},
+		level = "ERROR", loggerClass = ThrowableAwareRunnable.class
+	)
 	@Test(expected = BulkException.class)
 	public void testVerifyModelWithUnknownPKColumnName() throws Exception {
 		VerifyUUID.verify(
@@ -60,6 +76,54 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			});
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog =
+					"Unable to process runnable: Table ",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "ERROR", loggerClass = ThrowableAwareRunnable.class
+	)
+	@Test(expected = BulkException.class)
+	public void testVerifyParallelUnknownModelWithUnknownPKColumnName()
+		throws Exception {
+
+		int modelCount = PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD;
+
+		VerifiableUUIDModel[] verifiableUUIDModels =
+			new VerifiableUUIDModel[modelCount];
+
+		for (int i = 0; i < modelCount; i++) {
+			verifiableUUIDModels[i] = new VerifiableUUIDModel() {
+
+				@Override
+				public String getPrimaryKeyColumnName() {
+					return _UNKNOWN;
+				}
+
+				@Override
+				public String getTableName() {
+					return _UNKNOWN;
+				}
+
+			};
+		}
+
+		VerifyUUID.verify(verifiableUUIDModels);
+	}
+
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog =
+					"Unable to process runnable: Table ",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "ERROR", loggerClass = ThrowableAwareRunnable.class
+	)
 	@Test(expected = BulkException.class)
 	public void testVerifyUnknownModelWithUnknownPKColumnName()
 		throws Exception {

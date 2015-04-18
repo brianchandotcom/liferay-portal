@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.exception;
 
+import com.liferay.portal.kernel.util.StackTraceUtil;
+
+import java.io.PrintStream;
 import java.util.Collection;
 
 /**
@@ -29,6 +32,29 @@ public class BulkException extends Exception {
 
 	public Collection<Throwable> getCauses() {
 		return _causes;
+	}
+
+	@Override
+	public String getMessage() {
+		StringBuilder sb = new StringBuilder(7 * _causes.size() + 4);
+
+		sb.append("{BulkException.message = ");
+		sb.append(super.getMessage());
+		sb.append("\n");
+
+		for (Throwable cause : _causes) {
+			sb.append("{");
+			sb.append(cause.getClass().getName());
+			sb.append(":");
+			sb.append(cause.getMessage());
+			sb.append(", ");
+			sb.append(StackTraceUtil.getStackTrace(cause));
+			sb.append("}\n");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final Collection<Throwable> _causes;

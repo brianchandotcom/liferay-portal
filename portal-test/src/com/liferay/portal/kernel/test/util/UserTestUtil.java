@@ -261,17 +261,6 @@ public class UserTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public static User addUser(
-			String screenName, String firstName, String lastName,
-			long[] groupIds)
-		throws Exception {
-
-		return addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			screenName, LocaleUtil.getDefault(), firstName, lastName, groupIds,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
 	public static User getAdminUser(long companyId) throws PortalException {
 		Role role = RoleLocalServiceUtil.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);

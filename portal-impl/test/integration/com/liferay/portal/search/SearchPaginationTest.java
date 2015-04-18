@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -76,8 +77,9 @@ public class SearchPaginationTest {
 
 		for (int i = 0; i < _USERS_COUNT; i ++) {
 			User user = UserTestUtil.addUser(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				_randomLastName, new long[] {TestPropsValues.getGroupId()});
+				RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+				RandomTestUtil.randomString(), _randomLastName,
+				new long[] {TestPropsValues.getGroupId()});
 
 			_users.add(user);
 		}

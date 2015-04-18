@@ -251,17 +251,7 @@ public class UserTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public static User addUser(String screenName, long groupId)
-		throws Exception {
-
-		return addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			screenName, LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new long[] {groupId},
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static User addUser(String screenName, long[] groupIds)
+	public static User addUser(String screenName, long... groupIds)
 		throws Exception {
 
 		return addUser(

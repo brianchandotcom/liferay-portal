@@ -1,15 +1,17 @@
-.taglib-diff-html span {
-	&.diff-html-added img, &.diff-html-removed img {
-		border: 2px solid transparent;
-	}
-
-	&.diff-html-changed img {
-		border: 2px dotted transparent;
-	}
-}
-
 .taglib-diff-html {
-	div.diff-removed-imagei, div.diff-added-image {
+	span {
+		&.diff-html-added, &.diff-html-removed {
+			img {
+				border: 2px solid transparent;
+			}
+		}
+
+		&.diff-html-changed img {
+			border: 2px dotted transparent;
+		}
+	}
+
+	div.diff-added-image, div.diff-removed-image {
 		height: 300px;
 		margin: 2px;
 		position: absolute;

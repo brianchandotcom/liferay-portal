@@ -26,9 +26,6 @@ CommentSectionDisplayContext commentSectionDisplayContext = new MBCommentSection
 
 MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(discussionTaglibHelper.getUserId(), scopeGroupId, discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
 
-MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-MBMessage rootMessage = treeWalker.getRoot();
-
 Comment rootComment = commentSectionDisplayContext.getRootComment();
 %>
 
@@ -160,16 +157,16 @@ Comment rootComment = commentSectionDisplayContext.getRootComment();
 						List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(discussionTaglibHelper.getUserId(), MBDiscussion.class.getName(), classPKs);
 						List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDiscussion.class.getName(), classPKs);
 
-						int[] range = treeWalker.getChildrenRange(rootMessage);
-
 						int index = 0;
 						int rootIndexPage = 0;
 						boolean moreCommentsPagination = false;
 
-						for (int j = range[0]; j < range[1]; j++) {
+						CommentIterator commentIterator = rootComment.getThreadCommentsIterator();
+
+						while (commentIterator.hasNext()) {
 							index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"), 1);
 
-							rootIndexPage = j;
+							rootIndexPage = commentIterator.getIndexPage();
 
 							if ((index + 1) > PropsValues.DISCUSSION_COMMENTS_DELTA_VALUE) {
 								moreCommentsPagination = true;
@@ -177,7 +174,7 @@ Comment rootComment = commentSectionDisplayContext.getRootComment();
 								break;
 							}
 
-							comment = comments.get(j);
+							comment = commentIterator.next();
 
 							request.setAttribute("liferay-ui:discussion:currentComment", comment);
 							request.setAttribute("liferay-ui:discussion:messageDisplay", messageDisplay);

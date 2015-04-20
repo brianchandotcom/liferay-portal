@@ -14,41 +14,13 @@
 
 package com.liferay.portal.kernel.comment;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.User;
-
-import java.util.Date;
-import java.util.List;
+import java.util.Iterator;
 
 /**
  * @author Adolfo Pérez
  */
-public interface Comment {
+public interface CommentIterator extends Iterator<Comment> {
 
-	public String getBody();
-
-	public long getCommentId();
-
-	public Date getCreateDate();
-
-	public Date getModifiedDate();
-
-	public Comment getParentComment() throws PortalException;
-
-	public long getParentCommentId();
-
-	public List<Comment> getThreadComments();
-
-	public CommentIterator getThreadCommentsIterator();
-
-	public String getTranslatedBody();
-
-	public User getUser() throws PortalException;
-
-	public long getUserId();
-
-	public String getUserName();
-
-	public boolean isRoot();
+	public int getIndexPage();
 
 }

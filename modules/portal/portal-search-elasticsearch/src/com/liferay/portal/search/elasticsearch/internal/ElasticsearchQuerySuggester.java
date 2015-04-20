@@ -70,7 +70,7 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 		SuggestBuilder.SuggestionBuilder<TermSuggestionBuilder>
 			suggestionBuilder = SuggestBuilders.termSuggestion(
-			_REQUEST_TYPE_SPELL_CHECK);
+				_REQUEST_TYPE_SPELL_CHECK);
 
 		Suggest.Suggestion<?> suggestion = getSuggestion(
 			searchContext, suggestionBuilder, DocumentTypes.SPELL_CHECK,

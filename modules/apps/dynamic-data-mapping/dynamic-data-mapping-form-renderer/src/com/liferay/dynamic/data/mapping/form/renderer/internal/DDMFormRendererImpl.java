@@ -14,27 +14,33 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
-import aQute.bnd.annotation.component.Deactivate;
-
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.Writer;
 
 import java.net.URL;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -53,23 +59,27 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	public String render(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
-		throws PortalException {
+		throws DDMFormRenderingException {
 
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
+		try {
+			return doRender(ddmForm, ddmFormLayout, ddmFormRenderingContext);
+		}
+		catch (TemplateException te) {
+			throw new DDMFormRenderingException(te);
+		}
+	}
 
-		template.put(TemplateConstants.NAMESPACE, "ddm.pages");
+	@Override
+	public String render(
+			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
+		throws DDMFormRenderingException {
 
-		Map<String, String> renderedDDMFormFieldsMap =
-			getRenderedDDMFormFieldsMap(ddmForm, ddmFormRenderingContext);
-
-		List<Object> pages = getPages(
-			ddmFormLayout, renderedDDMFormFieldsMap,
-			ddmFormRenderingContext.getLocale());
-
-		template.put("pages", pages);
-
-		return render(template);
+		try {
+			return doRender(ddmForm, ddmFormRenderingContext);
+		}
+		catch (TemplateException te) {
+			throw new DDMFormRenderingException(te);
+		}
 	}
 
 	@Activate
@@ -79,25 +89,58 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		_templateResource = getTemplateResource(templatePath);
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_templateResource = null;
+	protected String doRender(
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			DDMFormRenderingContext ddmFormRenderingContext)
+		throws DDMFormRenderingException, TemplateException {
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
+
+		template.put(TemplateConstants.NAMESPACE, "ddm.multi_page_form");
+
+		populateCommonContext(template, ddmForm, ddmFormRenderingContext);
+
+		List<Object> pages = getPages(
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
+
+		template.put("pages", pages);
+
+		return render(template);
+	}
+
+	protected List<String> getFields(
+			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
+		throws DDMFormRenderingException {
+
+		Map<String, String> renderedDDMFormFieldsMap =
+			getRenderedDDMFormFieldsMap(ddmForm, ddmFormRenderingContext);
+
+		DDMFormTransformer ddmFormTransformer = new DDMFormTransformer(
+			ddmForm, renderedDDMFormFieldsMap);
+
+		return ddmFormTransformer.getFields();
 	}
 
 	protected List<Object> getPages(
-		DDMFormLayout ddmFormLayout,
-		Map<String, String> renderedDDMFormFieldsMap, Locale locale) {
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			DDMFormRenderingContext ddmFormRenderingContext)
+		throws DDMFormRenderingException {
+
+		Map<String, String> renderedDDMFormFieldsMap =
+			getRenderedDDMFormFieldsMap(ddmForm, ddmFormRenderingContext);
 
 		DDMFormLayoutTransformer ddmFormLayoutTransformer =
 			new DDMFormLayoutTransformer(
-				ddmFormLayout, renderedDDMFormFieldsMap, locale);
+				ddmFormLayout, renderedDDMFormFieldsMap,
+				ddmFormRenderingContext.getLocale());
 
 		return ddmFormLayoutTransformer.getPages();
 	}
 
 	protected Map<String, String> getRenderedDDMFormFieldsMap(
 			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
-		throws PortalException {
+		throws DDMFormRenderingException {
 
 		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
 			ddmForm, ddmFormRenderingContext);
@@ -115,12 +158,61 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return new URLTemplateResource(templateURL.getPath(), templateURL);
 	}
 
-	protected String render(Template template) throws PortalException {
+	protected void populateCommonContext(
+			Template template, DDMForm ddmForm,
+			DDMFormRenderingContext ddmFormRenderingContext)
+		throws DDMFormRenderingException {
+
+		template.put("containerId", StringUtil.randomId());
+		template.put(
+			"definition", DDMFormJSONSerializerUtil.serialize(ddmForm));
+
+		List<DDMFormFieldType> ddmFormFieldTypes =
+			DDMFormFieldTypeRegistryUtil.getDDMFormFieldTypes();
+
+		template.put(
+			"fieldTypes",
+			DDMFormFieldTypesJSONSerializerUtil.serialize(ddmFormFieldTypes));
+		template.put(
+			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
+
+		DDMFormValues ddmFormValues =
+			ddmFormRenderingContext.getDDMFormValues();
+
+		if (ddmFormValues != null) {
+			template.put(
+				"values",
+				DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues));
+		}
+		else {
+			template.put("values", JSONFactoryUtil.getNullJSON());
+		}
+	}
+
+	protected String render(Template template) throws TemplateException {
 		Writer writer = new UnsyncStringWriter();
 
 		template.processTemplate(writer);
 
 		return writer.toString();
+	}
+
+	private String doRender(
+			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
+		throws DDMFormRenderingException, TemplateException {
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
+
+		template.put(TemplateConstants.NAMESPACE, "ddm.single_page_form");
+
+		populateCommonContext(template, ddmForm, ddmFormRenderingContext);
+
+		List<String> fields = getFields(ddmForm, ddmFormRenderingContext);
+
+		template.put("fields", fields);
+
+		return render(template);
 	}
 
 	private TemplateResource _templateResource;

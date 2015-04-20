@@ -194,7 +194,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	protected static void processErrorMessage(String fileName, String message) {
+	protected void processErrorMessage(String fileName, String message) {
 		List<String> errorMessages = _errorMessagesMap.get(fileName);
 
 		if (errorMessages == null) {
@@ -765,10 +765,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			List<String> testAnnotationsExclusionFiles)
 		throws Exception {
 
+		JavaSourceProcessor javaSourceProcessor = null;
+
+		if (this instanceof JavaSourceProcessor) {
+			javaSourceProcessor = (JavaSourceProcessor)this;
+		}
+		else {
+			javaSourceProcessor = new JavaSourceProcessor();
+
+			javaSourceProcessor.setSourceFormatterBean(
+				getSourceFormatterBean());
+		}
+
 		JavaClass javaClass = new JavaClass(
 			javaClassName, packagePath, file, fileName, absolutePath,
 			javaClassContent, javaClassLineCount, StringPool.TAB, null,
-			javaTermAccessLevelModifierExclusionFiles);
+			javaTermAccessLevelModifierExclusionFiles, javaSourceProcessor);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(
 			getAnnotationsExclusions(), getImmutableFieldTypes(),
@@ -1716,12 +1728,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private static Map<String, List<String>> _errorMessagesMap =
-		new HashMap<String, List<String>>();
 
 	private Set<String> _annotationsExclusions;
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
+	private Map<String, List<String>> _errorMessagesMap = new HashMap<>();
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;

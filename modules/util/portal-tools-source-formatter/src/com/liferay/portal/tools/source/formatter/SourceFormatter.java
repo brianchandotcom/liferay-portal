@@ -17,11 +17,13 @@ package com.liferay.portal.tools.source.formatter;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Hugo Huijser
@@ -52,92 +54,41 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
-		final AtomicReference<Throwable> exceptionReference1 =
-			new AtomicReference<Throwable>();
+		List<SourceProcessor> sourceProcessors = new ArrayList<>();
 
-		Thread thread1 = new Thread () {
+		sourceProcessors.add(new CSSSourceProcessor());
+		sourceProcessors.add(new FTLSourceProcessor());
+		sourceProcessors.add(new JavaSourceProcessor());
+		sourceProcessors.add(new JSPSourceProcessor());
+		sourceProcessors.add(new JSSourceProcessor());
+		sourceProcessors.add(new PropertiesSourceProcessor());
+		sourceProcessors.add(new SHSourceProcessor());
+		sourceProcessors.add(new SQLSourceProcessor());
+		sourceProcessors.add(new TLDSourceProcessor());
+		sourceProcessors.add(new XMLSourceProcessor());
 
-			@Override
-			public void run() {
-				try {
-					List<SourceProcessor> sourceProcessors =
-						new ArrayList<SourceProcessor>();
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			sourceProcessors.size());
 
-					sourceProcessors.add(
-						CSSSourceProcessor.class.newInstance());
-					sourceProcessors.add(
-						FTLSourceProcessor.class.newInstance());
-					sourceProcessors.add(
-						JSPSourceProcessor.class.newInstance());
-					sourceProcessors.add(JSSourceProcessor.class.newInstance());
-					sourceProcessors.add(
-						PropertiesSourceProcessor.class.newInstance());
-					sourceProcessors.add(SHSourceProcessor.class.newInstance());
-					sourceProcessors.add(
-						SQLSourceProcessor.class.newInstance());
-					sourceProcessors.add(
-						TLDSourceProcessor.class.newInstance());
+		for (final SourceProcessor sourceProcessor : sourceProcessors) {
+			executorService.submit(
+				new Callable<Void>() {
 
-					for (SourceProcessor sourceProcessor : sourceProcessors) {
+					@Override
+					public Void call() throws Exception {
 						_runSourceProcessor(sourceProcessor);
+
+						return null;
 					}
+
 				}
-				catch (Throwable t) {
-					t.printStackTrace();
-
-					exceptionReference1.set(t);
-				}
-			}
-
-		};
-
-		final AtomicReference<Throwable> exceptionReference2 =
-			new AtomicReference<Throwable>();
-
-		Thread thread2 = new Thread () {
-
-			@Override
-			public void run() {
-				try {
-					List<SourceProcessor> sourceProcessors =
-						new ArrayList<SourceProcessor>();
-
-					sourceProcessors.add(
-						JavaSourceProcessor.class.newInstance());
-					sourceProcessors.add(
-						XMLSourceProcessor.class.newInstance());
-
-					for (SourceProcessor sourceProcessor : sourceProcessors) {
-						_runSourceProcessor(sourceProcessor);
-					}
-				}
-				catch (Throwable t) {
-					t.printStackTrace();
-
-					exceptionReference2.set(t);
-				}
-			}
-
-		};
-
-		thread1.start();
-		thread2.start();
-
-		thread1.join();
-		thread2.join();
-
-		Throwable throwable1 = exceptionReference1.get();
-		Throwable throwable2 = exceptionReference2.get();
-
-		if (throwable1 != null) {
-			if (throwable2 != null) {
-				throwable1.addSuppressed(throwable2);
-			}
-
-			throw throwable1;
+			);
 		}
-		else if (throwable2 != null) {
-			throw throwable2;
+
+		executorService.shutdown();
+
+		while (!executorService.isTerminated()) {
+			Thread.sleep(20);
 		}
 
 		if (_sourceFormatterBean.isThrowException()) {
@@ -183,8 +134,8 @@ public class SourceFormatter {
 		}
 	}
 
-	private final Set<String> _errorMessages = new LinkedHashSet<String>();
-	private SourceMismatchException _firstSourceMismatchException;
+	private final Set<String> _errorMessages = new ConcurrentSkipListSet<>();
+	private volatile SourceMismatchException _firstSourceMismatchException;
 	private final List<String> _processedFiles = new CopyOnWriteArrayList<>();
 	private final SourceFormatterBean _sourceFormatterBean;
 

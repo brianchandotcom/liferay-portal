@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.workflow;
+package com.liferay.workflowinstance;
 
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.workflow.WorkflowControlPanelEntry;
 
 /**
  * @author Miguel Pastor

@@ -121,6 +121,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _firstSourceMismatchException;
 	}
 
+	@Override
+	public SourceFormatterBean getSourceFormatterBean() {
+		return _sourceFormatterBean;
+	}
+
+	@Override
+	public void setSourceFormatterBean(
+		SourceFormatterBean sourceFormatterBean) {
+
+		_sourceFormatterBean = sourceFormatterBean;
+
+		_init();
+	}
+
 	protected static boolean isExcludedFile(
 		List<String> exclusionFiles, String absolutePath) {
 
@@ -518,7 +532,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		throws IOException {
 
 		if (_copyright == null) {
-			_copyright = getContent("copyright.txt", 4);
+			_copyright = getContent(_sourceFormatterBean.getCopyright(), 4);
 		}
 
 		String copyright = _copyright;
@@ -814,7 +828,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			"**\\portal-compat-shared\\src\\com\\liferay\\compat\\**\\*.java"
 		};
 
-		String basedir = BASEDIR;
+		String basedir = _sourceFormatterBean.getBaseDir();
 
 		List<String> fileNames = new ArrayList<String>();
 
@@ -931,7 +945,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected List<String> getFileNames(String[] excludes, String[] includes) {
-		return getFileNames(BASEDIR, excludes, includes);
+		return getFileNames(
+			_sourceFormatterBean.getBaseDir(), excludes, includes);
 	}
 
 	protected Set<String> getImmutableFieldTypes() {
@@ -1027,7 +1042,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		int pos = fileName.indexOf("/docroot/");
 
-		sb.append(BASEDIR);
+		sb.append(_sourceFormatterBean.getBaseDir());
 
 		if (pos != -1) {
 			sb.append(fileName.substring(0, pos + 9));
@@ -1198,7 +1213,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String content, String newContent)
 		throws IOException {
 
-		if (_printErrors) {
+		if (_sourceFormatterBean.isPrintErrors()) {
 			List<String> errorMessages = _errorMessagesMap.get(fileName);
 
 			if (errorMessages != null) {
@@ -1212,15 +1227,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		if (_autoFix) {
-			fileUtil.write(file, newContent);
+		if (_sourceFormatterBean.isAutoFix()) {
+			FileUtils.writeStringToFile(file, newContent);
 		}
 		else if (_firstSourceMismatchException == null) {
 			_firstSourceMismatchException = new SourceMismatchException(
 				fileName, content, newContent);
 		}
 
-		if (_printErrors) {
+		if (_sourceFormatterBean.isPrintErrors()) {
 			sourceFormatterHelper.printError(fileName, file);
 		}
 	}
@@ -1681,15 +1696,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_errorMessagesMap = new HashMap<String, List<String>>();
 
-		sourceFormatterHelper = new SourceFormatterHelper(useProperties);
+		sourceFormatterHelper = new SourceFormatterHelper(
+			_sourceFormatterBean.isUseProperties());
 
-		sourceFormatterHelper.init();
-
-		_autoFix = autoFix;
+		try {
+			sourceFormatterHelper.init();
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
+		}
 
 		_excludes = _getExcludes();
-
-		_printErrors = printErrors;
 
 		_usePortalCompatImport = GetterUtil.getBoolean(
 			getProperty("use.portal.compat.import"));
@@ -1706,10 +1723,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private static Map<String, List<String>> _errorMessagesMap =
 		new HashMap<String, List<String>>();
-	private static boolean _printErrors;
 
 	private Set<String> _annotationsExclusions;
-	private boolean _autoFix;
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
 	private String[] _excludes;
@@ -1720,6 +1735,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _portalLanguageProperties;
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusionPaths;
+	private SourceFormatterBean _sourceFormatterBean;
 	private boolean _usePortalCompatImport;
 
 }

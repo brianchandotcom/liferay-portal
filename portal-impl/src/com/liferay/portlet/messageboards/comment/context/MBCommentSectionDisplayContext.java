@@ -97,6 +97,13 @@ public class MBCommentSectionDisplayContext
 		return (getMessagesCount() > 1) || hasViewPermission();
 	}
 
+	@Override
+	public boolean isMessageThreadVisible() throws PortalException {
+		List<MBMessage> messages = getMessages();
+
+		return messages.size() > 1;
+	}
+
 	protected MBMessageDisplay getMBMessageDisplay() throws PortalException {
 		if (_discussionMessageDisplay == null) {
 			_discussionMessageDisplay =
@@ -110,6 +117,12 @@ public class MBCommentSectionDisplayContext
 		}
 
 		return _discussionMessageDisplay;
+	}
+
+	protected List<MBMessage> getMessages() throws PortalException {
+		MBTreeWalker treeWalker = getTreeWalker();
+
+		return treeWalker.getMessages();
 	}
 
 	protected int getMessagesCount() throws PortalException {

@@ -29,7 +29,6 @@ MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessage
 MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
 List<MBMessage> messages = treeWalker.getMessages();
-int messagesCount = messages.size();
 %>
 
 <section>
@@ -141,7 +140,7 @@ int messagesCount = messages.size();
 					</aui:fieldset>
 				</c:if>
 
-				<c:if test="<%= messagesCount > 1 %>">
+				<c:if test="<%= commentSectionDisplayContext.isMessageThreadVisible() %>">
 					<a name="<%= randomNamespace %>messages_top"></a>
 
 					<aui:row>

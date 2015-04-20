@@ -31,4 +31,6 @@ public interface CommentSectionDisplayContext {
 
 	public boolean isDiscussionVisible() throws PortalException;
 
+	public boolean isMessageThreadVisible() throws PortalException;
+
 }

@@ -52,17 +52,15 @@ public class FormNavigatorEntryUtil {
 
 		List<FormNavigatorEntry<T>> formNavigatorEntries = new ArrayList<>();
 
-		List<FormNavigatorCategory> formNavigatorCategories =
-			FormNavigatorCategoryUtil.getFormNavigatorCategories(
-				formNavigatorId);
+		String[] categoryKeys = FormNavigatorCategoryUtil.getKeys(
+			formNavigatorId);
 
-		for (FormNavigatorCategory formNavigatorCategory :
-				formNavigatorCategories) {
+		for (String categoryKey : categoryKeys) {
 
 			@SuppressWarnings("rawtypes")
 			List<FormNavigatorEntry<T>> curFormNavigatorEntries =
 				(List)_instance._formNavigatorEntries.getService(
-					_getKey(formNavigatorId, formNavigatorCategory.getKey()));
+					_getKey(formNavigatorId, categoryKey));
 
 			if (curFormNavigatorEntries != null) {
 				formNavigatorEntries.addAll(curFormNavigatorEntries);

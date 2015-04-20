@@ -8,6 +8,11 @@
 <tr><td rowspan="1" colspan="3">Language</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--LANGUAGE_MENU-->
 <tr>
 	<td>LANGUAGE_MENU_ARABIC</td>

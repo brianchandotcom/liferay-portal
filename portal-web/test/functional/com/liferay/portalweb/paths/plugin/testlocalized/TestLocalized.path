@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHINESE_LOCALIZATION</td>
 	<td>//div[@class='portlet-body']/a[1]</td>
 	<td></td>

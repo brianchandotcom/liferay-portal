@@ -17,112 +17,73 @@
 <%@ include file="/html/portlet/export_import/init.jsp" %>
 
 <%
+BackgroundTaskDisplay backgroundTaskDisplay = (BackgroundTaskDisplay)request.getAttribute("backgroundTaskDisplay");
+
 long backgroundTaskId = ParamUtil.getLong(request, "backgroundTaskId");
 
 BackgroundTask backgroundTask = BackgroundTaskLocalServiceUtil.fetchBackgroundTask(backgroundTaskId);
 
-JSONObject jsonObject = null;
+String backgroundTaskStatusMessage = backgroundTask.getStatusMessage();
 
-try {
-	jsonObject = JSONFactoryUtil.createJSONObject(backgroundTask.getStatusMessage());
-}
-catch (Exception e) {
-}
+int backgroundTaskStatus = backgroundTask.getStatus();
 %>
 
 <c:choose>
-	<c:when test="<%= jsonObject == null %>">
-		<div class="alert <%= backgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED ? "alert-danger" : StringPool.BLANK %> publish-error">
-			<liferay-ui:message arguments="<%= backgroundTask.getStatusMessage() %>" key="unable-to-execute-process-x" translateArguments="<%= false %>" />
+	<c:when test="<%= !backgroundTaskDisplay.hasDetails() %>">
+		<div class="alert <%= backgroundTaskStatus == BackgroundTaskConstants.STATUS_FAILED ? "alert-danger" : StringPool.BLANK %> publish-error">
+			<liferay-ui:message arguments="<%= backgroundTaskStatusMessage %>" key="unable-to-execute-process-x" translateArguments="<%= false %>" />
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-danger publish-error">
-			<h4 class="upload-error-message">
-
-				<%
-				boolean exported = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "exported");
-				boolean validated = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "validated");
-				%>
-
-				<c:choose>
-					<c:when test="<%= exported && !validated %>">
-						<liferay-ui:message key="the-publication-process-did-not-start-due-to-validation-errors" /></h4>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="an-unexpected-error-occurred-with-the-publication-process.-please-check-your-portal-and-publishing-configuration" /></h4>
-					</c:otherwise>
-				</c:choose>
-
-			<span class="error-message"><%= HtmlUtil.escape(jsonObject.getString("message")) %></span>
-
-			<%
-			JSONArray messageListItemsJSONArray = jsonObject.getJSONArray("messageListItems");
-			%>
-
-			<c:if test="<%= (messageListItemsJSONArray != null) && (messageListItemsJSONArray.length() > 0) %>">
-				<ul class="error-list-items">
-
-					<%
-					for (int i = 0; i < messageListItemsJSONArray.length(); i++) {
-						JSONObject messageListItemJSONArray = messageListItemsJSONArray.getJSONObject(i);
-
-						String info = messageListItemJSONArray.getString("info");
-					%>
-
-						<li>
-							<%= messageListItemJSONArray.getString("type") %>
-
-							<%= messageListItemJSONArray.getString("site") %>:
-
-							<strong><%= HtmlUtil.escape(messageListItemJSONArray.getString("name")) %></strong>
-
-							<c:if test="<%= Validator.isNotNull(info) %>">
-								<span class="error-info">(<%= HtmlUtil.escape(messageListItemJSONArray.getString("info")) %>)</span>
-							</c:if>
-						</li>
-
-					<%
-					}
-					%>
-
-				</ul>
-			</c:if>
-		</div>
 
 		<%
-		JSONArray warningMessagesJSONArray = jsonObject.getJSONArray("warningMessages");
+		JSONObject details = backgroundTaskDisplay.getDetails();
+
+		String detailsHeader = details.getString("detailHeader");
 		%>
 
-		<c:if test="<%= (warningMessagesJSONArray != null) && (warningMessagesJSONArray.length() > 0) %>">
-			<div class="alert upload-error">
-				<span class="error-message"><liferay-ui:message key='<%= ((messageListItemsJSONArray != null) && (messageListItemsJSONArray.length() > 0)) ? "consider-that-the-following-data-would-not-have-been-published-either" : "the-following-data-has-not-been-published" %>' /></span>
+		<div class="alert alert-danger publish-error">
+			<h4 class="upload-error-message">
+				<liferay-ui:message key="<%= detailsHeader %>" localizeKey="<%= false %>" />
+			</h4>
 
-				<ul class="error-list-items">
+			<%
+			JSONArray detailItems = details.getJSONArray("detailItems");
 
-					<%
-					for (int i = 0; i < warningMessagesJSONArray.length(); i++) {
-						JSONObject warningMessageJSONArray = warningMessagesJSONArray.getJSONObject(i);
+			for (int i=0; i < detailItems.length(); i++ ) {
+				JSONObject jsonObject = detailItems.getJSONObject(i);
+			%>
 
-						String info = warningMessageJSONArray.getString("info");
-					%>
+			<span class="error-message">
+				<%= HtmlUtil.escape(jsonObject.getString("message")) %>
+			</span>
 
-						<li>
-							<%= warningMessageJSONArray.getString("type") %>:
+			<ul class="error-list-items">
 
-							<strong><%= warningMessageJSONArray.getString("size") %></strong>
+				<%
+				JSONArray messageListItemsJSONArray = jsonObject.getJSONArray("itemsList");
 
-							<c:if test="<%= Validator.isNotNull(info) %>">
-								<span class="error-info">(<%= HtmlUtil.escape(warningMessageJSONArray.getString("info")) %>)</span>
-							</c:if>
-						</li>
+				for (int j = 0; j < messageListItemsJSONArray.length(); j++) {
+					JSONObject messageListItemJSONArray = messageListItemsJSONArray.getJSONObject(j);
 
-					<%
+					String info = messageListItemJSONArray.getString("info");
+				%>
+
+					<li>
+						<%= messageListItemJSONArray.getString("itemMessage") %>:
+
+						<strong><%= HtmlUtil.escape(messageListItemJSONArray.getString("strongItemMessage")) %></strong>
+
+						<c:if test="<%= Validator.isNotNull(info) %>">
+							<span class="error-info">(<%= HtmlUtil.escape(info) %>)</span>
+						</c:if>
+					</li>
+
+				<%
 					}
-					%>
+				}
+				%>
 
-				</ul>
-			</div>
-		</c:if>
+			</ul>
 	</c:otherwise>
 </c:choose>

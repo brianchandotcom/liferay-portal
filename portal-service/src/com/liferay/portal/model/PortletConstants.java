@@ -15,6 +15,7 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Brian Wing Shun Chan
@@ -99,13 +100,18 @@ public class PortletConstants {
 	 *
 	 * @param  portletId the portlet ID
 	 * @param  userId the user ID
-	 * @param  instanceId an instance ID
+	 * @param  instanceId an instance ID. If null the method will try to obtain
+	 *         the instanceId from the portletId.
 	 * @return the properly assembled portlet ID
 	 */
 	public static String assemblePortletId(
 		String portletId, long userId, String instanceId) {
 
 		String rootPortletId = getRootPortletId(portletId);
+
+		if (Validator.isNull(instanceId)) {
+			instanceId = getInstanceId(portletId);
+		}
 
 		PortletInstance portletInstance = new PortletInstance(
 			rootPortletId, userId, instanceId);

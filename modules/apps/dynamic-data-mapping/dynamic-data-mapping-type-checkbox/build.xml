@@ -5,29 +5,4 @@
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-	<property name="soy.template.name" value="checkbox.soy" />
-
-	<target name="build-javascript-renderer">
-		<delete>
-			<fileset
-				dir="src/META-INF/resources"
-				excludes="*.soy"
-				includes="*.js"
-			/>
-		</delete>
-
-		<java
-			classname="com.google.template.soy.SoyToJsSrcCompiler"
-			classpathref="plugin.classpath"
-			dir="src/META-INF/resources"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<arg value="--srcs" />
-			<arg value="${soy.template.name}" />
-			<arg value="--outputPathFormat" />
-			<arg value="${soy.template.name}.js" />
-		</java>
-	</target>
 </project>

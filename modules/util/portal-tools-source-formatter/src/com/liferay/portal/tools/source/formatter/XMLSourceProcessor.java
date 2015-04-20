@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.ContentUtil;
+import com.liferay.util.xml.XMLFormatter;
 
 import java.io.File;
 
@@ -42,6 +42,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+
+import org.dom4j.Attribute;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 /**
  * @author Hugo Huijser
@@ -72,6 +78,152 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	public static String sortAttributes(String content) throws Exception {
+		XMLSourceProcessor xmlSourceProcessor = new XMLSourceProcessor();
+
+		Document document = xmlSourceProcessor.readXML(content);
+
+		sortAttributes(document.getRootElement(), true);
+
+		return XMLFormatter.toString(document);
+	}
+
+	public static void sortAttributes(Element element, boolean recursive) {
+		Map<String, Attribute> attributesMap = new TreeMap<>();
+
+		List<Attribute> attributes = element.attributes();
+
+		for (Attribute attribute : attributes) {
+			attribute.detach();
+
+			attributesMap.put(attribute.getName(), attribute);
+		}
+
+		for (Map.Entry<String, Attribute> entry : attributesMap.entrySet()) {
+			Attribute attribute = entry.getValue();
+
+			element.add(attribute);
+		}
+
+		if (!recursive) {
+			return;
+		}
+
+		List<Element> elements = element.elements();
+
+		for (Element curElement : elements) {
+			sortAttributes(curElement, recursive);
+		}
+	}
+
+	public static void sortElementsByAttribute(
+		Element element, String elementName, String attributeName) {
+
+		Map<String, Element> elementsMap = new TreeMap<>();
+
+		List<Element> elements = element.elements();
+
+		for (Element curElement : elements) {
+			curElement.detach();
+
+			if (elementName.equals(curElement.getName())) {
+				String attributeValue = curElement.attributeValue(
+					attributeName);
+
+				elementsMap.put(attributeValue, curElement);
+			}
+		}
+
+		for (Element curElement : elements) {
+			if (elementName.equals(curElement.getName())) {
+				break;
+			}
+
+			element.add(curElement);
+		}
+
+		for (Map.Entry<String, Element> entry : elementsMap.entrySet()) {
+			Element curElement = entry.getValue();
+
+			element.add(curElement);
+		}
+
+		boolean foundLastElementWithElementName = false;
+
+		for (int i = 0; i < elements.size(); i++) {
+			Element curElement = elements.get(i);
+
+			if (!foundLastElementWithElementName) {
+				if (elementName.equals(curElement.getName())) {
+					if ((i + 1) < elements.size()) {
+						Element nextElement = elements.get(i + 1);
+
+						if (!elementName.equals(nextElement.getName())) {
+							foundLastElementWithElementName = true;
+						}
+					}
+				}
+			}
+			else {
+				element.add(curElement);
+			}
+		}
+	}
+
+	public static void sortElementsByChildElement(
+		Element element, String elementName, String childElementName) {
+
+		Map<String, Element> elementsMap = new TreeMap<>();
+
+		List<Element> elements = element.elements();
+
+		for (Element curElement : elements) {
+			curElement.detach();
+
+			if (elementName.equals(curElement.getName())) {
+				String childElementValue = curElement.elementText(
+					childElementName);
+
+				elementsMap.put(childElementValue, curElement);
+			}
+		}
+
+		for (Element curElement : elements) {
+			if (elementName.equals(curElement.getName())) {
+				break;
+			}
+
+			element.add(curElement);
+		}
+
+		for (Map.Entry<String, Element> entry : elementsMap.entrySet()) {
+			Element curElement = entry.getValue();
+
+			element.add(curElement);
+		}
+
+		boolean foundLastElementWithElementName = false;
+
+		for (int i = 0; i < elements.size(); i++) {
+			Element curElement = elements.get(i);
+
+			if (!foundLastElementWithElementName) {
+				if (elementName.equals(curElement.getName())) {
+					if ((i + 1) < elements.size()) {
+						Element nextElement = elements.get(i + 1);
+
+						if (!elementName.equals(nextElement.getName())) {
+							foundLastElementWithElementName = true;
+						}
+					}
+				}
+			}
+			else {
+				element.add(curElement);
+			}
+		}
 	}
 
 	@Override
@@ -500,7 +652,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixAntXMLProjectName(fileName, newContent);
 
-		Document document = saxReader.read(newContent);
+		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -548,21 +700,21 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatDDLStructuresXML(String content) throws Exception {
-		Document document = saxReader.read(content);
+		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
 
-		rootElement.sortAttributes(true);
+		sortAttributes(rootElement, true);
 
-		rootElement.sortElementsByChildElement("structure", "name");
+		sortElementsByChildElement(rootElement, "structure", "name");
 
 		List<Element> structureElements = rootElement.elements("structure");
 
 		for (Element structureElement : structureElements) {
 			Element structureRootElement = structureElement.element("root");
 
-			structureRootElement.sortElementsByAttribute(
-				"dynamic-element", "name");
+			sortElementsByAttribute(
+				structureRootElement, "dynamic-element", "name");
 
 			List<Element> dynamicElementElements =
 				structureRootElement.elements("dynamic-element");
@@ -571,11 +723,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				Element metaDataElement = dynamicElementElement.element(
 					"meta-data");
 
-				metaDataElement.sortElementsByAttribute("entry", "name");
+				sortElementsByAttribute(metaDataElement, "entry", "name");
 			}
 		}
 
-		return document.formattedString();
+		return XMLFormatter.toString(document);
 	}
 
 	protected String formatFriendlyURLRoutesXML(String content) {
@@ -608,11 +760,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Document document = saxReader.read(content);
+		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
 
-		rootElement.sortAttributes(true);
+		sortAttributes(rootElement, true);
 
 		boolean checkNumericalPortletNameElement = !isExcludedFile(
 			_numericalPortletNameElementExclusionFiles, absolutePath);
@@ -639,18 +791,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			portletElement.sortElementsByChildElement("init-param", "name");
+			sortElementsByChildElement(portletElement, "init-param", "name");
 
 			Element portletPreferencesElement = portletElement.element(
 				"portlet-preferences");
 
 			if (portletPreferencesElement != null) {
-				portletPreferencesElement.sortElementsByChildElement(
-					"preference", "name");
+				sortElementsByChildElement(
+					portletPreferencesElement, "preference", "name");
 			}
 		}
 
-		return document.formattedString();
+		return XMLFormatter.toString(document);
 	}
 
 	protected String formatPoshiXML(String fileName, String content)
@@ -679,7 +831,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void formatServiceXML(String fileName, String content)
 		throws Exception {
 
-		Document document = saxReader.read(content);
+		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -709,7 +861,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void formatStrutsConfigXML(String fileName, String content)
 		throws Exception {
 
-		Document document = saxReader.read(content);
+		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -737,7 +889,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void formatTilesDefsXML(String fileName, String content)
 		throws Exception {
 
-		Document document = saxReader.read(content);
+		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -899,6 +1051,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		int pos = fileName.lastIndexOf(StringPool.SLASH);
 
 		return getContent(fileName.substring(0, pos) + "/sql/tables.sql", 1);
+	}
+
+	protected Document readXML(String content) throws DocumentException {
+		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
+
+		return saxReader.read(new UnsyncStringReader(content));
 	}
 
 	protected String sortPoshiAttributes(String fileName, String content)

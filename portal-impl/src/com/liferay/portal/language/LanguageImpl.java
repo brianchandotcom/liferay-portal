@@ -468,7 +468,10 @@ public class LanguageImpl implements Language, Serializable {
 		catch (Exception e) {
 		}
 
-		return _getGroupLocalesSet(groupId);
+		Map<String, Locale> groupLanguageIdLocalesMap =
+			_getGroupLanguageIdLocalesMap(groupId);
+
+		return new HashSet<>(groupLanguageIdLocalesMap.values());
 	}
 
 	@Override
@@ -653,9 +656,11 @@ public class LanguageImpl implements Language, Serializable {
 		catch (Exception e) {
 		}
 
-		Set<Locale> localesSet = _getGroupLocalesSet(groupId);
+		Map<String, Locale> groupLanguageIdLocalesMap =
+			_getGroupLanguageIdLocalesMap(groupId);
 
-		return localesSet.contains(locale);
+		return groupLanguageIdLocalesMap.containsKey(
+			LocaleUtil.toLanguageId(locale));
 	}
 
 	@Override
@@ -840,7 +845,7 @@ public class LanguageImpl implements Language, Serializable {
 		_supportedLocalesSet.removeAll(_localesBetaSet);
 	}
 
-	private ObjectValuePair<Map<String, Locale>, Set<Locale>>
+	private ObjectValuePair<Map<String, Locale>, Map<String, Locale>>
 		_createGroupLocales(long groupId) {
 
 		String[] languageIds = null;
@@ -859,7 +864,7 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		Map<String, Locale> groupLanguageCodeLocalesMap = new HashMap<>();
-		Set<Locale> groupLocalesSet = new HashSet<>();
+		Map<String, Locale> groupLanguageIdLocalesMap = new HashMap<>();
 
 		for (int i = 0; i < languageIds.length; i++) {
 			String languageId = languageIds[i];
@@ -878,15 +883,16 @@ public class LanguageImpl implements Language, Serializable {
 				groupLanguageCodeLocalesMap.put(language, locale);
 			}
 
-			groupLocalesSet.add(locale);
+			groupLanguageIdLocalesMap.put(
+				LocaleUtil.toLanguageId(locale), locale);
 		}
 
 		_groupLanguageCodeLocalesMapMap.put(
 			groupId, groupLanguageCodeLocalesMap);
-		_groupLocalesSetsMap.put(groupId, groupLocalesSet);
+		_groupLanguageIdLocalesMap.put(groupId, groupLanguageIdLocalesMap);
 
 		return new ObjectValuePair<>(
-			groupLanguageCodeLocalesMap, groupLocalesSet);
+			groupLanguageCodeLocalesMap, groupLanguageIdLocalesMap);
 	}
 
 	private String _escapePattern(String pattern) {
@@ -933,8 +939,8 @@ public class LanguageImpl implements Language, Serializable {
 			_groupLanguageCodeLocalesMapMap.get(groupId);
 
 		if (groupLanguageCodeLocalesMap == null) {
-			ObjectValuePair<Map<String, Locale>, Set<Locale>> objectValuePair =
-				_createGroupLocales(groupId);
+			ObjectValuePair<Map<String, Locale>, Map<String, Locale>>
+				objectValuePair = _createGroupLocales(groupId);
 
 			groupLanguageCodeLocalesMap = objectValuePair.getKey();
 		}
@@ -942,17 +948,18 @@ public class LanguageImpl implements Language, Serializable {
 		return groupLanguageCodeLocalesMap;
 	}
 
-	private Set<Locale> _getGroupLocalesSet(long groupId) {
-		Set<Locale> groupLocalesSet = _groupLocalesSetsMap.get(groupId);
+	private Map<String, Locale> _getGroupLanguageIdLocalesMap(long groupId) {
+		Map<String, Locale> groupLanguageIdLocalesMap =
+			_groupLanguageIdLocalesMap.get(groupId);
 
-		if (groupLocalesSet == null) {
-			ObjectValuePair<Map<String, Locale>, Set<Locale>> objectValuePair =
-				_createGroupLocales(groupId);
+		if (groupLanguageIdLocalesMap == null) {
+			ObjectValuePair<Map<String, Locale>, Map<String, Locale>>
+				objectValuePair = _createGroupLocales(groupId);
 
-			groupLocalesSet = objectValuePair.getValue();
+			groupLanguageIdLocalesMap = objectValuePair.getValue();
 		}
 
-		return groupLocalesSet;
+		return groupLanguageIdLocalesMap;
 	}
 
 	private Locale _getLocale(HttpServletRequest request) {
@@ -981,7 +988,7 @@ public class LanguageImpl implements Language, Serializable {
 
 	private void _resetAvailableGroupLocales(long groupId) {
 		_groupLanguageCodeLocalesMapMap.remove(groupId);
-		_groupLocalesSetsMap.remove(groupId);
+		_groupLanguageIdLocalesMap.remove(groupId);
 	}
 
 	private void _resetAvailableLocales(long companyId) {
@@ -1016,7 +1023,7 @@ public class LanguageImpl implements Language, Serializable {
 	private final Set<String> _duplicateLanguageCodes;
 	private final Map<Long, Map<String, Locale>>
 		_groupLanguageCodeLocalesMapMap = new ConcurrentHashMap<>();
-	private final Map<Long, Set<Locale>> _groupLocalesSetsMap =
+	private final Map<Long, Map<String, Locale>> _groupLanguageIdLocalesMap =
 		new ConcurrentHashMap<>();
 	private final Map<String, Locale> _languageCodeLocalesMap;
 	private final Map<String, Locale> _languageIdLocalesMap;

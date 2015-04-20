@@ -1179,133 +1179,155 @@ public class HookHotDeployListener
 
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			COMPANY_SETTINGS_FORM_CONFIGURATION, "configuration",
-			FormNavigatorConstants.COMPANY_SETTINGS_FORM, "portal_settings");
+			COMPANY_SETTINGS_FORM_CONFIGURATION,
+			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_CONFIGURATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS,
+			"portal_settings");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			COMPANY_SETTINGS_FORM_IDENTIFICATION, "identification",
-			FormNavigatorConstants.COMPANY_SETTINGS_FORM, "portal_settings");
+			COMPANY_SETTINGS_FORM_IDENTIFICATION,
+			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_IDENTIFICATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS,
+			"portal_settings");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			COMPANY_SETTINGS_FORM_MISCELLANEOUS, "miscellaneous",
-			FormNavigatorConstants.COMPANY_SETTINGS_FORM, "portal_settings");
+			COMPANY_SETTINGS_FORM_MISCELLANEOUS,
+			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS,
+			"portal_settings");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, COMPANY_SETTINGS_FORM_SOCIAL,
-			"social", FormNavigatorConstants.COMPANY_SETTINGS_FORM,
+			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS,
 			"portal_settings");
 
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, LAYOUT_FORM_ADD,
-			StringPool.BLANK, FormNavigatorConstants.LAYOUT_FORM,
+			StringPool.BLANK, FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT,
 			"layouts_admin/layout");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, LAYOUT_FORM_UPDATE,
-			StringPool.BLANK, FormNavigatorConstants.LAYOUT_FORM,
+			StringPool.BLANK, FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT,
 			"layouts_admin/layout");
 
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, LAYOUT_SET_FORM_UPDATE,
-			StringPool.BLANK, FormNavigatorConstants.LAYOUT_SET_FORM,
+			StringPool.BLANK,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET,
 			"layouts_admin/layout_set");
 
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			ORGANIZATIONS_FORM_ADD_IDENTIFICATION, "identification",
-			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			ORGANIZATIONS_FORM_ADD_IDENTIFICATION,
+			FormNavigatorConstants.CATEGORY_KEY_ORGANIZATION_IDENTIFICATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS,
 			"users_admin/organization");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, ORGANIZATIONS_FORM_ADD_MAIN,
-			"organization-information",
-			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			FormNavigatorConstants.
+				CATEGORY_KEY_ORGANIZATION_ORGANIZATION_INFORMATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS,
 			"users_admin/organization");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			ORGANIZATIONS_FORM_ADD_MISCELLANEOUS, "miscellaneous",
-			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			ORGANIZATIONS_FORM_ADD_MISCELLANEOUS,
+			FormNavigatorConstants.CATEGORY_KEY_ORGANIZATION_MISCELLANEOUS,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS,
 			"users_admin/organization");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			ORGANIZATIONS_FORM_UPDATE_IDENTIFICATION, "identification",
-			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			ORGANIZATIONS_FORM_UPDATE_IDENTIFICATION,
+			FormNavigatorConstants.CATEGORY_KEY_ORGANIZATION_IDENTIFICATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS,
 			"users_admin/organization");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			ORGANIZATIONS_FORM_UPDATE_MAIN, "organization-information",
-			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			ORGANIZATIONS_FORM_UPDATE_MAIN,
+			FormNavigatorConstants.
+				CATEGORY_KEY_ORGANIZATION_ORGANIZATION_INFORMATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS,
 			"users_admin/organization");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			ORGANIZATIONS_FORM_UPDATE_MISCELLANEOUS, "miscellaneous",
-			FormNavigatorConstants.ORGANIZATIONS_FORM,
+			ORGANIZATIONS_FORM_UPDATE_MISCELLANEOUS,
+			FormNavigatorConstants.CATEGORY_KEY_ORGANIZATION_MISCELLANEOUS,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_ORGANIZATIONS,
 			"users_admin/organization");
 
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, SITES_FORM_ADD_ADVANCED,
-			"advanced", FormNavigatorConstants.SITES_FORM, "sites_admin/site");
+			FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES, "sites_admin/site");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, SITES_FORM_ADD_MAIN,
-			"basic-information", FormNavigatorConstants.SITES_FORM,
-			"sites_admin/site");
+			FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES, "sites_admin/site");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, SITES_FORM_ADD_MISCELLANEOUS,
-			"miscellaneous", FormNavigatorConstants.SITES_FORM,
-			"sites_admin/site");
+			FormNavigatorConstants.CATEGORY_KEY_SITES_MISCELLANEOUS,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES, "sites_admin/site");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, SITES_FORM_ADD_SEO,
-			"search-engine-optimization", FormNavigatorConstants.SITES_FORM,
-			"sites_admin/site");
+			FormNavigatorConstants.CATEGORY_KEY_SITES_SEO,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES, "sites_admin/site");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, SITES_FORM_UPDATE_ADVANCED,
-			"advanced", FormNavigatorConstants.SITES_FORM, "sites_admin/site");
+			FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES, "sites_admin/site");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, SITES_FORM_UPDATE_MAIN,
-			"basic-information", FormNavigatorConstants.SITES_FORM,
-			"sites_admin/site");
+			FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES, "sites_admin/site");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			SITES_FORM_UPDATE_MISCELLANEOUS, "miscellaneous",
-			FormNavigatorConstants.SITES_FORM, "sites_admin/site");
+			SITES_FORM_UPDATE_MISCELLANEOUS,
+			FormNavigatorConstants.CATEGORY_KEY_SITES_MISCELLANEOUS,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES, "sites_admin/site");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, SITES_FORM_UPDATE_SEO,
-			"search-engine-optimization", FormNavigatorConstants.SITES_FORM,
-			"sites_admin/site");
+			FormNavigatorConstants.CATEGORY_KEY_SITES_SEO,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES, "sites_admin/site");
 
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, USERS_FORM_ADD_IDENTIFICATION,
-			"identification", FormNavigatorConstants.USERS_FORM,
-			"users_admin/user");
+			FormNavigatorConstants.CATEGORY_KEY_USER_IDENTIFICATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS, "users_admin/user");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, USERS_FORM_ADD_MAIN,
-			"user-information", FormNavigatorConstants.USERS_FORM,
-			"users_admin/user");
+			FormNavigatorConstants.CATEGORY_KEY_USER_USER_INFORMATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS, "users_admin/user");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, USERS_FORM_ADD_MISCELLANEOUS,
-			"miscellaneous", FormNavigatorConstants.USERS_FORM,
-			"users_admin/user");
+			FormNavigatorConstants.CATEGORY_KEY_USER_MISCELLANEOUS,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS, "users_admin/user");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			USERS_FORM_MY_ACCOUNT_IDENTIFICATION, "identification",
-			FormNavigatorConstants.USERS_FORM, "users_admin/user");
+			USERS_FORM_MY_ACCOUNT_IDENTIFICATION,
+			FormNavigatorConstants.CATEGORY_KEY_USER_IDENTIFICATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS, "users_admin/user");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, USERS_FORM_MY_ACCOUNT_MAIN,
-			"user-information", FormNavigatorConstants.USERS_FORM,
-			"users_admin/user");
+			FormNavigatorConstants.CATEGORY_KEY_USER_USER_INFORMATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS, "users_admin/user");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			USERS_FORM_MY_ACCOUNT_MISCELLANEOUS, "miscellaneous",
-			FormNavigatorConstants.USERS_FORM, "users_admin/user");
+			USERS_FORM_MY_ACCOUNT_MISCELLANEOUS,
+			FormNavigatorConstants.CATEGORY_KEY_USER_MISCELLANEOUS,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS, "users_admin/user");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			USERS_FORM_UPDATE_IDENTIFICATION, "identification",
-			FormNavigatorConstants.USERS_FORM, "users_admin/user");
+			USERS_FORM_UPDATE_IDENTIFICATION,
+			FormNavigatorConstants.CATEGORY_KEY_USER_IDENTIFICATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS, "users_admin/user");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties, USERS_FORM_UPDATE_MAIN,
-			"user-information", FormNavigatorConstants.USERS_FORM,
-			"users_admin/user");
+			FormNavigatorConstants.CATEGORY_KEY_USER_USER_INFORMATION,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS, "users_admin/user");
 		initFormNavigatorEntry(
 			servletContextName, portalProperties,
-			USERS_FORM_UPDATE_MISCELLANEOUS, "miscellaneous",
-			FormNavigatorConstants.USERS_FORM, "users_admin/user");
+			USERS_FORM_UPDATE_MISCELLANEOUS,
+			FormNavigatorConstants.CATEGORY_KEY_USER_MISCELLANEOUS,
+			FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS, "users_admin/user");
 	}
 
 	protected void initFormNavigatorEntry(

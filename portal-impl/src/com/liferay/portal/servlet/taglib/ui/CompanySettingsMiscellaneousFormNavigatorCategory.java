@@ -30,12 +30,13 @@ public class CompanySettingsMiscellaneousFormNavigatorCategory
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.COMPANY_SETTINGS_FORM;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS;
 	}
 
 	@Override
 	public String getKey() {
-		return "miscellaneous";
+		return
+			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
 	}
 
 	@Override

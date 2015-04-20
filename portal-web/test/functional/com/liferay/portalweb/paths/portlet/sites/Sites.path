@@ -13,61 +13,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<tr>
-	<td>CONFIGURATION_FRAME</td>
-	<td>//iframe[contains(@id,'_156_exportDialog_iframe_')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIGURATION_EXPORT_BUTTON</td>
-	<td>//form[@class='form lfr-export-dialog ']/div[2]/button[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOWNLOAD_FILE</td>
-	<td>//tr/td/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>IMPORT_FRAME</td>
-	<td>//iframe[contains(@id,'_156_importDialog_iframe_')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_FILE</td>
-	<td>//button[@class='btn' and contains(.,'Select File')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>IMPORT_CONTINUE</td>
-	<td>//button[@id='_156_continueButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>IMPORT_CONTINUE_2</td>
-	<td>//button[@id='_156_continue']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>IMPORT</td>
-	<td>//div[@id='_156_importStrategy']/div/button[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXPORT_FILE_NAME</td>
-	<td>//input[@id='_156_exportFileName']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_TO_LIVE</td>
-	<td>//a[contains(@id,'publishGlobalLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SITE_TABLE-->
 <tr>
 	<td>SITE_TABLE_CHECKBOX</td>

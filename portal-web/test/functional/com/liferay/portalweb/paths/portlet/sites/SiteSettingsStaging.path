@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>SitesEdit</title>
+<title>SiteSettingsStaging</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">SitesEdit</td></tr>
+<tr><td rowspan="1" colspan="3">SiteSettingsStaging</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -14,55 +14,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_TITLE</td>
-	<td>//h1[@class='site-title']/div/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_TITLE_1</td>
-	<td>//h1/div/a | //h1[@class='site-title' and not(*)]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MEMBERSHIP_TYPE</td>
-	<td>//select[@name='_134_type']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ID</td>
-	<td>//input[@id='_165_siteId']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PARENT_SITE-->
-<tr>
-	<td>PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX</td>
-	<td>//input[@id='_165_membershipRestriction']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--MENU-->
-<tr>
-	<td>MENU_STAGING</td>
-	<td>//a[@id='_165_stagingLink']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--STAGING-->
 <tr>
-	<td>STAGING_NONE</td>
+	<td>NONE_RADIO</td>
 	<td>//input[@id='_165_none']</td>
 	<td></td>
 </tr>
@@ -77,17 +31,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX</td>
+	<td>ENABLED_ON_PUBLIC_PAGES_CHECKBOX</td>
 	<td>//input[@id='_165_branchingPublic']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_ENABLED_ON_PRIVATE_PAGES_CHECKBOX</td>
+	<td>ENABLED_ON_PRIVATE_PAGES_CHECKBOX</td>
 	<td>//input[@id='_165_branchingPrivate']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_CONTENT_CHECKBOX</td>
+	<td>CONTENT_CHECKBOX</td>
 	<td>//div[@id=&quot;_165_stagedPortlets&quot;]//label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>

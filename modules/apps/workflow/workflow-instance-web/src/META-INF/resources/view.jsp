@@ -14,11 +14,11 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_instances/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:choose>
 	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
-		<%@ include file="/html/portlet/workflow_instances/view_workflow_instances.jspf" %>
+		<%@ include file="/view_workflow_instances.jspf" %>
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

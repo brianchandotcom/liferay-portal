@@ -52,7 +52,7 @@ for (WorkflowLog workflowLog : workflowLogs) {
 		<c:choose>
 			<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_COMPLETION %>">
 				<div>
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(actorName), HtmlUtil.escape(workflowLog.getState())} %>" key="x-completed-the-task-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(actorName), HtmlUtil.escape(workflowLog.getState())} %>" key="x-completed-the-task-x" translateArguments="<%= Boolean.FALSE %>" />
 				</div>
 			</c:when>
 			<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_UPDATE %>">
@@ -62,14 +62,14 @@ for (WorkflowLog workflowLog : workflowLogs) {
 			</c:when>
 			<c:when test="<%= workflowLog.getType() == WorkflowLog.TRANSITION %>">
 				<div>
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(actorName), HtmlUtil.escape(workflowLog.getPreviousState()), HtmlUtil.escape(workflowLog.getState())} %>" key="x-changed-the-state-from-x-to-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(actorName), HtmlUtil.escape(workflowLog.getPreviousState()), HtmlUtil.escape(workflowLog.getState())} %>" key="x-changed-the-state-from-x-to-x" translateArguments="<%= Boolean.FALSE %>" />
 				</div>
 			</c:when>
 			<c:otherwise>
 				<c:choose>
 					<c:when test="<%= (curUser != null) && (workflowLog.getAuditUserId() == curUser.getUserId()) %>">
 						<div>
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(curUser.getFullName()) %>" key='<%= curUser.isMale() ? "x-assigned-the-task-to-himself" : "x-assigned-the-task-to-herself" %>' translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(curUser.getFullName()) %>" key='<%= curUser.isMale() ? "x-assigned-the-task-to-himself" : "x-assigned-the-task-to-herself" %>' translateArguments="<%= Boolean.FALSE %>" />
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -80,10 +80,10 @@ for (WorkflowLog workflowLog : workflowLogs) {
 						%>
 
 							<div>
-								<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(assignerName), HtmlUtil.escape(actorName)} %>" key="x-assigned-the-task-to-x" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(assignerName), HtmlUtil.escape(actorName)} %>" key="x-assigned-the-task-to-x" translateArguments="<%= Boolean.FALSE %>" />
 
 								<c:if test="<%= workflowLog.getPreviousUserId() != 0 %>">
-									<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(workflowLog.getPreviousUserId(), StringPool.BLANK)) %>" key="previous-assignee-was-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(workflowLog.getPreviousUserId(), StringPool.BLANK)) %>" key="previous-assignee-was-x" translateArguments="<%= Boolean.FALSE %>" />
 								</c:if>
 							</div>
 

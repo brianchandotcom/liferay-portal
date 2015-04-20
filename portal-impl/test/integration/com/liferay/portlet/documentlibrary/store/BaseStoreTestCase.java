@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -397,6 +400,37 @@ public abstract class BaseStoreTestCase {
 				store.hasFile(
 					companyId, repositoryId, fileName, versionLabel + i));
 		}
+	}
+
+	@ExpectedLogs (
+		expectedLogs = {
+			@ExpectedLog (
+				expectedLog = "Cannot delete file {companyId=",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "WARN", loggerClass = BaseStore.class
+	)
+	@Test
+	public void testLogFailedDeletion() {
+		store.deleteFile(
+			companyId, repositoryId, RandomTestUtil.randomString());
+	}
+
+	@ExpectedLogs (
+		expectedLogs = {
+			@ExpectedLog (
+				expectedLog = "Cannot delete file {companyId=",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "WARN", loggerClass = BaseStore.class
+	)
+	@Test
+	public void testLogFailedDeletionWithVersionLabel() {
+		store.deleteFile(
+			companyId, repositoryId, RandomTestUtil.randomString(),
+			Store.VERSION_DEFAULT);
 	}
 
 	@Test

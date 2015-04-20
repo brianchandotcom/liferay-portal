@@ -136,8 +136,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceFormatterBean sourceFormatterBean) {
 
 		_sourceFormatterBean = sourceFormatterBean;
-
-		_init();
 	}
 
 	protected static boolean isExcludedFile(

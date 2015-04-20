@@ -229,7 +229,7 @@ if (assetEntry != null) {
 		request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		%>
 
-		<liferay-util:include page="/workflow_instance_action.jsp" />
+		<liferay-util:include page="/workflow_instance_action.jsp" servletContext="<%= application %>" />
 	</aui:col>
 </aui:row>
 

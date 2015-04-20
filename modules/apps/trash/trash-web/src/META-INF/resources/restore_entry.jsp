@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-portlet:actionURL name="restoreEntries" varImpl="restoreURL" />
+<liferay-portlet:actionURL name="restoreEntry" varImpl="restoreURL" />
 
 <liferay-ui:restore-entry
 	restoreURL="<%= restoreURL %>"

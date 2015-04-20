@@ -1070,25 +1070,6 @@
 			<forward name="portlet.my_pages.view" path="portlet.my_account.view" />
 		</action>
 
-		<!-- My Workflow Instances -->
-
-		<action path="/my_workflow_instances/edit_workflow_instance" type="com.liferay.portlet.workflowinstances.action.EditWorkflowInstanceAction">
-			<forward name="portlet.workflow_instances.edit_workflow_instance" path="portlet.workflow_instances.edit_workflow_instance" />
-			<forward name="portlet.workflow_instances.error" path="portlet.workflow_instances.error" />
-		</action>
-
-		<action path="/my_workflow_instances/edit_workflow_instance_discussion" type="com.liferay.portlet.workflowtasks.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.workflow_instances.error" />
-		</action>
-
-		<action path="/my_workflow_instances/edit_workflow_instance_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
-			<forward name="portlet.workflow_tasks.error" path="portlet.workflow_instances.error" />
-		</action>
-
-		<action path="/my_workflow_instances/view" forward="portlet.workflow_instances.view" />
-
-		<action path="/my_workflow_instances/view_content" forward="portlet.workflow_instances.view_content" />
-
 		<!-- My Workflow Tasks -->
 
 		<action path="/my_workflow_tasks/edit_workflow_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">

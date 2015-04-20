@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -51,6 +52,10 @@ public class FormNavigatorCategoryUtil {
 		List<FormNavigatorCategory> formNavigatorCategories =
 			getFormNavigatorCategories(formNavigatorId);
 
+		if (ListUtil.isEmpty(formNavigatorCategories)) {
+			return new String[] {""};
+		}
+
 		for (FormNavigatorCategory formNavigatorCategory :
 				formNavigatorCategories) {
 
@@ -69,6 +74,10 @@ public class FormNavigatorCategoryUtil {
 
 		List<FormNavigatorCategory> formNavigatorCategories =
 			getFormNavigatorCategories(formNavigatorId);
+
+		if (ListUtil.isEmpty(formNavigatorCategories)) {
+			return new String[] {""};
+		}
 
 		for (FormNavigatorCategory formNavigatorCategory :
 				formNavigatorCategories) {

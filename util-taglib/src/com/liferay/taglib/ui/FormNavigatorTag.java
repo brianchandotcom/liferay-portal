@@ -110,13 +110,7 @@ public class FormNavigatorTag extends IncludeTag {
 			return _categoryNames;
 		}
 
-		String[] categoryKeys = FormNavigatorCategoryUtil.getKeys(_id);
-
-		if (ArrayUtil.isEmpty(categoryKeys)) {
-			return new String[] {""};
-		}
-
-		return categoryKeys;
+		return FormNavigatorCategoryUtil.getKeys(_id);
 	}
 
 	protected String[] getCategoryLabels() {
@@ -127,14 +121,8 @@ public class FormNavigatorTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String[] categoryLabels = FormNavigatorCategoryUtil.getLabels(
+		return FormNavigatorCategoryUtil.getLabels(
 			_id, themeDisplay.getLocale());
-
-		if (ArrayUtil.isEmpty(categoryLabels)) {
-			categoryLabels = new String[] {""};
-		}
-
-		return categoryLabels;
 	}
 
 	protected String[][] getCategorySectionKeys() {

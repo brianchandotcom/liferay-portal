@@ -16,6 +16,8 @@ package com.liferay.portal.tools.source.formatter;
 
 import com.liferay.portal.kernel.util.Tuple;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,7 +44,9 @@ public class SourceFormatterTest {
 
 		Tuple tuple = sourceFormatter.format(fileName);
 
-		Assert.assertNull(tuple);
+		List<String> processedFiles = sourceFormatter.getProcessedFiles();
+
+		Assert.assertTrue(processedFiles.isEmpty());
 	}
 
 	@Test

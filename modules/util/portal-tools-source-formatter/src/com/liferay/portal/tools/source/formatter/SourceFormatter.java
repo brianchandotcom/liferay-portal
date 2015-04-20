@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -179,6 +180,10 @@ public class SourceFormatter {
 		return new Tuple(newContent, sourceProcessor.getErrorMessages());
 	}
 
+	public List<String> getProcessedFiles() {
+		return _processedFiles;
+	}
+
 	public SourceFormatterBean getSourceformatterBean() {
 		return _sourceFormatterBean;
 	}
@@ -194,6 +199,7 @@ public class SourceFormatter {
 			_sourceFormatterBean.isAutoFix());
 
 		_errorMessages.addAll(sourceProcessor.getErrorMessages());
+		_processedFiles.addAll(sourceProcessor.getProcessedFiles());
 
 		if (_firstSourceMismatchException == null) {
 			_firstSourceMismatchException =
@@ -203,6 +209,7 @@ public class SourceFormatter {
 
 	private final Set<String> _errorMessages = new LinkedHashSet<String>();
 	private SourceMismatchException _firstSourceMismatchException;
+	private final List<String> _processedFiles = new CopyOnWriteArrayList<>();
 	private final SourceFormatterBean _sourceFormatterBean;
 
 }

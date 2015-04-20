@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.workflowinstances.action.ActionUtil;
+import com.liferay.workflowinstance.web.portlet.action.ActionUtil;
 
 /**
  * @author Leonardo Barros

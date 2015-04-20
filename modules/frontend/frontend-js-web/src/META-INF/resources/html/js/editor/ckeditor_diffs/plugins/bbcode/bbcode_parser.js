@@ -431,9 +431,7 @@
 
 			instance._parser = new Parser(config.parser);
 
-			emoticonImages = config.emoticonImages;
-			emoticonPath = config.emoticonPath;
-			emoticonSymbols = config.emoticonSymbols;
+			instance._config = config;
 
 			instance._result = [];
 			instance._stack = [];
@@ -532,6 +530,10 @@
 
 		_handleData: function(token) {
 			var instance = this;
+
+			var emoticonImages = instance._config.emoticonImages;
+			var emoticonPath = instance._config.emoticonPath;
+			var emoticonSymbols = instance._config.emoticonSymbols;
 
 			var value = instance._escapeHTML(token.value);
 
@@ -713,17 +715,17 @@
 
 			var cite = token.attribute;
 
-			var result = '<blockquote><p>';
+			var result = '<blockquote>';
 
 			if (cite && cite.length) {
 				cite = BBCodeUtil.escape(cite);
 
-				result += '<cite>' + cite + '</cite>';
+				result = '<blockquote><cite>' + cite + '</cite>';
 			}
 
 			instance._result.push(result);
 
-			instance._stack.push('</p></blockquote>');
+			instance._stack.push('</blockquote>');
 		},
 
 		_handleSimpleTag: function(tagName) {

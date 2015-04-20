@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_instances/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -45,12 +45,12 @@ if (assetEntry != null) {
 %>
 
 <portlet:renderURL var="backURL">
-	<portlet:param name="struts_action" value="/workflow_instances/view" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 </portlet:renderURL>
 
 <liferay-ui:header
 	backURL="<%= backURL.toString() %>"
-	localizeTitle="<%= false %>"
+	localizeTitle="<%= Boolean.FALSE %>"
 	title="<%= headerTitle %>"
 />
 
@@ -74,7 +74,7 @@ if (assetEntry != null) {
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
 								<portlet:renderURL var="viewFullContentURL">
-									<portlet:param name="struts_action" value="/workflow_instances/view_content" />
+									<portlet:param name="mvcPath" value="/view_content.jsp" />
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 
 									<c:if test="<%= assetEntry != null %>">
@@ -94,7 +94,7 @@ if (assetEntry != null) {
 					<h3 class="task-content-title">
 						<liferay-ui:icon
 							iconCssClass="<%= workflowHandler.getIconCssClass() %>"
-							label="<%= true %>"
+							label="<%= Boolean.TRUE %>"
 							message="<%= HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)) %>"
 						/>
 					</h3>
@@ -116,24 +116,21 @@ if (assetEntry != null) {
 				</liferay-ui:panel>
 
 				<liferay-ui:panel title="comments">
-					<portlet:actionURL var="discussionURL">
-						<portlet:param name="struts_action" value="/workflow_instances/edit_workflow_instance_discussion" />
-					</portlet:actionURL>
+					<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
 
 					<portlet:resourceURL var="discussionPaginationURL">
-						<portlet:param name="struts_action" value="/workflow_instances/edit_workflow_instance_discussion" />
+						<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:resourceURL>
 
 					<liferay-ui:discussion
 						className="<%= assetRenderer.getClassName() %>"
 						classPK="<%= assetRenderer.getClassPK() %>"
 						formAction="<%= discussionURL %>"
-						formName="fm1"
+						formName='<%= "fm" + assetRenderer.getClassPK() %>'
 						paginationURL="<%= discussionPaginationURL %>"
-						ratingsEnabled="<%= false %>"
+						ratingsEnabled="<%= Boolean.FALSE %>"
 						redirect="<%= currentURL %>"
-						userId="<%= user.getUserId() %>"
-					/>
+						userId="<%= user.getUserId() %>" />
 				</liferay-ui:panel>
 			</c:if>
 
@@ -166,7 +163,7 @@ if (assetEntry != null) {
 						<liferay-ui:search-container-row
 							className="com.liferay.portal.kernel.workflow.WorkflowTask"
 							modelVar="workflowTask"
-							stringKey="<%= true %>"
+							stringKey="<%= Boolean.TRUE %>"
 						>
 							<liferay-ui:search-container-row-parameter
 								name="workflowTask"
@@ -191,11 +188,6 @@ if (assetEntry != null) {
 								value='<%= workflowTask.isCompleted() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
 							/>
 
-							<liferay-ui:search-container-column-jsp
-								align="right"
-								cssClass="entry-action"
-								path="/html/portlet/workflow_instances/workflow_task_action.jsp"
-							/>
 						</liferay-ui:search-container-row>
 						<liferay-ui:search-iterator />
 					</liferay-ui:search-container>
@@ -215,12 +207,12 @@ if (assetEntry != null) {
 				List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowInstance.getWorkflowInstanceId(), logTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowComparatorFactoryUtil.getLogCreateDateComparator(true));
 				%>
 
-				<%@ include file="/html/portlet/workflow_instances/workflow_logs.jspf" %>
+				<%@ include file="/workflow_logs.jspf" %>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
 	</aui:col>
 
-	<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= Boolean.TRUE %>" width="<%= 25 %>">
 		<div class="lfr-asset-summary">
 			<liferay-ui:icon
 				cssClass="lfr-asset-avatar"
@@ -237,7 +229,7 @@ if (assetEntry != null) {
 		request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		%>
 
-		<liferay-util:include page="/html/portlet/workflow_instances/workflow_instance_action.jsp" />
+		<liferay-util:include page="/workflow_instance_action.jsp" />
 	</aui:col>
 </aui:row>
 

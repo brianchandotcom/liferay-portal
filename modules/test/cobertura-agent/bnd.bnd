@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Cobertura Agent
+Bundle-SymbolicName: com.liferay.cobertura.agent
+Bundle-Version: 1.0.0
+Include-Resource: classes
+
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Premain-Class: com.liferay.cobertura.instrument.InstrumentationAgent

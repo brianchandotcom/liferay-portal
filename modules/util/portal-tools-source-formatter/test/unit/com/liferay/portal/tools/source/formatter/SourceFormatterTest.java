@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.source.formatter;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -36,6 +37,8 @@ public class SourceFormatterTest {
 		String fileName =
 			"test/unit/com/liferay/portal/tools/source/formatter/" +
 				"dependencies/wrong.foo";
+
+		sourceFormatterBean.setFileNames(Collections.singletonList(fileName));
 
 		SourceFormatter sourceFormatter = new SourceFormatter(
 			sourceFormatterBean);

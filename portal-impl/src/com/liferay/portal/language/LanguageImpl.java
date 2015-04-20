@@ -648,24 +648,27 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public boolean isAvailableLocale(long groupId, String languageId) {
-		for (Locale locale : getAvailableLocales(groupId)) {
-			if (languageId.equals(locale.toString())) {
-				return true;
-			}
+		if (groupId <= 0) {
+			return isAvailableLocale(languageId);
 		}
 
-		return false;
+		try {
+			if (isInheritLocales(groupId)) {
+				return isAvailableLocale(languageId);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		Map<String, Locale> groupLanguageIdLocalesMap =
+			_getGroupLanguageIdLocalesMap(groupId);
+
+		return groupLanguageIdLocalesMap.containsKey(languageId);
 	}
 
 	@Override
 	public boolean isAvailableLocale(String languageId) {
-		for (Locale locale : getAvailableLocales()) {
-			if (languageId.equals(locale.toString())) {
-				return true;
-			}
-		}
-
-		return false;
+		return _getInstance()._languageIdLocalesMap.containsKey(languageId);
 	}
 
 	@Override

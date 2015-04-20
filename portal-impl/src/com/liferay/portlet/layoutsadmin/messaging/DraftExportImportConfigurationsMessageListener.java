@@ -14,10 +14,21 @@
 
 package com.liferay.portlet.layoutsadmin.messaging;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.util.PropsValues;
+
+import java.util.List;
 
 /**
  * @author Levente Hudák
@@ -27,8 +38,37 @@ public class DraftExportImportConfigurationsMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws PortalException {
-		ExportImportConfigurationLocalServiceUtil.
-			removeDraftExportImportConfigurations();
+		int draftExportImportConfigurationCleanupCount =
+			PropsValues.STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEANUP_COUNT;
+
+		if (draftExportImportConfigurationCleanupCount == -1) {
+			return;
+		}
+
+		DynamicQuery dynamicQuery =
+			ExportImportConfigurationLocalServiceUtil.dynamicQuery();
+
+		Property statusProperty = PropertyFactoryUtil.forName("status");
+
+		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_DRAFT));
+
+		Order order = OrderFactoryUtil.asc("createDate");
+
+		dynamicQuery.addOrder(order);
+
+		dynamicQuery.setLimit(
+			QueryUtil.ALL_POS, draftExportImportConfigurationCleanupCount);
+
+		List<ExportImportConfiguration> exportImportConfigurations =
+			ExportImportConfigurationLocalServiceUtil.dynamicQuery(
+				dynamicQuery);
+
+		for (ExportImportConfiguration exportImportConfiguration :
+				exportImportConfigurations) {
+
+			ExportImportConfigurationLocalServiceUtil.
+				deleteExportImportConfiguration(exportImportConfiguration);
+		}
 	}
 
 }

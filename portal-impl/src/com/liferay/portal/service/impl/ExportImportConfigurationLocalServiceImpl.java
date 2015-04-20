@@ -14,12 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Order;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -44,7 +38,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ExportImportConfigurationLocalServiceBaseImpl;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
@@ -254,38 +247,6 @@ public class ExportImportConfigurationLocalServiceImpl
 			null, oldStatus, null, null);
 
 		return exportImportConfiguration;
-	}
-
-	public void removeDraftExportImportConfigurations() throws PortalException {
-		int draftExportImportConfigurationCleanupCount =
-			PropsValues.STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEANUP_COUNT;
-
-		if (draftExportImportConfigurationCleanupCount == -1) {
-			return;
-		}
-
-		DynamicQuery dynamicQuery = dynamicQuery();
-
-		Property statusProperty = PropertyFactoryUtil.forName("status");
-
-		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_DRAFT));
-
-		Order order = OrderFactoryUtil.asc("createDate");
-
-		dynamicQuery.addOrder(order);
-
-		dynamicQuery.setLimit(
-			QueryUtil.ALL_POS, draftExportImportConfigurationCleanupCount);
-
-		List<ExportImportConfiguration> exportImportConfigurations =
-			dynamicQuery(dynamicQuery);
-
-		for (ExportImportConfiguration exportImportConfiguration :
-				exportImportConfigurations) {
-
-			exportImportConfigurationLocalService.
-				deleteExportImportConfiguration(exportImportConfiguration);
-		}
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

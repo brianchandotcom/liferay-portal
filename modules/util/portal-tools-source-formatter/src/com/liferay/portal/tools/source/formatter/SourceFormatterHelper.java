@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -48,7 +48,7 @@ public class SourceFormatterHelper {
 		String newPropertiesContent = PropertiesUtil.toString(_properties);
 
 		if (!_propertiesContent.equals(newPropertiesContent)) {
-			_fileUtil.write(_propertiesFile, newPropertiesContent);
+			FileUtils.writeStringToFile(_propertiesFile, newPropertiesContent);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class SourceFormatterHelper {
 		_propertiesFile = new File(propertiesFileName);
 
 		if (_propertiesFile.exists()) {
-			_propertiesContent = _fileUtil.read(_propertiesFile);
+			_propertiesContent = FileUtils.readFileToString(_propertiesFile);
 
 			PropertiesUtil.load(_properties, _propertiesContent);
 		}
@@ -121,8 +121,6 @@ public class SourceFormatterHelper {
 
 		return fileNames;
 	}
-
-	private static final FileImpl _fileUtil = FileImpl.getInstance();
 
 	private final Properties _properties = new Properties();
 	private String _propertiesContent = StringPool.BLANK;

@@ -45,6 +45,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
+
 /**
  * @author Hugo Huijser
  */
@@ -503,7 +505,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String absolutePath = getAbsolutePath(file);
 
-			String content = fileUtil.read(file);
+			String content = FileUtils.readFileToString(file);
 
 			Matcher matcher = pattern.matcher(content);
 
@@ -1417,7 +1419,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if (commonInitFileContent == null) {
 				commonInitFile = new File(commonInitFileName);
 
-				commonInitFileContent = fileUtil.read(commonInitFile);
+				commonInitFileContent = FileUtils.readFileToString(
+					commonInitFile);
 
 				x = commonInitFileContent.indexOf("<%@ page import");
 			}
@@ -1428,7 +1431,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (commonInitFileContent != null) {
-			fileUtil.write(commonInitFile, commonInitFileContent);
+			FileUtils.write(commonInitFile, commonInitFileContent);
 
 			_jspContents.put(commonInitFileName, commonInitFileContent);
 		}

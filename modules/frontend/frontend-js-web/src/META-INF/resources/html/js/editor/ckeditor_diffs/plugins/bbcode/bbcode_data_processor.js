@@ -130,7 +130,13 @@
 			var instance = this;
 
 			if (!instance._bbcodeConverter) {
-				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML();
+				var converterConfig = {
+					emoticonSymbols: emoticonSymbols,
+					emoticonImages: emoticonImages,
+					emoticonPath: emoticonPath
+				};
+
+				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML(converterConfig);
 			}
 
 			if (config) {

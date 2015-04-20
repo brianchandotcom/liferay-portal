@@ -1,29 +1,44 @@
 {namespace ddm}
 
 /**
- * Prints all pages.
+ * Prints a multi page form.
  *
+ * @param containerId
+ * @param definition
+ * @param fieldTypes
  * @param pages
+ * @param portletNamespace
+ * @param values
  */
-{template .pages}
-	<div class="lfr-form-pages">
-		<ul class="nav nav-tabs">
-			{foreach $page in $pages}
-				<li>
-					<a href="javascript:;">{$page.title}</a>
-				</li>
-			{/foreach}
-		</ul>
-		<div class="tab-content">
-			{foreach $page in $pages}
-				<div class="tab-pane">
-					{call ddm.rows data="all"}
-						{param rows: $page.rows /}
-					{/call}
-				</div>
-			{/foreach}
+{template .multi_page_form}
+	<div class="lfr-ddm-form-container" id="{$containerId}">
+		<div class="lfr-ddm-form-pages">
+			<ul class="nav nav-tabs">
+				{foreach $page in $pages}
+					<li>
+						<a href="javascript:;">{$page.title}</a>
+					</li>
+				{/foreach}
+			</ul>
+			<div class="tab-content">
+				{foreach $page in $pages}
+					<div class="tab-pane {if isFirst($page)}active{/if}">
+						{call ddm.rows data="all"}
+							{param rows: $page.rows /}
+						{/call}
+					</div>
+				{/foreach}
+			</div>
 		</div>
 	</div>
+
+	{call ddm.jsFormRenderer data="all"}
+		{param containerId: $containerId /}
+		{param definition: $definition /}
+		{param fieldTypes: $fieldTypes /}
+		{param portletNamespace: $portletNamespace /}
+		{param values: $values /}
+	{/call}
 {/template}
 
 /**
@@ -33,9 +48,11 @@
  */
 {template .rows}
 	{foreach $row in $rows}
-		{call ddm.columns data="all"}
-			{param columns: $row.columns /}
-		{/call}
+		<div class="row">
+			{call ddm.columns data="all"}
+				{param columns: $row.columns /}
+			{/call}
+		</div>
 	{/foreach}
 {/template}
 
@@ -59,6 +76,81 @@
  */
 {template .column}
 	<div class="col-md-{$column.size}">
-		{$column.renderedDDMFormField|noAutoescape}
+		{call ddm.field data="all"}
+			{param field: $column.field /}
+		{/call}
 	</div>
+{/template}
+
+/**
+ * Prints one field.
+ *
+ * @param field
+ */
+{template .field}
+	{if isNonnull($field)}
+		{$field|noAutoescape}
+	{/if}
+{/template}
+
+/**
+ * Prints a single page form.
+ *
+ * @param containerId
+ * @param definition
+ * @param fields
+ * @param fieldTypes
+ * @param portletNamespace
+ * @param values
+ */
+{template .single_page_form}
+	<div class="lfr-ddm-form-container" id="{$containerId}">
+		<div class="lfr-ddm-form-fields">
+			{foreach $field in $fields}
+				{call ddm.field data="all"}
+					{param field: $field /}
+				{/call}
+			{/foreach}
+		</div>
+	</div>
+	
+	{call ddm.jsFormRenderer data="all"}
+		{param containerId: $containerId /}
+		{param definition: $definition /}
+		{param fieldTypes: $fieldTypes /}
+		{param portletNamespace: $portletNamespace /}
+		{param values: $values /}
+	{/call}
+{/template}
+
+/**
+ * Prints the JavaScript Form Renderer.
+ *
+ * @param containerId
+ * @param definition
+ * @param fieldTypes
+ * @param portletNamespace
+ * @param values
+ */
+{template .jsFormRenderer}
+	<link rel="stylesheet" type="text/css" href="/o/ddm-renderer/css/main.css">
+	<script src="/o/ddm-renderer/js/modules.js"></script>
+
+	<script type="text/javascript">
+		AUI().use(
+			'liferay-ddm-form-renderer',
+			function(A) {lb}
+				Liferay.DDM.Renderer.FieldTypes.register({$fieldTypes|noAutoescape});
+	
+				new Liferay.DDM.Renderer.Form(
+					{lb}
+						container: '#{$containerId}',
+						definition: {$definition|noAutoescape},
+						portletNamespace: '{$portletNamespace}',
+						values: {$values|noAutoescape}
+					{rb}
+				);
+			{rb}
+		);
+	</script>
 {/template}

@@ -5,4 +5,4 @@ Include-Resource: classes
 
 Can-Redefine-Classes: true
 Can-Retransform-Classes: true
-Premain-Class: com.liferay.cobertura.instrument.InstrumentationAgent
+Premain-Class: com.liferay.cobertura.agent.InstrumentationAgent

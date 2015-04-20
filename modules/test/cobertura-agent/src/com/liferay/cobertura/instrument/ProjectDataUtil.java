@@ -14,6 +14,8 @@
 
 package com.liferay.cobertura.instrument;
 
+import com.liferay.cobertura.agent.InstrumentationAgent;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;

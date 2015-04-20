@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.cobertura.agent;
+
+import com.liferay.cobertura.instrument.CoberturaClassFileTransformer;
+import com.liferay.cobertura.instrument.ProjectDataUtil;
 
 import java.io.File;
 import java.io.IOException;

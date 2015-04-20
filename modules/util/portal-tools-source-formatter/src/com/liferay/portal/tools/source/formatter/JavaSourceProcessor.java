@@ -112,7 +112,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
-	protected static void checkAnnotationParameters(
+	protected void checkAnnotationParameters(
 		String fileName, String javaTermName, String annotation) {
 
 		int x = annotation.indexOf(StringPool.OPEN_PARENTHESIS);
@@ -182,7 +182,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected static String formatAnnotations(
+	protected String formatAnnotations(
 			String fileName, String javaTermName, String content, String indent)
 		throws IOException {
 

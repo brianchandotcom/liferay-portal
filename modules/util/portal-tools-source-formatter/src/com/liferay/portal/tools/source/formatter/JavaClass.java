@@ -47,7 +47,8 @@ public class JavaClass {
 			String name, String packagePath, File file, String fileName,
 			String absolutePath, String content, int lineCount, String indent,
 			JavaClass outerClass,
-			List<String> javaTermAccessLevelModifierExclusionFiles)
+			List<String> javaTermAccessLevelModifierExclusionFiles,
+			JavaSourceProcessor javaSourceProcessor)
 		throws Exception {
 
 		_name = name;
@@ -61,6 +62,7 @@ public class JavaClass {
 		_outerClass = outerClass;
 		_javaTermAccessLevelModifierExclusionFiles =
 			javaTermAccessLevelModifierExclusionFiles;
+		_javaSourceProcessor = javaSourceProcessor;
 
 		_javaTerms = getJavaTerms();
 	}
@@ -79,7 +81,7 @@ public class JavaClass {
 				!BaseSourceProcessor.isExcludedFile(
 					javaTermSortExclusionFiles, _absolutePath)) {
 
-				BaseSourceProcessor.processErrorMessage(
+				_javaSourceProcessor.processErrorMessage(
 					_fileName,
 					"Parsing error while retrieving java terms " + _fileName);
 			}
@@ -215,13 +217,13 @@ public class JavaClass {
 					StringPool.OPEN_PARENTHESIS)) {
 
 			if (!matcher.find()) {
-				BaseSourceProcessor.processErrorMessage(
+				_javaSourceProcessor.processErrorMessage(
 					fileName,
 					"LPS-36303: Incorrect method name: " + methodName + " " +
 						fileName);
 			}
 			else if (javaTerm.getType() != requiredMethodType) {
-				BaseSourceProcessor.processErrorMessage(
+				_javaSourceProcessor.processErrorMessage(
 					fileName,
 					"LPS-36303: Incorrect method type for " + methodName + " " +
 						fileName);
@@ -230,7 +232,7 @@ public class JavaClass {
 		else if (matcher.find() &&
 				 !methodContent.contains(_indent + "@Override")) {
 
-			BaseSourceProcessor.processErrorMessage(
+			_javaSourceProcessor.processErrorMessage(
 				fileName,
 				"Annotation @" + annotation + " required for " + methodName +
 					" " + fileName);
@@ -326,7 +328,7 @@ public class JavaClass {
 			int pos = matcher.start(2);
 
 			if (previousPos > pos) {
-				BaseSourceProcessor.processErrorMessage(
+				_javaSourceProcessor.processErrorMessage(
 					_fileName,
 					"Constructor parameter order " + parameterName + ": " +
 						_fileName);
@@ -538,7 +540,7 @@ public class JavaClass {
 
 		for (String parameterName : javaTerm.getParameterNames()) {
 			if (StringUtil.count(javaTerm.getContent(), parameterName) == 1) {
-				BaseSourceProcessor.processErrorMessage(
+				_javaSourceProcessor.processErrorMessage(
 					_fileName,
 					"Unused parameter " + parameterName + ": " + _fileName +
 						" " + javaTerm.getLineCount());
@@ -804,7 +806,7 @@ public class JavaClass {
 
 		String javaTermContent = javaTerm.getContent();
 
-		String newJavaTermContent = JavaSourceProcessor.formatAnnotations(
+		String newJavaTermContent = _javaSourceProcessor.formatAnnotations(
 			_fileName, javaTerm.getName(), javaTermContent, _indent);
 
 		if (!javaTermContent.equals(newJavaTermContent)) {
@@ -889,7 +891,7 @@ public class JavaClass {
 		JavaClass innerClass = new JavaClass(
 			name, _packagePath, _file, _fileName, _absolutePath,
 			javaTermContent, lineCount, _indent + StringPool.TAB, this,
-			_javaTermAccessLevelModifierExclusionFiles);
+			_javaTermAccessLevelModifierExclusionFiles, _javaSourceProcessor);
 
 		_innerClasses.add(innerClass);
 
@@ -997,7 +999,7 @@ public class JavaClass {
 					if (insideClass.contains(line) &&
 						!isEnumType(line, matcher.group(4))) {
 
-						BaseSourceProcessor.processErrorMessage(
+						_javaSourceProcessor.processErrorMessage(
 							_fileName,
 							"Missing access level modifier: " + _fileName +
 								" " + lineCount);
@@ -1347,6 +1349,7 @@ public class JavaClass {
 	};
 
 	private String _absolutePath;
+	private final JavaSourceProcessor _javaSourceProcessor;
 	private Pattern _camelCasePattern = Pattern.compile("([a-z])([A-Z0-9])");
 	private Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +

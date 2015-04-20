@@ -195,45 +195,35 @@ public class JavaSecurityTest {
 
 	@Test
 	public void testCrypto1() throws Exception {
-		try {
-			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
 
-			keyGenerator.init(128);
+		keyGenerator.init(128);
 
-			SecretKey secretKey = keyGenerator.generateKey();
+		SecretKey secretKey = keyGenerator.generateKey();
 
-			Cipher cipher = Cipher.getInstance("AES");
+		Cipher cipher = Cipher.getInstance("AES");
 
-			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
-			String text = "Hello World";
+		String text = "Hello World";
 
-			cipher.doFinal(text.getBytes());
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		cipher.doFinal(text.getBytes());
 	}
 
 	@Test
 	public void testCrypto2() throws Exception {
-		try {
-			Mac mac = Mac.getInstance("HmacMD5");
+		Mac mac = Mac.getInstance("HmacMD5");
 
-			String key = "123456789";
+		String key = "123456789";
 
-			SecretKeySpec secretKeySpec = new SecretKeySpec(
-				key.getBytes(), "HmacMD5");
+		SecretKeySpec secretKeySpec = new SecretKeySpec(
+			key.getBytes(), "HmacMD5");
 
-			mac.init(secretKeySpec);
+		mac.init(secretKeySpec);
 
-			String text = "Hello World";
+		String text = "Hello World";
 
-			mac.doFinal(text.getBytes());
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		mac.doFinal(text.getBytes());
 	}
 
 	@Test
@@ -277,9 +267,6 @@ public class JavaSecurityTest {
 			System.loadLibrary("test_b");
 		}
 		catch (UnsatisfiedLinkError usle) {
-		}
-		catch (SecurityException se) {
-			Assert.fail();
 		}
 	}
 

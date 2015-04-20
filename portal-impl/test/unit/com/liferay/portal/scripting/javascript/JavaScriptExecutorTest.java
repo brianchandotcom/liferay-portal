@@ -46,7 +46,7 @@ public class JavaScriptExecutorTest extends ScriptingExecutorTestCase {
 	}
 
 	@Test
-	public void testReturnValue() throws ScriptingException {
+	public void testReturnValue() throws Exception {
 		Map<String, Object> inputObjects = Collections.emptyMap();
 
 		Set<String> outputNames = new HashSet<>();
@@ -60,7 +60,7 @@ public class JavaScriptExecutorTest extends ScriptingExecutorTestCase {
 	}
 
 	@Test(expected = ScriptingException.class)
-	public void testRuntimeError() throws ScriptingException {
+	public void testRuntimeError() throws Exception {
 		Map<String, Object> inputObjects = Collections.emptyMap();
 		Set<String> outputNames = Collections.emptySet();
 
@@ -68,7 +68,7 @@ public class JavaScriptExecutorTest extends ScriptingExecutorTestCase {
 	}
 
 	@Test(expected = ScriptingException.class)
-	public void testSyntaxError() throws ScriptingException {
+	public void testSyntaxError() throws Exception {
 		Map<String, Object> inputObjects = Collections.emptyMap();
 		Set<String> outputNames = Collections.emptySet();
 

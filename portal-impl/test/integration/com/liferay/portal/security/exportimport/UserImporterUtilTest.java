@@ -51,81 +51,51 @@ public class UserImporterUtilTest {
 	}
 
 	@Test
-	public void testImportUser1() {
-		try {
-			User user = UserImporterUtil.importUser(
-				1, "test@liferay-test.com", "test");
+	public void testImportUser1() throws Exception {
+		User user = UserImporterUtil.importUser(
+			1, "test@liferay-test.com", "test");
 
-			Assert.assertEquals(user.getCompanyId(), 1);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(user.getCompanyId(), 1);
 	}
 
 	@Test
-	public void testImportUser2() {
-		try {
-			User user = UserImporterUtil.importUser(
-				2, 2, "test@liferay-test.com", "test");
+	public void testImportUser2() throws Exception {
+		User user = UserImporterUtil.importUser(
+			2, 2, "test@liferay-test.com", "test");
 
-			Assert.assertEquals(user.getCompanyId(), 2);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(user.getCompanyId(), 2);
 	}
 
 	@Test
-	public void testImportUserByScreenName() {
-		try {
-			User user = UserImporterUtil.importUserByScreenName(3, "test");
+	public void testImportUserByScreenName() throws Exception {
+		User user = UserImporterUtil.importUserByScreenName(3, "test");
 
-			Assert.assertEquals(user.getCompanyId(), 3);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(user.getCompanyId(), 3);
 	}
 
 	@Test
-	public void testImportUsers1() {
+	public void testImportUsers1() throws Exception {
 		_atomicState.reset();
 
-		try {
-			UserImporterUtil.importUsers();
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		UserImporterUtil.importUsers();
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testImportUsers2() {
+	public void testImportUsers2() throws Exception {
 		_atomicState.reset();
 
-		try {
-			UserImporterUtil.importUsers(1);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		UserImporterUtil.importUsers(1);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testImportUsers3() {
+	public void testImportUsers3() throws Exception {
 		_atomicState.reset();
 
-		try {
-			UserImporterUtil.importUsers(1, 1);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		UserImporterUtil.importUsers(1, 1);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}

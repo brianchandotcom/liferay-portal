@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scripting.groovy;
 
-import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.scripting.ScriptingExecutorTestCase;
 
@@ -44,7 +43,7 @@ public class GroovyExecutorTest extends ScriptingExecutorTestCase {
 	}
 
 	@Test(expected = RuntimeException.class)
-	public void testRuntimeError() throws ScriptingException {
+	public void testRuntimeError() throws Exception {
 		Map<String, Object> inputObjects = Collections.emptyMap();
 		Set<String> outputNames = Collections.emptySet();
 
@@ -52,7 +51,7 @@ public class GroovyExecutorTest extends ScriptingExecutorTestCase {
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
-	public void testSyntaxError() throws ScriptingException {
+	public void testSyntaxError() throws Exception {
 		Map<String, Object> inputObjects = Collections.emptyMap();
 		Set<String> outputNames = Collections.emptySet();
 

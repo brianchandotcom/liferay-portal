@@ -59,12 +59,7 @@ public class DynamicQueryTest {
 
 	@Test
 	public void test3() throws Exception {
-		try {
-			GroupLocalServiceUtil.dynamicQuery();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		GroupLocalServiceUtil.dynamicQuery();
 	}
 
 	@Test

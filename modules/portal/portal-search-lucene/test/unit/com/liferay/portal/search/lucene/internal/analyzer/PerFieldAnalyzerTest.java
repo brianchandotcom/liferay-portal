@@ -47,48 +47,42 @@ public class PerFieldAnalyzerTest extends PowerMockito {
 	}
 
 	@Test
-	public void testAddAnalyzer() {
-		try {
-			Analyzer analyzer = mock(Analyzer.class);
+	public void testAddAnalyzer() throws Exception {
+		Analyzer analyzer = mock(Analyzer.class);
 
-			String fieldName = "testFieldName";
+		String fieldName = "testFieldName";
 
-			when(
-				analyzer.getPositionIncrementGap(fieldName)
-			).thenReturn(
-				1
-			);
+		when(
+			analyzer.getPositionIncrementGap(fieldName)
+		).thenReturn(
+			1
+		);
 
-			when(
-				analyzer.getOffsetGap(Mockito.any(Fieldable.class))
-			).thenReturn(
-				1
-			);
+		when(
+			analyzer.getOffsetGap(Mockito.any(Fieldable.class))
+		).thenReturn(
+			1
+		);
 
-			Fieldable fieldable = mock(Fieldable.class);
+		Fieldable fieldable = mock(Fieldable.class);
 
-			when(
-				fieldable.name()
-			).thenReturn(
-				fieldName
-			);
+		when(
+			fieldable.name()
+		).thenReturn(
+			fieldName
+		);
 
-			_perFieldAnalyzer.addAnalyzer(fieldName, analyzer);
+		_perFieldAnalyzer.addAnalyzer(fieldName, analyzer);
 
-			int positionIncrementGap =
-				_perFieldAnalyzer.getPositionIncrementGap(fieldName);
+		int positionIncrementGap = _perFieldAnalyzer.getPositionIncrementGap(
+			fieldName);
 
-			Assert.assertEquals(
-				analyzer.getPositionIncrementGap(fieldName),
-				positionIncrementGap);
+		Assert.assertEquals(
+			analyzer.getPositionIncrementGap(fieldName), positionIncrementGap);
 
-			int offsetGap = _perFieldAnalyzer.getOffsetGap(fieldable);
+		int offsetGap = _perFieldAnalyzer.getOffsetGap(fieldable);
 
-			Assert.assertEquals(analyzer.getOffsetGap(fieldable), offsetGap);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		Assert.assertEquals(analyzer.getOffsetGap(fieldable), offsetGap);
 	}
 
 	private PerFieldAnalyzer _perFieldAnalyzer;

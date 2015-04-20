@@ -62,9 +62,7 @@ public class SyncEngineTest {
 
 		Thread.sleep(100);
 
-		if (!_stopped) {
-			Assert.fail();
-		}
+		Assert.assertTrue(_stopped);
 	}
 
 	private boolean _stopped;

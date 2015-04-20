@@ -97,7 +97,7 @@ public class LockLocalServiceTest {
 			SystemException systemException = lockingJob.getSystemException();
 
 			if (systemException != null) {
-				Assert.fail(systemException.getMessage());
+				throw systemException;
 			}
 		}
 

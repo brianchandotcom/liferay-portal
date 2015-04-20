@@ -57,14 +57,9 @@ public class AWTPermissionTest {
 
 	@Test
 	public void test2() throws Exception {
-		try {
-			Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-			toolkit.getSystemEventQueue();
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		toolkit.getSystemEventQueue();
 	}
 
 }

@@ -55,13 +55,10 @@ public class PortalClientBuilderTest {
 			for (String line : StringUtil.splitLines(output)) {
 				line = line.trim();
 
-				if (line.startsWith("Loading ") ||
-					line.startsWith("WSDL2Java ")) {
-
-					continue;
-				}
-
-				Assert.fail("Unexpected output " + output);
+				Assert.assertTrue(
+					"Unexpected output " + output,
+					line.startsWith("Loading ") ||
+						line.startsWith("WSDL2Java "));
 			}
 		}
 	}

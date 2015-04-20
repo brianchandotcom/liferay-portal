@@ -80,7 +80,6 @@ public class LayoutFriendlyURLServiceTest {
 
 		Layout layout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), false, nameMap, friendlyURLMap);
-
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
 				layout.getPlid());
@@ -91,11 +90,9 @@ public class LayoutFriendlyURLServiceTest {
 			availableLocales);
 
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			if (!ArrayUtil.contains(
-					availableLanguageIds, layoutFriendlyURL.getLanguageId())) {
-
-				Assert.fail();
-			}
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					availableLanguageIds, layoutFriendlyURL.getLanguageId()));
 		}
 	}
 

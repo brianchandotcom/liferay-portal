@@ -36,74 +36,44 @@ public class JNDITest {
 
 	@Test
 	public void testBind1() throws Exception {
-		try {
-			Context context = new InitialContext();
+		Context context = new InitialContext();
 
-			context.bind("test-pacl-john 3:16", "John");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		context.bind("test-pacl-john 3:16", "John");
 	}
 
 	@Test
 	public void testBind2() throws Exception {
-		try {
-			Context context = new InitialContext();
+		Context context = new InitialContext();
 
-			context.bind("test-pacl-luke", "Luke");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		context.bind("test-pacl-luke", "Luke");
 	}
 
 	@Test
 	public void testBind3() throws Exception {
-		try {
-			Context context = new InitialContext();
+		Context context = new InitialContext();
 
-			context.bind("test-pacl-Luke", "Luke");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		context.bind("test-pacl-Luke", "Luke");
 	}
 
 	@Test
 	public void testBind4() throws Exception {
-		try {
-			Context context = new InitialContext();
+		Context context = new InitialContext();
 
-			context.bind("test-pacl-Mark", "Mark");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		context.bind("test-pacl-Mark", "Mark");
 	}
 
 	@Test
 	public void testBind5() throws Exception {
-		try {
-			Context context = new InitialContext();
+		Context context = new InitialContext();
 
-			context.bind("test-pacl-mark", "Mark");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		context.bind("test-pacl-mark", "Mark");
 	}
 
 	@Test
 	public void testBind6() throws Exception {
-		try {
-			Context context = new InitialContext();
+		Context context = new InitialContext();
 
-			context.bind("test-pacl-matthew", "Matthew");
-		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
+		context.bind("test-pacl-matthew", "Matthew");
 	}
 
 	@Test
@@ -141,9 +111,6 @@ public class JNDITest {
 		}
 		catch (NameNotFoundException nnfe) {
 		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
 	}
 
 	@Test
@@ -154,9 +121,6 @@ public class JNDITest {
 			context.lookup("test-pacl-luke");
 		}
 		catch (NameNotFoundException nnfe) {
-		}
-		catch (SecurityException se) {
-			Assert.fail();
 		}
 	}
 
@@ -169,9 +133,6 @@ public class JNDITest {
 		}
 		catch (NameNotFoundException nnfe) {
 		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
 	}
 
 	@Test
@@ -182,9 +143,6 @@ public class JNDITest {
 			context.lookup("test-pacl-mark");
 		}
 		catch (NameNotFoundException nnfe) {
-		}
-		catch (SecurityException se) {
-			Assert.fail();
 		}
 	}
 
@@ -197,9 +155,6 @@ public class JNDITest {
 		}
 		catch (NameNotFoundException nnfe) {
 		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
 	}
 
 	@Test
@@ -210,9 +165,6 @@ public class JNDITest {
 			context.lookup("test-pacl-matthew");
 		}
 		catch (NameNotFoundException nnfe) {
-		}
-		catch (SecurityException se) {
-			Assert.fail();
 		}
 	}
 
@@ -225,9 +177,6 @@ public class JNDITest {
 		}
 		catch (NameNotFoundException nnfe) {
 		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
 	}
 
 	@Test
@@ -238,9 +187,6 @@ public class JNDITest {
 			context.unbind("test-pacl-luke");
 		}
 		catch (NameNotFoundException nnfe) {
-		}
-		catch (SecurityException se) {
-			Assert.fail();
 		}
 	}
 
@@ -253,9 +199,6 @@ public class JNDITest {
 		}
 		catch (NameNotFoundException nnfe) {
 		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
 	}
 
 	@Test
@@ -266,9 +209,6 @@ public class JNDITest {
 			context.unbind("test-pacl-mark");
 		}
 		catch (NameNotFoundException nnfe) {
-		}
-		catch (SecurityException se) {
-			Assert.fail();
 		}
 	}
 
@@ -281,9 +221,6 @@ public class JNDITest {
 		}
 		catch (NameNotFoundException nnfe) {
 		}
-		catch (SecurityException se) {
-			Assert.fail();
-		}
 	}
 
 	@Test
@@ -294,9 +231,6 @@ public class JNDITest {
 			context.unbind("test-pacl-matthew");
 		}
 		catch (NameNotFoundException nnfe) {
-		}
-		catch (SecurityException se) {
-			Assert.fail();
 		}
 	}
 

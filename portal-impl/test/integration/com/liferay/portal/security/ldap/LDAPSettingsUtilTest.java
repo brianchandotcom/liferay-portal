@@ -39,52 +39,32 @@ public class LDAPSettingsUtilTest {
 			new SyntheticBundleRule("bundle.ldapsettingsutil"));
 
 	@Test
-	public void testGetAuthSearchFilter() {
-		try {
-			Assert.assertEquals(
-				"(companyId=1)", LDAPSettingsUtil.getAuthSearchFilter(
-					1, 1, "test@liferay-test.com", "test-ip", "test"));
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+	public void testGetAuthSearchFilter() throws Exception {
+		Assert.assertEquals(
+			"(companyId=1)", LDAPSettingsUtil.getAuthSearchFilter(
+				1, 1, "test@liferay-test.com", "test-ip", "test"));
 	}
 
 	@Test
-	public void testGetContactExpandoMappings() {
-		try {
-			Properties properties = LDAPSettingsUtil.getContactExpandoMappings(
-				1, 1);
+	public void testGetContactExpandoMappings() throws Exception {
+		Properties properties = LDAPSettingsUtil.getContactExpandoMappings(
+			1, 1);
 
-			Assert.assertEquals(properties.get("ldapServerId"), "1");
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(properties.get("ldapServerId"), "1");
 	}
 
 	@Test
-	public void testGetContactMappings() {
-		try {
-			Properties properties = LDAPSettingsUtil .getContactMappings(1, 1);
+	public void testGetContactMappings() throws Exception {
+		Properties properties = LDAPSettingsUtil .getContactMappings(1, 1);
 
-			Assert.assertEquals(properties.get("ldapServerId"), "1");
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(properties.get("ldapServerId"), "1");
 	}
 
 	@Test
-	public void testGetGroupMappings() {
-		try {
-			Properties properties = LDAPSettingsUtil .getGroupMappings(1, 1);
+	public void testGetGroupMappings() throws Exception {
+		Properties properties = LDAPSettingsUtil .getGroupMappings(1, 1);
 
-			Assert.assertEquals(properties.get("ldapServerId"), "1");
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(properties.get("ldapServerId"), "1");
 	}
 
 	@Test
@@ -103,28 +83,17 @@ public class LDAPSettingsUtilTest {
 	}
 
 	@Test
-	public void testGetUserExpandoMappings() {
-		try {
-			Properties properties = LDAPSettingsUtil.getUserExpandoMappings(
-				1, 1);
+	public void testGetUserExpandoMappings() throws Exception {
+		Properties properties = LDAPSettingsUtil.getUserExpandoMappings(1, 1);
 
-			Assert.assertEquals(properties.get("ldapServerId"), "1");
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(properties.get("ldapServerId"), "1");
 	}
 
 	@Test
-	public void testGetUserMappings() {
-		try {
-			Properties properties = LDAPSettingsUtil .getUserMappings(1, 1);
+	public void testGetUserMappings() throws Exception {
+		Properties properties = LDAPSettingsUtil .getUserMappings(1, 1);
 
-			Assert.assertEquals(properties.get("ldapServerId"), "1");
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(properties.get("ldapServerId"), "1");
 	}
 
 	@Test

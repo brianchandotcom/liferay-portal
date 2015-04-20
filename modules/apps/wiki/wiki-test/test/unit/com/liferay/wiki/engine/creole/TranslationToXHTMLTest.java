@@ -30,7 +30,6 @@ import java.io.InputStream;
 
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -59,20 +58,20 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testEscapedEscapedCharacter() {
+	public void testEscapedEscapedCharacter() throws Exception {
 		Assert.assertEquals(
 			"<p>~&#034;~ is escaped&#034; </p>", translate("escape-2.creole"));
 	}
 
 	@Test
-	public void testInterwikiC2() {
+	public void testInterwikiC2() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://c2.com/cgi/wiki?Liferay\">Liferay</a> </p>",
 			translate("interwikic2.creole"));
 	}
 
 	@Test
-	public void testInterwikiDokuWiki() {
+	public void testInterwikiDokuWiki() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://wiki.splitbrain.org/wiki:Liferay\">" +
 				"Liferay</a> </p>",
@@ -80,7 +79,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiFlickr() {
+	public void testInterwikiFlickr() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://www.flickr.com/search/?w=all&amp;m=text" +
 				"&amp;q=Liferay\">Liferay</a> </p>",
@@ -88,7 +87,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiGoogle() {
+	public void testInterwikiGoogle() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://www.google.com/search?q=Liferay\">" +
 				"Liferay</a> </p>",
@@ -96,7 +95,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiJspWiki() {
+	public void testInterwikiJspWiki() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://www.jspwiki.org/Wiki.jsp?page=Liferay\">" +
 				"Liferay</a> </p>",
@@ -104,7 +103,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiMeatBall() {
+	public void testInterwikiMeatBall() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://usemod.com/cgi-bin/mb.pl?Liferay\">" +
 				"Liferay</a> </p>",
@@ -112,7 +111,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiMediaWiki() {
+	public void testInterwikiMediaWiki() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://www.mediawiki.org/wiki/Liferay\">" +
 				"Liferay</a> </p>",
@@ -120,7 +119,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiMoinMoin() {
+	public void testInterwikiMoinMoin() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://moinmoin.wikiwikiweb.de/Liferay\">" +
 				"Liferay</a> </p>",
@@ -128,7 +127,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiOddMuse() {
+	public void testInterwikiOddMuse() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://www.oddmuse.org/cgi-bin/wiki/Liferay\">" +
 				"Liferay</a> </p>",
@@ -136,7 +135,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiOhana() {
+	public void testInterwikiOhana() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://wikiohana.net/cgi-bin/wiki.pl/Liferay\">" +
 				"Liferay</a> </p>",
@@ -144,7 +143,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiPmWiki() {
+	public void testInterwikiPmWiki() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://www.pmwiki.com/wiki/PmWiki/Liferay\">" +
 				"Liferay</a> </p>",
@@ -152,7 +151,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiPukiWiki() {
+	public void testInterwikiPukiWiki() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://pukiwiki.sourceforge.jp/?Liferay\">" +
 				"Liferay</a> </p>",
@@ -160,7 +159,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiPurpleWiki() {
+	public void testInterwikiPurpleWiki() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://purplewiki.blueoxen.net/cgi-bin/wiki.pl" +
 				"?Liferay\">Liferay</a> </p>",
@@ -168,14 +167,14 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiRadeox() {
+	public void testInterwikiRadeox() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://radeox.org/space/Liferay\">Liferay</a> </p>",
 			translate("interwikiradeox.creole"));
 	}
 
 	@Test
-	public void testInterwikiSnipSnap() {
+	public void testInterwikiSnipSnap() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://www.snipsnap.org/space/Liferay\">" +
 				"Liferay</a> </p>",
@@ -183,7 +182,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiTiddlyWiki() {
+	public void testInterwikiTiddlyWiki() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://www.tiddlywiki.com/#Liferay\">" +
 				"Liferay</a> </p>",
@@ -191,7 +190,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiTWiki() {
+	public void testInterwikiTWiki() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://twiki.org/cgi-bin/view/TWiki/Liferay\">" +
 				"Liferay</a> </p>",
@@ -199,7 +198,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiUsemod() {
+	public void testInterwikiUsemod() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://http://www.usemod.com/cgi-bin/wiki.pl" +
 				"?Liferay\">Liferay</a> </p>",
@@ -207,21 +206,21 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testInterwikiWikipedia() {
+	public void testInterwikiWikipedia() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://wikipedia.org/wiki/Liferay\">Liferay</a> </p>",
 			translate("interwikiwikipedia.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyBoldContentInListItems() {
+	public void testParseCorrectlyBoldContentInListItems() throws Exception {
 		Assert.assertEquals(
 			"<ul><li> <strong>abcdefg</strong></li></ul>",
 			translate("list-6.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyComplexNestedList() {
+	public void testParseCorrectlyComplexNestedList() throws Exception {
 		Assert.assertEquals(
 			"<ul><li>a<ul><li>a.1</li></ul></li><li>b<ul><li>b.1</li>" +
 				"<li>b.2</li><li>b.3</li></ul></li><li>c</li></ul>",
@@ -229,13 +228,13 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyItalicContentInListItems() {
+	public void testParseCorrectlyItalicContentInListItems() throws Exception {
 		Assert.assertEquals(
 			"<ul><li> <em>abcdefg</em></li></ul>", translate("list-5.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyMixedHorizontalBlocks() {
+	public void testParseCorrectlyMixedHorizontalBlocks() throws Exception {
 		Assert.assertEquals(
 			"<h1>Before Horizontal section</h1><hr/><pre>\tNo wiki section " +
 				"after Horizontal section</pre>",
@@ -243,39 +242,41 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyMultipleHeadingBlocks() {
+	public void testParseCorrectlyMultipleHeadingBlocks() throws Exception {
 		Assert.assertEquals(
 			"<h1>Level 1</h1><h2>Level 2</h2><h3>Level 3</h3>",
 			translate("heading-10.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyNoClosedFirstHeadingBlock() {
+	public void testParseCorrectlyNoClosedFirstHeadingBlock() throws Exception {
 		Assert.assertEquals(
 			"<h1>This is a non closed heading</h1>",
 			translate("heading-3.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyNoClosedSecondHeadingBlock() {
+	public void testParseCorrectlyNoClosedSecondHeadingBlock()
+		throws Exception {
+
 		Assert.assertEquals(
 			"<h2>This is a non closed heading</h2>",
 			translate("heading-6.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyNoClosedThirdHeadingBlock() {
+	public void testParseCorrectlyNoClosedThirdHeadingBlock() throws Exception {
 		Assert.assertEquals("<h3>Level 3</h3>", translate("heading-7.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyNoWikiBlockInline() {
+	public void testParseCorrectlyNoWikiBlockInline() throws Exception {
 		Assert.assertEquals(
 			"<p><pre> Inline </pre></p>", translate("nowikiblock-10.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyNoWikiBlockWithBraces() {
+	public void testParseCorrectlyNoWikiBlockWithBraces() throws Exception {
 		Assert.assertEquals(
 			"<pre>{" + _NEW_LINE + "foo" + _NEW_LINE + "}" + _NEW_LINE +
 				"</pre>",
@@ -283,7 +284,9 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyNoWikiBlockWithMultipleAndText() {
+	public void testParseCorrectlyNoWikiBlockWithMultipleAndText()
+		throws Exception {
+
 		Assert.assertEquals(
 			"<pre>public interface Foo {" + _NEW_LINE + "void foo();" +
 				_NEW_LINE + "}" + _NEW_LINE + "</pre><p>Outside preserve </p>",
@@ -291,7 +294,9 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyNoWikiBlockWithMultipleBraces() {
+	public void testParseCorrectlyNoWikiBlockWithMultipleBraces()
+		throws Exception {
+
 		Assert.assertEquals(
 			"<pre>public interface Foo {" + _NEW_LINE + "void foo();" +
 				_NEW_LINE + "}" + _NEW_LINE + "</pre>",
@@ -299,83 +304,95 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyOneEmptyFirstHeadingBlock() {
+	public void testParseCorrectlyOneEmptyFirstHeadingBlock() throws Exception {
 		Assert.assertEquals("<h1>  </h1>", translate("heading-2.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneEmptyNoWikiBlock() {
+	public void testParseCorrectlyOneEmptyNoWikiBlock() throws Exception {
 		Assert.assertEquals("<pre></pre>", translate("nowikiblock-3.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneEmptySecondHeadingBlock() {
+	public void testParseCorrectlyOneEmptySecondHeadingBlock()
+		throws Exception {
+
 		Assert.assertEquals("<h2>  </h2>", translate("heading-5.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneEmptyThirdHeadingBlock() {
+	public void testParseCorrectlyOneEmptyThirdHeadingBlock() throws Exception {
 		Assert.assertEquals("<h3>  </h3>", translate("heading-8.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneHorizontalBlocks() {
+	public void testParseCorrectlyOneHorizontalBlocks() throws Exception {
 		Assert.assertEquals("<hr/>", translate("horizontal-1.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneItemFirstLevel() {
+	public void testParseCorrectlyOneItemFirstLevel() throws Exception {
 		Assert.assertEquals(
 			"<ul><li>ABCDEFG</li></ul>", translate("list-1.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyFirstHeadingBlock() {
+	public void testParseCorrectlyOneNonEmptyFirstHeadingBlock()
+		throws Exception {
+
 		Assert.assertEquals(
 			"<h1> Level 1 (largest) </h1>", translate("heading-1.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlock() {
+	public void testParseCorrectlyOneNonEmptyNoWikiBlock() throws Exception {
 		Assert.assertEquals(
 			"<pre>This is a non \\empty\\ block</pre>",
 			translate("nowikiblock-4.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithBraces() {
+	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithBraces()
+		throws Exception {
+
 		Assert.assertEquals(
 			"<p>Preserving </p><pre>.lfr-helper{span}</pre>",
 			translate("nowikiblock-6.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithMultipleLines() {
+	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithMultipleLines()
+		throws Exception {
+
 		Assert.assertEquals(
 			"<pre>Multiple" + _NEW_LINE + "lines</pre>",
 			toUnix(translate("nowikiblock-5.creole")));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptySecondHeadingBlock() {
+	public void testParseCorrectlyOneNonEmptySecondHeadingBlock()
+		throws Exception {
+
 		Assert.assertEquals("<h2>Level 2</h2>", translate("heading-4.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyThirdHeadingBlock() {
+	public void testParseCorrectlyOneNonEmptyThirdHeadingBlock()
+		throws Exception {
+
 		Assert.assertEquals(
 			"<h3>This is a non closed heading</h3>",
 			translate("heading-9.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneOrderedItemFirstLevel() {
+	public void testParseCorrectlyOneOrderedItemFirstLevel() throws Exception {
 		Assert.assertEquals(
 			"<ol><li>ABCDEFG</li></ol>", translate("list-7.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOrderedNestedLevels() {
+	public void testParseCorrectlyOrderedNestedLevels() throws Exception {
 		Assert.assertEquals(
 			"<ol><li>a<ol><li>a.1</li></ol></li><li>b<ol><li>b.1</li>" +
 				"<li>b.2</li><li>b.3</li></ol></li><li>c</li></ol>",
@@ -383,103 +400,98 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseCorrectlyThreeItemFirstLevel() {
-		Assert.assertEquals(
-			"<ul><li>1</li><li>2</li><li>3</li></ul>",
-			translate("list-3.creole"));
-	}
-
-	@Test
-	public void testParseCorrectlyThreeNoWikiBlock() {
+	public void testParseCorrectlyThreeItemFirstLevel() throws Exception {
 		Assert.assertEquals(
 			"<pre>1111</pre><pre>2222</pre><pre>3333</pre>",
 			translate("nowikiblock-2.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyThreeOrderedItemFirstLevel() {
+	public void testParseCorrectlyThreeOrderedItemFirstLevel()
+		throws Exception {
+
 		Assert.assertEquals(
 			"<ol><li>1</li><li>2</li><li>3</li></ol>",
 			translate("list-9.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyTwoHorizontalBlocks() {
+	public void testParseCorrectlyTwoHorizontalBlocks() throws Exception {
 		Assert.assertEquals("<hr/><hr/>", translate("horizontal-2.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyTwoItemFirstLevel() {
+	public void testParseCorrectlyTwoItemFirstLevel() throws Exception {
 		Assert.assertEquals(
 			"<ul><li>1</li><li>2</li></ul>", translate("list-2.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyTwoOrderedItemFirstLevel() {
+	public void testParseCorrectlyTwoOrderedItemFirstLevel() throws Exception {
 		Assert.assertEquals(
 			"<ol><li>1</li><li>2</li></ol>", translate("list-8.creole"));
 	}
 
 	@Test
-	public void testParseEmpyImageTag() {
+	public void testParseEmpyImageTag() throws Exception {
 		Assert.assertEquals(
 			"<p><img src=\"\" /> </p>", translate("image-4.creole"));
 	}
 
 	@Test
-	public void testParseImageAndTextInListItem() {
+	public void testParseImageAndTextInListItem() throws Exception {
 		Assert.assertEquals(
 			"<ul><li><img src=\"imageLink\" alt=\"altText\"/> end.</li></ul>",
 			translate("list-17.creole"));
 	}
 
 	@Test
-	public void testParseImageInListItem() {
+	public void testParseImageInListItem() throws Exception {
 		Assert.assertEquals(
 			"<ul><li><img src=\"imageLink\" alt=\"altText\"/></li></ul>",
 			translate("list-16.creole"));
 	}
 
 	@Test
-	public void testParseLinkEmpty() {
+	public void testParseLinkEmpty() throws Exception {
 		Assert.assertEquals("<p></p>", translate("link-8.creole"));
 	}
 
 	@Test
-	public void testParseLinkEmptyInHeader() {
+	public void testParseLinkEmptyInHeader() throws Exception {
 		Assert.assertEquals("<h2>  </h2>", translate("link-9.creole"));
 	}
 
 	@Test
-	public void testParseLinkFtp() {
+	public void testParseLinkFtp() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"ftp://liferay.com\">Liferay</a> </p>",
 			translate("link-12.creole"));
 	}
 
 	@Test
-	public void testParseLinkHttp() {
+	public void testParseLinkHttp() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"http://liferay.com\">Liferay</a> </p>",
 			translate("link-10.creole"));
 	}
 
 	@Test
-	public void testParseLinkHttps() {
+	public void testParseLinkHttps() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"https://liferay.com\">Liferay</a> </p>",
 			translate("link-11.creole"));
 	}
 
 	@Test
-	public void testParseLinkInListItem() {
+	public void testParseLinkInListItem() throws Exception {
 		Assert.assertEquals(
 			"<ul><li><a href=\"l\">a</a></li></ul>",
 			translate("list-13.creole"));
 	}
 
 	@Test
-	public void testParseLinkInListItemMixedText() {
+	public void testParseLinkInListItemMixedText() throws Exception {
 		Assert.assertEquals(
 			"<ul><li>This is an item with a link <a href=\"l\">a</a> inside " +
 				"text</li></ul>",
@@ -487,41 +499,41 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseLinkInListItemWithPreText() {
+	public void testParseLinkInListItemWithPreText() throws Exception {
 		Assert.assertEquals(
 			"<ul><li>This is an item with a link <a href=\"l\">a</a></li></ul>",
 			translate("list-11.creole"));
 	}
 
 	@Test
-	public void testParseLinkMailTo() {
+	public void testParseLinkMailTo() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"mailto:liferay@liferay.com\">Liferay Mail</a> </p>",
 			translate("link-13.creole"));
 	}
 
 	@Test
-	public void testParseLinkMMS() {
+	public void testParseLinkMMS() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"mms://liferay.com/file\">Liferay File</a> </p>",
 			translate("link-14.creole"));
 	}
 
 	@Test
-	public void testParseLinkWithNoAlt() {
+	public void testParseLinkWithNoAlt() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"Link\">Link</a> </p>", translate("link-7.creole"));
 	}
 
 	@Test
-	public void testParseMixedList1() {
+	public void testParseMixedList1() throws Exception {
 		Assert.assertEquals(
 			"<ul><li> U1</li></ul><ol><li> O1</li></ol>",
 			translate("mixed-list-1.creole"));
 	}
 
 	@Test
-	public void testParseMixedList2() {
+	public void testParseMixedList2() throws Exception {
 		Assert.assertEquals(
 			"<ol><li> 1<ol><li> 1.1</li><li> 1.2</li><li> 1.3</li></ol></li>" +
 				"</ol><ul><li> A<ul><li> A.A</li><li> A.B</li></ul></li></ul>",
@@ -529,7 +541,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseMixedList3() {
+	public void testParseMixedList3() throws Exception {
 		Assert.assertEquals(
 			"<ol><li> T1<ol><li> T1.1</li></ol></li><li> T2</li><li> T3" +
 				"</li></ol><ul><li> Divider 1<ul><li> Divider 2a</li>" +
@@ -540,7 +552,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseMultilineTextParagraph() {
+	public void testParseMultilineTextParagraph() throws Exception {
 		Assert.assertEquals(
 			"<p>Simple P0 Simple P1 Simple P2 Simple P3 Simple P4 Simple P5 " +
 				"Simple P6 Simple P7 Simple P8 Simple P9 </p>",
@@ -548,7 +560,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseMultipleImageTags() {
+	public void testParseMultipleImageTags() throws Exception {
 		Assert.assertEquals(
 			"<p><img src=\"L1\" alt=\"A1\"/><img src=\"L2\" alt=\"A2\"/><img " +
 				"src=\"L3\" alt=\"A3\"/><img src=\"L4\" alt=\"A4\"/><img " +
@@ -557,7 +569,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseMultipleLinkTags() {
+	public void testParseMultipleLinkTags() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"L\">A</a> <a href=\"L\">A</a> <a href=\"L\">A</a> " +
 				"</p>",
@@ -565,7 +577,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseNestedLists() {
+	public void testParseNestedLists() throws Exception {
 		Assert.assertEquals(
 			"<ul><li> 1</li><li> 2<ul><li> 2.1<ul><li> 2.1.1<ul>" +
 				"<li> 2.1.1.1</li><li> 2.1.1.2</li></ul></li><li> 2.1.2</li>" +
@@ -575,7 +587,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseNoWikiAndTextInListItem() {
+	public void testParseNoWikiAndTextInListItem() throws Exception {
 		Assert.assertEquals(
 			"<ul><li><pre>This is nowiki inside a list item</pre> and <em>" +
 				"italics</em></li></ul>",
@@ -583,14 +595,14 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseNoWikiInListItem() {
+	public void testParseNoWikiInListItem() throws Exception {
 		Assert.assertEquals(
 			"<ul><li><pre>This is nowiki inside a list item</pre></li></ul>",
 			translate("list-14.creole"));
 	}
 
 	@Test
-	public void testParseOnlySpacesContentInImageTag() {
+	public void testParseOnlySpacesContentInImageTag() throws Exception {
 		Assert.assertEquals(
 			"<p><img src=\"L1\" alt=\"A1\"/><img src=\"L2\" alt=\"A2\"/>" +
 				"<img src=\"L3\" alt=\"A3\"/><img src=\"L4\" alt=\"A4\"/>" +
@@ -599,53 +611,53 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseSimpleImageTag() {
+	public void testParseSimpleImageTag() throws Exception {
 		Assert.assertEquals(
 			"<p><img src=\"link\" alt=\"alternative text\"/> </p>",
 			translate("image-1.creole"));
 	}
 
 	@Test
-	public void testParseSimpleImageTagWithNoAlternative() {
+	public void testParseSimpleImageTagWithNoAlternative() throws Exception {
 		Assert.assertEquals(
 			"<p><img src=\"link\" /> </p>", translate("image-2.creole"));
 	}
 
 	@Test
-	public void testParseSimpleLinkTag() {
+	public void testParseSimpleLinkTag() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"link\">alternative text</a> </p>",
 			translate("link-1.creole"));
 	}
 
 	@Test
-	public void testParseSimpleLinkTagWithoutDescription() {
+	public void testParseSimpleLinkTagWithoutDescription() throws Exception {
 		Assert.assertEquals(
 			"<p><a href=\"link\">link</a> </p>", translate("link-2.creole"));
 	}
 
 	@Test
-	public void testParseSimpleTextBoldAndItalics() {
+	public void testParseSimpleTextBoldAndItalics() throws Exception {
 		Assert.assertEquals(
 			"<p>Text <strong><em>ItalicAndBold</em></strong> </p>",
 			translate("text-6.creole"));
 	}
 
 	@Test
-	public void testParseSimpleTextParagraph() {
+	public void testParseSimpleTextParagraph() throws Exception {
 		Assert.assertEquals(
 			"<p>Simple paragraph </p>", translate("text-1.creole"));
 	}
 
 	@Test
-	public void testParseSimpleTextWithBold() {
+	public void testParseSimpleTextWithBold() throws Exception {
 		Assert.assertEquals(
 			"<p>Text with some content in <strong>bold</strong> </p>",
 			translate("text-4.creole"));
 	}
 
 	@Test
-	public void testParseSimpleTextWithBoldAndItalics() {
+	public void testParseSimpleTextWithBoldAndItalics() throws Exception {
 		Assert.assertEquals(
 			"<p>Text with some content in <strong>bold</strong> and with " +
 				"some content in <em>italic</em> </p>",
@@ -653,21 +665,21 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseSimpleTextWithForcedEndline() {
+	public void testParseSimpleTextWithForcedEndline() throws Exception {
 		Assert.assertEquals(
 			"<p>Text with <br/>forced line break </p>",
 			translate("text-7.creole"));
 	}
 
 	@Test
-	public void testParseSimpleTextWithItalics() {
+	public void testParseSimpleTextWithItalics() throws Exception {
 		Assert.assertEquals(
 			"<p>Text with some content in <em>italic</em> </p>",
 			translate("text-3.creole"));
 	}
 
 	@Test
-	public void testParseTableImagesNested() {
+	public void testParseTableImagesNested() throws Exception {
 		Assert.assertEquals(
 			"<table><tr><th>H1</th></tr><tr><td><img " +
 				"src=\"image.png\" alt=\"Image\"/></td></tr></table>",
@@ -675,7 +687,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseTableLinksNested() {
+	public void testParseTableLinksNested() throws Exception {
 		Assert.assertEquals(
 			"<table><tr><th>H1</th></tr><tr><td><a " +
 				"href=\"http://www.liferay.com \"> Liferay</a></td></tr>" +
@@ -684,7 +696,7 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseTableMultipleRowsAndColumns() {
+	public void testParseTableMultipleRowsAndColumns() throws Exception {
 		Assert.assertEquals(
 			"<table><tr><th>H1</th><th>H2</th><th>H3</th><th>H4</th></tr>" +
 				"<tr><td>C1</td><td>C2</td><td>C3</td><td>C4</td></tr><tr>" +
@@ -695,14 +707,14 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseTableOfContents() {
+	public void testParseTableOfContents() throws Exception {
 		Assert.assertEquals(
 			"<h2> Level 1  </h2><h2> Level 2 </h2>",
 			translate("tableofcontents-1.creole"));
 	}
 
 	@Test
-	public void testParseTableOfContentsWithTitle() {
+	public void testParseTableOfContentsWithTitle() throws Exception {
 		Assert.assertEquals(
 			"<h2> Level 1 (largest) </h2><p><strong>L1 text</strong> </p>" +
 				"<h2> Level 2 </h2><h3> Level 3 </h3>",
@@ -710,21 +722,21 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
-	public void testParseTableOneRowOneColumn() {
+	public void testParseTableOneRowOneColumn() throws Exception {
 		Assert.assertEquals(
 			"<table><tr><th>H1</th></tr><tr><td>C1.1</td></tr></table>",
 			translate("table-1.creole"));
 	}
 
 	@Test
-	public void testSimpleEscapedCharacter() {
+	public void testSimpleEscapedCharacter() throws Exception {
 		Assert.assertEquals(
 			"<p>ESCAPED1 This is not escaped </p>",
 			translate("escape-1.creole"));
 	}
 
 	@Test
-	public void testTranslateOneNoWikiBlock() {
+	public void testTranslateOneNoWikiBlock() throws Exception {
 		Assert.assertEquals(
 			"<pre>\t//This// does **not** get [[formatted]]</pre>",
 			translate("nowikiblock-1.creole"));
@@ -748,18 +760,10 @@ public class TranslationToXHTMLTest {
 		return new Creole10Parser(commonTokenStream);
 	}
 
-	protected WikiPageNode getWikiPageNode(String fileName) {
-		try {
-			_creole10parser = getCreole10Parser(fileName);
+	protected WikiPageNode getWikiPageNode(String fileName) throws Exception {
+		_creole10parser = getCreole10Parser(fileName);
 
-			_creole10parser.wikipage();
-		}
-		catch (IOException ioe) {
-			Assert.fail("File does not exist");
-		}
-		catch (RecognitionException re) {
-			Assert.fail("File could not be parsed");
-		}
+		_creole10parser.wikipage();
 
 		return _creole10parser.getWikiPageNode();
 	}
@@ -769,7 +773,7 @@ public class TranslationToXHTMLTest {
 			text, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
-	protected String translate(String fileName) {
+	protected String translate(String fileName) throws Exception {
 		return _xhtmlTranslationVisitor.translate(getWikiPageNode(fileName));
 	}
 

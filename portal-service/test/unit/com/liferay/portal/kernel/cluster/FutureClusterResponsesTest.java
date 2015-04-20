@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.cluster;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +30,7 @@ import org.junit.Test;
 public class FutureClusterResponsesTest {
 
 	@Test
-	public void testMultipleResponseFailure() throws UnknownHostException {
+	public void testMultipleResponseFailure() throws Exception {
 		Set<String> clusterNodeIds = new HashSet<>();
 
 		clusterNodeIds.add("1.2.3.4");
@@ -55,15 +54,12 @@ public class FutureClusterResponsesTest {
 
 			Assert.fail("Should have failed");
 		}
-		catch (InterruptedException ie) {
-			Assert.fail("Interrupted");
-		}
 		catch (TimeoutException te) {
 		}
 	}
 
 	@Test
-	public void testMultipleResponseSuccess() throws UnknownHostException {
+	public void testMultipleResponseSuccess() throws Exception {
 		Set<String> clusterNodeIds = new HashSet<>();
 
 		clusterNodeIds.add("1.2.3.4");
@@ -86,19 +82,11 @@ public class FutureClusterResponsesTest {
 				new ClusterNode("1.2.3.6", InetAddress.getLocalHost()), null,
 				null));
 
-		try {
-			futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
-		}
-		catch (InterruptedException ie) {
-			Assert.fail("Interrupted");
-		}
-		catch (TimeoutException te) {
-			Assert.fail("Timed out");
-		}
+		futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
 	}
 
 	@Test
-	public void testSingleResponseFailure() {
+	public void testSingleResponseFailure() throws InterruptedException {
 		Set<String> clusterNodeIds = new HashSet<>();
 
 		clusterNodeIds.add("1.2.3.4");
@@ -111,15 +99,12 @@ public class FutureClusterResponsesTest {
 
 			Assert.fail("Should have failed");
 		}
-		catch (InterruptedException ie) {
-			Assert.fail("Interrupted");
-		}
 		catch (TimeoutException te) {
 		}
 	}
 
 	@Test
-	public void testSingleResponseSuccess() throws UnknownHostException {
+	public void testSingleResponseSuccess() throws Exception {
 		Set<String> clusterNodeIds = new HashSet<>();
 
 		clusterNodeIds.add("test");
@@ -132,15 +117,7 @@ public class FutureClusterResponsesTest {
 				new ClusterNode("test", InetAddress.getLocalHost()), null,
 				null));
 
-		try {
-			futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
-		}
-		catch (InterruptedException ie) {
-			Assert.fail("Interrupted");
-		}
-		catch (TimeoutException te) {
-			Assert.fail("Timed out");
-		}
+		futureClusterResponses.get(500, TimeUnit.MILLISECONDS);
 	}
 
 }

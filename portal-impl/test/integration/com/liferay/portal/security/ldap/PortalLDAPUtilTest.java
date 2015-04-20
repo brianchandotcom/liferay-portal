@@ -50,329 +50,204 @@ public class PortalLDAPUtilTest {
 	}
 
 	@Test
-	public void testGetContex2t() {
+	public void testGetContex2t() throws Exception {
 		_atomicState.reset();
 
-		try {
-			PortalLDAPUtil.getContext(
-				1, "providerURL", "principal", "credentials");
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		PortalLDAPUtil.getContext(1, "providerURL", "principal", "credentials");
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testGetContext() {
+	public void testGetContext() throws Exception {
 		_atomicState.reset();
 
-		try {
-			PortalLDAPUtil.getContext(1, 1);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		PortalLDAPUtil.getContext(1, 1);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testGetGroup() {
+	public void testGetGroup() throws Exception {
 		_atomicState.reset();
 
-		try {
-			PortalLDAPUtil.getGroup(1, 1, "groupName");
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		PortalLDAPUtil.getGroup(1, 1, "groupName");
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testGetGroupAttributes1() {
+	public void testGetGroupAttributes1() throws Exception {
 		_atomicState.reset();
 
-		try {
-			PortalLDAPUtil.getGroupAttributes(
-				1, 1, null, "fullDistinguishedName");
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		PortalLDAPUtil.getGroupAttributes(1, 1, null, "fullDistinguishedName");
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testGetGroupAttributes2() {
+	public void testGetGroupAttributes2() throws Exception {
 		_atomicState.reset();
 
-		try {
-			PortalLDAPUtil.getGroupAttributes(
-				1, 1, null, "fullDistinguishedName", false);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		PortalLDAPUtil.getGroupAttributes(
+			1, 1, null, "fullDistinguishedName", false);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testGetGroups1() {
-		try {
-			byte[] bytes = PortalLDAPUtil.getGroups(
-				1, 1, null, new byte[1], 1, null);
+	public void testGetGroups1() throws Exception {
+		byte[] bytes = PortalLDAPUtil.getGroups(
+			1, 1, null, new byte[1], 1, null);
 
-			Assert.assertEquals(bytes.length, 1);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(bytes.length, 1);
 	}
 
 	@Test
-	public void testGetGroups2() {
-		try {
-			byte[] bytes = PortalLDAPUtil.getGroups(
-				2, null, new byte[2], 2, "baseDN", "groupFilter", null);
+	public void testGetGroups2() throws Exception {
+		byte[] bytes = PortalLDAPUtil.getGroups(
+			2, null, new byte[2], 2, "baseDN", "groupFilter", null);
 
-			Assert.assertEquals(bytes.length, 2);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(bytes.length, 2);
 	}
 
 	@Test
-	public void testGetGroups3() {
-		try {
-			byte[] bytes = PortalLDAPUtil.getGroups(
-				3, 3, null, new byte[3], 3, new String[3], null);
+	public void testGetGroups3() throws Exception {
+		byte[] bytes = PortalLDAPUtil.getGroups(
+			3, 3, null, new byte[3], 3, new String[3], null);
 
-			Assert.assertEquals(bytes.length, 3);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(bytes.length, 3);
 	}
 
 	@Test
-	public void testGetGroups4() {
-		try {
-			byte[] bytes = PortalLDAPUtil.getGroups(
-				4, null, new byte[4], 4, "baseDN", "groupFilter", new String[4],
-				null);
+	public void testGetGroups4() throws Exception {
+		byte[] bytes = PortalLDAPUtil.getGroups(
+			4, null, new byte[4], 4, "baseDN", "groupFilter", new String[4],
+			null);
 
-			Assert.assertEquals(bytes.length, 4);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(bytes.length, 4);
 	}
 
 	@Test
-	public void testGetGroupsDN() {
-		try {
-			String groupsDN = PortalLDAPUtil.getGroupsDN(1, 1);
+	public void testGetGroupsDN() throws Exception {
+		String groupsDN = PortalLDAPUtil.getGroupsDN(1, 1);
 
-			Assert.assertEquals("1:1", groupsDN);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals("1:1", groupsDN);
 	}
 
 	@Test
-	public void testGetLdapServerId() {
-		try {
-			long ldapServiceId = PortalLDAPUtil.getLdapServerId(
-				1, "screeName", "emailAddress");
+	public void testGetLdapServerId() throws Exception {
+		long ldapServiceId = PortalLDAPUtil.getLdapServerId(
+			1, "screeName", "emailAddress");
 
-			Assert.assertEquals(1234567890, ldapServiceId);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(1234567890, ldapServiceId);
 	}
 
 	@Test
-	public void testGetMultivaluedAttribute() {
+	public void testGetMultivaluedAttribute() throws Exception {
 		_atomicState.reset();
 
-		try {
-			PortalLDAPUtil.getMultivaluedAttribute(
-				1, null, "baseDN", "filter", null);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		PortalLDAPUtil.getMultivaluedAttribute(
+			1, null, "baseDN", "filter", null);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testGetNameInNamespace() {
-		try {
-			String name = PortalLDAPUtil.getNameInNamespace(1, 1, null);
+	public void testGetNameInNamespace() throws Exception {
+		String name = PortalLDAPUtil.getNameInNamespace(1, 1, null);
 
-			Assert.assertEquals("1:1", name);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals("1:1", name);
 	}
 
 	@Test
-	public void testGetUser() {
+	public void testGetUser() throws Exception {
 		_atomicState.reset();
 
-		try {
-			PortalLDAPUtil.getUser(1, 1, "screenName", "emailAddress");
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		PortalLDAPUtil.getUser(1, 1, "screenName", "emailAddress");
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testGetUser2() {
+	public void testGetUser2() throws Exception {
 		_atomicState.reset();
 
-		try {
-			PortalLDAPUtil.getUser(1, 1, "screenName", "emailAddress", false);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		PortalLDAPUtil.getUser(1, 1, "screenName", "emailAddress", false);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
 	@Test
-	public void testGetUsers1() {
-		try {
-			byte[] bytes = PortalLDAPUtil.getUsers(
-				1, 1, null, new byte[1], 1, null);
+	public void testGetUsers1() throws Exception {
+		byte[] bytes = PortalLDAPUtil.getUsers(
+			1, 1, null, new byte[1], 1, null);
 
-			Assert.assertEquals(bytes.length, 1);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(bytes.length, 1);
 	}
 
 	@Test
-	public void testGetUsers2() {
-		try {
-			byte[] bytes = PortalLDAPUtil.getUsers(
-				2, null, new byte[2], 2, "baseDN", "userFilter", null);
+	public void testGetUsers2() throws Exception {
+		byte[] bytes = PortalLDAPUtil.getUsers(
+			2, null, new byte[2], 2, "baseDN", "userFilter", null);
 
-			Assert.assertEquals(bytes.length, 2);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(bytes.length, 2);
 	}
 
 	@Test
-	public void testGetUsers3() {
-		try {
-			byte[] bytes = PortalLDAPUtil.getUsers(
-				3, 3, null, new byte[3], 3, new String[3], null);
+	public void testGetUsers3() throws Exception {
+		byte[] bytes = PortalLDAPUtil.getUsers(
+			3, 3, null, new byte[3], 3, new String[3], null);
 
-			Assert.assertEquals(bytes.length, 3);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(bytes.length, 3);
 	}
 
 	@Test
-	public void testGetUsers4() {
-		try {
-			byte[] bytes = PortalLDAPUtil.getUsers(
-				4, null, new byte[4], 4, "baseDN", "userFilter", new String[4],
-				null);
+	public void testGetUsers4() throws Exception {
+		byte[] bytes = PortalLDAPUtil.getUsers(
+			4, null, new byte[4], 4, "baseDN", "userFilter", new String[4],
+			null);
 
-			Assert.assertEquals(bytes.length, 4);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(bytes.length, 4);
 	}
 
 	@Test
-	public void testGetUsersDN() {
-		try {
-			String usersDN = PortalLDAPUtil.getUsersDN(1, 1);
+	public void testGetUsersDN() throws Exception {
+		String usersDN = PortalLDAPUtil.getUsersDN(1, 1);
 
-			Assert.assertEquals("1:1", usersDN);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals("1:1", usersDN);
 	}
 
 	@Test
-	public void testHasUser() {
-		try {
-			Assert.assertTrue(
-				PortalLDAPUtil.hasUser(1, 1, "test", "test@liferay-test.com"));
-			Assert.assertFalse(
-				PortalLDAPUtil.hasUser(2, 1, "test", "test@liferay-test.com"));
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+	public void testHasUser() throws Exception {
+		Assert.assertTrue(
+			PortalLDAPUtil.hasUser(1, 1, "test", "test@liferay-test.com"));
+		Assert.assertFalse(
+			PortalLDAPUtil.hasUser(2, 1, "test", "test@liferay-test.com"));
 	}
 
 	@Test
-	public void testIsGroupMember() {
-		try {
-			Assert.assertTrue(
-				PortalLDAPUtil.isGroupMember(1, 1, "testGroup", "testUser"));
-			Assert.assertFalse(
-				PortalLDAPUtil.isGroupMember(2, 1, "testGroup", "testUser"));
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+	public void testIsGroupMember() throws Exception {
+		Assert.assertTrue(
+			PortalLDAPUtil.isGroupMember(1, 1, "testGroup", "testUser"));
+		Assert.assertFalse(
+			PortalLDAPUtil.isGroupMember(2, 1, "testGroup", "testUser"));
 	}
 
 	@Test
-	public void testIsUserGroupMember() {
-		try {
-			Assert.assertTrue(
-				PortalLDAPUtil.isUserGroupMember(
-					1, 1, "testGroup", "testUser"));
-			Assert.assertFalse(
-				PortalLDAPUtil.isUserGroupMember(
-					2, 1, "testGroup", "testUser"));
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+	public void testIsUserGroupMember() throws Exception {
+		Assert.assertTrue(
+			PortalLDAPUtil.isUserGroupMember(1, 1, "testGroup", "testUser"));
+		Assert.assertFalse(
+			PortalLDAPUtil.isUserGroupMember(2, 1, "testGroup", "testUser"));
 	}
 
 	@Test
-	public void testSearchLDAP() {
-		try {
-			byte[] bytes = PortalLDAPUtil.searchLDAP(
-				1, null, new byte[1], 1, "baseDN", "filter", new String[1],
-				null);
+	public void testSearchLDAP() throws Exception {
+		byte[] bytes = PortalLDAPUtil.searchLDAP(
+			1, null, new byte[1], 1, "baseDN", "filter", new String[1], null);
 
-			Assert.assertEquals(bytes.length, 1);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(bytes.length, 1);
 	}
 
 	private static AtomicState _atomicState;

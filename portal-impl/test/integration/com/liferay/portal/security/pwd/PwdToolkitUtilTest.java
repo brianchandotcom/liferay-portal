@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.pwd;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.pwd.bundle.pwdtoolkitutil.TestToolkit;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -66,15 +67,10 @@ public class PwdToolkitUtilTest {
 	}
 
 	@Test
-	public void testValidate() {
+	public void testValidate() throws PortalException {
 		_atomicState.reset();
 
-		try {
-			PwdToolkitUtil.validate(1, 1, "passwd", "passwd", null);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		PwdToolkitUtil.validate(1, 1, "passwd", "passwd", null);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}

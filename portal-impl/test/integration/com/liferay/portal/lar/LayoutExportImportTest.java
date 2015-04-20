@@ -473,14 +473,10 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		try {
 			exportImportLayouts(layoutIds, getImportParameterMap());
 
-			if (expectFailure) {
-				Assert.fail();
-			}
+			Assert.assertFalse(expectFailure);
 		}
 		catch (LocaleException le) {
-			if (!expectFailure) {
-				Assert.fail();
-			}
+			Assert.assertTrue(expectFailure);
 		}
 	}
 

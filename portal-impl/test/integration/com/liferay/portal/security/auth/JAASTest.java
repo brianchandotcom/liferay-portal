@@ -115,12 +115,7 @@ public class JAASTest {
 		LoginContext loginContext = getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
 
-		try {
-			loginContext.login();
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		loginContext.login();
 
 		validateSubject(loginContext.getSubject(), _user.getEmailAddress());
 	}
@@ -132,12 +127,7 @@ public class JAASTest {
 		LoginContext loginContext = getLoginContext(
 			_user.getEmailAddress(), _user.getPassword());
 
-		try {
-			loginContext.login();
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		loginContext.login();
 
 		validateSubject(loginContext.getSubject(), _user.getEmailAddress());
 	}
@@ -213,12 +203,7 @@ public class JAASTest {
 		LoginContext loginContext = getLoginContext(
 			_user.getScreenName(), _user.getPassword());
 
-		try {
-			loginContext.login();
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		loginContext.login();
 
 		validateSubject(loginContext.getSubject(), _user.getScreenName());
 	}
@@ -294,12 +279,7 @@ public class JAASTest {
 		LoginContext loginContext = getLoginContext(
 			String.valueOf(_user.getUserId()), _user.getPassword());
 
-		try {
-			loginContext.login();
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		loginContext.login();
 
 		validateSubject(
 			loginContext.getSubject(), String.valueOf(_user.getUserId()));

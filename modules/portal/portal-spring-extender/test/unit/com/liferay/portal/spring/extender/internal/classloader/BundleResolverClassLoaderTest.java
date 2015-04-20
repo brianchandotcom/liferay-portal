@@ -20,7 +20,6 @@ import java.net.URL;
 
 import java.util.Enumeration;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,8 +40,6 @@ public class BundleResolverClassLoaderTest extends PowerMockito {
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyClassLoaders() {
 		new BundleResolverClassLoader();
-
-		Assert.fail("IllegalArgumentException was not thrown");
 	}
 
 	@Test

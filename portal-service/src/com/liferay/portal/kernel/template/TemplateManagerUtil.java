@@ -265,10 +265,10 @@ public class TemplateManagerUtil {
 
 				_templateManagers.put(serviceReference, templateManager);
 			}
-			catch (TemplateException e) {
+			catch (TemplateException te) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"unable to init " + name + " Template Manager ", e);
+						"unable to init " + name + " Template Manager ", te);
 				}
 			}
 

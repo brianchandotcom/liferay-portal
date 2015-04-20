@@ -393,14 +393,10 @@ public abstract class BasePortletExportImportTestCase
 		try {
 			exportImportPortlet(getPortletId());
 
-			if (expectFailure) {
-				Assert.fail();
-			}
+			Assert.assertFalse(expectFailure);
 		}
 		catch (LocaleException le) {
-			if (!expectFailure) {
-				Assert.fail();
-			}
+			Assert.assertTrue(expectFailure);
 		}
 	}
 

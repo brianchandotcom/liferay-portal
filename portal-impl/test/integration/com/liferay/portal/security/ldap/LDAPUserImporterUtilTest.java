@@ -51,16 +51,11 @@ public class LDAPUserImporterUtilTest {
 	}
 
 	@Test
-	public void testImportUser() {
-		try {
-			User user = LDAPUserImporterUtil.importUser(
-				1, 1234567890, null, null, "passwd");
+	public void testImportUser() throws Exception {
+		User user = LDAPUserImporterUtil.importUser(
+			1, 1234567890, null, null, "passwd");
 
-			Assert.assertEquals(user.getCompanyId(), 1234567890);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertEquals(user.getCompanyId(), 1234567890);
 	}
 
 	private static AtomicState _atomicState;

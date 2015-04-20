@@ -221,8 +221,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 		DDMStructureLocalServiceUtil.deleteStructure(
 			structure.getStructureId());
-
-		Assert.fail();
 	}
 
 	@Test

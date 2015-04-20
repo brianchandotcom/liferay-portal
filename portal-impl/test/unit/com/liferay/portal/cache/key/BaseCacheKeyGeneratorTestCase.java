@@ -57,11 +57,9 @@ public abstract class BaseCacheKeyGeneratorTestCase extends TestCase {
 
 			String oldValue = map.put(key, value);
 
-			if (oldValue != null) {
-				fail(
-					oldValue + " and " + value + " generate the same key " +
-						key);
-			}
+			assertNull(
+				oldValue + " and " + value + " generate the same key " + key,
+				oldValue);
 		}
 	}
 
@@ -76,11 +74,9 @@ public abstract class BaseCacheKeyGeneratorTestCase extends TestCase {
 
 			String oldValue = checkMap.put(key, Arrays.toString(values));
 
-			if (oldValue != null) {
-				fail(
-					oldValue + " and " + value + " generate the same key " +
-						key);
-			}
+			assertNull(
+				oldValue + " and " + value + " generate the same key " + key,
+				oldValue);
 		}
 	}
 

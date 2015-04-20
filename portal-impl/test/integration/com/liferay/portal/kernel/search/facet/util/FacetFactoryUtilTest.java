@@ -54,22 +54,17 @@ public class FacetFactoryUtilTest {
 	}
 
 	@Test
-	public void testCreate() {
+	public void testCreate() throws Exception {
 		_atomicState.reset();
 
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
 		facetConfiguration.setClassName(TestFacetFactory.class.getName());
 
-		try {
-			Facet facet = FacetFactoryUtil.create(null, facetConfiguration);
+		Facet facet = FacetFactoryUtil.create(null, facetConfiguration);
 
-			Assert.assertTrue(_atomicState.isSet());
-			Assert.assertEquals(facet.getFieldName(), TestFacet.FIELD_NAME);
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertTrue(_atomicState.isSet());
+		Assert.assertEquals(facet.getFieldName(), TestFacet.FIELD_NAME);
 	}
 
 	private static AtomicState _atomicState;

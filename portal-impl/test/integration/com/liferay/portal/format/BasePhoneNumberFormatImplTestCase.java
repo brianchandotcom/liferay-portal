@@ -32,9 +32,8 @@ public abstract class BasePhoneNumberFormatImplTestCase {
 		String[] phoneNumbers = getInvalidPhoneNumbers();
 
 		for (String phoneNumber : phoneNumbers) {
-			if (phoneNumberFormat.validate(phoneNumber)) {
-				Assert.fail(phoneNumber);
-			}
+			Assert.assertFalse(
+				phoneNumber, phoneNumberFormat.validate(phoneNumber));
 		}
 	}
 
@@ -45,9 +44,8 @@ public abstract class BasePhoneNumberFormatImplTestCase {
 		String[] phoneNumbers = getValidPhoneNumbers();
 
 		for (String phoneNumber : phoneNumbers) {
-			if (!phoneNumberFormat.validate(phoneNumber)) {
-				Assert.fail(phoneNumber);
-			}
+			Assert.assertTrue(
+				phoneNumber, phoneNumberFormat.validate(phoneNumber));
 		}
 	}
 

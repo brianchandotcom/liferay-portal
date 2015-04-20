@@ -56,16 +56,16 @@ public class ExportImportLifecycleEventListenerRegistryUtilTest {
 
 			String className = clazz.getName();
 
+			Assert.assertNotEquals(
+				TestSyncExportImportLifecycleListener.class.getName(),
+				className);
+
 			if (className.equals(
 					TestAsyncExportImportLifecycleListener.class.getName())) {
 
 				found = true;
-			}
-			else if (className.equals(
-						TestSyncExportImportLifecycleListener.class.
-							getName())) {
 
-				Assert.fail();
+				break;
 			}
 		}
 
@@ -87,16 +87,16 @@ public class ExportImportLifecycleEventListenerRegistryUtilTest {
 
 			String className = clazz.getName();
 
-			if (className.equals(
-					TestAsyncExportImportLifecycleListener.class.getName())) {
+			Assert.assertNotEquals(
+				TestAsyncExportImportLifecycleListener.class.getName(),
+				className);
 
-				Assert.fail();
-			}
-			else if (className.equals(
-						TestSyncExportImportLifecycleListener.class.
-							getName())) {
+			if (className.equals(
+					TestSyncExportImportLifecycleListener.class.getName())) {
 
 				found = true;
+
+				break;
 			}
 		}
 

@@ -110,60 +110,44 @@ public class MapUtilTest {
 		public void shouldFailWithCompositeDouble() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Double.class.getName()});
-
-			Assert.fail();
 		}
 
 		@Test(expected = NumberFormatException.class)
 		public void shouldFailWithCompositeInteger() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Integer.class.getName()});
-
-			Assert.fail();
 		}
 
 		@Test(expected = NumberFormatException.class)
 		public void shouldFailWithCompositeLong() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Long.class.getName()});
-
-			Assert.fail();
 		}
 
 		@Test(expected = NumberFormatException.class)
 		public void shouldFailWithCompositeShort() {
 			MapUtil.toLinkedHashMap(
 				new String[] {"one:foo:" + Short.class.getName()});
-
-			Assert.fail();
 		}
 
 		@Test(expected = NumberFormatException.class)
 		public void shouldFailWithDouble() {
 			MapUtil.toLinkedHashMap(new String[] {"one:foo:double"});
-
-			Assert.fail();
 		}
 
 		@Test(expected = NumberFormatException.class)
 		public void shouldFailWithInteger() {
 			MapUtil.toLinkedHashMap(new String[] {"one:foo:int"});
-
-			Assert.fail();
 		}
 
 		@Test(expected = NumberFormatException.class)
 		public void shouldFailWithLong() {
 			MapUtil.toLinkedHashMap(new String[] {"one:foo:long"});
-
-			Assert.fail();
 		}
 
 		@Test(expected = NumberFormatException.class)
 		public void shouldFailWithShort() {
 			MapUtil.toLinkedHashMap(new String[] {"one:foo:short"});
-
-			Assert.fail();
 		}
 
 		@Test

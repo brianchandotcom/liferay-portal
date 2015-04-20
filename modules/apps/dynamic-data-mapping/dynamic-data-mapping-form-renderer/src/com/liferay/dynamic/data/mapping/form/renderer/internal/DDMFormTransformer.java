@@ -43,7 +43,7 @@ public class DDMFormTransformer {
 		return fields;
 	}
 
-	private DDMForm _ddmForm;
+	private final DDMForm _ddmForm;
 	private final Map<String, String> _renderedDDMFormFieldsMap;
 
 }

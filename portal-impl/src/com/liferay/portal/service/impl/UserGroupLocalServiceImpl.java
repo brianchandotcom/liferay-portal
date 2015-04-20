@@ -21,6 +21,7 @@ import com.liferay.portal.UserGroupNameException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -1005,12 +1006,18 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		if (userGroup.hasPrivateLayouts()) {
 			files[0] = layoutLocalService.exportLayoutsAsFile(
-				group.getGroupId(), true, null, parameterMap, null, null);
+				group.getGroupId(), true,
+				ExportImportHelperUtil.getAllLayoutIds(
+					group.getGroupId(), true),
+				parameterMap, null, null);
 		}
 
 		if (userGroup.hasPublicLayouts()) {
 			files[1] = layoutLocalService.exportLayoutsAsFile(
-				group.getGroupId(), false, null, parameterMap, null, null);
+				group.getGroupId(), false,
+				ExportImportHelperUtil.getAllLayoutIds(
+					group.getGroupId(), false),
+				parameterMap, null, null);
 		}
 
 		return files;

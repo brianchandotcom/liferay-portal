@@ -1,4 +1,6 @@
 ;(function() {
+	var A = AUI();
+
 	var BBCodeUtil = Liferay.BBCodeUtil;
 	var CKTools = CKEDITOR.tools;
 
@@ -157,9 +159,7 @@
 
 			instance._parser = new Parser(config.parser);
 
-			emoticonImages = config.emoticonImages;
-			emoticonPath = config.emoticonPath;
-			emoticonSymbols = config.emoticonSymbols;
+			instance._config = config;
 
 			instance._result = [];
 			instance._stack = [];
@@ -258,6 +258,10 @@
 
 		_handleData: function(token) {
 			var instance = this;
+
+			var emoticonImages = instance._config.emoticonImages;
+			var emoticonPath = instance._config.emoticonPath;
+			var emoticonSymbols = instance._config.emoticonSymbols;
 
 			var value = instance._escapeHTML(token.value);
 

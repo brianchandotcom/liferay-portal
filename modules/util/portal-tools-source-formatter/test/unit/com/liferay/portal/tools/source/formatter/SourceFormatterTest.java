@@ -34,8 +34,8 @@ public class SourceFormatterTest {
 		sourceFormatterBean.setUseProperties(false);
 
 		String fileName =
-			"portal-impl/test/integration/com/liferay/portal/tools/" +
-				"sourceformatter/dependencies/wrong.foo";
+			"test/unit/com/liferay/portal/tools/source/formatter/" +
+				"dependencies/wrong.foo";
 
 		SourceFormatter sourceFormatter = new SourceFormatter(
 			sourceFormatterBean);

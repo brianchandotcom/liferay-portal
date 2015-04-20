@@ -14,14 +14,11 @@
 
 package com.liferay.workflowdefinitionlinks.web.portlet;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
 
 /**
@@ -30,13 +27,13 @@ import com.liferay.portal.util.PortletKeys;
 @Component(immediate = true,
 	property = {
 		"com.liferay.portlet.icon=/icons/workflow_definition_links.png",
-		"com.liferay.portlet.control-panel-entry-category=site_administration.configuration",
+		"com.liferay.portlet.control-panel-entry-category=configuration",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.use-default-template=false",
+		"com.liferay.portlet.use-default-template=true",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definitions-link",
 		"com.liferay.portlet.control-panel-entry-class=com.liferay.portal.workflow.WorkflowControlPanelEntry",
@@ -50,9 +47,5 @@ import com.liferay.portal.util.PortletKeys;
 	},
 	service = { WorkflowDefinitionLinkPortlet.class, Portlet.class })
 public class WorkflowDefinitionLinkPortlet extends MVCPortlet {
-
-	public void testURL(ActionRequest req, ActionResponse resp) throws Exception {
-		
-		resp.sendRedirect(ParamUtil.getString(req, "redirect"));
-	}
+	
 }

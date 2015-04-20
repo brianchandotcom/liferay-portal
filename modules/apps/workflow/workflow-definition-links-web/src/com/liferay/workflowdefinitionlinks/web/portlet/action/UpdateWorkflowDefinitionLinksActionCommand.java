@@ -16,7 +16,6 @@ package com.liferay.workflowdefinitionlinks.web.portlet.action;
 
 import java.util.Enumeration;
 
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -51,12 +50,7 @@ public class UpdateWorkflowDefinitionLinksActionCommand extends
 			PortletResponse portletResponse) throws Exception {
 		try {
 			updateWorkflowDefinitionLinks(portletRequest);
-			
-			String redirect = ParamUtil.getString(portletRequest, "redirect");
-			
-			((ActionResponse)portletResponse).sendRedirect(redirect);
-		}
-		catch (Exception e) {
+		}catch (Exception e) {
 			if (e instanceof WorkflowException) {
 				SessionErrors.add(portletRequest, e.getClass());
 

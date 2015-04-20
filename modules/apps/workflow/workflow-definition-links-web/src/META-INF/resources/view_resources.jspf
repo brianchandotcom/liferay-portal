@@ -14,7 +14,6 @@
  */
 --%>
 
-<%@page import="com.liferay.portal.util.PortalUtil"%>
 <%
 long groupId = themeDisplay.getSiteGroupIdOrLiveGroupId();
 
@@ -51,9 +50,9 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", "default-configuration");
 %>
 
-<liferay-portlet:actionURL var="updateWorkflowDefinitionLinksURL" name="updateWorkflowDefinitionLinks" portletName="<%= PortletKeys.WORKFLOW_CONFIGURATION %>" />
+<portlet:actionURL var="updateWorkflowDefinitionLinksURL" name="updateWorkflowDefinitionLinks"  />
 
-<aui:form  action="<%= updateWorkflowDefinitionLinksURL %>" method="post" portletNamespace="<%= PortalUtil.getPortletNamespace(PortletKeys.WORKFLOW_CONFIGURATION) %>">
+<aui:form action="<%= updateWorkflowDefinitionLinksURL %>" method="post">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	

@@ -1015,8 +1015,9 @@ public class LanguageImpl implements Language, Serializable {
 
 	private final Set<String> _duplicateLanguageCodes;
 	private final Map<Long, Map<String, Locale>>
-		_groupLanguageCodeLocalesMapMap = new HashMap<>();
-	private final Map<Long, Set<Locale>> _groupLocalesSetsMap = new HashMap<>();
+		_groupLanguageCodeLocalesMapMap = new ConcurrentHashMap<>();
+	private final Map<Long, Set<Locale>> _groupLocalesSetsMap =
+		new ConcurrentHashMap<>();
 	private final Map<String, Locale> _languageCodeLocalesMap;
 	private final Map<String, Locale> _languageIdLocalesMap;
 	private final Set<Locale> _localesBetaSet;

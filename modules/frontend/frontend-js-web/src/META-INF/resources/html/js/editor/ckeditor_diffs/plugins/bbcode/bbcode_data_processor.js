@@ -62,8 +62,6 @@
 
 	var REGEX_EM = /em$/i;
 
-	var REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
-
 	var REGEX_LASTCHAR_NEWLINE_WHITESPACE = /(\r?\n\s*)$/;
 
 	var REGEX_LIST_ALPHA = /(upper|lower)-alpha/i;

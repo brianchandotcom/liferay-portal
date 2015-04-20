@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String randomId = StringUtil.randomId();
@@ -34,12 +34,10 @@ else {
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= (row == null) %>" showWhenSingleIcon="<%= (row == null) %>">
 	<c:if test="<%= !workflowInstance.isComplete() %>">
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="struts_action" value="/workflow_instances/view" />
+			<portlet:param name="mvcPath" value="/view.jsp" />
 		</portlet:renderURL>
 
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/workflow_instances/edit_workflow_instance" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deleteInstance" var="deleteURL">
 			<portlet:param name="redirect" value="<%= redirectURL %>" />
 			<portlet:param name="workflowInstanceId" value="<%= StringUtil.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
 		</portlet:actionURL>

@@ -38,7 +38,7 @@ try {
 	}
 %>
 
-	<%@ include file="/html/portlet/workflow_instances/workflow_instances.jspf" %>
+	<%@ include file="/workflow_instances.jspf" %>
 
 <%
 }
@@ -59,5 +59,5 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), 
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.workflow_instances.view_workflow_instances_jspf");
+private static Log _log = LogFactoryUtil.getLog("modules.apps.workflow.workflow-instance-web.view_workflow_instances_jspf");
 %>

@@ -23,7 +23,7 @@
 	%>
 
 	<liferay-ui:search-container-results>
-		<%@ include file="/html/portlet/workflow_instances/workflow_search_results.jspf" %>
+		<%@ include file="/workflow_search_results.jspf" %>
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
@@ -46,7 +46,7 @@
 		%>
 
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="struts_action" value="/workflow_instance/edit_workflow_instance" />
+			<portlet:param name="mvcPath" value="/edit_workflow_instance.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowInstanceId" value="<%= String.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
 		</portlet:renderURL>
@@ -101,7 +101,7 @@
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/workflow_instances/workflow_instance_action.jsp"
+				path="/workflow_instance_action.jsp"
 			/>
 		</c:if>
 	</liferay-ui:search-container-row>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_instances/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
@@ -33,7 +33,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 <c:if test="<%= (assetEntry != null) %>">
 	<liferay-ui:header
-		localizeTitle="<%= false %>"
+		localizeTitle="<%= Boolean.FALSE %>"
 		title="<%= assetRenderer.getTitle(locale) %>"
 	/>
 

@@ -1377,16 +1377,6 @@
 			<forward name="portlet.sites_admin.error" path="portlet.sites_admin.error" />
 		</action>
 
-		<action path="/sites_admin/edit_team" type="com.liferay.portlet.sites.action.EditTeamAction">
-			<forward name="portlet.sites_admin.edit_team" path="portlet.sites_admin.edit_team" />
-			<forward name="portlet.sites_admin.error" path="portlet.sites_admin.error" />
-		</action>
-
-		<action path="/sites_admin/edit_team_assignments" type="com.liferay.portlet.sites.action.EditTeamAssignmentsAction">
-			<forward name="portlet.sites_admin.edit_team_assignments" path="portlet.sites_admin.edit_team_assignments" />
-			<forward name="portlet.sites_admin.error" path="portlet.sites_admin.error" />
-		</action>
-
 		<action path="/sites_admin/edit_user_group_roles" type="com.liferay.portlet.sites.action.EditUserGroupRolesAction">
 			<forward name="portlet.sites_admin.edit_user_group_roles" path="portlet.sites_admin.edit_user_group_roles" />
 			<forward name="portlet.sites_admin.error" path="portlet.sites_admin.error" />
@@ -1431,8 +1421,6 @@
 			<forward name="portlet.sites_admin.error" path="portlet.sites_admin.error" />
 			<forward name="portlet.sites_admin.view_membership_requests" path="portlet.sites_admin.view_membership_requests" />
 		</action>
-
-		<action path="/sites_admin/view_teams" forward="portlet.sites_admin.view_teams" />
 
 		<!-- Sites Directory -->
 

@@ -19,7 +19,6 @@
 <%@ page import="com.liferay.portal.LayoutBranchNameException" %><%@
 page import="com.liferay.portal.LayoutSetBranchNameException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
-page import="com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.service.LayoutSetBranchLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.LayoutBranchPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.LayoutSetBranchPermissionUtil" %><%@

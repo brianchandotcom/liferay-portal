@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");
@@ -24,7 +24,9 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-Team team = (Team)request.getAttribute(WebKeys.TEAM);
+long teamId = ParamUtil.getLong(request, "teamId");
+
+Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
 Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
 
@@ -36,7 +38,7 @@ if (group.isOrganization()) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/sites_admin/edit_team_assignments");
+portletURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
@@ -70,55 +72,14 @@ request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
 	url="<%= portletURL.toString() %>"
 />
 
-<portlet:actionURL var="editAssignmentsURL">
-	<portlet:param name="struts_action" value="/sites_admin/edit_team_assignments" />
-</portlet:actionURL>
-
-<aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
-	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
-
-	<c:choose>
-		<c:when test='<%= tabs1.equals("users") %>'>
-			<liferay-util:include page="/html/portlet/sites_admin/edit_team_assignments_users.jsp" />
-		</c:when>
-		<c:when test='<%= tabs1.equals("user-groups") %>'>
-			<liferay-util:include page="/html/portlet/sites_admin/edit_team_assignments_user_groups.jsp" />
-		</c:when>
-	</c:choose>
-</aui:form>
-
-<aui:script>
-	function <portlet:namespace />updateTeamUserGroups(assignmentsRedirect) {
-		var Util = Liferay.Util;
-
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('team_user_groups');
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-		submitForm(form);
-	}
-
-	function <portlet:namespace />updateTeamUsers(assignmentsRedirect) {
-		var Util = Liferay.Util;
-
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('team_users');
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-		submitForm(form);
-	}
-</aui:script>
+<c:choose>
+	<c:when test='<%= tabs1.equals("users") %>'>
+		<liferay-util:include page="/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test='<%= tabs1.equals("user-groups") %>'>
+		<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
+	</c:when>
+</c:choose>
 
 <%
 if (group.isOrganization()) {

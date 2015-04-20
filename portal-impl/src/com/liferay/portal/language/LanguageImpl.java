@@ -450,7 +450,7 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public Set<Locale> getAvailableLocales() {
-		return _getInstance()._localesSet;
+		return new HashSet<>(_getInstance()._languageIdLocalesMap.values());
 	}
 
 	@Override
@@ -639,7 +639,8 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public boolean isAvailableLocale(Locale locale) {
-		return _getInstance()._localesSet.contains(locale);
+		return _getInstance()._languageIdLocalesMap.containsKey(
+			LocaleUtil.toLanguageId(locale));
 	}
 
 	@Override
@@ -810,8 +811,8 @@ public class LanguageImpl implements Language, Serializable {
 
 		_charEncodings = new HashSet<>();
 		_duplicateLanguageCodes = new HashSet<>();
-		_languageCodeLocalesMap = new HashMap<>(languageIds.length);
-		_localesSet = new HashSet<>(languageIds.length);
+		_languageCodeLocalesMap = new HashMap<>();
+		_languageIdLocalesMap = new HashMap<>();
 
 		for (int i = 0; i < languageIds.length; i++) {
 			String languageId = languageIds[i];
@@ -836,7 +837,7 @@ public class LanguageImpl implements Language, Serializable {
 				_languageCodeLocalesMap.put(language, locale);
 			}
 
-			_localesSet.add(locale);
+			_languageIdLocalesMap.put(LocaleUtil.toLanguageId(locale), locale);
 		}
 
 		String[] localesBetaArray = PropsValues.LOCALES_BETA;
@@ -849,7 +850,7 @@ public class LanguageImpl implements Language, Serializable {
 			_localesBetaSet.add(locale);
 		}
 
-		_supportedLocalesSet = new HashSet<>(_localesSet);
+		_supportedLocalesSet = new HashSet<>(_languageIdLocalesMap.values());
 
 		_supportedLocalesSet.removeAll(_localesBetaSet);
 	}
@@ -1013,8 +1014,8 @@ public class LanguageImpl implements Language, Serializable {
 		new HashMap<>();
 	private final Map<Long, Set<Locale>> _groupLocalesSetsMap = new HashMap<>();
 	private final Map<String, Locale> _languageCodeLocalesMap;
+	private final Map<String, Locale> _languageIdLocalesMap;
 	private final Set<Locale> _localesBetaSet;
-	private final Set<Locale> _localesSet;
 	private final Set<Locale> _supportedLocalesSet;
 
 }

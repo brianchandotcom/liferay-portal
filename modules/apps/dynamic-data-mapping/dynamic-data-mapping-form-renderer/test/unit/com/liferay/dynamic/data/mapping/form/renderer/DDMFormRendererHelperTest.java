@@ -400,7 +400,16 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		ddmFormFieldRenderingContext.setName(name);
 		ddmFormFieldRenderingContext.setValue(value);
 
-		return renderTextField(ddmFormFieldRenderingContext);
+		String renderedTextField = renderTextField(
+			ddmFormFieldRenderingContext);
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<div class=\"lfr-ddm-form-field-container\">");
+		sb.append(renderedTextField);
+		sb.append("</div>");
+
+		return sb.toString();
 	}
 
 	protected void setUpDDMFormFieldRenderer() throws Exception {

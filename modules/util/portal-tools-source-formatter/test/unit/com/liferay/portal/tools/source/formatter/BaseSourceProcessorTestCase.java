@@ -26,17 +26,21 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 import org.junit.Assert;
-import org.junit.Before;
 
 /**
  * @author Hugo Huijser
  */
 public class BaseSourceProcessorTestCase {
 
-	@Before
-	public void setUp() throws Exception {
-		sourceFormatter = SourceFormatterUtil.create(
-			false, false, false, false);
+	protected SourceFormatterBean getSourceFormatterBean() {
+		SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();
+
+		sourceFormatterBean.setAutoFix(true);
+		sourceFormatterBean.setPrintErrors(false);
+		sourceFormatterBean.setThrowException(false);
+		sourceFormatterBean.setUseProperties(false);
+
+		return sourceFormatterBean;
 	}
 
 	protected void test(String fileName) throws Exception {
@@ -70,6 +74,11 @@ public class BaseSourceProcessorTestCase {
 		throws Exception {
 
 		String fullFileName = _DIR_NAME + StringPool.SLASH + fileName;
+
+		SourceFormatterBean sourceFormatterBean = getSourceFormatterBean();
+
+		SourceFormatter sourceFormatter = new SourceFormatter(
+			sourceFormatterBean);
 
 		Tuple tuple = sourceFormatter.format(fullFileName);
 

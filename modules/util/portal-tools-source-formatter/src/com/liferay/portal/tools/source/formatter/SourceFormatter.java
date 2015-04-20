@@ -30,8 +30,15 @@ public class SourceFormatter {
 
 	public static void main(String[] args) {
 		try {
-			SourceFormatter sourceFormatter = SourceFormatterUtil.create(
-				false, false, true, true);
+			SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();
+
+			sourceFormatterBean.setAutoFix(true);
+			sourceFormatterBean.setPrintErrors(true);
+			sourceFormatterBean.setThrowException(false);
+			sourceFormatterBean.setUseProperties(false);
+
+			SourceFormatter sourceFormatter = new SourceFormatter(
+				sourceFormatterBean);
 
 			sourceFormatter.format();
 		}
@@ -40,15 +47,8 @@ public class SourceFormatter {
 		}
 	}
 
-	public SourceFormatter(
-			boolean useProperties, boolean throwException, boolean printErrors,
-			boolean autoFix)
-		throws Exception {
-
-		_useProperties = useProperties;
-		_throwException = throwException;
-		_printErrors = printErrors;
-		_autoFix = autoFix;
+	public SourceFormatter(SourceFormatterBean sourceFormatterBean) {
+		_sourceFormatterBean = sourceFormatterBean;
 	}
 
 	public void format() throws Throwable {
@@ -140,7 +140,7 @@ public class SourceFormatter {
 			throw throwable2;
 		}
 
-		if (_throwException) {
+		if (_sourceFormatterBean.isThrowException()) {
 			if (!_errorMessages.isEmpty()) {
 				throw new Exception(StringUtil.merge(_errorMessages, "\n"));
 			}
@@ -172,15 +172,26 @@ public class SourceFormatter {
 		}
 
 		String newContent = sourceProcessor.format(
-			fileName, _useProperties, _printErrors, _autoFix);
+			fileName, _sourceFormatterBean.isUseProperties(),
+			_sourceFormatterBean.isPrintErrors(),
+			_sourceFormatterBean.isAutoFix());
 
 		return new Tuple(newContent, sourceProcessor.getErrorMessages());
+	}
+
+	public SourceFormatterBean getSourceformatterBean() {
+		return _sourceFormatterBean;
 	}
 
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)
 		throws Exception {
 
-		sourceProcessor.format(_useProperties, _printErrors, _autoFix);
+		sourceProcessor.setSourceFormatterBean(_sourceFormatterBean);
+
+		sourceProcessor.format(
+			_sourceFormatterBean.isUseProperties(),
+			_sourceFormatterBean.isPrintErrors(),
+			_sourceFormatterBean.isAutoFix());
 
 		_errorMessages.addAll(sourceProcessor.getErrorMessages());
 
@@ -190,11 +201,8 @@ public class SourceFormatter {
 		}
 	}
 
-	private final boolean _autoFix;
 	private final Set<String> _errorMessages = new LinkedHashSet<String>();
 	private SourceMismatchException _firstSourceMismatchException;
-	private final boolean _printErrors;
-	private final boolean _throwException;
-	private final boolean _useProperties;
+	private final SourceFormatterBean _sourceFormatterBean;
 
 }

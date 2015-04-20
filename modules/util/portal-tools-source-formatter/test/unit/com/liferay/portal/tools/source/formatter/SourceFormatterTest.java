@@ -26,12 +26,19 @@ public class SourceFormatterTest {
 
 	@Test
 	public void testFileNameWithIncorrectExtension() throws Exception {
-		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
-			false, false, false, false);
+		SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();
+
+		sourceFormatterBean.setAutoFix(false);
+		sourceFormatterBean.setPrintErrors(false);
+		sourceFormatterBean.setThrowException(false);
+		sourceFormatterBean.setUseProperties(false);
 
 		String fileName =
 			"portal-impl/test/integration/com/liferay/portal/tools/" +
 				"sourceformatter/dependencies/wrong.foo";
+
+		SourceFormatter sourceFormatter = new SourceFormatter(
+			sourceFormatterBean);
 
 		Tuple tuple = sourceFormatter.format(fileName);
 
@@ -40,8 +47,15 @@ public class SourceFormatterTest {
 
 	@Test
 	public void testSourceFormatter() throws Throwable {
-		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
-			false, true, false, false);
+		SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();
+
+		sourceFormatterBean.setAutoFix(false);
+		sourceFormatterBean.setPrintErrors(false);
+		sourceFormatterBean.setThrowException(true);
+		sourceFormatterBean.setUseProperties(false);
+
+		SourceFormatter sourceFormatter = new SourceFormatter(
+			sourceFormatterBean);
 
 		try {
 			sourceFormatter.format();

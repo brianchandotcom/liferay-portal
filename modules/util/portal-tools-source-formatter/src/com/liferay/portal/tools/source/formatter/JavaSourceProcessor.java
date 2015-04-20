@@ -466,7 +466,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			StringBundler sb = new StringBundler(6);
 
-			sb.append(BASEDIR);
+			SourceFormatterBean sourceFormatterBean = getSourceFormatterBean();
+
+			sb.append(sourceFormatterBean.getBaseDir());
 			sb.append(fileName.substring(0, fileName.indexOf("/src/") + 5));
 			sb.append(
 				StringUtil.replace(

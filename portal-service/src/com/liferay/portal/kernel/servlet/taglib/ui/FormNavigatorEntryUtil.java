@@ -64,7 +64,9 @@ public class FormNavigatorEntryUtil {
 				(List)_instance._formNavigatorEntries.getService(
 					_getKey(formNavigatorId, formNavigatorCategory.getKey()));
 
-			formNavigatorEntries.addAll(curFormNavigatorEntries);
+			if (curFormNavigatorEntries != null) {
+				formNavigatorEntries.addAll(curFormNavigatorEntries);
+			}
 		}
 
 		return filterVisibleFormNavigatorEntries(

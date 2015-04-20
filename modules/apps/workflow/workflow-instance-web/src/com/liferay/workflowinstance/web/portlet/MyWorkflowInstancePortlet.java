@@ -18,7 +18,6 @@ import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.util.PortletKeys;
 
 /**
@@ -44,6 +43,6 @@ import com.liferay.portal.util.PortletKeys;
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = { MyWorkflowInstancePortlet.class, Portlet.class })
-public class MyWorkflowInstancePortlet extends MVCPortlet {
+public class MyWorkflowInstancePortlet extends WorkflowInstancePortlet {
 
 }

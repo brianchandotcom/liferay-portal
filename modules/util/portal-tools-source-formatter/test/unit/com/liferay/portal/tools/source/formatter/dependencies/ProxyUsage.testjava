@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.sourceformatter.dependencies;
+package com.liferay.portal.tools.source.formatter.dependencies;
 
 import java.io.Closeable;
 

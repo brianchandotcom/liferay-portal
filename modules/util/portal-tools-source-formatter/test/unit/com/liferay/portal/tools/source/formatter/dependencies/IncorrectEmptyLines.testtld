@@ -10,7 +10,7 @@
 	<short-name>tldsf</short-name>
 	<tag>
 		<name>trim-content</name>
-		<tag-class>com.liferay.portal.tools.sourceformatter.TLDSourceFormatterTag</tag-class>
+		<tag-class>com.liferay.portal.tools.source.formatter.TLDSourceFormatterTag</tag-class>
 		<body-content>JSP</body-content>   
 		<attribute>
 			<name>trimcontent</name>

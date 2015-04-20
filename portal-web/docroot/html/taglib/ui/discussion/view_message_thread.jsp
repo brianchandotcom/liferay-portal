@@ -28,8 +28,6 @@ CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayCo
 
 int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
-List<RatingsEntry> ratingsEntries = (List<RatingsEntry>)request.getAttribute("liferay-ui:discussion:ratingsEntries");
-List<RatingsStats> ratingsStatsList = (List<RatingsStats>)request.getAttribute("liferay-ui:discussion:ratingsStatsList");
 
 Comment rootComment = (Comment)request.getAttribute("liferay-ui:discussion:rootComment");
 
@@ -174,17 +172,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 			<div class="lfr-discussion-controls">
 				<c:if test="<%= commentTreeDisplayContext.isRatingsVisible() %>">
-
-					<%
-					RatingsEntry ratingsEntry = _getRatingsEntry(ratingsEntries, comment.getCommentId());
-					RatingsStats ratingStats = _getRatingsStats(ratingsStatsList, comment.getCommentId());
-					%>
-
 					<liferay-ui:ratings
 						className="<%= MBDiscussion.class.getName() %>"
 						classPK="<%= comment.getCommentId() %>"
-						ratingsEntry="<%= ratingsEntry %>"
-						ratingsStats="<%= ratingStats %>"
+						ratingsEntry="<%= comment.getRatingsEntry() %>"
+						ratingsStats="<%= comment.getRatingsStats() %>"
 					/>
 				</c:if>
 
@@ -304,25 +296,3 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 	</article>
 </c:if>
-
-<%!
-private RatingsEntry _getRatingsEntry(List<RatingsEntry> ratingEntries, long classPK) {
-	for (RatingsEntry ratingsEntry : ratingEntries) {
-		if (ratingsEntry.getClassPK() == classPK) {
-			return ratingsEntry;
-		}
-	}
-
-	return null;
-}
-
-private RatingsStats _getRatingsStats(List<RatingsStats> ratingsStatsList, long classPK) {
-	for (RatingsStats ratingsStats : ratingsStatsList) {
-		if (ratingsStats.getClassPK() == classPK) {
-			return ratingsStats;
-		}
-	}
-
-	return RatingsStatsUtil.create(0);
-}
-%>

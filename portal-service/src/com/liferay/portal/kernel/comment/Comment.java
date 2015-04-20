@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.User;
+import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.portlet.ratings.model.RatingsStats;
 
 import java.util.Date;
 import java.util.List;
@@ -36,6 +38,10 @@ public interface Comment {
 	public Comment getParentComment() throws PortalException;
 
 	public long getParentCommentId();
+
+	public RatingsEntry getRatingsEntry();
+
+	public RatingsStats getRatingsStats();
 
 	public List<Comment> getThreadComments();
 

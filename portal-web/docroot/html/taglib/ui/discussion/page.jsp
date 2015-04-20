@@ -142,19 +142,6 @@ Comment rootComment = commentSectionDisplayContext.getRootComment();
 					<aui:row>
 
 						<%
-						List<Comment> comments = rootComment.getThreadComments();
-
-						List<Long> classPKs = new ArrayList<Long>();
-
-						for (Comment curComment : comments) {
-							if (!curComment.isRoot()) {
-								classPKs.add(curComment.getCommentId());
-							}
-						}
-
-						List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(discussionTaglibHelper.getUserId(), MBDiscussion.class.getName(), classPKs);
-						List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDiscussion.class.getName(), classPKs);
-
 						int index = 0;
 						int rootIndexPage = 0;
 						boolean moreCommentsPagination = false;
@@ -177,8 +164,6 @@ Comment rootComment = commentSectionDisplayContext.getRootComment();
 							request.setAttribute("liferay-ui:discussion:commentSectionDisplayContext", commentSectionDisplayContext);
 							request.setAttribute("liferay-ui:discussion:currentComment", comment);
 							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
-							request.setAttribute("liferay-ui:discussion:ratingsEntries", ratingsEntries);
-							request.setAttribute("liferay-ui:discussion:ratingsStatsList", ratingsStatsList);
 							request.setAttribute("liferay-ui:discussion:rootComment", rootComment);
 						%>
 

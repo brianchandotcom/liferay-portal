@@ -50,6 +50,11 @@ import java.util.regex.Pattern;
  */
 public class JSPSourceProcessor extends BaseSourceProcessor {
 
+	@Override
+	public String[] getIncludes() {
+		return _INCLUDES;
+	}
+
 	protected void addImportCounts(String content) {
 		Matcher matcher = _importsPattern.matcher(content);
 
@@ -474,19 +479,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format() throws Exception {
+	protected List<String> doGetFileNames() {
 		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
 			getProperty("move.frequently.used.imports.to.common.init"));
 		_unusedVariablesExclusionFiles = getPropertyList(
 			"jsp.unused.variables.excludes.files");
 
 		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};
-		String[] includes = new String[] {
-			"**\\*.jsp", "**\\*.jspf", "**\\*.vm"
-		};
 
-		List<String> fileNames = getFileNames(excludes, includes);
+		List<String> fileNames = getFileNames(excludes, getIncludes());
 
+		try {
 		Pattern pattern = Pattern.compile(
 			"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 
@@ -530,10 +533,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		if (portalSource && _moveFrequentlyUsedImportsToCommonInit) {
 			moveFrequentlyUsedImportsToCommonInit(4);
 		}
-
-		for (String fileName : fileNames) {
-			format(fileName);
 		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+
+		return fileNames;
 	}
 
 	protected String formatJSP(
@@ -1525,6 +1530,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		return content;
 	}
+
+	private static final String[] _INCLUDES = new String[] {
+		"**\\*.jsp", "**\\*.jspf", "**\\*.vm"
+	};
 
 	private static final String[] _TAG_LIBRARIES = new String[] {
 		"aui", "c", "html", "jsp", "liferay-portlet", "liferay-security",

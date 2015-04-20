@@ -507,7 +507,7 @@ public class LanguageImpl implements Language, Serializable {
 		String languageId = ParamUtil.getString(request, "languageId");
 
 		if (Validator.isNotNull(languageId)) {
-			if (_localesMap.containsKey(languageId) ||
+			if (_languageCodeLocalesMap.containsKey(languageId) ||
 				_charEncodings.contains(languageId)) {
 
 				return languageId;
@@ -634,7 +634,7 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public boolean isAvailableLanguageCode(String languageCode) {
-		return _getInstance()._localesMap.containsKey(languageCode);
+		return _getInstance()._languageCodeLocalesMap.containsKey(languageCode);
 	}
 
 	@Override
@@ -810,7 +810,7 @@ public class LanguageImpl implements Language, Serializable {
 
 		_charEncodings = new HashSet<>();
 		_duplicateLanguageCodes = new HashSet<>();
-		_localesMap = new HashMap<>(languageIds.length);
+		_languageCodeLocalesMap = new HashMap<>(languageIds.length);
 		_localesSet = new HashSet<>(languageIds.length);
 
 		for (int i = 0; i < languageIds.length; i++) {
@@ -828,12 +828,12 @@ public class LanguageImpl implements Language, Serializable {
 				language = languageId.substring(0, pos);
 			}
 
-			if (_localesMap.containsKey(language)) {
+			if (_languageCodeLocalesMap.containsKey(language)) {
 				_duplicateLanguageCodes.add(language);
 			}
 
-			if (!_localesMap.containsKey(language)) {
-				_localesMap.put(language, locale);
+			if (!_languageCodeLocalesMap.containsKey(language)) {
+				_languageCodeLocalesMap.put(language, locale);
 			}
 
 			_localesSet.add(locale);
@@ -927,7 +927,7 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	private Locale _getLocale(String languageCode) {
-		return _localesMap.get(languageCode);
+		return _languageCodeLocalesMap.get(languageCode);
 	}
 
 	private void _initGroupLocales(long groupId) {
@@ -1012,8 +1012,8 @@ public class LanguageImpl implements Language, Serializable {
 	private final Map<Long, Map<String, Locale>> _groupLanguageCodeLocalesMap =
 		new HashMap<>();
 	private final Map<Long, Set<Locale>> _groupLocalesSetsMap = new HashMap<>();
+	private final Map<String, Locale> _languageCodeLocalesMap;
 	private final Set<Locale> _localesBetaSet;
-	private final Map<String, Locale> _localesMap;
 	private final Set<Locale> _localesSet;
 	private final Set<Locale> _supportedLocalesSet;
 

@@ -21,15 +21,19 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.ContentUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * @author Hugo Huijser
@@ -86,14 +90,23 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	protected String formatPortalPortalProperties() throws Exception {
 		if (!portalSource) {
-			return ContentUtil.get("portal.properties");
+			ClassLoader classLoader =
+				PropertiesSourceProcessor.class.getClassLoader();
+
+			URL url = classLoader.getResource("portal.properties");
+
+			if (url != null) {
+				return IOUtils.toString(url);
+			}
+
+			return StringPool.BLANK;
 		}
 
 		String fileName = "portal-impl/src/portal.properties";
 
 		File file = getFile(fileName, 4);
 
-		String content = fileUtil.read(file);
+		String content = FileUtils.readFileToString(file);
 
 		StringBundler sb = new StringBundler();
 
@@ -274,7 +287,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 					propertyFileName = propertyFileName.substring(0, pos);
 				}
 
-				if (!fileUtil.exists(path + propertyFileName)) {
+				File file = new File(path + propertyFileName);
+
+				if (!file.exists()) {
 					processErrorMessage(
 						fileName,
 						"Incorrect property value: " + propertyFileName + " " +

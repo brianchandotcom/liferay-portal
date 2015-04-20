@@ -41,6 +41,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
+
 /**
  * @author Hugo Huijser
  */
@@ -773,8 +775,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Properties properties = new Properties();
 
-		String propertiesContent = fileUtil.read(
-			BASEDIR + "portal-impl/src/portal.properties");
+		SourceFormatterBean sourceFormatterBean = getSourceFormatterBean();
+
+		File propertiesFile = new File(
+			sourceFormatterBean.getBaseDir(),
+			"portal-impl/src/portal.properties");
+
+		String propertiesContent = FileUtils.readFileToString(propertiesFile);
 
 		PropertiesUtil.load(properties, propertiesContent);
 

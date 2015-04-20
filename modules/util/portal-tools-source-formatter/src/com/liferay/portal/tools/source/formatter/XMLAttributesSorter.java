@@ -21,13 +21,13 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.tools.sourceformatter.XMLSourceProcessor;
-import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.io.File;
 
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -86,14 +86,14 @@ public class XMLAttributesSorter {
 			fullFileName = StringUtil.replace(
 				fullFileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			String content = _fileUtil.read(file);
+			String content = FileUtils.readFileToString(file);
 
 			String newContent = sortAttributes(content);
 
 			newContent = XMLSourceProcessor.formatXML(newContent);
 
 			if (!content.equals(newContent)) {
-				_fileUtil.write(file, newContent);
+				FileUtils.writeStringToFile(file, newContent);
 
 				System.out.println(fullFileName);
 			}
@@ -110,7 +110,6 @@ public class XMLAttributesSorter {
 		return document.formattedString();
 	}
 
-	private static final FileImpl _fileUtil = FileImpl.getInstance();
 	private static final SAXReader _saxReader = new SAXReaderImpl();
 
 }

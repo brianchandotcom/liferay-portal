@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -21,6 +22,7 @@ import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -48,6 +50,14 @@ public class DDMFormFieldTypeRegistryImpl implements DDMFormFieldTypeRegistry {
 	@Override
 	public Set<String> getDDMFormFieldTypeNames() {
 		return Collections.unmodifiableSet(_ddmFormFieldTypesMap.keySet());
+	}
+
+	@Override
+	public List<DDMFormFieldType> getDDMFormFieldTypes() {
+		List<DDMFormFieldType> ddmFormFieldTypes = ListUtil.fromCollection(
+			_ddmFormFieldTypesMap.values());
+
+		return Collections.unmodifiableList(ddmFormFieldTypes);
 	}
 
 	private final Map<String, DDMFormFieldType> _ddmFormFieldTypesMap =

@@ -1,0 +1,15 @@
+.lfr-ddm-form-field-container {
+	position: relative;
+
+	.lfr-ddm-form-field-repeatable-add-button {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.lfr-ddm-form-field-repeatable-delete-button {
+		position: absolute;
+		right: 15px;
+		top: 0;
+	}
+}

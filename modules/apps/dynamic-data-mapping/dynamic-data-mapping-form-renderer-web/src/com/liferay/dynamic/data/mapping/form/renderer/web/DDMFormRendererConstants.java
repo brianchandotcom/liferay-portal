@@ -12,20 +12,26 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry;
+package com.liferay.dynamic.data.mapping.form.renderer.web;
 
-import java.util.List;
-import java.util.Set;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldTypeRegistry {
+public class DDMFormRendererConstants {
 
-	public DDMFormFieldType getDDMFormFieldType(String name);
+	public static final String DDM_FORM_FIELD_LANGUAGE_ID_SEPARATOR =
+		StringPool.DOUBLE_DOLLAR;
 
-	public Set<String> getDDMFormFieldTypeNames();
+	public static final String DDM_FORM_FIELD_NAME_PREFIX = "ddm$$";
 
-	public List<DDMFormFieldType> getDDMFormFieldTypes();
+	public static final String DDM_FORM_FIELD_PARTS_SEPARATOR =
+		StringPool.DOLLAR;
+
+	public static final String DDM_FORM_FIELDS_SEPARATOR = StringPool.POUND;
+
+	private DDMFormRendererConstants() {
+	}
 
 }

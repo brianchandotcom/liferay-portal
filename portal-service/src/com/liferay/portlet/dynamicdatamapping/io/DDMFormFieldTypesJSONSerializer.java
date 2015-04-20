@@ -12,20 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry;
+package com.liferay.portlet.dynamicdatamapping.io;
+
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
 
 import java.util.List;
-import java.util.Set;
 
 /**
- * @author Marcellus Tavares
+ * @author Bruno Basto
  */
-public interface DDMFormFieldTypeRegistry {
+public interface DDMFormFieldTypesJSONSerializer {
 
-	public DDMFormFieldType getDDMFormFieldType(String name);
-
-	public Set<String> getDDMFormFieldTypeNames();
-
-	public List<DDMFormFieldType> getDDMFormFieldTypes();
+	public String serialize(List<DDMFormFieldType> ddmFormFieldTypes);
 
 }

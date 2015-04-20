@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.sourceformatter;
+package com.liferay.portal.tools.source.formatter;
 
 import com.liferay.portal.kernel.util.Tuple;
 

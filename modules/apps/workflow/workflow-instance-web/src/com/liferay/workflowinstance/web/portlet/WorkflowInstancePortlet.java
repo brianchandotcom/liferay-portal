@@ -14,12 +14,23 @@
 
 package com.liferay.workflowinstance.web.portlet;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.workflowinstances.action.ActionUtil;
 
 /**
  * @author Leonardo Barros
@@ -34,7 +45,7 @@ import com.liferay.portal.util.PortletKeys;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Workflow Instance",
+		"javax.portlet.display-name=Workflow Instances",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
@@ -45,4 +56,35 @@ import com.liferay.portal.util.PortletKeys;
 	service = { WorkflowInstancePortlet.class, Portlet.class })
 public class WorkflowInstancePortlet extends MVCPortlet {
 
+	@Override
+	public void render(RenderRequest request, RenderResponse response)
+		throws IOException, PortletException {
+
+		try {
+			ActionUtil.getWorkflowInstance(request);
+		} catch (Exception e) {
+			if (e instanceof WorkflowException) {
+				
+				SessionErrors.add(request, e.getClass());
+
+				PortletSession portletSession =
+					request.getPortletSession();
+
+				PortletContext portletContext =
+					portletSession.getPortletContext();
+
+				PortletRequestDispatcher portletRequestDispatcher =
+					portletContext.getRequestDispatcher("/error.jsp");
+
+				portletRequestDispatcher.include(
+					request, response);
+
+			} else {
+				throw new PortletException(e);
+			}
+		}
+
+		super.render(request, response);
+	}
+	
 }

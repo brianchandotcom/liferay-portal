@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.backgroundtask;
 
 import com.liferay.portal.model.BackgroundTask;
 
+import java.util.Locale;
+
 /**
  * @author Michael C. Han
  */
@@ -33,6 +35,14 @@ public class DelegatingBackgroundTaskExecutor
 		throws Exception {
 
 		return _backgroundTaskExecutor.execute(backgroundTask);
+	}
+
+	@Override
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		BackgroundTask backgroundTask, Locale locale) {
+
+		return _backgroundTaskExecutor.getBackgroundTaskDisplay(
+			backgroundTask, locale);
 	}
 
 	@Override

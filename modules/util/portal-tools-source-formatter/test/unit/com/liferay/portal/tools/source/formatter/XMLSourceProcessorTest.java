@@ -14,12 +14,18 @@
 
 package com.liferay.portal.tools.source.formatter;
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Karen Dang
  */
 public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
+
+	@Before
+	public void setUp() {
+		keepTestExtension = true;
+	}
 
 	@Test
 	public void testCharactersAfterDefinitionTag() throws Exception {

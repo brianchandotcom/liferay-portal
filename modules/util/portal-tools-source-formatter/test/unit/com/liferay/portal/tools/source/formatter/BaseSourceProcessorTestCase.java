@@ -17,7 +17,6 @@ package com.liferay.portal.tools.source.formatter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
 import java.io.File;
 
@@ -80,7 +79,7 @@ public class BaseSourceProcessorTestCase {
 		SourceFormatter sourceFormatter = new SourceFormatter(
 			sourceFormatterBean);
 
-		Tuple tuple = sourceFormatter.format(fullFileName);
+		sourceFormatter.format();
 
 		List<String> processedFiles = sourceFormatter.getProcessedFiles();
 
@@ -90,7 +89,7 @@ public class BaseSourceProcessorTestCase {
 					" does not end with a valid extension");
 		}
 
-		List<String> errorMessages = (List<String>)tuple.getObject(1);
+		List<String> errorMessages = sourceFormatter.getErrorMessages();
 
 		if (!errorMessages.isEmpty() || (expectedErrorMessages.length > 0)) {
 			Assert.assertEquals(
@@ -115,7 +114,8 @@ public class BaseSourceProcessorTestCase {
 			}
 		}
 		else {
-			String actualFormattedContent = (String)tuple.getObject(0);
+			String actualFormattedContent = FileUtils.readFileToString(
+				new File(processedFiles.get(0)));
 
 			File file = new File(_DIR_NAME + "/expected/" + fileName);
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.source.formatter;
 
-import com.liferay.portal.kernel.util.Tuple;
-
 import java.util.List;
 
 import org.junit.Assert;
@@ -42,7 +40,7 @@ public class SourceFormatterTest {
 		SourceFormatter sourceFormatter = new SourceFormatter(
 			sourceFormatterBean);
 
-		Tuple tuple = sourceFormatter.format(fileName);
+		sourceFormatter.format();
 
 		List<String> processedFiles = sourceFormatter.getProcessedFiles();
 
@@ -50,7 +48,7 @@ public class SourceFormatterTest {
 	}
 
 	@Test
-	public void testSourceFormatter() throws Throwable {
+	public void testSourceFormatter() throws Exception {
 		SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();
 
 		sourceFormatterBean.setAutoFix(false);

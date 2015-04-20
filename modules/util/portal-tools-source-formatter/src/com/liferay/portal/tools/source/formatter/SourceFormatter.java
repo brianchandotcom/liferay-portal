@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.source.formatter;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -43,8 +42,8 @@ public class SourceFormatter {
 
 			sourceFormatter.format();
 		}
-		catch (Throwable t) {
-			t.printStackTrace();
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -52,7 +51,7 @@ public class SourceFormatter {
 		_sourceFormatterBean = sourceFormatterBean;
 	}
 
-	public void format() throws Throwable {
+	public void format() throws Exception {
 		final AtomicReference<Throwable> exceptionReference1 =
 			new AtomicReference<Throwable>();
 
@@ -152,32 +151,12 @@ public class SourceFormatter {
 		}
 	}
 
-	public Tuple format(String fileName) throws Exception {
-		SourceProcessor sourceProcessor = null;
+	public List<String> getErrorMessages() {
+		return new ArrayList<>(_errorMessages);
+	}
 
-		if (fileName.endsWith(".testjava")) {
-			sourceProcessor = JavaSourceProcessor.class.newInstance();
-		}
-		else if (fileName.endsWith(".testsql")) {
-			sourceProcessor = SQLSourceProcessor.class.newInstance();
-		}
-		else if (fileName.endsWith(".testtld")) {
-			sourceProcessor = TLDSourceProcessor.class.newInstance();
-		}
-		else if (fileName.endsWith(".testxml")) {
-			sourceProcessor = XMLSourceProcessor.class.newInstance();
-		}
-
-		if (sourceProcessor == null) {
-			return null;
-		}
-
-		String newContent = sourceProcessor.format(
-			fileName, _sourceFormatterBean.isUseProperties(),
-			_sourceFormatterBean.isPrintErrors(),
-			_sourceFormatterBean.isAutoFix());
-
-		return new Tuple(newContent, sourceProcessor.getErrorMessages());
+	public SourceMismatchException getSourceMismatchException() {
+		return _firstSourceMismatchException;
 	}
 
 	public List<String> getProcessedFiles() {
@@ -193,10 +172,7 @@ public class SourceFormatter {
 
 		sourceProcessor.setSourceFormatterBean(_sourceFormatterBean);
 
-		sourceProcessor.format(
-			_sourceFormatterBean.isUseProperties(),
-			_sourceFormatterBean.isPrintErrors(),
-			_sourceFormatterBean.isAutoFix());
+		sourceProcessor.format();
 
 		_errorMessages.addAll(sourceProcessor.getErrorMessages());
 		_processedFiles.addAll(sourceProcessor.getProcessedFiles());

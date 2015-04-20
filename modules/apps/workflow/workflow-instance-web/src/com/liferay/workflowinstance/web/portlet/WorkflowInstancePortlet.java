@@ -16,6 +16,8 @@ package com.liferay.workflowinstance.web.portlet;
 
 import java.io.IOException;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -28,6 +30,10 @@ import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.workflowinstance.web.portlet.action.ActionUtil;
@@ -55,6 +61,24 @@ import com.liferay.workflowinstance.web.portlet.action.ActionUtil;
 	},
 	service = { WorkflowInstancePortlet.class, Portlet.class })
 public class WorkflowInstancePortlet extends MVCPortlet {
+	
+	@Override
+	public void processAction(ActionRequest actionRequest,
+			ActionResponse actionResponse) 
+					throws IOException, PortletException {
+		
+		String actionName = ParamUtil.getString(
+				actionRequest, ActionRequest.ACTION_NAME);
+		
+		if(Validator.isNotNull(actionName) && StringUtil.equalsIgnoreCase(
+				actionName, _DISCUSSION_ACTION)) {
+			SessionMessages.add(actionRequest, 
+					getPortletConfig().getPortletName() + 
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+		}
+		
+		super.processAction(actionRequest, actionResponse);
+	}
 
 	@Override
 	public void render(RenderRequest request, RenderResponse response)
@@ -87,4 +111,6 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 		super.render(request, response);
 	}
 	
+	private static final String _DISCUSSION_ACTION = "invokeTaglibDiscussion";
+
 }

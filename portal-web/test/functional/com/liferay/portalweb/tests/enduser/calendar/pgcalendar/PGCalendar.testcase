@@ -1195,6 +1195,7 @@
 			<var name="calendarDefaultName" value="Liferay" />
 			<var name="calendarName" value="Test Test" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 	</command>
 

@@ -839,7 +839,7 @@ public class LanguageImpl implements Language, Serializable {
 
 		String[] localesBetaArray = PropsValues.LOCALES_BETA;
 
-		_localesBetaSet = new HashSet<>(localesBetaArray.length);
+		_localesBetaSet = new HashSet<>();
 
 		for (String languageId : localesBetaArray) {
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
@@ -944,8 +944,8 @@ public class LanguageImpl implements Language, Serializable {
 			languageIds = PropsValues.LOCALES_ENABLED;
 		}
 
-		Map<String, Locale> localesMap = new HashMap<>(languageIds.length);
-		Set<Locale> localesSet = new HashSet<>(languageIds.length);
+		Map<String, Locale> localesMap = new HashMap<>();
+		Set<Locale> localesSet = new HashSet<>();
 
 		for (int i = 0; i < languageIds.length; i++) {
 			String languageId = languageIds[i];

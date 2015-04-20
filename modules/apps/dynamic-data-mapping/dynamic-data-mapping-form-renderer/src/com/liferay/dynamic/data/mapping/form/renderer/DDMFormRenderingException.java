@@ -14,21 +14,31 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormRenderer {
+@ProviderType
+public class DDMFormRenderingException extends PortalException {
 
-	public String render(
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-			DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException;
+	public DDMFormRenderingException() {
+	}
 
-	public String render(
-			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException;
+	public DDMFormRenderingException(String msg) {
+		super(msg);
+	}
+
+	public DDMFormRenderingException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public DDMFormRenderingException(Throwable cause) {
+		super(cause);
+	}
+
+	private static final long serialVersionUID = 1L;
 
 }

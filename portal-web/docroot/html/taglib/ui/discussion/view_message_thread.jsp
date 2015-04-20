@@ -20,7 +20,7 @@
 DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 
-MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("liferay-ui:discussion:messageDisplay");
+CommentSectionDisplayContext commentSectionDisplayContext = (CommentSectionDisplayContext)request.getAttribute("liferay-ui:discussion:commentSectionDisplayContext");
 
 Comment comment = (Comment)request.getAttribute("liferay-ui:discussion:currentComment");
 
@@ -197,7 +197,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + index + "','" + namespace + randomNamespace + "editForm" + index + "');" + randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage" + index + "')";
 						%>
 
-						<c:if test="<%= !messageDisplay.isDiscussionMaxComments() %>">
+						<c:if test="<%= !commentSectionDisplayContext.isDiscussionMaxComments() %>">
 							<c:choose>
 								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
 									<liferay-ui:icon

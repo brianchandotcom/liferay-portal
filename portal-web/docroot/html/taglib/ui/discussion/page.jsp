@@ -24,8 +24,6 @@ DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(re
 
 CommentSectionDisplayContext commentSectionDisplayContext = new MBCommentSectionDisplayContext(discussionTaglibHelper, discussionRequestHelper);
 
-MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(discussionTaglibHelper.getUserId(), scopeGroupId, discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
-
 Comment rootComment = commentSectionDisplayContext.getRootComment();
 %>
 
@@ -176,8 +174,8 @@ Comment rootComment = commentSectionDisplayContext.getRootComment();
 
 							comment = commentIterator.next();
 
+							request.setAttribute("liferay-ui:discussion:commentSectionDisplayContext", commentSectionDisplayContext);
 							request.setAttribute("liferay-ui:discussion:currentComment", comment);
-							request.setAttribute("liferay-ui:discussion:messageDisplay", messageDisplay);
 							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
 							request.setAttribute("liferay-ui:discussion:ratingsEntries", ratingsEntries);
 							request.setAttribute("liferay-ui:discussion:ratingsStatsList", ratingsStatsList);

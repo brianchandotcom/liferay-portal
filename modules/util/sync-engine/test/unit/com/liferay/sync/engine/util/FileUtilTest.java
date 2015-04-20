@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.engine;
+package com.liferay.sync.engine.util;
 
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.OSDetector;

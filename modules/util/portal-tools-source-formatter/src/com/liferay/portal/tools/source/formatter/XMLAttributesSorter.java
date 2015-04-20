@@ -17,6 +17,7 @@ package com.liferay.portal.tools.source.formatter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ArgumentsUtil;
 
 import java.io.File;
 

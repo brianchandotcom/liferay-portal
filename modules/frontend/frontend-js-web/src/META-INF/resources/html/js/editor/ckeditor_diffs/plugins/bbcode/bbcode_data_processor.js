@@ -104,8 +104,6 @@
 
 	var TAG_TD = 'td';
 
-	var tplImage = new CKEDITOR.template('<img src="{image}" />');
-
 	var emoticonImages;
 	var emoticonPath;
 	var emoticonSymbols;
@@ -152,20 +150,6 @@
 			}
 			else {
 				data = instance._bbcodeConverter.convert(data);
-
-				var length = emoticonSymbols.length;
-
-				for (var i = 0; i < length; i++) {
-					var image = tplImage.output(
-						{
-							image: emoticonPath + emoticonImages[i]
-						}
-					);
-
-					var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, '\\$&');
-
-					data = data.replace(new RegExp(escapedSymbol, 'g'), image);
-				}
 			}
 
 			return data;

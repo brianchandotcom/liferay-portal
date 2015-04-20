@@ -263,6 +263,22 @@
 
 			value = instance._handleNewLine(value);
 
+			if (!instance._noParse) {
+				var length = emoticonSymbols.length;
+
+				for (var i = 0; i < length; i++) {
+					var image = tplImage.output(
+						{
+							imageSrc: emoticonPath + emoticonImages[i]
+						}
+					);
+
+					var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, '\\$&');
+
+					value = value.replace(new RegExp(escapedSymbol, 'g'), image);
+				}
+			}
+
 			instance._result.push(value);
 		},
 

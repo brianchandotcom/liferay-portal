@@ -122,6 +122,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
+	public List<String> getProcessedFiles() {
+		return _processedFiles;
+	}
+
+	@Override
 	public SourceFormatterBean getSourceFormatterBean() {
 		return _sourceFormatterBean;
 	}
@@ -1223,6 +1228,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 		}
 
+		_processedFiles.add(file.getAbsolutePath());
+
 		if (content.equals(newContent)) {
 			return;
 		}
@@ -1733,6 +1740,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _mainReleaseVersion;
 	private String _oldCopyright;
 	private Properties _portalLanguageProperties;
+	private List<String> _processedFiles = new ArrayList<>();
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusionPaths;
 	private SourceFormatterBean _sourceFormatterBean;

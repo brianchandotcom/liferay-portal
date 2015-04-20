@@ -34,6 +34,8 @@ public interface SourceProcessor {
 
 	public SourceMismatchException getFirstSourceMismatchException();
 
+	public List<String> getProcessedFiles();
+
 	public SourceFormatterBean getSourceFormatterBean();
 
 	public void setSourceFormatterBean(SourceFormatterBean sourceFormatterBean);

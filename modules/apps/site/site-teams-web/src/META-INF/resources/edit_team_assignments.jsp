@@ -28,12 +28,12 @@ long teamId = ParamUtil.getLong(request, "teamId");
 
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
-Group group = GroupLocalServiceUtil.fetchGroup(team.getGroupId());
+Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
 
 Organization organization = null;
 
 if (group.isOrganization()) {
-	organization = OrganizationLocalServiceUtil.fetchOrganization(group.getOrganizationId());
+	organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();

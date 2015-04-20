@@ -1270,6 +1270,8 @@
 
 		<action path="/roles_admin/select_regular_role" forward="portlet.roles_admin.select_regular_role" />
 
+		<action path="/roles_admin/select_site" forward="portlet.sites_admin.select_site" />
+
 		<action path="/roles_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
 
 		<action path="/roles_admin/view" forward="portlet.roles_admin.view" />
@@ -1339,6 +1341,46 @@
 			<forward name="portlet.shopping.edit_item" path="portlet.shopping.view_item" />
 			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
 		</action>
+
+		<!-- Sites Admin -->
+
+		<action path="/sites_admin/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		</action>
+
+		<action path="/sites_admin/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		</action>
+
+		<action path="/sites_admin/edit_site" type="com.liferay.portlet.sites.action.EditGroupAction">
+			<forward name="portlet.sites_admin.edit_site" path="portlet.sites_admin.edit_site" />
+			<forward name="portlet.sites_admin.error" path="portlet.sites_admin.error" />
+		</action>
+
+		<action path="/sites_admin/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
+		</action>
+
+		<action path="/sites_admin/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+			<forward name="portlet.layouts_admin.import_layouts" path="portlet.layouts_admin.import_layouts" />
+		</action>
+
+		<action path="/sites_admin/page" type="com.liferay.portlet.myplaces.action.ViewAction" />
+
+		<action path="/sites_admin/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
+			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
+		</action>
+
+		<action path="/sites_admin/select_site" forward="portlet.sites_admin.select_site" />
+
+		<action path="/sites_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
+
+		<action path="/sites_admin/view" forward="portlet.sites_admin.view" />
 
 		<!-- Sites Directory -->
 
@@ -1538,6 +1580,8 @@
 
 		<action path="/users_admin/select_regular_role" forward="portlet.roles_admin.select_regular_role" />
 
+		<action path="/users_admin/select_site" forward="portlet.sites_admin.select_site" />
+
 		<action path="/users_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
 
 		<action path="/users_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
@@ -1546,24 +1590,30 @@
 
 		<action path="/users_admin/view_users" forward="portlet.users_admin.view" />
 
-		<!-- Workflow Instances -->
+		<!-- Workflow Definitions -->
 
-		<action path="/workflow_instances/edit_workflow_instance" type="com.liferay.portlet.workflowinstances.action.EditWorkflowInstanceAction">
+		<action path="/workflow_definitions/edit_workflow_definition" type="com.liferay.portlet.workflowdefinitions.action.EditWorkflowDefinitionAction">
+			<forward name="portlet.workflow_definitions.edit_workflow_definition" path="portlet.workflow_definitions.edit_workflow_definition" />
+			<forward name="portlet.workflow_definitions.error" path="portlet.workflow_definitions.error" />
+			<forward name="portlet.workflow_definitions.view" path="portlet.workflow_definitions.view" />
+		</action>
+
+		<action path="/workflow_definitions/edit_workflow_instance" type="com.liferay.portlet.workflowinstances.action.EditWorkflowInstanceAction">
 			<forward name="portlet.workflow_instances.edit_workflow_instance" path="portlet.workflow_instances.edit_workflow_instance" />
 			<forward name="portlet.workflow_instances.error" path="portlet.workflow_instances.error" />
 		</action>
 
-		<action path="/workflow_instances/edit_workflow_instance_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
+		<action path="/workflow_definitions/edit_workflow_instance_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.workflow_instances.error" />
 		</action>
 
-		<action path="/workflow_instances/edit_workflow_instance_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
+		<action path="/workflow_definitions/edit_workflow_instance_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
 			<forward name="portlet.workflow_tasks.error" path="portlet.workflow_instances.error" />
 		</action>
 
-		<action path="/workflow_instances/view" forward="portlet.workflow_instances.view" />
+		<action path="/workflow_definitions/view" forward="portlet.workflow_definitions.view" />
 
-		<action path="/workflow_instances/view_content" forward="portlet.workflow_instances.view_content" />
+		<action path="/workflow_definitions/view_content" forward="portlet.workflow_instances.view_content" />
 
 		<!-- Workflow Tasks -->
 

@@ -404,8 +404,8 @@
 		</if>
 
 		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MERIDIAN" name="expirationDateMeridian" />
-		<var name="expirationDateMeridian" value="${expirationDateMeridian?replace('0', 'AM')}" />
-		<var name="expirationDateMeridian" value="${expirationDateMeridian?replace('1', 'PM')}" />
+		<var method="StringUtil#replace(${expirationDateMeridian}, '0', 'AM')" name="expirationDateMeridian" />
+		<var method="StringUtil#replace(${expirationDateMeridian}, '1', 'PM')" name="expirationDateMeridian" />
 		<var name="expirationTime" value="${expirationDateHour}:${expirationDateMinuteFuture} ${expirationDateMeridian}" />
 
 		<execute function="Type" locator1="SOAnnouncementsAdd#EXPIRATION_DATE_TIME_INPUT" value1="${expirationTime}" />
@@ -436,8 +436,8 @@
 		</if>
 
 		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_MERIDIAN" name="displayDateMeridian" />
-		<var name="displayDateMeridian" value="${displayDateMeridian?replace('0', 'AM')}" />
-		<var name="displayDateMeridian" value="${displayDateMeridian?replace('1', 'PM')}" />
+		<var method="StringUtil#replace(${displayDateMeridian}, '0', 'AM')" name="displayDateMeridian" />
+		<var method="StringUtil#replace(${displayDateMeridian}, '1', 'PM')" name="displayDateMeridian" />
 
 		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}" />
 

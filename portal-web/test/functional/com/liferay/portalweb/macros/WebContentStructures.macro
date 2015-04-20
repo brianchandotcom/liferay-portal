@@ -62,7 +62,7 @@
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var name="fieldName" value="${structureFieldName?replace(' ', '_')}" />
+				<var method="StringUtil#replace(${structureFieldName}, ' ', '_')" name="fieldName" />
 			</execute>
 		</for>
 
@@ -233,7 +233,7 @@
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
 			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
-			<var name="structureFieldName" value="${structureFieldName?replace(' ', '_')}" />
+			<var method="StringUtil#replace(${structureFieldName}, ' ', '_')" name="structureFieldName" />
 
 			<execute function="Type" locator1="CPWebcontentStructuresEditdefaultvalues#FIELD_NAME_FIELD" value1="Edited ${structureFieldName} Field" />
 		</for>
@@ -332,7 +332,7 @@
 		<for list="${structureFieldNames}" param="structureFieldName">
 			<execute macro="DynamicDataMapping#viewField">
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var name="fieldName" value="${structureFieldName?replace(' ', '_')}" />
+				<var method="StringUtil#replace(${structureFieldName}, ' ', '_')" name="fieldName" />
 			</execute>
 		</for>
 	</command>

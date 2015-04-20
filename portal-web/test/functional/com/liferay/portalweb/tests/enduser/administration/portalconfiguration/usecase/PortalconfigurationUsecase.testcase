@@ -104,7 +104,7 @@
 
 		<var method="selenium#getLocation()" name="documentURL" />
 
-		<var name="otherInstanceAccessAttempt" value="${documentURL?replace('able', 'baker')}" />
+		<var method="StringUtil#replace(${documentURL}, 'able', 'baker')" name="otherInstanceAccessAttempt" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

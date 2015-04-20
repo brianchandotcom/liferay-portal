@@ -213,7 +213,7 @@
 	<command name="addMultipleCP">
 		<for list="${usersEmailsList}" param="userEmail" >
 			<var name="userEmailAddress" value="${userEmail}" />
-			<var name="userName" value="${userEmail?replace('@liferay.com', '')}" />
+			<var method="StringUtil#replace(${userEmail}, '@liferay.com', '')" name="userName" />
 
 			<execute macro="User#addCP">
 				<var name="userEmailAddress" value="${userEmailAddress}" />

@@ -161,7 +161,7 @@ public class PortletInstance {
 			portletInstance.substring(x + _USER_SEPARATOR.length()));
 	}
 
-	private String[] _PORTLET_NAME_RESERVED_KEYWORDS =
+	private final String[] _PORTLET_NAME_RESERVED_KEYWORDS =
 		new String[] {_INSTANCE_SEPARATOR, _USER_SEPARATOR};
 
 	private final String _instanceId;

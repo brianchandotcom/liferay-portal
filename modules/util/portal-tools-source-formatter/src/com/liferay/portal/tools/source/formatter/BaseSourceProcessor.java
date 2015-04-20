@@ -54,6 +54,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -76,31 +77,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public void format(
-			boolean useProperties, boolean printErrors, boolean autoFix)
-		throws Exception {
-
-		_init(useProperties, printErrors, autoFix);
-
-		format();
-
-		sourceFormatterHelper.close();
-	}
-
-	@Override
-	public String format(
-			String fileName, boolean useProperties, boolean printErrors,
-			boolean autoFix)
-		throws Exception {
-
-		try {
-			_init(useProperties, printErrors, autoFix);
-
-			return format(fileName);
+	public final void format() throws Exception {
+		for (String fileName : getFileNames()) {
+			format(fileName);
 		}
-		finally {
-			sourceFormatterHelper.close();
-		}
+
+		_sourceFormatterHelper.close();
 	}
 
 	@Override
@@ -114,6 +96,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return errorMessages;
+	}
+
+	public final List<String> getFileNames() {
+		if (_sourceFormatterBean.getFileNames() != null) {
+			return _sourceFormatterBean.getFileNames();
+		}
+
+		return doGetFileNames();
 	}
 
 	@Override
@@ -136,6 +126,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceFormatterBean sourceFormatterBean) {
 
 		_sourceFormatterBean = sourceFormatterBean;
+
+		_init();
 	}
 
 	protected static boolean isExcludedFile(
@@ -494,6 +486,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception;
 
+	protected abstract List<String> doGetFileNames();
+
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws IOException {
 
@@ -728,9 +722,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newContent;
 	}
 
-	protected abstract void format() throws Exception;
-
-	protected String format(
+	protected final String format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -748,8 +740,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return format(file, fileName, absolutePath, newContent);
 	}
 
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
+	protected final void format(String fileName) throws Exception {
+		File file = new File(_sourceFormatterBean.getBaseDir() + fileName);
 
 		fileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -761,8 +753,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String newContent = format(file, fileName, absolutePath, content);
 
 		processFormattedFile(file, fileName, content, newContent);
-
-		return newContent;
 	}
 
 	protected String formatJavaTerms(
@@ -944,7 +934,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		directoryScanner.setIncludes(includes);
 
-		return sourceFormatterHelper.scanForFiles(directoryScanner);
+		return _sourceFormatterHelper.scanForFiles(directoryScanner);
 	}
 
 	protected List<String> getFileNames(String[] excludes, String[] includes) {
@@ -1221,7 +1211,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			if (errorMessages != null) {
 				for (String errorMessage : errorMessages) {
-					sourceFormatterHelper.printError(fileName, errorMessage);
+					_sourceFormatterHelper.printError(fileName, errorMessage);
 				}
 			}
 		}
@@ -1241,7 +1231,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (_sourceFormatterBean.isPrintErrors()) {
-			sourceFormatterHelper.printError(fileName, file);
+			_sourceFormatterHelper.printError(fileName, file);
 		}
 	}
 
@@ -1598,12 +1588,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
 		Pattern.MULTILINE);
-	protected static SourceFormatterHelper sourceFormatterHelper;
 	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
 
 	private String[] _getExcludes() {
+		if (_sourceFormatterBean.getFileNames() != null) {
+			return new String[0];
+		}
+
 		List<String> excludesList = ListUtil.fromString(
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
@@ -1695,17 +1688,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return properties;
 	}
 
-	private void _init(
-			boolean useProperties, boolean printErrors, boolean autoFix)
-		throws Exception {
-
+	private void _init() {
 		_errorMessagesMap = new HashMap<String, List<String>>();
 
-		sourceFormatterHelper = new SourceFormatterHelper(
+		_sourceFormatterHelper = new SourceFormatterHelper(
 			_sourceFormatterBean.isUseProperties());
 
 		try {
-			sourceFormatterHelper.init();
+			_sourceFormatterHelper.init();
 		}
 		catch (IOException ioe) {
 			ReflectionUtil.throwException(ioe);
@@ -1742,6 +1732,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusionPaths;
 	private SourceFormatterBean _sourceFormatterBean;
+	private SourceFormatterHelper _sourceFormatterHelper;
 	private boolean _usePortalCompatImport;
 
 }

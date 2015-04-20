@@ -164,41 +164,26 @@ public class MeetupsRegistrationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByMeetupsEntryId() {
-		try {
-			_persistence.countByMeetupsEntryId(RandomTestUtil.nextLong());
+	public void testCountByMeetupsEntryId() throws Exception {
+		_persistence.countByMeetupsEntryId(RandomTestUtil.nextLong());
 
-			_persistence.countByMeetupsEntryId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByMeetupsEntryId(0L);
 	}
 
 	@Test
-	public void testCountByU_ME() {
-		try {
-			_persistence.countByU_ME(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByU_ME() throws Exception {
+		_persistence.countByU_ME(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByU_ME(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByU_ME(0L, 0L);
 	}
 
 	@Test
-	public void testCountByME_S() {
-		try {
-			_persistence.countByME_S(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt());
+	public void testCountByME_S() throws Exception {
+		_persistence.countByME_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-			_persistence.countByME_S(0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByME_S(0L, 0);
 	}
 
 	@Test
@@ -226,13 +211,8 @@ public class MeetupsRegistrationPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<MeetupsRegistration> getOrderByComparator() {

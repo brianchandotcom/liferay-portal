@@ -142,40 +142,25 @@ public class ExpandoRowPersistenceTest {
 	}
 
 	@Test
-	public void testCountByTableId() {
-		try {
-			_persistence.countByTableId(RandomTestUtil.nextLong());
+	public void testCountByTableId() throws Exception {
+		_persistence.countByTableId(RandomTestUtil.nextLong());
 
-			_persistence.countByTableId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByTableId(0L);
 	}
 
 	@Test
-	public void testCountByClassPK() {
-		try {
-			_persistence.countByClassPK(RandomTestUtil.nextLong());
+	public void testCountByClassPK() throws Exception {
+		_persistence.countByClassPK(RandomTestUtil.nextLong());
 
-			_persistence.countByClassPK(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByClassPK(0L);
 	}
 
 	@Test
-	public void testCountByT_C() {
-		try {
-			_persistence.countByT_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByT_C() throws Exception {
+		_persistence.countByT_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByT_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_C(0L, 0L);
 	}
 
 	@Test
@@ -202,13 +187,8 @@ public class ExpandoRowPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<ExpandoRow> getOrderByComparator() {

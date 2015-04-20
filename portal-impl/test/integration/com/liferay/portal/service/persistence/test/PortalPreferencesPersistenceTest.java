@@ -139,16 +139,11 @@ public class PortalPreferencesPersistenceTest {
 	}
 
 	@Test
-	public void testCountByO_O() {
-		try {
-			_persistence.countByO_O(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt());
+	public void testCountByO_O() throws Exception {
+		_persistence.countByO_O(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-			_persistence.countByO_O(0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByO_O(0L, 0);
 	}
 
 	@Test
@@ -176,13 +171,8 @@ public class PortalPreferencesPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<PortalPreferences> getOrderByComparator() {

@@ -164,17 +164,12 @@ public class ReleasePersistenceTest {
 	}
 
 	@Test
-	public void testCountByServletContextName() {
-		try {
-			_persistence.countByServletContextName(StringPool.BLANK);
+	public void testCountByServletContextName() throws Exception {
+		_persistence.countByServletContextName(StringPool.BLANK);
 
-			_persistence.countByServletContextName(StringPool.NULL);
+		_persistence.countByServletContextName(StringPool.NULL);
 
-			_persistence.countByServletContextName((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByServletContextName((String)null);
 	}
 
 	@Test
@@ -201,13 +196,8 @@ public class ReleasePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<Release> getOrderByComparator() {

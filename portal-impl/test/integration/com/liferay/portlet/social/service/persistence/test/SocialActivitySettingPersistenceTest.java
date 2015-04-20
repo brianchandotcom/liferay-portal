@@ -151,70 +151,45 @@ public class SocialActivitySettingPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
-		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
-	public void testCountByG_C() {
-		try {
-			_persistence.countByG_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByG_C() throws Exception {
+		_persistence.countByG_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByG_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_C(0L, 0L);
 	}
 
 	@Test
-	public void testCountByG_A() {
-		try {
-			_persistence.countByG_A(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt());
+	public void testCountByG_A() throws Exception {
+		_persistence.countByG_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-			_persistence.countByG_A(0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_A(0L, 0);
 	}
 
 	@Test
-	public void testCountByG_C_A() {
-		try {
-			_persistence.countByG_C_A(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+	public void testCountByG_C_A() throws Exception {
+		_persistence.countByG_C_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
-			_persistence.countByG_C_A(0L, 0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_C_A(0L, 0L, 0);
 	}
 
 	@Test
-	public void testCountByG_C_A_N() {
-		try {
-			_persistence.countByG_C_A_N(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
-				StringPool.BLANK);
+	public void testCountByG_C_A_N() throws Exception {
+		_persistence.countByG_C_A_N(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			StringPool.BLANK);
 
-			_persistence.countByG_C_A_N(0L, 0L, 0, StringPool.NULL);
+		_persistence.countByG_C_A_N(0L, 0L, 0, StringPool.NULL);
 
-			_persistence.countByG_C_A_N(0L, 0L, 0, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_C_A_N(0L, 0L, 0, (String)null);
 	}
 
 	@Test
@@ -243,13 +218,8 @@ public class SocialActivitySettingPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<SocialActivitySetting> getOrderByComparator() {

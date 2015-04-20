@@ -330,58 +330,38 @@ public class ShoppingOrderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
-		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
-	public void testCountByNumber() {
-		try {
-			_persistence.countByNumber(StringPool.BLANK);
+	public void testCountByNumber() throws Exception {
+		_persistence.countByNumber(StringPool.BLANK);
 
-			_persistence.countByNumber(StringPool.NULL);
+		_persistence.countByNumber(StringPool.NULL);
 
-			_persistence.countByNumber((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByNumber((String)null);
 	}
 
 	@Test
-	public void testCountByPPTxnId() {
-		try {
-			_persistence.countByPPTxnId(StringPool.BLANK);
+	public void testCountByPPTxnId() throws Exception {
+		_persistence.countByPPTxnId(StringPool.BLANK);
 
-			_persistence.countByPPTxnId(StringPool.NULL);
+		_persistence.countByPPTxnId(StringPool.NULL);
 
-			_persistence.countByPPTxnId((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByPPTxnId((String)null);
 	}
 
 	@Test
-	public void testCountByG_U_PPPS() {
-		try {
-			_persistence.countByG_U_PPPS(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByG_U_PPPS() throws Exception {
+		_persistence.countByG_U_PPPS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByG_U_PPPS(0L, 0L, StringPool.NULL);
+		_persistence.countByG_U_PPPS(0L, 0L, StringPool.NULL);
 
-			_persistence.countByG_U_PPPS(0L, 0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_U_PPPS(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -408,24 +388,14 @@ public class ShoppingOrderPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		try {
-			_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<ShoppingOrder> getOrderByComparator() {

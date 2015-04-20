@@ -189,15 +189,10 @@ public class OrgLaborPersistenceTest {
 	}
 
 	@Test
-	public void testCountByOrganizationId() {
-		try {
-			_persistence.countByOrganizationId(RandomTestUtil.nextLong());
+	public void testCountByOrganizationId() throws Exception {
+		_persistence.countByOrganizationId(RandomTestUtil.nextLong());
 
-			_persistence.countByOrganizationId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByOrganizationId(0L);
 	}
 
 	@Test
@@ -224,13 +219,8 @@ public class OrgLaborPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<OrgLabor> getOrderByComparator() {

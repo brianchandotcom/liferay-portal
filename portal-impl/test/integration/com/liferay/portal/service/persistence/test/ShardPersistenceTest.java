@@ -138,30 +138,20 @@ public class ShardPersistenceTest {
 	}
 
 	@Test
-	public void testCountByName() {
-		try {
-			_persistence.countByName(StringPool.BLANK);
+	public void testCountByName() throws Exception {
+		_persistence.countByName(StringPool.BLANK);
 
-			_persistence.countByName(StringPool.NULL);
+		_persistence.countByName(StringPool.NULL);
 
-			_persistence.countByName((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByName((String)null);
 	}
 
 	@Test
-	public void testCountByC_C() {
-		try {
-			_persistence.countByC_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByC_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
@@ -188,13 +178,8 @@ public class ShardPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<Shard> getOrderByComparator() {

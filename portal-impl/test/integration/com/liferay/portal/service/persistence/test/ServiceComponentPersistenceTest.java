@@ -145,32 +145,21 @@ public class ServiceComponentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByBuildNamespace() {
-		try {
-			_persistence.countByBuildNamespace(StringPool.BLANK);
+	public void testCountByBuildNamespace() throws Exception {
+		_persistence.countByBuildNamespace(StringPool.BLANK);
 
-			_persistence.countByBuildNamespace(StringPool.NULL);
+		_persistence.countByBuildNamespace(StringPool.NULL);
 
-			_persistence.countByBuildNamespace((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByBuildNamespace((String)null);
 	}
 
 	@Test
-	public void testCountByBNS_BNU() {
-		try {
-			_persistence.countByBNS_BNU(StringPool.BLANK,
-				RandomTestUtil.nextLong());
+	public void testCountByBNS_BNU() throws Exception {
+		_persistence.countByBNS_BNU(StringPool.BLANK, RandomTestUtil.nextLong());
 
-			_persistence.countByBNS_BNU(StringPool.NULL, 0L);
+		_persistence.countByBNS_BNU(StringPool.NULL, 0L);
 
-			_persistence.countByBNS_BNU((String)null, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByBNS_BNU((String)null, 0L);
 	}
 
 	@Test
@@ -198,13 +187,8 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<ServiceComponent> getOrderByComparator() {

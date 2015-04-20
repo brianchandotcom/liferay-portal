@@ -136,40 +136,25 @@ public class AssetTagStatsPersistenceTest {
 	}
 
 	@Test
-	public void testCountByTagId() {
-		try {
-			_persistence.countByTagId(RandomTestUtil.nextLong());
+	public void testCountByTagId() throws Exception {
+		_persistence.countByTagId(RandomTestUtil.nextLong());
 
-			_persistence.countByTagId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByTagId(0L);
 	}
 
 	@Test
-	public void testCountByClassNameId() {
-		try {
-			_persistence.countByClassNameId(RandomTestUtil.nextLong());
+	public void testCountByClassNameId() throws Exception {
+		_persistence.countByClassNameId(RandomTestUtil.nextLong());
 
-			_persistence.countByClassNameId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByClassNameId(0L);
 	}
 
 	@Test
-	public void testCountByT_C() {
-		try {
-			_persistence.countByT_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByT_C() throws Exception {
+		_persistence.countByT_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByT_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByT_C(0L, 0L);
 	}
 
 	@Test
@@ -196,13 +181,8 @@ public class AssetTagStatsPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<AssetTagStats> getOrderByComparator() {

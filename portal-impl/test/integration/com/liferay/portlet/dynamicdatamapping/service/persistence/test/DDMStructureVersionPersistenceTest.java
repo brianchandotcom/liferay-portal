@@ -176,29 +176,19 @@ public class DDMStructureVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByStructureId() {
-		try {
-			_persistence.countByStructureId(RandomTestUtil.nextLong());
+	public void testCountByStructureId() throws Exception {
+		_persistence.countByStructureId(RandomTestUtil.nextLong());
 
-			_persistence.countByStructureId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByStructureId(0L);
 	}
 
 	@Test
-	public void testCountByS_V() {
-		try {
-			_persistence.countByS_V(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByS_V() throws Exception {
+		_persistence.countByS_V(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByS_V(0L, StringPool.NULL);
+		_persistence.countByS_V(0L, StringPool.NULL);
 
-			_persistence.countByS_V(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByS_V(0L, (String)null);
 	}
 
 	@Test
@@ -226,13 +216,8 @@ public class DDMStructureVersionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<DDMStructureVersion> getOrderByComparator() {

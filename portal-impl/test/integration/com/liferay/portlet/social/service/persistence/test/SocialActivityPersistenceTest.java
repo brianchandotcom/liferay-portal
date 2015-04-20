@@ -176,156 +176,96 @@ public class SocialActivityPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
-		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
-	public void testCountByCompanyId() {
-		try {
-			_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-			_persistence.countByCompanyId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
-	public void testCountByUserId() {
-		try {
-			_persistence.countByUserId(RandomTestUtil.nextLong());
+	public void testCountByUserId() throws Exception {
+		_persistence.countByUserId(RandomTestUtil.nextLong());
 
-			_persistence.countByUserId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByUserId(0L);
 	}
 
 	@Test
-	public void testCountByActivitySetId() {
-		try {
-			_persistence.countByActivitySetId(RandomTestUtil.nextLong());
+	public void testCountByActivitySetId() throws Exception {
+		_persistence.countByActivitySetId(RandomTestUtil.nextLong());
 
-			_persistence.countByActivitySetId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByActivitySetId(0L);
 	}
 
 	@Test
-	public void testCountByMirrorActivityId() {
-		try {
-			_persistence.countByMirrorActivityId(RandomTestUtil.nextLong());
+	public void testCountByMirrorActivityId() throws Exception {
+		_persistence.countByMirrorActivityId(RandomTestUtil.nextLong());
 
-			_persistence.countByMirrorActivityId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByMirrorActivityId(0L);
 	}
 
 	@Test
-	public void testCountByClassNameId() {
-		try {
-			_persistence.countByClassNameId(RandomTestUtil.nextLong());
+	public void testCountByClassNameId() throws Exception {
+		_persistence.countByClassNameId(RandomTestUtil.nextLong());
 
-			_persistence.countByClassNameId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByClassNameId(0L);
 	}
 
 	@Test
-	public void testCountByReceiverUserId() {
-		try {
-			_persistence.countByReceiverUserId(RandomTestUtil.nextLong());
+	public void testCountByReceiverUserId() throws Exception {
+		_persistence.countByReceiverUserId(RandomTestUtil.nextLong());
 
-			_persistence.countByReceiverUserId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByReceiverUserId(0L);
 	}
 
 	@Test
-	public void testCountByC_C() {
-		try {
-			_persistence.countByC_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByC_C(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
-	public void testCountByM_C_C() {
-		try {
-			_persistence.countByM_C_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByM_C_C() throws Exception {
+		_persistence.countByM_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-			_persistence.countByM_C_C(0L, 0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByM_C_C(0L, 0L, 0L);
 	}
 
 	@Test
-	public void testCountByC_C_T() {
-		try {
-			_persistence.countByC_C_T(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+	public void testCountByC_C_T() throws Exception {
+		_persistence.countByC_C_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
-			_persistence.countByC_C_T(0L, 0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_C_T(0L, 0L, 0);
 	}
 
 	@Test
-	public void testCountByG_U_C_C_T_R() {
-		try {
-			_persistence.countByG_U_C_C_T_R(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
-				RandomTestUtil.nextLong());
+	public void testCountByG_U_C_C_T_R() throws Exception {
+		_persistence.countByG_U_C_C_T_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByG_U_C_C_T_R(0L, 0L, 0L, 0L, 0, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_U_C_C_T_R(0L, 0L, 0L, 0L, 0, 0L);
 	}
 
 	@Test
-	public void testCountByG_U_CD_C_C_T_R() {
-		try {
-			_persistence.countByG_U_CD_C_C_T_R(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
+	public void testCountByG_U_CD_C_C_T_R() throws Exception {
+		_persistence.countByG_U_CD_C_C_T_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
 
-			_persistence.countByG_U_CD_C_C_T_R(0L, 0L, 0L, 0L, 0L, 0, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_U_CD_C_C_T_R(0L, 0L, 0L, 0L, 0L, 0, 0L);
 	}
 
 	@Test
@@ -352,13 +292,8 @@ public class SocialActivityPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<SocialActivity> getOrderByComparator() {

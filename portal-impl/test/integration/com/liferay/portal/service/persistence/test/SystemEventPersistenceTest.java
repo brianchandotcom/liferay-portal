@@ -179,55 +179,35 @@ public class SystemEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
-		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
-	public void testCountByG_S() {
-		try {
-			_persistence.countByG_S(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByG_S() throws Exception {
+		_persistence.countByG_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByG_S(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_S(0L, 0L);
 	}
 
 	@Test
-	public void testCountByG_C_C() {
-		try {
-			_persistence.countByG_C_C(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByG_C_C() throws Exception {
+		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-			_persistence.countByG_C_C(0L, 0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_C_C(0L, 0L, 0L);
 	}
 
 	@Test
-	public void testCountByG_C_C_T() {
-		try {
-			_persistence.countByG_C_C_T(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt());
+	public void testCountByG_C_C_T() throws Exception {
+		_persistence.countByG_C_C_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-			_persistence.countByG_C_C_T(0L, 0L, 0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_C_C_T(0L, 0L, 0L, 0);
 	}
 
 	@Test
@@ -255,13 +235,8 @@ public class SystemEventPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<SystemEvent> getOrderByComparator() {

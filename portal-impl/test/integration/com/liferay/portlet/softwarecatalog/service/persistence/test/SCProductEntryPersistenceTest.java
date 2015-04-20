@@ -189,54 +189,34 @@ public class SCProductEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
-		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
-	public void testCountByCompanyId() {
-		try {
-			_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-			_persistence.countByCompanyId(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
-	public void testCountByG_U() {
-		try {
-			_persistence.countByG_U(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
+	public void testCountByG_U() throws Exception {
+		_persistence.countByG_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-			_persistence.countByG_U(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByG_U(0L, 0L);
 	}
 
 	@Test
-	public void testCountByRG_RA() {
-		try {
-			_persistence.countByRG_RA(StringPool.BLANK, StringPool.BLANK);
+	public void testCountByRG_RA() throws Exception {
+		_persistence.countByRG_RA(StringPool.BLANK, StringPool.BLANK);
 
-			_persistence.countByRG_RA(StringPool.NULL, StringPool.NULL);
+		_persistence.countByRG_RA(StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByRG_RA((String)null, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByRG_RA((String)null, (String)null);
 	}
 
 	@Test
@@ -264,24 +244,14 @@ public class SCProductEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		try {
-			_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<SCProductEntry> getOrderByComparator() {

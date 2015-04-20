@@ -149,47 +149,32 @@ public class ResourceBlockPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_N() {
-		try {
-			_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByC_N() throws Exception {
+		_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByC_N(0L, StringPool.NULL);
+		_persistence.countByC_N(0L, StringPool.NULL);
 
-			_persistence.countByC_N(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_N(0L, (String)null);
 	}
 
 	@Test
-	public void testCountByC_G_N() {
-		try {
-			_persistence.countByC_G_N(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByC_G_N() throws Exception {
+		_persistence.countByC_G_N(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-			_persistence.countByC_G_N(0L, 0L, StringPool.NULL);
+		_persistence.countByC_G_N(0L, 0L, StringPool.NULL);
 
-			_persistence.countByC_G_N(0L, 0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_G_N(0L, 0L, (String)null);
 	}
 
 	@Test
-	public void testCountByC_G_N_P() {
-		try {
-			_persistence.countByC_G_N_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
+	public void testCountByC_G_N_P() throws Exception {
+		_persistence.countByC_G_N_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
 
-			_persistence.countByC_G_N_P(0L, 0L, StringPool.NULL, StringPool.NULL);
+		_persistence.countByC_G_N_P(0L, 0L, StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByC_G_N_P(0L, 0L, (String)null, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_G_N_P(0L, 0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -217,13 +202,8 @@ public class ResourceBlockPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<ResourceBlock> getOrderByComparator() {

@@ -163,58 +163,37 @@ public class LockPersistenceTest {
 	}
 
 	@Test
-	public void testCountByUuid() {
-		try {
-			_persistence.countByUuid(StringPool.BLANK);
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
 
-			_persistence.countByUuid(StringPool.NULL);
+		_persistence.countByUuid(StringPool.NULL);
 
-			_persistence.countByUuid((String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByUuid((String)null);
 	}
 
 	@Test
-	public void testCountByUuid_C() {
-		try {
-			_persistence.countByUuid_C(StringPool.BLANK,
-				RandomTestUtil.nextLong());
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
 
-			_persistence.countByUuid_C(StringPool.NULL, 0L);
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
 
-			_persistence.countByUuid_C((String)null, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
-	public void testCountByLtExpirationDate() {
-		try {
-			_persistence.countByLtExpirationDate(RandomTestUtil.nextDate());
+	public void testCountByLtExpirationDate() throws Exception {
+		_persistence.countByLtExpirationDate(RandomTestUtil.nextDate());
 
-			_persistence.countByLtExpirationDate(RandomTestUtil.nextDate());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByLtExpirationDate(RandomTestUtil.nextDate());
 	}
 
 	@Test
-	public void testCountByC_K() {
-		try {
-			_persistence.countByC_K(StringPool.BLANK, StringPool.BLANK);
+	public void testCountByC_K() throws Exception {
+		_persistence.countByC_K(StringPool.BLANK, StringPool.BLANK);
 
-			_persistence.countByC_K(StringPool.NULL, StringPool.NULL);
+		_persistence.countByC_K(StringPool.NULL, StringPool.NULL);
 
-			_persistence.countByC_K((String)null, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.countByC_K((String)null, (String)null);
 	}
 
 	@Test
@@ -241,13 +220,8 @@ public class LockPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		try {
-			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				getOrderByComparator());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
 	}
 
 	protected OrderByComparator<Lock> getOrderByComparator() {

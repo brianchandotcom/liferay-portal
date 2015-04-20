@@ -25,6 +25,7 @@ import com.liferay.polls.service.persistence.PollsChoiceUtil;
 import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -48,7 +49,8 @@ public class PollsVoteStagedModelDataHandlerTest
 
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+		new LiferayIntegrationTestRule(),
+		new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

@@ -17,11 +17,6 @@ package com.liferay.portal.tools.source.formatter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReader;
-import com.liferay.portal.tools.sourceformatter.XMLSourceProcessor;
-import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.io.File;
 
@@ -88,9 +83,7 @@ public class XMLAttributesSorter {
 
 			String content = FileUtils.readFileToString(file);
 
-			String newContent = sortAttributes(content);
-
-			newContent = XMLSourceProcessor.formatXML(newContent);
+			String newContent = XMLSourceProcessor.sortAttributes(content);
 
 			if (!content.equals(newContent)) {
 				FileUtils.writeStringToFile(file, newContent);
@@ -99,17 +92,5 @@ public class XMLAttributesSorter {
 			}
 		}
 	}
-
-	protected String sortAttributes(String content) throws Exception {
-		Document document = _saxReader.read(content);
-
-		Element rootElement = document.getRootElement();
-
-		rootElement.sortAttributes(true);
-
-		return document.formattedString();
-	}
-
-	private static final SAXReader _saxReader = new SAXReaderImpl();
 
 }

@@ -56,6 +56,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 /**
  * @author Brian Wing Shun Chan
@@ -741,6 +742,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected final void format(String fileName) throws Exception {
+		if (!_matchPath(fileName)) {
+			return;
+		}
+
 		File file = new File(_sourceFormatterBean.getBaseDir() + fileName);
 
 		fileName = StringUtil.replace(
@@ -1728,6 +1733,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	private boolean _matchPath(String fileName) {
+		boolean matches = false;
+
+		for (String pattern : getIncludes()) {
+			if (SelectorUtils.matchPath(_normalizePattern(pattern), fileName)) {
+				matches = true;
+			}
+		}
+
+		return matches;
+	}
+
+	private String _normalizePattern(String originalPattern) {
+		String pattern = originalPattern.replace('/', File.separatorChar);
+		pattern = pattern.replace('\\', File.separatorChar);
+
+		if (pattern.endsWith(File.separator)) {
+			pattern += SelectorUtils.DEEP_TREE_MATCH;
+		}
+
+		return pattern;
+	}
 
 	private Set<String> _annotationsExclusions;
 	private Map<String, String> _compatClassNamesMap;

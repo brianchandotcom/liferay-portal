@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.registry;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,6 +37,10 @@ public class DDMFormFieldTypeRegistryUtil {
 			DDMFormFieldTypeRegistryUtil.class);
 
 		return _ddmFormFieldTypeRegistry;
+	}
+
+	public static List<DDMFormFieldType> getDDMFormFieldTypes() {
+		return getDDMFormFieldTypeRegistry().getDDMFormFieldTypes();
 	}
 
 	public void setDDMFormFieldTypeRegistry(

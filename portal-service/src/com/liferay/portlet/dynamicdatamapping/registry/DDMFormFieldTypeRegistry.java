@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,5 +25,7 @@ public interface DDMFormFieldTypeRegistry {
 	public DDMFormFieldType getDDMFormFieldType(String name);
 
 	public Set<String> getDDMFormFieldTypeNames();
+
+	public List<DDMFormFieldType> getDDMFormFieldTypes();
 
 }

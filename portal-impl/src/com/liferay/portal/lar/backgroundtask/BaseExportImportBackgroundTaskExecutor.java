@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.staging.StagingUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 
 import java.io.Serializable;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
@@ -39,6 +41,13 @@ public abstract class BaseExportImportBackgroundTaskExecutor
 	public BaseExportImportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new DefaultExportImportBackgroundTaskStatusMessageTranslator());
+	}
+
+	@Override
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		BackgroundTask backgroundTask, Locale locale) {
+
+		return new StagingBackgroundTaskDisplay(backgroundTask, locale);
 	}
 
 	@Override

@@ -80,7 +80,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<header class="lfr-discussion-message-author">
 
 					<%
-					User messageUser = UserLocalServiceUtil.fetchUser(comment.getUserId());
+					User messageUser = comment.getUser();
 					%>
 
 					<aui:a href="<%= (messageUser != null) ? messageUser.getDisplayURL(themeDisplay) : null %>">
@@ -104,14 +104,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						<c:otherwise>
 
 							<%
-							MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(comment.getParentCommentId());
-							Comment parentComment = new MBCommentImpl(parentMessage, themeDisplay.getPathThemeImages());
+							Comment parentComment = comment.getParentComment();
 							%>
 
 							<liferay-util:buffer var="parentCommentUserBuffer">
 
 								<%
-								User parentMessageUser = UserLocalServiceUtil.fetchUser(parentComment.getUserId());
+								User parentMessageUser = parentComment.getUser();
 
 								boolean male = (parentMessageUser == null) ? true : parentMessageUser.isMale();
 								long portraitId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();

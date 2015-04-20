@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.comment;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.User;
+
 import java.util.Date;
 
 /**
@@ -29,9 +32,13 @@ public interface Comment {
 
 	public Date getModifiedDate();
 
+	public Comment getParentComment() throws PortalException;
+
 	public long getParentCommentId();
 
 	public String getTranslatedBody();
+
+	public User getUser() throws PortalException;
 
 	public long getUserId();
 

@@ -1656,6 +1656,12 @@
 					<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#ALERT_MESSAGE" value1="${webContentTitle} is expired." />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${image}" arg2="true" />
+				<then>
+					<execute function="AssertElementPresent" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT_IMAGE" />
+				</then>
+			</elseif>
 			<else>
 				<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 			</else>

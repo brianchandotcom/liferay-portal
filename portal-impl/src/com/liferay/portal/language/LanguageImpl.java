@@ -783,42 +783,29 @@ public class LanguageImpl implements Language, Serializable {
 			}
 		}
 
-		_duplicateLanguageCodes = new HashSet<>();
-		_languageCodeLocalesMap = new HashMap<>();
-		_languageIdLocalesMap = new HashMap<>();
-
-		for (int i = 0; i < languageIds.length; i++) {
-			String languageId = languageIds[i];
-
+		for (String languageId : languageIds) {
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 
-			String language = languageId;
+			String languageCode = languageId;
 
 			int pos = languageId.indexOf(CharPool.UNDERLINE);
 
 			if (pos > 0) {
-				language = languageId.substring(0, pos);
+				languageCode = languageId.substring(0, pos);
 			}
 
-			if (_languageCodeLocalesMap.containsKey(language)) {
-				_duplicateLanguageCodes.add(language);
+			if (_languageCodeLocalesMap.containsKey(languageCode)) {
+				_duplicateLanguageCodes.add(languageCode);
+			}
+			else {
+				_languageCodeLocalesMap.put(languageCode, locale);
 			}
 
-			if (!_languageCodeLocalesMap.containsKey(language)) {
-				_languageCodeLocalesMap.put(language, locale);
-			}
-
-			_languageIdLocalesMap.put(LocaleUtil.toLanguageId(locale), locale);
+			_languageIdLocalesMap.put(languageId, locale);
 		}
 
-		String[] localesBetaArray = PropsValues.LOCALES_BETA;
-
-		_localesBetaSet = new HashSet<>();
-
-		for (String languageId : localesBetaArray) {
-			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
-
-			_localesBetaSet.add(locale);
+		for (String languageId : PropsValues.LOCALES_BETA) {
+			_localesBetaSet.add(LocaleUtil.fromLanguageId(languageId, false));
 		}
 
 		_supportedLocalesSet = new HashSet<>(_languageIdLocalesMap.values());
@@ -829,7 +816,7 @@ public class LanguageImpl implements Language, Serializable {
 	private ObjectValuePair<Map<String, Locale>, Map<String, Locale>>
 		_createGroupLocales(long groupId) {
 
-		String[] languageIds = null;
+		String[] languageIds = PropsValues.LOCALES_ENABLED;
 
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -841,31 +828,27 @@ public class LanguageImpl implements Language, Serializable {
 				typeSettingsProperties.getProperty(PropsKeys.LOCALES));
 		}
 		catch (Exception e) {
-			languageIds = PropsValues.LOCALES_ENABLED;
 		}
 
 		Map<String, Locale> groupLanguageCodeLocalesMap = new HashMap<>();
 		Map<String, Locale> groupLanguageIdLocalesMap = new HashMap<>();
 
-		for (int i = 0; i < languageIds.length; i++) {
-			String languageId = languageIds[i];
-
+		for (String languageId : languageIds) {
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 
-			String language = languageId;
+			String languageCode = languageId;
 
 			int pos = languageId.indexOf(CharPool.UNDERLINE);
 
 			if (pos > 0) {
-				language = languageId.substring(0, pos);
+				languageCode = languageId.substring(0, pos);
 			}
 
-			if (!groupLanguageCodeLocalesMap.containsKey(language)) {
-				groupLanguageCodeLocalesMap.put(language, locale);
+			if (!groupLanguageCodeLocalesMap.containsKey(languageCode)) {
+				groupLanguageCodeLocalesMap.put(languageCode, locale);
 			}
 
-			groupLanguageIdLocalesMap.put(
-				LocaleUtil.toLanguageId(locale), locale);
+			groupLanguageIdLocalesMap.put(languageId, locale);
 		}
 
 		_groupLanguageCodeLocalesMapMap.put(
@@ -997,14 +980,14 @@ public class LanguageImpl implements Language, Serializable {
 			});
 	}
 
-	private final Set<String> _duplicateLanguageCodes;
+	private final Set<String> _duplicateLanguageCodes = new HashSet<>();
 	private final Map<Long, Map<String, Locale>>
 		_groupLanguageCodeLocalesMapMap = new ConcurrentHashMap<>();
 	private final Map<Long, Map<String, Locale>> _groupLanguageIdLocalesMap =
 		new ConcurrentHashMap<>();
-	private final Map<String, Locale> _languageCodeLocalesMap;
-	private final Map<String, Locale> _languageIdLocalesMap;
-	private final Set<Locale> _localesBetaSet;
+	private final Map<String, Locale> _languageCodeLocalesMap = new HashMap<>();
+	private final Map<String, Locale> _languageIdLocalesMap = new HashMap<>();
+	private final Set<Locale> _localesBetaSet = new HashSet<>();
 	private final Set<Locale> _supportedLocalesSet;
 
 }

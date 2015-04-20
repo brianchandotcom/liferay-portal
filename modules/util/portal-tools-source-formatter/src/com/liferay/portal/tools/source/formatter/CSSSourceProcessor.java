@@ -31,6 +31,11 @@ import java.util.regex.Pattern;
 public class CSSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
+	public String[] getIncludes() {
+		return _INCLUDES;
+	}
+
+	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -91,20 +96,17 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format() throws Exception {
+	protected List<String> doGetFileNames() {
 		String[] excludes = {
 			"**\\.ivy\\**", "**\\.sass-cache\\**", "**\\__MACOSX\\**",
 			"**\\aui_deprecated.css", "**\\expected\\**", "**\\js\\aui\\**",
 			"**\\js\\editor\\**", "**\\js\\misc\\**", "**\\VAADIN\\**"
 		};
-		String[] includes = {"**\\*.css"};
 
-		List<String> fileNames = getFileNames(excludes, includes);
-
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
+		return getFileNames(excludes, getIncludes());
 	}
+
+	private static final String[] _INCLUDES = {"**\\*.css"};
 
 	private Pattern _commentPattern = Pattern.compile("/\\* -+(.+)-+ \\*/");
 	private Pattern _hexColorPattern = Pattern.compile("#([0-9a-f]+)[\\( ;,]");

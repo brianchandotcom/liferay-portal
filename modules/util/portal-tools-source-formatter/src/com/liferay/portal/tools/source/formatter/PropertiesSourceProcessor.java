@@ -36,6 +36,15 @@ import java.util.Properties;
  */
 public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
+	public PropertiesSourceProcessor() {
+		try {
+			_portalPortalPropertiesContent = formatPortalPortalProperties();
+		}
+		catch (Exception e) {
+			_portalPortalPropertiesContent = StringPool.BLANK;
+		}
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -56,29 +65,23 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format() throws Exception {
-		_portalPortalPropertiesContent = formatPortalPortalProperties();
-
-		String[] includes = null;
-
+	public String[] getIncludes() {
 		if (portalSource) {
-			includes = new String[] {
+			return new String[] {
 				"**\\portal-ext.properties", "**\\portal-legacy-*.properties",
 				"**\\portlet.properties", "**\\source-formatter.properties"
 			};
 		}
-		else {
-			includes = new String[] {
-				"**\\portal.properties", "**\\portal-ext.properties",
-				"**\\portlet.properties", "**\\source-formatter.properties"
-			};
-		}
 
-		List<String> fileNames = getFileNames(new String[0], includes);
+		return new String[] {
+			"**\\portal.properties", "**\\portal-ext.properties",
+			"**\\portlet.properties", "**\\source-formatter.properties"
+		};
+	}
 
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
+	@Override
+	protected List<String> doGetFileNames() {
+		return getFileNames(new String[0], getIncludes());
 	}
 
 	protected String formatPortalPortalProperties() throws Exception {

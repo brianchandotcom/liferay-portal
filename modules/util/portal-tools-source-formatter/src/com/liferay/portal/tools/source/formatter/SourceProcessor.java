@@ -27,6 +27,8 @@ public interface SourceProcessor {
 
 	public SourceMismatchException getFirstSourceMismatchException();
 
+	public String[] getIncludes();
+
 	public List<String> getProcessedFiles();
 
 	public SourceFormatterBean getSourceFormatterBean();

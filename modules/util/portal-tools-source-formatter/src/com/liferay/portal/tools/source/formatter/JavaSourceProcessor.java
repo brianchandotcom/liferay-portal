@@ -41,6 +41,11 @@ import java.util.regex.Pattern;
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
+	@Override
+	public String[] getIncludes() {
+		return _INCLUDES;
+	}
+
 	protected static String checkAnnotationParameterProperties(
 		String content, String annotation) {
 
@@ -1170,7 +1175,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format() throws Exception {
+	protected List<String> doGetFileNames() {
 		Collection<String> fileNames = null;
 
 		if (portalSource) {
@@ -1216,14 +1221,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_upgradeServiceUtilExclusionFiles = getPropertyList(
 			"upgrade.service.util.excludes.files");
 
-		for (String fileName : fileNames) {
-			try {
-				format(fileName);
-			}
-			catch (Exception e) {
-				throw new Exception("Unable to parse " + fileName, e);
-			}
-		}
+		return new ArrayList<String>(fileNames);
 	}
 
 	protected String formatIfClause(String ifClause) throws IOException {
@@ -2905,16 +2903,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\portal\\service\\**", "**\\portal-client\\**",
 			"**\\portal-web\\test\\**\\*Test.java",
 			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
-			"**\\tools\\sourceformatter\\**"
+			"**\\tools\\source\\formatter\\**"
 		};
-		String[] includes = new String[] {"**\\*.java"};
+		String[] includes = getIncludes();
 
 		fileNames.addAll(getFileNames(excludes, includes));
 
 		excludes = new String[] {
 			"**\\portal-client\\**", "**\\tools\\ext_tmpl\\**", "**\\*_IW.java",
 			"**\\test\\**\\*PersistenceTest.java",
-			"**\\tools\\sourceformatter\\**"
+			"**\\tools\\source\\formatter\\**"
 		};
 		includes = new String[] {
 			"**\\com\\liferay\\portal\\service\\ServiceContext*.java",
@@ -3246,6 +3244,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return line;
 	}
 
+	public static final String[] _INCLUDES = new String[] {"**\\*.java"};
 	private static final int _MAX_LINE_LENGTH = 80;
 
 	private static Pattern _annotationPattern = Pattern.compile(

@@ -72,6 +72,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
+	@Override
+	public String[] getIncludes() {
+		return _INCLUDES;
+	}
+
 	protected void checkPoshiCharactersAfterDefinition(
 		String fileName, String content) {
 
@@ -471,27 +476,19 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format() throws Exception {
+	protected List<String> doGetFileNames() {
 		String[] excludes = new String[] {
-			"**\\.bnd\\**", "**\\.idea\\**", "**\\.ivy\\**",
+			"**\\.bnd\\**", "**\\.idea\\**", "**\\.ivy\\**", "bin\\**",
 			"portal-impl\\**\\*.action", "portal-impl\\**\\*.function",
-			"portal-impl\\**\\*.macro", "portal-impl\\**\\*.testcase"
-		};
-
-		String[] includes = new String[] {
-			"**\\*.action","**\\*.function","**\\*.macro","**\\*.testcase",
-			"**\\*.xml"
+			"portal-impl\\**\\*.macro", "portal-impl\\**\\*.testcase",
+			"test-classes\\unit\\**", "test-results\\**", "test\\unit\\**"
 		};
 
 		_numericalPortletNameElementExclusionFiles = getPropertyList(
 			"numerical.portlet.name.element.excludes.files");
 		_xmlExclusionFiles = getPropertyList("xml.excludes.files");
 
-		List<String> fileNames = getFileNames(excludes, includes);
-
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
+		return getFileNames(excludes, getIncludes());
 	}
 
 	protected String formatAntXML(String fileName, String content)
@@ -1079,6 +1076,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		return content;
 	}
+
+	private static final String[] _INCLUDES = new String[] {
+		"**\\*.action","**\\*.function","**\\*.macro","**\\*.testcase",
+		"**\\*.testxml", "**\\*.xml"
+	};
 
 	private static Pattern _commentPattern1 = Pattern.compile(
 		">\n\t+<!--[\n ]");

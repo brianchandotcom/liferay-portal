@@ -30,6 +30,11 @@ import java.util.regex.Pattern;
 public class JSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
+	public String[] getIncludes() {
+		return _INCLUDES;
+	}
+
+	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -83,20 +88,17 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format() throws Exception {
+	protected List<String> doGetFileNames() {
 		String[] excludes = {
 			"**\\js\\aui\\**", "**\\js\\editor\\**", "**\\js\\jquery\\**",
 			"**\\js\\lodash\\**", "**\\js\\misc\\**", "**\\r2.js",
 			"**\\tools\\**", "**\\VAADIN\\**"
 		};
-		String[] includes = {"**\\*.js"};
 
-		List<String> fileNames = getFileNames(excludes, includes);
-
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
+		return getFileNames(excludes, getIncludes());
 	}
+
+	private static final String[] _INCLUDES = {"**\\*.js"};
 
 	private final Pattern _multipleVarsOnSingleLinePattern = Pattern.compile(
 		"\t+var \\w+\\, ");

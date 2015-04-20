@@ -24,6 +24,11 @@ import java.util.List;
 public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
+	public String[] getIncludes() {
+		return _INCLUDES;
+	}
+
+	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -32,18 +37,15 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format() throws Exception {
+	protected List<String> doGetFileNames() {
 		String[] excludes = new String[] {
 			"**\\journal\\dependencies\\template.ftl",
 			"**\\service\\builder\\dependencies\\props.ftl"
 		};
-		String[] includes = new String[] {"**\\*.ftl"};
 
-		List<String> fileNames = getFileNames(excludes, includes);
-
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
+		return getFileNames(excludes, getIncludes());
 	}
+
+	private static final String[] _INCLUDES = new String[] {"**\\*.ftl"};
 
 }

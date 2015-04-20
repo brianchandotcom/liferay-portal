@@ -22,7 +22,9 @@ import junit.framework.TestCase;
 
 import org.dom4j.Element;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -31,8 +33,16 @@ import org.junit.Test;
  */
 public class PoshiRunnerContextTest extends TestCase {
 
-	public PoshiRunnerContextTest() throws Exception {
+	@Before
+	@Override
+	public void setUp() throws Exception {
 		PoshiRunnerContext.readFiles();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		PoshiRunnerContext.clearFiles();
 	}
 
 	@Test

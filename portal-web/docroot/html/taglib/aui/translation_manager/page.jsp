@@ -34,12 +34,12 @@
 		<select class="hide lfr-translation-manager-default-locale">
 
 			<%
-			Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+			Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-			for (int i = 0; i < locales.length; i++) {
+			for (Locale curLocale : locales) {
 			%>
 
-				<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= defaultLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
+				<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= defaultLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
 			<%
 			}
@@ -60,15 +60,15 @@
 			>
 
 				<%
-				for (int i = 0; i < locales.length; i++) {
+				for (Locale curLocale : locales) {
 				%>
 
 					<liferay-ui:icon
 						cssClass="lfr-translation-manager-translation-item"
-						id="<%= LocaleUtil.toLanguageId(locales[i]) %>"
-						image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
-						lang="<%= LocaleUtil.toLanguageId(locales[i]) %>"
-						message="<%= locales[i].getDisplayName(locale) %>"
+						id="<%= LocaleUtil.toLanguageId(curLocale) %>"
+						image='<%= "../language/" + LocaleUtil.toLanguageId(curLocale) %>'
+						lang="<%= LocaleUtil.toLanguageId(curLocale) %>"
+						message="<%= curLocale.getDisplayName(locale) %>"
 						url="javascript:;"
 					/>
 
@@ -125,8 +125,8 @@
 
 	JSONObject localesMapJSONObject = JSONFactoryUtil.createJSONObject();
 
-	for (int i = 0; i < locales.length; i++) {
-		localesMapJSONObject.put(LocaleUtil.toLanguageId(locales[i]), locales[i].getDisplayName(locale));
+	for (Locale curLocale : locales) {
+		localesMapJSONObject.put(LocaleUtil.toLanguageId(curLocale), curLocale.getDisplayName(locale));
 	}
 	%>
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -501,7 +502,7 @@ public class UpgradeDynamicMappingTest extends PowerMockito {
 		whenLanguageGetLanguageId(LocaleUtil.BRAZIL, "pt_BR");
 
 		whenLanguageGetAvailableLocalesThen(
-			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US});
+			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}));
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
@@ -608,7 +609,7 @@ public class UpgradeDynamicMappingTest extends PowerMockito {
 	}
 
 	protected void whenLanguageGetAvailableLocalesThen(
-		Locale[] availableLocales) {
+		Set<Locale> availableLocales) {
 
 		when(
 			_language.getAvailableLocales()

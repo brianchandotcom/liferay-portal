@@ -4586,7 +4586,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				le.setSourceAvailableLocales(
 					LanguageUtil.getAvailableLocales());
 				le.setTargetAvailableLocales(
-					LocaleUtil.fromLanguageIds(languageIdsArray));
+					Arrays.asList(
+						LocaleUtil.fromLanguageIds(languageIdsArray)));
 
 				throw le;
 			}
@@ -4598,7 +4599,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			le.setSourceAvailableLocales(LanguageUtil.getAvailableLocales());
 			le.setTargetAvailableLocales(
-				LocaleUtil.fromLanguageIds(languageIdsArray));
+				Arrays.asList(LocaleUtil.fromLanguageIds(languageIdsArray)));
 
 			throw le;
 		}

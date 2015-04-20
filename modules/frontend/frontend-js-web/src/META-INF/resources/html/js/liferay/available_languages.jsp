@@ -27,8 +27,6 @@ response.addHeader(HttpHeaders.CONTENT_TYPE, ContentTypes.TEXT_JAVASCRIPT);
 String languageId = LanguageUtil.getLanguageId(request);
 
 Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-Locale[] locales = LanguageUtil.getAvailableLocales();
 %>
 
 AUI.add(
@@ -39,7 +37,7 @@ AUI.add(
 		var direction = {};
 
 		<%
-		for (Locale curLocale : locales) {
+		for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
 			String selLanguageId = LocaleUtil.toLanguageId(curLocale);
 		%>
 

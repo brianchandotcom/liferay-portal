@@ -59,6 +59,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -1728,7 +1729,8 @@ public class DDMStructureLocalServiceImpl
 				"The locale " + contentDefaultLocale +
 					" is not available in company " + companyId);
 
-			le.setSourceAvailableLocales(new Locale[] {contentDefaultLocale});
+			le.setSourceAvailableLocales(
+				Collections.singleton(contentDefaultLocale));
 			le.setTargetAvailableLocales(LanguageUtil.getAvailableLocales());
 
 			throw le;

@@ -30,6 +30,8 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Locale;
 
 import org.junit.AfterClass;
@@ -83,7 +85,7 @@ public class PortalImplAlternateURLTest {
 
 		testAlternateURL(
 			"localhost",
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			LocaleUtil.SPAIN, LocaleUtil.US, "/en");
 	}
 
@@ -93,7 +95,7 @@ public class PortalImplAlternateURLTest {
 
 		testAlternateURL(
 			"localhost",
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
 
@@ -118,7 +120,7 @@ public class PortalImplAlternateURLTest {
 
 		testAlternateURL(
 			"liferay.com",
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			LocaleUtil.SPAIN, LocaleUtil.US, "/en");
 	}
 
@@ -128,7 +130,7 @@ public class PortalImplAlternateURLTest {
 
 		testAlternateURL(
 			"liferay.com",
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
 
@@ -165,7 +167,7 @@ public class PortalImplAlternateURLTest {
 	}
 
 	protected void testAlternateURL(
-			String portalDomain, Locale[] groupAvailableLocales,
+			String portalDomain, Collection<Locale> groupAvailableLocales,
 			Locale groupDefaultLocale, Locale alternateLocale,
 			String expectedI18nPath)
 		throws Exception {

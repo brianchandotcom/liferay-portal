@@ -150,6 +150,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7439,9 +7440,8 @@ public class JournalArticleLocalServiceImpl
 				"The locale " + articleDefaultLocale +
 					" is not available in site with groupId" + groupId);
 
-			Locale[] sourceAvailableLocales = {articleDefaultLocale};
-
-			le.setSourceAvailableLocales(sourceAvailableLocales);
+			le.setSourceAvailableLocales(
+				Collections.singleton(articleDefaultLocale));
 			le.setTargetAvailableLocales(
 				LanguageUtil.getAvailableLocales(groupId));
 

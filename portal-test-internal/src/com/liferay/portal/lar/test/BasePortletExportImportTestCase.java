@@ -54,6 +54,8 @@ import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -187,15 +189,15 @@ public abstract class BasePortletExportImportTestCase
 	@Test
 	public void testExportImportInvalidAvailableLocales() throws Exception {
 		testExportImportAvailableLocales(
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
-			new Locale[] {LocaleUtil.US, LocaleUtil.GERMANY}, true);
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN),
+			Arrays.asList(LocaleUtil.US, LocaleUtil.GERMANY), true);
 	}
 
 	@Test
 	public void testExportImportValidAvailableLocales() throws Exception {
 		testExportImportAvailableLocales(
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN),
+			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			false);
 	}
 
@@ -363,8 +365,8 @@ public abstract class BasePortletExportImportTestCase
 	}
 
 	protected void testExportImportAvailableLocales(
-			Locale[] sourceAvailableLocales, Locale[] targetAvailableLocales,
-			boolean expectFailure)
+			Collection<Locale> sourceAvailableLocales,
+			Collection<Locale> targetAvailableLocales, boolean expectFailure)
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

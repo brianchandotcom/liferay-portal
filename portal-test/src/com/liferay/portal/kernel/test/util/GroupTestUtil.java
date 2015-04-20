@@ -34,6 +34,7 @@ import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -187,7 +188,8 @@ public class GroupTestUtil {
 	}
 
 	public static Group updateDisplaySettings(
-			long groupId, Locale[] availableLocales, Locale defaultLocale)
+			long groupId, Collection<Locale> availableLocales,
+			Locale defaultLocale)
 		throws Exception {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();

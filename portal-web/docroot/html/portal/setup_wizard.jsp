@@ -76,9 +76,7 @@
 									<%
 									String languageId = GetterUtil.getString((String)session.getAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE), SetupWizardUtil.getDefaultLanguageId());
 
-									Locale[] locales = LanguageUtil.getAvailableLocales();
-
-									for (Locale curLocale : locales) {
+									for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
 									%>
 
 										<aui:option label="<%= curLocale.getDisplayName(curLocale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />

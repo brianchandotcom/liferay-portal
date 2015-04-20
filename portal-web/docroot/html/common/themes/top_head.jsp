@@ -35,9 +35,9 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 	<link href="<%= HtmlUtil.escapeAttribute(canonicalURL) %>" rel="canonical" />
 
 	<%
-	Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+	Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-	if (availableLocales.length > 1) {
+	if (availableLocales.size() > 1) {
 		for (Locale availableLocale : availableLocales) {
 	%>
 

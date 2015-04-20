@@ -105,9 +105,9 @@ public interface Language {
 	public String get(
 		ResourceBundle resourceBundle, String key, String defaultValue);
 
-	public Locale[] getAvailableLocales();
+	public Set<Locale> getAvailableLocales();
 
-	public Locale[] getAvailableLocales(long groupId);
+	public Set<Locale> getAvailableLocales(long groupId);
 
 	public String getBCP47LanguageId(HttpServletRequest request);
 

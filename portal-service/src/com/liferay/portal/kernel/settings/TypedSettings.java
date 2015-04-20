@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -32,7 +33,9 @@ public class TypedSettings {
 		this(settings, LanguageUtil.getAvailableLocales());
 	}
 
-	public TypedSettings(Settings settings, Locale... availableLocales) {
+	public TypedSettings(
+		Settings settings, Collection<Locale> availableLocales) {
+
 		_settings = settings;
 		_availableLocales = availableLocales;
 	}
@@ -154,7 +157,7 @@ public class TypedSettings {
 		modifiableSettings.setValues(key, values);
 	}
 
-	private final Locale[] _availableLocales;
+	private final Collection<Locale> _availableLocales;
 	private final Settings _settings;
 
 }

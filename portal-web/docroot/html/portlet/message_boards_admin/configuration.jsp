@@ -18,6 +18,8 @@
 
 <%
 mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSiteGroupId(), request.getParameterMap());
+
+Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -161,13 +163,13 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					<aui:select label="localized-language" name="prioritiesLanguageId" onChange='<%= renderResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
 
 						<%
-						for (int i = 0; i < locales.length; i++) {
-							if (locales[i].equals(defaultLocale)) {
+						for (Locale curLocale : locales) {
+							if (curLocale.equals(defaultLocale)) {
 								continue;
 							}
 						%>
 
-							<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
+							<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
 						<%
 						}
@@ -276,12 +278,12 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					</table>
 
 					<%
-					for (int i = 0; i < locales.length; i++) {
-						if (locales[i].equals(defaultLocale)) {
+					for (Locale curLocale : locales) {
+						if (curLocale.equals(defaultLocale)) {
 							continue;
 						}
 
-						String[] tempPriorities = mbGroupServiceSettings.getPriorities(LocaleUtil.toLanguageId(locales[i]));
+						String[] tempPriorities = mbGroupServiceSettings.getPriorities(LocaleUtil.toLanguageId(curLocale));
 
 						for (int j = 0; j < 10; j++) {
 							String name = StringPool.BLANK;
@@ -305,9 +307,9 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 							}
 					%>
 
-							<aui:input name='<%= "priorityName" + j + "_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value="<%= name %>" />
-							<aui:input name='<%= "priorityImage" + j + "_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value="<%= image %>" />
-							<aui:input name='<%= "priorityValue" + j + "_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value="<%= value %>" />
+							<aui:input name='<%= "priorityName" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= name %>" />
+							<aui:input name='<%= "priorityImage" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= image %>" />
+							<aui:input name='<%= "priorityValue" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= value %>" />
 
 					<%
 						}
@@ -401,13 +403,13 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 						<aui:select label="localized-language" name="ranksLanguageId" onChange='<%= renderResponse.getNamespace() + "updateRanksLanguage();" %>' showEmptyOption="<%= true %>">
 
 							<%
-							for (int i = 0; i < locales.length; i++) {
-								if (locales[i].equals(defaultLocale)) {
+							for (Locale curLocale : locales) {
+								if (curLocale.equals(defaultLocale)) {
 									continue;
 								}
 							%>
 
-								<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
+								<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
 							<%
 							}
@@ -423,13 +425,13 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					<td>
 
 						<%
-						for (int i = 0; i < locales.length; i++) {
-							if (locales[i].equals(defaultLocale)) {
+						for (Locale curLocale : locales) {
+							if (curLocale.equals(defaultLocale)) {
 								continue;
 							}
 						%>
 
-							<aui:input name='<%= "ranks_" + LocaleUtil.toLanguageId(locales[i]) %>' type="hidden" value="<%= StringUtil.merge(mbGroupServiceSettings.getRanks(LocaleUtil.toLanguageId(locales[i])), StringPool.NEW_LINE) %>" />
+							<aui:input name='<%= "ranks_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= StringUtil.merge(mbGroupServiceSettings.getRanks(LocaleUtil.toLanguageId(curLocale)), StringPool.NEW_LINE) %>" />
 
 						<%
 						}

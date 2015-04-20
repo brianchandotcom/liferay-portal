@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -467,15 +468,7 @@ public class LanguageImpl implements Language, Serializable {
 		catch (Exception e) {
 		}
 
-		Set<Locale> localesSet = _groupLocalesSetsMap.get(groupId);
-
-		if (localesSet != null) {
-			return localesSet;
-		}
-
-		_initGroupLocales(groupId);
-
-		return _groupLocalesSetsMap.get(groupId);
+		return _getGroupLocalesSet(groupId);
 	}
 
 	@Override
@@ -534,7 +527,10 @@ public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public Locale getLocale(long groupId, String languageCode) {
-		return _getInstance()._getLocale(groupId, languageCode);
+		Map<String, Locale> groupLanguageCodeLocalesMap =
+			_getGroupLanguageCodeLocalesMap(groupId);
+
+		return groupLanguageCodeLocalesMap.get(languageCode);
 	}
 
 	@Override
@@ -657,15 +653,7 @@ public class LanguageImpl implements Language, Serializable {
 		catch (Exception e) {
 		}
 
-		Set<Locale> localesSet = _groupLocalesSetsMap.get(groupId);
-
-		if (localesSet != null) {
-			return localesSet.contains(locale);
-		}
-
-		_initGroupLocales(groupId);
-
-		localesSet = _groupLocalesSetsMap.get(groupId);
+		Set<Locale> localesSet = _getGroupLocalesSet(groupId);
 
 		return localesSet.contains(locale);
 	}
@@ -852,84 +840,9 @@ public class LanguageImpl implements Language, Serializable {
 		_supportedLocalesSet.removeAll(_localesBetaSet);
 	}
 
-	private String _escapePattern(String pattern) {
-		return StringUtil.replace(
-			pattern, StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
-	}
+	private ObjectValuePair<Map<String, Locale>, Set<Locale>>
+		_createGroupLocales(long groupId) {
 
-	private String _get(ResourceBundle resourceBundle, String key) {
-		if (PropsValues.TRANSLATIONS_DISABLED) {
-			return key;
-		}
-
-		if ((resourceBundle == null) || (key == null)) {
-			return null;
-		}
-
-		String value = ResourceBundleUtil.getString(resourceBundle, key);
-
-		if (value != null) {
-			return LanguageResources.fixValue(value);
-		}
-
-		if ((key.length() > 0) &&
-			(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
-
-			int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
-
-			if (pos != -1) {
-				key = key.substring(0, pos);
-
-				return _get(resourceBundle, key);
-			}
-		}
-
-		return null;
-	}
-
-	private String _getCharset() {
-		return StringPool.UTF8;
-	}
-
-	private Locale _getLocale(HttpServletRequest request) {
-		Locale locale = null;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay != null) {
-			locale = themeDisplay.getLocale();
-		}
-		else {
-			locale = request.getLocale();
-
-			if (!isAvailableLocale(locale)) {
-				locale = LocaleUtil.getDefault();
-			}
-		}
-
-		return locale;
-	}
-
-	private Locale _getLocale(long groupId, String languageCode) {
-		Map<String, Locale> groupLanguageCodeLocalesMap =
-			_groupLanguageCodeLocalesMapMap.get(groupId);
-
-		if (groupLanguageCodeLocalesMap == null) {
-			_initGroupLocales(groupId);
-
-			groupLanguageCodeLocalesMap = _groupLanguageCodeLocalesMapMap.get(
-				groupId);
-		}
-
-		return groupLanguageCodeLocalesMap.get(languageCode);
-	}
-
-	private Locale _getLocale(String languageCode) {
-		return _languageCodeLocalesMap.get(languageCode);
-	}
-
-	private void _initGroupLocales(long groupId) {
 		String[] languageIds = null;
 
 		try {
@@ -971,6 +884,99 @@ public class LanguageImpl implements Language, Serializable {
 		_groupLanguageCodeLocalesMapMap.put(
 			groupId, groupLanguageCodeLocalesMap);
 		_groupLocalesSetsMap.put(groupId, groupLocalesSet);
+
+		return new ObjectValuePair<>(
+			groupLanguageCodeLocalesMap, groupLocalesSet);
+	}
+
+	private String _escapePattern(String pattern) {
+		return StringUtil.replace(
+			pattern, StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
+	}
+
+	private String _get(ResourceBundle resourceBundle, String key) {
+		if (PropsValues.TRANSLATIONS_DISABLED) {
+			return key;
+		}
+
+		if ((resourceBundle == null) || (key == null)) {
+			return null;
+		}
+
+		String value = ResourceBundleUtil.getString(resourceBundle, key);
+
+		if (value != null) {
+			return LanguageResources.fixValue(value);
+		}
+
+		if ((key.length() > 0) &&
+			(key.charAt(key.length() - 1) == CharPool.CLOSE_BRACKET)) {
+
+			int pos = key.lastIndexOf(CharPool.OPEN_BRACKET);
+
+			if (pos != -1) {
+				key = key.substring(0, pos);
+
+				return _get(resourceBundle, key);
+			}
+		}
+
+		return null;
+	}
+
+	private String _getCharset() {
+		return StringPool.UTF8;
+	}
+
+	private Map<String, Locale> _getGroupLanguageCodeLocalesMap(long groupId) {
+		Map<String, Locale> groupLanguageCodeLocalesMap =
+			_groupLanguageCodeLocalesMapMap.get(groupId);
+
+		if (groupLanguageCodeLocalesMap == null) {
+			ObjectValuePair<Map<String, Locale>, Set<Locale>> objectValuePair =
+				_createGroupLocales(groupId);
+
+			groupLanguageCodeLocalesMap = objectValuePair.getKey();
+		}
+
+		return groupLanguageCodeLocalesMap;
+	}
+
+	private Set<Locale> _getGroupLocalesSet(long groupId) {
+		Set<Locale> groupLocalesSet = _groupLocalesSetsMap.get(groupId);
+
+		if (groupLocalesSet == null) {
+			ObjectValuePair<Map<String, Locale>, Set<Locale>> objectValuePair =
+				_createGroupLocales(groupId);
+
+			groupLocalesSet = objectValuePair.getValue();
+		}
+
+		return groupLocalesSet;
+	}
+
+	private Locale _getLocale(HttpServletRequest request) {
+		Locale locale = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			locale = themeDisplay.getLocale();
+		}
+		else {
+			locale = request.getLocale();
+
+			if (!isAvailableLocale(locale)) {
+				locale = LocaleUtil.getDefault();
+			}
+		}
+
+		return locale;
+	}
+
+	private Locale _getLocale(String languageCode) {
+		return _languageCodeLocalesMap.get(languageCode);
 	}
 
 	private void _resetAvailableGroupLocales(long groupId) {

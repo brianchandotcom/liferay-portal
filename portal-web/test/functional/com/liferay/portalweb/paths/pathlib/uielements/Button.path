@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_TEAM</td>
+	<td>//a[contains(.,'Add Team')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BROWSE</td>
 	<td>//input[@id='_195_fileName']</td>
 	<td></td>

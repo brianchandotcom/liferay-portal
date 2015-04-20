@@ -494,11 +494,6 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
-	public String getCharset(Locale locale) {
-		return _getInstance()._getCharset();
-	}
-
-	@Override
 	public String getLanguageId(HttpServletRequest request) {
 		String languageId = ParamUtil.getString(request, "languageId");
 
@@ -914,10 +909,6 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		return null;
-	}
-
-	private String _getCharset() {
-		return StringPool.UTF8;
 	}
 
 	private Map<String, Locale> _getGroupLanguageCodeLocalesMap(long groupId) {

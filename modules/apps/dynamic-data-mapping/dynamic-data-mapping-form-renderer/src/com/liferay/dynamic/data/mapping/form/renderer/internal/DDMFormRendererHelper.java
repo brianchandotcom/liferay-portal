@@ -164,11 +164,23 @@ public class DDMFormRendererHelper {
 			DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(
 				ddmFormField.getType());
 
-		DDMFormFieldRenderer ddmFormFieldRenderer =
-			ddmFormFieldType.getDDMFormFieldRenderer();
+		if (ddmFormFieldType == null) {
+			throw new DDMFormRenderingException(
+				"No DDMFormFieldType registered for " + ddmFormField.getType());
+		}
 
-		return ddmFormFieldRenderer.render(
-			ddmFormField, ddmFormFieldRenderingContext);
+		try {
+			DDMFormFieldRenderer ddmFormFieldRenderer =
+				ddmFormFieldType.getDDMFormFieldRenderer();
+
+			String ddmFormFieldHTML = ddmFormFieldRenderer.render(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+			return wrapDDMFormFieldHTML(ddmFormFieldHTML);
+		}
+		catch (PortalException pe) {
+			throw new DDMFormRenderingException(pe);
+		}
 	}
 
 	protected String renderDDMFormField(
@@ -314,6 +326,16 @@ public class DDMFormRendererHelper {
 
 		ddmFormFieldRenderingContext.setValue(
 			value.getString(ddmFormFieldRenderingContext.getLocale()));
+	}
+
+	protected String wrapDDMFormFieldHTML(String ddmFormFieldHTML) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<div class=\"lfr-ddm-form-field-container\">");
+		sb.append(ddmFormFieldHTML);
+		sb.append("</div>");
+
+		return sb.toString();
 	}
 
 	private final DDMForm _ddmForm;

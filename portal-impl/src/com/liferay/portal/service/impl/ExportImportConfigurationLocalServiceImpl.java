@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -273,16 +274,17 @@ public class ExportImportConfigurationLocalServiceImpl
 
 		dynamicQuery.addOrder(order);
 
+		dynamicQuery.setLimit(
+			QueryUtil.ALL_POS, draftExportImportConfigurationCleanupCount);
+
 		List<ExportImportConfiguration> exportImportConfigurations =
 			dynamicQuery(dynamicQuery);
 
-		int cleanupEndIndex =
-			exportImportConfigurations.size() -
-				draftExportImportConfigurationCleanupCount;
+		for (ExportImportConfiguration exportImportConfiguration :
+				exportImportConfigurations) {
 
-		for (int i = 0; i < cleanupEndIndex; i++) {
-			exportImportConfigurationPersistence.remove(
-				exportImportConfigurations.get(i));
+			exportImportConfigurationLocalService.
+				deleteExportImportConfiguration(exportImportConfiguration);
 		}
 	}
 

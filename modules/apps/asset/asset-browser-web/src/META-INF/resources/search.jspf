@@ -36,7 +36,7 @@ AssetBrowserDisplayTerms displayTerms = (AssetBrowserDisplayTerms)searchContaine
 
 			<%
 			for (long curGroupId : selectedGroupIds) {
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+				Group group = GroupLocalServiceUtil.getGroup(curGroupId);
 			%>
 
 				<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" selected="<%= displayTerms.getGroupId() == curGroupId %>" value="<%= curGroupId %>" />

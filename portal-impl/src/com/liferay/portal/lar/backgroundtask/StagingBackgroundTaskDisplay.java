@@ -16,22 +16,24 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.BackgroundTask;
-
-import java.util.Locale;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 
 import java.io.Serializable;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -46,7 +48,7 @@ public class StagingBackgroundTaskDisplay implements BackgroundTaskDisplay {
 			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
 				backgroundTask.getBackgroundTaskId());
 
-		_details = null;
+		_details = createDetailsJSON(locale, backgroundTask);
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -230,6 +232,83 @@ public class StagingBackgroundTaskDisplay implements BackgroundTaskDisplay {
 		}
 
 		return message;
+	}
+
+	private JSONObject createDetailsJSON(
+		Locale locale, BackgroundTask backgroundTask) {
+
+		JSONObject backgroundTaskJSON;
+
+		try {
+			backgroundTaskJSON = JSONFactoryUtil.createJSONObject(
+				backgroundTask.getStatusMessage());
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		boolean exported = MapUtil.getBoolean(
+			backgroundTask.getTaskContextMap(), "exported");
+		boolean validated = MapUtil.getBoolean(
+			backgroundTask.getTaskContextMap(), "validated");
+
+		String detailHeader = LanguageUtil.get(
+			locale,
+			"an-unexpected-error-occurred-with-the-publication-process." +
+				"-please-check-your-portal-and-publishing-configuration");
+
+		if (exported && !validated) {
+			detailHeader = LanguageUtil.get(
+				locale,
+				"an-unexpected-error-occurred-with-the-publication-" +
+					"process.-please-check-your-portal-and-publishing-" +
+					"configuration");
+		}
+
+		JSONArray detailItems = JSONFactoryUtil.createJSONArray();
+
+		JSONArray errorMessagesJSONArray = backgroundTaskJSON.getJSONArray(
+			"messageListItems");
+
+		if (errorMessagesJSONArray != null) {
+			JSONObject errorDetails = JSONFactoryUtil.createJSONObject();
+
+			errorDetails.put(
+				"message", backgroundTaskJSON.getString("message"));
+			errorDetails.put("itemsList", errorMessagesJSONArray);
+
+			detailItems.put(errorDetails);
+		}
+
+		JSONArray warningMessagesJSONArray = backgroundTaskJSON.getJSONArray(
+			"warningMessages");
+
+		if (warningMessagesJSONArray != null) {
+			String message = "the-following-data-has-not-been-published";
+
+			if ((errorMessagesJSONArray != null) &&
+				(errorMessagesJSONArray.length() > 0)) {
+
+				message =
+					"consider-that-the-following-data-would-not-have-been-" +
+						"published-either";
+			}
+
+			JSONObject warningDetails = JSONFactoryUtil.createJSONObject();
+
+			warningDetails.put("message", message);
+			warningDetails.put("itemsList", warningMessagesJSONArray);
+
+			detailItems.put(warningDetails);
+		}
+
+		JSONObject detailsJSON = JSONFactoryUtil.createJSONObject();
+
+		detailsJSON.put("detailHeader", detailHeader);
+		detailsJSON.put("detailItems", detailItems);
+		detailsJSON.put("status", backgroundTaskJSON.getInt("status"));
+
+		return detailsJSON;
 	}
 
 	private final long _allProgressBarCountersTotal;

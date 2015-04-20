@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.User;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -36,6 +37,8 @@ public interface Comment {
 
 	public long getParentCommentId();
 
+	public List<Comment> getThreadComments();
+
 	public String getTranslatedBody();
 
 	public User getUser() throws PortalException;
@@ -43,5 +46,7 @@ public interface Comment {
 	public long getUserId();
 
 	public String getUserName();
+
+	public boolean isRoot();
 
 }

@@ -22,20 +22,16 @@ DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(re
 
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute("liferay-ui:discussion:messageDisplay");
 
-MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
-MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
+Comment comment = (Comment)request.getAttribute("liferay-ui:discussion:currentComment");
 
-Comment comment = new MBCommentImpl(message, themeDisplay.getPathThemeImages());
-
-CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, message);
+CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, comment);
 
 int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
-MBMessage rootMessage = (MBMessage)request.getAttribute("liferay-ui:discussion:rootMessage");
 List<RatingsEntry> ratingsEntries = (List<RatingsEntry>)request.getAttribute("liferay-ui:discussion:ratingsEntries");
 List<RatingsStats> ratingsStatsList = (List<RatingsStats>)request.getAttribute("liferay-ui:discussion:ratingsStatsList");
 
-Comment rootComment = new MBCommentImpl(rootMessage, themeDisplay.getPathThemeImages());
+Comment rootComment = (Comment)request.getAttribute("liferay-ui:discussion:rootComment");
 
 index++;
 
@@ -296,14 +292,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		</div>
 
 		<%
-		List messages = treeWalker.getMessages();
-		int[] range = treeWalker.getChildrenRange(message);
-
-		for (int j = range[0]; j < range[1]; j++) {
-			MBMessage curMessage = (MBMessage)messages.get(j);
-
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
+		for (Comment curComment : comment.getThreadComments()) {
+			request.setAttribute("liferay-ui:discussion:currentComment", curComment);
 		%>
 
 			<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />

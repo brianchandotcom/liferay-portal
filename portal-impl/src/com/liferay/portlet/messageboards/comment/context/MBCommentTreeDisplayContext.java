@@ -22,6 +22,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.messageboards.comment.MBCommentImpl;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -38,11 +39,11 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	public MBCommentTreeDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionRequestHelper discussionRequestHelper, MBMessage message) {
+		DiscussionRequestHelper discussionRequestHelper, Comment comment) {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
-		_message = message;
+		_message = ((MBCommentImpl)comment).getMessage();
 	}
 
 	@Override

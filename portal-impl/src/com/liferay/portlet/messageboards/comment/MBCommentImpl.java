@@ -20,18 +20,24 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
  */
 public class MBCommentImpl implements Comment, WorkflowableComment {
 
-	public MBCommentImpl(MBMessage message, String pathThemeImages) {
+	public MBCommentImpl(
+		MBMessage message, MBTreeWalker treeWalker, String pathThemeImages) {
+
 		_message = message;
+		_treeWalker = treeWalker;
 		_pathThemeImages = pathThemeImages;
 	}
 
@@ -60,6 +66,10 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 		return _message.getGroupId();
 	}
 
+	public MBMessage getMessage() {
+		return _message;
+	}
+
 	@Override
 	public Class<?> getModelClass() {
 		return MBMessage.class;
@@ -77,7 +87,7 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
 			parentMessageId);
 
-		return new MBCommentImpl(parentMessage, _pathThemeImages);
+		return new MBCommentImpl(parentMessage, _treeWalker, _pathThemeImages);
 	}
 
 	@Override
@@ -93,6 +103,24 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	@Override
 	public int getStatus() {
 		return _message.getStatus();
+	}
+
+	@Override
+	public List<Comment> getThreadComments() {
+		List<MBMessage> messages = _treeWalker.getMessages();
+
+		int[] range = _treeWalker.getChildrenRange(_message);
+
+		List<Comment> comments = new ArrayList<>();
+
+		for (int i = range[0]; i < range[1]; i++) {
+			MBMessage message = messages.get(i);
+
+			comments.add(
+				new MBCommentImpl(message, _treeWalker, _pathThemeImages));
+		}
+
+		return comments;
 	}
 
 	@Override
@@ -119,7 +147,13 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 		return _message.getUserName();
 	}
 
+	@Override
+	public boolean isRoot() {
+		return _message.isRoot();
+	}
+
 	private final MBMessage _message;
 	private final String _pathThemeImages;
+	private final MBTreeWalker _treeWalker;
 
 }

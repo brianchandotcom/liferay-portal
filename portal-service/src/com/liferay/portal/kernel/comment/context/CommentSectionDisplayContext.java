@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.comment.context;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -21,7 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface CommentSectionDisplayContext {
 
-	public long getRootMessageId() throws PortalException;
+	public Comment getRootComment() throws PortalException;
 
 	public long getThreadId() throws PortalException;
 

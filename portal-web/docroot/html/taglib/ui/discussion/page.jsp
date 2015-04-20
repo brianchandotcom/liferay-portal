@@ -28,7 +28,8 @@ MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessage
 
 MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
-List<MBMessage> messages = treeWalker.getMessages();
+
+Comment rootComment = commentSectionDisplayContext.getRootComment();
 %>
 
 <section>
@@ -61,15 +62,15 @@ List<MBMessage> messages = treeWalker.getMessages();
 				<aui:input name="ajax" type="hidden" value="<%= true %>" />
 
 				<%
-				MBMessage message = rootMessage;
+				Comment comment = rootComment;
 				%>
 
 				<c:if test="<%= commentSectionDisplayContext.isControlsVisible() %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
 						<c:if test="<%= !commentSectionDisplayContext.isDiscussionMaxComments() %>">
-							<div id="<%= randomNamespace %>messageScroll<%= commentSectionDisplayContext.getRootMessageId() %>">
-								<aui:input name="messageId0" type="hidden" value="<%= commentSectionDisplayContext.getRootMessageId() %>" />
-								<aui:input name="parentMessageId0" type="hidden" value="<%= commentSectionDisplayContext.getRootMessageId() %>" />
+							<div id="<%= randomNamespace %>messageScroll<%= rootComment.getCommentId() %>">
+								<aui:input name="messageId0" type="hidden" value="<%= rootComment.getCommentId() %>" />
+								<aui:input name="parentMessageId0" type="hidden" value="<%= rootComment.getCommentId() %>" />
 							</div>
 						</c:if>
 
@@ -146,11 +147,13 @@ List<MBMessage> messages = treeWalker.getMessages();
 					<aui:row>
 
 						<%
+						List<Comment> comments = rootComment.getThreadComments();
+
 						List<Long> classPKs = new ArrayList<Long>();
 
-						for (MBMessage curMessage : messages) {
-							if (!curMessage.isRoot()) {
-								classPKs.add(curMessage.getMessageId());
+						for (Comment curComment : comments) {
+							if (!curComment.isRoot()) {
+								classPKs.add(curComment.getCommentId());
 							}
 						}
 
@@ -174,16 +177,14 @@ List<MBMessage> messages = treeWalker.getMessages();
 								break;
 							}
 
-							message = (MBMessage)messages.get(j);
+							comment = comments.get(j);
 
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
-
+							request.setAttribute("liferay-ui:discussion:currentComment", comment);
 							request.setAttribute("liferay-ui:discussion:messageDisplay", messageDisplay);
 							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
 							request.setAttribute("liferay-ui:discussion:ratingsEntries", ratingsEntries);
 							request.setAttribute("liferay-ui:discussion:ratingsStatsList", ratingsStatsList);
-							request.setAttribute("liferay-ui:discussion:rootMessage", rootMessage);
+							request.setAttribute("liferay-ui:discussion:rootComment", rootComment);
 						%>
 
 							<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />

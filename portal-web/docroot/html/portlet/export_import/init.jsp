@@ -20,11 +20,6 @@
 page import="com.liferay.portal.NoSuchGroupException" %><%@
 page import="com.liferay.portal.PortletIdException" %><%@
 page import="com.liferay.portal.RemoteOptionsException" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplay" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.lock.DuplicateLockException" %><%@
 page import="com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil" %><%@
 page import="com.liferay.portal.kernel.scheduler.StorageType" %><%@

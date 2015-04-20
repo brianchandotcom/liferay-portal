@@ -65,7 +65,13 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 		/>
 	</div>
 
-	<liferay-util:include page="/html/portlet/export_import/publish_process_message_task_details.jsp">
+	<%
+		BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId(), locale);
+
+		request.setAttribute("backgroundTaskDisplay", backgroundTaskDisplay);
+	%>
+
+	<liferay-util:include page="/html/portlet/background_task/background_task_details.jsp">
 		<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId()) %>" />
 	</liferay-util:include>
 </c:if>

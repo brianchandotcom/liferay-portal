@@ -33,7 +33,11 @@
 	<td>//a[contains(.,'Available')]</td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>

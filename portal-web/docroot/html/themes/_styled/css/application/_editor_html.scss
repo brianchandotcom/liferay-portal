@@ -10,6 +10,10 @@
 
 	word-wrap: break-word;
 
+	a {
+		font-weight: inherit;
+	}
+
 	blockquote {
 		background: #EEF0F2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
 		border: 1px solid #777;

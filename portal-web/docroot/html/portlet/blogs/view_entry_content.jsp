@@ -194,15 +194,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</c:when>
 					<c:when test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") || strutsAction.equals("/blogs_admin/view_entry") %>'>
 
-						<%
-						String entryContentId = "blogs-entry-content-" + entry.getEntryId();
-
-						boolean inlineEditEnabled = PropsValues.EDITOR_INLINE_EDITING_ENABLED && BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) && BrowserSnifferUtil.isRtf(request) && !WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, BlogsEntry.class.getName());
-						%>
-
-						<div id="<%= entryContentId %>" <%= (inlineEditEnabled && Validator.equals(GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", "visible")), "visible")) ? "class=\"lfr-editable\" contenteditable=\"true\" spellcheck=\"false\"" : StringPool.BLANK %>>
+						<p>
 							<%= entry.getContent() %>
-						</div>
+						</p>
 
 						<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
 							<liferay-ui:custom-attribute-list
@@ -213,20 +207,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							/>
 						</liferay-ui:custom-attributes-available>
 
-						<c:if test="<%= inlineEditEnabled %>">
-							<portlet:actionURL var="updateEntryContent">
-								<portlet:param name="struts_action" value="/blogs/edit_entry" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE_CONTENT %>" />
-								<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-							</portlet:actionURL>
-
-							<liferay-ui:input-editor
-								editorName="ckeditor"
-								inlineEdit="<%= true %>"
-								inlineEditSaveURL="<%= updateEntryContent %>"
-								name="<%= entryContentId %>"
-							/>
-						</c:if>
 					</c:when>
 					<c:when test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_TITLE) && !strutsAction.equals("/blogs/view_entry") && !strutsAction.equals("/blogs_admin/view_entry") %>'>
 						<div class="read-more">

@@ -58,6 +58,39 @@ public class BackgroundTaskLocalServiceImpl
 	extends BackgroundTaskLocalServiceBaseImpl {
 
 	@Override
+	public BackgroundTask addBackgroundTask(BackgroundTask backgroundTask) {
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		if (taskContextMap == null) {
+			taskContextMap = new HashMap<>();
+
+			backgroundTask.setTaskContextMap(taskContextMap);
+		}
+
+		_backgroundTaskThreadLocalManager.serializeThreadLocals(taskContextMap);
+
+		backgroundTask = super.addBackgroundTask(backgroundTask);
+
+		final long backgroundTaskId = backgroundTask.getBackgroundTaskId();
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					backgroundTaskLocalService.triggerBackgroundTask(
+						backgroundTaskId);
+
+					return null;
+				}
+
+			});
+
+		return backgroundTask;
+	}
+
+	@Override
 	public BackgroundTask addBackgroundTask(
 			long userId, long groupId, String name,
 			String[] servletContextNames, Class<?> taskExecutorClass,

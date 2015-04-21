@@ -2,5 +2,6 @@ Bundle-Name: Liferay Mentions API
 Bundle-SymbolicName: com.liferay.mentions.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.mentions.configuration
+	com.liferay.mentions.configuration,\
+	com.liferay.mentions.util
 Include-Resource: classes

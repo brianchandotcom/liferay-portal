@@ -12,13 +12,22 @@
  * details.
  */
 
-package com.liferay.mentions.constants;
+package com.liferay.mentions.util;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Sergio González
  */
-public class MentionsConstants {
+public interface MentionsNotifier {
 
-	public static final int NOTIFICATION_TYPE_MENTION = 0;
-
-}
+	public void notify(
+			long userId, long groupId, String title, String content,
+			String className, long classPK,
+			LocalizedValuesMap subjectLocalizedValuesMap,
+			LocalizedValuesMap bodyLocalizedValuesMap,
+			ServiceContext serviceContext)
+		throws PortalException;
+	}

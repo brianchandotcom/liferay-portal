@@ -82,23 +82,8 @@
 </tr>
 <!--MERGE_TAGS-->
 <tr>
-	<td>MERGE_TAGS_SELECT_BUTTON</td>
-	<td>//button[@title='Select Tags']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MERGE_TAGS_INTO_THIS_TAG_SELECT</td>
 	<td>//select[contains(@id,'targetTagName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MERGE_TAGS_MERGE_BUTTON</td>
-	<td>//button[contains(.,'Merge')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MERGE_TAGS_CANCEL_BUTTON</td>
-	<td>//a[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 </tbody>

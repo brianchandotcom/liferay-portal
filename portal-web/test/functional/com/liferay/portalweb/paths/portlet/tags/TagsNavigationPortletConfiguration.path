@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SHOW_UNUSED_TAGS_CHECKBOX</td>
 	<td>//input[contains(@id,'showZeroAssetCount')]</td>
 	<td></td>
@@ -41,11 +36,6 @@
 <tr>
 	<td>DISPLAY_TEMPLATE_SELECT</td>
 	<td>//select[contains(@id,'displayStyle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -119,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MERGE</td>
+	<td>//button[contains(.,'Merge')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE</td>
 	<td>//button[contains(.,'Move')]</td>
 	<td></td>

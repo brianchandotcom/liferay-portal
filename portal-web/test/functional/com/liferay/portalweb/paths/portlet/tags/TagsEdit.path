@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CANCEL_BUTTON</td>
-	<td>//a[contains(.,'Cancel')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TAG_HEADER</td>
 	<td>//h3[@class='header-title']/span[contains(.,'${key_tagName}')]</td>
 	<td></td>

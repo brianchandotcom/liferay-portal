@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>Tags</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Tags</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_TAGS_CHECKBOX</td>
+	<td>//input[@title='Select All']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ACTIONS</td>
+	<td>//a[contains(@title,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@id,'AssetTags') and contains(@class,'search-query')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERIC_TAG_ACTIONS</td>
+	<td>//td[contains(@class,'table-cell')]//a[contains(@id,'AssetTagsAdmin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TAG_ENTRY_TABLE-->
+<tr>
+	<td>TAG_ENTRY_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_tagName}')]/td/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_ENTRY_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_tagName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_ENTRY_TABLE_USAGES</td>
+	<td>//tr[contains(.,'${key_tagName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_ENTRY_TABLE_ACTIONS_ARROW</td>
+	<td>//tr[contains(.,'${key_tagName}')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECTED_TAG-->
+<tr>
+	<td>SELECTED_TAG_NAME</td>
+	<td>//span[@class='lfr-token']/span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_TAG_NAME_REMOVE</td>
+	<td>//a[contains(@class,'icon') and contains(@class,'icon-remove') and contains(@class,'lfr-token-close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MERGE_TAGS-->
+<tr>
+	<td>MERGE_TAGS_SELECT_BUTTON</td>
+	<td>//button[@title='Select Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE_TAGS_INTO_THIS_TAG_SELECT</td>
+	<td>//select[contains(@id,'targetTagName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE_TAGS_MERGE_BUTTON</td>
+	<td>//button[contains(.,'Merge')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE_TAGS_CANCEL_BUTTON</td>
+	<td>//a[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

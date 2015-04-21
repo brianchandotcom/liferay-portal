@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>TagsEdit</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TagsEdit</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//a[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_HEADER</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

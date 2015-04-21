@@ -1,32 +1,34 @@
-.lfr-ddm-container .field-wrapper-content label {
-	font-weight: bold;
-}
+@import "../aui/bootstrap/variables";
+@import "../aui_variables";
+@import "../aui/bootstrap/mixins/vendor-prefixes";
+@import "../aui/bootstrap/mixins/forms";
 
-.form-control.error-field {
-  border-color: #a94442;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-}
+.lfr-ddm-container {
+	.field-wrapper-content label {
+		font-weight: bold;
+	}
 
-.form-control.error-field:focus {
-  border-color: #843534;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
-}
+	.has-success {
+		@include form-control-validation();
+	}
 
-.form-control.success-field {
-  border-color: #3c763d;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-}
+	.has-warning {
+		@include form-control-validation();
+	}
 
-.form-control.success-field:focus {
-  border-color: #2b542c;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #67b168;
-}
+	.has-error {
+		@include form-control-validation();
+	}
 
-.form-control.warning-field {
-  border-color: #8a6d3b;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-}
-.form-control.warning-field:focus {
-  border-color: #66512c;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #c0a16b;
+	.has-success > {
+		@include form-control-validation($state-success-text, $state-success-text, $state-success-bg);
+	}
+
+	.has-warning > {
+		@include form-control-validation($state-warning-text, $state-warning-text, $state-warning-bg);
+	}
+
+	.has-error > {
+		@include form-control-validation($state-danger-text, $state-danger-text, $state-danger-bg);
+	}
 }

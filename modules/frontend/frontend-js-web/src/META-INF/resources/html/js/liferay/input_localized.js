@@ -529,11 +529,15 @@ AUI.add(
 						if (languageId) {
 							var items = inputLocalized.get(STR_ITEMS);
 
-							if (AArray.indexOf(items, languageId) === -1) {
+							var languageIndex = AArray.indexOf(items, languageId);
+
+							if (languageIndex === -1) {
 								languageId = defaultLanguageId;
+
+								languageIndex = AArray.indexOf(items, languageId);
 							}
 
-							inputLocalized.set(STR_SELECTED, AArray.indexOf(items, languageId));
+							inputLocalized.set(STR_SELECTED, languageIndex);
 
 							inputLocalized.selectFlag(languageId);
 						}

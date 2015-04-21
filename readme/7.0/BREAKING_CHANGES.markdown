@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `768b181`.*
+*This document has been reviewed through commit `5996ef5`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1231,6 +1231,43 @@ This change simplifies using asset previews.
 
 ---------------------------------------
 
+### Added New Methods in the `ScreenNameValidator` Interface
+- **Date:** 2015-Mar-17
+- **JIRA Ticket:** LPS-53409
+
+#### What changed?
+
+The `ScreenNameValidator` interface has new methods `getDescription(Locale)` and
+`getJSValidation()`.
+
+#### Who is affected?
+
+This affects developers who have implemented a custom screen name validator with
+the `ScreenNameValidator` interface.
+
+#### How should I update my code?
+
+You should implement the new methods introduced in the interface.
+
+- `getDescription(Locale)`: returns a description of what the screen name 
+validator validates.
+
+- `getJSValidation()`: returns the JavaScript input validator on the client
+side.
+
+#### Why was this change made?
+
+Previous to Liferay 7, validation for user screen name characters was hard-coded 
+in `UserLocalService`. A new portal property named
+`users.screen.name.special.characters` has been added to provide configurability
+of special characters allowed in screen names.
+
+In addition, developers can now specify a custom input validator for the screen
+name on the client side by providing a JavaScript validator in
+`getJSValidation()`.
+
+---------------------------------------
+
 ### Replaced the Language Portlet's Display Styles with ADTs
 - **Date:** 2015-Mar-30
 - **JIRA Ticket:** LPS-54419
@@ -1338,114 +1375,82 @@ modules provide more flexibility and can be included in any app.
 
 ---------------------------------------
 
-### Added new methods in `ScreenNameValidator` interface
-- **Date:** 2015-Mar-17
-- **JIRA Ticket:** LPS-53409
-
-#### What changed?
-
-The `ScreenNameValidator` interface has new methods `getDescription(Locale locale)`
-and `getJSValidation()`.
-
-#### Who is affected?
-
-This affects developers who have implemented custom screen name validator with
-the `ScreenNameValidator` interface.
-
-#### How should I update my code?
-
-You should implement the new methods introduced in the interface.
-
-- `getDescription(Locale locale)`: returns a description of what the screen name 
-validator validates.
-
-- `getJSValidation()`: returns the JavaScript input validator on the client side.
-
-#### Why was this change made?
-
-Previous to Liferay 7, validation for user screen name characters was hard-coded 
-in `UserLocalService`. A new property `users.screen.name.special.characters` has
-been added to provide configurability of special characters allowed in screen
-names.
-
-In addition, developers can now specify custom input validator for the screen name
-on the client side by providing a JavaScript validator in `getJSValidation()`.
-
----------------------------------------
-
-### Removed portal properties to display sections in form navigators
-- **Date:** 2015-Apr-16
-- **JIRA Ticket:** LPS-54903
-
-#### What changed?
-
-The following portal properties (and the equivalent `PropsKeys` and `PropsValues`)
-that were used to decide what sections would be displayed in the `form-navigator`
-have been removed:
-
-`layout.set.form.update`
-`sites.form.add.advanced`
-`sites.form.add.main`
-`sites.form.add.miscellaneous`
-`sites.form.add.seo`
-`sites.form.update.advanced`
-`sites.form.update.main`
-`sites.form.update.miscellaneous`
-`sites.form.update.seo`
-
-The sections and categories of form navigators are now OSGi components.
-
-#### Who is affected?
-
-Administrators who may have added, removed or reorder sections through those
-portal properties. Developers using the constants defined in `PropsKeys` or
-`PropsValues` for those portal properties will also be affected.
-
-#### How should I update my code?
-
-Since those properties no longer exist you cannot rely on them. References to
-the constants of `PropsKeys` and `PropsValues` will need to be updated. You can
-use `FormNavigatorCategoryUtil` and `FormNavigatorEntryUtil` to obtain a list of
-the available sections and categories for a form navigator instance.
-
-Changes to remove or reorder specific sections will need to be done through
-OSGi console to update the service ranking or stop the components.
-
-Adding new sections with Liferay Hooks will still work as a legacy feature, but
-we recommend to use OSGi components to add new sections.
-
-#### Why was this change made?
-
-The old mechanism to add new sections to `form-navigator` taglibs was very
-limited because it could only depend on portal for services and utils due to the
-new section was rendered from the portal classloader.
-
-We need a way to add new sections and categories to `form-navigator` taglibs via
-OSGi plugins in a more extensible way, allowing the developer including the new
-section to access to their own utils and services.
-
----------------------------------------
-### Changed default value of copy-request-parameters init parameter in MVCPortlet
+### Changed the Default Value of the `copy-request-parameters` Init Parameter for MVC Portlets
 - **Date:** 2015-Apr-15
 - **JIRA Ticket:** LPS-54798
 
 #### What changed?
 
-The copy request init parameter default value is now set to true in MVCPortlet
+The `copy-request-parameters` init parameter's default value is now set to
+`true` in all portlets that extend `MVCPortlet`.
 
 #### Who is affected?
 
-This affects developers that have created portlets that extend MVCPortlet
+This affects developers that have created portlets that extend `MVCPortlet`.
 
 #### How should I update my code?
 
-To change the default property, you have to set the init parameter to false in
-your MVCPortlet:
+To continue using the property the same way you did before this change was
+implemented, you'll need to change the default property. To change the property,
+set the init parameter to `false` in your class extending `MVCPortlet`:
 
-"javax.portlet.init-param.copy-request-parameters=false"
+    javax.portlet.init-param.copy-request-parameters=false
 
 #### Why was this change made?
 
-This was done for backwards compatibility
+This change was made to allow for backwards compatibility.
+
+---------------------------------------
+
+### Removed Portal Properties Used to Display Sections in Form Navigators
+- **Date:** 2015-Apr-16
+- **JIRA Ticket:** LPS-54903
+
+#### What changed?
+
+The following portal properties (and the equivalent `PropsKeys` and
+`PropsValues`) that were used to decide what sections would be displayed in the
+`form-navigator` have been removed:
+
+- `layout.set.form.update`
+- `sites.form.add.advanced`
+- `sites.form.add.main`
+- `sites.form.add.miscellaneous`
+- `sites.form.add.seo`
+- `sites.form.update.advanced`
+- `sites.form.update.main`
+- `sites.form.update.miscellaneous`
+- `sites.form.update.seo`
+
+The sections and categories of form navigators are now OSGi components.
+
+#### Who is affected?
+
+This affects administrators who may have added, removed, or reordered sections
+using those portal properties. Developers using the constants defined in
+`PropsKeys` or `PropsValues` for those portal properties will also be affected.
+
+#### How should I update my code?
+
+Since those properties no longer exist, you cannot rely on them. References to
+the constants of `PropsKeys` and `PropsValues` will need to be updated. You can
+use `FormNavigatorCategoryUtil` and `FormNavigatorEntryUtil` to obtain a list of
+the available sections and categories for a form navigator instance.
+
+Changes to remove or reorder specific sections will need to be done through the
+OSGi console to update the service ranking or stop the components.
+
+Adding new sections with Liferay Hooks will still work as a legacy feature, but
+the recommended way is using OSGi components to add new sections.
+
+#### Why was this change made?
+
+The old mechanism to add new sections to `form-navigator` tags was very
+limited because it could only depend on portal for services and utils due to the
+new section that was rendered from the portal classloader.
+
+There was a need to add new sections and categories to `form-navigator` tags via
+OSGi plugins in a more extensible way, allowing the developer to include new
+sections to access to their own utils and services.
 
 ---------------------------------------

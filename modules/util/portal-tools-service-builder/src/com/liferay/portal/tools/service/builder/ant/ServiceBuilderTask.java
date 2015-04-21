@@ -35,12 +35,13 @@ public class ServiceBuilderTask extends Task {
 			ServiceBuilder serviceBuilder = ServiceBuilderInvoker.invoke(
 				_serviceBuilderBean);
 
-			Set<String> modifiedFiles = serviceBuilder.getModifiedFiles();
+			Set<String> modifiedFileNames =
+				serviceBuilder.getModifiedFileNames();
 
 			Project project = getProject();
 
 			project.addIdReference(
-				ServiceBuilder.MODIFIED_FILES_ATTRIBUTE, modifiedFiles);
+				ServiceBuilder.MODIFIED_FILES_ATTRIBUTE, modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);

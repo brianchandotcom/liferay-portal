@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
+import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -281,18 +282,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			boolean staleCache = false;
 
 			for (String fileName : fileNames) {
-				URL resourceURL = portalWebResourcesServletContext.getResource(
+				long curLastModified = FileTimestampUtil.getTimestamp(
+					portalWebResourcesServletContext,
 					bundleDirName.concat(StringPool.SLASH).concat(fileName));
 
-				if (resourceURL == null) {
-					continue;
-				}
-
-				URLConnection urlConnection = resourceURL.openConnection();
-
-				if (urlConnection.getLastModified() >
-						cacheFile.lastModified()) {
-
+				if (curLastModified > cacheFile.lastModified()) {
 					staleCache = true;
 
 					break;

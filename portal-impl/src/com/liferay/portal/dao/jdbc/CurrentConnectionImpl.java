@@ -36,8 +36,9 @@ public class CurrentConnectionImpl implements CurrentConnection {
 			(ConnectionHolder)TransactionSynchronizationManager.getResource(
 				dataSource);
 
-		if (connectionHolder == null) {
-			return null;
+		if ((connectionHolder == null) ||
+			(connectionHolder.getConnectionHandle() == null)) {
+				return null;
 		}
 		else {
 			return connectionHolder.getConnection();

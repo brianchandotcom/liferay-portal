@@ -326,7 +326,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	 * Returns <code>true</code> if all the route parameters are public render
 	 * parameters.
 	 *
-	 * @param  routeParameters the parameter map.
+	 * @param  routeParameters the parameter map
 	 * @return <code>true</code> if all the route parameters are public render
 	 *         parameters; <code>false</code> otherwise
 	 */

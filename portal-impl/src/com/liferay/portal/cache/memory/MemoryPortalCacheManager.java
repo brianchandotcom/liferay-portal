@@ -18,6 +18,7 @@ import com.liferay.portal.cache.AbstractPortalCacheManager;
 import com.liferay.portal.cache.cluster.ClusterLinkCallbackFactory;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
@@ -151,6 +152,11 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 		return new PortalCacheManagerConfiguration(
 			null, defaultPortalCacheConfiguration, null);
+	}
+
+	@Override
+	protected String getType() {
+		return PortalCacheManagerTypes.MEMORY;
 	}
 
 	@Override

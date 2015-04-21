@@ -105,7 +105,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public List<String> getErrorMessages() {
-		List<String> errorMessages = new ArrayList<String>();
+		List<String> errorMessages = new ArrayList<>();
 
 		for (Map.Entry<String, List<String>> entry :
 				_errorMessagesMap.entrySet()) {
@@ -189,7 +189,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<String> errorMessages = _errorMessagesMap.get(fileName);
 
 		if (errorMessages == null) {
-			errorMessages = new ArrayList<String>();
+			errorMessages = new ArrayList<>();
 		}
 
 		errorMessages.add(message);
@@ -808,7 +808,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return _compatClassNamesMap;
 		}
 
-		Map<String, String> compatClassNamesMap = new HashMap<String, String>();
+		Map<String, String> compatClassNamesMap = new HashMap<>();
 
 		String[] includes = new String[] {
 			"**\\portal-compat-shared\\src\\com\\liferay\\compat\\**\\*.java"
@@ -816,7 +816,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String basedir = BASEDIR;
 
-		List<String> fileNames = new ArrayList<String>();
+		List<String> fileNames = new ArrayList<>();
 
 		for (int i = 0; i < 3; i++) {
 			fileNames = getFileNames(basedir, new String[0], includes);
@@ -943,7 +943,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			new String[] {
 				"boolean", "byte", "char", "double", "float", "int", "long",
 				"short", "Boolean", "Byte", "Character", "Class", "Double",
-				"Float", "Int", "Long", "Number", "Short", "String",
+				"Float", "Int", "Long", "Number", "Short", "String"
 			});
 
 		immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
@@ -1608,7 +1608,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		Properties properties = new Properties();
 
-		List<Properties> propertiesList = new ArrayList<Properties>();
+		List<Properties> propertiesList = new ArrayList<>();
 
 		int level = 2;
 
@@ -1679,7 +1679,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			boolean useProperties, boolean printErrors, boolean autoFix)
 		throws Exception {
 
-		_errorMessagesMap = new HashMap<String, List<String>>();
+		_errorMessagesMap = new HashMap<>();
 
 		sourceFormatterHelper = new SourceFormatterHelper(useProperties);
 
@@ -1705,7 +1705,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private static Map<String, List<String>> _errorMessagesMap =
-		new HashMap<String, List<String>>();
+		new HashMap<>();
 	private static boolean _printErrors;
 
 	private Set<String> _annotationsExclusions;

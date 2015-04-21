@@ -53,15 +53,14 @@ public class SourceFormatter {
 
 	public void format() throws Throwable {
 		final AtomicReference<Throwable> exceptionReference1 =
-			new AtomicReference<Throwable>();
+			new AtomicReference<>();
 
 		Thread thread1 = new Thread () {
 
 			@Override
 			public void run() {
 				try {
-					List<SourceProcessor> sourceProcessors =
-						new ArrayList<SourceProcessor>();
+					List<SourceProcessor> sourceProcessors = new ArrayList<>();
 
 					sourceProcessors.add(
 						CSSSourceProcessor.class.newInstance());
@@ -92,15 +91,14 @@ public class SourceFormatter {
 		};
 
 		final AtomicReference<Throwable> exceptionReference2 =
-			new AtomicReference<Throwable>();
+			new AtomicReference<>();
 
 		Thread thread2 = new Thread () {
 
 			@Override
 			public void run() {
 				try {
-					List<SourceProcessor> sourceProcessors =
-						new ArrayList<SourceProcessor>();
+					List<SourceProcessor> sourceProcessors = new ArrayList<>();
 
 					sourceProcessors.add(
 						JavaSourceProcessor.class.newInstance());
@@ -191,7 +189,7 @@ public class SourceFormatter {
 	}
 
 	private final boolean _autoFix;
-	private final Set<String> _errorMessages = new LinkedHashSet<String>();
+	private final Set<String> _errorMessages = new LinkedHashSet<>();
 	private SourceMismatchException _firstSourceMismatchException;
 	private final boolean _printErrors;
 	private final boolean _throwException;

@@ -100,7 +100,7 @@ public class SourceFormatterHelper {
 			return ListUtil.toList(fileNamesArray);
 		}
 
-		List<String> fileNames = new ArrayList<String>(fileNamesArray.length);
+		List<String> fileNames = new ArrayList<>(fileNamesArray.length);
 
 		for (String fileName : fileNamesArray) {
 			File file = new File(fileName);

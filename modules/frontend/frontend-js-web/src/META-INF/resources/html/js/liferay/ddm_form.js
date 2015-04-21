@@ -350,10 +350,7 @@ AUI.add(
 					getSiblings: function() {
 						var instance = this;
 
-						var parent = instance.get('parent');
-						var name = instance.get('name');
-
-						return parent.get('fields');
+						return instance.get('parent').get('fields');
 					},
 
 					getValue: function() {
@@ -947,8 +944,6 @@ AUI.add(
 
 					getUploadURL: function() {
 						var instance = this;
-
-						var portletNamespace = instance.get('portletNamespace');
 
 						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 

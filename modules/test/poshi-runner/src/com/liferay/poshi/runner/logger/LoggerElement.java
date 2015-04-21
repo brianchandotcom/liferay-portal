@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -187,6 +188,16 @@ public class LoggerElement {
 		sb.append("<");
 		sb.append(_name);
 
+		Set<Entry<String, String>> attributeEntrySet = _attributes.entrySet();
+
+		for (Entry<String, String> attributeEntry : attributeEntrySet) {
+			sb.append(" ");
+			sb.append(attributeEntry.getKey());
+			sb.append("=\"");
+			sb.append(attributeEntry.getValue());
+			sb.append("\"");
+		}
+
 		if (Validator.isNotNull(_className)) {
 			sb.append(" class=\"");
 			sb.append(_className);
@@ -199,12 +210,12 @@ public class LoggerElement {
 			sb.append("\"");
 		}
 
+		sb.append(">");
+
 		boolean hasChildren = _childLoggerElements.size() > 0;
 		boolean hasText = Validator.isNotNull(_text);
 
 		if (hasChildren || hasText) {
-			sb.append(">");
-
 			if (hasText) {
 				sb.append(_text);
 			}
@@ -214,14 +225,11 @@ public class LoggerElement {
 					sb.append(childLoggerElement.toString());
 				}
 			}
+		}
 
-			sb.append("</");
-			sb.append(_name);
-			sb.append(">");
-		}
-		else {
-			sb.append(" />");
-		}
+		sb.append("</");
+		sb.append(_name);
+		sb.append(">");
 
 		return sb.toString();
 	}

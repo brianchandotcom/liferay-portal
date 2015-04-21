@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test-data>
+	<test-code>
+		<description><![CDATA[
+Should NOT fail when there are a block as try parameter
+assertEquals ok
+	 ]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try(Object object = new Object() {
+			@Override
+			public int hashCOde() {
+				return 1;
+			}
+		}) {
+			//SOME CODE
+
+			Assert.fail();
+		}
+	    catch (Exception e) {
+			//SOME CODE
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[
+Should NOT fail when there are a finally block
+assertEquals ok
+	 ]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try {
+			//SOME CODE
+
+			Assert.fail();
+		}
+	    catch (Exception e) {
+			//SOME CODE
+	    }
+	    finally {
+	    	//SOME CODE
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+	<description><![CDATA[
+Should NOT fail when there are a finally block
+assertEquals ok
+	 ]]></description>
+	<expected-problems>0</expected-problems>
+	<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try(int a = 2) {
+			//SOME CODE
+
+			Assert.fail();
+		}
+	    catch (Exception e) {
+			//SOME CODE
+	    }
+	    finally {
+	    	//SOME CODE
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[
+Should NOT fail when there are a method that starts with fail
+assertEquals ok
+	 ]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try {
+		}
+	    catch (Exception e) {
+			failMethod();
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[
+Should NOT fail when there are an Assert.fail inside a Try block as the last statement
+assertEquals ok
+	 ]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try {
+			System.out.println("SOME CODE");
+
+			Assert.fail();
+		}
+	    catch (Exception e) {
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[
+Should NOT fail when there are an Assert.fail inside a Try block as the last statement
+assertEquals ok
+	 ]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try {
+			//SOME CODE
+			Assert.fail();
+		}
+	    catch (Exception e) {
+	    	Assert.assertEqual("ERROR", e.getMessage());
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[
+Should fail when there are an Assert.fail outside a Try/Catch block
+assertEquals bad
+	 ]]></description>
+		<expected-problems>1</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		Assert.fail();
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+	<description><![CDATA[
+Should NOT fail when there are an Assert.fail inside a Try block as the last statement
+assertEquals ok
+	 ]]></description>
+	<expected-problems>0</expected-problems>
+	<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try {
+			//SOME CODE
+			Assert.fail();
+		}
+	    catch (Exception e) {
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[
+Should fail when there are an Assert.fail inside a block inside a Catch block
+assertEquals bad
+	 ]]></description>
+		<expected-problems>1</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try {
+			//SOME CODE
+		}
+	    catch (Exception e) {
+	    	{
+		    	Assert.fail();
+		    }
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[
+Should fail when there are an Assert.fail inside a Catch block
+assertEquals bad
+	 ]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+
+public class ClassTest {
+	public void test1() {
+		try {
+			//SOME CODE
+		}
+	    catch (Exception e) {
+		    Assert.fail();
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[
+Should fail when there are an Assert.fail inside a Catch block (even if there are other statements around the Assert.fail)
+assertEquals bad
+	 ]]></description>
+		<expected-problems>1</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try {
+			//SOME CODE
+		}
+	    catch (Exception e) {
+	    	System.out.println("ERROR " + e.getMessage());
+	    	Assert.fail();
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[
+Should fail when there are an Assert.fail inside a Catch block
+assertEquals bad
+	 ]]></description>
+		<expected-problems>1</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+	@Test
+	public void test1() {
+		try {
+			//SOME CODE
+		}
+	    catch (Exception e) {
+		    Assert.fail();
+	    }
+	}
+}
+			]]></code>
+	</test-code>
+</test-data>

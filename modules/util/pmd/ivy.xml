@@ -18,5 +18,6 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="pmd-java" org="net.sourceforge.pmd" rev="5.2.3" />
+		<dependency conf="test->default" name="pmd-test" org="net.sourceforge.pmd" rev="5.2.3" />
 	</dependencies>
 </ivy-module>

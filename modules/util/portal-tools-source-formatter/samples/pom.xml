@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sample.source.formatter</groupId>
+	<artifactId>sample.source.formatter</artifactId>
+	<name>Sample Source Formatter Project</name>
+	<version>1.0.0</version>
+	<description>Sample Source Formatter Project</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.portal.tools.source.formatter</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<baseDir>src/main</baseDir>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

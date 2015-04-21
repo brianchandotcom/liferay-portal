@@ -194,9 +194,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</c:when>
 					<c:when test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") || strutsAction.equals("/blogs_admin/view_entry") %>'>
 
-						<p>
+						<div>
 							<%= entry.getContent() %>
-						</p>
+						</div>
 
 						<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
 							<liferay-ui:custom-attribute-list

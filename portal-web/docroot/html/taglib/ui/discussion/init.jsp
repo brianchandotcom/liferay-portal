@@ -24,14 +24,6 @@ page import="com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext
 page import="com.liferay.portlet.messageboards.comment.context.MBCommentSectionDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.context.MBCommentTreeDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper" %><%@
-page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper" %><%@
-page import="com.liferay.portlet.messageboards.model.MBDiscussion" %><%@
-page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %><%@
-page import="com.liferay.portlet.messageboards.model.MBTreeWalker" %><%@
-page import="com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator" %><%@
-page import="com.liferay.portlet.ratings.model.RatingsEntry" %><%@
-page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@
-page import="com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %>
+page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper" %>
 
 <portlet:defineObjects />

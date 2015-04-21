@@ -346,6 +346,10 @@
 		}
 	}
 
+	.options ul.portlet-list > li.tree-item {
+		padding-left: 0;
+	}
+
 	.page-not-exportable {
 		color: #933;
 	}
@@ -359,8 +363,21 @@
 		}
 	}
 
-	.options ul.portlet-list > li.tree-item {
-		padding-left: 0;
+	.portlet-list-simple {
+		margin-left: 20px;
+	}
+
+	.publish-mode-switch {
+		position: absolute;
+		right: 10px;
+
+		a {
+			color: #FFF;
+		}
+
+		span {
+			text-decoration: none !important;
+		}
 	}
 
 	.selected-labels {

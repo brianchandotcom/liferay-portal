@@ -129,19 +129,14 @@
 	$('#<portlet:namespace />mergeSelectedTags').on(
 		'click',
 		function() {
-			if (form.fm('rowIds').filter(':checked').length > 1) {
-				<portlet:renderURL var="mergeURL">
-					<portlet:param name="mvcPath" value="/merge_tag.jsp" />
-					<portlet:param name="mergeTagIds" value="[$MERGE_TAGS_IDS$]" />
-				</portlet:renderURL>
+			<portlet:renderURL var="mergeURL">
+				<portlet:param name="mvcPath" value="/merge_tag.jsp" />
+				<portlet:param name="mergeTagIds" value="[$MERGE_TAGS_IDS$]" />
+			</portlet:renderURL>
 
-				var mergeURL = '<%= mergeURL %>';
+			var mergeURL = '<%= mergeURL %>';
 
-				location.href = mergeURL.replace(escape('[$MERGE_TAGS_IDS$]'), Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-			}
-			else {
-				alert('<liferay-ui:message arguments="<%= 2 %>" key="please-choose-at-least-x-tags" />');
-			}
+			location.href = mergeURL.replace(escape('[$MERGE_TAGS_IDS$]'), Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		}
 	);
 </aui:script>

@@ -35,6 +35,18 @@ AssetTag tag = (AssetTag)row.getObject();
 			message="edit"
 			url="<%= editURL %>"
 		/>
+
+		<portlet:renderURL var="mergeURL">
+			<portlet:param name="mvcPath" value="/merge_tag.jsp" />
+			<portlet:param name="mergeTagIds" value="<%= String.valueOf(tag.getTagId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			iconCssClass="icon-random"
+			label="<%= true %>"
+			message="merge"
+			url="<%= mergeURL %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= AssetTagPermission.contains(permissionChecker, tag, ActionKeys.DELETE) %>">

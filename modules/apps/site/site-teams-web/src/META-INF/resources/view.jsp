@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -33,7 +33,6 @@ if (group.isOrganization()) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/sites_admin/view_teams");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 
 pageContext.setAttribute("portletURL", portletURL);
@@ -69,7 +68,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			<aui:nav cssClass="navbar-nav">
 				<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_TEAMS) %>">
 					<portlet:renderURL var="addTeamURL">
-						<portlet:param name="struts_action" value="/sites_admin/edit_team" />
+						<portlet:param name="mvcPath" value="/edit_team.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					</portlet:renderURL>
@@ -101,7 +100,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			if (TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.UPDATE)) {
 				rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("struts_action", "/sites_admin/edit_team");
+				rowURL.setParameter("mvcPath", "/edit_team.jsp");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("teamId", String.valueOf(team.getTeamId()));
 			}
@@ -121,7 +120,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/sites_admin/team_action.jsp"
+				path="/team_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.DuplicateGroupException" %><%@
-page import="com.liferay.portal.DuplicateTeamException" %><%@
-page import="com.liferay.portal.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.GroupInheritContentException" %><%@
 page import="com.liferay.portal.GroupKeyException" %><%@
 page import="com.liferay.portal.GroupParentException" %><%@
@@ -30,16 +28,11 @@ page import="com.liferay.portal.PendingBackgroundTaskException" %><%@
 page import="com.liferay.portal.RemoteExportException" %><%@
 page import="com.liferay.portal.RemoteOptionsException" %><%@
 page import="com.liferay.portal.RequiredGroupException" %><%@
-page import="com.liferay.portal.TeamNameException" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.staging.StagingConstants" %><%@
 page import="com.liferay.portal.lar.LayoutExporter" %><%@
-page import="com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
-page import="com.liferay.portal.security.auth.AuthException" %><%@
 page import="com.liferay.portal.security.auth.RemoteAuthException" %><%@
-page import="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
-page import="com.liferay.portal.service.permission.TeamPermissionUtil" %><%@
 page import="com.liferay.portal.util.CustomJspRegistryUtil" %><%@
 page import="com.liferay.portal.util.RobotsUtil" %><%@
 page import="com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskCreateDateComparator" %><%@
@@ -58,8 +51,6 @@ page import="com.liferay.portlet.sitesadmin.search.SiteChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.SiteMembershipChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.TeamDisplayTerms" %><%@
 page import="com.liferay.portlet.sitesadmin.search.TeamSearch" %><%@
-page import="com.liferay.portlet.sitesadmin.search.UserGroupTeamChecker" %><%@
-page import="com.liferay.portlet.sitesadmin.search.UserTeamChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationGroupChecker" %>
 

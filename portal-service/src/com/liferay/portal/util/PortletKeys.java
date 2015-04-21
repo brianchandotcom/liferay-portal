@@ -173,8 +173,6 @@ public class PortletKeys {
 
 	public static final String SITE_SETTINGS = "165";
 
-	public static final String SITE_TEAMS_ADMIN = "191";
-
 	public static final String SITES_ADMIN = "134";
 
 	public static final String SOCIAL_ACTIVITY = "179";

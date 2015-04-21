@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `7a8747c`.*
+*This document has been reviewed through commit `a4f12cd`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1375,28 +1375,30 @@ modules provide more flexibility and can be included in any app.
 
 ---------------------------------------
 
-### Changed default value of copy-request-parameters init parameter in MVCPortlet
+### Changed the Default Value of the `copy-request-parameters` Init Parameter for MVC Portlets
 - **Date:** 2015-Apr-15
 - **JIRA Ticket:** LPS-54798
 
 #### What changed?
 
-The copy request init parameter default value is now set to true in MVCPortlet
+The `copy-request-parameters` init parameter's default value is now set to
+`true` in all portlets that extend `MVCPortlet`.
 
 #### Who is affected?
 
-This affects developers that have created portlets that extend MVCPortlet
+This affects developers that have created portlets that extend `MVCPortlet`.
 
 #### How should I update my code?
 
-To change the default property, you have to set the init parameter to false in
-your MVCPortlet:
+To continue using the property the same way you did before this change was
+implemented, you'll need to change the default property. To change the property,
+set the init parameter to `false` in your class extending `MVCPortlet`:
 
-"javax.portlet.init-param.copy-request-parameters=false"
+    javax.portlet.init-param.copy-request-parameters=false
 
 #### Why was this change made?
 
-This was done for backwards compatibility
+This change was made to allow for backwards compatibility.
 
 ---------------------------------------
 

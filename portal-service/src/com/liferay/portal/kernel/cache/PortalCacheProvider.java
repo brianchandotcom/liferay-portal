@@ -14,6 +14,12 @@
 
 package com.liferay.portal.kernel.cache;
 
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+
 import java.io.Serializable;
 
 import java.util.Collection;
@@ -38,22 +44,31 @@ public class PortalCacheProvider {
 		return _instance._getPortalCacheManagers();
 	}
 
-	public static void registerPortalCacheManager(
-		PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
+	private PortalCacheProvider() {
+		_portalCacheManagers = new ConcurrentHashMap<>();
 
-		_instance._registerPortalCacheManager(portalCacheManager);
-	}
+		Registry registry = RegistryUtil.getRegistry();
 
-	public static void unregisterPortalCacheManager(
-		String portalCacheManagerName) {
+		_serviceTracker = registry.trackServices(
+			(Class<PortalCacheManager<? extends Serializable, ?>>)(Class<?>)
+				PortalCacheManager.class,
+			new PortalCacheProviderServiceTrackerCustomizer());
 
-		_instance._unregisterPortalCacheManager(portalCacheManagerName);
+		_serviceTracker.open();
 	}
 
 	private PortalCacheManager<? extends Serializable, ?>
 		_getPortalCacheManager(String portalCacheManagerName) {
 
-		return _portalCacheManagers.get(portalCacheManagerName);
+		for (PortalCacheManager<? extends Serializable, ?> portalCacheManager :
+				_portalCacheManagers.values()) {
+
+			if (portalCacheManagerName.equals(portalCacheManager.getName())) {
+				return portalCacheManager;
+			}
+		}
+
+		return null;
 	}
 
 	private Collection<PortalCacheManager<? extends Serializable, ?>>
@@ -63,22 +78,53 @@ public class PortalCacheProvider {
 			_portalCacheManagers.values());
 	}
 
-	private void _registerPortalCacheManager(
-		PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
-
-		_portalCacheManagers.put(
-			portalCacheManager.getName(), portalCacheManager);
-	}
-
-	private void _unregisterPortalCacheManager(String portalCacheManagerName) {
-		_portalCacheManagers.remove(portalCacheManagerName);
-	}
-
 	private static final PortalCacheProvider _instance =
 		new PortalCacheProvider();
 
-	private static final
-		Map<String, PortalCacheManager<? extends Serializable, ?>>
-			_portalCacheManagers = new ConcurrentHashMap<>();
+	private final
+		Map<ServiceReference<PortalCacheManager<? extends Serializable, ?>>,
+			PortalCacheManager<? extends Serializable, ?>> _portalCacheManagers;
+	private final
+		ServiceTracker<PortalCacheManager<? extends Serializable, ?>,
+			PortalCacheManager<? extends Serializable, ?>>
+		_serviceTracker;
+
+	private class PortalCacheProviderServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<PortalCacheManager<? extends Serializable, ?>,
+			PortalCacheManager<? extends Serializable, ?>> {
+
+		@Override
+		public PortalCacheManager<? extends Serializable, ?> addingService(
+			ServiceReference<PortalCacheManager<? extends Serializable, ?>>
+				serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			PortalCacheManager<?, ?> portalCacheManager = registry.getService(
+				serviceReference);
+
+			_portalCacheManagers.put(serviceReference, portalCacheManager);
+
+			return portalCacheManager;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<PortalCacheManager<? extends Serializable, ?>>
+				serviceReference,
+			PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<PortalCacheManager<? extends Serializable, ?>>
+				serviceReference,
+			PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
+
+			_portalCacheManagers.remove(serviceReference);
+		}
+
+	}
 
 }

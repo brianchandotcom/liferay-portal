@@ -14,6 +14,8 @@
 
 package com.liferay.cobertura.instrument;
 
+import com.liferay.cobertura.agent.InstrumentationAgent;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -264,7 +266,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 					"net/sourceforge/cobertura/coveragedata/ProjectData") &&
 				name.equals("initialize") && desc.equals("()V")) {
 
-				owner = "com/liferay/cobertura/instrument/InstrumentationAgent";
+				owner = "com/liferay/cobertura/agent/InstrumentationAgent";
 			}
 
 			super.visitMethodInsn(opcode, owner, name, desc, itf);

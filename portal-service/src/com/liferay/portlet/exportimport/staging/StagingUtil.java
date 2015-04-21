@@ -17,8 +17,6 @@ package com.liferay.portlet.exportimport.staging;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -29,15 +27,11 @@ import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.exportimport.lar.MissingReference;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 
-import java.io.Serializable;
-
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -286,21 +280,6 @@ public class StagingUtil {
 			remoteGroupId, serviceContext);
 	}
 
-	public static JSONArray getErrorMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap) {
-
-		return getStaging().getErrorMessagesJSONArray(
-			locale, missingReferences, contextMap);
-	}
-
-	public static JSONObject getExceptionMessagesJSONObject(
-		Locale locale, Exception e, Map<String, Serializable> contextMap) {
-
-		return getStaging().getExceptionMessagesJSONObject(
-			locale, e, contextMap);
-	}
-
 	public static Group getLiveGroup(long groupId) {
 		return getStaging().getLiveGroup(groupId);
 	}
@@ -388,14 +367,6 @@ public class StagingUtil {
 		PortletRequest PortletRequest) {
 
 		return getStaging().getStagingParameters(PortletRequest);
-	}
-
-	public static JSONArray getWarningMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap) {
-
-		return getStaging().getWarningMessagesJSONArray(
-			locale, missingReferences, contextMap);
 	}
 
 	public static WorkflowTask getWorkflowTask(

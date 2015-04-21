@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.test.rule.callback.SyntheticBundleTestCallback;
 
 /**
- * Creates and installs a bundle from the named sub-package of the test class.
+ * Creates and installs a bundle from the named sub-package of a test class.
  *
  * <p>
  * For example, if the test class is <code>bar.FooTest</code>, invoking

@@ -109,7 +109,7 @@ public class SyncAccountServiceTest extends BaseTestCase {
 		PowerMockito.stub(
 			PowerMockito.method(
 				FileUtil.class, "moveFile", Path.class, Path.class,
-				Boolean.class)
+				boolean.class)
 		).toThrow(
 
 			// DirectoryNotEmptyException is thrown when a file is moved across

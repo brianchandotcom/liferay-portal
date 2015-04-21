@@ -21,6 +21,7 @@
 		<dirset dir="journal" includes="*" />
 		<dirset dir="layout" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
+		<dirset dir="marketplace" includes="*" />
 		<dirset dir="mentions" excludes="mentions-editor-config" includes="*" />
 		<dirset dir="message-boards" includes="*" />
 		<dirset dir="nested-portlets" includes="*" />

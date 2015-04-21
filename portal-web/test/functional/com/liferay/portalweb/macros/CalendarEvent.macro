@@ -122,17 +122,13 @@
 
 				<execute macro="CalendarEvent#save" />
 
-				<execute macro="CalendarEvent#changeViewPG">
-					<var name="viewType" value="Month" />
+				<execute macro="CalendarEvent#viewRegularEventTitleViaMonthViewCmd">
+					<var name="endDate" value="${endDate}" />
+					<var name="endDateTime" value="${endDateTime}" />
+					<var name="eventTitle" value="${eventTitle}" />
+					<var name="startDate" value="${startDate}" />
+					<var name="startDateTime" value="${startDateTime}" />
 				</execute>
-
-				<var name="key_endDate" value="${endDate}" />
-				<var name="key_endDateTime" value="${endDateTime}" />
-				<var name="key_startDate" value="${startDate}" />
-				<var name="key_startDateTime" value="${startDateTime}" />
-
-				<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_REGULAR" />
-				<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_REGULAR_TITLE" value1="${eventTitle}" />
 			</then>
 			<elseif>
 				<equals arg1="${eventType}" arg2="All Day" />
@@ -316,13 +312,13 @@
 
 				<execute macro="CalendarEvent#save" />
 
-				<var name="key_endDate" value="${endDate}" />
-				<var name="key_endDateTime" value="${setEndDateTime}" />
-				<var name="key_startDate" value="${startDate}" />
-				<var name="key_startDateTime" value="${setStartDateTime}" />
-
-				<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_REGULAR" />
-				<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_REGULAR_TITLE" value1="${eventTitle}" />
+				<execute macro="CalendarEvent#viewRegularEventTitleViaMonthViewCmd">
+					<var name="endDate" value="${endDate}" />
+					<var name="endDateTime" value="${endDateTime}" />
+					<var name="eventTitle" value="${eventTitle}" />
+					<var name="startDate" value="${startDate}" />
+					<var name="startDateTime" value="${startDateTime}" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${eventType}" arg2="Repeating" />
@@ -1667,6 +1663,20 @@
 		<execute function="AssertElementNotPresent" locator1="PGCalendarVieweventdetails#AVERAGE_STAR_EMPTY_5" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewRegularEventTitleViaMonthViewCmd">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Month" />
+		</execute>
+
+		<var name="key_endDate" value="${endDate}" />
+		<var name="key_endDateTime" value="${endDateTime}" />
+		<var name="key_startDate" value="${startDate}" />
+		<var name="key_startDateTime" value="${startDateTime}" />
+
+		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_REGULAR" />
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_REGULAR_TITLE_VIA_MONTH" value1="${eventTitle}" />
 	</command>
 
 	<command name="viewRepeatWeekStartDay">

@@ -26,6 +26,7 @@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.xsl.content.web.configuration.XSLContentConfiguration" %><%@
+page import="com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration" %><%@
 page import="com.liferay.xsl.content.web.util.XSLContentUtil" %>
 
 <%@ page import="java.net.URL" %>
@@ -36,8 +37,10 @@ page import="com.liferay.xsl.content.web.util.XSLContentUtil" %>
 <%
 XSLContentConfiguration xslContentConfiguration = (XSLContentConfiguration)request.getAttribute(XSLContentConfiguration.class.getName());
 
-String xmlUrl = portletPreferences.getValue("xmlUrl", "@portlet_context_url@" + XSLContentUtil.DEFAULT_XML_URL);
-String xslUrl = portletPreferences.getValue("xslUrl", "@portlet_context_url@" + XSLContentUtil.DEFAULT_XSL_URL);
+XSLContentPortletInstanceConfiguration xslContentPortletInstanceConfiguration = (XSLContentPortletInstanceConfiguration)renderRequest.getAttribute(XSLContentPortletInstanceConfiguration.class.getName());
+
+String xmlUrl = xslContentPortletInstanceConfiguration.xmlUrl();
+String xslUrl = xslContentPortletInstanceConfiguration.xslUrl();
 %>
 
 <%@ include file="/init-ext.jsp" %>

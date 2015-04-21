@@ -16,8 +16,16 @@ package com.liferay.xsl.content.web.portlet;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
+import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;
 import com.liferay.xsl.content.web.upgrade.XSLContentWebUpgrade;
 
 import java.io.IOException;
@@ -71,8 +79,29 @@ public class XSLContentPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		renderRequest.setAttribute(
 			XSLContentConfiguration.class.getName(), _xslContentConfiguration);
+
+		try {
+			XSLContentPortletInstanceConfiguration
+				xslContentPortletInstanceConfiguration =
+					_settingsFactory.getSettings(
+						XSLContentPortletInstanceConfiguration.class,
+						new PortletInstanceSettingsLocator(
+							themeDisplay.getLayout(), portletDisplay.getId()));
+
+			renderRequest.setAttribute(
+				XSLContentPortletInstanceConfiguration.class.getName(),
+				xslContentPortletInstanceConfiguration);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 
 		super.doView(renderRequest, renderResponse);
 	}
@@ -90,10 +119,16 @@ public class XSLContentPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
+	@Reference(unbind = "-")
 	protected void setXSLContentWebUpgrade(
 		XSLContentWebUpgrade xslContentWebUpgrade) {
 	}
 
+	private SettingsFactory _settingsFactory;
 	private volatile XSLContentConfiguration _xslContentConfiguration;
 
 }

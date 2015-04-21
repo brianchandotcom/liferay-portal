@@ -14,10 +14,14 @@
 
 package com.liferay.xml.formatter;
 
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,8 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 public class XMLFormatter {
 
 	public static void main(String[] args) {
-		ToolDependencies.wireBasic();
-
 		String fileName = System.getProperty("xml.formatter.file");
 		boolean stripComments = GetterUtil.getBoolean(
 			System.getProperty("xml.formatter.strip.comments"));
@@ -36,19 +38,31 @@ public class XMLFormatter {
 		}
 
 		try {
-			String xml = FileUtil.read(fileName);
-
-			if (stripComments) {
-				xml = HtmlUtil.stripComments(xml);
-			}
-
-			xml = com.liferay.util.xml.XMLFormatter.toString(xml);
-
-			FileUtil.write(fileName, xml);
+			new XMLFormatter(fileName, stripComments);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public XMLFormatter(String fileName, boolean stripComments)
+		throws Exception {
+
+		Path path = Paths.get(fileName);
+
+		String xml = new String(Files.readAllBytes(path), StringPool.UTF8);
+
+		if (stripComments) {
+			xml = _stripComments(xml);
+		}
+
+		xml = com.liferay.util.xml.XMLFormatter.toString(xml);
+
+		Files.write(path, xml.getBytes(StringPool.UTF8));
+	}
+
+	private String _stripComments(String xml) {
+		return StringUtil.stripBetween(xml, "<!--", "-->");
 	}
 
 }

@@ -92,6 +92,11 @@ public final class LoggerUtil {
 		_javascriptExecutor.executeScript(sb.toString());
 	}
 
+	public static void executeJavascript(String script) {
+		_javascriptExecutor.executeScript(
+			StringEscapeUtils.escapeEcmaScript(script));
+	}
+
 	public static String getClassName(LoggerElement loggerElement) {
 		if (!isLoggerStarted()) {
 			return null;

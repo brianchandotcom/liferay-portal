@@ -127,9 +127,9 @@
 
 			if (!instance._bbcodeConverter) {
 				var converterConfig = {
-					emoticonSymbols: emoticonSymbols,
 					emoticonImages: emoticonImages,
-					emoticonPath: emoticonPath
+					emoticonPath: emoticonPath,
+					emoticonSymbols: emoticonSymbols
 				};
 
 				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML(converterConfig);

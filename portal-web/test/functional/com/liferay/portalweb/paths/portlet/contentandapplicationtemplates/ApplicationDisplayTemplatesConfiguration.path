@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CLOSE_BUTTON</td>
-	<td>//button[@class='close-content']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETUP</td>
 	<td>//a[contains(.,'Setup')]</td>
 	<td></td>

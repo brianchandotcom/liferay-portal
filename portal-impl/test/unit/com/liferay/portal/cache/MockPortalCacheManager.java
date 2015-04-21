@@ -65,6 +65,10 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public void initialize() {
+	}
+
+	@Override
 	public boolean isClusterAware() {
 		throw new UnsupportedOperationException();
 	}

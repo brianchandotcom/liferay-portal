@@ -48,37 +48,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
 	public void afterPropertiesSet() {
-		if ((_portalCacheManagerConfiguration != null) ||
-			(_mpiOnly && SPIUtil.isSPI())) {
-
-			return;
-		}
-
-		if (name == null) {
-			throw new NullPointerException("Name is null");
-		}
-
-		initPortalCacheManager();
-
-		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
-
-		for (CallbackConfiguration callbackConfiguration :
-				_portalCacheManagerConfiguration.
-					getCacheManagerListenerConfigurations()) {
-
-			CallbackFactory callbackFactory =
-				callbackConfiguration.getCallbackFactory();
-
-			CacheManagerListener cacheManagerListener =
-				callbackFactory.createCacheManagerListener(
-					callbackConfiguration.getProperties());
-
-			if (cacheManagerListener != null) {
-				registerCacheManagerListener(cacheManagerListener);
-			}
-		}
-
-		PortalCacheProvider.registerPortalCacheManager(this);
+		initialize();
 	}
 
 	@Override
@@ -171,6 +141,41 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public void initialize() {
+		if ((_portalCacheManagerConfiguration != null) ||
+			(_mpiOnly && SPIUtil.isSPI())) {
+
+			return;
+		}
+
+		if (name == null) {
+			throw new NullPointerException("Name is null");
+		}
+
+		initPortalCacheManager();
+
+		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
+
+		for (CallbackConfiguration callbackConfiguration :
+				_portalCacheManagerConfiguration.
+					getCacheManagerListenerConfigurations()) {
+
+			CallbackFactory callbackFactory =
+				callbackConfiguration.getCallbackFactory();
+
+			CacheManagerListener cacheManagerListener =
+				callbackFactory.createCacheManagerListener(
+					callbackConfiguration.getProperties());
+
+			if (cacheManagerListener != null) {
+				registerCacheManagerListener(cacheManagerListener);
+			}
+		}
+
+		PortalCacheProvider.registerPortalCacheManager(this);
 	}
 
 	@Override

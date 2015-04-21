@@ -48,7 +48,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 		memoryPortalCacheManager.setName(name);
 
-		memoryPortalCacheManager.afterPropertiesSet();
+		memoryPortalCacheManager.initialize();
 
 		return memoryPortalCacheManager;
 	}

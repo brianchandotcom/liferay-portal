@@ -81,6 +81,9 @@ public class PoshiRunner {
 		_testClassCommandName = classCommandName;
 		_testClassName = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 			_testClassCommandName);
+
+		PoshiRunnerContext.setTestCaseCommandName(_testClassCommandName);
+		PoshiRunnerContext.setTestCaseName(_testClassName);
 	}
 
 	@Test

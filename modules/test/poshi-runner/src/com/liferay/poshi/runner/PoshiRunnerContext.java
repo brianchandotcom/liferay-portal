@@ -154,6 +154,14 @@ public class PoshiRunnerContext {
 		return _commandElements.get("test-case#" + classCommandName);
 	}
 
+	public static String getTestCaseCommandName() {
+		return _testClassCommandName;
+	}
+
+	public static String getTestCaseName() {
+		return _testClassName;
+	}
+
 	public static Element getTestCaseRootElement(String className) {
 		return _rootElements.get("test-case#" + className);
 	}
@@ -173,6 +181,14 @@ public class PoshiRunnerContext {
 	public static void readFiles() throws Exception {
 		_readPoshiFiles();
 		_readSeleniumFiles();
+	}
+
+	public static void setTestCaseCommandName(String testClassCommandName) {
+		_testClassCommandName = testClassCommandName;
+	}
+
+	public static void setTestCaseName(String testClassName) {
+		_testClassName = testClassName;
 	}
 
 	private static String _getCommandSummary(
@@ -464,5 +480,7 @@ public class PoshiRunnerContext {
 	private static final Map<String, Element> _rootElements = new HashMap<>();
 	private static final Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<>();
+	private static String _testClassCommandName;
+	private static String _testClassName;
 
 }

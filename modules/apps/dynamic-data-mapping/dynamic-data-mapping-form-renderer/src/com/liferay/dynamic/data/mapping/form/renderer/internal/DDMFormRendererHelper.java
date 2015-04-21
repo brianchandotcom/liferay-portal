@@ -166,7 +166,8 @@ public class DDMFormRendererHelper {
 
 		if (ddmFormFieldType == null) {
 			throw new DDMFormRenderingException(
-				"No DDMFormFieldType registered for " + ddmFormField.getType());
+				"No DDM form field type registered for " +
+					ddmFormField.getType());
 		}
 
 		try {

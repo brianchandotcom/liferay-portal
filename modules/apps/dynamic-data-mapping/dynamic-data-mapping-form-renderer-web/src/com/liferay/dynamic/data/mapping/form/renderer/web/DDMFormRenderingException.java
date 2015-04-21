@@ -12,20 +12,33 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry;
+package com.liferay.dynamic.data.mapping.form.renderer.web;
 
-import java.util.List;
-import java.util.Set;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldTypeRegistry {
+@ProviderType
+public class DDMFormRenderingException extends PortalException {
 
-	public DDMFormFieldType getDDMFormFieldType(String name);
+	public DDMFormRenderingException() {
+	}
 
-	public Set<String> getDDMFormFieldTypeNames();
+	public DDMFormRenderingException(String msg) {
+		super(msg);
+	}
 
-	public List<DDMFormFieldType> getDDMFormFieldTypes();
+	public DDMFormRenderingException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public DDMFormRenderingException(Throwable cause) {
+		super(cause);
+	}
+
+	private static final long serialVersionUID = 1L;
 
 }

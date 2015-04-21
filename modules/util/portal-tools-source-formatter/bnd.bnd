@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	!javax.portlet,\
 	!javax.servlet.http,\
+	!org.apache.tools.ant.*,\
 	*
 Include-Resource:\
 	classes,\

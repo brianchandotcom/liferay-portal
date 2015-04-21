@@ -30,6 +30,9 @@ import java.util.concurrent.Executors;
  */
 public class SourceFormatter {
 
+	public static final String PROCESSED_FILES_ATTRIBUTE =
+		"source.formatter.processed.files";
+
 	public static void main(String[] args) {
 		try {
 			SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();

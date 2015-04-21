@@ -28,6 +28,31 @@
 	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td></td>
 </tr>
+<tr>
+	<td>IFRAME</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME_LOCALIZED</td>
+	<td>//iframe[contains(@title,'_editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY</td>
+	<td>//body[contains(@class,'cke_editable')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SOURCE_ON</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_URL</td>
+	<td>//input[contains(@id,'sourceURL')]</td>
+	<td></td>
+</tr>
 <!--This locator is necessary for tests that require the sendKey action-->
 <tr>
 	<td>BODY_FIELD_SOURCE_ON_SEND_KEYS</td>

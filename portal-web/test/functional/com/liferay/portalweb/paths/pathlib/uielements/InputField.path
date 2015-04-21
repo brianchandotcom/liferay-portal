@@ -19,26 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT</td>
-	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT</td>
-	<td>//body[contains(@class,'cke_editable')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_IFRAME</td>
-	<td>//div[@id='cke_1_contents']/iframe</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_SOURCE_ON</td>
-	<td>//textarea[contains(@class,'cke_editable')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DESCRIPTION</td>
 	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
@@ -86,11 +66,6 @@
 <tr>
 	<td>REQUIRED_ALERT</td>
 	<td>//div[@class=&quot;required&quot; and contains(.,'This field is required')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SOURCE_URL</td>
-	<td>//input[contains(@id,'sourceURL')]</td>
 	<td></td>
 </tr>
 <tr>

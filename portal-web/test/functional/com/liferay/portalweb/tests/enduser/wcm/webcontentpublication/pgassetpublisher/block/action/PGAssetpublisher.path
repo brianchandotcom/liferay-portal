@@ -329,52 +329,52 @@
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_1</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[1][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingStar')]//a[1][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_2</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[2][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingStar')]//a[2][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_3</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[3][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingStar')]//a[3][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_4</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[4][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingStar')]//a[4][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_5</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[5][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingStar')]//a[5][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_1</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[1][@class='rating-element icon-star-empty']</td>
+	<td>//a[1][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_2</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[2][@class='rating-element icon-star-empty']</td>
+	<td>//a[2][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_3</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[3][@class='rating-element icon-star-empty']</td>
+	<td>//a[3][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_4</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[4][@class='rating-element icon-star-empty']</td>
+	<td>//a[4][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_5</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingStar')]//a[5][@class='rating-element icon-star-empty']</td>
+	<td>//a[5][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>
@@ -390,52 +390,52 @@
 </tr>
 <tr>
 	<td>AVERAGE_STAR_1</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[1][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[1][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_2</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[2][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[2][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_3</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[3][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[3][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_4</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[4][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[4][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_5</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[5][@class='rating-element icon-star']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[5][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_1</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[1][@class='rating-element icon-star-empty']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[1][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_2</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[2][@class='rating-element icon-star-empty']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[2][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_3</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[3][@class='rating-element icon-star-empty']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[3][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_4</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[4][@class='rating-element icon-star-empty']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[4][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_5</td>
-	<td>//div[@class='body-row' and contains(.,'${key_assetTitle}')]//div[contains(@id,'ratingScore')]//span[5][@class='rating-element icon-star-empty']</td>
+	<td>//div[contains(@id,'ratingScore')]//span[5][@class='rating-element icon-star-empty']</td>
 	<td></td>
 </tr>
 <tr>

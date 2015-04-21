@@ -129,9 +129,7 @@ public final class CommandLoggerHandler {
 
 		String classCommandName = element.attributeValue("function");
 
-		String commandNameText = "<b>" + classCommandName + "</b>";
-
-		sb.append(_getLineItemText("command-name", commandNameText));
+		sb.append(_getLineItemText("command-name", classCommandName));
 
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
@@ -148,12 +146,10 @@ public final class CommandLoggerHandler {
 				sb.append(_getLineItemText("param-type", locatorKey));
 				sb.append(_getLineItemText("misc", "&nbsp;"));
 
-				String paramValueText =
+				String paramValue =
 					PoshiRunnerVariablesUtil.getValueFromCommandMap(locatorKey);
 
-				paramValueText = "<b>" + paramValueText + "</b>";
-
-				sb.append(_getLineItemText("param-value", paramValueText));
+				sb.append(_getLineItemText("param-value", paramValue));
 			}
 
 			String valueKey = "value" + (i + 1);
@@ -163,12 +159,10 @@ public final class CommandLoggerHandler {
 				sb.append(_getLineItemText("param-type", valueKey));
 				sb.append(_getLineItemText("misc", "&nbsp;"));
 
-				String paramValueText =
+				String paramValue =
 					PoshiRunnerVariablesUtil.getValueFromCommandMap(valueKey);
 
-				paramValueText = "<b>" + paramValueText + "</b>";
-
-				sb.append(_getLineItemText("param-value", paramValueText));
+				sb.append(_getLineItemText("param-value", paramValue));
 			}
 		}
 

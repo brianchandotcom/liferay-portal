@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -108,8 +109,23 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		URL resourceURL = _servletContext.getResource(requestPath);
 
+		ServletContext currentThreadServletContext = _servletContext;
+
+		boolean bundleResource = false;
+
 		if (resourceURL == null) {
-			return null;
+			resourceURL = PortalWebResourcesUtil.getServletContextResource(
+				requestPath);
+
+			if (resourceURL == null) {
+				return null;
+			}
+
+			currentThreadServletContext =
+				PortalWebResourcesUtil.getServletContext(
+					PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+
+			bundleResource = true;
 		}
 
 		String cacheCommonFileName = getCacheFileName(request);
@@ -144,8 +160,15 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 				content = StringUtil.read(resourceURL.openStream());
 
-				dynamicContent = DynamicCSSUtil.parseSass(
-					_servletContext, request, requestPath, content);
+				if (bundleResource) {
+					dynamicContent = DynamicCSSUtil.replaceToken(
+						currentThreadServletContext, request, content);
+				}
+				else {
+					dynamicContent = DynamicCSSUtil.parseSass(
+						currentThreadServletContext, request, requestPath,
+						content);
+				}
 
 				response.setContentType(ContentTypes.TEXT_CSS);
 
@@ -168,7 +191,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 				content = bufferCacheServletResponse.getString();
 
 				dynamicContent = DynamicCSSUtil.parseSass(
-					_servletContext, request, requestPath, content);
+					currentThreadServletContext, request, requestPath, content);
 
 				FileUtil.write(
 					cacheContentTypeFile,

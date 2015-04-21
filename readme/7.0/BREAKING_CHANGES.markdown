@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `a4f12cd`.*
+*This document has been reviewed through commit `5996ef5`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1402,55 +1402,55 @@ This change was made to allow for backwards compatibility.
 
 ---------------------------------------
 
-### Removed portal properties to display sections in form navigators
+### Removed Portal Properties Used to Display Sections in Form Navigators
 - **Date:** 2015-Apr-16
 - **JIRA Ticket:** LPS-54903
 
 #### What changed?
 
-The following portal properties (and the equivalent `PropsKeys` and `PropsValues`)
-that were used to decide what sections would be displayed in the `form-navigator`
-have been removed:
+The following portal properties (and the equivalent `PropsKeys` and
+`PropsValues`) that were used to decide what sections would be displayed in the
+`form-navigator` have been removed:
 
-`layout.set.form.update`
-`sites.form.add.advanced`
-`sites.form.add.main`
-`sites.form.add.miscellaneous`
-`sites.form.add.seo`
-`sites.form.update.advanced`
-`sites.form.update.main`
-`sites.form.update.miscellaneous`
-`sites.form.update.seo`
+- `layout.set.form.update`
+- `sites.form.add.advanced`
+- `sites.form.add.main`
+- `sites.form.add.miscellaneous`
+- `sites.form.add.seo`
+- `sites.form.update.advanced`
+- `sites.form.update.main`
+- `sites.form.update.miscellaneous`
+- `sites.form.update.seo`
 
 The sections and categories of form navigators are now OSGi components.
 
 #### Who is affected?
 
-Administrators who may have added, removed or reorder sections through those
-portal properties. Developers using the constants defined in `PropsKeys` or
-`PropsValues` for those portal properties will also be affected.
+This affects administrators who may have added, removed, or reordered sections
+using those portal properties. Developers using the constants defined in
+`PropsKeys` or `PropsValues` for those portal properties will also be affected.
 
 #### How should I update my code?
 
-Since those properties no longer exist you cannot rely on them. References to
+Since those properties no longer exist, you cannot rely on them. References to
 the constants of `PropsKeys` and `PropsValues` will need to be updated. You can
 use `FormNavigatorCategoryUtil` and `FormNavigatorEntryUtil` to obtain a list of
 the available sections and categories for a form navigator instance.
 
-Changes to remove or reorder specific sections will need to be done through
+Changes to remove or reorder specific sections will need to be done through the
 OSGi console to update the service ranking or stop the components.
 
 Adding new sections with Liferay Hooks will still work as a legacy feature, but
-we recommend to use OSGi components to add new sections.
+the recommended way is using OSGi components to add new sections.
 
 #### Why was this change made?
 
-The old mechanism to add new sections to `form-navigator` taglibs was very
+The old mechanism to add new sections to `form-navigator` tags was very
 limited because it could only depend on portal for services and utils due to the
-new section was rendered from the portal classloader.
+new section that was rendered from the portal classloader.
 
-We need a way to add new sections and categories to `form-navigator` taglibs via
-OSGi plugins in a more extensible way, allowing the developer including the new
-section to access to their own utils and services.
+There was a need to add new sections and categories to `form-navigator` tags via
+OSGi plugins in a more extensible way, allowing the developer to include new
+sections to access to their own utils and services.
 
 ---------------------------------------

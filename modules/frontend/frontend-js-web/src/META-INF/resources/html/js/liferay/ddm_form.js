@@ -350,10 +350,7 @@ AUI.add(
 					getSiblings: function() {
 						var instance = this;
 
-						var parent = instance.get('parent');
-						var name = instance.get('name');
-
-						return parent.get('fields');
+						return instance.get('parent').get('fields');
 					},
 
 					getValue: function() {
@@ -948,8 +945,6 @@ AUI.add(
 					getUploadURL: function() {
 						var instance = this;
 
-						var portletNamespace = instance.get('portletNamespace');
-
 						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
 						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
@@ -1429,6 +1424,8 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						instance.eventHandlers = [];
+
 						instance.bindUI();
 						instance.renderUI();
 					},
@@ -1447,20 +1444,28 @@ AUI.add(
 						instance.formNode = container.ancestor('form', true);
 
 						if (instance.formNode) {
-							instance.formNode.on('submit', instance._onSubmitForm, instance);
-
-							Liferay.on('submitForm', instance._onLiferaySubmitForm, instance);
-
-							Liferay.after('form:registered', instance._afterFormRegistered, instance);
-
-							instance.after(
-								['liferay-ddm-field:repeat', 'liferay-ddm-field:remove'],
-								instance._afterUpdateRepeatableFields,
-								instance
+							instance.eventHandlers.push(
+								instance.after('liferay-ddm-field:render', instance._afterRenderField, instance),
+								instance.after(
+									['liferay-ddm-field:repeat', 'liferay-ddm-field:remove'],
+									instance._afterUpdateRepeatableFields,
+									instance
+								),
+								instance.formNode.on('submit', instance._onSubmitForm, instance),
+								Liferay.after('form:registered', instance._afterFormRegistered, instance),
+								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
 							);
-
-							instance.after('liferay-ddm-field:render', instance._afterRenderField, instance);
 						}
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						AArray.invoke(instance.eventHandlers, 'detach');
+
+						instance.eventHandlers = null;
+
+						instance.formNode = null;
 					},
 
 					_afterFormRegistered: function(event) {

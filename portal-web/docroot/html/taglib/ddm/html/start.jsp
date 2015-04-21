@@ -40,7 +40,7 @@
 		<aui:input name="<%= ddmFormValuesInputName %>" type="hidden" />
 
 		<aui:script use="liferay-ddm-form">
-			new Liferay.DDM.Form(
+			var liferayDDMForm = new Liferay.DDM.Form(
 				{
 					container: '#<%= randomNamespace %>',
 					ddmFormValuesInput: '#<portlet:namespace /><%= ddmFormValuesInputName %>',
@@ -75,5 +75,15 @@
 					</c:if>
 				}
 			);
+
+			var onDestroyPortlet = function(event) {
+				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+					liferayDDMForm.destructor();
+
+					Liferay.detach('destroyPortlet', onDestroyPortlet);
+				}
+			};
+
+			Liferay.on('destroyPortlet', onDestroyPortlet);
 		</aui:script>
 	</c:if>

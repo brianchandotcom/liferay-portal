@@ -19,7 +19,7 @@
 			<var name="portletName" value="Test Localized Portlet" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGTestlocalization#CHINESE_LOCALIZATION" value1="English" />
+		<execute function="AssertClick" locator1="PGTestlocalization#CHINESE_LOCALIZATION" value1="Chinese" />
 
 		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" />
 	</command>
@@ -49,7 +49,7 @@
 			<var name="portletName" value="Test Localized Portlet" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGTestlocalization#FRENCH_LOCALIZATION" value1="English" />
+		<execute function="AssertClick" locator1="PGTestlocalization#FRENCH_LOCALIZATION" value1="French" />
 
 		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" />
 	</command>
@@ -63,7 +63,7 @@
 			<var name="portletName" value="Test Localized Portlet" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGTestlocalization#SPANISH_LOCALIZATION" value1="English" />
+		<execute function="AssertClick" locator1="PGTestlocalization#SPANISH_LOCALIZATION" value1="Spanish" />
 
 		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" />
 	</command>

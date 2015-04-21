@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `768b181`.*
+*This document has been reviewed through commit `7a8747c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1338,28 +1338,29 @@ modules provide more flexibility and can be included in any app.
 
 ---------------------------------------
 
-### Added new methods in `ScreenNameValidator` interface
+### Added New Methods in the `ScreenNameValidator` Interface
 - **Date:** 2015-Mar-17
 - **JIRA Ticket:** LPS-53409
 
 #### What changed?
 
-The `ScreenNameValidator` interface has new methods `getDescription(Locale locale)`
-and `getJSValidation()`.
+The `ScreenNameValidator` interface has new methods `getDescription(Locale)` and
+`getJSValidation()`.
 
 #### Who is affected?
 
-This affects developers who have implemented custom screen name validator with
+This affects developers who have implemented a custom screen name validator with
 the `ScreenNameValidator` interface.
 
 #### How should I update my code?
 
 You should implement the new methods introduced in the interface.
 
-- `getDescription(Locale locale)`: returns a description of what the screen name 
+- `getDescription(Locale)`: returns a description of what the screen name 
 validator validates.
 
-- `getJSValidation()`: returns the JavaScript input validator on the client side.
+- `getJSValidation()`: returns the JavaScript input validator on the client
+side.
 
 #### Why was this change made?
 
@@ -1368,8 +1369,9 @@ in `UserLocalService`. A new property `users.screen.name.special.characters` has
 been added to provide configurability of special characters allowed in screen
 names.
 
-In addition, developers can now specify custom input validator for the screen name
-on the client side by providing a JavaScript validator in `getJSValidation()`.
+In addition, developers can now specify custom input validator for the screen
+name on the client side by providing a JavaScript validator in
+`getJSValidation()`.
 
 ---------------------------------------
 

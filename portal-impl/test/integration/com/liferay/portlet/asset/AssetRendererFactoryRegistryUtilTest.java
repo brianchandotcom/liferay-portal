@@ -48,13 +48,14 @@ public class AssetRendererFactoryRegistryUtilTest {
 		List<AssetRendererFactory> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(1);
 
-		for (AssetRendererFactory assetRendererFactory : assetRendererFactories)
-		{
+		for (AssetRendererFactory assetRendererFactory :
+				assetRendererFactories) {
 
 			Class<?> clazz = assetRendererFactory.getClass();
 
 			if (className.equals(clazz.getName())) {
 				Assert.assertTrue(true);
+
 				return;
 			}
 		}
@@ -114,6 +115,7 @@ public class AssetRendererFactoryRegistryUtilTest {
 		for (long classNameId : classNameIds) {
 			if (classNameId == 1234567890) {
 				Assert.assertTrue(true);
+
 				return;
 			}
 		}
@@ -129,6 +131,7 @@ public class AssetRendererFactoryRegistryUtilTest {
 		for (long classNameId : classNameIds) {
 			if (classNameId == 1234567890) {
 				Assert.assertTrue(true);
+
 				return;
 			}
 		}
@@ -144,6 +147,7 @@ public class AssetRendererFactoryRegistryUtilTest {
 		for (long classNameId : classNameIds) {
 			if (classNameId == 1234567890) {
 				Assert.assertTrue(true);
+
 				return;
 			}
 		}

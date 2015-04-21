@@ -14,7 +14,12 @@
 
 package com.liferay.portal.tools.service.builder;
 
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelHintsUtil;
+
+import java.io.File;
 
 import java.util.Set;
 
@@ -23,7 +28,8 @@ import java.util.Set;
  */
 public class ServiceBuilderInvoker {
 
-	public static ServiceBuilder invoke(ServiceBuilderBean serviceBuilderBean)
+	public static ServiceBuilder invoke(
+			File baseDir, ServiceBuilderBean serviceBuilderBean)
 		throws Exception {
 
 		Set<String> resourceActionModels =
@@ -42,29 +48,43 @@ public class ServiceBuilderInvoker {
 		modelHintsUtil.setModelHints(modelHintsImpl);
 
 		return new ServiceBuilder(
-			serviceBuilderBean.getApiDir(),
+			_getAbsolutePath(baseDir, serviceBuilderBean.getApiDir()),
 			serviceBuilderBean.isAutoImportDefaultReferences(),
 			serviceBuilderBean.isAutoNamespaceTables(),
 			serviceBuilderBean.getBeanLocatorUtil(),
 			serviceBuilderBean.getBuildNumber(),
 			serviceBuilderBean.isBuildNumberIncrement(),
-			serviceBuilderBean.getHbmFileName(),
-			serviceBuilderBean.getImplDir(),
-			serviceBuilderBean.getInputFileName(),
-			serviceBuilderBean.getModelHintsFileName(),
+			_getAbsolutePath(baseDir, serviceBuilderBean.getHbmFileName()),
+			_getAbsolutePath(baseDir, serviceBuilderBean.getImplDir()),
+			_getAbsolutePath(baseDir, serviceBuilderBean.getInputFileName()),
+			_getAbsolutePath(
+				baseDir, serviceBuilderBean.getModelHintsFileName()),
 			serviceBuilderBean.isOsgiModule(),
 			serviceBuilderBean.getPluginName(),
 			serviceBuilderBean.getPropsUtil(),
 			serviceBuilderBean.getReadOnlyPrefixes(),
-			serviceBuilderBean.getRemotingFileName(), resourceActionModels,
-			serviceBuilderBean.getResourcesDir(),
-			serviceBuilderBean.getSpringFileName(),
+			_getAbsolutePath(baseDir, serviceBuilderBean.getRemotingFileName()),
+			resourceActionModels,
+			_getAbsolutePath(baseDir, serviceBuilderBean.getResourcesDir()),
+			_getAbsolutePath(baseDir, serviceBuilderBean.getSpringFileName()),
 			serviceBuilderBean.getSpringNamespaces(),
-			serviceBuilderBean.getSqlDir(), serviceBuilderBean.getSqlFileName(),
+			_getAbsolutePath(baseDir, serviceBuilderBean.getSqlDir()),
+			serviceBuilderBean.getSqlFileName(),
 			serviceBuilderBean.getSqlIndexesFileName(),
 			serviceBuilderBean.getSqlSequencesFileName(),
 			serviceBuilderBean.getTargetEntityName(),
-			serviceBuilderBean.getTestDir(), true);
+			_getAbsolutePath(baseDir, serviceBuilderBean.getTestDir()), true);
+	}
+
+	private static String _getAbsolutePath(File baseDir, String fileName) {
+		if (Validator.isNull(fileName)) {
+			return fileName;
+		}
+
+		File file = new File(baseDir, fileName);
+
+		return StringUtil.replace(
+			file.getAbsolutePath(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
 }

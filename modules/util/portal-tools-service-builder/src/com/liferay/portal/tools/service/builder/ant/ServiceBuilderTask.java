@@ -32,13 +32,13 @@ public class ServiceBuilderTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 		try {
+			Project project = getProject();
+
 			ServiceBuilder serviceBuilder = ServiceBuilderInvoker.invoke(
-				_serviceBuilderBean);
+				project.getBaseDir(), _serviceBuilderBean);
 
 			Set<String> modifiedFileNames =
 				serviceBuilder.getModifiedFileNames();
-
-			Project project = getProject();
 
 			project.addIdReference(
 				ServiceBuilder.MODIFIED_FILES_ATTRIBUTE, modifiedFileNames);

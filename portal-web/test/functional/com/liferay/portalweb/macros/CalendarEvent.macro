@@ -245,6 +245,10 @@
 	</command>
 
 	<command name="addRSVP">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#selectViaSchedulerCmd">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
@@ -985,6 +989,10 @@
 	</command>
 
 	<command name="gotoEdit">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#selectViaSchedulerCmd">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
@@ -1476,8 +1484,13 @@
 	</command>
 
 	<command name="viewEventDetails">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#selectViaSchedulerCmd">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewTitleViaSchedulerDialogBoxCmd">

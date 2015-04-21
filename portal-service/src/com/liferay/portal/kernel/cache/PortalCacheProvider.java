@@ -29,28 +29,53 @@ public class PortalCacheProvider {
 	public static PortalCacheManager<? extends Serializable, ?>
 		getPortalCacheManager(String portalCacheManagerName) {
 
-		return _portalCacheManagers.get(portalCacheManagerName);
+		return _instance._getPortalCacheManager(portalCacheManagerName);
 	}
 
 	public static Collection<PortalCacheManager<? extends Serializable, ?>>
 		getPortalCacheManagers() {
 
+		return _instance._getPortalCacheManagers();
+	}
+
+	public static void registerPortalCacheManager(
+		PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
+
+		_instance._registerPortalCacheManager(portalCacheManager);
+	}
+
+	public static void unregisterPortalCacheManager(
+		String portalCacheManagerName) {
+
+		_instance._unregisterPortalCacheManager(portalCacheManagerName);
+	}
+
+	private PortalCacheManager<? extends Serializable, ?>
+		_getPortalCacheManager(String portalCacheManagerName) {
+
+		return _portalCacheManagers.get(portalCacheManagerName);
+	}
+
+	private Collection<PortalCacheManager<? extends Serializable, ?>>
+		_getPortalCacheManagers() {
+
 		return Collections.unmodifiableCollection(
 			_portalCacheManagers.values());
 	}
 
-	public static void registerPortalCacheManager(
+	private void _registerPortalCacheManager(
 		PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
 
 		_portalCacheManagers.put(
 			portalCacheManager.getName(), portalCacheManager);
 	}
 
-	public static void unregisterPortalCacheManager(
-		String portalCacheManagerName) {
-
+	private void _unregisterPortalCacheManager(String portalCacheManagerName) {
 		_portalCacheManagers.remove(portalCacheManagerName);
 	}
+
+	private static final PortalCacheProvider _instance =
+		new PortalCacheProvider();
 
 	private static final
 		Map<String, PortalCacheManager<? extends Serializable, ?>>

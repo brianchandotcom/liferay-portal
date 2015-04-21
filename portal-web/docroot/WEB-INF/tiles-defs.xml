@@ -560,6 +560,10 @@
 		<put name="portlet_content" value="/portlet/layouts_admin/publish_layouts.jsp" />
 	</definition>
 
+	<definition name="portlet.layouts_admin.publish_layouts_simple" extends="portlet.layouts_admin">
+		<put name="portlet_content" value="/portlet/layouts_admin/publish_layouts_simple.jsp" />
+	</definition>
+
 	<!-- Login -->
 
 	<definition name="portlet.login" extends="portlet" />

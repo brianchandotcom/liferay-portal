@@ -355,8 +355,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (portalSource &&
-			content.contains("page import=") &&
+		if (portalSource && content.contains("page import=") &&
 			!fileName.contains("init.jsp") &&
 			!fileName.contains("init-ext.jsp") &&
 			!fileName.contains("/taglib/aui/") &&
@@ -512,8 +511,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			processFormattedFile(file, fileName, content, newContent);
 
-			if (portalSource &&
-				_moveFrequentlyUsedImportsToCommonInit &&
+			if (portalSource && _moveFrequentlyUsedImportsToCommonInit &&
 				fileName.endsWith("/init.jsp") &&
 				!absolutePath.contains("/modules/") &&
 				!fileName.endsWith("/common/init.jsp")) {
@@ -552,8 +550,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-			_checkedForIncludesFileNames = new HashSet<String>();
-			_includeFileNames = new HashSet<String>();
+			_checkedForIncludesFileNames = new HashSet<>();
+			_includeFileNames = new HashSet<>();
 
 			int lineCount = 0;
 
@@ -1017,7 +1015,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected List<String> getJSPDuplicateImports(
 		String fileName, String content, List<String> importLines) {
 
-		List<String> duplicateImports = new ArrayList<String>();
+		List<String> duplicateImports = new ArrayList<>();
 
 		for (String importLine : importLines) {
 			int x = content.indexOf("<%@ include file=");
@@ -1193,7 +1191,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		_includeFileNames.add(fileName);
 
-		Set<String> checkedForUnusedJSPTerm = new HashSet<String>();
+		Set<String> checkedForUnusedJSPTerm = new HashSet<>();
 
 		return !isJSPTermRequired(
 			fileName, regex, type, checkedForUnusedJSPTerm);
@@ -1474,7 +1472,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			imports, new String[] {"%><%@\r\n", "%><%@\n"},
 			new String[] {"%>\r\n<%@ ", "%>\n<%@ "});
 
-		List<String> importLines = new ArrayList<String>();
+		List<String> importLines = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -1529,43 +1527,43 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"tiles"
 	};
 
-	private Set<String> _checkedForIncludesFileNames = new HashSet<String>();
-	private List<String> _duplicateImportClassNames = new ArrayList<String>();
-	private List<String> _importClassNames = new ArrayList<String>();
-	private Map<String, Integer> _importCountMap =
-		new HashMap<String, Integer>();
-	private Pattern _importsPattern = Pattern.compile("page import=\"(.+)\"");
-	private Set<String> _includeFileNames = new HashSet<String>();
+	private Set<String> _checkedForIncludesFileNames = new HashSet<>();
+	private final List<String> _duplicateImportClassNames = new ArrayList<>();
+	private final List<String> _importClassNames = new ArrayList<>();
+	private final Map<String, Integer> _importCountMap = new HashMap<>();
+	private final Pattern _importsPattern = Pattern.compile(
+		"page import=\"(.+)\"");
+	private Set<String> _includeFileNames = new HashSet<>();
 	private Pattern _javaClassPattern = Pattern.compile(
 		"\n(private|protected|public).* class ([A-Za-z0-9]+) " +
 			"([\\s\\S]*?)\n\\}\n");
-	private Map<String, String> _jspContents = new HashMap<String, String>();
-	private Pattern _jspImportPattern = Pattern.compile(
+	private final Map<String, String> _jspContents = new HashMap<>();
+	private final Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
-	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
+	private final Pattern _jspIncludeFilePattern = Pattern.compile(
+		"/.*[.]jsp[f]?");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private Set<String> _primitiveTagAttributeDataTypes;
-	private Pattern _redirectBackURLPattern = Pattern.compile(
+	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
 			"\\);)\n(String backURL = ParamUtil\\.getString\\(request, \"" +
 				"backURL\", redirect\\);)");
 	private boolean _stripJSPImports = true;
-	private Map<String, JavaClass> _tagJavaClassesMap =
-		new HashMap<String, JavaClass>();
-	private Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
+	private final Map<String, JavaClass> _tagJavaClassesMap = new HashMap<>();
+	private final Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
 			"<=%\\[\\s]+\"");
-	private Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
+	private final Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
 		"(aui:)(?:input|select|field-wrapper) (?!.*label=(?:'|\").*(?:'|\").*" +
 			"name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+\".*title=" +
 				"(?:'|\").+(?:'|\"))(?!.*name=\"[^<=%\\[\\s]+\".*type=\"" +
 					"hidden\").*name=\"([^<=%\\[\\s]+)\"");
-	private Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
+	private final Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
 		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
 			"(?:'|\").+(?:'|\"))");
 	private List<String> _unusedVariablesExclusionFiles;
 	private String _utilTaglibDirName;
-	private Pattern _xssPattern = Pattern.compile(
+	private final Pattern _xssPattern = Pattern.compile(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 
 }

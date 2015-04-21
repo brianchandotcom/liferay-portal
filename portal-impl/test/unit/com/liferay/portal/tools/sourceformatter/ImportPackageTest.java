@@ -32,7 +32,7 @@ public class ImportPackageTest {
 		ImportPackage importPackage2 =
 			_javaImportsFormatter.createImportPackage(_ARRAYS_IMPORT_STATEMENT);
 
-		List<ImportPackage> importPackages = new ArrayList<ImportPackage>();
+		List<ImportPackage> importPackages = new ArrayList<>();
 
 		importPackages.add(importPackage);
 

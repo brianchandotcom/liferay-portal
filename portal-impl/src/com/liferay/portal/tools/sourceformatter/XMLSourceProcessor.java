@@ -212,8 +212,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatFriendlyURLRoutesXML(newContent);
 		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
-				 (portalSource &&
-				  fileName.endsWith("/portlet-custom.xml")) ||
+				 (portalSource && fileName.endsWith("/portlet-custom.xml")) ||
 				 (!portalSource && fileName.endsWith("/portlet.xml"))) {
 
 			newContent = formatPortletXML(fileName, absolutePath, newContent);
@@ -479,7 +478,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		String[] includes = new String[] {
-			"**\\*.action","**\\*.function","**\\*.macro","**\\*.testcase",
+			"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.testcase",
 			"**\\*.xml"
 		};
 
@@ -786,7 +785,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Arrays.sort(locales);
 
-		Set<String> urlPatterns = new TreeSet<String>();
+		Set<String> urlPatterns = new TreeSet<>();
 
 		for (String locale : locales) {
 			int pos = locale.indexOf(StringPool.UNDERLINE);
@@ -850,7 +849,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected List<String> getColumnNames(String fileName, String entityName)
 		throws Exception {
 
-		List<String> columnNames = new ArrayList<String>();
+		List<String> columnNames = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(
 			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
@@ -951,7 +950,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String sortPoshiCommands(String content) {
 		Matcher matcher = _poshiCommandsPattern.matcher(content);
 
-		Map<String, String> commandBlocksMap = new TreeMap<String, String>(
+		Map<String, String> commandBlocksMap = new TreeMap<>(
 			String.CASE_INSENSITIVE_ORDER);
 
 		String previousName = StringPool.BLANK;
@@ -1024,7 +1023,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String previousName = StringPool.BLANK;
 			String tabs = StringPool.BLANK;
 
-			Map<String, String> variableLinesMap = new TreeMap<String, String>(
+			Map<String, String> variableLinesMap = new TreeMap<>(
 				String.CASE_INSENSITIVE_ORDER);
 
 			String variableBlock = matcher.group(1);
@@ -1080,44 +1079,47 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	private static Pattern _commentPattern1 = Pattern.compile(
+	private static final Pattern _commentPattern1 = Pattern.compile(
 		">\n\t+<!--[\n ]");
-	private static Pattern _commentPattern2 = Pattern.compile(
+	private static final Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
 
 	private List<String> _columnNames;
 	private List<String> _numericalPortletNameElementExclusionFiles;
-	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
-	private Pattern _poshiCommandsPattern = Pattern.compile(
+	private final Pattern _poshiClosingTagPattern = Pattern.compile(
+		"</[^>/]*>");
+	private final Pattern _poshiCommandsPattern = Pattern.compile(
 		"\\<command.*name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+");
-	private Pattern _poshiElementWithNoChildPattern = Pattern.compile(
+	private final Pattern _poshiElementWithNoChildPattern = Pattern.compile(
 		"\\\"[\\s]*\\>[\\n\\s\\t]*\\</[a-z\\-]+>");
-	private Pattern _poshiEndLinesAfterClosingElementPattern = Pattern.compile(
-		"(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
-	private Pattern _poshiEndLinesBeforeClosingElementPattern = Pattern.compile(
-		"(\\n+)(\\t*</[a-z\\-]+>)");
-	private Pattern _poshiEndLinesPattern = Pattern.compile(
+	private final Pattern _poshiEndLinesAfterClosingElementPattern =
+		Pattern.compile("(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
+	private final Pattern _poshiEndLinesBeforeClosingElementPattern =
+		Pattern.compile("(\\n+)(\\t*</[a-z\\-]+>)");
+	private final Pattern _poshiEndLinesPattern = Pattern.compile(
 		"\\>\\n\\n\\n+(\\t*\\<)");
-	private Pattern _poshiOpeningTagPattern = Pattern.compile(
+	private final Pattern _poshiOpeningTagPattern = Pattern.compile(
 		"<[^/][^>]*[^/]>");
-	private Pattern _poshiQuoteWithSlashPattern = Pattern.compile(
+	private final Pattern _poshiQuoteWithSlashPattern = Pattern.compile(
 		"\"[^\"]*\\>[^\"]*\"");
-	private Pattern _poshiSetUpPattern = Pattern.compile(
+	private final Pattern _poshiSetUpPattern = Pattern.compile(
 		"\\n[\\t]++\\<set-up\\>([\\s\\S]*?)\\</set-up\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
-	private Pattern _poshiTabsPattern = Pattern.compile("\\n*([ \\t]*<).*");
-	private Pattern _poshiTearDownPattern = Pattern.compile(
+	private final Pattern _poshiTabsPattern = Pattern.compile(
+		"\\n*([ \\t]*<).*");
+	private final Pattern _poshiTearDownPattern = Pattern.compile(
 		"\\n[\\t]++\\<tear-down\\>([\\s\\S]*?)\\</tear-down\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
-	private Pattern _poshiVariableLinePattern = Pattern.compile(
+	private final Pattern _poshiVariableLinePattern = Pattern.compile(
 		"([\\t]*+)(\\<var name=\\\"([^\\\"]*)\\\".*?/\\>.*+(?:\\</var\\>)??)");
-	private Pattern _poshiVariablesBlockPattern = Pattern.compile(
+	private final Pattern _poshiVariablesBlockPattern = Pattern.compile(
 		"((?:[\\t]*+\\<var.*?\\>\\n[\\t]*+){2,}?)" +
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
-	private Pattern _poshiWholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
+	private final Pattern _poshiWholeTagPattern = Pattern.compile(
+		"<[^\\>^/]*\\/>");
 	private String _tablesContent;
-	private Pattern _whereNotInSQLPattern = Pattern.compile(
+	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 	private List<String> _xmlExclusionFiles;
 

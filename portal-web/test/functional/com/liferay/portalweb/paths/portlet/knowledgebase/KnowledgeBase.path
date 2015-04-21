@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>KB</title>
+<title>KnowledgeBase</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
@@ -11,7 +11,7 @@
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>KB</td>
+	<td>KnowledgeBase</td>
 </tr>
 <tr>
 	<td></td>
@@ -21,7 +21,7 @@
 <tr>
 	<td></td>
 	<td>ADD_ARTICLE_VIA_TEMPLATE</td>
-	<td>//a[@role='menuitem' and contains(.,'$kbTemplateTitle')]</td>
+	<td>//a[@role='menuitem' and contains(.,'${kbTemplateTitle}')]</td>
 </tr>
 <tr>
 	<td>HEADER</td>

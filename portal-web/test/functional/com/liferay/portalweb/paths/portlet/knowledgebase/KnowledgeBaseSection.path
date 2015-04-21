@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PGKnowledgebasesection</title>
+<title>KnowledgeBaseSection</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGKnowledgebasesection</td></tr>
+<tr><td rowspan="1" colspan="3">KnowledgeBaseSection</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGKnowledgebasesection</td>
+	<td>KnowledgeBaseSection</td>
 </tr>
 <tr>
 	<td></td>

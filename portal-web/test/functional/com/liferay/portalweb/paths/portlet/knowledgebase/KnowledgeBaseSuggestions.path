@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>KBSuggestions</title>
+<title>KnowledgeBaseSuggestions</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">KBSuggestions</td></tr>
+<tr><td rowspan="1" colspan="3">KnowledgeBaseSuggestions</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>KBSuggestions</td>
+	<td>KnowledgeBaseSuggestions</td>
 </tr>
 <tr>
 	<td></td>

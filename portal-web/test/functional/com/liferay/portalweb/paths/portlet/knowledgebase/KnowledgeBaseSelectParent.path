@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>KBSelectParent</title>
+<title>KnowledgeBaseSelectParent</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">KBSelectParent</td></tr>
+<tr><td rowspan="1" colspan="3">KnowledgeBaseSelectParent</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>KBSelectParent</td>
+	<td>KnowledgeBaseSelectParent</td>
 </tr>
 <tr>
 	<td></td>

@@ -1,3 +1,4 @@
+lib/development/cobertura-agent.jar
 lib/development/com.liferay.ant.bnd.jar
 lib/development/liferay-doclet.jar
 lib/portal/com.liferay.rtl.css.jar

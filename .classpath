@@ -31,6 +31,7 @@
 	<classpathentry kind="lib" path="lib/development/appium.jar"/>
 	<classpathentry kind="lib" path="lib/development/catalina.jar"/>
 	<classpathentry kind="lib" path="lib/development/cobertura.jar"/>
+	<classpathentry kind="lib" path="lib/development/cobertura-agent.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.bnd.jar"/>
 	<classpathentry kind="lib" path="lib/development/deployment.jar"/>
 	<classpathentry kind="lib" path="lib/development/derby.jar"/>

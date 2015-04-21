@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.cobertura.agent;
 
 import java.util.HashMap;
 import java.util.Map;

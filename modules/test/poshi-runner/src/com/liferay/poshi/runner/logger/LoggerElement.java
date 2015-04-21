@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -186,6 +187,16 @@ public class LoggerElement {
 
 		sb.append("<");
 		sb.append(_name);
+
+		Set<Entry<String, String>> attributeEntrySet = _attributes.entrySet();
+
+		for (Entry<String, String> attributeEntry : attributeEntrySet) {
+			sb.append(" ");
+			sb.append(attributeEntry.getKey());
+			sb.append("=\"");
+			sb.append(attributeEntry.getValue());
+			sb.append("\"");
+		}
 
 		if (Validator.isNotNull(_className)) {
 			sb.append(" class=\"");

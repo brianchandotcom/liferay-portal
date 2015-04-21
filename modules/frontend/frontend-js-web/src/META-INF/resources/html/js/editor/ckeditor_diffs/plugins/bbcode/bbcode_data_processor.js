@@ -62,8 +62,6 @@
 
 	var REGEX_EM = /em$/i;
 
-	var REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
-
 	var REGEX_LASTCHAR_NEWLINE_WHITESPACE = /(\r?\n\s*)$/;
 
 	var REGEX_LIST_ALPHA = /(upper|lower)-alpha/i;
@@ -104,8 +102,6 @@
 
 	var TAG_TD = 'td';
 
-	var tplImage = new CKEDITOR.template('<img src="{image}" />');
-
 	var emoticonImages;
 	var emoticonPath;
 	var emoticonSymbols;
@@ -130,7 +126,13 @@
 			var instance = this;
 
 			if (!instance._bbcodeConverter) {
-				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML();
+				var converterConfig = {
+					emoticonImages: emoticonImages,
+					emoticonPath: emoticonPath,
+					emoticonSymbols: emoticonSymbols
+				};
+
+				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML(converterConfig);
 			}
 
 			if (config) {
@@ -146,20 +148,6 @@
 			}
 			else {
 				data = instance._bbcodeConverter.convert(data);
-
-				var length = emoticonSymbols.length;
-
-				for (var i = 0; i < length; i++) {
-					var image = tplImage.output(
-						{
-							image: emoticonPath + emoticonImages[i]
-						}
-					);
-
-					var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, '\\$&');
-
-					data = data.replace(new RegExp(escapedSymbol, 'g'), image);
-				}
 			}
 
 			return data;

@@ -82,6 +82,8 @@
 
 	var REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
 
+	var REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
+
 	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,512}$/i;
 
 	var REGEX_LASTCHAR_NEWLINE = /\r?\n$/;
@@ -161,6 +163,8 @@
 			var instance = this;
 
 			instance._parser = new Parser(config.parser);
+
+			instance._config = config;
 
 			instance._result = [];
 			instance._stack = [];
@@ -259,9 +263,29 @@
 		_handleData: function(token) {
 			var instance = this;
 
+			var emoticonImages = instance._config.emoticonImages;
+			var emoticonPath = instance._config.emoticonPath;
+			var emoticonSymbols = instance._config.emoticonSymbols;
+
 			var value = instance._escapeHTML(token.value);
 
 			value = instance._handleNewLine(value);
+
+			if (!instance._noParse) {
+				var length = emoticonSymbols.length;
+
+				for (var i = 0; i < length; i++) {
+					var image = tplImage.output(
+						{
+							imageSrc: emoticonPath + emoticonImages[i]
+						}
+					);
+
+					var escapedSymbol = emoticonSymbols[i].replace(REGEX_ESCAPE_REGEX, '\\$&');
+
+					value = value.replace(new RegExp(escapedSymbol, 'g'), image);
+				}
+			}
 
 			instance._result.push(value);
 		},

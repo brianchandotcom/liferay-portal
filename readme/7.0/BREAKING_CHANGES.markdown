@@ -1258,11 +1258,11 @@ side.
 #### Why was this change made?
 
 Previous to Liferay 7, validation for user screen name characters was hard-coded 
-in `UserLocalService`. A new property `users.screen.name.special.characters` has
-been added to provide configurability of special characters allowed in screen
-names.
+in `UserLocalService`. A new portal property named
+`users.screen.name.special.characters` has been added to provide configurability
+of special characters allowed in screen names.
 
-In addition, developers can now specify custom input validator for the screen
+In addition, developers can now specify a custom input validator for the screen
 name on the client side by providing a JavaScript validator in
 `getJSValidation()`.
 

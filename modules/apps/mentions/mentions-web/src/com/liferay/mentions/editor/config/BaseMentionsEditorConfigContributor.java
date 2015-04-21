@@ -28,17 +28,10 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Sergio González
  */
-@Component(
-	property = {
-		"editor.config.key=commentsEditor", "service.ranking:Integer=10"
-	}
-)
-public class MentionsEditorConfigContributor
+public class BaseMentionsEditorConfigContributor
 	implements EditorConfigContributor {
 
 	@Override

@@ -40,6 +40,9 @@ public interface ElasticsearchConfiguration {
 	public String clusterName();
 
 	@Meta.AD(deflt = "true", required = false)
+	public boolean httpCORSEnabled();
+
+	@Meta.AD(deflt = "true", required = false)
 	public boolean httpEnabled();
 
 	@Meta.AD(deflt = "EMBEDDED", required = false)

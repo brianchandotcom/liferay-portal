@@ -32,16 +32,22 @@ BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.g
 
 	<c:if test="<%= backgroundTaskDisplay.hasBackgroundTaskStatus() %>">
 
-		<%
-		int percentage = backgroundTaskDisplay.getPercentage();
-		%>
-
 		<div class="active progress progress-striped">
-			<div class="progress-bar" style="width: <%= percentage %>%;">
-				<c:if test="<%= backgroundTaskDisplay.hasPercentage() %>">
-					<%= percentage + StringPool.PERCENT %>
-				</c:if>
-			</div>
+			<c:choose>
+				<c:when test="<%= backgroundTaskDisplay.hasPercentage() %>">
+
+					<%
+					int percentage = backgroundTaskDisplay.getPercentage();
+					%>
+
+					<div class="progress-bar" style="width: <%= percentage %>%;">
+						<%= percentage + StringPool.PERCENT %>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="progress-bar" style="width: 100%;">
+				</c:otherwise>
+			</c:choose>
 		</div>
 
 		<c:if test="<%= backgroundTaskDisplay.hasMessage() %>">

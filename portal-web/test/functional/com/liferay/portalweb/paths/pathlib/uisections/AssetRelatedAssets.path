@@ -38,71 +38,10 @@
 	<td>//a[@data-title='Select ${key_assetType}']</td>
 	<td></td>
 </tr>
+<!--This is temporary. After path restructure, the ideal solution is to make the path variable more generic.-->
 <tr>
-	<td>RELATED_ASSETS_LINKS</td>
+	<td>KB_RELATED_ASSETS_LINKS</td>
 	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_ASSET_IFRAME</td>
-	<td>//iframe[contains(@id,'selectAsset')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>IFRAME</td>
-	<td>//iframe[contains(@id,'selectAsset')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ASSET_TABLE-->
-<tr>
-	<td>ASSET_TABLE_TITLE</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TABLE_DESCRIPTION</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TABLE_USER_NAME</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TABLE_MODIFIED_DATE</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[4]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TABLE_SITE</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[5]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_TABLE_ACTION</td>
-	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[6]/button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--BLOGS_ENTRY-->
-<tr>
-	<td>BLOGS_ENTRY_TITLE</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>BLOGS_ENTRY_CONTENT</td>
-	<td>//div[@class='asset-content']/p</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,6 +75,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--BLOGS_ENTRY-->
+<tr>
+	<td>BLOGS_ENTRY_TITLE</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY_CONTENT</td>
+	<td>//div[@class='asset-content']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MESSAGE_BOARDS_THREAD-->
 <tr>
 	<td>MESSAGE_BOARDS_THREAD_TITLE</td>
@@ -152,15 +107,46 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--RELATED_ASSETS-->
 <tr>
-	<td>RELATED_ASSETS_HEADER</td>
-	<td>//h2[contains(@class,'asset-links-title')]</td>
+	<td>SELECT_ASSET_IFRAME</td>
+	<td>//iframe[contains(@id,'selectAsset')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RELATED_ASSETS_LINKS</td>
-	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--This is temporary. After path restructure, the ideal solution is to make the key_kbArticleRelatedAssetTitle path variable more generic.-->
+<!--KB_ASSET_TABLE-->
+<tr>
+	<td>KB_ASSET_TABLE_TITLE</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ASSET_TABLE_DESCRIPTION</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ASSET_TABLE_USER_NAME</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ASSET_TABLE_MODIFIED_DATE</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[4]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ASSET_TABLE_SITE</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KB_ASSET_TABLE_ACTION</td>
+	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[6]/button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

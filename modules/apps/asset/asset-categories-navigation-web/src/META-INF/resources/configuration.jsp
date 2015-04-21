@@ -26,13 +26,13 @@
 
 	<aui:fieldset>
 		<aui:select label="vocabularies" name="preferences--allAssetVocabularies--">
-			<aui:option label="all" selected="<%= assetCategoriesNavigationDisplayContext.isAllAssetVocabularies() %>" value="<%= true %>" />
-			<aui:option label="filter[action]" selected="<%= !assetCategoriesNavigationDisplayContext.isAllAssetVocabularies() %>" value="<%= false %>" />
+			<aui:option label="all" selected="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= true %>" />
+			<aui:option label="filter[action]" selected="<%= !assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= false %>" />
 		</aui:select>
 
 		<aui:input name="preferences--assetVocabularyIds--" type="hidden" />
 
-		<div class="<%= assetCategoriesNavigationDisplayContext.isAllAssetVocabularies() ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
+		<div class="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
 			<liferay-ui:input-move-boxes
 				leftBoxName="currentAssetVocabularyIds"
 				leftList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
@@ -47,8 +47,8 @@
 		<div class="display-template">
 			<liferay-ui:ddm-template-selector
 				className="<%= AssetCategory.class.getName() %>"
-				displayStyle="<%= assetCategoriesNavigationDisplayContext.getDisplayStyle() %>"
-				displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
+				displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>"
+				displayStyleGroupId="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyleGroupId(themeDisplay.getScopeGroupId()) %>"
 				refreshURL="<%= configurationRenderURL %>"
 				showEmptyOption="<%= true %>"
 			/>

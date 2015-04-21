@@ -10,7 +10,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewLocalized" priority="5">
+	<command name="ViewLocalizedChinese" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Localized Page" />
 		</execute>
@@ -19,6 +19,52 @@
 			<var name="portletName" value="Test Localized Portlet" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute function="AssertClick" locator1="PGTestlocalization#CHINESE_LOCALIZATION" value1="English" />
+
+		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" />
+	</command>
+
+	<command name="ViewLocalizedEnglish" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Localized Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Localized Portlet" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" />
+
+		<execute function="AssertClick" locator1="PGTestlocalization#ENGLISH_LOCALIZATION" value1="English" />
+
+		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" />
+	</command>
+
+	<command name="ViewLocalizedFrench" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Localized Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Localized Portlet" />
+		</execute>
+
+		<execute function="AssertClick" locator1="PGTestlocalization#FRENCH_LOCALIZATION" value1="English" />
+
+		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" />
+	</command>
+
+	<command name="ViewLocalizedSpanish" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Localized Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Localized Portlet" />
+		</execute>
+
+		<execute function="AssertClick" locator1="PGTestlocalization#SPANISH_LOCALIZATION" value1="English" />
+
+		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" />
 	</command>
 </definition>

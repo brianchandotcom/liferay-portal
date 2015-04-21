@@ -594,6 +594,10 @@ public class PortletTracker
 			GetterUtil.getBoolean(
 				get(serviceReference, "show-portlet-inactive"),
 				portletModel.isShowPortletInactive()));
+		portletModel.setSocialInteractionsConfiguration(
+			GetterUtil.getBoolean(
+				get(serviceReference, "social-interactions-configuration"),
+				portletModel.isSocialInteractionsConfiguration()));
 		portletModel.setStrutsPath(
 			GetterUtil.getString(
 				get(serviceReference, "struts-path"),

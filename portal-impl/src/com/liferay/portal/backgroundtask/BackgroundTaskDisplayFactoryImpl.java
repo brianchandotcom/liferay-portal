@@ -17,6 +17,10 @@ package com.liferay.portal.backgroundtask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayFactory;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskDisplay;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 
@@ -42,8 +46,25 @@ public class BackgroundTaskDisplayFactoryImpl
 		BackgroundTaskExecutor backgroundTaskExecutor =
 			backgroundTask.getBackgroundTaskExecutor();
 
-		return backgroundTaskExecutor.getBackgroundTaskDisplay(
-			backgroundTask, locale);
+		Class clazz = backgroundTaskExecutor.getBackgroundTaskDisplay();
+
+		try {
+			Class[] parameterTypes = {BackgroundTask.class, Locale.class};
+
+			Object[] arguments = {backgroundTask, locale};
+
+			return (BackgroundTaskDisplay)InstanceFactory.newInstance(
+				clazz.getName(), parameterTypes, arguments);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to create BackgroundTaskDisplay " + e.getMessage(), e);
+		}
+
+		return new BaseBackgroundTaskDisplay(backgroundTask, locale);
 	}
+
+	private final Log _log = LogFactoryUtil.getLog(
+		BackgroundTaskDisplayFactoryImpl.class);
 
 }

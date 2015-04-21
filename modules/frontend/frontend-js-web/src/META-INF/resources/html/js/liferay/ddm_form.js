@@ -1424,12 +1424,12 @@ AUI.add(
 				NAME: 'liferay-ddm-form',
 
 				prototype: {
-					eventHandlers: [],
-
 					repeatableInstances: {},
 
 					initializer: function() {
 						var instance = this;
+
+						instance.eventHandlers = [];
 
 						instance.bindUI();
 						instance.renderUI();

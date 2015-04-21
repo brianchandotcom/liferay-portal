@@ -1,0 +1,16 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath 'com.liferay:com.liferay.portal.tools.source.formatter:1.0.0'
+	}
+}
+
+apply plugin: 'com.liferay.portal.tools.source.formatter'
+
+sourceFormatter {
+	baseDir="src/main"
+}

@@ -1231,6 +1231,43 @@ This change simplifies using asset previews.
 
 ---------------------------------------
 
+### Added New Methods in the `ScreenNameValidator` Interface
+- **Date:** 2015-Mar-17
+- **JIRA Ticket:** LPS-53409
+
+#### What changed?
+
+The `ScreenNameValidator` interface has new methods `getDescription(Locale)` and
+`getJSValidation()`.
+
+#### Who is affected?
+
+This affects developers who have implemented a custom screen name validator with
+the `ScreenNameValidator` interface.
+
+#### How should I update my code?
+
+You should implement the new methods introduced in the interface.
+
+- `getDescription(Locale)`: returns a description of what the screen name 
+validator validates.
+
+- `getJSValidation()`: returns the JavaScript input validator on the client
+side.
+
+#### Why was this change made?
+
+Previous to Liferay 7, validation for user screen name characters was hard-coded 
+in `UserLocalService`. A new property `users.screen.name.special.characters` has
+been added to provide configurability of special characters allowed in screen
+names.
+
+In addition, developers can now specify custom input validator for the screen
+name on the client side by providing a JavaScript validator in
+`getJSValidation()`.
+
+---------------------------------------
+
 ### Replaced the Language Portlet's Display Styles with ADTs
 - **Date:** 2015-Mar-30
 - **JIRA Ticket:** LPS-54419
@@ -1338,40 +1375,28 @@ modules provide more flexibility and can be included in any app.
 
 ---------------------------------------
 
-### Added New Methods in the `ScreenNameValidator` Interface
-- **Date:** 2015-Mar-17
-- **JIRA Ticket:** LPS-53409
+### Changed default value of copy-request-parameters init parameter in MVCPortlet
+- **Date:** 2015-Apr-15
+- **JIRA Ticket:** LPS-54798
 
 #### What changed?
 
-The `ScreenNameValidator` interface has new methods `getDescription(Locale)` and
-`getJSValidation()`.
+The copy request init parameter default value is now set to true in MVCPortlet
 
 #### Who is affected?
 
-This affects developers who have implemented a custom screen name validator with
-the `ScreenNameValidator` interface.
+This affects developers that have created portlets that extend MVCPortlet
 
 #### How should I update my code?
 
-You should implement the new methods introduced in the interface.
+To change the default property, you have to set the init parameter to false in
+your MVCPortlet:
 
-- `getDescription(Locale)`: returns a description of what the screen name 
-validator validates.
-
-- `getJSValidation()`: returns the JavaScript input validator on the client
-side.
+"javax.portlet.init-param.copy-request-parameters=false"
 
 #### Why was this change made?
 
-Previous to Liferay 7, validation for user screen name characters was hard-coded 
-in `UserLocalService`. A new property `users.screen.name.special.characters` has
-been added to provide configurability of special characters allowed in screen
-names.
-
-In addition, developers can now specify custom input validator for the screen
-name on the client side by providing a JavaScript validator in
-`getJSValidation()`.
+This was done for backwards compatibility
 
 ---------------------------------------
 
@@ -1425,29 +1450,5 @@ new section was rendered from the portal classloader.
 We need a way to add new sections and categories to `form-navigator` taglibs via
 OSGi plugins in a more extensible way, allowing the developer including the new
 section to access to their own utils and services.
-
----------------------------------------
-### Changed default value of copy-request-parameters init parameter in MVCPortlet
-- **Date:** 2015-Apr-15
-- **JIRA Ticket:** LPS-54798
-
-#### What changed?
-
-The copy request init parameter default value is now set to true in MVCPortlet
-
-#### Who is affected?
-
-This affects developers that have created portlets that extend MVCPortlet
-
-#### How should I update my code?
-
-To change the default property, you have to set the init parameter to false in
-your MVCPortlet:
-
-"javax.portlet.init-param.copy-request-parameters=false"
-
-#### Why was this change made?
-
-This was done for backwards compatibility
 
 ---------------------------------------

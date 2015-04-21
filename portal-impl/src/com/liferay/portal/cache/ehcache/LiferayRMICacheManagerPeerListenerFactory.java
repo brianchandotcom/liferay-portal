@@ -19,7 +19,6 @@ import com.liferay.portal.util.PropsValues;
 import java.util.List;
 import java.util.Properties;
 
-import net.sf.ehcache.CacheException;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -35,11 +34,6 @@ import net.sf.ehcache.event.RegisteredEventListeners;
  */
 public class LiferayRMICacheManagerPeerListenerFactory
 	extends CacheManagerPeerListenerFactory {
-
-	public LiferayRMICacheManagerPeerListenerFactory() {
-		_cacheManagerPeerListenerFactory =
-			new RMICacheManagerPeerListenerFactory();
-	}
 
 	@Override
 	public CacheManagerPeerListener createCachePeerListener(
@@ -112,23 +106,14 @@ public class LiferayRMICacheManagerPeerListenerFactory
 	};
 
 	private final CacheManagerPeerListenerFactory
-		_cacheManagerPeerListenerFactory;
+		_cacheManagerPeerListenerFactory =
+			new RMICacheManagerPeerListenerFactory();
 
 	private static class LiferayCacheManagerPeerListener
 		implements CacheManagerPeerListener {
 
-		public LiferayCacheManagerPeerListener(
-			CacheManager cacheManager,
-			CacheManagerPeerListener cacheManagerPeerListener) {
-
-			_cacheManager = cacheManager;
-			_cacheManagerPeerListener = cacheManagerPeerListener;
-		}
-
 		@Override
-		public void attemptResolutionOfUniqueResourceConflict()
-			throws CacheException, IllegalStateException {
-
+		public void attemptResolutionOfUniqueResourceConflict() {
 			_cacheManagerPeerListener.
 				attemptResolutionOfUniqueResourceConflict();
 		}
@@ -190,6 +175,14 @@ public class LiferayRMICacheManagerPeerListenerFactory
 		@Override
 		public void notifyCacheRemoved(String cacheName) {
 			_cacheManagerPeerListener.notifyCacheRemoved(cacheName);
+		}
+
+		private LiferayCacheManagerPeerListener(
+			CacheManager cacheManager,
+			CacheManagerPeerListener cacheManagerPeerListener) {
+
+			_cacheManager = cacheManager;
+			_cacheManagerPeerListener = cacheManagerPeerListener;
 		}
 
 		private void _unwrapEhcache(String cacheName) {

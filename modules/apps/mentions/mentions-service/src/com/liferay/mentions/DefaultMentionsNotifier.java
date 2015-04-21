@@ -17,6 +17,7 @@ package com.liferay.mentions;
 import com.liferay.mentions.constants.MentionsConstants;
 import com.liferay.mentions.util.MentionsNotifier;
 import com.liferay.mentions.util.MentionsUserFinder;
+import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -98,7 +99,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.setMailId("mb_discussion", classPK);
 		subscriptionSender.setNotificationType(
 			MentionsConstants.NOTIFICATION_TYPE_MENTION);
-		subscriptionSender.setPortletId("1_WAR_mentionsportlet");
+		subscriptionSender.setPortletId(MentionsPortletKeys.MENTIONS);
 		subscriptionSender.setScopeGroupId(groupId);
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setLocalizedSubjectMap(
@@ -143,7 +144,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		SocialInteractionsConfiguration socialInteractionsConfiguration =
 			SocialInteractionsConfigurationUtil.
 				getSocialInteractionsConfiguration(
-					user.getCompanyId(), "1_WAR_mentionsportlet");
+					user.getCompanyId(), MentionsPortletKeys.MENTIONS);
 
 		Matcher matcher = _pattern.matcher(content);
 

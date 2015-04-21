@@ -14,6 +14,7 @@
 
 package com.liferay.mentions.editor.config;
 
+import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -76,11 +77,12 @@ public class MentionsEditorConfigContributor
 		if (liferayPortletResponse != null) {
 			LiferayPortletURL autoCompleteUserURL =
 				liferayPortletResponse.createResourceURL(
-					"1_WAR_mentionsportlet");
+					MentionsPortletKeys.MENTIONS);
 
 			String source =
 				autoCompleteUserURL.toString() + "&" +
-					PortalUtil.getPortletNamespace("1_WAR_mentionsportlet");
+					PortalUtil.getPortletNamespace(
+						MentionsPortletKeys.MENTIONS);
 
 			triggerJSONObject.put("source", source);
 		}

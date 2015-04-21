@@ -85,6 +85,10 @@ public class LoggerElement {
 		}
 	}
 
+	public void addClassName(String className) {
+		setClassName(_className + " " + className);
+	}
+
 	public List<String> getAttributeNames() {
 		List<String> attributeNames = new ArrayList<>();
 
@@ -139,6 +143,27 @@ public class LoggerElement {
 		}
 
 		return childLoggerElements;
+	}
+
+	public void removeClassName(String className) {
+		String[] classNames = StringUtil.split(_className, " ");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < classNames.length; i++) {
+			if (Validator.isNull(classNames[i])) {
+				continue;
+			}
+
+			if (Validator.equals(classNames[i], className)) {
+				continue;
+			}
+
+			sb.append(classNames[i]);
+			sb.append(" ");
+		}
+
+		setClassName(sb.toString());
 	}
 
 	public void setAttribute(String attributeName, String attributeValue) {

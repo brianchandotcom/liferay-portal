@@ -1449,18 +1449,16 @@ AUI.add(
 						instance.formNode = container.ancestor('form', true);
 
 						if (instance.formNode) {
-							instance.eventHandlers = instance.eventHandlers.concat(
-								[
-									instance.after('liferay-ddm-field:render', instance._afterRenderField, instance),
-									instance.after(
-										['liferay-ddm-field:repeat', 'liferay-ddm-field:remove'],
-										instance._afterUpdateRepeatableFields,
-										instance
-									),
-									instance.formNode.on('submit', instance._onSubmitForm, instance),
-									Liferay.after('form:registered', instance._afterFormRegistered, instance),
-									Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
-								]
+							instance.eventHandlers.push(
+								instance.after('liferay-ddm-field:render', instance._afterRenderField, instance),
+								instance.after(
+									['liferay-ddm-field:repeat', 'liferay-ddm-field:remove'],
+									instance._afterUpdateRepeatableFields,
+									instance
+								),
+								instance.formNode.on('submit', instance._onSubmitForm, instance),
+								Liferay.after('form:registered', instance._afterFormRegistered, instance),
+								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
 							);
 						}
 					},

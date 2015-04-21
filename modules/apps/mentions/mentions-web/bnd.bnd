@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Mentions Web
 Bundle-SymbolicName: com.liferay.mentions.web
 Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /mentions-web

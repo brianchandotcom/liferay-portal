@@ -240,7 +240,6 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 	}
 
 	protected String processMessage(Locale locale) {
-
 		String messageKey = "exporting";
 
 		if (Validator.equals(_cmd, Constants.IMPORT)) {

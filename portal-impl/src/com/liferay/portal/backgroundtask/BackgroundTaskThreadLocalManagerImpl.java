@@ -47,7 +47,7 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 		Map<String, Serializable> threadLocalValues =
 			(Map<String, Serializable>)taskContextMap.get(
-				_KEY_THREAD_LOCAL_VALUES);
+				KEY_THREAD_LOCAL_VALUES);
 
 		setThreadLocalValues(threadLocalValues);
 	}
@@ -58,9 +58,8 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 		threadLocalValues.put("companyId", CompanyThreadLocal.getCompanyId());
 
-		if (!ClusterInvokeThreadLocal.isEnabled()) {
-			threadLocalValues.put("clusterInvoke", Boolean.FALSE);
-		}
+		threadLocalValues.put(
+			"clusterInvoke", ClusterInvokeThreadLocal.isEnabled());
 
 		threadLocalValues.put(
 			"defaultLocale", LocaleThreadLocal.getDefaultLocale());
@@ -80,13 +79,13 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 		HashMap<String, Serializable> taskContextThreadLocalValues =
 			(HashMap<String, Serializable>)taskContextMap.get(
-				_KEY_THREAD_LOCAL_VALUES);
+				KEY_THREAD_LOCAL_VALUES);
 
 		if (taskContextThreadLocalValues == null) {
 			taskContextThreadLocalValues = new HashMap<>();
 
 			taskContextMap.put(
-				_KEY_THREAD_LOCAL_VALUES, taskContextThreadLocalValues);
+				KEY_THREAD_LOCAL_VALUES, taskContextThreadLocalValues);
 		}
 
 		Map<String, Serializable> currentThreadLocalValues =
@@ -170,7 +169,7 @@ public class BackgroundTaskThreadLocalManagerImpl
 		}
 	}
 
-	private static final String _KEY_THREAD_LOCAL_VALUES = "threadLocalValues";
+	protected static final String KEY_THREAD_LOCAL_VALUES = "threadLocalValues";
 
 	private PermissionCheckerFactory _permissionCheckerFactory;
 

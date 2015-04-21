@@ -28,6 +28,8 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
+import java.util.ResourceBundle;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -77,10 +79,12 @@ public class MentionsUserNotificationHandler
 		String typeName = assetRendererFactory.getTypeName(
 			serviceContext.getLocale());
 
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", serviceContext.getLocale());
+
 		if ((mbMessage != null) && mbMessage.isDiscussion()) {
 			return LanguageUtil.format(
-				serviceContext.getLocale(),
-				"x-mentioned-you-in-a-comment-in-a-x",
+				resourceBundle, "x-mentioned-you-in-a-comment-in-a-x",
 				new String[] {
 					HtmlUtil.escape(assetRenderer.getUserName()),
 					StringUtil.toLowerCase(HtmlUtil.escape(typeName))
@@ -89,7 +93,7 @@ public class MentionsUserNotificationHandler
 		}
 		else {
 			return LanguageUtil.format(
-				serviceContext.getLocale(), "x-mentioned-you-in-a-x",
+				resourceBundle, "x-mentioned-you-in-a-x",
 				new String[] {
 					HtmlUtil.escape(assetRenderer.getUserName()),
 					StringUtil.toLowerCase(HtmlUtil.escape(typeName))

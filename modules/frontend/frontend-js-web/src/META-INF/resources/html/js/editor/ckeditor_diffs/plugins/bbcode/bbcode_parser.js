@@ -298,6 +298,7 @@
 		font: '_handleFont',
 		i: '_handleEm',
 		img: '_handleImage',
+		indent: '_handleIndent',
 		list: '_handleList',
 		s: '_handleStrikeThrough',
 		size: '_handleSize',
@@ -343,10 +344,10 @@
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
 		'*': 3,
 		li: 3,
-		tr: 3,
+		table: 2,
 		td: 3,
 		th: 3,
-		table: 2
+		tr: 3
 	};
 
 	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
@@ -363,7 +364,7 @@
 
 	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
 
-	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
+	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|indent|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
 	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,512}$|\${\S+}/i;
 
@@ -379,11 +380,15 @@
 
 	var STR_NEW_LINE = '\n';
 
+	var STR_TAG_A_CLOSE = '</a>';
+
 	var STR_TAG_ATTR_CLOSE = '">';
 
 	var STR_TAG_ATTR_HREF_OPEN = '<a href="';
 
-	var STR_TAG_A_CLOSE = '</a>';
+	var STR_TAG_DIV_CLOSE = '</div>';
+
+	var STR_TAG_DIV_STYLE_OPEN = '<div style="';
 
 	var STR_TAG_END_CLOSE = '>';
 
@@ -485,7 +490,6 @@
 				if (token.type == TOKEN_DATA) {
 					result.push(token.value);
 				}
-
 			}
 			while ((token.type != TOKEN_TAG_END) && (token.value != toTagName));
 
@@ -617,6 +621,16 @@
 			return attrs;
 		},
 
+		_handleIndent: function(token) {
+			var instance = this;
+
+			var indent = token.attribute;
+
+			instance._result.push(STR_TAG_DIV_STYLE_OPEN, 'margin-left: ', indent, 'px;', STR_TAG_ATTR_CLOSE);
+
+			instance._stack.push(STR_TAG_DIV_CLOSE);
+		},
+
 		_handleList: function(token) {
 			var instance = this;
 
@@ -661,7 +675,7 @@
 						hasOwnProperty.call(MAP_TOKENS_EXCLUDE_NEW_LINE, nextToken.value) &&
 						(nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value])) {
 
-							value = STR_BLANK;
+						value = STR_BLANK;
 					}
 				}
 				else if (REGEX_LASTCHAR_NEWLINE.test(value)) {
@@ -727,7 +741,7 @@
 				size = '1';
 			}
 
-			instance._result.push(STR_TAG_SPAN_STYLE_OPEN, 'font-size: ', instance._getFontSize(size), 'px', STR_TAG_ATTR_CLOSE);
+			instance._result.push(STR_TAG_SPAN_STYLE_OPEN, 'font-size: ', instance._getFontSize(size), 'px;', STR_TAG_ATTR_CLOSE);
 
 			instance._stack.push(STR_TAG_SPAN_CLOSE);
 		},

@@ -86,9 +86,9 @@
 
 	var TAG_BR = 'br';
 
-	var TAG_CODE = 'code';
-
 	var TAG_CITE = 'cite';
+
+	var TAG_CODE = 'code';
 
 	var TAG_DIV = 'div';
 
@@ -116,7 +116,7 @@
 	BBCodeDataProcessor.prototype = {
 		constructor: BBCodeDataProcessor,
 
-		toDataFormat: function(html, fixForBody ) {
+		toDataFormat: function(html, fixForBody) {
 			var instance = this;
 
 			html = html.replace(REGEX_PRE, '$&\n');
@@ -729,6 +729,18 @@
 			}
 		},
 
+		_handleStyleIndent: function(element, stylesTagsIn, stylesTagsOut) {
+			var style = element.style;
+
+			var marginLeft = style.marginLeft;
+
+			if (marginLeft) {
+				stylesTagsIn.push('[indent=', parseInt(marginLeft, 10), ']');
+
+				stylesTagsOut.push('[/indent]');
+			}
+		},
+
 		_handleStyleItalic: function(element, stylesTagsIn, stylesTagsOut) {
 			var style = element.style;
 
@@ -755,6 +767,7 @@
 				instance._handleStyleColor(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleFontFamily(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleFontSize(element, stylesTagsIn, stylesTagsOut);
+				instance._handleStyleIndent(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleItalic(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleTextDecoration(element, stylesTagsIn, stylesTagsOut);
 			}

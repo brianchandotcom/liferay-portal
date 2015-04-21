@@ -21,16 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class BreadcrumbConfigurationValues {
 
-	public static final String DDM_TEMPLATE_KEY_DEFAULT = GetterUtil.getString(
-		BreadcrumbWebConfigurationUtil.get("ddm.template.key.default"));
-
 	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
 		BreadcrumbWebConfigurationUtil.get("display.templates.config"));
-
-	public static final boolean SHOW_GUEST_GROUP = GetterUtil.getBoolean(
-		BreadcrumbWebConfigurationUtil.get("show.guest.group"));
-
-	public static final boolean SHOW_PARENT_GROUPS = GetterUtil.getBoolean(
-		BreadcrumbWebConfigurationUtil.get("show.parent.groups"));
 
 }

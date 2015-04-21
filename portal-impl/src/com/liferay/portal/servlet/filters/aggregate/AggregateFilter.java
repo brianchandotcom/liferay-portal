@@ -375,7 +375,12 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		URL resourceURL = _servletContext.getResource(resourcePath);
 
 		if (resourceURL == null) {
-			return null;
+			resourceURL = PortalWebResourcesUtil.getServletContextResource(
+				resourcePath);
+
+			if (resourceURL == null) {
+				return null;
+			}
 		}
 
 		String cacheCommonFileName = getCacheFileName(request);
@@ -465,8 +470,12 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String resourcePath, String content) {
 
 		try {
+			ServletContext cssResourcesServletContext =
+				PortalWebResourcesUtil.getServletContext(
+					PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+
 			content = DynamicCSSUtil.parseSass(
-				_servletContext, request, resourcePath, content);
+				cssResourcesServletContext, request, resourcePath, content);
 		}
 		catch (Exception e) {
 			_log.error("Unable to parse SASS on CSS " + resourcePath, e);

@@ -199,12 +199,12 @@ public class LoggerElement {
 			sb.append("\"");
 		}
 
+		sb.append(">");
+
 		boolean hasChildren = _childLoggerElements.size() > 0;
 		boolean hasText = Validator.isNotNull(_text);
 
 		if (hasChildren || hasText) {
-			sb.append(">");
-
 			if (hasText) {
 				sb.append(_text);
 			}
@@ -214,14 +214,11 @@ public class LoggerElement {
 					sb.append(childLoggerElement.toString());
 				}
 			}
+		}
 
-			sb.append("</");
-			sb.append(_name);
-			sb.append(">");
-		}
-		else {
-			sb.append(" />");
-		}
+		sb.append("</");
+		sb.append(_name);
+		sb.append(">");
 
 		return sb.toString();
 	}

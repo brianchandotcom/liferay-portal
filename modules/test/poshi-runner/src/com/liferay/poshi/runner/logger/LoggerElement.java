@@ -58,7 +58,7 @@ public class LoggerElement {
 			String className = LoggerUtil.getClassName(this);
 
 			if (Validator.isNotNull(className)) {
-				_className = className;
+				_className = _fixClassName(className);
 			}
 
 			String name = LoggerUtil.getName(this);
@@ -83,6 +83,10 @@ public class LoggerElement {
 
 			childLoggerElement.writeChildLoggerElements();
 		}
+	}
+
+	public void addClassName(String className) {
+		setClassName(_className + " " + className);
 	}
 
 	public List<String> getAttributeNames() {
@@ -141,6 +145,27 @@ public class LoggerElement {
 		return childLoggerElements;
 	}
 
+	public void removeClassName(String className) {
+		String[] classNames = StringUtil.split(_className, " ");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < classNames.length; i++) {
+			if (Validator.isNull(classNames[i])) {
+				continue;
+			}
+
+			if (Validator.equals(classNames[i], className)) {
+				continue;
+			}
+
+			sb.append(classNames[i]);
+			sb.append(" ");
+		}
+
+		setClassName(sb.toString());
+	}
+
 	public void setAttribute(String attributeName, String attributeValue) {
 		_attributes.put(attributeName, attributeValue);
 
@@ -150,7 +175,7 @@ public class LoggerElement {
 	}
 
 	public void setClassName(String className) {
-		_className = className;
+		_className = _fixClassName(className);
 
 		if (_isWrittenToLogger()) {
 			LoggerUtil.setClassName(this);
@@ -240,6 +265,27 @@ public class LoggerElement {
 				childLoggerElement.writeChildLoggerElements();
 			}
 		}
+	}
+
+	private String _fixClassName(String className) {
+		String[] classNames = StringUtil.split(className, " ");
+
+		Arrays.sort(classNames);
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < classNames.length; i++) {
+			if (Validator.isNull(classNames[i])) {
+				continue;
+			}
+
+			sb.append(classNames[i]);
+			sb.append(" ");
+		}
+
+		className = sb.toString();
+
+		return className.trim();
 	}
 
 	private boolean _isWrittenToLogger() {

@@ -93,8 +93,7 @@ public final class LoggerUtil {
 	}
 
 	public static void executeJavaScript(String script) {
-		_javascriptExecutor.executeScript(
-			StringEscapeUtils.escapeEcmaScript(script));
+		_javascriptExecutor.executeScript(script);
 	}
 
 	public static String getClassName(LoggerElement loggerElement) {

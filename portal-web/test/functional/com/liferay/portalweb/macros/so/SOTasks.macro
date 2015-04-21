@@ -106,8 +106,8 @@
 				</if>
 
 				<var locator="SOTasksAdd#DUE_DATE_MERIDIAN" name="displayDateMeridian" />
-				<var method="StringUtil#replace(${displayDateMeridian}, '0', 'AM')" name="displayDateMeridian" />
-				<var method="StringUtil#replace(${displayDateMeridian}, '1', 'PM')" name="displayDateMeridian" />
+				<var method="StringUtil#replace(${displayDateMeridian}, &quot;0&quot;, &quot;AM&quot;)" name="displayDateMeridian" />
+				<var method="StringUtil#replace(${displayDateMeridian}, &quot;1&quot;, &quot;PM&quot;)" name="displayDateMeridian" />
 
 				<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}" />
 

@@ -91,7 +91,7 @@
 
 		<var name="string" value="abcde" />
 
-		<var method="StringUtil#replace(${string}, 'abc','123')" name="stringReplaced" />
+		<var method="StringUtil#replace(${string}, &quot;abc&quot;,&quot;123&quot;)" name="stringReplaced" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${stringReplaced}" />
@@ -101,7 +101,7 @@
 		<echo message="Test replace() used inline" />
 
 		<execute macro="TestUtils#assertEquals">
-			<var method="StringUtil#replace(${string}, 'abc','123')" name="actual" />
+			<var method="StringUtil#replace(${string}, &quot;abc&quot;,&quot;123&quot;)" name="actual" />
 			<var name="expected" value="123de" />
 		</execute>
 	</command>

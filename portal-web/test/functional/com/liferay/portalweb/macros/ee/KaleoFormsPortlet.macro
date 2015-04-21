@@ -170,7 +170,7 @@
 	</command>
 
 	<command name="populateFieldTextBox">
-		<var method="StringUtil#replace(${fieldName}, ' ', '_')" name="fieldName" />
+		<var method="StringUtil#replace(${fieldName}, &quot; &quot;, &quot;_&quot;)" name="fieldName" />
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Type" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${kfProcessFieldData}" />

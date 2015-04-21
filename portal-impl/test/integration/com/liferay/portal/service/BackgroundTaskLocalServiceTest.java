@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.backgroundtask.BaseBackgroundTaskTestCase;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -56,7 +57,7 @@ import org.junit.Test;
 /**
  * @author Cristina González
  */
-public class BackgroundTaskLocalServiceTest {
+public class BackgroundTaskLocalServiceTest extends BaseBackgroundTaskTestCase {
 
 	@ClassRule
 	@Rule
@@ -65,7 +66,10 @@ public class BackgroundTaskLocalServiceTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser(_group.getGroupId());
@@ -81,7 +85,10 @@ public class BackgroundTaskLocalServiceTest {
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
+		super.tearDown();
+
 		MessageBus messageBus = MessageBusUtil.getMessageBus();
 
 		Destination destination = messageBus.getDestination(
@@ -95,6 +102,8 @@ public class BackgroundTaskLocalServiceTest {
 
 	@Test
 	public void testAddBackgroundTask() throws Exception {
+		initalizeThreadLocals();
+
 		Map<String, Serializable> taskContextMap = getTaskContextMap();
 
 		BackgroundTask backgroundTask =
@@ -112,10 +121,18 @@ public class BackgroundTaskLocalServiceTest {
 			backgroundTask.getTaskExecutorClassName());
 		AssertUtils.assertEquals(
 			taskContextMap, backgroundTask.getTaskContextMap());
+
+		Map<String, Serializable> threadLocalValues =
+			(Map<String, Serializable>)backgroundTask.getTaskContextMap().get(
+				"threadLocalValues");
+
+		assertThreadLocalValues(threadLocalValues);
 	}
 
 	@Test
 	public void testAddBackgroundTaskAttachmentFromFile() throws Exception {
+		initalizeThreadLocals();
+
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
 				_user.getUserId(), _group.getGroupId(), _BACKGROUND_TASK_NAME,
@@ -138,11 +155,19 @@ public class BackgroundTaskLocalServiceTest {
 			backgroundTask.getBackgroundTaskId());
 
 		Assert.assertEquals(backgroundTask.getAttachmentsFileEntriesCount(), 1);
+
+		Map<String, Serializable> threadLocalValues =
+			(Map<String, Serializable>)backgroundTask.getTaskContextMap().get(
+				"threadLocalValues");
+
+		assertThreadLocalValues(threadLocalValues);
 	}
 
 	@Test
 	public void testAddBackgroundTaskAttachmentFromInputStream()
 		throws Exception {
+
+		initalizeThreadLocals();
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.addBackgroundTask(
@@ -173,10 +198,18 @@ public class BackgroundTaskLocalServiceTest {
 		FileEntry attachment = attachmentsFileEntries.get(0);
 
 		Assert.assertEquals(fileName, attachment.getTitle());
+
+		Map<String, Serializable> threadLocalValues =
+			(Map<String, Serializable>)backgroundTask.getTaskContextMap().get(
+				"threadLocalValues");
+
+		assertThreadLocalValues(threadLocalValues);
 	}
 
 	@Test
 	public void testAddBackgroundTaskFromBackgroundTask() throws Exception {
+		initalizeThreadLocals();
+
 		BackgroundTask backgroundTaskImpl = new BackgroundTaskImpl();
 
 		backgroundTaskImpl.setUserId(_user.getUserId());
@@ -202,6 +235,12 @@ public class BackgroundTaskLocalServiceTest {
 			backgroundTask.getTaskExecutorClassName());
 		AssertUtils.assertEquals(
 			taskContextMap, backgroundTask.getTaskContextMap());
+
+		Map<String, Serializable> threadLocalValues =
+			(Map<String, Serializable>)backgroundTask.getTaskContextMap().get(
+				"threadLocalValues");
+
+		assertThreadLocalValues(threadLocalValues);
 	}
 
 	@Test
@@ -219,6 +258,8 @@ public class BackgroundTaskLocalServiceTest {
 
 	@Test
 	public void testAmendBackgroundTaskWithStatusFailed() throws Exception {
+		initalizeThreadLocals();
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
@@ -238,10 +279,18 @@ public class BackgroundTaskLocalServiceTest {
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_FAILED, backgroundTask.getStatus());
 		Assert.assertTrue(backgroundTask.isCompleted());
+
+		Map<String, Serializable> threadLocalValues =
+			(Map<String, Serializable>)backgroundTask.getTaskContextMap().get(
+				"threadLocalValues");
+
+		assertThreadLocalValues(threadLocalValues);
 	}
 
 	@Test
 	public void testAmendBackgroundTaskWithStatusInProgress() throws Exception {
+		initalizeThreadLocals();
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
@@ -262,10 +311,18 @@ public class BackgroundTaskLocalServiceTest {
 			BackgroundTaskConstants.STATUS_IN_PROGRESS,
 			backgroundTask.getStatus());
 		Assert.assertFalse(backgroundTask.isCompleted());
+
+		Map<String, Serializable> threadLocalValues =
+			(Map<String, Serializable>)backgroundTask.getTaskContextMap().get(
+				"threadLocalValues");
+
+		assertThreadLocalValues(threadLocalValues);
 	}
 
 	@Test
 	public void testAmendBackgroundTaskWithStatusSuccessful() throws Exception {
+		initalizeThreadLocals();
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
@@ -286,10 +343,18 @@ public class BackgroundTaskLocalServiceTest {
 			BackgroundTaskConstants.STATUS_SUCCESSFUL,
 			backgroundTask.getStatus());
 		Assert.assertTrue(backgroundTask.isCompleted());
+
+		Map<String, Serializable> threadLocalValues =
+			(Map<String, Serializable>)backgroundTask.getTaskContextMap().get(
+				"threadLocalValues");
+
+		assertThreadLocalValues(threadLocalValues);
 	}
 
 	@Test
 	public void testAmendBackgroundTaskWithTaskContextMap() throws Exception {
+		initalizeThreadLocals();
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
@@ -306,6 +371,12 @@ public class BackgroundTaskLocalServiceTest {
 
 		AssertUtils.assertEquals(
 			backgroundTask.getTaskContextMap(), taskContextMap);
+
+		Map<String, Serializable> threadLocalValues =
+			(Map<String, Serializable>)backgroundTask.getTaskContextMap().get(
+				"threadLocalValues");
+
+		assertThreadLocalValues(threadLocalValues);
 	}
 
 	protected Map<String, Serializable> getTaskContextMap() throws Exception {

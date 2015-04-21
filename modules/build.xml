@@ -13,7 +13,7 @@
 		<dirset dir="apps/currency-converter" includes="*" />
 		<dirset dir="apps/dictionary" includes="*" />
 		<dirset dir="apps/document-library" includes="*" />
-		<dirset dir="apps/document-selector" includes="*" />
+		<dirset dir="apps/item-selector" includes="*" />
 		<dirset dir="apps/dynamic-data-lists" includes="*" />
 		<dirset dir="apps/dynamic-data-mapping" includes="*" />
 		<dirset dir="apps/hello-velocity" includes="*" />

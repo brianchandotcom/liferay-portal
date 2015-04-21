@@ -106,7 +106,7 @@ if (fileEntryId != 0) {
 	</div>
 </div>
 
-<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<liferay-portlet:renderURL portletName="<%= PortletKeys.ITEM_SELECTOR %>" varImpl="itemSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/view.jsp" />
 	<portlet:param name="tabs1Names" value="documents" />
 	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
@@ -125,7 +125,7 @@ if (!draggableImage.equals("none")) {
 <aui:script use="<%= modules %>">
 	var imageSelector = new Liferay.ImageSelector(
 		{
-			documentSelectorURL: '<%= documentSelectorURL.toString() %>',
+			itemSelectorURL: '<%= itemSelectorURL.toString() %>',
 			errorNode: '#<%= randomNamespace + "errorAlert" %>',
 			fileEntryImageNode: '#<%= randomNamespace %>image',
 			maxFileSize: <%= maxFileSize %>,

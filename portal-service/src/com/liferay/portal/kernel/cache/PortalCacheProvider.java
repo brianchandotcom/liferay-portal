@@ -60,15 +60,7 @@ public class PortalCacheProvider {
 	private PortalCacheManager<? extends Serializable, ?>
 		_getPortalCacheManager(String portalCacheManagerName) {
 
-		for (PortalCacheManager<? extends Serializable, ?> portalCacheManager :
-				_portalCacheManagers.values()) {
-
-			if (portalCacheManagerName.equals(portalCacheManager.getName())) {
-				return portalCacheManager;
-			}
-		}
-
-		return null;
+		return _portalCacheManagers.get(portalCacheManagerName);
 	}
 
 	private Collection<PortalCacheManager<? extends Serializable, ?>>
@@ -82,8 +74,8 @@ public class PortalCacheProvider {
 		new PortalCacheProvider();
 
 	private final
-		Map<ServiceReference<PortalCacheManager<? extends Serializable, ?>>,
-			PortalCacheManager<? extends Serializable, ?>> _portalCacheManagers;
+		Map<String, PortalCacheManager<? extends Serializable, ?>>
+		_portalCacheManagers;
 	private final
 		ServiceTracker<PortalCacheManager<? extends Serializable, ?>,
 			PortalCacheManager<? extends Serializable, ?>>
@@ -104,7 +96,8 @@ public class PortalCacheProvider {
 			PortalCacheManager<?, ?> portalCacheManager = registry.getService(
 				serviceReference);
 
-			_portalCacheManagers.put(serviceReference, portalCacheManager);
+			_portalCacheManagers.put(
+				portalCacheManager.getName(), portalCacheManager);
 
 			return portalCacheManager;
 		}
@@ -122,7 +115,7 @@ public class PortalCacheProvider {
 				serviceReference,
 			PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
 
-			_portalCacheManagers.remove(serviceReference);
+			_portalCacheManagers.remove(portalCacheManager.getName());
 		}
 
 	}

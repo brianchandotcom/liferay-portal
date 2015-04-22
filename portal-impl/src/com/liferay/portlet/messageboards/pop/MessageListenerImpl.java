@@ -182,7 +182,11 @@ public class MessageListenerImpl implements MessageListener {
 			User user = UserLocalServiceUtil.getUserByEmailAddress(
 				company.getCompanyId(), from);
 
-			String subject = MBUtil.getSubjectForEmail(message);
+			String subject = null;
+
+			if (parentMessage != null) {
+				MBUtil.getSubjectForEmail(parentMessage);
+			}
 
 			MBMailMessage mbMailMessage = new MBMailMessage();
 

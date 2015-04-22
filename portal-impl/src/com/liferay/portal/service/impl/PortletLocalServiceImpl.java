@@ -52,13 +52,13 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.EventDefinition;
-import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletFilter;
 import com.liferay.portal.model.PortletInfo;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletURLListener;
 import com.liferay.portal.model.PublicRenderParameter;
@@ -2390,9 +2390,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	private static final int _PORTLET_ID_MAX_LENGTH =
-		ModelHintsUtil.getMaxLength(Portlet.class.getName(), "portletId") -
-			PortletConstants.INSTANCE_SEPARATOR.length() +
-				PortletConstants.USER_SEPARATOR.length() + 39;
+		PortletInstance.PORTLET_INSTANCE_KEY_MAX_LENGTH;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletLocalServiceImpl.class);

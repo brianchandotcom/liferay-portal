@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMContentTable;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMStructureTable;
 import com.liferay.portal.util.PortalUtil;
@@ -1619,6 +1621,86 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			return entryVersionFolderId;
 		}
 
+		protected void addResourcePermissions(
+			int mvccVersion, long resourcePermissionId, long companyId,
+			String name, long scope, long primKey, long roleId, long ownerId,
+			long actionIds) throws SQLException {
+
+			Connection con = null;
+			PreparedStatement ps = null;
+
+			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("insert into ResourcePermission (mvccVersion, ");
+				sb.append("resourcePermissionId, companyId, name, scope, ");
+				sb.append("primKey, roleId, ownerId, actionIds) values (?, ");
+				sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
+
+				String sql = sb.toString();
+
+				ps = con.prepareStatement(sql);
+
+				ps.setLong(1, mvccVersion);
+				ps.setLong(2, resourcePermissionId);
+				ps.setLong(3, companyId);
+				ps.setString(4, name);
+				ps.setLong(5, scope);
+				ps.setLong(6, primKey);
+				ps.setLong(7, roleId);
+				ps.setLong(8, ownerId);
+				ps.setLong(9, actionIds);
+
+				ps.executeUpdate();
+			}
+			finally {
+				DataAccess.cleanUp(con, ps);
+			}
+		}
+
+		protected long getActionBitwiseValue(String action)
+			throws SQLException {
+
+			Connection con = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+
+			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("select bitwiseValue from ResourceAction where ");
+				sb.append("name = ? and actionId = ?");
+
+				String sql = sb.toString();
+
+				ps = con.prepareStatement(sql);
+
+				ps.setString(1, DLFileEntry.class.getName());
+				ps.setString(2, action);
+
+				rs = ps.executeQuery();
+
+				return rs.getLong("bitwiseValue");
+			}
+			finally {
+				DataAccess.cleanUp(con, ps, rs);
+			}
+		}
+
+		protected long getActionIdsLong(String[] actions) throws SQLException {
+			long actionIdsLong = 0;
+
+			for (String action : actions) {
+				actionIdsLong |= getActionBitwiseValue(action);
+			}
+
+			return actionIdsLong;
+		}
+
 		protected long getDLFolderId(
 				long groupId, long parentFolderId, String name)
 			throws Exception {
@@ -1663,6 +1745,35 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 
 			return StringUtil.toLowerCase(extension);
+		}
+
+		protected long getRoleId(String roleName) throws SQLException {
+			Connection con = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+
+			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("select roleId from role_ where companyId = ? and ");
+				sb.append("name = ?");
+
+				String sql = sb.toString();
+
+				ps = con.prepareStatement(sql);
+
+				ps.setLong(1, _companyId);
+				ps.setString(2, roleName);
+
+				rs = ps.executeQuery();
+
+				return rs.getLong("roleId");
+			}
+			finally {
+				DataAccess.cleanUp(con, ps, rs);
+			}
 		}
 
 		protected String toJSON(long groupId, String fileEntryUuid) {
@@ -1736,6 +1847,28 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					StringPool.BLANK, StringPool.BLANK, null, null, 0, 0, null,
 					0);
 
+				// Resource permissions
+
+				addResourcePermissions(
+					0, increment(), _companyId, DLFileEntry.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL, fileEntryId,
+					getRoleId(RoleConstants.OWNER), _userId,
+					getActionIdsLong(_ownerPermissions));
+
+				if (_groupId > 0) {
+					addResourcePermissions(
+						0, increment(), _companyId, DLFileEntry.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL, fileEntryId,
+						getRoleId(RoleConstants.SITE_MEMBER), 0,
+						getActionIdsLong(_groupPermissions));
+				}
+
+				addResourcePermissions(
+					0, increment(), _companyId, DLFileEntry.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL, fileEntryId,
+					getRoleId(RoleConstants.GUEST), 0,
+					getActionIdsLong(_guestPermissions));
+
 				// File
 
 				DLStoreUtil.addFile(_companyId, dlFolderId, name, file);
@@ -1752,8 +1885,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		private final long _entryId;
 		private final String _entryVersion;
 		private final long _groupId;
+		private final String[] _groupPermissions = {"ADD_DISCUSSION", "VIEW"};
+		private final String[] _guestPermissions = {"ADD_DISCUSSION", "VIEW"};
 		private final Timestamp _now = new Timestamp(
 			System.currentTimeMillis());
+		private final String[] _ownerPermissions = {"ADD_DISCUSSION", "DELETE",
+			"DELETE_DISCUSSION", "OVERRIDE_CHECKOUT", "PERMISSIONS", "UPDATE",
+			"UPDATE_DISCUSSION", "VIEW"};
 		private final long _userId;
 		private final String _userName;
 

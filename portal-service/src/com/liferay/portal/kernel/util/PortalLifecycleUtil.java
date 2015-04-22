@@ -54,6 +54,25 @@ public class PortalLifecycleUtil {
 		PortalInitableUtil.flushInitables();
 	}
 
+	public static PortalLifecycle getPortalLifecycle(String className) {
+		if (_portalLifecyclesInit != null) {
+			List<PortalLifecycle> portalLifecyclesInit = _portalLifecyclesInit;
+
+			for (PortalLifecycle portalLifecycle : portalLifecyclesInit) {
+				Class<?> portalLifecycleClass = portalLifecycle.getClass();
+
+				String portalLifecycleClassName =
+					portalLifecycleClass.getName();
+
+				if (portalLifecycleClassName.equals(className)) {
+					return portalLifecycle;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public static void register(PortalLifecycle portalLifecycle) {
 		register(portalLifecycle, PortalLifecycle.METHOD_ALL);
 	}

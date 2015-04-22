@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflowdefinitionlinks.web.portlet;
+package com.liferay.workflow.definition.link.web.portlet;
 
 import javax.portlet.Portlet;
 
@@ -35,13 +35,12 @@ import com.liferay.portal.util.PortletKeys;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definitions-link",
-		"com.liferay.portlet.control-panel-entry-class=com.liferay.portal.workflow.WorkflowControlPanelEntry",
-		"javax.portlet.display-name=Workflow Definition Links",
+		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definition-link",
+		"javax.portlet.display-name=Workflow Definition Link",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_CONFIGURATION,
+		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION_LINK,
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflowdefinitionlinks.web.portlet.action;
+package com.liferay.workflow.definition.link.web.portlet.action;
 
 import java.util.Enumeration;
 
@@ -38,11 +38,11 @@ import com.liferay.portal.util.WebKeys;
  */
 @Component(immediate = true,
 	property = {
-		"action.command.name=updateWorkflowDefinitionLinks",
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_CONFIGURATION
+		"action.command.name=updateWorkflowDefinitionLink",
+		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION_LINK
 	},
 	service = ActionCommand.class)
-public class UpdateWorkflowDefinitionLinksActionCommand extends
+public class UpdateWorkflowDefinitionLinkActionCommand extends
 		BaseActionCommand {
 
 	@Override

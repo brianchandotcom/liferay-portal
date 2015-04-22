@@ -249,31 +249,28 @@ if (feed != null) {
 
 							<%
 							DDMForm ddmForm = ddmStructure.getDDMForm();
-							int selectAndRadioFieldsCounter = 0;
 
 							for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-								String ddmFormFieldName = StringPool.BLANK;
 								String ddmFormFieldType = ddmFormField.getType();
 
 								if (ddmFormFieldType.equals("select") || ddmFormFieldType.equals("radio")) {
-									selectAndRadioFieldsCounter++;
-
 									DDMFormFieldOptions ddmFormFieldOptions = ddmFormField.getDDMFormFieldOptions();
 
 									for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
-										ddmFormFieldName = ddmFormFieldOptions.getOptionLabels(optionValue).getString(locale);
+										LocalizedValue optionLabels = ddmFormFieldOptions.getOptionLabels(optionValue);
+
+										optionValue = ddmFormField.getName() + StringPool.UNDERLINE + optionValue;
 							%>
 
-										<aui:option label='<%= TextFormatter.format(ddmFormFieldName, TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(ddmFormFieldName + StringPool.UNDERLINE + selectAndRadioFieldsCounter) %>" value="<%= ddmFormFieldName + StringPool.UNDERLINE + selectAndRadioFieldsCounter %>" />
+										<aui:option label='<%= TextFormatter.format(optionLabels.getString(locale), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(optionValue) %>" value="<%= optionValue %>" />
 
 							<%
 									}
 								}
 								else if (!ddmFormFieldType.equals("checkbox")) {
-									ddmFormFieldName = ddmFormField.getName();
 							%>
 
-									<aui:option label='<%= TextFormatter.format(ddmFormFieldName, TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(ddmFormFieldName) %>" value="<%= ddmFormFieldName %>" />
+									<aui:option label='<%= TextFormatter.format(ddmFormField.getName(), TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(ddmFormField.getName()) %>" value="<%= ddmFormField.getName() %>" />
 
 							<%
 								}

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -47,7 +46,6 @@ import com.liferay.portlet.journal.service.base.JournalFeedLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -356,45 +354,39 @@ public class JournalFeedLocalServiceImpl
 			if (ddmFormFieldsMap.containsKey(contentField)) {
 				return true;
 			}
-			else {
-				int selectAndRadioFieldsCounter = 0;
 
-				for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
-					String ddmFormFieldType = ddmFormField.getType();
-
-					if (ddmFormFieldType.equals("select") ||
-						ddmFormFieldType.equals("radio")) {
-
-						selectAndRadioFieldsCounter++;
-
-						DDMFormFieldOptions ddmFormFieldOptions =
-							ddmFormField.getDDMFormFieldOptions();
-
-						for (String optionValue :
-							ddmFormFieldOptions.getOptionsValues()) {
-
-							Locale locale =
-								LocaleThreadLocal.getThemeDisplayLocale();
-
-							String optionLabel =
-								ddmFormFieldOptions.
-									getOptionLabels(optionValue).
-										getString(locale);
-
-							String optionLabelFormatted =
-								optionLabel + StringPool.UNDERLINE +
-									selectAndRadioFieldsCounter;
-
-							if (optionLabelFormatted.equals(contentField)) {
-								return true;
-							}
-						}
-					}
-				}
-			}
+			return isValidStructureOptionValue(ddmFormFieldsMap, contentField);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+
+		return false;
+	}
+
+	protected boolean isValidStructureOptionValue(
+		Map<String, DDMFormField> ddmFormFieldsMap, String contentField) {
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			String ddmFormFieldType = ddmFormField.getType();
+
+			if (!(ddmFormFieldType.equals("select") ||
+				  ddmFormFieldType.equals("radio"))) {
+
+				continue;
+			}
+
+			DDMFormFieldOptions ddmFormFieldOptions =
+				ddmFormField.getDDMFormFieldOptions();
+
+			for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
+				optionValue =
+					ddmFormField.getName() + StringPool.UNDERLINE + optionValue;
+
+				if (contentField.equals(optionValue)) {
+					return true;
+				}
+			}
 		}
 
 		return false;

@@ -180,7 +180,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		_cacheManager = new CacheManager(_configurationPair.getKey());
 
-		_cacheManager.setName(name);
+		_cacheManager.setName(getName());
 
 		if (_stopCacheManagerTimer) {
 			FailSafeTimer failSafeTimer = _cacheManager.getTimer();

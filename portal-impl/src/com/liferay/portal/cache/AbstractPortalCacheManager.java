@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfigura
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -143,7 +144,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public String getName() {
-		return name;
+		return _name;
 	}
 
 	@Override
@@ -175,7 +176,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		_name = name;
 	}
 
 	@Override
@@ -211,8 +212,9 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		if (name == null) {
-			throw new NullPointerException("Name is null");
+		if (Validator.isNull(_name)) {
+			throw new IllegalArgumentException(
+				"Portal cache manager name must be specified.");
 		}
 
 		initPortalCacheManager();
@@ -239,7 +241,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("portal.cache.manager.name", name);
+		properties.put("portal.cache.manager._name", _name);
 		properties.put("portal.cache.manager.type", getType());
 
 		_serviceRegistration = registry.registerService(
@@ -290,7 +292,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	protected final AggregatedCacheManagerListener
 		aggregatedCacheManagerListener = new AggregatedCacheManagerListener();
 	protected boolean clusterAware;
-	protected String name;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();
 
@@ -323,6 +324,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	private boolean _mpiOnly;
+	private String _name;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private ServiceRegistration<PortalCacheManager<K, V>> _serviceRegistration;
 

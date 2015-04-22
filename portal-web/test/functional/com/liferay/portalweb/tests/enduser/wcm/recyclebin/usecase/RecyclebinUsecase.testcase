@@ -83,7 +83,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54849" name="RecycleBinBookmarks" priority="3">
+	<command name="RecycleBinBookmarks" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />

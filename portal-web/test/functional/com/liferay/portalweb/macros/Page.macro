@@ -505,7 +505,7 @@
 			</and>
 			<then>
 				<var method="StringUtil#replace(${siteName}, ' ', '-')" name="siteNameURL" />
-				<var method="StringUtil#lowerCase(${siteNameURL})" name="siteNameURL" />
+				<var method="StringUtil#lowerCase(/${siteNameURL})" name="siteNameURL" />
 			</then>
 			<elseif>
 				<isset var="friendlyURL" />

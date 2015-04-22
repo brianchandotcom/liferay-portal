@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Mentions Editor Config
-Bundle-SymbolicName: com.liferay.mentions.editor.config
-Bundle-Version: 1.0.0
-Include-Resource: classes

@@ -176,8 +176,15 @@ public class FileEventUtil {
 	}
 
 	public static void downloadFile(long syncAccountId, SyncFile syncFile) {
+		downloadFile(syncAccountId, syncFile, true);
+	}
+
+	public static void downloadFile(
+		long syncAccountId, SyncFile syncFile, boolean batch) {
+
 		Map<String, Object> parameters = new HashMap<>();
 
+		parameters.put("batch", batch);
 		parameters.put("patch", false);
 		parameters.put("syncFile", syncFile);
 
@@ -283,6 +290,11 @@ public class FileEventUtil {
 			downloadFile(syncAccountId, downloadingSyncFile);
 		}
 
+		BatchDownloadEvent batchDownloadEvent =
+			BatchEventManager.getBatchDownloadEvent(syncAccountId);
+
+		batchDownloadEvent.fireBatchEvent();
+
 		List<SyncFile> uploadingSyncFiles = SyncFileService.findSyncFiles(
 			syncAccountId, SyncFile.UI_EVENT_UPLOADING);
 
@@ -344,6 +356,10 @@ public class FileEventUtil {
 					movingSyncFile);
 			}
 		}
+
+		BatchEvent batchEvent = BatchEventManager.getBatchEvent(syncAccountId);
+
+		batchEvent.fireBatchEvent();
 	}
 
 	public static void updateFile(

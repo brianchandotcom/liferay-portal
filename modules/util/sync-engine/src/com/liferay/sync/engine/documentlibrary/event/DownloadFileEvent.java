@@ -50,11 +50,13 @@ public class DownloadFileEvent extends BaseEvent {
 
 		SyncFileService.update(syncFile);
 
-		BatchDownloadEvent batchDownloadEvent =
-			BatchEventManager.getBatchDownloadEvent(getSyncAccountId());
+		if ((boolean)getParameterValue("batch")) {
+			BatchDownloadEvent batchDownloadEvent =
+				BatchEventManager.getBatchDownloadEvent(getSyncAccountId());
 
-		if (batchDownloadEvent.addEvent(this)) {
-			return;
+			if (batchDownloadEvent.addEvent(this)) {
+				return;
+			}
 		}
 
 		StringBuilder sb = new StringBuilder();

@@ -112,7 +112,7 @@ public class DownloadFileHandler extends BaseHandler {
 					"NoSuchFileVersionException") &&
 			(Boolean)getParameterValue("patch")) {
 
-			FileEventUtil.downloadFile(getSyncAccountId(), syncFile);
+			FileEventUtil.downloadFile(getSyncAccountId(), syncFile, false);
 
 			return true;
 		}

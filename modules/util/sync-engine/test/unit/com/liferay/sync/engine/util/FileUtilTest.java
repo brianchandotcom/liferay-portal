@@ -123,7 +123,8 @@ public class FileUtilTest {
 		Path filePath = Files.createTempDirectory("test");
 
 		for (String ignoredFileName : PropsValues.SYNC_FILE_IGNORE_NAMES) {
-			Path ignoredFilePath = filePath.resolve(ignoredFileName);
+			Path ignoredFilePath = filePath.resolve(
+				StringEscapeUtils.unescapeJava(ignoredFileName));
 
 			Assert.assertTrue(FileUtil.isIgnoredFilePath(ignoredFilePath));
 		}

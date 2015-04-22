@@ -188,8 +188,8 @@ public class PortletKeys {
 	public static final String WORKFLOW_DEFINITION =
 		"com_liferay_workflow_definition_web_portlet_WorkflowDefinitionPortlet";
 
-	public static final String WORKFLOW_INSTANCES = 
-			"com_liferay_workflowinstance_web_portlet_WorkflowInstancePortlet";
+	public static final String WORKFLOW_INSTANCE = 
+			"com_liferay_workflow_instance_web_portlet_WorkflowInstancePortlet";
 
 	public static final String WORKFLOW_TASKS = "150";
 

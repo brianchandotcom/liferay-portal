@@ -161,7 +161,7 @@
 	</command>
 
 	<command name="definePermissionPG">
-		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
+		<var method="StringUtil#replace(${roleName}, &quot; &quot;, &quot;-&quot;)" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
@@ -436,7 +436,7 @@
 			<if>
 				<isset var="siteNameScope" />
 				<then>
-					<var method="StringUtil#replace(${permissionDefinitionKey}, 'CHECKBOX', 'CHANGE_LINK')" name="permissionDefinitionKeyChange" />
+					<var method="StringUtil#replace(${permissionDefinitionKey}, &quot;CHECKBOX&quot;, &quot;CHANGE_LINK&quot;)" name="permissionDefinitionKeyChange" />
 
 					<execute function="AssertClick" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeyChange}" value1="Change" />
 
@@ -447,7 +447,7 @@
 					<execute function="Click" locator1="CPRolesDefinepermissionsSelectSite#SCOPE_SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
 					<var name="key_siteNameScope" value="${siteNameScope}" />
-					<var method="StringUtil#replace(${permissionDefinitionKey}, 'CHECKBOX', 'SITE_SCOPE')" name="permissionDefinitionKeySiteScope" />
+					<var method="StringUtil#replace(${permissionDefinitionKey}, &quot;CHECKBOX&quot;, &quot;SITE_SCOPE&quot;)" name="permissionDefinitionKeySiteScope" />
 
 					<execute function="SelectFrame" value1="relative=top" />
 					<execute function="AssertTextEquals" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeySiteScope}" value1="${siteNameScope}" />
@@ -627,7 +627,7 @@
 	</command>
 
 	<command name="removePermissionPG">
-		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
+		<var method="StringUtil#replace(${roleName}, &quot; &quot;, &quot;-&quot;)" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<execute function="Uncheck" locator1="Permissions#${permissionDefinitionKey}" />
@@ -936,7 +936,7 @@
 	</command>
 
 	<command name="viewPermissionPG">
-		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
+		<var method="StringUtil#replace(${roleName}, &quot; &quot;, &quot;-&quot;)" name="key_roleName" />
 		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
 
 		<if>

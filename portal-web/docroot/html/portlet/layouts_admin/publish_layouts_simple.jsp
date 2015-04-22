@@ -34,7 +34,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 %>
 
 <portlet:actionURL var="confirmedActionURL">
-	<portlet:param name="struts_action" value='<%= (cmd.equals(Constants.EXPORT) ? "/layouts_admin/edit_export_configuration" : "/layouts_admin/edit_publish_configuration") %>' />
+	<portlet:param name="struts_action" value='<%= cmd.equals(Constants.EXPORT) ? "/layouts_admin/edit_export_configuration" : "/layouts_admin/edit_publish_configuration" %>' />
 	<portlet:param name="redirect" value="<%= redirectURL %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
@@ -79,7 +79,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 						%>
 
 						<liferay-util:buffer var="badgeHTML">
-							<span class="badge badge-info"><%= pagesCount > 0 ? pagesCount : LanguageUtil.get(request, "none") %></span>
+							<span class="badge badge-info"><%= (pagesCount > 0) ? pagesCount : LanguageUtil.get(request, "none") %></span>
 						</liferay-util:buffer>
 
 						<li class="tree-item">
@@ -127,9 +127,9 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 								%>
 
 									<liferay-util:buffer var="badgeHTML">
-										<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
+										<span class="badge badge-info"><%= (exportModelCount > 0) ? exportModelCount : StringPool.BLANK %></span>
 
-										<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
+										<span class="badge badge-warning deletions"><%= (modelDeletionCount > 0) ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(request, "deletions")) : StringPool.BLANK %></span>
 									</liferay-util:buffer>
 
 									<li class="tree-item">

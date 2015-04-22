@@ -145,7 +145,7 @@ public class InvokerFilterHelper {
 					filter = filterMapping.getFilter();
 				}
 
-				unregisterFilterMapping(filterMapping, false);
+				_filterMappings.remove(filterMapping);
 
 				break;
 			}
@@ -164,18 +164,6 @@ public class InvokerFilterHelper {
 
 		for (InvokerFilter invokerFilter : _invokerFilters) {
 			invokerFilter.clearFilterChainsCache();
-		}
-	}
-
-	public void unregisterFilterMapping(
-		FilterMapping filterMapping, boolean clearFilterChainsCache) {
-
-		_filterMappings.remove(filterMapping);
-
-		if (clearFilterChainsCache) {
-			for (InvokerFilter invokerFilter : _invokerFilters) {
-				invokerFilter.clearFilterChainsCache();
-			}
 		}
 	}
 

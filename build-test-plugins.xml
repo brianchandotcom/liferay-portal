@@ -171,7 +171,10 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 
 	<target name="test-plugin">
 		<if>
-			<contains string="${test.plugin}" substring="layouttpl" />
+			<or>
+				<contains string="${test.plugin}" substring="layouttpl" />
+				<contains string="${test.plugin}" substring="shared" />
+			</or>
 			<then>
 				<var name="select" value="\2" />
 			</then>

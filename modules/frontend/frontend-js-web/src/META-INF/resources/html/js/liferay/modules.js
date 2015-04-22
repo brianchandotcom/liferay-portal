@@ -959,6 +959,9 @@
 				base: PATH_JAVASCRIPT + '/misc/',
 				combine: COMBINE,
 				modules: {
+					'soyutils': {
+						path: '/soyutils.js'
+					},
 					'swfobject': {
 						path: '/swfobject.js'
 					},

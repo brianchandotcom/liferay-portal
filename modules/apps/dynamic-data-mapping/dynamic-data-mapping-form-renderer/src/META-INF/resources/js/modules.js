@@ -8,7 +8,7 @@
 						'liferay-checkbox-field': {
 							path: 'checkbox.soy.js',
 							requires: [
-								'liferay-soy-utils'
+								'soyutils'
 							]
 						}
 					},
@@ -20,7 +20,7 @@
 						'liferay-text-field': {
 							path: 'text.soy.js',
 							requires: [
-								'liferay-soy-utils'
+								'soyutils'
 							]
 						}
 					},
@@ -70,15 +70,6 @@
 						}
 					},
 					root: '/o/ddm-form-renderer/js/'
-				},
-				'third-party': {
-					base: '/o/ddm-form-renderer/third-party/',
-					modules: {
-						'liferay-soy-utils': {
-							path: 'soyutils.js'
-						}
-					},
-					root: '/o/ddm-form-renderer/third-party/'
 				}
 			}
 		}

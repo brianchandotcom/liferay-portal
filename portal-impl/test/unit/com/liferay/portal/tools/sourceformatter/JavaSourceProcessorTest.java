@@ -187,7 +187,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"SortAnnotationParameters.testjava",
 			new String[] {
 				"sort: @Component#immediate",
-				"sort: method#@Transactional#propagation"
+				"sort: method#@Transactional#propagation",
 			});
 	}
 

@@ -3,7 +3,7 @@
 		{
 			groups: {
 				'field-checkbox': {
-					base: '/o/ddm-checkbox/',
+					base: '/o/ddm-type-checkbox/',
 					modules: {
 						'liferay-checkbox-field': {
 							path: 'checkbox.soy.js',
@@ -12,10 +12,10 @@
 							]
 						}
 					},
-					root: '/o/ddm-checkbox/'
+					root: '/o/ddm-type-checkbox/'
 				},
 				'field-text': {
-					base: '/o/ddm-text/',
+					base: '/o/ddm-type-text/',
 					modules: {
 						'liferay-text-field': {
 							path: 'text.soy.js',
@@ -24,7 +24,7 @@
 							]
 						}
 					},
-					root: '/o/ddm-text/'
+					root: '/o/ddm-type-text/'
 				},
 				'form': {
 					base: '/o/ddm-form-renderer/js/',

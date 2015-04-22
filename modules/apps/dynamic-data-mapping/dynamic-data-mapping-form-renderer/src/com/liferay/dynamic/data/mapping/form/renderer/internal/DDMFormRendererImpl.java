@@ -97,7 +97,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
 
-		template.put(TemplateConstants.NAMESPACE, "ddm.multi_page_form");
+		template.put(TemplateConstants.NAMESPACE, "ddm.multiple_page_form");
 
 		populateCommonContext(template, ddmForm, ddmFormRenderingContext);
 
@@ -105,6 +105,24 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
 		template.put("pages", pages);
+
+		return render(template);
+	}
+
+	protected String doRender(
+			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
+		throws DDMFormRenderingException, TemplateException {
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
+
+		template.put(TemplateConstants.NAMESPACE, "ddm.single_page_form");
+
+		populateCommonContext(template, ddmForm, ddmFormRenderingContext);
+
+		List<String> fields = getFields(ddmForm, ddmFormRenderingContext);
+
+		template.put("fields", fields);
 
 		return render(template);
 	}
@@ -195,24 +213,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.processTemplate(writer);
 
 		return writer.toString();
-	}
-
-	private String doRender(
-			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException, TemplateException {
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
-
-		template.put(TemplateConstants.NAMESPACE, "ddm.single_page_form");
-
-		populateCommonContext(template, ddmForm, ddmFormRenderingContext);
-
-		List<String> fields = getFields(ddmForm, ddmFormRenderingContext);
-
-		template.put("fields", fields);
-
-		return render(template);
 	}
 
 	private TemplateResource _templateResource;

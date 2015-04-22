@@ -14,13 +14,11 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.cache.SingleVMPoolImpl;
-import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.InputStreamReader;
 
@@ -42,15 +40,7 @@ public class SQLQueryTableNamesUtilTest {
 
 	@Before
 	public void setUp() {
-		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
-
-		singleVMPoolImpl.setPortalCacheManager(
-			MemoryPortalCacheManager.createMemoryPortalCacheManager(
-				SQLQueryTableNamesUtilTest.class.getName()));
-
-		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
-
-		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
+		ToolDependencies.wireCaches();
 	}
 
 	@Test

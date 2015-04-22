@@ -16,11 +16,6 @@ package com.liferay.portal.template.freemarker;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.cache.MultiVMPoolImpl;
-import com.liferay.portal.cache.SingleVMPoolImpl;
-import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
@@ -29,8 +24,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import freemarker.cache.TemplateCache;
 
@@ -42,7 +36,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Reader;
-import java.io.Serializable;
 import java.io.StringReader;
 
 import java.util.Collections;
@@ -64,28 +57,7 @@ public class FreeMarkerTemplateTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-
-		MultiVMPoolUtil multiVMPoolUtil = new MultiVMPoolUtil();
-
-		MultiVMPoolImpl multiVMPoolImpl = new MultiVMPoolImpl();
-
-		multiVMPoolImpl.setPortalCacheManager(
-			MemoryPortalCacheManager.
-				<Serializable, Serializable>createMemoryPortalCacheManager(
-					"multi.vm.pool"));
-
-		multiVMPoolUtil.setMultiVMPool(multiVMPoolImpl);
-
-		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
-
-		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
-
-		singleVMPoolImpl.setPortalCacheManager(
-			MemoryPortalCacheManager.createMemoryPortalCacheManager(
-				"single.vm.pool"));
-
-		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
+		ToolDependencies.wireCaches();
 	}
 
 	@Before

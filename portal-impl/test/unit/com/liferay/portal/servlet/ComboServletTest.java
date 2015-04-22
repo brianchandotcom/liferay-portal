@@ -16,13 +16,11 @@ package com.liferay.portal.servlet;
 
 import static org.mockito.Mockito.verify;
 
-import com.liferay.portal.cache.SingleVMPoolImpl;
-import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.PortletKeys;
 
 import javax.servlet.RequestDispatcher;
@@ -61,15 +59,7 @@ public class ComboServletTest extends PowerMockito {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
-
-		singleVMPoolImpl.setPortalCacheManager(
-			MemoryPortalCacheManager.createMemoryPortalCacheManager(
-				ComboServletTest.class.getName()));
-
-		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
-
-		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
+		ToolDependencies.wireCaches();
 	}
 
 	@Before

@@ -24,10 +24,11 @@ import com.liferay.portal.service.ServiceContext;
 public interface MentionsNotifier {
 
 	public void notify(
-		long userId, long groupId, String title, String content,
-		String className, long classPK,
-		LocalizedValuesMap subjectLocalizedValuesMap,
-		LocalizedValuesMap bodyLocalizedValuesMap,
-		ServiceContext serviceContext)
-	throws PortalException;
+			long userId, long groupId, String title, String content,
+			String className, long classPK,
+			LocalizedValuesMap subjectLocalizedValuesMap,
+			LocalizedValuesMap bodyLocalizedValuesMap,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 }

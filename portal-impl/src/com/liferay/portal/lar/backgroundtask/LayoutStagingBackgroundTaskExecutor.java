@@ -101,7 +101,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			missingReferences = TransactionHandlerUtil.invoke(
 				transactionAttribute,
 				new LayoutStagingImportCallable(
-					backgroundTask.getBackgroundTaskId(), file, parameterMap,
+					backgroundTask.getBackgroundTaskId(),
+					exportImportConfiguration, file, parameterMap,
 					privateLayout, sourceGroupId, targetGroupId, userId));
 
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
@@ -187,11 +188,13 @@ public class LayoutStagingBackgroundTaskExecutor
 		implements Callable<MissingReferences> {
 
 		public LayoutStagingImportCallable(
-			long backgroundTaskId, File file,
+			long backgroundTaskId,
+			ExportImportConfiguration exportImportConfiguration, File file,
 			Map<String, String[]> parameterMap, boolean privateLayout,
 			long sourceGroupId, long targetGroupId, long userId) {
 
 			_backgroundTaskId = backgroundTaskId;
+			_exportImportConfiguration = exportImportConfiguration;
 			_file = file;
 			_parameterMap = parameterMap;
 			_privateLayout = privateLayout;
@@ -203,7 +206,7 @@ public class LayoutStagingBackgroundTaskExecutor
 		@Override
 		public MissingReferences call() throws PortalException {
 			LayoutLocalServiceUtil.importLayoutsDataDeletions(
-				_userId, _targetGroupId, _privateLayout, _parameterMap, _file);
+				_exportImportConfiguration, _file);
 
 			MissingReferences missingReferences =
 				LayoutLocalServiceUtil.validateImportLayoutsFile(
@@ -221,6 +224,7 @@ public class LayoutStagingBackgroundTaskExecutor
 		}
 
 		private final long _backgroundTaskId;
+		private final ExportImportConfiguration _exportImportConfiguration;
 		private final File _file;
 		private final Map<String, String[]> _parameterMap;
 		private final boolean _privateLayout;

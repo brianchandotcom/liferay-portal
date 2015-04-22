@@ -82,8 +82,8 @@ public class LayoutImportBackgroundTaskExecutor
 				TransactionHandlerUtil.invoke(
 					transactionAttribute,
 					new LayoutImportCallable(
-						file, parameterMap, privateLayout, targetGroupId,
-						userId));
+						exportImportConfiguration, file, parameterMap,
+						privateLayout, targetGroupId, userId));
 			}
 			catch (Throwable t) {
 				if (_log.isDebugEnabled()) {
@@ -109,9 +109,11 @@ public class LayoutImportBackgroundTaskExecutor
 	private class LayoutImportCallable implements Callable<Void> {
 
 		public LayoutImportCallable(
-			File file, Map<String, String[]> parameterMap,
-			boolean privateLayout, long targetGroupId, long userId) {
+			ExportImportConfiguration exportImportConfiguration, File file,
+			Map<String, String[]> parameterMap, boolean privateLayout,
+			long targetGroupId, long userId) {
 
+			_exportImportConfiguration = exportImportConfiguration;
 			_file = file;
 			_parameterMap = parameterMap;
 			_privateLayout = privateLayout;
@@ -122,7 +124,7 @@ public class LayoutImportBackgroundTaskExecutor
 		@Override
 		public Void call() throws PortalException {
 			LayoutLocalServiceUtil.importLayoutsDataDeletions(
-				_userId, _targetGroupId, _privateLayout, _parameterMap, _file);
+				_exportImportConfiguration, _file);
 
 			LayoutLocalServiceUtil.importLayouts(
 				_userId, _targetGroupId, _privateLayout, _parameterMap, _file);
@@ -130,6 +132,7 @@ public class LayoutImportBackgroundTaskExecutor
 			return null;
 		}
 
+		private final ExportImportConfiguration _exportImportConfiguration;
 		private final File _file;
 		private final Map<String, String[]> _parameterMap;
 		private final boolean _privateLayout;

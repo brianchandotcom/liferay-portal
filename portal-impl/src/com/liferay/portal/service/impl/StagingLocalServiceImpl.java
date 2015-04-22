@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -382,10 +383,25 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		updateStagedPortlets(remoteURL, remoteGroupId, typeSettingsProperties);
 	}
 
+	/**
+	 * @throws     PortalException
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public MissingReferences publishStagingRequest(
 			long userId, long stagingRequestId, boolean privateLayout,
 			Map<String, String[]> parameterMap)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public MissingReferences publishStagingRequest(
+			long userId, long stagingRequestId, boolean privateLayout,
+			Map<String, String[]> parameterMap,
+			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
 		File file = null;
@@ -404,7 +420,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			FileUtil.write(file, stagingRequestFileEntry.getContentStream());
 
 			layoutLocalService.importLayoutsDataDeletions(
-				userId, folder.getGroupId(), privateLayout, parameterMap, file);
+				exportImportConfiguration, file);
 
 			MissingReferences missingReferences =
 				layoutLocalService.validateImportLayoutsFile(

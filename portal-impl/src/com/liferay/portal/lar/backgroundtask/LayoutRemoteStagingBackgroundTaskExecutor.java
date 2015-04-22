@@ -116,7 +116,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				backgroundTask.getBackgroundTaskId(), "exported");
 
 			missingReferences = StagingServiceHttp.publishStagingRequest(
-				httpPrincipal, stagingRequestId, privateLayout, parameterMap);
+				httpPrincipal, stagingRequestId, privateLayout, parameterMap,
+				exportImportConfiguration);
 
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 

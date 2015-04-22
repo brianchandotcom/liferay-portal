@@ -16,13 +16,50 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:choose>
-	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
-		<%@ include file="/view_workflow_instances.jspf" %>
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="no-workflow-engine-is-deployed" />
-		</div>
-	</c:otherwise>
-</c:choose>
+<%
+String tabs2 = ParamUtil.getString(request, "tabs2", "pending");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("tabs1", "submissions");
+portletURL.setParameter("tabs2", tabs2);
+%>
+
+<liferay-ui:tabs
+	names="pending,completed"
+	param="tabs2"
+	portletURL="<%= portletURL %>"
+/>
+
+<%
+try {
+	boolean completedInstances = true;
+
+	if (tabs2.equals("pending")) {
+		completedInstances = false;
+	}
+%>
+
+	<%@ include file="/workflow_instances.jspf" %>
+
+<%
+}
+catch (Exception e) {
+	if (_log.isWarnEnabled()) {
+		_log.warn("Error retrieving workflow instances", e);
+	}
+%>
+
+	<div class="alert alert-danger">
+		<liferay-ui:message key="an-error-occurred-while-retrieving-the-list-of-instances" />
+	</div>
+
+<%
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), currentURL);
+%>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("modules.apps.workflow.workflow-instance-web.view_jsp");
+%>

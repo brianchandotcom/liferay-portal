@@ -16,17 +16,15 @@ package com.liferay.portal.kernel.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Reader;
 
-import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -80,27 +78,8 @@ public class URLTemplateResource implements TemplateResource {
 
 	@Override
 	public long getLastModified() {
-		URLConnection urlConnection = null;
-
 		try {
-			urlConnection = _templateURL.openConnection();
-
-			if (urlConnection instanceof JarURLConnection) {
-				JarURLConnection jarURLConnection =
-					(JarURLConnection)urlConnection;
-
-				URL url = jarURLConnection.getJarFileURL();
-
-				String protocol = url.getProtocol();
-
-				if (protocol.equals("file")) {
-					return new File(url.getFile()).lastModified();
-				}
-
-				urlConnection = url.openConnection();
-			}
-
-			return urlConnection.getLastModified();
+			return URLUtil.getLastModifiedTime(_templateURL);
 		}
 		catch (IOException ioe) {
 			_log.error(
@@ -108,17 +87,6 @@ public class URLTemplateResource implements TemplateResource {
 				ioe);
 
 			return 0;
-		}
-		finally {
-			if (urlConnection != null) {
-				try {
-					InputStream inputStream = urlConnection.getInputStream();
-
-					inputStream.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
 	}
 

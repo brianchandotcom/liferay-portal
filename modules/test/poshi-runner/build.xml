@@ -12,6 +12,15 @@
 
 			test.name=${test.name}
 		</echo>
+
+		<if>
+			<isset property="headless.logger.enabled" />
+			<then>
+				<echo append="true" file="classes/poshi-runner-ext.properties">
+					headless.logger.enabled=${headless.logger.enabled}
+				</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-sikuli" depends="jar">

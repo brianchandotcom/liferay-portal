@@ -17,6 +17,7 @@ package com.liferay.poshi.runner.logger;
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
@@ -285,7 +286,7 @@ public final class LoggerUtil {
 	}
 
 	public static void startLogger() throws Exception {
-		if (isLoggerStarted()) {
+		if (isLoggerStarted() || PropsValues.HEADLESS_LOGGER_ENABLED) {
 			return;
 		}
 
@@ -324,9 +325,16 @@ public final class LoggerUtil {
 			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">" +
 				commandLogText);
 
-		FileUtil.write(_getHtmlFilePath(), htmlContent);
+		FileUtil.write(_getHtmlFilePath(), content);
 
-		if (isLoggerStarted()) {
+		if (PropsValues.HEADLESS_LOGGER_ENABLED) {
+			String cssContent = _readResource(
+				"META-INF/resources/css/main_rtl.css");
+
+			FileUtil.write(_CURRENT_DIR + "/test-results/css/main.css", cssContent);
+		}
+
+		if (isLoggerStarted() || !PropsValues.HEADLESS_LOGGER_ENABLED) {
 			_webDriver.quit();
 
 			_webDriver = null;

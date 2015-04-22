@@ -261,12 +261,12 @@ public final class SummaryLoggerHandler {
 		Matcher matcher = _pattern.matcher(token);
 
 		while (matcher.find() &&
-			   PoshiRunnerVariablesUtil.containsKeyInCommandMap(
+			   PoshiRunnerVariablesUtil.containsKeyInExecuteMap(
 				   matcher.group(1))) {
 
 			String varName = matcher.group(1);
 
-			String varValue = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+			String varValue = PoshiRunnerVariablesUtil.getValueFromExecuteMap(
 				varName);
 
 			if ((element.attributeValue("function") != null) &&
@@ -275,7 +275,7 @@ public final class SummaryLoggerHandler {
 				varName = StringUtil.replace(varName, "locator", "locator-key");
 
 				String locatorKey =
-					PoshiRunnerVariablesUtil.getValueFromCommandMap(varName);
+					PoshiRunnerVariablesUtil.getValueFromExecuteMap(varName);
 
 				if (Validator.isNotNull(locatorKey)) {
 					StringBuilder sb = new StringBuilder();

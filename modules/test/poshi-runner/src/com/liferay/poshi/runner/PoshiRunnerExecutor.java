@@ -54,7 +54,7 @@ public class PoshiRunnerExecutor {
 		}
 		else if (elementName.equals("condition")) {
 			if (element.attributeValue("function") != null) {
-				runFunctionElement(element);
+				runFunctionExecuteElement(element);
 
 				return (boolean)_returnObject;
 			}
@@ -135,7 +135,7 @@ public class PoshiRunnerExecutor {
 			}
 			else if (childElementName.equals("execute")) {
 				if (childElement.attributeValue("function") != null) {
-					runFunctionElement(childElement);
+					runFunctionExecuteElement(childElement);
 				}
 				else if (childElement.attributeValue("macro") != null) {
 					runMacroElement(childElement, "macro");
@@ -217,7 +217,22 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
-	public static void runFunctionElement(Element executeElement)
+	public static void runFunctionCommandElement(
+			String classCommandName, Element commandElement)
+		throws Exception {
+
+		PoshiRunnerVariablesUtil.pushCommandMap();
+
+		PoshiRunnerStackTraceUtil.pushFilePath(classCommandName, "function");
+
+		parseElement(commandElement);
+
+		PoshiRunnerStackTraceUtil.popFilePath();
+
+		PoshiRunnerVariablesUtil.popCommandMap();
+	}
+
+	public static void runFunctionExecuteElement(Element executeElement)
 		throws Exception {
 
 		List<Element> executeVarElements = executeElement.elements("var");
@@ -284,10 +299,6 @@ public class PoshiRunnerExecutor {
 			}
 		}
 
-		PoshiRunnerVariablesUtil.pushCommandMap();
-
-		PoshiRunnerStackTraceUtil.pushFilePath(classCommandName, "function");
-
 		CommandLoggerHandler.startCommand(executeElement);
 		SummaryLoggerHandler.startSummary(executeElement);
 
@@ -295,7 +306,7 @@ public class PoshiRunnerExecutor {
 			classCommandName);
 
 		try {
-			parseElement(commandElement);
+			runFunctionCommandElement(classCommandName, commandElement);
 		}
 		catch (Exception e) {
 			CommandLoggerHandler.failCommand(executeElement);
@@ -303,10 +314,6 @@ public class PoshiRunnerExecutor {
 
 			throw e;
 		}
-
-		PoshiRunnerVariablesUtil.popCommandMap();
-
-		PoshiRunnerStackTraceUtil.popFilePath();
 
 		CommandLoggerHandler.passCommand(executeElement);
 		SummaryLoggerHandler.passSummary(executeElement);

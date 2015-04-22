@@ -1056,10 +1056,7 @@ public class LiferaySeleniumHelper {
 
 		// LPS-55120, temporary workaround until Julio Camarero fixes it
 
-		if (line.contains(
-				"java.io.IOException: Stream closed." +
-					"java.io.IOException: Stream closed.")) {
-
+		if (line.contains("java.io.IOException: Stream closed.")) {
 			return true;
 		}
 

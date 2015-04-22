@@ -147,6 +147,6 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		return compareParameterTypes(javaTerm1, javaTerm2);
 	}
 
-	private final boolean _ascending;
+	private boolean _ascending;
 
 }

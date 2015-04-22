@@ -793,7 +793,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "package: " + fileName);
 		}
 
-		if (portalSource && !_allowUseServiceUtilInServiceImpl &&
+		if (portalSource &&
+			!_allowUseServiceUtilInServiceImpl &&
 			!className.equals("BaseServiceImpl") &&
 			className.endsWith("ServiceImpl") &&
 			newContent.contains("ServiceUtil.")) {
@@ -1204,7 +1205,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_proxyExclusionFiles = getPropertyList("proxy.excludes.files");
 		_secureRandomExclusionFiles = getPropertyList(
 			"secure.random.excludes.files");
-		_secureXmlExclusionFiles = getPropertyList("secure.xml.excludes.files");
+		_secureXmlExclusionFiles = getPropertyList(
+			"secure.xml.excludes.files");
 		_staticLogVariableExclusionFiles = getPropertyList(
 			"static.log.excludes.files");
 		_testAnnotationsExclusionFiles = getPropertyList(
@@ -1282,7 +1284,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				(line.endsWith("||") || line.endsWith("&&") ||
 				 line.endsWith(") {")) &&
 				(previousLine.endsWith("||") || previousLine.endsWith("&&")) &&
-				((previousLineLength + trimmedLine.length()) <
+				(previousLineLength + trimmedLine.length() <
 					_MAX_LINE_LENGTH) &&
 				(openParenthesesCount <= closeParenthesesCount) &&
 				(previousLineCloseParenthesesCount <=
@@ -1456,7 +1458,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (line.contains(StringPool.TAB + "for (") &&
 					line.contains(":") && !line.contains(" :")) {
 
-					line = StringUtil.replace(line, ":", " :");
+					line = StringUtil.replace(line, ":" , " :");
 				}
 
 				// LPS-42924
@@ -1999,7 +2001,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						else if (!trimmedPreviousLine.endsWith(
 									StringPool.OPEN_CURLY_BRACE) &&
 								 !trimmedPreviousLine.endsWith(
-									 StringPool.COLON) &&
+									StringPool.COLON) &&
 								 (trimmedLine.startsWith("for (") ||
 								  trimmedLine.startsWith("if (") ||
 								  trimmedLine.startsWith("try {"))) {
@@ -2150,8 +2152,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		for (int x = -1;;) {
-			int posComma = line.indexOf(StringPool.COMMA, x + 1);
-			int posSemicolon = line.indexOf(StringPool.SEMICOLON, x + 1);
+			int posComma = line.indexOf(
+				StringPool.COMMA, x + 1);
+			int posSemicolon = line.indexOf(
+				StringPool.SEMICOLON, x + 1);
 
 			if ((posComma == -1) && (posSemicolon == -1)) {
 				break;
@@ -2175,7 +2179,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					(nextChar != CharPool.SPACE) &&
 					(nextChar != CharPool.STAR)) {
 
-					line = StringUtil.insert(line, StringPool.SPACE, x + 1);
+					line = StringUtil.insert(
+						line, StringPool.SPACE, x + 1);
 				}
 			}
 
@@ -2183,7 +2188,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				char previousChar = line.charAt(x - 1);
 
 				if (previousChar == CharPool.SPACE) {
-					line = line.substring(0, x - 1).concat(line.substring(x));
+					line = line.substring(0, x - 1).concat(
+						line.substring(x));
 				}
 			}
 		}
@@ -2740,7 +2746,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected List<String> getImportedExceptionClassNames(
 		JavaDocBuilder javaDocBuilder) {
 
-		List<String> exceptionClassNames = new ArrayList<>();
+		List<String> exceptionClassNames = new ArrayList<String>();
 
 		JavaSource javaSource = javaDocBuilder.getSources()[0];
 
@@ -2859,7 +2865,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected Collection<String> getPluginJavaFiles() {
-		Collection<String> fileNames = new TreeSet<>();
+		Collection<String> fileNames = new TreeSet<String>();
 
 		String[] excludes = new String[] {
 			"**\\model\\*Clp.java", "**\\model\\impl\\*BaseImpl.java",
@@ -2888,7 +2894,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected Collection<String> getPortalJavaFiles() {
-		Collection<String> fileNames = new TreeSet<>();
+		Collection<String> fileNames = new TreeSet<String>();
 
 		String[] excludes = new String[] {
 			"**\\*_IW.java", "**\\PropsValues.java", "**\\counter\\service\\**",
@@ -3238,53 +3244,53 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final int _MAX_LINE_LENGTH = 80;
 
-	private static final Pattern _annotationPattern = Pattern.compile(
+	private static Pattern _annotationPattern = Pattern.compile(
 		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
-	private final Pattern _catchExceptionPattern = Pattern.compile(
+	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
 	private boolean _checkUnprocessedExceptions;
-	private final Pattern _combinedLinesPattern = Pattern.compile(
+	private Pattern _combinedLinesPattern = Pattern.compile(
 		"\n(\t*).+(=|\\]) \\{\n");
 	private List<String> _diamondOperatorExclusionFiles;
 	private List<String> _diamondOperatorExclusionPaths;
-	private final Pattern _diamondOperatorPattern = Pattern.compile(
+	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
-	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
+	private Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private List<String> _fitOnSingleLineExclusionFiles;
 	private List<String> _hibernateSQLQueryExclusionFiles;
-	private final Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
+	private Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
-	private final Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
+	private Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
 		"(\t| )@?(class |enum |interface |new )");
-	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
+	private Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
-	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(
+	private Pattern _incorrectLineBreakPattern2 = Pattern.compile(
 		"\\{\n\n\t*\\}");
 	private List<String> _javaTermAccessLevelModifierExclusionFiles;
 	private List<String> _javaTermSortExclusionFiles;
-	private final Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");
+	private Pattern _lineBreakPattern = Pattern.compile("\\}(\\)+) \\{");
 	private List<String> _lineLengthExclusionFiles;
-	private final Pattern _logLevelPattern = Pattern.compile(
+	private Pattern _logLevelPattern = Pattern.compile(
 		"\n(\t+)_log.(debug|info|trace|warn)\\(");
-	private final Pattern _logPattern = Pattern.compile(
+	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
-	private final Pattern _processCallablePattern = Pattern.compile(
+	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;
-	private final Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
+	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 	private List<String> _secureRandomExclusionFiles;
 	private List<String> _secureXmlExclusionFiles;
-	private final Pattern _stagedModelTypesPattern = Pattern.compile(
+	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;
 	private List<String> _testAnnotationsExclusionFiles;
-	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
+	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private List<String> _upgradeServiceUtilExclusionFiles;
 

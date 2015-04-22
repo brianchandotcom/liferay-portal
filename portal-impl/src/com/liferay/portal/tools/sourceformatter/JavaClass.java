@@ -157,7 +157,8 @@ public class JavaClass {
 	protected Set<JavaTerm> addStaticBlocks(
 		Set<JavaTerm> javaTerms, List<JavaTerm> staticBlocks) {
 
-		Set<JavaTerm> newJavaTerms = new TreeSet<>(new JavaTermComparator());
+		Set<JavaTerm> newJavaTerms = new TreeSet<JavaTerm>(
+			new JavaTermComparator());
 
 		Iterator<JavaTerm> javaTermsIterator = javaTerms.iterator();
 
@@ -482,6 +483,7 @@ public class JavaClass {
 
 			newName = sb.toString();
 		}
+
 
 		if (!newName.equals(oldName)) {
 			_content = _content.replaceAll(
@@ -895,8 +897,9 @@ public class JavaClass {
 	}
 
 	protected Set<JavaTerm> getJavaTerms() throws Exception {
-		Set<JavaTerm> javaTerms = new TreeSet<>(new JavaTermComparator(false));
-		List<JavaTerm> staticBlocks = new ArrayList<>();
+		Set<JavaTerm> javaTerms = new TreeSet<JavaTerm>(
+			new JavaTermComparator(false));
+		List<JavaTerm> staticBlocks = new ArrayList<JavaTerm>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(_content));
@@ -1134,7 +1137,7 @@ public class JavaClass {
 			}
 		}
 
-		line = StringUtil.replace(line, " synchronized ", StringPool.SPACE);
+		line = StringUtil.replace(line, " synchronized " , StringPool.SPACE);
 
 		for (String accessModifier : _ACCESS_MODIFIERS) {
 			Tuple tuple = getJavaTermTuple(line, accessModifier);
@@ -1343,25 +1346,24 @@ public class JavaClass {
 		_ACCESS_MODIFIER_PUBLIC
 	};
 
-	private final String _absolutePath;
-	private final Pattern _camelCasePattern = Pattern.compile(
-		"([a-z])([A-Z0-9])");
-	private final Pattern _classPattern = Pattern.compile(
+	private String _absolutePath;
+	private Pattern _camelCasePattern = Pattern.compile("([a-z])([A-Z0-9])");
+	private Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
+	private Pattern _enumTypePattern = Pattern.compile(
+		"\t[A-Z0-9]+[ _,;\\(\n]");
 	private int _constructorCount = 0;
 	private String _content;
-	private final Pattern _enumTypePattern = Pattern.compile(
-		"\t[A-Z0-9]+[ _,;\\(\n]");
-	private final File _file;
-	private final String _fileName;
-	private final String _indent;
-	private final List<JavaClass> _innerClasses = new ArrayList<>();
-	private final List<String> _javaTermAccessLevelModifierExclusionFiles;
+	private File _file;
+	private String _fileName;
+	private String _indent;
+	private List<JavaClass> _innerClasses = new ArrayList<JavaClass>();
+	private List<String> _javaTermAccessLevelModifierExclusionFiles;
 	private Set<JavaTerm> _javaTerms;
-	private final int _lineCount;
-	private final String _name;
-	private final JavaClass _outerClass;
+	private int _lineCount;
+	private String _name;
+	private JavaClass _outerClass;
 	private String _packagePath;
 
 }

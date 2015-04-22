@@ -11,22 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.workflow.instance.web.portlet.action;
 
-import org.osgi.service.component.annotations.Component;
+package com.liferay.workflow.instance.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.util.PortletKeys;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true,
+@Component(
+	immediate = true,
 	property = {
 		"action.command.name=signalInstance",
 		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCES
 	},
-	service = ActionCommand.class)
+	service = ActionCommand.class
+)
 public class MySignalInstanceActionCommand extends SignalInstanceActionCommand {
-
 }

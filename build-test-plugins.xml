@@ -183,13 +183,21 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			</else>
 		</if>
 
-		<propertyregex
-			input="${test.plugin}"
-			override="true"
-			property="test.plugin.type"
-			regexp="(\w+-)+(\w+)"
-			select="${select}"
-		/>
+		<if>
+			<equals arg1="${test.plugin}" arg2="portal-http-service" />
+			<then>
+				<var name="test.plugin.type" value="shared" />
+			</then>
+			<else>
+				<propertyregex
+					input="${test.plugin}"
+					override="true"
+					property="test.plugin.type"
+					regexp="(\w+-)+(\w+)"
+					select="${select}"
+				/>
+			</else>
+		</if>
 
 		<get-auto-deploy-dir />
 

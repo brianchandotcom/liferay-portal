@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.item.selector.web.impl;
+package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -398,7 +398,7 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		_itemSelectionCriterionHandlers.put(
 			itemSelectorCriterionClass.getName(),
-			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
+			(ItemSelectorCriterionHandler) itemSelectionCriterionHandler);
 	}
 
 	protected <T extends ItemSelectorCriterion>

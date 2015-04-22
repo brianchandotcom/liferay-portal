@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.item.selector.web.impl;
+package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorView;
 
@@ -29,30 +29,30 @@ import javax.servlet.ServletResponse;
 /**
  * @author Iván Zaera
  */
-public class MediaItemSelectorView
-	implements ItemSelectorView<MediaItemSelectorCriterion> {
+public class FlickrItemSelectorView
+	implements ItemSelectorView<FlickrItemSelectorCriterion> {
 
 	@Override
-	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return MediaItemSelectorCriterion.class;
+	public Class<FlickrItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return FlickrItemSelectorCriterion.class;
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return MediaItemSelectorView.class.getName();
+		return FlickrItemSelectorView.class.getName();
 	}
 
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			MediaItemSelectorCriterion mediaItemSelectorCriterion,
+			FlickrItemSelectorCriterion flickrItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedCallback)
 		throws IOException {
 
 		PrintWriter printWriter = response.getWriter();
 
 		printWriter.print(
-			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
+			"<html>" + FlickrItemSelectorView.class.getName() + "</html>");
 	}
 
 }

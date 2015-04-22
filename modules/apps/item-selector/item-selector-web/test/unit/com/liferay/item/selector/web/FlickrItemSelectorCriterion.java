@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.item.selector.web.impl;
+package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.net.URL;
 
@@ -24,32 +23,23 @@ import java.util.Set;
 /**
  * @author Iván Zaera
  */
-public class MediaItemSelectorCriterion extends BaseItemSelectorCriterion {
+public class FlickrItemSelectorCriterion extends BaseItemSelectorCriterion {
 
-	public MediaItemSelectorCriterion() {
+	public FlickrItemSelectorCriterion() {
 		super(_AVAILABLE_RETURN_TYPES);
 	}
 
-	public String getFileExtension() {
-		return _fileExtension;
+	public String getUser() {
+		return _user;
 	}
 
-	public long getMaxSize() {
-		return _maxSize;
-	}
-
-	public void setFileExtension(String fileExtension) {
-		_fileExtension = fileExtension;
-	}
-
-	public void setMaxSize(long maxSize) {
-		_maxSize = maxSize;
+	public void setUser(String user) {
+		_user = user;
 	}
 
 	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(FileEntry.class, URL.class);
+		getInmutableSet(URL.class, String.class);
 
-	private String _fileExtension = "*";
-	private long _maxSize = -1;
+	private String _user = "anonymous";
 
 }

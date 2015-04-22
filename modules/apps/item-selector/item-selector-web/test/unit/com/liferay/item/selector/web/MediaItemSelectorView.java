@@ -12,19 +12,25 @@
  * details.
  */
 
-package com.liferay.item.selector.web.impl;
+package com.liferay.item.selector.web;
 
-import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import java.util.Locale;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * @author Iván Zaera
  */
-public class MediaItemSelectorCriterionHandler
-	implements ItemSelectorCriterionHandler<MediaItemSelectorCriterion> {
+public class MediaItemSelectorView
+	implements ItemSelectorView<MediaItemSelectorCriterion> {
 
 	@Override
 	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -32,16 +38,21 @@ public class MediaItemSelectorCriterionHandler
 	}
 
 	@Override
-	public List<ItemSelectorView<MediaItemSelectorCriterion>>
-		getItemSelectorViews(
-			MediaItemSelectorCriterion mediaItemSelectorCriterion) {
+	public String getTitle(Locale locale) {
+		return MediaItemSelectorView.class.getName();
+	}
 
-		List<ItemSelectorView<MediaItemSelectorCriterion>> itemSelectorViews =
-			new ArrayList<>();
+	@Override
+	public void renderHTML(
+			ServletRequest request, ServletResponse response,
+			MediaItemSelectorCriterion mediaItemSelectorCriterion,
+			PortletURL portletURL, String itemSelectedCallback)
+		throws IOException {
 
-		itemSelectorViews.add(new MediaItemSelectorView());
+		PrintWriter printWriter = response.getWriter();
 
-		return itemSelectorViews;
+		printWriter.print(
+			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
 	}
 
 }

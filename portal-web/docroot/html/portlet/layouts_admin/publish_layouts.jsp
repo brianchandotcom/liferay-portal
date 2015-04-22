@@ -187,6 +187,43 @@ else if (!quickPublish) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
+<c:if test="<%= !quickPublish %>">
+	<div class="export-dialog-tree">
+		<portlet:renderURL var="simplePublishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
+			<portlet:param name="tabs2" value="current-and-previous" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
+
+		<portlet:renderURL var="simplePublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/staging_bar/publish_layouts_simple" />
+			<portlet:param name="redirect" value="<%= simplePublishRedirectURL %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
+			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<portlet:param name="quickPublish" value="<%= Boolean.FALSE.toString() %>" />
+			<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
+			<portlet:param name="remotePort" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
+			<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
+			<portlet:param name="remoteGroupId" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
+			<portlet:param name="secureConnection" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
+			<portlet:param name="sourceGroupId" value="<%= String.valueOf(stagingGroupId) %>" />
+			<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			cssClass="label label-submit publish-mode-switch"
+			iconCssClass="icon-cog"
+			label="<%= true %>"
+			message="switch-to-simple-publication"
+			method="post"
+			url="<%= simplePublishURL %>"
+		/>
+	</div>
+</c:if>
+
 <liferay-ui:tabs
 	names="<%= tabs2Names %>"
 	param="tabs2"

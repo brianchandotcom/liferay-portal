@@ -59,12 +59,13 @@
 			UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 			%>
 
-			<liferay-portlet:renderURL varImpl="confirmationURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/staging_bar/confirmation" />
+			<liferay-portlet:renderURL varImpl="simplePublishLayoutsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/staging_bar/publish_layouts_simple" />
 				<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="localPublishing" value="<%= String.valueOf(liveGroup.isStaged() && !liveGroup.isStagedRemotely()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
 				<portlet:param name="remotePort" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
 				<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
@@ -76,7 +77,7 @@
 
 			<%
 			if (groupId == 0) {
-				confirmationURL.setParameter("selPlid", String.valueOf(plid));
+				simplePublishLayoutsURL.setParameter("selPlid", String.valueOf(plid));
 
 				publishRenderURL.setParameter("selPlid", String.valueOf(plid));
 			}
@@ -88,8 +89,8 @@
 					<%
 					layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
 
-					confirmationURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
-					confirmationURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
+					simplePublishLayoutsURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
+					simplePublishLayoutsURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 
 					publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 					publishRenderURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
@@ -104,7 +105,7 @@
 						<%
 						layoutSetBranch = layoutSetBranches.get(0);
 
-						confirmationURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
+						simplePublishLayoutsURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
 
 						publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
 						%>
@@ -126,7 +127,7 @@
 			</liferay-util:buffer>
 
 			<liferay-util:buffer var="publishOnLayoutLink">
-				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= confirmationURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>' label="publish-to-live" />
+				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= simplePublishLayoutsURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>' label="publish-to-live" />
 			</liferay-util:buffer>
 
 			<c:choose>

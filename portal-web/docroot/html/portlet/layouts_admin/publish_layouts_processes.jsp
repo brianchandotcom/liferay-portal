@@ -147,6 +147,7 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
 								<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
 								<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+								<portlet:param name="quickPublish" value="<%= String.valueOf(quickPublish) %>" />
 							</portlet:actionURL>
 
 							<liferay-ui:icon iconCssClass="icon-repeat" message="relaunch" url="<%= relaunchURL %>" />
@@ -156,6 +157,7 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 							<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
 							<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
 							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+							<portlet:param name="quickPublish" value="<%= String.valueOf(quickPublish) %>" />
 						</portlet:actionURL>
 
 						<%

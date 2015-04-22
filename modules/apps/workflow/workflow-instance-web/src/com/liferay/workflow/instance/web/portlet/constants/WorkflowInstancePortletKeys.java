@@ -19,7 +19,7 @@ package com.liferay.workflow.instance.web.portlet.constants;
  */
 public class WorkflowInstancePortletKeys {
 
-	public static final String WORKFLOW_INSTANCE = 
-			"com_liferay_workflow_instance_web_portlet_WorkflowInstancePortlet";
-	
+	public static final String WORKFLOW_INSTANCE =
+		"com_liferay_workflow_instance_web_portlet_WorkflowInstancePortlet";
+
 }

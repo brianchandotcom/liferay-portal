@@ -11,15 +11,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.workflow.instance.web.portlet.action;
-
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
-
-import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
@@ -32,31 +25,43 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
 
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true,
+@Component(
+	immediate = true,
 	property = {
 		"action.command.name=signalInstance",
 		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE
 	},
-	service = ActionCommand.class)
+	service = ActionCommand.class
+)
 public class SignalInstanceActionCommand extends BaseActionCommand {
 
 	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
 
 		try {
 			signalInstance(portletRequest);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			if (e instanceof PrincipalException ||
 				e instanceof WorkflowException) {
-				
+
 				SessionErrors.add(portletRequest, e.getClass());
 
 				PortletSession portletSession =
-						portletRequest.getPortletSession();
+					portletRequest.getPortletSession();
 
 				PortletContext portletContext =
 					portletSession.getPortletContext();
@@ -65,9 +70,9 @@ public class SignalInstanceActionCommand extends BaseActionCommand {
 					portletContext.getRequestDispatcher("/error.jsp");
 
 				portletRequestDispatcher.include(
-						portletRequest, portletResponse);
-
-			} else {
+					portletRequest, portletResponse);
+			}
+			else {
 				throw e;
 			}
 		}

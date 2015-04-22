@@ -2365,7 +2365,7 @@
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
-		<var name="usersList" value="userfn userln, Test Test" />
+		<var name="usersList" value="userfn userln,Test Test" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

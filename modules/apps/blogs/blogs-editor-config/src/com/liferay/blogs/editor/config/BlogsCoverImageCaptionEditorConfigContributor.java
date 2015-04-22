@@ -67,8 +67,6 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
-
-		jsonObject.put("textMode", Boolean.TRUE);
 	}
 
 }

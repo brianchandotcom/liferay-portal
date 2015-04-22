@@ -283,6 +283,11 @@ public class FileEventUtil {
 			downloadFile(syncAccountId, downloadingSyncFile);
 		}
 
+		BatchDownloadEvent batchDownloadEvent =
+			BatchEventManager.getBatchDownloadEvent(syncAccountId);
+
+		batchDownloadEvent.fireBatchEvent();
+
 		List<SyncFile> uploadingSyncFiles = SyncFileService.findSyncFiles(
 			syncAccountId, SyncFile.UI_EVENT_UPLOADING);
 
@@ -344,6 +349,10 @@ public class FileEventUtil {
 					movingSyncFile);
 			}
 		}
+
+		BatchEvent batchEvent = BatchEventManager.getBatchEvent(syncAccountId);
+
+		batchEvent.fireBatchEvent();
 	}
 
 	public static void updateFile(

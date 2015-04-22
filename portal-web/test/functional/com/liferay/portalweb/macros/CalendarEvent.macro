@@ -281,12 +281,11 @@
 
 		<execute function="AssertClick" locator1="PGCalendar#ADD_EVENT_BUTTON" value1="Add Event" />
 
-		<execute function="SelectFrame" locator1="PGCalendarAddevent#ADD_EVENT_IFRAME" />
+		<execute macro="CalendarEvent#selectEventIframeCmd" />
+
 		<execute function="Type" locator1="PGCalendarAddevent#TITLE_FIELD" value1="${eventTitle}" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
+
+		<execute macro="CalendarEvent#viewNewEventIframeCmd" />
 
 		<if>
 			<equals arg1="${eventType}" arg2="Regular" />
@@ -953,12 +952,9 @@
 
 		<execute function="AssertClick" locator1="PGCalendar#ADD_EVENT_BUTTON" value1="Add Event" />
 
-		<execute macro="CalendarEvent#selectEventIframe" />
+		<execute macro="CalendarEvent#selectEventIframeCmd" />
 
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
+		<execute macro="CalendarEvent#viewNewEventIframeCmd" />
 	</command>
 
 	<command name="goToAddOnSpecifcDayOfWeekViaWeekView">
@@ -981,7 +977,7 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
-		<execute macro="CalendarEvent#selectEventIframe" />
+		<execute macro="CalendarEvent#selectEventIframeCmd" />
 	</command>
 
 	<command name="gotoEdit">
@@ -1139,7 +1135,7 @@
 		</if>
 	</command>
 
-	<command name="selectEventIframe">
+	<command name="selectEventIframeCmd">
 		<execute function="SelectFrame" locator1="PGCalendarAddevent#ADD_EVENT_IFRAME" />
 	</command>
 
@@ -1599,6 +1595,15 @@
 				</if>
 			</then>
 		</if>
+	</command>
+
+	<command name="viewNewEventIframeCmd">
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewPG">

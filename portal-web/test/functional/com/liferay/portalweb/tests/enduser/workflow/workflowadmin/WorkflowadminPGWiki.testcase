@@ -43,7 +43,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LPS-55056" name="ApproveWikiPagePG" priority="5">
+	<command name="ApproveWikiPagePG" priority="5">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 		<var name="wikiPageUsername" value="Test Test" />
@@ -121,7 +121,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55056" name="RejectWikiPagePG" priority="5">
+	<command name="RejectWikiPagePG" priority="5">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 		<var name="wikiPageUsername" value="Test Test" />

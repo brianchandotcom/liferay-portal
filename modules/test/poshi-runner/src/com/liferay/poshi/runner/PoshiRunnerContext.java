@@ -14,17 +14,18 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.tools.ant.DirectoryScanner;
@@ -416,46 +417,15 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _readSeleniumFiles() throws Exception {
-		String[] fileNames = {
-			"LiferaySelenium.java", "WebDriverToSeleniumBridge.java"
-		};
+		Method[] methods = LiferaySelenium.class.getMethods();
 
-		for (String fileName : fileNames) {
-			String filePath = "src/com/liferay/poshi/runner/selenium/";
+		Map<String, Integer> seleniumParameterCounts = new HashMap<>();
 
-			if (OSDetector.isWindows()) {
-				filePath = filePath.replace("/", "\\");
-			}
+		for (Method method : methods) {
+			Class[] parameterTypes = method.getParameterTypes();
 
-			try {
-				String content = FileUtil.read(filePath + fileName);
-
-				Matcher matcher = _pattern.matcher(content);
-
-				while (matcher.find()) {
-					String methodSignature = matcher.group();
-
-					int x = methodSignature.indexOf(" ", 7);
-					int y = methodSignature.indexOf("(");
-
-					String commandName = methodSignature.substring(x + 1, y);
-
-					int parameterCount = 0;
-
-					int z = methodSignature.indexOf(")");
-
-					String parameters = methodSignature.substring(y + 1, z);
-
-					if (!parameters.equals("")) {
-						parameterCount = StringUtil.count(parameters, ",") + 1;
-					}
-
-					_seleniumParameterCounts.put(commandName, parameterCount);
-				}
-			}
-			catch (Exception e) {
-				throw new PoshiRunnerException(e);
-			}
+			_seleniumParameterCounts.put(
+				method.getName(), parameterTypes.length);
 		}
 
 		_seleniumParameterCounts.put("open", 1);

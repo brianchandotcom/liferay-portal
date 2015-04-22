@@ -52,7 +52,19 @@ public class SignalInstanceActionCommand extends BaseActionCommand {
 		throws Exception {
 
 		try {
-			signalInstance(portletRequest);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			long workflowInstanceId = ParamUtil.getLong(
+				portletRequest, "workflowInstanceId");
+
+			String transitionName = ParamUtil.getString(
+				portletRequest, "transitionName");
+
+			WorkflowInstanceManagerUtil.signalWorkflowInstance(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				workflowInstanceId, transitionName, null);
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException ||
@@ -76,23 +88,6 @@ public class SignalInstanceActionCommand extends BaseActionCommand {
 				throw e;
 			}
 		}
-	}
-
-	protected void signalInstance(PortletRequest portletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long workflowInstanceId = ParamUtil.getLong(
-			portletRequest, "workflowInstanceId");
-
-		String transitionName = ParamUtil.getString(
-			portletRequest, "transitionName");
-
-		WorkflowInstanceManagerUtil.signalWorkflowInstance(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-			workflowInstanceId, transitionName, null);
 	}
 
 }

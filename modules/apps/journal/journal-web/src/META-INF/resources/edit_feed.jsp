@@ -248,22 +248,32 @@ if (feed != null) {
 						<optgroup label="<liferay-ui:message key="structure-fields" />">
 
 							<%
-							Document doc = SAXReaderUtil.read(ddmStructure.getDefinition());
+							DDMForm ddmForm = ddmStructure.getDDMForm();
+							int selectAndRadioFieldsCounter = 0;
 
-							XPath xpathSelector = SAXReaderUtil.createXPath("//dynamic-element");
+							for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+								String ddmFormFieldName = StringPool.BLANK;
+								String ddmFormFieldType = ddmFormField.getType();
 
-							List<Node> nodes = xpathSelector.selectNodes(doc);
+								if (ddmFormFieldType.equals("select") || ddmFormFieldType.equals("radio")) {
+									selectAndRadioFieldsCounter++;
 
-							for (Node node : nodes) {
-								Element el = (Element)node;
+									DDMFormFieldOptions ddmFormFieldOptions = ddmFormField.getDDMFormFieldOptions();
 
-								String elName = el.attributeValue("name");
-								String elType = StringUtil.replace(el.attributeValue("type"), StringPool.UNDERLINE, StringPool.DASH);
-
-								if (!elType.equals("boolean") && !elType.equals("list") && !elType.equals("multi-list")) {
+									for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
+										ddmFormFieldName = ddmFormFieldOptions.getOptionLabels(optionValue).getString(locale);
 							%>
 
-									<aui:option label='<%= TextFormatter.format(elName, TextFormatter.J) + "(" + LanguageUtil.get(request, elType) + ")" %>' selected="<%= contentField.equals(elName) %>" value="<%= elName %>" />
+										<aui:option label='<%= TextFormatter.format(ddmFormFieldName, TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(ddmFormFieldName + StringPool.UNDERLINE + selectAndRadioFieldsCounter) %>" value="<%= ddmFormFieldName + StringPool.UNDERLINE + selectAndRadioFieldsCounter %>" />
+
+							<%
+									}
+								}
+								else if (!ddmFormFieldType.equals("checkbox")) {
+									ddmFormFieldName = ddmFormField.getName();
+							%>
+
+									<aui:option label='<%= TextFormatter.format(ddmFormFieldName, TextFormatter.J) + "(" + LanguageUtil.get(request, ddmFormFieldType) + ")" %>' selected="<%= contentField.equals(ddmFormFieldName) %>" value="<%= ddmFormFieldName %>" />
 
 							<%
 								}

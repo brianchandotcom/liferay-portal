@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.control-panel-entry-category=configuration",
+		"com.liferay.portlet.control-panel-entry-category=site_administration.configuration",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definition-link",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION_LINK,
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

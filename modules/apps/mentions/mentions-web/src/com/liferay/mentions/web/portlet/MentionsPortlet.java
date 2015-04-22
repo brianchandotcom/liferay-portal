@@ -98,8 +98,6 @@ public class MentionsPortlet extends MVCPortlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-
-		return;
 	}
 
 	protected JSONArray getJSONArray(HttpServletRequest request)
@@ -162,7 +160,8 @@ public class MentionsPortlet extends MVCPortlet {
 		_mentionsUserFinder = mentionsUserFinder;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MentionsPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MentionsPortlet.class);
 
 	private MentionsUserFinder _mentionsUserFinder;
 

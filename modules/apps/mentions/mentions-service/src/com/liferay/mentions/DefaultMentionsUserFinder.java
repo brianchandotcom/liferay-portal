@@ -88,6 +88,6 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 		return Collections.emptyList();
 	}
 
-	private static int _MAX_USERS = 100;
+	private static final int _MAX_USERS = 100;
 
 }

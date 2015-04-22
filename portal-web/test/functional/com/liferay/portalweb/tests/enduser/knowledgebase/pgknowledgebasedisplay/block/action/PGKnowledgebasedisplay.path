@@ -116,7 +116,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_ACTIONS_BUTTON</td>
-	<td>//div[@class='kb-article-container']//div//span[contains(.,'Actions')]</td>
+	<td>//div[@class='kb-article-container']//span[contains(.,'Actions')]</td>
 	<td></td>
 </tr>
 <tr>

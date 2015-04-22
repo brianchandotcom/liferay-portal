@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//h4[@class='asset-title']/a</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>

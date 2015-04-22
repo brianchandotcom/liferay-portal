@@ -776,7 +776,6 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="SelectFrame" locator1="PGKnowledgebasedisplaySelectParentArticle#SELECT_PARENT_IFRAME" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplaySelectParentArticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="Click" locator1="PGKnowledgebasedisplaySelectParentArticle#CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
@@ -796,10 +795,10 @@
 
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfigurationArticle#ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClickNoError" locator1="PGKnowledgebasearticleConfigurationArticle#ARTICLE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="SelectWindow" locator1="title=${pageName} - Liferay" />
-		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="PGKnowledgebasearticleConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertClick" locator1="PGKnowledgebasearticleConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="SelectFrame" value1="relative=top" />

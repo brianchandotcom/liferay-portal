@@ -1790,7 +1790,7 @@
 				<if>
 					<isset var="localizedText" />
 					<then>
-						<var name="key_fieldName" value="${localizedText}" />
+						<var name="key_fieldName" value="${fieldName}" />
 
 						<execute function="AssertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#TEXT_FIELD" value1="${localizedText}" />
 					</then>

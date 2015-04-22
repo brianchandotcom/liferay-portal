@@ -28,21 +28,12 @@
 	</tear-down>
 
 	<command name="DeleteKBArticleViaKBArticle" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Knowledge Base Article Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base Display" />
-		</execute>
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
-			<var name="kbArticleSection" value="Development" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
@@ -59,10 +50,19 @@
 			<var name="pageName" value="Knowledge Base Article Page" />
 		</execute>
 
+		<execute macro="KBArticle#viewPGViaKBArticle">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
 		<execute macro="KBArticle#deletePGViaKBArticle">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticle#viewDefaultViaKBArticlePG" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#viewDefaultCP" />
 	</command>
 </definition>

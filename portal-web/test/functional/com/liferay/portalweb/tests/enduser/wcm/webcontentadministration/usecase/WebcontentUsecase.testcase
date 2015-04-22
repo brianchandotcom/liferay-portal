@@ -978,6 +978,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewTranslationPGViaWCD">
+			<var name="fieldName" value="Text" />
 			<var name="localizedText" value="WC contenu WebContent" />
 			<var name="localizedTitle" value="WC WebContent Titre" />
 			<var name="lowercaseLanguageCode" value="fr" />

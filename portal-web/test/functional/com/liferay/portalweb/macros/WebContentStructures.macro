@@ -155,7 +155,7 @@
 			<then>
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="CPWebcontentStructures#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-				<execute function="AssertTextEquals" locator1="CPWebcontentStructures#ERROR_MESSAGE_2" value1="Required structures could not be deleted. They are referenced by templates." />
+				<execute function="AssertTextEquals" locator1="CPWebcontentStructures#ERROR_MESSAGE_2" value1="The structure cannot be deleted because it is required by one or more templates." />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="CPWebcontentStructures#SUCCESS_MESSAGE" value1="Your request completed successfully." />

@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.util.URLUtil;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -24,6 +23,7 @@ import java.io.InputStreamReader;
 
 import java.lang.reflect.Constructor;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -87,12 +87,54 @@ public class ServiceLoader {
 		return services;
 	}
 
+	/**
+	 * @see com.liferay.portal.kernel.process.ClassPathUtil#_buildClassPath(
+	 *      ClassLoader, String)
+	 */
+	public static URL normalizeURL(URL url) throws MalformedURLException {
+		String urlString = url.toString();
+
+		if (urlString.startsWith("vfsfile:")) {
+			urlString = StringUtil.replaceFirst(urlString, "vfsfile:", "file:");
+		}
+		else if (urlString.startsWith("vfsjar:")) {
+			urlString = StringUtil.replaceFirst(urlString, "vfsjar:", "file:");
+		}
+		else if (urlString.startsWith("vfszip:")) {
+			urlString = StringUtil.replaceFirst(urlString, "vfszip:", "file:");
+		}
+
+		if (urlString.contains(".jar/")) {
+			urlString = StringUtil.replaceFirst(urlString, ".jar/", ".jar!/");
+
+			if (urlString.startsWith("file:")) {
+				urlString = "jar:" + urlString;
+			}
+		}
+
+		urlString = urlString.replace('\\', '/');
+
+		int index = urlString.indexOf("file:");
+
+		if (index != -1) {
+			index += 5;
+
+			if (urlString.charAt(index) != '/') {
+				urlString =
+					urlString.substring(0, index) + '/' +
+						urlString.substring(index);
+			}
+		}
+
+		return new URL(urlString);
+	}
+
 	private static <S> void _load(
 			List<S> services, ClassLoader classLoader, Class<S> clazz, URL url)
 		throws Exception {
 
 		if (ServerDetector.isJBoss5()) {
-			url = URLUtil.normalizeURL(url);
+			url = normalizeURL(url);
 		}
 
 		try (InputStream inputStream = url.openStream()) {

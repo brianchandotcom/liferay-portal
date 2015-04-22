@@ -34,6 +34,10 @@ public final class CommandLoggerHandler {
 		_commandElement = null;
 	}
 
+	public static String getCommandLogText() {
+		return _commandLogLoggerElement.toString();
+	}
+
 	public static void logClassCommandName(String classCommandName) {
 		LoggerElement dividerLineLoggerElement = new LoggerElement();
 

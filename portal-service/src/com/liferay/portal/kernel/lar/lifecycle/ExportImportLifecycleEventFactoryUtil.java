@@ -24,9 +24,10 @@ import java.io.Serializable;
 public class ExportImportLifecycleEventFactoryUtil {
 
 	public static ExportImportLifecycleEvent create(
-		int code, Serializable... attributes) {
+		int code, int processFlag, Serializable... attributes) {
 
-		return getExportImportLifecycleEventFactory().create(code, attributes);
+		return getExportImportLifecycleEventFactory().create(
+			code, processFlag, attributes);
 	}
 
 	public static ExportImportLifecycleEventFactory

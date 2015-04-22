@@ -14,12 +14,16 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_STARTED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
+
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,8 +62,8 @@ public class PortletStagingBackgroundTaskExecutor
 			ExportImportThreadLocal.setPortletStagingInProcess(true);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
+				EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
+				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
 				exportImportConfiguration);
 
 			missingReferences = TransactionHandlerUtil.invoke(
@@ -68,15 +72,19 @@ public class PortletStagingBackgroundTaskExecutor
 					backgroundTask.getBackgroundTaskId(),
 					exportImportConfiguration));
 
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
+				EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
+				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
 				exportImportConfiguration);
 		}
 		catch (Throwable t) {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_PORTLET_LOCAL_FAILED,
+				EVENT_PUBLICATION_PORTLET_LOCAL_FAILED,
+				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
 				exportImportConfiguration);
 
 			if (_log.isDebugEnabled()) {
@@ -87,9 +95,6 @@ public class PortletStagingBackgroundTaskExecutor
 			}
 
 			throw new SystemException(t);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletStagingInProcess(false);
 		}
 
 		return processMissingReferences(

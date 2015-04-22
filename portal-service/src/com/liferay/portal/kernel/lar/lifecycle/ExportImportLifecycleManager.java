@@ -26,12 +26,13 @@ import java.io.Serializable;
 public class ExportImportLifecycleManager {
 
 	public static void fireExportImportLifecycleEvent(
-		int code, Serializable... arguments) {
+		int code, int processFlag, Serializable... arguments) {
 
 		Message message = new Message();
 
 		ExportImportLifecycleEvent exportImportLifecycleEvent =
-			ExportImportLifecycleEventFactoryUtil.create(code, arguments);
+			ExportImportLifecycleEventFactoryUtil.create(
+				code, processFlag, arguments);
 
 		message.put("exportImportLifecycleEvent", exportImportLifecycleEvent);
 

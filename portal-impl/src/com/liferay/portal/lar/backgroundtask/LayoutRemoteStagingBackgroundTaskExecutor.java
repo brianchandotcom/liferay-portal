@@ -14,6 +14,11 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
+
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,7 +27,6 @@ import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,8 +81,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			ExportImportThreadLocal.setLayoutStagingInProcess(true);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED,
+				EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED,
+				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
 				exportImportConfiguration);
 
 			missingReferences = TransactionHandlerUtil.invoke(
@@ -87,15 +91,19 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					backgroundTask.getBackgroundTaskId(),
 					exportImportConfiguration));
 
+			ExportImportThreadLocal.setLayoutStagingInProcess(false);
+
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED,
+				EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED,
+				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
 				exportImportConfiguration);
 		}
 		catch (Throwable t) {
+			ExportImportThreadLocal.setLayoutStagingInProcess(false);
+
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED,
+				EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED,
+				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
 				exportImportConfiguration);
 
 			if (_log.isDebugEnabled()) {
@@ -106,9 +114,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			}
 
 			throw new SystemException(t);
-		}
-		finally {
-			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 		}
 
 		return processMissingReferences(

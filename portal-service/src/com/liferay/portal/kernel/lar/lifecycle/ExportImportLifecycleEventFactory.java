@@ -22,6 +22,6 @@ import java.io.Serializable;
 public interface ExportImportLifecycleEventFactory {
 
 	public ExportImportLifecycleEvent create(
-		int code, Serializable... attributes);
+		int code, int processFlag, Serializable... attributes);
 
 }

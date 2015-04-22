@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>EVENTS_DISPLAY_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Events')]//h1</td>
 	<td></td>

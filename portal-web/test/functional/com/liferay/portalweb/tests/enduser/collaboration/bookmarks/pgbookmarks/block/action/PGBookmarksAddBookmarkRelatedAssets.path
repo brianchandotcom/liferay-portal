@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_BOOKMARKS_ENTRY_IFRAME</td>
 	<td>//iframe[contains(@id,'selectAsset_28_bookmarks-entry_iframe')]</td>
 	<td></td>

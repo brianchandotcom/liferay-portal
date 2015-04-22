@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>ApplicationDisplayTemplatesConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ApplicationDisplayTemplatesConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortletConfiguration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP</td>
+	<td>//a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_DISPLAY_TEMPLATES_LINK</td>
+	<td>//span/a/span[contains(.,'Manage Display Templates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_TEMPLATE_SELECT</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

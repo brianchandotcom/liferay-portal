@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Language</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Language</td></tr>
+</thead>
+<tbody>
+<!--LANGUAGE_MENU-->
+<tr>
+	<td>LANGUAGE_MENU_ARABIC</td>
+	<td>//a[@lang='ar-SA']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_CHINESE</td>
+	<td>//a[@lang='zh-CN']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_ENGLISH</td>
+	<td>//img[@title='English']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_FRENCH</td>
+	<td>//img[@title='français']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_GERMAN</td>
+	<td>//img[@title='Deutsch']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_HUNGARIAN</td>
+	<td>//img[@title='magyar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_JAPANESE</td>
+	<td>//a[@lang='ja-JP']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_PORTUGUESE</td>
+	<td>//img[@title='português']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_SPANISH</td>
+	<td>//img[@title='español']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

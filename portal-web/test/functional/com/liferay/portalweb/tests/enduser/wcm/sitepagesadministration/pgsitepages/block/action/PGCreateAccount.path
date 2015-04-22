@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>CREATE_ACCOUNT_LINk</td>
 	<td>//div[@class='navigation']//span[contains(.,'Create Account')]</td>
 	<td></td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SCHEDULER_VIEW_MONTH</td>
 	<td>//div[@class='yui3-widget component scheduler-view scheduler-view-table scheduler-view-month scheduler-month-view']</td>
 	<td></td>

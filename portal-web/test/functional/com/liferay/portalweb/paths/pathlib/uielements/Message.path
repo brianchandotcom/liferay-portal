@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ERROR</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
@@ -31,6 +26,11 @@
 <tr>
 	<td>ERROR_3</td>
 	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning'))])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_FIELD_REQUIRED</td>
+	<td>//span[contains(@id,'title')]//div[contains(.,'This field is required.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -59,8 +59,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_ADD_EXPLANATION</td>
+	<td>//div[contains(@id,'explanationPost')]/div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_SUCCESS</td>
+	<td>//div[contains(@class,'alert-success') and contains(@class,'trash')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_INFO</td>
+	<td>//div[contains(@class,'required') and contains(@role,'alert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-success')])[2]</td>
 	<td></td>
 </tr>
 <tr>

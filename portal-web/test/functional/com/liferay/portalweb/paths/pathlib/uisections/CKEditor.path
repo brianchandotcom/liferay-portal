@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BODY_FIELD</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td></td>
@@ -25,6 +20,37 @@
 </tr>
 <tr>
 	<td>BODY_FIELD_SOURCE_ON</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME_LOCALIZED</td>
+	<td>//iframe[contains(@title,'_editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY</td>
+	<td>//body[contains(@class,'cke_editable')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SOURCE_ON</td>
+	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_URL</td>
+	<td>//input[contains(@id,'sourceURL')]</td>
+	<td></td>
+</tr>
+<!--This locator is necessary for tests that require the sendKey action-->
+<tr>
+	<td>BODY_FIELD_SOURCE_ON_SEND_KEYS</td>
 	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td></td>
 </tr>
@@ -46,6 +72,16 @@
 </tr>
 <!--TOOLBAR-->
 <tr>
+	<td>TOOLBAR_BLOCK_QUOTE_BUTTON</td>
+	<td>//span[@class='cke_button_icon cke_button__blockquote_icon']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_BLOCK_QUOTE_FIELD</td>
+	<td>//div[@id='cke__19_editor']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_FONT_BUTTON</td>
 	<td>//a[contains(@class,'cke_combo_button') and contains(.,'Font')]/span</td>
 	<td></td>
@@ -58,6 +94,11 @@
 <tr>
 	<td>TOOLBAR_SIZE_BUTTON</td>
 	<td>//a[contains(@class,'cke_combo_button') and contains(.,'Size')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_SIZE_BUTTON_DROPDOWN</td>
+	<td>//span[contains(@class,'fontsize')]//span[contains(.,'${key_fontSize}')]</td>
 	<td></td>
 </tr>
 <tr>

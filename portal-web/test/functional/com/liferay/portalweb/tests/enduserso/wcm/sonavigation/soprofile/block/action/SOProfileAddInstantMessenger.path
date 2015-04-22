@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>AIM_FIELD</td>
 	<td>//input[contains(@id,'aimSn')]</td>
 	<td></td>

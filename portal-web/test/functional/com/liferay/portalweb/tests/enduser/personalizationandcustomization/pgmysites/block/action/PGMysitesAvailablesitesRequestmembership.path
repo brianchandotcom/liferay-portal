@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>COMMENTS_FIELD</td>
 	<td>//textarea[@id='_29_comments']</td>
 	<td></td>

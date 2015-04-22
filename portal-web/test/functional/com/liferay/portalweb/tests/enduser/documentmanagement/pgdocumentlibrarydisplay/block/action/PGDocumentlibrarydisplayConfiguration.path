@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENTS_AND_MEDIA_DISPLAY_IFRAME</td>
 	<td>//iframe[contains(@id,'_configurationIframeDialog')]</td>
 	<td></td>

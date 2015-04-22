@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//div[@class='lfr-asset-status']</td>
 	<td></td>

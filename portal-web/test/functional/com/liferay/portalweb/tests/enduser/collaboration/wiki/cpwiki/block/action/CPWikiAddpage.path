@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>TITLE_FIELD</td>
 	<td>//input[@id='_154_WAR_wikiweb_title']</td>
 	<td></td>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPUsersandorganizationsAssignuserroles</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ROLES_SEARCH-->
 <tr>
 	<td>ROLES_SEARCH_FIELD</td>

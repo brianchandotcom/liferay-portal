@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSIGNED_TO_ME_LINK</td>
 	<td>//a[contains(.,'Assigned to Me')]</td>
 	<td></td>

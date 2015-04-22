@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD</td>
 	<td>//ul[@role='menubar']/li/a[@title='Add']/span</td>
 	<td></td>

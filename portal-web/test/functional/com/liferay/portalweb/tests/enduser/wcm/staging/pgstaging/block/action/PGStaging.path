@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>LIVE_BUTTON</td>
 	<td>//li[contains(@class,'live-link staging-toggle')]/a/span</td>
 	<td></td>

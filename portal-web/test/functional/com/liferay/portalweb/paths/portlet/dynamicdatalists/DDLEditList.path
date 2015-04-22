@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DATA_DEFINITION_SELECT</td>
 	<td>//a[contains(@class,'btn') and contains(@class,'taglib-icon')]/span[contains(.,'Select')]</td>
 	<td></td>

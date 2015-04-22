@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAME_FIELD</td>
 	<td>//input[contains(@id,'title')]</td>
 	<td></td>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">SocialBookmarks</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SOCIAL_BOOKMARKS_CONFIGURATION-->
 <tr>
 	<td>SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX</td>

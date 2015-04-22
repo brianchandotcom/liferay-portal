@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>REPORT_FORMAT_SELECT</td>
 	<td>//select[contains(@id,'reportsportlet_format')]</td>
 	<td></td>

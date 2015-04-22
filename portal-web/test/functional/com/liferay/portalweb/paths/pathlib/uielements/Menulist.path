@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACCESS_FROM_DESKTOP</td>
 	<td>//a[@role='menuitem' and contains(.,'Access from Desktop')]</td>
 	<td></td>
@@ -21,6 +16,26 @@
 <tr>
 	<td>ACTIVATE</td>
 	<td>//a[@role='menuitem' and contains(.,'Activate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ARTICLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CHILD_ARTICLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Child Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CHILD_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Child Site')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FOLDER</td>
+	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,13 +69,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGN_SITE_ROLES</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Site Roles')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGN_USERS</td>
 	<td>//a[@role='menuitem' and contains(.,'Assign Users')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>BASIC_ARTICLE</td>
+	<td>//a[@role='menuitem' and contains(.,'Basic Article')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BASIC_DOCUMENT</td>
 	<td>//a[@role='menuitem' and @title='Basic Document']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_WEB_CONTENT</td>
+	<td>//a[@role='menuitem' and @title='Basic Web Content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLANK_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Blank Site')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,13 +114,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMUNITY_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Community Site')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION</td>
-	<td>//a[contains(@id, 'menu_configuration')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTRACT</td>
 	<td>//a[@role='menuitem' and contains(.,'Contract')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY</td>
+	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,18 +184,58 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_DEFAULT_VALUES</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit Default Values')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRE</td>
+	<td>//a[@role='menuitem' and contains(.,'Expire')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_IMPORT</td>
 	<td>//a[@role='menuitem' and contains(.,'Export / Import')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>FEEDS</td>
+	<td>//a[@role='menuitem' and @title='Feeds']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FOLDER</td>
-	<td>//a[@role='menuitem' and @title='Folder']</td>
+	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IMPERSONATE_USER</td>
 	<td>//a[@role='menuitem' and contains(.,'Impersonate User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT</td>
+	<td>//ul[@class='dropdown-menu']//a[contains(.,'Import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INTRANET_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Intranet Site')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEMS_PER_PAGE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a/span[contains(.,'${key_itemsPerPage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LEAVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Leave')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCK_THREAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Lock Thread')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -176,6 +261,16 @@
 <tr>
 	<td>MANAGE_SITE_PAGES</td>
 	<td>//a[@role='menuitem' and contains(.,'Manage Site Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_SITES_TEMPLATES</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Sites Templates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_TEMPLATES</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Templates')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,8 +304,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATION</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Organization')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATION_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Organization Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_SELECT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a/span[contains(.,'${key_pageNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -219,8 +324,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW</td>
+	<td>//a[@role='menuitem' and contains(.,'Preview')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REGULAR_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_MEMBERSHIP</td>
+	<td>//a[@role='menuitem' and contains(.,'Remove Membership')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -229,13 +344,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESTORE</td>
+	<td>//a[@role='menuitem' and contains(.,'Restore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS</td>
+	<td>//a[@role='menuitem' and contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SALES_PRESENTATION</td>
 	<td>//a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHORTCUT</td>
 	<td>//a[@role='menuitem' and contains(.,'Shortcut')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMINISTRATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Site Administration')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -246,6 +381,11 @@
 <tr>
 	<td>SITE_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Site Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_siteTemplateName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -274,13 +414,53 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STRUCTURE_NAME</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_structureName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STRUCTURES</td>
 	<td>//a[@role='menuitem' and contains(.,'Structures')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEMPLATES</td>
 	<td>//a[@role='menuitem' and contains(.,'Templates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNLOCK_THREAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Unlock Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNSUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User Group')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUPS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User Groups')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USERS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Users')]</td>
 	<td></td>
 </tr>
 <tr>

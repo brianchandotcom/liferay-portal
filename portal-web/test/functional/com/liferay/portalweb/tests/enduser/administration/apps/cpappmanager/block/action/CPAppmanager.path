@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPAppmanager</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--APP-->
 <tr>
 	<td>APP_NAME</td>

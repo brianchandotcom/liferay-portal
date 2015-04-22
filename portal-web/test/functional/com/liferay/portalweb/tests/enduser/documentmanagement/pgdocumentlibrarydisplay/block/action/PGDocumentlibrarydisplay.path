@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>PORTLET_TITLE</td>
 	<td>//h1[@class='portlet-title']/span[contains(.,'Documents and Media Display')]</td>
 	<td></td>

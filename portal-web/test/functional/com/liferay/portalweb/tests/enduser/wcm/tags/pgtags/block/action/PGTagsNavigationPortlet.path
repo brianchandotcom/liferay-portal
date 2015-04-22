@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>TAG_NAME</td>
 	<td>//li[contains(@class,'tag-popularity')]/span/a[contains(.,'${key_tagName}')]</td>
 	<td></td>

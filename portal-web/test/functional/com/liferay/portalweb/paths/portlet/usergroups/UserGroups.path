@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPTIONS_ICON</td>
 	<td>//div[@id='main-content']//menu[@class='portlet-topper-toolbar']/div/a/i</td>
 	<td></td>

@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>TestLocalized</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestLocalized</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CHINESE_LOCALIZATION</td>
+	<td>//div[@class='portlet-body']/a[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENGLISH_LOCALIZATION</td>
+	<td>//div[@class='portlet-body']/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRENCH_LOCALIZATION</td>
+	<td>//div[@class='portlet-body']/a[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPANISH_LOCALIZATION</td>
+	<td>//div[@class='portlet-body']/a[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LOCALIZATION-->
+<tr>
+	<td>LOCALIZATION_TEST_1</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[1]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_2</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[2]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_3</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[3]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_4</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[4]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_5</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[5]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_6</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[6]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_7</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[7]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_8</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[8]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_9</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[9]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_10</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[10]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_11</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[11]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_12</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[12]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_13</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[13]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_TEST_14</td>
+	<td>//table[@class='table table-bordered table-hover table-striped']/tbody/tr[14]/td[5]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

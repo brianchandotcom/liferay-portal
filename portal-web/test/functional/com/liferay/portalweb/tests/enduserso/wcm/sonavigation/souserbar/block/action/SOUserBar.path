@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_BAR</td>
 	<td>//div[@class='so-portlet-user-bar']</td>
 	<td></td>

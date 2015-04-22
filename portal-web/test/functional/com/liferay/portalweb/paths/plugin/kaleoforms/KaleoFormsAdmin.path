@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">KaleoFormsAdmin</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--OPTIONS_MENULIST-->
 <tr>
 	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>

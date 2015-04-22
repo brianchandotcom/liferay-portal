@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SPREADSHEET_CONTAINER</td>
 	<td>//div[@class='lfr-spreadsheet-container']</td>
 	<td></td>

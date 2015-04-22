@@ -9,13 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
+	<td>ADD</td>
+	<td>//a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD</td>
-	<td>//a[contains(.,'Add')]</td>
+	<td>ADD_ENTRY</td>
+	<td>//button[contains(.,'Add Entry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,8 +29,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_TEAM</td>
+	<td>//a[contains(.,'Add Team')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BROWSE</td>
 	<td>//input[@id='_195_fileName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBFOLDER</td>
+	<td>//a[contains(.,'Add Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE</td>
+	<td>//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHOOSE_THIS_FOLDER</td>
 	<td>//button[contains(.,'Choose This Folder')]</td>
 	<td></td>
@@ -56,6 +71,16 @@
 <tr>
 	<td>CLOSE</td>
 	<td>//button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_IFRAME</td>
+	<td>//button[contains(.,'×')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPARE_VERSIONS</td>
+	<td>//button[contains(@id,'compare')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,23 +99,68 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENTS_AND_MEDIA</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
 	<td>//a[contains(@id,'edit') and contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_BUTTON</td>
+	<td>ITEMS_PER_PAGE</td>
+	<td>//a[contains(@title,'Items per Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE</td>
+	<td>//button[contains(.,'Merge')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE</td>
 	<td>//button[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_THREAD</td>
+	<td>//button[contains(.,'Move Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OK</td>
+	<td>//button[contains(.,'OK')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_SELECT</td>
+	<td>//a[contains(@title,'Page') and contains(@title,'of')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARENT_FOLDER_REMOVE</td>
+	<td>//button[contains(@id,'removeFolderButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARENT_FOLDER_SELECT</td>
+	<td>//button[contains(@id,'selecFolderButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS</td>
+	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POST</td>
+	<td>//button[contains(.,'Post')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW</td>
 	<td>//button[contains(.,'Preview')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OK</td>
-	<td>//button[.='OK']</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,11 +176,6 @@
 <tr>
 	<td>RESTORE</td>
 	<td>//button[contains(.,'Restore')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBMIT_FOR_PUBLICATION</td>
-	<td>//button[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -144,8 +209,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_SCOPE</td>
+	<td>//div[contains (@class,'btn-group')]/a[@title='Default']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEND</td>
 	<td>//button[contains(.,'Send')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE</td>
+	<td>//a[@role='button' and (@title='Source')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT_FOR_PUBLICATION</td>
+	<td>//button[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>

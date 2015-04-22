@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_NEW_DEFINITION_BUTTON</td>
 	<td>//button[@class='btn btn-primary' and contains(.,'Add New Definition')]</td>
 	<td></td>

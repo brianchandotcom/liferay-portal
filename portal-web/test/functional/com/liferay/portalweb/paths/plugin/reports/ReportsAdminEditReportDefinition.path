@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DATA_SOURCE_NAME_SELECT</td>
 	<td>//select[contains(@id,'reportsportlet_sourceId')]</td>
 	<td></td>

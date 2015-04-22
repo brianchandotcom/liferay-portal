@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>REPOST_IFRAME</td>
 	<td>//iframe[contains(@id,'soportlet_Dialog_iframe')]</td>
 	<td></td>

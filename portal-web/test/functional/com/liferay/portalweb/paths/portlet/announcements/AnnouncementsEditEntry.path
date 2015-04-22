@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>AnnouncementsEditEntry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AnnouncementsEditEntry</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PRIORITY_SELECT</td>
+	<td>//select[contains(@id,'84') and contains(@id,'priority')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_IMMEDIATELY_CHECKBOX</td>
+	<td>//input[contains(@id,'84') and contains(@id,'fmdisplayDate')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

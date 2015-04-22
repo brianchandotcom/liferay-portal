@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIMEO_VIDEO</td>
 	<td>//div[contains(@class,'portlet-body')]/div/object</td>
 	<td></td>

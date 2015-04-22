@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADVANCED_SEARCH</td>
 	<td>//a[contains(@class,'toggle-advanced') and i[@class='icon-search']]</td>
 	<td></td>
@@ -21,6 +16,11 @@
 <tr>
 	<td>BACK</td>
 	<td>//a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE</td>
+	<td>//button[contains(@class,'close-content')]</td>
 	<td></td>
 </tr>
 <tr>

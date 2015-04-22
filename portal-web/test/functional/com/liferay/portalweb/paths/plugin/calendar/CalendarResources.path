@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_RESOURCE_BUTTON</td>
 	<td>//a[contains(@class,'btn') and contains (.,'Add Resource')]</td>
 	<td></td>

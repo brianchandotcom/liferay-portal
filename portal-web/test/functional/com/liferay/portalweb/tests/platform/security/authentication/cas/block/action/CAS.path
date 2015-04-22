@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>APP_NAME_HEADER</td>
 	<td>//h1[@id='app-name']</td>
 	<td></td>

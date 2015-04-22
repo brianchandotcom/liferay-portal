@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DROOLS_CONTENT</td>
 	<td>//div[contains(@id,'sampledroolsportlet')]//div[@class='portlet-body']</td>
 	<td></td>

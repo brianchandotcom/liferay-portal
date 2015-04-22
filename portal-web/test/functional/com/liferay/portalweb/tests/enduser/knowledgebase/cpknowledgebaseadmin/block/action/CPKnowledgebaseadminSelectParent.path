@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAME_HEADER</td>
 	<td>//div[contains(@class,'modal-header')]</td>
 	<td></td>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPRolesDefinepermissionsSelectSite</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SELECT_SITE-->
 <tr>
 	<td>SELECT_SITE_IFRAME</td>

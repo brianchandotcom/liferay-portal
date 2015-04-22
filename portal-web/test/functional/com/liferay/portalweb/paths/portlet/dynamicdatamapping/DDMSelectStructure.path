@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DDM_STRUCTURES_IFRAME</td>
 	<td>//iframe[@class='dialog-iframe-node ']</td>
 	<td></td>
@@ -51,79 +46,73 @@
 </tr>
 <!--DDM_STRUCTURE_TABLE-->
 <tr>
+	<td>DDM_STRUCTURE_TABLE</td>
+	<td>//div[contains(@id,'_166_ddmStructuresSearchContainer')]/table/tbody/tr[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DDM_STRUCTURE_TABLE_ALL_CHECKBOX</td>
-	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//input[@name='_166_allRowIds']</td>
+	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1]/input[@name='_166_rowIds'])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1]/input[contains(@name,'rowIds')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_STRUCTURE_TABLE_ID</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[count(//th[contains(.,'ID')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_ID_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[count(//th[contains(.,'ID')]/preceding-sibling::th) + 1])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_NAME</td>
-	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[3]/a[1]</td>
+	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[count(//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[2])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[count(//th[contains(.,'Name')]/preceding-sibling::th) + 1])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_STRUCTURE_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[count(//th[contains(.,'Description')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[3])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[count(//th[contains(.,'Description')]/preceding-sibling::th) + 1])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_STRUCTURE_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[count(//th[contains(.,'Modified Date')]/preceding-sibling::th) + 1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDM_STRUCTURE_TABLE_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_structureName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[5]/button[contains(.,'Choose')])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td/button[contains(.,'Choose')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_ACTIONS</td>
-	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[7]/div/a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
+	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td/div/a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_ACTIONS_1</td>
 	<td>xpath=(//a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--DDM_STRUCTURE_MENULIST-->
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_MANAGE_TEMPLATES</td>
-	<td>//a[@role='menuitem' and contains(.,'Manage Templates')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_PERMISSIONS</td>
-	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_COPY</td>
-	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_MENULIST_DELETE</td>
-	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 </tbody>

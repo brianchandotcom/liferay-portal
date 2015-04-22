@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIRST_LINK</td>
 	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'First')]</td>
 	<td></td>
@@ -41,6 +36,11 @@
 <tr>
 	<td>ITEMS_PER_PAGE_SELECT</td>
 	<td>//a[contains(@title,'Items per Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIVE_ITEMS_PER_PAGE</td>
+	<td>//a[contains(@id,'5')]</td>
 	<td></td>
 </tr>
 </tbody>

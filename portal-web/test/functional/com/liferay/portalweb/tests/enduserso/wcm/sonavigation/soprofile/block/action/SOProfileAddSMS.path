@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SMS_FIELD</td>
 	<td>//input[contains(@id,'smsSn')]</td>
 	<td></td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DDL_IFRAME</td>
 	<td>//iframe[contains(@src,'dynamic_data_lists')]</td>
 	<td></td>
@@ -21,6 +16,11 @@
 <tr>
 	<td>COPY_STRUCTURE_IFRAME</td>
 	<td>//iframe[contains(@id,'copyStructure_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATES_IFRAME</td>
+	<td>//iframe[contains(@src,'scopeTitle=Templates')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,6 +57,16 @@
 <tr>
 	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
 	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Add Display Template')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_TEMPLATE</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//span[@class='nav-item-label' and contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADVANCED_SEARCH_ICON</td>
+	<td>//div[@class='taglib-search-toggle']/div/a[contains(@id,'ddm_template')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -136,29 +146,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--TEMPLATE_MENULIST-->
-<tr>
-	<td>TEMPLATE_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_MENULIST_PERMISSIONS</td>
-	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_MENULIST_COPY</td>
-	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_MENULIST_DELETE</td>
-	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td>TEMPLATE_TABLE_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_templateName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

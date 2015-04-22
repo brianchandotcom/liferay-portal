@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>SitesExport</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SitesExport</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXPORT_IFRAME</td>
+	<td>//iframe[contains(@id,'exportDialog_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT_BUTTON</td>
+	<td>//form[@class='form lfr-export-dialog ']/div[2]/button[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOWNLOAD_FILE</td>
+	<td>//tr/td/span/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

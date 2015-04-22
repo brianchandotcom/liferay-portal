@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>START_DATE_DATE_FIELD</td>
 	<td>//span[@class='lfr-input-date ']/input</td>
 	<td></td>

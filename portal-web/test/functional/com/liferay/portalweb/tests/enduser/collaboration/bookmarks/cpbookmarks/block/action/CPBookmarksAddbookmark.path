@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPTIONS_WRENCH_ICON</td>
 	<td>//div[@id='main-content']//a[@title='Options']</td>
 	<td></td>

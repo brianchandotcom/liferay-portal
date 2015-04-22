@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">OS</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FILE_DIALOG_BOX-->
 <tr>
 	<td>FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG</td>

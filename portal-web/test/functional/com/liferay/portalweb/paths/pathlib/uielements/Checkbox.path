@@ -9,13 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
+	<td>ACTIVE</td>
+	<td>//label[contains(.,'Active')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVE</td>
-	<td>//label[contains(.,'Active')]/input[@type='checkbox']</td>
+	<td>ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT</td>
+	<td>//label[contains(.,'Allow Manual Membership Management')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -24,13 +24,58 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECK_ALL_NAME</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_PROPAGATION</td>
+	<td>//label[contains(.,'Enable propagation of changes')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RECYCLE_BIN</td>
+	<td>//label[contains(.,'Enable Recycle Bin')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HIDE_FROM_NAVIGATION_MENU</td>
 	<td>//label[contains(.,'Hide from Navigation Menu')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>NEVER_EXPIRE</td>
+	<td>//input[contains(@name,'neverExpire')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEVER_REVIEW</td>
+	<td>//input[contains(@name,'neverReview')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS</td>
 	<td>//label[contains(.,'Permissions')]/input[contains(@id,'PERMISSIONS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCHABLE</td>
+	<td>//input[contains(@id,'indexable')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ALL</td>
+	<td>//input[contains(@id,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMINISTRATOR</td>
+	<td>xpath=(//input[contains(@name,'rowIds')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_OWNER</td>
+	<td>xpath=(//input[contains(@name,'rowIds')])[2]</td>
 	<td></td>
 </tr>
 </tbody>

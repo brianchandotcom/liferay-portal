@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOGO</td>
 	<td>//div[@id='header']/a[@id='solr']</td>
 	<td></td>

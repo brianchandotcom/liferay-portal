@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_SERVICE_PROVIDER_BUTTON</td>
 	<td>//a[contains(@class,'btn') and contains(.,'Add Service Provider')]</td>
 	<td></td>

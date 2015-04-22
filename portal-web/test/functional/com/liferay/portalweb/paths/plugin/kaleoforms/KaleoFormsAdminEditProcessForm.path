@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_FORM_BUTTON</td>
 	<td>//button[contains(.,'Add Form')]</td>
 	<td></td>

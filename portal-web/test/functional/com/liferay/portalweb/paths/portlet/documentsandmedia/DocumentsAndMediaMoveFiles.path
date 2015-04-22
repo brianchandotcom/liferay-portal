@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>MOVE_FILE</td>
 	<td>//li[@class='move-file']/span[@class='file-title']</td>
 	<td></td>

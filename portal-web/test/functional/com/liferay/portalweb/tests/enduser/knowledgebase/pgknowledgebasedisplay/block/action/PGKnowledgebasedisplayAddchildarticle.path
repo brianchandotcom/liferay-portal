@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>TITLE_FIELD</td>
 	<td>//input[@id='_2_WAR_knowledgebaseportlet_title']</td>
 	<td></td>

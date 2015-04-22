@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>TEST_PORTLET_BODY_PASSED</td>
 	<td>//div[contains(@id,'test')]//div[contains(.,'PASSED')]</td>
 	<td></td>

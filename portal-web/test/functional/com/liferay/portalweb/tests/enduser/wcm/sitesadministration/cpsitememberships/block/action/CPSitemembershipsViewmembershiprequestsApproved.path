@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPSitemembershipsViewmembershiprequestsApproved</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--APPROVED_TABLE-->
 <tr>
 	<td>APPROVED_TABLE_USER_NAME</td>

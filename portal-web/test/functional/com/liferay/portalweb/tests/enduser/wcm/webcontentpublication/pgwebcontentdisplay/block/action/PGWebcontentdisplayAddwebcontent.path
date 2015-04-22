@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>WEB_CONTENT_IFRAME</td>
 	<td>//iframe[contains(@id,'editAsset_iframe')]</td>
 	<td></td>

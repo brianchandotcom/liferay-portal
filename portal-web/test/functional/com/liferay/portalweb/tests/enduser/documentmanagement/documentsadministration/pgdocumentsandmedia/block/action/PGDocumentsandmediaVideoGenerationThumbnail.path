@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIDEO_GENERATION_THUMBNAIL_RESOLUTION</td>
 	<td>//head/title[contains(.,'${key_videoGenerationThumbnailResolution}')]</td>
 	<td></td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BLOGS_PORTLET_OPTIONS</td>
 	<td>//div[contains(@class,'portlet-blogs')]//span[contains(@class,'portlet-actions')]</td>
 	<td></td>

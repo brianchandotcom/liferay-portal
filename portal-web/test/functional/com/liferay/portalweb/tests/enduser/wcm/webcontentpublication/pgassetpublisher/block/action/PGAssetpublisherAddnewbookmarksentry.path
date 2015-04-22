@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BOOKMARKS_FOLDER_NAME_FIELD</td>
 	<td>//input[contains(@id,'bookmark') and contains(@id,'folderName')]</td>
 	<td></td>

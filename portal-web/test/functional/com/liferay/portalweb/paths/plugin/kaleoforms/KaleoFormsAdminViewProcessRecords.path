@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBMIT_NEW</td>
 	<td>//div[contains(@class,'navbar')]//a[@role='menuitem']/span[contains(.,'Submit New')]</td>
 	<td></td>

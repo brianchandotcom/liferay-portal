@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_FIELD</td>
 	<td>//span/input[contains(@class,'field-input-text')]</td>
 	<td></td>

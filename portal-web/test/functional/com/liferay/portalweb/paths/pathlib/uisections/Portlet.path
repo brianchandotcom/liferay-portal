@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Portlet</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Portlet</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

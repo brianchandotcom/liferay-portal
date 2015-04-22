@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE_DOCUMENT_VIEW</td>
 	<td>//div[@class='view']//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>

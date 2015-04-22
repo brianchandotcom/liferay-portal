@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>MessageBoardsMySubscriptions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MessageBoardsMySubscriptions</td></tr>
+</thead>
+<tbody>
+<!--CATEGORY_TABLE-->
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_BREADCRUMB_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//ul/li)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_BREADCRUMB_2</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//ul/li)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_BREADCRUMB_3</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//ul/li)[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

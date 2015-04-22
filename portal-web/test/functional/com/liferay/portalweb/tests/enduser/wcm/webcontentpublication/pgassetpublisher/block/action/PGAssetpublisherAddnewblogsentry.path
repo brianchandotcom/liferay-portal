@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BLOGS_ENTRY_IFRAME</td>
 	<td>//iframe[contains(@id,'_editAsset_iframe_')]</td>
 	<td></td>

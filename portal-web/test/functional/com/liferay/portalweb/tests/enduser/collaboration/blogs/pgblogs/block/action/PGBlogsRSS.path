@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FEED_TITLE</td>
 	<td>//*[@id='feedTitleText']</td>
 	<td></td>

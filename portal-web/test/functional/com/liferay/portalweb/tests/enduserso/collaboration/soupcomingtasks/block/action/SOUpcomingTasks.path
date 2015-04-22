@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>TASK_PORTLET_TITLE</td>
 	<td>//h1[@class='portlet-title'][contains(.,'Upcoming Tasks')]</td>
 	<td></td>

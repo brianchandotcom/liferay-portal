@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_MESSAGE</td>
 	<td>//div[contains(@class,'search-info')]</td>
 	<td></td>

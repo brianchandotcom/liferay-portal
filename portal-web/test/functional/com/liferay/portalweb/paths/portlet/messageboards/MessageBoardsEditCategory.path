@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>MessageBoardsEditCategory</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MessageBoardsEditCategory</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>DISPLAY_STYLE_SELECT</td>
+	<td>//select[@id='_19_displayStyle']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

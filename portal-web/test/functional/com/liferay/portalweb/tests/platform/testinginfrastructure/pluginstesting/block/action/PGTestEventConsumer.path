@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>EVENT_CONSUMER_PORTLET_BODY</td>
 	<td>//section[contains(@id,'portlet_2')]//div[@class='portlet-body']</td>
 	<td></td>

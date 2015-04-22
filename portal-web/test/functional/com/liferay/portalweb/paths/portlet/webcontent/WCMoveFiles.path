@@ -1,16 +1,16 @@
 <html>
 <head>
-<title>WebContent</title>
+<title>WCMoveFiles</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">WebContent</td></tr>
+<tr><td rowspan="1" colspan="3">WCMoveFiles</td></tr>
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
+	<td>PARENT_FOLDER_NAME</td>
+	<td>//a[contains(@id,'parentFolderName')]</td>
 	<td></td>
 </tr>
 </tbody>

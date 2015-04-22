@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FACEBOOK_FIELD</td>
 	<td>//input[contains(@id,'facebookSn')]</td>
 	<td></td>

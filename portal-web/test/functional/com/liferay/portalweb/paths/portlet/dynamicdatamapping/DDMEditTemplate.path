@@ -9,18 +9,28 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DDL_IFRAME</td>
 	<td>//iframe[contains(@src,'dynamic_data_lists')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_TITLE</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_TITLE</td>
 	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCRIPT_FIELDS_1</td>
+	<td>//div[contains(@id,'paletteData')]/div[2]/ul/li/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCRIPT_FIELD</td>
+	<td>//div[@class='palette-section' and contains(.,'Fields')]/ul/li/span[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,11 +49,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//div[@class='button-holder ']/a[contains(.,' Cancel ')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--DETAILS-->
+<tr>
+	<td>DETAILS_SELECT_STRUCTURE</td>
+	<td>//a[contains(@href,'openDDMStructureSelector')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_STRUCTURE</td>
+	<td>//input[contains(@id,'structure')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>DETAILS_LANGUAGE_SELECT</td>
 	<td>//select[contains(@id,'language')]</td>
@@ -123,11 +148,6 @@
 <tr>
 	<td>DATA_LIST_RECORD_FIELDS_TEXT_BOX</td>
 	<td>//div[contains(@class,'palette-section') and contains(.,'Data List Record Fields')]/div[2]//span[contains(.,'Text Box')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

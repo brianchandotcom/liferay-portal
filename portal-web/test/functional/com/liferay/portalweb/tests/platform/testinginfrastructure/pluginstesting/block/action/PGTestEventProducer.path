@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>EVENT_PRODUCER_PORTLET_LINK</td>
 	<td>//section[contains(@id,'portlet_1')]//a[contains(.,'Send Event')]</td>
 	<td></td>

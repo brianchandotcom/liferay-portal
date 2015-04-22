@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_1</td>
 	<td>//div[contains(@class,'field-wrapper')][1]</td>
 	<td></td>

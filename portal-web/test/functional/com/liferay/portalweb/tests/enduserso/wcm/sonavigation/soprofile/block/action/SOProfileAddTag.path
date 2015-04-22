@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>TAG_FIELD</td>
 	<td>//input[contains(@id,'TagNames')]</td>
 	<td></td>

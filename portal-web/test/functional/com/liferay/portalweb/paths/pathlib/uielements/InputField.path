@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>InputField</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">InputField</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>BODY</td>
+	<td>//body</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE</td>
+	<td>//input[contains(@id,'displayDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_TIME</td>
+	<td>//input[contains(@id,'displayDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE</td>
+	<td>//input[contains(@id,'expirationDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE_TIME</td>
+	<td>//input[contains(@id,'expirationDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GOOGLE_ANALYTICS_ID</td>
+	<td>//input[contains(@id,'_165_googleAnalyticsId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME</td>
+	<td>//input[contains(@id,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PIWIK</td>
+	<td>//textarea[contains(@id,'_analytics_piwik')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_DATE</td>
+	<td>//input[contains(@id,'reviewDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_ALERT</td>
+	<td>//div[@class=&quot;required&quot; and contains(.,'This field is required')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUMMARY</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBJECT</td>
+	<td>//input[contains(@id,'subject')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//input[contains(@id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPLOAD_FILE</td>
+	<td>//input[contains(@class,'field') and (@type='file')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL</td>
+	<td>//input[contains(@id,'url')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">KaleoFormsAdminViewProcessRecordsDetails</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CURRENT_RECORD-->
 <tr>
 	<td>CURRENT_RECORD_VERSION</td>

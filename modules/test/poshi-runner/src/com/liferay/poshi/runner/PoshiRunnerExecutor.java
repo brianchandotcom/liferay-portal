@@ -131,14 +131,7 @@ public class PoshiRunnerExecutor {
 			if (childElementName.equals("echo") ||
 				childElementName.equals("description")) {
 
-				String message = childElement.attributeValue("message");
-
-				if (message == null) {
-					message = childElement.getText();
-				}
-
-				System.out.println(
-					PoshiRunnerVariablesUtil.replaceCommandVars(message));
+				runEchoElement(childElement);
 			}
 			else if (childElementName.equals("execute")) {
 				if (childElement.attributeValue("function") != null) {
@@ -167,32 +160,13 @@ public class PoshiRunnerExecutor {
 				runIfElement(childElement);
 			}
 			else if (childElementName.equals("fail")) {
-				String message = childElement.attributeValue("message");
-
-				if (Validator.isNotNull(message)) {
-					throw new Exception(
-						PoshiRunnerVariablesUtil.replaceCommandVars(message));
-				}
-
-				throw new Exception();
+				runFailElement(childElement);
 			}
 			else if (childElementName.equals("for")) {
 				runForElement(childElement);
 			}
 			else if (childElementName.equals("task")) {
-				try {
-					SummaryLoggerHandler.startSummary(childElement);
-
-					parseElement(childElement);
-				}
-				catch (Exception e) {
-					SummaryLoggerHandler.failSummary(
-						childElement, e.getMessage());
-
-					throw e;
-				}
-
-				SummaryLoggerHandler.passSummary(childElement);
+				runTaskElement(childElement);
 			}
 			else if (childElementName.equals("var")) {
 				runVarElement(childElement, true);
@@ -203,6 +177,28 @@ public class PoshiRunnerExecutor {
 
 			PoshiRunnerStackTraceUtil.popStackTrace();
 		}
+	}
+
+	public static void runEchoElement(Element element) throws Exception {
+		String message = element.attributeValue("message");
+
+		if (message == null) {
+			message = element.getText();
+		}
+
+		System.out.println(
+			PoshiRunnerVariablesUtil.replaceCommandVars(message));
+	}
+
+	public static void runFailElement(Element element) throws Exception {
+		String message = element.attributeValue("message");
+
+		if (Validator.isNotNull(message)) {
+			throw new Exception(
+				PoshiRunnerVariablesUtil.replaceCommandVars(message));
+		}
+
+		throw new Exception();
 	}
 
 	public static void runForElement(Element element) throws Exception {
@@ -477,6 +473,21 @@ public class PoshiRunnerExecutor {
 
 			throw new Exception(throwable.getMessage(), e);
 		}
+	}
+
+	public static void runTaskElement(Element element) throws Exception {
+		try {
+			SummaryLoggerHandler.startSummary(element);
+
+			parseElement(element);
+		}
+		catch (Exception e) {
+			SummaryLoggerHandler.failSummary(element, e.getMessage());
+
+			throw e;
+		}
+
+		SummaryLoggerHandler.passSummary(element);
 	}
 
 	public static void runVarElement(Element element, boolean commandVar)

@@ -398,7 +398,7 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		_itemSelectionCriterionHandlers.put(
 			itemSelectorCriterionClass.getName(),
-			(ItemSelectorCriterionHandler) itemSelectionCriterionHandler);
+			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
 	}
 
 	protected <T extends ItemSelectorCriterion>

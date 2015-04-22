@@ -873,7 +873,7 @@
 		<execute macro="KBArticle#viewDefaultViaKBDisplayPG" />
 	</command>
 
-	<command known-issues="LPS-54597" name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="5">
+	<command name="ViewImportedKBArticlesInHierarchyWithMarkdownFormat" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>

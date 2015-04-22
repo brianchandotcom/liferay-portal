@@ -415,7 +415,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="5">
+	<command known-issues="LPS-55128" name="DeleteTemplateAndStructureWithReferencedWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

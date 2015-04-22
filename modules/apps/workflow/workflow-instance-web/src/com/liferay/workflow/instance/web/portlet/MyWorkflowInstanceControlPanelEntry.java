@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.workflow.WorkflowControlPanelEntry;
 import com.liferay.portlet.ControlPanelEntry;
+import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
 
 /**
  * @author Miguel Pastor
@@ -31,7 +31,7 @@ import com.liferay.portlet.ControlPanelEntry;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_INSTANCE
+		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE
 	},
 	service = ControlPanelEntry.class
 )

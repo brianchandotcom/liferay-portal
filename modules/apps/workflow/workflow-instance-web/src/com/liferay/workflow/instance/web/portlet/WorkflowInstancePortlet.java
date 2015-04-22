@@ -35,8 +35,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.workflow.instance.web.portlet.action.ActionUtil;
+import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
 
 /**
  * @author Leonardo Barros
@@ -55,7 +55,7 @@ import com.liferay.workflow.instance.web.portlet.action.ActionUtil;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_INSTANCE,
+		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE,
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

@@ -63,8 +63,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class WebDAVUtil {
 
-	public static final Namespace DAV_URI = SAXReaderUtil.createNamespace(
-		"D", "DAV:");
+	public static Namespace DAV_URI;
 
 	public static final int SC_LOCKED = 423;
 
@@ -314,6 +313,10 @@ public class WebDAVUtil {
 		}
 
 		return timeout * Time.SECOND;
+	}
+
+	public static void initDAV_URI() {
+		DAV_URI = SAXReaderUtil.createNamespace("D", "DAV:");
 	}
 
 	public static boolean isOverwrite(HttpServletRequest request) {

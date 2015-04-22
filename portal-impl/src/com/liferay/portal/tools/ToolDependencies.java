@@ -175,11 +175,7 @@ public class ToolDependencies {
 
 		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
 
-		try {
-			singleVMPoolUtil.setSingleVMPool(new SingleVMPoolImpl());
-		}
-		catch (InterruptedException ie) {
-		}
+		singleVMPoolUtil.setSingleVMPool(new SingleVMPoolImpl());
 
 		properties = new HashMap<>();
 
@@ -197,11 +193,7 @@ public class ToolDependencies {
 
 		MultiVMPoolUtil multiVMPoolUtil = new MultiVMPoolUtil();
 
-		try {
-			multiVMPoolUtil.setMultiVMPool(new MultiVMPoolImpl());
-		}
-		catch (Exception e) {
-		}
+		multiVMPoolUtil.setMultiVMPool(new MultiVMPoolImpl());
 	}
 
 	public static void wireDeployers() {

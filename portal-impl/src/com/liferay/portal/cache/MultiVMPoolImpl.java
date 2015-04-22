@@ -35,7 +35,7 @@ import java.io.Serializable;
 @DoPrivileged
 public class MultiVMPoolImpl implements MultiVMPool {
 
-	public MultiVMPoolImpl() throws Exception {
+	public MultiVMPoolImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
@@ -53,9 +53,15 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 		serviceTracker.open();
 
-		_portalCacheManager =
-			SPIPortalCacheManagerConfigurator.createSPIPortalCacheManager(
-				serviceTracker.waitForService(0));
+		try {
+			_portalCacheManager =
+				SPIPortalCacheManagerConfigurator.createSPIPortalCacheManager(
+					serviceTracker.waitForService(0));
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(
+				"Cannot initialize MultiVMPool", e);
+		}
 	}
 
 	@Override

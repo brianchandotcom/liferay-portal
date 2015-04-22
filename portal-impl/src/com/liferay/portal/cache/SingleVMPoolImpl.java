@@ -34,7 +34,7 @@ import java.io.Serializable;
 @DoPrivileged
 public class SingleVMPoolImpl implements SingleVMPool {
 
-	public SingleVMPoolImpl() throws InterruptedException {
+	public SingleVMPoolImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
@@ -51,7 +51,13 @@ public class SingleVMPoolImpl implements SingleVMPool {
 
 		serviceTracker.open();
 
-		_portalCacheManager = serviceTracker.waitForService(0);
+		try {
+			_portalCacheManager = serviceTracker.waitForService(0);
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(
+				"Cannot initialize SingleVMPool", e);
+		}
 	}
 
 	@Override

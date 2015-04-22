@@ -137,35 +137,45 @@ public class InvokerFilterHelper {
 	}
 
 	public void unregisterFilter(String filterName) {
-		Filter filter = _filters.remove(filterName);
-
-		if (filter == null) {
-			return;
-		}
+		Filter filter = null;
 
 		for (FilterMapping filterMapping : _filterMappings) {
-			if (filterMapping.getFilter() == filter) {
-				unregisterFilterMapping(filterMapping);
+			if (filterName.equals(filterMapping.getFilterName())) {
+				if (filter == null) {
+					filter = filterMapping.getFilter();
+				}
+
+				unregisterFilterMapping(filterMapping, false);
 
 				break;
 			}
 		}
 
-		_filterConfigs.remove(filterName);
+		if (filter != null) {
+			try {
+				filter.destroy();
 
-		try {
-			filter.destroy();
+				_filters.remove(filterName);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	public void unregisterFilterMapping(FilterMapping filterMapping) {
-		_filterMappings.remove(filterMapping);
 
 		for (InvokerFilter invokerFilter : _invokerFilters) {
 			invokerFilter.clearFilterChainsCache();
+		}
+	}
+
+	public void unregisterFilterMapping(
+		FilterMapping filterMapping, boolean clearFilterChainsCache) {
+
+		_filterMappings.remove(filterMapping);
+
+		if (clearFilterChainsCache) {
+			for (InvokerFilter invokerFilter : _invokerFilters) {
+				invokerFilter.clearFilterChainsCache();
+			}
 		}
 	}
 

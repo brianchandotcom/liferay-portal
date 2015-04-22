@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -246,8 +247,8 @@ public class InvokerFilterHelper {
 
 		Element rootElement = document.getRootElement();
 
-		Map<String, FilterConfig> filterConfigs = new HashMap<>();
-		Map<String, Filter> filters = new HashMap<>();
+		Map<String, ObjectValuePair<Filter, FilterConfig>>
+			filterObjectValuePairs = new HashMap<>();
 
 		for (Element filterElement : rootElement.elements("filter")) {
 			String filterName = filterElement.elementText("filter-name");
@@ -272,8 +273,8 @@ public class InvokerFilterHelper {
 				servletContext, filterClassName, filterName, filterConfig);
 
 			if (filter != null) {
-				filterConfigs.put(filterName, filterConfig);
-				filters.put(filterName, filter);
+				filterObjectValuePairs.put(
+					filterName, new ObjectValuePair<>(filter, filterConfig));
 			}
 		}
 
@@ -304,32 +305,23 @@ public class InvokerFilterHelper {
 				dispatchers.add(dispatcher);
 			}
 
-			FilterConfig filterConfig = filterConfigs.get(filterName);
+			ObjectValuePair<Filter, FilterConfig> filterObjectValuePair =
+				filterObjectValuePairs.get(filterName);
 
-			if (filterConfig == null) {
+			if (filterObjectValuePair == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"No filter config exists with filter name " +
+						"No filter and filter config exists with filter name " +
 							filterName);
 				}
 
 				continue;
 			}
 
-			Filter filter = filters.get(filterName);
-
-			if (filter == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"No filter exists with filter name " + filterName);
-				}
-
-				return;
-			}
-
 			_filterMappings.add(
 				new FilterMapping(
-					filter, filterConfig, urlPatterns, dispatchers,
+					filterObjectValuePair.getKey(),
+					filterObjectValuePair.getValue(), urlPatterns, dispatchers,
 					filterName));
 		}
 	}

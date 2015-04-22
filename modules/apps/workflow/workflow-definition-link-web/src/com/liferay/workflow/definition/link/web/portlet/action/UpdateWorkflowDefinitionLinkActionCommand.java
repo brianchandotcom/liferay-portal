@@ -16,9 +16,7 @@ package com.liferay.workflow.definition.link.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -26,11 +24,8 @@ import com.liferay.portal.util.WebKeys;
 
 import java.util.Enumeration;
 
-import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -53,33 +48,12 @@ public class UpdateWorkflowDefinitionLinkActionCommand
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		try {
-			updateWorkflowDefinitionLinks(portletRequest);
-		}
-		catch (Exception e) {
-			SessionErrors.add(portletRequest, e.getClass());
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 
-			PortletSession portletSession = portletRequest.getPortletSession();
-
-			PortletContext portletContext = portletSession.getPortletContext();
-
-			PortletRequestDispatcher portletRequestDispatcher =
-				portletContext.getRequestDispatcher(
-					portletResponse.encodeURL("/error.jsp"));
-
-			portletRequestDispatcher.include(portletRequest, portletResponse);
-		}
-	}
-
-	protected void updateWorkflowDefinitionLinks(PortletRequest actionRequest)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Enumeration<String> enu = actionRequest.getParameterNames();
+		Enumeration<String> enu = portletRequest.getParameterNames();
 
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
@@ -90,7 +64,7 @@ public class UpdateWorkflowDefinitionLinkActionCommand
 
 			String className = name.substring(_PREFIX.length());
 			String workflowDefinition = ParamUtil.getString(
-				actionRequest, name);
+				portletRequest, name);
 
 			WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLink(
 				themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,

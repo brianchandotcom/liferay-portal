@@ -39,14 +39,14 @@
 		<if>
 			<isset var="kbArticleFriendlyURL" />
 			<then>
-				<var method="StringUtil#lowerCase(/${kbArticleFriendlyURL})" name="kbArticleTitleFormatted" />
-				<var method="StringUtil#replace(${kbArticleTitleFormatted}, ' ', '-')" name="kbArticleTitleFormatted" />
+				<var method="StringUtil#lowerCase('/${kbArticleFriendlyURL}')" name="kbArticleTitleFormatted" />
+				<var method="StringUtil#replace('${kbArticleTitleFormatted}', ' ', '-')" name="kbArticleTitleFormatted" />
 
 				<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
 			</then>
 			<else>
-				<var method="StringUtil#lowerCase(/${kbArticleTitle})" name="kbArticleTitleFormatted" />
-				<var method="StringUtil#replace(${kbArticleTitleFormatted}, ' ', '-')" name="kbArticleTitleFormatted" />
+				<var method="StringUtil#lowerCase('/${kbArticleTitle}')" name="kbArticleTitleFormatted" />
+				<var method="StringUtil#replace('${kbArticleTitleFormatted}', ' ', '-')" name="kbArticleTitleFormatted" />
 
 				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
 			</else>
@@ -1004,7 +1004,7 @@
 		<while>
 			<condition function="IsElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_CHILD_GENERIC" />
 			<then>
-				<var method="MathUtil#sum(${childCount}, 1)" name="childCount" />
+				<var method="MathUtil#sum('${childCount}', '1')" name="childCount" />
 				<var name="kbChildArticleTitle" value="${kbParentChild} ${childCount}" />
 				<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
@@ -1222,7 +1222,7 @@
 		<var name="key_publishDate" value="${publishDate}" />
 		<var name="separator" value=" " />
 
-		<var method="StringUtil#extractFirst(${key_publishDate}, ${separator})" name="gmailKBArticleDate" />
+		<var method="StringUtil#extractFirst('${key_publishDate}, ${separator}')" name="gmailKBArticleDate" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1342,7 +1342,7 @@
 		<while>
 			<condition function="IsElementPresent" locator1="PGKnowledgebasedisplay#ARTICLE_NAVIGATION_GENERIC" />
 			<then>
-				<var method="MathUtil#sum(${count}, 1)" name="count" />
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
 				<var name="kbParentTitle" value="${kbArticleTitle} ${count}" />
 				<var name="key_kbArticleTitle" value="${kbParentTitle}" />
 

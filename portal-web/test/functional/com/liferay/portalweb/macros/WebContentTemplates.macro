@@ -125,8 +125,8 @@
 	</command>
 
 	<command name="addField">
-		<var method="StringUtil#replace(${fieldName}, ' ', '_')" name="fieldNameLabel" />
-		<var method="StringUtil#lowerCase(${fieldNameLabel})" name="fieldNameLabel" />
+		<var method="StringUtil#replace('${fieldName}', ' ', '_')" name="fieldNameLabel" />
+		<var method="StringUtil#lowerCase('${fieldNameLabel}')" name="fieldNameLabel" />
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertClick" locator1="CPWebcontentTemplatesAddtemplate#PALETTE_FIELD" value1="${fieldName}" />

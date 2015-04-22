@@ -15,7 +15,7 @@
 
 		<var name="number" value="1" />
 
-		<var method="MathUtil#sum(${number}, 1)" name="numberIncremented" />
+		<var method="MathUtil#sum('${number}', '1')" name="numberIncremented" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${numberIncremented}" />
@@ -25,7 +25,7 @@
 		<echo message="Test increment() used inline" />
 
 		<execute macro="TestUtils#assertEquals">
-			<var method="MathUtil#sum(${number}, 1)" name="actual" />
+			<var method="MathUtil#sum('${number}', '1')" name="actual" />
 			<var name="expected" value="2" />
 		</execute>
 	</command>
@@ -55,7 +55,7 @@
 
 		<var name="string" value="abCDe" />
 
-		<var method="StringUtil#lowerCase(${string})" name="stringLowercased" />
+		<var method="StringUtil#lowerCase('${string}')" name="stringLowercased" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${stringLowercased}" />
@@ -65,7 +65,7 @@
 		<echo message="Test lowercase() used inline" />
 
 		<execute macro="TestUtils#assertEquals">
-			<var method="StringUtil#lowerCase(${string})" name="actual" />
+			<var method="StringUtil#lowerCase('${string}')" name="actual" />
 			<var name="expected" value="abcde" />
 		</execute>
 	</command>
@@ -91,7 +91,7 @@
 
 		<var name="string" value="abcde" />
 
-		<var method="StringUtil#replace(${string}, 'abc','123')" name="stringReplaced" />
+		<var method="StringUtil#replace('${string}', 'abc','123')" name="stringReplaced" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${stringReplaced}" />
@@ -101,7 +101,7 @@
 		<echo message="Test replace() used inline" />
 
 		<execute macro="TestUtils#assertEquals">
-			<var method="StringUtil#replace(${string}, 'abc','123')" name="actual" />
+			<var method="StringUtil#replace('${string}', 'abc','123')" name="actual" />
 			<var name="expected" value="123de" />
 		</execute>
 	</command>
@@ -111,7 +111,7 @@
 
 		<var name="string" value="abCDe" />
 
-		<var method="StringUtil#upperCase(${string})" name="stringUppercased" />
+		<var method="StringUtil#upperCase('${string}')" name="stringUppercased" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${stringUppercased}" />
@@ -121,7 +121,7 @@
 		<echo message="Test uppercase() used inline" />
 
 		<execute macro="TestUtils#assertEquals">
-			<var method="StringUtil#upperCase(${string})" name="actual" />
+			<var method="StringUtil#upperCase('${string}')" name="actual" />
 			<var name="expected" value="ABCDE" />
 		</execute>
 	</command>

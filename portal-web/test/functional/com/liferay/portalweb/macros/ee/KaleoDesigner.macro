@@ -1,6 +1,6 @@
 <definition>
 	<command name="addConnectorAndNodeViaViewTab">
-		<var method="StringUtil#replace(${nodeType}, '-', '_')" name="key_nodeType" />
+		<var method="StringUtil#replace('${nodeType}', '-', '_')" name="key_nodeType" />
 
 		<if>
 			<equals arg1="${down}" arg2="true" />
@@ -41,12 +41,12 @@
 	</command>
 
 	<command name="addConnectorViaViewTab">
-		<var method="StringUtil#replace(${nodeType}, '-', '_')" name="key_nodeType" />
+		<var method="StringUtil#replace('${nodeType}', '-', '_')" name="key_nodeType" />
 
 		<execute function="SikuliMouseMove" locator1="Kaleodesigner#NODE_CORNER" />
 		<execute function="SikuliLeftMouseDown" />
 
-		<var method="StringUtil#replace(${nodeTypeDestination}, '-', '_')" name="key_nodeType" />
+		<var method="StringUtil#replace('${nodeTypeDestination}', '-', '_')" name="key_nodeType" />
 
 		<execute function="SikuliMouseMove" locator1="Kaleodesigner#NODE_CORNER" />
 		<execute function="SikuliLeftMouseUp" />
@@ -109,7 +109,7 @@
 	</command>
 
 	<command name="addNodeViaViewTab">
-		<var method="StringUtil#replace(${nodeType}, '-', '_')" name="key_nodeType" />
+		<var method="StringUtil#replace('${nodeType}', '-', '_')" name="key_nodeType" />
 
 		<execute function="SikuliDragAndDrop" locator1="Kaleodesigner#NODE_PNG" value1="250,0" />
 

@@ -544,7 +544,7 @@
 		<var attribute="value" locator="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" name="textFieldContent" />
 		<var name="textFieldContentLength" value="${textFieldContent?length()}" />
 
-		<var method="MathUtil#difference(&quot;150&quot;, &quot;${textFieldContentLength}&quot;)" name="characterCountdown" />
+		<var method="MathUtil#difference('150', '${textFieldContentLength}')" name="characterCountdown" />
 
 		<if>
 			<equals arg1="${commentInDashboard}" arg2="true" />

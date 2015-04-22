@@ -350,7 +350,7 @@
 
 	<command name="removeFolderViewPermissionsPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
-		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
+		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<execute function="Check" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_CHECKBOX" />
 		<execute function="Click" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_ACTIONS" />
@@ -438,7 +438,7 @@
 
 	<command name="viewFolderViewPermissionsPG">
 		<var name="key_dmFolderName" value="${dmFolder}" />
-		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
+		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<execute function="Check" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_CHECKBOX" />
 		<execute function="Click" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_ACTIONS" />

@@ -131,7 +131,7 @@
 		<var attribute="value" locator="SOStatusUpdate#STATUS_UPDATE_CONTENT_INPUT_FIELD" name="textFieldContent" />
 		<var name="textFieldContentLength" value="${textFieldContent?length()}" />
 
-		<var method="MathUtil#difference(&quot;150&quot;, &quot;${textFieldContentLength}&quot;)" name="characterCountdown" />
+		<var method="MathUtil#difference('150', '${textFieldContentLength}')" name="characterCountdown" />
 
 		<execute function="AssertTextEquals" locator1="SOStatusUpdate#STATUS_UPDATE_CONTENT_COUNTDOWN" value1="${characterCountdown}" />
 	</command>

@@ -63,9 +63,9 @@
 						<equals arg1="${i}" arg2="${propertyNumber}" />
 					</not>
 					<then>
-						<var method="MathUtil#sum(${i}, 1)" name="i" />
+						<var method="MathUtil#sum('${i}', '1')" name="i" />
 						<var name="key_pathNumber" value="${pathNumber}" />
-						<var method="MathUtil#sum(${pathNumber}, 2)" name="pathNumber" />
+						<var method="MathUtil#sum('${pathNumber}', '2')" name="pathNumber" />
 
 						<execute function="Type" locator1="CPCategoriesAdd#PROPERTIES_KEY_FIELD" value1="${propertiesKeyField} ${i}" />
 						<execute function="Type" locator1="CPCategoriesAdd#PROPERTIES_VALUE_FIELD" value1="${propertiesValueField} ${i}" />
@@ -292,7 +292,7 @@
 					<then>
 						<var name="key_pathNumber" value="${i}" />
 
-						<var method="MathUtil#sum(${i}, 1)" name="i" />
+						<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 						<execute function="AssertTextEquals" locator1="CPCategories#CATEGORY_DETAILS_PROPERTY_KEY_2" value1="${propertiesKeyField} ${i}" />
 						<execute function="AssertTextEquals" locator1="CPCategories#CATEGORY_DETAILS_PROPERTY_VALUE_2" value1="${propertiesValueField} ${i}" />

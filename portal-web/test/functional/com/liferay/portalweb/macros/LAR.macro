@@ -268,7 +268,7 @@
 		<execute function="Click" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON" />
 		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_TEMPLATES_EXPORT_BUTTON" value1="Export" />
 
-		<var method="StringUtil#replace(${exportTemplateName}, ' ', '_')" name="exportTemplateName" />
+		<var method="StringUtil#replace('${exportTemplateName}', ' ', '_')" name="exportTemplateName" />
 		<var name="key_larFileName" value="${exportTemplateName}" />
 		<echo message="${exportTemplateName}" />
 
@@ -292,7 +292,7 @@
 
 		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 

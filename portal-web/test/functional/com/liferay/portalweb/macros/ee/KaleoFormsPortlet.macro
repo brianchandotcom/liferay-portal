@@ -170,7 +170,7 @@
 	</command>
 
 	<command name="populateFieldTextBox">
-		<var method="StringUtil#replace(${fieldName}, ' ', '_')" name="fieldName" />
+		<var method="StringUtil#replace('${fieldName}', ' ', '_')" name="fieldName" />
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Type" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${kfProcessFieldData}" />
@@ -369,7 +369,7 @@
 		<for list="${commentList}" param="comment">
 			<execute function="AssertTextEquals" locator1="xpath=(//div[@class='task-activity-comment'])[${i}]" value1="${comment}" />
 
-			<var method="MathUtil#sum(${i}, 1)" name="i" />
+			<var method="MathUtil#sum('${i}', '1')" name="i" />
 		</for>
 
 		<execute function="AssertElementNotPresent" locator1="xpath=(//div[@class='task-activity-comment'])[${i}]" />

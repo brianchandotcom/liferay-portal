@@ -196,7 +196,7 @@
 		<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#DISPLAY_SETTINGS_LINK" value1="Display Settings" />
 
 		<for list="${documentTypes}" param="documentType">
-			<var method="StringUtil#upperCase(${documentType})" name="documentTypeUppercase" />
+			<var method="StringUtil#upperCase('${documentType}')" name="documentTypeUppercase" />
 
 			<if>
 				<equals arg1="${check}" arg2="true" />

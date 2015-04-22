@@ -31,7 +31,7 @@
 				<equals arg1="${i}" arg2="${portletCount}" />
 			</not>
 			<then>
-				<var method="MathUtil#sum(${i}, 1)" name="i" />
+				<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 				<execute function="Refresh" />
 
@@ -69,7 +69,7 @@
 				</or>
 			</not>
 			<then>
-				<var method="MathUtil#sum(${i}, 1)" name="i" />
+				<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 				<echo message="The PORTLET could not be found. Refreshing the page. Attempt number ${i}..." />
 
@@ -271,7 +271,7 @@
 				<equals arg1="${i}" arg2="${totalPortletCount}" />
 			</not>
 			<then>
-				<var method="MathUtil#sum(${i}, 1)" name="i" />
+				<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 				<execute function="AssertElementPresent" locator1="xpath=(//section[header/h1[contains(.,'${portletName}')]])[${i}]" />
 			</then>

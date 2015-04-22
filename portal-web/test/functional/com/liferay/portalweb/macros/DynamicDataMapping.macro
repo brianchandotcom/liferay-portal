@@ -69,12 +69,12 @@
 
 		<execute function="ScrollWebElementIntoView" locator1="Dynamicdatamapping#FIELDS_LINK" />
 
-		<var method="StringUtil#lowerCase(${field})" name="key_field" />
+		<var method="StringUtil#lowerCase('${field}')" name="key_field" />
 
 		<execute function="SikuliMouseMove" locator1="Dynamicdatamapping#FIELDS_FIELD_PNG" />
 		<execute function="SikuliLeftMouseDown" />
 
-		<var method="StringUtil#lowerCase(${parentField})" name="key_formField" />
+		<var method="StringUtil#lowerCase('${parentField}')" name="key_formField" />
 
 		<execute function="SikuliMouseMove" locator1="Dynamicdatamapping#FORM_FIELD_PNG" />
 		<execute function="SikuliLeftMouseUp" />
@@ -186,7 +186,7 @@
 				<isset var="fieldName" />
 			</not>
 			<then>
-				<var method="StringUtil#replace(${fieldFieldLabel}, ' ', '_')" name="fieldName" />
+				<var method="StringUtil#replace('${fieldFieldLabel}', ' ', '_')" name="fieldName" />
 			</then>
 		</if>
 
@@ -219,7 +219,7 @@
 		<var name="i" value="0" />
 
 		<for list="${fieldOptionsNames}" param="fieldOptionsName">
-			<var method="MathUtil#sum(${i}, 1)" name="i" />
+			<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 			<execute function="Type" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}" value1="${fieldOptionsName}" />
 		</for>
@@ -227,7 +227,7 @@
 		<var name="j" value="0" />
 
 		<for list="${fieldOptionsValues}" param="fieldOptionsValue">
-			<var method="MathUtil#sum(${j}, 1)" name="j" />
+			<var method="MathUtil#sum('${j}', '1')" name="j" />
 
 			<execute function="Type" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}" value1="${fieldOptionsValue}" />
 		</for>
@@ -582,7 +582,7 @@
 				<var name="i" value="0" />
 
 				<for list="${fieldOptionsNames}" param="fieldOptionsName">
-					<var method="MathUtil#sum(${i}, 1)" name="i" />
+					<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 					<execute function="AssertTextEquals" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}" value1="${fieldOptionsName}" />
 				</for>
@@ -590,7 +590,7 @@
 				<var name="j" value="0" />
 
 				<for list="${fieldOptionsValues}" param="fieldOptionsValue">
-					<var method="MathUtil#sum(${j}, 1)" name="j" />
+					<var method="MathUtil#sum('${j}', '1')" name="j" />
 
 					<execute function="AssertTextEquals" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}" value1="${fieldOptionsValue}" />
 				</for>

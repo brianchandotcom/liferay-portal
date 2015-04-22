@@ -524,7 +524,7 @@
 				<condition function="IsElementPresent" locator1="PGDocumentsandmediaDocument#INFO_MESSAGE" />
 			</and>
 			<then>
-				<var method="MathUtil#sum(${videoGenerationTimeCounter}, 1)" name="videoGenerationTimeCounter" />
+				<var method="MathUtil#sum('${videoGenerationTimeCounter}', '1')" name="videoGenerationTimeCounter" />
 
 				<execute function="Pause" locator1="30000" />
 

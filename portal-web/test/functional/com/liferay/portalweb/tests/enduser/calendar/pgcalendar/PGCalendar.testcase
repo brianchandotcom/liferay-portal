@@ -1137,6 +1137,7 @@
 
 	<command name="AddUserCalendarToOtherCalendars" priority="5">
 		<var name="calendarType" value="Other Calendars" />
+		<var name="userCalendarColor" value="668CD9" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1169,6 +1170,12 @@
 		<execute macro="Calendar#viewPG">
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 			<var name="calendarType" value="${calendarType}" />
+		</execute>
+
+		<execute macro="Calendar#viewOtherCalendarMenulist">
+			<var name="calendarName" value="${userFirstName} ${userLastName}" />
+			<var name="color" value="${userCalendarColor}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 

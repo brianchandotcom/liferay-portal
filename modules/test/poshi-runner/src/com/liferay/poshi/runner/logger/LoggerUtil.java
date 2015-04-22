@@ -314,10 +314,17 @@ public final class LoggerUtil {
 	}
 
 	public static void stopLogger() throws Exception {
-		String content = (String)_javascriptExecutor.executeScript(
-			"return document.getElementsByTagName('html')[0].outerHTML;");
+		String content = _readResource(
+			"META-INF/resources/html/index.html");
 
-		FileUtil.write(_getHtmlFilePath(), content);
+		String commandLogText = CommandLoggerHandler.getCommandLogText();
+
+		content = content.replace(
+			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">",
+			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">" +
+				commandLogText);
+
+		FileUtil.write(_getHtmlFilePath(), htmlContent);
 
 		if (isLoggerStarted()) {
 			_webDriver.quit();

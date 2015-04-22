@@ -14,21 +14,22 @@
 
 package com.liferay.workflow.instance.web.portlet;
 
+import com.liferay.portal.util.PortletKeys;
+
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 
-import com.liferay.portal.util.PortletKeys;
-
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true,
+@Component(
+	immediate = true,
 	property = {
-		"com.liferay.portlet.icon=/icons/my_workflow_instance.png",
 		"com.liferay.portlet.control-panel-entry-category=my",
-		"com.liferay.portlet.control-panel-entry-weight=4.0",
 		"com.liferay.portlet.control-panel-entry-class=com.liferay.workflow.instance.web.portlet.MyWorkflowInstancesControlPanelEntry",
+		"com.liferay.portlet.control-panel-entry-weight=4.0",
+		"com.liferay.portlet.icon=/icons/my_workflow_instance.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
@@ -42,7 +43,7 @@ import com.liferay.portal.util.PortletKeys;
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = { MyWorkflowInstancePortlet.class, Portlet.class })
+	service = { MyWorkflowInstancePortlet.class, Portlet.class }
+)
 public class MyWorkflowInstancePortlet extends WorkflowInstancePortlet {
-
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.workflow.instance.web.portlet;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
@@ -23,6 +21,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.workflow.WorkflowControlPanelEntry;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Miguel Pastor

@@ -303,7 +303,9 @@ public class PermissionCacheUtil {
 
 		@Override
 		public int hashCode() {
-			return (int)(_userId * 11 + _groupId);
+			int hashCode = HashUtil.hash(0, _userId);
+
+			return HashUtil.hash(hashCode, _groupId);
 		}
 
 		private static final long serialVersionUID = 1L;
@@ -478,7 +480,9 @@ public class PermissionCacheUtil {
 
 		@Override
 		public int hashCode() {
-			return (int)(_userId * 11 + _roleId);
+			int hashCode = HashUtil.hash(0, _userId);
+
+			return HashUtil.hash(hashCode, _roleId);
 		}
 
 		private static final long serialVersionUID = 1L;

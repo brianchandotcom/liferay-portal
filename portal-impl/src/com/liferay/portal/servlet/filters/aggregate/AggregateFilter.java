@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.minifier.MinifierUtil;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
@@ -375,8 +376,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			return null;
 		}
 
-		URLConnection urlConnection = resourceURL.openConnection();
-
 		String cacheCommonFileName = getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(
@@ -385,7 +384,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			_tempDir, cacheCommonFileName + "_E_DATA");
 
 		if (cacheDataFile.exists() &&
-			(cacheDataFile.lastModified() >= urlConnection.getLastModified())) {
+			(cacheDataFile.lastModified() >=
+				URLUtil.getLastModifiedTime(resourceURL))) {
 
 			if (cacheContentTypeFile.exists()) {
 				String contentType = FileUtil.read(cacheContentTypeFile);

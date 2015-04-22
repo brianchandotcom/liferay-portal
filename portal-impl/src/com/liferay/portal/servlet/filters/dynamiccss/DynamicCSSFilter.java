@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.util.PropsUtil;
 import java.io.File;
 
 import java.net.URL;
-import java.net.URLConnection;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -111,8 +111,6 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			return null;
 		}
 
-		URLConnection urlConnection = resourceURL.openConnection();
-
 		String cacheCommonFileName = getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(
@@ -121,7 +119,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			_tempDir, cacheCommonFileName + "_E_DATA");
 
 		if (cacheDataFile.exists() &&
-			(cacheDataFile.lastModified() >= urlConnection.getLastModified())) {
+			(cacheDataFile.lastModified() >=
+				URLUtil.getLastModifiedTime(resourceURL))) {
 
 			if (cacheContentTypeFile.exists()) {
 				String contentType = FileUtil.read(cacheContentTypeFile);
@@ -142,7 +141,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 					_log.info("Parsing SASS on CSS " + requestPath);
 				}
 
-				content = StringUtil.read(urlConnection.getInputStream());
+				content = StringUtil.read(resourceURL.openStream());
 
 				dynamicContent = DynamicCSSUtil.parseSass(
 					_servletContext, request, requestPath, content);

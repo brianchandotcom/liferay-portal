@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.AggregateResourceBundle;
 import com.liferay.portal.language.LanguageResources;
@@ -52,7 +53,6 @@ import java.io.Serializable;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -273,19 +273,13 @@ public class ComboServlet extends HttpServlet {
 			return fileContentBag._fileContent;
 		}
 
-		URLConnection urlConnection = null;
-
-		if (resourceURL != null) {
-			urlConnection = resourceURL.openConnection();
-		}
-
 		if ((fileContentBag != null) && PropsValues.COMBO_CHECK_TIMESTAMP) {
 			long elapsedTime =
 				System.currentTimeMillis() - fileContentBag._lastModified;
 
-			if ((urlConnection != null) &&
+			if ((resourceURL != null) &&
 				(elapsedTime <= PropsValues.COMBO_CHECK_TIMESTAMP_INTERVAL) &&
-				(urlConnection.getLastModified() ==
+				(URLUtil.getLastModifiedTime(resourceURL) ==
 					fileContentBag._lastModified)) {
 
 				return fileContentBag._fileContent;
@@ -299,7 +293,7 @@ public class ComboServlet extends HttpServlet {
 		}
 		else {
 			String stringFileContent = StringUtil.read(
-				urlConnection.getInputStream());
+				resourceURL.openStream());
 
 			if (!StringUtil.endsWith(resourcePath, _CSS_MINIFIED_SUFFIX) &&
 				!StringUtil.endsWith(
@@ -350,7 +344,7 @@ public class ComboServlet extends HttpServlet {
 
 			fileContentBag = new FileContentBag(
 				stringFileContent.getBytes(StringPool.UTF8),
-				urlConnection.getLastModified());
+				URLUtil.getLastModifiedTime(resourceURL));
 		}
 
 		if (PropsValues.COMBO_CHECK_TIMESTAMP) {

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
@@ -144,35 +145,27 @@ public class DynamicCSSUtil {
 
 		boolean themeCssFastLoad = _isThemeCssFastLoad(request, themeDisplay);
 
-		URLConnection cacheResourceURLConnection = null;
-
 		URL cacheResourceURL = _getCacheResourceURL(
 			servletContext, request, resourcePath);
 
 		if (cacheResourceURL != null) {
-			cacheResourceURLConnection = cacheResourceURL.openConnection();
-
 			if (!themeCssFastLoad) {
 				URL resourceURL = servletContext.getResource(resourcePath);
 
 				if (resourceURL != null) {
-					URLConnection resourceURLConnection =
-						resourceURL.openConnection();
+					if (URLUtil.getLastModifiedTime(cacheResourceURL) <
+							URLUtil.getLastModifiedTime(resourceURL)) {
 
-					if (cacheResourceURLConnection.getLastModified() <
-							resourceURLConnection.getLastModified()) {
-
-						cacheResourceURLConnection = null;
+						cacheResourceURL = null;
 					}
 				}
 			}
 		}
 
 		if ((themeCssFastLoad || !content.contains(_CSS_IMPORT_BEGIN)) &&
-			(cacheResourceURLConnection != null)) {
+			(cacheResourceURL != null)) {
 
-			parsedContent = StringUtil.read(
-				cacheResourceURLConnection.getInputStream());
+			parsedContent = StringUtil.read(cacheResourceURL.openStream());
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(

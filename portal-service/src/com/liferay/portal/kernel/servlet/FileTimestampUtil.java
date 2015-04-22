@@ -17,14 +17,13 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -76,25 +75,7 @@ public class FileTimestampUtil {
 				_log.error("Resource URL for " + path + " is null");
 			}
 			else {
-				URLConnection urlConnection = null;
-
-				try {
-					urlConnection = url.openConnection();
-
-					timestamp = urlConnection.getLastModified();
-				}
-				finally {
-					if (urlConnection != null) {
-						try {
-							InputStream inputStream =
-								urlConnection.getInputStream();
-
-							inputStream.close();
-						}
-						catch (IOException ioe) {
-						}
-					}
-				}
+				timestamp = URLUtil.getLastModifiedTime(url);
 			}
 		}
 		catch (IOException ioe) {

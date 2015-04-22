@@ -118,7 +118,7 @@
 
 				<#assign parameter = methodParameter?trim>
 
-				<#assign parameter = parameter?replace("\"", "")>
+				<#assign parameter = parameter?replace("\\'", "'")>
 
 				<#if "${parameter}"?starts_with("'") && "${parameter}"?ends_with("'")>
 					<#assign parameter = parameter?substring(1, (parameter?length - 1))>

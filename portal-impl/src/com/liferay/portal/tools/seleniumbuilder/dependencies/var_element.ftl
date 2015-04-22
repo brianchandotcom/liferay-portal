@@ -120,6 +120,10 @@
 
 				<#assign parameter = parameter?replace("\"", "")>
 
+				<#if "${parameter}"?starts_with("'") && "${parameter}"?ends_with("'")>
+					<#assign parameter = parameter?substring(1, (parameter?length - 1))>
+				</#if>
+
 				RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeHtml(parameter)}", ${variableContext})
 
 				<#if "${method}"?starts_with("MathUtil")>

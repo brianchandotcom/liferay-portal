@@ -1762,7 +1762,10 @@
 
 	<command name="viewUsersViaSchedulerDialogBoxCmd">
 		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_LABEL" value1="Users:" />
-		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD" value1="${usersList}" />
+
+		<for list="${usersList}" param="user">
+			<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD" value1="${user}" />
+		</for>
 	</command>
 
 	<command name="viewWeekPG">

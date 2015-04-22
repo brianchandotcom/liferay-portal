@@ -132,12 +132,21 @@ public class WebServerServlet extends HttpServlet {
 	 * @see com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter
 	 */
 	public static boolean hasFiles(HttpServletRequest request) {
+		String name = PrincipalThreadLocal.getName();
+		String password = PrincipalThreadLocal.getPassword();
+
 		try {
 
 			// Do not use permission checking since this may be called from
 			// other contexts that are also managing the principal
 
 			User user = _getUser(request);
+
+			if (!user.isDefaultUser()) {
+				PrincipalThreadLocal.setName(user.getUserId());
+				PrincipalThreadLocal.setPassword(
+					PortalUtil.getUserPassword(request));
+			}
 
 			String path = HttpUtil.fixPath(request.getPathInfo());
 
@@ -184,6 +193,10 @@ public class WebServerServlet extends HttpServlet {
 		}
 		catch (Exception e) {
 			return false;
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
+			PrincipalThreadLocal.setPassword(password);
 		}
 
 		return true;

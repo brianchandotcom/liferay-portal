@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
 
 /**
  * @author Leonardo Barros
@@ -38,7 +38,7 @@ import com.liferay.portal.util.PortletKeys;
 @Component(immediate = true,
 	property = {
 		"action.command.name=signalInstance",
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_INSTANCE
+		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE
 	},
 	service = ActionCommand.class)
 public class SignalInstanceActionCommand extends BaseActionCommand {

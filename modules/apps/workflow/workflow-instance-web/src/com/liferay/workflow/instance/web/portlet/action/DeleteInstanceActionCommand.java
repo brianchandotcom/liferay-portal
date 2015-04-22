@@ -44,7 +44,7 @@ import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
 
 /**
  * @author Leonardo Barros
@@ -52,7 +52,7 @@ import com.liferay.portal.util.PortletKeys;
 @Component(immediate = true,
 	property = {
 		"action.command.name=deleteInstance",
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_INSTANCE
+		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE
 	},
 	service = ActionCommand.class)
 public class DeleteInstanceActionCommand extends BaseActionCommand {

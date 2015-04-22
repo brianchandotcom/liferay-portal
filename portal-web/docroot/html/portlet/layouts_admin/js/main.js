@@ -478,7 +478,6 @@ AUI.add(
 									dialog: {
 										bodyContent: pagesNode,
 										centered: true,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -510,7 +509,6 @@ AUI.add(
 												}
 											]
 										},
-										width: 400
 									},
 									title: Liferay.Language.get('pages')
 								}

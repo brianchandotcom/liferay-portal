@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BREADCRUMB_HOME</td>
 	<td>//div[contains(@id,'breadcrumbContainer')]//ul/li[1]</td>
 	<td></td>

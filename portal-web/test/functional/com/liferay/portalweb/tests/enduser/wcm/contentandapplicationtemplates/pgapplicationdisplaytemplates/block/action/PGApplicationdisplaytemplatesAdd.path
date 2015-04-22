@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADT_IFRAME</td>
 	<td>//iframe[contains(@src,'Application%20Display%20Templates')]</td>
 	<td></td>

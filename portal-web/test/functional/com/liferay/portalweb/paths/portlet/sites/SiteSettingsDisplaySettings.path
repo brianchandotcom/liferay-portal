@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>USE_DEFAULT_LANGUAGE_OPTIONS_RADIO</td>
 	<td>//input[@id='_165_inheritLocales']</td>
 	<td></td>

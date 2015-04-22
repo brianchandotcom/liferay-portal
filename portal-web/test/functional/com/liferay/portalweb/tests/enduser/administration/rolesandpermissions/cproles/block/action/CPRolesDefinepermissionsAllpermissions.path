@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>PERMISSION_HEADER</td>
 	<td>//form/h3[contains(.,'${permissionNavigationValue}')]</td>
 	<td></td>

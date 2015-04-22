@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DATEPICKER_POPUP</td>
 	<td>//div[contains(@class,'yui3-calendar-content')]</td>
 	<td></td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE_ENTRY_IFRAME</td>
 	<td>//iframe[contains(@id,'soannouncementsportlet_Dialog')]</td>
 	<td></td>

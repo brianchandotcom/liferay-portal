@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">MessageBoardsStatistics</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--GENERAL-->
 <tr>
 	<td>GENERAL_DROPDOWN</td>

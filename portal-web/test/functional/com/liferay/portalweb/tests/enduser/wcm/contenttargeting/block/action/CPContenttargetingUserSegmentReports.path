@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>UPDATE_REPORT</td>
 	<td>//div[@class='portlet-body']/span[contains(@class,'pull-right')]/a</td>
 	<td></td>

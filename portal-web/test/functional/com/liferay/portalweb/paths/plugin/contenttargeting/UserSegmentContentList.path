@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPTIONS_WRENCH_ICON</td>
 	<td>//section[contains(.,'User Segment Content List')]//a[contains(.,'Options')]</td>
 	<td></td>

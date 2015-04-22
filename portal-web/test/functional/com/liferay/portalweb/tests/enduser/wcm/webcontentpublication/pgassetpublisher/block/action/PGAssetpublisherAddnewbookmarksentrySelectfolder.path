@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">PGAssetpublisherAddnewbookmarksentrySelectfolder</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SELECT_FOLDER-->
 <tr>
 	<td>SELECT_FOLDER_IFRAME</td>

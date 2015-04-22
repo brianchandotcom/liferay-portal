@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPSitemembershipsUsers</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEARCH-->
 <tr>
 	<td>USER_SEARCH_FIELD</td>

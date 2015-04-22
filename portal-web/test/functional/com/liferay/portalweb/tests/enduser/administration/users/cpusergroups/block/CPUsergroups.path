@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD</td>
 	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//a[contains(.,'Add')]</td>
 	<td></td>

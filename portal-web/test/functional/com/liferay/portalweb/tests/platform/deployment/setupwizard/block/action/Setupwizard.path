@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FINISH_CONFIGURATION_BUTTON</td>
 	<td>//button[contains(@id,'finishButton')]</td>
 	<td></td>

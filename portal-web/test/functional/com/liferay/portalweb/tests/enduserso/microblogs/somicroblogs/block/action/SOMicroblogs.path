@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>MICROBLOGS_CONTENT_FIELD</td>
 	<td>//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]</td>
 	<td></td>

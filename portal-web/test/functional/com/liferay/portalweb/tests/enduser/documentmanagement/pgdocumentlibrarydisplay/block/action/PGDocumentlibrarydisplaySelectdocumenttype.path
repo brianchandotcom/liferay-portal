@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_DOCUMENT_TYPE_IFRAME</td>
 	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>

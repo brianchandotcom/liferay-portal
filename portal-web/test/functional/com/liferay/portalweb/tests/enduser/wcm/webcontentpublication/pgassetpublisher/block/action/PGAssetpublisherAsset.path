@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_TITLE</td>
 	<td>//h4[@class='asset-title']/a</td>
 	<td></td>

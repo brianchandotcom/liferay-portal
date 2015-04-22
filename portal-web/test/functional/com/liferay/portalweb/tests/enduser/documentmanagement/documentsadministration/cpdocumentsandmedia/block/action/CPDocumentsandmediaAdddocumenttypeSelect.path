@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_DOCUMENT_IFRAME</td>
 	<td>//iframe[contains(@id,'fileEntryTypeSelector')]</td>
 	<td></td>

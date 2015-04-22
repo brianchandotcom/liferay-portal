@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCKBAR_SIMULATOR_BUTTON</td>
 	<td>//a[@id='_145_simulatorPanel']</td>
 	<td></td>

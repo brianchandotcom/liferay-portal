@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_VIEWS_REPORT</td>
 	<td>//tr[contains(.,'Content Views')]/td/a</td>
 	<td></td>

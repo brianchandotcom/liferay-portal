@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">SiteMembershipsAddMembers</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>

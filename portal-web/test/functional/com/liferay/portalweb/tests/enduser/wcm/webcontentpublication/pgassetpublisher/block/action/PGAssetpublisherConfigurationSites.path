@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITES_IFRAME</td>
 	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@src,'selectSite')]</td>
 	<td></td>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPCustomfields</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RESOURCE_TABLE-->
 <tr>
 	<td>RESOURCE_TABLE_RESOURCE_LINK</td>

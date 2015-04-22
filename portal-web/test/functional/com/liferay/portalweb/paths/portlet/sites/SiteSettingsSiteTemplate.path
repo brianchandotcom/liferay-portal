@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE</td>
 	<td>//div[@id='_165_siteTemplate']/div</td>
 	<td></td>

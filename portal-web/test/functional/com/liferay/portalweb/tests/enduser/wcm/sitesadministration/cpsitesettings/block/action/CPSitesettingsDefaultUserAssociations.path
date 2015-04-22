@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_ROLES_SELECT</td>
 	<td>//div[contains(.,'Site Roles')]//a[contains(@id,'selectSiteRoleLink')]</td>
 	<td></td>

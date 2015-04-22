@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>CLOSE_ICON</td>
 	<td>//i[@class='icon-remove']</td>
 	<td></td>

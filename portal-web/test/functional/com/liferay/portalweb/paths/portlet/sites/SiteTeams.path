@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">SiteTeams</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TEAM_TABLE-->
 <tr>
 	<td>TEAM_TABLE_NAME</td>

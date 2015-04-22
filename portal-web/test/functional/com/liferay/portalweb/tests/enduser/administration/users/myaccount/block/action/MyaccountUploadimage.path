@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>UPLOAD_IMAGE_IFRAME</td>
 	<td>//iframe[contains(@id,'_2_changeLogo_iframe')]</td>
 	<td></td>

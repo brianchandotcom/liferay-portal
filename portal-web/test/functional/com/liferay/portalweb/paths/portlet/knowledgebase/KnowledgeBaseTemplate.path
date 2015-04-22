@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">KnowledgeBaseTemplate</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENUBAR-->
 <tr>
 	<td>MENUBAR_ADD_TEMPLATE</td>

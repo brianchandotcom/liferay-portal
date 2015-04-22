@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">MessageBoardsRemovedAttachments</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ATTACHMENT_TABLE-->
 <tr>
 	<td>ATTACHMENT_TABLE_NAME</td>

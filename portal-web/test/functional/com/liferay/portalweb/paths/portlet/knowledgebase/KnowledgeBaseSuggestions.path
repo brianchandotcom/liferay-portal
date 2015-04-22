@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>TITLE</td>
 	<td>//div[@class='kb-article-comment']//h4/a</td>
 	<td></td>

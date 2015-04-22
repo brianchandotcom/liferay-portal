@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
 	<td>//button[contains(@id,'saveButton')]</td>
 	<td></td>

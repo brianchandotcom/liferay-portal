@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD</td>
 	<td>//div[contains(@class,'translation-manager')]/a[@title='Add Translation']</td>
 	<td></td>

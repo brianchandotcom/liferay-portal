@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIRST_LINK</td>
 	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'First')]</td>
 	<td></td>

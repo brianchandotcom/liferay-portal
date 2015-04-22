@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAVIGATION_USER_SEGMENTS</td>
 	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'User Segments')]</td>
 	<td></td>

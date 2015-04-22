@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>PARENT_FOLDER_SELECT_BUTTON</td>
 	<td>//button[contains(@id,'selecFolderButton')]</td>
 	<td></td>

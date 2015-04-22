@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>PUBLISHER_PORTLET_PUBLISH_BUTTON</td>
 	<td>//section[contains(@id,'portlet_1')]//button[contains(.,'Publish a Random Number')]</td>
 	<td></td>

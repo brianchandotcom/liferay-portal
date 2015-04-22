@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENABLE_RECYCLE_BIN_CHECKBOX</td>
 	<td>//input[@id='_165_trashEnabled']</td>
 	<td></td>

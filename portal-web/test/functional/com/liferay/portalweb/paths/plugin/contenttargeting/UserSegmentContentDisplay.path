@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONFIGURATION_LINK</td>
 	<td>//div[contains(@class,'usersegmentcontentdisplay')]//a[@data-title='Configuration']</td>
 	<td></td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FORMAT_DROPDOWN</td>
 	<td>//select[@id='_154_format']</td>
 	<td></td>

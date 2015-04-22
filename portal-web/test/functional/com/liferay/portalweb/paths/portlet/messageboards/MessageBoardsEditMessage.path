@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>MARK_AS_A_QUESTION_CHECKBOX</td>
 	<td>//input[contains(.,'Mark as a Question')]</td>
 	<td></td>

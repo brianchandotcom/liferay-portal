@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>PERMISSIONS_SELECT</td>
 	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
 	<td></td>

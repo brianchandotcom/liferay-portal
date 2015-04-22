@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">Ratings</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--YOUR_RATING-->
 <tr>
 	<td>YOUR_RATING_LABEL</td>

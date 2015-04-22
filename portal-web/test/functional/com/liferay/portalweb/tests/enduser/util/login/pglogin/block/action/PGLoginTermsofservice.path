@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>I_AGREE_BUTTON</td>
 	<td>//button[contains(.,'I Agree')]</td>
 	<td>I Agree Button</td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>INTRODUCTION_FIELD</td>
 	<td>//textarea[contains(@id,'comments')]</td>
 	<td></td>

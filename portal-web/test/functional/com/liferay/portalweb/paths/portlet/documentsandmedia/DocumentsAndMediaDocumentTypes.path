@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENT_TYPES_IFRAME</td>
 	<td>//iframe[contains(@id,'_openFileEntryTypeView_iframe_')]</td>
 	<td></td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBJECT_FIELD</td>
 	<td>//input[@id='_19_subject']</td>
 	<td></td>

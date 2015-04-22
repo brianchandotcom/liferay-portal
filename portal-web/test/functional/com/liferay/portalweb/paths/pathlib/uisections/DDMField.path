@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BOOLEAN</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/label[@class='checkbox']</td>
 	<td></td>

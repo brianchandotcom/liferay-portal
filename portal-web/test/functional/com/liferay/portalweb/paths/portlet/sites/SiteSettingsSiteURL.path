@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_URL_HEADER</td>
 	<td>//div[contains(@id,'siteUrl')]/h3</td>
 	<td></td>

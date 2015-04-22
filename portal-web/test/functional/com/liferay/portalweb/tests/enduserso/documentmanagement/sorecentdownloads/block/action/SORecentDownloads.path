@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>RECENT_DOWNLOADS_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Recent Downloads')]//h1</td>
 	<td></td>

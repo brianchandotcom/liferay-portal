@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>STATUS</td>
 	<td>//select[@id='_174_statusId']</td>
 	<td></td>

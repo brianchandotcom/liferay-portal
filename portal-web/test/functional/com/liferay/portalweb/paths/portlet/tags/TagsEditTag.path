@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>TAG_HEADER</td>
 	<td>//h3[@class='header-title']/span[contains(.,'${key_tagName}')]</td>
 	<td></td>

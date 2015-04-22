@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-success')])[1]</td>
 	<td></td>

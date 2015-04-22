@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">MessageBoardsBannedUsers</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--BANNED_USERS_TABLE-->
 <tr>
 	<td>BANNED_USERS_TABLE_BANNED_USER</td>

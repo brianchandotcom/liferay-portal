@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">SODocuments</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DOCUMENT_BREADCRUMBS-->
 <tr>
 	<td>DOCUMENT_BREADCRUMBS</td>

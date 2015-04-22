@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCKBAR</td>
 	<td>//li[contains(@class,'dockbar-user-notifications')]/a</td>
 	<td></td>

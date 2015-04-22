@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_ALL_CHECKBOX</td>
 	<td>//input[@class='field check-all']</td>
 	<td></td>

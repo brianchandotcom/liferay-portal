@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BACK_BUTTON</td>
 	<td>//a[@title='Back']</td>
 	<td></td>

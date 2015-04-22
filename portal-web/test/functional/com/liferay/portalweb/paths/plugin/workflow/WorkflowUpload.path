@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FILE_UPLOAD</td>
 	<td>//input[contains(@id,'file')]</td>
 	<td></td>

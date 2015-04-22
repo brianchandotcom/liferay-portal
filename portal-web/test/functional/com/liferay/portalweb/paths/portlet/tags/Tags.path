@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ALL_TAGS_CHECKBOX</td>
 	<td>//input[@title='Select All']</td>
 	<td></td>

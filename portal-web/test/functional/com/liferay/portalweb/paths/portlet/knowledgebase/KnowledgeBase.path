@@ -10,11 +10,6 @@
 <tbody>
 <tr>
 	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
 	<td>ADD_ARTICLE_VIA_TEMPLATE</td>
 	<td>//a[@role='menuitem' and contains(.,'${kbTemplateTitle}')]</td>
 </tr>

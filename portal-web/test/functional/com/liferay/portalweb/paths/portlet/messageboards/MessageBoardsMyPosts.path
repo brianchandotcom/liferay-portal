@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">MessageBoardsMyPosts</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--THREAD_TABLE-->
 <tr>
 	<td>THREAD_TABLE_THREAD</td>

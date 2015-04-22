@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">WCViewHistory</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VERSIONS_TABLE-->
 <tr>
 	<td>VERSIONS_TABLE_TITLE</td>

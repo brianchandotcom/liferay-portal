@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACTIVE</td>
 	<td>//label[contains(.,'Active')]/input[@type='checkbox']</td>
 	<td></td>

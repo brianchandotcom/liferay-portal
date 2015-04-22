@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>IMPORT_IFRAME</td>
 	<td>//iframe[contains(@id,'importDialog_iframe_')]</td>
 	<td></td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>MEMBERSHIP_TYPE</td>
 	<td>//div[@class='site-membership-type']/span/span</td>
 	<td></td>

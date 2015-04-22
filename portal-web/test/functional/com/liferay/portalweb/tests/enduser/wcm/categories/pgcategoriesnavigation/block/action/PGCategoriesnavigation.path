@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORY_NAME</td>
 	<td>//ul[@class='categories']/li/a[contains(.,'${key_categoryName}')]</td>
 	<td></td>

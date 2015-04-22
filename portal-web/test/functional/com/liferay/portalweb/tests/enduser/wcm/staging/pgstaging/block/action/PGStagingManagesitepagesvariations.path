@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE_SITE_PAGES_VARIATIONS_IFRAME</td>
 	<td>//iframe[@id='_170_layoutSetBranches_iframe_']</td>
 	<td></td>

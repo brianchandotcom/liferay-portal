@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADT_TITLE</td>
 	<td>//span[@class='portlet-title-text']</td>
 	<td></td>

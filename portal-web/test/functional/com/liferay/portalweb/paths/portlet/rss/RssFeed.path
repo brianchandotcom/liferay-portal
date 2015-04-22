@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>RSS_CONFIGURATION_IFRAME</td>
 	<td>//iframe[contains(@id,'com_liferay_rss_web_portlet_RSSPortlet') and contains(@class,'dialog-iframe-node')]</td>
 	<td></td>

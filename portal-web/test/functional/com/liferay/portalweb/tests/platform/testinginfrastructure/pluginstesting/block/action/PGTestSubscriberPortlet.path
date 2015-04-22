@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBSCRIBER_PORTLET_SUBSCRIBE_BUTTON</td>
 	<td>//section[contains(@id,'portlet_2')]//button[contains(.,'Subscribe')]</td>
 	<td></td>

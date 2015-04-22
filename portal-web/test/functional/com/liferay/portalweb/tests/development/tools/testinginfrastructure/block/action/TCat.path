@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_NAME_FIELD</td>
 	<td>//input[@name='j_username']</td>
 	<td>User Name Field</td>

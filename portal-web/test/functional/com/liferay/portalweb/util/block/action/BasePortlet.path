@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>TITLE</td>
 	<td>//div[@id='main-content']//h1[@class='portlet-title']/span[1]</td>
 	<td>Portlet Header</td>

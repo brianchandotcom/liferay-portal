@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPServeradministrationLogLevels</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_UPDATE_CATEGORIES</td>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">MessageBoardsSearch</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SEARCH_RESULTS-->
 <tr>
 	<td>SEARCH_RESULTS_ENTRY_TITLE</td>

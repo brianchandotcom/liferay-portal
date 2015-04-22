@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BREADCRUMB_PORTLET_TITLE</td>
 	<td>xpath=(//span[@class='portlet-title-default'])[contains(.,'Breadcrumb')]</td>
 	<td></td>

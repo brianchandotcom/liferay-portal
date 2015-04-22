@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPUsersandorganizationsSuborganization</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SUBORGANIZATION_TABLE-->
 <tr>
 	<td>SUBORGANIZATION_TABLE_ALL_CHECKBOX</td>

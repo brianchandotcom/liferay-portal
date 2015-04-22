@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/workflow_definition_links/init.jsp" %>
+package com.liferay.workflow.definition.link.web.portlet.constants;
 
-<c:choose>
-	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
-		<%@ include file="/html/portlet/workflow_definition_links/view_resources.jspf" %>
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="no-workflow-engine-is-deployed" />
-		</div>
-	</c:otherwise>
-</c:choose>
+/**
+ * @author Marcellus Tavares
+ */
+public class WorkflowDefinitionLinkPortletKeys {
+
+	public static final String WORKFLOW_DEFINITION_LINK =
+		"com_liferay_workflow_definition_link_web_portlet_" +
+			"WorkflowDefinitionLinkPortlet";
+
+}

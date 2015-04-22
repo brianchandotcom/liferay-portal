@@ -42,6 +42,7 @@
 		<dirset dir="apps/unit-converter" includes="*" />
 		<dirset dir="apps/web-proxy" includes="*" />
 		<dirset dir="apps/wiki" includes="*" />
+		<dirset dir="apps/workflow" includes="*" />
 		<dirset dir="apps/xsl-content" includes="*" />
 		<dirset dir="core" includes="*" />
 		<dirset dir="frontend" includes="*" />

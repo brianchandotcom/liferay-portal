@@ -1,0 +1,58 @@
+.lfr-asset-column-details {
+	.lfr-asset-title .lfr-asset-actions img {
+		margin-left: 5px;
+	}
+
+	.lfr-asset-actions {
+		float: right;
+		font-size: 11px;
+		font-weight: normal;
+		margin-bottom: 3px;
+		margin-top: 0;
+	}
+
+	.task-activity {
+		padding: 5px 5px 5px 25px;
+	}
+
+	.task-activity-date {
+		font-weight: bold;
+	}
+
+	h3.task-content-title {
+		border-bottom: 1px solid #DDD;
+		margin-top: 0;
+	}
+
+	.task-panel-container .lfr-panel-content {
+		padding: 0.7em;
+	}
+
+	.task-content-actions {
+		float: right;
+	}
+
+	.asset-metadata {
+		background-color: #EFEFEF;
+		border-top: 1px solid #DDD;
+		margin: 2em 0 0;
+		padding: 0.5em;
+
+		span {
+			display: inline-block;
+		}
+	}
+
+	.metadata-author {
+		font-weight: bold;
+		margin-right: 10px;
+	}
+
+	.metadata-entry {
+		color: #999;
+	}
+}
+
+#workflowTasksPanelContainer {
+	border-width: 0;
+}

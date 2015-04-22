@@ -193,8 +193,6 @@ public class PortletKeys {
 
 	public static final String USERS_ADMIN = "125";
 
-	public static final String WORKFLOW_CONFIGURATION = "152";
-
 	public static final String WORKFLOW_DEFINITIONS = "151";
 
 	public static final String WORKFLOW_INSTANCES = "157";

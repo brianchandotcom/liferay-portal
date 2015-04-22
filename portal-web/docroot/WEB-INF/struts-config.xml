@@ -1635,24 +1635,12 @@
 
 		<action path="/users_admin/view_users" forward="portlet.users_admin.view" />
 
-		<!-- Workflow Definition Links -->
-
-		<action path="/workflow_definition_links/edit_workflow_definition_link" type="com.liferay.portlet.workflowdefinitionlinks.action.EditWorkflowDefinitionLinkAction">
-			<forward name="portlet.workflow_definition_links.error" path="portlet.workflow_definition_links.error" />
-		</action>
-
-		<action path="/workflow_definition_links/view" forward="portlet.workflow_definition_links.view" />
-
 		<!-- Workflow Definitions -->
 
 		<action path="/workflow_definitions/edit_workflow_definition" type="com.liferay.portlet.workflowdefinitions.action.EditWorkflowDefinitionAction">
 			<forward name="portlet.workflow_definitions.edit_workflow_definition" path="portlet.workflow_definitions.edit_workflow_definition" />
 			<forward name="portlet.workflow_definitions.error" path="portlet.workflow_definitions.error" />
 			<forward name="portlet.workflow_definitions.view" path="portlet.workflow_definitions.view" />
-		</action>
-
-		<action path="/workflow_definitions/edit_workflow_definition_link" type="com.liferay.portlet.workflowdefinitionlinks.action.EditWorkflowDefinitionLinkAction">
-			<forward name="portlet.workflow_definition_links.error" path="portlet.workflow_definitions.error" />
 		</action>
 
 		<action path="/workflow_definitions/edit_workflow_instance" type="com.liferay.portlet.workflowinstances.action.EditWorkflowInstanceAction">

@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%
 long groupId = themeDisplay.getSiteGroupIdOrLiveGroupId();
 
@@ -46,15 +48,13 @@ List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.get
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/workflow_definition_links/view");
+portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", "default-configuration");
 %>
 
-<portlet:actionURL var="editWorkflowDefinitionLinkURL">
-	<portlet:param name="struts_action" value="/workflow_definition_links/edit_workflow_definition_link" />
-</portlet:actionURL>
+<portlet:actionURL name="updateWorkflowDefinitionLink" var="updateWorkflowDefinitionLinkURL"  />
 
-<aui:form action="<%= editWorkflowDefinitionLinkURL %>" method="post">
+<aui:form action="<%= updateWorkflowDefinitionLinkURL %>" method="post">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 

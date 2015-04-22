@@ -14,15 +14,27 @@
 
 package com.liferay.workflow.instance.web.portlet;
 
+import org.osgi.service.component.annotations.Component;
+
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.workflow.WorkflowControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
 
 /**
  * @author Miguel Pastor
+ * @author Leonardo Barros
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + PortletKeys.WORKFLOW_INSTANCE
+	},
+	service = ControlPanelEntry.class
+)
 public class MyWorkflowInstanceControlPanelEntry
 	extends WorkflowControlPanelEntry {
 

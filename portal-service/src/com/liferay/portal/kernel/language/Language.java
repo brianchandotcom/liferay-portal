@@ -115,8 +115,6 @@ public interface Language {
 
 	public String getBCP47LanguageId(PortletRequest portletRequest);
 
-	public String getCharset(Locale locale);
-
 	public String getLanguageId(HttpServletRequest request);
 
 	public String getLanguageId(Locale locale);

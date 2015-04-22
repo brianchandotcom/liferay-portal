@@ -204,10 +204,6 @@ public class LanguageUtil {
 		return getLanguage().getBCP47LanguageId(portletRequest);
 	}
 
-	public static String getCharset(Locale locale) {
-		return getLanguage().getCharset(locale);
-	}
-
 	public static Language getLanguage() {
 		PortalRuntimePermission.checkGetBeanProperty(LanguageUtil.class);
 

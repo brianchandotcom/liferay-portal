@@ -59,8 +59,7 @@ public class MultiVMPoolImpl implements MultiVMPool {
 					serviceTracker.waitForService(0));
 		}
 		catch (Exception e) {
-			throw new IllegalStateException(
-				"Cannot initialize MultiVMPool", e);
+			throw new IllegalStateException("Cannot initialize MultiVMPool", e);
 		}
 	}
 

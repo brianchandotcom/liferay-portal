@@ -14,15 +14,6 @@
 
 package com.liferay.workflow.definition.link.web.portlet.action;
 
-import java.util.Enumeration;
-
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -33,45 +24,55 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
+import java.util.Enumeration;
+
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true,
+@Component(
+	immediate = true,
 	property = {
 		"action.command.name=updateWorkflowDefinitionLink",
 		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION_LINK
 	},
-	service = ActionCommand.class)
-public class UpdateWorkflowDefinitionLinkActionCommand extends
-		BaseActionCommand {
+	service = ActionCommand.class
+)
+public class UpdateWorkflowDefinitionLinkActionCommand
+	extends BaseActionCommand {
 
 	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
 		try {
 			updateWorkflowDefinitionLinks(portletRequest);
-		}catch (Exception e) {
-			if (e instanceof WorkflowException) {
-				SessionErrors.add(portletRequest, e.getClass());
+		}
+		catch (Exception e) {
+			SessionErrors.add(portletRequest, e.getClass());
 
-				PortletSession portletSession = portletRequest
-					.getPortletSession();
+			PortletSession portletSession = portletRequest.getPortletSession();
 
-				PortletContext portletContext = portletSession
-					.getPortletContext();
+			PortletContext portletContext = portletSession.getPortletContext();
 
+			PortletRequestDispatcher portletRequestDispatcher =
 				portletContext.getRequestDispatcher(
-						portletResponse.encodeURL("/error.jsp")).include(
-						portletRequest, portletResponse);
-			}
-			else {
-				throw e;
-			}
+					portletResponse.encodeURL("/error.jsp"));
+
+			portletRequestDispatcher.include(portletRequest, portletResponse);
 		}
 	}
 
 	protected void updateWorkflowDefinitionLinks(PortletRequest actionRequest)
-			throws Exception {
+		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
@@ -98,4 +99,5 @@ public class UpdateWorkflowDefinitionLinkActionCommand extends
 	}
 
 	private static final String _PREFIX = "workflowDefinitionName@";
+
 }

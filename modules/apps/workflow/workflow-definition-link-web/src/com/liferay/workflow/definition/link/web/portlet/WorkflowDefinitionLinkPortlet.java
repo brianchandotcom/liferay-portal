@@ -14,28 +14,29 @@
 
 package com.liferay.workflow.definition.link.web.portlet;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.util.PortletKeys;
+
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.util.PortletKeys;
-
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true,
+@Component(
+	immediate = true,
 	property = {
-		"com.liferay.portlet.icon=/icons/workflow_definition_links.png",
 		"com.liferay.portlet.control-panel-entry-category=configuration",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
+		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definition-link",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.icon=/icons/workflow_definition_link.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definition-link",
 		"javax.portlet.display-name=Workflow Definition Link",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
@@ -44,7 +45,7 @@ import com.liferay.portal.util.PortletKeys;
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = { WorkflowDefinitionLinkPortlet.class, Portlet.class })
+	service = Portlet.class
+)
 public class WorkflowDefinitionLinkPortlet extends MVCPortlet {
-	
 }

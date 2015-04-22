@@ -52,12 +52,12 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", "default-configuration");
 %>
 
-<portlet:actionURL var="updateWorkflowDefinitionLinkURL" name="updateWorkflowDefinitionLink"  />
+<portlet:actionURL name="updateWorkflowDefinitionLink" var="updateWorkflowDefinitionLinkURL"  />
 
 <aui:form action="<%= updateWorkflowDefinitionLinkURL %>" method="post">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	
+
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
 		total="<%= workflowHandlers.size() %>"

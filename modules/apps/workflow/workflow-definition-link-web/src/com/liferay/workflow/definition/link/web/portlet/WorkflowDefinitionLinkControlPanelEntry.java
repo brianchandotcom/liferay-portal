@@ -14,11 +14,11 @@
 
 package com.liferay.workflow.definition.link.web.portlet;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.workflow.WorkflowControlPanelEntry;
 import com.liferay.portlet.ControlPanelEntry;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
@@ -30,6 +30,6 @@ import com.liferay.portlet.ControlPanelEntry;
 		},
 		service = ControlPanelEntry.class
 	)
-public class WorkflowDefinitionLinkControlPanelEntry 
+public class WorkflowDefinitionLinkControlPanelEntry
 	extends WorkflowControlPanelEntry {
 }

@@ -31,6 +31,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
 import org.apache.commons.beanutils.BeanUtils;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -159,6 +161,29 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return portletURL;
+	}
+
+	protected List<ItemSelectorCriterion> getItemSelectorCriteria(
+		Map<String, String[]> parameters) {
+
+		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+
+		List<Class<? extends ItemSelectorCriterion>>
+			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
+				parameters);
+
+		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
+			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
+				itemSelectorCriterionClasses.get(i);
+
+			String paramPrefix = i + "_";
+
+			itemSelectorCriteria.add(
+				getItemSelectorCriterion(
+					parameters, paramPrefix, itemSelectorCriterionClass));
+		}
+
+		return itemSelectorCriteria;
 	}
 
 	protected <T extends ItemSelectorCriterion> T getItemSelectorCriterion(
@@ -385,29 +410,6 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		_itemSelectionCriterionHandlers.remove(
 			itemSelectorCriterionClass.getName());
-	}
-
-	protected List<ItemSelectorCriterion> getItemSelectorCriteria(
-		Map<String, String[]> parameters) {
-
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
-
-		List<Class<? extends ItemSelectorCriterion>>
-			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
-				parameters);
-
-		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
-			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
-				itemSelectorCriterionClasses.get(i);
-
-			String paramPrefix = i + "_";
-
-			itemSelectorCriteria.add(
-				getItemSelectorCriterion(
-					parameters, paramPrefix, itemSelectorCriterionClass));
-		}
-
-		return itemSelectorCriteria;
 	}
 
 	private final ConcurrentMap

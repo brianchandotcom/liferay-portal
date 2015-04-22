@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL portletURL = (PortletURL)request.getAttribute("portletURL");
+PortletURL portletURL = (PortletURL)request.getAttribute(WikiAttachmentItemSelectorView.PORTLET_URL);
 
-String itemSelectedCallback = (String)request.getAttribute("itemSelectedCallback");
+String itemSelectedCallback = (String)request.getAttribute(WikiAttachmentItemSelectorView.ITEM_SELECTED_CALLBACK);
 
-WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = (WikiAttachmentItemSelectorCriterion)request.getAttribute("wikiAttachmentItemSelectorCriterion");
+WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = (WikiAttachmentItemSelectorCriterion)request.getAttribute(WikiAttachmentItemSelectorView.WIKI_ATTACHMENT_ITEM_SELECTOR_CRITERION);
 
 WikiPageResource pageResource = WikiPageResourceLocalServiceUtil.fetchWikiPageResource(wikiAttachmentItemSelectorCriterion.getWikiPageResourceId());
 

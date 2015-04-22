@@ -28,6 +28,7 @@ page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.wiki.item.selector.web.attachment.WikiAttachmentItemSelectorCriterion" %><%@
+page import="com.liferay.wiki.item.selector.web.attachment.WikiAttachmentItemSelectorView" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.model.WikiPageResource" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@

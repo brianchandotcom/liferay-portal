@@ -38,10 +38,6 @@ AUI.add(
 		var ImageSelector = A.Component.create(
 			{
 				ATTRS: {
-					documentSelectorURL: {
-						validator: Lang.isString
-					},
-
 					errorNode: {
 						validator: Lang.isString
 					},
@@ -53,6 +49,10 @@ AUI.add(
 					fileNameNode: {
 						validator: Lang.isString,
 						value: '.file-name'
+					},
+
+					itemSelectorURL: {
+						validator: Lang.isString
 					},
 
 					maxFileSize: {
@@ -218,7 +218,7 @@ AUI.add(
 								eventName: instance.ns('selectImage'),
 								id: instance.ns('selectImage'),
 								title: Liferay.Language.get('select-image'),
-								uri: instance.get('documentSelectorURL')
+								uri: instance.get('itemSelectorURL')
 							},
 							instance._updateImageDataFn
 						);

@@ -106,7 +106,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			</c:if>
 		</c:if>
 
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.ITEM_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="tabs1Names" value="pages" />
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />

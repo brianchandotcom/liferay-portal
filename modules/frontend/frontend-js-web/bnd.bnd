@@ -82,7 +82,6 @@ Include-Resource:\
 	META-INF/resources/html/js=tmp/META-INF/resources/html/js,\
 	@../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/EncryptorException.class
-
 Web-ContextPath: /frontend-js-web
 
 -donotcopy: (\.touch|.*_diffs.*)

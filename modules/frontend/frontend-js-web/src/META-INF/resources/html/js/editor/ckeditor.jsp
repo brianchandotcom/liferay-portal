@@ -425,7 +425,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		var filebrowserFlashBrowseUrl = '';
 
 		<c:if test="<%= allowBrowseDocuments %>">
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.ITEM_SELECTOR %>" varImpl="itemSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
@@ -435,29 +435,29 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			<%
 			if (fileBrowserParamsMap != null) {
 				for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
-					documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
+					itemSelectorURL.setParameter(entry.getKey(), entry.getValue());
 				}
 			}
 			%>
 
-			filebrowserBrowseUrl = '<%= documentSelectorURL %>';
+			filebrowserBrowseUrl = '<%= itemSelectorURL %>';
 
 			<%
-			PortletURL imageDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
+			PortletURL imageItemSelectorURL = PortletURLUtil.clone(itemSelectorURL, liferayPortletResponse);
 
-			imageDocumentSelectorURL.setParameter("type", "image");
+			imageItemSelectorURL.setParameter("type", "image");
 			%>
 
-			filebrowserImageBrowseUrl = '<%= imageDocumentSelectorURL %>';
-			filebrowserImageBrowseLinkUrl = '<%= imageDocumentSelectorURL %>';
+			filebrowserImageBrowseUrl = '<%= imageItemSelectorURL %>';
+			filebrowserImageBrowseLinkUrl = '<%= imageItemSelectorURL %>';
 
 			<%
-			PortletURL flashDocumentSelectorURL = PortletURLUtil.clone(documentSelectorURL, liferayPortletResponse);
+			PortletURL flashItemSelectorURL = PortletURLUtil.clone(itemSelectorURL, liferayPortletResponse);
 
-			flashDocumentSelectorURL.setParameter("type", "flash");
+			flashItemSelectorURL.setParameter("type", "flash");
 			%>
 
-			filebrowserFlashBrowseUrl = '<%= flashDocumentSelectorURL %>';
+			filebrowserFlashBrowseUrl = '<%= flashItemSelectorURL %>';
 		</c:if>
 
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>(

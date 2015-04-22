@@ -18,22 +18,21 @@ package com.liferay.cobertura.agent.instrumentation;
  * @author Cristina González
  */
 public class JumpHolder {
-   protected int lineNumber;
 
-   protected int jumpNumber;
+	public JumpHolder(int lineNumber, int jumpNumber) {
+		this.lineNumber = lineNumber;
+		this.jumpNumber = jumpNumber;
+	}
 
-   public JumpHolder(int lineNumber, int jumpNumber) {
-      super();
-      this.lineNumber = lineNumber;
-      this.jumpNumber = jumpNumber;
-   }
+	public int getJumpNumber() {
+		return jumpNumber;
+	}
 
-   public int getJumpNumber() {
-      return jumpNumber;
-   }
+	public int getLineNumber() {
+		return lineNumber;
+	}
 
-   public int getLineNumber() {
-      return lineNumber;
-   }
+	protected int jumpNumber;
+	protected int lineNumber;
 
 }

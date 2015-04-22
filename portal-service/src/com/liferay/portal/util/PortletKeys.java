@@ -193,9 +193,6 @@ public class PortletKeys {
 
 	public static final String USERS_ADMIN = "125";
 
-	public static final String WORKFLOW_DEFINITION_LINK =
-		"com_liferay_workflow_definition_link_web_portlet_WorkflowDefinitionLinkPortlet";
-
 	public static final String WORKFLOW_DEFINITIONS = "151";
 
 	public static final String WORKFLOW_INSTANCES = "157";

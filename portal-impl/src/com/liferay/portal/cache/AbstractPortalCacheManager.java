@@ -149,7 +149,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public boolean isClusterAware() {
-		return clusterAware;
+		return _clusterAware;
 	}
 
 	@Override
@@ -168,7 +168,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	public void setClusterAware(boolean clusterAware) {
-		this.clusterAware = clusterAware;
+		this._clusterAware = clusterAware;
 	}
 
 	public void setMpiOnly(boolean mpiOnly) {
@@ -291,7 +291,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	protected final AggregatedCacheManagerListener
 		aggregatedCacheManagerListener = new AggregatedCacheManagerListener();
-	protected boolean clusterAware;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();
 
@@ -323,6 +322,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		}
 	}
 
+	private boolean _clusterAware;
 	private boolean _mpiOnly;
 	private String _name;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;

@@ -67,7 +67,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	@Override
 	public void reconfigureCaches(URL configurationURL) {
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
-			configurationURL, clusterAware, _usingDefault);
+			configurationURL, isClusterAware(), _usingDefault);
 
 		reconfigEhcache(_configurationPair.getKey());
 
@@ -176,7 +176,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
 			EhcacheConfigurationHelperUtil.class.getResource(_configFile),
-			clusterAware, _usingDefault);
+			isClusterAware(), _usingDefault);
 
 		_cacheManager = new CacheManager(_configurationPair.getKey());
 

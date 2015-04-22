@@ -14,20 +14,17 @@
 
 package com.liferay.mentions.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.service.ServiceContext;
-
 /**
  * @author Sergio González
  */
 public interface MentionsNotifier {
 
 	public void notify(
-		long userId, long groupId, String title, String content,
-		String className, long classPK,
-		LocalizedValuesMap subjectLocalizedValuesMap,
-		LocalizedValuesMap bodyLocalizedValuesMap,
-		ServiceContext serviceContext)
-	throws PortalException;
+			long userId, long groupId, String title, String content,
+			String className, long classPK,
+			LocalizedValuesMap subjectLocalizedValuesMap,
+			LocalizedValuesMap bodyLocalizedValuesMap,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 }

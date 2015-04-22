@@ -1435,6 +1435,76 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 
+		protected void addDLFileVersion(
+				String uuid, long fileVersionId, long groupId, long companyId,
+				long userId, String userName, Timestamp createDate,
+				Timestamp modifiedDate, long repositoryId, long folderId,
+				long fileEntryId, String treePath, String fileName,
+				String extension, String mimeType, String title,
+				String description, String changeLog, String extraSettings,
+				long fileEntryTypeId, String version, long size,
+				String checksum, int status, long statusByUserId,
+				String statusByUserName, Timestamp statusDate)
+			throws SQLException {
+
+			Connection con = null;
+			PreparedStatement ps = null;
+
+			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				StringBundler sb = new StringBundler(10);
+
+				sb.append("insert into DLFileVersion (uuid_, fileVersionId, ");
+				sb.append("groupId, companyId, userId, userName, createDate, ");
+				sb.append("modifiedDate, repositoryId, folderId, ");
+				sb.append("fileEntryId, treePath, fileName, extension, ");
+				sb.append("mimeType, title, description, changeLog, ");
+				sb.append("extraSettings, fileEntryTypeId, version, size_, ");
+				sb.append("checksum, status, statusByUserId, ");
+				sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ");
+				sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+				sb.append("?, ?, ?, ?, ?, ?, ?)");
+
+				String sql = sb.toString();
+
+				ps = con.prepareStatement(sql);
+
+				ps.setString(1, uuid);
+				ps.setLong(2, fileVersionId);
+				ps.setLong(3, groupId);
+				ps.setLong(4, companyId);
+				ps.setLong(5, userId);
+				ps.setString(6, userName);
+				ps.setTimestamp(7, createDate);
+				ps.setTimestamp(8, modifiedDate);
+				ps.setLong(9, repositoryId);
+				ps.setLong(10, folderId);
+				ps.setLong(11, fileEntryId);
+				ps.setString(12, treePath);
+				ps.setString(13, fileName);
+				ps.setString(14, extension);
+				ps.setString(15, mimeType);
+				ps.setString(16, title);
+				ps.setString(17, description);
+				ps.setString(18, changeLog);
+				ps.setString(19, extraSettings);
+				ps.setLong(20, fileEntryTypeId);
+				ps.setString(21, version);
+				ps.setLong(22, size);
+				ps.setString(23, checksum);
+				ps.setInt(24, status);
+				ps.setLong(25, statusByUserId);
+				ps.setString(26, statusByUserName);
+				ps.setTimestamp(27, statusDate);
+
+				ps.executeUpdate();
+			}
+			finally {
+				DataAccess.cleanUp(con, ps);
+			}
+		}
+
 		protected void addDLFolder(
 				String uuid, long folderId, long groupId, long companyId,
 				long userId, String userName, Timestamp createDate,
@@ -1639,6 +1709,19 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 					DLFileEntryConstants.VERSION_DEFAULT, file.length(),
 					DLFileEntryConstants.DEFAULT_READ_COUNT, 0, 0, 0, 0, false);
+
+				// File version
+
+				addDLFileVersion(
+					fileEntryUuid, increment(), _groupId, _companyId, _userId,
+					_userName, _createDate, _createDate, _groupId, dlFolderId,
+					fileEntryId, StringPool.BLANK, fileName, extension,
+					MimeTypesUtil.getContentType(fileName), fileName,
+					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					DLFileEntryConstants.VERSION_DEFAULT, file.length(),
+					StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+					_userId, _userName, _createDate);
 
 				// Asset Entry
 

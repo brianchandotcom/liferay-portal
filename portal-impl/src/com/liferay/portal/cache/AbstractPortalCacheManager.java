@@ -147,50 +147,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void initialize() {
-		if ((_portalCacheManagerConfiguration != null) ||
-			(_mpiOnly && SPIUtil.isSPI())) {
-
-			return;
-		}
-
-		if (name == null) {
-			throw new NullPointerException("Name is null");
-		}
-
-		initPortalCacheManager();
-
-		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
-
-		for (CallbackConfiguration callbackConfiguration :
-				_portalCacheManagerConfiguration.
-					getCacheManagerListenerConfigurations()) {
-
-			CallbackFactory callbackFactory =
-				callbackConfiguration.getCallbackFactory();
-
-			CacheManagerListener cacheManagerListener =
-				callbackFactory.createCacheManagerListener(
-					callbackConfiguration.getProperties());
-
-			if (cacheManagerListener != null) {
-				registerCacheManagerListener(cacheManagerListener);
-			}
-		}
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("portal.cache.manager.name", name);
-		properties.put("portal.cache.manager.type", getType());
-
-		_serviceRegistration = registry.registerService(
-			(Class<PortalCacheManager<K, V>>)(Class<?>)PortalCacheManager.class,
-			this, properties);
-	}
-
-	@Override
 	public boolean isClusterAware() {
 		return clusterAware;
 	}
@@ -247,6 +203,49 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		getPortalCacheManagerConfiguration();
 
 	protected abstract String getType();
+
+	protected void initialize() {
+		if ((_portalCacheManagerConfiguration != null) ||
+			(_mpiOnly && SPIUtil.isSPI())) {
+
+			return;
+		}
+
+		if (name == null) {
+			throw new NullPointerException("Name is null");
+		}
+
+		initPortalCacheManager();
+
+		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
+
+		for (CallbackConfiguration callbackConfiguration :
+				_portalCacheManagerConfiguration.
+					getCacheManagerListenerConfigurations()) {
+
+			CallbackFactory callbackFactory =
+				callbackConfiguration.getCallbackFactory();
+
+			CacheManagerListener cacheManagerListener =
+				callbackFactory.createCacheManagerListener(
+					callbackConfiguration.getProperties());
+
+			if (cacheManagerListener != null) {
+				registerCacheManagerListener(cacheManagerListener);
+			}
+		}
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("portal.cache.manager.name", name);
+		properties.put("portal.cache.manager.type", getType());
+
+		_serviceRegistration = registry.registerService(
+			(Class<PortalCacheManager<K, V>>)(Class<?>)PortalCacheManager.class,
+			this, properties);
+	}
 
 	protected abstract void initPortalCacheManager();
 

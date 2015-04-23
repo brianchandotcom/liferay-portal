@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cobertura.agent.util;
+package com.liferay.cobertura.util;
 
 /**
  * @author Shuyang Zhou

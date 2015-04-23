@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cobertura.agent.instrument;
+package com.liferay.cobertura.instrument;
 
 import java.io.IOException;
 import java.io.InputStream;

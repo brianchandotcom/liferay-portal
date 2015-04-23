@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.cobertura.agent.coveragedata;
+package com.liferay.cobertura.coveragedata;
 
 import com.liferay.cobertura.agent.InstrumentationAgent;
-import com.liferay.cobertura.agent.util.HashUtil;
+import com.liferay.cobertura.util.HashUtil;
 
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;

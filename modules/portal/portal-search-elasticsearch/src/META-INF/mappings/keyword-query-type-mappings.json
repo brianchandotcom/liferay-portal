@@ -25,10 +25,25 @@
 			}
 		],
 		"properties": {
+			"companyId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			  },
+			"groupId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"priority": {
 				"index": "not_analyzed",
 				"type": "float"
-			}
+			},
+			"uid": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+				}
 		}
 	}
 }

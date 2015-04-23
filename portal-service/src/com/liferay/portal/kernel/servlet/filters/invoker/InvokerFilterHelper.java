@@ -36,6 +36,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -137,25 +138,17 @@ public class InvokerFilterHelper {
 	}
 
 	public void unregisterFilter(String filterName) {
-		Filter filter = null;
-
 		for (FilterMapping filterMapping : _filterMappings) {
 			if (filterName.equals(filterMapping.getFilterName())) {
-				if (filter == null) {
-					filter = filterMapping.getFilter();
-				}
-
 				_filterMappings.remove(filterMapping);
-
-				break;
 			}
 		}
+
+		Filter filter = _filters.remove(filterName);
 
 		if (filter != null) {
 			try {
 				filter.destroy();
-
-				_filters.remove(filterName);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

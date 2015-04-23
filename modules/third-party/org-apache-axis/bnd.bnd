@@ -1,0 +1,6 @@
+Bundle-SymbolicName: org.apache.axis
+Bundle-Version: 1.4.LIFERAY-PATCHED-1
+Export-Package: \
+	org.apache.axis.*,\
+	org.apache.xml.*
+Include-Resource: classes

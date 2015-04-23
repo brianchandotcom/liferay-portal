@@ -67,19 +67,11 @@ public class TouchCollector {
 		}
 	}
 
-	/**
-	 * This method is only called by code that has been instrumented.  It
-	 * is not called by any of the Cobertura code or ant tasks.
-	 */
 	public static void touch(String classId, int lineNumber) {
 		_touchedLines.incrementValue(
 			new LineTouchData(_registerClassData(classId), lineNumber));
 	}
 
-	/**
-	 * This method is only called by code that has been instrumented.  It
-	 * is not called by any of the Cobertura code or ant tasks.
-	 */
 	public static void touchJump(
 		String classId, int lineNumber, int branchNumber, boolean branch) {
 
@@ -88,10 +80,6 @@ public class TouchCollector {
 				_registerClassData(classId), lineNumber, branchNumber, branch));
 	}
 
-	/**
-	 * This method is only called by code that has been instrumented.  It
-	 * is not called by any of the Cobertura code or ant tasks.
-	 */
 	public static void touchSwitch(
 		String classId, int lineNumber, int switchNumber, int branch) {
 

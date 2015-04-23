@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="ant" org="org.apache.ant" rev="1.9.3" />
 		<dependency name="commons-io" org="commons-io" rev="2.4" />
 		<dependency name="commons-lang" org="commons-lang" rev="2.6" />
 		<dependency name="dom4j" org="dom4j" rev="1.6.1" />

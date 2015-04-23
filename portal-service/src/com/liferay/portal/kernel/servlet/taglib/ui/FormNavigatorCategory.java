@@ -18,12 +18,12 @@ import java.util.Locale;
 
 /**
  * Provides an interface defining categories that will be used by a specific
- * <code>liferay-ui:form-navigator</code> taglib instance to render a new
- * category. Form navigator categories includes form navigator entries, defined
- * by {@link FormNavigatorEntry} implementations.
+ * <code>liferay-ui:form-navigator</code> tag instance to render a new category.
+ * Form navigator categories includes form navigator entries, defined by {@link
+ * FormNavigatorEntry} implementations.
  *
  * <p>
- * Implementations must be registered in the OSGI Registry. The order of the
+ * Implementations must be registered in the OSGi Registry. The order of the
  * form navigator categories is determined by the service ranking.
  * </p>
  *
@@ -32,24 +32,26 @@ import java.util.Locale;
 public interface FormNavigatorCategory {
 
 	/**
-	 * Defines the form navigator ID where the form navigator category will be
+	 * Returns the form navigator ID where the form navigator category will be
 	 * included. This ID must match the ID attribute of the
-	 * <code>liferay-ui:form-navigator</code> taglib where this form navigator
+	 * <code>liferay-ui:form-navigator</code> tag where this form navigator
 	 * category is to be included.
 	 *
 	 * @return the form navigator ID where the form navigator category will be
-	 *         included.
+	 *         included
 	 */
 	public String getFormNavigatorId();
 
 	/**
-	 * Defines a key for the form navigator category. This key needs to be
+	 * Returns the key for the form navigator category. This key needs to be
 	 * unique in the scope of a form navigator ID.
 	 *
+	 * <p>
 	 * This key will be referred by the form navigator entries to be added to
 	 * this form navigator category.
+	 * </p>
 	 *
-	 * @return the key of the form navigator category.
+	 * @return the key of the form navigator category
 	 */
 	public String getKey();
 
@@ -58,7 +60,7 @@ public interface FormNavigatorCategory {
 	 * form navigator category is included in the form navigator.
 	 *
 	 * @param  locale the locale that the label should be retrieved for
-	 * @return the label of the form navigator category.
+	 * @return the label of the form navigator category
 	 */
 	public String getLabel(Locale locale);
 

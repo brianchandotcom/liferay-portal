@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -373,7 +374,8 @@ public class ItemSelectorImpl implements ItemSelector {
 				Object value = entry.getValue();
 
 				parameters.put(
-					paramPrefix + key, new String[] {value.toString()});
+					paramPrefix + key,
+					StringUtil.split((String)value, StringPool.COMMA));
 			}
 		}
 		catch (IllegalAccessException | InvocationTargetException |

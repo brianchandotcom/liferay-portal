@@ -94,6 +94,9 @@ import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletURLListenerFactory;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.servlet.EncryptedServletRequest;
 
@@ -101,6 +104,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -137,6 +141,8 @@ public class MainServlet extends ActionServlet {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Destroy plugins");
 		}
+
+		_servletContextRegistration.unregister();
 
 		PortalLifecycleUtil.flushDestroys();
 
@@ -361,6 +367,8 @@ public class MainServlet extends ActionServlet {
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, true);
 
 		StartupHelperUtil.setStartupFinished(true);
+
+		registerServletContextWithModuleFramework();
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
@@ -1265,6 +1273,19 @@ public class MainServlet extends ActionServlet {
 		return new ProtectedServletRequest(request, remoteUser);
 	}
 
+	protected void registerServletContextWithModuleFramework() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("bean.id", ServletContext.class.getName());
+		properties.put("original.bean", Boolean.TRUE);
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+
+		_servletContextRegistration = registry.registerService(
+			ServletContext.class, getServletContext(), properties);
+	}
+
 	protected void sendError(
 			int status, Throwable t, HttpServletRequest request,
 			HttpServletResponse response)
@@ -1334,5 +1355,7 @@ public class MainServlet extends ActionServlet {
 		"Liferay-Portal";
 
 	private static final Log _log = LogFactoryUtil.getLog(MainServlet.class);
+
+	private ServiceRegistration<ServletContext> _servletContextRegistration;
 
 }

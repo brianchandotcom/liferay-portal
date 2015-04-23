@@ -93,13 +93,3 @@ String currentURL = currentURLObj.toString();
 %>
 
 <%@ include file="/init-ext.jsp" %>
-
-<%!
-private boolean _isAssignedToUser(WorkflowTask workflowTask, User user) {
-	if (workflowTask.getAssigneeUserId() == user.getUserId()) {
-		return true;
-	}
-
-	return false;
-}
-%>

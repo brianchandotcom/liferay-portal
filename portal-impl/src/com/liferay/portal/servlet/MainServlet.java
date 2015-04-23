@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -78,7 +77,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.setup.SetupWizardSampleDataUtil;
-import com.liferay.portal.spring.context.ContextRegisterPortalLifecycle;
+import com.liferay.portal.setup.SetupWizardUtil;
 import com.liferay.portal.struts.PortletRequestProcessor;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -843,13 +842,6 @@ public class MainServlet extends ActionServlet {
 			HotDeployUtil.setCapturePrematureEvents(false);
 
 			PortalLifecycleUtil.flushInits();
-		}
-		else {
-			PortalLifecycle portalLifecycle =
-				PortalLifecycleUtil.getPortalLifecycle(
-					ContextRegisterPortalLifecycle.class.getName());
-
-			portalLifecycle.portalInit();
 		}
 	}
 

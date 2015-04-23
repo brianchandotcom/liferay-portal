@@ -317,11 +317,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		_serviceWrapperRegistry = new ServiceWrapperRegistry();
 
 		try {
-			ContextRegisterPortalLifecycle contextRegisterPortalLifecycle =
-				new ContextRegisterPortalLifecycle(servletContext);
-
-			PortalLifecycleUtil.register(contextRegisterPortalLifecycle);
-
 			ModuleFrameworkUtilAdapter.registerContext(applicationContext);
 
 			ModuleFrameworkUtilAdapter.startRuntime();

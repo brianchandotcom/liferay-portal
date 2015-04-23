@@ -1281,14 +1281,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		protected void addAssetEntry(
-			long entryId, long groupId, long companyId, long userId,
-			String userName, Timestamp createDate, Timestamp modifiedDate,
-			long classNameId, long classPK, String classUuid, long classTypeId,
-			boolean visible, Timestamp startDate, Timestamp endDate,
-			Timestamp publishDate, Timestamp expirationDate, String mimeType,
-			String title, String description, String summary, String url,
-			String layoutUuid, int height, long width, Integer priority,
-			int viewCount) throws SQLException {
+				long entryId, long groupId, long companyId, long userId,
+				String userName, Timestamp createDate, Timestamp modifiedDate,
+				long classNameId, long classPK, String classUuid,
+				long classTypeId, boolean visible, Timestamp startDate,
+				Timestamp endDate, Timestamp publishDate,
+				Timestamp expirationDate, String mimeType, String title,
+				String description, String summary, String url,
+				String layoutUuid, int height, int width, double priority,
+				int viewCount)
+			throws Exception {
 
 			Connection con = null;
 			PreparedStatement ps = null;
@@ -1335,8 +1337,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				ps.setString(21, url);
 				ps.setString(22, layoutUuid);
 				ps.setInt(23, height);
-				ps.setLong(24, width);
-				ps.setInt(25, priority);
+				ps.setInt(24, width);
+				ps.setDouble(25, priority);
 				ps.setInt(26, viewCount);
 
 				ps.executeUpdate();
@@ -1447,7 +1449,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				long fileEntryTypeId, String version, long size,
 				String checksum, int status, long statusByUserId,
 				String statusByUserName, Timestamp statusDate)
-			throws SQLException {
+			throws Exception {
 
 			Connection con = null;
 			PreparedStatement ps = null;
@@ -1622,9 +1624,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		protected void addResourcePermissions(
-			int mvccVersion, long resourcePermissionId, long companyId,
-			String name, long scope, long primKey, long roleId, long ownerId,
-			long actionIds) throws SQLException {
+				int mvccVersion, long resourcePermissionId, long companyId,
+				String name, long scope, long primKey, long roleId,
+				long ownerId, long actionIds)
+			throws Exception {
 
 			Connection con = null;
 			PreparedStatement ps = null;
@@ -1660,9 +1663,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 
-		protected long getActionBitwiseValue(String action)
-			throws SQLException {
-
+		protected long getActionBitwiseValue(String action) throws Exception {
 			Connection con = null;
 			PreparedStatement ps = null;
 			ResultSet rs = null;
@@ -1684,14 +1685,18 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				rs = ps.executeQuery();
 
-				return rs.getLong("bitwiseValue");
+				if (rs.next()) {
+					return rs.getLong("bitwiseValue");
+				}
+
+				return 0;
 			}
 			finally {
 				DataAccess.cleanUp(con, ps, rs);
 			}
 		}
 
-		protected long getActionIdsLong(String[] actions) throws SQLException {
+		protected long getActionIdsLong(String[] actions) throws Exception {
 			long actionIdsLong = 0;
 
 			for (String action : actions) {
@@ -1747,7 +1752,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			return StringUtil.toLowerCase(extension);
 		}
 
-		protected long getRoleId(String roleName) throws SQLException {
+		protected long getRoleId(String roleName) throws Exception {
 			Connection con = null;
 			PreparedStatement ps = null;
 			ResultSet rs = null;
@@ -1769,7 +1774,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				rs = ps.executeQuery();
 
-				return rs.getLong("roleId");
+				if (rs.next()) {
+					return rs.getLong("roleId");
+				}
+
+				return 0;
 			}
 			finally {
 				DataAccess.cleanUp(con, ps, rs);
@@ -1844,8 +1853,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 					false, null, null, null, null,
 					MimeTypesUtil.getContentType(fileName), fileName,
-					StringPool.BLANK, StringPool.BLANK, null, null, 0, 0, null,
-					0);
+					StringPool.BLANK, StringPool.BLANK, null, null, 0, 0, 0, 0);
 
 				// Resource permissions
 
@@ -1876,7 +1884,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				return fileEntryUuid;
 			}
 			catch (Exception e) {
-				throw new PortalException(e);
+				throw new UpgradeException(e);
 			}
 		}
 
@@ -1889,9 +1897,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		private final String[] _guestPermissions = {"ADD_DISCUSSION", "VIEW"};
 		private final Timestamp _now = new Timestamp(
 			System.currentTimeMillis());
-		private final String[] _ownerPermissions = {"ADD_DISCUSSION", "DELETE",
-			"DELETE_DISCUSSION", "OVERRIDE_CHECKOUT", "PERMISSIONS", "UPDATE",
-			"UPDATE_DISCUSSION", "VIEW"};
+		private final String[] _ownerPermissions = {
+			"ADD_DISCUSSION", "DELETE", "DELETE_DISCUSSION",
+			"OVERRIDE_CHECKOUT", "PERMISSIONS", "UPDATE", "UPDATE_DISCUSSION",
+			"VIEW"
+		};
 		private final long _userId;
 		private final String _userName;
 

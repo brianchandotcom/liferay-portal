@@ -301,12 +301,12 @@ public final class LoggerUtil {
 		_javascriptExecutor = (JavascriptExecutor)_webDriver;
 
 		String cssContent = _readResourceFile(
-			"/META-INF/resources/css/main_rtl.css");
+			"META-INF/resources/css/main_rtl.css");
 
 		FileUtil.write(_CURRENT_DIR + "/test-results/css/main.css", cssContent);
 
 		String htmlContent = _readResourceFile(
-			"/META-INF/resources/html/index.html");
+			"META-INF/resources/html/index.html");
 
 		FileUtil.write(_getHtmlFilePath(), htmlContent);
 

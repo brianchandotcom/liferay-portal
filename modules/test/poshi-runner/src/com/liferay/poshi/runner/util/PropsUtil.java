@@ -34,10 +34,6 @@ public class PropsUtil {
 		return _instance._props;
 	}
 
-	public static void printProperties() {
-		_instance._printProperties(true);
-	}
-
 	public static void set(String key, String value) {
 		_instance._set(key, value);
 	}
@@ -92,7 +88,7 @@ public class PropsUtil {
 		}
 
 		for (String key : keys) {
-			System.out.println(key + "=" + _props.getProperty(key));
+			System.out.println(key + "=" + _get(key));
 		}
 
 		System.out.println("");

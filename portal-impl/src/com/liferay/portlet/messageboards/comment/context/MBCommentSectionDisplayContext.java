@@ -30,13 +30,13 @@ public class MBCommentSectionDisplayContext
 
 	public MBCommentSectionDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionRequestHelper discussionRequestHelper, Discussion discussion,
-		DiscussionPermission discussionPermission) {
+		DiscussionRequestHelper discussionRequestHelper,
+		DiscussionPermission discussionPermission, Discussion discussion) {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
-		_rootComment = discussion.getRootComment();
 		_discussionPermission = discussionPermission;
+		_rootComment = discussion.getRootComment();
 	}
 
 	@Override

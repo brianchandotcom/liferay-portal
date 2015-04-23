@@ -37,13 +37,13 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	public MBCommentTreeDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionRequestHelper discussionRequestHelper, Comment comment,
-		DiscussionPermission discussionPermission) {
+		DiscussionRequestHelper discussionRequestHelper,
+		DiscussionPermission discussionPermission, Comment comment) {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
-		_comment = comment;
 		_discussionPermission = discussionPermission;
+		_comment = comment;
 	}
 
 	@Override

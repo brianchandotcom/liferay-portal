@@ -29,7 +29,7 @@ Comment rootComment = discussion.getRootComment();
 
 DiscussionPermission discussionPermission = new MBDiscussionPermissionImpl(discussionRequestHelper.getPermissionChecker());
 
-CommentSectionDisplayContext commentSectionDisplayContext = new MBCommentSectionDisplayContext(discussionTaglibHelper, discussionRequestHelper, discussion, discussionPermission, commentManager);
+CommentSectionDisplayContext commentSectionDisplayContext = new MBCommentSectionDisplayContext(discussionTaglibHelper, discussionRequestHelper, discussionPermission, discussion);
 %>
 
 <section>

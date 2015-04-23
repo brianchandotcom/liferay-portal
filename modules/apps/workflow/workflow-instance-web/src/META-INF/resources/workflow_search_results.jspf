@@ -17,7 +17,8 @@
 <%
 String[] assetTypes = WorkflowHandlerUtil.getSearchableAssetTypes();
 
-if (portletName.equals(PortletKeys.WORKFLOW_DEFINITION) || portletName.equals(PortletKeys.WORKFLOW_INSTANCES)) {
+if (portletName.equals(PortletKeys.WORKFLOW_DEFINITION) || portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
+
 	if (completedInstances) {
 		searchContainer.setEmptyResultsMessage("there-are-no-completed-instances");
 	}

@@ -656,6 +656,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void typeCKEditor(String locator, String value) {
+		WebDriverHelper.typeCKEditor(this, locator, value);
+	}
+
+	@Override
 	public void typeFrame(String locator, String value) {
 		LiferaySeleniumHelper.typeFrame(this, locator, value);
 	}

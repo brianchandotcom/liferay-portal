@@ -741,6 +741,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void typeCKEditor(String locator, String value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void typeFrame(String locator, String value) {
 		LiferaySeleniumHelper.typeFrame(this, locator, value);
 	}

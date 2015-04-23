@@ -23,8 +23,6 @@ public interface WorkflowableComment {
 
 	public long getGroupId();
 
-	public Class<?> getModelClass();
-
 	public long getPrimaryKey();
 
 	public int getStatus();

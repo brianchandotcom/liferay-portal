@@ -84,6 +84,11 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
+	public String getModelClassName() {
+		return MBMessage.class.getName();
+	}
+
+	@Override
 	public Date getModifiedDate() {
 		return _message.getModifiedDate();
 	}
@@ -207,6 +212,16 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	@Override
 	public String getUserName() {
 		return _message.getUserName();
+	}
+
+	@Override
+	public boolean isApproved() {
+		return _message.isApproved();
+	}
+
+	@Override
+	public boolean isPending() {
+		return _message.isPending();
 	}
 
 	@Override

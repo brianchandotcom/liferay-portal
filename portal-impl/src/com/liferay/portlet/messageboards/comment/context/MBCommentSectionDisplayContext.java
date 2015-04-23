@@ -14,21 +14,18 @@
 
 package com.liferay.portlet.messageboards.comment.context;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
-
-import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -38,10 +35,11 @@ public class MBCommentSectionDisplayContext
 
 	public MBCommentSectionDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionRequestHelper discussionRequestHelper) {
+		DiscussionRequestHelper discussionRequestHelper, Comment rootComment) {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
+		_rootComment = rootComment;
 	}
 
 	@Override
@@ -83,7 +81,13 @@ public class MBCommentSectionDisplayContext
 
 	@Override
 	public boolean isDiscussionVisible() throws PortalException {
-		if ((getMessagesCount() > 1) || hasViewPermission()) {
+		if (_rootComment == null) {
+			return false;
+		}
+
+		if ((_rootComment.getThreadCommentsCount() > 1) ||
+			hasViewPermission()) {
+
 			return true;
 		}
 
@@ -92,7 +96,9 @@ public class MBCommentSectionDisplayContext
 
 	@Override
 	public boolean isMessageThreadVisible() throws PortalException {
-		if (getMessagesCount() > 1) {
+		if ((_rootComment != null) &&
+			(_rootComment.getThreadCommentsCount() > 1)) {
+
 			return true;
 		}
 
@@ -114,32 +120,6 @@ public class MBCommentSectionDisplayContext
 		return _discussionMessageDisplay;
 	}
 
-	protected List<MBMessage> getMessages() throws PortalException {
-		MBTreeWalker treeWalker = getTreeWalker();
-
-		return treeWalker.getMessages();
-	}
-
-	protected int getMessagesCount() throws PortalException {
-		if (_messagesCount == null) {
-			List<MBMessage> messages = getMessages();
-
-			_messagesCount = messages.size();
-		}
-
-		return _messagesCount;
-	}
-
-	protected MBTreeWalker getTreeWalker() throws PortalException {
-		if (_treeWalker == null) {
-			MBMessageDisplay messageDisplay = getMBMessageDisplay();
-
-			_treeWalker = messageDisplay.getTreeWalker();
-		}
-
-		return _treeWalker;
-	}
-
 	protected boolean hasViewPermission() {
 		return MBDiscussionPermission.contains(
 			_discussionRequestHelper.getPermissionChecker(),
@@ -154,8 +134,7 @@ public class MBCommentSectionDisplayContext
 	private MBMessageDisplay _discussionMessageDisplay;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;
-	private Integer _messagesCount;
+	private final Comment _rootComment;
 	private MBThread _thread;
-	private MBTreeWalker _treeWalker;
 
 }

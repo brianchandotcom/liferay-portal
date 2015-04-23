@@ -24,10 +24,8 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.messageboards.comment.MBCommentImpl;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -44,7 +42,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
-		_message = ((MBCommentImpl)comment).getMessage();
+		_comment = comment;
 	}
 
 	@Override
@@ -57,7 +55,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 				_discussionRequestHelper.getScopeGroupId(),
 				CommentConstants.getDiscussionClassName())) {
 
-			if (_message.isPending()) {
+			if (_comment.isPending()) {
 				publishButtonLabel = "save";
 			}
 			else {
@@ -77,7 +75,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		}
 
 		return !TrashUtil.isInTrash(
-			_message.getClassName(), _message.getClassPK());
+			_comment.getModelClassName(), _comment.getCommentId());
 	}
 
 	@Override
@@ -88,13 +86,13 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_message.getMessageId(), _message.getUserId(),
+			_comment.getCommentId(), _comment.getUserId(),
 			ActionKeys.DELETE_DISCUSSION);
 	}
 
 	@Override
 	public boolean isDiscussionVisible() {
-		if (!_message.isApproved() && !isCommentAuthor() && !isGroupAdmin()) {
+		if (!_comment.isApproved() && !isCommentAuthor() && !isGroupAdmin()) {
 			return false;
 		}
 
@@ -109,7 +107,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_message.getMessageId(), _message.getUserId(),
+			_comment.getCommentId(), _comment.getUserId(),
 			ActionKeys.UPDATE_DISCUSSION);
 	}
 
@@ -129,7 +127,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		}
 
 		return !TrashUtil.isInTrash(
-			_message.getClassName(), _message.getClassPK());
+			_comment.getModelClassName(), _comment.getCommentId());
 	}
 
 	@Override
@@ -145,7 +143,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	@Override
 	public boolean isWorkflowStatusVisible() {
-		if ((_message != null) && !_message.isApproved()) {
+		if ((_comment != null) && !_comment.isApproved()) {
 			return true;
 		}
 
@@ -165,7 +163,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_message.getMessageId(), _message.getUserId(),
+			_comment.getCommentId(), _comment.getUserId(),
 			ActionKeys.UPDATE_DISCUSSION);
 	}
 
@@ -182,7 +180,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 	protected boolean isCommentAuthor() {
 		User user = getUser();
 
-		if ((_message.getUserId() == user.getUserId()) &&
+		if ((_comment.getUserId() == user.getUserId()) &&
 			!user.isDefaultUser()) {
 
 			return true;
@@ -199,8 +197,8 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getScopeGroupId());
 	}
 
+	private final Comment _comment;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;
-	private final MBMessage _message;
 
 }

@@ -44,7 +44,7 @@ public class FileAvailabilityUtil {
 			return true;
 		}
 
-		if (PortalWebResourcesUtil.isResourceAvailable(path)) {
+		if (path.startsWith(PortalWebResourcesUtil.getContextPath())) {
 			return true;
 		}
 

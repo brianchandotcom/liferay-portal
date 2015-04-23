@@ -41,7 +41,10 @@ public class SCFrameworkVersionPermission
 		throws PortalException {
 
 		if (!contains(permissionChecker, frameworkVersionId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(),
+				SCFrameworkVersion.class.getName(), frameworkVersionId,
+				actionId);
 		}
 	}
 
@@ -51,7 +54,10 @@ public class SCFrameworkVersionPermission
 		throws PortalException {
 
 		if (!contains(permissionChecker, frameworkVersion, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(),
+				SCFrameworkVersion.class.getName(),
+				frameworkVersion.getFrameworkVersionId(), actionId);
 		}
 	}
 

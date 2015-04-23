@@ -37,7 +37,9 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, organizationId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Organization.class.getName(),
+				organizationId, actionId);
 		}
 	}
 
@@ -48,7 +50,9 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, organization, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Organization.class.getName(),
+				organization.getOrganizationId(), actionId);
 		}
 	}
 

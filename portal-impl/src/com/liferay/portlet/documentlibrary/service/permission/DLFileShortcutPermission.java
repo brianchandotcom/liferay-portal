@@ -35,7 +35,9 @@ public class DLFileShortcutPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, dlFileShortcut, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DLFileShortcut.class.getName(),
+				dlFileShortcut.getFileShortcutId(), actionId);
 		}
 	}
 
@@ -45,7 +47,9 @@ public class DLFileShortcutPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, fileShortcut, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), FileShortcut.class.getName(),
+				fileShortcut.getFileShortcutId(), actionId);
 		}
 	}
 
@@ -55,7 +59,9 @@ public class DLFileShortcutPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, fileShortcutId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DLFileShortcut.class.getName(),
+				fileShortcutId, actionId);
 		}
 	}
 

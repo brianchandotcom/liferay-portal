@@ -60,7 +60,9 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 				ActionKeys.ADD_ENTRY);
 
 		if (!containsResourcePermission) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), BlogsPermission.RESOURCE_NAME,
+				groupId, ActionKeys.ADD_ENTRY);
 		}
 	}
 

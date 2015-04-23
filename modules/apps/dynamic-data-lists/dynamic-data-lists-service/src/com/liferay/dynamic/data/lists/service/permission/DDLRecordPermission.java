@@ -32,7 +32,9 @@ public class DDLRecordPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, record, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDLRecord.class.getName(),
+				record.getRecordId(), actionId);
 		}
 	}
 
@@ -41,7 +43,9 @@ public class DDLRecordPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, recordId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDLRecord.class.getName(),
+				recordId, actionId);
 		}
 	}
 

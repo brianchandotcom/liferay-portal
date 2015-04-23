@@ -802,7 +802,10 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					getPermissionChecker(), groupId, categoryId,
 					ActionKeys.REPLY_TO_MESSAGE)) {
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					getPermissionChecker().getUserId(),
+					MBCategory.class.getName(), categoryId,
+					ActionKeys.REPLY_TO_MESSAGE);
 			}
 		}
 		else {

@@ -33,7 +33,9 @@ public class DDLPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), RESOURCE_NAME, groupId,
+				actionId);
 		}
 	}
 

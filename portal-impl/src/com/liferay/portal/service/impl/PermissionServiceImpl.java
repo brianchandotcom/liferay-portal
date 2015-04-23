@@ -239,7 +239,9 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 						groupId, name, primKey,
 						ActionKeys.DEFINE_PERMISSIONS)) {
 
-					throw new PrincipalException();
+					throw new PrincipalException.MustHavePermission(
+						permissionChecker.getUserId(), name,
+						Long.valueOf(primKey), ActionKeys.DEFINE_PERMISSIONS);
 				}
 			}
 		}

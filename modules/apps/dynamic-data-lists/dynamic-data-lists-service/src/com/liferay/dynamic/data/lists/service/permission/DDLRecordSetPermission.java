@@ -33,7 +33,9 @@ public class DDLRecordSetPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, recordSet, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDLRecordSet.class.getName(),
+				recordSet.getRecordSetId(), actionId);
 		}
 	}
 
@@ -43,7 +45,9 @@ public class DDLRecordSetPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, recordSetId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDLRecordSet.class.getName(),
+				recordSetId, actionId);
 		}
 	}
 
@@ -52,9 +56,10 @@ public class DDLRecordSetPermission {
 			String recordSetKey, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, recordSetKey, actionId)) {
-			throw new PrincipalException();
-		}
+		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
+			groupId, recordSetKey);
+
+		check(permissionChecker, recordSet, actionId);
 	}
 
 	public static boolean contains(

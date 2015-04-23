@@ -41,7 +41,9 @@ public class GroupPermissionImpl
 		throws PortalException {
 
 		if (!contains(permissionChecker, group, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Group.class.getName(),
+				group.getGroupId(), actionId);
 		}
 	}
 
@@ -51,7 +53,9 @@ public class GroupPermissionImpl
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Group.class.getName(), groupId,
+				actionId);
 		}
 	}
 
@@ -60,7 +64,9 @@ public class GroupPermissionImpl
 		throws PortalException {
 
 		if (!contains(permissionChecker, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Group.class.getName(),
+				Long.valueOf(0), actionId);
 		}
 	}
 

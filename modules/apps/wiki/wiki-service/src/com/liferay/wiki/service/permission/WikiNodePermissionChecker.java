@@ -38,9 +38,9 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long nodeId, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, nodeId, actionId)) {
-			throw new PrincipalException();
-		}
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(nodeId);
+
+		check(permissionChecker, node, actionId);
 	}
 
 	public static void check(
@@ -48,9 +48,9 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, name, actionId)) {
-			throw new PrincipalException();
-		}
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(groupId, name);
+
+		check(permissionChecker, node, actionId);
 	}
 
 	public static void check(
@@ -58,7 +58,9 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, node, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), WikiNode.class.getName(),
+				node.getNodeId(), actionId);
 		}
 	}
 

@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.comment;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
@@ -127,9 +128,9 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public Comment getComment(
-			long userId, long groupId, String className, long classPK,
-			ServiceContext serviceContext)
+	public Discussion getDiscussion(
+		long userId, long groupId, String className, long classPK,
+		ServiceContext serviceContext)
 		throws PortalException {
 
 		MBMessageDisplay messageDisplay =
@@ -162,9 +163,12 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		return new MBCommentImpl(
+		Comment rootComment = new MBCommentImpl(
 			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats,
 			themeDisplay.getPathThemeImages());
+
+		return new MBDiscussionImpl(
+			rootComment, messageDisplay.isDiscussionMaxComments());
 	}
 
 	@Override

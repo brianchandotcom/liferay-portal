@@ -12,19 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.comment.context;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.portal.kernel.comment;
 
 /**
  * @author Adolfo Pérez
  */
-public interface CommentSectionDisplayContext {
+public interface Discussion {
 
-	public boolean isControlsVisible() throws PortalException;
+	public Comment getRootComment();
 
-	public boolean isDiscussionVisible() throws PortalException;
-
-	public boolean isMessageThreadVisible() throws PortalException;
+	public boolean isMaxCommentsLimitExceeded();
 
 }

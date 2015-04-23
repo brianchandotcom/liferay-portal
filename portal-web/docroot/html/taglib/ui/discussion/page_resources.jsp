@@ -26,11 +26,8 @@ DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(re
 
 CommentManager commentManager = CommentManagerUtil.getCommentManager();
 
-Comment rootComment = commentManager.getComment(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), ServiceContextFactory.getInstance(request));
-
-DiscussionPermission discussionPermission = new MBDiscussionPermissionImpl(discussionRequestHelper.getPermissionChecker());
-
-CommentSectionDisplayContext commentSectionDisplayContext = new MBCommentSectionDisplayContext(discussionTaglibHelper, discussionRequestHelper, rootComment, discussionPermission);
+Discussion discussion = commentManager.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), ServiceContextFactory.getInstance(request));
+Comment rootComment = discussion.getRootComment();
 
 CommentIterator commentIterator = rootComment.getThreadCommentsIterator(rootIndexPage);
 
@@ -43,8 +40,8 @@ while (commentIterator.hasNext()) {
 
 	Comment comment = commentIterator.next();
 
-	request.setAttribute("liferay-ui:discussion:commentSectionDisplayContext", commentSectionDisplayContext);
 	request.setAttribute("liferay-ui:discussion:currentComment", comment);
+	request.setAttribute("liferay-ui:discussion:discussion", discussion);
 	request.setAttribute("liferay-ui:discussion:rootComment", rootComment);
 %>
 

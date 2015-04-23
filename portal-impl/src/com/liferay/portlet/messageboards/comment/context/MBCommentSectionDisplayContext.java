@@ -15,15 +15,12 @@
 package com.liferay.portlet.messageboards.comment.context;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 
 /**
  * @author Adolfo Pérez
@@ -33,12 +30,12 @@ public class MBCommentSectionDisplayContext
 
 	public MBCommentSectionDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionRequestHelper discussionRequestHelper, Comment rootComment,
+		DiscussionRequestHelper discussionRequestHelper, Discussion discussion,
 		DiscussionPermission discussionPermission) {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
-		_rootComment = rootComment;
+		_rootComment = discussion.getRootComment();
 		_discussionPermission = discussionPermission;
 	}
 
@@ -54,17 +51,6 @@ public class MBCommentSectionDisplayContext
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
 			_discussionTaglibHelper.getUserId());
-	}
-
-	@Override
-	public boolean isDiscussionMaxComments() throws PortalException {
-		if (_discussionMaxComments == null) {
-			MBMessageDisplay messageDisplay = getMBMessageDisplay();
-
-			_discussionMaxComments = messageDisplay.isDiscussionMaxComments();
-		}
-
-		return _discussionMaxComments;
 	}
 
 	@Override
@@ -93,21 +79,6 @@ public class MBCommentSectionDisplayContext
 		return false;
 	}
 
-	protected MBMessageDisplay getMBMessageDisplay() throws PortalException {
-		if (_discussionMessageDisplay == null) {
-			_discussionMessageDisplay =
-				MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-					_discussionTaglibHelper.getUserId(),
-					_discussionRequestHelper.getScopeGroupId(),
-					_discussionTaglibHelper.getClassName(),
-					_discussionTaglibHelper.getClassPK(),
-					WorkflowConstants.STATUS_ANY,
-					new MessageThreadComparator());
-		}
-
-		return _discussionMessageDisplay;
-	}
-
 	protected boolean hasViewPermission() throws PortalException {
 		return _discussionPermission.hasViewPermission(
 			_discussionRequestHelper.getCompanyId(),
@@ -117,8 +88,6 @@ public class MBCommentSectionDisplayContext
 			_discussionTaglibHelper.getUserId());
 	}
 
-	private Boolean _discussionMaxComments;
-	private MBMessageDisplay _discussionMessageDisplay;
 	private final DiscussionPermission _discussionPermission;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;

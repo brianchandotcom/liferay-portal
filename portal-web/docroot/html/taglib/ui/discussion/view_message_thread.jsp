@@ -17,8 +17,8 @@
 <%@ include file="/html/taglib/ui/discussion/init.jsp" %>
 
 <%
-CommentSectionDisplayContext commentSectionDisplayContext = (CommentSectionDisplayContext)request.getAttribute("liferay-ui:discussion:commentSectionDisplayContext");
 Comment comment = (Comment)request.getAttribute("liferay-ui:discussion:currentComment");
+Discussion discussion = (Discussion)request.getAttribute("liferay-ui:discussion:discussion");
 
 int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
 
@@ -190,7 +190,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + index + "','" + namespace + randomNamespace + "editForm" + index + "');" + randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage" + index + "')";
 						%>
 
-						<c:if test="<%= !commentSectionDisplayContext.isDiscussionMaxComments() %>">
+						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 							<c:choose>
 								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
 									<liferay-ui:icon

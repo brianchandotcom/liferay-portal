@@ -27,7 +27,7 @@ public class MentionsGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return MentionsGroupServiceConfiguration.class;
 	}
 

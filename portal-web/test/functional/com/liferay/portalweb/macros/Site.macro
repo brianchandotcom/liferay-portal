@@ -437,7 +437,7 @@
 		</if>
 	</command>
 
-	<command name="deactivateOrganizationSiteCP">
+	<command name="deactivateCP">
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="Type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="${siteName}" />

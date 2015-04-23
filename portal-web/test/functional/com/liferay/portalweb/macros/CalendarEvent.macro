@@ -260,9 +260,9 @@
 		<if>
 			<equals arg1="${rsvp}" arg2="No" />
 			<then>
-				<var name="key_eventTitle" value="${eventTitle}" />
-
-				<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC" />
+				<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+					<var name="eventTitle" value="${eventTitle}" />
+				</execute>
 			</then>
 			<else>
 				<execute macro="CalendarEvent#selectViaSchedulerCmd">
@@ -580,8 +580,10 @@
 
 		<execute function="AssertClickNoError" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 		<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
-		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC" />
-		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
+
+		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="deleteRepeatingEventViaAgendaViewPG">
@@ -659,8 +661,9 @@
 		<execute function="AssertClickNoError" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 		<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
-		<execute function="AssertElementNotPresent" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_SPECIFIC" />
-		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
+		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="editAllDayEventViaScheduler">
@@ -1418,9 +1421,9 @@
 
 		<execute function="Pause" value1="1000" />
 
-		<var name="key_eventTitle" value="${eventTitle}" />
-
-		<execute function="AssertElementNotPresent" locator1="PGCalendarDayView#SCHEDULER_EVENT_SPECIFIC" />
+		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="viewDefaultPG">
@@ -1430,7 +1433,9 @@
 			<var name="viewType" value="Day" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGCalendarDayView#SCHEDULER_EVENT_SPECIFIC" />
+		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 
@@ -1438,8 +1443,9 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC" />
-		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
+		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Month" />
@@ -1449,16 +1455,19 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGCalendarMonthView#SCHEDULER_EVENT_SPECIFIC" />
-		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
+		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="PGCalendarAgendaView#EMPTY_MESSAGE" value1="No events." />
-		<execute function="AssertElementNotPresent" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_SPECIFIC" />
-		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
+
+		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
@@ -1470,9 +1479,9 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<var name="key_eventTitle" value="${eventTitle}" />
-
-		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC" />
+		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="viewEventDetails">
@@ -1708,6 +1717,13 @@
 		<var name="key_resource" value="${resourceName}" />
 
 		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#INVITATIONS_PENDING" value1="${resourceName}" />
+	</command>
+
+	<command name="viewSpecificEventNotPresent">
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC" />
+		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 	</command>
 
 	<command name="viewTitleViaDetailsCmd">

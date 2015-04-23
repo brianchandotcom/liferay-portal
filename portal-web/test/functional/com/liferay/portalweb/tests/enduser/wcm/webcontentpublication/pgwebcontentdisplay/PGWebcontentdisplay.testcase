@@ -571,7 +571,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAllSettingsEnabledWCDConfiguration" priority="5">
+	<command known-issues="LPS-55118" name="ViewAllSettingsEnabledWCDConfiguration" priority="5">
 		<execute macro="WebContentDisplayPortlet#configureSetupPG">
 			<var name="wcdConfigurationSettings" value="Enable Print,Enable Related Assets,Enable Ratings,Enable Comments,Enable Comment Ratings,Enable View Count Increment" />
 		</execute>

@@ -15,25 +15,82 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class PrincipalException extends PortalException {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public PrincipalException() {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public PrincipalException(String msg) {
 		super(msg);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public PrincipalException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 */
+	@Deprecated
 	public PrincipalException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustHavePermission extends PrincipalException {
+
+		public MustHavePermission(long userId, String ... actionId) {
+			super(
+				String.format(
+					"User %s must have permission to perform action %s",
+					Validator.isNull(userId) ? "" : userId,
+					StringUtil.merge(actionId, ",")));
+
+			this.actionId = actionId;
+			this.resourceId = 0;
+			this.resourceName = null;
+			this.userId = userId;
+		}
+
+		public MustHavePermission(
+			long userId, String resourceName, long resourceId,
+			String ... actionId) {
+
+			super(
+				String.format(
+					"User %s must have %s permission for %s %s",
+					Validator.isNull(userId) ? "" : userId,
+					StringUtil.merge(actionId, ","), resourceName,
+					Validator.isNull(resourceId) ? "" : resourceId));
+
+			this.actionId = actionId;
+			this.resourceName = resourceName;
+			this.resourceId = resourceId;
+			this.userId = userId;
+		}
+
+		public final String[] actionId;
+		public final long resourceId;
+		public final String resourceName;
+		public final long userId;
+
 	}
 
 }

@@ -69,7 +69,13 @@ public class PropsUtil {
 	}
 
 	private String _get(String key) {
-		return _props.getProperty(key);
+		String value = System.getProperty(key);
+
+		if (Validator.isNull(value)) {
+			value = _props.getProperty(key);
+		}
+
+		return value;
 	}
 
 	private void _printProperties(boolean update) {

@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public abstract class BaseMentionsFormNavigatorEntry
-	implements FormNavigatorEntry {
+	implements FormNavigatorEntry<Object> {
 
 	@Override
 	public String getKey() {

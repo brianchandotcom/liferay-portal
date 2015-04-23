@@ -14,8 +14,7 @@
  */
 --%>
 
-<%@ page import="com.liferay.mentions.constants.MentionsWebKeys" %>
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
+<%@ include file="/init.jsp" %>
 
 <%
 boolean groupMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(MentionsWebKeys.GROUP_MENTIONS_ENABLED));

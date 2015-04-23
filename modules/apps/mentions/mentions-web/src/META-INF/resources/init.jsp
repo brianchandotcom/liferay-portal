@@ -14,12 +14,12 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<h3><liferay-ui:message key="mentions" /><h3>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%
-boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(MentionsWebKeys.COMPANY_MENTIONS_ENABLED));
-%>
+<%@ page import="com.liferay.mentions.constants.MentionsWebKeys" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
-<aui:input checked="<%= companyMentionsEnabled %>" label="enable-mentions" name="settings--mentionsEnabled--" type="checkbox" value="<%= companyMentionsEnabled %>" />
+<%@ include file="/init-ext.jsp" %>

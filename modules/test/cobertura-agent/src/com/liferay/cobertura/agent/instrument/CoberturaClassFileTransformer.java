@@ -36,8 +36,6 @@ import net.sourceforge.cobertura.coveragedata.ProjectData;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
 
 /**
  * @author Shuyang Zhou
@@ -123,32 +121,6 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 				return data;
 			}
-
-			// Modify TouchCollector's static initialization block by
-			// redirecting ProjectData#initialize to
-			// InstrumentationAgent#initialize
-
-			if ((className != null) &&
-				className.equals(
-					"com/liferay/cobertura/agent/coveragedata/TouchCollector")
-						) {
-
-				ClassWriter classWriter = new ContextAwareClassWriter(
-					ClassWriter.COMPUTE_FRAMES);
-
-				ClassVisitor classVisitor = new TouchCollectorClassVisitor(
-					classWriter);
-
-				ClassReader classReader = new ClassReader(classfileBuffer);
-
-				classReader.accept(classVisitor, 0);
-
-				byte[] data = classWriter.toByteArray();
-
-				dumpIntrumentedClass(classLoader, className, data);
-
-				return data;
-			}
 		}
 		catch (Throwable t) {
 			t.printStackTrace();
@@ -221,58 +193,5 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 	private final Pattern[] _excludePatterns;
 	private final Pattern[] _includePatterns;
-
-	private static class TouchCollectorClassVisitor extends ClassVisitor {
-
-		public TouchCollectorClassVisitor(ClassVisitor classVisitor) {
-			super(Opcodes.ASM5, classVisitor);
-		}
-
-		@Override
-		public MethodVisitor visitMethod(
-			int access, String name, String desc, String signature,
-			String[] exceptions) {
-
-			MethodVisitor methodVisitor = cv.visitMethod(
-				access, name, desc, signature, exceptions);
-
-			if ((methodVisitor != null) && name.equals("<clinit>")) {
-				methodVisitor = new TouchCollectorCLINITVisitor(methodVisitor);
-			}
-
-			return methodVisitor;
-		}
-
-	}
-
-	private static class TouchCollectorCLINITVisitor extends MethodVisitor {
-
-		public TouchCollectorCLINITVisitor(MethodVisitor methodVisitor) {
-			super(Opcodes.ASM5, methodVisitor);
-		}
-
-		@Override
-		public void visitMethodInsn(
-			int opcode, String owner, String name, String desc) {
-
-			visitMethodInsn(opcode, owner, name, desc, false);
-		}
-
-		@Override
-		public void visitMethodInsn(
-			int opcode, String owner, String name, String desc, boolean itf) {
-
-			if ((opcode == Opcodes.INVOKESTATIC) &&
-				owner.equals(
-					"net/sourceforge/cobertura/coveragedata/ProjectData") &&
-				name.equals("initialize") && desc.equals("()V")) {
-
-				owner = "com/liferay/cobertura/agent/InstrumentationAgent";
-			}
-
-			super.visitMethodInsn(opcode, owner, name, desc, itf);
-		}
-
-	}
 
 }

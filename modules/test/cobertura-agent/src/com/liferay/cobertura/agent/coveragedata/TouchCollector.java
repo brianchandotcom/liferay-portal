@@ -14,6 +14,8 @@
 
 package com.liferay.cobertura.agent.coveragedata;
 
+import com.liferay.cobertura.agent.InstrumentationAgent;
+
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -141,7 +143,7 @@ public class TouchCollector implements HasBeenInstrumented {
 		new AtomicCounterMap<>();
 
 	static {
-		ProjectData.initialize();
+		InstrumentationAgent.initialize();
 	}
 
 	private static class JumpTouchData

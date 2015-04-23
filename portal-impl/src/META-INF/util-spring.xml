@@ -491,7 +491,7 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.webdav.WebDAVUtil" class="com.liferay.portal.kernel.webdav.WebDAVUtil" init-method="initDAV_URI" />
+	<bean id="com.liferay.portal.kernel.webdav.WebDAVUtil" class="com.liferay.portal.kernel.webdav.WebDAVUtil" init-method="init" />
 	<bean id="com.liferay.portal.kernel.xmlrpc.XmlRpc" class="com.liferay.portal.xmlrpc.XmlRpcImpl" />
 	<bean id="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil" class="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil">
 		<property name="xmlRpc" ref="com.liferay.portal.kernel.xmlrpc.XmlRpc" />

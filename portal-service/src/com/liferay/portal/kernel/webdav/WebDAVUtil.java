@@ -323,7 +323,7 @@ public class WebDAVUtil {
 		return timeout * Time.SECOND;
 	}
 
-	public static void initDAV_URI() {
+	public static void init() {
 		_davNamespace = SAXReaderUtil.createNamespace("D", "DAV:");
 
 		DAV_URI = _davNamespace;

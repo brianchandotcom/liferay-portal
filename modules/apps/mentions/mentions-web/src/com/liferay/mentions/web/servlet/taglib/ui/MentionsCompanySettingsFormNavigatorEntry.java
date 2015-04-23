@@ -14,11 +14,11 @@
 
 package com.liferay.mentions.web.servlet.taglib.ui;
 
+import com.liferay.mentions.util.WebKeys;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
@@ -60,10 +60,11 @@ public class MentionsCompanySettingsFormNavigatorEntry
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId(), true);
 
-		boolean mentionsEnabled = PrefsParamUtil.getBoolean(
+		boolean companyMentionsEnabled = PrefsParamUtil.getBoolean(
 			companyPortletPreferences, request, "mentionsEnabled", true);
 
-		request.setAttribute("mentions.jsp-mentionsEnabled", mentionsEnabled);
+		request.setAttribute(
+			WebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
 
 		super.render(request, response);
 	}

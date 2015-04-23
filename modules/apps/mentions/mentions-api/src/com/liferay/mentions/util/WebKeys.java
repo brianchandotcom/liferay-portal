@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+package com.liferay.mentions.util;
 
-<%@ page import="com.liferay.mentions.util.WebKeys" %>
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
+/**
+ * @author Sergio González
+ */
+public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
-<h3><liferay-ui:message key="mentions" /><h3>
+	public static final String COMPANY_MENTIONS_ENABLED =
+		"COMPANY_MENTIONS_ENABLED";
 
-<%
-boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(WebKeys.COMPANY_MENTIONS_ENABLED));
-%>
+	public static final String GROUP_MENTIONS_ENABLED =
+		"GROUP_MENTIONS_ENABLED";
 
-<aui:input checked="<%= companyMentionsEnabled %>" label="enable-mentions" name="settings--mentionsEnabled--" type="checkbox" value="<%= companyMentionsEnabled %>" />
+}

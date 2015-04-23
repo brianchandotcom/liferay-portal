@@ -14,8 +14,9 @@
 
 package com.liferay.cobertura.agent;
 
-import com.liferay.cobertura.agent.instrument.ProjectDataUtil;
 import com.liferay.cobertura.agent.instrument.CoberturaClassFileTransformer;
+import com.liferay.cobertura.agent.instrument.ProjectDataUtil;
+
 import java.io.File;
 import java.io.IOException;
 

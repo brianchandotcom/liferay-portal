@@ -14,9 +14,6 @@
 
 package com.liferay.cobertura.agent.instrument;
 
-
-import com.liferay.cobertura.agent.instrument.JumpHolder;
-import com.liferay.cobertura.agent.instrument.SwitchHolder;
 import java.util.HashMap;
 import java.util.Map;
 

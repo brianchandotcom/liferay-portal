@@ -67,16 +67,16 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="last-activity-date"
-			value='<%= workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance) %>'
+			value="<%= workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="end-date"
-			value='<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) %>'
+			value="<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) %>"
 		/>
 
-		<c:if test='<%= workflowInstanceViewDisplayContext.showEntryAction() %>'>
+		<c:if test="<%= workflowInstanceViewDisplayContext.showEntryAction() %>">
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"

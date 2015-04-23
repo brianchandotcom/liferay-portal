@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions;
+package com.liferay.mentions.util;
 
 import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

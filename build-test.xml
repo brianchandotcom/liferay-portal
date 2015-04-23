@@ -3099,6 +3099,15 @@ portal.security.manager.strategy=liferay</echo>
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${javascript.fast.load}" arg2="false" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+javascript.fast.load=false</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="mobile.device.enabled" />
 
 		<if>

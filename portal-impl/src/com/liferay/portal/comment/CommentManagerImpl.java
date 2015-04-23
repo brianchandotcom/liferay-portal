@@ -14,6 +14,7 @@
 
 package com.liferay.portal.comment;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -98,6 +99,18 @@ public class CommentManagerImpl implements CommentManager {
 		CommentManager commentManager = getCommentManager();
 
 		commentManager.deleteDiscussion(className, classPK);
+	}
+
+	@Override
+	public Comment getComment(
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.getComment(
+			userId, groupId, className, classPK, serviceContext);
 	}
 
 	@Override

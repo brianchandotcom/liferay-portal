@@ -24,7 +24,9 @@ DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(re
 
 CommentSectionDisplayContext commentSectionDisplayContext = new MBCommentSectionDisplayContext(discussionTaglibHelper, discussionRequestHelper);
 
-Comment rootComment = commentSectionDisplayContext.getRootComment();
+CommentManager commentManager = CommentManagerUtil.getCommentManager();
+
+Comment rootComment = commentManager.getComment(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), ServiceContextFactory.getInstance(request));
 %>
 
 <section>

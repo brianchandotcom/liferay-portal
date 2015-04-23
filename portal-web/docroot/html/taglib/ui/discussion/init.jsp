@@ -19,6 +19,8 @@
 <%@ page import="com.liferay.portal.kernel.comment.Comment" %><%@
 page import="com.liferay.portal.kernel.comment.CommentConstants" %><%@
 page import="com.liferay.portal.kernel.comment.CommentIterator" %><%@
+page import="com.liferay.portal.kernel.comment.CommentManager" %><%@
+page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@
 page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
 page import="com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext" %><%@
 page import="com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext" %><%@

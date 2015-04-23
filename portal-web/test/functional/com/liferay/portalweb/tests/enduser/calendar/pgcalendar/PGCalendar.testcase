@@ -243,12 +243,12 @@
 	<command known-issues="LPS-51310" name="AddCalendarEventAllDayWithUserInviteAccept" priority="5">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
-		<var name="resourceNameList" value="user1 user1" />
+		<var name="resourceNameList" value="userfn userln" />
 		<var name="siteScopeName" value="Liferay" />
-		<var name="userEmailAddress" value="user1@liferay.com" />
-		<var name="userFirstName" value="user1" />
-		<var name="userLastName" value="user1" />
-		<var name="userScreenName" value="user1" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -299,7 +299,7 @@
 			<var name="optionSet" value="true" />
 			<var name="resourceNameList" value="${resourceNameList}" />
 			<var name="rsvp" value="Yes" />
-			<var name="user" value="user1 user1" />
+			<var name="user" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -540,12 +540,12 @@
 	<command known-issues="LPS-51310" name="AddCalendarEventRegularWithUserInviteAccept" priority="5">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
-		<var name="resourceNameList" value="user1 user1" />
+		<var name="resourceNameList" value="userfn userln" />
 		<var name="siteScopeName" value="Liferay" />
-		<var name="userEmailAddress" value="user1@liferay.com" />
-		<var name="userFirstName" value="user1" />
-		<var name="userLastName" value="user1" />
-		<var name="userScreenName" value="user1" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -600,7 +600,7 @@
 			<var name="optionSet" value="true" />
 			<var name="resourceNameList" value="${resourceNameList}" />
 			<var name="rsvp" value="Yes" />
-			<var name="user" value="user1 user1" />
+			<var name="user" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -900,12 +900,12 @@
 	<command known-issues="LPS-51310" name="AddCalendarEventRepeatingWithUserInviteAccept" priority="5">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
-		<var name="resourceNameList" value="user1 user1" />
+		<var name="resourceNameList" value="userfn userln" />
 		<var name="siteScopeName" value="Liferay" />
-		<var name="userEmailAddress" value="user1@liferay.com" />
-		<var name="userFirstName" value="user1" />
-		<var name="userLastName" value="user1" />
-		<var name="userScreenName" value="user1" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -962,7 +962,7 @@
 			<var name="optionSet" value="true" />
 			<var name="resourceNameList" value="${resourceNameList}" />
 			<var name="rsvp" value="Yes" />
-			<var name="user" value="user1 user1" />
+			<var name="user" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1137,6 +1137,7 @@
 
 	<command name="AddUserCalendarToOtherCalendars" priority="5">
 		<var name="calendarType" value="Other Calendars" />
+		<var name="userCalendarColor" value="668CD9" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1169,6 +1170,12 @@
 		<execute macro="Calendar#viewPG">
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 			<var name="calendarType" value="${calendarType}" />
+		</execute>
+
+		<execute macro="Calendar#viewOtherCalendarMenulist">
+			<var name="calendarName" value="${userFirstName} ${userLastName}" />
+			<var name="color" value="${userCalendarColor}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -2358,7 +2365,6 @@
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
-		<var name="usersList" value="userfn userln, Test Test" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -2396,7 +2402,7 @@
 		<execute macro="CalendarEvent#viewUsers">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="usersList" value="${usersList}" />
+			<var name="usersList" value="${resourceNameList}" />
 		</execute>
 	</command>
 
@@ -2915,10 +2921,10 @@
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="Regular" />
 		<var name="siteScopeName" value="Liferay" />
-		<var name="userEmailAddress" value="user1@liferay.com" />
-		<var name="userFirstName" value="user1" />
-		<var name="userLastName" value="user1" />
-		<var name="userScreenName" value="user1" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

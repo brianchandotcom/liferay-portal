@@ -85,8 +85,10 @@
 		<while>
 			<condition function="IsElementPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
 			<then>
-				<execute function="Click" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC_MENULIST_ARROW" />
-				<execute function="AssertClick" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_MENULIST_HIDE_CALENDAR" value1="Hide Calendar" />
+				<execute macro="Calendar#chooseMenulistOption">
+					<var name="calendarName" value="${calendarName}" />
+					<var name="menuListOption" value="Hide Calendar" />
+				</execute>
 			</then>
 		</while>
 

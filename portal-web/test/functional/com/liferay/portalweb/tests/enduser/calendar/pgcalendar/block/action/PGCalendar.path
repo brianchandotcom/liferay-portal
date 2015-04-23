@@ -463,28 +463,8 @@
 </tr>
 <!--OTHER_CALENDARS_CALENDAR_MENULIST-->
 <tr>
-	<td>OTHER_CALENDARS_CALENDAR_MENULIST_ADD_EVENT</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='addEvent']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHER_CALENDARS_CALENDAR_MENULIST_HIDE_CALENDAR</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='hide']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHER_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='settings']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHER_CALENDARS_CALENDAR_MENULIST_PERMISSIONS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='permissions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHER_CALENDARS_CALENDAR_MENULIST_RSS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item calendar-subscribe-link' and @data-id='subscribe']</td>
+	<td>OTHER_CALENDARS_CALENDAR_MENULIST_OPTION</td>
+	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[contains(@class,'simple-menu-item') and contains(.,'${key_menuListOption}')]</td>
 	<td></td>
 </tr>
 <tr>

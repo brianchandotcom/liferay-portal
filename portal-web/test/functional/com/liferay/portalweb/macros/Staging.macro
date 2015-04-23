@@ -462,8 +462,10 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="CPSitepages#NAVIGATION_PUBLIC_PAGES" />
-			<condition function="IsElementPresent" locator1="CPSitepages#STAGING_BUTTON" />
+			<and>
+				<condition function="IsElementPresent" locator1="CPSitepages#NAVIGATION_PUBLIC_PAGES" />
+				<condition function="IsElementPresent" locator1="CPSitepages#STAGING_BUTTON" />
+			</and>
 			<then>
 				<execute function="AssertClick" locator1="CPSitepages#STAGING_BUTTON" value1="Staging" />
 			</then>

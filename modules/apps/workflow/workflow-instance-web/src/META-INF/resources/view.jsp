@@ -17,12 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "pending");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(liferayPortletRequest, renderResponse);
 
-portletURL.setParameter("tabs1", "submissions");
-portletURL.setParameter("tabs2", tabs2);
+PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 %>
 
 <liferay-ui:tabs
@@ -33,11 +31,6 @@ portletURL.setParameter("tabs2", tabs2);
 
 <%
 try {
-	boolean completedInstances = true;
-
-	if (tabs2.equals("pending")) {
-		completedInstances = false;
-	}
 %>
 
 	<%@ include file="/workflow_instances.jspf" %>
@@ -57,7 +50,7 @@ catch (Exception e) {
 <%
 }
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, workflowInstanceViewDisplayContext.getViewTab2()), currentURL);
 %>
 
 <%!

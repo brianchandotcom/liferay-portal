@@ -18,30 +18,24 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+		 
+WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest);
 
-WorkflowInstance workflowInstance = (WorkflowInstance)request.getAttribute(WebKeys.WORKFLOW_INSTANCE);
+AssetRenderer assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
 
-Map<String, Serializable> workflowContext = workflowInstance.getWorkflowContext();
+AssetEntry assetEntry = workflowInstanceEditDisplayContext.getAssetEntry();
 
-String className = (String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
-long classPK = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+List<WorkflowTask> workflowTasks = workflowInstanceEditDisplayContext.getWorkflowTasks();
 
-WorkflowHandler<?> workflowHandler = WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
+PortletURL portletURL = null;
 
-AssetRenderer assetRenderer = workflowHandler.getAssetRenderer(classPK);
-AssetRendererFactory assetRendererFactory = workflowHandler.getAssetRendererFactory();
-
-AssetEntry assetEntry = null;
-
-if (assetRenderer != null) {
-	assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
+if(!workflowTasks.isEmpty()) {
+	portletURL = renderResponse.createRenderURL();
 }
 
-String headerTitle = LanguageUtil.get(request, workflowInstance.getWorkflowDefinitionName());
+String[] metadataFields = new String[] {"author", "categories", "tags"};
 
-if (assetEntry != null) {
-	headerTitle = headerTitle.concat(StringPool.COLON + StringPool.SPACE + assetRenderer.getTitle(locale));
-}
+List<WorkflowLog> workflowLogs = workflowInstanceEditDisplayContext.getWorkflowLogs();
 %>
 
 <portlet:renderURL var="backURL">
@@ -51,25 +45,25 @@ if (assetEntry != null) {
 <liferay-ui:header
 	backURL="<%= backURL.toString() %>"
 	localizeTitle="<%= Boolean.FALSE %>"
-	title="<%= headerTitle %>"
+	title="<%= workflowInstanceEditDisplayContext.getHeaderTitle() %>"
 />
 
 <aui:row>
 	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">
 		<aui:row>
 			<aui:col width="<%= 60 %>">
-				<aui:input name="state" type="resource" value="<%= LanguageUtil.get(request, workflowInstance.getState()) %>" />
+				<aui:input name="state" type="resource" value="<%= workflowInstanceEditDisplayContext.getState() %>" />
 			</aui:col>
 
 			<aui:col width="<%= 33 %>">
-				<aui:input name="endDate" type="resource" value='<%= (workflowInstance.getEndDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>' />
+				<aui:input name="endDate" type="resource" value='<%= workflowInstanceEditDisplayContext.getEndDate() %>' />
 			</aui:col>
 		</aui:row>
 
-		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>" id="preview">
+		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= Boolean.TRUE %>" id="preview">
 
 			<c:if test="<%= assetRenderer != null %>">
-				<liferay-ui:panel defaultState="open" title='<%= LanguageUtil.format(request, "preview-of-x", ResourceActionsUtil.getModelResource(locale, className), false) %>'>
+				<liferay-ui:panel defaultState="open" title='<%= workflowInstanceEditDisplayContext.getPanelTitle() %>'>
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
@@ -79,10 +73,10 @@ if (assetEntry != null) {
 
 									<c:if test="<%= assetEntry != null %>">
 										<portlet:param name="assetEntryId" value="<%= String.valueOf(assetEntry.getEntryId()) %>" />
-										<portlet:param name="assetEntryVersionId" value="<%= String.valueOf(classPK) %>" />
+										<portlet:param name="assetEntryVersionId" value="<%= workflowInstanceEditDisplayContext.getAssetEntryVersionId() %>" />
 									</c:if>
 
-									<portlet:param name="type" value="<%= assetRendererFactory.getType() %>" />
+									<portlet:param name="type" value="<%= workflowInstanceEditDisplayContext.getAssetRendererFactory().getType() %>" />
 									<portlet:param name="showEditURL" value="<%= Boolean.FALSE.toString() %>" />
 								</portlet:renderURL>
 
@@ -93,9 +87,9 @@ if (assetEntry != null) {
 
 					<h3 class="task-content-title">
 						<liferay-ui:icon
-							iconCssClass="<%= workflowHandler.getIconCssClass() %>"
+							iconCssClass="<%= workflowInstanceEditDisplayContext.getIconCssClass() %>"
 							label="<%= Boolean.TRUE %>"
-							message="<%= HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)) %>"
+							message="<%= workflowInstanceEditDisplayContext.getTaskContentTitleMessage() %>"
 						/>
 					</h3>
 
@@ -103,10 +97,6 @@ if (assetEntry != null) {
 						assetRenderer="<%= assetRenderer %>"
 						template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
 					/>
-
-					<%
-					String[] metadataFields = new String[] {"author", "categories", "tags"};
-					%>
 
 					<liferay-ui:asset-metadata
 						className="<%= assetEntry.getClassName() %>"
@@ -134,23 +124,8 @@ if (assetEntry != null) {
 				</liferay-ui:panel>
 			</c:if>
 
-			<%
-			List<WorkflowTask> workflowTasks = null;
-
-			if (portletName.equals(PortletKeys.WORKFLOW_DEFINITION)) {
-				workflowTasks = WorkflowTaskManagerUtil.getWorkflowTasksByWorkflowInstance(company.getCompanyId(), null, workflowInstance.getWorkflowInstanceId(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-			}
-			else {
-				workflowTasks = WorkflowTaskManagerUtil.getWorkflowTasksByWorkflowInstance(company.getCompanyId(), user.getUserId(), workflowInstance.getWorkflowInstanceId(), false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-			}
-			%>
-
 			<c:if test="<%= !workflowTasks.isEmpty() %>">
 				<liferay-ui:panel defaultState="open" title="tasks">
-
-					<%
-					PortletURL portletURL = renderResponse.createRenderURL();
-					%>
 
 					<liferay-ui:search-container
 						emptyResultsMessage="there-are-no-tasks"
@@ -174,18 +149,18 @@ if (assetEntry != null) {
 								name="task"
 							>
 								<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
-									<liferay-ui:message key="<%= HtmlUtil.escape(workflowTask.getName()) %>" />
+									<liferay-ui:message key="<%= workflowInstanceEditDisplayContext.getTaskName(workflowTask) %>" />
 								</span>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
 								name="due-date"
-								value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>'
+								value='<%= workflowInstanceEditDisplayContext.getTaskDueDate(workflowTask) %>'
 							/>
 
 							<liferay-ui:search-container-column-text
 								name="completed"
-								value='<%= workflowTask.isCompleted() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
+								value='<%=  workflowInstanceEditDisplayContext.getTaskCompleted(workflowTask) %>'
 							/>
 
 						</liferay-ui:search-container-row>
@@ -195,18 +170,6 @@ if (assetEntry != null) {
 			</c:if>
 
 			<liferay-ui:panel defaultState="closed" title="activities">
-
-				<%
-				List<Integer> logTypes = new ArrayList<Integer>();
-
-				logTypes.add(WorkflowLog.TASK_ASSIGN);
-				logTypes.add(WorkflowLog.TASK_COMPLETION);
-				logTypes.add(WorkflowLog.TASK_UPDATE);
-				logTypes.add(WorkflowLog.TRANSITION);
-
-				List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowInstance.getWorkflowInstanceId(), logTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowComparatorFactoryUtil.getLogCreateDateComparator(true));
-				%>
-
 				<%@ include file="/workflow_logs.jspf" %>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
@@ -221,7 +184,7 @@ if (assetEntry != null) {
 			/>
 
 			<div class="lfr-asset-name">
-				<%= HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName()) %>
+				<%= workflowInstanceEditDisplayContext.getAssetName() %>
 			</div>
 		</div>
 
@@ -234,5 +197,5 @@ if (assetEntry != null) {
 </aui:row>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, headerTitle, currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, workflowInstanceEditDisplayContext.getHeaderTitle(), currentURL);
 %>

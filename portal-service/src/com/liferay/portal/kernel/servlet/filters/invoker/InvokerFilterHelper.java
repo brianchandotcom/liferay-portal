@@ -68,7 +68,6 @@ public class InvokerFilterHelper {
 			}
 		}
 
-		_filterConfigs.clear();
 		_filterMappings.clear();
 		_filters.clear();
 
@@ -194,7 +193,7 @@ public class InvokerFilterHelper {
 
 	protected void initFilter(
 		ServletContext servletContext, String filterClassName,
-		String filterName, Map<String, String> initParameterMap) {
+		String filterName, FilterConfig filterConfig) {
 
 		ClassLoader pluginClassLoader = servletContext.getClassLoader();
 
@@ -210,12 +209,8 @@ public class InvokerFilterHelper {
 			Filter filter = (Filter)InstanceFactory.newInstance(
 				pluginClassLoader, filterClassName);
 
-			FilterConfig filterConfig = new InvokerFilterConfig(
-				servletContext, filterName, initParameterMap);
-
 			filter.init(filterConfig);
 
-			_filterConfigs.put(filterName, filterConfig);
 			_filters.put(filterName, filter);
 		}
 		catch (Exception e) {
@@ -229,24 +224,14 @@ public class InvokerFilterHelper {
 	}
 
 	protected void initFilterMapping(
-		String filterName, List<String> urlPatterns, List<String> dispatchers) {
+		String filterName, List<String> urlPatterns, List<String> dispatchers,
+		FilterConfig filterConfig) {
 
 		Filter filter = _filters.get(filterName);
 
 		if (filter == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("No filter exists with filter name " + filterName);
-			}
-
-			return;
-		}
-
-		FilterConfig filterConfig = _filterConfigs.get(filterName);
-
-		if (filterConfig == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No filter config exists with filter name " + filterName);
 			}
 
 			return;
@@ -271,9 +256,9 @@ public class InvokerFilterHelper {
 
 		Element rootElement = document.getRootElement();
 
-		List<Element> filterElements = rootElement.elements("filter");
+		Map<String, FilterConfig> filterConfigs = new HashMap<>();
 
-		for (Element filterElement : filterElements) {
+		for (Element filterElement : rootElement.elements("filter")) {
 			String filterName = filterElement.elementText("filter-name");
 			String filterClassName = filterElement.elementText("filter-class");
 
@@ -289,8 +274,13 @@ public class InvokerFilterHelper {
 				initParameterMap.put(name, value);
 			}
 
+			FilterConfig filterConfig = new InvokerFilterConfig(
+				servletContext, filterName, initParameterMap);
+
+			filterConfigs.put(filterName, filterConfig);
+
 			initFilter(
-				servletContext, filterClassName, filterName, initParameterMap);
+				servletContext, filterClassName, filterName, filterConfig);
 		}
 
 		List<Element> filterMappingElements = rootElement.elements(
@@ -320,14 +310,26 @@ public class InvokerFilterHelper {
 				dispatchers.add(dispatcher);
 			}
 
-			initFilterMapping(filterName, urlPatterns, dispatchers);
+			FilterConfig filterConfig = filterConfigs.get(filterName);
+
+			if (filterConfig == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No filter config exists with filter name " +
+							filterName);
+				}
+
+				continue;
+			}
+
+			initFilterMapping(
+				filterName, urlPatterns, dispatchers, filterConfig);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InvokerFilterHelper.class);
 
-	private final Map<String, FilterConfig> _filterConfigs = new HashMap<>();
 	private final List<FilterMapping> _filterMappings =
 		new CopyOnWriteArrayList<>();
 	private final Map<String, Filter> _filters = new HashMap<>();
@@ -398,8 +400,6 @@ public class InvokerFilterHelper {
 
 				return null;
 			}
-
-			_filterConfigs.put(servletFilterName, filterConfig);
 
 			updateFilterMappings(servletFilterName, filter);
 

@@ -82,8 +82,8 @@ public class WebDAVUtil {
 	public static Namespace createNamespace(String prefix, String uri) {
 		Namespace namespace = null;
 
-		if (uri.equals(WebDAVUtil.DAV_URI.getURI())) {
-			namespace = WebDAVUtil.DAV_URI;
+		if (uri.equals(_davNamespace.getURI())) {
+			namespace = _davNamespace;
 		}
 		else if (Validator.isNull(prefix)) {
 			namespace = SAXReaderUtil.createNamespace(uri);
@@ -97,6 +97,10 @@ public class WebDAVUtil {
 
 	public static void deleteStorage(WebDAVStorage storage) {
 		getInstance()._deleteStorage(storage);
+	}
+
+	public static Namespace getDAVNamespace() {
+		return _davNamespace;
 	}
 
 	public static long getDepth(HttpServletRequest request) {
@@ -320,7 +324,9 @@ public class WebDAVUtil {
 	}
 
 	public static void initDAV_URI() {
-		DAV_URI = SAXReaderUtil.createNamespace("D", "DAV:");
+		_davNamespace = SAXReaderUtil.createNamespace("D", "DAV:");
+
+		DAV_URI = _davNamespace;
 	}
 
 	public static boolean isOverwrite(HttpServletRequest request) {
@@ -407,6 +413,8 @@ public class WebDAVUtil {
 	private static final Log _log = LogFactoryUtil.getLog(WebDAVUtil.class);
 
 	private static final WebDAVUtil _instance = new WebDAVUtil();
+
+	private static Namespace _davNamespace;
 
 	private final ServiceRegistrationMap<WebDAVStorage> _serviceRegistrations =
 		new ServiceRegistrationMap<>();

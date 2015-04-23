@@ -22,10 +22,4 @@ import aQute.bnd.annotation.metatype.Meta;
 @Meta.OCD(id = "com.liferay.portal.soap.extender.SoapExtenderConfiguration")
 public interface SoapExtenderConfiguration {
 
-	@Meta.AD(deflt = "/soap", required = false)
-	public String contextPath();
-
-	@Meta.AD(name = "soap.extensions", required = false)
-	public String[] extensions();
-
 }

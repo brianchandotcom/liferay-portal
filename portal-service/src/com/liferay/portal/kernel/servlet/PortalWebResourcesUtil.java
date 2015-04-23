@@ -60,7 +60,7 @@ public class PortalWebResourcesUtil {
 				return true;
 			}
 		}
-		catch (MalformedURLException murle) {
+		catch (MalformedURLException e) {
 		}
 
 		return false;

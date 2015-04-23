@@ -174,7 +174,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Site#deactivateOrganizationSiteCP">
+		<execute macro="Site#deactivateCP">
 			<var name="siteName" value="${org2Name}" />
 		</execute>
 
@@ -187,7 +187,7 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute macro="Site#deactivateOrganizationSiteCP">
+		<execute macro="Site#deactivateCP">
 			<var name="siteName" value="${org2Name}" />
 			<var name="successMessage" value="true" />
 		</execute>

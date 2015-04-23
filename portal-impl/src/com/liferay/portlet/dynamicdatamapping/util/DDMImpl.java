@@ -237,9 +237,15 @@ public class DDMImpl implements DDM {
 	public DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm) {
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
-		ddmFormLayout.setDefaultLocale(ddmForm.getDefaultLocale());
+		Locale defaultLocale = ddmForm.getDefaultLocale();
+
+		ddmFormLayout.setDefaultLocale(defaultLocale);
 
 		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
+
+		LocalizedValue title = getDefaultDDMFormPageTitle(defaultLocale);
+
+		ddmFormLayoutPage.setTitle(title);
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			ddmFormLayoutPage.addDDMFormLayoutRow(
@@ -788,6 +794,14 @@ public class DDMImpl implements DDM {
 				ddmFormField.getName(), DDMFormLayoutColumn.FULL));
 
 		return ddmFormLayoutRow;
+	}
+
+	protected LocalizedValue getDefaultDDMFormPageTitle(Locale defaultLocale) {
+		LocalizedValue title = new LocalizedValue(defaultLocale);
+
+		title.addString(defaultLocale, StringPool.BLANK);
+
+		return title;
 	}
 
 	protected int getExistingFieldValueIndex(

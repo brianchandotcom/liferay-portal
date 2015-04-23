@@ -31,6 +31,8 @@ public class DDMFormLayoutPage {
 
 			addDDMFormLayoutRow(new DDMFormLayoutRow(ddmFormLayoutRow));
 		}
+
+		_title = new LocalizedValue(ddmFormLayoutPage._title);
 	}
 
 	public void addDDMFormLayoutRow(DDMFormLayoutRow ddmFormLayoutRow) {

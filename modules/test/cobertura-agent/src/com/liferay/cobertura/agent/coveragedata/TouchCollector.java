@@ -31,7 +31,7 @@ import net.sourceforge.cobertura.coveragedata.countermaps.CounterMap;
  */
 public class TouchCollector {
 
-	public static synchronized void applyTouchesOnProjectData(
+	public static void applyTouchesOnProjectData(
 		ProjectData projectData) {
 
 		Map<LineTouchData, Integer> touches =

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.editor.config;
+package com.liferay.mentions.web.editor.config;
 
 import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 
@@ -23,11 +23,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=editor", "javax.portlet.name=19",
-		"javax.portlet.name=162", "service.ranking:Integer=10"
+		"editor.config.key=commentsEditor", "service.ranking:Integer=10"
 	},
 	service = EditorConfigContributor.class
 )
-public class MBMentionsEditorConfigContributor
+public class CommentsMentionsEditorConfigContributor
 	extends BaseMentionsEditorConfigContributor {
 }

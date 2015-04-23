@@ -32,7 +32,9 @@ Comment rootComment = (Comment)request.getAttribute("liferay-ui:discussion:rootC
 DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 
-CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, comment);
+DiscussionPermission discussionPermission = new MBDiscussionPermissionImpl(discussionRequestHelper.getPermissionChecker());
+
+CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, comment, discussionPermission);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

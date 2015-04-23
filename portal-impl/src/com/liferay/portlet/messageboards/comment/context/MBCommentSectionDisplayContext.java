@@ -15,15 +15,14 @@
 package com.liferay.portlet.messageboards.comment.context;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 
 /**
@@ -34,26 +33,27 @@ public class MBCommentSectionDisplayContext
 
 	public MBCommentSectionDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionRequestHelper discussionRequestHelper, Comment rootComment) {
+		DiscussionRequestHelper discussionRequestHelper, Comment rootComment,
+		DiscussionPermission discussionPermission) {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
 		_rootComment = rootComment;
+		_discussionPermission = discussionPermission;
 	}
 
 	@Override
-	public boolean isControlsVisible() {
+	public boolean isControlsVisible() throws PortalException {
 		if (_discussionTaglibHelper.isHideControls()) {
 			return false;
 		}
 
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+		return _discussionPermission.hasAddPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
+			_discussionTaglibHelper.getUserId());
 	}
 
 	@Override
@@ -108,18 +108,18 @@ public class MBCommentSectionDisplayContext
 		return _discussionMessageDisplay;
 	}
 
-	protected boolean hasViewPermission() {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+	protected boolean hasViewPermission() throws PortalException {
+		return _discussionPermission.hasViewPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId(), ActionKeys.VIEW);
+			_discussionTaglibHelper.getUserId());
 	}
 
 	private Boolean _discussionMaxComments;
 	private MBMessageDisplay _discussionMessageDisplay;
+	private final DiscussionPermission _discussionPermission;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;
 	private final Comment _rootComment;

@@ -16,17 +16,16 @@ package com.liferay.portlet.messageboards.comment.context;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Locale;
@@ -38,11 +37,13 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	public MBCommentTreeDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionRequestHelper discussionRequestHelper, Comment comment) {
+		DiscussionRequestHelper discussionRequestHelper, Comment comment,
+		DiscussionPermission discussionPermission) {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
 		_comment = comment;
+		_discussionPermission = discussionPermission;
 	}
 
 	@Override
@@ -80,18 +81,16 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	@Override
 	public boolean isDeleteActionControlVisible() throws PortalException {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+		return _discussionPermission.hasDeletePermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_comment.getCommentId(), _comment.getUserId(),
-			ActionKeys.DELETE_DISCUSSION);
+			_comment.getCommentId(), _comment.getUserId());
 	}
 
 	@Override
-	public boolean isDiscussionVisible() {
+	public boolean isDiscussionVisible() throws PortalException {
 		if (!_comment.isApproved() && !isCommentAuthor() && !isGroupAdmin()) {
 			return false;
 		}
@@ -101,14 +100,12 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	@Override
 	public boolean isEditActionControlVisible() throws PortalException {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+		return _discussionPermission.hasUpdatePermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_comment.getCommentId(), _comment.getUserId(),
-			ActionKeys.UPDATE_DISCUSSION);
+			_comment.getCommentId(), _comment.getUserId());
 	}
 
 	@Override
@@ -131,14 +128,13 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 	}
 
 	@Override
-	public boolean isReplyActionControlVisible() {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+	public boolean isReplyActionControlVisible() throws PortalException {
+		return _discussionPermission.hasAddPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
+			_discussionTaglibHelper.getUserId());
 	}
 
 	@Override
@@ -157,24 +153,21 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 	}
 
 	protected boolean hasUpdatePermission() throws PortalException {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+		return _discussionPermission.hasUpdatePermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_comment.getCommentId(), _comment.getUserId(),
-			ActionKeys.UPDATE_DISCUSSION);
+			_comment.getCommentId(), _comment.getUserId());
 	}
 
-	protected boolean hasViewPermission() {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+	protected boolean hasViewPermission() throws PortalException {
+		return _discussionPermission.hasViewPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId(), ActionKeys.VIEW);
+			_discussionTaglibHelper.getUserId());
 	}
 
 	protected boolean isCommentAuthor() {
@@ -198,6 +191,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 	}
 
 	private final Comment _comment;
+	private final DiscussionPermission _discussionPermission;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;
 

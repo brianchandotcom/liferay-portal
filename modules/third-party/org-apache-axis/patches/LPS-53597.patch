@@ -1,7 +1,5 @@
-Index: src/org/apache/axis/description/JavaServiceDesc.java
-===================================================================
---- src/org/apache/axis/description/JavaServiceDesc.java	(revision 1659749)
-+++ src/org/apache/axis/description/JavaServiceDesc.java	(working copy)
+--- LPS-53597/JavaServiceDesc.java	2013-04-12 15:11:07.380006000 +0200
++++ src/org/apache/axis/description/JavaServiceDesc.java	2015-02-15 00:06:00.000000000 -0800
 @@ -701,10 +707,10 @@
                          }
                          if (paramClass == null) {

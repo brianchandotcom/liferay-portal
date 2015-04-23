@@ -24,8 +24,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.bundle.layouttypecontrollertracker.TestLayoutTypeController;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -119,9 +117,8 @@ public class LayoutTypeControllerTrackerTest {
 		Assert.assertNotNull(types);
 
 		boolean found = false;
-		List<String> typesList = Arrays.asList(types);
 
-		for (String type : typesList) {
+		for (String type : types) {
 			if ("testLayoutTypeController".equals(type)) {
 				found = true;
 			}

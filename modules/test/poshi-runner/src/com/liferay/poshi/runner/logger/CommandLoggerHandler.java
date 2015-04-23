@@ -141,26 +141,26 @@ public final class CommandLoggerHandler {
 		for (int i = 0; i < functionLocatorCount; i++) {
 			String locatorKey = "locator" + (i + 1);
 
-			if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(locatorKey)) {
+			if (PoshiRunnerVariablesUtil.containsKeyInExecuteMap(locatorKey)) {
 				sb.append(_getLineItemText("misc", " with "));
 				sb.append(_getLineItemText("param-type", locatorKey));
 				sb.append(_getLineItemText("misc", "&nbsp;"));
 
 				String paramValue =
-					PoshiRunnerVariablesUtil.getValueFromCommandMap(locatorKey);
+					PoshiRunnerVariablesUtil.getValueFromExecuteMap(locatorKey);
 
 				sb.append(_getLineItemText("param-value", paramValue));
 			}
 
 			String valueKey = "value" + (i + 1);
 
-			if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(valueKey)) {
+			if (PoshiRunnerVariablesUtil.containsKeyInExecuteMap(valueKey)) {
 				sb.append(_getLineItemText("misc", " with "));
 				sb.append(_getLineItemText("param-type", valueKey));
 				sb.append(_getLineItemText("misc", "&nbsp;"));
 
 				String paramValue =
-					PoshiRunnerVariablesUtil.getValueFromCommandMap(valueKey);
+					PoshiRunnerVariablesUtil.getValueFromExecuteMap(valueKey);
 
 				sb.append(_getLineItemText("param-value", paramValue));
 			}

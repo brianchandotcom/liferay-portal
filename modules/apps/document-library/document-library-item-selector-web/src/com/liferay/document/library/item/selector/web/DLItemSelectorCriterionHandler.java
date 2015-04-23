@@ -17,6 +17,7 @@ package com.liferay.document.library.item.selector.web;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,14 +31,19 @@ public class DLItemSelectorCriterionHandler
 
 	@Override
 	public Class<DLItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return null;
+		return DLItemSelectorCriterion.class;
 	}
 
 	@Override
-	public List<ItemSelectorView<DLItemSelectorCriterion>> getItemSelectorViews(
-		DLItemSelectorCriterion dlItemSelectorCriterion) {
+	public List<ItemSelectorView<DLItemSelectorCriterion>>
+		getItemSelectorViews(DLItemSelectorCriterion dlItemSelectorCriterion) {
 
-		return null;
+		List<ItemSelectorView<DLItemSelectorCriterion>>
+			itemSelectorViews = new ArrayList<>();
+
+		itemSelectorViews.add(new DLItemSelectorView());
+
+		return itemSelectorViews;
 	}
 
 }

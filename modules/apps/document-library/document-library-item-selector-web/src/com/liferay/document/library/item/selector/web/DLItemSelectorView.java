@@ -19,9 +19,11 @@ import com.liferay.item.selector.ItemSelectorView;
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -32,24 +34,45 @@ import javax.servlet.ServletResponse;
 public class DLItemSelectorView
 	implements ItemSelectorView<DLItemSelectorCriterion> {
 
-	@Override
-	public Class<DLItemSelectorCriterion>
-	getItemSelectorCriterionClass() {
+	public static final String DL_ITEM_SELECTOR_CRITERION =
+		DLItemSelectorView.class.getName() + "#DL_ITEM_SELECTOR_CRITERION";
 
-		return null;
+	public static final String ITEM_SELECTED_CALLBACK =
+		DLItemSelectorView.class.getName() + "#ITEM_SELECTED_CALLBACK";
+
+	public static final String PORTLET_URL =
+		DLItemSelectorView.class.getName() + "#PORTLET_URL";
+
+	@Override
+	public Class<DLItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return DLItemSelectorCriterion.class;
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return null;
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content/Language", locale);
+
+		return resourceBundle.getString("documents");
 	}
 
 	@Override
 	public void renderHTML(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			DLItemSelectorCriterion dlItemSelectorCriterion,
-			PortletURL portletURL, String s)
+			ServletRequest request, ServletResponse response,
+			DLItemSelectorCriterion
+				dlItemSelectorCriterion, PortletURL portletURL,
+			String itemSelectedCallback)
 		throws IOException, ServletException {
+
+		request.setAttribute(ITEM_SELECTED_CALLBACK, itemSelectedCallback);
+		request.setAttribute(PORTLET_URL, portletURL);
+		request.setAttribute(
+			DL_ITEM_SELECTOR_CRITERION, dlItemSelectorCriterion);
+
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+			"/o/document-library-item-selector-web/documents.jsp");
+
+		requestDispatcher.include(request, response);
 	}
 
 }

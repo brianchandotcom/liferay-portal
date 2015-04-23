@@ -90,7 +90,7 @@ public abstract class BaseWikiEngine implements WikiEngine {
 
 		RequestDispatcher requestDispatcher =
 			servletRequest.getRequestDispatcher(
-				"/o" + webContextPath + "/edit_page.jsp");
+				"/o" + webContextPath + _editPage);
 
 		servletRequest.setAttribute(_WIKI_PAGE, page);
 
@@ -102,7 +102,17 @@ public abstract class BaseWikiEngine implements WikiEngine {
 		return true;
 	}
 
+	protected BaseWikiEngine() {
+		this("/edit_page.jsp");
+	}
+
+	protected BaseWikiEngine(String editPage) {
+		_editPage = editPage;
+	}
+
 	private static final String _WIKI_PAGE =
 		BaseWikiEngine.class.getName() + "#wikiPage";
+
+	private final String _editPage;
 
 }

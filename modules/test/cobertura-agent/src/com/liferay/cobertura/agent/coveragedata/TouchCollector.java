@@ -39,7 +39,7 @@ public class TouchCollector {
 			if (touch.getValue() > 0) {
 				_getClassFor(
 					touch.getKey(),
-					projectData).touch(touch.getKey().lineNumber,
+					projectData).touch(touch.getKey()._lineNumber,
 					touch.getValue());
 			}
 		}
@@ -50,8 +50,9 @@ public class TouchCollector {
 		for (Entry<SwitchTouchData, Integer> touch :switchTouches.entrySet()) {
 			if (touch.getValue() > 0) {
 				_getClassFor(touch.getKey(), projectData).touchSwitch(
-					touch.getKey().lineNumber, touch.getKey().switchNumber,
-					touch.getKey().branch, touch.getValue());
+					touch.getKey().getLineNumber(),
+					touch.getKey()._switchNumber, touch.getKey()._branch,
+					touch.getValue());
 			}
 		}
 
@@ -61,8 +62,9 @@ public class TouchCollector {
 		for (Entry<JumpTouchData, Integer> touch :jumpTouches.entrySet()) {
 			if (touch.getValue() > 0) {
 				_getClassFor(touch.getKey(), projectData).touchJump(
-					touch.getKey().lineNumber, touch.getKey().branchNumber,
-					touch.getKey().branch, touch.getValue());
+					touch.getKey().getLineNumber(),
+					touch.getKey()._branchNumber, touch.getKey()._branch,
+					touch.getValue());
 			}
 		}
 	}
@@ -92,7 +94,7 @@ public class TouchCollector {
 		LineTouchData key, ProjectData projectData) {
 
 		return projectData.getOrCreateClassData(
-			_classId2class.get(key.classId));
+			_classId2class.get(key._classId));
 	}
 
 	private static int _registerClassData(String name) {
@@ -143,10 +145,14 @@ public class TouchCollector {
 
 			JumpTouchData other = (JumpTouchData)obj;
 
-			if (branch != other.branch)return false;
+			if (_branch != other._branch)return false;
 
-			if (branchNumber != other.branchNumber)return false;
+			if (_branchNumber != other._branchNumber)return false;
 			return true;
+		}
+
+		public int getBranchNumber() {
+			return _branchNumber;
 		}
 
 		@Override
@@ -155,25 +161,28 @@ public class TouchCollector {
 
 			int result = super.hashCode();
 
-			result = prime * result + (branch ? 1231 : 1237);
+			result = prime * result + (_branch ? 1231 : 1237);
 
-			result = prime * result + branchNumber;
+			result = prime * result + _branchNumber;
 
 			return result;
 		}
 
-		protected boolean branch;
-		protected int branchNumber;
+		public boolean isBranch() {
+			return _branch;
+		}
 
 		private JumpTouchData(
 			int classId, int lineNumber, int branchNumber, boolean branch) {
 
 			super(classId, lineNumber);
 
-			this.branchNumber = branchNumber;
-
-			this.branch = branch;
+			_branchNumber = branchNumber;
+			_branch = branch;
 		}
+
+		private final boolean _branch;
+		private final int _branchNumber;
 
 	}
 
@@ -195,15 +204,23 @@ public class TouchCollector {
 
 			LineTouchData other = (LineTouchData)obj;
 
-			if (classId != other.classId) {
+			if (_classId != other._classId) {
 				return false;
 			}
 
-			if (lineNumber != other.lineNumber) {
+			if (_lineNumber != other._lineNumber) {
 				return false;
 			}
 
 			return true;
+		}
+
+		public int getClassId() {
+			return _classId;
+		}
+
+		public int getLineNumber() {
+			return _lineNumber;
 		}
 
 		@Override
@@ -212,19 +229,20 @@ public class TouchCollector {
 
 			int result = 1;
 
-			result = prime * result + classId;
+			result = prime * result + _classId;
 
-			result = prime * result + lineNumber;
+			result = prime * result + _lineNumber;
 
 			return result;
 		}
 
-		protected int classId, lineNumber;
-
 		private LineTouchData(int classId, int lineNumber) {
-			this.classId = classId;
-			this.lineNumber = lineNumber;
+			_classId = classId;
+			_lineNumber = lineNumber;
 		}
+
+		private final int _classId;
+		private final int _lineNumber;
 
 	}
 
@@ -246,15 +264,23 @@ public class TouchCollector {
 
 			SwitchTouchData other = (SwitchTouchData)obj;
 
-			if (branch != other.branch) {
+			if (_branch != other._branch) {
 				return false;
 			}
 
-			if (switchNumber != other.switchNumber) {
+			if (_switchNumber != other._switchNumber) {
 				return false;
 			}
 
 			return true;
+		}
+
+		public int getBranch() {
+			return _branch;
+		}
+
+		public int getSwitchNumber() {
+			return _switchNumber;
 		}
 
 		@Override
@@ -263,24 +289,24 @@ public class TouchCollector {
 
 			int result = super.hashCode();
 
-			result = prime * result + branch;
+			result = prime * result + _branch;
 
-			result = prime * result + switchNumber;
+			result = prime * result + _switchNumber;
 
 			return result;
 		}
-
-		protected int switchNumber, branch;
 
 		private SwitchTouchData(
 			int classId, int lineNumber, int switchNumber, int branch) {
 
 			super(classId, lineNumber);
 
-			this.switchNumber = switchNumber;
-
-			this.branch = branch;
+			_switchNumber = switchNumber;
+			_branch = branch;
 		}
+
+		private final int _branch;
+		private final int _switchNumber;
 
 	}
 

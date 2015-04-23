@@ -63,6 +63,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class WebDAVUtil {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDAVNamespace()}
+	 */
+	@Deprecated
 	public static Namespace DAV_URI;
 
 	public static final int SC_LOCKED = 423;

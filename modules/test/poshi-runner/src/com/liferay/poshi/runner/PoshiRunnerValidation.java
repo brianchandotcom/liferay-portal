@@ -147,17 +147,14 @@ public class PoshiRunnerValidation {
 			Element element, String filePath)
 		throws PoshiRunnerException {
 
-		if (Validator.isNull(element.attributeValue("name"))) {
-			throw new PoshiRunnerException(
-				"Missing name attribute\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-
 		List<String> possibleAttributeNames = Arrays.asList(
 			"line-number", "name", "summary", "summary-ignore");
 
 		_validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
+
+		_validateRequiredAttributeNames(
+			element, Arrays.asList("name"), filePath);
 	}
 
 	private static void _validateDefinitionElement(
@@ -181,22 +178,24 @@ public class PoshiRunnerValidation {
 
 			_validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
+
+			_validateRequiredAttributeNames(
+				element, Arrays.asList("default"), filePath);
 		}
-
-		if (classType.equals("macro")) {
-			List<String> possibleAttributeNames = Arrays.asList("line-number");
-
+		else if (classType.equals("macro")) {
 			_validatePossibleAttributeNames(
-				element, possibleAttributeNames, filePath);
+				element, Arrays.asList("line-number"), filePath);
 		}
-
-		if (classType.equals("testcase")) {
+		else if (classType.equals("testcase")) {
 			List<String> possibleAttributeNames = Arrays.asList(
 				"component-name", "extends", "ignore", "ignore-command-names",
 				"line-number");
 
 			_validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
+
+			_validateRequiredAttributeNames(
+				element, Arrays.asList("component-name"), filePath);
 		}
 	}
 
@@ -277,9 +276,8 @@ public class PoshiRunnerValidation {
 					}
 					else {
 						throw new PoshiRunnerException(
-							"Invalid child element\n" +
-								filePath + ":" +
-									element.attributeValue("line-number"));
+							"Invalid child element\n" + filePath + ":" +
+								element.attributeValue("line-number"));
 					}
 				}
 			}
@@ -294,12 +292,11 @@ public class PoshiRunnerValidation {
 	private static void _validateForElement(Element element, String filePath)
 		throws PoshiRunnerException {
 
-		List<String> possibleAttributeNames = Arrays.asList(
+		List<String> attributeNames = Arrays.asList(
 			"line-number", "list", "param");
 
-		_validatePossibleAttributeNames(
-			element, possibleAttributeNames, filePath);
-
+		_validatePossibleAttributeNames(element, attributeNames, filePath);
+		_validateRequiredAttributeNames(element, attributeNames, filePath);
 		_parseElements(element, filePath);
 	}
 
@@ -474,6 +471,20 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateRequiredAttributeNames(
+			Element element, List<String> requiredAttributeNames,
+			String filePath)
+		throws PoshiRunnerException {
+
+		for (String requiredAttributeName : requiredAttributeNames) {
+			if (element.attributeValue(requiredAttributeName) == null) {
+				throw new PoshiRunnerException(
+					"Missing " + requiredAttributeName + " attribute\n" +
+						filePath + ":" + element.attributeValue("line-number"));
+			}
+		}
+	}
+
 	private static void _validateTakeScreenshotElement(
 			Element element, String filePath)
 		throws PoshiRunnerException {
@@ -545,6 +556,9 @@ public class PoshiRunnerValidation {
 				_validatePossibleAttributeNames(
 					childElement, possibleAttributeNames, filePath);
 
+				_validateRequiredAttributeNames(
+					childElement, Arrays.asList("name"), filePath);
+
 				_parseElements(childElement, filePath);
 			}
 			else if (childElementName.equals("property")) {
@@ -599,11 +613,8 @@ public class PoshiRunnerValidation {
 	private static void _validateVarElement(Element element, String filePath)
 		throws PoshiRunnerException {
 
-		if (Validator.isNull(element.attributeValue("name"))) {
-			throw new PoshiRunnerException(
-				"Missing name attribute\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
+		_validateRequiredAttributeNames(
+			element, Arrays.asList("name"), filePath);
 
 		List<Attribute> attributes = element.attributes();
 

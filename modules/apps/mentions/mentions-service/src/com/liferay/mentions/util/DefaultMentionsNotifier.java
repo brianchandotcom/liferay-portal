@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component
 public class DefaultMentionsNotifier implements MentionsNotifier {
 
+	@Override
 	public void notify(
 			long userId, long groupId, String title, String content,
 			String className, long classPK,

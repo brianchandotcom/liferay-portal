@@ -42,7 +42,9 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, feed, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), JournalFeed.class.getName(),
+				feed.getFeedId(), actionId);
 		}
 	}
 
@@ -51,7 +53,9 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, id, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), JournalFeed.class.getName(),
+				id, actionId);
 		}
 	}
 
@@ -61,7 +65,9 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, feedId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), JournalFeed.class.getName(),
+				feedId, actionId);
 		}
 	}
 

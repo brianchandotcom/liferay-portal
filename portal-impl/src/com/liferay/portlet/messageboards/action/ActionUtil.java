@@ -52,7 +52,8 @@ public class ActionUtil {
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.BAN_USER)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId(), ActionKeys.BAN_USER);
 		}
 
 		MBBanLocalServiceUtil.checkBan(

@@ -426,7 +426,9 @@ public class PortletPreferencesFactoryImpl
 				// Only users with the correct permissions can update guest
 				// preferences
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker.getUserId(), Layout.class.getName(),
+					layout.getLayoutId(), ActionKeys.UPDATE);
 			}
 		}
 

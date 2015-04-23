@@ -32,7 +32,9 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, column, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), ExpandoColumn.class.getName(),
+				column.getColumnId(), actionId);
 		}
 	}
 
@@ -42,7 +44,9 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, columnId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), ExpandoColumn.class.getName(),
+				columnId, actionId);
 		}
 	}
 
@@ -53,12 +57,10 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(
-				permissionChecker, companyId, className, tableName, columnName,
-				actionId)) {
+		ExpandoColumn column = ExpandoColumnLocalServiceUtil.getColumn(
+			companyId, className, tableName, columnName);
 
-			throw new PrincipalException();
-		}
+		check(permissionChecker, column, actionId);
 	}
 
 	@Override

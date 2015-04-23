@@ -46,7 +46,8 @@ public class BookmarksFolderPermissionChecker
 		throws PortalException {
 
 		if (!contains(permissionChecker, folder, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), BookmarksFolder.class.getName(), folder.getFolderId(), actionId);
 		}
 	}
 
@@ -56,7 +57,8 @@ public class BookmarksFolderPermissionChecker
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, folderId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), BookmarksFolder.class.getName(), folderId, actionId);
 		}
 	}
 

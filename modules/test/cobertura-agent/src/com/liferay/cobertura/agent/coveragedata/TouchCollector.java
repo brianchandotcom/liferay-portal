@@ -37,16 +37,13 @@ public class TouchCollector {
 		for (Entry<LineTouchData, Integer> lineTouchDataEntry :
 				lineTouchDataMap.entrySet()) {
 
-			int hits = lineTouchDataEntry.getValue();
+			LineTouchData lineTouchData = lineTouchDataEntry.getKey();
 
-			if (hits > 0) {
-				LineTouchData lineTouchData = lineTouchDataEntry.getKey();
+			ClassData classData = projectData.getOrCreateClassData(
+				lineTouchData.getClassName());
 
-				ClassData classData = projectData.getOrCreateClassData(
-					lineTouchData.getClassName());
-
-				classData.touch(lineTouchData.getLineNumber(), hits);
-			}
+			classData.touch(
+				lineTouchData.getLineNumber(), lineTouchDataEntry.getValue());
 		}
 
 		Map<SwitchTouchData, Integer> switchTouchDataMap =
@@ -55,19 +52,15 @@ public class TouchCollector {
 		for (Entry<SwitchTouchData, Integer> switchTouchDataEntry :
 				switchTouchDataMap.entrySet()) {
 
-			int hits = switchTouchDataEntry.getValue();
+			SwitchTouchData switchTouchData = switchTouchDataEntry.getKey();
 
-			if (hits > 0) {
-				SwitchTouchData switchTouchData = switchTouchDataEntry.getKey();
+			ClassData classData = projectData.getOrCreateClassData(
+				switchTouchData.getClassName());
 
-				ClassData classData = projectData.getOrCreateClassData(
-					switchTouchData.getClassName());
-
-				classData.touchSwitch(
-					switchTouchData.getLineNumber(),
-					switchTouchData.getSwitchNumber(),
-					switchTouchData.getBranch(), hits);
-			}
+			classData.touchSwitch(
+				switchTouchData.getLineNumber(),
+				switchTouchData.getSwitchNumber(), switchTouchData.getBranch(),
+				switchTouchDataEntry.getValue());
 		}
 
 		Map<JumpTouchData, Integer> jumpTouchDataMap =
@@ -76,19 +69,14 @@ public class TouchCollector {
 		for (Entry<JumpTouchData, Integer> jumpTouchDataEntry :
 				jumpTouchDataMap.entrySet()) {
 
-			int hits = jumpTouchDataEntry.getValue();
+			JumpTouchData jumpTouchData = jumpTouchDataEntry.getKey();
 
-			if (hits > 0) {
-				JumpTouchData jumpTouchData = jumpTouchDataEntry.getKey();
+			ClassData classData = projectData.getOrCreateClassData(
+				jumpTouchData.getClassName());
 
-				ClassData classData = projectData.getOrCreateClassData(
-					jumpTouchData.getClassName());
-
-				classData.touchJump(
-					jumpTouchData.getLineNumber(),
-					jumpTouchData.getBranchNumber(), jumpTouchData.isBranch(),
-					hits);
-			}
+			classData.touchJump(
+				jumpTouchData.getLineNumber(), jumpTouchData.getBranchNumber(),
+				jumpTouchData.isBranch(), jumpTouchDataEntry.getValue());
 		}
 	}
 

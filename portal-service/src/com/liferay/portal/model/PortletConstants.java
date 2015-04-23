@@ -104,7 +104,8 @@ public class PortletConstants {
 	 *
 	 * @param  portletId the portlet ID
 	 * @param  userId the user ID
-	 * @param  instanceId an instance ID
+	 * @param  instanceId an instance ID. If <code>null</code>, an instance ID
+	 *         is derived from the portlet ID.
 	 * @return the properly assembled portlet ID
 	 */
 	public static String assemblePortletId(

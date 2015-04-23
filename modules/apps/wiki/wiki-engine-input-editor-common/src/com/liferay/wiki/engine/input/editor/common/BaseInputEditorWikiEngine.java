@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.wiki.engine.impl;
+package com.liferay.wiki.engine.input.editor.common;
 
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.SessionClicks;
 import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
+import javax.portlet.RenderResponse;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
@@ -33,8 +38,10 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 		ServletRequest servletRequest) {
 
 		return (BaseInputEditorWikiEngine)servletRequest.getAttribute(
-			_WIKI_ENGINE);
+			_BASE_INPUT_EDITOR_WIKI_ENGINE);
 	}
+
+	public abstract String getEditorName();
 
 	public String getHelpPage() {
 		return _helpPage;
@@ -44,28 +51,56 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 		return _helpURL;
 	}
 
+	public String getToggleId(PageContext pageContext) {
+		RenderResponse renderResponse =
+			(RenderResponse)pageContext.getAttribute("renderResponse");
+
+		return renderResponse.getNamespace() + "toggle_id_wiki_editor_help";
+	}
+
+	public boolean isHelpPageDefined() {
+		if (Validator.isNotNull(_helpPage)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSyntaxHelpVisible(PageContext pageContext) {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		String toggleValue = SessionClicks.get(
+			request, getToggleId(pageContext), null);
+
+		if ((toggleValue != null) && toggleValue.equals("block")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public void renderEditPage(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			WikiPage page)
 		throws IOException, ServletException {
 
-		RequestDispatcher requestDispatcher =
-			servletRequest.getRequestDispatcher(
-				"/o/wiki-web/html/portlet/wiki/edit/wiki.jsp");
-
-		servletRequest.setAttribute(_WIKI_ENGINE, this);
+		servletRequest.setAttribute(_BASE_INPUT_EDITOR_WIKI_ENGINE, this);
 
 		super.renderEditPage(servletRequest, servletResponse, page);
 	}
 
 	protected BaseInputEditorWikiEngine(String helpPage, String helpURL) {
+		super("/wiki-engine-input-editor-common/edit_page.jsp");
+
 		_helpPage = helpPage;
 		_helpURL = helpURL;
 	}
 
-	private static final String _WIKI_ENGINE =
-		BaseInputEditorWikiEngine.class.getName() + "#wikiEngine";
+	private static final String _BASE_INPUT_EDITOR_WIKI_ENGINE =
+		BaseInputEditorWikiEngine.class.getName() +
+			"#baseInputEditorWikiEngine";
 
 	private final String _helpPage;
 	private final String _helpURL;

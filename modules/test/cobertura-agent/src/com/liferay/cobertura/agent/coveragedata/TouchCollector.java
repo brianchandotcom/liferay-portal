@@ -31,9 +31,7 @@ import net.sourceforge.cobertura.coveragedata.countermaps.CounterMap;
  */
 public class TouchCollector {
 
-	public static void applyTouchesOnProjectData(
-		ProjectData projectData) {
-
+	public static void applyTouchesOnProjectData(ProjectData projectData) {
 		Map<LineTouchData, Integer> touches =
 			_touchedLines.getFinalStateAndCleanIt();
 
@@ -73,7 +71,7 @@ public class TouchCollector {
 	 * This method is only called by code that has been instrumented.  It
 	 * is not called by any of the Cobertura code or ant tasks.
 	 */
-	public static final void touch(String classId, int lineNumber) {
+	public static void touch(String classId, int lineNumber) {
 		_touchedLines.incrementValue(
 			new LineTouchData(_registerClassData(classId), lineNumber));
 	}
@@ -82,7 +80,7 @@ public class TouchCollector {
 	 * This method is only called by code that has been instrumented.  It
 	 * is not called by any of the Cobertura code or ant tasks.
 	 */
-	public static final void touchJump(
+	public static void touchJump(
 		String classId, int lineNumber, int branchNumber, boolean branch) {
 
 		_jumpTouchData.incrementValue(
@@ -94,7 +92,7 @@ public class TouchCollector {
 	 * This method is only called by code that has been instrumented.  It
 	 * is not called by any of the Cobertura code or ant tasks.
 	 */
-	public static final void touchSwitch(
+	public static void touchSwitch(
 		String classId, int lineNumber, int switchNumber, int branch) {
 
 		_switchTouchData.incrementValue(
@@ -109,7 +107,7 @@ public class TouchCollector {
 			_classId2class.get(key.classId));
 	}
 
-	private static final int _registerClassData(String name) {
+	private static int _registerClassData(String name) {
 		Integer res =_class2classId.get(name);
 
 		if (res == null) {
@@ -142,16 +140,6 @@ public class TouchCollector {
 	}
 
 	private static class JumpTouchData extends LineTouchData {
-
-		public JumpTouchData(
-			int classId, int lineNumber, int branchNumber, boolean branch) {
-
-			super(classId, lineNumber);
-
-			this.branchNumber = branchNumber;
-
-			this.branch = branch;
-		}
 
 		@Override
 		public boolean equals(Object obj) {
@@ -189,14 +177,19 @@ public class TouchCollector {
 		protected boolean branch;
 		protected int branchNumber;
 
+		private JumpTouchData(
+			int classId, int lineNumber, int branchNumber, boolean branch) {
+
+			super(classId, lineNumber);
+
+			this.branchNumber = branchNumber;
+
+			this.branch = branch;
+		}
+
 	}
 
 	private static class LineTouchData {
-
-		public LineTouchData(int classId, int lineNumber) {
-			this.classId = classId;
-			this.lineNumber = lineNumber;
-		}
 
 		@Override
 		public boolean equals(Object obj) {
@@ -240,19 +233,14 @@ public class TouchCollector {
 
 		protected int classId, lineNumber;
 
+		private LineTouchData(int classId, int lineNumber) {
+			this.classId = classId;
+			this.lineNumber = lineNumber;
+		}
+
 	}
 
 	private static class SwitchTouchData extends LineTouchData {
-
-		public SwitchTouchData(
-			int classId, int lineNumber, int switchNumber, int branch) {
-
-			super(classId, lineNumber);
-
-			this.switchNumber = switchNumber;
-
-			this.branch = branch;
-		}
 
 		@Override
 		public boolean equals(Object obj) {
@@ -295,6 +283,16 @@ public class TouchCollector {
 		}
 
 		protected int switchNumber, branch;
+
+		private SwitchTouchData(
+			int classId, int lineNumber, int switchNumber, int branch) {
+
+			super(classId, lineNumber);
+
+			this.switchNumber = switchNumber;
+
+			this.branch = branch;
+		}
 
 	}
 

@@ -31,27 +31,34 @@ import net.sourceforge.cobertura.coveragedata.countermaps.CounterMap;
 public class TouchCollector {
 
 	public static void applyTouchesOnProjectData(ProjectData projectData) {
-		Map<LineTouchData, Integer> touches =
+		Map<LineTouchData, Integer> lineTouchDataMap =
 			_touchedLines.getFinalStateAndCleanIt();
 
-		for (Entry<LineTouchData, Integer> touch :touches.entrySet()) {
-			if (touch.getValue() > 0) {
-				LineTouchData lineTouchData = touch.getKey();
+		for (Entry<LineTouchData, Integer> lineTouchDataEntry :
+				lineTouchDataMap.entrySet()) {
+
+			int hits = lineTouchDataEntry.getValue();
+
+			if (hits > 0) {
+				LineTouchData lineTouchData = lineTouchDataEntry.getKey();
 
 				ClassData classData = projectData.getOrCreateClassData(
 					lineTouchData.getClassName());
 
-				classData.touch(
-					lineTouchData.getLineNumber(), touch.getValue());
+				classData.touch(lineTouchData.getLineNumber(), hits);
 			}
 		}
 
-		Map<SwitchTouchData, Integer> switchTouches =
+		Map<SwitchTouchData, Integer> switchTouchDataMap =
 			_switchTouchData.getFinalStateAndCleanIt();
 
-		for (Entry<SwitchTouchData, Integer> touch :switchTouches.entrySet()) {
-			if (touch.getValue() > 0) {
-				SwitchTouchData switchTouchData = touch.getKey();
+		for (Entry<SwitchTouchData, Integer> switchTouchDataEntry :
+				switchTouchDataMap.entrySet()) {
+
+			int hits = switchTouchDataEntry.getValue();
+
+			if (hits > 0) {
+				SwitchTouchData switchTouchData = switchTouchDataEntry.getKey();
 
 				ClassData classData = projectData.getOrCreateClassData(
 					switchTouchData.getClassName());
@@ -59,16 +66,20 @@ public class TouchCollector {
 				classData.touchSwitch(
 					switchTouchData.getLineNumber(),
 					switchTouchData.getSwitchNumber(),
-					switchTouchData.getBranch(), touch.getValue());
+					switchTouchData.getBranch(), hits);
 			}
 		}
 
-		Map<JumpTouchData, Integer> jumpTouches =
+		Map<JumpTouchData, Integer> jumpTouchDataMap =
 			_jumpTouchData.getFinalStateAndCleanIt();
 
-		for (Entry<JumpTouchData, Integer> touch :jumpTouches.entrySet()) {
-			if (touch.getValue() > 0) {
-				JumpTouchData jumpTouchData = touch.getKey();
+		for (Entry<JumpTouchData, Integer> jumpTouchDataEntry :
+				jumpTouchDataMap.entrySet()) {
+
+			int hits = jumpTouchDataEntry.getValue();
+
+			if (hits > 0) {
+				JumpTouchData jumpTouchData = jumpTouchDataEntry.getKey();
 
 				ClassData classData = projectData.getOrCreateClassData(
 					jumpTouchData.getClassName());
@@ -76,7 +87,7 @@ public class TouchCollector {
 				classData.touchJump(
 					jumpTouchData.getLineNumber(),
 					jumpTouchData.getBranchNumber(), jumpTouchData.isBranch(),
-					touch.getValue());
+					hits);
 			}
 		}
 	}

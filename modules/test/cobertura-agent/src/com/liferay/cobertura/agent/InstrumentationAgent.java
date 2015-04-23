@@ -14,7 +14,6 @@
 
 package com.liferay.cobertura.agent;
 
-import com.liferay.cobertura.agent.coveragedata.TouchCollector;
 import com.liferay.cobertura.agent.instrument.CoberturaClassFileTransformer;
 import com.liferay.cobertura.agent.instrument.ProjectDataUtil;
 
@@ -165,10 +164,6 @@ public class InstrumentationAgent {
 				}
 			}
 		}
-
-		// See LPS-52161
-
-		modifiableClasses.add(TouchCollector.class);
 
 		_instrumentation.retransformClasses(
 			modifiableClasses.toArray(new Class<?>[modifiableClasses.size()]));

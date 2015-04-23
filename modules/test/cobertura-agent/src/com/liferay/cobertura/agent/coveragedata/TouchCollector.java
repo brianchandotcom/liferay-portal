@@ -22,7 +22,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
-import net.sourceforge.cobertura.coveragedata.HasBeenInstrumented;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
 import net.sourceforge.cobertura.coveragedata.countermaps.AtomicCounterMap;
 import net.sourceforge.cobertura.coveragedata.countermaps.CounterMap;
@@ -30,7 +29,7 @@ import net.sourceforge.cobertura.coveragedata.countermaps.CounterMap;
 /**
  * @author Cristina González
  */
-public class TouchCollector implements HasBeenInstrumented {
+public class TouchCollector {
 
 	public static synchronized void applyTouchesOnProjectData(
 		ProjectData projectData) {
@@ -146,8 +145,7 @@ public class TouchCollector implements HasBeenInstrumented {
 		InstrumentationAgent.initialize();
 	}
 
-	private static class JumpTouchData
-		extends LineTouchData implements HasBeenInstrumented {
+	private static class JumpTouchData extends LineTouchData {
 
 		public JumpTouchData(
 			int classId, int lineNumber, int branchNumber, boolean branch) {
@@ -197,7 +195,7 @@ public class TouchCollector implements HasBeenInstrumented {
 
 	}
 
-	private static class LineTouchData implements HasBeenInstrumented {
+	private static class LineTouchData {
 
 		public LineTouchData(int classId, int lineNumber) {
 			this.classId = classId;
@@ -248,8 +246,7 @@ public class TouchCollector implements HasBeenInstrumented {
 
 	}
 
-	private static class SwitchTouchData
-		extends LineTouchData implements HasBeenInstrumented {
+	private static class SwitchTouchData extends LineTouchData {
 
 		public SwitchTouchData(
 			int classId, int lineNumber, int switchNumber, int branch) {

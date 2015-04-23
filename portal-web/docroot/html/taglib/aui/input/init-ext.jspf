@@ -65,8 +65,12 @@ if (baseType.equals("email") || baseType.equals("password") || baseType.equals("
 	fieldCssClass += " form-control";
 }
 
-if (type.equals("switch")) {
-	fieldCssClass += " switch";
+if (type.equals("toggle-card")) {
+	fieldCssClass += " toggle-card";
+}
+
+if (type.equals("toggle-switch")) {
+	fieldCssClass += " toggle-switch";
 }
 
 boolean useInputWrapper = true;

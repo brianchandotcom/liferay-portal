@@ -33,7 +33,7 @@
 		</c:if>
 	</c:if>
 
-	<c:if test='<%= type.equals("switch") %>'>
+	<c:if test='<%= type.equals("toggle-card") || type.equals("toggle-switch") %>'>
 
 		<%
 		String buttonIconOff = (String)dynamicAttributes.get("buttonIconOff");
@@ -41,7 +41,6 @@
 		String iconOff = (String)dynamicAttributes.get("iconOff");
 		String iconOn = (String)dynamicAttributes.get("iconOn");
 		String labelOff = (String)dynamicAttributes.get("labelOff");
-
 		String labelOn = (String)dynamicAttributes.get("labelOn");
 
 		if (localizeLabel) {
@@ -55,25 +54,66 @@
 		}
 		%>
 
-		<span aria-hidden="true" class="switch-bar">
-			<span class="switch-toggle" data-label-off="<%= (Validator.isNotNull(labelOff) ? HtmlUtil.escapeAttribute(labelOff) : StringPool.BLANK) %>" data-label-on="<%= (Validator.isNotNull(labelOn) ? HtmlUtil.escapeAttribute(labelOn) : StringPool.BLANK) %>">
-				<c:if test="<%= Validator.isNotNull(buttonIconOn) %>">
-					<span class="button-icon <%= Validator.isNotNull(buttonIconOff) ? "button-icon-on" : StringPool.BLANK %> switch-icon <%= buttonIconOn %>"></span>
-				</c:if>
+		<c:if test='<%= type.equals("toggle-card") %>'>
 
-				<c:if test="<%= Validator.isNotNull(buttonIconOff) %>">
-					<span class="button-icon button-icon-off switch-icon <%= buttonIconOff %>"></span>
-				</c:if>
+			<%
+			if (Validator.isNull(iconOff)) {
+				iconOff = "icon-circle-blank";
+			}
 
-				<c:if test="<%= Validator.isNotNull(iconOn) %>">
-					<span class="switch-icon switch-icon-on <%= iconOn %>"></span>
-				</c:if>
+			if (Validator.isNull(iconOn)) {
+				iconOn = "icon-ok";
+			}
 
-				<c:if test="<%= Validator.isNotNull(iconOff) %>">
-					<span class="switch-icon switch-icon-off <%= iconOff %>"></span>
-				</c:if>
+			if (Validator.isNull(labelOff)) {
+				labelOff = label;
+			}
+
+			if (Validator.isNull(labelOn)) {
+				labelOn = label;
+			}
+			%>
+
+			<div class="toggle-card-container">
+				<div class="toggle-card-cell">
+					<div class="toggle-card-icon">
+						<span class="toggle-card-off <%= iconOff %>"></span>
+						<span class="toggle-card-on <%= iconOn %>"></span>
+					</div>
+					<div class="toggle-card-label">
+						<c:if test="<%= Validator.isNotNull(labelOff) %>">
+							<span class="toggle-card-off"><%= labelOff %></span>
+						</c:if>
+
+						<c:if test="<%= Validator.isNotNull(labelOn) %>">
+							<span class="toggle-card-on"><%= labelOn %></span>
+						</c:if>
+					</div>
+				</div>
+			</div>
+		</c:if>
+
+		<c:if test='<%= type.equals("toggle-switch") %>'>
+			<span aria-hidden="true" class="toggle-switch-bar">
+				<span class="toggle-switch-handle" data-label-off="<%= (Validator.isNotNull(labelOff) ? HtmlUtil.escapeAttribute(labelOff) : StringPool.BLANK) %>" data-label-on="<%= (Validator.isNotNull(labelOn) ? HtmlUtil.escapeAttribute(labelOn) : StringPool.BLANK) %>">
+					<c:if test="<%= Validator.isNotNull(buttonIconOn) %>">
+						<span class="button-icon <%= Validator.isNotNull(buttonIconOff) ? "button-icon-on" : StringPool.BLANK %> toggle-switch-icon <%= buttonIconOn %>"></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(buttonIconOff) %>">
+						<span class="button-icon button-icon-off toggle-switch-icon <%= buttonIconOff %>"></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(iconOn) %>">
+						<span class="toggle-switch-icon toggle-switch-icon-on <%= iconOn %>"></span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(iconOff) %>">
+						<span class="toggle-switch-icon toggle-switch-icon-off <%= iconOff %>"></span>
+					</c:if>
+				</span>
 			</span>
-		</span>
+		</c:if>
 	</c:if>
 </liferay-util:buffer>
 

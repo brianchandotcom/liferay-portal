@@ -173,4 +173,15 @@ public final class XMLLoggerHandler {
 		return loggerElement.toString();
 	}
 
+	private static String _getLineNumberItemText(String lineNumber) {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("line-number");
+		loggerElement.setID(null);
+		loggerElement.setName("div");
+		loggerElement.setText(lineNumber);
+
+		return loggerElement.toString();
+	}
+
 }

@@ -17,13 +17,13 @@ package com.liferay.cobertura.agent.coveragedata;
 import com.liferay.cobertura.agent.InstrumentationAgent;
 import com.liferay.cobertura.agent.util.HashUtil;
 
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
-import net.sourceforge.cobertura.coveragedata.countermaps.AtomicCounterMap;
-import net.sourceforge.cobertura.coveragedata.countermaps.CounterMap;
 
 /**
  * @author Cristina González
@@ -31,79 +31,103 @@ import net.sourceforge.cobertura.coveragedata.countermaps.CounterMap;
 public class TouchCollector {
 
 	public static void applyTouchesOnProjectData(ProjectData projectData) {
-		Map<LineTouchData, Integer> lineTouchDataMap =
-			_touchedLines.getFinalStateAndCleanIt();
+		for (Entry<LineTouchData, AtomicInteger> entry :
+				_lineTouchHitsMap.entrySet()) {
 
-		for (Entry<LineTouchData, Integer> lineTouchDataEntry :
-				lineTouchDataMap.entrySet()) {
-
-			LineTouchData lineTouchData = lineTouchDataEntry.getKey();
+			LineTouchData lineTouchData = entry.getKey();
 
 			ClassData classData = projectData.getOrCreateClassData(
 				lineTouchData.getClassName());
 
-			classData.touch(
-				lineTouchData.getLineNumber(), lineTouchDataEntry.getValue());
+			AtomicInteger atomicInteger = entry.getValue();
+
+			classData.touch(lineTouchData.getLineNumber(), atomicInteger.get());
 		}
 
-		Map<SwitchTouchData, Integer> switchTouchDataMap =
-			_switchTouchData.getFinalStateAndCleanIt();
+		_lineTouchHitsMap.clear();
 
-		for (Entry<SwitchTouchData, Integer> switchTouchDataEntry :
-				switchTouchDataMap.entrySet()) {
+		for (Entry<SwitchTouchData, AtomicInteger> entry :
+				_switchTouchHitsMap.entrySet()) {
 
-			SwitchTouchData switchTouchData = switchTouchDataEntry.getKey();
+			SwitchTouchData switchTouchData = entry.getKey();
 
 			ClassData classData = projectData.getOrCreateClassData(
 				switchTouchData.getClassName());
 
+			AtomicInteger atomicInteger = entry.getValue();
+
 			classData.touchSwitch(
 				switchTouchData.getLineNumber(),
 				switchTouchData.getSwitchNumber(), switchTouchData.getBranch(),
-				switchTouchDataEntry.getValue());
+				atomicInteger.get());
 		}
 
-		Map<JumpTouchData, Integer> jumpTouchDataMap =
-			_jumpTouchData.getFinalStateAndCleanIt();
+		_switchTouchHitsMap.clear();
 
-		for (Entry<JumpTouchData, Integer> jumpTouchDataEntry :
-				jumpTouchDataMap.entrySet()) {
+		for (Entry<JumpTouchData, AtomicInteger> entry :
+				_jumpTouchHitsMap.entrySet()) {
 
-			JumpTouchData jumpTouchData = jumpTouchDataEntry.getKey();
+			JumpTouchData jumpTouchData = entry.getKey();
 
 			ClassData classData = projectData.getOrCreateClassData(
 				jumpTouchData.getClassName());
 
+			AtomicInteger atomicInteger = entry.getValue();
+
 			classData.touchJump(
 				jumpTouchData.getLineNumber(), jumpTouchData.getBranchNumber(),
-				jumpTouchData.isBranch(), jumpTouchDataEntry.getValue());
+				jumpTouchData.isBranch(), atomicInteger.get());
 		}
+
+		_jumpTouchHitsMap.clear();
 	}
 
 	public static void touch(String className, int lineNumber) {
-		_touchedLines.incrementValue(new LineTouchData(className, lineNumber));
+		_incrementHits(
+			_lineTouchHitsMap, new LineTouchData(className, lineNumber));
 	}
 
 	public static void touchJump(
 		String className, int lineNumber, int branchNumber, boolean branch) {
 
-		_jumpTouchData.incrementValue(
+		_incrementHits(
+			_jumpTouchHitsMap,
 			new JumpTouchData(className, lineNumber, branchNumber, branch));
 	}
 
 	public static void touchSwitch(
 		String className, int lineNumber, int switchNumber, int branch) {
 
-		_switchTouchData.incrementValue(
+		_incrementHits(
+			_switchTouchHitsMap,
 			new SwitchTouchData(className, lineNumber, switchNumber, branch));
 	}
 
-	private static final CounterMap<JumpTouchData> _jumpTouchData =
-		new AtomicCounterMap<>();
-	private static final CounterMap<SwitchTouchData> _switchTouchData =
-		new AtomicCounterMap<>();
-	private static final CounterMap<LineTouchData> _touchedLines =
-		new AtomicCounterMap<>();
+	private static <T extends LineTouchData> void _incrementHits(
+		ConcurrentMap<T, AtomicInteger> hitsMap, T t) {
+
+		AtomicInteger atomicInteger = hitsMap.get(t);
+
+		if (atomicInteger == null) {
+			atomicInteger = new AtomicInteger();
+
+			AtomicInteger previousAtomicInteger = hitsMap.putIfAbsent(
+				t, atomicInteger);
+
+			if (previousAtomicInteger != null) {
+				atomicInteger = previousAtomicInteger;
+			}
+		}
+
+		atomicInteger.incrementAndGet();
+	}
+
+	private static final ConcurrentMap<JumpTouchData, AtomicInteger>
+		_jumpTouchHitsMap = new ConcurrentHashMap<>();
+	private static final ConcurrentMap<LineTouchData, AtomicInteger>
+		_lineTouchHitsMap = new ConcurrentHashMap<>();
+	private static final ConcurrentMap<SwitchTouchData, AtomicInteger>
+		_switchTouchHitsMap = new ConcurrentHashMap<>();
 
 	static {
 		InstrumentationAgent.initialize();

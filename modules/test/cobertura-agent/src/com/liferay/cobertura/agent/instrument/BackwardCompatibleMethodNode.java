@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cobertura.agent;
+package com.liferay.cobertura.agent.instrument;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;

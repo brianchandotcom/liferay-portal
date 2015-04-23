@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.cobertura.agent;
+package com.liferay.cobertura.agent.instrument;
 
 import java.util.Map;
-
-import net.sourceforge.cobertura.instrument.JumpHolder;
-import net.sourceforge.cobertura.instrument.SwitchHolder;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -176,7 +173,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 
 		if (switchHolder != null) {
 			_touchSwitch(
-				switchHolder.getLineNumber(), switchHolder.getSwitchNumber(),
+				switchHolder.getLineNumber(), switchHolder.getJumpNumber(),
 				switchHolder.getBranch());
 		}
 

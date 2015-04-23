@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.cobertura.agent;
+package com.liferay.cobertura.agent.instrument;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
-import net.sourceforge.cobertura.instrument.JumpHolder;
-import net.sourceforge.cobertura.instrument.SwitchHolder;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;

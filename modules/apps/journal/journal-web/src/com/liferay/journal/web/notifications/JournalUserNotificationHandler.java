@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.notification;
+package com.liferay.journal.web.notifications;
 
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;

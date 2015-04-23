@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.notification;
+package com.liferay.journal.web.notifications;
 
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -29,15 +29,15 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = UserNotificationDefinition.class
 )
-public class JournalUpdateEntryUserNotificationDefinition
+public class JournalAddEntryUserNotificationDefinition
 	extends UserNotificationDefinition {
 
-	public JournalUpdateEntryUserNotificationDefinition() {
+	public JournalAddEntryUserNotificationDefinition() {
 		super(
 			JournalPortletKeys.JOURNAL, 0,
-			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-			"receive-a-notification-when-someone-updates-a-web-content-you-" +
-				"are-subscribed-to<");
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+			"receive-a-notification-when-someone-adds-a-new-content-in-a-" +
+				"folder-you-are-subscribed-to");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

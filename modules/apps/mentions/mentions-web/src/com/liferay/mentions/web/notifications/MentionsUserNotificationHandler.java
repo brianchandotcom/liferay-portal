@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.web.notification;
+package com.liferay.mentions.web.notifications;
 
 import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.json.JSONObject;

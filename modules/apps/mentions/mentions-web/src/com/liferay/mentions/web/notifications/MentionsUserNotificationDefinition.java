@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.web.notification;
+package com.liferay.mentions.web.notifications;
 
-import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.mentions.constants.MentionsConstants;
+import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
@@ -22,22 +23,22 @@ import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eduardo Garcia
+ * @author Sergio González
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
+	property = {"javax.portlet.name=" + MentionsPortletKeys.MENTIONS},
 	service = UserNotificationDefinition.class
 )
-public class JournalAddEntryUserNotificationDefinition
+public class MentionsUserNotificationDefinition
 	extends UserNotificationDefinition {
 
-	public JournalAddEntryUserNotificationDefinition() {
+	public MentionsUserNotificationDefinition() {
 		super(
-			JournalPortletKeys.JOURNAL, 0,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-			"receive-a-notification-when-someone-adds-a-new-content-in-a-" +
-				"folder-you-are-subscribed-to");
+			MentionsPortletKeys.MENTIONS, 0,
+			MentionsConstants.NOTIFICATION_TYPE_MENTION,
+			"receive-a-notification-when-someone-mentions-you-in-a-blogs-" +
+				"entry,-a-comment,-or-a-message-boards-message");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

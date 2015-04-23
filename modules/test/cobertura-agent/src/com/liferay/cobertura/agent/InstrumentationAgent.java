@@ -177,10 +177,6 @@ public class InstrumentationAgent {
 		return _lockFile;
 	}
 
-	public static void initialize() {
-		ProjectDataUtil.addMergeHook();
-	}
-
 	public static synchronized void premain(
 		String agentArguments, Instrumentation instrumentation) {
 

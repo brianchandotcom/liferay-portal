@@ -14,7 +14,7 @@
 
 package com.liferay.cobertura.coveragedata;
 
-import com.liferay.cobertura.agent.InstrumentationAgent;
+import com.liferay.cobertura.instrument.ProjectDataUtil;
 import com.liferay.cobertura.util.HashUtil;
 
 import java.util.Map.Entry;
@@ -129,7 +129,7 @@ public class TouchCollector {
 		_switchTouchHitsMap = new ConcurrentHashMap<>();
 
 	static {
-		InstrumentationAgent.initialize();
+		ProjectDataUtil.addMergeHook();
 	}
 
 	private static class JumpTouchData extends LineTouchData {

@@ -148,23 +148,6 @@ public class WorkflowInstanceEditDisplayContext {
 		if (!_workflowLogs.isEmpty()) {
 			_roleMap = new HashMap<>();
 			_userMap = new HashMap<>();
-
-			for (WorkflowLog workflowLog : _workflowLogs) {
-				if (workflowLog.getRoleId() != 0) {
-					if (!_roleMap.containsKey(workflowLog.getRoleId())) {
-						Role curRole = RoleLocalServiceUtil.getRole(
-							workflowLog.getRoleId());
-						_roleMap.put(workflowLog.getRoleId(), curRole);
-					}
-				}
-				else if (workflowLog.getUserId() != 0) {
-					if (_userMap.containsKey(workflowLog.getUserId())) {
-						User curUser = UserLocalServiceUtil.getUser(
-							workflowLog.getUserId());
-						_userMap.put(workflowLog.getUserId(), curUser);
-					}
-				}
-			}
 		}
 
 		_panelTitle = LanguageUtil.format(
@@ -179,9 +162,19 @@ public class WorkflowInstanceEditDisplayContext {
 
 	public String getActorName(WorkflowLog workflowLog) throws PortalException {
 		if (workflowLog.getRoleId() != 0) {
+			if(!_roleMap.containsKey(workflowLog.getRoleId())) {
+				Role curRole = RoleLocalServiceUtil.getRole(
+						workflowLog.getRoleId());
+				_roleMap.put(workflowLog.getRoleId(), curRole);
+			}
 			return _roleMap.get(workflowLog.getRoleId()).getDescriptiveName();
 		}
 		else if (workflowLog.getUserId() != 0) {
+			if(!_userMap.containsKey(workflowLog.getUserId())) {
+				User curUser = UserLocalServiceUtil.getUser(
+						workflowLog.getUserId());
+				_userMap.put(workflowLog.getUserId(), curUser);
+			}
 			return _userMap.get(workflowLog.getUserId()).getFullName();
 		}
 

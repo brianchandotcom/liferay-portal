@@ -14,10 +14,10 @@
 
 package com.liferay.cobertura.agent;
 
-import java.util.Map;
+import com.liferay.cobertura.agent.instrumentation.JumpHolder;
+import com.liferay.cobertura.agent.instrumentation.SwitchHolder;
 
-import net.sourceforge.cobertura.instrument.JumpHolder;
-import net.sourceforge.cobertura.instrument.SwitchHolder;
+import java.util.Map;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;

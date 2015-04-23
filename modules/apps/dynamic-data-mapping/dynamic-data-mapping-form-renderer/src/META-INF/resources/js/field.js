@@ -101,111 +101,6 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
-					render: function() {
-						var instance = this;
-
-						if (!instance.get('container').inDoc()) {
-							instance.renderTemplate();
-						}
-
-						instance.renderUI();
-						instance.bindUI();
-						instance.syncUI();
-					},
-
-					_getFieldType: function() {
-						var instance = this;
-
-						return instance.get('definition').type;
-					},
-
-					_getLabel: function() {
-						var instance = this;
-
-						return instance.get('definition').label[instance.get('locale')];
-					},
-
-					_getName: function() {
-						var instance = this;
-
-						return instance.get('definition').name;
-					},
-
-					_getRepeatable: function() {
-						var instance = this;
-
-						return instance.get('definition').repeatable === true;
-					},
-
-					_syncRepeatableField: function(event) {
-						var instance = this;
-
-						if (instance.get('repeatable')) {
-							var fieldNode = instance.getInputNode();
-
-							instance.set('repeatedIndex', instance._valueRepeatedIndex());
-
-							fieldNode.attr('name', instance.getQualifiedName());
-
-							instance.syncRepeatablelUI();
-						}
-					},
-
-					_valueRepeatedIndex: function() {
-						var instance = this;
-
-						var form = instance.get('form');
-
-						var repeatedIndex = -1;
-
-						var found = false;
-
-						form.getFieldNodes().each(
-							function(item) {
-								if (!found) {
-									var fieldNode = item.one('.field-wrapper');
-
-									var fieldQualifiedName = fieldNode.getData('fieldname');
-
-									var fieldInstanceId = Util.getInstanceIdFromQualifiedName(fieldQualifiedName);
-
-									if (fieldInstanceId === instance.get('instanceId')) {
-										found = true;
-									}
-
-									var fieldName = Util.getFieldNameFromQualifiedName(fieldQualifiedName);
-
-									if (fieldName === instance.get('name')) {
-										repeatedIndex++;
-									}
-								}
-							}
-						);
-
-						return repeatedIndex;
-					},
-
-					_handleToolbarClick: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						if (currentTarget.hasClass('lfr-ddm-form-field-repeatable-add-button')) {
-							instance.repeat();
-						}
-						else if (currentTarget.hasClass('lfr-ddm-form-field-repeatable-delete-button')) {
-							instance.remove();
-						}
-
-						event.stopPropagation();
-					},
-
-					_valueContainer: function() {
-						var instance = this;
-
-						return A.Node.create('<div class="lfr-ddm-form-field-container"></div>');
-					},
-
 					getIndex: function() {
 						var instance = this;
 
@@ -308,6 +203,18 @@ AUI.add(
 						);
 					},
 
+					render: function() {
+						var instance = this;
+
+						if (!instance.get('container').inDoc()) {
+							instance.renderTemplate();
+						}
+
+						instance.renderUI();
+						instance.bindUI();
+						instance.syncUI();
+					},
+
 					renderRepeatableUI: function() {
 						var instance = this;
 
@@ -376,6 +283,99 @@ AUI.add(
 						var siblings = instance.getRepeatedSiblings();
 
 						container.one('.lfr-ddm-form-field-repeatable-delete-button').toggle(instance.get('repeatedIndex') > 0);
+					},
+
+					_getFieldType: function() {
+						var instance = this;
+
+						return instance.get('definition').type;
+					},
+
+					_getLabel: function() {
+						var instance = this;
+
+						return instance.get('definition').label[instance.get('locale')];
+					},
+
+					_getName: function() {
+						var instance = this;
+
+						return instance.get('definition').name;
+					},
+
+					_getRepeatable: function() {
+						var instance = this;
+
+						return instance.get('definition').repeatable === true;
+					},
+
+					_handleToolbarClick: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						if (currentTarget.hasClass('lfr-ddm-form-field-repeatable-add-button')) {
+							instance.repeat();
+						}
+						else if (currentTarget.hasClass('lfr-ddm-form-field-repeatable-delete-button')) {
+							instance.remove();
+						}
+
+						event.stopPropagation();
+					},
+
+					_syncRepeatableField: function(event) {
+						var instance = this;
+
+						if (instance.get('repeatable')) {
+							var fieldNode = instance.getInputNode();
+
+							instance.set('repeatedIndex', instance._valueRepeatedIndex());
+
+							fieldNode.attr('name', instance.getQualifiedName());
+
+							instance.syncRepeatablelUI();
+						}
+					},
+
+					_valueContainer: function() {
+						var instance = this;
+
+						return A.Node.create('<div class="lfr-ddm-form-field-container"></div>');
+					},
+
+					_valueRepeatedIndex: function() {
+						var instance = this;
+
+						var form = instance.get('form');
+
+						var repeatedIndex = -1;
+
+						var found = false;
+
+						form.getFieldNodes().each(
+							function(item) {
+								if (!found) {
+									var fieldNode = item.one('.field-wrapper');
+
+									var fieldQualifiedName = fieldNode.getData('fieldname');
+
+									var fieldInstanceId = Util.getInstanceIdFromQualifiedName(fieldQualifiedName);
+
+									if (fieldInstanceId === instance.get('instanceId')) {
+										found = true;
+									}
+
+									var fieldName = Util.getFieldNameFromQualifiedName(fieldQualifiedName);
+
+									if (fieldName === instance.get('name')) {
+										repeatedIndex++;
+									}
+								}
+							}
+						);
+
+						return repeatedIndex;
 					}
 				}
 			}

@@ -53,12 +53,6 @@
 								'liferay-text-field'
 							]
 						},
-						'liferay-ddm-form-renderer-util': {
-							path: 'util.js',
-							requires: [
-								'array-extras',
-							]
-						},
 						'liferay-ddm-form-renderer-field-types': {
 							path: 'field_types.js',
 							requires: [
@@ -66,6 +60,12 @@
 								'aui-form-builder-field-type',
 								'liferay-ddm-form-renderer-field',
 								'liferay-ddm-form-renderer-util'
+							]
+						},
+						'liferay-ddm-form-renderer-util': {
+							path: 'util.js',
+							requires: [
+								'array-extras'
 							]
 						}
 					},

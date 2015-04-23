@@ -22,7 +22,7 @@ AUI.add(
 						defaultConfig: defaultConfig,
 						fieldClass: fieldClass,
 						icon: config.icon,
-						label: config.label,
+						label: config.label
 					}
 				);
 

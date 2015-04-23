@@ -35,10 +35,11 @@ AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);
 	title='<%= (tag != null) ? tag.getName() : "add-tag" %>'
 />
 
-<portlet:actionURL name="editTag" var="editTagURL" />
+<portlet:actionURL name="editTag" var="editTagURL">
+	<portlet:param name="mvcPath" value="/edit_tag.jsp" />
+</portlet:actionURL>
 
 <aui:form action="<%= editTagURL %>" method="post" name="fm">
-	<aui:input name="mvcPath" type="hidden" value="/edit_tag.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:error exception="<%= AssetTagException.class %>">

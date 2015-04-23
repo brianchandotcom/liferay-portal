@@ -45,10 +45,11 @@ for (long mergeTagId : mergeTagIds) {
 	title="merge-tags"
 />
 
-<portlet:actionURL name="mergeTag" var="mergeURL" />
+<portlet:actionURL name="mergeTag" var="mergeURL">
+	<portlet:param name="mvcPath" value="/merge_tag.jsp" />
+</portlet:actionURL>
 
 <aui:form action="<%= mergeURL %>" method="post" name="fm" onSubmit="event.preventDefault();">
-	<aui:input name="mvcPath" type="hidden" value="/merge_tag.jsp" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 

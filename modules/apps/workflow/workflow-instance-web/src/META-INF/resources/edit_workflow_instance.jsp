@@ -18,7 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-		 
+
 WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest);
 
 AssetRenderer assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
@@ -29,7 +29,7 @@ List<WorkflowTask> workflowTasks = workflowInstanceEditDisplayContext.getWorkflo
 
 PortletURL portletURL = null;
 
-if(!workflowTasks.isEmpty()) {
+if (!workflowTasks.isEmpty()) {
 	portletURL = renderResponse.createRenderURL();
 }
 
@@ -56,14 +56,14 @@ List<WorkflowLog> workflowLogs = workflowInstanceEditDisplayContext.getWorkflowL
 			</aui:col>
 
 			<aui:col width="<%= 33 %>">
-				<aui:input name="endDate" type="resource" value='<%= workflowInstanceEditDisplayContext.getEndDate() %>' />
+				<aui:input name="endDate" type="resource" value="<%= workflowInstanceEditDisplayContext.getEndDate() %>" />
 			</aui:col>
 		</aui:row>
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= Boolean.TRUE %>" id="preview">
 
 			<c:if test="<%= assetRenderer != null %>">
-				<liferay-ui:panel defaultState="open" title='<%= workflowInstanceEditDisplayContext.getPanelTitle() %>'>
+				<liferay-ui:panel defaultState="open" title="<%= workflowInstanceEditDisplayContext.getPanelTitle() %>">
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
@@ -155,12 +155,12 @@ List<WorkflowLog> workflowLogs = workflowInstanceEditDisplayContext.getWorkflowL
 
 							<liferay-ui:search-container-column-text
 								name="due-date"
-								value='<%= workflowInstanceEditDisplayContext.getTaskDueDate(workflowTask) %>'
+								value="<%= workflowInstanceEditDisplayContext.getTaskDueDate(workflowTask) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
 								name="completed"
-								value='<%=  workflowInstanceEditDisplayContext.getTaskCompleted(workflowTask) %>'
+								value="<%= workflowInstanceEditDisplayContext.getTaskCompleted(workflowTask) %>"
 							/>
 
 						</liferay-ui:search-container-row>

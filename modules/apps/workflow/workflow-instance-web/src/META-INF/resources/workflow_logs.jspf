@@ -14,9 +14,10 @@
  */
 --%>
 
-  <%
-  for (WorkflowLog workflowLog : workflowLogs) {
-  %>
+<%
+for (WorkflowLog workflowLog : workflowLogs) {
+%>
+
 	<div class="task-activity">
 		<div class="task-activity-date">
 			<c:choose>
@@ -56,7 +57,7 @@
 				<c:choose>
 					<c:when test="<%= workflowInstanceEditDisplayContext.isAuditUser(workflowLog) %>">
 						<div>
-							<liferay-ui:message arguments="<%= workflowInstanceEditDisplayContext.getUserFullName(workflowLog) %>" key='<%= workflowInstanceEditDisplayContext.getAssignedTheTaskMessageKey(workflowLog) %>' translateArguments="<%= Boolean.FALSE %>" />
+							<liferay-ui:message arguments="<%= workflowInstanceEditDisplayContext.getUserFullName(workflowLog) %>" key="<%= workflowInstanceEditDisplayContext.getAssignedTheTaskMessageKey(workflowLog) %>" translateArguments="<%= Boolean.FALSE %>" />
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -64,7 +65,7 @@
 							<c:when test="<%= workflowLog.getRoleId() == 0 %>">
 								<div>
 									<liferay-ui:message arguments="<%= workflowInstanceEditDisplayContext.getAssignedTheTaskToMessageArguments(workflowLog) %>" key="x-assigned-the-task-to-x" translateArguments="<%= Boolean.FALSE %>" />
-	
+
 									<c:if test="<%= workflowLog.getPreviousUserId() != 0 %>">
 										<liferay-ui:message arguments="<%= workflowInstanceEditDisplayContext.getPreviousAssigneeMessageArguments(workflowLog) %>" key="previous-assignee-was-x" translateArguments="<%= Boolean.FALSE %>" />
 									</c:if>
@@ -85,6 +86,7 @@
 			<%= workflowInstanceEditDisplayContext.getWorkflowLogComment(workflowLog) %>
 		</div>
 	</div>
-  <%
-  }
-  %>
+
+<%
+}
+%>

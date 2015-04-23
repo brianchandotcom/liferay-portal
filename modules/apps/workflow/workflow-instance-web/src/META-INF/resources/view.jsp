@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-
 WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(liferayPortletRequest, renderResponse);
 
 PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();

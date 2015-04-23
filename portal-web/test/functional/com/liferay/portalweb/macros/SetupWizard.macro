@@ -1,25 +1,107 @@
 <definition>
-	<command name="configureDefaultPG">
-		<var name="administratorEmail" value="test@liferay.com" />
-		<var name="administratorFirstName" value="Test" />
-		<var name="administratorLastName" value="Test" />
+	<command name="configureAdministratorUserPG">
+		<execute function="Type" locator1="Setupwizard#ADMINISTRATOR_USER_FIRST_NAME_FIELD" value1="${administratorFirstName}" />
+		<execute function="Type" locator1="Setupwizard#ADMINISTRATOR_USER_LAST_NAME_FIELD" value1="${administratorLastName}" />
+		<execute function="Type" locator1="Setupwizard#ADMINISTRATOR_USER_EMAIL_FIELD" value1="${administratorEmail}" />
+	</command>
 
-		<execute macro="Page#openURL" />
-
-		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#PORTAL_PORTAL_NAME_FIELD" value1="Liferay" />
-
+	<command name="configureDatabasePG">
 		<if>
-			<equals arg1="${setupWizardAddSampleData}" arg2="false" />
+			<condition function="IsElementNotPresent" locator1="Setupwizard#DATABASE_CHANGE_USE_CONFIGURED_DATABASE_LINK" />
+			<then>
+				<execute function="AssertClick" locator1="Setupwizard#DATABASE_CHANGE_LINK" value1="(Change)" />
+			</then>
+		</if>
+
+		<execute function="Select" locator1="Setupwizard#DATABASE_CHANGE_DATABASE_TYPE_SELECT" value1="${databaseType}" />
+		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_JDBC_URL_FIELD" value1="${jdbcURL}" />
+		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD" value1="${jdbcDriverClassName}" />
+		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_USER_NAME_FIELD" value1="${databaseUserName}" />
+		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_PASSWORD_FIELD" value1="${databasePassword}" />
+	</command>
+
+	<command name="configureDefaultPG">
+		<execute macro="SetupWizard#viewDefaultPortalNamePG" />
+
+		<execute macro="SetupWizard#configureSampleDataPG">
+			<var name="addSampleData" value="${addSampleData}" />
+		</execute>
+
+		<execute macro="SetupWizard#viewDefaultAdministratorUserPG" />
+
+		<execute macro="SetupWizard#viewDefaultDatabasePG" />
+
+		<execute macro="SetupWizard#finishConfigurationPG" />
+
+		<execute macro="SetupWizard#viewConfigurationSavedPG" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
+		<execute macro="User#firstLoginPG" />
+	</command>
+
+	<command name="configurePG">
+		<execute macro="SetupWizard#viewDefaultPortalNamePG" />
+
+		<execute macro="SetupWizard#configureSampleDataPG">
+			<var name="addSampleData" value="${addSampleData}" />
+		</execute>
+
+		<execute macro="SetupWizard#configureAdministratorUserPG">
+			<var name="administratorEmail" value="${administratorEmail}" />
+			<var name="administratorFirstName" value="${administratorFirstName}" />
+			<var name="administratorLastName" value="${administratorLastName}" />
+		</execute>
+
+		<execute macro="SetupWizard#configureDatabasePG">
+			<var name="databasePassword" value="${databasePassword}" />
+			<var name="databaseType" value="${databaseType}" />
+			<var name="databaseUserName" value="${databaseUserName}" />
+			<var name="jdbcDriverClassName" value="${jdbcDriverClassName}" />
+			<var name="jdbcURL" value="${jdbcURL}" />
+		</execute>
+
+		<execute macro="SetupWizard#finishConfigurationPG" />
+
+		<execute macro="SetupWizard#viewConfigurationSavedPG" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
+		<execute macro="User#firstLoginPG" />
+	</command>
+
+	<command name="configureSampleDataPG">
+		<if>
+			<equals arg1="${addSampleData}" arg2="false" />
 			<then>
 				<execute function="Uncheck" locator1="Setupwizard#PORTAL_ADD_SAMPLE_DATA_CHECKBOX" />
 			</then>
 		</if>
+	</command>
 
+	<command name="finishConfigurationPG">
+		<execute function="AssertClick" locator1="Setupwizard#FINISH_CONFIGURATION_BUTTON" value1="Finish Configuration" />
+	</command>
+
+	<command name="viewConfigurationSavedPG">
+		<execute function="AssertTextEquals" locator1="SetupwizardFinishconfiguration#SUCCESS_MESSAGE" value1="Your configuration was saved successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
+		<execute function="AssertTextEquals" locator1="SetupwizardFinishconfiguration#CONFIGURATION_STATUS_MESSAGE" value1="Changes will take effect once the portal is restarted. Please restart the portal now." />
+	</command>
+
+	<command name="viewDefaultAdministratorUserPG">
 		<execute function="AssertSelectedLabel" locator1="Setupwizard#PORTAL_DEFAULT_LANGUAGE_SELECT" value1="English (United States)" />
-		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#ADMINISTRATOR_USER_FIRST_NAME_FIELD" value1="${administratorFirstName}" />
-		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#ADMINISTRATOR_USER_LAST_NAME_FIELD" value1="${administratorLastName}" />
-		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#ADMINISTRATOR_USER_EMAIL_FIELD" value1="${administratorEmail}" />
+		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#ADMINISTRATOR_USER_FIRST_NAME_FIELD" value1="Test" />
+		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#ADMINISTRATOR_USER_LAST_NAME_FIELD" value1="Test" />
+		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#ADMINISTRATOR_USER_EMAIL_FIELD" value1="test@liferay.com" />
+	</command>
 
+	<command name="viewDefaultDatabasePG">
 		<if>
 			<condition function="IsElementPresent" locator1="Setupwizard#DATABASE_DEFAULT_LABEL" />
 			<then>
@@ -37,18 +119,9 @@
 				<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_CHANGE_PASSWORD_LABEL" value1="Password" />
 			</else>
 		</if>
+	</command>
 
-		<execute function="AssertClick" locator1="Setupwizard#FINISH_CONFIGURATION_BUTTON" value1="Finish Configuration" />
-
-		<execute function="AssertTextEquals" locator1="SetupwizardFinishconfiguration#SUCCESS_MESSAGE" value1="Your configuration was saved successfully." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
-		<execute function="AssertTextEquals" locator1="SetupwizardFinishconfiguration#CONFIGURATION_STATUS_MESSAGE" value1="Changes will take effect once the portal is restarted. Please restart the portal now." />
-
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer" />
-
-		<execute macro="User#firstLoginPG" />
+	<command name="viewDefaultPortalNamePG">
+		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#PORTAL_PORTAL_NAME_FIELD" value1="Liferay" />
 	</command>
 </definition>

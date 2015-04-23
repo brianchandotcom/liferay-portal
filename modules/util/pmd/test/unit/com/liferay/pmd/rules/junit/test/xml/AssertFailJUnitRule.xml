@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+
+<test-data>
+	<test-code>
+		<description><![CDATA[Not fail when there is call to Assert#fail inside 1.7 try block as the last statement.]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+import java.io.Closeable;
+import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try(Closeable closeable = new Closeable() {
+
+			@Override
+			public void close() throws IOException {
+				System.out.println("close");
+			}}) {
+
+			// ...
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+
+			// ...
+
+		}
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[Not fail when there is call to Assert#fail inside a try block as the last parameter with a finally block.]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try {
+
+			// ...
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+
+			// ...
+
+		}
+		finally {
+
+			// ...
+
+		}
+	}
+
+}
+			]]></code>
+	</test-code>
+	<test-code>
+	<description><![CDATA[Not fail when there is a call to Assert#fail inside a 1.7 try block as the last parameter with a finally block.]]></description>
+	<expected-problems>0</expected-problems>
+	<code><![CDATA[
+
+import java.io.Closeable;
+import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try(Closeable closeable = new Closeable() {
+
+			@Override
+			public void close() throws IOException {
+				System.out.println("close");
+			}}) {
+			// ...
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+			// ...
+		}
+		finally {
+			// ...
+		}
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[Not fail when there is call to a method that starts with fail.]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try {
+			//...
+		}
+		catch (Exception e) {
+			failMethod();
+		}
+	}
+
+	protected void failMethod() {
+		//...
+	}
+
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[Not fail when there are is call to Assert#fail inside a try block as the last statement.]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try {
+			System.out.println("SOME CODE");
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+		}
+	}
+
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[Not fail when there is call to Assert#fail inside a try block as the last statement.]]></description>
+		<expected-problems>0</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try {
+
+			// ...
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+			Assert.assertEquals("ERROR", e.getMessage());
+		}
+	}
+
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[Fail when there is call to Assert#fail outside a try/catch block.]]></description>
+		<expected-problems>1</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		Assert.fail();
+	}
+
+}
+			]]></code>
+	</test-code>
+	<test-code>
+	<description><![CDATA[Not fail when there is call to Assert#fail inside a try block as the last statement.]]></description>
+	<expected-problems>0</expected-problems>
+	<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try {
+
+			// ...
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+		}
+	}
+
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[Fail when there is call to Assert#fail inside a catch block.]]></description>
+		<expected-problems>1</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try {
+
+			// ...
+
+		}
+		catch (Exception e) {
+			{
+				Assert.fail();
+			}
+		}
+	}
+
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[Fail when there is call to Assert#fail inside a catch block even if there are statements around Assert#fail.]]></description>
+		<expected-problems>1</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try {
+
+			// ...
+
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+
+			Assert.fail();
+		}
+	}
+}
+			]]></code>
+	</test-code>
+	<test-code>
+		<description><![CDATA[Fail when there is call to Assert#fail inside a catch block.]]></description>
+		<expected-problems>1</expected-problems>
+		<code><![CDATA[
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ClassTest {
+
+	@Test
+	public void test() {
+		try {
+
+			// ...
+
+		}
+		catch (Exception e) {
+			Assert.fail();
+		}
+	}
+}
+			]]></code>
+	</test-code>
+</test-data>

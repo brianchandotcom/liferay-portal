@@ -2,5 +2,7 @@
 <!DOCTYPE project>
 
 <project>
+	<property name="osgi.ide.dependencies" value="ant.jar" />
+
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

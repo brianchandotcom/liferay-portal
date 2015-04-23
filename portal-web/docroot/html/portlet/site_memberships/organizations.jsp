@@ -109,6 +109,11 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		keyProperty="organizationId"
 		modelVar="organization"
 	>
+		<liferay-ui:search-container-row-parameter
+			name="group"
+			value="<%= group %>"
+		/>
+
 		<liferay-ui:search-container-column-text
 			name="name"
 			orderable="<%= true %>"
@@ -146,6 +151,14 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			name="country"
 			value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
 		/>
+
+		<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
+			<liferay-ui:search-container-column-jsp
+				align="right"
+				cssClass="entry-action"
+				path="/html/portlet/site_memberships/organization_action.jsp"
+			/>
+		</c:if>
 	</liferay-ui:search-container-row>
 
 	<liferay-util:buffer var="formButton">

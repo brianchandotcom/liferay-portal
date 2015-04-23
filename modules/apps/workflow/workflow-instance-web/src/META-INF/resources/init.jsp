@@ -65,7 +65,9 @@ page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys" %>
+page import="com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys" %><%@
+page import="com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceViewDisplayContext" %><%@
+page import="com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceEditDisplayContext" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -82,14 +84,12 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
 WindowState windowState = liferayPortletRequest.getWindowState();
 
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
+
 %>
 
 <%@ include file="/init-ext.jsp" %>

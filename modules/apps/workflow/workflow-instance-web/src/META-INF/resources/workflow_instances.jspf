@@ -19,31 +19,20 @@
 >
 
 	<%
-	boolean allInstances = false;
+	workflowInstanceViewDisplayContext.loadSearchContainer(searchContainer);
 	%>
 
-	<liferay-ui:search-container-results>
-		<%@ include file="/workflow_search_results.jspf" %>
-	</liferay-ui:search-container-results>
+	<liferay-ui:search-container-results results="<%= searchContainer.getResults() %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowInstance"
 		modelVar="workflowInstance"
-		stringKey="<%= true %>"
+		stringKey="<%= Boolean.TRUE %>"
 	>
 		<liferay-ui:search-container-row-parameter
 			name="workflowInstance"
 			value="<%= workflowInstance %>"
 		/>
-
-		<%
-		Map<String, Serializable> workflowContext = workflowInstance.getWorkflowContext();
-
-		String className = (String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
-		long classPK = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-
-		WorkflowHandler workflowHandler = WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
-		%>
 
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_instance.jsp" />
@@ -54,50 +43,40 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="definition"
-			value="<%= LanguageUtil.get(request, HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName())) %>"
+			value="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="asset-title"
-			value="<%= HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)) %>"
+			value="<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="asset-type"
-			value="<%= workflowHandler.getType(locale) %>"
+			value="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="status"
-			value="<%= LanguageUtil.get(request, HtmlUtil.escape(workflowInstance.getState())) %>"
+			value="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>"
 		/>
-
-		<%
-		List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowInstance.getWorkflowInstanceId(), null, 0, 1, WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
-
-		WorkflowLog workflowLog = null;
-
-		if (!workflowLogs.isEmpty()) {
-			workflowLog = workflowLogs.get(0);
-		}
-		%>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="last-activity-date"
-			value='<%= (workflowLog == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowLog.getCreateDate()) %>'
+			value='<%= workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance) %>'
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="end-date"
-			value='<%= (workflowInstance.getEndDate() == null ) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowInstance.getEndDate()) %>'
+			value='<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) %>'
 		/>
 
-		<c:if test='<%= !allInstances && !tabs2.equals("completed") %>'>
+		<c:if test='<%= workflowInstanceViewDisplayContext.showEntryAction() %>'>
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"

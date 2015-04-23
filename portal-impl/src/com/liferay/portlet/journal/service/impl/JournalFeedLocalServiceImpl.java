@@ -349,7 +349,7 @@ public class JournalFeedLocalServiceImpl
 			DDMForm ddmForm = ddmStructure.getDDMForm();
 
 			Map<String, DDMFormField> ddmFormFieldsMap =
-				ddmForm.getDDMFormFieldsMap(false);
+				ddmForm.getDDMFormFieldsMap(true);
 
 			if (ddmFormFieldsMap.containsKey(contentField)) {
 				return true;

@@ -62,6 +62,6 @@ public class PoshiRunnerExtension {
 
 	private File _baseDir;
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
-	private String _version = "+";
+	private String _version = "latest.release";
 
 }

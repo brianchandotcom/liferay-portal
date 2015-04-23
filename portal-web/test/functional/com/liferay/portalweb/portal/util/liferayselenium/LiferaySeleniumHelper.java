@@ -1054,6 +1054,12 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-55120, temporary workaround while Brian Wulbern investigates it
+
+		if (line.contains("java.io.IOException: Stream closed.")) {
+			return true;
+		}
+
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

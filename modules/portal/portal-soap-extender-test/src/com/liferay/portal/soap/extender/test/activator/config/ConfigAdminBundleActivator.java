@@ -103,7 +103,8 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 			"SoapExtenderConfiguration";
 
 	private static final String _WEB_SERVICE_PUBLISHER_CONFIGURATION =
-		"com.liferay.portal.ws.configuration.WebServicePublisherConfiguration";
+		"com.liferay.portal.cxf.common.configuration." +
+			"CXFEndpointPublisherConfiguration";
 
 	private Configuration _cxfConfiguration;
 	private Configuration _jaxwsApiConfiguration;

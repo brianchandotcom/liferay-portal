@@ -18,11 +18,12 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
+<%@ page import="com.liferay.mentions.util.WebKeys" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
 <%
-boolean mentionsEnabled = GetterUtil.getBoolean(request.getAttribute("mentions.jsp-mentionsEnabled"));
-boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute("mentions.jsp-companyMentionsEnabled"));
+boolean groupMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(WebKeys.GROUP_MENTIONS_ENABLED));
+boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(WebKeys.COMPANY_MENTIONS_ENABLED));
 %>
 
 <h3><liferay-ui:message key="mentions" /></h3>
@@ -33,4 +34,4 @@ boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute("men
 	</div>
 </c:if>
 
-<aui:input checked="<%= mentionsEnabled %>" disabled="<%= !companyMentionsEnabled %>" label="enable-mentions" name="TypeSettingsProperties--mentionsEnabled--" type="checkbox" value="<%= mentionsEnabled %>" />
+<aui:input checked="<%= groupMentionsEnabled %>" disabled="<%= !companyMentionsEnabled %>" label="enable-mentions" name="TypeSettingsProperties--mentionsEnabled--" type="checkbox" value="<%= groupMentionsEnabled %>" />

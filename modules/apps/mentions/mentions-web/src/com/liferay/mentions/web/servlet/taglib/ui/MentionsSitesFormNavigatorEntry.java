@@ -14,13 +14,13 @@
 
 package com.liferay.mentions.web.servlet.taglib.ui;
 
+import com.liferay.mentions.util.WebKeys;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -70,7 +70,7 @@ public class MentionsSitesFormNavigatorEntry
 			typeSettingsProperties = new UnicodeProperties();
 		}
 
-		boolean mentionsEnabled = GetterUtil.getBoolean(
+		boolean groupMentionsEnabled = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("mentionsEnabled"), true);
 
 		PortletPreferences companyPortletPreferences =
@@ -80,8 +80,9 @@ public class MentionsSitesFormNavigatorEntry
 			companyPortletPreferences, request, "mentionsEnabled", true);
 
 		request.setAttribute(
-			"mentions.jsp-companyMentionsEnabled", companyMentionsEnabled);
-		request.setAttribute("mentions.jsp-mentionsEnabled", mentionsEnabled);
+			WebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
+		request.setAttribute(
+			WebKeys.GROUP_MENTIONS_ENABLED, groupMentionsEnabled);
 
 		super.render(request, response);
 	}

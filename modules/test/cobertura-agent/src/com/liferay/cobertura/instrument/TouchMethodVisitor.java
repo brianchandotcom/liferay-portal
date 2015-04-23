@@ -14,6 +14,8 @@
 
 package com.liferay.cobertura.instrument;
 
+import com.liferay.cobertura.coveragedata.TouchCollector;
+
 import java.util.Map;
 
 import org.objectweb.asm.Label;
@@ -351,8 +353,8 @@ public class TouchMethodVisitor extends MethodVisitor {
 			"(Ljava/lang/String;III)V", false);
 	}
 
-	private static final String _TOUCH_COLLECTOR_CLASS =
-		"com/liferay/cobertura/coveragedata/TouchCollector";
+	private static final String _TOUCH_COLLECTOR_CLASS = Type.getInternalName(
+		TouchCollector.class);
 
 	private int _currentJump;
 	private int _currentLine;

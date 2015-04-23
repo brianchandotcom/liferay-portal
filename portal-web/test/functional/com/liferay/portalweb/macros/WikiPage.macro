@@ -834,8 +834,8 @@
 				<equals arg1="${siteURL}" arg2="true" />
 			</and>
 			<then>
-				<var method="StringUtil#replace(${siteName}, ' ', '-')" name="siteNameURL" />
-				<var method="StringUtil#lowerCase(/${siteNameURL})" name="siteNameURL" />
+				<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
+				<var method="StringUtil#lowerCase('/${siteNameURL}')" name="siteNameURL" />
 			</then>
 			<elseif>
 				<isset var="friendlyURL" />
@@ -858,13 +858,13 @@
 			</else>
 		</if>
 
-		<var method="StringUtil#replace(${pageName}, ' ', '-')" name="pageNameURL" />
-		<var method="StringUtil#lowerCase(/${pageNameURL})" name="pageNameURL" />
+		<var method="StringUtil#replace('${pageName}', ' ', '-')" name="pageNameURL" />
+		<var method="StringUtil#lowerCase('/${pageNameURL}')" name="pageNameURL" />
 
 		<if>
 			<isset var="wikiNodeName" />
 			<then>
-				<var method="StringUtil#replace(${wikiNodeName}, ' ', '-')" name="wikiNodeNameURL" />
+				<var method="StringUtil#replace('${wikiNodeName}', ' ', '-')" name="wikiNodeNameURL" />
 				<var name="wikiNodeNameURL" value="/${wikiNodeNameURL}" />
 			</then>
 			<else>
@@ -872,8 +872,8 @@
 			</else>
 		</if>
 
-		<var method="StringUtil#replace(${wikiPage2Title}, ' ', '+')" name="wikiPage2TitleURL" />
-		<var method="StringUtil#lowerCase(${wikiPage2TitleURL})" name="wikiPage2TitleURL" />
+		<var method="StringUtil#replace('${wikiPage2Title}', ' ', '+')" name="wikiPage2TitleURL" />
+		<var method="StringUtil#lowerCase('${wikiPage2TitleURL}')" name="wikiPage2TitleURL" />
 
 		<if>
 			<isset var="virtualHostsURL" />
@@ -977,7 +977,7 @@
 	</command>
 
 	<command name="removeViewPermissionPG">
-		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
+		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="AssertClick" locator1="PGWiki#DETAILS_BUTTON" value1="Details" />
@@ -1561,13 +1561,13 @@
 
 	<command name="viewTagPG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-		<var method="StringUtil#lowerCase(${tagName})" name="tagName" />
+		<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
 
 		<execute function="AssertTextEquals" locator1="PGWiki#WIKI_PAGE_TAG" value1="${tagName}" />
 	</command>
 
 	<command name="viewTagViaAddPG">
-		<var method="StringUtil#lowerCase(${tagName})" name="tagName" />
+		<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
 
 		<execute function="AssertElementPresent" locator1="PGWikiAddpage#CATEGORIZATION_TAG" value1="${tagName}" />
 	</command>

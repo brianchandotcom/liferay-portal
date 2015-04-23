@@ -461,8 +461,8 @@
 			</elseif>
 		</if>
 
-		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
-		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
+		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
+		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${calendarName}" />
@@ -573,8 +573,8 @@
 			</elseif>
 		</if>
 
-		<var method="StringUtil#replace(${roleName}, ' ', '-')" name="key_roleName" />
-		<var method="StringUtil#lowerCase(${key_roleName})" name="key_roleName" />
+		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
+		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${calendarName}" />

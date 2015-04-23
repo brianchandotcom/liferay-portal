@@ -114,7 +114,7 @@
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 
-		<var method="selenium#getText(&quot;//div[@id='_156_exportProcesses']//table//tr/td[5]/span/a/span&quot;)" name="valueName" />
+		<var method="selenium#getText('//div[@id=\'_156_exportProcesses\']//table//tr/td[5]/span/a/span')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -179,7 +179,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText(&quot;//div[@id='_156_exportProcesses']//table//tr/td[5]/span/a/span&quot;)" name="valueName" />
+		<var method="selenium#getText('//div[@id=\'_156_exportProcesses\']//table//tr/td[5]/span/a/span')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -232,7 +232,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -280,7 +280,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -354,7 +354,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -410,7 +410,7 @@
 
 		<execute macro="SampleLARPortlet#addSampleBooking" />
 
-		<var method="selenium#getText(&quot;//tbody[@class='table-data']/tr/td[2]&quot;)" name="bookingNumber" />
+		<var method="selenium#getText('//tbody[@class=\'table-data\']/tr/td[2]')" name="bookingNumber" />
 
 		<echo message="Booking Number ${bookingNumber}" />
 
@@ -522,7 +522,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -593,7 +593,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -646,7 +646,7 @@
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 
-		<var method="selenium#getText(&quot;//div[@id='_156_exportProcesses']//table//tr/td[5]/span/a/span&quot;)" name="valueName" />
+		<var method="selenium#getText('//div[@id=\'_156_exportProcesses\']//table//tr/td[5]/span/a/span')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -738,7 +738,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 

@@ -2,7 +2,7 @@
 	<command name="configureDisplayContent">
 		<execute function="SelectFrame" locator1="PGUsersegmentcontentdisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
-		<var method="selenium#getNumberDecrement(${rowNumber})" name="rowIndexNumber" />
+		<var method="selenium#getNumberDecrement('${rowNumber}')" name="rowIndexNumber" />
 
 		<if>
 			<not>

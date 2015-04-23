@@ -128,7 +128,7 @@
 				<equals arg1="${number}" arg2="4" />
 			</not>
 			<then>
-				<var method="MathUtil#sum(&quot;1&quot;, ${number})" name="number" />
+				<var method="MathUtil#sum('1', '${number}')" name="number" />
 			</then>
 		</while>
 

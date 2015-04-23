@@ -250,7 +250,7 @@
 
 		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_PAGE" value1="${dashboardPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${microblogsStatusUpdatePortletLocalized}&quot;)" name="microblogsStatusUpdatePortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${microblogsStatusUpdatePortletLocalized}')" name="microblogsStatusUpdatePortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${microblogsStatusUpdatePortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalizedUpperCase}" />
@@ -275,7 +275,7 @@
 
 		<execute function="AssertClick" locator1="SODashboard#NAVIGATION_PAGE" value1="${contactsCenterPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${contactsCenterPortletLocalized}&quot;)" name="contactsCenterPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${contactsCenterPortletLocalized}')" name="contactsCenterPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${contactsCenterPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${contactsCenterPortletLocalizedUpperCase}" />
@@ -284,7 +284,7 @@
 
 		<execute function="AssertClick" locator1="SODashboard#NAVIGATION_PAGE" value1="${microblogsPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${microblogsPortletLocalized}&quot;)" name="microblogsPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${microblogsPortletLocalized}')" name="microblogsPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${microblogsPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${microblogsPortletLocalizedUpperCase}" />
@@ -293,7 +293,7 @@
 
 		<execute function="AssertClick" locator1="SODashboard#NAVIGATION_PAGE" value1="${messagesPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${privateMessagingPortletLocalized}&quot;)" name="privateMessagingPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${privateMessagingPortletLocalized}')" name="privateMessagingPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${privateMessagingPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${privateMessagingPortletLocalizedUpperCase}" />
@@ -302,7 +302,7 @@
 
 		<execute function="AssertClick" locator1="SODashboard#NAVIGATION_PAGE" value1="${myDocumentsPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${documentsAndMediaPortletLocalized}&quot;)" name="documentsAndMediaPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${documentsAndMediaPortletLocalized}')" name="documentsAndMediaPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${documentsAndMediaPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalizedUpperCase}" />
@@ -311,7 +311,7 @@
 
 		<execute function="AssertClick" locator1="SODashboard#NAVIGATION_PAGE" value1="${tasksPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${tasksPortletLocalized}&quot;)" name="tasksPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${tasksPortletLocalized}')" name="tasksPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${tasksPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${tasksPortletLocalizedUpperCase}" />

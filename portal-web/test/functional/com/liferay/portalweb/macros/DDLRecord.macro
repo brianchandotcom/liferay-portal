@@ -256,7 +256,7 @@
 		<while>
 			<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
 			<then>
-				<var method="MathUtil#sum(${i}, 1)" name="i" />
+				<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 				<if>
 					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
@@ -302,7 +302,7 @@
 		<while>
 			<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
 			<then>
-				<var method="MathUtil#sum(${i}, 1)" name="i" />
+				<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 				<if>
 					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
@@ -558,7 +558,7 @@
 		<if>
 			<equals arg1="${field}" arg2="Geolocation" />
 			<then>
-				<var method="selenium#getText(//div[@id='_167_ocerSearchContainer']//tr/td[1]/a)" name="coordinates" />
+				<var method="selenium#getText('//div[@id=\'_167_ocerSearchContainer\']//tr/td[1]/a')" name="coordinates" />
 
 				<echo message="Location rounded coordinates: ${coordinates}" />
 

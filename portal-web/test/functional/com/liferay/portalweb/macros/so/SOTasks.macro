@@ -95,7 +95,7 @@
 				</if>
 
 				<var locator="SOTasksAdd#DUE_DATE_MINUTE" name="displayDateMinute" />
-				<var method="MathUtil#sum(${displayDateMinute}, 2)" name="displayDateMinuteFuture" />
+				<var method="MathUtil#sum('${displayDateMinute}', '2')" name="displayDateMinuteFuture" />
 				<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
 
 				<if>
@@ -106,8 +106,8 @@
 				</if>
 
 				<var locator="SOTasksAdd#DUE_DATE_MERIDIAN" name="displayDateMeridian" />
-				<var method="StringUtil#replace(${displayDateMeridian}, '0', 'AM')" name="displayDateMeridian" />
-				<var method="StringUtil#replace(${displayDateMeridian}, '1', 'PM')" name="displayDateMeridian" />
+				<var method="StringUtil#replace('${displayDateMeridian}', '0', 'AM')" name="displayDateMeridian" />
+				<var method="StringUtil#replace('${displayDateMeridian}', '1', 'PM')" name="displayDateMeridian" />
 
 				<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}" />
 
@@ -125,7 +125,7 @@
 						<equals arg1="${tagNumber}" arg2="${numberOfTags}" />
 					</not>
 					<then>
-						<var method="MathUtil#sum(${tagNumber}, 1)" name="tagNumber" />
+						<var method="MathUtil#sum('${tagNumber}', '1')" name="tagNumber" />
 
 						<execute function="Type" locator1="SOTasksAdd#TASK_TAG_FIELD" value1="tag${tagNumber}" />
 						<execute function="Click" locator1="SOTasksAdd#TASK_ADD_TAG_BUTTON" />
@@ -808,7 +808,7 @@
 						<equals arg1="${tagNumber}" arg2="${numberOfTags}" />
 					</not>
 					<then>
-						<var method="MathUtil#sum(${tagNumber}, 1)" name="tagNumber" />
+						<var method="MathUtil#sum('${tagNumber}', '1')" name="tagNumber" />
 
 						<var name="key_tagNumber" value="${tagNumber}" />
 

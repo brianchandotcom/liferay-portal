@@ -116,9 +116,13 @@
 					Integer.parseInt(
 				</#if>
 
-				<#assign parameter = methodParameter?replace("\"", "")>
+				<#assign parameter = methodParameter?trim>
 
-				<#assign parameter = parameter?trim>
+				<#assign parameter = parameter?replace("\\'", "'")>
+
+				<#if "${parameter}"?starts_with("'") && "${parameter}"?ends_with("'")>
+					<#assign parameter = parameter?substring(1, (parameter?length - 1))>
+				</#if>
 
 				RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeHtml(parameter)}", ${variableContext})
 

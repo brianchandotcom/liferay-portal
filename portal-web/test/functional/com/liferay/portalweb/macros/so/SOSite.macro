@@ -73,7 +73,7 @@
 
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${calendarPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${calendarPortletLocalized}&quot;)" name="calendarPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${calendarPortletLocalized}')" name="calendarPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${calendarPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${calendarPortletLocalizedUpperCase}" />
@@ -82,7 +82,7 @@
 
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${documentsPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${documentsAndMediaPortletLocalized}&quot;)" name="documentsAndMediaPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${documentsAndMediaPortletLocalized}')" name="documentsAndMediaPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${documentsAndMediaPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalizedUpperCase}" />
@@ -91,12 +91,12 @@
 
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${forumsPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${breadcrumbPortletLocalized}&quot;)" name="breadcrumbPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${breadcrumbPortletLocalized}')" name="breadcrumbPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${breadcrumbPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${breadcrumbPortletLocalizedUpperCase}" />
 
-		<var method="StringUtil#upperCase(&quot;${messageBoardsPortletLocalized}&quot;)" name="messageBoardsPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${messageBoardsPortletLocalized}')" name="messageBoardsPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${messageBoardsPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${messageBoardsPortletLocalizedUpperCase}" />
@@ -105,7 +105,7 @@
 
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${blogsPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${blogsPortletLocalized}&quot;)" name="blogsPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${blogsPortletLocalized}')" name="blogsPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${blogsPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${blogsPortletLocalizedUpperCase}" />
@@ -118,7 +118,7 @@
 
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${wikiPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${wikiPortletLocalized}&quot;)" name="wikiPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${wikiPortletLocalized}')" name="wikiPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${wikiPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${wikiPortletLocalizedUpperCase}" />
@@ -127,8 +127,8 @@
 
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${membersPageLocalized}" />
 
-		<var method="StringUtil#upperCase(&quot;${inviteMembersPortletLocalized}&quot;)" name="inviteMembersPortletLocalizedUpperCase" />
-		<var method="StringUtil#upperCase(&quot;${membersPortletLocalized}&quot;)" name="membersPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${inviteMembersPortletLocalized}')" name="inviteMembersPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase('${membersPortletLocalized}')" name="membersPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${inviteMembersPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${inviteMembersPortletLocalizedUpperCase}" />

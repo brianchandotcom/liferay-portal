@@ -73,13 +73,13 @@
 			<isset var="siteTypeList" />
 			<then>
 				<for list="${siteTypeList}" param="siteType">
-					<var method="StringUtil#replace(${siteType}, ' ', '')" name="key_siteType" />
+					<var method="StringUtil#replace('${siteType}', ' ', '')" name="key_siteType" />
 
 					<execute function="Uncheck" locator1="SOConfigurationsGeneral#SOCIAL_OFFICE_SITE_ENABLE_SITE_TYPE_CHECKBOX" />
 				</for>
 			</then>
 			<else>
-				<var method="StringUtil#replace(${siteType}, ' ', '')" name="key_siteType" />
+				<var method="StringUtil#replace('${siteType}', ' ', '')" name="key_siteType" />
 
 				<execute function="Uncheck" locator1="SOConfigurationsGeneral#SOCIAL_OFFICE_SITE_ENABLE_SITE_TYPE_CHECKBOX" />
 			</else>
@@ -112,13 +112,13 @@
 			<isset var="siteTypeList" />
 			<then>
 				<for list="${siteTypeList}" param="siteType">
-					<var method="StringUtil#replace(${siteType}, ' ', '')" name="key_siteType" />
+					<var method="StringUtil#replace('${siteType}', ' ', '')" name="key_siteType" />
 
 					<execute function="Check" locator1="SOConfigurationsGeneral#SOCIAL_OFFICE_SITE_ENABLE_SITE_TYPE_CHECKBOX" />
 				</for>
 			</then>
 			<else>
-				<var method="StringUtil#replace(${siteType}, ' ', '')" name="key_siteType" />
+				<var method="StringUtil#replace('${siteType}', ' ', '')" name="key_siteType" />
 
 				<execute function="Check" locator1="SOConfigurationsGeneral#SOCIAL_OFFICE_SITE_ENABLE_SITE_TYPE_CHECKBOX" />
 			</else>

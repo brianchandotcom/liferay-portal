@@ -173,7 +173,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 
 		if (switchHolder != null) {
 			_touchSwitch(
-				switchHolder.getLineNumber(), switchHolder.getSwitchNumber(),
+				switchHolder.getLineNumber(), switchHolder.getJumpNumber(),
 				switchHolder.getBranch());
 		}
 

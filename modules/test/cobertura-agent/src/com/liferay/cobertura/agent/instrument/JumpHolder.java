@@ -20,19 +20,19 @@ package com.liferay.cobertura.agent.instrument;
 public class JumpHolder {
 
 	public JumpHolder(int lineNumber, int jumpNumber) {
-		this.lineNumber = lineNumber;
-		this.jumpNumber = jumpNumber;
+		_lineNumber = lineNumber;
+		_jumpNumber = jumpNumber;
 	}
 
 	public int getJumpNumber() {
-		return jumpNumber;
+		return _jumpNumber;
 	}
 
 	public int getLineNumber() {
-		return lineNumber;
+		return _lineNumber;
 	}
 
-	protected int jumpNumber;
-	protected int lineNumber;
+	private final int _jumpNumber;
+	private final int _lineNumber;
 
 }

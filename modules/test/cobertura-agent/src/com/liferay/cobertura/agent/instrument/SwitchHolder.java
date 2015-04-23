@@ -21,17 +21,14 @@ public class SwitchHolder extends JumpHolder {
 
 	public SwitchHolder(int lineNumber, int switchNumber, int branch) {
 		super(lineNumber, switchNumber);
-		this.branch = branch;
+
+		_branch = branch;
 	}
 
 	public int getBranch() {
-		return branch;
+		return _branch;
 	}
 
-	public int getSwitchNumber() {
-		return jumpNumber;
-	}
-
-	protected int branch;
+	private final int _branch;
 
 }

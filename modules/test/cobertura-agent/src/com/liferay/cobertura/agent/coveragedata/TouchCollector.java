@@ -35,10 +35,13 @@ public class TouchCollector {
 
 		for (Entry<LineTouchData, Integer> touch :touches.entrySet()) {
 			if (touch.getValue() > 0) {
-				_getClassFor(
-					touch.getKey(),
-					projectData).touch(touch.getKey()._lineNumber,
-					touch.getValue());
+				LineTouchData lineTouchData = touch.getKey();
+
+				ClassData classData = projectData.getOrCreateClassData(
+					lineTouchData.getClassName());
+
+				classData.touch(
+					lineTouchData.getLineNumber(), touch.getValue());
 			}
 		}
 
@@ -47,10 +50,15 @@ public class TouchCollector {
 
 		for (Entry<SwitchTouchData, Integer> touch :switchTouches.entrySet()) {
 			if (touch.getValue() > 0) {
-				_getClassFor(touch.getKey(), projectData).touchSwitch(
-					touch.getKey().getLineNumber(),
-					touch.getKey()._switchNumber, touch.getKey()._branch,
-					touch.getValue());
+				SwitchTouchData switchTouchData = touch.getKey();
+
+				ClassData classData = projectData.getOrCreateClassData(
+					switchTouchData.getClassName());
+
+				classData.touchSwitch(
+					switchTouchData.getLineNumber(),
+					switchTouchData.getSwitchNumber(),
+					switchTouchData.getBranch(), touch.getValue());
 			}
 		}
 
@@ -59,9 +67,14 @@ public class TouchCollector {
 
 		for (Entry<JumpTouchData, Integer> touch :jumpTouches.entrySet()) {
 			if (touch.getValue() > 0) {
-				_getClassFor(touch.getKey(), projectData).touchJump(
-					touch.getKey().getLineNumber(),
-					touch.getKey()._branchNumber, touch.getKey()._branch,
+				JumpTouchData jumpTouchData = touch.getKey();
+
+				ClassData classData = projectData.getOrCreateClassData(
+					jumpTouchData.getClassName());
+
+				classData.touchJump(
+					jumpTouchData.getLineNumber(),
+					jumpTouchData.getBranchNumber(), jumpTouchData.isBranch(),
 					touch.getValue());
 			}
 		}
@@ -83,12 +96,6 @@ public class TouchCollector {
 
 		_switchTouchData.incrementValue(
 			new SwitchTouchData(className, lineNumber, switchNumber, branch));
-	}
-
-	private static ClassData _getClassFor(
-		LineTouchData key, ProjectData projectData) {
-
-		return projectData.getOrCreateClassData(key.getClassName());
 	}
 
 	private static final CounterMap<JumpTouchData> _jumpTouchData =

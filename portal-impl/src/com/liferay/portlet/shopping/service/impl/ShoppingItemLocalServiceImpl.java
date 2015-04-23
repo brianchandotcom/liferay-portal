@@ -140,13 +140,25 @@ public class ShoppingItemLocalServiceImpl
 		item.setFeatured(featured);
 		item.setSale((sale != null) ? sale.booleanValue() : false);
 		item.setSmallImage(smallImage);
-		item.setSmallImageId(counterLocalService.increment());
+
+		if ((smallImageFile != null) && (smallImageBytes != null)) {
+			item.setSmallImageId(counterLocalService.increment());
+		}
+
 		item.setSmallImageURL(smallImageURL);
 		item.setMediumImage(mediumImage);
-		item.setMediumImageId(counterLocalService.increment());
+
+		if ((mediumImageFile != null) && (mediumImageBytes != null)) {
+			item.setMediumImageId(counterLocalService.increment());
+		}
+
 		item.setMediumImageURL(mediumImageURL);
 		item.setLargeImage(largeImage);
-		item.setLargeImageId(counterLocalService.increment());
+
+		if ((largeImageFile != null) && (largeImageBytes != null)) {
+			item.setLargeImageId(counterLocalService.increment());
+		}
+
 		item.setLargeImageURL(largeImageURL);
 
 		shoppingItemPersistence.update(item);
@@ -169,10 +181,9 @@ public class ShoppingItemLocalServiceImpl
 		// Images
 
 		saveImages(
-			smallImage, item.getSmallImageId(), smallImageFile, smallImageBytes,
-			mediumImage, item.getMediumImageId(), mediumImageFile,
-			mediumImageBytes, largeImage, item.getLargeImageId(),
-			largeImageFile, largeImageBytes);
+			item.getSmallImageId(), smallImageFile, smallImageBytes,
+			item.getMediumImageId(), mediumImageFile, mediumImageBytes,
+			item.getLargeImageId(), largeImageFile, largeImageBytes);
 
 		// Item fields
 
@@ -509,10 +520,25 @@ public class ShoppingItemLocalServiceImpl
 		item.setFeatured(featured);
 		item.setSale((sale != null) ? sale.booleanValue() : false);
 		item.setSmallImage(smallImage);
+
+		if ((smallImageFile != null) && (smallImageBytes != null)) {
+			item.setSmallImageId(counterLocalService.increment());
+		}
+
 		item.setSmallImageURL(smallImageURL);
 		item.setMediumImage(mediumImage);
+
+		if ((mediumImageFile != null) && (mediumImageBytes != null)) {
+			item.setMediumImageId(counterLocalService.increment());
+		}
+
 		item.setMediumImageURL(mediumImageURL);
 		item.setLargeImage(largeImage);
+
+		if ((largeImageFile != null) && (largeImageBytes != null)) {
+			item.setLargeImageId(counterLocalService.increment());
+		}
+
 		item.setLargeImageURL(largeImageURL);
 
 		shoppingItemPersistence.update(item);
@@ -520,10 +546,9 @@ public class ShoppingItemLocalServiceImpl
 		// Images
 
 		saveImages(
-			smallImage, item.getSmallImageId(), smallImageFile, smallImageBytes,
-			mediumImage, item.getMediumImageId(), mediumImageFile,
-			mediumImageBytes, largeImage, item.getLargeImageId(),
-			largeImageFile, largeImageBytes);
+			item.getSmallImageId(), smallImageFile, smallImageBytes,
+			item.getMediumImageId(), mediumImageFile, mediumImageBytes,
+			item.getLargeImageId(), largeImageFile, largeImageBytes);
 
 		// Item fields
 
@@ -591,43 +616,27 @@ public class ShoppingItemLocalServiceImpl
 	}
 
 	protected void saveImages(
-			boolean smallImage, long smallImageId, File smallImageFile,
-			byte[] smallImageBytes, boolean mediumImage, long mediumImageId,
-			File mediumImageFile, byte[] mediumImageBytes, boolean largeImage,
+			long smallImageId, File smallImageFile, byte[] smallImageBytes,
+			long mediumImageId, File mediumImageFile, byte[] mediumImageBytes,
 			long largeImageId, File largeImageFile, byte[] largeImageBytes)
 		throws PortalException {
 
 		// Small image
 
-		if (smallImage) {
-			if ((smallImageFile != null) && (smallImageBytes != null)) {
-				imageLocalService.updateImage(smallImageId, smallImageBytes);
-			}
-		}
-		else {
-			imageLocalService.deleteImage(smallImageId);
+		if ((smallImageFile != null) && (smallImageBytes != null)) {
+			imageLocalService.updateImage(smallImageId, smallImageBytes);
 		}
 
 		// Medium image
 
-		if (mediumImage) {
-			if ((mediumImageFile != null) && (mediumImageBytes != null)) {
-				imageLocalService.updateImage(mediumImageId, mediumImageBytes);
-			}
-		}
-		else {
-			imageLocalService.deleteImage(mediumImageId);
+		if ((mediumImageFile != null) && (mediumImageBytes != null)) {
+			imageLocalService.updateImage(mediumImageId, mediumImageBytes);
 		}
 
 		// Large image
 
-		if (largeImage) {
-			if ((largeImageFile != null) && (largeImageBytes != null)) {
-				imageLocalService.updateImage(largeImageId, largeImageBytes);
-			}
-		}
-		else {
-			imageLocalService.deleteImage(largeImageId);
+		if ((largeImageFile != null) && (largeImageBytes != null)) {
+			imageLocalService.updateImage(largeImageId, largeImageBytes);
 		}
 	}
 

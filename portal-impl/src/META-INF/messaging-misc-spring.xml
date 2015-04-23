@@ -91,14 +91,14 @@
 	<bean id="messageListener.layouts_local_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
 		<property name="messageListener">
 			<bean class="com.liferay.portal.lar.messaging.LayoutsLocalPublisherMessageListener">
-				<property name="statusSender" ref="messageSender.service_request_status" />
+				<property name="destinationName" value="liferay/message_bus/message_status" />
 			</bean>
 		</property>
 	</bean>
 	<bean id="messageListener.layouts_remote_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
 		<property name="messageListener">
 			<bean class="com.liferay.portal.lar.messaging.LayoutsRemotePublisherMessageListener">
-				<property name="statusSender" ref="messageSender.service_request_status" />
+				<property name="destinationName" value="liferay/message_bus/message_status" />
 			</bean>
 		</property>
 	</bean>
@@ -142,9 +142,6 @@
 				<ref bean="destination.subscription_clean_up" />
 				<ref bean="destination.subscription_sender" />
 			</list>
-		</property>
-		<property name="messageBus">
-			<ref bean="com.liferay.portal.kernel.messaging.MessageBus" />
 		</property>
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">

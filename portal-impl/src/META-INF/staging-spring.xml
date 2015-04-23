@@ -16,12 +16,7 @@
 	<bean id="com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSenderUtil" class="com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSenderUtil">
 		<property name="portletDataHandlerStatusMessageSender">
 			<bean class="com.liferay.portal.lar.PortletDataHandlerStatusMessageSenderImpl">
-				<property name="singleDestinationMessageSender">
-					<bean class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationMessageSender">
-						<property name="destinationName" value="liferay/background_task_status" />
-						<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
-					</bean>
-				</property>
+				<property name="destinationName" value="liferay/background_task_status" />
 			</bean>
 		</property>
 	</bean>

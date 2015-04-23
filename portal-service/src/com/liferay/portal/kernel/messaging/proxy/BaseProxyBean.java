@@ -16,7 +16,10 @@ package com.liferay.portal.kernel.messaging.proxy;
 
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationSynchronousMessageSender;
+import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Micha Kiener
@@ -26,22 +29,68 @@ import com.liferay.portal.kernel.messaging.sender.SingleDestinationSynchronousMe
  */
 public abstract class BaseProxyBean {
 
+	public void afterPropertiesSet() {
+		if ((_singleDestinationSynchronousMessageSender == null) &&
+			Validator.isNotNull(_synchronousDestinationName)) {
+
+			_singleDestinationSynchronousMessageSender =
+				SingleDestinationMessageSenderFactoryUtil.
+					createSingleDestinationSynchronousMessageSender(
+						_synchronousDestinationName,
+						_synchronousMessageSenderMode);
+		}
+
+		if ((_singleDestinationMessageSender == null) &&
+			Validator.isNotNull(_destinationName)) {
+
+			_singleDestinationMessageSender =
+				SingleDestinationMessageSenderFactoryUtil.
+					createSingleDestinationMessageSender(_destinationName);
+		}
+	}
+
 	public void send(ProxyRequest proxyRequest) {
 		_singleDestinationMessageSender.send(buildMessage(proxyRequest));
 	}
 
+	public void setDestinationName(String destinationName) {
+		_destinationName = destinationName;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setDestinationName)
+	 */
+	@Deprecated
 	public void setSingleDestinationMessageSender(
 		SingleDestinationMessageSender singleDestinationMessageSender) {
 
 		_singleDestinationMessageSender = singleDestinationMessageSender;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 * {@link #setSynchronousMessageSenderMode and
+	 *  @link #setSynchronousDestinationName }
+	 */
+	@Deprecated
 	public void setSingleDestinationSynchronousMessageSender(
 		SingleDestinationSynchronousMessageSender
 			singleDestinationSynchronousMessageSender) {
 
 		_singleDestinationSynchronousMessageSender =
 			singleDestinationSynchronousMessageSender;
+	}
+
+	public void setSynchronousDestinationName(
+		String synchronousDestinationName) {
+
+		_synchronousDestinationName = synchronousDestinationName;
+	}
+
+	public void setSynchronousMessageSenderMode(
+		SynchronousMessageSender.Mode synchronousMessageSenderMode) {
+
+		_synchronousMessageSenderMode = synchronousMessageSenderMode;
 	}
 
 	public Object synchronousSend(ProxyRequest proxyRequest) throws Exception {
@@ -74,8 +123,11 @@ public abstract class BaseProxyBean {
 		return message;
 	}
 
+	private String _destinationName;
 	private SingleDestinationMessageSender _singleDestinationMessageSender;
 	private SingleDestinationSynchronousMessageSender
 		_singleDestinationSynchronousMessageSender;
+	private String _synchronousDestinationName;
+	private SynchronousMessageSender.Mode _synchronousMessageSenderMode;
 
 }

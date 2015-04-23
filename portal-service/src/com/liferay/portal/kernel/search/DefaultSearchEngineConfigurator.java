@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 
 /**
  * @author Michael C. Han
@@ -34,10 +35,6 @@ public class DefaultSearchEngineConfigurator
 		_indexWriter = indexWriter;
 	}
 
-	public void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
-	}
-
 	@Override
 	protected String getDefaultSearchEngineId() {
 		return _defaultSearchEngineId;
@@ -55,7 +52,7 @@ public class DefaultSearchEngineConfigurator
 
 	@Override
 	protected MessageBus getMessageBus() {
-		return _messageBus;
+		return MessageBusUtil.getMessageBus();
 	}
 
 	@Override
@@ -68,6 +65,5 @@ public class DefaultSearchEngineConfigurator
 	private String _defaultSearchEngineId;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
-	private MessageBus _messageBus;
 
 }

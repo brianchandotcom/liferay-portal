@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.messaging.DestinationConfigurationProcessCallable;
@@ -313,7 +314,9 @@ public abstract class AbstractMessagingConfigurator
 		_replacementDestinations = replacementDestinations;
 	}
 
-	protected abstract MessageBus getMessageBus();
+	protected MessageBus getMessageBus() {
+		return MessageBusUtil.getMessageBus();
+	}
 
 	protected abstract ClassLoader getOperatingClassloader();
 

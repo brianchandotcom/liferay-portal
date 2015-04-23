@@ -25,18 +25,9 @@
 	<!-- Proxy -->
 
 	<bean id="com.liferay.portal.audit.AuditRouterProxyBean" class="com.liferay.portal.audit.AuditRouterProxyBean">
-		<property name="singleDestinationSynchronousMessageSender">
-			<bean class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationSynchronousMessageSender">
-				<property name="destinationName" value="liferay/audit" />
-				<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
-			</bean>
-		</property>
-		<property name="singleDestinationMessageSender">
-			<bean class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationMessageSender">
-				<property name="destinationName" value="liferay/audit" />
-				<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
-			</bean>
-		</property>
+		<property name="destinationName" value="liferay/audit" />
+		<property name="synchronousDestinationName" value="liferay/audit" />
+		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
 
 	<!-- Util -->
@@ -55,9 +46,6 @@
 			<list>
 				<ref bean="destination.audit" />
 			</list>
-		</property>
-		<property name="messageBus">
-			<ref bean="com.liferay.portal.kernel.messaging.MessageBus" />
 		</property>
 	</bean>
 </beans>

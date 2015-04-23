@@ -6,12 +6,16 @@
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
->
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+	xmlns:util="http://www.springframework.org/schema/util">
 
 	<!-- Message bus -->
 
 	<bean id="com.liferay.portal.kernel.messaging.MessageBus" class="com.liferay.portal.kernel.messaging.DefaultMessageBus" />
+	<bean id="com.liferay.portal.kernel.messaging.MessageBusUtil" class="com.liferay.portal.kernel.messaging.MessageBusUtil">
+		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
+		<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" class="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender">
 		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 	</bean>
@@ -19,6 +23,19 @@
 		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 		<property name="portalUUID" ref="com.liferay.portal.kernel.uuid.PortalUUID" />
 		<property name="timeout" value="10000" />
+	</bean>
+	<bean id="com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil" class="com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil">
+		<property name="singleDestinationMessageSenderFactory">
+			<bean class="com.liferay.portal.kernel.messaging.sender.DefaultSingleDestinationMessageSenderFactory">
+				<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
+				<property name="synchronousMessageSenders">
+					<util:map>
+						<entry key="DEFAULT" value-ref="com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender" />
+						<entry key="DIRECT" value-ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
+					</util:map>
+				</property>
+			</bean>
+		</property>
 	</bean>
 
 	<!-- Destinations -->
@@ -60,9 +77,6 @@
 				<ref bean="destination.message_bus_default_response" />
 				<ref bean="destination.message_bus_message_status" />
 			</list>
-		</property>
-		<property name="messageBus">
-			<ref bean="com.liferay.portal.kernel.messaging.MessageBus" />
 		</property>
 	</bean>
 </beans>

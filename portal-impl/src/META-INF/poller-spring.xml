@@ -46,9 +46,6 @@
 				<ref bean="destination.poller_response" />
 			</list>
 		</property>
-		<property name="messageBus">
-			<ref bean="com.liferay.portal.kernel.messaging.MessageBus" />
-		</property>
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">
 				<entry key="liferay/poller">

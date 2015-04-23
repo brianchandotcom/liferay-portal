@@ -115,7 +115,10 @@ public class QuartzSchedulerEngineTest {
 
 		PropsUtil.setProps(new PropsImpl());
 
-		MessageBusUtil.init(new DefaultMessageBus(), null);
+		MessageBusUtil messageBusUtil = new MessageBusUtil();
+
+		messageBusUtil.setMessageBus(new DefaultMessageBus());
+		messageBusUtil.setSynchronousMessageSender(null);
 
 		_testDestination = new SynchronousDestination();
 

@@ -14,22 +14,11 @@
 
 package com.liferay.portal.kernel.messaging.config;
 
-import com.liferay.portal.kernel.messaging.MessageBus;
-
 /**
  * @author Michael C. Han
  */
 public class DefaultMessagingConfigurator
 	extends AbstractMessagingConfigurator {
-
-	public void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
-	}
-
-	@Override
-	protected MessageBus getMessageBus() {
-		return _messageBus;
-	}
 
 	@Override
 	protected ClassLoader getOperatingClassloader() {
@@ -37,7 +26,5 @@ public class DefaultMessagingConfigurator
 
 		return currentThread.getContextClassLoader();
 	}
-
-	private MessageBus _messageBus;
 
 }

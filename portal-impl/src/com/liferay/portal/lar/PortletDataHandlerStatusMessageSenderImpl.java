@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
@@ -35,6 +36,14 @@ import java.util.Map;
  */
 public class PortletDataHandlerStatusMessageSenderImpl
 	implements PortletDataHandlerStatusMessageSender {
+
+	public void afterPropertiesSet() {
+		if (_singleDestinationMessageSender == null) {
+			_singleDestinationMessageSender =
+				SingleDestinationMessageSenderFactoryUtil.
+					createSingleDestinationMessageSender(_destinationName);
+		}
+	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #sendStatusMessage(String,
@@ -124,6 +133,14 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		_singleDestinationMessageSender.send(message);
 	}
 
+	public void setDestinationName(String destinationName) {
+		_destinationName = destinationName;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setDestinationName(String)})
+	 */
+	@Deprecated
 	public void setSingleDestinationMessageSender(
 		SingleDestinationMessageSender singleDestinationMessageSender) {
 
@@ -157,6 +174,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		return message;
 	}
 
+	private String _destinationName;
 	private SingleDestinationMessageSender _singleDestinationMessageSender;
 
 }

@@ -26,11 +26,9 @@
 	<!-- Proxy -->
 
 	<bean id="com.liferay.portal.kernel.search.IndexSearcherProxyBean" class="com.liferay.portal.kernel.search.IndexSearcherProxyBean">
-		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 		<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.IndexWriterProxyBean" class="com.liferay.portal.kernel.search.IndexWriterProxyBean">
-		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 		<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
 	</bean>
 
@@ -124,14 +122,11 @@
 		<property name="defaultSearchEngineId" value="SYSTEM_ENGINE" />
 		<property name="indexSearcher" ref="com.liferay.portal.kernel.search.IndexSearcherProxyBean" />
 		<property name="indexWriter" ref="com.liferay.portal.kernel.search.IndexWriterProxyBean" />
-		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 		<property name="searchEngines">
 			<util:map>
 				<entry key="GENERIC_ENGINE" value-ref="com.liferay.portal.search.generic.GenericSearchEngineImpl" />
 			</util:map>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" class="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator">
-		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
-	</bean>
+	<bean id="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" class="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" />
 </beans>

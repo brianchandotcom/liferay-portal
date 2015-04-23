@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.messaging.config;
 
-import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 
@@ -29,11 +27,6 @@ public class PluginMessagingConfigurator extends AbstractMessagingConfigurator {
 		_servletContextName = PortletClassLoaderUtil.getServletContextName();
 
 		super.afterPropertiesSet();
-	}
-
-	@Override
-	protected MessageBus getMessageBus() {
-		return MessageBusUtil.getMessageBus();
 	}
 
 	@Override

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.ws.configuration;
+package com.liferay.portal.cxf.common.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -21,7 +21,7 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.ws.configuration.WebServicePublisherConfiguration"
+	id = "com.liferay.portal.cxf.common.configuration.CXFEndpointPublisherConfiguration"
 )
 public interface CXFEndpointPublisherConfiguration {
 

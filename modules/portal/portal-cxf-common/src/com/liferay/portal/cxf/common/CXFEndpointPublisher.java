@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.ws.configuration;
+package com.liferay.portal.cxf.common;
 
 import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.cxf.common.configuration.CXFEndpointPublisherConfiguration;
 
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -47,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	configurationPid = "com.liferay.portal.ws.configuration.WebServicePublisherConfiguration",
+	configurationPid = "com.liferay.portal.cxf.common.configuration.CXFEndpointPublisherConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class CXFEndpointPublisher {

@@ -12,7 +12,7 @@ Bundle-ClassPath:\
 	lib/woodstox-core-asl.jar,\
 	lib/wsdl4j.jar
 Bundle-Name: Liferay CXF Common Infrastructure
-Bundle-SymbolicName: com.liferay.cxf.common
+Bundle-SymbolicName: com.liferay.portal.cxf.common
 Bundle-Version: 1.0.0
 Export-Package: \
 	javax.wsdl.*;version="1.2",\

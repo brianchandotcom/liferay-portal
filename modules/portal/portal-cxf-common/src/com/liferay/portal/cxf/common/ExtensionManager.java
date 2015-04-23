@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.ws.configuration;
+package com.liferay.portal.cxf.common;
 
 import java.util.HashMap;
 import java.util.Map;

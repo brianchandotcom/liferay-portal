@@ -80,6 +80,16 @@ public final class XMLLoggerHandler {
 		return btnContainerLoggerElement;
 	}
 
+	private static String _getBtnItemText(String className) {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("btn " + className);
+		loggerElement.setID(null);
+		loggerElement.setName("button");
+
+		return loggerElement.toString();
+	}
+
 	private static LoggerElement _getChildContainerLoggerElement() {
 		LoggerElement childContainerLoggerElement = new LoggerElement();
 

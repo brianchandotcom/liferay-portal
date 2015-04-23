@@ -17,15 +17,12 @@ package com.liferay.cobertura.agent.instrument;
 import com.liferay.cobertura.agent.InstrumentationAgent;
 import com.liferay.cobertura.agent.coveragedata.TouchCollector;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.io.RandomAccessFile;
 
 import java.lang.reflect.Field;
@@ -242,21 +239,7 @@ public class ProjectDataUtil {
 			public void run() {
 				ProjectData projectData = new ProjectData();
 
-				PrintStream printStream = new PrintStream(
-					new ByteArrayOutputStream());
-
-				synchronized (FileDescriptor.out) {
-					PrintStream stdOut = System.out;
-
-					System.setOut(printStream);
-
-					try {
-						TouchCollector.applyTouchesOnProjectData(projectData);
-					}
-					finally {
-						System.setOut(stdOut);
-					}
-				}
+				TouchCollector.applyTouchesOnProjectData(projectData);
 
 				String className = ProjectDataUtil.class.getName();
 

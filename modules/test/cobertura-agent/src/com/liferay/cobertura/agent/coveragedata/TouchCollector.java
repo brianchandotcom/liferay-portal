@@ -34,8 +34,6 @@ public class TouchCollector {
 	public static synchronized void applyTouchesOnProjectData(
 		ProjectData projectData) {
 
-		System.out.println("Flushing results...");
-
 		Map<LineTouchData, Integer> touches =
 			_touchedLines.getFinalStateAndCleanIt();
 
@@ -69,8 +67,6 @@ public class TouchCollector {
 					touch.getKey().branch, touch.getValue());
 			}
 		}
-
-		System.out.println("Flushing results done");
 	}
 
 	/**

@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface CommentSectionDisplayContext {
 
-	public long getThreadId() throws PortalException;
-
 	public boolean isControlsVisible() throws PortalException;
 
 	public boolean isDiscussionMaxComments() throws PortalException;

@@ -191,6 +191,11 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
+	public long getThreadId() {
+		return _message.getThreadId();
+	}
+
+	@Override
 	public String getTranslatedBody() {
 		if (_message.isFormatBBCode()) {
 			return MBUtil.getBBCodeHTML(getBody(), _pathThemeImages);

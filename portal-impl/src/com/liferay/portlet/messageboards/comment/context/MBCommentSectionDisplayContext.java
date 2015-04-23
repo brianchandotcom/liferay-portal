@@ -22,7 +22,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
@@ -40,17 +39,6 @@ public class MBCommentSectionDisplayContext
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
 		_rootComment = rootComment;
-	}
-
-	@Override
-	public long getThreadId() throws PortalException {
-		if (_thread == null) {
-			MBMessageDisplay messageDisplay = getMBMessageDisplay();
-
-			_thread = messageDisplay.getThread();
-		}
-
-		return _thread.getThreadId();
 	}
 
 	@Override
@@ -135,6 +123,5 @@ public class MBCommentSectionDisplayContext
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;
 	private final Comment _rootComment;
-	private MBThread _thread;
 
 }

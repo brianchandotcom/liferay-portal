@@ -52,7 +52,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = new MBCommentSection
 				<aui:input name="permissionClassPK" type="hidden" value="<%= discussionTaglibHelper.getPermissionClassPK() %>" />
 				<aui:input name="permissionOwnerId" type="hidden" value="<%= String.valueOf(discussionTaglibHelper.getUserId()) %>" />
 				<aui:input name="messageId" type="hidden" />
-				<aui:input name="threadId" type="hidden" value="<%= commentSectionDisplayContext.getThreadId() %>" />
+				<aui:input name="threadId" type="hidden" value="<%= rootComment.getThreadId() %>" />
 				<aui:input name="parentMessageId" type="hidden" />
 				<aui:input name="body" type="hidden" />
 				<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = ContentMetadataEntry.class
 )
 public class CommentsSelectableEntry
-	extends BaseSelectableEntry implements ContentMetadataEntry {
+	extends BaseJSPSelectableEntry implements ContentMetadataEntry {
 
 	@Override
 	public String getIcon() {

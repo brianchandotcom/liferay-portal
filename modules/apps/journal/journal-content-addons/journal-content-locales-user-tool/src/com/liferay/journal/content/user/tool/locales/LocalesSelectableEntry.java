@@ -15,7 +15,7 @@
 package com.liferay.journal.content.user.tool.locales;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
-import com.liferay.portal.model.BaseSelectableEntry;
+import com.liferay.portal.model.BaseJSPSelectableEntry;
 
 import javax.servlet.ServletContext;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = UserToolEntry.class
 )
 public class LocalesSelectableEntry
-	extends BaseSelectableEntry implements UserToolEntry {
+	extends BaseJSPSelectableEntry implements UserToolEntry {
 
 	@Override
 	public String getIcon() {

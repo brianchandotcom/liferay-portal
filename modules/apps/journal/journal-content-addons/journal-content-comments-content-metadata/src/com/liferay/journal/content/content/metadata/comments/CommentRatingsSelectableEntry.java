@@ -17,11 +17,6 @@ package com.liferay.journal.content.content.metadata.comments;
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
 import com.liferay.portal.model.BaseSelectableEntry;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true, service = {ContentMetadataEntry.class, CommentRatingsSelectableEntry.class}
@@ -47,12 +42,6 @@ public class CommentRatingsSelectableEntry
 	@Override
 	public Double getWeight() {
 		return 4.0;
-	}
-
-	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
 	}
 
 }

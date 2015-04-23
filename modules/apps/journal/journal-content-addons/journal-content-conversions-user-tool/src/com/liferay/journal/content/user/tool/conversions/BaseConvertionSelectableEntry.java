@@ -18,7 +18,7 @@ import com.liferay.journal.content.web.util.UserToolEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.model.BaseSelectableEntry;
+import com.liferay.portal.model.BaseJSPSelectableEntry;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
@@ -27,7 +27,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 public abstract class BaseConvertionSelectableEntry
-	extends BaseSelectableEntry implements UserToolEntry {
+	extends BaseJSPSelectableEntry implements UserToolEntry {
 
 	public abstract String getExtension();
 

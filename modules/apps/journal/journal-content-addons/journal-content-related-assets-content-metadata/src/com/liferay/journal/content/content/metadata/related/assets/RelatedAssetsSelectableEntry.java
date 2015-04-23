@@ -15,7 +15,7 @@
 package com.liferay.journal.content.content.metadata.related.assets;
 
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
-import com.liferay.portal.model.BaseSelectableEntry;
+import com.liferay.portal.model.BaseJSPSelectableEntry;
 
 import javax.servlet.ServletContext;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = ContentMetadataEntry.class
 )
 public class RelatedAssetsSelectableEntry
-	extends BaseSelectableEntry implements ContentMetadataEntry {
+	extends BaseJSPSelectableEntry implements ContentMetadataEntry {
 
 	@Override
 	public String getIcon() {

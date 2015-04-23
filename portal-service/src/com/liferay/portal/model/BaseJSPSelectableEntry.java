@@ -19,69 +19,46 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Julio Camarero
  */
-public abstract class BaseSelectableEntry implements SelectableEntry {
+public abstract class BaseJSPSelectableEntry extends BaseSelectableEntry {
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SelectableEntry)) {
-			return false;
-		}
-
-		SelectableEntry selectableEntry = (SelectableEntry)obj;
-
-		String key = selectableEntry.getKey();
-
-		if (getKey() == key) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public String getIcon() {
-		return _DEFAUTL_ICON;
-	}
-
-	public String getJSPPath() {
-		return null;
-	}
-
-	@Override
-	public String getKey() {
-		return getClass().getSimpleName();
-	}
-
-	@Override
-	public Double getWeight() {
-		return 10.0;
-	}
+	public abstract String getJSPPath();
 
 	@Override
 	public void include(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(getJSPPath());
+
+		try {
+			requestDispatcher.include(request, response);
+		}
+		catch (ServletException se) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to include JSP", se);
+			}
+
+			throw new IOException("Unable to include JSP", se);
+		}
 	}
 
-	@Override
-	public boolean isEnabled() {
-		return true;
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
-
-	private static final String _DEFAUTL_ICON = "circle-blank";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseSelectableEntry.class);
+		BaseJSPSelectableEntry.class);
+
+	private ServletContext _servletContext;
 
 }

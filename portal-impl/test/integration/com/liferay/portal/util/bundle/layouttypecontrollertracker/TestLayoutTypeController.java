@@ -26,21 +26,21 @@ import org.osgi.service.component.annotations.Component;
  * @author Phil Jones
  */
 @Component(
-		immediate = true,
-		property = {"layout.type=testLayoutTypeController" + Integer.MAX_VALUE,
-				    "service.ranking:Integer="}
-	)
+	immediate = true,
+	property = {
+		"layout.type=testLayoutTypeController",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	}
+)
 public class TestLayoutTypeController implements LayoutTypeController {
 
 	@Override
 	public String[] getConfigurationActionDelete() {
-		
 		return null;
 	}
 
 	@Override
 	public String[] getConfigurationActionUpdate() {
-		
 		return null;
 	}
 
@@ -51,15 +51,16 @@ public class TestLayoutTypeController implements LayoutTypeController {
 
 	@Override
 	public String includeEditContent(
-		HttpServletRequest request,	HttpServletResponse response, 
-			Layout layout) {
+		HttpServletRequest request, HttpServletResponse response,
+		Layout layout) {
 
 		return null;
 	}
 
 	@Override
-	public boolean includeLayoutContent(HttpServletRequest request,
-			HttpServletResponse response, Layout layout) {
+	public boolean includeLayoutContent(
+		HttpServletRequest request, HttpServletResponse response,
+		Layout layout) {
 
 		return false;
 	}
@@ -85,8 +86,8 @@ public class TestLayoutTypeController implements LayoutTypeController {
 	}
 
 	@Override
-	public boolean matches(HttpServletRequest request, String friendlyURL,
-			Layout layout) {
+	public boolean matches(
+		HttpServletRequest request, String friendlyURL, Layout layout) {
 
 		return false;
 	}

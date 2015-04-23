@@ -88,10 +88,11 @@ public interface FormNavigatorEntry<T> {
 	 * Renders the HTML that needs to be displayed when the form navigator entry
 	 * is displayed.
 	 *
-	 * @param request the request with which the form navigator entry is
-	 *        rendered
-	 * @param response the response with which the form navigator entry is
-	 *        rendered
+	 * @param  request the request with which the form navigator entry is
+	 *         rendered
+	 * @param  response the response with which the form navigator entry is
+	 *         rendered
+	 * @throws IOException
 	 */
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException;

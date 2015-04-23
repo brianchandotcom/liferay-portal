@@ -37,7 +37,8 @@ public class PluginSettingLocalServiceImpl
 		throws PortalException {
 
 		if (!hasPermission(userId, pluginId, pluginType)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				userId, pluginType, pluginId);
 		}
 	}
 

@@ -33,7 +33,9 @@ public class DLFileEntryTypePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, fileEntryType, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DLFileEntryType.class.getName(),
+				fileEntryType.getFileEntryTypeId(), actionId);
 		}
 	}
 
@@ -43,7 +45,9 @@ public class DLFileEntryTypePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, fileEntryTypeId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DLFileEntryType.class.getName(),
+				fileEntryTypeId, actionId);
 		}
 	}
 

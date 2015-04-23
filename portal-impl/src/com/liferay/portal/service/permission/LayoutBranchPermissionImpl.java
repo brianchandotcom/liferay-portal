@@ -32,7 +32,9 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, layoutBranch, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), LayoutBranch.class.getName(),
+				layoutBranch.getLayoutBranchId(), actionId);
 		}
 	}
 
@@ -43,7 +45,9 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, layoutBranchId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), LayoutBranch.class.getName(),
+				layoutBranchId, actionId);
 		}
 	}
 

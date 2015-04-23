@@ -65,9 +65,9 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			}
 		}
 
-		throw new PrincipalException(
-			"User does not have permission to access portlet " +
-				portlet.getPortletId());
+		throw new PrincipalException.MustHavePermission(
+				PortalUtil.getUserId(request), portlet.getDisplayName(),
+				portlet.getPortletId(), ActionKeys.ACCESS);
 	}
 
 	@Override

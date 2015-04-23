@@ -144,8 +144,6 @@ public class LayoutTypeControllerTrackerTest {
 			return getParentLayoutId() + "/" + getPlid();
 		}
 
-		private static final long serialVersionUID = -5026462547994956011L;
-
 	}
 
 }

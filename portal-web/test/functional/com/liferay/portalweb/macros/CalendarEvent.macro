@@ -1602,8 +1602,6 @@
 		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
 		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE" />
 		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewPG">

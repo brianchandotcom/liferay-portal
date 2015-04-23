@@ -14,11 +14,12 @@
 
 package com.liferay.mentions.web.servlet.taglib.ui;
 
-import com.liferay.mentions.util.WebKeys;
+import com.liferay.mentions.constants.MentionsWebKeys;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class MentionsCompanySettingsFormNavigatorEntry
 			companyPortletPreferences, request, "mentionsEnabled", true);
 
 		request.setAttribute(
-			WebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
+			MentionsWebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
 
 		super.render(request, response);
 	}

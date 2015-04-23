@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.mentions.util;
+package com.liferay.mentions.constants;
 
 /**
  * @author Sergio González
  */
-public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
+public class MentionsWebKeys {
 
 	public static final String COMPANY_MENTIONS_ENABLED =
 		"COMPANY_MENTIONS_ENABLED";

@@ -16,13 +16,13 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
-<%@ page import="com.liferay.mentions.util.WebKeys" %>
+<%@ page import="com.liferay.mentions.constants.MentionsWebKeys" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
 <h3><liferay-ui:message key="mentions" /><h3>
 
 <%
-boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(WebKeys.COMPANY_MENTIONS_ENABLED));
+boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(MentionsWebKeys.COMPANY_MENTIONS_ENABLED));
 %>
 
 <aui:input checked="<%= companyMentionsEnabled %>" label="enable-mentions" name="settings--mentionsEnabled--" type="checkbox" value="<%= companyMentionsEnabled %>" />

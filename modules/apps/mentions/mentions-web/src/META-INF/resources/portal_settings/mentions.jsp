@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-
 <%@ page import="com.liferay.mentions.constants.MentionsWebKeys" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 

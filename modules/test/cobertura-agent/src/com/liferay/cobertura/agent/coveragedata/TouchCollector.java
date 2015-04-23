@@ -18,8 +18,6 @@ import com.liferay.cobertura.agent.InstrumentationAgent;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 import net.sourceforge.cobertura.coveragedata.ProjectData;
@@ -69,57 +67,32 @@ public class TouchCollector {
 		}
 	}
 
-	public static void touch(String classId, int lineNumber) {
-		_touchedLines.incrementValue(
-			new LineTouchData(_registerClassData(classId), lineNumber));
+	public static void touch(String className, int lineNumber) {
+		_touchedLines.incrementValue(new LineTouchData(className, lineNumber));
 	}
 
 	public static void touchJump(
-		String classId, int lineNumber, int branchNumber, boolean branch) {
+		String className, int lineNumber, int branchNumber, boolean branch) {
 
 		_jumpTouchData.incrementValue(
-			new JumpTouchData(
-				_registerClassData(classId), lineNumber, branchNumber, branch));
+			new JumpTouchData(className, lineNumber, branchNumber, branch));
 	}
 
 	public static void touchSwitch(
-		String classId, int lineNumber, int switchNumber, int branch) {
+		String className, int lineNumber, int switchNumber, int branch) {
 
 		_switchTouchData.incrementValue(
-			new SwitchTouchData(
-				_registerClassData(classId), lineNumber, switchNumber, branch));
+			new SwitchTouchData(className, lineNumber, switchNumber, branch));
 	}
 
 	private static ClassData _getClassFor(
 		LineTouchData key, ProjectData projectData) {
 
-		return projectData.getOrCreateClassData(
-			_classId2class.get(key._classId));
+		return projectData.getOrCreateClassData(key.getClassName());
 	}
 
-	private static int _registerClassData(String name) {
-		Integer res =_class2classId.get(name);
-
-		if (res == null) {
-			int new_id = _lastClassId.incrementAndGet();
-
-			_class2classId.put(name, new_id);
-
-			_classId2class.put(new_id, name);
-
-			return new_id;
-		}
-
-		return res;
-	}
-
-	private static final Map<String, Integer> _class2classId =
-		new ConcurrentHashMap<>();
-	private static final Map<Integer, String> _classId2class =
-		new ConcurrentHashMap<>();
 	private static final CounterMap<JumpTouchData> _jumpTouchData =
 		new AtomicCounterMap<>();
-	private static final AtomicInteger _lastClassId = new AtomicInteger(1);
 	private static final CounterMap<SwitchTouchData> _switchTouchData =
 		new AtomicCounterMap<>();
 	private static final CounterMap<LineTouchData> _touchedLines =
@@ -173,9 +146,10 @@ public class TouchCollector {
 		}
 
 		private JumpTouchData(
-			int classId, int lineNumber, int branchNumber, boolean branch) {
+			String className, int lineNumber, int branchNumber,
+			boolean branch) {
 
-			super(classId, lineNumber);
+			super(className, lineNumber);
 
 			_branchNumber = branchNumber;
 			_branch = branch;
@@ -204,7 +178,7 @@ public class TouchCollector {
 
 			LineTouchData other = (LineTouchData)obj;
 
-			if (_classId != other._classId) {
+			if (!_className.equals(other._className)) {
 				return false;
 			}
 
@@ -215,8 +189,8 @@ public class TouchCollector {
 			return true;
 		}
 
-		public int getClassId() {
-			return _classId;
+		public String getClassName() {
+			return _className;
 		}
 
 		public int getLineNumber() {
@@ -229,19 +203,19 @@ public class TouchCollector {
 
 			int result = 1;
 
-			result = prime * result + _classId;
+			result = prime * result + _className.hashCode();
 
 			result = prime * result + _lineNumber;
 
 			return result;
 		}
 
-		private LineTouchData(int classId, int lineNumber) {
-			_classId = classId;
+		private LineTouchData(String className, int lineNumber) {
+			_className = className;
 			_lineNumber = lineNumber;
 		}
 
-		private final int _classId;
+		private final String _className;
 		private final int _lineNumber;
 
 	}
@@ -297,9 +271,9 @@ public class TouchCollector {
 		}
 
 		private SwitchTouchData(
-			int classId, int lineNumber, int switchNumber, int branch) {
+			String className, int lineNumber, int switchNumber, int branch) {
 
-			super(classId, lineNumber);
+			super(className, lineNumber);
 
 			_switchNumber = switchNumber;
 			_branch = branch;

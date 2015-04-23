@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.cobertura.agent.instrument;
+package com.liferay.cobertura.instrument;
+
+import com.liferay.cobertura.coveragedata.TouchCollector;
 
 import java.util.Map;
 
@@ -351,8 +353,8 @@ public class TouchMethodVisitor extends MethodVisitor {
 			"(Ljava/lang/String;III)V", false);
 	}
 
-	private static final String _TOUCH_COLLECTOR_CLASS =
-		"net/sourceforge/cobertura/coveragedata/TouchCollector";
+	private static final String _TOUCH_COLLECTOR_CLASS = Type.getInternalName(
+		TouchCollector.class);
 
 	private int _currentJump;
 	private int _currentLine;

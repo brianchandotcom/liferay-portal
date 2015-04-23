@@ -31,4 +31,7 @@ public class DDMFormRendererConstants {
 
 	public static final String DDM_FORM_FIELDS_SEPARATOR = StringPool.POUND;
 
+	private DDMFormRendererConstants() {
+	}
+
 }

@@ -12,23 +12,17 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.renderer;
+package com.liferay.portlet.dynamicdatamapping.io;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
+
+import java.util.List;
 
 /**
- * @author Marcellus Tavares
+ * @author Bruno Basto
  */
-public interface DDMFormRenderer {
+public interface DDMFormFieldTypesJSONSerializer {
 
-	public String render(
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-			DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException;
-
-	public String render(
-			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException;
+	public String serialize(List<DDMFormFieldType> ddmFormFieldTypes);
 
 }

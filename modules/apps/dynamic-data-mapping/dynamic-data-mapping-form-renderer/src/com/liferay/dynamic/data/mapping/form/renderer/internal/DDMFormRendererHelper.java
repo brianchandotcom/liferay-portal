@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -53,7 +54,7 @@ public class DDMFormRendererHelper {
 	}
 
 	public Map<String, String> getRenderedDDMFormFieldsMap()
-		throws PortalException {
+		throws DDMFormRenderingException {
 
 		if (_ddmFormValues != null) {
 			return getRenderedDDMFormFieldValues();
@@ -122,7 +123,7 @@ public class DDMFormRendererHelper {
 	}
 
 	protected Map<String, String> getRenderedDDMFormFields()
-		throws PortalException {
+		throws DDMFormRenderingException {
 
 		Map<String, String> renderedDDMFormFieldsMap = new HashMap<>();
 
@@ -136,7 +137,7 @@ public class DDMFormRendererHelper {
 	}
 
 	protected Map<String, String> getRenderedDDMFormFieldValues()
-		throws PortalException {
+		throws DDMFormRenderingException {
 
 		Map<String, String> renderedDDMFormFieldValuesMap = new HashMap<>();
 
@@ -157,22 +158,35 @@ public class DDMFormRendererHelper {
 	protected String renderDDMFormField(
 			DDMFormField ddmFormField,
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
-		throws PortalException {
+		throws DDMFormRenderingException {
 
 		DDMFormFieldType ddmFormFieldType =
 			DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(
 				ddmFormField.getType());
 
-		DDMFormFieldRenderer ddmFormFieldRenderer =
-			ddmFormFieldType.getDDMFormFieldRenderer();
+		if (ddmFormFieldType == null) {
+			throw new DDMFormRenderingException(
+				"No DDM form field type registered for " +
+					ddmFormField.getType());
+		}
 
-		return ddmFormFieldRenderer.render(
-			ddmFormField, ddmFormFieldRenderingContext);
+		try {
+			DDMFormFieldRenderer ddmFormFieldRenderer =
+				ddmFormFieldType.getDDMFormFieldRenderer();
+
+			String ddmFormFieldHTML = ddmFormFieldRenderer.render(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+			return wrapDDMFormFieldHTML(ddmFormFieldHTML);
+		}
+		catch (PortalException pe) {
+			throw new DDMFormRenderingException(pe);
+		}
 	}
 
 	protected String renderDDMFormField(
 			DDMFormField ddmFormField, String parentDDMFormFieldParameterName)
-		throws PortalException {
+		throws DDMFormRenderingException {
 
 		String ddmFormFieldParameterName = getDDMFormFieldParameterName(
 			ddmFormField.getName(), StringUtil.randomString(), 0,
@@ -205,7 +219,7 @@ public class DDMFormRendererHelper {
 	protected String renderDDMFormFieldValue(
 			DDMFormFieldValue ddmFormFieldValue,
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
-		throws PortalException {
+		throws DDMFormRenderingException {
 
 		DDMFormField ddmFormField = _ddmFormFieldsMap.get(
 			ddmFormFieldValue.getName());
@@ -221,7 +235,7 @@ public class DDMFormRendererHelper {
 	protected String renderDDMFormFieldValue(
 			DDMFormFieldValue ddmFormFieldValue, int index,
 			String parentDDMFormFieldParameterName)
-		throws PortalException {
+		throws DDMFormRenderingException {
 
 		String ddmFormFieldParameterName = getDDMFormFieldParameterName(
 			ddmFormFieldValue.getName(), ddmFormFieldValue.getInstanceId(),
@@ -256,7 +270,7 @@ public class DDMFormRendererHelper {
 	protected String renderDDMFormFieldValues(
 			List<DDMFormFieldValue> ddmFormFieldValues,
 			String parentDDMFormFieldParameterName)
-		throws PortalException {
+		throws DDMFormRenderingException {
 
 		StringBundler sb = new StringBundler(ddmFormFieldValues.size());
 
@@ -313,6 +327,16 @@ public class DDMFormRendererHelper {
 
 		ddmFormFieldRenderingContext.setValue(
 			value.getString(ddmFormFieldRenderingContext.getLocale()));
+	}
+
+	protected String wrapDDMFormFieldHTML(String ddmFormFieldHTML) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<div class=\"lfr-ddm-form-field-container\">");
+		sb.append(ddmFormFieldHTML);
+		sb.append("</div>");
+
+		return sb.toString();
 	}
 
 	private final DDMForm _ddmForm;

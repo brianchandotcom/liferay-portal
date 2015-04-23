@@ -12,26 +12,27 @@
  * details.
  */
 
-package com.liferay.cobertura.agent.instrumentation;
+package com.liferay.cobertura.agent.instrument;
 
 /**
  * @author Cristina González
  */
-public class SwitchHolder extends JumpHolder {
+public class JumpHolder {
 
-	public SwitchHolder(int lineNumber, int switchNumber, int branch) {
-		super(lineNumber, switchNumber);
-		this.branch = branch;
+	public JumpHolder(int lineNumber, int jumpNumber) {
+		this.lineNumber = lineNumber;
+		this.jumpNumber = jumpNumber;
 	}
 
-	public int getBranch() {
-		return branch;
-	}
-
-	public int getSwitchNumber() {
+	public int getJumpNumber() {
 		return jumpNumber;
 	}
 
-	protected int branch;
+	public int getLineNumber() {
+		return lineNumber;
+	}
+
+	protected int jumpNumber;
+	protected int lineNumber;
 
 }

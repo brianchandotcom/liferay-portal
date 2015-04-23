@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.cobertura.agent;
+package com.liferay.cobertura.agent.instrument;
 
-import com.liferay.cobertura.agent.instrumentation.JumpHolder;
-import com.liferay.cobertura.agent.instrumentation.SwitchHolder;
 
+import com.liferay.cobertura.agent.instrument.JumpHolder;
+import com.liferay.cobertura.agent.instrument.SwitchHolder;
 import java.util.HashMap;
 import java.util.Map;
 

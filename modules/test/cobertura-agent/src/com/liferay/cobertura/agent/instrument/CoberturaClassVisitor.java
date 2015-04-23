@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cobertura.agent;
+package com.liferay.cobertura.agent.instrument;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 

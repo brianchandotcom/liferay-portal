@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.PACLTestRule;
@@ -472,9 +471,7 @@ public class ThreadTest {
 
 		PortalExecutorManagerUtil.getPortalExecutor("liferay/test_pacl", true);
 
-		MessageBus messageBus = MessageBusUtil.getMessageBus();
-
-		Destination destination = messageBus.getDestination(
+		Destination destination = MessageBusUtil.getDestination(
 			"liferay/test_pacl");
 
 		destination.open();

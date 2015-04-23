@@ -185,7 +185,7 @@ public class MessageListenerImpl implements MessageListener {
 			String subject = null;
 
 			if (parentMessage != null) {
-				MBUtil.getSubjectForEmail(parentMessage);
+				subject = MBUtil.getSubjectForEmail(parentMessage);
 			}
 
 			MBMailMessage mbMailMessage = new MBMailMessage();

@@ -156,6 +156,11 @@ AUI.add(
 
 								image.attr(data.image.attributeDataImageId, data.image.fileEntryId);
 								image.attr('src', data.image.url);
+
+								var imageContainer = image.ancestor();
+
+								image.unwrap(imageContainer);
+								imageContainer.remove();
 							}
 						}
 						else {

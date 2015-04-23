@@ -2,6 +2,9 @@
 @import "aui/alloy-font-awesome/scss/variables";
 @import "bourbon";
 
+@import "application/variables";
+@import "application/variables_custom";
+
 @import "application/autocomplete";
 @import "application/color_picker";
 @import "application/dialog";

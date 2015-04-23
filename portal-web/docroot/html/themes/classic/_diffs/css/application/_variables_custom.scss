@@ -1,0 +1,52 @@
+/* ---------- Toggle card ---------- */
+
+$toggle-card-height: 104px;
+$toggle-card-width: 92px;
+
+$toggle-card-padding-horizontal: 12px;
+$toggle-card-padding-vertical: 12px;
+
+$toggle-card-border-radius: 2px;
+
+$toggle-card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+
+$toggle-card-icon-border-radius: 30px;
+$toggle-card-icon-height: 32px;
+$toggle-card-icon-width: 32px;
+
+$toggle-card-border: #DCE0E3;
+$toggle-card-border-width: 1px;
+$toggle-card-icon-bg: #FFF;
+$toggle-card-icon-border: #869CAD;
+$toggle-card-icon-border-width: 0;
+
+$toggle-card-on-border: #65B6F0;
+$toggle-card-on-border-width: 2px;
+$toggle-card-on-icon-bg: #FFF;
+$toggle-card-on-icon-border: #65B6F0;
+$toggle-card-on-icon-border-width: 0;
+
+/* ---------- Switches ---------- */
+
+$toggle-switch-button-width: 18px;
+$toggle-switch-bar-padding: 4px;
+
+$toggle-switch-bar-width: 50px;
+$toggle-switch-bar-height: ($toggle-switch-bar-padding * 2) + $toggle-switch-button-width;
+
+$toggle-switch-bar-border-radius: 20px;
+$toggle-switch-button-border-radius: 50%;
+$toggle-switch-button-off-border-radius: $toggle-switch-button-border-radius;
+$toggle-switch-button-on-border-radius: $toggle-switch-button-border-radius;
+
+$toggle-switch-bar-border-width: 2px;
+$toggle-switch-bar-font-size: 12px;
+$toggle-switch-button-border-width: 1px;
+$toggle-switch-button-font-size: $toggle-switch-bar-font-size;
+
+$toggle-switch-bar-bg: #65B6F0;
+$toggle-switch-bar-border-color: #60A7D8;
+$toggle-switch-bar-icon-color: #FFF;
+$toggle-switch-button-bg: #FFF;
+$toggle-switch-button-border-color: #FFF;
+$toggle-switch-button-icon-color: #34ADAB;

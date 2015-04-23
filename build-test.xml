@@ -1355,8 +1355,7 @@
 						</then>
 					</if>
 
-					<delete dir="${liferay.home}/data" />
-					<delete dir="${liferay.home}/osgi/state" />
+					<antcall target="delete-liferay-home" />
 
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
@@ -1980,15 +1979,7 @@ go]]></replacevalue>
 	<target name="clean-up-bundles">
 		<delete file="test.${user.name}.properties" />
 
-		<if>
-			<not>
-				<isset property="skip.delete-liferay-home" />
-			</not>
-			<then>
-				<delete dir="${liferay.home}/data" />
-				<delete dir="${liferay.home}/logs" />
-			</then>
-		</if>
+		<antcall target="delete-liferay-home" />
 
 		<delete includeemptydirs="true">
 			<fileset dir="${app.server.parent.dir}" excludes="*.zip" />
@@ -2152,6 +2143,21 @@ go]]></replacevalue>
 				<copy todir="lib/development/libs">
 					<fileset dir="tools/selenium/sikuli/linux" />
 				</copy>
+			</then>
+		</if>
+	</target>
+
+	<target name="delete-liferay-home">
+		<get-testcase-property property.name="delete.liferay.home" />
+
+		<if>
+			<not>
+				<equals arg1="delete.liferay.home" arg2="false" />
+			</not>
+			<then>
+				<delete dir="${liferay.home}/data" />
+				<delete dir="${liferay.home}/logs" />
+				<delete dir="${liferay.home}/osgi/state" />
 			</then>
 		</if>
 	</target>
@@ -4682,15 +4688,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<isset property="skip.rebuild-database" />
 			</not>
 			<then>
-				<if>
-					<not>
-						<isset property="skip.delete-liferay-home" />
-					</not>
-					<then>
-						<delete dir="${liferay.home}/data" />
-						<delete dir="${liferay.home}/logs" />
-					</then>
-				</if>
+				<antcall target="delete-liferay-home" />
 
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />

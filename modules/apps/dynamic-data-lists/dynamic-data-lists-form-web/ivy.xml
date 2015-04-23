@@ -17,8 +17,6 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="com.liferay.dynamic.data.mapping.form.renderer" org="com.liferay" rev="1.0.0" />
-		<dependency name="com.liferay.dynamic.data.mapping.form.values.factory" org="com.liferay" rev="1.0.0" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

@@ -14,11 +14,15 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
-import java.net.URL;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.util.List;
 
@@ -296,17 +300,24 @@ public final class LoggerUtil {
 
 		_javascriptExecutor = (JavascriptExecutor)_webDriver;
 
-		_webDriver.get("file://" + _getResourcesDir() + "html/index.html");
+		String cssContent = _readResourceFile(
+			"/META-INF/resources/css/main_rtl.css");
+
+		FileUtil.write(_CURRENT_DIR + "/test-results/css/main.css", cssContent);
+
+		String htmlContent = _readResourceFile(
+			"/META-INF/resources/html/index.html");
+
+		FileUtil.write(_getHtmlFilePath(), htmlContent);
+
+		_webDriver.get("file://" + _getHtmlFilePath());
 	}
 
 	public static void stopLogger() throws Exception {
-		FileUtil.copyDirectory(
-			_getResourcesDir() + "css", _CURRENT_DIR + "/test-results/css");
-
 		String content = (String)_javascriptExecutor.executeScript(
 			"return document.getElementsByTagName('html')[0].outerHTML;");
 
-		FileUtil.write(_CURRENT_DIR + "/test-results/html/index.html", content);
+		FileUtil.write(_getHtmlFilePath(), content);
 
 		if (isLoggerStarted()) {
 			_webDriver.quit();
@@ -315,16 +326,49 @@ public final class LoggerUtil {
 		}
 	}
 
-	private static String _getResourcesDir() {
+	private static String _getHtmlFilePath() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_CURRENT_DIR);
+		sb.append("/test-results/");
+
+		String testCaseCommandName =
+			PoshiRunnerContext.getTestCaseCommandName();
+
+		testCaseCommandName = StringUtil.replace(testCaseCommandName, "#", "_");
+
+		sb.append(testCaseCommandName);
+		sb.append("/index.html");
+
+		return sb.toString();
+	}
+
+	private static String _readResourceFile(String filePath) throws Exception {
 		LoggerUtil loggerUtil = new LoggerUtil();
 
 		Class<?> clazz = loggerUtil.getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		URL url = classLoader.getResource("META-INF/resources/");
+		InputStream inputStream = classLoader.getResourceAsStream(filePath);
 
-		return url.getPath();
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			inputStream);
+
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+		StringBuilder sb = new StringBuilder();
+
+		String line;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		bufferedReader.close();
+
+		return sb.toString();
 	}
 
 	private static final String _CURRENT_DIR =

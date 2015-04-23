@@ -68,10 +68,6 @@ public class PoshiRunner {
 	}
 
 	public PoshiRunner(String classCommandName) throws Exception {
-		LoggerUtil.startLogger();
-
-		SeleniumUtil.startSelenium();
-
 		System.out.println();
 		System.out.println("###");
 		System.out.println("### " + classCommandName);
@@ -84,6 +80,10 @@ public class PoshiRunner {
 
 		PoshiRunnerContext.setTestCaseCommandName(_testClassCommandName);
 		PoshiRunnerContext.setTestCaseName(_testClassName);
+
+		LoggerUtil.startLogger();
+
+		SeleniumUtil.startSelenium();
 	}
 
 	@Test

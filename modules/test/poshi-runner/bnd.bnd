@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.poshi.runner
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/META-INF/resources,\
+	META-INF/resources/addons=../../../tools/selenium/addons

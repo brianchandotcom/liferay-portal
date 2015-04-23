@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.blogs.util;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainerResults;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,13 +53,8 @@ public class BlogsUtil {
 
 	public static final String DISPLAY_STYLE_TITLE = "title";
 
-	public static CommentManager getCommentManager() {
-		return (CommentManager)PortalBeanLocatorUtil.locate(
-			CommentManager.class.getName());
-	}
-
 	public static int getCommentsCount(BlogsEntry entry) {
-		CommentManager commentManager = getCommentManager();
+		CommentManager commentManager = CommentManagerUtil.getCommentManager();
 
 		return commentManager.getCommentsCount(
 			BlogsEntry.class.getName(), entry.getEntryId());

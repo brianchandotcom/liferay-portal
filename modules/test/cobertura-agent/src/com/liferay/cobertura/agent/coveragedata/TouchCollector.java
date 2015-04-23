@@ -15,6 +15,7 @@
 package com.liferay.cobertura.agent.coveragedata;
 
 import com.liferay.cobertura.agent.InstrumentationAgent;
+import com.liferay.cobertura.agent.util.HashUtil;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -113,22 +114,15 @@ public class TouchCollector {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj)return true;
+			JumpTouchData jumpTouchData = (JumpTouchData)obj;
 
-			if (!super.equals(obj)) {
-				return false;
+			if ((_branch == jumpTouchData._branch) &&
+				(_branchNumber == jumpTouchData._branchNumber)) {
+
+				return true;
 			}
 
-			if (getClass() != obj.getClass()) {
-				return false;
-			}
-
-			JumpTouchData other = (JumpTouchData)obj;
-
-			if (_branch != other._branch)return false;
-
-			if (_branchNumber != other._branchNumber)return false;
-			return true;
+			return false;
 		}
 
 		public int getBranchNumber() {
@@ -137,15 +131,9 @@ public class TouchCollector {
 
 		@Override
 		public int hashCode() {
-			final int prime = 31;
+			int hashCode = HashUtil.hash(super.hashCode(), _branch);
 
-			int result = super.hashCode();
-
-			result = prime * result + (_branch ? 1231 : 1237);
-
-			result = prime * result + _branchNumber;
-
-			return result;
+			return HashUtil.hash(hashCode, _branchNumber);
 		}
 
 		public boolean isBranch() {
@@ -171,29 +159,15 @@ public class TouchCollector {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj) {
+			LineTouchData lineTouchData = (LineTouchData)obj;
+
+			if (_className.equals(lineTouchData._className) &&
+				(_lineNumber == lineTouchData._lineNumber)) {
+
 				return true;
 			}
 
-			if (obj == null) {
-				return false;
-			}
-
-			if (getClass() != obj.getClass()) {
-				return false;
-			}
-
-			LineTouchData other = (LineTouchData)obj;
-
-			if (!_className.equals(other._className)) {
-				return false;
-			}
-
-			if (_lineNumber != other._lineNumber) {
-				return false;
-			}
-
-			return true;
+			return false;
 		}
 
 		public String getClassName() {
@@ -206,15 +180,9 @@ public class TouchCollector {
 
 		@Override
 		public int hashCode() {
-			final int prime = 31;
+			int hashCode = HashUtil.hash(0, _className);
 
-			int result = 1;
-
-			result = prime * result + _className.hashCode();
-
-			result = prime * result + _lineNumber;
-
-			return result;
+			return HashUtil.hash(hashCode, _lineNumber);
 		}
 
 		private LineTouchData(String className, int lineNumber) {
@@ -231,29 +199,15 @@ public class TouchCollector {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj) {
+			SwitchTouchData switchTouchData = (SwitchTouchData)obj;
+
+			if ((_branch == switchTouchData._branch) &&
+				(_switchNumber == switchTouchData._switchNumber)) {
+
 				return true;
 			}
 
-			if (!super.equals(obj)) {
-				return false;
-			}
-
-			if (getClass() != obj.getClass()) {
-				return false;
-			}
-
-			SwitchTouchData other = (SwitchTouchData)obj;
-
-			if (_branch != other._branch) {
-				return false;
-			}
-
-			if (_switchNumber != other._switchNumber) {
-				return false;
-			}
-
-			return true;
+			return false;
 		}
 
 		public int getBranch() {
@@ -266,15 +220,9 @@ public class TouchCollector {
 
 		@Override
 		public int hashCode() {
-			final int prime = 31;
+			int hashCode = HashUtil.hash(super.hashCode(), _branch);
 
-			int result = super.hashCode();
-
-			result = prime * result + _branch;
-
-			result = prime * result + _switchNumber;
-
-			return result;
+			return HashUtil.hash(hashCode, _switchNumber);
 		}
 
 		private SwitchTouchData(

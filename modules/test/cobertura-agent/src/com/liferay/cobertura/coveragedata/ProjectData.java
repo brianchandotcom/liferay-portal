@@ -90,6 +90,7 @@ public class ProjectData extends CoverageDataContainer
 		}
 	}
 
+	@Override
 	public void merge(CoverageData coverageData)
 	{
 		if (coverageData == null) {

@@ -81,6 +81,7 @@ public abstract class CoverageDataContainer
 	 * @param obj An object to test for equality.
 	 * @return True if the objects are equal.
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
@@ -104,6 +105,7 @@ public abstract class CoverageDataContainer
 	 * @return The average branch coverage rate for all children
 	 *         in this container.
 	 */
+	@Override
 	public double getBranchCoverageRate()
 	{
 		int number = 0;
@@ -156,6 +158,7 @@ public abstract class CoverageDataContainer
 	 *         in this container.  This number will be a decimal
 	 *         between 0 and 1, inclusive.
 	 */
+	@Override
 	public double getLineCoverageRate()
 	{
 		int number = 0;
@@ -199,6 +202,7 @@ public abstract class CoverageDataContainer
 		}
 	}
 
+	@Override
 	public int getNumberOfCoveredBranches()
 	{
 		int number = 0;
@@ -219,6 +223,7 @@ public abstract class CoverageDataContainer
 		return number;
 	}
 
+	@Override
 	public int getNumberOfCoveredLines()
 	{
 		int number = 0;
@@ -239,6 +244,7 @@ public abstract class CoverageDataContainer
 		return number;
 	}
 
+	@Override
 	public int getNumberOfValidBranches()
 	{
 		int number = 0;
@@ -259,6 +265,7 @@ public abstract class CoverageDataContainer
 		return number;
 	}
 
+	@Override
 	public int getNumberOfValidLines()
 	{
 		int number = 0;
@@ -284,6 +291,7 @@ public abstract class CoverageDataContainer
 	 * class override this hashCode method and generate a more
 	 * effective hash code.
 	 */
+	@Override
 	public int hashCode()
 	{
 		lock.lock();
@@ -302,6 +310,7 @@ public abstract class CoverageDataContainer
 	 *
 	 * @param coverageData The container to merge into this one.
 	 */
+	@Override
 	public void merge(CoverageData coverageData)
 	{
 		CoverageDataContainer container = (CoverageDataContainer)coverageData;

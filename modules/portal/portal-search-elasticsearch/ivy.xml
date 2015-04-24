@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency conf="default->master" name="jts" org="com.vividsolutions" rev="1.13" />
 		<dependency name="elasticsearch" org="org.elasticsearch" rev="1.5.1" />
 		<dependency name="elasticsearch-analysis-icu" org="org.elasticsearch" rev="2.5.0" />
 		<dependency name="elasticsearch-analysis-kuromoji" org="org.elasticsearch" rev="2.5.0" />
@@ -24,6 +25,5 @@
 		<dependency name="elasticsearch-analysis-smartcn" org="org.elasticsearch" rev="2.5.0" />
 		<dependency name="elasticsearch-analysis-stempel" org="org.elasticsearch" rev="2.5.0" />
 		<dependency name="elasticsearch-groovy" org="org.elasticsearch" rev="1.5.1" />
-		<dependency conf="default->master" name="jts" org="com.vividsolutions" rev="1.13" />
 	</dependencies>
 </ivy-module>

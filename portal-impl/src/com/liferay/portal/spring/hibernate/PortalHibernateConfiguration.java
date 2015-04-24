@@ -155,6 +155,11 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				ShardSpringSessionContext.class.getName());
 		}
 
+		properties.setProperty("hibernate.cache.use_query_cache", "false");
+		properties.setProperty(
+			"hibernate.cache.use_second_level_cache", "false");
+		properties.remove("hibernate.cache.region.factory_class");
+
 		configuration.setProperties(properties);
 
 		try {

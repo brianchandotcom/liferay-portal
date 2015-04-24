@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.comment.context;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -23,7 +24,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.comment.MBCommentImpl;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -73,10 +73,10 @@ public class MBCommentSectionDisplayContext
 
 				ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(
 					_discussionTaglibHelper.getUserId(),
-					MBDiscussion.class.getName(), classPKs);
+					CommentConstants.getDiscussionClassName(), classPKs);
 
 				ratingsStats = RatingsStatsLocalServiceUtil.getStats(
-					MBDiscussion.class.getName(), classPKs);
+					CommentConstants.getDiscussionClassName(), classPKs);
 			}
 
 			MBTreeWalker treeWalker = getTreeWalker();

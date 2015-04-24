@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.comment.context;
 
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -25,7 +27,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.comment.MBCommentImpl;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -54,7 +55,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
 				_discussionRequestHelper.getCompanyId(),
 				_discussionRequestHelper.getScopeGroupId(),
-				MBDiscussion.class.getName())) {
+				CommentConstants.getDiscussionClassName())) {
 
 			if (_message.isPending()) {
 				publishButtonLabel = "save";

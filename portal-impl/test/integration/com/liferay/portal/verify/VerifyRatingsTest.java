@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -51,6 +52,8 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_previousCacheStatus = CacheRegistryUtil.isActive();
+
 		CacheRegistryUtil.setActive(false);
 
 		_ratingsStats = RatingsTestUtil.addStats(
@@ -67,13 +70,13 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 			RatingsEntryLocalServiceUtil.deleteRatingsEntry(ratingsEntry);
 		}
 
-		CacheRegistryUtil.setActive(true);
+		CacheRegistryUtil.setActive(_previousCacheStatus);
 	}
 
 	@Test
 	public void testVerifyStatsWithEntries() throws Exception {
 		int totalEntries = RandomTestUtil.randomInt(1, 10);
-		double totalScore = 0;
+		double totalScore = 0.0;
 
 		for (int i = 0; i < totalEntries; i++) {
 			totalScore += addVote();
@@ -85,21 +88,21 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 			_TEST_CLASS_NAME, _TEST_CLASS_PK);
 
 		Assert.assertEquals(totalEntries, ratingStats.getTotalEntries());
-		Assert.assertEquals(totalScore, ratingStats.getTotalScore(), 0.001);
-		Assert.assertEquals(
-			totalScore / totalEntries, ratingStats.getAverageScore(), 0.001);
+		AssertUtils.assertEquals(totalScore, ratingStats.getTotalScore());
+		AssertUtils.assertEquals(
+			totalScore / totalEntries, ratingStats.getAverageScore());
 	}
 
 	@Test
-	public void testVerifyStatsWithoutEntries() throws Exception {
+	public void testVerifyStatsWithNoEntries() throws Exception {
 		doVerify();
 
 		RatingsStats ratingStats = RatingsStatsLocalServiceUtil.getStats(
 			_TEST_CLASS_NAME, _TEST_CLASS_PK);
 
 		Assert.assertEquals(0, ratingStats.getTotalEntries());
-		Assert.assertEquals(0, ratingStats.getTotalScore(), 0.001);
-		Assert.assertEquals(0, ratingStats.getAverageScore(), 0.001);
+		AssertUtils.assertEquals(0.0, ratingStats.getTotalScore());
+		AssertUtils.assertEquals(0.0, ratingStats.getAverageScore());
 	}
 
 	protected double addVote() throws Exception {
@@ -120,6 +123,8 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 	private static final String _TEST_CLASS_NAME = "testClassName";
 
 	private static final int _TEST_CLASS_PK = 1;
+
+	private boolean _previousCacheStatus;
 
 	@DeleteAfterTestRun
 	private RatingsStats _ratingsStats;

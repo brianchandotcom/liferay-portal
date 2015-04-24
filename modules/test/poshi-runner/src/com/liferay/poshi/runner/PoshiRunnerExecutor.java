@@ -138,19 +138,19 @@ public class PoshiRunnerExecutor {
 					runFunctionExecuteElement(childElement);
 				}
 				else if (childElement.attributeValue("macro") != null) {
-					runMacroElement(childElement, "macro");
+					runMacroExecuteElement(childElement, "macro");
 				}
 				else if ((childElement.attributeValue(
 							"macro-desktop") != null) &&
 						 Validator.isNotNull(PropsValues.MOBILE_DEVICE_TYPE)) {
 
-					runMacroElement(childElement, "macro-desktop");
+					runMacroExecuteElement(childElement, "macro-desktop");
 				}
 				else if ((childElement.attributeValue(
 							"macro-mobile") != null) &&
 						 Validator.isNotNull(PropsValues.MOBILE_DEVICE_TYPE)) {
 
-					runMacroElement(childElement, "macro-mobile");
+					runMacroExecuteElement(childElement, "macro-mobile");
 				}
 				else if (childElement.attributeValue("selenium") != null) {
 					runSeleniumElement(childElement);
@@ -358,7 +358,23 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
-	public static void runMacroElement(Element executeElement, String macroType)
+	public static void runMacroCommandElement(
+			String classCommandName, Element commandElement)
+		throws Exception {
+
+		PoshiRunnerVariablesUtil.pushCommandMap();
+
+		PoshiRunnerStackTraceUtil.pushFilePath(classCommandName, "macro");
+
+		parseElement(commandElement);
+
+		PoshiRunnerStackTraceUtil.popFilePath();
+
+		PoshiRunnerVariablesUtil.popCommandMap();
+	}
+
+	public static void runMacroExecuteElement(
+			Element executeElement, String macroType)
 		throws Exception {
 
 		String classCommandName = executeElement.attributeValue(macroType);
@@ -381,27 +397,19 @@ public class PoshiRunnerExecutor {
 			runVarElement(executeVarElement, false);
 		}
 
-		PoshiRunnerVariablesUtil.pushCommandMap();
-
-		PoshiRunnerStackTraceUtil.pushFilePath(classCommandName, "macro");
-
 		SummaryLoggerHandler.startSummary(executeElement);
 
 		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
 			classCommandName);
 
 		try {
-			parseElement(commandElement);
+			runMacroCommandElement(classCommandName, commandElement);
 		}
 		catch (Exception e) {
 			SummaryLoggerHandler.failSummary(executeElement, e.getMessage());
 
 			throw e;
 		}
-
-		PoshiRunnerVariablesUtil.popCommandMap();
-
-		PoshiRunnerStackTraceUtil.popFilePath();
 
 		SummaryLoggerHandler.passSummary(executeElement);
 	}

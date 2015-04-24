@@ -49,21 +49,15 @@ public class SwitchData implements BranchCoverageData, Serializable
 
 	public SwitchData(int switchNumber, int caseNumber)
 	{
-		super();
 		this.switchNumber = switchNumber;
-		defaultHits = 0;
 		hits = new long[caseNumber];
-		Arrays.fill(hits, 0);
 		initLock();
 	}
 
 	public SwitchData(int switchNumber, int min, int max)
 	{
-		super();
 		this.switchNumber = switchNumber;
-		defaultHits = 0;
 		hits = new long[max - min + 1];
-		Arrays.fill(hits, 0);
 		initLock();
 	}
 

@@ -39,6 +39,8 @@ public class PoshiRunnerExecutor {
 	public static boolean evaluateConditionalElement(Element element)
 		throws Exception {
 
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
 		String elementName = element.getName();
 
 		if (elementName.equals("and")) {
@@ -125,9 +127,6 @@ public class PoshiRunnerExecutor {
 		for (Element childElement : childElements) {
 			String childElementName = childElement.getName();
 
-			PoshiRunnerStackTraceUtil.pushStackTrace(
-				childElement.attributeValue("line-number"));
-
 			if (childElementName.equals("echo") ||
 				childElementName.equals("description")) {
 
@@ -174,12 +173,12 @@ public class PoshiRunnerExecutor {
 			else if (childElementName.equals("while")) {
 				runWhileElement(childElement);
 			}
-
-			PoshiRunnerStackTraceUtil.popStackTrace();
 		}
 	}
 
 	public static void runEchoElement(Element element) throws Exception {
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
 		String message = element.attributeValue("message");
 
 		if (message == null) {
@@ -191,6 +190,8 @@ public class PoshiRunnerExecutor {
 	}
 
 	public static void runFailElement(Element element) throws Exception {
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
 		String message = element.attributeValue("message");
 
 		if (Validator.isNotNull(message)) {
@@ -202,6 +203,8 @@ public class PoshiRunnerExecutor {
 	}
 
 	public static void runForElement(Element element) throws Exception {
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
 		String list = PoshiRunnerVariablesUtil.replaceCommandVars(
 			element.attributeValue("list"));
 
@@ -221,6 +224,8 @@ public class PoshiRunnerExecutor {
 			String classCommandName, Element commandElement)
 		throws Exception {
 
+		PoshiRunnerStackTraceUtil.setCurrentElement(commandElement);
+
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
 		PoshiRunnerStackTraceUtil.pushFilePath(classCommandName, "function");
@@ -234,6 +239,8 @@ public class PoshiRunnerExecutor {
 
 	public static void runFunctionExecuteElement(Element executeElement)
 		throws Exception {
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
 		List<Element> executeVarElements = executeElement.elements("var");
 
@@ -299,6 +306,9 @@ public class PoshiRunnerExecutor {
 			}
 		}
 
+		PoshiRunnerStackTraceUtil.pushStackTrace(
+			executeElement.attributeValue("line-number"));
+
 		CommandLoggerHandler.startCommand(executeElement);
 		SummaryLoggerHandler.startSummary(executeElement);
 
@@ -317,9 +327,13 @@ public class PoshiRunnerExecutor {
 
 		CommandLoggerHandler.passCommand(executeElement);
 		SummaryLoggerHandler.passSummary(executeElement);
+
+		PoshiRunnerStackTraceUtil.popStackTrace();
 	}
 
 	public static void runIfElement(Element element) throws Exception {
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
 		List<Element> ifChildElements = element.elements();
 
 		Element ifConditionElement = ifChildElements.get(0);
@@ -329,12 +343,16 @@ public class PoshiRunnerExecutor {
 		if (condition) {
 			Element ifThenElement = element.element("then");
 
+			PoshiRunnerStackTraceUtil.setCurrentElement(ifThenElement);
+
 			parseElement(ifThenElement);
 		}
 		else if (element.element("elseif") != null) {
 			List<Element> elseIfElements = element.elements("elseif");
 
 			for (Element elseIfElement : elseIfElements) {
+				PoshiRunnerStackTraceUtil.setCurrentElement(elseIfElement);
+
 				List<Element> elseIfChildElements = elseIfElement.elements();
 
 				Element elseIfConditionElement = elseIfChildElements.get(0);
@@ -343,6 +361,9 @@ public class PoshiRunnerExecutor {
 
 				if (condition) {
 					Element elseIfThenElement = elseIfElement.element("then");
+
+					PoshiRunnerStackTraceUtil.setCurrentElement(
+						elseIfThenElement);
 
 					parseElement(elseIfThenElement);
 
@@ -354,6 +375,8 @@ public class PoshiRunnerExecutor {
 		if ((element.element("else") != null) && !condition) {
 			Element elseElement = element.element("else");
 
+			PoshiRunnerStackTraceUtil.setCurrentElement(elseElement);
+
 			parseElement(elseElement);
 		}
 	}
@@ -361,6 +384,8 @@ public class PoshiRunnerExecutor {
 	public static void runMacroCommandElement(
 			String classCommandName, Element commandElement)
 		throws Exception {
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(commandElement);
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
@@ -376,6 +401,8 @@ public class PoshiRunnerExecutor {
 	public static void runMacroExecuteElement(
 			Element executeElement, String macroType)
 		throws Exception {
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
 		String classCommandName = executeElement.attributeValue(macroType);
 
@@ -397,6 +424,9 @@ public class PoshiRunnerExecutor {
 			runVarElement(executeVarElement, false);
 		}
 
+		PoshiRunnerStackTraceUtil.pushStackTrace(
+			executeElement.attributeValue("line-number"));
+
 		SummaryLoggerHandler.startSummary(executeElement);
 
 		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
@@ -412,10 +442,14 @@ public class PoshiRunnerExecutor {
 		}
 
 		SummaryLoggerHandler.passSummary(executeElement);
+
+		PoshiRunnerStackTraceUtil.popStackTrace();
 	}
 
 	public static void runSeleniumElement(Element executeElement)
 		throws Exception {
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
 		List<String> arguments = new ArrayList<>();
 		List<Class<?>> parameterClasses = new ArrayList<>();
@@ -491,6 +525,8 @@ public class PoshiRunnerExecutor {
 	}
 
 	public static void runTaskElement(Element element) throws Exception {
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
 		try {
 			SummaryLoggerHandler.startSummary(element);
 
@@ -507,6 +543,8 @@ public class PoshiRunnerExecutor {
 
 	public static void runVarElement(Element element, boolean commandVar)
 		throws Exception {
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
 		String varName = element.attributeValue("name");
 		String varValue = element.attributeValue("value");
@@ -557,6 +595,8 @@ public class PoshiRunnerExecutor {
 	}
 
 	public static void runWhileElement(Element element) throws Exception {
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
 		int maxIterations = 15;
 
 		if (element.attributeValue("max-iterations") != null) {
@@ -573,6 +613,8 @@ public class PoshiRunnerExecutor {
 			if (!evaluateConditionalElement(conditionElement)) {
 				break;
 			}
+
+			PoshiRunnerStackTraceUtil.setCurrentElement(thenElement);
 
 			parseElement(thenElement);
 		}

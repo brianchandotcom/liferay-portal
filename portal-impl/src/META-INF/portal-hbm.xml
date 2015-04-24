@@ -168,7 +168,6 @@
 		<property name="currentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.AccountImpl" table="Account_" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="accountId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -190,7 +189,6 @@
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.StringType" column="size_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.AddressImpl" table="Address" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="addressId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -215,7 +213,6 @@
 		<property name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="primary_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.BackgroundTaskImpl" table="BackgroundTask" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="backgroundTaskId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -236,7 +233,6 @@
 		<property name="statusMessage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.BrowserTrackerImpl" table="BrowserTracker" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="browserTrackerId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -245,7 +241,6 @@
 		<property name="browserKey" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ClassNameImpl" table="ClassName_" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="classNameId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -253,7 +248,6 @@
 		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ClusterGroupImpl" table="ClusterGroup" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="clusterGroupId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -263,7 +257,6 @@
 		<property name="wholeCluster" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.CompanyImpl" table="Company" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="companyId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -279,7 +272,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ContactImpl" table="Contact_" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="contactId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -318,7 +310,6 @@
 		<property name="hoursOfOperation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.CountryImpl" table="Country" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="countryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -332,7 +323,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.EmailAddressImpl" table="EmailAddress" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="emailAddressId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -350,7 +340,6 @@
 		<property name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="primary_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ExportImportConfigurationImpl" table="ExportImportConfiguration" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="exportImportConfigurationId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -371,7 +360,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.GroupImpl" table="Group_" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="groupId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -398,7 +386,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ImageImpl" table="Image" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="imageId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -410,7 +397,6 @@
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="size_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutImpl" table="Layout" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="plid" type="long">
 			<generator class="assigned" />
 		</id>
@@ -446,7 +432,6 @@
 		<property name="sourcePrototypeLayoutUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutBranchImpl" table="LayoutBranch" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="layoutBranchId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -462,7 +447,6 @@
 		<property name="master" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutFriendlyURLImpl" table="LayoutFriendlyURL" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="layoutFriendlyURLId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -480,7 +464,6 @@
 		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutPrototypeImpl" table="LayoutPrototype" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="layoutPrototypeId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -497,7 +480,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutRevisionImpl" table="LayoutRevision" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="layoutRevisionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -533,7 +515,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutSetImpl" table="LayoutSet" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="layoutSetId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -555,7 +536,6 @@
 		<property name="layoutSetPrototypeLinkEnabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutSetBranchImpl" table="LayoutSetBranch" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="layoutSetBranchId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -581,7 +561,6 @@
 		<property name="layoutSetPrototypeLinkEnabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LayoutSetPrototypeImpl" table="LayoutSetPrototype" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="layoutSetPrototypeId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -598,7 +577,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ListTypeImpl" table="ListType" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="listTypeId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -607,7 +585,6 @@
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.LockImpl" table="Lock_" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="lockId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -624,7 +601,6 @@
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.MembershipRequestImpl" table="MembershipRequest" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="membershipRequestId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -640,7 +616,6 @@
 		<property name="statusId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.OrganizationImpl" table="Organization_" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="organizationId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -663,7 +638,6 @@
 		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.OrgGroupRoleImpl" table="OrgGroupRole" dynamic-update="true">
-		<cache usage="read-write" />
 		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.OrgGroupRolePK">
 			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -672,7 +646,6 @@
 		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
 	</class>
 	<class name="com.liferay.portal.model.impl.OrgLaborImpl" table="OrgLabor" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="orgLaborId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -695,7 +668,6 @@
 		<property name="satClose" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PasswordPolicyImpl" table="PasswordPolicy" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="passwordPolicyId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -735,7 +707,6 @@
 		<property name="resetTicketMaxAge" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PasswordPolicyRelImpl" table="PasswordPolicyRel" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="passwordPolicyRelId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -745,7 +716,6 @@
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PasswordTrackerImpl" table="PasswordTracker" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="passwordTrackerId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -755,7 +725,6 @@
 		<property name="password" type="com.liferay.portal.dao.orm.hibernate.StringType" column="password_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PhoneImpl" table="Phone" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="phoneId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -774,7 +743,6 @@
 		<property name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="primary_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PluginSettingImpl" table="PluginSetting" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="pluginSettingId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -786,7 +754,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PortalPreferencesImpl" table="PortalPreferences" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="portalPreferencesId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -796,7 +763,6 @@
 		<property name="preferences" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PortletImpl" table="Portlet" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="id" column="id_" type="long">
 			<generator class="assigned" />
 		</id>
@@ -807,7 +773,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PortletItemImpl" table="PortletItem" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="portletItemId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -823,7 +788,6 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.PortletPreferencesImpl" table="PortletPreferences" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="portletPreferencesId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -835,7 +799,6 @@
 		<property name="preferences" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.RegionImpl" table="Region" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="regionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -846,7 +809,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ReleaseImpl" table="Release_" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="releaseId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -861,7 +823,6 @@
 		<property name="testString" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.RepositoryImpl" table="Repository" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="repositoryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -881,7 +842,6 @@
 		<property name="dlFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.RepositoryEntryImpl" table="RepositoryEntry" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="repositoryEntryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -898,7 +858,6 @@
 		<property name="manualCheckInRequired" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourceActionImpl" table="ResourceAction" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="resourceActionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -908,7 +867,6 @@
 		<property name="bitwiseValue" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourceBlockImpl" table="ResourceBlock" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="resourceBlockId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -920,7 +878,6 @@
 		<property name="referenceCount" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourceBlockPermissionImpl" table="ResourceBlockPermission" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="resourceBlockPermissionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -930,7 +887,6 @@
 		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourcePermissionImpl" table="ResourcePermission" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="resourcePermissionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -944,7 +900,6 @@
 		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourceTypePermissionImpl" table="ResourceTypePermission" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="resourceTypePermissionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -956,7 +911,6 @@
 		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.RoleImpl" table="Role_" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="roleId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -976,7 +930,6 @@
 		<property name="subtype" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ServiceComponentImpl" table="ServiceComponent" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="serviceComponentId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -987,7 +940,6 @@
 		<property name="data" type="com.liferay.portal.dao.orm.hibernate.StringType" column="data_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ShardImpl" table="Shard" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="shardId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -997,7 +949,6 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.SubscriptionImpl" table="Subscription" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="subscriptionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1013,7 +964,6 @@
 		<property name="frequency" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.SystemEventImpl" table="SystemEvent" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="systemEventId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1033,7 +983,6 @@
 		<property name="extraData" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.TeamImpl" table="Team" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="teamId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1048,7 +997,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.TicketImpl" table="Ticket" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="ticketId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1063,7 +1011,6 @@
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserImpl" table="User_" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="userId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1109,7 +1056,6 @@
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserGroupImpl" table="UserGroup" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="userGroupId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1126,7 +1072,6 @@
 		<property name="addedByLDAPImport" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserGroupGroupRoleImpl" table="UserGroupGroupRole" dynamic-update="true">
-		<cache usage="read-write" />
 		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.UserGroupGroupRolePK">
 			<key-property name="userGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1135,7 +1080,6 @@
 		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserGroupRoleImpl" table="UserGroupRole" dynamic-update="true">
-		<cache usage="read-write" />
 		<composite-id name="primaryKey" class="com.liferay.portal.service.persistence.UserGroupRolePK">
 			<key-property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -1144,7 +1088,6 @@
 		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserIdMapperImpl" table="UserIdMapper" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="userIdMapperId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1155,7 +1098,6 @@
 		<property name="externalUserId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserNotificationDeliveryImpl" table="UserNotificationDelivery" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="userNotificationDeliveryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1169,7 +1111,6 @@
 		<property name="deliver" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserNotificationEventImpl" table="UserNotificationEvent" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="userNotificationEventId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1187,7 +1128,6 @@
 		<property name="archived" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserTrackerImpl" table="UserTracker" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="userTrackerId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1201,7 +1141,6 @@
 		<property name="userAgent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserTrackerPathImpl" table="UserTrackerPath" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="userTrackerPathId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1211,7 +1150,6 @@
 		<property name="pathDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.VirtualHostImpl" table="VirtualHost" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="virtualHostId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1221,7 +1159,6 @@
 		<property name="hostname" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.WebDAVPropsImpl" table="WebDAVProps" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="webDavPropsId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1234,7 +1171,6 @@
 		<property name="props" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.WebsiteImpl" table="Website" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="websiteId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1252,7 +1188,6 @@
 		<property name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="primary_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.WorkflowDefinitionLinkImpl" table="WorkflowDefinitionLink" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="workflowDefinitionLinkId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1270,7 +1205,6 @@
 		<property name="workflowDefinitionVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.WorkflowInstanceLinkImpl" table="WorkflowInstanceLink" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="workflowInstanceLinkId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1286,7 +1220,6 @@
 		<property name="workflowInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl" table="AnnouncementsDelivery">
-		<cache usage="read-write" />
 		<id name="deliveryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1298,7 +1231,6 @@
 		<property name="website" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.announcements.model.impl.AnnouncementsEntryImpl" table="AnnouncementsEntry">
-		<cache usage="read-write" />
 		<id name="entryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1320,7 +1252,6 @@
 		<property name="alert" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl" table="AnnouncementsFlag">
-		<cache usage="read-write" />
 		<id name="flagId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1330,7 +1261,6 @@
 		<property name="value" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetCategoryImpl" table="AssetCategory">
-		<cache usage="read-write" />
 		<id name="categoryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1350,7 +1280,6 @@
 		<property name="vocabularyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" table="AssetCategoryProperty">
-		<cache usage="read-write" />
 		<id name="categoryPropertyId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1364,7 +1293,6 @@
 		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetEntryImpl" table="AssetEntry">
-		<cache usage="read-write" />
 		<id name="entryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1396,7 +1324,6 @@
 		<property name="viewCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetLinkImpl" table="AssetLink">
-		<cache usage="read-write" />
 		<id name="linkId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1410,7 +1337,6 @@
 		<property name="weight" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetTagImpl" table="AssetTag">
-		<cache usage="read-write" />
 		<id name="tagId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1424,7 +1350,6 @@
 		<property name="assetCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetTagStatsImpl" table="AssetTagStats">
-		<cache usage="read-write" />
 		<id name="tagStatsId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1433,7 +1358,6 @@
 		<property name="assetCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetVocabularyImpl" table="AssetVocabulary">
-		<cache usage="read-write" />
 		<id name="vocabularyId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1450,7 +1374,6 @@
 		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" column="settings_" />
 	</class>
 	<class name="com.liferay.portlet.blogs.model.impl.BlogsEntryImpl" table="BlogsEntry">
-		<cache usage="read-write" />
 		<id name="entryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1483,7 +1406,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl" table="BlogsStatsUser">
-		<cache usage="read-write" />
 		<id name="statsUserId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1497,7 +1419,6 @@
 		<property name="ratingsAverageScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 	<class name="com.liferay.portlet.calendar.model.impl.CalEventImpl" table="CalEvent">
-		<cache usage="read-write" />
 		<id name="eventId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1525,7 +1446,6 @@
 		<property name="secondReminder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLContentImpl" table="DLContent">
-		<cache usage="read-write" />
 		<id name="contentId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1546,7 +1466,6 @@
 		<property column="data_" name="dataBlob" type="blob" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl" table="DLFileEntry">
-		<cache usage="read-write" />
 		<id name="fileEntryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1580,7 +1499,6 @@
 		<property name="manualCheckInRequired" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl" table="DLFileEntryMetadata">
-		<cache usage="read-write" />
 		<id name="fileEntryMetadataId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1592,7 +1510,6 @@
 		<property name="fileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl" table="DLFileEntryType">
-		<cache usage="read-write" />
 		<id name="fileEntryTypeId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1608,7 +1525,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl" table="DLFileRank">
-		<cache usage="read-write" />
 		<id name="fileRankId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1620,7 +1536,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl" table="DLFileShortcut">
-		<cache usage="read-write" />
 		<id name="fileShortcutId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1642,7 +1557,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl" table="DLFileVersion">
-		<cache usage="read-write" />
 		<id name="fileVersionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1674,7 +1588,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl" table="DLFolder">
-		<cache usage="read-write" />
 		<id name="folderId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1701,7 +1614,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLSyncEventImpl" table="DLSyncEvent">
-		<cache usage="read-write" />
 		<id name="syncEventId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1711,7 +1623,6 @@
 		<property name="typePK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl" table="DDLRecord">
-		<cache usage="read-write" />
 		<id name="recordId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1730,7 +1641,6 @@
 		<property name="displayIndex" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImpl" table="DDLRecordSet">
-		<cache usage="read-write" />
 		<id name="recordSetId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1749,7 +1659,6 @@
 		<property name="scope" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionImpl" table="DDLRecordVersion">
-		<cache usage="read-write" />
 		<id name="recordVersionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1769,7 +1678,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentImpl" table="DDMContent">
-		<cache usage="read-write" />
 		<id name="contentId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1785,7 +1693,6 @@
 		<property name="data" type="com.liferay.portal.dao.orm.hibernate.StringType" column="data_" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkImpl" table="DDMStorageLink">
-		<cache usage="read-write" />
 		<id name="storageLinkId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1795,7 +1702,6 @@
 		<property name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl" table="DDMStructure">
-		<cache usage="read-write" />
 		<id name="structureId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1817,7 +1723,6 @@
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLayoutImpl" table="DDMStructureLayout">
-		<cache usage="read-write" />
 		<id name="structureLayoutId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1832,7 +1737,6 @@
 		<property name="definition" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkImpl" table="DDMStructureLink">
-		<cache usage="read-write" />
 		<id name="structureLinkId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1841,7 +1745,6 @@
 		<property name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureVersionImpl" table="DDMStructureVersion">
-		<cache usage="read-write" />
 		<id name="structureVersionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1859,7 +1762,6 @@
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl" table="DDMTemplate">
-		<cache usage="read-write" />
 		<id name="templateId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1887,7 +1789,6 @@
 		<property name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionImpl" table="DDMTemplateVersion">
-		<cache usage="read-write" />
 		<id name="templateVersionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1904,7 +1805,6 @@
 		<property name="script" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.expando.model.impl.ExpandoColumnImpl" table="ExpandoColumn">
-		<cache usage="read-write" />
 		<id name="columnId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1916,7 +1816,6 @@
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.expando.model.impl.ExpandoRowImpl" table="ExpandoRow">
-		<cache usage="read-write" />
 		<id name="rowId" column="rowId_" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1926,7 +1825,6 @@
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.expando.model.impl.ExpandoTableImpl" table="ExpandoTable">
-		<cache usage="read-write" />
 		<id name="tableId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1935,7 +1833,6 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.expando.model.impl.ExpandoValueImpl" table="ExpandoValue" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="valueId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1948,7 +1845,6 @@
 		<property name="data" type="com.liferay.portal.dao.orm.hibernate.StringType" column="data_" />
 	</class>
 	<class name="com.liferay.portlet.journal.model.impl.JournalArticleImpl" table="JournalArticle">
-		<cache usage="read-write" />
 		<id name="id" column="id_" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1986,7 +1882,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.journal.model.impl.JournalArticleImageImpl" table="JournalArticleImage">
-		<cache usage="read-write" />
 		<id name="articleImageId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -1999,7 +1894,6 @@
 		<property name="tempImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.journal.model.impl.JournalArticleResourceImpl" table="JournalArticleResource">
-		<cache usage="read-write" />
 		<id name="resourcePrimKey" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2008,7 +1902,6 @@
 		<property name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.journal.model.impl.JournalContentSearchImpl" table="JournalContentSearch">
-		<cache usage="read-write" />
 		<id name="contentSearchId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2020,7 +1913,6 @@
 		<property name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.journal.model.impl.JournalFeedImpl" table="JournalFeed">
-		<cache usage="read-write" />
 		<id name="id" column="id_" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2047,7 +1939,6 @@
 		<property name="feedVersion" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 	<class name="com.liferay.portlet.journal.model.impl.JournalFolderImpl" table="JournalFolder">
-		<cache usage="read-write" />
 		<id name="folderId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2069,7 +1960,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBBanImpl" table="MBBan">
-		<cache usage="read-write" />
 		<id name="banId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2083,7 +1973,6 @@
 		<property name="banUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBCategoryImpl" table="MBCategory">
-		<cache usage="read-write" />
 		<id name="categoryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2107,7 +1996,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBDiscussionImpl" table="MBDiscussion">
-		<cache usage="read-write" />
 		<id name="discussionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2123,7 +2011,6 @@
 		<property name="threadId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBMailingListImpl" table="MBMailingList">
-		<cache usage="read-write" />
 		<id name="mailingListId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2154,7 +2041,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBMessageImpl" table="MBMessage">
-		<cache usage="read-write" />
 		<id name="messageId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2184,7 +2070,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl" table="MBStatsUser">
-		<cache usage="read-write" />
 		<id name="statsUserId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2194,7 +2079,6 @@
 		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBThreadImpl" table="MBThread">
-		<cache usage="read-write" />
 		<id name="threadId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2220,7 +2104,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl" table="MBThreadFlag">
-		<cache usage="read-write" />
 		<id name="threadFlagId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2234,7 +2117,6 @@
 		<property name="threadId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRActionImpl" table="MDRAction">
-		<cache usage="read-write" />
 		<id name="actionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2254,7 +2136,6 @@
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleImpl" table="MDRRule">
-		<cache usage="read-write" />
 		<id name="ruleId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2272,7 +2153,6 @@
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupImpl" table="MDRRuleGroup">
-		<cache usage="read-write" />
 		<id name="ruleGroupId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2287,7 +2167,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupInstanceImpl" table="MDRRuleGroupInstance">
-		<cache usage="read-write" />
 		<id name="ruleGroupInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2304,7 +2183,6 @@
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.ratings.model.impl.RatingsEntryImpl" table="RatingsEntry">
-		<cache usage="read-write" />
 		<id name="entryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2319,7 +2197,6 @@
 		<property name="score" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 	<class name="com.liferay.portlet.ratings.model.impl.RatingsStatsImpl" table="RatingsStats">
-		<cache usage="read-write" />
 		<id name="statsId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2330,7 +2207,6 @@
 		<property name="averageScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 	<class name="com.liferay.portlet.shopping.model.impl.ShoppingCartImpl" table="ShoppingCart">
-		<cache usage="read-write" />
 		<id name="cartId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2346,7 +2222,6 @@
 		<property name="insure" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.shopping.model.impl.ShoppingCategoryImpl" table="ShoppingCategory">
-		<cache usage="read-write" />
 		<id name="categoryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2361,7 +2236,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.shopping.model.impl.ShoppingCouponImpl" table="ShoppingCoupon">
-		<cache usage="read-write" />
 		<id name="couponId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2384,7 +2258,6 @@
 		<property name="discountType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.shopping.model.impl.ShoppingItemImpl" table="ShoppingItem">
-		<cache usage="read-write" />
 		<id name="itemId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2423,7 +2296,6 @@
 		<property name="largeImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.shopping.model.impl.ShoppingItemFieldImpl" table="ShoppingItemField">
-		<cache usage="read-write" />
 		<id name="itemFieldId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2433,7 +2305,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.shopping.model.impl.ShoppingItemPriceImpl" table="ShoppingItemPrice">
-		<cache usage="read-write" />
 		<id name="itemPriceId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2448,7 +2319,6 @@
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.shopping.model.impl.ShoppingOrderImpl" table="ShoppingOrder">
-		<cache usage="read-write" />
 		<id name="orderId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2504,7 +2374,6 @@
 		<property name="sendShippingEmail" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.shopping.model.impl.ShoppingOrderItemImpl" table="ShoppingOrderItem">
-		<cache usage="read-write" />
 		<id name="orderItemId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2519,7 +2388,6 @@
 		<property name="shippedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialActivityImpl" table="SocialActivity" dynamic-update="true">
-		<cache usage="read-write" />
 		<id name="activityId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2538,7 +2406,6 @@
 		<property name="receiverUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl" table="SocialActivityAchievement">
-		<cache usage="read-write" />
 		<id name="activityAchievementId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2550,7 +2417,6 @@
 		<property name="firstInGroup" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialActivityCounterImpl" table="SocialActivityCounter">
-		<cache usage="read-write" />
 		<id name="activityCounterId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2568,7 +2434,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialActivityLimitImpl" table="SocialActivityLimit">
-		<cache usage="read-write" />
 		<id name="activityLimitId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2582,7 +2447,6 @@
 		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialActivitySetImpl" table="SocialActivitySet">
-		<cache usage="read-write" />
 		<id name="activitySetId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2598,7 +2462,6 @@
 		<property name="activityCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialActivitySettingImpl" table="SocialActivitySetting">
-		<cache usage="read-write" />
 		<id name="activitySettingId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2610,7 +2473,6 @@
 		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialRelationImpl" table="SocialRelation">
-		<cache usage="read-write" />
 		<id name="relationId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2622,7 +2484,6 @@
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
 	</class>
 	<class name="com.liferay.portlet.social.model.impl.SocialRequestImpl" table="SocialRequest">
-		<cache usage="read-write" />
 		<id name="requestId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2640,7 +2501,6 @@
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionImpl" table="SCFrameworkVersion">
-		<cache usage="read-write" />
 		<id name="frameworkVersionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2656,7 +2516,6 @@
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCLicenseImpl" table="SCLicense">
-		<cache usage="read-write" />
 		<id name="licenseId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2667,7 +2526,6 @@
 		<property name="recommended" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryImpl" table="SCProductEntry">
-		<cache usage="read-write" />
 		<id name="productEntryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2688,7 +2546,6 @@
 		<property name="repoArtifactId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotImpl" table="SCProductScreenshot">
-		<cache usage="read-write" />
 		<id name="productScreenshotId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2700,7 +2557,6 @@
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.softwarecatalog.model.impl.SCProductVersionImpl" table="SCProductVersion">
-		<cache usage="read-write" />
 		<id name="productVersionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2717,7 +2573,6 @@
 		<property name="repoStoreArtifact" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portlet.trash.model.impl.TrashEntryImpl" table="TrashEntry">
-		<cache usage="read-write" />
 		<id name="entryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -2733,7 +2588,6 @@
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.portlet.trash.model.impl.TrashVersionImpl" table="TrashVersion">
-		<cache usage="read-write" />
 		<id name="versionId" type="long">
 			<generator class="assigned" />
 		</id>

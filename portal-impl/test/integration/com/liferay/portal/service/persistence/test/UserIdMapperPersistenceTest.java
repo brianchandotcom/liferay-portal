@@ -37,7 +37,6 @@ import com.liferay.portal.service.persistence.UserIdMapperPersistence;
 import com.liferay.portal.service.persistence.UserIdMapperUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -402,10 +401,6 @@ public class UserIdMapperPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		UserIdMapper newUserIdMapper = addUserIdMapper();
 
 		_persistence.clearCache();

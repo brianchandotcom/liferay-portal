@@ -14,7 +14,6 @@
 
 package com.liferay.cobertura.agent;
 
-import com.liferay.cobertura.coveragedata.CoverageDataFileHandler;
 import com.liferay.cobertura.coveragedata.ProjectData;
 import com.liferay.cobertura.instrument.CoberturaClassFileTransformer;
 import com.liferay.cobertura.instrument.ProjectDataUtil;
@@ -218,7 +217,8 @@ public class InstrumentationAgent {
 			// Forcibly clear the data file to make sure that the coverage
 			// assert is based on the current test
 
-			File dataFile = CoverageDataFileHandler.getDefaultDataFile();
+			File dataFile = new File(
+				System.getProperty("net.sourceforge.cobertura.datafile"));
 
 			dataFile.delete();
 		}
@@ -333,7 +333,8 @@ public class InstrumentationAgent {
 	private static List<OriginalClassDefinition> _originalClassDefinitions;
 
 	static {
-		File dataFile = CoverageDataFileHandler.getDefaultDataFile();
+		File dataFile = new File(
+			System.getProperty("net.sourceforge.cobertura.datafile"));
 
 		File parentFolder = dataFile.getParentFile();
 

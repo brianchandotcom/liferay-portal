@@ -15,7 +15,6 @@
 package com.liferay.cobertura.instrument;
 
 import com.liferay.cobertura.agent.InstrumentationAgent;
-import com.liferay.cobertura.coveragedata.CoverageDataFileHandler;
 import com.liferay.cobertura.coveragedata.ProjectData;
 import com.liferay.cobertura.coveragedata.TouchCollector;
 
@@ -63,7 +62,8 @@ public class ProjectDataUtil {
 			}
 
 			try {
-				File dataFile = CoverageDataFileHandler.getDefaultDataFile();
+				File dataFile = new File(
+					System.getProperty("net.sourceforge.cobertura.datafile"));
 
 				if (dataFile.exists()) {
 					masterProjectData.merge(_readProjectData(dataFile));
@@ -246,8 +246,9 @@ public class ProjectDataUtil {
 					FileLock fileLock = _lockFile();
 
 					try {
-						File dataFile =
-							CoverageDataFileHandler.getDefaultDataFile();
+						File dataFile = new File(
+							System.getProperty(
+								"net.sourceforge.cobertura.datafile"));
 
 						if (dataFile.exists()) {
 							projectData.merge(_readProjectData(dataFile));

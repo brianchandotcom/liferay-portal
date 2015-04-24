@@ -22,6 +22,13 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="configurePermissionsPG">
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#NAVIGATION_PERMISSIONS" value1="Permissions" />
+	</command>
+
 	<command name="configureScopePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -288,5 +295,9 @@
 			<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#DOCUMENT_CONVERSION_TYPE" value1="${fileType}" />
 			<execute function="AssertElementPresent" locator1="PGWebcontentdisplay#DOCUMENT_CONVERSION_TYPE_ICON" />
 		</for>
+	</command>
+
+	<command name="viewNoPermissionPG">
+		<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 	</command>
 </definition>

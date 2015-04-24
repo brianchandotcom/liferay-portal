@@ -9,10 +9,6 @@
 				dynamic-update="true"
 			</#if>
 		>
-			<#if entity.isCacheEnabled()>
-				<cache usage="read-write" />
-			</#if>
-
 			<#if entity.hasCompoundPK()>
 				<composite-id name="primaryKey" class="${packagePath}.service.persistence.${entity.name}PK">
 					<#assign pkList = entity.getPKList()>

@@ -2156,6 +2156,8 @@ go]]></replacevalue>
 				<delete dir="${liferay.home}/data" />
 				<delete dir="${liferay.home}/logs" />
 				<delete dir="${liferay.home}/osgi/state" />
+
+				<delete file="${liferay.home}/portal-setup-wizard.properties" />
 			</then>
 		</if>
 	</target>

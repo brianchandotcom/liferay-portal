@@ -5,7 +5,6 @@
 	<import class="com.liferay.bookmarks.model.BookmarksEntry" />
 	<import class="com.liferay.bookmarks.model.BookmarksFolder" />
 	<class name="com.liferay.bookmarks.model.impl.BookmarksEntryImpl" table="BookmarksEntry">
-		<cache usage="read-write" />
 		<id name="entryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -30,7 +29,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.bookmarks.model.impl.BookmarksFolderImpl" table="BookmarksFolder">
-		<cache usage="read-write" />
 		<id name="folderId" type="long">
 			<generator class="assigned" />
 		</id>

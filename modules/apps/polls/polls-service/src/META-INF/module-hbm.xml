@@ -6,7 +6,6 @@
 	<import class="com.liferay.polls.model.PollsQuestion" />
 	<import class="com.liferay.polls.model.PollsVote" />
 	<class name="com.liferay.polls.model.impl.PollsChoiceImpl" table="PollsChoice">
-		<cache usage="read-write" />
 		<id name="choiceId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -22,7 +21,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.polls.model.impl.PollsQuestionImpl" table="PollsQuestion">
-		<cache usage="read-write" />
 		<id name="questionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -39,7 +37,6 @@
 		<property name="lastVoteDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.polls.model.impl.PollsVoteImpl" table="PollsVote">
-		<cache usage="read-write" />
 		<id name="voteId" type="long">
 			<generator class="assigned" />
 		</id>

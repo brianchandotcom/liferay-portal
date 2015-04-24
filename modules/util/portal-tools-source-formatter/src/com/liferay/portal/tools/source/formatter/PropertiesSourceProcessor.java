@@ -50,6 +50,21 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	public String[] getIncludes() {
+		if (portalSource) {
+			return new String[] {
+				"**\\portal-ext.properties", "**\\portal-legacy-*.properties",
+				"**\\portlet.properties", "**\\source-formatter.properties"
+			};
+		}
+
+		return new String[] {
+			"**\\portal.properties", "**\\portal-ext.properties",
+			"**\\portlet.properties", "**\\source-formatter.properties"
+		};
+	}
+
+	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -66,21 +81,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	@Override
-	public String[] getIncludes() {
-		if (portalSource) {
-			return new String[] {
-				"**\\portal-ext.properties", "**\\portal-legacy-*.properties",
-				"**\\portlet.properties", "**\\source-formatter.properties"
-			};
-		}
-
-		return new String[] {
-			"**\\portal.properties", "**\\portal-ext.properties",
-			"**\\portlet.properties", "**\\source-formatter.properties"
-		};
 	}
 
 	@Override

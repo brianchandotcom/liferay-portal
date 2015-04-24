@@ -160,6 +160,55 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		Assert.assertEquals(true, properties.get("Boolean"));
 	}
 
+	@Test
+	public void testSimpleIntegerValue() {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addAvailableLocale(_enLocale);
+		ddmForm.setDefaultLocale(_enLocale);
+
+		DDMFormField integerDDMFormField = DDMFormTestUtil.createDDMFormField(
+			"Integer", "Integer", DDMFormFieldType.TEXT, "integer", false,
+			false, false);
+
+		ddmForm.addDDMFormField(integerDDMFormField);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addAvailableLocale(_enLocale);
+		ddmFormValues.setDefaultLocale(_enLocale);
+
+		ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue("Integer", "42", _enLocale));
+
+		ObjectClassDefinition objectClassDefinition = mock(
+			ObjectClassDefinition.class);
+
+		AttributeDefinition attributeDefinition = mock(
+			AttributeDefinition.class);
+
+		Configuration configuration = mock(Configuration.class);
+
+		whenObjectClassDefinitionGetAttributeDefinitions(
+			objectClassDefinition,
+			new AttributeDefinition[] {attributeDefinition});
+
+		whenAttributeDefinitionGetCardinality(attributeDefinition, 0);
+		whenAttributeDefinitionGetID(attributeDefinition, "Integer");
+
+		ConfigurationModel configurationModel = new ConfigurationModel(
+			objectClassDefinition, configuration, null, false);
+
+		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
+			new DDMFormValuesToPropertiesConverter(
+				configurationModel, ddmFormValues, _enLocale);
+
+		Dictionary<String, Object> properties =
+			ddmFormValuesToPropertiesConverter.getProperties();
+
+		Assert.assertEquals(42, properties.get("Integer"));
+	}
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testVectorBooleanValues() {

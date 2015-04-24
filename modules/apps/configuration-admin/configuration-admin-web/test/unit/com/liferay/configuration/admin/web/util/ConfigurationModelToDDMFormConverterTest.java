@@ -15,16 +15,14 @@
 package com.liferay.configuration.admin.web.util;
 
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.Value;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -37,7 +35,6 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.metatype.AttributeDefinition;
 import org.osgi.service.metatype.ObjectClassDefinition;
 
@@ -52,7 +49,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 	}
 
 	@Test
-	public void testCreateDDMFormWithCheckboxField() {
+	public void testGetWithCheckboxField() {
 		ObjectClassDefinition objectClassDefinition = mock(
 			ObjectClassDefinition.class);
 
@@ -89,10 +86,14 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		Assert.assertEquals("boolean", ddmFormField.getDataType());
 		Assert.assertFalse(ddmFormField.isRepeatable());
 		Assert.assertFalse(ddmFormField.isRequired());
+
+		Value predefinedValue = ddmFormField.getPredefinedValue();
+
+		Assert.assertEquals("false", predefinedValue.getString(_enLocale));
 	}
 
 	@Test
-	public void testCreateDDMFormWithIntegerFieldAndPredefinedValue() {
+	public void testGetWithIntegerField() {
 		ObjectClassDefinition objectClassDefinition = mock(
 			ObjectClassDefinition.class);
 
@@ -108,11 +109,6 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		whenAttributeDefinitionGetID(attributeDefinition, "Integer");
 		whenAttributeDefinitionGetType(
 			attributeDefinition, AttributeDefinition.INTEGER);
-
-		String randomIntString = String.valueOf(RandomTestUtil.randomInt());
-
-		whenAttributeDefinitionGetDefaultValue(
-			attributeDefinition, new String[] {randomIntString});
 
 		ConfigurationModel configurationModel = new ConfigurationModel(
 			objectClassDefinition, null, null, false);
@@ -130,7 +126,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		DDMFormField ddmFormField = ddmFormFieldsMap.get("Integer");
 
 		Assert.assertNotNull(ddmFormField);
-		Assert.assertEquals(DDMFormFieldType.INTEGER, ddmFormField.getType());
+		Assert.assertEquals(DDMFormFieldType.TEXT, ddmFormField.getType());
 		Assert.assertEquals("integer", ddmFormField.getDataType());
 		Assert.assertFalse(ddmFormField.isRepeatable());
 		Assert.assertTrue(ddmFormField.isRequired());
@@ -138,12 +134,11 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
 		Assert.assertEquals(_enLocale, predefinedValue.getDefaultLocale());
-		Assert.assertEquals(
-			randomIntString, predefinedValue.getString(_enLocale));
+		Assert.assertEquals("0", predefinedValue.getString(_enLocale));
 	}
 
 	@Test
-	public void testCreateDDMFormWithSelectField() {
+	public void testGetWithSelectField() {
 		ObjectClassDefinition objectClassDefinition = mock(
 			ObjectClassDefinition.class);
 
@@ -209,7 +204,7 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 	}
 
 	@Test
-	public void testCreateDDMFormWithTextFieldAndPredefinedValue() {
+	public void testGetWithTextField() {
 		ObjectClassDefinition objectClassDefinition = mock(
 			ObjectClassDefinition.class);
 
@@ -226,16 +221,8 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		whenAttributeDefinitionGetType(
 			attributeDefinition, AttributeDefinition.STRING);
 
-		Configuration configuration = mock(Configuration.class);
-
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("Text", "Ella Fitzgerald");
-
-		whenConfigurationGetProperties(configuration, properties);
-
 		ConfigurationModel configurationModel = new ConfigurationModel(
-			objectClassDefinition, configuration, null, false);
+			objectClassDefinition, null, null, false);
 
 		ConfigurationModelToDDMFormConverter
 			configurationModelToDDMFormConverter =
@@ -254,12 +241,6 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		Assert.assertEquals("string", ddmFormField.getDataType());
 		Assert.assertFalse(ddmFormField.isRepeatable());
 		Assert.assertFalse(ddmFormField.isRequired());
-
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-		Assert.assertEquals(_enLocale, predefinedValue.getDefaultLocale());
-		Assert.assertEquals(
-			"Ella Fitzgerald", predefinedValue.getString(_enLocale));
 	}
 
 	protected void whenAttributeDefinitionGetCardinality(
@@ -269,16 +250,6 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			attributeDefinition.getCardinality()
 		).thenReturn(
 			returnCardinality
-		);
-	}
-
-	protected void whenAttributeDefinitionGetDefaultValue(
-		AttributeDefinition attributeDefinition, String[] returnDefaultValue) {
-
-		when(
-			attributeDefinition.getDefaultValue()
-		).thenReturn(
-			returnDefaultValue
 		);
 	}
 
@@ -319,17 +290,6 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 			attributeDefinition.getType()
 		).thenReturn(
 			returnType
-		);
-	}
-
-	protected void whenConfigurationGetProperties(
-		Configuration configuration,
-		Dictionary<String, Object> returnProperties) {
-
-		when(
-			configuration.getProperties()
-		).thenReturn(
-			returnProperties
 		);
 	}
 

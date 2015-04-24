@@ -1345,7 +1345,8 @@ public class HookHotDeployListener
 				new DeprecatedFormNavigatorEntry(
 					formNavigatorSection, formNavigatorSection, categoryKey,
 					formNavigatorId,
-					"/html/portlet/" + jspPath + "/" + categoryKey + ".jsp");
+					"/html/portlet/" + jspPath + "/" + formNavigatorSection +
+						".jsp");
 
 			registerService(
 				servletContextName,

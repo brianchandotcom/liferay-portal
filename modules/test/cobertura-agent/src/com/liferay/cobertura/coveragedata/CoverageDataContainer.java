@@ -2,10 +2,11 @@ package com.liferay.cobertura.coveragedata;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import net.sourceforge.cobertura.coveragedata.CoverageData;
 
 public abstract class CoverageDataContainer
@@ -14,7 +15,8 @@ public abstract class CoverageDataContainer
 
 	private static final long serialVersionUID = 2;
 
-	Map<Object,CoverageData> children = new HashMap<Object,CoverageData>();
+	protected final ConcurrentMap<Object, CoverageData> children =
+		new ConcurrentHashMap<>();
 
 	@Override
 	public boolean equals(Object obj)
@@ -125,16 +127,12 @@ public abstract class CoverageDataContainer
 		Map<Object, CoverageData> otherChildren = container.children;
 
 		for (Entry<Object, CoverageData> entry : otherChildren.entrySet()) {
-			Object key = entry.getKey();
-
 			CoverageData otherChild = entry.getValue();
 
-			CoverageData myChild = children.get(key);
+			CoverageData myChild = children.putIfAbsent(
+				entry.getKey(), otherChild);
 
-			if (myChild == null) {
-				children.put(key, otherChild);
-			}
-			else {
+			if (myChild != null) {
 				myChild.merge(otherChild);
 			}
 		}

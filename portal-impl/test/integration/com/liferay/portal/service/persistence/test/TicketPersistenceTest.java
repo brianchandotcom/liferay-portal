@@ -38,7 +38,6 @@ import com.liferay.portal.service.persistence.TicketPersistence;
 import com.liferay.portal.service.persistence.TicketUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -404,10 +403,6 @@ public class TicketPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		Ticket newTicket = addTicket();
 
 		_persistence.clearCache();

@@ -37,7 +37,6 @@ import com.liferay.portal.service.persistence.UserNotificationDeliveryPersistenc
 import com.liferay.portal.service.persistence.UserNotificationDeliveryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -421,10 +420,6 @@ public class UserNotificationDeliveryPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		UserNotificationDelivery newUserNotificationDelivery = addUserNotificationDelivery();
 
 		_persistence.clearCache();

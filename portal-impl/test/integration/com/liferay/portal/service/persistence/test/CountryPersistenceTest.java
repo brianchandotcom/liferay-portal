@@ -34,7 +34,6 @@ import com.liferay.portal.service.persistence.CountryPersistence;
 import com.liferay.portal.service.persistence.CountryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -389,10 +388,6 @@ public class CountryPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		Country newCountry = addCountry();
 
 		_persistence.clearCache();

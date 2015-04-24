@@ -126,7 +126,7 @@
 	fieldName
 >
 	<#if stringUtil.split(metadataFields)?seq_contains(fieldName)>
-		<span class="metadata-entry metadata-"${fieldName}">
+		<span class="metadata-entry metadata-${fieldName}">
 			<#assign dateFormat = "dd MMM yyyy - HH:mm:ss" />
 
 			<#if fieldName == "author">

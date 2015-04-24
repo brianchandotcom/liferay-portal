@@ -13,16 +13,16 @@ public class ProjectData extends CoverageDataContainer
 
 	private static final long serialVersionUID = 6;
 
-	private Map classes = new HashMap();
+	private final Map<String, ClassData> _classDataMap = new HashMap<>();
 
 	public ClassData getClassData(String name)
 	{
-			return (ClassData)this.classes.get(name);
+			return _classDataMap.get(name);
 	}
 
 	public ClassData getOrCreateClassData(String name)
 	{
-			ClassData classData = (ClassData)this.classes.get(name);
+			ClassData classData = _classDataMap.get(name);
 			if (classData == null)
 			{
 				classData = new ClassData(name);
@@ -34,7 +34,7 @@ public class ProjectData extends CoverageDataContainer
 					this.children.put(packageName, packageData);
 				}
 				packageData.addClassData(classData);
-				this.classes.put(classData.getName(), classData);
+				_classDataMap.put(classData.getName(), classData);
 			}
 			return classData;
 	}
@@ -48,12 +48,12 @@ public class ProjectData extends CoverageDataContainer
 		ProjectData projectData = (ProjectData)coverageData;
 			super.merge(coverageData);
 
-			for (Iterator iter = projectData.classes.keySet().iterator(); iter.hasNext();)
+			for (Iterator<String> iter = projectData._classDataMap.keySet().iterator(); iter.hasNext();)
 			{
-				Object key = iter.next();
-				if (!this.classes.containsKey(key))
+				String key = iter.next();
+				if (!_classDataMap.containsKey(key))
 				{
-					this.classes.put(key, projectData.classes.get(key));
+					_classDataMap.put(key, projectData._classDataMap.get(key));
 				}
 			}
 	}

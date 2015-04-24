@@ -14,6 +14,8 @@
 
 package com.liferay.cobertura.agent;
 
+import com.liferay.cobertura.coveragedata.CoverageDataFileHandler;
+import com.liferay.cobertura.coveragedata.ProjectData;
 import com.liferay.cobertura.instrument.CoberturaClassFileTransformer;
 import com.liferay.cobertura.instrument.ProjectDataUtil;
 
@@ -30,9 +32,7 @@ import java.util.Set;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 import net.sourceforge.cobertura.coveragedata.CoverageData;
-import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
 import net.sourceforge.cobertura.coveragedata.LineData;
-import net.sourceforge.cobertura.coveragedata.ProjectData;
 
 /**
  * @author Shuyang Zhou

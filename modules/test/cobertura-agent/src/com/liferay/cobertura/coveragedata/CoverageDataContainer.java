@@ -3,9 +3,9 @@ package com.liferay.cobertura.coveragedata;
 import java.io.Serializable;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
+import java.util.Map.Entry;
 import net.sourceforge.cobertura.coveragedata.CoverageData;
 
 public abstract class CoverageDataContainer
@@ -33,13 +33,11 @@ public abstract class CoverageDataContainer
 	{
 		int number = 0;
 		int numberCovered = 0;
-			Iterator<CoverageData> iter = this.children.values().iterator();
-			while (iter.hasNext())
-			{
-				CoverageData coverageContainer = iter.next();
-				number += coverageContainer.getNumberOfValidBranches();
-				numberCovered += coverageContainer.getNumberOfCoveredBranches();
-			}
+
+		for (CoverageData coverageData : children.values()) {
+			number += coverageData.getNumberOfValidBranches();
+			numberCovered += coverageData.getNumberOfCoveredBranches();
+		}
 		if (number == 0)
 		{
 			return 1d;
@@ -52,13 +50,12 @@ public abstract class CoverageDataContainer
 	{
 		int number = 0;
 		int numberCovered = 0;
-			Iterator<CoverageData> iter = this.children.values().iterator();
-			while (iter.hasNext())
-			{
-				CoverageData coverageContainer = iter.next();
-				number += coverageContainer.getNumberOfValidLines();
-				numberCovered += coverageContainer.getNumberOfCoveredLines();
-			}
+
+		for (CoverageData coverageData : children.values()) {
+			number += coverageData.getNumberOfValidLines();
+			numberCovered += coverageData.getNumberOfCoveredLines();
+		}
+
 		if (number == 0)
 		{
 			return 1d;
@@ -70,12 +67,11 @@ public abstract class CoverageDataContainer
 	public int getNumberOfCoveredBranches()
 	{
 		int number = 0;
-			Iterator<CoverageData> iter = this.children.values().iterator();
-			while (iter.hasNext())
-			{
-				CoverageData coverageContainer = iter.next();
-				number += coverageContainer.getNumberOfCoveredBranches();
-			}
+
+		for (CoverageData coverageData : children.values()) {
+			number += coverageData.getNumberOfCoveredBranches();
+		}
+
 		return number;
 	}
 
@@ -83,12 +79,11 @@ public abstract class CoverageDataContainer
 	public int getNumberOfCoveredLines()
 	{
 		int number = 0;
-			Iterator<CoverageData> iter = this.children.values().iterator();
-			while (iter.hasNext())
-			{
-				CoverageData coverageContainer = iter.next();
-				number += coverageContainer.getNumberOfCoveredLines();
-			}
+
+		for (CoverageData coverageData : children.values()) {
+			number += coverageData.getNumberOfCoveredLines();
+		}
+
 		return number;
 	}
 
@@ -96,12 +91,11 @@ public abstract class CoverageDataContainer
 	public int getNumberOfValidBranches()
 	{
 		int number = 0;
-			Iterator<CoverageData> iter = this.children.values().iterator();
-			while (iter.hasNext())
-			{
-				CoverageData coverageContainer = iter.next();
-				number += coverageContainer.getNumberOfValidBranches();
-			}
+
+		for (CoverageData coverageData : children.values()) {
+			number += coverageData.getNumberOfValidBranches();
+		}
+
 		return number;
 	}
 
@@ -109,12 +103,11 @@ public abstract class CoverageDataContainer
 	public int getNumberOfValidLines()
 	{
 		int number = 0;
-			Iterator<CoverageData> iter = this.children.values().iterator();
-			while (iter.hasNext())
-			{
-				CoverageData coverageContainer = iter.next();
-				number += coverageContainer.getNumberOfValidLines();
-			}
+
+		for (CoverageData coverageData : children.values()) {
+			number += coverageData.getNumberOfValidLines();
+		}
+
 		return number;
 	}
 
@@ -128,21 +121,23 @@ public abstract class CoverageDataContainer
 	public void merge(CoverageData coverageData)
 	{
 		CoverageDataContainer container = (CoverageDataContainer)coverageData;
-			Iterator<Object> iter = container.children.keySet().iterator();
-			while (iter.hasNext())
-			{
-				Object key = iter.next();
-				CoverageData newChild = (CoverageData)container.children.get(key);
-				CoverageData existingChild = (CoverageData)this.children.get(key);
-				if (existingChild != null)
-				{
-					existingChild.merge(newChild);
-				}
-				else
-				{
-					this.children.put(key, newChild);
-				}
+
+		Map<Object, CoverageData> otherChildren = container.children;
+
+		for (Entry<Object, CoverageData> entry : otherChildren.entrySet()) {
+			Object key = entry.getKey();
+
+			CoverageData otherChild = entry.getValue();
+
+			CoverageData myChild = children.get(key);
+
+			if (myChild == null) {
+				children.put(key, otherChild);
 			}
+			else {
+				myChild.merge(otherChild);
+			}
+		}
 	}
 
 }

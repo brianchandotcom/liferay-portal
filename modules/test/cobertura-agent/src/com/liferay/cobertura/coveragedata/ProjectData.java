@@ -1,7 +1,8 @@
 package com.liferay.cobertura.coveragedata;
 
-import java.util.Iterator;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import net.sourceforge.cobertura.coveragedata.ClassData;
@@ -49,14 +50,11 @@ public class ProjectData extends CoverageDataContainer
 		ProjectData projectData = (ProjectData)coverageData;
 			super.merge(coverageData);
 
-			for (Iterator<String> iter = projectData._classDataMap.keySet().iterator(); iter.hasNext();)
-			{
-				String key = iter.next();
-				if (!_classDataMap.containsKey(key))
-				{
-					_classDataMap.put(key, projectData._classDataMap.get(key));
-				}
-			}
+		Map<String, ClassData> classDataMap = projectData._classDataMap;
+
+		for (Entry<String, ClassData> entry : classDataMap.entrySet()) {
+			_classDataMap.putIfAbsent(entry.getKey(), entry.getValue());
+		}
 	}
 
 }

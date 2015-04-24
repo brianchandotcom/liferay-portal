@@ -84,8 +84,10 @@ public class BaseSourceProcessorTestCase {
 		throws Exception {
 
 		String originalExtension = FilenameUtils.getExtension(fileName);
-		fileName = FilenameUtils.getBaseName(fileName);
+
 		String extension = originalExtension;
+
+		fileName = FilenameUtils.getBaseName(fileName);
 
 		if (!keepTestExtension && originalExtension.startsWith("test")) {
 			extension = extension.substring(4);

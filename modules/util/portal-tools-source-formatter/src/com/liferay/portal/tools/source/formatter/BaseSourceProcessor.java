@@ -92,8 +92,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	public final List<String> getFileNames() {
-		if (_sourceFormatterBean.getFileNames() != null) {
-			return _sourceFormatterBean.getFileNames();
+		List<String> fileNames = _sourceFormatterBean.getFileNames();
+
+		if (fileNames != null) {
+			return fileNames;
 		}
 
 		return doGetFileNames();
@@ -734,7 +736,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected final void format(String fileName) throws Exception {
-		if (!_matchPath(fileName)) {
+		if (!_isMatchPath(fileName)) {
 			return;
 		}
 
@@ -1688,21 +1690,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private boolean _matchPath(String fileName) {
-		boolean matches = false;
-
+	private boolean _isMatchPath(String fileName) {
 		for (String pattern : getIncludes()) {
 			if (SelectorUtils.matchPath(_normalizePattern(pattern), fileName)) {
-				matches = true;
+				return true;
 			}
 		}
 
-		return matches;
+		return false;
 	}
 
 	private String _normalizePattern(String originalPattern) {
-		String pattern = originalPattern.replace('/', File.separatorChar);
-		pattern = pattern.replace('\\', File.separatorChar);
+		String pattern = originalPattern.replace(
+			CharPool.SLASH, File.separatorChar);
+
+		pattern = pattern.replace(CharPool.BACK_SLASH, File.separatorChar);
 
 		if (pattern.endsWith(File.separator)) {
 			pattern += SelectorUtils.DEEP_TREE_MATCH;

@@ -13,14 +13,18 @@ public abstract class CoverageDataContainer
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)return true;
+		if (this == obj) {
+			return true;
+		}
 
-		if ((obj == null) || !(obj.getClass().equals(this.getClass())))
+		if (!(obj instanceof CoverageDataContainer)) {
 			return false;
+		}
 
 		CoverageDataContainer coverageDataContainer =
 			(CoverageDataContainer)obj;
-			return this.children.equals(coverageDataContainer.children);
+
+		return children.equals(coverageDataContainer.children);
 	}
 
 	@Override
@@ -105,7 +109,7 @@ public abstract class CoverageDataContainer
 
 	@Override
 	public int hashCode() {
-		return this.children.size();
+		return children.hashCode();
 	}
 
 	@Override

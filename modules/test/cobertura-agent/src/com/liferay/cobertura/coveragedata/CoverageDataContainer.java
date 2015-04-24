@@ -3,36 +3,28 @@ package com.liferay.cobertura.coveragedata;
 import java.io.Serializable;
 
 import java.util.Map;
-
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
 import net.sourceforge.cobertura.coveragedata.CoverageData;
-
 public abstract class CoverageDataContainer
-	implements CoverageData, Serializable
-{
-
-	private static final long serialVersionUID = 2;
-
-	protected final ConcurrentMap<Object, CoverageData> children =
-		new ConcurrentHashMap<>();
+	implements CoverageData, Serializable {
 
 	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
+	public boolean equals(Object obj) {
+		if (this == obj)return true;
+
 		if ((obj == null) || !(obj.getClass().equals(this.getClass())))
 			return false;
 
-		CoverageDataContainer coverageDataContainer = (CoverageDataContainer)obj;
+		CoverageDataContainer coverageDataContainer =
+			(CoverageDataContainer)obj;
 			return this.children.equals(coverageDataContainer.children);
 	}
 
 	@Override
-	public double getBranchCoverageRate()
-	{
+	public double getBranchCoverageRate() {
 		int number = 0;
 		int numberCovered = 0;
 
@@ -40,16 +32,17 @@ public abstract class CoverageDataContainer
 			number += coverageData.getNumberOfValidBranches();
 			numberCovered += coverageData.getNumberOfCoveredBranches();
 		}
+
 		if (number == 0)
 		{
 			return 1d;
 		}
+
 		return (double)numberCovered / number;
 	}
 
 	@Override
-	public double getLineCoverageRate()
-	{
+	public double getLineCoverageRate() {
 		int number = 0;
 		int numberCovered = 0;
 
@@ -62,12 +55,12 @@ public abstract class CoverageDataContainer
 		{
 			return 1d;
 		}
+
 		return (double)numberCovered / number;
 	}
 
 	@Override
-	public int getNumberOfCoveredBranches()
-	{
+	public int getNumberOfCoveredBranches() {
 		int number = 0;
 
 		for (CoverageData coverageData : children.values()) {
@@ -78,8 +71,7 @@ public abstract class CoverageDataContainer
 	}
 
 	@Override
-	public int getNumberOfCoveredLines()
-	{
+	public int getNumberOfCoveredLines() {
 		int number = 0;
 
 		for (CoverageData coverageData : children.values()) {
@@ -90,8 +82,7 @@ public abstract class CoverageDataContainer
 	}
 
 	@Override
-	public int getNumberOfValidBranches()
-	{
+	public int getNumberOfValidBranches() {
 		int number = 0;
 
 		for (CoverageData coverageData : children.values()) {
@@ -102,8 +93,7 @@ public abstract class CoverageDataContainer
 	}
 
 	@Override
-	public int getNumberOfValidLines()
-	{
+	public int getNumberOfValidLines() {
 		int number = 0;
 
 		for (CoverageData coverageData : children.values()) {
@@ -114,14 +104,12 @@ public abstract class CoverageDataContainer
 	}
 
 	@Override
-	public int hashCode()
-	{
-			return this.children.size();
+	public int hashCode() {
+		return this.children.size();
 	}
 
 	@Override
-	public void merge(CoverageData coverageData)
-	{
+	public void merge(CoverageData coverageData) {
 		CoverageDataContainer container = (CoverageDataContainer)coverageData;
 
 		Map<Object, CoverageData> otherChildren = container.children;
@@ -137,5 +125,10 @@ public abstract class CoverageDataContainer
 			}
 		}
 	}
+
+	protected final ConcurrentMap<Object, CoverageData> children =
+		new ConcurrentHashMap<>();
+
+	private static final long serialVersionUID = 2;
 
 }

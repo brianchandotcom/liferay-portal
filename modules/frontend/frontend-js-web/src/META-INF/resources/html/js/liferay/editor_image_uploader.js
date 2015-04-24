@@ -200,7 +200,7 @@ AUI.add(
 
 							var image = A.one(instance._editor.element.$).one('[data-random-id="' + imageId + '"]');
 
-							image.remove();
+							image.ancestor().remove();
 						}
 
 						var strings = instance.get('strings');

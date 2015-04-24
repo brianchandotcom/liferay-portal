@@ -41,6 +41,6 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 		return getFileNames(new String[0], getIncludes());
 	}
 
-	public static final String[] _INCLUDES = new String[] {"**\\*.sh"};
+	private static final String[] _INCLUDES = new String[] {"**\\*.sh"};
 
 }

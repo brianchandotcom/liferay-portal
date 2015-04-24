@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.service.builder.gradle;
 
 import com.liferay.portal.tools.service.builder.ServiceBuilder;
-import com.liferay.portal.tools.service.builder.ServiceBuilderBean;
+import com.liferay.portal.tools.service.builder.ServiceBuilderArgs;
 import com.liferay.portal.tools.service.builder.ServiceBuilderInvoker;
 
 import java.util.Set;
@@ -38,24 +38,25 @@ public class ServiceBuilderTask extends DefaultTask {
 
 		ExtensionContainer extensionContainer = project.getExtensions();
 
-		ServiceBuilderBean serviceBuilderBean = extensionContainer.findByType(
-			ServiceBuilderBean.class);
+		ServiceBuilderArgs serviceBuilderArgs = extensionContainer.findByType(
+			ServiceBuilderArgs.class);
 
-		if (serviceBuilderBean == null) {
-			serviceBuilderBean = new ServiceBuilderBean();
+		if (serviceBuilderArgs == null) {
+			serviceBuilderArgs = new ServiceBuilderArgs();
 		}
 
 		try {
 			ServiceBuilder serviceBuilder = ServiceBuilderInvoker.invoke(
-				serviceBuilderBean);
+				project.getProjectDir(), serviceBuilderArgs);
 
-			Set<String> modifiedFiles = serviceBuilder.getModifiedFiles();
+			Set<String> modifiedFileNames =
+				serviceBuilder.getModifiedFileNames();
 
 			ExtraPropertiesExtension extraProperties =
 				extensionContainer.getExtraProperties();
 
 			extraProperties.set(
-				ServiceBuilder.MODIFIED_FILES_ATTRIBUTE, modifiedFiles);
+				ServiceBuilder.OUTPUT_KEY_MODIFIED_FILES, modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new GradleException(e.getMessage(), e);

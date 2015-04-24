@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_NAME_FIELD</td>
+	<td>//span[contains(@class,'input-localized-input')]/input[contains(@id,'addLayoutName')]</td>
+	<td>New Page Name Field</td>
+</tr>
+<tr>
 	<td>PASSWORD</td>
 	<td>//div[label[contains(.,'Password')]]/input</td>
 	<td></td>

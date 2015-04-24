@@ -9,6 +9,16 @@
 </thead>
 <tbody>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD</td>
+	<td>//a[contains(@id,'addPanel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADVANCED_SEARCH</td>
 	<td>//a[contains(@class,'toggle-advanced') and i[@class='icon-search']]</td>
 	<td></td>
@@ -26,6 +36,16 @@
 <tr>
 	<td>COG</td>
 	<td>//div[@id='main-content']//i[contains(@class,'icon-cog') and contains(@class,'lfr-icon-menu-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT</td>
+	<td>//a[contains(@id,'editLayoutPanel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZED_FLAG</td>
+	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
 	<td></td>
 </tr>
 </tbody>

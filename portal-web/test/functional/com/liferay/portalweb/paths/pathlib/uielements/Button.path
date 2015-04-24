@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_NEW</td>
+	<td>//a[contains(.,'Add New')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_PAGE</td>
 	<td>//button[contains(.,'Add Page')]</td>
 	<td></td>
@@ -76,6 +81,11 @@
 <tr>
 	<td>CLOSE_IFRAME</td>
 	<td>//button[contains(.,'×')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_PANEL</td>
+	<td>//button[contains(@id,'closePanelAdd')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -176,6 +186,11 @@
 <tr>
 	<td>REPLY_BUTTON</td>
 	<td>//button[contains(.,'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESET_CHANGES</td>
+	<td>//button[contains(.,'Reset Changes')]</td>
 	<td></td>
 </tr>
 <tr>

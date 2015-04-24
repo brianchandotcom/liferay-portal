@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COPY_APPLICATIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Copy Applications')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEACTIVATE</td>
 	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
 	<td></td>

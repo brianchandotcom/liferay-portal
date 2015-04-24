@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOMIZED_PAGE_INFO</td>
+	<td>//div[@class='page-customization-bar']/div[contains(@class,'page-customization-bar-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECYCLE_BIN_SUCCESS</td>
 	<td>//div[contains(@class,'alert-success') and contains(@class,'trash')]</td>
 	<td></td>
@@ -81,6 +86,11 @@
 <tr>
 	<td>SUCCESS_1</td>
 	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-success')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_2</td>
+	<td>//span[contains(@class,'alert-success') and contains(@class,'message')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<!--
+~ /**
+~  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+~  *
+~  * This library is free software; you can redistribute it and/or modify it under
+~  * the terms of the GNU Lesser General Public License as published by the Free
+~  * Software Foundation; either version 2.1 of the License, or (at your option)
+~  * any later version.
+~  *
+~  * This library is distributed in the hope that it will be useful, but WITHOUT
+~  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+~  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+~  * details.
+~  */
+-->
+
+<ivy-module
+	version="2.0"
+	xmlns:m2="http://ant.apache.org/ivy/maven"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+>
+	<info module="${plugin.name}" organisation="com.liferay">
+		<extends extendType="configurations,description,info" location="${sdk.dir}/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
+	</info>
+
+	<publications>
+		<artifact type="jar" />
+		<artifact type="pom" />
+		<artifact m2:classifier="sources" />
+	</publications>
+
+	<dependencies defaultconf="default">
+		<dependency name="ant" org="org.apache.ant" rev="1.9.4" />
+	</dependencies>
+</ivy-module>

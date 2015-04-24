@@ -1,9 +1,9 @@
 package com.liferay.cobertura.coveragedata;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import net.sourceforge.cobertura.coveragedata.ClassData;
 import net.sourceforge.cobertura.coveragedata.CoverageData;
 import net.sourceforge.cobertura.coveragedata.PackageData;
@@ -13,7 +13,8 @@ public class ProjectData extends CoverageDataContainer
 
 	private static final long serialVersionUID = 6;
 
-	private final Map<String, ClassData> _classDataMap = new HashMap<>();
+	private final ConcurrentMap<String, ClassData> _classDataMap =
+		new ConcurrentHashMap<>();
 
 	public ClassData getClassData(String name)
 	{

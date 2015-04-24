@@ -29,6 +29,7 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/ant-launcher.jar" />
 	<classpathentry kind="lib" path="lib/asm.jar" />
 	<classpathentry kind="lib" path="lib/cglib-nodep.jar" />
 	<classpathentry kind="lib" path="lib/cglib.jar" />
@@ -40,6 +41,7 @@
 	<classpathentry kind="lib" path="lib/commons-lang3.jar" />
 	<classpathentry kind="lib" path="lib/cssparser.jar" />
 	<classpathentry kind="lib" path="lib/dom4j.jar" />
+	<classpathentry kind="lib" path="lib/groovy-all.jar" />
 	<classpathentry kind="lib" path="lib/gson.jar" />
 	<classpathentry kind="lib" path="lib/guava.jar" />
 	<classpathentry kind="lib" path="lib/hamcrest-core.jar" />
@@ -60,6 +62,11 @@
 	<classpathentry kind="lib" path="lib/net.jsourcerer.webdriver.JSErrorCollector.jar" />
 	<classpathentry kind="lib" path="lib/netty.jar" />
 	<classpathentry kind="lib" path="lib/opencv.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services-groovy.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-core.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-plugins.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-reporting.jar" />
 	<classpathentry kind="lib" path="lib/piccolo2d-core.jar" />
 	<classpathentry kind="lib" path="lib/piccolo2d-extras.jar" />
 	<classpathentry kind="lib" path="lib/platform.jar" />

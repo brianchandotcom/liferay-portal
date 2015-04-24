@@ -3246,7 +3246,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return line;
 	}
 
-	public static final String[] _INCLUDES = new String[] {"**\\*.java"};
+	private static final String[] _INCLUDES = new String[] {"**\\*.java"};
+
 	private static final int _MAX_LINE_LENGTH = 80;
 
 	private static Pattern _annotationPattern = Pattern.compile(

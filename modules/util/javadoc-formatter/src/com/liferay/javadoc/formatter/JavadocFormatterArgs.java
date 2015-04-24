@@ -14,6 +14,8 @@
 
 package com.liferay.javadoc.formatter;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.File;
 
 /**
@@ -63,8 +65,8 @@ public class JavadocFormatterArgs {
 		_inputDir = inputDir;
 	}
 
-	public void setLimits(String[] limits) {
-		_limits = limits;
+	public void setLimits(String limits) {
+		_limits = StringUtil.split(limits);
 	}
 
 	public void setLowestSupportedJavaVersion(

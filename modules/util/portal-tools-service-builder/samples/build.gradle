@@ -5,11 +5,11 @@ buildscript {
 	}
 
 	dependencies {
-		classpath 'com.liferay:com.liferay.portal.tools.service.builder:1.1.0'
+		classpath "com.liferay:com.liferay.portal.tools.service.builder:1.0.0"
 	}
 }
 
-apply plugin: 'com.liferay.portal.tools.service.builder'
+apply plugin: "com.liferay.portal.tools.service.builder"
 
 serviceBuilder {
 	apiDir="../tmp/api"

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.gradle;
 
-import com.liferay.portal.tools.service.builder.ServiceBuilderBean;
+import com.liferay.portal.tools.service.builder.ServiceBuilderArgs;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -30,7 +30,7 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		ExtensionContainer extensionContainer = project.getExtensions();
 
-		extensionContainer.create("serviceBuilder", ServiceBuilderBean.class);
+		extensionContainer.create("serviceBuilder", ServiceBuilderArgs.class);
 
 		TaskContainer taskContainer = project.getTasks();
 

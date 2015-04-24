@@ -1305,6 +1305,88 @@
 		</execute>
 	</command>
 
+	<command name="DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#addPG">
+			<var name="calendarName" value="Site Name" />
+			<var name="calendarType" value="Other Calendars" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoAdd" />
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="calendarName" value="Site Name" />
+			<var name="eventTitle" value="Site Name Calendar Event Regular" />
+			<var name="eventType" value="Regular" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#viewPG">
+			<var name="calendarName" value="Site Name" />
+			<var name="calendarType" value="Other Calandars" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="Site Name Calendar Event Regular" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#deactivateCP">
+			<var name="siteName" value="Site Name" />
+			<var name="successMessage" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#viewPG">
+			<var name="calendarName" value="Site Name" />
+			<var name="calendarType" value="Other Calandars" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="Site Name Calendar Event Regular" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#deleteCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#viewCalendarHiddenCmd">
+			<var name="calendarName" value="Site Name" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
+			<var name="eventTitle" value="Site Name Calendar Event Regular" />
+		</execute>
+	</command>
+
 	<command name="DeleteCalendarEventRegular"  priority="5">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />

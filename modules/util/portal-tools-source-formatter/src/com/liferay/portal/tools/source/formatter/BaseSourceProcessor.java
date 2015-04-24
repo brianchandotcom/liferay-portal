@@ -189,18 +189,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	protected void processErrorMessage(String fileName, String message) {
-		List<String> errorMessages = _errorMessagesMap.get(fileName);
-
-		if (errorMessages == null) {
-			errorMessages = new ArrayList<String>();
-		}
-
-		errorMessages.add(message);
-
-		_errorMessagesMap.put(fileName, errorMessages);
-	}
-
 	protected static String stripQuotes(String s, char delimeter) {
 		boolean insideQuotes = false;
 
@@ -1213,6 +1201,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = attributeNamePattern.matcher(attributeName);
 
 		return matcher.matches();
+	}
+
+	protected void processErrorMessage(String fileName, String message) {
+		List<String> errorMessages = _errorMessagesMap.get(fileName);
+
+		if (errorMessages == null) {
+			errorMessages = new ArrayList<String>();
+		}
+
+		errorMessages.add(message);
+
+		_errorMessagesMap.put(fileName, errorMessages);
 	}
 
 	protected void processFormattedFile(

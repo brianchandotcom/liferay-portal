@@ -119,6 +119,61 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
+	protected static int getLeadingTabCount(String line) {
+		int leadingTabCount = 0;
+
+		while (line.startsWith(StringPool.TAB)) {
+			line = line.substring(1);
+
+			leadingTabCount++;
+		}
+
+		return leadingTabCount;
+	}
+
+	protected static boolean isInsideQuotes(String s, int pos) {
+		boolean insideQuotes = false;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (insideQuotes) {
+				if ((c == CharPool.QUOTE) &&
+					((c <= 1) || (s.charAt(i - 1) != CharPool.BACK_SLASH) ||
+					 (s.charAt(i - 2) == CharPool.BACK_SLASH))) {
+
+					insideQuotes = false;
+				}
+			}
+			else if (c == CharPool.QUOTE) {
+				insideQuotes = true;
+			}
+
+			if (pos == i) {
+				return insideQuotes;
+			}
+		}
+
+		return false;
+	}
+
+	protected String applyDiamondOperator(String content) {
+		Matcher matcher = _diamondOperatorPattern.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+			String whitespace = matcher.group(4);
+			String parameterType = matcher.group(5);
+
+			String replacement = StringUtil.replaceFirst(
+				match, whitespace + "<" + parameterType + ">", "<>");
+
+			content = StringUtil.replace(content, match, replacement);
+		}
+
+		return content;
+	}
+
 	protected void checkAnnotationParameters(
 		String fileName, String javaTermName, String annotation) {
 
@@ -187,153 +242,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			return;
 		}
-	}
-
-	protected String formatAnnotations(
-			String fileName, String javaTermName, String content, String indent)
-		throws IOException {
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
-
-		String line = null;
-
-		String annotation = StringPool.BLANK;
-		String previousAnnotation = StringPool.BLANK;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.equals(indent + StringPool.CLOSE_CURLY_BRACE)) {
-				return content;
-			}
-
-			if ((StringUtil.count(line, StringPool.TAB) == indent.length()) &&
-				!line.startsWith(indent + StringPool.CLOSE_PARENTHESIS)) {
-
-				if (Validator.isNotNull(annotation) &&
-					annotation.contains(StringPool.OPEN_PARENTHESIS)) {
-
-					Matcher matcher = _annotationPattern.matcher(
-						"\n" + annotation);
-
-					if (matcher.find()) {
-						String match = matcher.group();
-
-						match = match.substring(1);
-
-						if (!match.endsWith("\n)\n") &&
-							!match.endsWith("\t)\n")) {
-
-							String tabs = matcher.group(1);
-
-							String replacement = StringUtil.replaceLast(
-								match, ")", "\n" + tabs + ")");
-
-							return StringUtil.replace(
-								content, match, replacement);
-						}
-					}
-
-					String newContent = checkAnnotationParameterProperties(
-						content, annotation);
-
-					if (newContent != null) {
-						return formatAnnotations(
-							fileName, javaTermName, newContent, indent);
-					}
-
-					checkAnnotationParameters(
-						fileName, javaTermName, annotation);
-				}
-
-				if (Validator.isNotNull(previousAnnotation) &&
-					(previousAnnotation.compareTo(annotation) > 0)) {
-
-					content = StringUtil.replaceFirst(
-						content, previousAnnotation, annotation);
-					content = StringUtil.replaceLast(
-						content, annotation, previousAnnotation);
-
-					return formatAnnotations(
-						fileName, javaTermName, content, indent);
-				}
-
-				if (line.startsWith(indent + StringPool.AT)) {
-					if (Validator.isNotNull(annotation)) {
-						previousAnnotation = annotation;
-					}
-
-					annotation = line + "\n";
-				}
-				else {
-					annotation = StringPool.BLANK;
-					previousAnnotation = StringPool.BLANK;
-				}
-			}
-			else {
-				if (Validator.isNull(annotation)) {
-					return content;
-				}
-
-				annotation += line + "\n";
-			}
-		}
-
-		return content;
-	}
-
-	protected static int getLeadingTabCount(String line) {
-		int leadingTabCount = 0;
-
-		while (line.startsWith(StringPool.TAB)) {
-			line = line.substring(1);
-
-			leadingTabCount++;
-		}
-
-		return leadingTabCount;
-	}
-
-	protected static boolean isInsideQuotes(String s, int pos) {
-		boolean insideQuotes = false;
-
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			if (insideQuotes) {
-				if ((c == CharPool.QUOTE) &&
-					((c <= 1) || (s.charAt(i - 1) != CharPool.BACK_SLASH) ||
-					 (s.charAt(i - 2) == CharPool.BACK_SLASH))) {
-
-					insideQuotes = false;
-				}
-			}
-			else if (c == CharPool.QUOTE) {
-				insideQuotes = true;
-			}
-
-			if (pos == i) {
-				return insideQuotes;
-			}
-		}
-
-		return false;
-	}
-
-	protected String applyDiamondOperator(String content) {
-		Matcher matcher = _diamondOperatorPattern.matcher(content);
-
-		while (matcher.find()) {
-			String match = matcher.group();
-			String whitespace = matcher.group(4);
-			String parameterType = matcher.group(5);
-
-			String replacement = StringUtil.replaceFirst(
-				match, whitespace + "<" + parameterType + ">", "<>");
-
-			content = StringUtil.replace(content, match, replacement);
-		}
-
-		return content;
 	}
 
 	protected void checkFinderCacheInterfaceMethod(
@@ -1018,6 +926,56 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return StringUtil.replace(newContent, "\n\n\n", "\n\n");
 	}
 
+	@Override
+	protected List<String> doGetFileNames() {
+		Collection<String> fileNames = null;
+
+		if (portalSource) {
+			fileNames = getPortalJavaFiles();
+
+			_checkUnprocessedExceptions = GetterUtil.getBoolean(
+				System.getProperty(
+					"source.formatter.check.unprocessed.exceptions"));
+		}
+		else {
+			fileNames = getPluginJavaFiles();
+		}
+
+		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
+			getProperty("add.missing.deprecation.release.version"));
+		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
+			getProperty("allow.use.service.util.in.service.impl"));
+		_checkJavaFieldTypesExclusionFiles = getPropertyList(
+			"check.java.field.types.excludes.files");
+		_diamondOperatorExclusionFiles = getPropertyList(
+			"diamond.operator.excludes.files");
+		_diamondOperatorExclusionPaths = getPropertyList(
+			"diamond.operator.excludes.paths");
+		_fitOnSingleLineExclusionFiles = getPropertyList(
+			"fit.on.single.line.excludes.files");
+		_hibernateSQLQueryExclusionFiles = getPropertyList(
+			"hibernate.sql.query.excludes.files");
+		_javaTermAccessLevelModifierExclusionFiles = getPropertyList(
+			"javaterm.access.level.modifier.excludes.files");
+		_javaTermSortExclusionFiles = getPropertyList(
+			"javaterm.sort.excludes.files");
+		_lineLengthExclusionFiles = getPropertyList(
+			"line.length.excludes.files");
+		_proxyExclusionFiles = getPropertyList("proxy.excludes.files");
+		_secureRandomExclusionFiles = getPropertyList(
+			"secure.random.excludes.files");
+		_secureXmlExclusionFiles = getPropertyList(
+			"secure.xml.excludes.files");
+		_staticLogVariableExclusionFiles = getPropertyList(
+			"static.log.excludes.files");
+		_testAnnotationsExclusionFiles = getPropertyList(
+			"test.annotations.excludes.files");
+		_upgradeServiceUtilExclusionFiles = getPropertyList(
+			"upgrade.service.util.excludes.files");
+
+		return new ArrayList<String>(fileNames);
+	}
+
 	protected String fixDataAccessConnection(String className, String content) {
 		int x = content.indexOf("package ");
 
@@ -1176,54 +1134,96 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			StringUtil.replaceFirst(content, match, replacement));
 	}
 
-	@Override
-	protected List<String> doGetFileNames() {
-		Collection<String> fileNames = null;
+	protected String formatAnnotations(
+			String fileName, String javaTermName, String content, String indent)
+		throws IOException {
 
-		if (portalSource) {
-			fileNames = getPortalJavaFiles();
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(content));
 
-			_checkUnprocessedExceptions = GetterUtil.getBoolean(
-				System.getProperty(
-					"source.formatter.check.unprocessed.exceptions"));
+		String line = null;
+
+		String annotation = StringPool.BLANK;
+		String previousAnnotation = StringPool.BLANK;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.equals(indent + StringPool.CLOSE_CURLY_BRACE)) {
+				return content;
+			}
+
+			if ((StringUtil.count(line, StringPool.TAB) == indent.length()) &&
+				!line.startsWith(indent + StringPool.CLOSE_PARENTHESIS)) {
+
+				if (Validator.isNotNull(annotation) &&
+					annotation.contains(StringPool.OPEN_PARENTHESIS)) {
+
+					Matcher matcher = _annotationPattern.matcher(
+						"\n" + annotation);
+
+					if (matcher.find()) {
+						String match = matcher.group();
+
+						match = match.substring(1);
+
+						if (!match.endsWith("\n)\n") &&
+							!match.endsWith("\t)\n")) {
+
+							String tabs = matcher.group(1);
+
+							String replacement = StringUtil.replaceLast(
+								match, ")", "\n" + tabs + ")");
+
+							return StringUtil.replace(
+								content, match, replacement);
+						}
+					}
+
+					String newContent = checkAnnotationParameterProperties(
+						content, annotation);
+
+					if (newContent != null) {
+						return formatAnnotations(
+							fileName, javaTermName, newContent, indent);
+					}
+
+					checkAnnotationParameters(
+						fileName, javaTermName, annotation);
+				}
+
+				if (Validator.isNotNull(previousAnnotation) &&
+					(previousAnnotation.compareTo(annotation) > 0)) {
+
+					content = StringUtil.replaceFirst(
+						content, previousAnnotation, annotation);
+					content = StringUtil.replaceLast(
+						content, annotation, previousAnnotation);
+
+					return formatAnnotations(
+						fileName, javaTermName, content, indent);
+				}
+
+				if (line.startsWith(indent + StringPool.AT)) {
+					if (Validator.isNotNull(annotation)) {
+						previousAnnotation = annotation;
+					}
+
+					annotation = line + "\n";
+				}
+				else {
+					annotation = StringPool.BLANK;
+					previousAnnotation = StringPool.BLANK;
+				}
+			}
+			else {
+				if (Validator.isNull(annotation)) {
+					return content;
+				}
+
+				annotation += line + "\n";
+			}
 		}
-		else {
-			fileNames = getPluginJavaFiles();
-		}
 
-		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
-			getProperty("add.missing.deprecation.release.version"));
-		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
-			getProperty("allow.use.service.util.in.service.impl"));
-		_checkJavaFieldTypesExclusionFiles = getPropertyList(
-			"check.java.field.types.excludes.files");
-		_diamondOperatorExclusionFiles = getPropertyList(
-			"diamond.operator.excludes.files");
-		_diamondOperatorExclusionPaths = getPropertyList(
-			"diamond.operator.excludes.paths");
-		_fitOnSingleLineExclusionFiles = getPropertyList(
-			"fit.on.single.line.excludes.files");
-		_hibernateSQLQueryExclusionFiles = getPropertyList(
-			"hibernate.sql.query.excludes.files");
-		_javaTermAccessLevelModifierExclusionFiles = getPropertyList(
-			"javaterm.access.level.modifier.excludes.files");
-		_javaTermSortExclusionFiles = getPropertyList(
-			"javaterm.sort.excludes.files");
-		_lineLengthExclusionFiles = getPropertyList(
-			"line.length.excludes.files");
-		_proxyExclusionFiles = getPropertyList("proxy.excludes.files");
-		_secureRandomExclusionFiles = getPropertyList(
-			"secure.random.excludes.files");
-		_secureXmlExclusionFiles = getPropertyList(
-			"secure.xml.excludes.files");
-		_staticLogVariableExclusionFiles = getPropertyList(
-			"static.log.excludes.files");
-		_testAnnotationsExclusionFiles = getPropertyList(
-			"test.annotations.excludes.files");
-		_upgradeServiceUtilExclusionFiles = getPropertyList(
-			"upgrade.service.util.excludes.files");
-
-		return new ArrayList<String>(fileNames);
+		return content;
 	}
 
 	protected String formatIfClause(String ifClause) throws IOException {

@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.sql.Blob;
 import java.sql.Connection;
@@ -861,10 +860,6 @@ public class ${entity.name}PersistenceTest {
 	<#if uniqueFinderList?size != 0>
 		@Test
 		public void testResetOriginalValues() throws Exception {
-			if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-				return;
-			}
-
 			${entity.name} new${entity.name} = add${entity.name}();
 
 			_persistence.clearCache();

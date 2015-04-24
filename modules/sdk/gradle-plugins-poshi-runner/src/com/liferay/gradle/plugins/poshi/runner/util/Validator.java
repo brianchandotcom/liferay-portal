@@ -15,9 +15,14 @@
 package com.liferay.gradle.plugins.poshi.runner.util;
 
 /**
+ * @author Brian Wing Shun Chan
  * @author Andrea Di Giorgi
  */
 public class Validator {
+
+	public static boolean isNotNull(String s) {
+		return !isNull(s);
+	}
 
 	public static boolean isNull(String s) {
 		if (s == null) {

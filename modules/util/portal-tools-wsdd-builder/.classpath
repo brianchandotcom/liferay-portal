@@ -24,10 +24,10 @@
 	<classpathentry kind="lib" path="lib/axis-jaxrpc.jar" />
 	<classpathentry kind="lib" path="lib/axis-saaj.jar" />
 	<classpathentry kind="lib" path="lib/axis-wsdl4j.jar" />
-	<classpathentry kind="lib" path="lib/axis.jar" />
 	<classpathentry kind="lib" path="lib/commons-discovery.jar" />
 	<classpathentry kind="lib" path="lib/dom4j.jar" />
 	<classpathentry kind="lib" path="lib/mail.jar" />
+	<classpathentry kind="lib" path="lib/org.apache.axis.jar" />
 	<classpathentry kind="lib" path="lib/xml-apis.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

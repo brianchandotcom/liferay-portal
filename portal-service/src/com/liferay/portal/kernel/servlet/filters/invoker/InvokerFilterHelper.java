@@ -61,7 +61,7 @@ public class InvokerFilterHelper {
 	public void destroy() {
 		_serviceTracker.close();
 
-		for (List<FilterMapping> filterMappings : _filterMappings.values()) {
+		for (List<FilterMapping> filterMappings : _filterMappingsMap.values()) {
 			FilterMapping filterMapping = filterMappings.get(0);
 
 			Filter filter = filterMapping.getFilter();
@@ -74,7 +74,7 @@ public class InvokerFilterHelper {
 			}
 		}
 
-		_filterMappings.clear();
+		_filterMappingsMap.clear();
 
 		for (InvokerFilter invokerFilter : _invokerFilters) {
 			invokerFilter.clearFilterChainsCache();
@@ -112,19 +112,19 @@ public class InvokerFilterHelper {
 	public void registerFilterMapping(
 		FilterMapping filterMapping, String filterName, boolean after) {
 
-		List<FilterMapping> filterMappings = _filterMappings.get(filterName);
+		List<FilterMapping> filterMappings = _filterMappingsMap.get(filterName);
 
 		if (filterMappings == null) {
 			filterMappings = new CopyOnWriteArrayList<>();
 
 			List<FilterMapping> previousFilterMapping =
-				_filterMappings.putIfAbsent(filterName, filterMappings);
+				_filterMappingsMap.putIfAbsent(filterName, filterMappings);
 
 			if (previousFilterMapping != null) {
 				filterMappings = previousFilterMapping;
 			}
 
-			_filterMappingNames.add(filterName);
+			_filterNames.add(filterName);
 		}
 
 		if (after) {
@@ -140,7 +140,8 @@ public class InvokerFilterHelper {
 	}
 
 	public void unregisterFilter(String filterName) {
-		List<FilterMapping> filterMappings = _filterMappings.remove(filterName);
+		List<FilterMapping> filterMappings = _filterMappingsMap.remove(
+			filterName);
 
 		if (filterMappings == null) {
 			return;
@@ -159,7 +160,7 @@ public class InvokerFilterHelper {
 			}
 		}
 
-		_filterMappingNames.remove(filterName);
+		_filterNames.remove(filterName);
 
 		for (InvokerFilter invokerFilter : _invokerFilters) {
 			invokerFilter.clearFilterChainsCache();
@@ -167,7 +168,7 @@ public class InvokerFilterHelper {
 	}
 
 	public void updateFilterMappings(String filterName, Filter filter) {
-		List<FilterMapping> filterMappings = _filterMappings.get(filterName);
+		List<FilterMapping> filterMappings = _filterMappingsMap.get(filterName);
 
 		if (filterMappings == null) {
 			return;
@@ -191,8 +192,8 @@ public class InvokerFilterHelper {
 		InvokerFilterChain invokerFilterChain = new InvokerFilterChain(
 			filterChain);
 
-		for (String filterName : _filterMappingNames) {
-			List<FilterMapping> filterMappings = _filterMappings.get(
+		for (String filterName : _filterNames) {
+			List<FilterMapping> filterMappings = _filterMappingsMap.get(
 				filterName);
 
 			if (filterMappings == null) {
@@ -201,9 +202,7 @@ public class InvokerFilterHelper {
 
 			for (FilterMapping filterMapping : filterMappings) {
 				if (filterMapping.isMatch(request, dispatcher, uri)) {
-					Filter filter = filterMapping.getFilter();
-
-					invokerFilterChain.addFilter(filter);
+					invokerFilterChain.addFilter(filterMapping.getFilter());
 				}
 			}
 		}
@@ -335,20 +334,20 @@ public class InvokerFilterHelper {
 					filterObjectValuePair.getValue(), urlPatterns, dispatchers,
 					filterName);
 
-			List<FilterMapping> filterMappings = _filterMappings.get(
+			List<FilterMapping> filterMappings = _filterMappingsMap.get(
 				filterName);
 
 			if (filterMappings == null) {
 				filterMappings = new CopyOnWriteArrayList<>();
 
 				List<FilterMapping> previousFilterMapping =
-					_filterMappings.putIfAbsent(filterName, filterMappings);
+					_filterMappingsMap.putIfAbsent(filterName, filterMappings);
 
 				if (previousFilterMapping != null) {
 					filterMappings = previousFilterMapping;
 				}
 
-				_filterMappingNames.add(filterName);
+				_filterNames.add(filterName);
 			}
 
 			filterMappings.add(filterMapping);
@@ -358,9 +357,9 @@ public class InvokerFilterHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		InvokerFilterHelper.class);
 
-	private final Set<String> _filterMappingNames = new CopyOnWriteArraySet<>();
-	private final ConcurrentMap<String, List<FilterMapping>> _filterMappings =
-		new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, List<FilterMapping>>
+		_filterMappingsMap = new ConcurrentHashMap<>();
+	private final Set<String> _filterNames = new CopyOnWriteArraySet<>();
 	private final List<InvokerFilter> _invokerFilters = new ArrayList<>();
 	private ServiceTracker<Filter, FilterMapping> _serviceTracker;
 

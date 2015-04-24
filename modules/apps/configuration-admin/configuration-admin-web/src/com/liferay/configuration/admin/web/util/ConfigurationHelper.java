@@ -15,19 +15,9 @@
 package com.liferay.configuration.admin.web.util;
 
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContext;
-import com.liferay.portlet.dynamicdatamapping.render.DDMFormRendererUtil;
 
 import java.io.IOException;
 
@@ -35,9 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -133,48 +120,6 @@ public class ConfigurationHelper {
 		return configurationModels;
 	}
 
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			ConfigurationModel configurationModel)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ConfigurationModelToDDMFormConverter
-			configurationModelToDDMFormConverter =
-				new ConfigurationModelToDDMFormConverter(
-					configurationModel, themeDisplay.getLocale());
-
-		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setHttpServletRequest(
-			PortalUtil.getHttpServletRequest(portletRequest));
-		ddmFormFieldRenderingContext.setHttpServletResponse(
-			PortalUtil.getHttpServletResponse(portletResponse));
-		ddmFormFieldRenderingContext.setLocale(themeDisplay.getLocale());
-		ddmFormFieldRenderingContext.setPortletNamespace(
-			portletResponse.getNamespace());
-		ddmFormFieldRenderingContext.setReadOnly(false);
-
-		String definition = DDMFormJSONSerializerUtil.serialize(ddmForm);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("DDMForm definition: " + definition);
-		}
-
-		portletRequest.setAttribute("definition", definition);
-		portletRequest.setAttribute(
-			"scopeGroupId", themeDisplay.getScopeGroupId());
-		portletRequest.setAttribute("plId", themeDisplay.getPlid());
-
-		return DDMFormRendererUtil.render(
-			ddmForm, ddmFormFieldRenderingContext);
-	}
-
 	private void _collectConfigurationModels(
 		Bundle bundle, Map<String, ConfigurationModel> modelMap, String locale,
 		boolean factory) {
@@ -257,9 +202,6 @@ public class ConfigurationHelper {
 
 		return filter.toString();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ConfigurationHelper.class);
 
 	private final BundleContext _bundleContext;
 	private final ConfigurationAdmin _configurationAdmin;

@@ -74,6 +74,57 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			PortalUtil.getHttpServletRequest(portletRequest), ddmForm);
 	}
 
+	protected void checkDDMFormFieldParameterNames(
+		DDMForm ddmForm, Set<String> ddmFormFieldParameterNames) {
+
+		if (ddmFormFieldParameterNames.isEmpty()) {
+			ddmFormFieldParameterNames.addAll(
+				createDefaultDDMFormFieldParameterNames(ddmForm));
+
+			return;
+		}
+
+		checkDDMFormFieldParameterNames(
+			ddmForm.getDDMFormFields(), StringPool.BLANK,
+			ddmFormFieldParameterNames);
+	}
+
+	protected void checkDDMFormFieldParameterNames(
+		List<DDMFormField> ddmFormFields,
+		String parentDDMFormFieldParameterName,
+		Set<String> ddmFormFieldParameterNames) {
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			if (ddmFormField.isTransient()) {
+				continue;
+			}
+
+			if (containsDDMFormFieldParameterName(
+					ddmFormField, ddmFormFieldParameterNames)) {
+
+				continue;
+			}
+
+			String defaultDDMFormFieldParameterName =
+				createDefaultDDMFormFieldParameterName(
+					ddmFormField, parentDDMFormFieldParameterName);
+
+			ddmFormFieldParameterNames.add(defaultDDMFormFieldParameterName);
+		}
+	}
+
+	protected boolean containsDDMFormFieldParameterName(
+		DDMFormField ddmFormField, Set<String> ddmFormFieldParameterNames) {
+
+		for (String ddmFormFieldParameterName : ddmFormFieldParameterNames) {
+			if (ddmFormFieldParameterName.contains(ddmFormField.getName())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected DDMFormFieldValue createDDMFormFieldValue(
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		Map<String, DDMFormField> ddmFormFieldsMap) {
@@ -220,9 +271,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 				getDDMFormFieldParameterNames(parameterName));
 		}
 
-		if (ddmFormFieldParameterNames.isEmpty()) {
-			return createDefaultDDMFormFieldParameterNames(ddmForm);
-		}
+		checkDDMFormFieldParameterNames(ddmForm, ddmFormFieldParameterNames);
 
 		return ddmFormFieldParameterNames;
 	}

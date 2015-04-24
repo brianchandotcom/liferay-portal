@@ -620,6 +620,58 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		assertEquals(expectedDDMFormValues, actualDDMFormValues);
 	}
 
+	@Test
+	public void testCreateWithTextAndUncheckedCheckboxField() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"Name", false, false, false));
+
+		DDMFormField checkbockDDMFormField = DDMFormTestUtil.createDDMFormField(
+			"Boolean", "Boolean", DDMFormFieldType.CHECKBOX, "boolean", false,
+			false, false);
+
+		LocalizedValue predefinedValue =
+			checkbockDDMFormField.getPredefinedValue();
+
+		predefinedValue.addString(LocaleUtil.US, "false");
+
+		ddmForm.addDDMFormField(checkbockDDMFormField);
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(
+			ddmForm, createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(
+				"amay", "Name", new UnlocalizedValue("Joe")));
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(
+				"wqer", "Boolean", new UnlocalizedValue("false")));
+
+		MockHttpServletRequest httpServletRequest =
+			new MockHttpServletRequest();
+
+		httpServletRequest.addParameter("availableLanguageIds", "en_US");
+		httpServletRequest.addParameter("defaultLanguageId", "en_US");
+
+		// Name
+
+		httpServletRequest.addParameter("ddm$$Name$wqer$0$$en_US", "Joe");
+
+		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
+			httpServletRequest, ddmForm);
+
+		List<DDMFormFieldValue> actualDDMFormFieldValues =
+			actualDDMFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(2, actualDDMFormFieldValues.size());
+
+		assertEquals("Joe", actualDDMFormFieldValues.get(0), LocaleUtil.US);
+		assertEquals("false", actualDDMFormFieldValues.get(1), LocaleUtil.US);
+	}
+
 	protected void assertEquals(
 			DDMFormValues expectedDDMFormValues,
 			DDMFormValues actualDDMFormValues)
@@ -634,6 +686,15 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		JSONAssert.assertEquals(
 			serializedExpectedDDMFormValues, serializedActualDDMFormValues,
 			false);
+	}
+
+	protected void assertEquals(
+		String expectedValueString, DDMFormFieldValue actualDDMFormFieldValue,
+		Locale locale) {
+
+		Value actualValue = actualDDMFormFieldValue.getValue();
+
+		Assert.assertEquals(expectedValueString, actualValue.getString(locale));
 	}
 
 	protected Set<Locale> createAvailableLocales(Locale... locales) {

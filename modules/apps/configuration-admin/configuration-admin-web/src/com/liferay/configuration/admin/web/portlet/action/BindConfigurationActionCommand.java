@@ -19,16 +19,14 @@ import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.configuration.admin.web.util.ConfigurationModelToDDMFormConverter;
 import com.liferay.configuration.admin.web.util.DDMFormValuesToPropertiesConverter;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
@@ -186,16 +184,7 @@ public class BindConfigurationActionCommand implements ActionCommand {
 	protected DDMFormValues getDDMFormValues(
 		PortletRequest portletRequest, DDMForm ddmForm) {
 
-		String serializedDDMFormValues = ParamUtil.getString(
-			portletRequest, "serializedDDMFormValues");
-
-		try {
-			return DDMFormValuesJSONDeserializerUtil.deserialize(
-				ddmForm, serializedDDMFormValues);
-		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
-		}
+		return _ddmFormValuesFactory.create(portletRequest, ddmForm);
 	}
 
 	@Reference(unbind = "-")
@@ -203,6 +192,13 @@ public class BindConfigurationActionCommand implements ActionCommand {
 		ConfigurationAdmin configurationAdmin) {
 
 		_configurationAdmin = configurationAdmin;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormValuesFactory(
+		DDMFormValuesFactory ddmFormValuesFactory) {
+
+		_ddmFormValuesFactory = ddmFormValuesFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -215,6 +211,7 @@ public class BindConfigurationActionCommand implements ActionCommand {
 
 	private BundleContext _bundleContext;
 	private ConfigurationAdmin _configurationAdmin;
+	private DDMFormValuesFactory _ddmFormValuesFactory;
 	private MetaTypeService _metaTypeService;
 
 }

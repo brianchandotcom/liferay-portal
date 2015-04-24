@@ -42,7 +42,13 @@ public class PortalCacheIndexer<I, K extends IndexedCacheKey<I>, V> {
 	}
 
 	public void removeIndexedCacheKeys(I index) {
-		for (K indexedCacheKey : _indexedCacheKeys.remove(index)) {
+		Set<K> indexedCacheKeys = _indexedCacheKeys.remove(index);
+
+		if (indexedCacheKeys == null) {
+			return;
+		}
+
+		for (K indexedCacheKey : indexedCacheKeys) {
 			_portalCache.remove(indexedCacheKey);
 		}
 	}

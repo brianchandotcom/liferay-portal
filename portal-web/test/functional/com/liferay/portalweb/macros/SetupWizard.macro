@@ -37,7 +37,7 @@
 
 		<execute macro="Portlet#shutdownServer" />
 
-		<execute macro="Portlet#startServer" />
+		<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server -Ddelete.liferay.home=false" />
 
 		<execute macro="User#firstLoginPG" />
 	</command>
@@ -69,7 +69,7 @@
 
 		<execute macro="Portlet#shutdownServer" />
 
-		<execute macro="Portlet#startServer" />
+		<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server -Ddelete.liferay.home=false" />
 
 		<execute macro="User#firstLoginPG" />
 	</command>

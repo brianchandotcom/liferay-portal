@@ -2148,16 +2148,16 @@ go]]></replacevalue>
 	</target>
 
 	<target name="delete-liferay-home">
-		<get-testcase-property property.name="delete.liferay.home" />
-
 		<if>
 			<not>
-				<equals arg1="delete.liferay.home" arg2="false" />
+				<equals arg1="${delete.liferay.home}" arg2="false" />
 			</not>
 			<then>
 				<delete dir="${liferay.home}/data" />
 				<delete dir="${liferay.home}/logs" />
 				<delete dir="${liferay.home}/osgi/state" />
+
+				<delete file="${liferay.home}/portal-setup-wizard.properties" />
 			</then>
 		</if>
 	</target>

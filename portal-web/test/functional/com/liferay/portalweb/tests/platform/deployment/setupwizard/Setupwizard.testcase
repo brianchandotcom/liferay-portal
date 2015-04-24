@@ -1,5 +1,4 @@
 <definition component-name="portal-deployment">
-	<property name="delete.liferay.home" value="false" />
 	<property name="setup.wizard.enabled" value="true" />
 	<property name="testray.main.component.name" value="Setup Wizard" />
 

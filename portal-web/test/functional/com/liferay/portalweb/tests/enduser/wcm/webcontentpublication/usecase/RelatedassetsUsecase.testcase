@@ -76,6 +76,10 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title 2" />
+		</execute>
+
 		<execute macro="WebContent#addExistingRelatedAssetCP">
 			<var name="assetTitle" value="Web Content Title 1" />
 			<var name="assetType" value="Basic Web Content" />

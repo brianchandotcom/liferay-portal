@@ -58,7 +58,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	<liferay-util:html-top outputKey="js_editor_tinymce">
 
 		<%
-		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified();
+		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR);
 		%>
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathEditors() + "/editor/tiny_mce/tinymce.min.js", javaScriptLastModified)) %>" type="text/javascript"></script>

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.editor.config.EditorConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -300,7 +301,9 @@ public class InputEditorTag extends IncludeTag {
 	@Override
 	protected RequestDispatcher getRequestDispatcher(String page) {
 		return DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-			PortalWebResourcesUtil.getServletContext(), page);
+			PortalWebResourcesUtil.getServletContext(
+				PortalWebResourceConstants.RESOURCE_TYPE_EDITOR),
+			page);
 	}
 
 	@Override

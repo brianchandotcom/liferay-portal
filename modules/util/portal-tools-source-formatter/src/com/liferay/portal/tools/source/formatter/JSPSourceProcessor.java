@@ -492,49 +492,50 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> fileNames = getFileNames(excludes, getIncludes());
 
 		try {
-		Pattern pattern = Pattern.compile(
-			"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
+			Pattern pattern = Pattern.compile(
+				"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 
-		SourceFormatterBean sourceFormatterBean = getSourceFormatterBean();
+			SourceFormatterBean sourceFormatterBean = getSourceFormatterBean();
 
-		for (String fileName : fileNames) {
-			File file = new File(sourceFormatterBean.getBaseDir() + fileName);
+			for (String fileName : fileNames) {
+				File file =
+					new File(sourceFormatterBean.getBaseDir() + fileName);
 
-			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				fileName = StringUtil.replace(
+					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			String absolutePath = getAbsolutePath(file);
+				String absolutePath = getAbsolutePath(file);
 
-			String content = FileUtils.readFileToString(file);
+				String content = FileUtils.readFileToString(file);
 
-			Matcher matcher = pattern.matcher(content);
+				Matcher matcher = pattern.matcher(content);
 
-			String newContent = content;
+				String newContent = content;
 
-			while (matcher.find()) {
-				newContent = StringUtil.replaceFirst(
-					newContent, matcher.group(),
-					"@ include file=\"" + matcher.group(1) + "\"",
-					matcher.start());
+				while (matcher.find()) {
+					newContent = StringUtil.replaceFirst(
+						newContent, matcher.group(),
+						"@ include file=\"" + matcher.group(1) + "\"",
+						matcher.start());
+				}
+
+				processFormattedFile(file, fileName, content, newContent);
+
+				if (portalSource &&
+					_moveFrequentlyUsedImportsToCommonInit &&
+					fileName.endsWith("/init.jsp") &&
+					!absolutePath.contains("/modules/") &&
+					!fileName.endsWith("/common/init.jsp")) {
+
+					addImportCounts(content);
+				}
+
+				_jspContents.put(fileName, newContent);
 			}
 
-			processFormattedFile(file, fileName, content, newContent);
-
-			if (portalSource &&
-				_moveFrequentlyUsedImportsToCommonInit &&
-				fileName.endsWith("/init.jsp") &&
-				!absolutePath.contains("/modules/") &&
-				!fileName.endsWith("/common/init.jsp")) {
-
-				addImportCounts(content);
+			if (portalSource && _moveFrequentlyUsedImportsToCommonInit) {
+				moveFrequentlyUsedImportsToCommonInit(4);
 			}
-
-			_jspContents.put(fileName, newContent);
-		}
-
-		if (portalSource && _moveFrequentlyUsedImportsToCommonInit) {
-			moveFrequentlyUsedImportsToCommonInit(4);
-		}
 		}
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);

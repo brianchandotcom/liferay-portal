@@ -15,8 +15,6 @@
 package com.liferay.portal.tools.source.formatter;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.tools.source.formatter.ImportsFormatter;
-import com.liferay.portal.tools.source.formatter.JavaImportsFormatter;
 
 import org.junit.Assert;
 import org.junit.Test;

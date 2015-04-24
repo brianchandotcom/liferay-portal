@@ -708,15 +708,6 @@
 		['liferay-util-window']
 	);
 
-	Liferay.provide(
-		Portlet,
-		'loadCSSEditor',
-		function(portletId) {
-			Liferay.PortletCSS.init(portletId);
-		},
-		['liferay-look-and-feel']
-	);
-
 	Liferay.publish(
 		'closePortlet',
 		{

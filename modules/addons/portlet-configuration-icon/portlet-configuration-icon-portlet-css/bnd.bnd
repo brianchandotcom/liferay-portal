@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portlet Configuration Icon Portlet CSS
-Bundle-SymbolicName: com.liferay.portlet.configuration.icon.portlet.css
-Bundle-Version: 1.0.0
-Include-Resource: classes

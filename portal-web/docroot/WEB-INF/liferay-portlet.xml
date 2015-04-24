@@ -468,16 +468,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>113</portlet-name>
-		<icon>/html/icons/portlet_css.png</icon>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>114</portlet-name>
 		<icon>/html/icons/recent_bloggers.png</icon>
 		<struts-path>recent_bloggers</struts-path>

@@ -29,6 +29,7 @@
 		<dirset dir="apps/network-utilities" includes="*" />
 		<dirset dir="apps/password-generator" includes="*" />
 		<dirset dir="apps/polls" includes="*" />
+		<dirset dir="apps/portlet-css" includes="*" />
 		<dirset dir="apps/productivity-center" includes="*" />
 		<dirset dir="apps/quick-note" includes="*" />
 		<dirset dir="apps/rss" includes="*" />

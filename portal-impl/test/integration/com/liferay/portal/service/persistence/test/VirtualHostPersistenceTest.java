@@ -37,7 +37,6 @@ import com.liferay.portal.service.persistence.VirtualHostPersistence;
 import com.liferay.portal.service.persistence.VirtualHostUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -390,10 +389,6 @@ public class VirtualHostPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		VirtualHost newVirtualHost = addVirtualHost();
 
 		_persistence.clearCache();

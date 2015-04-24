@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.blogs.NoSuchStatsUserException;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
@@ -436,10 +435,6 @@ public class BlogsStatsUserPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		BlogsStatsUser newBlogsStatsUser = addBlogsStatsUser();
 
 		_persistence.clearCache();

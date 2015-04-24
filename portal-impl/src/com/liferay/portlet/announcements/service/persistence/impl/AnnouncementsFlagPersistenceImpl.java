@@ -16,7 +16,6 @@ package com.liferay.portlet.announcements.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -874,10 +873,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public void clearCache() {
-		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(AnnouncementsFlagImpl.class.getName());
-		}
-
 		EntityCacheUtil.clearCache(AnnouncementsFlagImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
@@ -1533,7 +1528,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	private static final String _ORDER_BY_ENTITY_ALIAS = "announcementsFlag.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnnouncementsFlag exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnnouncementsFlag exists with the key {";
-	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static final Log _log = LogFactoryUtil.getLog(AnnouncementsFlagPersistenceImpl.class);
 	private static final AnnouncementsFlag _nullAnnouncementsFlag = new AnnouncementsFlagImpl() {
 			@Override

@@ -37,7 +37,6 @@ import com.liferay.portal.service.persistence.ServiceComponentPersistence;
 import com.liferay.portal.service.persistence.ServiceComponentUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -395,10 +394,6 @@ public class ServiceComponentPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		ServiceComponent newServiceComponent = addServiceComponent();
 
 		_persistence.clearCache();

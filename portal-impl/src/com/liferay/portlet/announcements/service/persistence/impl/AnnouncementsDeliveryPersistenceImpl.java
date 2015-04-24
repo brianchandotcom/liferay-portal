@@ -16,7 +16,6 @@ package com.liferay.portlet.announcements.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -879,10 +878,6 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	 */
 	@Override
 	public void clearCache() {
-		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(AnnouncementsDeliveryImpl.class.getName());
-		}
-
 		EntityCacheUtil.clearCache(AnnouncementsDeliveryImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
@@ -1551,7 +1546,6 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	private static final String _ORDER_BY_ENTITY_ALIAS = "announcementsDelivery.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnnouncementsDelivery exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnnouncementsDelivery exists with the key {";
-	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static final Log _log = LogFactoryUtil.getLog(AnnouncementsDeliveryPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"

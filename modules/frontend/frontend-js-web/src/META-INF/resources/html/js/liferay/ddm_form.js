@@ -1456,6 +1456,7 @@ AUI.add(
 									instance
 								),
 								formNode.on('submit', instance._onSubmitForm, instance),
+								Liferay.after('form:registered', instance._afterFormRegistered, instance),
 								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
 							);
 						}

@@ -17,8 +17,8 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="default->master;internal->default;provided" name="gradle-base-services" org="org.gradle" rev="2.0" />
-		<dependency conf="default->master;internal->default;provided" name="gradle-core" org="org.gradle" rev="2.0" />
-		<dependency conf="default->master;internal->default;provided" name="groovy-all" org="org.codehaus.groovy" rev="2.0.1" />
+		<dependency conf="provided;default->master" name="gradle-base-services" org="org.gradle" rev="2.0" />
+		<dependency conf="provided;default->master" name="gradle-core" org="org.gradle" rev="2.0" />
+		<dependency conf="provided;default->master" name="groovy-all" org="org.codehaus.groovy" rev="2.0.1" />
 	</dependencies>
 </ivy-module>

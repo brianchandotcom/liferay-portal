@@ -1,27 +1,3 @@
-/*
- * Cobertura - http://cobertura.sourceforge.net/
- *
- * Copyright (C) 2003 jcoverage ltd.
- * Copyright (C) 2005 Mark Doliner
- * Copyright (C) 2005 Jeremy Thomerson
- * Copyright (C) 2005 Mark Sinke
- *
- * Cobertura is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published
- * by the Free Software Foundation; either version 2 of the License,
- * or (at your option) any later version.
- *
- * Cobertura is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Cobertura; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA
- */
-
 package com.liferay.cobertura.coveragedata;
 
 import java.io.Serializable;
@@ -32,39 +8,14 @@ import java.util.Map;
 
 import net.sourceforge.cobertura.coveragedata.CoverageData;
 
-/**
- * <p>
- * Coverage data information is typically serialized to a file.
- * </p>
- *
- * <p>
- * This class implements HasBeenInstrumented so that when cobertura
- * instruments itself, it will omit this class.  It does this to
- * avoid an infinite recursion problem because instrumented classes
- * make use of this class.
- * </p>
- */
 public abstract class CoverageDataContainer
 	implements CoverageData, Serializable
 {
 
 	private static final long serialVersionUID = 2;
 
-	/**
-	 * Each key is the name of a child, usually stored as a String or
-	 * an Integer object.  Each value is information about the child,
-	 * stored as an object that implements the CoverageData interface.
-	 */
 	Map<Object,CoverageData> children = new HashMap<Object,CoverageData>();
 
-	/**
-	 * Determine if this CoverageDataContainer is equal to
-	 * another one.  Subclasses should override this and
-	 * make sure they implement the hashCode method.
-	 *
-	 * @param obj An object to test for equality.
-	 * @return True if the objects are equal.
-	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -77,10 +28,6 @@ public abstract class CoverageDataContainer
 			return this.children.equals(coverageDataContainer.children);
 	}
 
-	/**
-	 * @return The average branch coverage rate for all children
-	 *         in this container.
-	 */
 	@Override
 	public double getBranchCoverageRate()
 	{
@@ -95,17 +42,11 @@ public abstract class CoverageDataContainer
 			}
 		if (number == 0)
 		{
-			// no branches, therefore 100% branch coverage.
 			return 1d;
 		}
 		return (double)numberCovered / number;
 	}
 
-	/**
-	 * @return The average line coverage rate for all children
-	 *         in this container.  This number will be a decimal
-	 *         between 0 and 1, inclusive.
-	 */
 	@Override
 	public double getLineCoverageRate()
 	{
@@ -120,7 +61,6 @@ public abstract class CoverageDataContainer
 			}
 		if (number == 0)
 		{
-			// no lines, therefore 100% line coverage.
 			return 1d;
 		}
 		return (double)numberCovered / number;
@@ -178,22 +118,12 @@ public abstract class CoverageDataContainer
 		return number;
 	}
 
-	/**
-	 * It is highly recommended that classes extending this
-	 * class override this hashCode method and generate a more
-	 * effective hash code.
-	 */
 	@Override
 	public int hashCode()
 	{
 			return this.children.size();
 	}
 
-	/**
-	 * Merge two <code>CoverageDataContainer</code>s.
-	 *
-	 * @param coverageData The container to merge into this one.
-	 */
 	@Override
 	public void merge(CoverageData coverageData)
 	{
@@ -210,9 +140,6 @@ public abstract class CoverageDataContainer
 				}
 				else
 				{
-					// TODO: Shouldn't we be cloning newChild here?  I think so that
-					//       would be better... but we would need to override the
-					//       clone() method all over the place?
 					this.children.put(key, newChild);
 				}
 			}

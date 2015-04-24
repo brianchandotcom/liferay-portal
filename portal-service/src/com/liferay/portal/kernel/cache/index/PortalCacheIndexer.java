@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.cache.index;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +39,13 @@ public class PortalCacheIndexer<I, K extends IndexedCacheKey<I>, V> {
 	}
 
 	public Set<K> getIndexedCacheKeys(I index) {
-		return _indexedCacheKeys.get(index);
+		Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
+
+		if (indexedCacheKeys == null) {
+			return Collections.emptySet();
+		}
+
+		return new HashSet<>(indexedCacheKeys);
 	}
 
 	public void removeIndexedCacheKeys(I index) {

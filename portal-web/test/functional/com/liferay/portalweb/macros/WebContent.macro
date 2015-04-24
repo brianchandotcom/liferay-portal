@@ -212,12 +212,6 @@
 	<command name="addExistingRelatedAssetCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
-
 		<execute function="AssertClick" locator1="CPWebcontentEditwebcontent#MENU_RELATED_ASSETS" value1="Related Assets" />
 
 		<execute function="Click" locator1="CPWebcontentRelatedassets#SELECT_BUTTON" />
@@ -963,10 +957,6 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="WebContent#gotoEditPG">
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
 		<execute function="Type" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitleEdit}" />
 
 		<if>
@@ -999,10 +989,6 @@
 	</command>
 
 	<command name="editDisplayPageCP">
-		<execute macro="WebContent#gotoEditCP">
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_DISPLAY_PAGE" value1="Display Page" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#DISPLAY_PAGE_CHOOSE" value1="Choose" />
 		<execute function="Pause" locator1="5000" />
@@ -1050,12 +1036,6 @@
 	<command name="editNullCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
-
 		<execute function="Type" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="" />
 
 		<if>
@@ -1067,6 +1047,17 @@
 
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentAddwebcontent#ERROR_MESSAGE_FIELD_REQUIRED" value1="This field is required." />
+	</command>
+
+	<command name="editPermissionsCP">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute function="Click" locator1="PGAssetpublisher#ASSET_ABSTRACT_EDIT" />
+
+		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewwebcontent#WEB_CONTENT_IFRAME" />
+		<execute function="Type#typeWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#TITLE_FIELD" value1="${webContentTitleEdit}" />
+		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#CONTENT_FIELD" value1="${webContentContentEdit}" />
+		<execute function="Click" locator1="PGAssetpublisherAddnewwebcontent#PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
 	<command name="editPGViaAP">
@@ -1153,6 +1144,14 @@
 		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />
 	</command>
 
+	<command name="gotoArticlePermissionsCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute function="AssertClick" locator1="CPWebcontentEditwebcontent#PERMISSIONS_BUTTON" value1="Permissions" />
+
+		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="gotoCP">
 		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -1170,24 +1169,7 @@
 		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
 	</command>
 
-	<command name="gotoEditPG">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
-	</command>
-
 	<command name="gotoViewSpecificVersionHistoryCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
 		<execute function="AssertClick" locator1="CPWebcontentEditwebcontent#VIEW_HISTORY_BUTTON" value1="View History" />
 	</command>
 
@@ -1336,12 +1318,6 @@
 	<command name="viewCategorizationCategoryCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
-
 		<execute function="Click" locator1="CPWebcontentEditwebcontent#MENU_CATEGORIZATION" />
 
 		<var name="key_categoryName" value="${categoryName}" />
@@ -1352,31 +1328,11 @@
 	<command name="viewCategorizationCategoryNotVisibleCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
-
 		<execute function="Click" locator1="CPWebcontentEditwebcontent#MENU_CATEGORIZATION" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="AssertElementNotPresent" locator1="CPWebcontentCategorization#CATEGORY" value1="${categoryName}" />
-	</command>
-
-	<command name="viewCategorizationSelectionCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
-
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_CATEGORIZATION" value1="Categorization" />
-
-		<execute function="AssertTextPresent" locator1="CPWebcontentCategorization#TYPE_SELECT" value1="${categorizationType}" />
 	</command>
 
 	<command name="viewConversionLinksPGViaAP">

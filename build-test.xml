@@ -2150,7 +2150,7 @@ go]]></replacevalue>
 	<target name="delete-liferay-home">
 		<if>
 			<not>
-				<equals arg1="delete.liferay.home" arg2="false" />
+				<equals arg1="${delete.liferay.home}" arg2="false" />
 			</not>
 			<then>
 				<delete dir="${liferay.home}/data" />

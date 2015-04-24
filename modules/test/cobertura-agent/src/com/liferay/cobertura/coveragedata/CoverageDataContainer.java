@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.cobertura.coveragedata;
 
 import java.io.Serializable;
@@ -8,6 +22,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import net.sourceforge.cobertura.coveragedata.CoverageData;
+
+/**
+ * @author Shuyang Zhou
+ */
 public abstract class CoverageDataContainer
 	implements CoverageData, Serializable {
 
@@ -29,82 +47,82 @@ public abstract class CoverageDataContainer
 
 	@Override
 	public double getBranchCoverageRate() {
-		int number = 0;
-		int numberCovered = 0;
+		int numberOfValidBranches = 0;
+		int numberOfCoveredBranches = 0;
 
 		for (CoverageData coverageData : children.values()) {
-			number += coverageData.getNumberOfValidBranches();
-			numberCovered += coverageData.getNumberOfCoveredBranches();
+			numberOfValidBranches += coverageData.getNumberOfValidBranches();
+			numberOfCoveredBranches +=
+				coverageData.getNumberOfCoveredBranches();
 		}
 
-		if (number == 0)
-		{
-			return 1d;
+		if (numberOfValidBranches == 0) {
+			return 1D;
 		}
 
-		return (double)numberCovered / number;
+		return (double)numberOfCoveredBranches / numberOfValidBranches;
 	}
 
 	@Override
 	public double getLineCoverageRate() {
-		int number = 0;
-		int numberCovered = 0;
+		int numberOfValidLines = 0;
+		int numberOfCoveredLines = 0;
 
 		for (CoverageData coverageData : children.values()) {
-			number += coverageData.getNumberOfValidLines();
-			numberCovered += coverageData.getNumberOfCoveredLines();
+			numberOfValidLines += coverageData.getNumberOfValidLines();
+			numberOfCoveredLines += coverageData.getNumberOfCoveredLines();
 		}
 
-		if (number == 0)
-		{
-			return 1d;
+		if (numberOfValidLines == 0) {
+			return 1D;
 		}
 
-		return (double)numberCovered / number;
+		return (double)numberOfCoveredLines / numberOfValidLines;
 	}
 
 	@Override
 	public int getNumberOfCoveredBranches() {
-		int number = 0;
+		int numberOfCoveredBranches = 0;
 
 		for (CoverageData coverageData : children.values()) {
-			number += coverageData.getNumberOfCoveredBranches();
+			numberOfCoveredBranches +=
+				coverageData.getNumberOfCoveredBranches();
 		}
 
-		return number;
+		return numberOfCoveredBranches;
 	}
 
 	@Override
 	public int getNumberOfCoveredLines() {
-		int number = 0;
+		int numberOfCoveredLines = 0;
 
 		for (CoverageData coverageData : children.values()) {
-			number += coverageData.getNumberOfCoveredLines();
+			numberOfCoveredLines += coverageData.getNumberOfCoveredLines();
 		}
 
-		return number;
+		return numberOfCoveredLines;
 	}
 
 	@Override
 	public int getNumberOfValidBranches() {
-		int number = 0;
+		int numberOfValidBranches = 0;
 
 		for (CoverageData coverageData : children.values()) {
-			number += coverageData.getNumberOfValidBranches();
+			numberOfValidBranches += coverageData.getNumberOfValidBranches();
 		}
 
-		return number;
+		return numberOfValidBranches;
 	}
 
 	@Override
 	public int getNumberOfValidLines() {
-		int number = 0;
+		int numberOfValidLines = 0;
 
 		for (CoverageData coverageData : children.values()) {
-			number += coverageData.getNumberOfValidLines();
+			numberOfValidLines += coverageData.getNumberOfValidLines();
 		}
 
-		return number;
+		return numberOfValidLines;
 	}
 
 	@Override
@@ -113,10 +131,12 @@ public abstract class CoverageDataContainer
 	}
 
 	@Override
-	public void merge(CoverageData coverageData) {
-		CoverageDataContainer container = (CoverageDataContainer)coverageData;
+	public void merge(CoverageData otherCoverageData) {
+		CoverageDataContainer otherCoverageDataContainer =
+			(CoverageDataContainer)otherCoverageData;
 
-		Map<Object, CoverageData> otherChildren = container.children;
+		Map<Object, CoverageData> otherChildren =
+			otherCoverageDataContainer.children;
 
 		for (Entry<Object, CoverageData> entry : otherChildren.entrySet()) {
 			CoverageData otherChild = entry.getValue();
@@ -133,6 +153,6 @@ public abstract class CoverageDataContainer
 	protected final ConcurrentMap<Object, CoverageData> children =
 		new ConcurrentHashMap<>();
 
-	private static final long serialVersionUID = 2;
+	private static final long serialVersionUID = 1;
 
 }

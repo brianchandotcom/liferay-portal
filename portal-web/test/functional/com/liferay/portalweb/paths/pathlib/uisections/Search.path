@@ -8,6 +8,21 @@
 <tr><td rowspan="1" colspan="3">Search</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>APPLICATION_SEARCH_FIELD</td>
+	<td>//input[contains(@id,'searchApplication')]</td>
+	<td>Application Search Field</td>
+</tr>
+<tr>
+	<td>CONTENT_SEARCH_FIELD</td>
+	<td>//input[contains(@id,'searchContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--BASIC_SEARCH-->
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>

@@ -30,6 +30,6 @@
 		<dependency name="lucene-spellchecker" org="org.apache.lucene" rev="3.5.0" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
-		<dependency conf="internal->default" name="bobo-browse" org="com.browseengine.bobo" rev="3.2.0" transitive="false" />
+		<dependency conf="default->master;internal->default" name="bobo-browse" org="com.browseengine.bobo" rev="3.2.0" />
 	</dependencies>
 </ivy-module>

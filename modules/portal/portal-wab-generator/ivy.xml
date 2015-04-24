@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="org.apache.felix.fileinstall" org="org.apache.felix" rev="3.1.10" transitive="false" />
+		<dependency conf="default->master" name="org.apache.felix.fileinstall" org="org.apache.felix" rev="3.1.10" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

@@ -17,12 +17,12 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="javax.el" org="org.glassfish" rev="3.0.1-b05" transitive="false" />
-		<dependency name="javax.servlet" org="org.glassfish" rev="3.2-b06" transitive="false" />
-		<dependency name="javax.servlet.jsp" org="org.glassfish.web" rev="2.3.3-b02" transitive="false" />
-		<dependency name="javax.servlet.jsp-api" org="javax.servlet.jsp" rev="2.3.2-b01" transitive="false" />
-		<dependency name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3" transitive="false" />
-		<dependency name="javax.servlet.jsp.jstl-api" org="javax.servlet.jsp.jstl" rev="1.2.1" transitive="false" />
+		<dependency conf="default->master" name="javax.el" org="org.glassfish" rev="3.0.1-b05" />
+		<dependency conf="default->master" name="javax.servlet" org="org.glassfish" rev="3.2-b06" />
+		<dependency conf="default->master" name="javax.servlet.jsp" org="org.glassfish.web" rev="2.3.3-b02" />
+		<dependency conf="default->master" name="javax.servlet.jsp-api" org="javax.servlet.jsp" rev="2.3.2-b01" />
+		<dependency conf="default->master" name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3" />
+		<dependency conf="default->master" name="javax.servlet.jsp.jstl-api" org="javax.servlet.jsp.jstl" rev="1.2.1" />
 		<dependency name="org.apache.felix.utils" org="org.apache.felix" rev="1.6.0" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="phidias" org="com.github.rotty3000" rev="0.3.2" />

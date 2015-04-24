@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="ant" org="org.apache.ant" rev="1.9.3" transitive="false" />
+		<dependency conf="default->master" name="ant" org="org.apache.ant" rev="1.9.3" />
 		<dependency name="biz.aQute.bnd" org="biz.aQute.bnd" rev="2.4.1" />
 	</dependencies>
 </ivy-module>

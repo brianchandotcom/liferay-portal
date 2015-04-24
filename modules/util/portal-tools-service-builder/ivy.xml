@@ -18,12 +18,12 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="commons-io" org="commons-io" rev="2.1" />
-		<dependency name="dom4j" org="dom4j" rev="1.6.1" transitive="false" />
-		<dependency name="jalopy" org="jalopy" rev="1.5rc3" transitive="false" />
-		<dependency name="jaxen" org="jaxen" rev="1.1.1" transitive="false" />
+		<dependency conf="default->master" name="dom4j" org="dom4j" rev="1.6.1" />
+		<dependency conf="default->master" name="jalopy" org="jalopy" rev="1.5rc3" />
+		<dependency conf="default->master" name="jaxen" org="jaxen" rev="1.1.1" />
 		<dependency name="log4j" org="log4j" rev="1.2.17" />
-		<dependency name="org.freemarker" org="com.liferay" rev="2.3.17.LIFERAY-PATCHED-1" transitive="false" />
-		<dependency name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" transitive="false" />
-		<dependency conf="internal->default;provided" name="ant" org="org.apache.ant" rev="1.9.3" transitive="false" />
+		<dependency conf="default->master" name="org.freemarker" org="com.liferay" rev="2.3.17.LIFERAY-PATCHED-1" />
+		<dependency conf="default->master" name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" />
+		<dependency conf="default->master;internal->default;provided" name="ant" org="org.apache.ant" rev="1.9.3" />
 	</dependencies>
 </ivy-module>

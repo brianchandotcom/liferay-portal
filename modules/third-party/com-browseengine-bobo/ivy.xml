@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="internal->default" name="bobo-browse" org="com.browseengine.bobo" rev="3.2.0" transitive="false" />
+		<dependency conf="default->master;internal->default" name="bobo-browse" org="com.browseengine.bobo" rev="3.2.0" />
 		<dependency name="lucene-core" org="org.apache.lucene" rev="3.5.0" />
 	</dependencies>
 </ivy-module>

@@ -4,7 +4,6 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.service.access.control.profile.model.SACPEntry" />
 	<class name="com.liferay.service.access.control.profile.model.impl.SACPEntryImpl" table="SACPEntry">
-		<cache usage="read-write" />
 		<id name="sacpEntryId" type="long">
 			<generator class="assigned" />
 		</id>

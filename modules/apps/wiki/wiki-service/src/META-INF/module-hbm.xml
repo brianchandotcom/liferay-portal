@@ -6,7 +6,6 @@
 	<import class="com.liferay.wiki.model.WikiPage" />
 	<import class="com.liferay.wiki.model.WikiPageResource" />
 	<class name="com.liferay.wiki.model.impl.WikiNodeImpl" table="WikiNode">
-		<cache usage="read-write" />
 		<id name="nodeId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -26,7 +25,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.wiki.model.impl.WikiPageImpl" table="WikiPage">
-		<cache usage="read-write" />
 		<id name="pageId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -54,7 +52,6 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.wiki.model.impl.WikiPageResourceImpl" table="WikiPageResource">
-		<cache usage="read-write" />
 		<id name="resourcePrimKey" type="long">
 			<generator class="assigned" />
 		</id>

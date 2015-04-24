@@ -134,26 +134,6 @@ public abstract class CoverageDataContainer
 	}
 
 	/**
-	 * Get a child from this container with the specified
-	 * key.
-	 * @param name The key used to lookup the child in the
-	 *        map.
-	 * @return The child object, if found, or null if not found.
-	 */
-	public CoverageData getChild(String name)
-	{
-		lock.lock();
-		try
-		{
-			return (CoverageData)this.children.get(name);
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
-	/**
 	 * @return The average line coverage rate for all children
 	 *         in this container.  This number will be a decimal
 	 *         between 0 and 1, inclusive.
@@ -184,22 +164,6 @@ public abstract class CoverageDataContainer
 			return 1d;
 		}
 		return (double)numberCovered / number;
-	}
-
-	/**
-	 * @return The number of children in this container.
-	 */
-	public int getNumberOfChildren()
-	{
-		lock.lock();
-		try
-		{
-			return this.children.size();
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	@Override

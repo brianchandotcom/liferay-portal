@@ -1,0 +1,9 @@
+Bundle-Name: Liferay CSS Builder
+Bundle-SymbolicName: com.liferay.css.builder
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.css.builder
+Include-Resource:\
+	classes,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/FileImpl.class
+
+Main-Class: com.liferay.portal.tools.css.builder.CSSBuilder

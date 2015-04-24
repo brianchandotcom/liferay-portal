@@ -28,6 +28,7 @@ Object defaultValue = request.getAttribute("liferay-ui:input-field:defaultValue"
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:disabled"));
 String field = (String)request.getAttribute("liferay-ui:input-field:field");
 String fieldParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:fieldParam"));
+int firstDayOfWeek = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-field:firstDayOfWeek"));
 Format format = (Format)request.getAttribute("liferay-ui:input-field:format");
 String formName = (String)request.getAttribute("liferay-ui:input-field:formName");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:id"));
@@ -154,12 +155,6 @@ if (hints != null) {
 				month = cal.get(Calendar.MONTH);
 				day = cal.get(Calendar.DATE);
 				year = cal.get(Calendar.YEAR);
-			}
-
-			int firstDayOfWeek = Calendar.SUNDAY - 1;
-
-			if (cal != null) {
-				firstDayOfWeek = cal.getFirstDayOfWeek() - 1;
 			}
 
 			int hour = -1;

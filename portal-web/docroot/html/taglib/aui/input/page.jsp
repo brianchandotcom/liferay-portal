@@ -172,6 +172,7 @@ boolean choiceField = checkboxField || radioField;
 			disabled="<%= disabled %>"
 			field="<%= field %>"
 			fieldParam="<%= fieldParam %>"
+			firstDayOfWeek="<%= firstDayOfWeek %>"
 			formName="<%= formName %>"
 			format='<%= (Format)dynamicAttributes.get("format") %>'
 			id="<%= id %>"

@@ -1,0 +1,274 @@
+<html>
+<head>
+<title>DockbarEditPanel</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DockbarEditPanel</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>Dockbar</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_PANEL_TOGGLE</td>
+	<td>//div[@id='_145_details']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_LOCALIZED_FLAG_ICON</td>
+	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL</td>
+	<td>//label[contains(@for,'layoutPrototypeLinkEnabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX</td>
+	<td>//label[contains(@for,'layoutPrototypeLinkEnabled')]/input[contains(@id,'layoutPrototypeLinkEnabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_LAYOUT_RADIO</td>
+	<td>//input[@value='${columnName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLY_URL_TITLE</td>
+	<td>//label[@for='_145_friendlyURL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLY_URL_ENGLISH_UNITED_STATES</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='en_US']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLY_URL_LOCALIZED</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='${key_friendlyUrlLocalized}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLY_URL_SPANISH_SPAIN</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='es_ES']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLY_URL_PORTUGUESE_BRAZIL</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='pt_BR']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_TYPE_PAGE_OPTIONS</td>
+	<td>//div[contains(@id,'typeOptions')]//select[@id='_145_type']/option[@value='embedded']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_TYPE_PAGE_URL</td>
+	<td>//input[@id='_145_urlEmbedded']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLYURL</td>
+	<td>//input[@id='_145_friendlyURL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FRIENDLYURL_LOCALIZED</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='${key_localizationName}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEO-->
+<tr>
+	<td>SEO_PANEL_TOGGLE</td>
+	<td>//div[@id='_145_seo']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEO_HTML_TITLE</td>
+	<td>//div[@id='_145_titleContentBox']//li[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEO_META_TAGS_DESCRIPTION</td>
+	<td>//div[@id='_145_descriptionSEOContentBox']//li[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LOOK_AND_FEEL-->
+<tr>
+	<td>LOOK_AND_FEEL_PANEL_TOGGLE</td>
+	<td>//div[@id='_145_lookAndFeel']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--JAVASCRIPT-->
+<tr>
+	<td>JAVASCRIPT_PANEL_TOGGLE</td>
+	<td>//div[@id='_145_javascript']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CUSTOM_FIELDS-->
+<tr>
+	<td>CUSTOM_FIELDS_PANEL_TOGGLE</td>
+	<td>//div[@id='_145_customFields']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADVANCED_PANEL-->
+<tr>
+	<td>ADVANCED_PANEL_TOGGLE</td>
+	<td>//div[@id='_145_advanced']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MOBILE_DEVICE_RULES-->
+<tr>
+	<td>MOBILE_DEVICE_RULES_PANEL_TOGGLE</td>
+	<td>//div[@id='_145_mobileDeviceRules']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EMBEDDED_PORTLETS-->
+<tr>
+	<td>EMBEDDED_PORTLETS_PANEL_TOGGLE</td>
+	<td>//div[@id='_145_embeddedPortlets']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_CHECKBOX_1</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_CHECKBOX_2</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_PORTLET_ID_1</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_PORTLET_ID_2</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_TITLE_1</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_TITLE_2</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_STATUS_1</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_STATUS_2</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CUSTOMIZATION_SETTINGS-->
+<tr>
+	<td>CUSTOMIZATION_SETTINGS_PANEL_TOGGLE</td>
+	<td>//div[@id='_145_customizationSettings']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS</td>
+	<td>//div[@class='customization-settings']/button[contains(@id,'_145_manageCustomization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX</td>
+	<td>//input[contains(@id,'TypeSettingsProperties--column-${key_columnId}-customizable--')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COPY_APPLICATIONS-->
+<tr>
+	<td>COPY_APPLICATIONS_MESSAGE_INFO</td>
+	<td>//div[@id='_145_copyPortletsFromPage']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL</td>
+	<td>//div[@id='_145_copyPortletsFromPage']//label[@for='_145_copyLayoutId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT</td>
+	<td>//div[@id='_145_copyPortletsFromPage']//select[@id='_145_copyLayoutId']/option[@value='1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY_APPLICATIONS_COPY_BUTTON</td>
+	<td>//div[@id='_145_copyPortletsFromPage']//button[@id='_145_copySubmitButton']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

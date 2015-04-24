@@ -1,0 +1,97 @@
+<html>
+<head>
+<title>DockbarAddPanelContent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DockbarAddPanelContent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>Dockbar</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TITLE</td>
+	<td>//div[contains(@class,'add-content-details')]/div[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_TAB</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATIONS_TAB</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Applications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TAB</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_CONTENT</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_APPLICATIONS</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Applications')]</td>
+	<td>Applications Link</td>
+</tr>
+<tr>
+	<td>NAVIGATION_PAGE</td>
+	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Page')]</td>
+	<td>Add Page Link</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--POPOVER-->
+<tr>
+	<td>POPOVER_ADD_BUTTON</td>
+	<td>//button[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POPOVER_CONTENT_TITLE</td>
+	<td>//div[contains(@class,'popover-content')]/div/div/div[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_NEW_MENULIST-->
+<tr>
+	<td>ADD_NEW_MENULIST</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'${key_assetType}')]/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

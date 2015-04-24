@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>DockbarAddPanelPage</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DockbarAddPanelPage</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>DockbarAddpanelcontent</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_PAGE_TYPE-->
+<tr>
+	<td>TYPE_RADIO</td>
+	<td>//div[contains(@class,'radio')]/label[contains(.,'${key_pageType}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_PAGE_TYPE_PANEL-->
+<tr>
+	<td>TYPE_PANEL_COMPONENT_TREE_ARROW</td>
+	<td>//div[contains(.,'${key_componentName}')]/span[contains(@class,'tree-hitarea')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_PANEL_CHECKBOX</td>
+	<td>//div[contains(.,'${key_componentOrPortletName}')]/span[contains(@class,'tree-node-checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_PANEL_CHECKBOX_INPUT</td>
+	<td>//div[contains(.,'${key_componentOrPortletName}')]/span[contains(@class,'tree-node-checkbox')]/input</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

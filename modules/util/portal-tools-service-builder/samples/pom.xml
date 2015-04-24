@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sample.service.builder</groupId>
+	<artifactId>sample.service.builder</artifactId>
+	<name>Sample Service Builder Project</name>
+	<version>1.0.0</version>
+	<description>Sample Service Builder Project</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.portal.tools.service.builder</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<apiDir>../tmp/api</apiDir>
+					<hbmFileName>../tmp/src/META-INF/portal-hbm.xml</hbmFileName>
+					<implDir>../tmp/src</implDir>
+					<inputFileName>service.xml</inputFileName>
+					<modelHintsFileName>../tmp/src/META-INF/portal-model-hints.xml</modelHintsFileName>
+					<resourcesDir>../tmp/src</resourcesDir>
+					<springFileName>../tmp/src/META-INF/portal-spring.xml</springFileName>
+					<sqlDir>../tmp/sql</sqlDir>
+					<testDir>../tmp/test/integration</testDir>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

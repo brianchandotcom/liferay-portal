@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactory;
@@ -93,13 +94,16 @@ public class ItemSelectorImplTest extends PowerMockito {
 			_flickrItemSelectorCriterion.getUser(),
 			parameters.get("1_user")[0]);
 		Assert.assertEquals(
+			StringUtil.merge(_flickrItemSelectorCriterion.getTags()),
+			parameters.get("1_tags")[0]);
+		Assert.assertEquals(
 			_mediaItemSelectorCriterion.getFileExtension(),
 			parameters.get("0_fileExtension")[0]);
 		Assert.assertEquals(
 			String.valueOf(_mediaItemSelectorCriterion.getMaxSize()),
 			parameters.get("0_maxSize")[0]);
 
-		Assert.assertEquals(6, parameters.size());
+		Assert.assertEquals(7, parameters.size());
 	}
 
 	@Test

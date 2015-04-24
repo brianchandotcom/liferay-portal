@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.util;
+package com.liferay.mentions.util.impl;
 
 import com.liferay.mentions.constants.MentionsConstants;
 import com.liferay.mentions.util.MentionsNotifier;

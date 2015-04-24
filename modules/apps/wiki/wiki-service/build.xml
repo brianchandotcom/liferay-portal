@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="wiki-api" />
+	<property name="import.shared" value="wiki-api,../../core/osgi-service-tracker-map" />
 	<property name="osgi.ide.dependencies" value="antlr3.jar,commons-lang.jar,jamwiki-core.jar,jericho-html.jar,jspwiki.jar,rome.jar,spring-context.jar" />
 	<property name="service.input.file" value="service.xml" />
 

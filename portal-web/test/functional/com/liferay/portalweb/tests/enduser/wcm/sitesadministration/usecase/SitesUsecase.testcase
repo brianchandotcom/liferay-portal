@@ -169,6 +169,10 @@
 			<var name="siteScopeName" value="${globalSiteName}" />
 		</execute>
 
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
 		<execute macro="WebContent#editCP">
 			<var name="webContentContentEdit" value="${webContentContentEdit}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
@@ -297,6 +301,10 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="${globalSiteName}" />
+		</execute>
+
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="WebContent#editCP">

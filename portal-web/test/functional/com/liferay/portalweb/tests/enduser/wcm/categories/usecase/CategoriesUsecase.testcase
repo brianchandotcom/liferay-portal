@@ -597,6 +597,10 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
 		<execute macro="WebContent#viewCategorizationCategoryCP">
 			<var name="categoryName" value="Category Name 2" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -604,6 +608,10 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewCategorizationCategoryNotVisibleCP">
@@ -636,15 +644,8 @@
 				<var name="portletName" value="Web Content" />
 			</execute>
 
-			<execute macro="WebContent#viewCategorizationCategoryCP">
-				<var name="categoryName" value="${categoryName}" />
+			<execute macro="WebContent#gotoEditCP">
 				<var name="webContentTitle" value="Web Content Title Multiple Categories" />
-			</execute>
-		</for>
-
-		<for list="Category Name 1,Category Name 2" param="categoryName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Web Content" />
 			</execute>
 
 			<execute macro="WebContent#viewCategorizationCategoryCP">
@@ -828,6 +829,10 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteName" value="Import Site Name" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="WebContent#viewCategorizationCategoryCP">

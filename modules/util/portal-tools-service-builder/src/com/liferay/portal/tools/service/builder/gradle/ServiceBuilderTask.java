@@ -34,26 +34,26 @@ public class ServiceBuilderTask extends DefaultTask {
 
 	@TaskAction
 	public void buildService() {
-		Project project = getProject();
-
-		ExtensionContainer extensionContainer = project.getExtensions();
-
-		ServiceBuilderArgs serviceBuilderArgs = extensionContainer.findByType(
-			ServiceBuilderArgs.class);
-
-		if (serviceBuilderArgs == null) {
-			serviceBuilderArgs = new ServiceBuilderArgs();
-		}
-
 		try {
+			Project project = getProject();
+
+			ExtensionContainer extensionContainer = project.getExtensions();
+
+			ExtraPropertiesExtension extraProperties =
+				extensionContainer.getExtraProperties();
+
+			ServiceBuilderArgs serviceBuilderArgs =
+				extensionContainer.findByType(ServiceBuilderArgs.class);
+
+			if (serviceBuilderArgs == null) {
+				serviceBuilderArgs = new ServiceBuilderArgs();
+			}
+
 			ServiceBuilder serviceBuilder = ServiceBuilderInvoker.invoke(
 				project.getProjectDir(), serviceBuilderArgs);
 
 			Set<String> modifiedFileNames =
 				serviceBuilder.getModifiedFileNames();
-
-			ExtraPropertiesExtension extraProperties =
-				extensionContainer.getExtraProperties();
 
 			extraProperties.set(
 				ServiceBuilder.OUTPUT_KEY_MODIFIED_FILES, modifiedFileNames);

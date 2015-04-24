@@ -40,13 +40,13 @@ public class ServicebuilderMojo extends AbstractMojo {
 	@SuppressWarnings("rawtypes")
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
+			Map pluginContext = getPluginContext();
+
 			ServiceBuilder serviceBuilder = ServiceBuilderInvoker.invoke(
 				baseDir, _serviceBuilderArgs);
 
 			Set<String> modifiedFileNames =
 				serviceBuilder.getModifiedFileNames();
-
-			Map pluginContext = getPluginContext();
 
 			pluginContext.put(
 				ServiceBuilder.OUTPUT_KEY_MODIFIED_FILES, modifiedFileNames);

@@ -1,0 +1,169 @@
+<html>
+<head>
+<title>AlloyEditor</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AlloyEditor</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//div[contains(@id,'titleEditor') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBTITLE_FIELD</td>
+	<td>//div[contains(@id,'subtitleEditor') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD</td>
+	<td>//div[contains(@id,'contentEditor') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_ADD_BUTTON</td>
+	<td>//button[contains(@class,'alloy-editor') and contains(@class,'add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_ADD_MENUBAR-->
+<tr>
+	<td>CONTENT_ADD_MENUBAR_IMAGE</td>
+	<td>//button[contains(@data-type,'image')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_ADD_MENUBAR_IMAGE_FROM_CAMERA</td>
+	<td>//button[contains(@data-type,'image-camera')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_ADD_MENUBAR_HORIZONTAL_LINE</td>
+	<td>//button[contains(@data-type,'hline')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_ADD_MENUBAR_TABLE</td>
+	<td>//button[contains(@data-type,'table')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TABLE-->
+<tr>
+	<td>TABLE_ROWS</td>
+	<td>//input[contains(@placeholder,'Rows')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_COLS</td>
+	<td>//input[contains(@placeholder,'Colums')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TEXT_FORMATTING-->
+<tr>
+	<td>TEXT_FORMATTING_STYLE</td>
+	<td>//button[contains(@class,'alloy-editor-toolbar-element')]//span[contains(@class,'icon-arrow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FORMATTING_STYLE_DROPDOWN</td>
+	<td>//button[contains(@class,'alloy-editor-toolbar-element') and contains(.,'${key_styleFormat}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FORMATTING_BOLD</td>
+	<td>//button[contains(@data-type,'button-bold')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FORMATTING_ITALIC</td>
+	<td>//button[contains(@data-type,'button-italic')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FORMATTING_UNDERLINE</td>
+	<td>//button[contains(@data-type,'button-underline')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FORMATTING_LINK</td>
+	<td>//button[contains(@data-type,'button-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FORMATTING_TWITTER</td>
+	<td>//button[contains(@data-type,'button-twitter')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_EDITOR-->
+<tr>
+	<td>CONTENT_EDITOR_SWITCH_ACE_EDITOR</td>
+	<td>//button[contains(@id,'contentEditorSwitch') and contains(.,'&lt;/&gt;')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_EDITOR_SWITCH_ABC</td>
+	<td>//button[contains(@id,'contentEditorSwitch') and contains(.,'abc')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_EDITOR_FULL_SCREEN</td>
+	<td>//button[contains(@id,'contentEditorFullscreen')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_EDITOR_LIGHT_BACKGROUND</td>
+	<td>//button/i[contains(@class,'icon-sun')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_EDITOR_DARK_BACKGROUND</td>
+	<td>//button/i[contains(@class,'icon-moon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_EDITOR_FULL_SCREEN-->
+<tr>
+	<td>CONTENT_EDITOR_FULL_SCREEN_VERTICAL_LAYOUT</td>
+	<td>//span[contains(@data-layout,'vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_EDITOR_FULL_SCREEN_HORIZONTAL_LAYOUT</td>
+	<td>//span[contains(@data-layout,'horizontal')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_EDITOR_FULL_SCREEN_SIMPLE_LAYOUT</td>
+	<td>//span[contains(@data-layout,'simple')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

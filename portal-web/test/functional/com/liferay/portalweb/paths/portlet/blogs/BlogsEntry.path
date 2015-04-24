@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>BlogsEntry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">BlogsEntry</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ENTRY_COVER_IMAGE</td>
+	<td>//div[contains(@class,'cover-image-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//div[contains(@class,'entry-title')]//h2[contains(.,'key_entryTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBTITLE</td>
+	<td>//div[contains(@class,'entry-subtitle')]/p[contains(.,'key_entrySubtitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISHED_TIME</td>
+	<td>//div[contains(@class,'entry-date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_LINK</td>
+	<td>//li[contains(@class,'edit-entry')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_LINK</td>
+	<td>//li[contains(@class,'edit-entry-permissions')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_TO_THE_RECYCLING_BIN</td>
+	<td>//li[contains(@class,'delete-entry')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT</td>
+	<td>//div[contains(@class,'entry-body')]/p[contains(.,'key_entryContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_MORE</td>
+	<td>//div[contains(@class,'read-more')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_AUTHOR</td>
+	<td>//div[contains(@class,'entry-author')]//span[contains(@class,'user-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIOUS_ENTRY_TITLE</td>
+	<td>//div[contains(@class,'previous-entry-content')]//span[contains(@class,'entry-content')]/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIOUS_ENTRY_SUBTITLE</td>
+	<td>//div[contains(@class,'previous-entry-content')]//span[contains(@class,'entry-content-body')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIOUS_ENTRY_AUTHOR</td>
+	<td>//div[contains(@class,'previous-entry-content')]//span[contains(@class,'user-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIOUS_ENTRY_IMAGE</td>
+	<td>//div[contains(@class,'previous-entry-content')]//span[contains(@class,'small-image')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_ENTRY_TITLE</td>
+	<td>//div[contains(@class,'next-entry-content')]//span[contains(@class,'entry-content')]/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_ENTRY_SUBTITLE</td>
+	<td>//div[contains(@class,'next-entry-content')]//span[contains(@class,'entry-content-body')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_ENTRY_AUTHOR</td>
+	<td>//div[contains(@class,'next-entry-content')]//span[contains(@class,'user-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_ENTRY_IMAGE</td>
+	<td>//div[contains(@class,'next-entry-content')]//span[contains(@class,'small-image')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -8,6 +8,52 @@
 <tr><td rowspan="1" colspan="3">Blogs</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>ADD_BLOGS_ENTRY</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Add Blog Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_TABLE-->
+<tr>
+	<td>ENTRY_TABLE_ALL_CHECKBOX</td>
+	<td>//th/input[@name='_161_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td/input[@name='_161_rowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_AUTHOR</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_CREATE_DATE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[5]/span/span/span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td/div/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

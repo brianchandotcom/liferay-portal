@@ -47,17 +47,13 @@ public class SwitchData implements BranchCoverageData, Serializable
 
 	private long[] hits;
 
-	private int[] keys;
-
-	public SwitchData(int switchNumber, int[] keys)
+	public SwitchData(int switchNumber, int caseNumber)
 	{
 		super();
 		this.switchNumber = switchNumber;
 		defaultHits = 0;
-		hits = new long[keys.length];
+		hits = new long[caseNumber];
 		Arrays.fill(hits, 0);
-		this.keys = new int[keys.length];
-		System.arraycopy(keys, 0, this.keys, 0, keys.length);
 		initLock();
 	}
 
@@ -68,14 +64,12 @@ public class SwitchData implements BranchCoverageData, Serializable
 		defaultHits = 0;
 		hits = new long[max - min + 1];
 		Arrays.fill(hits, 0);
-		this.keys = new int[max - min + 1];
-		for (int i = 0; min <= max; keys[i++] = min++);
 		initLock();
 	}
 
 	public SwitchData(int switchNumber)
 	{
-		this(switchNumber, new int[0]);
+		this(switchNumber, 0);
 	}
 
 	private void initLock()
@@ -198,8 +192,6 @@ public class SwitchData implements BranchCoverageData, Serializable
 				System.arraycopy(old, 0, hits, 0, old.length);
 				System.arraycopy(switchData.hits, old.length, hits, old.length, hits.length - old.length);
 			}
-			if ((this.keys.length == 0) && (switchData.keys.length > 0))
-				this.keys = switchData.keys;
 		}
 		finally
 		{

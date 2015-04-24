@@ -240,7 +240,7 @@ public class LineData
 
 	void addSwitch(int switchNumber, int[] keys)
 	{
-		getSwitchData(switchNumber, new SwitchData(switchNumber, keys));
+		getSwitchData(switchNumber, new SwitchData(switchNumber, keys.length));
 	}
 
 	void addSwitch(int switchNumber, int min, int max)

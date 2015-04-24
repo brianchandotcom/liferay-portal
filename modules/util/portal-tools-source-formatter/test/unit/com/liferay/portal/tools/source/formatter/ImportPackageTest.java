@@ -14,9 +14,6 @@
 
 package com.liferay.portal.tools.source.formatter;
 
-import com.liferay.portal.tools.source.formatter.ImportPackage;
-import com.liferay.portal.tools.source.formatter.JavaImportsFormatter;
-
 import java.util.ArrayList;
 import java.util.List;
 

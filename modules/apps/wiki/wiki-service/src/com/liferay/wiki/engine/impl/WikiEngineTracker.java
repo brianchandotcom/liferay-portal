@@ -14,21 +14,22 @@
 
 package com.liferay.wiki.engine.impl;
 
+import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.wiki.engine.WikiEngine;
 
 import java.util.Collection;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Iván Zaera
@@ -39,58 +40,64 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class WikiEngineTracker {
 
 	public Collection<String> getFormats() {
-		return _serviceReferences.keySet();
-	}
-
-	public String getProperty(String format, String key) {
-		ServiceReference<WikiEngine> serviceReference = _serviceReferences.get(
-			format);
-
-		return (String)serviceReference.getProperty(key);
+		return _serviceTrackerMap.keySet();
 	}
 
 	public WikiEngine getWikiEngine(String format) {
-		return _bundleContext.getService(_serviceReferences.get(format));
+		List<WikiEngine> wikiEngines = _serviceTrackerMap.getService(format);
+
+		if (wikiEngines == null) {
+			return null;
+		}
+
+		return wikiEngines.get(0);
 	}
 
 	@Activate
-	protected void activate(ComponentContext componentContext) {
-		_bundleContext = componentContext.getBundleContext();
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		_bundleContext = bundleContext;
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+			bundleContext, WikiEngine.class, null,
+			new ServiceReferenceMapper<String, WikiEngine>() {
+				@Override
+				public void map(
+					ServiceReference<WikiEngine> serviceReference,
+					Emitter<String> emitter) {
+
+					String enabled = (String)serviceReference.getProperty(
+						"enabled");
+
+					if (!Boolean.valueOf(enabled)) {
+						return;
+					}
+
+					WikiEngine wikiEngine = _bundleContext.getService(
+						serviceReference);
+
+					try {
+						emitter.emit(wikiEngine.getFormat());
+					}
+					finally {
+						_bundleContext.ungetService(serviceReference);
+					}
+				}
+			});
+
+		_serviceTrackerMap.open();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, service = WikiEngine.class,
-		target = "(enabled=true)", unbind = "removedService",
-		updated = "modifiedService"
-	)
-	protected void addingService(
-		ServiceReference<WikiEngine> serviceReference) {
-
-		String format = (String)serviceReference.getProperty("format");
-
-		_serviceReferences.put(format, serviceReference);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	protected void modifiedService(
-		ServiceReference<WikiEngine> serviceReference) {
-
-		removedService(serviceReference);
-
-		addingService(serviceReference);
-	}
-
-	protected void removedService(
-		ServiceReference<WikiEngine> serviceReference) {
-
-		String format = (String)serviceReference.getProperty("format");
-
-		_serviceReferences.remove(format);
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		WikiEngineTracker.class);
 
 	private BundleContext _bundleContext;
-	private final ConcurrentMap<String, ServiceReference<WikiEngine>>
-		_serviceReferences = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, List<WikiEngine>> _serviceTrackerMap;
 
 }

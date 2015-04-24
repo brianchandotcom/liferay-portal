@@ -17,9 +17,16 @@ package com.liferay.wiki.engine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 
+import java.io.IOException;
+
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * @author Jorge Ferrer
@@ -42,6 +49,10 @@ public interface WikiEngine {
 			String attachmentURLPrefix)
 		throws PageContentException;
 
+	public String getFormat();
+
+	public String getFormatLabel(Locale locale);
+
 	/**
 	 * Returns a map of the links included in the given page. The key of each
 	 * map entry is the title of the linked page. The value is a Boolean object
@@ -52,6 +63,11 @@ public interface WikiEngine {
 	 */
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException;
+
+	public void renderEditPage(
+			ServletRequest servletRequest, ServletResponse servletResponse,
+			WikiPage page)
+		throws IOException, ServletException;
 
 	/**
 	 * Returns <code>true</code> if the content of a wiki page for this engine

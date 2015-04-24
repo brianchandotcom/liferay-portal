@@ -31,15 +31,15 @@ public class RatingsTestUtil {
 	public static RatingsEntry addEntry(String className, long classPK)
 		throws Exception {
 
-		return addEntry(className, classPK, 1.0d);
+		return addEntry(className, classPK, 1.0d, TestPropsValues.getUserId());
 	}
 
 	public static RatingsEntry addEntry(
-			String className, long classPK, double score)
+			String className, long classPK, double score, long userId)
 		throws Exception {
 
 		return RatingsEntryLocalServiceUtil.updateEntry(
-			TestPropsValues.getUserId(), className, classPK, score,
+			userId, className, classPK, score,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

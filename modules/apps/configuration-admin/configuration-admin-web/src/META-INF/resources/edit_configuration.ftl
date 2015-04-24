@@ -16,8 +16,8 @@
 
 <#include "init.ftl">
 
-<#assign configurationHelper = Request["configurationHelper"] />
 <#assign configurationModel = Request["configurationModel"] />
+<#assign ddmFormHTML = Request["DYNAMIC_DATA_MAPPING_FORM_HTML"] />
 
 <#assign redirectURL = renderResponse.createRenderURL() />
 
@@ -36,29 +36,7 @@
 	<@aui["input"] name="factoryPid" type="hidden" value="${configurationModel.getFactoryPid()}" />
 
 	<div class="lfr-ddm-container" id="lfr-ddm-container">
-		${configurationHelper.render(renderRequest, renderResponse, configurationModel)}
-
-		<#assign definition = Request["definition"] />
-		<#assign plId = Request["plId"] />
-		<#assign scopeGroupId = Request["scopeGroupId"] />
-
-		<@aui["input"] name="serializedDDMFormValues" type="hidden" />
-
-		<@aui["script"] use="liferay-ddm-form">
-			new Liferay.DDM.Form(
-				{
-					container: '#lfr-ddm-container',
-					ddmFormValuesInput: '#<@portlet["namespace"]/>serializedDDMFormValues',
-					definition: ${definition},
-					doAsGroupId: ${scopeGroupId},
-					fieldsNamespace: "",
-					mode: "edit",
-					p_l_id: ${plId},
-					portletNamespace: "<@portlet["namespace"]/>",
-					repeatable: true
-				}
-			);
-		</@>
+		${ddmFormHTML}
 	</div>
 
 	<@aui["button-row"]>

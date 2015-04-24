@@ -16,7 +16,6 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,18 +37,16 @@ public class VerifyRatings extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(6);
 
-			sb.append("update RatingsStats set totalEntries = ");
-			sb.append("coalesce((select count(1) ?), 0), totalScore = ");
-			sb.append("coalesce((select sum(RatingsEntry.score) ?), 0), ");
-			sb.append("averageScore = coalesce((select ");
-			sb.append("sum(RatingsEntry.score) / count(1) ?), 0)");
+			sb.append("update RatingsStats set ");
+			sb.append(_UPDATE_TOTAL_ENTRIES);
+			sb.append(", ");
+			sb.append(_UPDATE_TOTAL_SCORE);
+			sb.append(", ");
+			sb.append(_UPDATE_AVERAGE_SCORE);
 
-			String update = StringUtil.replace(
-				sb.toString(), "?", _FROM_WHERE_CLAUSE);
-
-			ps = con.prepareStatement(update);
+			ps = con.prepareStatement(sb.toString());
 
 			ps.executeUpdate();
 		}
@@ -62,5 +59,17 @@ public class VerifyRatings extends VerifyProcess {
 		"from RatingsEntry where RatingsStats.classPK = RatingsEntry.classPK " +
 		"and RatingsStats.classNameId = RatingsEntry.classNameId group by " +
 		"classNameId, classPK";
+
+	private static final String _UPDATE_AVERAGE_SCORE =
+		"totalScore = coalesce((select sum(RatingsEntry.score) " +
+			_FROM_WHERE_CLAUSE + "), 0)";
+
+	private static final String _UPDATE_TOTAL_ENTRIES =
+		"totalEntries = coalesce((select count(1) " +
+			_FROM_WHERE_CLAUSE + "), 0)";
+
+	private static final String _UPDATE_TOTAL_SCORE =
+		"averageScore = coalesce((select sum(RatingsEntry.score) / count(1) " +
+			_FROM_WHERE_CLAUSE + "), 0)";
 
 }

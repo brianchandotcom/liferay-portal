@@ -63,9 +63,6 @@ public class ClassData extends CoverageDataContainer
 	 */
 	public ClassData(String name)
 	{
-		if (name == null)
-			throw new IllegalArgumentException(
-				"Class name must be specified.");
 		this.name = name;
 	}
 

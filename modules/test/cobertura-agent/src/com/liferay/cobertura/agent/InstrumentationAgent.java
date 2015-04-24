@@ -14,6 +14,7 @@
 
 package com.liferay.cobertura.agent;
 
+import com.liferay.cobertura.coveragedata.ProjectData;
 import com.liferay.cobertura.instrument.CoberturaClassFileTransformer;
 import com.liferay.cobertura.instrument.ProjectDataUtil;
 
@@ -30,9 +31,7 @@ import java.util.Set;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 import net.sourceforge.cobertura.coveragedata.CoverageData;
-import net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler;
 import net.sourceforge.cobertura.coveragedata.LineData;
-import net.sourceforge.cobertura.coveragedata.ProjectData;
 
 /**
  * @author Shuyang Zhou
@@ -178,10 +177,6 @@ public class InstrumentationAgent {
 		return _lockFile;
 	}
 
-	public static void initialize() {
-		ProjectDataUtil.addMergeHook();
-	}
-
 	public static synchronized void premain(
 		String agentArguments, Instrumentation instrumentation) {
 
@@ -218,7 +213,8 @@ public class InstrumentationAgent {
 			// Forcibly clear the data file to make sure that the coverage
 			// assert is based on the current test
 
-			File dataFile = CoverageDataFileHandler.getDefaultDataFile();
+			File dataFile = new File(
+				System.getProperty("net.sourceforge.cobertura.datafile"));
 
 			dataFile.delete();
 		}
@@ -333,7 +329,8 @@ public class InstrumentationAgent {
 	private static List<OriginalClassDefinition> _originalClassDefinitions;
 
 	static {
-		File dataFile = CoverageDataFileHandler.getDefaultDataFile();
+		File dataFile = new File(
+			System.getProperty("net.sourceforge.cobertura.datafile"));
 
 		File parentFolder = dataFile.getParentFile();
 

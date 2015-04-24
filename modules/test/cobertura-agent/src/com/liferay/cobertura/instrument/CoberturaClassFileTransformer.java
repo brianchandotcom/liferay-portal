@@ -15,6 +15,7 @@
 package com.liferay.cobertura.instrument;
 
 import com.liferay.cobertura.agent.InstrumentationAgent;
+import com.liferay.cobertura.coveragedata.ProjectData;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,8 +31,6 @@ import java.security.ProtectionDomain;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import net.sourceforge.cobertura.coveragedata.ProjectData;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;

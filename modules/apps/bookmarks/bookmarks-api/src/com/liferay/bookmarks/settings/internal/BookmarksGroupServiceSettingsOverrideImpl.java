@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.settings.definition;
+package com.liferay.bookmarks.settings.internal;
 
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.settings.BookmarksGroupServiceSettingsOverride;

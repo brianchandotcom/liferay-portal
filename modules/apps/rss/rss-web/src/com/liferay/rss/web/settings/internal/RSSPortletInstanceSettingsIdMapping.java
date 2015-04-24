@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.bookmarks.settings.definition;
+package com.liferay.rss.web.settings.internal;
 
-import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
-import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
+import com.liferay.rss.web.constants.RSSPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,16 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component
-public class BookmarksGroupServiceSettingsIdMapping
-	implements SettingsIdMapping {
+public class RSSPortletInstanceSettingsIdMapping implements SettingsIdMapping {
 
 	@Override
-	public Class getConfigurationBeanClass() {
-		return BookmarksGroupServiceConfiguration.class;
+	public Class<?> getConfigurationBeanClass() {
+		return RSSPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getSettingsId() {
-		return BookmarksConstants.SERVICE_NAME;
+		return RSSPortletKeys.RSS;
 	}
 
 }

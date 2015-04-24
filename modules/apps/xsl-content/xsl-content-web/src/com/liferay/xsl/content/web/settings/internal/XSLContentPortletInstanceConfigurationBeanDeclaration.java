@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.xsl.content.web.configuration.internal;
+package com.liferay.xsl.content.web.settings.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;

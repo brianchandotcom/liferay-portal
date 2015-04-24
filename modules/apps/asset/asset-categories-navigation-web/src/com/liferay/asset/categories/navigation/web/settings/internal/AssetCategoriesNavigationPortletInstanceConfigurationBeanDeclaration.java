@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.bookmarks.settings.definition;
+package com.liferay.asset.categories.navigation.web.settings.internal;
 
-import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
+import com.liferay.asset.categories.navigation.web.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Juergen Kappler
  */
 @Component
-public class BookmarksGroupServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class
+	AssetCategoriesNavigationPortletInstanceConfigurationBeanDeclaration
+		implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class getConfigurationBeanClass() {
-		return BookmarksGroupServiceConfiguration.class;
+		return AssetCategoriesNavigationPortletInstanceConfiguration.class;
 	}
 
 }

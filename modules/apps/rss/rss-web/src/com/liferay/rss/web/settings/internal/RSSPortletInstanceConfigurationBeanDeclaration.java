@@ -12,17 +12,23 @@
  * details.
  */
 
-package com.liferay.bookmarks.settings;
+package com.liferay.rss.web.settings.internal;
 
-import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
-import com.liferay.bookmarks.settings.internal.BookmarksGroupServiceSettingsOverrideImpl;
-import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Iván Zaera
  */
-@Settings.OverrideClass(BookmarksGroupServiceSettingsOverrideImpl.class)
-public interface BookmarksGroupServiceSettings
-	extends BookmarksGroupServiceConfiguration,
-			BookmarksGroupServiceSettingsOverride {
+@Component
+public class RSSPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
+
+	@Override
+	public Class getConfigurationBeanClass() {
+		return RSSPortletInstanceConfiguration.class;
+	}
+
 }

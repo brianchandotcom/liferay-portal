@@ -12,23 +12,29 @@
  * details.
  */
 
-package com.liferay.rss.web.configuration.internal;
+package com.liferay.xsl.content.web.settings.internal;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
+import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;
+import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Juergen Kappler
  */
 @Component
-public class RSSPortletInstanceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class XSLContentPortletInstanceSettingsIdMapping
+	implements SettingsIdMapping {
 
 	@Override
-	public Class getConfigurationBeanClass() {
-		return RSSPortletInstanceConfiguration.class;
+	public Class<?> getConfigurationBeanClass() {
+		return XSLContentPortletInstanceConfiguration.class;
+	}
+
+	@Override
+	public String getSettingsId() {
+		return XSLContentPortletKeys.XSL_CONTENT;
 	}
 
 }

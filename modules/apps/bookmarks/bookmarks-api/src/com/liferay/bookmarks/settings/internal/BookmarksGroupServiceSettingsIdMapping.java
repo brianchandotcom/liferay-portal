@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.xsl.content.web.configuration.internal;
+package com.liferay.bookmarks.settings.internal;
 
+import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
+import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
-import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;
-import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Juergen Kappler
+ * @author Iván Zaera
  */
 @Component
-public class XSLContentPortletInstanceSettingsIdMapping
+public class BookmarksGroupServiceSettingsIdMapping
 	implements SettingsIdMapping {
 
 	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return XSLContentPortletInstanceConfiguration.class;
+	public Class getConfigurationBeanClass() {
+		return BookmarksGroupServiceConfiguration.class;
 	}
 
 	@Override
 	public String getSettingsId() {
-		return XSLContentPortletKeys.XSL_CONTENT;
+		return BookmarksConstants.SERVICE_NAME;
 	}
 
 }

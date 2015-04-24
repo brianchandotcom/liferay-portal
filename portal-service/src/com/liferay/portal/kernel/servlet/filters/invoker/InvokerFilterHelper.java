@@ -39,7 +39,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -356,10 +358,9 @@ public class InvokerFilterHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		InvokerFilterHelper.class);
 
-	private final CopyOnWriteArraySet<String> _filterMappingNames =
-		new CopyOnWriteArraySet<>();
-	private final ConcurrentHashMap<String, List<FilterMapping>>
-		_filterMappings = new ConcurrentHashMap<>();
+	private final Set<String> _filterMappingNames = new CopyOnWriteArraySet<>();
+	private final ConcurrentMap<String, List<FilterMapping>> _filterMappings =
+		new ConcurrentHashMap<>();
 	private final List<InvokerFilter> _invokerFilters = new ArrayList<>();
 	private ServiceTracker<Filter, FilterMapping> _serviceTracker;
 

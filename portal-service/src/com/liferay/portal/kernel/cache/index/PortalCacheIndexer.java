@@ -63,20 +63,33 @@ public class PortalCacheIndexer<I, K extends IndexedCacheKey<I>, V> {
 	private void _addIndexedCacheKey(K indexedCacheKey) {
 		I index = indexedCacheKey.getIndex();
 
-		Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
+		while (true) {
+			Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
 
-		if (indexedCacheKeys == null) {
-			indexedCacheKeys = new HashSet<>();
+			if (indexedCacheKeys == null) {
+				Set<K> keys = new HashSet<>();
 
-			Set<K> previousIndexedCacheKeys = _indexedCacheKeys.putIfAbsent(
-				index, indexedCacheKeys);
+				keys.add(indexedCacheKey);
 
-			if (previousIndexedCacheKeys != null) {
-				indexedCacheKeys = previousIndexedCacheKeys;
+				indexedCacheKeys = _indexedCacheKeys.putIfAbsent(index, keys);
+
+				if (indexedCacheKeys == null) {
+					return;
+				}
+			}
+
+			Set<K> newIndexedCacheKeys = new HashSet<>(indexedCacheKeys);
+
+			if (!newIndexedCacheKeys.add(indexedCacheKey)) {
+				return;
+			}
+
+			if (_indexedCacheKeys.replace(
+					index, indexedCacheKeys, newIndexedCacheKeys)) {
+
+				return;
 			}
 		}
-
-		indexedCacheKeys.add(indexedCacheKey);
 	}
 
 	private void _removeIndexedCacheKey(K indexedCacheKey) {

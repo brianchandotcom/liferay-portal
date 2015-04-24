@@ -47,15 +47,7 @@ public class ProjectData extends CoverageDataContainer
 
 	public ClassData getClassData(String name)
 	{
-		lock.lock();
-		try
-		{
 			return (ClassData)this.classes.get(name);
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -63,9 +55,6 @@ public class ProjectData extends CoverageDataContainer
 	 */
 	public ClassData getOrCreateClassData(String name)
 	{
-		lock.lock();
-		try
-		{
 			ClassData classData = (ClassData)this.classes.get(name);
 			if (classData == null)
 			{
@@ -83,11 +72,6 @@ public class ProjectData extends CoverageDataContainer
 				this.classes.put(classData.getName(), classData);
 			}
 			return classData;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	@Override
@@ -97,9 +81,6 @@ public class ProjectData extends CoverageDataContainer
 			return;
 		}
 		ProjectData projectData = (ProjectData)coverageData;
-		getBothLocks(projectData);
-		try
-		{
 			super.merge(coverageData);
 
 			for (Iterator iter = projectData.classes.keySet().iterator(); iter.hasNext();)
@@ -110,12 +91,6 @@ public class ProjectData extends CoverageDataContainer
 					this.classes.put(key, projectData.classes.get(key));
 				}
 			}
-		}
-		finally
-		{
-			lock.unlock();
-			projectData.lock.unlock();
-		}
 	}
 
 }

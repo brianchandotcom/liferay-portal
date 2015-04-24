@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -112,9 +113,14 @@ public class InvokerFilterHelper {
 		List<FilterMapping> filterMappings = _filterMappings.get(filterName);
 
 		if (filterMappings == null) {
-			filterMappings = new ArrayList<>();
+			filterMappings = new CopyOnWriteArrayList<>();
 
-			_filterMappings.put(filterName, filterMappings);
+			List<FilterMapping> previousFilterMapping =
+				_filterMappings.putIfAbsent(filterName, filterMappings);
+
+			if (previousFilterMapping != null) {
+				filterMappings = previousFilterMapping;
+			}
 
 			_filterMappingNames.add(filterName);
 		}
@@ -331,20 +337,27 @@ public class InvokerFilterHelper {
 				filterName);
 
 			if (filterMappings == null) {
-				filterMappings = new ArrayList<>();
+				filterMappings = new CopyOnWriteArrayList<>();
+
+				List<FilterMapping> previousFilterMapping =
+					_filterMappings.putIfAbsent(filterName, filterMappings);
+
+				if (previousFilterMapping != null) {
+					filterMappings = previousFilterMapping;
+				}
+
+				_filterMappingNames.add(filterName);
 			}
 
 			filterMappings.add(filterMapping);
-
-			_filterMappingNames.add(filterName);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InvokerFilterHelper.class);
 
-	private final List<String> _filterMappingNames =
-		new CopyOnWriteArrayList<>();
+	private final CopyOnWriteArraySet<String> _filterMappingNames =
+		new CopyOnWriteArraySet<>();
 	private final ConcurrentHashMap<String, List<FilterMapping>>
 		_filterMappings = new ConcurrentHashMap<>();
 	private final List<InvokerFilter> _invokerFilters = new ArrayList<>();

@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.runner.util.Validator;
+
 import java.util.List;
 
 import org.dom4j.Attribute;
@@ -170,6 +172,31 @@ public final class XMLLoggerHandler {
 		lineContainerLoggerElement.setText(sb.toString());
 
 		return lineContainerLoggerElement;
+	}
+
+	private static LoggerElement _getLineGroupLoggerElement(Element element) {
+		return _getLineGroupLoggerElement(null, element);
+	}
+
+	private static LoggerElement _getLineGroupLoggerElement(
+		String className, Element element) {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setName("li");
+		loggerElement.setClassName("line-group");
+
+		if (Validator.isNotNull(className)) {
+			loggerElement.addClassName(className);
+		}
+
+		loggerElement.addChildLoggerElement(
+			_getBtnContainerLoggerElement(element));
+
+		loggerElement.addChildLoggerElement(
+			_getLineContainerLoggerElement(element));
+
+		return loggerElement;
 	}
 
 	private static String _getLineItemText(String className, String text) {

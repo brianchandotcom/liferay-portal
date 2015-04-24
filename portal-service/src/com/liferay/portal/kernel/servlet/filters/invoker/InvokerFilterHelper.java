@@ -75,6 +75,7 @@ public class InvokerFilterHelper {
 		}
 
 		_filterMappingsMap.clear();
+		_filterNames.clear();
 
 		for (InvokerFilter invokerFilter : _invokerFilters) {
 			invokerFilter.clearFilterChainsCache();

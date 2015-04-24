@@ -998,12 +998,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				isNew = true;
 			}
 
-			String modifiedDate = LDAPUtil.getAttributeString(
+			String modifyTimestamp = LDAPUtil.getAttributeString(
 				attributes, "modifyTimestamp");
 
 			user = updateUser(
 				companyId, ldapUser, user, userMappings, contactMappings,
-				password, modifiedDate, isNew);
+				password, modifyTimestamp, isNew);
 
 			updateExpandoAttributes(
 				user, ldapUser, userExpandoMappings, contactExpandoMappings);
@@ -1240,10 +1240,10 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	protected User updateUser(
 			long companyId, LDAPUser ldapUser, User user,
 			Properties userMappings, Properties contactMappings,
-			String password, String modifiedDate, boolean isNew)
+			String password, String modifyTimestamp, boolean isNew)
 		throws Exception {
 
-		Date ldapUserModifiedDate = null;
+		Date modifiedDate = null;
 
 		boolean passwordReset = ldapUser.isPasswordReset();
 
@@ -1255,10 +1255,10 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 
 		try {
-			if (Validator.isNotNull(modifiedDate)) {
-				ldapUserModifiedDate = LDAPUtil.parseDate(modifiedDate);
+			if (Validator.isNotNull(modifyTimestamp)) {
+				modifiedDate = LDAPUtil.parseDate(modifyTimestamp);
 
-				if (ldapUserModifiedDate.equals(user.getModifiedDate())) {
+				if (modifiedDate.equals(user.getModifiedDate())) {
 					if (ldapUser.isAutoPassword()) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
@@ -1296,7 +1296,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		catch (ParseException pe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to parse LDAP modify timestamp " + modifiedDate,
+					"Unable to parse LDAP modify timestamp " + modifyTimestamp,
 					pe);
 			}
 		}
@@ -1356,9 +1356,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapUser.getRoleIds(), ldapUser.getUserGroupRoles(),
 			ldapUser.getUserGroupIds(), ldapUser.getServiceContext());
 
-		if (ldapUserModifiedDate != null) {
+		if (modifiedDate != null) {
 			user = UserLocalServiceUtil.updateModifiedDate(
-				user.getUserId(), ldapUserModifiedDate);
+				user.getUserId(), modifiedDate);
 		}
 
 		user = UserLocalServiceUtil.updateStatus(

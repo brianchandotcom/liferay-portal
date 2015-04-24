@@ -31,6 +31,13 @@
 					<description/>
 				</parameter>
 				<parameter>
+					<name>baseDir</name>
+					<type>java.io.File</type>
+					<required>false</required>
+					<editable>false</editable>
+					<description></description>
+				</parameter>
+				<parameter>
 					<name>autoImportDefaultReferences</name>
 					<type>boolean</type>
 					<required>false</required>
@@ -220,6 +227,9 @@
 					<description/>
 				</parameter>
 			</parameters>
+			<configuration>
+				<baseDir implementation="java.io.File" default-value="${project.basedir}" />
+			</configuration>
 		</mojo>
 	</mojos>
 	<dependencies>

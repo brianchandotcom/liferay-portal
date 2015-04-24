@@ -18,6 +18,9 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.servlet.ServletContext;
 
 /**
@@ -39,6 +42,28 @@ public class PortalWebResourcesUtil {
 
 	public static ServletContext getServletContext() {
 		return getPortalWebResources().getServletContext();
+	}
+
+	public static boolean isResourceAvailable(String path) {
+		String contextPath = getContextPath();
+
+		if (path.startsWith(contextPath)) {
+			path = path.substring(contextPath.length());
+		}
+
+		try {
+			ServletContext servletContext = getServletContext();
+
+			URL url = servletContext.getResource(path);
+
+			if (url != null) {
+				return true;
+			}
+		}
+		catch (MalformedURLException murle) {
+		}
+
+		return false;
 	}
 
 	private PortalWebResourcesUtil() {

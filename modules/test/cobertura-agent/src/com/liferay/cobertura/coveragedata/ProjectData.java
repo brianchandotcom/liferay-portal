@@ -55,29 +55,6 @@ public class ProjectData extends CoverageDataContainer implements HasBeenInstrum
 	/** This collection is used for quicker access to the list of classes. */
 	private Map classes = new HashMap();
 
-	public void addClassData(ClassData classData)
-	{
-		lock.lock();
-		try
-		{
-			String packageName = classData.getPackageName();
-			PackageData packageData = (PackageData)children.get(packageName);
-			if (packageData == null)
-			{
-				packageData = new PackageData(packageName);
-				// Each key is a package name, stored as an String object.
-				// Each value is information about the package, stored as a PackageData object.
-				this.children.put(packageName, packageData);
-			}
-			packageData.addClassData(classData);
-			this.classes.put(classData.getName(), classData);
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
 	public ClassData getClassData(String name)
 	{
 		lock.lock();
@@ -103,7 +80,17 @@ public class ProjectData extends CoverageDataContainer implements HasBeenInstrum
 			if (classData == null)
 			{
 				classData = new ClassData(name);
-				addClassData(classData);
+				String packageName = classData.getPackageName();
+				PackageData packageData = (PackageData)children.get(packageName);
+				if (packageData == null)
+				{
+					packageData = new PackageData(packageName);
+					// Each key is a package name, stored as an String object.
+					// Each value is information about the package, stored as a PackageData object.
+					this.children.put(packageName, packageData);
+				}
+				packageData.addClassData(classData);
+				this.classes.put(classData.getName(), classData);
 			}
 			return classData;
 		}

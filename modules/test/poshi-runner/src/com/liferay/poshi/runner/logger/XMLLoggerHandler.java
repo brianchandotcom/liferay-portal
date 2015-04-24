@@ -135,6 +135,10 @@ public final class XMLLoggerHandler {
 		return _getLineGroupLoggerElement(element, "echo");
 	}
 
+	private static LoggerElement _getFailLoggerElement(Element element) {
+		return _getLineGroupLoggerElement(element);
+	}
+
 	private static LoggerElement _getLineContainerLoggerElement(
 		Element element) {
 

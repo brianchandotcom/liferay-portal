@@ -35,7 +35,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.sourceforge.cobertura.coveragedata.CoverageData;
-import net.sourceforge.cobertura.coveragedata.HasBeenInstrumented;
 
 /**
  * <p>
@@ -50,7 +49,7 @@ import net.sourceforge.cobertura.coveragedata.HasBeenInstrumented;
  * </p>
  */
 public abstract class CoverageDataContainer
-	implements CoverageData, HasBeenInstrumented, Serializable
+	implements CoverageData, Serializable
 {
 
 	private static final long serialVersionUID = 2;

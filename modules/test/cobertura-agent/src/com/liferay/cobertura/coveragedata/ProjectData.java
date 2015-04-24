@@ -29,25 +29,15 @@
 
 package com.liferay.cobertura.coveragedata;
 
-import java.io.File;
-
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 import net.sourceforge.cobertura.coveragedata.CoverageData;
-import net.sourceforge.cobertura.coveragedata.HasBeenInstrumented;
-import net.sourceforge.cobertura.coveragedata.LineData;
 import net.sourceforge.cobertura.coveragedata.PackageData;
-import net.sourceforge.cobertura.coveragedata.SaveTimer;
-import net.sourceforge.cobertura.coveragedata.SourceFileData;
-import net.sourceforge.cobertura.util.FileLocker;
 
-public class ProjectData extends CoverageDataContainer implements HasBeenInstrumented
+public class ProjectData extends CoverageDataContainer
 {
 
 	private static final long serialVersionUID = 6;

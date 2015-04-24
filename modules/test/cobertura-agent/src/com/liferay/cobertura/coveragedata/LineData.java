@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import net.sourceforge.cobertura.coveragedata.CoverageData;
 import net.sourceforge.cobertura.util.StringUtil;
 
 /**
@@ -43,7 +44,7 @@ import net.sourceforge.cobertura.util.StringUtil;
  * </p>
  */
 public class LineData
-		implements Comparable, CoverageData, HasBeenInstrumented, Serializable
+		implements Comparable, CoverageData, Serializable
 {
 	private static final long serialVersionUID = 4;
 

@@ -26,6 +26,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import net.sourceforge.cobertura.coveragedata.BranchCoverageData;
 
 /**
  * <p>
@@ -34,8 +35,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * problem because instrumented classes make use of this class.
  * </p>
  */
-public class JumpData implements BranchCoverageData, Comparable, Serializable,
-		HasBeenInstrumented
+public class JumpData implements BranchCoverageData, Comparable, Serializable
 {
 	private static final long serialVersionUID = 8;
 

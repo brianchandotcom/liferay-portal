@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import net.sourceforge.cobertura.coveragedata.CoverageData;
 
 /**
  * <p>
@@ -49,7 +50,7 @@ import java.util.TreeSet;
  */
 
 public class ClassData extends CoverageDataContainer
-	implements Comparable<ClassData>, HasBeenInstrumented
+	implements Comparable<ClassData>
 {
 
 	private static final long serialVersionUID = 5;
@@ -82,9 +83,6 @@ public class ClassData extends CoverageDataContainer
 	public LineData addLine(int lineNumber, String methodName,
 			String methodDescriptor)
 	{
-		lock.lock();
-		try
-		{
 			LineData lineData = getLineData(lineNumber);
 			if (lineData == null)
 			{
@@ -100,11 +98,6 @@ public class ClassData extends CoverageDataContainer
 			if( methodName!=null && methodDescriptor!=null)
 				methodNamesAndDescriptors.add(methodName + methodDescriptor);
 			return lineData;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -117,15 +110,7 @@ public class ClassData extends CoverageDataContainer
 
 	public boolean containsInstrumentationInfo()
 	{
-		lock.lock();
-		try
-		{
 			return this.containsInstrumentationInfo;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -141,21 +126,12 @@ public class ClassData extends CoverageDataContainer
 			return false;
 
 		ClassData classData = (ClassData)obj;
-		getBothLocks(classData);
-		try
-		{
 			return super.equals(obj)
 				&& this.branches.equals(classData.branches)
 				&& this.methodNamesAndDescriptors
 					.equals(classData.methodNamesAndDescriptors)
 				&& this.name.equals(classData.name)
 				&& this.sourceFileName.equals(classData.sourceFileName);
-		}
-		finally
-		{
-			lock.unlock();
-			classData.lock.unlock();
-		}
 	}
 
 	public String getBaseName()
@@ -176,9 +152,6 @@ public class ClassData extends CoverageDataContainer
 		int total = 0;
 		int covered = 0;
 
-		lock.lock();
-		try
-		{
 			for (Iterator<LineData> iter = branches.values().iterator(); iter.hasNext();) {
 				LineData next = (LineData) iter.next();
 				if (methodNameAndDescriptor.equals(next.getMethodName() + next.getMethodDescriptor()))
@@ -189,24 +162,11 @@ public class ClassData extends CoverageDataContainer
 			}
 			if (total == 0) return 1.0;
 			return (double) covered / total;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public Collection<Integer> getBranches()
 	{
-		lock.lock();
-		try
-		{
 			return Collections.unmodifiableCollection(branches.keySet());
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -216,20 +176,12 @@ public class ClassData extends CoverageDataContainer
 	public LineData getLineCoverage(int lineNumber)
 	{
 		Integer lineObject = new Integer(lineNumber);
-		lock.lock();
-		try
-		{
 			if (!children.containsKey(lineObject))
 			{
 				return null;
 			}
 
 			return (LineData) children.get(lineObject);
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -240,9 +192,6 @@ public class ClassData extends CoverageDataContainer
 		int total = 0;
 		int hits = 0;
 
-		lock.lock();
-		try
-		{
 			Iterator<CoverageData> iter = children.values().iterator();
 			while (iter.hasNext())
 			{
@@ -257,45 +206,21 @@ public class ClassData extends CoverageDataContainer
 			}
 			if (total == 0) return 1d;
 			return (double) hits / total;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	private LineData getLineData(int lineNumber)
 	{
-		lock.lock();
-		try
-		{
 			return (LineData)children.get(Integer.valueOf(lineNumber));
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public SortedSet<CoverageData> getLines()
 	{
-		lock.lock();
-		try
-		{
 			return new TreeSet<CoverageData>(this.children.values());
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public Collection<CoverageData> getLines(String methodNameAndDescriptor)
 	{
 		Collection<CoverageData> lines = new HashSet<CoverageData>();
-		lock.lock();
-		try
-		{
 			Iterator<CoverageData> iter = children.values().iterator();
 			while (iter.hasNext())
 			{
@@ -307,11 +232,6 @@ public class ClassData extends CoverageDataContainer
 				}
 			}
 			return lines;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -320,15 +240,7 @@ public class ClassData extends CoverageDataContainer
 	 */
 	public Set<String> getMethodNamesAndDescriptors()
 	{
-		lock.lock();
-		try
-		{
 			return methodNamesAndDescriptors;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public String getName()
@@ -342,19 +254,11 @@ public class ClassData extends CoverageDataContainer
 	public int getNumberOfValidBranches()
 	{
 		int number = 0;
-		lock.lock();
-		try
-		{
 			for (Iterator<LineData> i = branches.values().iterator();
 				i.hasNext();
 				number += (i.next()).getNumberOfValidBranches())
 				;
 			return number;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -363,19 +267,11 @@ public class ClassData extends CoverageDataContainer
 	public int getNumberOfCoveredBranches()
 	{
 		int number = 0;
-		lock.lock();
-		try
-		{
 			for (Iterator<LineData> i = branches.values().iterator();
 				i.hasNext();
 				number += (i.next()).getNumberOfCoveredBranches())
 				;
 			return number;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public String getPackageName()
@@ -400,9 +296,6 @@ public class ClassData extends CoverageDataContainer
 	public String getSourceFileName()
 	{
 		String baseName;
-		lock.lock();
-		try
-		{
 			if (sourceFileName != null)
 				baseName = sourceFileName;
 			else
@@ -420,11 +313,6 @@ public class ClassData extends CoverageDataContainer
 			if (packageName.equals(""))
 				return baseName;
 			return packageName.replace('.', '/') + '/' + baseName;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public int hashCode()
@@ -437,15 +325,7 @@ public class ClassData extends CoverageDataContainer
 	 */
 	public boolean hasBranch(int lineNumber)
 	{
-		lock.lock();
-		try
-		{
 			return branches.containsKey(Integer.valueOf(lineNumber));
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -456,69 +336,37 @@ public class ClassData extends CoverageDataContainer
 	 */
 	public boolean isValidSourceLineNumber(int lineNumber)
 	{
-		lock.lock();
-		try
-		{
 			return children.containsKey(Integer.valueOf(lineNumber));
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public void addLineJump(int lineNumber, int branchNumber)
 	{
-		lock.lock();
-		try
-		{
 			LineData lineData = getLineData(lineNumber);
 			if (lineData != null)
 			{
 				lineData.addJump(branchNumber);
 				this.branches.put(Integer.valueOf(lineNumber), lineData);
 			}
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys)
 	{
-		lock.lock();
-		try
-		{
 			LineData lineData = getLineData(lineNumber);
 			if (lineData != null)
 			{
 				lineData.addSwitch(switchNumber, keys);
 				this.branches.put(Integer.valueOf(lineNumber), lineData);
 			}
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int min, int max)
 	{
-		lock.lock();
-		try
-		{
 			LineData lineData = getLineData(lineNumber);
 			if (lineData != null)
 			{
 				lineData.addSwitch(switchNumber, min, max);
 				this.branches.put(Integer.valueOf(lineNumber), lineData);
 			}
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -534,9 +382,6 @@ public class ClassData extends CoverageDataContainer
 		if (!this.getName().equals(classData.getName()))
 			return;
 
-		getBothLocks(classData);
-		try
-		{
 			super.merge(coverageData);
 
 			// We can't just call this.branches.putAll(classData.branches);
@@ -561,53 +406,23 @@ public class ClassData extends CoverageDataContainer
 					.getMethodNamesAndDescriptors());
 			if (classData.sourceFileName != null)
 				this.sourceFileName = classData.sourceFileName;
-		}
-		finally
-		{
-			lock.unlock();
-			classData.lock.unlock();
-		}
 	}
 
 	public void removeLine(int lineNumber)
 	{
 		Integer lineObject = Integer.valueOf(lineNumber);
-		lock.lock();
-		try
-		{
 			children.remove(lineObject);
 			branches.remove(lineObject);
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public void setContainsInstrumentationInfo()
 	{
-		lock.lock();
-		try
-		{
 			this.containsInstrumentationInfo = true;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public void setSourceFileName(String sourceFileName)
 	{
-		lock.lock();
-		try
-		{
 			this.sourceFileName = sourceFileName;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -618,18 +433,10 @@ public class ClassData extends CoverageDataContainer
 	 */
 	public void touch(int lineNumber,int hits)
 	{
-		lock.lock();
-		try
-		{
 			LineData lineData = getLineData(lineNumber);
 			if (lineData == null)
 				lineData = addLine(lineNumber, null, null);
 			lineData.touch(hits);
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -641,18 +448,10 @@ public class ClassData extends CoverageDataContainer
 	 * @param hits how many times the piece was called
 	 */
 	public void touchJump(int lineNumber, int branchNumber, boolean branch,int hits) {
-		lock.lock();
-		try
-		{
 			LineData lineData = getLineData(lineNumber);
 			if (lineData == null)
 				lineData = addLine(lineNumber, null, null);
 			lineData.touchJump(branchNumber, branch,hits);
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	/**
@@ -664,18 +463,10 @@ public class ClassData extends CoverageDataContainer
 	 * @param hits how many times the piece was called
 	 */
 	public void touchSwitch(int lineNumber, int switchNumber, int branch,int hits) {
-		lock.lock();
-		try
-		{
 			LineData lineData = getLineData(lineNumber);
 			if (lineData == null)
 				lineData = addLine(lineNumber, null, null);
 			lineData.touchSwitch(switchNumber, branch,hits);
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 }

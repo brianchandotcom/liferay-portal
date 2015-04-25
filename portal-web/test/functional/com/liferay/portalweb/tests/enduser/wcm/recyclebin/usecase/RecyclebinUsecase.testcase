@@ -1285,6 +1285,10 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
 		<execute macro="WebContent#editCP">
 			<var name="webContentContentEdit" value="Web Content Content Edit 1" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -1301,6 +1305,10 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title Edit 1" />
+		</execute>
+
 		<execute macro="WebContent#editCP">
 			<var name="webContentContentEdit" value="Web Content Content Edit 2" />
 			<var name="webContentTitle" value="Web Content Title Edit 1" />
@@ -1315,6 +1323,10 @@
 		<execute macro="WebContentFolder#gotoCP">
 			<var name="folderName" value="WC Folder Name" />
 			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title Edit 2" />
 		</execute>
 
 		<execute macro="WebContent#editCP">
@@ -1346,6 +1358,10 @@
 		<execute macro="WebContentFolder#gotoCP">
 			<var name="folderName" value="WC Folder Name" />
 			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title Edit 3" />
 		</execute>
 
 		<execute macro="WebContent#editCP">
@@ -1385,9 +1401,11 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
-		<execute macro="WebContent#gotoViewSpecificVersionHistoryCP">
+		<execute macro="WebContent#gotoEditCP">
 			<var name="webContentTitle" value="Web Content Title Edit Draft" />
 		</execute>
+
+		<execute macro="WebContent#gotoViewSpecificVersionHistoryCP" />
 
 		<execute macro="WebContent#viewSpecificVersionHistoryCP">
 			<var name="webContentStatus" value="Approved" />

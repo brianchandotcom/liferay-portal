@@ -653,6 +653,10 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
 		<execute macro="WebContent#editCP">
 			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -677,6 +681,10 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#editCP">
@@ -1100,6 +1108,10 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="nonAdminUser" value="true" />
 			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#editCP">

@@ -14,12 +14,15 @@
 
 package com.liferay.javadoc.formatter.ant;
 
+import com.liferay.javadoc.formatter.JavadocFormatter;
 import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 import com.liferay.javadoc.formatter.JavadocFormatterInvoker;
 
 import java.io.File;
+import java.util.Set;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 
 /**
@@ -30,7 +33,16 @@ public class JavadocFormatterTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 		try {
-			JavadocFormatterInvoker.invoke(_javadocFormatterArgs);
+			Project project = getProject();
+
+			JavadocFormatter javadocFormatter = JavadocFormatterInvoker.invoke(
+				project.getBaseDir(), _javadocFormatterArgs);
+
+			Set<String> modifiedFileNames =
+				javadocFormatter.getModifiedFileNames();
+
+			project.addIdReference(
+				JavadocFormatter.OUTPUT_KEY_MODIFIED_FILES, modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);

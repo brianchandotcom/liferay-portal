@@ -93,6 +93,9 @@ public class JavadocFormatter {
 
 	public static final String OUTPUT_FILE_PREFIX = "javadocs";
 
+	public static final String OUTPUT_KEY_MODIFIED_FILES =
+		"javadoc.formatter.modified.files";
+
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
@@ -251,6 +254,8 @@ public class JavadocFormatter {
 			if (!oldJavadocsXmlContent.equals(newJavadocsXmlContent)) {
 				FileUtils.writeStringToFile(
 					javadocsXmlFile, newJavadocsXmlContent);
+
+				_modifiedFileNames.add(javadocsXmlFile.getAbsolutePath());
 			}
 
 			_detachUnnecessaryTypes(javadocsXmlRootElement);
@@ -274,8 +279,15 @@ public class JavadocFormatter {
 
 				FileUtils.writeStringToFile(
 					javadocsRuntimeXmlFile, newJavadocsRuntimeXmlContent);
+
+				_modifiedFileNames.add(
+					javadocsRuntimeXmlFile.getAbsolutePath());
 			}
 		}
+	}
+
+	public Set<String> getModifiedFileNames() {
+		return _modifiedFileNames;
 	}
 
 	private List<Tuple> _addAncestorJavaClassTuples(
@@ -1256,6 +1268,8 @@ public class JavadocFormatter {
 			FileUtils.writeStringToFile(
 				javadocsXmlFile,
 				"<?xml version=\"1.0\"?>\n\n<javadocs>\n</javadocs>");
+
+			_modifiedFileNames.add(javadocsXmlFile.getAbsolutePath());
 		}
 
 		String javadocsXmlContent = FileUtils.readFileToString(javadocsXmlFile);
@@ -1964,6 +1978,8 @@ public class JavadocFormatter {
 			FileUtils.writeByteArrayToFile(
 				file, formattedContent.getBytes(StringPool.UTF8));
 
+			_modifiedFileNames.add(file.getAbsolutePath());
+
 			System.out.println("Writing " + file);
 		}
 	}
@@ -2134,6 +2150,7 @@ public class JavadocFormatter {
 	private Properties _languageProperties;
 	private final File _languagePropertiesFile;
 	private final double _lowestSupportedJavaVersion;
+	private final Set<String> _modifiedFileNames = new HashSet<>();
 	private final String _outputFilePrefix;
 	private final Pattern _paragraphTagPattern = Pattern.compile(
 		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);

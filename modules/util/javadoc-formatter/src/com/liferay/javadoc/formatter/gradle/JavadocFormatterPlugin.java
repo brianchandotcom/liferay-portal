@@ -44,13 +44,10 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 	}
 
 	protected void addJavadocFormatterExtension(Project project) {
-		JavadocFormatterArgs javadocFormatterArgs = new JavadocFormatterArgs();
-
-		javadocFormatterArgs.setInputDir(project.getProjectDir());
-
 		ExtensionContainer extensionContainer = project.getExtensions();
 
-		extensionContainer.add("javadocFormatter", javadocFormatterArgs);
+		extensionContainer.create(
+			"javadocFormatter", JavadocFormatterArgs.class);
 	}
 
 }

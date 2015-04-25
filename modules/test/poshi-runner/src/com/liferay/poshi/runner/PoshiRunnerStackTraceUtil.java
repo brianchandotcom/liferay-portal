@@ -18,6 +18,8 @@ import com.liferay.poshi.runner.util.Validator;
 
 import java.util.Stack;
 
+import org.dom4j.Element;
+
 /**
  * @author Karen Dang
  * @author Michael Hashimoto
@@ -46,10 +48,17 @@ public final class PoshiRunnerStackTraceUtil {
 
 		Stack<String> stackTrace = (Stack<String>)_stackTrace.clone();
 
+		sb.append("\n");
+		sb.append(_filePaths.peek());
+		sb.append(":");
+		sb.append(_currentElement.attributeValue("line-number"));
+
 		while (!stackTrace.isEmpty()) {
 			sb.append("\n");
 			sb.append(stackTrace.pop());
 		}
+
+		sb.append("\n");
 
 		return sb.toString();
 	}
@@ -88,6 +97,11 @@ public final class PoshiRunnerStackTraceUtil {
 		_stackTrace.push(_filePaths.peek() + ":" + lineNumber);
 	}
 
+	public static void setCurrentElement(Element currentElement) {
+		_currentElement = currentElement;
+	}
+
+	private static Element _currentElement;
 	private static final Stack<String> _filePaths = new Stack<>();
 	private static final Stack<String> _stackTrace = new Stack<>();
 

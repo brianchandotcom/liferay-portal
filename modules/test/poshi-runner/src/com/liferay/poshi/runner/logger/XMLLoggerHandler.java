@@ -132,7 +132,7 @@ public final class XMLLoggerHandler {
 	}
 
 	private static LoggerElement _getEchoLoggerElement(Element element) {
-		return _getLineGroupLoggerElement(element, "echo");
+		return _getLineGroupLoggerElement("echo", element);
 	}
 
 	private static LoggerElement _getFailLoggerElement(Element element) {
@@ -227,6 +227,21 @@ public final class XMLLoggerHandler {
 		loggerElement.setText(lineNumber);
 
 		return loggerElement.toString();
+	}
+
+	private static LoggerElement _getLoggerElementFromElement(Element element) {
+		String elementName = element.getName();
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		if (elementName.equals("echo") || elementName.equals("description")) {
+			loggerElement = _getEchoLoggerElement(element);
+		}
+		else if (elementName.equals("fail")) {
+			loggerElement = _getFailLoggerElement(element);
+		}
+
+		return loggerElement;
 	}
 
 	private static boolean _isExecutingMacro(Element element) {

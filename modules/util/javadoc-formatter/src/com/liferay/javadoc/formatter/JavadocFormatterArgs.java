@@ -16,8 +16,6 @@ package com.liferay.javadoc.formatter;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.File;
-
 /**
  * @author Andrea Di Giorgi
  */
@@ -27,7 +25,7 @@ public class JavadocFormatterArgs {
 		return _author;
 	}
 
-	public File getInputDir() {
+	public String getInputDir() {
 		return _inputDir;
 	}
 
@@ -61,7 +59,7 @@ public class JavadocFormatterArgs {
 		_initializeMissingJavadocs = initializeMissingJavadocs;
 	}
 
-	public void setInputDir(File inputDir) {
+	public void setInputDir(String inputDir) {
 		_inputDir = inputDir;
 	}
 
@@ -85,7 +83,7 @@ public class JavadocFormatterArgs {
 
 	private String _author = JavadocFormatter.AUTHOR;
 	private boolean _initializeMissingJavadocs;
-	private File _inputDir;
+	private String _inputDir = "./";
 	private String[] _limits;
 	private double _lowestSupportedJavaVersion =
 		JavadocFormatter.LOWEST_SUPPORTED_JAVA_VERSION;

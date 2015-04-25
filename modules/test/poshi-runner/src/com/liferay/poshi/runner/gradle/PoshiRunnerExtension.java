@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.poshi.runner;
+package com.liferay.poshi.runner.gradle;
 
 import java.io.File;
 
@@ -38,10 +38,6 @@ public class PoshiRunnerExtension {
 		return _poshiProperties;
 	}
 
-	public String getVersion() {
-		return _version;
-	}
-
 	public void poshiProperty(String key, Object value) {
 		_poshiProperties.put(key, value);
 	}
@@ -56,12 +52,7 @@ public class PoshiRunnerExtension {
 		_poshiProperties.putAll(poshiProperties);
 	}
 
-	public void setVersion(String version) {
-		_version = version;
-	}
-
 	private File _baseDir;
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
-	private String _version = "latest.release";
 
 }

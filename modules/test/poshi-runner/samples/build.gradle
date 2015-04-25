@@ -8,7 +8,7 @@ buildscript {
 	}
 
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "latest.release"
+		classpath group: "com.liferay", name: "com.liferay.poshi.runner", version: "latest.release"
 	}
 }
 

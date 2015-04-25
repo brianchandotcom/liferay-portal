@@ -26,6 +26,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+
 		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#NAVIGATION_PERMISSIONS" value1="Permissions" />
 	</command>
 

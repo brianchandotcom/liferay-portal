@@ -18,7 +18,6 @@ import com.liferay.javadoc.formatter.JavadocFormatter;
 import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 import com.liferay.javadoc.formatter.JavadocFormatterInvoker;
 
-import java.io.File;
 import java.util.Set;
 
 import org.apache.tools.ant.BuildException;
@@ -60,7 +59,7 @@ public class JavadocFormatterTask extends Task {
 			initializeMissingJavadocs);
 	}
 
-	public void setInputDir(File inputDir) {
+	public void setInputDir(String inputDir) {
 		_javadocFormatterArgs.setInputDir(inputDir);
 	}
 

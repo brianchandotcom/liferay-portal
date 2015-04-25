@@ -120,10 +120,9 @@ public class PoshiRunnerValidation {
 	}
 
 	private static void _validateClassCommandName(
-			Element element, String classType, String filePath)
+			Element element, String classCommandName, String classType,
+			String filePath)
 		throws PoshiRunnerException {
-
-		String classCommandName = element.attributeValue(classType);
 
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
@@ -222,7 +221,25 @@ public class PoshiRunnerValidation {
 			_validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
 
-			_validateMacroContext(element, filePath);
+			_validateMacroContext(element, "macro", filePath);
+		}
+		else if (Validator.isNotNull(element.attributeValue("macro-desktop"))) {
+			List<String> possibleAttributeNames = Arrays.asList(
+				"line-number", "macro-desktop", "macro-mobile");
+
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
+
+			_validateMacroContext(element, "macro-desktop", filePath);
+		}
+		else if (Validator.isNotNull(element.attributeValue("macro-mobile"))) {
+			List<String> possibleAttributeNames = Arrays.asList(
+				"line-number", "macro-desktop", "macro-mobile");
+
+			_validatePossibleAttributeNames(
+				element, possibleAttributeNames, filePath);
+
+			_validateMacroContext(element, "macro-mobile", filePath);
 		}
 		else if (Validator.isNotNull(element.attributeValue("selenium"))) {
 			List<String> possibleAttributeNames = Arrays.asList(
@@ -248,7 +265,9 @@ public class PoshiRunnerValidation {
 
 		if (!childElements.isEmpty()) {
 			if (Validator.isNotNull(element.attributeValue("function")) ||
-				Validator.isNotNull(element.attributeValue("macro"))) {
+				Validator.isNotNull(element.attributeValue("macro")) ||
+				Validator.isNotNull(element.attributeValue("macro-desktop")) ||
+				Validator.isNotNull(element.attributeValue("macro-mobile"))) {
 
 				for (Element childElement : childElements) {
 					if (StringUtils.equals(childElement.getName(), "var")) {
@@ -288,11 +307,12 @@ public class PoshiRunnerValidation {
 			Element element, String filePath)
 		throws PoshiRunnerException {
 
-		_validateClassCommandName(element, "function", filePath);
+		String function = element.attributeValue("function");
+
+		_validateClassCommandName(element, function, "function", filePath);
 
 		String className =
-			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				element.attributeValue("function"));
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(function);
 
 		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
 			className);
@@ -354,10 +374,12 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	private static void _validateMacroContext(Element element, String filePath)
+	private static void _validateMacroContext(
+			Element element, String macroType, String filePath)
 		throws PoshiRunnerException {
 
-		_validateClassCommandName(element, "macro", filePath);
+		_validateClassCommandName(
+			element, element.attributeValue(macroType), "macro", filePath);
 	}
 
 	private static void _validateMacroFile(Element element, String filePath)

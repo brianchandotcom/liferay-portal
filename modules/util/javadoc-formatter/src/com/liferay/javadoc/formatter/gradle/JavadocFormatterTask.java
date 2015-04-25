@@ -14,13 +14,17 @@
 
 package com.liferay.javadoc.formatter.gradle;
 
+import com.liferay.javadoc.formatter.JavadocFormatter;
 import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 import com.liferay.javadoc.formatter.JavadocFormatterInvoker;
+
+import java.util.Set;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.tasks.TaskAction;
 
 /**
@@ -38,7 +42,17 @@ public class JavadocFormatterTask extends DefaultTask {
 			extensionContainer.getByType(JavadocFormatterArgs.class);
 
 		try {
-			JavadocFormatterInvoker.invoke(javadocFormatterArgs);
+			JavadocFormatter javadocFormatter = JavadocFormatterInvoker.invoke(
+				project.getProjectDir(), javadocFormatterArgs);
+
+			Set<String> modifiedFileNames =
+				javadocFormatter.getModifiedFileNames();
+
+			ExtraPropertiesExtension extraPropertiesExtension =
+				extensionContainer.getExtraProperties();
+
+			extraPropertiesExtension.set(
+				JavadocFormatter.OUTPUT_KEY_MODIFIED_FILES, modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new GradleException(e.getMessage(), e);

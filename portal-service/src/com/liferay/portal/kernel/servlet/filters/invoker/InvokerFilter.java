@@ -191,10 +191,10 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		if (invokerFilterHelper == null) {
 			invokerFilterHelper = new InvokerFilterHelper();
 
-			invokerFilterHelper.init(_filterConfig);
-
 			servletContext.setAttribute(
 				InvokerFilterHelper.class.getName(), invokerFilterHelper);
+
+			invokerFilterHelper.init(_filterConfig);
 		}
 
 		_invokerFilterHelper = invokerFilterHelper;

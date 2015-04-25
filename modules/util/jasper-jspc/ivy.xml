@@ -17,8 +17,8 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="tomcat-jasper" org="org.apache.tomcat" rev="7.0.42" />
 		<dependency conf="default->master" name="jstl" org="javax.servlet" rev="1.2" />
 		<dependency conf="default->master" name="jstl-api" org="javax.servlet.jsp.jstl" rev="1.2" />
-		<dependency name="tomcat-jasper" org="org.apache.tomcat" rev="7.0.42" />
 	</dependencies>
 </ivy-module>

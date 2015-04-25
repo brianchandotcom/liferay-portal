@@ -17,6 +17,11 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="org.eclipse.equinox.console" org="org.eclipse.equinox" rev="1.1.100-SNAPSHOT" />
+		<dependency name="org.eclipse.equinox.http.servlet" org="org.eclipse.equinox" rev="1.2.0-SNAPSHOT" />
+		<dependency name="org.eclipse.osgi.services" org="org.eclipse.osgi" rev="3.5.0-SNAPSHOT" />
+		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="6.0.0" />
 		<dependency conf="default->master" name="commons-fileupload" org="commons-fileupload" rev="1.2.1" />
 		<dependency conf="default->master" name="commons-io" org="commons-io" rev="1.4" />
 		<dependency conf="default->master" name="javax.servlet" org="org.glassfish" rev="3.2-b06" />
@@ -31,10 +36,5 @@
 		<dependency conf="default->master" name="org.apache.felix.metatype" org="org.apache.felix" rev="1.0.8" />
 		<dependency conf="default->master" name="org.apache.felix.utils" org="org.apache.felix" rev="1.6.0" />
 		<dependency conf="default->master" name="org.apache.felix.webconsole" org="org.apache.felix" rev="4.2.2" />
-		<dependency name="org.eclipse.equinox.console" org="org.eclipse.equinox" rev="1.1.100-SNAPSHOT" />
-		<dependency name="org.eclipse.equinox.http.servlet" org="org.eclipse.equinox" rev="1.2.0-SNAPSHOT" />
-		<dependency name="org.eclipse.osgi.services" org="org.eclipse.osgi" rev="3.5.0-SNAPSHOT" />
-		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="6.0.0" />
 	</dependencies>
 </ivy-module>

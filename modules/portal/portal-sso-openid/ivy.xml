@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="default->master" name="org.apache.xml.resolver" org="org.eclipse.birt.runtime.3_7_1" rev="1.2.0" />
 		<dependency name="openid4java" org="org.openid4java" rev="0.9.8" />
+		<dependency conf="default->master" name="org.apache.xml.resolver" org="org.eclipse.birt.runtime.3_7_1" rev="1.2.0" />
 	</dependencies>
 </ivy-module>

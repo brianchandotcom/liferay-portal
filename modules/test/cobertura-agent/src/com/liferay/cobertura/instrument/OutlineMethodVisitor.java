@@ -94,7 +94,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 			_switchLabels.put(
 				dflt, new SwitchHolder(_currentLine, _currentSwitch, -1));
 
-			for (int i = labels.length -1; i >= 0; i--) {
+			for (int i = 0; i < labels.length; i++) {
 				_switchLabels.put(
 					labels[i],
 					new SwitchHolder(_currentLine, _currentSwitch, i));
@@ -114,7 +114,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 			_switchLabels.put(
 				dflt, new SwitchHolder(_currentLine, _currentSwitch, -1));
 
-			for (int i = labels.length -1; i >= 0; i--) {
+			for (int i = 0; i < labels.length; i++) {
 				_switchLabels.put(
 					labels[i],
 					new SwitchHolder(_currentLine, _currentSwitch, i));

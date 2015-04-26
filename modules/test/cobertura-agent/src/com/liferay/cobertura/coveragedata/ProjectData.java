@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 import net.sourceforge.cobertura.coveragedata.CoverageData;
-import net.sourceforge.cobertura.coveragedata.PackageData;
 
 /**
  * @author Shuyang Zhou
@@ -53,9 +52,9 @@ public class ProjectData extends CoverageDataContainer {
 				}
 			}
 
-			packageData.addClassData(classData);
-
-			_classDataMap.put(classData.getName(), classData);
+			if (packageData.addClassData(classData) == classData) {
+				_classDataMap.put(classData.getName(), classData);
+			}
 		}
 
 		return classData;

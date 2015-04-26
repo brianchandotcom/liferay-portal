@@ -17,6 +17,6 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="jcifs" org="jcifs" rev="1.3.17" transitive="false" />
+		<dependency conf="default->master" name="jcifs" org="jcifs" rev="1.3.17" />
 	</dependencies>
 </ivy-module>

@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="cas-client-core" org="org.jasig.cas.client" rev="3.1.12" transitive="false" />
-		<dependency name="opensaml" org="org.opensaml" rev="1.1" transitive="false" />
+		<dependency conf="default->master" name="cas-client-core" org="org.jasig.cas.client" rev="3.1.12" />
+		<dependency conf="default->master" name="opensaml" org="org.opensaml" rev="1.1" />
 	</dependencies>
 </ivy-module>

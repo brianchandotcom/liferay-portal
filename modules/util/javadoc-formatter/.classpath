@@ -19,21 +19,11 @@
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/ant-launcher.jar" />
 	<classpathentry kind="lib" path="lib/ant.jar" />
-	<classpathentry kind="lib" path="lib/asm.jar" />
 	<classpathentry kind="lib" path="lib/commons-io.jar" />
 	<classpathentry kind="lib" path="lib/dom4j.jar" />
 	<classpathentry kind="lib" path="lib/gradle-base-services.jar" />
 	<classpathentry kind="lib" path="lib/gradle-core.jar" />
-	<classpathentry kind="lib" path="lib/gradle-messaging.jar" />
-	<classpathentry kind="lib" path="lib/gradle-resources.jar" />
 	<classpathentry kind="lib" path="lib/groovy-all.jar" />
-	<classpathentry kind="lib" path="lib/guava-jdk5.jar" />
-	<classpathentry kind="lib" path="lib/kryo.jar" />
-	<classpathentry kind="lib" path="lib/minlog.jar" />
-	<classpathentry kind="lib" path="lib/objenesis.jar" />
 	<classpathentry kind="lib" path="lib/qdox.jar" />
-	<classpathentry kind="lib" path="lib/reflectasm.jar" />
-	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
-	<classpathentry kind="lib" path="lib/xml-apis.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

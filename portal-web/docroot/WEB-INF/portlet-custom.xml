@@ -970,51 +970,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>150</portlet-name>
-		<display-name>Workflow Tasks</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/workflow_tasks/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/workflow_tasks/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>153</portlet-name>
-		<display-name>My Workflow Tasks</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/workflow_tasks/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/my_workflow_tasks/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>156</portlet-name>
 		<display-name>Group Pages</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

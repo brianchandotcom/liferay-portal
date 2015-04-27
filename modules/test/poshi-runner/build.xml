@@ -51,6 +51,10 @@
 	<target name="start-poshi-runner" depends="prepare-poshi-runner,prepare-sikuli">
 		<fail message="Please set the property ${test.name}." unless="test.name" />
 
+		<copy todir="classes/META-INF/resources/css">
+			<fileset dir="src/META-INF/resources/css/.sass-cache" />
+		</copy>
+
 		<mkdir dir="test-results" />
 
 		<junit fork="true" printsummary="on" showoutput="true">

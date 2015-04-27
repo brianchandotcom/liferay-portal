@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.workflowtasks.search;
+package com.liferay.workflow.task.web.portlet.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.OrderByComparator;

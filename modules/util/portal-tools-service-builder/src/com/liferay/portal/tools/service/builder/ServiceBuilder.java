@@ -4440,21 +4440,25 @@ public class ServiceBuilder {
 	}
 
 	private JavaClass _getJavaClass(String fileName) throws IOException {
-		fileName = StringUtil.replace(
-			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
 		int pos = 0;
 
 		if (fileName.contains(_implDir)) {
 			pos = _implDir.length() + 1;
 		}
-		else {
+		else if (fileName.contains(_apiDir)) {
 			pos = _apiDir.length() + 1;
+		}
+		else {
+		    return null;
 		}
 
 		String fullyQualifiedClassName = StringUtil.replace(
 			fileName.substring(pos, fileName.length() - 5), CharPool.SLASH,
 			CharPool.PERIOD);
+
+		fullyQualifiedClassName = StringUtil.replace(
+		        fullyQualifiedClassName, CharPool.BACK_SLASH,
+	            CharPool.PERIOD);
 
 		JavaClass javaClass = _javaClasses.get(fullyQualifiedClassName);
 

@@ -77,6 +77,12 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 	@Override
 	public void stop(BundleContext bundleContext) {
 		try {
+			_cxfConfiguration.delete();
+		}
+		catch (Exception e) {
+		}
+
+		try {
 			_jaxWsApiConfiguration.delete();
 		}
 		catch (Exception e) {
@@ -84,12 +90,6 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 		try {
 			_soapConfiguration.delete();
-		}
-		catch (Exception e) {
-		}
-
-		try {
-			_cxfConfiguration.delete();
 		}
 		catch (Exception e) {
 		}

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "assigned-to-me");
@@ -23,7 +23,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "assigned-to-me
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="completedURL">
-			<portlet:param name="struts_action" value="/workflow_tasks/view" />
+			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="toolbarItem" value="my-completed-tasks" />
 		</portlet:renderURL>
 

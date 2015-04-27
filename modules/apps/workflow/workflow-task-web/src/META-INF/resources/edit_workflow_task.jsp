@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String randomId = StringUtil.randomId();
@@ -58,12 +58,12 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 %>
 
 <portlet:renderURL var="backURL">
-	<portlet:param name="struts_action" value="/workflow_tasks/view" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 </portlet:renderURL>
 
 <liferay-ui:header
 	backURL="<%= backURL.toString() %>"
-	localizeTitle="<%= false %>"
+	localizeTitle="<%= Boolean.FALSE %>"
 	title="<%= headerTitle %>"
 />
 
@@ -76,17 +76,16 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 				<div class="lfr-asset-assigned">
 					<c:choose>
 						<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
-							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value="<%= PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK) %>" />
+							<aui:input cssClass="assigned-to" inlineField="<%= Boolean.TRUE %>" name="assignedTo" type="resource" value="<%= PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK) %>" />
 						</c:when>
 						<c:otherwise>
-							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value='<%= LanguageUtil.get(request, "nobody") %>' />
+							<aui:input cssClass="assigned-to" inlineField="<%= Boolean.TRUE %>" name="assignedTo" type="resource" value='<%= LanguageUtil.get(request, "nobody") %>' />
 						</c:otherwise>
 					</c:choose>
 
 					<c:if test="<%= !workflowTask.isAssignedToSingleUser() %>">
-						<portlet:actionURL var="assignToMeURL">
-							<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />
+						<portlet:actionURL var="assignToMeURL" name="assignTask">
+							<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 							<portlet:param name="assigneeUserId" value="<%= String.valueOf(user.getUserId()) %>" />
@@ -104,9 +103,8 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 					<c:if test="<%= _hasOtherAssignees(pooledActorsIds, workflowTask, user) %>">
 						<%= StringPool.DASH %>
 
-						<portlet:actionURL var="assignURL">
-							<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />
+						<portlet:actionURL var="assignURL" name="assignTask">
+							<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 						</portlet:actionURL>
@@ -121,12 +119,11 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 			<aui:col width="<%= 50 %>">
 				<aui:input name="createDate" type="resource" value="<%= dateFormatDateTime.format(workflowTask.getCreateDate()) %>" />
 
-				<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
+				<aui:input inlineField="<%= Boolean.TRUE %>" name="dueDate" type="resource" value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
 
 				<c:if test="<%= !workflowTask.isCompleted() %>">
-					<portlet:actionURL var="updateDueDateURL">
-						<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+					<portlet:actionURL var="updateDueDateURL" name="updateTask">
+						<portlet:param name="jsp" value="/edit_workflow_task.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 					</portlet:actionURL>
@@ -134,7 +131,7 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 					<liferay-ui:icon
 						iconCssClass="icon-time"
 						id='<%= randomId + "taskDueDateLink" %>'
-						label="<%= true %>"
+						label="<%= Boolean.TRUE %>"
 						message="change"
 						url="javascript:;"
 					/>
@@ -150,14 +147,14 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 			</div>
 		</c:if>
 
-		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>">
+		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= Boolean.TRUE %>">
 			<c:if test="<%= assetRenderer != null %>">
 				<liferay-ui:panel defaultState="open" title='<%= LanguageUtil.format(request, "preview-of-x", ResourceActionsUtil.getModelResource(locale, className), false) %>'>
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
 								<portlet:renderURL var="viewFullContentURL">
-									<portlet:param name="struts_action" value="/workflow_tasks/view_content" />
+									<portlet:param name="mvcPath" value="/view_content.jsp" />
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 
 									<c:if test="<%= assetEntry != null %>">
@@ -240,22 +237,20 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 				</liferay-ui:panel>
 
 				<liferay-ui:panel title="comments">
-					<portlet:actionURL var="discussionURL">
-						<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task_discussion" />
-					</portlet:actionURL>
-
+					<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
+					
 					<portlet:resourceURL var="discussionPaginationURL">
-						<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task_discussion" />
+						<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:resourceURL>
 
 					<liferay-ui:discussion
-						assetEntryVisible="<%= false %>"
+						assetEntryVisible="<%= Boolean.FALSE %>"
 						className="<%= assetRenderer.getClassName() %>"
 						classPK="<%= assetRenderer.getClassPK() %>"
 						formAction="<%= discussionURL %>"
-						formName="fm1"
+						formName='<%= "fm" + assetRenderer.getClassPK() %>'
 						paginationURL="<%= discussionPaginationURL %>"
-						ratingsEnabled="<%= false %>"
+						ratingsEnabled="<%= Boolean.FALSE %>"
 						redirect="<%= currentURL %>"
 						userId="<%= user.getUserId() %>"
 					/>
@@ -275,12 +270,12 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 				List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowTask.getWorkflowInstanceId(), logTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowComparatorFactoryUtil.getLogCreateDateComparator(true));
 				%>
 
-				<%@ include file="/html/portlet/workflow_tasks/workflow_logs.jspf" %>
+				<%@ include file="/workflow_logs.jspf" %>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
 	</aui:col>
 
-	<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= Boolean.TRUE %>" width="<%= 25 %>">
 		<div class="lfr-asset-summary">
 			<liferay-ui:icon
 				cssClass="lfr-asset-avatar"
@@ -297,7 +292,7 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 		request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		%>
 
-		<liferay-util:include page="/html/portlet/workflow_tasks/workflow_task_action.jsp" />
+		<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>" />
 	</aui:col>
 </aui:row>
 

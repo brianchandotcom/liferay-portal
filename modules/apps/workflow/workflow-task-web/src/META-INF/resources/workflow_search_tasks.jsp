@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 WorkflowTaskDisplayTerms displayTerms = new WorkflowTaskDisplayTerms(renderRequest);
@@ -28,9 +28,9 @@ WorkflowTaskDisplayTerms displayTerms = new WorkflowTaskDisplayTerms(renderReque
 >
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" label="task" name="<%= WorkflowTaskDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+		<aui:input inlineField="<%= Boolean.TRUE %>" label="task" name="<%= WorkflowTaskDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
 
-		<aui:select inlineField="<%= true %>" name="<%= WorkflowTaskDisplayTerms.TYPE %>">
+		<aui:select inlineField="<%= Boolean.TRUE %>" name="<%= WorkflowTaskDisplayTerms.TYPE %>">
 
 			<%
 			String displayTermsType = displayTerms.getType();

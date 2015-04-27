@@ -19,27 +19,7 @@ WorkflowTaskDisplayTerms searchTerms = (WorkflowTaskDisplayTerms)searchContainer
 
 String[] assetTypes = WorkflowHandlerUtil.getSearchableAssetTypes();
 
-if (portletName.equals(PortletKeys.WORKFLOW_TASKS)) {
-	searchContainer.setEmptyResultsMessage("there-are-no-tasks");
-
-	allTasks = true;
-
-	if (searchTerms.isAdvancedSearch()) {
-		total = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), 0, searchTerms.getName(), searchTerms.getType(), null, null, null, null, null, searchTerms.isAndOperator());
-
-		searchContainer.setTotal(total);
-
-		results = WorkflowTaskManagerUtil.search(company.getCompanyId(), 0, searchTerms.getName(), searchTerms.getType(), null, null, null, null, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	}
-	else {
-		total = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), 0, searchTerms.getKeywords(), assetTypes, null, null);
-
-		searchContainer.setTotal(total);
-
-		results = WorkflowTaskManagerUtil.search(company.getCompanyId(), 0, searchTerms.getKeywords(), assetTypes, null, null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	}
-}
-else if (type.equals("assigned-to-my-roles")) {
+if (type.equals("assigned-to-my-roles")) {
 	searchContainer.setEmptyResultsMessage("there-are-no-pending-tasks-assigned-to-your-roles");
 
 	if (searchTerms.isAdvancedSearch()) {

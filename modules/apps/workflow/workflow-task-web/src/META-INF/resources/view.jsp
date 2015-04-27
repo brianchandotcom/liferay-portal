@@ -14,15 +14,77 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<c:choose>
-	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
-		<%@ include file="/html/portlet/workflow_tasks/view_workflow_tasks.jspf" %>
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="no-workflow-engine-is-deployed" />
-		</div>
-	</c:otherwise>
-</c:choose>
+<%
+String tabs1 = ParamUtil.getString(request, "tabs1", "pending");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("tabs1", tabs1);
+%>
+
+<liferay-ui:tabs
+	names="pending,completed"
+	portletURL="<%= portletURL %>"
+/>
+
+<%
+try {
+	String type = "completed";
+%>
+
+	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+		<aui:nav-bar-search>
+			<liferay-util:include page="/workflow_search_tasks.jsp" servletContext="<%= application %>" />
+		</aui:nav-bar-search>
+		<c:choose>
+			<c:when test='<%= tabs1.equals("pending") %>'>
+				<liferay-ui:panel-container extended="<%= Boolean.FALSE %>" id="workflowTasksPanelContainer" persistState="<%= Boolean.TRUE %>">
+					<liferay-ui:panel collapsible="<%= Boolean.TRUE %>" extended="<%= Boolean.FALSE %>" id="workflowMyTasksPanel" persistState="<%= Boolean.TRUE %>" title="assigned-to-me">
+
+						<%
+						type = "assigned-to-me";
+						%>
+
+						<%@ include file="/workflow_tasks.jspf" %>
+					</liferay-ui:panel>
+
+					<liferay-ui:panel collapsible="<%= Boolean.TRUE %>" extended="<%= Boolean.FALSE %>" id="workflowMyRolesTasksPanel" persistState="<%= Boolean.TRUE %>" title="assigned-to-my-roles">
+
+						<%
+						type = "assigned-to-my-roles";
+						%>
+
+						<%@ include file="/workflow_tasks.jspf" %>
+					</liferay-ui:panel>
+				</liferay-ui:panel-container>
+			</c:when>
+			<c:otherwise>
+				<div class="separator"></div>
+				<%@ include file="/workflow_tasks.jspf" %>
+			</c:otherwise>
+		</c:choose>
+	</aui:form>
+
+<%
+}
+catch (Exception e) {
+	if (_log.isWarnEnabled()) {
+		_log.warn("Error retrieving tasks for user " + user.getUserId(), e);
+	}
+%>
+
+	<div class="alert alert-danger">
+		<liferay-ui:message key="an-error-occurred-while-retrieving-the-list-of-tasks" />
+	</div>
+
+<%
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), currentURL);
+%>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("com.liferay.workflow.task.web.portlet.view_jsp");
+%>

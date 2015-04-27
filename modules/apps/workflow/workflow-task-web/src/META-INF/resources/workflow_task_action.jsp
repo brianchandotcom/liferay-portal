@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String randomId = StringPool.BLANK;
@@ -51,9 +51,8 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 			}
 		%>
 
-			<portlet:actionURL var="editURL">
-				<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
+			<liferay-portlet:actionURL var="editURL" name="completeTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>">
+				<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 				<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -62,7 +61,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 				<c:if test="<%= transitionName != null %>">
 					<portlet:param name="transitionName" value="<%= transitionName %>" />
 				</c:if>
-			</portlet:actionURL>
+			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon
 				cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
@@ -80,14 +79,13 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 	</c:if>
 
 	<c:if test="<%= !workflowTask.isCompleted() && !_isAssignedToUser(workflowTask, user) %>">
-		<portlet:actionURL var="assignToMeURL">
-			<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />
+		<liferay-portlet:actionURL var="assignToMeURL" name="assignTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>">
+			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 			<portlet:param name="assigneeUserId" value="<%= String.valueOf(user.getUserId()) %>" />
-		</portlet:actionURL>
+		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-assign-to-me-link" %>'
@@ -100,13 +98,12 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 	</c:if>
 
 	<c:if test="<%= _hasOtherAssignees(pooledActorsIds, workflowTask, user) %>">
-		<portlet:actionURL var="assignURL">
-			<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />
+		<liferay-portlet:actionURL var="assignURL" name="assignTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>">
+			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-		</portlet:actionURL>
+		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-assign-link" %>'
@@ -119,12 +116,11 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 	</c:if>
 
 	<c:if test="<%= !workflowTask.isCompleted() %>">
-		<portlet:actionURL var="updateDueDateURL">
-			<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+		<liferay-portlet:actionURL var="updateDueDateURL" name="updateTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>">
+			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-		</portlet:actionURL>
+		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-due-date-link" %>'

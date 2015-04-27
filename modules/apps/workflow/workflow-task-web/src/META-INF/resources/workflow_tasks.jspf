@@ -34,7 +34,7 @@ else if (type.equals("assigned-to-my-roles")) {
 	%>
 
 	<liferay-ui:search-container-results>
-		<%@ include file="/html/portlet/workflow_tasks/workflow_search_results.jspf" %>
+		<%@ include file="/workflow_search_results.jspf" %>
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
@@ -72,7 +72,7 @@ else if (type.equals("assigned-to-my-roles")) {
 		</c:if>
 
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
+			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 		</portlet:renderURL>
@@ -125,7 +125,7 @@ else if (type.equals("assigned-to-my-roles")) {
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/workflow_tasks/workflow_task_action.jsp"
+				path="/workflow_task_action.jsp"
 			/>
 		</c:if>
 	</liferay-ui:search-container-row>

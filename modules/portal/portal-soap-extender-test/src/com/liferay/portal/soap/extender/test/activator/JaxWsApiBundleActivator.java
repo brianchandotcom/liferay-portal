@@ -25,7 +25,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Carlos Sierra Andrés
  */
-public class JaxwsApiBundleActivator1 implements BundleActivator {
+public class JaxWsApiBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {

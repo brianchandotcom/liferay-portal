@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.engine.BaseWikiEngine;
@@ -48,6 +46,7 @@ import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -55,19 +54,6 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = WikiEngine.class)
 public class HtmlEngine extends BaseWikiEngine {
-
-	public HtmlEngine() {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			WikiPortletKeys.WIKI);
-
-		_friendlyURLMapping =
-			Portal.FRIENDLY_URL_SEPARATOR + portlet.getFriendlyURLMapping();
-
-		FriendlyURLMapper friendlyURLMapper =
-			portlet.getFriendlyURLMapperInstance();
-
-		_router = friendlyURLMapper.getRouter();
-	}
 
 	@Override
 	public String getFormat() {
@@ -97,6 +83,14 @@ public class HtmlEngine extends BaseWikiEngine {
 				"/o/wiki-web/html/portlet/wiki/edit/html.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
+	}
+
+	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")")
+	protected void setFriendlyURLMapper(FriendlyURLMapper friendlyURLMapper) {
+		_friendlyURLMapping =
+			Portal.FRIENDLY_URL_SEPARATOR + friendlyURLMapper.getMapping();
+
+		_router = friendlyURLMapper.getRouter();
 	}
 
 	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
@@ -168,7 +162,7 @@ public class HtmlEngine extends BaseWikiEngine {
 
 	private static final Log _log = LogFactoryUtil.getLog(HtmlEngine.class);
 
-	private final String _friendlyURLMapping;
-	private final Router _router;
+	private String _friendlyURLMapping;
+	private Router _router;
 
 }

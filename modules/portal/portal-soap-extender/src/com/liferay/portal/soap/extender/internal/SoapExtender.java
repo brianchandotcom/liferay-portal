@@ -70,13 +70,13 @@ public class SoapExtender {
 
 		_component = _dependencyManager.createComponent();
 
-		CXFJaxWsServiceRegistrator jaxwsServiceRegistrator =
+		CXFJaxWsServiceRegistrator cxfJaxWsServiceRegistrator =
 			new CXFJaxWsServiceRegistrator();
 
-		jaxwsServiceRegistrator.setSoapDescriptorBuilder(
+		cxfJaxWsServiceRegistrator.setSoapDescriptorBuilder(
 			_soapDescriptorBuilder);
 
-		_component.setImplementation(jaxwsServiceRegistrator);
+		_component.setImplementation(cxfJaxWsServiceRegistrator);
 
 		addBusDependencies();
 		addHandlerDependencies();
@@ -99,13 +99,11 @@ public class SoapExtender {
 		}
 
 		for (String contextPath : contextPaths) {
-			String contextPathFilterString =
-				"(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
-					"=" + contextPath + ")";
-
 			addTCCLDependency(
-				true, Bus.class, contextPathFilterString, "addBus",
-				"removeBus");
+				true, Bus.class,
+				"(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
+					"=" + contextPath + ")",
+				"addBus", "removeBus");
 		}
 	}
 
@@ -113,13 +111,13 @@ public class SoapExtender {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
-		String[] handlers = soapExtenderConfiguration.jaxwsHandlersFilters();
+		String[] jaxWsHandlerFilters = soapExtenderConfiguration.jaxWsHandlerFilters();
 
-		if (handlers == null) {
+		if (jaxWsHandlerFilters == null) {
 			return;
 		}
 
-		for (String handlerFilter : handlers) {
+		for (String handlerFilter : jaxWsHandlerFilters) {
 			addTCCLDependency(
 				false, Handler.class, handlerFilter, "addHandler",
 				"removeHandler");

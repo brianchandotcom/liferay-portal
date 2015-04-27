@@ -19,11 +19,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -151,32 +149,6 @@ public class ActionUtil
 			portletRequest);
 
 		return getGroup(request);
-	}
-
-	public static void getMembershipRequest(HttpServletRequest request)
-		throws Exception {
-
-		long membershipRequestId = ParamUtil.getLong(
-			request, "membershipRequestId");
-
-		MembershipRequest membershipRequest = null;
-
-		if (membershipRequestId > 0) {
-			membershipRequest =
-				MembershipRequestLocalServiceUtil.getMembershipRequest(
-					membershipRequestId);
-		}
-
-		request.setAttribute(WebKeys.MEMBERSHIP_REQUEST, membershipRequest);
-	}
-
-	public static void getMembershipRequest(PortletRequest portletRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		getMembershipRequest(request);
 	}
 
 	public static void removePortletIds(

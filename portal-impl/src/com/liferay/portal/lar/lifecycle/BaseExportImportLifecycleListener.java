@@ -14,6 +14,13 @@
 
 package com.liferay.portal.lar.lifecycle;
 
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
+
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
@@ -45,6 +52,7 @@ public abstract class BaseExportImportLifecycleListener
 			exportImportLifecycleEvent.getAttributes();
 
 		int code = exportImportLifecycleEvent.getCode();
+		int processFlag = exportImportLifecycleEvent.getProcessFlag();
 
 		if (code == ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FAILED) {
 			onLayoutExportFailed(
@@ -82,6 +90,13 @@ public abstract class BaseExportImportLifecycleListener
 						EVENT_LAYOUT_IMPORT_SUCCEEDED) {
 
 			onLayoutImportSucceeded(getPortletDataContextAttribute(attributes));
+		}
+		else if ((code == EVENT_LAYOUT_IMPORT_SUCCEEDED) &&
+				 ((processFlag == PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS) ||
+				  (processFlag == PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS))) {
+
+			onLayoutImportProcessFinished(
+				getPortletDataContextAttribute(attributes));
 		}
 		else if (code ==
 					ExportImportLifecycleConstants.
@@ -123,6 +138,13 @@ public abstract class BaseExportImportLifecycleListener
 						EVENT_PORTLET_IMPORT_SUCCEEDED) {
 
 			onPortletImportSucceeded(
+				getPortletDataContextAttribute(attributes));
+		}
+		else if ((code == EVENT_PORTLET_IMPORT_SUCCEEDED) &&
+				 ((processFlag == PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS) ||
+				  (processFlag == PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS))) {
+
+			onPortletImportProcessFinished(
 				getPortletDataContextAttribute(attributes));
 		}
 		else if (code ==
@@ -310,6 +332,11 @@ public abstract class BaseExportImportLifecycleListener
 		throws Exception {
 	}
 
+	protected void onLayoutImportProcessFinished(
+			PortletDataContext portletDataContext)
+		throws Exception {
+	}
+
 	protected void onLayoutImportStarted(PortletDataContext portletDataContext)
 		throws Exception {
 	}
@@ -367,6 +394,11 @@ public abstract class BaseExportImportLifecycleListener
 
 	protected void onPortletImportFailed(
 			PortletDataContext portletDataContext, Throwable throwable)
+		throws Exception {
+	}
+
+	protected void onPortletImportProcessFinished(
+			PortletDataContext portletDataContext)
 		throws Exception {
 	}
 

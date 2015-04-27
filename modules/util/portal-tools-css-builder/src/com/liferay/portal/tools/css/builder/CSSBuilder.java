@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.liferay.sass.compiler.ruby.RubySassCompiler;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -41,25 +42,61 @@ import org.apache.tools.ant.DirectoryScanner;
 public class CSSBuilder {
 
 	public static void main(String[] args) throws Exception {
-		new CSSBuilder(args);
-	}
-
-	public CSSBuilder(String[] args) throws Exception {
 		Map<String, String> arguments = _parseArguments(args);
 
-		_jniSassCompiler = new JniSassCompiler();
+		String sassDir = arguments.get("sass.dir");
+		String docrootDirName = arguments.get("sass.docroot.dir");
+		String portalCommonDirName = arguments.get("sass.portal.common.dir");
+		String compilerImpl = arguments.get("sass.compiler.impl");
+
+		if(compilerImpl == null) {
+			compilerImpl = "libsass";
+		}
+
+		new CSSBuilder(
+			sassDir, docrootDirName, portalCommonDirName, compilerImpl);
+	}
+
+	public CSSBuilder(
+			String sassDir, String docrootDirName, String portalCommonDirName)
+		throws Exception{
+
+		this(sassDir,docrootDirName,portalCommonDirName,"libsass");
+	}
+
+	public CSSBuilder(
+			String sassDir, String docrootDirName, String portalCommonDirName,
+			String compilerImpl)
+		throws Exception {
+
+		long start = System.currentTimeMillis();
+
+		_docrootDirName = docrootDirName;
+		_portalCommonDirName = portalCommonDirName;
+
+		if (compilerImpl.equals("libsass")) {
+			try {
+				_jniSassCompiler = new JniSassCompiler();
+			}
+			catch (Exception e) {
+				System.err.println(
+					"Could not load JniSassCompiler, using RubySassCompiler " +
+						"instead");
+
+				_rubySassCompiler = new RubySassCompiler();
+			}
+		}
+		else {
+			_rubySassCompiler = new RubySassCompiler();
+		}
+
 		_rtlCSSConverter = new RTLCSSConverter();
 
 		List<String> dirNames = new ArrayList<>();
 
-		String sassDir = arguments.get("sass.dir");
-
 		if (sassDir != null) {
 			dirNames.addAll(Arrays.asList(sassDir.split(",")));
 		}
-
-		_docrootDirName = arguments.get("sass.docroot.dir");
-		_portalCommonDirName = arguments.get("sass.portal.common.dir");
 
 		List<String> fileNames = new ArrayList<>();
 
@@ -75,6 +112,16 @@ public class CSSBuilder {
 				System.out.println("Could not build " + fileName);
 			}
 		}
+
+		long finished = System.currentTimeMillis() - start;
+
+		StringBuilder finishedMessage = new StringBuilder(5);
+
+		finishedMessage.append("Total build time finished in ");
+		finishedMessage.append(finished);
+		finishedMessage.append("ms.");
+
+		System.out.println(finishedMessage.toString());
 	}
 
 	public void _build(String fileName) throws Exception {
@@ -129,6 +176,25 @@ public class CSSBuilder {
 		parsedMessage.append("ms of that time");
 
 		System.out.println(parsedMessage.toString());
+	}
+
+	private static Map<String, String> _parseArguments(String[] args) {
+		Map<String, String> arguments = new HashMap<>();
+
+		for (String arg : args) {
+			int pos = arg.indexOf('=');
+
+			if (pos <= 0) {
+				throw new IllegalArgumentException("Bad argument " + arg);
+			}
+
+			String key = arg.substring(0, pos).trim();
+			String value = arg.substring(pos + 1).trim();
+
+			arguments.put(key, value);
+		}
+
+		return arguments;
 	}
 
 	private void _collectSassFiles(
@@ -248,25 +314,6 @@ public class CSSBuilder {
 		);
 	}
 
-	private Map<String, String> _parseArguments(String[] args) {
-		Map<String, String> arguments = new HashMap<>();
-
-		for (String arg : args) {
-			int pos = arg.indexOf('=');
-
-			if (pos <= 0) {
-				throw new IllegalArgumentException("Bad argument " + arg);
-			}
-
-			String key = arg.substring(0, pos).trim();
-			String value = arg.substring(pos + 1).trim();
-
-			arguments.put(key, value);
-		}
-
-		return arguments;
-	}
-
 	private String _parseFile(String baseURL, String fileName)
 		throws Exception {
 
@@ -376,23 +423,26 @@ public class CSSBuilder {
 	}
 
 	private String _parseSass(String fileName, String content) {
-		String filePath = _docrootDirName.concat(fileName);
+		String filePath = _normalizeFileName(_docrootDirName, fileName);
 
-		String cssThemePath = filePath;
-
-		int pos = filePath.lastIndexOf("/css/");
-
-		if (pos >= 0) {
-			cssThemePath = filePath.substring(0, pos + 4);
-		}
+		filePath = filePath.substring(0, filePath.lastIndexOf("/"));
 
 		try {
-			return _jniSassCompiler.compileString(
-				content,
-				_portalCommonDirName + File.pathSeparator + cssThemePath, "");
+			if (_jniSassCompiler != null) {
+				return _jniSassCompiler.compileString(
+					content,
+					_portalCommonDirName + File.pathSeparator + filePath,
+					"");
+			}
+			else {
+				return _rubySassCompiler.compileString(
+					content,
+					_portalCommonDirName + File.pathSeparator + filePath,
+					"");
+			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 
 			System.out.println("Unable to parse " + fileName);
 		}
@@ -505,7 +555,8 @@ public class CSSBuilder {
 
 	private final String _docrootDirName;
 	private final Map<String, String> _fileCache = new HashMap<>();
-	private final JniSassCompiler _jniSassCompiler;
+	private JniSassCompiler _jniSassCompiler;
+	private RubySassCompiler _rubySassCompiler;
 	private final Pattern[] _patterns = {Pattern.compile(".*\\/ckeditor\\/.*")};
 	private final String _portalCommonDirName;
 	private final RTLCSSConverter _rtlCSSConverter;

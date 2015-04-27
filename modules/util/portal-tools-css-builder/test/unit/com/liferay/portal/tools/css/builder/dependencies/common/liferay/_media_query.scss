@@ -1,0 +1,67 @@
+@mixin media-query($min, $max: null) {
+	$maxWidth: -1;
+	$minWidth: -1;
+
+	@if $min != null {
+		@if map-has-key($media-query-sizes, $min) {
+			$minWidth: map-get($media-query-sizes, $min);
+		}
+		@else {
+			$minWidth: $min;
+		}
+	}
+
+	@if $max != null {
+		@if map-has-key($media-query-sizes, $max) {
+			$maxWidth: map-get($media-query-sizes, $max);
+		}
+		@else {
+			$maxWidth: $max;
+		}
+	}
+
+	@if $maxWidth <= 0 and $minWidth <= 0 {
+		@content;
+	}
+	@else if $maxWidth <= 0 {
+		@media only screen and (min-width: $minWidth) {
+			@content;
+		}
+	}
+	@else if $minWidth <= 0 {
+		@media only screen and (max-width: $maxWidth) {
+			@content;
+		}
+	}
+	@else {
+		@media only screen and (min-width: $minWidth) and (max-width: $maxWidth) {
+			@content;
+		}
+	}
+}
+
+// Shortcuts
+
+@mixin xs {
+	@include media-query(xs) {
+		@content
+	};
+}
+
+@mixin sm {
+	@include media-query(sm) {
+		@content
+	};
+}
+
+@mixin md {
+	@include media-query(md) {
+		@content
+	};
+}
+
+@mixin lg {
+	@include media-query(lg) {
+		@content
+	};
+}

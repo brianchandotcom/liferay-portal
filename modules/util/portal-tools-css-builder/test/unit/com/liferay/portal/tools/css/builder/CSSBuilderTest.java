@@ -19,7 +19,14 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
+import com.helger.commons.charset.CCharset;
+import com.helger.css.ECSSVersion;
+import com.helger.css.decl.CSSStyleRule;
+import com.helger.css.decl.CascadingStyleSheet;
+import com.helger.css.reader.CSSReader;
+import com.helger.css.writer.CSSWriterSettings;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,46 +36,43 @@ import org.junit.Test;
 public class CSSBuilderTest {
 
 	@Test
-	public void testGeneratedCss() throws Exception {
-		generateCSS();
+	public void testLibsassGeneratedCss() throws Exception {
+		generateCSS("libsass");
 
 		String expectedTestCss = readFile(_WORKING_DIR + "expected/test.css");
 		String generatedTestCss = readFile(
-			_WORKING_DIR + "/tests/.sass-cache/test.css");
+			_WORKING_DIR + "/libsass/.sass-cache/test.css");
 
-		Assert.assertEquals(expectedTestCss, generatedTestCss);
+		Assert.assertEquals(formatCss(expectedTestCss), formatCss(generatedTestCss));
 
 		String expectedTestRtlCss = readFile(
 			_WORKING_DIR + "/expected/test_rtl.css");
 		String generatedTestRtlCss = readFile(
-			_WORKING_DIR + "/tests/.sass-cache/test_rtl.css");
+			_WORKING_DIR + "/libsass/.sass-cache/test_rtl.css");
 
-		Assert.assertEquals(expectedTestRtlCss, generatedTestRtlCss);
+		Assert.assertEquals(formatCss(expectedTestRtlCss), formatCss(generatedTestRtlCss));
 
 		String expectedMainCss = readFile(_WORKING_DIR + "/expected/main.css");
 		String generatedMainCss = readFile(
-			_WORKING_DIR + "/tests/.sass-cache/main.css");
+			_WORKING_DIR + "/libsass/.sass-cache/main.css");
 
-		Assert.assertEquals(expectedMainCss, generatedMainCss);
+		Assert.assertEquals(formatCss(expectedMainCss), formatCss(generatedMainCss));
 
 		String expectedMainRtlCss = readFile(
 			_WORKING_DIR + "/expected/main_rtl.css");
 		String generatedMainRtlCss = readFile(
-			_WORKING_DIR + "/tests/.sass-cache/main_rtl.css");
+			_WORKING_DIR + "/libsass/.sass-cache/main_rtl.css");
 
-		Assert.assertEquals(expectedMainRtlCss, generatedMainRtlCss);
-	}
+		Assert.assertEquals(formatCss(expectedMainRtlCss), formatCss(generatedMainRtlCss));
 
-	@Test
-	public void testSkipUnmodifiedCss() throws Exception {
 		File previousTestFile = new File(
-			_WORKING_DIR + "/tests/.sass-cache/test.css");
+			_WORKING_DIR + "/libsass/.sass-cache/test.css");
 		File previousTestRtlFile = new File(
-			_WORKING_DIR + "/tests/.sass-cache/test_rtl.css");
+			_WORKING_DIR + "/libsass/.sass-cache/test_rtl.css");
 		File previousMainFile = new File(
-			_WORKING_DIR + "/tests/.sass-cache/main.css");
+			_WORKING_DIR + "/libsass/.sass-cache/main.css");
 		File previousMainRtlFile = new File(
-			_WORKING_DIR + "/tests/.sass-cache/main_rtl.css");
+			_WORKING_DIR + "/libsass/.sass-cache/main_rtl.css");
 
 		long previousTestFileModifiedDate = previousTestFile.lastModified();
 		long previousTestRtlFileModifiedDate =
@@ -77,16 +81,16 @@ public class CSSBuilderTest {
 		long previousMainRtlFileModifiedDate =
 			previousMainRtlFile.lastModified();
 
-		generateCSS();
+		generateCSS("libsass");
 
 		File newTestFile = new File(
-			_WORKING_DIR + "/tests/.sass-cache/test.css");
+			_WORKING_DIR + "/libsass/.sass-cache/test.css");
 		File newTestRtlFile = new File(
-			_WORKING_DIR + "/tests/.sass-cache/test_rtl.css");
+			_WORKING_DIR + "/libsass/.sass-cache/test_rtl.css");
 		File newMainFile = new File(
-			_WORKING_DIR + "/tests/.sass-cache/main.css");
+			_WORKING_DIR + "/libsass/.sass-cache/main.css");
 		File newMainRtlFile = new File(
-			_WORKING_DIR + "/tests/.sass-cache/main_rtl.css");
+			_WORKING_DIR + "/libsass/.sass-cache/main_rtl.css");
 
 		long newTestFileModifiedDate = newTestFile.lastModified();
 		long newTestRtlFileModifiedDate = newTestRtlFile.lastModified();
@@ -103,14 +107,63 @@ public class CSSBuilderTest {
 			previousMainRtlFileModifiedDate, newMainRtlFileModifiedDate);
 	}
 
-	private void generateCSS() throws Exception {
-		String[] args = {
-			"sass.dir=/tests/", "sass.docroot.dir=" + _WORKING_DIR,
-			"sass.portal.common.dir=" +
-				"../../../portal-web/docroot/html/css/common/"
-		};
+	@Test
+	public void testRubyGeneratedCss() throws Exception {
+		generateCSS("ruby");
 
-		new CSSBuilder(args);
+		String expectedTestCss = readFile(_WORKING_DIR + "expected/test.css");
+		String generatedTestCss = readFile(
+			_WORKING_DIR + "/ruby/.sass-cache/test.css");
+
+		Assert.assertEquals(formatCss(expectedTestCss), formatCss(generatedTestCss));
+
+		String expectedTestRtlCss = readFile(
+			_WORKING_DIR + "/expected/test_rtl.css");
+		String generatedTestRtlCss = readFile(
+			_WORKING_DIR + "/ruby/.sass-cache/test_rtl.css");
+
+		Assert.assertEquals(formatCss(expectedTestRtlCss), formatCss(generatedTestRtlCss));
+
+		String expectedMainCss = readFile(_WORKING_DIR + "/expected/main.css");
+		String generatedMainCss = readFile(
+			_WORKING_DIR + "/ruby/.sass-cache/main.css");
+
+		Assert.assertEquals(formatCss(expectedMainCss), formatCss(generatedMainCss));
+
+		String expectedMainRtlCss = readFile(
+			_WORKING_DIR + "/expected/main_rtl.css");
+		String generatedMainRtlCss = readFile(
+			_WORKING_DIR + "/ruby/.sass-cache/main_rtl.css");
+
+		Assert.assertEquals(formatCss(expectedMainRtlCss), formatCss(generatedMainRtlCss));
+	}
+
+	private void generateCSS(String sassImpl) throws Exception {
+		String sassDir = "/" + sassImpl + "/";
+		String docrootDirName = _WORKING_DIR;
+		String portalCommonDirName =
+			_WORKING_DIR + "common";
+
+		new CSSBuilder(sassDir, docrootDirName, portalCommonDirName, sassImpl);
+	}
+
+	protected String formatCss(String css) {
+		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
+			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
+
+		List<CSSStyleRule> cssStyleRules =
+			cascadingStyleSheet.getAllStyleRules();
+
+		StringBuilder sb = new StringBuilder(cssStyleRules.size());
+
+		CSSWriterSettings cssWriterSettings = new CSSWriterSettings(
+			ECSSVersion.CSS30, true);
+
+		for (CSSStyleRule cssStyleRule : cssStyleRules) {
+			sb.append(cssStyleRule.getAsCSSString(cssWriterSettings, 1));
+		}
+
+		return sb.toString();
 	}
 
 	private String readFile(String fileName) throws Exception {

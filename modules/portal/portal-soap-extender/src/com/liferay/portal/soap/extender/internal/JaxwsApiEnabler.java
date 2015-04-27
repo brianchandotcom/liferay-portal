@@ -52,37 +52,39 @@ public class JaxwsApiEnabler {
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws InterruptedException, InvalidSyntaxException {
 
-		JaxWsApiConfiguration configuration = Configurable.createConfigurable(
-			JaxWsApiConfiguration.class, properties);
+		JaxWsApiConfiguration jaxWsApiConfiguration =
+			Configurable.createConfigurable(
+				JaxWsApiConfiguration.class, properties);
 
-		String contextPath = configuration.contextPath();
+		String contextPath = jaxWsApiConfiguration.contextPath();
 
 		Filter filter = bundleContext.createFilter(
 			"(&(objectClass=org.apache.cxf.Bus)(" +
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH + "=" +
-				contextPath + "))");
+					contextPath + "))");
 
-		_busServiceTracker = new ServiceTracker<>(bundleContext, filter, null);
+		_serviceTracker = new ServiceTracker<>(bundleContext, filter, null);
 
-		_busServiceTracker.open();
+		_serviceTracker.open();
 
-		Bus bus = _busServiceTracker.waitForService(configuration.timeout());
+		Bus bus = _serviceTracker.waitForService(
+			jaxWsApiConfiguration.timeout());
 
 		if (bus != null) {
 			BusFactory.setDefaultBus(bus);
 
 			ProviderImpl providerImpl = new ProviderImpl();
 
-			_providerServiceRegistration = bundleContext.registerService(
+			_serviceRegistration = bundleContext.registerService(
 				Provider.class, providerImpl, null);
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_providerServiceRegistration.unregister();
+		_serviceRegistration.unregister();
 
-		_busServiceTracker.close();
+		_serviceTracker.close();
 	}
 
 	@Modified
@@ -95,7 +97,7 @@ public class JaxwsApiEnabler {
 		activate(bundleContext, properties);
 	}
 
-	private ServiceTracker<Bus, Bus> _busServiceTracker;
-	private ServiceRegistration<Provider> _providerServiceRegistration;
+	private ServiceRegistration<Provider> _serviceRegistration;
+	private ServiceTracker<Bus, Bus> _serviceTracker;
 
 }

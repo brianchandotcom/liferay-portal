@@ -68,14 +68,24 @@ public final class XMLLoggerHandler {
 		btnContainerLoggerElement.setClassName("btn-container");
 		btnContainerLoggerElement.setName("div");
 
-		LoggerElement lineNumberLoggerElement = new LoggerElement();
+		StringBuilder sb = new StringBuilder();
 
-		lineNumberLoggerElement.setClassName("line-number");
-		lineNumberLoggerElement.setName("div");
-		lineNumberLoggerElement.setText(element.attributeValue("line-number"));
+		sb.append(
+			_getLineNumberItemText(element.attributeValue("line-number")));
 
-		btnContainerLoggerElement.addChildLoggerElement(
-			lineNumberLoggerElement);
+		List<Element> childElements = element.elements();
+
+		boolean isExecutingMacro = _isExecutingMacro(element);
+
+		if (!childElements.isEmpty() || isExecutingMacro) {
+			sb.append(_getBtnItemText("btn-collapse"));
+		}
+
+		if (!childElements.isEmpty() && isExecutingMacro) {
+			sb.append(_getBtnItemText("btn-var"));
+		}
+
+		btnContainerLoggerElement.setText(sb.toString());
 
 		return btnContainerLoggerElement;
 	}

@@ -17,31 +17,31 @@
 <%@ include file="/init.jsp" %>
 
 <script>
-	var PATH_PORTLET = Liferay.ThemeDisplay.getPathContext() + '/o/comliferayportletcssweb';
+	var PATH_PORTLET_CSS_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/comliferayportletcssweb';
 
 	AUI().applyConfig(
-			{
-				groups: {
-					journal: {
-						base: PATH_PORTLET + '/js/',
-						modules: {
-							'liferay-look-and-feel': {
-								path: 'look_and_feel.js',
-								requires: [
-									'aui-color-picker-popover',
-									'aui-io-plugin-deprecated',
-									'aui-io-request',
-									'aui-tabview',
-									'liferay-portlet-url',
-									'liferay-util-window',
-									'liferay-widget-zindex'
-								]
-							}
-						},
-						root: PATH_PORTLET + '/js/'
-					}
+		{
+			groups: {
+				portlet_css: {
+					base: PATH_PORTLET_CSS_WEB + '/js/',
+					modules: {
+						'liferay-look-and-feel': {
+							path: 'look_and_feel.js',
+							requires: [
+								'aui-color-picker-popover',
+								'aui-io-plugin-deprecated',
+								'aui-io-request',
+								'aui-tabview',
+								'liferay-portlet-url',
+								'liferay-util-window',
+								'liferay-widget-zindex'
+							]
+						}
+					},
+					root: PATH_PORTLET_CSS_WEB + '/js/'
 				}
 			}
+		}
 	);
 
 	Liferay.provide(

@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.comment;
 /**
  * @author Adolfo Pérez
  */
-public interface WorkflowableComment {
+public interface WorkflowableComment extends Comment {
 
 	public long getCompanyId();
 
@@ -26,5 +26,9 @@ public interface WorkflowableComment {
 	public long getPrimaryKey();
 
 	public int getStatus();
+
+	public boolean isApproved();
+
+	public boolean isPending();
 
 }

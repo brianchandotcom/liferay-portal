@@ -65,10 +65,6 @@ public interface Comment {
 
 	public String getUserName();
 
-	public boolean isApproved();
-
-	public boolean isPending();
-
 	public boolean isRoot();
 
 }

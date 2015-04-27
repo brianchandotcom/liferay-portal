@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.comment.context;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -56,7 +57,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 				_discussionRequestHelper.getScopeGroupId(),
 				CommentConstants.getDiscussionClassName())) {
 
-			if (_comment.isPending()) {
+			if (isCommentPending()) {
 				publishButtonLabel = "save";
 			}
 			else {
@@ -91,7 +92,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	@Override
 	public boolean isDiscussionVisible() throws PortalException {
-		if (!_comment.isApproved() && !isCommentAuthor() && !isGroupAdmin()) {
+		if (!isCommentApproved() && !isCommentAuthor() && !isGroupAdmin()) {
 			return false;
 		}
 
@@ -139,7 +140,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	@Override
 	public boolean isWorkflowStatusVisible() {
-		if ((_comment != null) && !_comment.isApproved()) {
+		if ((_comment != null) && !isCommentApproved()) {
 			return true;
 		}
 
@@ -170,6 +171,19 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionTaglibHelper.getUserId());
 	}
 
+	protected boolean isCommentApproved() {
+		boolean approved = true;
+
+		if (_comment instanceof WorkflowableComment) {
+			WorkflowableComment workflowableComment =
+				(WorkflowableComment)_comment;
+
+			approved = workflowableComment.isApproved();
+		}
+
+		return approved;
+	}
+
 	protected boolean isCommentAuthor() {
 		User user = getUser();
 
@@ -180,6 +194,19 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		}
 
 		return false;
+	}
+
+	protected boolean isCommentPending() {
+		boolean pending = false;
+
+		if (_comment instanceof WorkflowableComment) {
+			WorkflowableComment workflowableComment =
+				(WorkflowableComment)_comment;
+
+			pending = workflowableComment.isPending();
+		}
+
+		return pending;
 	}
 
 	protected boolean isGroupAdmin() {

@@ -146,16 +146,12 @@ public class SoapExtender {
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();
 
-		String descriptorBuilderFilter =
-			_soapExtenderConfiguration.soapDescriptorBuilderFilter();
-
 		serviceDependency.setDefaultImplementation(_soapDescriptorBuilder);
-
 		serviceDependency.setCallbacks("setSoapDescriptorBuilder", "-");
 		serviceDependency.setRequired(false);
-
 		serviceDependency.setService(
-			SoapDescriptorBuilder.class, descriptorBuilderFilter);
+			SoapDescriptorBuilder.class,
+			_soapExtenderConfiguration.soapDescriptorBuilderFilter());
 
 		_component.add(serviceDependency);
 	}

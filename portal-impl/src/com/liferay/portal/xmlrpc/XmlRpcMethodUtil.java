@@ -38,22 +38,6 @@ public class XmlRpcMethodUtil {
 		return _instance._getMethod(token, methodName);
 	}
 
-	public static void registerMethod(Method method) {
-		if (method == null) {
-			return;
-		}
-
-		_instance._registerMethod(method);
-	}
-
-	public static void unregisterMethod(Method method) {
-		if (method == null) {
-			return;
-		}
-
-		_instance._unregisterMethod(method);
-	}
-
 	protected Method _getMethod(String token, String methodName) {
 		Method method = null;
 
@@ -73,24 +57,6 @@ public class XmlRpcMethodUtil {
 			Method.class, new MethodServiceTrackerCustomizer());
 
 		_serviceTracker.open();
-	}
-
-	private void _registerMethod(Method method) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceRegistration<Method> serviceRegistration =
-			registry.registerService(Method.class, method);
-
-		_serviceRegistrations.put(method, serviceRegistration);
-	}
-
-	private void _unregisterMethod(Method method) {
-		ServiceRegistration<Method> serviceRegistration =
-			_serviceRegistrations.remove(method);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

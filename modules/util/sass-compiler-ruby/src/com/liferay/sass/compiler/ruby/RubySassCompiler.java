@@ -23,14 +23,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jruby.RubyArray;
-import org.jruby.RubyException;
 import org.jruby.RubyInstanceConfig;
 import org.jruby.embed.LocalContextScope;
 import org.jruby.embed.ScriptingContainer;
 import org.jruby.embed.internal.LocalContextProvider;
-import org.jruby.exceptions.RaiseException;
-import org.jruby.runtime.builtin.IRubyObject;
 
 /**
  * @author David Truong
@@ -38,24 +34,11 @@ import org.jruby.runtime.builtin.IRubyObject;
 public class RubySassCompiler implements AutoCloseable {
 
 	public RubySassCompiler() throws Exception {
-		this("", "", _COMPILE_MODE_JIT, _COMPILE_DEFAULT_THRESHOLD);
+		this(_COMPILE_MODE_JIT, _COMPILE_DEFAULT_THRESHOLD);
 	}
 
-	public RubySassCompiler(String docrootDirName, String includeDirName)
+	public RubySassCompiler(String compileMode, int compilerThreshold)
 		throws Exception {
-
-		this(
-			docrootDirName, includeDirName, _COMPILE_MODE_JIT,
-			_COMPILE_DEFAULT_THRESHOLD);
-	}
-
-	public RubySassCompiler(
-			String docrootDirName, String includeDirName, String compileMode,
-			int compilerThreshold)
-		throws Exception {
-
-		_docrootDirName = docrootDirName;
-		_includeDirName = includeDirName;
 
 		_scriptingContainer = new ScriptingContainer(
 			LocalContextScope.THREADSAFE);
@@ -96,10 +79,7 @@ public class RubySassCompiler implements AutoCloseable {
 
 		Class<?> clazz = getClass();
 
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		URL url = classLoader.getResource(
-			"com/liferay/sass/compiler/ruby/dependencies/main.rb");
+		URL url = clazz.getResource("dependencies/main.rb");
 
 		Path path = Paths.get(url.toURI());
 
@@ -113,62 +93,35 @@ public class RubySassCompiler implements AutoCloseable {
 		_scriptingContainer.terminate();
 	}
 
-	public String compileFile(String fileName) {
+	public String compileFile(
+			String inputFile, String includePath, String imgPath)
+		throws RubySassCompilerException {
+
 		try {
-			Path path = Paths.get(_docrootDirName.concat(fileName));
+			Path path = Paths.get(inputFile);
 
 			String input = new String(Files.readAllBytes(path));
 
-			return compileString(input, fileName);
+			return compileString(input, includePath, imgPath);
 		}
 		catch (Exception e) {
-			System.err.println("Unable to parse " + fileName);
+			throw new RubySassCompilerException("Unable to parse " + inputFile);
 		}
-
-		return null;
 	}
 
-	public String compileString(String input, String fileName) {
+	public String compileString(
+			String input, String includePath, String imgPath)
+		throws RubySassCompilerException {
+
 		try {
-			fileName = _docrootDirName.concat(fileName);
-
-			String cssThemeDirName = fileName;
-
-			int index = fileName.lastIndexOf("/css/");
-
-			if (index >= 0) {
-				cssThemeDirName = fileName.substring(0, index + 4);
-			}
-
 			return _scriptingContainer.callMethod(
 				_scriptObject, "process",
-				new Object[] {
-					input, _includeDirName, fileName, cssThemeDirName, _TMP_DIR,
-					false
-				},
+				new Object[] {input, includePath, _TMP_DIR, false},
 				String.class);
 		}
 		catch (Exception e) {
-			RaiseException raiseException = (RaiseException)e;
-
-			RubyException rubyException = raiseException.getException();
-
-			System.err.println(
-				String.valueOf(rubyException.message.toJava(String.class)));
-
-			IRubyObject iRubyObject = rubyException.getBacktrace();
-
-			RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
-				RubyArray.class);
-
-			for (int i = 0; i < rubyArray.size(); i++) {
-				Object object = rubyArray.get(i);
-
-				System.err.println(String.valueOf(object));
-			}
+			throw new RubySassCompilerException(e);
 		}
-
-		return null;
 	}
 
 	private static final int _COMPILE_DEFAULT_THRESHOLD = 5;
@@ -179,8 +132,6 @@ public class RubySassCompiler implements AutoCloseable {
 
 	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 
-	private final String _docrootDirName;
-	private final String _includeDirName;
 	private final ScriptingContainer _scriptingContainer;
 	private final Object _scriptObject;
 

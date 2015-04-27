@@ -8,18 +8,16 @@ class SASSWrapper
 		@load_paths = Compass.configuration.sass_load_paths
 	end
 
-	def process(content, commonSassPath, cssRealPath, cssThemePath, sassCachePath, debug=false)
-		Compass.configuration.project_path ||= cssThemePath
+	def process(input, includePath, sassCachePath, debug=false)
 
-		load_paths = [commonSassPath, cssThemePath]
+		load_paths = includePath.split(File::PATH_SEPARATOR)
 		load_paths += @load_paths
 
 		engine = Sass::Engine.new(
-			content,
+			input,
 			{
 				:cache_location => sassCachePath,
 				:debug_info => debug,
-				:filename => cssRealPath,
 				:full_exception => debug,
 				:line => 0,
 				:load_paths => load_paths,

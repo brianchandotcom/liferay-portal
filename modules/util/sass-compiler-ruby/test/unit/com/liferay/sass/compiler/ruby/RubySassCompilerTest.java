@@ -30,7 +30,8 @@ public class RubySassCompilerTest {
 			String expectedOutput = "foo {\n  margin: 42px; }\n";
 			String actualOutput = rubySassCompiler.compileFile(
 				System.getProperty("user.dir") + "/test-classes/unit/com" +
-					"/liferay/sass/compiler/ruby/dependencies/input.scss");
+					"/liferay/sass/compiler/ruby/dependencies/input.scss",
+				"", "");
 
 			Assert.assertEquals(expectedOutput, actualOutput);
 		}
@@ -43,10 +44,9 @@ public class RubySassCompilerTest {
 
 			String expectedOutput = "foo {\n  margin: 42px; }\n";
 			String actualOutput = rubySassCompiler.compileString(
-				"foo { margin: 21px * 2; }", "");
+				"foo { margin: 21px * 2; }", "", "");
 
 			Assert.assertEquals(expectedOutput, actualOutput);
-
 		}
 	}
 

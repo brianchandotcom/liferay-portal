@@ -424,6 +424,39 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	@Override
+	public List<DDMStructure> getJournalFolderStructures(
+			long[] groupIds, long journalFolderId, int restrictionType)
+		throws PortalException {
+
+		if (restrictionType ==
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
+
+			return journalFolderPersistence.getDDMStructures(journalFolderId);
+		}
+
+		List<DDMStructure> structures = null;
+
+		journalFolderId = getOverridedDDMStructuresFolderId(journalFolderId);
+
+		if (journalFolderId !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			structures = journalFolderPersistence.getDDMStructures(
+				journalFolderId);
+		}
+		else {
+			long classNameId = classNameLocalService.getClassNameId(
+				JournalArticle.class);
+
+			structures = ddmStructurePersistence.findByG_C(
+				groupIds, classNameId);
+		}
+
+		return structures;
+	}
+
+	@Override
 	public List<JournalFolder> getNoAssetFolders() {
 		return journalFolderFinder.findF_ByNoAssets();
 	}

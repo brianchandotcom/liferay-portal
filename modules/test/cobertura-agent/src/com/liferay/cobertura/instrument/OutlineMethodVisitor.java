@@ -63,8 +63,8 @@ public class OutlineMethodVisitor extends MethodVisitor {
 
 	@Override
 	public void visitJumpInsn(int opcode, Label label) {
-		if ((_currentLine != 0) && !"<clinit>".equals(_methodNode.name) &&
-			(opcode != Opcodes.GOTO) && (opcode != Opcodes.JSR)) {
+		if ((_currentLine != 0) && (opcode != Opcodes.GOTO) &&
+			(opcode != Opcodes.JSR)) {
 
 			_classData.addLineJump(_currentLine, _currentJump);
 

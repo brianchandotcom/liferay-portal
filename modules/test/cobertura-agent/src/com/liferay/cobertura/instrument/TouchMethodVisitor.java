@@ -41,7 +41,6 @@ public class TouchMethodVisitor extends MethodVisitor {
 		_jumpLabels = jumpLabels;
 		_lineLabels = lineLabels;
 		_switchLabels = switchLabels;
-		_name = methodNode.name;
 
 		int variableCount = 0;
 
@@ -101,8 +100,8 @@ public class TouchMethodVisitor extends MethodVisitor {
 	public void visitJumpInsn(int opcode, Label label) {
 		_touchBranch();
 
-		if ((_currentLine != 0) && !_name.equals("<clinit>") &&
-			(opcode != Opcodes.GOTO) && (opcode != Opcodes.JSR)) {
+		if ((_currentLine != 0) && (opcode != Opcodes.GOTO) &&
+			(opcode != Opcodes.JSR)) {
 
 			_lastJump = new JumpHolder(_currentLine, _currentJump++);
 
@@ -363,7 +362,6 @@ public class TouchMethodVisitor extends MethodVisitor {
 	private final Set<Label> _jumpLabels;
 	private JumpHolder _lastJump;
 	private final Map<Label, Integer> _lineLabels;
-	private final String _name;
 	private final String _owner;
 	private boolean _started;
 	private Label _startLabel;

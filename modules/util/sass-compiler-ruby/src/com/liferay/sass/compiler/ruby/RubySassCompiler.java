@@ -14,16 +14,14 @@
 
 package com.liferay.sass.compiler.ruby;
 
-import java.io.InputStream;
-
 import java.net.URL;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import org.jruby.RubyInstanceConfig;
 import org.jruby.embed.LocalContextScope;
@@ -118,7 +116,7 @@ public class RubySassCompiler implements AutoCloseable {
 		try {
 			return _scriptingContainer.callMethod(
 				_scriptObject, "process",
-				new Object[]{input, includePath, _TMP_DIR, false},
+				new Object[] {input, includePath, _TMP_DIR, false},
 				String.class);
 		}
 		catch (Exception e) {

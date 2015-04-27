@@ -24,8 +24,7 @@ WorkflowTaskDisplayTerms displayTerms = new WorkflowTaskDisplayTerms(renderReque
 	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
-	id="toggle_id_workflow_task_search"
->
+	id="toggle_id_workflow_task_search">
 
 	<aui:fieldset>
 		<aui:input inlineField="<%= Boolean.TRUE %>" label="task" name="<%= WorkflowTaskDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />

@@ -123,7 +123,7 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 
 				<c:if test="<%= !workflowTask.isCompleted() %>">
 					<portlet:actionURL var="updateDueDateURL" name="updateTask">
-						<portlet:param name="jsp" value="/edit_workflow_task.jsp" />
+						<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 					</portlet:actionURL>

@@ -35,9 +35,11 @@ try {
 %>
 
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-		<aui:nav-bar-search>
-			<liferay-util:include page="/workflow_search_tasks.jsp" servletContext="<%= application %>" />
-		</aui:nav-bar-search>
+		<aui:nav-bar>
+			<aui:nav-bar-search>
+				<liferay-util:include page="/workflow_search_tasks.jsp" servletContext="<%= application %>" />
+			</aui:nav-bar-search>
+		</aui:nav-bar>	
 		<c:choose>
 			<c:when test='<%= tabs1.equals("pending") %>'>
 				<liferay-ui:panel-container extended="<%= Boolean.FALSE %>" id="workflowTasksPanelContainer" persistState="<%= Boolean.TRUE %>">

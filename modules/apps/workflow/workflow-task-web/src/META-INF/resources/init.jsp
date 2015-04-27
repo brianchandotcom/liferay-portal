@@ -79,7 +79,8 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="javax.portlet.PortletMode" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.model.Role" %><%@
-page import="com.liferay.portal.service.RoleLocalServiceUtil" %>
+page import="com.liferay.portal.service.RoleLocalServiceUtil" %><%@
+page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %>
 
 
 <liferay-theme:defineObjects />

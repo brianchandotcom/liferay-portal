@@ -15,10 +15,8 @@
 package com.liferay.portlet.dynamicdatamapping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
@@ -29,7 +27,6 @@ import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePer
 import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -388,16 +385,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		}
 
 		return ddmStructure;
-	}
-
-	@Override
-	public List<DDMStructure> getJournalFolderStructures(
-			long[] groupIds, long journalFolderId, int restrictionType)
-		throws PortalException {
-
-		return filterStructures(
-			ddmStructureLocalService.getJournalFolderStructures(
-				groupIds, journalFolderId, restrictionType));
 	}
 
 	/**
@@ -763,28 +750,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		return ddmStructureLocalService.updateStructure(
 			structureId, parentStructureId, nameMap, descriptionMap, definition,
 			serviceContext);
-	}
-
-	protected List<DDMStructure> filterStructures(List<DDMStructure> structures)
-		throws PortalException {
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		structures = ListUtil.copy(structures);
-
-		Iterator<DDMStructure> itr = structures.iterator();
-
-		while (itr.hasNext()) {
-			DDMStructure structure = itr.next();
-
-			if (!DDMStructurePermission.contains(
-					permissionChecker, structure, ActionKeys.VIEW)) {
-
-				itr.remove();
-			}
-		}
-
-		return structures;
 	}
 
 }

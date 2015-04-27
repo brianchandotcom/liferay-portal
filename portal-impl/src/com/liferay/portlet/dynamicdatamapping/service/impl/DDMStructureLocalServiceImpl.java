@@ -55,8 +55,6 @@ import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLocalServ
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormTemplateSynchonizer;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -757,41 +755,6 @@ public class DDMStructureLocalServiceImpl
 		long dlFileEntryTypeId) {
 
 		return dlFileEntryTypePersistence.getDDMStructures(dlFileEntryTypeId);
-	}
-
-	@Override
-	public List<DDMStructure> getJournalFolderStructures(
-			long[] groupIds, long journalFolderId, int restrictionType)
-		throws PortalException {
-
-		if (restrictionType ==
-				JournalFolderConstants.
-					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
-
-			return journalFolderPersistence.getDDMStructures(journalFolderId);
-		}
-
-		List<DDMStructure> structures = null;
-
-		journalFolderId =
-			journalFolderLocalService.getOverridedDDMStructuresFolderId(
-				journalFolderId);
-
-		if (journalFolderId !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			structures = journalFolderPersistence.getDDMStructures(
-				journalFolderId);
-		}
-		else {
-			long classNameId = classNameLocalService.getClassNameId(
-				JournalArticle.class);
-
-			structures = ddmStructurePersistence.findByG_C(
-				groupIds, classNameId);
-		}
-
-		return structures;
 	}
 
 	/**

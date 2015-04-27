@@ -32,7 +32,7 @@ public abstract class BaseRSSStrutsAction extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		if (!PortalUtil.isRSSFeedsEnabled()) {
+		if (!isRSSFeedsEnabled(request)) {
 			PortalUtil.sendRSSFeedsDisabledError(request, response);
 
 			return null;
@@ -54,5 +54,11 @@ public abstract class BaseRSSStrutsAction extends BaseStrutsAction {
 
 	protected abstract byte[] getRSS(HttpServletRequest request)
 		throws Exception;
+
+	protected boolean isRSSFeedsEnabled(HttpServletRequest request)
+		throws Exception {
+
+		return PortalUtil.isRSSFeedsEnabled();
+	}
 
 }

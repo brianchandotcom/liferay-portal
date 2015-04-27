@@ -19,7 +19,6 @@ import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.engine.WikiEngine;
 
 import java.util.Collection;
@@ -67,17 +66,6 @@ public class WikiEngineTracker {
 				public void map(
 					ServiceReference<WikiEngine> serviceReference,
 					Emitter<String> emitter) {
-
-					String enabled = (String)serviceReference.getProperty(
-						"enabled");
-
-					if (Validator.isNull(enabled)) {
-						enabled = Boolean.TRUE.toString();
-					}
-
-					if (!Boolean.valueOf(enabled)) {
-						return;
-					}
 
 					WikiEngine wikiEngine = _bundleContext.getService(
 						serviceReference);

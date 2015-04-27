@@ -36,10 +36,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component(
-	property = {"enabled=false"},
-	service = WikiEngine.class
-)
+@Component(service = WikiEngine.class)
 public class TextEngine extends BaseWikiEngine {
 
 	@Override

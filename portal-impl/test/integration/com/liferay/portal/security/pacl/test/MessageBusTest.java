@@ -16,8 +16,11 @@ package com.liferay.portal.security.pacl.test;
 
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.test.rule.PACLTestRule;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,6 +33,11 @@ public class MessageBusTest {
 	@ClassRule
 	@Rule
 	public static final PACLTestRule paclTestRule = new PACLTestRule();
+
+	@Before
+	public void setUp() {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	}
 
 	@Test
 	public void testListen1() throws Exception {

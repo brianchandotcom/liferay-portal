@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 
 /**
@@ -49,11 +47,6 @@ public class PluginSearchEngineConfigurator
 
 		return (IndexWriter)beanLocator.locate(
 			IndexWriterProxyBean.class.getName());
-	}
-
-	@Override
-	protected MessageBus getMessageBus() {
-		return MessageBusUtil.getMessageBus();
 	}
 
 	@Override

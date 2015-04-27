@@ -38,14 +38,6 @@ public class SerialDestination extends BaseAsyncDestination {
 		setWorkersMaxSize(_WORKERS_MAX_SIZE);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public SerialDestination(String name) {
-		super(name, _WORKERS_CORE_SIZE, _WORKERS_MAX_SIZE);
-	}
-
 	@Override
 	protected void dispatch(
 		final Set<MessageListener> messageListeners, final Message message) {

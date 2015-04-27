@@ -34,13 +34,13 @@ import org.junit.runner.RunWith;
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("bnd-api-handler.bnd")
+@BndFile("bnd-api.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class JaxwsApiHandlerRegistrationTest1 {
+public class JaxWsApiRegistrationTest {
 
 	@Test
-	public void testHandlerIsRegistered() throws Exception {
+	public void testGreeter() throws Exception {
 		URL url = new URL(_url, "/o/soap-test/greeterApi?wsdl");
 
 		QName qName = new QName(
@@ -51,9 +51,7 @@ public class JaxwsApiHandlerRegistrationTest1 {
 
 		Greeter greeter = service.getPort(Greeter.class);
 
-		String greeting = greeter.greet();
-
-		Assert.assertTrue(greeting.endsWith("was handled."));
+		Assert.assertEquals("Greetings!", greeter.greet());
 	}
 
 	@ArquillianResource

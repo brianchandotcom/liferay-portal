@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	property = {"enabled=false"},
+	property = {"service.ranking:Integer=-1000"},
 	service = WikiEngine.class
 )
 public class JSPWikiEngine extends BaseInputEditorWikiEngine {

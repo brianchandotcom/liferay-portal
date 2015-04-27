@@ -66,8 +66,8 @@ public class UpgradeProcess_6_1_0 extends UpgradeProcess {
 		upgrade(UpgradeDocumentLibrary.class);
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeGroup.class);
-		upgrade(UpgradeImageGallery.class);
 		upgrade(UpgradeIFrame.class);
+		upgrade(UpgradeImageGallery.class);
 		upgrade(UpgradeJournal.class);
 		upgrade(UpgradeLayout.class);
 		upgrade(UpgradeLock.class);

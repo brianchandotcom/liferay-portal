@@ -89,6 +89,16 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	}
 
 	@Override
+	public List<DDMStructure> getDDMStructures(
+			long[] groupIds, long folderId, int restrictionType)
+		throws PortalException {
+
+		return filterStructures(
+			journalFolderLocalService.getDDMStructures(
+				groupIds, folderId, restrictionType));
+	}
+
+	@Override
 	public JournalFolder getFolder(long folderId) throws PortalException {
 		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
 
@@ -226,16 +236,6 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			return journalFolderPersistence.filterCountByG_P_S(
 				groupId, parentFolderId, status);
 		}
-	}
-
-	@Override
-	public List<DDMStructure> getJournalFolderStructures(
-			long[] groupIds, long journalFolderId, int restrictionType)
-		throws PortalException {
-
-		return filterStructures(
-			ddmStructureLocalService.getJournalFolderStructures(
-				groupIds, journalFolderId, restrictionType));
 	}
 
 	/**

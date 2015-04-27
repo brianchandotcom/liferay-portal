@@ -277,6 +277,36 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	@Override
+	public List<DDMStructure> getDDMStructures(
+			long[] groupIds, long folderId, int restrictionType)
+		throws PortalException {
+
+		if (restrictionType ==
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
+
+			return journalFolderPersistence.getDDMStructures(folderId);
+		}
+
+		List<DDMStructure> structures = null;
+
+		folderId = getOverridedDDMStructuresFolderId(folderId);
+
+		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			structures = journalFolderPersistence.getDDMStructures(folderId);
+		}
+		else {
+			long classNameId = classNameLocalService.getClassNameId(
+				JournalArticle.class);
+
+			structures = ddmStructurePersistence.findByG_C(
+				groupIds, classNameId);
+		}
+
+		return structures;
+	}
+
+	@Override
 	public JournalFolder getFolder(long folderId) throws PortalException {
 		return journalFolderPersistence.findByPrimaryKey(folderId);
 	}
@@ -421,39 +451,6 @@ public class JournalFolderLocalServiceImpl
 		}
 
 		return folderId;
-	}
-
-	@Override
-	public List<DDMStructure> getJournalFolderStructures(
-			long[] groupIds, long journalFolderId, int restrictionType)
-		throws PortalException {
-
-		if (restrictionType ==
-				JournalFolderConstants.
-					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
-
-			return journalFolderPersistence.getDDMStructures(journalFolderId);
-		}
-
-		List<DDMStructure> structures = null;
-
-		journalFolderId = getOverridedDDMStructuresFolderId(journalFolderId);
-
-		if (journalFolderId !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			structures = journalFolderPersistence.getDDMStructures(
-				journalFolderId);
-		}
-		else {
-			long classNameId = classNameLocalService.getClassNameId(
-				JournalArticle.class);
-
-			structures = ddmStructurePersistence.findByG_C(
-				groupIds, classNameId);
-		}
-
-		return structures;
 	}
 
 	@Override
@@ -949,11 +946,9 @@ public class JournalFolderLocalServiceImpl
 			restrictionType = parentFolder.getRestrictionType();
 		}
 
-		List<DDMStructure> folderDDMStructures =
-			ddmStructureLocalService.getJournalFolderStructures(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					folder.getGroupId()),
-				parentFolderId, restrictionType);
+		List<DDMStructure> folderDDMStructures = getDDMStructures(
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(folder.getGroupId()),
+			parentFolderId, restrictionType);
 
 		long[] ddmStructureIds = new long[folderDDMStructures.size()];
 

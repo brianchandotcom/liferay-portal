@@ -12,16 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.test.service;
+package com.liferay.portal.soap.extender.api;
+
+import java.util.Map;
+
+import javax.xml.namespace.QName;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class GreeterImpl implements Greeter {
+public interface SoapDescriptorBuilder {
 
-	@Override
-	public String greet() {
-		return "Greetings!";
+	public SoapDescriptor buildDescriptor(
+		Map<String, Object> properties, Object service);
+
+	public interface SoapDescriptor {
+		public QName getEndpointName();
+
+		public String getPublicationAddress();
+
+		public Class<?> getServiceClass();
+
+		public String getWsdlLocation();
+
 	}
 
 }

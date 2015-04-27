@@ -4,5 +4,6 @@ Bundle-SymbolicName: com.liferay.portal.soap.extender.test.api
 Bundle-Version: 1.0.0
 Include-Resource:\
 	com/liferay/portal/soap/extender/test/activator=classes/com/liferay/portal/soap/extender/test/activator,\
+	com/liferay/portal/soap/extender/test/activator/config=classes/com/liferay/portal/soap/extender/test/activator/config,\
 	com/liferay/portal/soap/extender/test/handler=classes/com/liferay/portal/soap/extender/test/handler,\
 	com/liferay/portal/soap/extender/test/service=classes/com/liferay/portal/soap/extender/test/service

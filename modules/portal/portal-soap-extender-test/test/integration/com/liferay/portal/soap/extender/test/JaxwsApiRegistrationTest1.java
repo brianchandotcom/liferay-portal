@@ -34,14 +34,14 @@ import org.junit.runner.RunWith;
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("bnd-component.bnd")
+@BndFile("bnd-api.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class JaxwsComponentRegistrationTest {
+public class JaxwsApiRegistrationTest1 {
 
 	@Test
-	public void testIsRegistered() throws Exception {
-		URL url = new URL(_url, "/o/soap-test/greeter?wsdl");
+	public void testGreeter() throws Exception {
+		URL url = new URL(_url, "/o/soap-test/greeterApi?wsdl");
 
 		QName qName = new QName(
 			"http://service.test.extender.soap.portal.liferay.com/",

@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
 @BndFile("bnd-api-handler.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class JaxwsApiHandlerRegistrationTest {
+public class JaxwsApiHandlerRegistrationTest1 {
 
 	@Test
 	public void testHandlerIsRegistered() throws Exception {

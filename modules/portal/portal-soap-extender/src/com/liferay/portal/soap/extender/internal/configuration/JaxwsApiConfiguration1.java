@@ -22,7 +22,7 @@ import aQute.bnd.annotation.metatype.Meta;
 @Meta.OCD(
 	id = "com.liferay.portal.soap.extender.configuration.JaxwsApiConfiguration"
 )
-public interface JaxwsApiConfiguration {
+public interface JaxwsApiConfiguration1 {
 
 	@Meta.AD(required = true)
 	public String contextPath();

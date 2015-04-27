@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.wiki.service
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.wiki.asset,\
+	com.liferay.wiki.engine.impl,\
 	com.liferay.wiki.importer.impl,\
 	com.liferay.wiki.indexer,\
 	com.liferay.wiki.lar,\

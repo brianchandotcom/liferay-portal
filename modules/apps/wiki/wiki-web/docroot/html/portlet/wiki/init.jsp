@@ -20,6 +20,7 @@
 page import="com.liferay.wiki.constants.WikiConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
+page import="com.liferay.wiki.engine.impl.BaseInputEditorWikiEngine" %><%@
 page import="com.liferay.wiki.exception.DuplicateNodeNameException" %><%@
 page import="com.liferay.wiki.exception.DuplicatePageException" %><%@
 page import="com.liferay.wiki.exception.ImportFilesException" %><%@

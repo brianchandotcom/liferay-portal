@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.engine.WikiEngine;
 
 import java.util.Collection;
@@ -42,11 +43,11 @@ import org.osgi.service.component.annotations.Deactivate;
 public class WikiEngineTracker {
 
 	public Collection<String> getFormats() {
-		return _wikiEnginesMap.keySet();
+		return _wikiEngines.keySet();
 	}
 
 	public WikiEngine getWikiEngine(String format) {
-		List<WikiEngine> wikiEngines = _wikiEnginesMap.getService(format);
+		List<WikiEngine> wikiEngines = _wikiEngines.getService(format);
 
 		if (wikiEngines == null) {
 			return null;
@@ -61,7 +62,7 @@ public class WikiEngineTracker {
 
 		_bundleContext = bundleContext;
 
-		_wikiEnginesMap = ServiceTrackerMapFactory.multiValueMap(
+		_wikiEngines = ServiceTrackerMapFactory.multiValueMap(
 			bundleContext, WikiEngine.class, null,
 			new ServiceReferenceMapper<String, WikiEngine>() {
 				@Override
@@ -71,6 +72,10 @@ public class WikiEngineTracker {
 
 					String enabled = (String)serviceReference.getProperty(
 						"enabled");
+
+					if (Validator.isNull(enabled)) {
+						enabled = Boolean.TRUE.toString();
+					}
 
 					if (!Boolean.valueOf(enabled)) {
 						return;
@@ -113,18 +118,18 @@ public class WikiEngineTracker {
 				}
 			});
 
-		_wikiEnginesMap.open();
+		_wikiEngines.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_wikiEnginesMap.close();
+		_wikiEngines.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiEngineTracker.class);
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<String, List<WikiEngine>> _wikiEnginesMap;
+	private ServiceTrackerMap<String, List<WikiEngine>> _wikiEngines;
 
 }

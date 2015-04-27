@@ -12,24 +12,17 @@
  * details.
  */
 
-package com.liferay.wiki.engine.impl;
+package com.liferay.wiki.engine.text.web;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.model.WikiPage;
 
-import java.io.IOException;
-
 import java.util.Collections;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -60,19 +53,6 @@ public class TextEngine extends BaseWikiEngine {
 	@Override
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page) {
 		return Collections.emptyMap();
-	}
-
-	@Override
-	public void renderEditPage(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			WikiPage wikiPage)
-		throws IOException, ServletException {
-
-		RequestDispatcher requestDispatcher =
-			servletRequest.getRequestDispatcher(
-				"/o/wiki-web/html/portlet/wiki/edit/plain_text.jsp");
-
-		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 }

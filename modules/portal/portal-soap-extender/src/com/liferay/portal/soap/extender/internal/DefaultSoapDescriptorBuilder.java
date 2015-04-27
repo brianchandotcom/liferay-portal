@@ -33,18 +33,6 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 		final Object service, final Map<String, Object> properties) {
 
 		return new SoapDescriptor() {
-			@Override
-			public String getPublicationAddress() {
-				Object soapAddress = properties.get("soap.address");
-
-				if (soapAddress == null) {
-					Class<?> clazz = service.getClass();
-
-					return "/" + clazz.getSimpleName();
-				}
-
-				return soapAddress.toString();
-			}
 
 			@Override
 			public QName getEndpointName() {
@@ -59,6 +47,19 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 				}
 
 				return null;
+			}
+
+			@Override
+			public String getPublicationAddress() {
+				Object soapAddress = properties.get("soap.address");
+
+				if (soapAddress == null) {
+					Class<?> clazz = service.getClass();
+
+					return "/" + clazz.getSimpleName();
+				}
+
+				return soapAddress.toString();
 			}
 
 			@Override

@@ -41,7 +41,7 @@ public class CXFJaxWSServiceRegistrator {
 		_buses.add(bus);
 
 		for (Map.Entry<Object, Map<String, Object>> entry :
-				_propertiesByService.entrySet()) {
+				_serviceProperties.entrySet()) {
 
 			registerServiceInBus(bus, entry.getKey(), entry.getValue());
 		}
@@ -50,7 +50,7 @@ public class CXFJaxWSServiceRegistrator {
 	public synchronized void addHandler(Handler<?> handler) {
 		_handlers.add(handler);
 
-		for (Map<Object, Server> servers : _serversPerBus.values()) {
+		for (Map<Object, Server> servers : _busServers.values()) {
 			for (Server server : servers.values()) {
 				JaxWsEndpointImpl jaxWsEndpoint =
 					(JaxWsEndpointImpl)server.getEndpoint();
@@ -74,14 +74,14 @@ public class CXFJaxWSServiceRegistrator {
 			registerServiceInBus(bus, service, properties);
 		}
 
-		_propertiesByService.put(service, properties);
+		_serviceProperties.put(service, properties);
 	}
 
 	public synchronized void removeBus(Bus bus) {
 		_buses.remove(bus);
 
-		synchronized (_serversPerBus) {
-			Map<Object, Server> servers = _serversPerBus.remove(bus);
+		synchronized (_busServers) {
+			Map<Object, Server> servers = _busServers.remove(bus);
 
 			if (servers == null) {
 				return;
@@ -94,7 +94,7 @@ public class CXFJaxWSServiceRegistrator {
 	}
 
 	public synchronized void removeHandler(Handler<?> handler) {
-		for (Map<Object, Server> servers : _serversPerBus.values()) {
+		for (Map<Object, Server> servers : _busServers.values()) {
 			for (Server server : servers.values()) {
 				JaxWsEndpointImpl jaxWsEndpoint =
 					(JaxWsEndpointImpl)server.getEndpoint();
@@ -114,9 +114,9 @@ public class CXFJaxWSServiceRegistrator {
 	}
 
 	public synchronized void removeService(Object service) {
-		_propertiesByService.remove(service);
+		_serviceProperties.remove(service);
 
-		for (Map<Object, Server> servers : _serversPerBus.values()) {
+		for (Map<Object, Server> servers : _busServers.values()) {
 			Server server = servers.get(service);
 
 			if (server != null) {
@@ -173,13 +173,13 @@ public class CXFJaxWSServiceRegistrator {
 	}
 
 	protected void storeForBus(Bus bus, Object object, Server server) {
-		synchronized (_serversPerBus) {
-			Map<Object, Server> servers = _serversPerBus.get(bus);
+		synchronized (_busServers) {
+			Map<Object, Server> servers = _busServers.get(bus);
 
 			if (servers == null) {
 				servers = new HashMap<>();
 
-				_serversPerBus.put(bus, servers);
+				_busServers.put(bus, servers);
 			}
 
 			servers.put(object, server);
@@ -191,9 +191,9 @@ public class CXFJaxWSServiceRegistrator {
 	@SuppressWarnings("rawtypes")
 	private final List<Handler> _handlers = new ArrayList<>();
 
-	private final Map<Object, Map<String, Object>> _propertiesByService =
+	private final Map<Object, Map<String, Object>> _serviceProperties =
 		new IdentityHashMap<>();
-	private final Map<Bus, Map<Object, Server>> _serversPerBus =
+	private final Map<Bus, Map<Object, Server>> _busServers =
 		new IdentityHashMap<>();
 	private SoapDescriptorBuilder _soapDescriptorBuilder;
 

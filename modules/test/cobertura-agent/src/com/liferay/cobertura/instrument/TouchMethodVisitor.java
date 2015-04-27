@@ -17,6 +17,7 @@ package com.liferay.cobertura.instrument;
 import com.liferay.cobertura.coveragedata.TouchCollector;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -31,7 +32,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 
 	public TouchMethodVisitor(
 		String owner, MethodNode methodNode, MethodVisitor methodVisitor,
-		Map<Label, JumpHolder> jumpLabels, Map<Label, Integer> lineLabels,
+		Set<Label> jumpLabels, Map<Label, Integer> lineLabels,
 		Map<Label, SwitchHolder> switchLabels) {
 
 		super(Opcodes.ASM5, methodVisitor);
@@ -132,7 +133,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 
 		super.visitLabel(label);
 
-		if (_jumpLabels.containsKey(label)) {
+		if (_jumpLabels.contains(label)) {
 			if (_lastJump != null) {
 				Label label1 = _lastJump();
 
@@ -359,7 +360,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 	private int _currentJump;
 	private int _currentLine;
 	private Label _endLabel;
-	private final Map<Label, JumpHolder> _jumpLabels;
+	private final Set<Label> _jumpLabels;
 	private JumpHolder _lastJump;
 	private final Map<Label, Integer> _lineLabels;
 	private final String _name;

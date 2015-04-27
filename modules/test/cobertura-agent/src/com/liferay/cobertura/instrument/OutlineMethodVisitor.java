@@ -15,7 +15,9 @@
 package com.liferay.cobertura.instrument;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 
@@ -68,8 +70,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 
 			_classData.addLineJump(_currentLine, _currentJump);
 
-			_jumpLabels.put(
-				label, new JumpHolder(_currentLine, _currentJump++));
+			_jumpLabels.add(label);
 		}
 
 		super.visitJumpInsn(opcode, label);
@@ -128,7 +129,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 	private int _currentJump;
 	private int _currentLine;
 	private int _currentSwitch;
-	private final Map<Label, JumpHolder> _jumpLabels = new HashMap<>();
+	private final Set<Label> _jumpLabels = new HashSet<>();
 	private final Map<Label, Integer> _lineLabels = new HashMap<>();
 	private final MethodNode _methodNode;
 	private final MethodVisitor _methodVisitor;

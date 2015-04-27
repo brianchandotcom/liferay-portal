@@ -43,7 +43,7 @@ public class CXFJaxWsServiceRegistrator {
 		for (Map.Entry<Object, Map<String, Object>> entry :
 				_serviceProperties.entrySet()) {
 
-			registerServiceInBus(bus, entry.getKey(), entry.getValue());
+			registerService(bus, entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -52,10 +52,10 @@ public class CXFJaxWsServiceRegistrator {
 
 		for (Map<Object, Server> servers : _busServers.values()) {
 			for (Server server : servers.values()) {
-				JaxWsEndpointImpl jaxWsEndpoint =
+				JaxWsEndpointImpl jaxWsEndpointImpl =
 					(JaxWsEndpointImpl)server.getEndpoint();
 
-				Binding binding = jaxWsEndpoint.getJaxwsBinding();
+				Binding binding = jaxWsEndpointImpl.getJaxwsBinding();
 
 				@SuppressWarnings("rawtypes")
 				List<Handler> handlers = binding.getHandlerChain();
@@ -71,7 +71,7 @@ public class CXFJaxWsServiceRegistrator {
 		Map<String, Object> properties, Object service) {
 
 		for (Bus bus : _buses) {
-			registerServiceInBus(bus, service, properties);
+			registerService(bus, service, properties);
 		}
 
 		_serviceProperties.put(service, properties);
@@ -131,7 +131,7 @@ public class CXFJaxWsServiceRegistrator {
 		_soapDescriptorBuilder = soapDescriptorBuilder;
 	}
 
-	protected void registerServiceInBus(
+	protected void registerService(
 		Bus bus, Object service, Map<String, Object> properties) {
 
 		SoapDescriptorBuilder.SoapDescriptor soapDescriptor =

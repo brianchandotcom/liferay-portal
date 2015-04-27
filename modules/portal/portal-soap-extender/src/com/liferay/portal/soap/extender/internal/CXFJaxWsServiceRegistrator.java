@@ -138,7 +138,7 @@ public class CXFJaxWsServiceRegistrator {
 			new JaxWsServerFactoryBean();
 
 		SoapDescriptorBuilder.SoapDescriptor soapDescriptor =
-			_soapDescriptorBuilder.buildSoapDescriptor(properties, service);
+			_soapDescriptorBuilder.buildSoapDescriptor(service, properties);
 
 		jaxWsServerFactoryBean.setAddress(
 			soapDescriptor.getPublicationAddress());

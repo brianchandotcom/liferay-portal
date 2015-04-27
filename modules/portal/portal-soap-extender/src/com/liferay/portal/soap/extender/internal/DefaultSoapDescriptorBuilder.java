@@ -30,7 +30,7 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 
 	@Override
 	public SoapDescriptor buildSoapDescriptor(
-		final Map<String, Object> properties, final Object service) {
+		final Object service, final Map<String, Object> properties) {
 
 		return new SoapDescriptor() {
 			@Override

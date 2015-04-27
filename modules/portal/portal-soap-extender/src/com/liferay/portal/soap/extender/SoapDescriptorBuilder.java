@@ -24,7 +24,7 @@ import javax.xml.namespace.QName;
 public interface SoapDescriptorBuilder {
 
 	public SoapDescriptor buildSoapDescriptor(
-		Map<String, Object> properties, Object service);
+		Object service, Map<String, Object> properties);
 
 	public interface SoapDescriptor {
 

@@ -286,7 +286,7 @@ public final class LoggerUtil {
 	}
 
 	public static void startLogger() throws Exception {
-		if (isLoggerStarted() || PropsValues.HEADLESS_LOGGER_ENABLED) {
+		if (isLoggerStarted() || !PropsValues.SELENIUM_LOGGER_ENABLED) {
 			return;
 		}
 
@@ -315,26 +315,25 @@ public final class LoggerUtil {
 	}
 
 	public static void stopLogger() throws Exception {
-		String content = _readResource(
-			"META-INF/resources/html/index.html");
-
-		String commandLogText = CommandLoggerHandler.getCommandLogText();
-
-		content = content.replace(
-			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">",
-			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">" +
-				commandLogText);
-
-		FileUtil.write(_getHtmlFilePath(), content);
-
-		if (PropsValues.HEADLESS_LOGGER_ENABLED) {
+		if (!PropsValues.SELENIUM_LOGGER_ENABLED) {
 			String cssContent = _readResource(
 				"META-INF/resources/css/main_rtl.css");
 
-			FileUtil.write(_CURRENT_DIR + "/test-results/css/main.css", cssContent);
+			FileUtil.write(
+				_CURRENT_DIR + "/test-results/css/main.css", cssContent);
 		}
 
-		if (isLoggerStarted() || !PropsValues.HEADLESS_LOGGER_ENABLED) {
+		String htmlContent = _readResource(
+			"META-INF/resources/html/index.html");
+
+		htmlContent = htmlContent.replace(
+			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">" +
+				"</ul>",
+			CommandLoggerHandler.getCommandLogText());
+
+		FileUtil.write(_getHtmlFilePath(), htmlContent);
+
+		if (isLoggerStarted()) {
 			_webDriver.quit();
 
 			_webDriver = null;

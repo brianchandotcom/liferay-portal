@@ -210,4 +210,10 @@ public final class CommandLoggerHandler {
 	private static final LoggerElement _commandLogLoggerElement =
 		new LoggerElement("commandLog");
 
+	static {
+		_commandLogLoggerElement.setAttribute("data-logid", "01");
+		_commandLogLoggerElement.setClassName("command-log");
+		_commandLogLoggerElement.setName("ul");
+	}
+
 }

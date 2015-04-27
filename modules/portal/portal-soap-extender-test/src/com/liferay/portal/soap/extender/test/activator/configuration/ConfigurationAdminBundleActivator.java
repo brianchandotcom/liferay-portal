@@ -35,7 +35,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 		ServiceReference<ConfigurationAdmin> serviceReference =
 			bundleContext.getServiceReference(ConfigurationAdmin.class);
 
-		try {	
+		try {
 			ConfigurationAdmin configurationAdmin = bundleContext.getService(
 				serviceReference);
 

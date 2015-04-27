@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 
 	@Override
-	public SoapDescriptor buildDescriptor(
+	public SoapDescriptor buildSoapDescriptor(
 		final Map<String, Object> properties, final Object service) {
 
 		return new SoapDescriptor() {

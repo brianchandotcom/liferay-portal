@@ -23,10 +23,11 @@ import javax.xml.namespace.QName;
  */
 public interface SoapDescriptorBuilder {
 
-	public SoapDescriptor buildDescriptor(
+	public SoapDescriptor buildSoapDescriptor(
 		Map<String, Object> properties, Object service);
 
 	public interface SoapDescriptor {
+
 		public QName getEndpointName();
 
 		public String getPublicationAddress();

@@ -135,7 +135,7 @@ public class CXFJaxWSServiceRegistrator {
 		Bus bus, Object service, Map<String, Object> properties) {
 
 		SoapDescriptorBuilder.SoapDescriptor soapDescriptor =
-			_soapDescriptorBuilder.buildDescriptor(properties, service);
+			_soapDescriptorBuilder.buildSoapDescriptor(properties, service);
 
 		JaxWsServerFactoryBean jaxWsServerFactoryBean =
 			new JaxWsServerFactoryBean();

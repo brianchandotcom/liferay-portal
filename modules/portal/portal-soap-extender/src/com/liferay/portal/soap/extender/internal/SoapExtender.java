@@ -27,6 +27,7 @@ import javax.xml.ws.handler.Handler;
 import org.apache.cxf.Bus;
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -129,7 +130,8 @@ public class SoapExtender {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
-		String[] serviceFilters = soapExtenderConfiguration.jaxwsServiceFilters();
+		String[] serviceFilters =
+			soapExtenderConfiguration.jaxwsServiceFilters();
 
 		if (serviceFilters == null) {
 			return;

@@ -141,7 +141,6 @@
 
 <modules>
 	<module>arquillian-container-liferay</module>
-	<module>arquillian-container-osgi-with-extensions</module>
 	<module>arquillian-deployment-generator-bnd</module>
 	<module>arquillian-liferay-maven-extension</module>
 </modules>

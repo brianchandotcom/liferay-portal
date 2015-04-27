@@ -160,6 +160,7 @@ AUI.add(
 								var imageContainer = image.ancestor();
 
 								image.unwrap(imageContainer);
+
 								imageContainer.remove();
 							}
 						}

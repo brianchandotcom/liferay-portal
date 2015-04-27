@@ -45,7 +45,7 @@ import org.osgi.util.tracker.ServiceTracker;
 	configurationPid = "com.liferay.portal.soap.extender.internal.configuration.JaxWsApiConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
-public class JaxwsApiEnabler {
+public class JaxwsApiEnabler1 {
 
 	@Activate
 	protected void activate(

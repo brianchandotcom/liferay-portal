@@ -42,7 +42,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	configurationPid = "com.liferay.portal.soap.extender.configuration.JaxwsApiConfiguration",
+	configurationPid = "com.liferay.portal.soap.extender.internal.configuration.JaxWsApiConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class JaxwsApiEnabler {

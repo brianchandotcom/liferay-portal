@@ -20,7 +20,7 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Carlos Sierra Andrés
  */
 @Meta.OCD(
-	id = "com.liferay.portal.soap.extender.configuration.JaxwsApiConfiguration"
+	id = "com.liferay.portal.soap.extender.internal.configuration.JaxWsApiConfiguration"
 )
 public interface JaxWsApiConfiguration {
 

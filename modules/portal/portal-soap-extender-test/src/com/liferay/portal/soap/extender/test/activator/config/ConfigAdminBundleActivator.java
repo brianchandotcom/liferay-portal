@@ -96,10 +96,11 @@ public class ConfigAdminBundleActivator implements BundleActivator {
 	}
 
 	private static final String _JAXWS_API_CONFIGURATION =
-		"com.liferay.portal.soap.extender.configuration.JaxwsApiConfiguration";
+		"com.liferay.portal.soap.extender.internal.configuration." +
+			"JaxwsApiConfiguration";
 
 	private static final String _SOAP_EXTENDER_CONFIGURATION =
-		"com.liferay.portal.soap.extender.configuration." +
+		"com.liferay.portal.soap.extender.internal.configuration." +
 			"SoapExtenderConfiguration";
 
 	private static final String _WEB_SERVICE_PUBLISHER_CONFIGURATION =

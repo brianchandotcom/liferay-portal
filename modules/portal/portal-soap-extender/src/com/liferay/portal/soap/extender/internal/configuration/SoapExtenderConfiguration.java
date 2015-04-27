@@ -21,7 +21,7 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.soap.extender.configuration.SoapExtenderConfiguration"
+	id = "com.liferay.portal.soap.extender.internal.configuration.SoapExtenderConfiguration"
 )
 public interface SoapExtenderConfiguration {
 

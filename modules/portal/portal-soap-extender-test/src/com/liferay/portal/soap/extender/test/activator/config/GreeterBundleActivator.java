@@ -54,7 +54,7 @@ public class GreeterBundleActivator implements BundleActivator {
 		Filter filter = bundleContext.createFilter(
 			"(&(objectClass=" + Bus.class.getName() + ")(" +
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH + "=" +
-				"/soap-test))");
+					"/soap-test))");
 
 		ServiceTracker<Bus, Bus> serviceTracker = new ServiceTracker<>(
 			bundleContext, filter, null);

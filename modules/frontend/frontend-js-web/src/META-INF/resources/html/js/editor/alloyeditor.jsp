@@ -230,11 +230,11 @@ if (showSource) {
 			}
 		},
 
-		getCkData: function() {
-			var data;
+		getHTML: function() {
+			var data = '';
 
 			if (alloyEditor && alloyEditor.instanceReady) {
-				data = alloyEditor.getCkData();
+				data = alloyEditor.getHTML();
 			}
 			else if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
 				data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
@@ -243,12 +243,17 @@ if (showSource) {
 			return data;
 		},
 
-		getHTML: function() {
-			return alloyEditor ? alloyEditor.getHTML() : window['<%= name %>'].getCkData();
-		},
-
 		getText: function() {
-			return window['<%= name %>'].getCkData();
+			var data = '';
+
+			if (alloyEditor && alloyEditor.instanceReady) {
+				data = alloyEditor.getText();
+			}
+			else if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
+				data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+			}
+
+			return data;
 		},
 
 		initEditor: function() {

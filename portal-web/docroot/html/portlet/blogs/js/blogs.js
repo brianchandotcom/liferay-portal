@@ -78,7 +78,7 @@ AUI.add(
 						instance._customDescription = customDescriptionEnabled ? entry.description : STR_BLANK;
 						instance._shortenDescription = !customDescriptionEnabled;
 
-						instance.setDescription(window[instance.ns('contentEditor')].getHTML());
+						instance.setDescription(window[instance.ns('contentEditor')].getText());
 					},
 
 					destructor: function() {
@@ -172,7 +172,7 @@ AUI.add(
 						if (instance._shortenDescription) {
 							instance._customDescription = window[instance.ns('descriptionEditor')].getHTML();
 
-							description = window[instance.ns('contentEditor')].getHTML();
+							description = window[instance.ns('contentEditor')].getText();
 						}
 
 						instance._setDescriptionReadOnly(instance._shortenDescription);

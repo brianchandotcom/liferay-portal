@@ -66,10 +66,9 @@ public class StartupAction extends SimpleAction {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceTracker<ClusterMasterExecutor, ClusterMasterExecutor>
-			clusterMasterExecutorServiceTracker =
-				registry.trackServices(
-					ClusterMasterExecutor.class,
-					new ClusterMasterExecutorServiceTrackerCustomizer());
+			clusterMasterExecutorServiceTracker = registry.trackServices(
+				ClusterMasterExecutor.class,
+				new ClusterMasterExecutorServiceTrackerCustomizer());
 
 		clusterMasterExecutorServiceTracker.open();
 

@@ -34,7 +34,7 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("layoutSetPrototypeId",String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
-	portletURL.setParameter("struts_action", "/sites_admin/edit_site");
+	portletURL.setParameter("struts_action", "/layouts_admin/edit_layout_set");
 	portletURL.setParameter(Constants.CMD, "reset_merge_fail_count_and_merge");
 	portletURL.setParameter("groupId", String.valueOf(groupId));
 	portletURL.setParameter("privateLayoutSet", String.valueOf(layoutSet.isPrivateLayout()));

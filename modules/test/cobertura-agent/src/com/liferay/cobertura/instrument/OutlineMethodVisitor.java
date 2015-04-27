@@ -32,9 +32,8 @@ import org.objectweb.asm.tree.MethodNode;
 public class OutlineMethodVisitor extends MethodVisitor {
 
 	public OutlineMethodVisitor(
-		ClassData classData, MethodVisitor methodVisitor, String owner,
-		int access, String name, String desc, String signature,
-		String[] exceptions) {
+		ClassData classData, MethodVisitor methodVisitor, int access,
+		String name, String desc, String signature, String[] exceptions) {
 
 		super(
 			Opcodes.ASM5,
@@ -43,7 +42,6 @@ public class OutlineMethodVisitor extends MethodVisitor {
 
 		_classData = classData;
 		_methodVisitor = methodVisitor;
-		_owner = owner;
 
 		_methodNode = (MethodNode)mv;
 	}
@@ -56,8 +54,8 @@ public class OutlineMethodVisitor extends MethodVisitor {
 
 		if (!_lineLabels.isEmpty()) {
 			methodVisitor = new TouchMethodVisitor(
-				_owner, _methodNode, _methodVisitor, _jumpLabels, _lineLabels,
-				_switchLabels);
+				_classData.getName(), _methodNode, _methodVisitor, _jumpLabels,
+				_lineLabels, _switchLabels);
 		}
 
 		_methodNode.accept(methodVisitor);
@@ -133,7 +131,6 @@ public class OutlineMethodVisitor extends MethodVisitor {
 	private final Map<Label, Integer> _lineLabels = new HashMap<>();
 	private final MethodNode _methodNode;
 	private final MethodVisitor _methodVisitor;
-	private final String _owner;
 	private final Map<Label, SwitchHolder> _switchLabels = new HashMap<>();
 
 }

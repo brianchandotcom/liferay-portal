@@ -96,10 +96,10 @@ public class CXFJaxWsServiceRegistrator {
 	public synchronized void removeHandler(Handler<?> handler) {
 		for (Map<Object, Server> servers : _busServers.values()) {
 			for (Server server : servers.values()) {
-				JaxWsEndpointImpl jaxWsEndpoint =
+				JaxWsEndpointImpl jaxWsEndpointImpl =
 					(JaxWsEndpointImpl)server.getEndpoint();
 
-				Binding binding = jaxWsEndpoint.getJaxwsBinding();
+				Binding binding = jaxWsEndpointImpl.getJaxwsBinding();
 
 				@SuppressWarnings("rawtypes")
 				List<Handler> handlers = binding.getHandlerChain();
@@ -134,16 +134,16 @@ public class CXFJaxWsServiceRegistrator {
 	protected void registerService(
 		Bus bus, Object service, Map<String, Object> properties) {
 
-		SoapDescriptorBuilder.SoapDescriptor soapDescriptor =
-			_soapDescriptorBuilder.buildSoapDescriptor(properties, service);
-
 		JaxWsServerFactoryBean jaxWsServerFactoryBean =
 			new JaxWsServerFactoryBean();
 
+		SoapDescriptorBuilder.SoapDescriptor soapDescriptor =
+			_soapDescriptorBuilder.buildSoapDescriptor(properties, service);
+
 		jaxWsServerFactoryBean.setAddress(
 			soapDescriptor.getPublicationAddress());
+
 		jaxWsServerFactoryBean.setBus(bus);
-		jaxWsServerFactoryBean.setProperties(properties);
 
 		QName endpointName = soapDescriptor.getEndpointName();
 
@@ -151,6 +151,8 @@ public class CXFJaxWsServiceRegistrator {
 			jaxWsServerFactoryBean.setEndpointName(endpointName);
 		}
 
+		jaxWsServerFactoryBean.setHandlers(_handlers);
+		jaxWsServerFactoryBean.setProperties(properties);
 		jaxWsServerFactoryBean.setServiceBean(service);
 
 		Class<?> serviceClass = soapDescriptor.getServiceClass();
@@ -165,14 +167,12 @@ public class CXFJaxWsServiceRegistrator {
 			jaxWsServerFactoryBean.setWsdlLocation(wsdlLocation);
 		}
 
-		jaxWsServerFactoryBean.setHandlers(_handlers);
-
 		Server server = jaxWsServerFactoryBean.create();
 
-		storeForBus(bus, service, server);
+		store(bus, server, service);
 	}
 
-	protected void storeForBus(Bus bus, Object object, Server server) {
+	protected void store(Bus bus, Server server, Object service) {
 		synchronized (_busServers) {
 			Map<Object, Server> servers = _busServers.get(bus);
 
@@ -182,7 +182,7 @@ public class CXFJaxWsServiceRegistrator {
 				_busServers.put(bus, servers);
 			}
 
-			servers.put(object, server);
+			servers.put(service, server);
 		}
 	}
 

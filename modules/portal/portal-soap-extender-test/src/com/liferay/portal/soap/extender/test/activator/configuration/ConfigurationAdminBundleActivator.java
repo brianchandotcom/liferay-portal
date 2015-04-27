@@ -40,7 +40,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 		try {
 			_cxfConfiguration = configurationAdmin.createFactoryConfiguration(
-				_WEB_SERVICE_PUBLISHER_CONFIGURATION, null);
+				_CXF_ENDPOINT_PUBLISHER_CONFIGURATION, null);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -59,15 +59,15 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 			_soapConfiguration.update(properties);
 
-			_jaxwsApiConfiguration = configurationAdmin.getConfiguration(
-				_JAXWS_API_CONFIGURATION, null);
+			_jaxWsApiConfiguration = configurationAdmin.getConfiguration(
+				_JAX_WS_API_CONFIGURATION, null);
 
 			properties = new Hashtable<>();
 
 			properties.put("contextPath", _TEST_CONTEXT_PATH);
 			properties.put("timeout", 10000);
 
-			_jaxwsApiConfiguration.update(properties);
+			_jaxWsApiConfiguration.update(properties);
 		}
 		finally {
 			bundleContext.ungetService(serviceReference);
@@ -77,7 +77,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 	@Override
 	public void stop(BundleContext bundleContext) {
 		try {
-			_jaxwsApiConfiguration.delete();
+			_jaxWsApiConfiguration.delete();
 		}
 		catch (Exception e) {
 		}
@@ -95,20 +95,20 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 		}
 	}
 
-	private static final String _JAXWS_API_CONFIGURATION =
+	private static final String _JAX_WS_API_CONFIGURATION =
 		"com.liferay.portal.soap.extender.internal.configuration." +
-			"JaxwsApiConfiguration";
+			"JaxWsApiConfiguration";
 
 	private static final String _SOAP_EXTENDER_CONFIGURATION =
 		"com.liferay.portal.soap.extender.internal.configuration." +
 			"SoapExtenderConfiguration";
 
-	private static final String _WEB_SERVICE_PUBLISHER_CONFIGURATION =
+	private static final String _CXF_ENDPOINT_PUBLISHER_CONFIGURATION =
 		"com.liferay.portal.cxf.common.configuration." +
 			"CXFEndpointPublisherConfiguration";
 
 	private Configuration _cxfConfiguration;
-	private Configuration _jaxwsApiConfiguration;
+	private Configuration _jaxWsApiConfiguration;
 	private Configuration _soapConfiguration;
 
 }

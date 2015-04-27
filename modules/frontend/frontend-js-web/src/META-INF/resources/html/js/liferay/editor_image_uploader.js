@@ -156,6 +156,12 @@ AUI.add(
 
 								image.attr(data.image.attributeDataImageId, data.image.fileEntryId);
 								image.attr('src', data.image.url);
+
+								var imageContainer = image.ancestor();
+
+								image.unwrap(imageContainer);
+
+								imageContainer.remove();
 							}
 						}
 						else {
@@ -195,7 +201,7 @@ AUI.add(
 
 							var image = A.one(instance._editor.element.$).one('[data-random-id="' + imageId + '"]');
 
-							image.remove();
+							image.ancestor().remove();
 						}
 
 						var strings = instance.get('strings');

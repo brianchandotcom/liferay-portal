@@ -41,7 +41,7 @@ public class BBCodeLexer {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(?:\\[((?:[a-z]|\\*){1,16})(?:[=\\s]([^\\x00-\\x1F'\\(\\)<>\\[\\]]" +
+		"(?:\\[((?:[a-z]|\\*){1,16})(?:[=\\s]([^\\x00-\\x1F'<>\\[\\]]" +
 			"{1,2083}))?\\])|(?:\\[\\/([a-z]{1,16})\\])",
 		Pattern.CASE_INSENSITIVE);
 

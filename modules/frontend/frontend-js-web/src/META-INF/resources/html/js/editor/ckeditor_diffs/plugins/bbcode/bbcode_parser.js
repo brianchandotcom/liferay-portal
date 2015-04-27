@@ -18,7 +18,7 @@
 	BBCodeUtil.escape = A.rbind('escapeHTML', LString, true, entities);
 	BBCodeUtil.unescape = A.rbind('unescapeHTML', LString, entities);
 }());;(function() {
-	var REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'\(\)<>\[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/ig;
+	var REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'<>\[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/ig;
 
 	var Lexer = function(data) {
 		var instance = this;
@@ -729,17 +729,17 @@
 
 			var cite = token.attribute;
 
-			var result = '<blockquote>';
+			var result = '<blockquote><p>';
 
 			if (cite && cite.length) {
 				cite = BBCodeUtil.escape(cite);
 
-				result = '<blockquote><cite>' + cite + '</cite>';
+				result += '<cite>' + cite + '</cite>';
 			}
 
 			instance._result.push(result);
 
-			instance._stack.push('</blockquote>');
+			instance._stack.push('</p></blockquote>');
 		},
 
 		_handleSimpleTag: function(tagName) {

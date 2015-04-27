@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_memberships/init.jsp" %>
 
 <%
 String tabs1 = (String)request.getAttribute("edit_site_assignments.jsp-tabs1");
@@ -30,7 +30,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.
 
 PortletURL viewUsersURL = renderResponse.createRenderURL();
 
-viewUsersURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 viewUsersURL.setParameter("tabs1", "users");
 viewUsersURL.setParameter("tabs2", tabs2);
 viewUsersURL.setParameter("redirect", currentURL);
@@ -66,7 +65,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 >
 	<c:if test='<%= !tabs1.equals("summary") %>'>
 		<liferay-ui:search-form
-			page="/html/portlet/users_admin/user_search.jsp"
+			page="/html/portlet/site_memberships/user_search.jsp"
 		/>
 
 		<div class="separator"><!-- --></div>
@@ -88,7 +87,26 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 	%>
 
 	<liferay-ui:search-container-results>
-		<%@ include file="/html/portlet/users_admin/user_search_results.jspf" %>
+
+		<%
+		if (searchTerms.isAdvancedSearch()) {
+			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator());
+
+			userSearchContainer.setTotal(total);
+
+			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
+		}
+		else {
+			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
+
+			userSearchContainer.setTotal(total);
+
+			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
+		}
+
+		userSearchContainer.setResults(results);
+		%>
+
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
@@ -167,7 +185,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/sites_admin/user_action.jsp"
+				path="/html/portlet/site_memberships/user_action.jsp"
 			/>
 		</c:if>
 	</liferay-ui:search-container-row>

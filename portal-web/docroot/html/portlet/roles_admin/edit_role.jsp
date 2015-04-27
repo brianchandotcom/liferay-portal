@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-Role role = (Role)request.getAttribute(WebKeys.ROLE);
+Role role = ActionUtil.getRole(request);
 
 long roleId = BeanParamUtil.getLong(role, request, "roleId");
 

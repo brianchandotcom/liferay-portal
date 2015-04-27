@@ -25,7 +25,7 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-Role role = (Role)request.getAttribute(WebKeys.ROLE);
+Role role = ActionUtil.getRole(request);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

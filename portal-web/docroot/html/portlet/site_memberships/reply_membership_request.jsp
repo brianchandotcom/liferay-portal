@@ -14,30 +14,23 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_memberships/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-ActionUtil.getGroup(request);
+long groupId = ParamUtil.getLong(request, "groupId");
 
-Group group = (Group)request.getAttribute(WebKeys.GROUP);
+Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-long groupId = BeanParamUtil.getLong(group, request, "groupId");
+long membershipRequestId = ParamUtil.getLong(request, "membershipRequestId");
 
-String friendlyURL = BeanParamUtil.getString(group, request, "friendlyURL");
-
-ActionUtil.getMembershipRequest(request);
-
-MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(WebKeys.MEMBERSHIP_REQUEST);
+MembershipRequest membershipRequest = MembershipRequestLocalServiceUtil.getMembershipRequest(membershipRequestId);
 %>
 
-<portlet:actionURL var="replyMembershipRequestURL">
-	<portlet:param name="struts_action" value="/sites_admin/reply_membership_request" />
-</portlet:actionURL>
+<portlet:actionURL name="replyMembershipRequest" var="replyMembershipRequestURL" />
 
 <aui:form action="<%= replyMembershipRequestURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="membershipRequestId" type="hidden" value="<%= membershipRequest.getMembershipRequestId() %>" />

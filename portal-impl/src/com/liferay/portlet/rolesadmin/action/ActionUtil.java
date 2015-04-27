@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static void getRole(HttpServletRequest request) throws Exception {
+	public static Role getRole(HttpServletRequest request) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -119,14 +119,14 @@ public class ActionUtil {
 			}
 		}
 
-		request.setAttribute(WebKeys.ROLE, role);
+		return role;
 	}
 
-	public static void getRole(PortletRequest portletRequest) throws Exception {
+	public static Role getRole(PortletRequest portletRequest) throws Exception {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getRole(request);
+		return getRole(request);
 	}
 
 }

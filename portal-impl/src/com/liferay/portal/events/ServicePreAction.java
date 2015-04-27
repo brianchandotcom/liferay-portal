@@ -1061,8 +1061,6 @@ public class ServicePreAction extends Action {
 
 					manageSiteMembershipsURL.setDoAsGroupId(scopeGroupId);
 					manageSiteMembershipsURL.setParameter(
-						"struts_action", "/sites_admin/edit_site_assignments");
-					manageSiteMembershipsURL.setParameter(
 						"groupId", String.valueOf(scopeGroupId));
 					manageSiteMembershipsURL.setParameter(
 						"selPlid", String.valueOf(plid));

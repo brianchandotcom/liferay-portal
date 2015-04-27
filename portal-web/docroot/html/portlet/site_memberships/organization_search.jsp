@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_memberships/init.jsp" %>
 
 <%
 OrganizationSearch searchContainer = (OrganizationSearch)request.getAttribute("liferay-ui:search:searchContainer");
@@ -28,7 +28,7 @@ String type = displayTerms.getType();
 	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
-	id="toggle_id_users_admin_organization_search"
+	id="toggle_id_site_memberships_organization_search"
 >
 	<aui:fieldset>
 		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />

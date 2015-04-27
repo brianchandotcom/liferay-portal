@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_memberships/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "summary");
@@ -25,7 +25,9 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 String redirect = ParamUtil.getString(request, "redirect");
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
-Group group = (Group)request.getAttribute(WebKeys.GROUP);
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
+
+Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 if (group != null) {
 	group = StagingUtil.getLiveGroup(group.getGroupId());
@@ -37,7 +39,6 @@ long userGroupId = ParamUtil.getLong(request, "userGroupId");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
@@ -45,7 +46,6 @@ portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
 PortletURL tabsURL = renderResponse.createRenderURL();
 
-tabsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 tabsURL.setParameter("tabs1", tabs1);
 tabsURL.setParameter("tabs2", "current");
 tabsURL.setParameter("redirect", redirect);
@@ -76,7 +76,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 				/>
 			</c:when>
 			<c:otherwise>
-				<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp">
+				<liferay-util:include page="/html/portlet/site_memberships/toolbar.jsp">
 					<liferay-util:param name="toolbarItem" value='<%= tabs2.equals("available") ? "add-role" : null %>' />
 				</liferay-util:include>
 			</c:otherwise>
@@ -93,7 +93,6 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 </c:choose>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "submit();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
@@ -122,7 +121,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 						<br />
 
 						<portlet:renderURL var="viewMembershipRequestsURL">
-							<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
+							<portlet:param name="mvcPath" value="/html/portlet/site_memberships/view_membership_requests.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 						</portlet:renderURL>
@@ -137,32 +136,32 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 				</c:if>
 			</div>
 
-			<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_users.jsp" />
+			<liferay-util:include page="/html/portlet/site_memberships/users.jsp" />
 
-			<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_organizations.jsp" />
+			<liferay-util:include page="/html/portlet/site_memberships/organizations.jsp" />
 
-			<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_user_groups.jsp" />
+			<liferay-util:include page="/html/portlet/site_memberships/user_groups.jsp" />
 		</c:when>
 		<c:when test='<%= tabs1.equals("users") %>'>
 			<c:choose>
 				<c:when test="<%= selUser == null %>">
-					<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_users.jsp" />
+					<liferay-util:include page="/html/portlet/site_memberships/users.jsp" />
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_users_roles.jsp" />
+					<liferay-util:include page="/html/portlet/site_memberships/users_roles.jsp" />
 				</c:otherwise>
 			</c:choose>
 		</c:when>
 		<c:when test='<%= tabs1.equals("organizations") %>'>
-			<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_organizations.jsp" />
+			<liferay-util:include page="/html/portlet/site_memberships/organizations.jsp" />
 		</c:when>
 		<c:when test='<%= tabs1.equals("user-groups") %>'>
 			<c:choose>
 				<c:when test="<%= userGroupId == 0 %>">
-					<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_user_groups.jsp" />
+					<liferay-util:include page="/html/portlet/site_memberships/user_groups.jsp" />
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_user_groups_roles.jsp" />
+					<liferay-util:include page="/html/portlet/site_memberships/user_groups_roles.jsp" />
 				</c:otherwise>
 			</c:choose>
 		</c:when>
@@ -183,17 +182,17 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 		if (organizationKeywordsValue) {
 			keywords = organizationKeywordsValue;
 
-			url = '<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="organizations" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>';
+			url = '<portlet:renderURL><portlet:param name="tabs1" value="organizations" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>';
 		}
 		else if (userKeywordsValue) {
 			keywords = userKeywordsValue;
 
-			url = '<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="users" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>';
+			url = '<portlet:renderURL><portlet:param name="tabs1" value="users" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>';
 		}
 		else if (userGroupKeywordsValue) {
 			keywords = userGroupKeywordsValue;
 
-			url = '<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /><portlet:param name="tabs1" value="user-groups" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>';
+			url = '<portlet:renderURL><portlet:param name="tabs1" value="user-groups" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>';
 		}
 
 		if (keywords) {
@@ -208,12 +207,11 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= Constants.CMD %>').val('group_organizations');
 		form.fm('assignmentsRedirect').val(assignmentsRedirect);
 		form.fm('addOrganizationIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeOrganizationIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="editGroupOrganizations" />');
 	}
 
 	function <portlet:namespace />updateGroupUserGroups(assignmentsRedirect) {
@@ -221,12 +219,11 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= Constants.CMD %>').val('group_user_groups');
 		form.fm('assignmentsRedirect').val(assignmentsRedirect);
 		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="editGroupUserGroups" />');
 	}
 
 	function <portlet:namespace />updateGroupUsers(assignmentsRedirect) {
@@ -234,12 +231,11 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= Constants.CMD %>').val('group_users');
 		form.fm('assignmentsRedirect').val(assignmentsRedirect);
 		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="editGroupUsers" />');
 	}
 
 	function <portlet:namespace />updateUserGroupGroupRole(assignmentsRedirect) {
@@ -247,12 +243,11 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= Constants.CMD %>').val('user_group_group_role');
 		form.fm('assignmentsRedirect').val(assignmentsRedirect);
 		form.fm('addRoleIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeRoleIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="editUserGroupGroupRole" />');
 	}
 
 	function <portlet:namespace />updateUserGroupRole(assignmentsRedirect) {
@@ -260,12 +255,11 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= Constants.CMD %>').val('user_group_role');
 		form.fm('assignmentsRedirect').val(assignmentsRedirect);
 		form.fm('addRoleIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeRoleIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="editUserGroupRole" />');
 	}
 </aui:script>
 

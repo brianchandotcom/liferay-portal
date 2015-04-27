@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_memberships/init.jsp" %>
 
 <%
 String tabs1 = (String)request.getAttribute("edit_user_group_roles.jsp-tabs1");
@@ -34,9 +34,9 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 <aui:input name="removeUserGroupIds" type="hidden" />
 
 <div>
-	<%= LanguageUtil.format(request, "step-x-of-x", new String[] {"2", "2"}, false) %>
+	<liferay-ui:message arguments='<%= new String[] {"2", "2"} %>' key="step-x-of-x" translateArguments="<%= false %>" />
 
-	<%= LanguageUtil.format(request, "current-signifies-current-user-groups-associated-with-the-x-role.-available-signifies-all-user-groups-associated-with-the-x-x", new String[] {HtmlUtil.escape(role.getTitle(locale)), HtmlUtil.escape(groupDescriptiveName), LanguageUtil.get(request, (group.isOrganization() ? LanguageUtil.get(request, "organization") : LanguageUtil.get(request, "site")))}, false) %>
+	<liferay-ui:message arguments='<%= new String[] {HtmlUtil.escape(role.getTitle(locale)), HtmlUtil.escape(groupDescriptiveName), LanguageUtil.get(request, (group.isOrganization() ? LanguageUtil.get(request, "organization") : LanguageUtil.get(request, "site")))} %>' key="current-signifies-current-user-groups-associated-with-the-x-role.-available-signifies-all-user-groups-associated-with-the-x-x" translateArguments="<%= false %>" />
 </div>
 
 <br />
@@ -54,7 +54,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
 	<liferay-ui:search-form
-		page="/html/portlet/users_admin/user_group_search.jsp"
+		page="/html/portlet/site_memberships/user_group_search.jsp"
 	/>
 
 	<%

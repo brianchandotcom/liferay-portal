@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_memberships/init.jsp" %>
 
 <%
 String tabs1 = (String)request.getAttribute("edit_site_assignments.jsp-tabs1");
@@ -28,7 +28,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.
 
 PortletURL viewUserGroupsURL = renderResponse.createRenderURL();
 
-viewUserGroupsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 viewUserGroupsURL.setParameter("tabs1", "user-groups");
 viewUserGroupsURL.setParameter("tabs2", tabs2);
 viewUserGroupsURL.setParameter("redirect", currentURL);
@@ -61,7 +60,7 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 >
 	<c:if test='<%= !tabs1.equals("summary") %>'>
 		<liferay-ui:search-form
-			page="/html/portlet/user_groups_admin/user_group_search.jsp"
+			page="/html/portlet/site_memberships/user_group_search.jsp"
 		/>
 
 		<div class="separator"><!-- --></div>
@@ -78,7 +77,26 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 	%>
 
 	<liferay-ui:search-container-results>
-		<%@ include file="/html/portlet/user_groups_admin/user_group_search_results.jspf" %>
+
+		<%
+		if (searchTerms.isAdvancedSearch()) {
+			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator());
+
+			searchContainer.setTotal(total);
+
+			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		}
+		else {
+			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
+
+			searchContainer.setTotal(total);
+
+			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		}
+
+		searchContainer.setResults(results);
+		%>
+
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
@@ -118,7 +136,7 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/sites_admin/user_group_action.jsp"
+				path="/html/portlet/site_memberships/user_group_action.jsp"
 			/>
 		</c:if>
 	</liferay-ui:search-container-row>

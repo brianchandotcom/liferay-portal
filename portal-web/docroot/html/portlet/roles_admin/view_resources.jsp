@@ -19,7 +19,7 @@
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
-Role role = (Role)request.getAttribute(WebKeys.ROLE);
+Role role = ActionUtil.getRole(request);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 

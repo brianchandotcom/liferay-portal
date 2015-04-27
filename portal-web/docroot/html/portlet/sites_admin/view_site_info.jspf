@@ -89,11 +89,11 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 			</dt>
 
 			<dd class="membership-requests">
-				<portlet:renderURL var="viewMembershipRequestsURL">
-					<portlet:param name="struts_action" value="/sites_admin/view_membership_requests" />
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.SITE_MEMBERSHIPS_ADMIN %>" var="viewMembershipRequestsURL">
+					<portlet:param name="mvcPath" value="/html/portlet/site_memberships/view_membership_requests.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				</portlet:renderURL>
+				</liferay-portlet:renderURL>
 
 				<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (pendingRequests == 1) ? "x-request-pending" : "x-requests-pending", pendingRequests, false) %>' />
 			</dd>

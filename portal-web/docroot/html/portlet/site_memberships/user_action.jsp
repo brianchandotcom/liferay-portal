@@ -14,23 +14,26 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_memberships/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-UserGroup userGroup = (UserGroup)row.getObject();
+User user2 = (User)row.getObject();
 
 Group group = (Group)row.getParameter("group");
+
+boolean organizationUser = GetterUtil.getBoolean(row.getParameter("organizationUser"));
+boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ASSIGN_USER_ROLES) %>">
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_USER_ROLES) %>">
 		<portlet:renderURL var="assignURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-			<portlet:param name="tabs1" value="user-groups" />
+			<portlet:param name="mvcPath" value="/html/portlet/site_memberships/view.jsp" />
+			<portlet:param name="tabs1" value="users" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
+			<portlet:param name="p_u_i_d" value="<%= String.valueOf(user2.getUserId()) %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 		</portlet:renderURL>
 
@@ -41,13 +44,11 @@ Group group = (Group)row.getParameter("group");
 		/>
 	</c:if>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ASSIGN_MEMBERS) %>">
-		<portlet:actionURL var="removeURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-			<portlet:param name="<%= Constants.CMD %>" value="group_user_groups" />
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) && !(organizationUser || userGroupUser) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, user2.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipRequired(user2.getUserId(), group.getGroupId()) %>">
+		<portlet:actionURL name="editGroupUsers" var="removeURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-			<portlet:param name="removeUserGroupIds" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
+			<portlet:param name="removeUserIds" value="<%= String.valueOf(user2.getUserId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon

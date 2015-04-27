@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/html/portlet/site_memberships/init.jsp" %>
 
 <%
 String tabs1 = (String)request.getAttribute("edit_user_roles.jsp-tabs1");
@@ -34,9 +34,9 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-po
 <aui:input name="removeUserIds" type="hidden" />
 
 <div>
-	<%= LanguageUtil.format(request, "step-x-of-x", new String[] {"2", "2"}, false) %>
+	<liferay-ui:message arguments='<%= new String[] {"2", "2"} %>' key="step-x-of-x" translateArguments="<%= false %>" />
 
-	<%= LanguageUtil.format(request, "current-signifies-current-users-associated-with-the-x-role.-available-signifies-all-users-associated-with-the-x-x", new String[] {HtmlUtil.escape(role.getTitle(locale)), HtmlUtil.escape(groupDescriptiveName), LanguageUtil.get(request, (group.isOrganization() ? "organization" : "site"))}) %>
+	<liferay-ui:message arguments='<%= new String[] {HtmlUtil.escape(role.getTitle(locale)), HtmlUtil.escape(groupDescriptiveName), LanguageUtil.get(request, (group.isOrganization() ? "organization" : "site"))} %>' key="current-signifies-current-users-associated-with-the-x-role.-available-signifies-all-users-associated-with-the-x-x" translateArguments="<%= false %>" />
 </div>
 
 <br />
@@ -57,7 +57,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-po
 	var="userSearchContainer"
 >
 	<liferay-ui:search-form
-		page="/html/portlet/users_admin/user_search.jsp"
+		page="/html/portlet/site_memberships/user_search.jsp"
 	/>
 
 	<%
@@ -74,7 +74,26 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-po
 	%>
 
 	<liferay-ui:search-container-results>
-		<%@ include file="/html/portlet/users_admin/user_search_results.jspf" %>
+
+		<%
+		if (searchTerms.isAdvancedSearch()) {
+			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator());
+
+			userSearchContainer.setTotal(total);
+
+			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
+		}
+		else {
+			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
+
+			userSearchContainer.setTotal(total);
+
+			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
+		}
+
+		userSearchContainer.setResults(results);
+		%>
+
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row

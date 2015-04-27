@@ -38,8 +38,6 @@ public abstract class BaseDestination implements Destination {
 		if (Validator.isNull(name)) {
 			throw new IllegalArgumentException("Name is null");
 		}
-
-		open();
 	}
 
 	@Override

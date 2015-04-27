@@ -54,7 +54,7 @@ public class AssertUtils {
 	public static void assertEquals(
 		double expectedDouble, double actualDouble) {
 
-		Assert.assertEquals(expectedDouble, actualDouble, 0);
+		Assert.assertEquals(expectedDouble, actualDouble, 0.0001);
 	}
 
 	public static void assertEquals(

@@ -34,28 +34,28 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		_configAdminActivator = new ConfigAdminBundleActivator();
+		_configAdminBundleActivator = new ConfigAdminBundleActivator();
 
-		_configAdminActivator.start(bundleContext);
+		_configAdminBundleActivator.start(bundleContext);
 
 		_endpoint = Endpoint.publish("/greeterApi", new GreeterImpl());
 
 		Binding binding = _endpoint.getBinding();
 
 		@SuppressWarnings("rawtypes")
-		List<Handler> handlerChain = binding.getHandlerChain();
+		List<Handler> handlers = binding.getHandlerChain();
 
 		Handler<?> handler = new SampleHandler();
 
-		handlerChain.add(handler);
+		handlers.add(handler);
 
-		binding.setHandlerChain(handlerChain);
+		binding.setHandlerChain(handlers);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) {
 		try {
-			_configAdminActivator.stop(bundleContext);
+			_configAdminBundleActivator.stop(bundleContext);
 		}
 		catch (Exception e) {
 		}
@@ -63,7 +63,7 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 		_endpoint.stop();
 	}
 
-	private ConfigAdminBundleActivator _configAdminActivator;
+	private ConfigAdminBundleActivator _configAdminBundleActivator;
 	private Endpoint _endpoint;
 
 }

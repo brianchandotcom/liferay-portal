@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.impl;
+package com.liferay.portal.soap.extender.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.dependency.manager.tccl.TCCLDependencyManager;
-import com.liferay.portal.soap.extender.api.SoapDescriptorBuilder;
+import com.liferay.portal.soap.extender.SoapDescriptorBuilder;
 import com.liferay.portal.soap.extender.configuration.SoapExtenderConfiguration;
 
 import java.util.Map;
@@ -27,7 +27,6 @@ import javax.xml.ws.handler.Handler;
 import org.apache.cxf.Bus;
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

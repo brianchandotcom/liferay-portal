@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.impl;
+package com.liferay.portal.soap.extender.internal;
 
 import aQute.bnd.annotation.component.Modified;
 import aQute.bnd.annotation.metatype.Configurable;

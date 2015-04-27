@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.impl;
+package com.liferay.portal.soap.extender.internal;
 
-import com.liferay.portal.soap.extender.api.SoapDescriptorBuilder;
+import com.liferay.portal.soap.extender.SoapDescriptorBuilder;
 
 import java.util.Map;
 

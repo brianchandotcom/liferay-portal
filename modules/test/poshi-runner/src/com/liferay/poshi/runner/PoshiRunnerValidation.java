@@ -501,6 +501,14 @@ public class PoshiRunnerValidation {
 		_validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
 
+		if (Validator.isNull(element.attributeValue("macro-summary")) &&
+			Validator.isNull(element.attributeValue("summary"))) {
+
+			throw new PoshiRunnerException(
+				"Missing (macro-summary|summary) attribute\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+
 		_parseElements(element, filePath);
 	}
 

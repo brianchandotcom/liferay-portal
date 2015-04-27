@@ -75,6 +75,12 @@ public class JournalFolderServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
+		long[] groupIds, long folderId, int restrictionType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDMStructures(groupIds, folderId, restrictionType);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {

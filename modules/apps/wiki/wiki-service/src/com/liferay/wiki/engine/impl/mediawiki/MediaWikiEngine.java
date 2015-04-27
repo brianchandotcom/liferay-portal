@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.engine.WikiEngine;
+import com.liferay.wiki.engine.impl.BaseInputEditorWikiEngine;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.DirectTagMatcher;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.DirectURLMatcher;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.EditURLMatcher;
@@ -46,15 +47,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jonathan Potter
  */
-@Component(
-	property = {
-		"edit.page=/html/portlet/wiki/edit/wiki.jsp", "enabled=true",
-		"format=mediawiki", "help.page=/html/portlet/wiki/help/mediawiki.jsp",
-		"help.url=http://www.mediawiki.org/wiki/Help:Formatting"
-	},
-	service = WikiEngine.class
-)
-public class MediaWikiEngine implements WikiEngine {
+@Component(service = WikiEngine.class)
+public class MediaWikiEngine extends BaseInputEditorWikiEngine {
+
+	public MediaWikiEngine() {
+		super(
+			"/html/portlet/wiki/help/mediawiki.jsp",
+			"http://www.mediawiki.org/wiki/Help:Formatting");
+	}
 
 	@Override
 	public String convert(
@@ -65,6 +65,11 @@ public class MediaWikiEngine implements WikiEngine {
 		return parsePage(
 			page, new ParserOutput(), viewPageURL, editPageURL,
 			attachmentURLPrefix);
+	}
+
+	@Override
+	public String getFormat() {
+		return "mediawiki";
 	}
 
 	@Override
@@ -112,11 +117,6 @@ public class MediaWikiEngine implements WikiEngine {
 		}
 
 		return outgoingLinks;
-	}
-
-	@Override
-	public boolean validate(long nodeId, String content) {
-		return true;
 	}
 
 	protected ClassLoader getClassLoader() {

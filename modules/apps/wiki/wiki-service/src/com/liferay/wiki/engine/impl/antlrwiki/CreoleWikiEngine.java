@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.engine.WikiEngine;
+import com.liferay.wiki.engine.impl.BaseInputEditorWikiEngine;
 import com.liferay.wiki.engine.impl.antlrwiki.translator.XhtmlTranslator;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
@@ -45,15 +46,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Miguel Pastor
  */
-@Component(
-	property = {
-		"edit.page=/html/portlet/wiki/edit/wiki.jsp", "enabled=true",
-		"format=creole", "help.page=/html/portlet/wiki/help/creole.jsp",
-		"help.url=http://www.wikicreole.org/wiki/Creole1.0"
-	},
-	service = WikiEngine.class
-)
-public class CreoleWikiEngine implements WikiEngine {
+@Component(service = WikiEngine.class)
+public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
+
+	public CreoleWikiEngine() {
+		super(
+			"/html/portlet/wiki/help/creole.jsp",
+			"http://www.wikicreole.org/wiki/Creole1.0");
+	}
 
 	@Override
 	public String convert(
@@ -65,6 +65,11 @@ public class CreoleWikiEngine implements WikiEngine {
 		return xhtmlTranslator.translate(
 			page, viewPageURL, editPageURL, attachmentURLPrefix,
 			parse(page.getContent()));
+	}
+
+	@Override
+	public String getFormat() {
+		return "creole";
 	}
 
 	@Override
@@ -105,11 +110,6 @@ public class CreoleWikiEngine implements WikiEngine {
 		}
 
 		return outgoingLinks;
-	}
-
-	@Override
-	public boolean validate(long nodeId, String content) {
-		return true;
 	}
 
 	protected Creole10Parser build(String creoleCode) {

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.engine.WikiEngine;
+import com.liferay.wiki.engine.impl.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
@@ -52,14 +53,20 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	property = {"enabled=false", "format=creole"},
+	property = {"enabled=false"},
 	service = WikiEngine.class
 )
-public class JSPWikiEngine implements WikiEngine {
+public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 
 	public static String decodeJSPWikiName(String jspWikiName) {
 		return StringUtil.replace(
 			jspWikiName, _JSP_WIKI_NAME_2, _JSP_WIKI_NAME_1);
+	}
+
+	public JSPWikiEngine() {
+		super(
+			"/html/portlet/wiki/help/creole.jsp",
+			"http://www.wikicreole.org/wiki/Creole1.0");
 	}
 
 	@Override
@@ -74,6 +81,11 @@ public class JSPWikiEngine implements WikiEngine {
 		catch (WikiException we) {
 			throw new PageContentException(we);
 		}
+	}
+
+	@Override
+	public String getFormat() {
+		return "creole";
 	}
 
 	@Override
@@ -135,11 +147,6 @@ public class JSPWikiEngine implements WikiEngine {
 		catch (WikiException we) {
 			throw new PageContentException(we);
 		}
-	}
-
-	@Override
-	public boolean validate(long nodeId, String newContent) {
-		return true;
 	}
 
 	@Activate

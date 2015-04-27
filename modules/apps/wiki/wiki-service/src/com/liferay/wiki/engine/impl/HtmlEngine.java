@@ -25,18 +25,24 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
+import java.io.IOException;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
@@ -47,14 +53,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  * @author Zsigmond Rab
  */
-@Component(
-	property = {
-		"edit.page=/html/portlet/wiki/edit/html.jsp", "enabled=true",
-		"format=html"
-	},
-	service = WikiEngine.class
-)
-public class HtmlEngine implements WikiEngine {
+@Component(service = WikiEngine.class)
+public class HtmlEngine extends BaseWikiEngine {
 
 	public HtmlEngine() {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -70,11 +70,8 @@ public class HtmlEngine implements WikiEngine {
 	}
 
 	@Override
-	public String convert(
-		WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
-		String attachmentURLPrefix) {
-
-		return page.getContent();
+	public String getFormat() {
+		return "html";
 	}
 
 	@Override
@@ -90,8 +87,16 @@ public class HtmlEngine implements WikiEngine {
 	}
 
 	@Override
-	public boolean validate(long nodeId, String newContent) {
-		return true;
+	public void renderEditPage(
+			ServletRequest servletRequest, ServletResponse servletResponse,
+			WikiPage wikiPage)
+		throws IOException, ServletException {
+
+		RequestDispatcher requestDispatcher =
+			servletRequest.getRequestDispatcher(
+				"/o/wiki-web/html/portlet/wiki/edit/html.jsp");
+
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)

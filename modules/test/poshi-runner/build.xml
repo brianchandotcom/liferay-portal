@@ -14,10 +14,10 @@
 		</echo>
 
 		<if>
-			<isset property="headless.logger.enabled" />
+			<isset property="selenium.logger.enabled" />
 			<then>
 				<echo append="true" file="classes/poshi-runner-ext.properties">
-					headless.logger.enabled=${headless.logger.enabled}
+					selenium.logger.enabled=${selenium.logger.enabled}
 				</echo>
 			</then>
 		</if>

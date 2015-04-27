@@ -167,6 +167,7 @@ public class SoapExtender {
 		ServiceDependency serviceDependency =
 			_dependencyManager.createTCCLServiceDependency();
 
+		serviceDependency.setCallbacks(addName, removeName);
 		serviceDependency.setRequired(required);
 
 		if (clazz == null) {
@@ -175,8 +176,6 @@ public class SoapExtender {
 		else {
 			serviceDependency.setService(clazz, filterString);
 		}
-
-		serviceDependency.setCallbacks(addName, removeName);
 
 		_component.add(serviceDependency);
 

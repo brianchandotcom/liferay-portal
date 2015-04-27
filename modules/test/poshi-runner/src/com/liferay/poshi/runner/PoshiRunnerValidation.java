@@ -562,20 +562,25 @@ public class PoshiRunnerValidation {
 				_parseElements(childElement, filePath);
 			}
 			else if (childElementName.equals("property")) {
-				List<String> possibleAttributeNames = Arrays.asList(
+				List<String> attributeNames = Arrays.asList(
 					"line-number", "name", "value");
 
 				_validatePossibleAttributeNames(
-					childElement, possibleAttributeNames, filePath);
+					childElement, attributeNames, filePath);
+
+				_validateRequiredAttributeNames(
+					childElement, attributeNames, filePath);
 			}
 			else if (childElementName.equals("set-up") ||
 					 childElementName.equals("tear-down")) {
 
-				List<String> possibleAttributeNames = Arrays.asList(
-					"line-number");
+				List<String> attributeNames = Arrays.asList("line-number");
 
 				_validatePossibleAttributeNames(
-					childElement, possibleAttributeNames, filePath);
+					childElement, attributeNames, filePath);
+
+				_validateRequiredAttributeNames(
+					childElement, attributeNames, filePath);
 
 				_parseElements(childElement, filePath);
 			}

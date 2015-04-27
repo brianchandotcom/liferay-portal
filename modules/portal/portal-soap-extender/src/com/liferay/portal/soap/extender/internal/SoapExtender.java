@@ -79,9 +79,9 @@ public class SoapExtender {
 		_component.setImplementation(cxfJaxWsServiceRegistrator);
 
 		addBusDependencies();
-		addJaxWsHandlerDependencies();
+		addJaxWsHandlerServiceDependencies();
 		addJaxWsServiceDependencies();
-		addSoapDescriptorBuilderDependency();
+		addSoapDescriptorBuilderServiceDependency();
 
 		_dependencyManager.add(_component);
 
@@ -99,7 +99,7 @@ public class SoapExtender {
 		}
 
 		for (String contextPath : contextPaths) {
-			addTCCLDependency(
+			addTCCLServiceDependency(
 				true, Bus.class,
 				"(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
 					"=" + contextPath + ")",
@@ -107,7 +107,7 @@ public class SoapExtender {
 		}
 	}
 
-	protected void addJaxWsHandlerDependencies() {
+	protected void addJaxWsHandlerServiceDependencies() {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
@@ -119,7 +119,7 @@ public class SoapExtender {
 		}
 
 		for (String jaxWsHandlerFilterString : jaxWsHandlerFilterStrings) {
-			addTCCLDependency(
+			addTCCLServiceDependency(
 				false, Handler.class, jaxWsHandlerFilterString, "addHandler",
 				"removeHandler");
 		}
@@ -137,13 +137,13 @@ public class SoapExtender {
 		}
 
 		for (String jaxWsServiceFilterString : jaxWsServiceFilterStrings) {
-			addTCCLDependency(
+			addTCCLServiceDependency(
 				false, null, jaxWsServiceFilterString, "addService",
 				"removeService");
 		}
 	}
 
-	protected void addSoapDescriptorBuilderDependency() {
+	protected void addSoapDescriptorBuilderServiceDependency() {
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();
 
@@ -157,7 +157,7 @@ public class SoapExtender {
 		_component.add(serviceDependency);
 	}
 
-	protected ServiceDependency addTCCLDependency(
+	protected ServiceDependency addTCCLServiceDependency(
 		boolean required, Class<?> clazz, String filterString, String addName,
 		String removeName) {
 

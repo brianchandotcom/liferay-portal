@@ -16,20 +16,13 @@ package com.liferay.xsl.content.web.portlet.action;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
-import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
-import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;
 import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
 import com.liferay.xsl.content.web.util.XSLContentUtil;
 
@@ -44,7 +37,6 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -79,32 +71,8 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			com.liferay.portal.util.WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		renderRequest.setAttribute(
 			XSLContentConfiguration.class.getName(), _xslContentConfiguration);
-
-		try {
-			XSLContentPortletInstanceConfiguration
-				xslContentPortletInstanceConfiguration =
-					_settingsFactory.getSettings(
-						XSLContentPortletInstanceConfiguration.class,
-						new ParameterMapSettingsLocator(
-							renderRequest.getParameterMap(),
-							new PortletInstanceSettingsLocator(
-								themeDisplay.getLayout(),
-								portletDisplay.getPortletResource())));
-
-			renderRequest.setAttribute(
-				XSLContentPortletInstanceConfiguration.class.getName(),
-				xslContentPortletInstanceConfiguration);
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
 
 		return super.render(portletConfig, renderRequest, renderResponse);
 	}
@@ -137,11 +105,6 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
 	protected void validateUrls(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -165,7 +128,6 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		}
 	}
 
-	private SettingsFactory _settingsFactory;
 	private volatile XSLContentConfiguration _xslContentConfiguration;
 
 }

@@ -16,15 +16,7 @@ package com.liferay.rss.web.portlet;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
 import com.liferay.rss.web.configuration.RSSWebConfiguration;
 import com.liferay.rss.web.upgrade.RSSWebUpgrade;
 
@@ -76,28 +68,8 @@ public class RSSPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		renderRequest.setAttribute(
 			RSSWebConfiguration.class.getName(), _rssWebConfiguration);
-
-		try {
-			RSSPortletInstanceConfiguration rssPortletInstanceConfiguration =
-				_settingsFactory.getSettings(
-					RSSPortletInstanceConfiguration.class,
-					new PortletInstanceSettingsLocator(
-						themeDisplay.getLayout(), portletDisplay.getId()));
-
-			renderRequest.setAttribute(
-				RSSPortletInstanceConfiguration.class.getName(),
-				rssPortletInstanceConfiguration);
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
 
 		super.doView(renderRequest, renderResponse);
 	}
@@ -113,12 +85,6 @@ public class RSSPortlet extends MVCPortlet {
 	protected void setRSSWebUpgrade(RSSWebUpgrade rssWebUpgrade) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
 	private volatile RSSWebConfiguration _rssWebConfiguration;
-	private SettingsFactory _settingsFactory;
 
 }

@@ -32,7 +32,7 @@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 <portlet:defineObjects />
 
 <%
-AssetCategoriesNavigationPortletInstanceConfiguration assetCategoriesNavigationPortletInstanceConfiguration = (AssetCategoriesNavigationPortletInstanceConfiguration)renderRequest.getAttribute(AssetCategoriesNavigationPortletInstanceConfiguration.class.getName());
+AssetCategoriesNavigationPortletInstanceConfiguration assetCategoriesNavigationPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(AssetCategoriesNavigationPortletInstanceConfiguration.class);
 
 AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request, assetCategoriesNavigationPortletInstanceConfiguration);
 %>

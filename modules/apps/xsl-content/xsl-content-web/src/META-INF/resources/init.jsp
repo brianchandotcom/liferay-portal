@@ -36,7 +36,8 @@ page import="com.liferay.xsl.content.web.util.XSLContentUtil" %>
 
 <%
 XSLContentConfiguration xslContentConfiguration = (XSLContentConfiguration)request.getAttribute(XSLContentConfiguration.class.getName());
-XSLContentPortletInstanceConfiguration xslContentPortletInstanceConfiguration = (XSLContentPortletInstanceConfiguration)renderRequest.getAttribute(XSLContentPortletInstanceConfiguration.class.getName());
+
+XSLContentPortletInstanceConfiguration xslContentPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(XSLContentPortletInstanceConfiguration.class);
 
 String xmlUrl = xslContentPortletInstanceConfiguration.xmlUrl();
 String xslUrl = xslContentPortletInstanceConfiguration.xslUrl();

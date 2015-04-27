@@ -1,3 +1,9 @@
+/* ---------- Labels ---------- */
+
+$label-entry-bg: #E3F1FC;
+$label-entry-border-width: 0;
+$label-entry-color: #55A6EC;
+
 /* ---------- Toggle card ---------- */
 
 $toggle-card-height: 104px;
@@ -28,11 +34,11 @@ $toggle-card-on-icon-border-width: 0;
 
 /* ---------- Switches ---------- */
 
-$toggle-switch-button-width: 18px;
 $toggle-switch-bar-padding: 4px;
+$toggle-switch-button-width: 18px;
 
-$toggle-switch-bar-width: 50px;
 $toggle-switch-bar-height: ($toggle-switch-bar-padding * 2) + $toggle-switch-button-width;
+$toggle-switch-bar-width: 50px;
 
 $toggle-switch-bar-border-radius: 20px;
 $toggle-switch-button-border-radius: 50%;

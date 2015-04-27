@@ -332,7 +332,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		int restrictionType = JournalUtil.getRestrictionType(containerModelId);
 
 		List<DDMStructure> folderDDMStructures =
-			DDMStructureLocalServiceUtil.getJournalFolderStructures(
+			JournalFolderLocalServiceUtil.getDDMStructures(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					article.getGroupId()),
 				containerModelId, restrictionType);

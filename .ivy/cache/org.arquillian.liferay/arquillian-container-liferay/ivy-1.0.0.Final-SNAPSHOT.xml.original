@@ -27,9 +27,15 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.arquillian.liferay</groupId>
-			<artifactId>arquillian-container-osgi-with-extensions</artifactId>
-			<version>1.0.0.Final-SNAPSHOT</version>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-container-karaf-remote</artifactId>
+			<version>2.1.0.CR18</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.arquillian.junit</groupId>
+					<artifactId>arquillian-junit-container</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>

@@ -4,7 +4,7 @@
 		module="arquillian-extension-liferay"
 		revision="1.0.0.Final-SNAPSHOT"
 		status="integration"
-		publication="20150415161203"
+		publication="20150414141254"
 	>
 		<license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
 		<description homepage="">

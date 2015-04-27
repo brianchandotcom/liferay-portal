@@ -4,7 +4,7 @@
 		module="arquillian-deployment-generator-bnd"
 		revision="1.0.0.Final-SNAPSHOT"
 		status="integration"
-		publication="20150415161202"
+		publication="20150414141254"
 	>
 		<description homepage="">
 		Arquillian Deployment Scenario Generator for BND liferay plugins

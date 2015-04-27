@@ -5,16 +5,21 @@
 		</execute>
 
 		<execute function="SikuliClick" locator1="PGCalendar#SCHEDULER_EVENT_ALL_DAY_FIELD_PNG" />
-		<execute function="Type" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+
+		<execute macro="CalendarEvent#editTitleViaScheduler">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 
 		<if>
 			<isset var="calendarName" />
 			<then>
-				<execute function="Select" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
+				<execute macro="CalendarEvent#selectCalendarViaScheduler">
+					<var name="calendarName" value="${calendarName}" />
+				</execute>
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" value1="Save" />
+		<execute macro="CalendarEvent#saveViaScheduler" />
 	</command>
 
 	<command name="addCommentPG">
@@ -274,7 +279,7 @@
 		</if>
 	</command>
 
-	<command name="addSetTimePG">
+	<command name="addSetTime">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
 		</execute>
@@ -379,6 +384,16 @@
 		</if>
 	</command>
 
+	<command name="addViaDayView">
+		<execute macro="CalendarEvent#gotoAddViaDayView" />
+
+		<execute macro="CalendarEvent#editTitleViaScheduler">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#saveViaScheduler" />
+	</command>
+
 	<command name="assertDialogBoxPresentCmd">
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="false" />
@@ -391,7 +406,7 @@
 		</if>
 	</command>
 
-	<command name="changeCalendarViaQuickEditPG">
+	<command name="changeCalendarViaScheduler">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
 		</execute>
@@ -405,7 +420,8 @@
 		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarDefaultName}" />
 		<execute function="Select" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
 		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
-		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" value1="Save" />
+
+		<execute macro="CalendarEvent#saveViaScheduler" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="PGCalendarRecurringEventDialogBox#RECURRING_EVENT_DIALOG_BOX_HEADER" />
@@ -684,7 +700,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" value1="Save" />
+		<execute macro="CalendarEvent#saveViaScheduler" />
 	</command>
 
 	<command name="editCommentPG">
@@ -871,6 +887,10 @@
 		<execute function="Type" locator1="PGCalendarAddevent#TITLE_FIELD" value1="${eventTitle}" />
 	</command>
 
+	<command name="editTitleViaScheduler">
+		<execute function="Type" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+	</command>
+
 	<command name="editViaAgendaViewPG">
 		<if>
 			<isset var="endDateTimeEdit" />
@@ -960,7 +980,7 @@
 		<execute macro="CalendarEvent#viewNewEventIframeCmd" />
 	</command>
 
-	<command name="goToAddOnSpecifcDayOfWeekViaWeekView">
+	<command name="gotoAddOnSpecifcDayOfWeekViaWeekView">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
 		</execute>
@@ -983,6 +1003,10 @@
 		<execute macro="CalendarEvent#selectEventIframeCmd" />
 	</command>
 
+	<command name="gotoAddViaDayView">
+		<execute function="SikuliClick" locator1="PGCalendar#SCHEDULER_DAY_VIEW_PNG" />
+	</command>
+
 	<command name="gotoEdit">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
@@ -995,6 +1019,22 @@
 		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
 		<execute function="SelectFrame" locator1="PGCalendarEditevent#EDIT_EVENT_IFRAME" />
+	</command>
+
+	<command name="gotoNextDay">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute function="Click" locator1="PGCalendar#VIEW_NEXT_BUTTON" />
+	</command>
+
+	<command name="gotoPreviousDay">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute function="Click" locator1="PGCalendar#VIEW_PREVIOUS_BUTTON" />
 	</command>
 
 	<command name="gotoRepeatConfiguration">
@@ -1127,6 +1167,10 @@
 		</execute>
 	</command>
 
+	<command name="saveViaScheduler">
+		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="selectCalendar">
 		<if>
 			<isset var="calendarName" />
@@ -1136,6 +1180,10 @@
 				<execute function="Select" locator1="PGCalendarAddevent#DETAILS_CALENDAR_SELECT" value1="${calendarName}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="selectCalendarViaScheduler">
+		<execute function="Select" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
 	</command>
 
 	<command name="selectEventIframeCmd">
@@ -1170,8 +1218,12 @@
 	<command name="setDates">
 		<execute function="Type" locator1="PGCalendarAddevent#START_DATE" value1="${startDate}" />
 		<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
-		<execute function="Type" locator1="PGCalendarAddevent#START_DATE_TIME" value1="${startDateTime}" />
-		<execute function="Type" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${endDateTime}" />
+	</command>
+
+	<command name="setDatesToday">
+		<var locator="PGCalendarAddevent#START_DATE" name="endDate" />
+
+		<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
 	</command>
 
 	<command name="setRepeating">
@@ -1241,6 +1293,11 @@
 		<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 	</command>
 
+	<command name="setTimes">
+		<execute function="Type" locator1="PGCalendarAddevent#START_DATE_TIME" value1="${startDateTime}" />
+		<execute function="Type" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${endDateTime}" />
+	</command>
+
 	<command name="tag">
 		<if>
 			<condition function="IsElementPresent" locator1="PGCalendarAddevent#CATEGORIZATION_PANEL_COLLAPSED" />
@@ -1297,7 +1354,7 @@
 	</command>
 
 	<command name="tearDownOnBusyDayInCurrentMonth">
-		<execute macro="Calendar#goToBusyDayViaSmallCalendar" />
+		<execute macro="Calendar#gotoBusyDayViaSmallCalendar" />
 
 		<execute macro="CalendarEvent#delete" />
 	</command>

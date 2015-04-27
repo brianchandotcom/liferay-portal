@@ -129,16 +129,16 @@ public class SoapExtender {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
-		String[] serviceFilters =
+		String[] jaxWsServiceFilters =
 			soapExtenderConfiguration.jaxWsServiceFilters();
 
-		if (serviceFilters == null) {
+		if (jaxWsServiceFilters == null) {
 			return;
 		}
 
-		for (String serviceFilter : serviceFilters) {
+		for (String jaxWsServiceFilter : jaxWsServiceFilters) {
 			addTCCLDependency(
-				false, null, serviceFilter, "addService", "removeService");
+				false, null, jaxWsServiceFilter, "addService", "removeService");
 		}
 	}
 
@@ -161,7 +161,7 @@ public class SoapExtender {
 	}
 
 	protected ServiceDependency addTCCLDependency(
-		boolean required, Class<?> clazz, String filter, String addName,
+		boolean required, Class<?> clazz, String filterString, String addName,
 		String removeName) {
 
 		ServiceDependency serviceDependency =
@@ -170,10 +170,10 @@ public class SoapExtender {
 		serviceDependency.setRequired(required);
 
 		if (clazz == null) {
-			serviceDependency.setService(filter);
+			serviceDependency.setService(filterString);
 		}
 		else {
-			serviceDependency.setService(clazz, filter);
+			serviceDependency.setService(clazz, filterString);
 		}
 
 		serviceDependency.setCallbacks(addName, removeName);

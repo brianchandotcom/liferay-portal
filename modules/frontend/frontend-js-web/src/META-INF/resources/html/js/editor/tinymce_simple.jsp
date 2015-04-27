@@ -76,6 +76,19 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 </div>
 
 <aui:script use="aui-node-base">
+	var getInitialContent = function() {
+		var data;
+
+		if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+		}
+		else {
+			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+		}
+
+		return data;
+	};
+
 	window['<%= name %>'] = {
 		init: function(value) {
 			if (typeof value != 'string') {
@@ -132,15 +145,25 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			var data;
 
 			if (!window['<%= name %>'].instanceReady) {
-				if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
-					data = <%= HtmlUtil.escape(namespace + initMethod) %>();
-				}
-				else {
-					data = '<%= contents != null ? contents: StringPool.BLANK %>';
-				}
+				data = getInitialContent();
 			}
 			else {
 				data = tinyMCE.editors['<%= name %>'].getBody().innerHTML;
+			}
+
+			return data;
+		},
+
+		getText: function() {
+			var data;
+
+			if (!window['<%= name %>'].instanceReady) {
+				data = getInitialContent();
+			}
+			else {
+				var editorBody = tinyMCE.editors['<%= name %>'].getBody();
+
+				data = editorBody.textContent || editorBody.innerText;
 			}
 
 			return data;

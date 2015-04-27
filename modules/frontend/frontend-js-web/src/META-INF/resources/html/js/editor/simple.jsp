@@ -104,6 +104,10 @@ if (resizable) {
 			return document.getElementById('<%= name %>').value;
 		},
 
+		getText: function() {
+			return document.getElementById('<%= name %>').value;
+		},
+
 		initEditor: function() {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
 				<%= name %>.setHTML(<%= namespace + initMethod %>());

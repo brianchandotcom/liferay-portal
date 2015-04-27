@@ -111,16 +111,16 @@ public class SoapExtender {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
-		String[] jaxWsHandlerFilters =
-			soapExtenderConfiguration.jaxWsHandlerFilters();
+		String[] jaxWsHandlerFilterStrings =
+			soapExtenderConfiguration.jaxWsHandlerFilterStrings();
 
-		if (jaxWsHandlerFilters == null) {
+		if (jaxWsHandlerFilterStrings == null) {
 			return;
 		}
 
-		for (String jaxWsHandlerFilter : jaxWsHandlerFilters) {
+		for (String jaxWsHandlerFilterString : jaxWsHandlerFilterStrings) {
 			addTCCLDependency(
-				false, Handler.class, jaxWsHandlerFilter, "addHandler",
+				false, Handler.class, jaxWsHandlerFilterString, "addHandler",
 				"removeHandler");
 		}
 	}
@@ -129,16 +129,17 @@ public class SoapExtender {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
-		String[] jaxWsServiceFilters =
-			soapExtenderConfiguration.jaxWsServiceFilters();
+		String[] jaxWsServiceFilterStrings =
+			soapExtenderConfiguration.jaxWsServiceFilterStrings();
 
-		if (jaxWsServiceFilters == null) {
+		if (jaxWsServiceFilterStrings == null) {
 			return;
 		}
 
-		for (String jaxWsServiceFilter : jaxWsServiceFilters) {
+		for (String jaxWsServiceFilterString : jaxWsServiceFilterStrings) {
 			addTCCLDependency(
-				false, null, jaxWsServiceFilter, "addService", "removeService");
+				false, null, jaxWsServiceFilterString, "addService",
+				"removeService");
 		}
 	}
 

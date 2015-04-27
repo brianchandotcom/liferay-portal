@@ -118,14 +118,17 @@ public class TouchMethodVisitor extends MethodVisitor {
 	public void visitLabel(Label label) {
 		if (_started) {
 			_started = false;
-			_variableIndex = _variableCount;
 
-			mv.visitInsn(Opcodes.ICONST_0);
-			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex);
-			mv.visitIntInsn(Opcodes.SIPUSH, -1);
-			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
+			if (!_jumpLabels.isEmpty()) {
+				_variableIndex = _variableCount;
 
-			_startLabel = label;
+				mv.visitInsn(Opcodes.ICONST_0);
+				mv.visitVarInsn(Opcodes.ISTORE, _variableIndex);
+				mv.visitIntInsn(Opcodes.SIPUSH, -1);
+				mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
+
+				_startLabel = label;
+			}
 		}
 
 		_endLabel = label;
@@ -228,13 +231,15 @@ public class TouchMethodVisitor extends MethodVisitor {
 
 	@Override
 	public void visitMaxs(int maxStack, int maxLocals) {
-		mv.visitLocalVariable(
-			"__cobertura__line__number__", "I", null, _startLabel, _endLabel,
-			_variableIndex);
+		if (!_jumpLabels.isEmpty()) {
+			mv.visitLocalVariable(
+				"__cobertura__line__number__", "I", null, _startLabel,
+				_endLabel, _variableIndex);
 
-		mv.visitLocalVariable(
-			"__cobertura__branch__number__", "I", null, _startLabel, _endLabel,
-			_variableIndex + 1);
+			mv.visitLocalVariable(
+				"__cobertura__branch__number__", "I", null, _startLabel,
+				_endLabel, _variableIndex + 1);
+		}
 
 		super.visitMaxs(maxStack, maxLocals);
 	}

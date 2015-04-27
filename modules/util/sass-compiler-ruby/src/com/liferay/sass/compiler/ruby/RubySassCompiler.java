@@ -14,6 +14,8 @@
 
 package com.liferay.sass.compiler.ruby;
 
+import java.io.File;
+
 import java.net.URL;
 
 import java.nio.file.Files;
@@ -113,38 +115,35 @@ public class RubySassCompiler implements AutoCloseable {
 		_scriptingContainer.terminate();
 	}
 
-	public String compileFile(String fileName) {
+	public String compileFile(
+			String inputFile, String includePath, String imgPath)
+		throws RubySassCompilerException {
+
 		try {
-			Path path = Paths.get(_docrootDirName.concat(fileName));
+			Path path = Paths.get(_docrootDirName.concat(inputFile));
 
 			String input = new String(Files.readAllBytes(path));
 
-			return compileString(input, fileName);
+			return compileString(input, includePath, imgPath);
 		}
 		catch (Exception e) {
-			System.err.println("Unable to parse " + fileName);
+			throw new RubySassCompilerException("Unable to parse " + inputFile);
 		}
-
-		return null;
 	}
 
-	public String compileString(String input, String fileName) {
+	public String compileString(
+			String input, String includePath, String imgPath)
+		throws RubySassCompilerException {
+
+		if ((_includeDirName != null) && !_includeDirName.equals("")) {
+			includePath = includePath + File.pathSeparator + _includeDirName;
+		}
+
 		try {
-			fileName = _docrootDirName.concat(fileName);
-
-			String cssThemeDirName = fileName;
-
-			int index = fileName.lastIndexOf("/css/");
-
-			if (index >= 0) {
-				cssThemeDirName = fileName.substring(0, index + 4);
-			}
-
 			return _scriptingContainer.callMethod(
 				_scriptObject, "process",
 				new Object[] {
-					input, _includeDirName, fileName, cssThemeDirName, _TMP_DIR,
-					false
+					input, includePath, _docrootDirName, _TMP_DIR, false
 				},
 				String.class);
 		}
@@ -161,14 +160,16 @@ public class RubySassCompiler implements AutoCloseable {
 			RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
 				RubyArray.class);
 
+			StringBuilder sb = new StringBuilder();
+
 			for (int i = 0; i < rubyArray.size(); i++) {
 				Object object = rubyArray.get(i);
 
-				System.err.println(String.valueOf(object));
+				sb.append(String.valueOf(object));
 			}
-		}
 
-		return null;
+			throw new RubySassCompilerException(sb.toString());
+		}
 	}
 
 	private static final int _COMPILE_DEFAULT_THRESHOLD = 5;

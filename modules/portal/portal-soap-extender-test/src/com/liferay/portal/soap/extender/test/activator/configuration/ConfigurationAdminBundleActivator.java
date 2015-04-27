@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.test.activator.config;
+package com.liferay.portal.soap.extender.test.activator.configuration;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -26,7 +26,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ConfigAdminBundleActivator implements BundleActivator {
+public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	public static final String _TEST_CONTEXT_PATH = "/soap-test";
 

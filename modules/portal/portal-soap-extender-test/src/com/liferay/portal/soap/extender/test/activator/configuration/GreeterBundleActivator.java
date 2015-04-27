@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.test.activator.config;
+package com.liferay.portal.soap.extender.test.activator.configuration;
 
 import com.liferay.portal.soap.extender.test.service.Greeter;
 import com.liferay.portal.soap.extender.test.service.GreeterImpl;
@@ -47,7 +47,7 @@ public class GreeterBundleActivator implements BundleActivator {
 		_serviceRegistration = bundleContext.registerService(
 			Greeter.class, new GreeterImpl(), properties);
 
-		_configAdminBundleActivator = new ConfigAdminBundleActivator();
+		_configAdminBundleActivator = new ConfigurationAdminBundleActivator();
 
 		_configAdminBundleActivator.start(bundleContext);
 
@@ -105,7 +105,7 @@ public class GreeterBundleActivator implements BundleActivator {
 		_serviceRegistration.unregister();
 	}
 
-	private ConfigAdminBundleActivator _configAdminBundleActivator;
+	private ConfigurationAdminBundleActivator _configAdminBundleActivator;
 	private ServiceRegistration<Greeter> _serviceRegistration;
 
 }

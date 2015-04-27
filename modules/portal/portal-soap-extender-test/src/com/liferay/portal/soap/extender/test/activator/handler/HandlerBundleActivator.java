@@ -14,7 +14,7 @@
 
 package com.liferay.portal.soap.extender.test.activator.handler;
 
-import com.liferay.portal.soap.extender.test.activator.config.GreeterBundleActivator;
+import com.liferay.portal.soap.extender.test.activator.configuration.GreeterBundleActivator;
 import com.liferay.portal.soap.extender.test.handler.SampleHandler;
 
 import java.util.Dictionary;

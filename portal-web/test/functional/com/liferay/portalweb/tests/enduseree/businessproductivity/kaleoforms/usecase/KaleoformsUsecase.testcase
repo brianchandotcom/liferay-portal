@@ -7729,7 +7729,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewEmailNotificationSentToTaskAssignees" priority="5">
+	<command known-issues="LRQA-13709" name="ViewEmailNotificationSentToTaskAssignees" priority="5">
 		<description message="This is a use case for LPS-50688 and LPS-35263." />
 
 		<property name="test.assert.javascript.errors" value="false" />

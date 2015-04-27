@@ -13,17 +13,15 @@
  * details.
  */
 --%>
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-WikiPage wikiPage = (WikiPage)request.getAttribute("edit_page.jsp-wikiPage");
+WikiPage wikiPage = BaseWikiEngine.getWikiPage(request);
 
 String content = BeanParamUtil.getString(wikiPage, request, "content");
-
-String format = "html";
 %>
 
-<%@ include file="/html/portlet/wiki/edit/editor_config.jspf" %>
+<%@ include file="/editor_config.jspf" %>
 
 <liferay-ui:input-editor
 	configParams="<%= configParams %>"

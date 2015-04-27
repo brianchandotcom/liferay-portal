@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Wiki Web
 Bundle-SymbolicName: com.liferay.wiki.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.wiki.web.util
 Import-Package:\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\

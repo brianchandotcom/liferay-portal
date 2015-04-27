@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.wiki.engine.impl;
+package com.liferay.wiki.engine.html.web;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -30,17 +31,10 @@ import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
-import java.io.IOException;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
@@ -67,22 +61,9 @@ public class HtmlEngine extends BaseWikiEngine {
 		try {
 			return _getOutgoingLinks(page);
 		}
-		catch (Exception e) {
-			throw new PageContentException(e);
+		catch (PortalException pe) {
+			throw new PageContentException(pe);
 		}
-	}
-
-	@Override
-	public void renderEditPage(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			WikiPage wikiPage)
-		throws IOException, ServletException {
-
-		RequestDispatcher requestDispatcher =
-			servletRequest.getRequestDispatcher(
-				"/o/wiki-web/html/portlet/wiki/edit/html.jsp");
-
-		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")")
@@ -94,7 +75,7 @@ public class HtmlEngine extends BaseWikiEngine {
 	}
 
 	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
-		throws Exception {
+		throws PortalException {
 
 		if (Validator.isNull(page.getContent())) {
 			return Collections.emptyMap();

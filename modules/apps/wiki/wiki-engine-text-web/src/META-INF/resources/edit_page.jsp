@@ -13,10 +13,10 @@
  * details.
  */
 --%>
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-WikiPage wikiPage = (WikiPage)request.getAttribute("edit_page.jsp-wikiPage");
+WikiPage wikiPage = BaseWikiEngine.getWikiPage(request);
 %>
 
 <liferay-ui:input-field bean="<%= wikiPage %>" field="content" model="<%= WikiPage.class %>" />

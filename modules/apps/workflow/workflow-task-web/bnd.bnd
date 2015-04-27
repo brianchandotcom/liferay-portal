@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Workflow Tasks Web
+Bundle-SymbolicName: com.liferay.workflowtasks.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,

@@ -113,7 +113,7 @@ public class SoapExtender {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
-		String[] handlers = soapExtenderConfiguration.handlers();
+		String[] handlers = soapExtenderConfiguration.jaxwsHandlersFilters();
 
 		if (handlers == null) {
 			return;
@@ -130,7 +130,7 @@ public class SoapExtender {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
-		String[] serviceFilters = soapExtenderConfiguration.serviceFilters();
+		String[] serviceFilters = soapExtenderConfiguration.jaxwsServiceFilters();
 
 		if (serviceFilters == null) {
 			return;
@@ -147,7 +147,7 @@ public class SoapExtender {
 			_dependencyManager.createServiceDependency();
 
 		String descriptorBuilderFilter =
-			_soapExtenderConfiguration.descriptorBuilderFilter();
+			_soapExtenderConfiguration.soapDescriptorBuilderFilter();
 
 		serviceDependency.setDefaultImplementation(_soapDescriptorBuilder);
 

@@ -29,12 +29,12 @@ public interface SoapExtenderConfiguration {
 	public String[] contextPaths();
 
 	@Meta.AD(name = "soap.descriptor.builder", required = false)
-	public String descriptorBuilderFilter();
+	public String soapDescriptorBuilderFilter();
 
 	@Meta.AD(name = "jaxws.handlers.filters", required = false)
-	public String[] handlers();
+	public String[] jaxwsHandlersFilters();
 
 	@Meta.AD(name = "jaxws.service.filters", required = false)
-	public String[] serviceFilters();
+	public String[] jaxwsServiceFilters();
 
 }

@@ -17,7 +17,7 @@ package com.liferay.portal.soap.extender.internal;
 import aQute.bnd.annotation.component.Modified;
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.soap.extender.configuration.JaxwsApiConfiguration;
+import com.liferay.portal.soap.extender.internal.configuration.JaxwsApiConfiguration;
 
 import java.util.Map;
 
@@ -26,7 +26,6 @@ import javax.xml.ws.spi.Provider;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.jaxws22.spi.ProviderImpl;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;

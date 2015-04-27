@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.configuration;
+package com.liferay.portal.soap.extender.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -20,21 +20,14 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Carlos Sierra Andrés
  */
 @Meta.OCD(
-	factory = true,
-	id = "com.liferay.portal.soap.extender.configuration.SoapExtenderConfiguration"
+	id = "com.liferay.portal.soap.extender.configuration.JaxwsApiConfiguration"
 )
-public interface SoapExtenderConfiguration {
+public interface JaxwsApiConfiguration {
 
-	@Meta.AD(required = false)
-	public String[] contextPaths();
+	@Meta.AD(required = true)
+	public String contextPath();
 
-	@Meta.AD(name = "soap.descriptor.builder", required = false)
-	public String soapDescriptorBuilderFilter();
-
-	@Meta.AD(name = "jaxws.handlers.filters", required = false)
-	public String[] jaxwsHandlersFilters();
-
-	@Meta.AD(name = "jaxws.service.filters", required = false)
-	public String[] jaxwsServiceFilters();
+	@Meta.AD(deflt = "10000", required = true)
+	public long timeout();
 
 }

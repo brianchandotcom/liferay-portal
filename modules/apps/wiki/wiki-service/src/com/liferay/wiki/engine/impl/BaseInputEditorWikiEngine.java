@@ -14,68 +14,60 @@
 
 package com.liferay.wiki.engine.impl;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.engine.BaseWikiEngine;
-import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;
-
-import java.util.Collections;
-import java.util.Map;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
- * @author Jorge Ferrer
+ * @author Iván Zaera
  */
-@Component(
-	property = {"enabled=false"},
-	service = WikiEngine.class
-)
-public class TextEngine extends BaseWikiEngine {
+public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 
-	@Override
-	public String convert(
-		WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
-		String attachmentURLPrefix) {
+	public static BaseInputEditorWikiEngine getBaseInputEditorWikiEngine(
+		ServletRequest servletRequest) {
 
-		if (page.getContent() == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return "<pre>" + page.getContent() + "</pre>";
-		}
+		return (BaseInputEditorWikiEngine)servletRequest.getAttribute(
+			_WIKI_ENGINE);
 	}
 
-	@Override
-	public String getFormat() {
-		return "plain_text";
+	public String getHelpPage() {
+		return _helpPage;
 	}
 
-	@Override
-	public Map<String, Boolean> getOutgoingLinks(WikiPage page) {
-		return Collections.emptyMap();
+	public String getHelpURL() {
+		return _helpURL;
 	}
 
 	@Override
 	public void renderEditPage(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			WikiPage wikiPage)
+			WikiPage page)
 		throws IOException, ServletException {
 
 		RequestDispatcher requestDispatcher =
 			servletRequest.getRequestDispatcher(
-				"/o/wiki-web/html/portlet/wiki/edit/plain_text.jsp");
+				"/o/wiki-web/html/portlet/wiki/edit/wiki.jsp");
 
-		requestDispatcher.include(servletRequest, servletResponse);
+		servletRequest.setAttribute(_WIKI_ENGINE, this);
+
+		super.renderEditPage(servletRequest, servletResponse, page);
 	}
+
+	protected BaseInputEditorWikiEngine(String helpPage, String helpURL) {
+		_helpPage = helpPage;
+		_helpURL = helpURL;
+	}
+
+	private static final String _WIKI_ENGINE =
+		BaseInputEditorWikiEngine.class.getName() + "#wikiEngine";
+
+	private final String _helpPage;
+	private final String _helpURL;
 
 }

@@ -27,6 +27,8 @@ String toggleId = renderResponse.getNamespace() + "toggle_id_wiki_editor_help";
 String toggleValue = SessionClicks.get(request, toggleId, null);
 
 boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
+
+BaseInputEditorWikiEngine baseInputEditorWikiEngine = BaseInputEditorWikiEngine.getBaseInputEditorWikiEngine(request);
 %>
 
 <div align="right">
@@ -75,9 +77,9 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 				<liferay-ui:message key="syntax-help" />
 			</h3>
 
-			<liferay-util:include page="<%= WikiUtil.getHelpPage(format) %>" servletContext="<%= application %>" />
+			<liferay-util:include page="<%= baseInputEditorWikiEngine.getHelpPage() %>" servletContext="<%= application %>" />
 
-			<aui:a href="<%= WikiUtil.getHelpURL(format) %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
+			<aui:a href="<%= baseInputEditorWikiEngine.getHelpURL() %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
 		</aui:col>
 	</aui:row>
 </div>

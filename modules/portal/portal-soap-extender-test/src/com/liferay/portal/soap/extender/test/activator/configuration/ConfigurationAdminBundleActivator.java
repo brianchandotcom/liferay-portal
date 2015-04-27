@@ -35,10 +35,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 		ServiceReference<ConfigurationAdmin> serviceReference =
 			bundleContext.getServiceReference(ConfigurationAdmin.class);
 
-		ConfigurationAdmin configurationAdmin = bundleContext.getService(
-			serviceReference);
+		try {	
+			ConfigurationAdmin configurationAdmin = bundleContext.getService(
+				serviceReference);
 
-		try {
 			_cxfConfiguration = configurationAdmin.createFactoryConfiguration(
 				_CXF_ENDPOINT_PUBLISHER_CONFIGURATION, null);
 

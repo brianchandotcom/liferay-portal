@@ -15,7 +15,6 @@
 package com.liferay.portal.soap.extender.impl;
 
 import com.liferay.portal.soap.extender.api.SoapDescriptorBuilder;
-import com.liferay.portal.soap.extender.api.SoapDescriptorBuilder.SoapDescriptor;
 
 import java.util.Map;
 

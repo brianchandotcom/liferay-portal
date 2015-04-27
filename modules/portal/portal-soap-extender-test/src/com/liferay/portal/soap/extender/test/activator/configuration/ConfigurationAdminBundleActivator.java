@@ -48,6 +48,16 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 			_cxfConfiguration.update(properties);
 
+			_jaxWsApiConfiguration = configurationAdmin.getConfiguration(
+				_JAX_WS_API_CONFIGURATION, null);
+
+			properties = new Hashtable<>();
+
+			properties.put("contextPath", _TEST_CONTEXT_PATH);
+			properties.put("timeout", 10000);
+
+			_jaxWsApiConfiguration.update(properties);
+
 			_soapConfiguration = configurationAdmin.createFactoryConfiguration(
 				_SOAP_EXTENDER_CONFIGURATION, null);
 
@@ -58,16 +68,6 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			properties.put("jaxWsServiceFilterStrings", new String[] {"(jaxws=true)"});
 
 			_soapConfiguration.update(properties);
-
-			_jaxWsApiConfiguration = configurationAdmin.getConfiguration(
-				_JAX_WS_API_CONFIGURATION, null);
-
-			properties = new Hashtable<>();
-
-			properties.put("contextPath", _TEST_CONTEXT_PATH);
-			properties.put("timeout", 10000);
-
-			_jaxWsApiConfiguration.update(properties);
 		}
 		finally {
 			bundleContext.ungetService(serviceReference);

@@ -70,8 +70,8 @@ public class SoapExtender {
 
 		_component = _dependencyManager.createComponent();
 
-		CXFJaxWSServiceRegistrator jaxwsServiceRegistrator =
-			new CXFJaxWSServiceRegistrator();
+		CXFJaxWSServiceRegistrator1 jaxwsServiceRegistrator =
+			new CXFJaxWSServiceRegistrator1();
 
 		jaxwsServiceRegistrator.setSoapDescriptorBuilder(
 			_soapDescriptorBuilder);

@@ -1711,7 +1711,7 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusNew">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
 			<var name="suggestionCount" value="1" />
 		</execute>
 
@@ -1720,7 +1720,7 @@
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusInProgress">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusInProgress">
 			<var name="suggestionCount" value="1" />
 		</execute>
 
@@ -1729,7 +1729,7 @@
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusResolved">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusResolved">
 			<var name="suggestionCount" value="1" />
 		</execute>
 
@@ -1743,19 +1743,19 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusNew">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
 			<var name="suggestionCount" value="0" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewDefaultNew" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusInProgress">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusInProgress">
 			<var name="suggestionCount" value="0" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewDefaultInProgress" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusResolved">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusResolved">
 			<var name="suggestionCount" value="0" />
 		</execute>
 
@@ -1903,7 +1903,7 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusInProgress">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusInProgress">
 			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 			<var name="suggestionCount" value="1" />
 		</execute>
@@ -1915,7 +1915,7 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusResolved">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusResolved">
 			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 			<var name="suggestionCount" value="1" />
 		</execute>
@@ -2335,7 +2335,7 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusNew">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
 			<var name="suggestionCount" value="1" />
 		</execute>
 

@@ -1,0 +1,189 @@
+@import "bourbon";
+@import "mixins";
+
+.form-group-inline {
+	display: inline-block;
+	vertical-align: bottom;
+}
+
+.button-holder {
+	margin: 20px 0;
+}
+
+.form-search .input-group {
+	position: relative;
+
+	&.advanced-search {
+		.search-query {
+			padding-left: 40px;
+			z-index: 0;
+		}
+
+		.toggle-advanced {
+			cursor: pointer;
+			left: 0;
+			line-height: 1;
+			padding: 8px 10px;
+			position: absolute;
+			top: 0;
+
+			.caret {
+				margin-top: 7px;
+			}
+
+			.icon-search {
+				font-size: 14px;
+			}
+		}
+	}
+
+	@include respond-to(phone, tablet) {
+		width: 100%;
+
+		.btn {
+			clip: rect(0, 0, 0, 0);
+			left: -9999px;
+			position: absolute;
+		}
+
+		input.search-query {
+			width: 100%;
+		}
+	}
+}
+
+.input-flex-add-on {
+	position: relative;
+	width: 100%;
+
+	&:after {
+		clear: left;
+		content: "";
+		display: block;
+		height: 0;
+		visibility: hidden;
+	}
+
+	input {
+		float: left;
+		margin-top: -1px;
+	}
+
+	.input-group-addon {
+		float: left;
+		margin-top: -1px;
+		padding: 9px;
+		white-space: normal;
+		width: auto;
+
+		@include word-wrap(break-all);
+
+		@include respond-to(phone, tablet) {
+			font-size: 18px;
+			padding: 8px;
+		}
+	}
+
+	.input-localized-content {
+		clear: both;
+		left: 0;
+		padding-top: 10px;
+		position: absolute;
+		top: 100%;
+	}
+
+	.input-localized-input {
+		float: left;
+	}
+}
+
+.lfr-ddm-container {
+	.form-group label {
+		margin-left: 0;
+	}
+
+	.lfr-ddm-repeatable-helper {
+		display: none;
+	}
+
+	.lfr-ddm-repeatable-placeholder {
+		border: 1px dotted;
+		margin-top: 15px;
+		padding: 20px 0;
+	}
+
+	.field-wrapper {
+		position: relative;
+
+		.aui-field-wrapper {
+			margin-left: 20px;
+		}
+
+		.datepicker-display {
+			float: none;
+
+			.datepicker-button-wrapper, .datepicker-select-wrapper {
+				display: inline;
+				float: none;
+			}
+		}
+
+		.file-entry-upload-progress {
+			height: 6px;
+			margin-top: -7px;
+		}
+
+		.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button {
+			display: block;
+			height: 16px;
+			position: absolute;
+			top: 4px;
+			width: 16px;
+
+			&.lfr-ddm-repeatable-add-button {
+				right: 4px;
+			}
+
+			&.lfr-ddm-repeatable-delete-button {
+				right: 24px;
+			}
+		}
+	}
+
+	.field-wrapper-content {
+		margin-bottom: 6px;
+
+		label {
+			margin-left: 0;
+		}
+
+		&, .field-wrapper-content {
+			margin-left: 15px;
+		}
+	}
+}
+
+.field-wrapper .btn {
+	margin-top: 6px;
+}
+
+.label-required {
+	&:after {
+		content: ")";
+	}
+
+	&:before {
+		content: "(";
+	}
+}
+
+@include respond-to(phone, tablet) {
+	#{$form_text_fields},
+	select,
+	.input-group .input-group-addon,
+	.navbar-search .search-query {
+		font-size: 18px;
+		height: auto;
+		line-height: normal;
+	}
+}

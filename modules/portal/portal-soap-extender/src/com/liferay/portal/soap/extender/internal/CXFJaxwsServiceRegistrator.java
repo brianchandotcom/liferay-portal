@@ -35,7 +35,7 @@ import org.apache.cxf.jaxws.support.JaxWsEndpointImpl;
 /**
 * @author Carlos Sierra Andrés
 */
-public class CXFJaxWSServiceRegistrator1 {
+public class CXFJaxwsServiceRegistrator {
 
 	public synchronized void addBus(Bus bus) {
 		_buses.add(bus);

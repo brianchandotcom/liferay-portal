@@ -79,8 +79,8 @@ public class SoapExtender {
 		_component.setImplementation(cxfJaxWsServiceRegistrator);
 
 		addBusDependencies();
-		addHandlerDependencies();
-		addServiceDependencies();
+		addJaxWsHandlerDependencies();
+		addJaxWsServiceDependencies();
 		addSoapDescriptorBuilderDependency();
 
 		_dependencyManager.add(_component);
@@ -107,29 +107,30 @@ public class SoapExtender {
 		}
 	}
 
-	protected void addHandlerDependencies() {
+	protected void addJaxWsHandlerDependencies() {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
-		String[] jaxWsHandlerFilters = soapExtenderConfiguration.jaxWsHandlerFilters();
+		String[] jaxWsHandlerFilters =
+			soapExtenderConfiguration.jaxWsHandlerFilters();
 
 		if (jaxWsHandlerFilters == null) {
 			return;
 		}
 
-		for (String handlerFilter : jaxWsHandlerFilters) {
+		for (String jaxWsHandlerFilter : jaxWsHandlerFilters) {
 			addTCCLDependency(
-				false, Handler.class, handlerFilter, "addHandler",
+				false, Handler.class, jaxWsHandlerFilter, "addHandler",
 				"removeHandler");
 		}
 	}
 
-	protected void addServiceDependencies() {
+	protected void addJaxWsServiceDependencies() {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
 		String[] serviceFilters =
-			soapExtenderConfiguration.jaxwsServiceFilters();
+			soapExtenderConfiguration.jaxWsServiceFilters();
 
 		if (serviceFilters == null) {
 			return;

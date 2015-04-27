@@ -17,7 +17,7 @@ package com.liferay.portal.soap.extender.internal;
 import aQute.bnd.annotation.component.Modified;
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.soap.extender.internal.configuration.JaxwsApiConfiguration1;
+import com.liferay.portal.soap.extender.internal.configuration.JaxWsApiConfiguration;
 
 import java.util.Map;
 
@@ -52,8 +52,8 @@ public class JaxwsApiEnabler {
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws InterruptedException, InvalidSyntaxException {
 
-		JaxwsApiConfiguration1 configuration = Configurable.createConfigurable(
-			JaxwsApiConfiguration1.class, properties);
+		JaxWsApiConfiguration configuration = Configurable.createConfigurable(
+			JaxWsApiConfiguration.class, properties);
 
 		String contextPath = configuration.contextPath();
 

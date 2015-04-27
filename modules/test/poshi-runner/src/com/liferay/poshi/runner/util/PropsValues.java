@@ -64,6 +64,9 @@ public class PropsValues {
 	public static final String[] FIXED_ISSUES = StringUtil.split(
 		PropsUtil.get("fixed.issues"));
 
+	public static final boolean HEADLESS_LOGGER_ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get("headless.logger.enabled"));
+
 	public static final String IGNORE_ERRORS = PropsUtil.get(
 		"ignore.errors");
 

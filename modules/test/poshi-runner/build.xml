@@ -12,6 +12,15 @@
 
 			test.name=${test.name}
 		</echo>
+
+		<if>
+			<isset property="selenium.logger.enabled" />
+			<then>
+				<echo append="true" file="classes/poshi-runner-ext.properties">
+					selenium.logger.enabled=${selenium.logger.enabled}
+				</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-sikuli" depends="jar">

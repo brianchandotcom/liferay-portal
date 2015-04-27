@@ -17,6 +17,7 @@ package com.liferay.poshi.runner.logger;
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.FileUtil;
+import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
@@ -285,7 +286,7 @@ public final class LoggerUtil {
 	}
 
 	public static void startLogger() throws Exception {
-		if (isLoggerStarted()) {
+		if (isLoggerStarted() || !PropsValues.SELENIUM_LOGGER_ENABLED) {
 			return;
 		}
 
@@ -314,10 +315,23 @@ public final class LoggerUtil {
 	}
 
 	public static void stopLogger() throws Exception {
-		String content = (String)_javascriptExecutor.executeScript(
-			"return document.getElementsByTagName('html')[0].outerHTML;");
+		if (!PropsValues.SELENIUM_LOGGER_ENABLED) {
+			String cssContent = _readResource(
+				"META-INF/resources/css/main_rtl.css");
 
-		FileUtil.write(_getHtmlFilePath(), content);
+			FileUtil.write(
+				_CURRENT_DIR + "/test-results/css/main.css", cssContent);
+		}
+
+		String htmlContent = _readResource(
+			"META-INF/resources/html/index.html");
+
+		htmlContent = htmlContent.replace(
+			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">" +
+				"</ul>",
+			CommandLoggerHandler.getCommandLogText());
+
+		FileUtil.write(_getHtmlFilePath(), htmlContent);
 
 		if (isLoggerStarted()) {
 			_webDriver.quit();

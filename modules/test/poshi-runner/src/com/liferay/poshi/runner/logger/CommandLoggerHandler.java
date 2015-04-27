@@ -34,6 +34,10 @@ public final class CommandLoggerHandler {
 		_commandElement = null;
 	}
 
+	public static String getCommandLogText() {
+		return _commandLogLoggerElement.toString();
+	}
+
 	public static void logClassCommandName(String classCommandName) {
 		LoggerElement dividerLineLoggerElement = new LoggerElement();
 
@@ -205,5 +209,11 @@ public final class CommandLoggerHandler {
 	private static LoggerElement _commandLoggerElement;
 	private static final LoggerElement _commandLogLoggerElement =
 		new LoggerElement("commandLog");
+
+	static {
+		_commandLogLoggerElement.setAttribute("data-logid", "01");
+		_commandLogLoggerElement.setClassName("command-log");
+		_commandLogLoggerElement.setName("ul");
+	}
 
 }

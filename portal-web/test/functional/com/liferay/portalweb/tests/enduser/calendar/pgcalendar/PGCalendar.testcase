@@ -3099,7 +3099,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#chooseMenulistOption">
+		<execute macro="Calendar#chooseOtherCalendarMenulistOption">
 			<var name="calendarName" value="userfn userln" />
 			<var name="menuListOption" value="Hide Calendar" />
 		</execute>
@@ -3270,8 +3270,14 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#gotoSiteCalendarRSS">
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
 			<var name="calendarName" value="Liferay" />
+			<var name="menuListOption" value="RSS" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventNotPresent">
+			<var name="calendarName" value="Liferay" />
+			<var name="eventTitle" value="Past Day Event" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
@@ -3282,11 +3288,6 @@
 		<execute macro="Calendar#viewRSSFeedEventPresent">
 			<var name="calendarName" value="Liferay" />
 			<var name="eventTitle" value="Future Day Event" />
-		</execute>
-
-		<execute macro="Calendar#viewRSSFeedEventNotPresent">
-			<var name="calendarName" value="Liferay" />
-			<var name="eventTitle" value="Past Day Event" />
 		</execute>
 
 		<execute macro="Calendar#gotoPageWindow">

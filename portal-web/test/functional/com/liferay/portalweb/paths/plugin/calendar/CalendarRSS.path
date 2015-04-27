@@ -14,18 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FEED_EVENT_TITLE</td>
+	<td>FEED_EVENT_LINK</td>
 	<td>//*[@class='entry']/*/*[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FEED_EVENT_TITLE</td>
+	<td>//*[@class='entry']/*[@class='feedEntryContent']/*[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FEED_EVENT_DATES</td>
 	<td>//*[@class='entry']/*[contains(.,'${key_eventTitle}')]/*[contains(.,'Start Date') and contains(.,'End Date')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FEED_EVENT_LINK</td>
-	<td>//*[@class='entry']/*/*/*[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

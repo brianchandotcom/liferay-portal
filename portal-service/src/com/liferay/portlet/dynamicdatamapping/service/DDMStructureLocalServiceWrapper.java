@@ -969,14 +969,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderStructures(
-		long[] groupIds, long journalFolderId, int restrictionType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructureLocalService.getJournalFolderStructures(groupIds,
-			journalFolderId, restrictionType);
-	}
-
-	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

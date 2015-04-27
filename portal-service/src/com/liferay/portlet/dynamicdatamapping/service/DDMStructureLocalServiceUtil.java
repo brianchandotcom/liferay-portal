@@ -899,14 +899,6 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getJournalFolderPrimaryKeys(structureId);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderStructures(
-		long[] groupIds, long journalFolderId, int restrictionType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getJournalFolderStructures(groupIds, journalFolderId,
-			restrictionType);
-	}
-
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

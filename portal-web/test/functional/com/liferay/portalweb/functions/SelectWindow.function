@@ -1,4 +1,14 @@
 <definition default="selectWindow">
+	<command name="selectPopUp">
+		<execute argument1="5000" selenium="pause" />
+
+		<execute selenium="selectPopUp" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="selectWindow">
 		<execute argument1="5000" selenium="pause" />
 
@@ -13,16 +23,6 @@
 		<execute argument1="5000" selenium="pause" />
 
 		<execute argument1="null" selenium="selectWindow" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="selectPopUp">
-		<execute argument1="5000" selenium="pause" />
-
-		<execute selenium="selectPopUp" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

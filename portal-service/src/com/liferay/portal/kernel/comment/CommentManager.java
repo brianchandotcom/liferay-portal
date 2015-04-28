@@ -44,11 +44,11 @@ public interface CommentManager {
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException;
 
-	public Discussion getDiscussion(
-		long userId, long groupId, String className, long classPK,
-		ServiceContext serviceContext)
-		throws PortalException;
-
 	public int getCommentsCount(String className, long classPK);
+
+	public Discussion getDiscussion(
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 }

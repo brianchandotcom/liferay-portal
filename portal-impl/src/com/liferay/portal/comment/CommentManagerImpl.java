@@ -14,7 +14,6 @@
 
 package com.liferay.portal.comment;
 
-import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -103,22 +102,22 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public int getCommentsCount(String className, long classPK) {
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.getCommentsCount(className, classPK);
+	}
+
+	@Override
 	public Discussion getDiscussion(
-		long userId, long groupId, String className, long classPK,
-		ServiceContext serviceContext)
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.getDiscussion(
 			userId, groupId, className, classPK, serviceContext);
-	}
-
-	@Override
-	public int getCommentsCount(String className, long classPK) {
-		CommentManager commentManager = getCommentManager();
-
-		return commentManager.getCommentsCount(className, classPK);
 	}
 
 	protected CommentManager getCommentManager() {

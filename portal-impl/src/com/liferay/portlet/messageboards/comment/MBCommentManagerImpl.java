@@ -128,9 +128,17 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public int getCommentsCount(String className, long classPK) {
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return _mbMessageLocalService.getDiscussionMessagesCount(
+			classNameId, classPK, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
 	public Discussion getDiscussion(
-		long userId, long groupId, String className, long classPK,
-		ServiceContext serviceContext)
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		MBMessageDisplay messageDisplay =
@@ -169,14 +177,6 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		return new MBDiscussionImpl(
 			rootComment, messageDisplay.isDiscussionMaxComments());
-	}
-
-	@Override
-	public int getCommentsCount(String className, long classPK) {
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		return _mbMessageLocalService.getDiscussionMessagesCount(
-			classNameId, classPK, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	public void setMBMessageLocalService(

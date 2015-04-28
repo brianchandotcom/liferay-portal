@@ -56,17 +56,17 @@ public class DummyCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public Discussion getDiscussion(
-		long userId, long groupId, String className, long classPK,
-		ServiceContext serviceContext)
-		throws PortalException {
-
-		return EMPTY_DISCUSSION;
+	public int getCommentsCount(String className, long classPK) {
+		return 0;
 	}
 
 	@Override
-	public int getCommentsCount(String className, long classPK) {
-		return 0;
+	public Discussion getDiscussion(
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return EMPTY_DISCUSSION;
 	}
 
 	private static final Discussion EMPTY_DISCUSSION = new Discussion() {

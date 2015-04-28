@@ -1461,20 +1461,21 @@ sections to access to their own utils and services.
 #### What changed?
 
 The type settings breadcrumbShowParentGroups was removed from groups, it is
-no longer available in site configuration and in breadcrumbs configuration
+no longer available in site configuration. Now it is only available in the
+breadcrumb configuration.
 
 #### Who is affected?
 
-This affect all developers that have not set the showParentGroups preference in
-properties
+This affects all site administrators that have set the showParentGroups 
+preference in the site administration.
 
 #### How should I update my code?
 
-There is no need to change the code, as for now, showParentGroups is
-configurable in the OSGi console, and in every portlet instance as usual
+There is no need to change the code. This should be updated at the portlet
+instance level. 
 
 #### Why was this change made?
 
-This change was introduced to support the new settings API
+This change was introduced to support the new settings API. 
 
 ---------------------------------------

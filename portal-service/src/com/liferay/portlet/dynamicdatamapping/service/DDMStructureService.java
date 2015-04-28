@@ -269,11 +269,6 @@ public interface DDMStructureService extends BaseService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderStructures(
-		long[] groupIds, long journalFolderId, int restrictionType)
-		throws PortalException;
-
 	/**
 	* Returns the structure matching the class name ID, structure key, and
 	* group.

@@ -345,6 +345,12 @@ public class JournalFolderLocalServiceUtil {
 		return getService().getDDMStructurePrimaryKeys(folderId);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
+		long[] groupIds, long folderId, int restrictionType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDMStructures(groupIds, folderId, restrictionType);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);

@@ -388,6 +388,14 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
+		long[] groupIds, long folderId, int restrictionType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalFolderLocalService.getDDMStructures(groupIds, folderId,
+			restrictionType);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _journalFolderLocalService.getExportActionableDynamicQuery(portletDataContext);

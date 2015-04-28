@@ -27,7 +27,7 @@ if (folder != null) {
 	restrictionType = folder.getRestrictionType();
 }
 
-List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getJournalFolderStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, restrictionType);
+List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, restrictionType);
 %>
 
 <aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">

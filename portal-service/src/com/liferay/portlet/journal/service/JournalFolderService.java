@@ -70,6 +70,11 @@ public interface JournalFolderService extends BaseService {
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
+		long[] groupIds, long folderId, int restrictionType)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalFolder getFolder(
 		long folderId) throws PortalException;
 

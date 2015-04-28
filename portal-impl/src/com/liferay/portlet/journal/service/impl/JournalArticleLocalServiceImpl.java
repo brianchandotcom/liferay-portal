@@ -7625,7 +7625,7 @@ public class JournalArticleLocalServiceImpl
 			ddmStructureKey, true);
 
 		List<DDMStructure> folderDDMStructures =
-			ddmStructureLocalService.getJournalFolderStructures(
+			journalFolderLocalService.getDDMStructures(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
 				restrictionType);
 

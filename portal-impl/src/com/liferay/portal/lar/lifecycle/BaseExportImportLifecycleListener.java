@@ -14,15 +14,39 @@
 
 package com.liferay.portal.lar.lifecycle;
 
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_STARTED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED;
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_STARTED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED;
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_STARTED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_STARTED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_SUCCEEDED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_FAILED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_STARTED;
+import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_SUCCEEDED;
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS;
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleListener;
 import com.liferay.portal.kernel.util.TransientValue;
@@ -54,41 +78,26 @@ public abstract class BaseExportImportLifecycleListener
 		int code = exportImportLifecycleEvent.getCode();
 		int processFlag = exportImportLifecycleEvent.getProcessFlag();
 
-		if (code == ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FAILED) {
+		if (code == EVENT_LAYOUT_EXPORT_FAILED) {
 			onLayoutExportFailed(
 				getPortletDataContextAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_LAYOUT_EXPORT_STARTED) {
-
+		else if (code == EVENT_LAYOUT_EXPORT_STARTED) {
 			onLayoutExportStarted(getPortletDataContextAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_LAYOUT_EXPORT_SUCCEEDED) {
-
+		else if (code == EVENT_LAYOUT_EXPORT_SUCCEEDED) {
 			onLayoutExportSucceeded(getPortletDataContextAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_LAYOUT_IMPORT_FAILED) {
-
+		else if (code == EVENT_LAYOUT_IMPORT_FAILED) {
 			onLayoutImportFailed(
 				getPortletDataContextAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_LAYOUT_IMPORT_STARTED) {
-
+		else if (code == EVENT_LAYOUT_IMPORT_STARTED) {
 			onLayoutImportStarted(getPortletDataContextAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_LAYOUT_IMPORT_SUCCEEDED) {
-
+		else if (code == EVENT_LAYOUT_IMPORT_SUCCEEDED) {
 			onLayoutImportSucceeded(getPortletDataContextAttribute(attributes));
 		}
 		else if ((code == EVENT_LAYOUT_IMPORT_SUCCEEDED) &&
@@ -98,45 +107,27 @@ public abstract class BaseExportImportLifecycleListener
 			onLayoutImportProcessFinished(
 				getPortletDataContextAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PORTLET_EXPORT_FAILED) {
-
+		else if (code == EVENT_PORTLET_EXPORT_FAILED) {
 			onPortletExportFailed(
 				getPortletDataContextAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PORTLET_EXPORT_STARTED) {
-
+		else if (code == EVENT_PORTLET_EXPORT_STARTED) {
 			onPortletExportStarted(getPortletDataContextAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PORTLET_EXPORT_SUCCEEDED) {
-
+		else if (code == EVENT_PORTLET_EXPORT_SUCCEEDED) {
 			onPortletExportSucceeded(
 				getPortletDataContextAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PORTLET_IMPORT_FAILED) {
-
+		else if (code == EVENT_PORTLET_IMPORT_FAILED) {
 			onPortletImportFailed(
 				getPortletDataContextAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PORTLET_IMPORT_STARTED) {
-
+		else if (code == EVENT_PORTLET_IMPORT_STARTED) {
 			onPortletImportStarted(getPortletDataContextAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PORTLET_IMPORT_SUCCEEDED) {
-
+		else if (code == EVENT_PORTLET_IMPORT_SUCCEEDED) {
 			onPortletImportSucceeded(
 				getPortletDataContextAttribute(attributes));
 		}
@@ -147,117 +138,72 @@ public abstract class BaseExportImportLifecycleListener
 			onPortletImportProcessFinished(
 				getPortletDataContextAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED) {
-
+		else if (code == EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED) {
 			onLayoutLocalPublicationFailed(
 				getExportImportConfigurationAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED) {
-
+		else if (code == EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED) {
 			onLayoutLocalPublicationStarted(
 				getExportImportConfigurationAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) {
-
+		else if (code == EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) {
 			onLayoutLocalPublicationSucceeded(
 				getExportImportConfigurationAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED) {
-
+		else if (code == EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED) {
 			onLayoutRemotePublicationFailed(
 				getExportImportConfigurationAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED) {
-
+		else if (code == EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED) {
 			onLayoutRemotePublicationStarted(
 				getExportImportConfigurationAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED) {
-
+		else if (code == EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED) {
 			onLayoutRemotePublicationSucceeded(
 				getExportImportConfigurationAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_PORTLET_LOCAL_FAILED) {
-
+		else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_FAILED) {
 			onPortletPublicationFailed(
 				getTaskContextMapAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
-
+		else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
 			onPortletPublicationStarted(getTaskContextMapAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
-
+		else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
 			onPortletPublicationSucceeded(
 				getTaskContextMapAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_STAGED_MODEL_EXPORT_FAILED) {
-
+		else if (code == EVENT_STAGED_MODEL_EXPORT_FAILED) {
 			onStagedModelExportFailed(
 				getPortletDataContextAttribute(attributes),
 				getStagedModelAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_STAGED_MODEL_EXPORT_STARTED) {
-
+		else if (code == EVENT_STAGED_MODEL_EXPORT_STARTED) {
 			onStagedModelExportStarted(
 				getPortletDataContextAttribute(attributes),
 				getStagedModelAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_STAGED_MODEL_EXPORT_SUCCEEDED) {
-
+		else if (code == EVENT_STAGED_MODEL_EXPORT_SUCCEEDED) {
 			onStagedModelExportSucceeded(
 				getPortletDataContextAttribute(attributes),
 				getStagedModelAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_STAGED_MODEL_IMPORT_FAILED) {
-
+		else if (code == EVENT_STAGED_MODEL_IMPORT_FAILED) {
 			onStagedModelImportFailed(
 				getPortletDataContextAttribute(attributes),
 				getStagedModelAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_STAGED_MODEL_IMPORT_STARTED) {
-
+		else if (code == EVENT_STAGED_MODEL_IMPORT_STARTED) {
 			onStagedModelImportStarted(
 				getPortletDataContextAttribute(attributes),
 				getStagedModelAttribute(attributes));
 		}
-		else if (code ==
-					ExportImportLifecycleConstants.
-						EVENT_STAGED_MODEL_IMPORT_SUCCEEDED) {
-
+		else if (code == EVENT_STAGED_MODEL_IMPORT_SUCCEEDED) {
 			onStagedModelImportSucceeded(
 				getPortletDataContextAttribute(attributes),
 				getStagedModelAttribute(attributes));

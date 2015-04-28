@@ -26,9 +26,13 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.workflow.task.web.portlet.action.ActionUtil;
 
@@ -65,8 +69,24 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
+			LiferayPortletRequest liferayPortletRequest = 
+				PortalUtil.getLiferayPortletRequest(request);
 			
-			ActionUtil.getWorkflowTask(request);
+			LiferayPortletResponse liferayPortletResponse = 
+				PortalUtil.getLiferayPortletResponse(response);	
+			
+			long workflowTaskId = ParamUtil.getLong(request, 
+				ActionUtil.WORKFLOW_TASK_ID);
+			
+			if(workflowTaskId > 0) {
+				ActionUtil.getWorkflowTask(liferayPortletRequest, 
+					workflowTaskId);
+			}
+			else {
+				ActionUtil.searchWorkflowTasks(liferayPortletRequest, 
+					liferayPortletResponse);
+			}
+			
 		} catch (Exception e) {
 			if (e instanceof WorkflowException) {
 				

@@ -80,7 +80,9 @@ page import="javax.portlet.PortletMode" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.model.Role" %><%@
 page import="com.liferay.portal.service.RoleLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %>
+page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
+page import="com.liferay.workflow.task.web.portlet.context.WorkflowTaskViewDisplayContext" %><%@
+page import="com.liferay.portal.security.auth.PrincipalException" %>
 
 
 <liferay-theme:defineObjects />

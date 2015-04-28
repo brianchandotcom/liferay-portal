@@ -17,11 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "pending");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+WorkflowTaskSearch workflowTaskSearch = null;
 
-portletURL.setParameter("tabs1", tabs1);
+WorkflowTaskViewDisplayContext displayContext = (WorkflowTaskViewDisplayContext)request.getAttribute(WebKeys.WORKFLOW_TASK_DISPLAY_CONTEXT);
+
+PortletURL portletURL = displayContext.getPortletURL();
+
+WorkflowTaskDisplayTerms displayTerms = displayContext.getDisplayTerms();
+
+String displayTermsType = displayTerms.getType();
+
+String selectedTab = displayContext.getSelectedTab();
+
+List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = displayContext.getWorkflowHandlersOfSearchableAssets();
+
 %>
 
 <liferay-ui:tabs
@@ -29,64 +39,68 @@ portletURL.setParameter("tabs1", tabs1);
 	portletURL="<%= portletURL %>"
 />
 
-<%
-try {
-	String type = "completed";
-%>
-
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-		<aui:nav-bar>
-			<aui:nav-bar-search>
-				<liferay-util:include page="/workflow_search_tasks.jsp" servletContext="<%= application %>" />
-			</aui:nav-bar-search>
-		</aui:nav-bar>	
-		<c:choose>
-			<c:when test='<%= tabs1.equals("pending") %>'>
-				<liferay-ui:panel-container extended="<%= Boolean.FALSE %>" id="workflowTasksPanelContainer" persistState="<%= Boolean.TRUE %>">
-					<liferay-ui:panel collapsible="<%= Boolean.TRUE %>" extended="<%= Boolean.FALSE %>" id="workflowMyTasksPanel" persistState="<%= Boolean.TRUE %>" title="assigned-to-me">
-
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+	<aui:nav-bar>
+		<aui:nav-bar-search>
+			<liferay-ui:search-toggle
+				autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+				buttonLabel="search"
+				displayTerms="<%= displayTerms %>"
+				id="toggle_id_workflow_task_search">
+			
+				<aui:fieldset>
+					<aui:input inlineField="<%= Boolean.TRUE %>" label="task" name="<%= WorkflowTaskDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+			
+					<aui:select inlineField="<%= Boolean.TRUE %>" name="<%= WorkflowTaskDisplayTerms.TYPE %>">
+			
 						<%
-						type = "assigned-to-me";
+						for (WorkflowHandler<?> workflowHandler : workflowHandlersOfSearchableAssets) {
+							String defaultWorkflowHandlerType = workflowHandler.getClassName();
 						%>
-
-						<%@ include file="/workflow_tasks.jspf" %>
-					</liferay-ui:panel>
-
-					<liferay-ui:panel collapsible="<%= Boolean.TRUE %>" extended="<%= Boolean.FALSE %>" id="workflowMyRolesTasksPanel" persistState="<%= Boolean.TRUE %>" title="assigned-to-my-roles">
-
+			
+							<aui:option label="<%= workflowHandler.getType(locale) %>" selected="<%= displayTermsType.equals(defaultWorkflowHandlerType) %>" value="<%= defaultWorkflowHandlerType %>" />
+			
 						<%
-						type = "assigned-to-my-roles";
+						}
 						%>
+			
+					</aui:select>
+				</aui:fieldset>
+			</liferay-ui:search-toggle>
+		</aui:nav-bar-search>
+	</aui:nav-bar>	
+	<c:choose>
+		<c:when test='<%= displayContext.isPendingTab() %>'>
+			<liferay-ui:panel-container extended="<%= Boolean.FALSE %>" id="workflowTasksPanelContainer" persistState="<%= Boolean.TRUE %>">
+				<liferay-ui:panel collapsible="<%= Boolean.TRUE %>" extended="<%= Boolean.FALSE %>" id="workflowMyTasksPanel" persistState="<%= Boolean.TRUE %>" title="assigned-to-me">
 
-						<%@ include file="/workflow_tasks.jspf" %>
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
-			</c:when>
-			<c:otherwise>
-				<div class="separator"></div>
-				<%@ include file="/workflow_tasks.jspf" %>
-			</c:otherwise>
-		</c:choose>
-	</aui:form>
+					<%
+					workflowTaskSearch = (WorkflowTaskSearch)request.getAttribute(WebKeys.WORKFLOW_PENDING_TASKS_ASSIGNED_TO_ME);
+					%>
+
+					<%@ include file="/workflow_tasks.jspf" %>
+				</liferay-ui:panel>
+
+				<liferay-ui:panel collapsible="<%= Boolean.TRUE %>" extended="<%= Boolean.FALSE %>" id="workflowMyRolesTasksPanel" persistState="<%= Boolean.TRUE %>" title="assigned-to-my-roles">
+
+					<%
+					workflowTaskSearch = (WorkflowTaskSearch)request.getAttribute(WebKeys.WORKFLOW_PENDING_TASKS_ASSIGNED_TO_MY_ROLES);
+					%>
+
+					<%@ include file="/workflow_tasks.jspf" %>
+				</liferay-ui:panel>
+			</liferay-ui:panel-container>
+		</c:when>
+		<c:otherwise>
+			<div class="separator"></div>
+			<%
+			workflowTaskSearch = (WorkflowTaskSearch)request.getAttribute(WebKeys.WORKFLOW_MY_COMPLETED_TASKS);
+			%>
+			<%@ include file="/workflow_tasks.jspf" %>
+		</c:otherwise>
+	</c:choose>
+</aui:form>
 
 <%
-}
-catch (Exception e) {
-	if (_log.isWarnEnabled()) {
-		_log.warn("Error retrieving tasks for user " + user.getUserId(), e);
-	}
-%>
-
-	<div class="alert alert-danger">
-		<liferay-ui:message key="an-error-occurred-while-retrieving-the-list-of-tasks" />
-	</div>
-
-<%
-}
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), currentURL);
-%>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("com.liferay.workflow.task.web.portlet.view_jsp");
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, selectedTab), currentURL);
 %>

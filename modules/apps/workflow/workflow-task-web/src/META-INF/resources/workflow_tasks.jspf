@@ -14,62 +14,22 @@
  */
 --%>
 
-<%
-String curParam = SearchContainer.DEFAULT_CUR_PARAM;
-
-if (type.equals("assigned-to-me")) {
-	curParam = "cur1";
-}
-else if (type.equals("assigned-to-my-roles")) {
-	curParam = "cur2";
-}
-%>
-
-<liferay-ui:search-container
-	searchContainer="<%= new WorkflowTaskSearch(renderRequest, curParam, currentURLObj) %>"
+<liferay-ui:search-container searchContainer="<%= workflowTaskSearch %>"
 >
 
-	<%
-	boolean allTasks = false;
-	%>
-
-	<liferay-ui:search-container-results>
-		<%@ include file="/workflow_search_results.jspf" %>
+	<liferay-ui:search-container-results results="<%= workflowTaskSearch.getResults() %>"
+		total="<%= workflowTaskSearch.getTotal() %>">
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowTask"
 		modelVar="workflowTask"
-		stringKey="<%= true %>"
+		stringKey="<%= Boolean.TRUE %>"
 	>
 		<liferay-ui:search-container-row-parameter
 			name="workflowTask"
 			value="<%= workflowTask %>"
 		/>
-
-		<%
-		WorkflowInstance workflowInstance = WorkflowInstanceManagerUtil.getWorkflowInstance(company.getCompanyId(), workflowTask.getWorkflowInstanceId());
-
-		Map<String, Serializable> workflowContext = workflowInstance.getWorkflowContext();
-
-		String className = (String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
-		long classPK = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-
-		WorkflowHandler workflowHandler = WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
-		%>
-
-		<c:if test="<%= allTasks %>">
-			<liferay-ui:search-container-column-text>
-				<c:if test="<%= workflowTask.isAssignedToSingleUser() && (workflowTask.getAssigneeUserId() > 0) %>">
-
-					<%
-					User assigneeUser = UserLocalServiceUtil.getUser(workflowTask.getAssigneeUserId());
-					%>
-
-					<img alt="<%= HtmlUtil.escapeAttribute(assigneeUser.getFullName()) %>" class="user-avatar" src="<%= assigneeUser.getPortraitURL(themeDisplay) %>" title="<%= HtmlUtil.escape(assigneeUser.getFullName()) %>" />
-				</c:if>
-			</liferay-ui:search-container-column-text>
-		</c:if>
 
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
@@ -82,46 +42,36 @@ else if (type.equals("assigned-to-my-roles")) {
 			name="task"
 		>
 			<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
-				<liferay-ui:message key="<%= HtmlUtil.escape(workflowTask.getName()) %>" />
+				<liferay-ui:message key="<%= displayContext.getTaskName(workflowTask) %>" />
 			</span>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="asset-title"
-			value="<%= HtmlUtil.escape(workflowHandler.getTitle(classPK, locale)) %>"
+			value="<%= displayContext.getAssetTitle(workflowTask) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="asset-type"
-			value="<%= workflowHandler.getType(locale) %>"
+			value="<%= displayContext.getAssetType(workflowTask) %>"
 		/>
-
-		<%
-		List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowTask.getWorkflowInstanceId(), null, 0, 1, WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
-
-		WorkflowLog workflowLog = null;
-
-		if (!workflowLogs.isEmpty()) {
-			workflowLog = workflowLogs.get(0);
-		}
-		%>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="last-activity-date"
-			value='<%= (workflowLog == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowLog.getCreateDate()) %>'
+			value='<%= displayContext.getLastActivityDate(workflowTask) %>'
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="due-date"
-			orderable="<%= true %>"
-			value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>'
+			orderable="<%= Boolean.TRUE %>"
+			value='<%= displayContext.getDueDate(workflowTask) %>'
 		/>
 
-		<c:if test='<%= !allTasks && !tabs1.equals("completed") %>'>
+		<c:if test='<%= !displayContext.isCompletedTab() %>'>
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"

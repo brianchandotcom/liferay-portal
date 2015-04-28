@@ -70,11 +70,10 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 		jsonObject.put("language", languageId.replace("iw_", "he_"));
 		jsonObject.put(
 			"extraPlugins",
-			"autolink,dragresize,dropimages,placeholder,selectionregion," +
-				"tableresize,tabletools,uicore");
+			"dragresize,dropimages,placeholder,selectionregion,tableresize," +
+				"tabletools,uicore,autolink");
 		jsonObject.put(
-			"removePlugins",
-			"contextmenu,elementspath,link,liststyle,resize,toolbar");
+			"removePlugins", "elementspath,link,liststyle,resize,toolbar");
 
 		if (liferayPortletResponse != null) {
 			LiferayPortletURL itemSelectorURL =

@@ -1115,6 +1115,14 @@ body.yui3-skin-sam .yui3-widget-mask {
 	}
 }
 
+/* ---------- CKEditor ---------- */
+
+.html-editor.portlet-message-boards {
+	a {
+		font-weight: inherit;
+	}
+}
+
 /* ---------- Extras ---------- */
 
 $prefixes: ("-webkit-", "-moz-", "-o-", "");

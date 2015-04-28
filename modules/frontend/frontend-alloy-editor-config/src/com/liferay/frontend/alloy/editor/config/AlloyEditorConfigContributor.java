@@ -70,10 +70,11 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 		jsonObject.put("language", languageId.replace("iw_", "he_"));
 		jsonObject.put(
 			"extraPlugins",
-			"uicore,selectionregion,dragresize,dropimages,placeholder,tabletools,tableresize,autolink");
+			"autolink,dragresize,dropimages,placeholder,selectionregion," +
+				"tableresize,tabletools,uicore");
 		jsonObject.put(
 			"removePlugins",
-			"contextmenu,toolbar,elementspath,resize,liststyle,link");
+			"contextmenu,elementspath,link,liststyle,resize,toolbar");
 
 		if (liferayPortletResponse != null) {
 			LiferayPortletURL itemSelectorURL =
@@ -175,8 +176,10 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 				JSONFactoryUtil.createJSONObject();
 
 			toolbarStylesSelectionTextJSONObject.put(
-				"buttons", JSONFactoryUtil.createJSONArray(
-				"['styles', 'bold', 'italic', 'underline', 'link', 'twitter']"));
+				"buttons",
+				JSONFactoryUtil.createJSONArray(
+					"['styles', 'bold', 'italic', 'underline', 'link', " +
+						"'twitter']"));
 			toolbarStylesSelectionTextJSONObject.put("name", "text");
 			toolbarStylesSelectionTextJSONObject.put("test", "text");
 

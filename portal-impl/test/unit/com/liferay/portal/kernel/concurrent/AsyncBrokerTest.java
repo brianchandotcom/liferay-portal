@@ -346,8 +346,7 @@ public class AsyncBrokerTest {
 		Assert.assertFalse(asyncBroker.takeWithResult(_KEY, _VALUE));
 	}
 
-	protected void testPhantomReferenceResurrectionNotSupported(
-			boolean withLog)
+	protected void testPhantomReferenceResurrectionNotSupported(boolean withLog)
 		throws ClassNotFoundException {
 
 		Throwable throwable = new Throwable();

@@ -51,7 +51,6 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -1164,17 +1163,16 @@ public class JournalPortlet extends MVCPortlet {
 			}
 		}
 
-		if (actionName.equals("deleteArticle") &&
+		if ((actionName.equals("deleteArticle") ||
+			 actionName.equals("deleteArticles")) &&
 			!ActionUtil.hasArticle(actionRequest)) {
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				actionRequest, portletDisplay.getPortletName(),
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+				PortletRequest.RENDER_PHASE);
 
 			redirect = portletURL.toString();
 		}

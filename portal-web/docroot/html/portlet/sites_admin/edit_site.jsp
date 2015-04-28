@@ -23,9 +23,13 @@ String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedi
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
-Group group = (Group)request.getAttribute(WebKeys.GROUP);
+long groupId = ParamUtil.getLong(request, "groupId", portletName.equals(SitesAdminPortletKeys.SITE_SETTINGS) ? themeDisplay.getSiteGroupId() : 0);
 
-long groupId = BeanParamUtil.getLong(group, request, "groupId");
+Group group = null;
+
+if (groupId > 0) {
+	group = GroupLocalServiceUtil.getGroup(groupId);
+}
 
 long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", GroupConstants.DEFAULT_PARENT_GROUP_ID);
 

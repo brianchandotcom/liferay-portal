@@ -18,14 +18,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
-import com.liferay.wiki.engine.impl.BaseInputEditorWikiEngine;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.DirectTagMatcher;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.DirectURLMatcher;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.EditURLMatcher;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.ImageTagMatcher;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.ImageURLMatcher;
 import com.liferay.wiki.engine.impl.mediawiki.matchers.ViewURLMatcher;
+import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
@@ -43,6 +44,7 @@ import org.jamwiki.parser.ParserUtil;
 import org.jamwiki.parser.TableOfContents;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Potter
@@ -65,6 +67,11 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		return parsePage(
 			page, new ParserOutput(), viewPageURL, editPageURL,
 			attachmentURLPrefix);
+	}
+
+	@Override
+	public String getEditorName() {
+		return _wikiGroupServiceConfiguration.getMediaWikiEditor();
 	}
 
 	@Override
@@ -243,5 +250,20 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 
 		return content;
 	}
+
+	@Reference
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = null;
+	}
+
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

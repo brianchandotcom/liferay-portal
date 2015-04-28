@@ -18,9 +18,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
-import com.liferay.wiki.engine.impl.BaseInputEditorWikiEngine;
 import com.liferay.wiki.engine.impl.antlrwiki.translator.XhtmlTranslator;
+import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.parser.creole.ast.ASTNode;
@@ -42,6 +43,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Pastor
@@ -65,6 +67,11 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 		return xhtmlTranslator.translate(
 			page, viewPageURL, editPageURL, attachmentURLPrefix,
 			parse(page.getContent()));
+	}
+
+	@Override
+	public String getEditorName() {
+		return _wikiGroupServiceConfiguration.getCreoleEditor();
 	}
 
 	@Override
@@ -142,7 +149,22 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 		return creole10Parser.getWikiPageNode();
 	}
 
+	@Reference
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreoleWikiEngine.class);
+
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

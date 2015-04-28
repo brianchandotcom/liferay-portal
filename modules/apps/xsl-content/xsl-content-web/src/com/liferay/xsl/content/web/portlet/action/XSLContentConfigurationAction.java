@@ -15,7 +15,6 @@
 package com.liferay.xsl.content.web.portlet.action;
 
 import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -25,6 +24,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
 import com.liferay.xsl.content.web.util.XSLContentUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 import java.util.Map;
 
@@ -33,10 +35,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,7 +46,7 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + XSLContentPortletKeys.XSL_CONTENT,
-		"valid.url.prefixes=@portlet_context_url@"
+		"valid.url.prefixes=@portal_url@,@portlet_context_url@"
 	},
 	service = ConfigurationAction.class
 )

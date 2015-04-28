@@ -47,9 +47,7 @@ public class ProjectDataUtil {
 		mergeHooks.add(_mergeHookRunnable);
 	}
 
-	public static ProjectData captureProjectData() {
-		runMergeHooks();
-
+	public static ProjectData captureProjectData(boolean saveSessionData) {
 		String className = ProjectDataUtil.class.getName();
 
 		synchronized (className.intern()) {
@@ -61,6 +59,8 @@ public class ProjectDataUtil {
 				masterProjectData.merge(projectData);
 			}
 
+			masterProjectData = _runMergeHooks(masterProjectData);
+
 			try {
 				File dataFile = new File(
 					System.getProperty("net.sourceforge.cobertura.datafile"));
@@ -69,6 +69,10 @@ public class ProjectDataUtil {
 					masterProjectData.merge(_readProjectData(dataFile));
 
 					dataFile.delete();
+				}
+
+				if (saveSessionData) {
+					_writeProjectData(masterProjectData, dataFile);
 				}
 
 				return masterProjectData;
@@ -94,44 +98,6 @@ public class ProjectDataUtil {
 		}
 
 		return projectData;
-	}
-
-	public static void runMergeHooks() {
-		String className = ProjectDataUtil.class.getName();
-
-		synchronized (className.intern()) {
-			FileLock fileLock = _lockFile();
-
-			try {
-				File dataFile = new File(
-					System.getProperty("net.sourceforge.cobertura.datafile"));
-
-				ProjectData projectData = null;
-
-				if (dataFile.exists()) {
-					projectData = _readProjectData(dataFile);
-				}
-				else {
-					projectData = new ProjectData();
-				}
-
-				_setThreadLocalProjectData(projectData);
-
-				for (Runnable runnable :
-						ProjectDataUtil.<Set<Runnable>>_getFieldValue(
-							"_mergeHooks")) {
-
-					runnable.run();
-				}
-
-				_writeProjectData(_getThreadLocalProjectData(), dataFile);
-			}
-			finally {
-				_unlockFile(fileLock);
-
-				_removeThreadLocalProjectData();
-			}
-		}
 	}
 
 	private static <T> T _getFieldValue(String fieldName) {
@@ -207,6 +173,24 @@ public class ProjectDataUtil {
 			"_sessionDataThreadLocal");
 
 		sessionDataThreadLocal.remove();
+	}
+
+	private static ProjectData _runMergeHooks(ProjectData projectData) {
+		try {
+			_setThreadLocalProjectData(projectData);
+
+			for (Runnable runnable :
+					ProjectDataUtil.<Set<Runnable>>_getFieldValue(
+						"_mergeHooks")) {
+
+				runnable.run();
+			}
+
+			return _getThreadLocalProjectData();
+		}
+		finally {
+			_removeThreadLocalProjectData();
+		}
 	}
 
 	private static void _setThreadLocalProjectData(ProjectData projectData) {

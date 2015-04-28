@@ -50,7 +50,7 @@ public class InstrumentationAgent {
 		_coberturaClassFileTransformer = null;
 
 		try {
-			ProjectData projectData = ProjectDataUtil.captureProjectData();
+			ProjectData projectData = ProjectDataUtil.captureProjectData(false);
 
 			List<AssertionError> assertionErrors = new ArrayList<>();
 
@@ -198,7 +198,7 @@ public class InstrumentationAgent {
 
 					@Override
 					public void run() {
-						ProjectDataUtil.runMergeHooks();
+						ProjectDataUtil.captureProjectData(true);
 					}
 
 				});

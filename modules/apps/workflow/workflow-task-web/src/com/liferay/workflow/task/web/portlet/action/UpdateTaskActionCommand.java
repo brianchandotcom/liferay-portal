@@ -60,26 +60,27 @@ public class UpdateTaskActionCommand extends WorkflowTaskBaseActionCommand {
 					WebKeys.THEME_DISPLAY);
 
 			long workflowTaskId = ParamUtil.getLong(
-				portletRequest, "workflowTaskId");
+				portletRequest, ActionUtil.WORKFLOW_TASK_ID);
 
-			String comment = ParamUtil.getString(portletRequest, "comment");
+			String comment = ParamUtil.getString(portletRequest, _COMMENT);
 
 			int dueDateMonth = ParamUtil.getInteger(
-				portletRequest, "dueDateMonth");
+				portletRequest, _DUE_DATE_MONTH);
 
-			int dueDateDay = ParamUtil.getInteger(portletRequest, "dueDateDay");
+			int dueDateDay = ParamUtil.getInteger(
+				portletRequest, _DUE_DATE_DAY);
 
 			int dueDateYear = ParamUtil.getInteger(
-				portletRequest, "dueDateYear");
+				portletRequest, _DUE_DATE_YEAR);
 
 			int dueDateHour = ParamUtil.getInteger(
-				portletRequest, "dueDateHour");
+				portletRequest, _DUE_DATE_HOUR);
 
 			int dueDateMinute = ParamUtil.getInteger(
-				portletRequest, "dueDateMinute");
+				portletRequest, _DUE_DATE_MINUTE);
 
 			int dueDateAmPm = ParamUtil.getInteger(
-				portletRequest, "dueDateAmPm");
+				portletRequest, _DUE_DATE_AM_PM);
 
 			if (dueDateAmPm == Calendar.PM) {
 				dueDateHour += 12;
@@ -119,5 +120,19 @@ public class UpdateTaskActionCommand extends WorkflowTaskBaseActionCommand {
 			}
 		}
 	}
+
+	private static final String _COMMENT = "comment";
+
+	private static final String _DUE_DATE_AM_PM = "dueDateAmPm";
+
+	private static final String _DUE_DATE_DAY = "dueDateDay";
+
+	private static final String _DUE_DATE_HOUR = "dueDateHour";
+
+	private static final String _DUE_DATE_MINUTE = "dueDateMinute";
+
+	private static final String _DUE_DATE_MONTH = "dueDateMonth";
+
+	private static final String _DUE_DATE_YEAR = "dueDateYear";
 
 }

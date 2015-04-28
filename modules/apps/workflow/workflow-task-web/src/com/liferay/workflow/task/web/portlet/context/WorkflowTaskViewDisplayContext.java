@@ -71,10 +71,10 @@ public class WorkflowTaskViewDisplayContext {
 		_workflowLogMap = new HashMap<>();
 
 		_selectedTab = ParamUtil.getString(
-			_liferayPortletRequest, "tabs1", _PENDING);
+			_liferayPortletRequest, _TABS1, _PENDING);
 
 		_portletURL = liferayPortletResponse.createRenderURL();
-		_portletURL.setParameter("tabs1", _selectedTab);
+		_portletURL.setParameter(_TABS1, _selectedTab);
 
 		_displayTerms = new WorkflowTaskDisplayTerms(liferayPortletRequest);
 
@@ -226,6 +226,8 @@ public class WorkflowTaskViewDisplayContext {
 	private static final String _NEVER = "never";
 
 	private static final String _PENDING = "pending";
+
+	private static final String _TABS1 = "tabs1";
 
 	private final Format _dateFormatDateTime;
 	private final WorkflowTaskDisplayTerms _displayTerms;

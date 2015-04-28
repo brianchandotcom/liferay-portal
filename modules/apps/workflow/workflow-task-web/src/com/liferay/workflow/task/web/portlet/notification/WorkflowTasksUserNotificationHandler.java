@@ -56,7 +56,7 @@ public class WorkflowTasksUserNotificationHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		long workflowTaskId = jsonObject.getLong("workflowTaskId");
+		long workflowTaskId = jsonObject.getLong(_WORKFLOW_TASK_ID);
 
 		WorkflowTask workflowTask = WorkflowTaskManagerUtil.fetchWorkflowTask(
 			serviceContext.getCompanyId(), workflowTaskId);
@@ -68,7 +68,7 @@ public class WorkflowTasksUserNotificationHandler
 			return null;
 		}
 
-		return HtmlUtil.escape(jsonObject.getString("notificationMessage"));
+		return HtmlUtil.escape(jsonObject.getString(_NOTIFICATION_MESSAGE));
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class WorkflowTasksUserNotificationHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		String entryClassName = jsonObject.getString("entryClassName");
+		String entryClassName = jsonObject.getString(_ENTRY_CLASS_NAME);
 
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(entryClassName);
@@ -89,10 +89,16 @@ public class WorkflowTasksUserNotificationHandler
 			return null;
 		}
 
-		long workflowTaskId = jsonObject.getLong("workflowTaskId");
+		long workflowTaskId = jsonObject.getLong(_WORKFLOW_TASK_ID);
 
 		return workflowHandler.getURLEditWorkflowTask(
 			workflowTaskId, serviceContext);
 	}
+
+	private static final String _ENTRY_CLASS_NAME = "entryClassName";
+
+	private static final String _NOTIFICATION_MESSAGE = "notificationMessage";
+
+	private static final String _WORKFLOW_TASK_ID = "workflowTaskId";
 
 }

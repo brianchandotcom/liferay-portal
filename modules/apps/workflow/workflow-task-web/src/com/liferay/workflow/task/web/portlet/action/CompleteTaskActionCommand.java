@@ -56,12 +56,12 @@ public class CompleteTaskActionCommand extends WorkflowTaskBaseActionCommand {
 					WebKeys.THEME_DISPLAY);
 
 			long workflowTaskId = ParamUtil.getLong(
-				portletRequest, "workflowTaskId");
+				portletRequest, ActionUtil.WORKFLOW_TASK_ID);
 
 			String transitionName = ParamUtil.getString(
-				portletRequest, "transitionName");
+				portletRequest, _TRANSITION_NAME);
 
-			String comment = ParamUtil.getString(portletRequest, "comment");
+			String comment = ParamUtil.getString(portletRequest, _COMMENT);
 
 			WorkflowTaskManagerUtil.completeWorkflowTask(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
@@ -93,5 +93,9 @@ public class CompleteTaskActionCommand extends WorkflowTaskBaseActionCommand {
 			}
 		}
 	}
+
+	private static final String _COMMENT = "comment";
+
+	private static final String _TRANSITION_NAME = "transitionName";
 
 }

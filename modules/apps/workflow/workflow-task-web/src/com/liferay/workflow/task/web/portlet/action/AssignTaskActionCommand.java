@@ -56,12 +56,12 @@ public class AssignTaskActionCommand extends WorkflowTaskBaseActionCommand {
 					WebKeys.THEME_DISPLAY);
 
 			long workflowTaskId = ParamUtil.getLong(
-				portletRequest, "workflowTaskId");
+				portletRequest, ActionUtil.WORKFLOW_TASK_ID);
 
 			long assigneeUserId = ParamUtil.getLong(
-				portletRequest, "assigneeUserId");
+				portletRequest, _ASSIGNEE_USER_ID);
 
-			String comment = ParamUtil.getString(portletRequest, "comment");
+			String comment = ParamUtil.getString(portletRequest, _COMMENT);
 
 			WorkflowTaskManagerUtil.assignWorkflowTaskToUser(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
@@ -93,5 +93,9 @@ public class AssignTaskActionCommand extends WorkflowTaskBaseActionCommand {
 			}
 		}
 	}
+
+	private static final String _ASSIGNEE_USER_ID = "assigneeUserId";
+
+	private static final String _COMMENT = "comment";
 
 }

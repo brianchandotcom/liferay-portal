@@ -35,13 +35,13 @@ public abstract class WorkflowTaskBaseActionCommand extends BaseActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(portletRequest, "redirect");
+		String redirect = ParamUtil.getString(portletRequest, _REDIRECT);
 		String closeRedirect = ParamUtil.getString(
-			portletRequest, "closeRedirect");
+			portletRequest, _CLOSE_REDIRECT);
 
 		if (Validator.isNotNull(closeRedirect)) {
 			redirect = HttpUtil.setParameter(
-				redirect, "closeRedirect", closeRedirect);
+				redirect, _CLOSE_REDIRECT, closeRedirect);
 
 			SessionMessages.add(
 				portletRequest, PortalUtil.getPortletId(portletRequest) +
@@ -50,5 +50,9 @@ public abstract class WorkflowTaskBaseActionCommand extends BaseActionCommand {
 
 		portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
+
+	private static final String _CLOSE_REDIRECT = "closeRedirect";
+
+	private static final String _REDIRECT = "redirect";
 
 }

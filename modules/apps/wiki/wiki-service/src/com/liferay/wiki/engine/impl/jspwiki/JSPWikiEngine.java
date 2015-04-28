@@ -27,8 +27,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
-import com.liferay.wiki.engine.impl.BaseInputEditorWikiEngine;
+import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
@@ -48,6 +49,7 @@ import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -81,6 +83,11 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 		catch (WikiException we) {
 			throw new PageContentException(we);
 		}
+	}
+
+	@Override
+	public String getEditorName() {
+		return _wikiGroupServiceConfiguration.getCreoleEditor();
 	}
 
 	@Override
@@ -231,6 +238,19 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 		}
 	}
 
+	@Reference
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = null;
+	}
+
 	private static String _decodeJSPWikiContent(String jspWikiContent) {
 		return StringUtil.replace(
 			jspWikiContent, _JSP_WIKI_NAME_2, _JSP_WIKI_NAME_1);
@@ -325,5 +345,6 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 	private final Map<Long, LiferayJSPWikiEngine> _engines =
 		new ConcurrentHashMap<>();
 	private Properties _properties = new Properties();
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

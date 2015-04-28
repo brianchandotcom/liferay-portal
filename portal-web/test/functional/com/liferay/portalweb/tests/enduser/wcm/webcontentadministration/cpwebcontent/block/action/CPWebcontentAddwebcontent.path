@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NESTED_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div[@data-fieldname='${key_nestedField}']/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_FIELD</td>
 	<td>//body</td>
 	<td></td>

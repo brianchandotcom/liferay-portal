@@ -63,104 +63,6 @@ AUI.add(
 						instance.config = config;
 					},
 
-					render: function() {
-						var instance = this;
-
-						var config = instance.config;
-
-						var contentBox = A.one(config.contentBox);
-
-						var baseRows = contentBox.all(config.baseRows || '.lfr-form-row');
-						var baseContainer = A.Node.create('<div class="lfr-form-row"><div class="row-fields"></div></div>');
-
-						instance._contentBox = contentBox;
-						instance._guid = baseRows.size();
-
-						instance.url = config.url;
-
-						instance._undoManager = new Liferay.UndoManager().render(contentBox);
-
-						if (config.fieldIndexes) {
-							instance._fieldIndexes = A.all('[name=' + config.fieldIndexes + ']');
-
-							if (!instance._fieldIndexes.size()) {
-								instance._fieldIndexes = A.Node.create('<input name="' + config.fieldIndexes + '" type="hidden" />');
-
-								contentBox.append(instance._fieldIndexes);
-							}
-						}
-						else {
-							instance._fieldIndexes = A.all([]);
-						}
-
-						contentBox.delegate(
-							'click',
-							function(event) {
-								var link = event.currentTarget;
-								var currentRow = link.ancestor('.lfr-form-row');
-
-								if (link.hasClass('add-row')) {
-									instance.addRow(currentRow);
-								}
-								else if (link.hasClass('delete-row')) {
-									link.fire('change');
-
-									instance.deleteRow(currentRow);
-								}
-							},
-							'.lfr-autorow-controls .btn'
-						);
-
-						baseRows.each(
-							function(item, index) {
-								var formRow;
-								var firstChild;
-
-								if (item.hasClass('lfr-form-row')) {
-									formRow = item;
-								}
-								else {
-									formRow = baseContainer.clone();
-									firstChild = formRow.one('> div');
-									firstChild.append(item);
-								}
-
-								formRow.append(TPL_AUTOROW_CONTROLS);
-
-								if (!contentBox.contains(formRow)) {
-									contentBox.append(formRow);
-								}
-
-								if (index === 0) {
-									instance._rowTemplate = formRow.clone();
-									instance._clearForm(instance._rowTemplate);
-								}
-							}
-						);
-
-						if (config.sortable) {
-							instance._makeSortable(config.sortableHandle);
-						}
-
-						Liferay.on(
-							'saveAutoFields',
-							function(event) {
-								instance.save(event.form);
-							}
-						);
-
-						instance._undoManager.on(
-							'clearList',
-							function(event) {
-								contentBox.all('.lfr-form-row').each(instance._clearHiddenRows, instance);
-							}
-						);
-
-						instance._attachSubmitListener();
-
-						return instance;
-					},
-
 					addRow: function(node) {
 						var instance = this;
 
@@ -281,6 +183,104 @@ AUI.add(
 								form.fire('autofields:update');
 							}
 						}
+					},
+
+					render: function() {
+						var instance = this;
+
+						var config = instance.config;
+
+						var contentBox = A.one(config.contentBox);
+
+						var baseRows = contentBox.all(config.baseRows || '.lfr-form-row');
+						var baseContainer = A.Node.create('<div class="lfr-form-row"><div class="row-fields"></div></div>');
+
+						instance._contentBox = contentBox;
+						instance._guid = baseRows.size();
+
+						instance.url = config.url;
+
+						instance._undoManager = new Liferay.UndoManager().render(contentBox);
+
+						if (config.fieldIndexes) {
+							instance._fieldIndexes = A.all('[name=' + config.fieldIndexes + ']');
+
+							if (!instance._fieldIndexes.size()) {
+								instance._fieldIndexes = A.Node.create('<input name="' + config.fieldIndexes + '" type="hidden" />');
+
+								contentBox.append(instance._fieldIndexes);
+							}
+						}
+						else {
+							instance._fieldIndexes = A.all([]);
+						}
+
+						contentBox.delegate(
+							'click',
+							function(event) {
+								var link = event.currentTarget;
+								var currentRow = link.ancestor('.lfr-form-row');
+
+								if (link.hasClass('add-row')) {
+									instance.addRow(currentRow);
+								}
+								else if (link.hasClass('delete-row')) {
+									link.fire('change');
+
+									instance.deleteRow(currentRow);
+								}
+							},
+							'.lfr-autorow-controls .btn'
+						);
+
+						baseRows.each(
+							function(item, index) {
+								var formRow;
+								var firstChild;
+
+								if (item.hasClass('lfr-form-row')) {
+									formRow = item;
+								}
+								else {
+									formRow = baseContainer.clone();
+									firstChild = formRow.one('> div');
+									firstChild.append(item);
+								}
+
+								formRow.append(TPL_AUTOROW_CONTROLS);
+
+								if (!contentBox.contains(formRow)) {
+									contentBox.append(formRow);
+								}
+
+								if (index === 0) {
+									instance._rowTemplate = formRow.clone();
+									instance._clearForm(instance._rowTemplate);
+								}
+							}
+						);
+
+						if (config.sortable) {
+							instance._makeSortable(config.sortableHandle);
+						}
+
+						Liferay.on(
+							'saveAutoFields',
+							function(event) {
+								instance.save(event.form);
+							}
+						);
+
+						instance._undoManager.on(
+							'clearList',
+							function(event) {
+								contentBox.all('.lfr-form-row').each(instance._clearHiddenRows, instance);
+							}
+						);
+
+						instance._attachSubmitListener();
+
+						return instance;
 					},
 
 					reset: function() {

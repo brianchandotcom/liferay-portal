@@ -60,11 +60,11 @@ AUI.add(
 
 		var REGEX_VIDEO = /\.(avi|flv|mpe|mpg|mpeg|mov|m4v|ogg|wmv)$/i;
 
-		var STR_DOT = '.';
-
 		var SELECTOR_DATA_FOLDER = '[data-folder="true"]';
 
 		var SELECTOR_DATA_FOLDER_DATA_TITLE = '[data-folder="true"][data-title]';
+
+		var STR_DOT = '.';
 
 		var SELECTOR_DISPLAY_DESCRIPTIVE = STR_DOT + CSS_DISPLAY_DESCRIPTIVE;
 
@@ -687,14 +687,8 @@ AUI.add(
 						if (!tooltipDelegate) {
 							tooltipDelegate = new A.TooltipDelegate(
 								{
-									formatter: function() {
-										var tooltip = this;
-
-										tooltip.set('zIndex', 2);
-
-										var node = tooltip.get('trigger');
-
-										return node.attr('data-message');
+									formatter: function(val) {
+										return instance._formatTooltip(val, this);
 									},
 									trigger: '.app-view-entry.upload-error',
 									visible: false
@@ -729,6 +723,16 @@ AUI.add(
 							resultsNode.addClass(uploadResultClass);
 							resultsNode.addClass(CSS_ENTRY_DISPLAY_STYLE);
 						}
+					},
+
+					_formatTooltip: function(val, tooltip) {
+						var instance = this;
+
+						tooltip.set('zIndex', 2);
+
+						var node = tooltip.get('trigger');
+
+						return node.attr('data-message');
 					},
 
 					_getCurrentUploadData: function() {

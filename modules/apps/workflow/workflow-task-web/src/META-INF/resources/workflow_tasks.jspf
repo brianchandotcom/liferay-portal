@@ -61,17 +61,17 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="last-activity-date"
-			value='<%= displayContext.getLastActivityDate(workflowTask) %>'
+			value="<%= displayContext.getLastActivityDate(workflowTask) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="due-date"
 			orderable="<%= Boolean.TRUE %>"
-			value='<%= displayContext.getDueDate(workflowTask) %>'
+			value="<%= displayContext.getDueDate(workflowTask) %>"
 		/>
 
-		<c:if test='<%= !displayContext.isCompletedTab() %>'>
+		<c:if test="<%= !displayContext.isCompletedTab() %>">
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"

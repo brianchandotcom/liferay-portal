@@ -84,7 +84,7 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 					</c:choose>
 
 					<c:if test="<%= !workflowTask.isAssignedToSingleUser() %>">
-						<portlet:actionURL var="assignToMeURL" name="assignTask">
+						<portlet:actionURL name="assignTask" var="assignToMeURL">
 							<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -103,7 +103,7 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 					<c:if test="<%= _hasOtherAssignees(pooledActorsIds, workflowTask, user) %>">
 						<%= StringPool.DASH %>
 
-						<portlet:actionURL var="assignURL" name="assignTask">
+						<portlet:actionURL name="assignTask" var="assignURL">
 							<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -122,7 +122,7 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 				<aui:input inlineField="<%= Boolean.TRUE %>" name="dueDate" type="resource" value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
 
 				<c:if test="<%= !workflowTask.isCompleted() %>">
-					<portlet:actionURL var="updateDueDateURL" name="updateTask">
+					<portlet:actionURL name="updateTask" var="updateDueDateURL">
 						<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -238,7 +238,7 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 
 				<liferay-ui:panel title="comments">
 					<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-					
+
 					<portlet:resourceURL var="discussionPaginationURL">
 						<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:resourceURL>

@@ -51,7 +51,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 			}
 		%>
 
-			<liferay-portlet:actionURL var="editURL" name="completeTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>">
+			<liferay-portlet:actionURL name="completeTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="editURL">
 				<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -79,7 +79,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 	</c:if>
 
 	<c:if test="<%= !workflowTask.isCompleted() && !_isAssignedToUser(workflowTask, user) %>">
-		<liferay-portlet:actionURL var="assignToMeURL" name="assignTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>">
+		<liferay-portlet:actionURL name="assignTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="assignToMeURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -98,7 +98,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 	</c:if>
 
 	<c:if test="<%= _hasOtherAssignees(pooledActorsIds, workflowTask, user) %>">
-		<liferay-portlet:actionURL var="assignURL" name="assignTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>">
+		<liferay-portlet:actionURL name="assignTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="assignURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -116,7 +116,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 	</c:if>
 
 	<c:if test="<%= !workflowTask.isCompleted() %>">
-		<liferay-portlet:actionURL var="updateDueDateURL" name="updateTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>">
+		<liferay-portlet:actionURL name="updateTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="updateDueDateURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />

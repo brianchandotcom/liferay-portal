@@ -14,8 +14,6 @@
 
 package com.liferay.workflow.task.web.portlet.notification;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
@@ -30,20 +28,20 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jonathan Lee
  * @author Leonardo Barros
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASKS
-	},
+	property = {"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASKS},
 	service = UserNotificationHandler.class
 )
-public class WorkflowTasksUserNotificationHandler extends
-		BaseUserNotificationHandler {
-	
+public class WorkflowTasksUserNotificationHandler
+	extends BaseUserNotificationHandler {
+
 	public WorkflowTasksUserNotificationHandler() {
 		setOpenDialog(true);
 		setPortletId(PortletKeys.MY_WORKFLOW_TASKS);
@@ -96,4 +94,5 @@ public class WorkflowTasksUserNotificationHandler extends
 		return workflowHandler.getURLEditWorkflowTask(
 			workflowTaskId, serviceContext);
 	}
+
 }

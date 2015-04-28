@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-
 WorkflowTaskSearch workflowTaskSearch = null;
 
 WorkflowTaskViewDisplayContext displayContext = (WorkflowTaskViewDisplayContext)request.getAttribute(WebKeys.WORKFLOW_TASK_DISPLAY_CONTEXT);
@@ -31,7 +30,6 @@ String displayTermsType = displayTerms.getType();
 String selectedTab = displayContext.getSelectedTab();
 
 List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = displayContext.getWorkflowHandlersOfSearchableAssets();
-
 %>
 
 <liferay-ui:tabs
@@ -47,30 +45,31 @@ List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = displayContext.get
 				buttonLabel="search"
 				displayTerms="<%= displayTerms %>"
 				id="toggle_id_workflow_task_search">
-			
+
 				<aui:fieldset>
 					<aui:input inlineField="<%= Boolean.TRUE %>" label="task" name="<%= WorkflowTaskDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
-			
+
 					<aui:select inlineField="<%= Boolean.TRUE %>" name="<%= WorkflowTaskDisplayTerms.TYPE %>">
-			
+
 						<%
 						for (WorkflowHandler<?> workflowHandler : workflowHandlersOfSearchableAssets) {
+
 							String defaultWorkflowHandlerType = workflowHandler.getClassName();
 						%>
-			
+
 							<aui:option label="<%= workflowHandler.getType(locale) %>" selected="<%= displayTermsType.equals(defaultWorkflowHandlerType) %>" value="<%= defaultWorkflowHandlerType %>" />
-			
+
 						<%
 						}
 						%>
-			
+
 					</aui:select>
 				</aui:fieldset>
 			</liferay-ui:search-toggle>
 		</aui:nav-bar-search>
-	</aui:nav-bar>	
+	</aui:nav-bar>
 	<c:choose>
-		<c:when test='<%= displayContext.isPendingTab() %>'>
+		<c:when test="<%= displayContext.isPendingTab() %>">
 			<liferay-ui:panel-container extended="<%= Boolean.FALSE %>" id="workflowTasksPanelContainer" persistState="<%= Boolean.TRUE %>">
 				<liferay-ui:panel collapsible="<%= Boolean.TRUE %>" extended="<%= Boolean.FALSE %>" id="workflowMyTasksPanel" persistState="<%= Boolean.TRUE %>" title="assigned-to-me">
 
@@ -93,9 +92,11 @@ List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = displayContext.get
 		</c:when>
 		<c:otherwise>
 			<div class="separator"></div>
+
 			<%
 			workflowTaskSearch = (WorkflowTaskSearch)request.getAttribute(WebKeys.WORKFLOW_MY_COMPLETED_TASKS);
 			%>
+
 			<%@ include file="/workflow_tasks.jspf" %>
 		</c:otherwise>
 	</c:choose>

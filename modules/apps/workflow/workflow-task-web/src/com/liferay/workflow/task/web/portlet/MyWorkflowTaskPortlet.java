@@ -14,6 +14,16 @@
 
 package com.liferay.workflow.task.web.portlet;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.task.web.portlet.action.ActionUtil;
+
 import java.io.IOException;
 
 import javax.portlet.Portlet;
@@ -26,32 +36,23 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.task.web.portlet.action.ActionUtil;
-
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true,
+@Component(
+	immediate = true,
 	property = {
-		"com.liferay.portlet.icon=/icons/my_workflow_tasks.png",
 		"com.liferay.portlet.control-panel-entry-category=my",
 		"com.liferay.portlet.control-panel-entry-weight=3.0",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-tasks",
+		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.icon=/icons/my_workflow_tasks.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=false",
-		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
 		"javax.portlet.display-name=My Workflow Tasks",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
@@ -61,39 +62,38 @@ import com.liferay.workflow.task.web.portlet.action.ActionUtil;
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = { MyWorkflowTaskPortlet.class, Portlet.class })
+	service = { MyWorkflowTaskPortlet.class, Portlet.class }
+)
 public class MyWorkflowTaskPortlet extends MVCPortlet {
-	
+
 	@Override
 	public void render(RenderRequest request, RenderResponse response)
 		throws IOException, PortletException {
 
 		try {
-			LiferayPortletRequest liferayPortletRequest = 
+			LiferayPortletRequest liferayPortletRequest =
 				PortalUtil.getLiferayPortletRequest(request);
-			
-			LiferayPortletResponse liferayPortletResponse = 
-				PortalUtil.getLiferayPortletResponse(response);	
-			
-			long workflowTaskId = ParamUtil.getLong(request, 
-				ActionUtil.WORKFLOW_TASK_ID);
-			
-			if(workflowTaskId > 0) {
-				ActionUtil.getWorkflowTask(liferayPortletRequest, 
-					workflowTaskId);
+
+			LiferayPortletResponse liferayPortletResponse =
+				PortalUtil.getLiferayPortletResponse(response);
+
+			long workflowTaskId = ParamUtil.getLong(
+				request, ActionUtil.WORKFLOW_TASK_ID);
+
+			if (workflowTaskId > 0) {
+				ActionUtil.getWorkflowTask(
+					liferayPortletRequest, workflowTaskId);
 			}
 			else {
-				ActionUtil.searchWorkflowTasks(liferayPortletRequest, 
-					liferayPortletResponse);
+				ActionUtil.searchWorkflowTasks(
+					liferayPortletRequest, liferayPortletResponse);
 			}
-			
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			if (e instanceof WorkflowException) {
-				
 				SessionErrors.add(request, e.getClass());
 
-				PortletSession portletSession =
-					request.getPortletSession();
+				PortletSession portletSession = request.getPortletSession();
 
 				PortletContext portletContext =
 					portletSession.getPortletContext();
@@ -101,10 +101,9 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 				PortletRequestDispatcher portletRequestDispatcher =
 					portletContext.getRequestDispatcher("/error.jsp");
 
-				portletRequestDispatcher.include(
-					request, response);
-
-			} else {
+				portletRequestDispatcher.include(request, response);
+			}
+			else {
 				throw new PortletException(e);
 			}
 		}

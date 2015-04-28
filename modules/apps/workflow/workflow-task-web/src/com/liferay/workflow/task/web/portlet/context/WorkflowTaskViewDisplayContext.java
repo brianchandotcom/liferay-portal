@@ -14,16 +14,6 @@
 
 package com.liferay.workflow.task.web.portlet.context;
 
-import java.io.Serializable;
-import java.text.Format;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.PortletURL;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -45,139 +35,131 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.workflow.task.web.portlet.search.WorkflowTaskDisplayTerms;
 
+import java.io.Serializable;
+
+import java.text.Format;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.PortletURL;
+
 /**
  * @author Leonardo Barros
  */
 public class WorkflowTaskViewDisplayContext {
 
 	public WorkflowTaskViewDisplayContext(
-		LiferayPortletRequest liferayPortletRequest, 
-		LiferayPortletResponse liferayPortletResponse,
-		List<WorkflowTask> workflowTasks) 
-		throws Exception
-	{
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			List<WorkflowTask> workflowTasks)
+		throws Exception {
+
 		_liferayPortletRequest = liferayPortletRequest;
 
-		ThemeDisplay themeDisplay = 
+		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Company company = themeDisplay.getCompany();
 
-		_workflowHandlers = new HashMap<Long, WorkflowHandler<?>>();
-		_workflowContextClassPK = new HashMap<Long, Long>();
-		_workflowLogMap = new HashMap<Long, WorkflowLog>();
-		
-		_selectedTab = ParamUtil.getString(_liferayPortletRequest, "tabs1", 
-			_PENDING);
-		
+		_workflowHandlers = new HashMap<>();
+		_workflowContextClassPK = new HashMap<>();
+		_workflowLogMap = new HashMap<>();
+
+		_selectedTab = ParamUtil.getString(
+			_liferayPortletRequest, "tabs1", _PENDING);
+
 		_portletURL = liferayPortletResponse.createRenderURL();
 		_portletURL.setParameter("tabs1", _selectedTab);
-		
+
 		_displayTerms = new WorkflowTaskDisplayTerms(liferayPortletRequest);
-		
+
 		_locale = themeDisplay.getLocale();
-		
-		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(_locale, 
-			themeDisplay.getTimeZone());
-		
-		_workflowHandlersOfSearchableAssets = new ArrayList<WorkflowHandler<?>>();
-		
-		List<WorkflowHandler<?>> workflowHandlers = 
+
+		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+			_locale, themeDisplay.getTimeZone());
+
+		_workflowHandlersOfSearchableAssets = new ArrayList<>();
+
+		List<WorkflowHandler<?>> workflowHandlers =
 			WorkflowHandlerRegistryUtil.getWorkflowHandlers();
-		
+
 		for (WorkflowHandler<?> workflowHandler : workflowHandlers) {
 			if (workflowHandler.isAssetTypeSearchable()) {
 				_workflowHandlersOfSearchableAssets.add(workflowHandler);
 			}
 		}
-		
-		for(WorkflowTask workflowTask : workflowTasks) {
-			
-			if(!_workflowHandlers.containsKey(
-				workflowTask.getWorkflowInstanceId())) {
-			
-				WorkflowInstance workflowInstance = 
+
+		for (WorkflowTask workflowTask : workflowTasks) {
+			if (!_workflowHandlers.containsKey(
+					workflowTask.getWorkflowInstanceId())) {
+
+				WorkflowInstance workflowInstance =
 					WorkflowInstanceManagerUtil.getWorkflowInstance(
-						company.getCompanyId(), 
+						company.getCompanyId(),
 						workflowTask.getWorkflowInstanceId());
-	
-				Map<String, Serializable> workflowContext = 
+
+				Map<String, Serializable> workflowContext =
 					workflowInstance.getWorkflowContext();
-	
+
 				String className = (String)workflowContext.get(
 					WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
-				
+
 				long classPK = GetterUtil.getLong((String)workflowContext.get(
 					WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-	
-				WorkflowHandler<?> workflowHandler = 
+
+				WorkflowHandler<?> workflowHandler =
 					WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
-				
-				_workflowHandlers.put(workflowTask.getWorkflowInstanceId(), 
-					workflowHandler);
+
+				_workflowHandlers.put(
+					workflowTask.getWorkflowInstanceId(), workflowHandler);
 				_workflowContextClassPK.put(
 					workflowTask.getWorkflowInstanceId(), classPK);
 			}
-			
-			if(!_workflowLogMap.containsKey(
-				workflowTask.getWorkflowInstanceId())) {
-				List<WorkflowLog> workflowLogs = 
+
+			if (!_workflowLogMap.containsKey(
+					workflowTask.getWorkflowInstanceId())) {
+
+				List<WorkflowLog> workflowLogs =
 					WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(
-						company.getCompanyId(), 
-						workflowTask.getWorkflowInstanceId(), null, 0, 1, 
-						WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
+						company.getCompanyId(),
+						workflowTask.getWorkflowInstanceId(), null, 0, 1,
+					WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
 
 				if (!workflowLogs.isEmpty()) {
 					WorkflowLog workflowLog = workflowLogs.get(0);
-					_workflowLogMap.put(workflowTask.getWorkflowInstanceId(), 
-						workflowLog);
+					_workflowLogMap.put(
+						workflowTask.getWorkflowInstanceId(), workflowLog);
 				}
 			}
 		}
 	}
-	
-	public boolean isPendingTab() {
-		return _selectedTab.equals(_PENDING);
-	}
-	
-	public boolean isCompletedTab() {
-		return _selectedTab.equals(_COMPLETED);
-	}
-	
-	public String getTaskName(WorkflowTask workflowTask) {
-		return HtmlUtil.escape(workflowTask.getName());
-	}
-	
+
 	public String getAssetTitle(WorkflowTask workflowTask) {
 		long classPK = getWorkflowContextClassPK(
 			workflowTask.getWorkflowInstanceId());
 		WorkflowHandler<?> workflowHandler = getWorkflowHandler(
 			workflowTask.getWorkflowInstanceId());
-		
+
 		return HtmlUtil.escape(workflowHandler.getTitle(classPK, _locale));
 	}
-	
+
 	public String getAssetType(WorkflowTask workflowTask) {
 		WorkflowHandler<?> workflowHandler = getWorkflowHandler(
-				workflowTask.getWorkflowInstanceId());
+			workflowTask.getWorkflowInstanceId());
 		return workflowHandler.getType(_locale);
 	}
-	
-	public String getLastActivityDate(WorkflowTask workflowTask) {
-		WorkflowLog workflowLog = getWorkflowLog(
-			workflowTask.getWorkflowInstanceId());
-		if(workflowLog == null) {
-			return LanguageUtil.get(
-				_liferayPortletRequest.getHttpServletRequest(), _NEVER);
-		}
-		else {
-			return _dateFormatDateTime.format(workflowLog.getCreateDate());
-		}
+
+	public WorkflowTaskDisplayTerms getDisplayTerms() {
+		return _displayTerms;
 	}
-	
+
 	public String getDueDate(WorkflowTask workflowTask) {
-		if(workflowTask.getDueDate() == null) {
+		if (workflowTask.getDueDate() == null) {
 			return LanguageUtil.get(
 				_liferayPortletRequest.getHttpServletRequest(), _NEVER);
 		}
@@ -185,49 +167,75 @@ public class WorkflowTaskViewDisplayContext {
 			return _dateFormatDateTime.format(workflowTask.getDueDate());
 		}
 	}
-	
+
+	public String getLastActivityDate(WorkflowTask workflowTask) {
+		WorkflowLog workflowLog = getWorkflowLog(
+			workflowTask.getWorkflowInstanceId());
+
+		if (workflowLog == null) {
+			return LanguageUtil.get(
+				_liferayPortletRequest.getHttpServletRequest(), _NEVER);
+		}
+		else {
+			return _dateFormatDateTime.format(workflowLog.getCreateDate());
+		}
+	}
+
 	public PortletURL getPortletURL() {
 		return _portletURL;
 	}
-	
-	public long getWorkflowContextClassPK(long workflowInstanceId) {
-		return _workflowContextClassPK.get(workflowInstanceId);
-	}
-	
-	public WorkflowHandler<?> getWorkflowHandler(long workflowInstanceId) {
-		return _workflowHandlers.get(workflowInstanceId);
-	}
-	
-	public WorkflowLog getWorkflowLog(long workflowInstanceId) {
-		if(_workflowLogMap.containsKey(workflowInstanceId)) {
-			return _workflowLogMap.get(workflowInstanceId);
-		}
-		return null;
-	}
-	
-	public WorkflowTaskDisplayTerms getDisplayTerms() {
-		return _displayTerms;
-	}
-	
+
 	public String getSelectedTab() {
 		return _selectedTab;
 	}
-	
+
+	public String getTaskName(WorkflowTask workflowTask) {
+		return HtmlUtil.escape(workflowTask.getName());
+	}
+
+	public long getWorkflowContextClassPK(long workflowInstanceId) {
+		return _workflowContextClassPK.get(workflowInstanceId);
+	}
+
+	public WorkflowHandler<?> getWorkflowHandler(long workflowInstanceId) {
+		return _workflowHandlers.get(workflowInstanceId);
+	}
+
 	public List<WorkflowHandler<?>> getWorkflowHandlersOfSearchableAssets() {
 		return _workflowHandlersOfSearchableAssets;
 	}
-	
-	private static final String _PENDING = "pending";
+
+	public WorkflowLog getWorkflowLog(long workflowInstanceId) {
+		if (_workflowLogMap.containsKey(workflowInstanceId)) {
+			return _workflowLogMap.get(workflowInstanceId);
+		}
+
+		return null;
+	}
+
+	public boolean isCompletedTab() {
+		return _selectedTab.equals(_COMPLETED);
+	}
+
+	public boolean isPendingTab() {
+		return _selectedTab.equals(_PENDING);
+	}
+
 	private static final String _COMPLETED = "completed";
+
 	private static final String _NEVER = "never";
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final Map<Long,WorkflowHandler<?>> _workflowHandlers;
-	private final Map<Long,Long> _workflowContextClassPK;
-	private final Map<Long,WorkflowLog> _workflowLogMap;
+
+	private static final String _PENDING = "pending";
+
 	private final Format _dateFormatDateTime;
-	private final Locale _locale;
-	private final String _selectedTab;
-	private final PortletURL _portletURL;
 	private final WorkflowTaskDisplayTerms _displayTerms;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final Locale _locale;
+	private final PortletURL _portletURL;
+	private final String _selectedTab;
+	private final Map<Long, Long> _workflowContextClassPK;
+	private final Map<Long, WorkflowHandler<?>> _workflowHandlers;
 	private final List<WorkflowHandler<?>> _workflowHandlersOfSearchableAssets;
+	private final Map<Long, WorkflowLog> _workflowLogMap;
+
 }

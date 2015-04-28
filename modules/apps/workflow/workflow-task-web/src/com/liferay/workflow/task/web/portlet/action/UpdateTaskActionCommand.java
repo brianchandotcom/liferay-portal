@@ -14,16 +14,6 @@
 
 package com.liferay.workflow.task.web.portlet.action;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -35,6 +25,16 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
@@ -48,61 +48,73 @@ import com.liferay.portal.util.PortletKeys;
 	service = ActionCommand.class
 )
 public class UpdateTaskActionCommand extends WorkflowTaskBaseActionCommand {
-	
-	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
-		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay) portletRequest
-					.getAttribute(WebKeys.THEME_DISPLAY);
 
-			long workflowTaskId = ParamUtil
-					.getLong(portletRequest, "workflowTaskId");
+	@Override
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			long workflowTaskId = ParamUtil.getLong(
+				portletRequest, "workflowTaskId");
 
 			String comment = ParamUtil.getString(portletRequest, "comment");
 
-			int dueDateMonth = ParamUtil.getInteger(portletRequest, 
-					"dueDateMonth");
+			int dueDateMonth = ParamUtil.getInteger(
+				portletRequest, "dueDateMonth");
+
 			int dueDateDay = ParamUtil.getInteger(portletRequest, "dueDateDay");
-			int dueDateYear = ParamUtil.getInteger(portletRequest, 
-					"dueDateYear");
-			int dueDateHour = ParamUtil.getInteger(portletRequest, 
-					"dueDateHour");
-			int dueDateMinute = ParamUtil.getInteger(portletRequest, 
-					"dueDateMinute");
-			int dueDateAmPm = ParamUtil.getInteger(portletRequest, 
-					"dueDateAmPm");
+
+			int dueDateYear = ParamUtil.getInteger(
+				portletRequest, "dueDateYear");
+
+			int dueDateHour = ParamUtil.getInteger(
+				portletRequest, "dueDateHour");
+
+			int dueDateMinute = ParamUtil.getInteger(
+				portletRequest, "dueDateMinute");
+
+			int dueDateAmPm = ParamUtil.getInteger(
+				portletRequest, "dueDateAmPm");
 
 			if (dueDateAmPm == Calendar.PM) {
 				dueDateHour += 12;
 			}
 
-			Date dueDate = PortalUtil.getDate(dueDateMonth, dueDateDay,
-					dueDateYear, dueDateHour, dueDateMinute,
-					WorkflowTaskDueDateException.class);
+			Date dueDate = PortalUtil.getDate(
+				dueDateMonth, dueDateDay, dueDateYear, dueDateHour,
+				dueDateMinute, WorkflowTaskDueDateException.class);
 
-			WorkflowTaskManagerUtil.updateDueDate(themeDisplay.getCompanyId(),
-					themeDisplay.getUserId(), workflowTaskId, comment, dueDate);
-			
+			WorkflowTaskManagerUtil.updateDueDate(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				workflowTaskId, comment, dueDate);
+
 			super.doProcessCommand(portletRequest, portletResponse);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			if (e instanceof WorkflowTaskDueDateException) {
 				SessionErrors.add(portletRequest, e.getClass());
-			} else if (e instanceof PrincipalException
-					|| e instanceof WorkflowException) {
+			}
+			else if (e instanceof PrincipalException ||
+					 e instanceof WorkflowException) {
 
 				SessionErrors.add(portletRequest, e.getClass());
-				
+
 				PortletSession portletSession =
-						portletRequest.getPortletSession();
+					portletRequest.getPortletSession();
 
 				PortletContext portletContext =
 					portletSession.getPortletContext();
 
 				portletContext.getRequestDispatcher(
 						portletResponse.encodeURL("/error.jsp")).include(
-								portletRequest, portletResponse);
-			} else {
+							portletRequest, portletResponse);
+			}
+			else {
 				throw e;
 			}
 		}

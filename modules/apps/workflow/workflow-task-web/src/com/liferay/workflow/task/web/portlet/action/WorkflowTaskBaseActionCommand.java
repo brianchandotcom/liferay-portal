@@ -14,16 +14,16 @@
 
 package com.liferay.workflow.task.web.portlet.action;
 
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalUtil;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Leonardo Barros
@@ -31,24 +31,24 @@ import com.liferay.portal.util.PortalUtil;
 public abstract class WorkflowTaskBaseActionCommand extends BaseActionCommand {
 
 	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
 
 		String redirect = ParamUtil.getString(portletRequest, "redirect");
-		String closeRedirect = ParamUtil.getString(portletRequest,
-				"closeRedirect");
+		String closeRedirect = ParamUtil.getString(
+			portletRequest, "closeRedirect");
 
 		if (Validator.isNotNull(closeRedirect)) {
-			redirect = HttpUtil.setParameter(redirect, "closeRedirect",
-					closeRedirect);
+			redirect = HttpUtil.setParameter(
+				redirect, "closeRedirect", closeRedirect);
 
-			SessionMessages.add(portletRequest,
-					PortalUtil.getPortletId(portletRequest)
-							+ SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
-					closeRedirect);
+			SessionMessages.add(
+				portletRequest, PortalUtil.getPortletId(portletRequest) +
+					SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT, closeRedirect);
 		}
 
-		((ActionResponse)portletResponse).sendRedirect(redirect);
+		portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
-	
+
 }

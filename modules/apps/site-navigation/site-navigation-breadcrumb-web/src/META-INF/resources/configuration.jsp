@@ -56,13 +56,6 @@
 		</aui:form>
 	</aui:col>
 	<aui:col width="<%= 50 %>">
-
-		<%
-		List<BreadcrumbEntry> breadcrumbEntries = BreadcrumbUtil.getPortletBreadcrumbEntries(request);
-
-		breadcrumbEntries.clear();
-		%>
-
 		<liferay-portlet:preview
 			portletName="<%= breadcrumbDisplayContext.getPortletResource() %>"
 			showBorders="<%= true %>"
@@ -104,4 +97,6 @@
 			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_', data);
 		}
 	);
+
+	Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_', data);
 </aui:script>

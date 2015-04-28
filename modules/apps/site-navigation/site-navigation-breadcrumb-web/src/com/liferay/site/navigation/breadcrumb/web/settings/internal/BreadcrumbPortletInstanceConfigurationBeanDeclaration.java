@@ -12,16 +12,23 @@
  * details.
  */
 
-package com.liferay.site.navigation.breadcrumb.web.configuration;
+package com.liferay.site.navigation.breadcrumb.web.settings.internal;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class BreadcrumbConfigurationValues {
+@Component
+public class BreadcrumbPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		BreadcrumbWebConfigurationUtil.get("display.templates.config"));
+	@Override
+	public Class getConfigurationBeanClass() {
+		return BreadcrumbPortletInstanceConfiguration.class;
+	}
 
 }

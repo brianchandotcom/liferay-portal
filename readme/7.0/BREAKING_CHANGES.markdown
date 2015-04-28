@@ -1454,3 +1454,28 @@ OSGi plugins in a more extensible way, allowing the developer to include new
 sections to access to their own utils and services.
 
 ---------------------------------------
+### Removed the type settings breadcrumbShowParentGroups from groups
+- **Date:** 2015-Apr-21
+- **JIRA Ticket:** LPS-54791
+
+#### What changed?
+
+The type settings breadcrumbShowParentGroups was removed from groups, it is
+no longer available in site configuration. Now it is only available in the
+breadcrumb configuration.
+
+#### Who is affected?
+
+This affects all site administrators that have set the showParentGroups 
+preference in the site administration.
+
+#### How should I update my code?
+
+There is no need to change the code. This should be updated at the portlet
+instance level. 
+
+#### Why was this change made?
+
+This change was introduced to support the new settings API. 
+
+---------------------------------------

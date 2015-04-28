@@ -14,14 +14,17 @@
 
 package com.liferay.site.navigation.breadcrumb.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class BreadcrumbConfigurationValues {
+@Meta.OCD(
+	id = "com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbWebConfiguration"
+)
+public interface BreadcrumbWebConfiguration {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		BreadcrumbWebConfigurationUtil.get("display.templates.config"));
+	@Meta.AD(deflt = "breadcrumb-horizontal-ftl", required = false)
+	public String ddmTemplateKeyDefault();
 
 }

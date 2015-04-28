@@ -12,27 +12,28 @@
  * details.
  */
 
-package com.liferay.site.navigation.breadcrumb.web.portlet;
+package com.liferay.site.navigation.breadcrumb.web.settings.internal;
 
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
 import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-@Component(
-	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
-	},
-	service = ViewPortletProvider.class
-)
-public class BreadcrumbEntryViewPortletProvider implements ViewPortletProvider {
+@Component
+public class BreadcrumbPortletInstanceSettingsIdMapping
+	implements SettingsIdMapping {
 
 	@Override
-	public String getPortletId() {
+	public Class<?> getConfigurationBeanClass() {
+		return BreadcrumbPortletInstanceConfiguration.class;
+	}
+
+	@Override
+	public String getSettingsId() {
 		return BreadcrumbPortletKeys.BREADCRUMB;
 	}
 

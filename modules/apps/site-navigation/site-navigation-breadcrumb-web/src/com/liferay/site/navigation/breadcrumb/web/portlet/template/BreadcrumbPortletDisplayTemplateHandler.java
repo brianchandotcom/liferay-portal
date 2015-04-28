@@ -14,6 +14,8 @@
 
 package com.liferay.site.navigation.breadcrumb.web.portlet.template;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbConfigurationValues;
+import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbWebConfiguration;
 import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
 
 import java.util.HashMap;
@@ -32,13 +35,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author José Manuel Navarro
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {"javax.portlet.name=" + BreadcrumbPortletKeys.BREADCRUMB},
 	service = TemplateHandler.class
 )
@@ -61,7 +68,7 @@ public class BreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public String getDefaultTemplateKey() {
-		return BreadcrumbConfigurationValues.DDM_TEMPLATE_KEY_DEFAULT;
+		return _breadcrumbWebConfiguration.ddmTemplateKeyDefault();
 	}
 
 	@Override
@@ -105,9 +112,18 @@ public class BreadcrumbPortletDisplayTemplateHandler
 		return templateVariableGroups;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_breadcrumbWebConfiguration = Configurable.createConfigurable(
+			BreadcrumbWebConfiguration.class, properties);
+	}
+
 	@Override
 	protected String getTemplatesConfigPath() {
 		return BreadcrumbConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
+
+	private volatile BreadcrumbWebConfiguration _breadcrumbWebConfiguration;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.mentions.web.editor.config;
 
+import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -23,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"editor.config.key=commentsEditor", "service.ranking:Integer=10"
 	},
-	service = EditorConfigContributor.class
+	service = BaseEditorConfigContributor.class
 )
 public class CommentsMentionsEditorConfigContributor
 	extends BaseMentionsEditorConfigContributor {

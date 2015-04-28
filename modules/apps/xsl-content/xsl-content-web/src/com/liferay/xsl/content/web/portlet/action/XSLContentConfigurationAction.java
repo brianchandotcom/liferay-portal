@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + XSLContentPortletKeys.XSL_CONTENT,
-		"valid.url.prefixes=@portlet_context_url@"
+		"valid.url.prefixes=@portal_url@,@portlet_context_url@"
 	},
 	service = ConfigurationAction.class
 )

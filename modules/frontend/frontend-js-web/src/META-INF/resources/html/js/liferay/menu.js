@@ -85,7 +85,7 @@ AUI.add(
 		var TPL_MENU = '<div class="open" />';
 
 		var TPL_SEARCH_BOX = '<div class="lfr-menu-list-search-container">' +
-				'<input autocomplete="off" aria-autocomplete="list" aria-expanded="true" aria-labelledby="{searchLabeledBy}" aria-owns="{searchOwns}" class="lfr-menu-list-search" id="{searchId}" role="combobox" type="text">' +
+				'<input autocomplete="off" aria-autocomplete="list" aria-expanded="true" aria-labelledby="{searchLabeledBy}" aria-owns="{searchOwns}" class="lfr-menu-list-search" id="{searchId}" role="combobox" type="text" />' +
 			'</div>';
 
 		var Menu = function() {
@@ -426,8 +426,6 @@ AUI.add(
 
 		Menu._registerTask = A.debounce(
 			function() {
-				var instance = Menu._INSTANCE;
-
 				if (buffer.length) {
 					var nodes = A.all(buffer);
 
@@ -451,12 +449,12 @@ AUI.add(
 			Menu,
 			'_getFocusManager',
 			function() {
-				var instance = Menu._INSTANCE;
+				var menuInstance = Menu._INSTANCE;
 
-				var focusManager = instance._focusManager;
+				var focusManager = menuInstance._focusManager;
 
 				if (!focusManager) {
-					var bodyNode = instance._overlay.bodyNode;
+					var bodyNode = menuInstance._overlay.bodyNode;
 
 					bodyNode.plug(
 						A.Plugin.NodeFocusManager,
@@ -474,10 +472,10 @@ AUI.add(
 					bodyNode.on(
 						'key',
 						function(event) {
-							var activeTrigger = instance._activeTrigger;
+							var activeTrigger = menuInstance._activeTrigger;
 
 							if (activeTrigger) {
-								instance._closeActiveMenu();
+								menuInstance._closeActiveMenu();
 
 								activeTrigger.focus();
 							}
@@ -508,7 +506,7 @@ AUI.add(
 						}
 					);
 
-					instance._focusManager = focusManager;
+					menuInstance._focusManager = focusManager;
 				}
 
 				focusManager.refresh();
@@ -568,13 +566,13 @@ AUI.add(
 			Menu,
 			'_registerMenu',
 			function(event) {
-				var instance = Menu._INSTANCE;
+				var menuInstance = Menu._INSTANCE;
 
-				var handles = instance._handles;
+				var handles = menuInstance._handles;
 
 				var trigger = event.currentTarget;
 
-				var activeTrigger = instance._activeTrigger;
+				var activeTrigger = menuInstance._activeTrigger;
 
 				if (activeTrigger) {
 					if (activeTrigger != trigger) {
@@ -583,17 +581,17 @@ AUI.add(
 						activeTrigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 					}
 					else {
-						instance._closeActiveMenu();
+						menuInstance._closeActiveMenu();
 
 						return;
 					}
 				}
 
 				if (!trigger.hasClass('disabled')) {
-					var menu = instance._getMenu(trigger);
+					var menu = menuInstance._getMenu(trigger);
 
-					instance._activeMenu = menu;
-					instance._activeTrigger = trigger;
+					menuInstance._activeMenu = menu;
+					menuInstance._activeTrigger = trigger;
 
 					if (!handles.length) {
 						var listContainer = trigger.getData('menuListContainer');
@@ -601,27 +599,27 @@ AUI.add(
 						A.Event.defineOutside('touchend');
 
 						handles.push(
-							A.getWin().on('resize', A.debounce(instance._positionActiveMenu, 200, instance)),
-							A.getDoc().on(EVENT_CLICK, instance._closeActiveMenu, instance),
+							A.getWin().on('resize', A.debounce(menuInstance._positionActiveMenu, 200, menuInstance)),
+							A.getDoc().on(EVENT_CLICK, menuInstance._closeActiveMenu, menuInstance),
 							listContainer.on(
 								'touchendoutside',
 								function(event) {
 									event.preventDefault();
 
-									instance._closeActiveMenu();
+									menuInstance._closeActiveMenu();
 								},
-								instance
+								menuInstance
 							)
 						);
 
 						var DDM = A.DD && A.DD.DDM;
 
 						if (DDM) {
-							handles.push(DDM.on('ddm:start', instance._closeActiveMenu, instance));
+							handles.push(DDM.on('ddm:start', menuInstance._closeActiveMenu, menuInstance));
 						}
 					}
 
-					instance._positionActiveMenu();
+					menuInstance._positionActiveMenu();
 
 					event.halt();
 				}

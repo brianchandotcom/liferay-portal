@@ -7,7 +7,9 @@ AUI.add(
 
 		var SELECTOR_LFR_NAV_SORTABLE = '.lfr-nav-sortable';
 
-		var TPL_DRAG_HANDLE = '<span class="drag-handle"><i class="icon-reorder"></i></span>';
+		var TPL_DRAG_HANDLE = '<span class="drag-handle">' +
+				'<i class="icon-reorder"></i>' +
+			'</span>';
 
 		var afterMakeSortable = Liferay.Navigation.prototype._afterMakeSortable;
 

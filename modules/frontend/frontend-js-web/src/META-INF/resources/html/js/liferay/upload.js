@@ -9,9 +9,9 @@ AUI.add(
 
 		var STATUS_CODE = Liferay.STATUS_CODE;
 
-		var STRINGS = 'strings';
-
 		var STR_BLANK = '';
+
+		var STRINGS = 'strings';
 
 		var STR_PARAM_FALLBACK = 'uploader=fallback';
 
@@ -22,18 +22,24 @@ AUI.add(
 				'<tpl if="!values.error">',
 					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}">',
 						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ LString.escapeHTML(values.name) ]}" />',
+
 						'<span class="file-title" title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}">{[ LString.escapeHTML(values.title ? values.title : values.name) ]}</span>',
+
 						'<span class="progress-bar">',
 							'<span class="progress" id="{id}progress"></span>',
 						'</span>',
+
 						'<a class="lfr-button cancel-button" href="javascript:;" id="{id}cancelButton">{[ this.strings.cancelFileText ]}</a>',
 						'<a class="lfr-button delete-button" href="javascript:;" id="{id}deleteButton">{[ this.strings.deleteFileText ]}</a>',
 					'</li>',
 				'</tpl>',
+
 				'<tpl if="values.error && this.multipleFiles">',
 					'<li class="upload-file upload-error" data-fileId="{id}" id="{id}">',
 						'<span class="file-title" title="{[ LString.escapeHTML(values.name) ]}">{[ LString.escapeHTML(values.name) ]}</span>',
+
 						'<span class="error-message" title="{[ LString.escapeHTML(values.error) ]}">{[ LString.escapeHTML(values.error) ]}</span>',
+
 						'<tpl if="values.messageListItems && (values.messageListItems.length > 0)">',
 							'<ul class="error-list-items">',
 								'<tpl for="messageListItems">',
@@ -47,10 +53,13 @@ AUI.add(
 						'</tpl>',
 					'</li>',
 				'</tpl>',
+
 				'<tpl if="values.error && !this.multipleFiles">',
 					'<li class="alert alert-danger upload-error" data-fileId="{id}" id="{id}">',
 						'<h4 class="upload-error-message">{[ Lang.sub(this.strings.fileCannotBeSavedText, [LString.escapeHTML(values.name)]) ]}</h4>',
+
 						'<span class="error-message" title="{[ LString.escapeHTML(values.error) ]}">{[ LString.escapeHTML(values.error) ]}</span>',
+
 						'<tpl if="values.messageListItems && (values.messageListItems.length > 0)">',
 							'<ul class="error-list-items">',
 								'<tpl for="messageListItems">',
@@ -64,9 +73,11 @@ AUI.add(
 						'</tpl>',
 					'</li>',
 				'</tpl>',
+
 				'<tpl if="values.warningMessages && (values.warningMessages.length > 0)">',
 					'<li class="alert upload-error" data-fileId="{id}" id="{id}">',
 						'<span class="error-message" title="{[ LString.escapeHTML(values.error ? this.strings.warningFailureText : this.strings.warningText) ]}">{[ values.error ? this.strings.warningFailureText : this.strings.warningText ]}</span>',
+
 						'<ul class="error-list-items">',
 							'<tpl for="warningMessages">',
 								'<li>{[ LString.escapeHTML(values.type) ]} <strong>({size})</strong>:',
@@ -87,6 +98,7 @@ AUI.add(
 					'<tpl if="this.uploaderType == \'html5\'">',
 						'<h4 class="drop-file-text">{[ this.dropFileText ]}<span class="or-text">{[ this.strings.orText ]}</span></h4>',
 					'</tpl>',
+
 					'<span class="select-files-container" id="{$ns}selectFilesButton">',
 						'<button class="btn btn-default" type="button">{[ this.selectFilesText ]}</button>',
 					'</span>',

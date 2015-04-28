@@ -12,7 +12,9 @@ AUI.add(
 
 		var STR_LAYOUT_ID = 'layoutId';
 
-		var TPL_EDITOR = '<div class="add-page-editor"><div class="input-group"></div></div>';
+		var TPL_EDITOR = '<div class="add-page-editor">' +
+				'<div class="input-group"></div>' +
+			'</div>';
 
 		var TPL_FIELD_INPUT = '<input class="add-page-editor-input" type="text" value="{0}" />';
 
@@ -20,7 +22,9 @@ AUI.add(
 
 		var TPL_LIST_ITEM = '<li class="add-page"></li>';
 
-		var TPL_TAB_LINK = '<a href="{url}"><span>{pageTitle}</span></a>';
+		var TPL_TAB_LINK = '<a href="{url}">' +
+				'<span>{pageTitle}</span>' +
+			'</a>';
 
 		/**
 		 * OPTIONS

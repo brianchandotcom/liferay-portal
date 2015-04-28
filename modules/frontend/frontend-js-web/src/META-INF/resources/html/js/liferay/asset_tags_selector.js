@@ -65,6 +65,7 @@ AUI.add(
 				'<tpl for="tags">',
 					'<label class="checkbox" title="{name}"><input {checked} type="checkbox" value="{name}" />{name}</label>',
 				'</tpl>',
+
 				'<div class="lfr-tag-message">{message}</div>',
 			'</fieldset>'
 		);

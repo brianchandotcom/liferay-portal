@@ -12,7 +12,7 @@ AUI.add(
 
 		var TPL_INPUT_FILTER = '<li class="btn-toolbar search-panel">' +
 				'<div class="form-group">' +
-					'<input class="col-md-12 field focus menu-item-filter search-query" placeholder="{placeholder}" type="text">' +
+					'<input class="col-md-12 field focus menu-item-filter search-query" placeholder="{placeholder}" type="text" />' +
 				'</div>' +
 			'</li>';
 

@@ -51,9 +51,14 @@ AUI.add(
 
 		var TPL_AVAILABLE_TRANSLATIONS_LINKS_NODE = '<span class="' + CSS_AVAILABLE_TRANSLATIONS_LINKS + '"></span>';
 
-		var TPL_AVAILABLE_TRANSLATIONS_NODE = '<div class="' + CSS_AVAILABLE_TRANSLATIONS + '"><label>' + Liferay.Language.get('available-translations') + '</label></div>';
+		var TPL_AVAILABLE_TRANSLATIONS_NODE = '<div class="' + CSS_AVAILABLE_TRANSLATIONS + '">' +
+				'<label>' + Liferay.Language.get('available-translations') + '</label>' +
+			'</div>';
 
-		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' + TPL_LOCALE_IMAGE + '{displayName} <i class="' + CSS_DELETE_TRANSLATION + ' icon icon-remove"></i></span>';
+		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' +
+				TPL_LOCALE_IMAGE + '{displayName} ' +
+				'<i class="' + CSS_DELETE_TRANSLATION + ' icon icon-remove"></i>' +
+			'</span>';
 
 		var TPL_CHANGE_DEFAULT_LOCALE = '<a href="javascript:;">' + Liferay.Language.get('change') + '</a>';
 
@@ -63,9 +68,23 @@ AUI.add(
 
 		var TPL_DEFAULT_LOCALE_TEXT_NODE = '<span class="' + CSS_TRANSLATION + '">' + TPL_LOCALE_IMAGE + '{displayName}</span>';
 
-		var TPL_ICON_MENU_NODE = '<ul class="' + [CSS_ICON_MENU, CSS_COMPONENT, CSS_ACTIONS, CSS_DIRECTION_DOWN, 'max-display-items-15', CSS_EXTENDED, CSS_SHOW_ARROW].join(STR_SPACE) + '"><li class="lfr-trigger"><strong><a class="nobr" href="javascript:;"><img src="' + themeDisplay.getPathThemeImages() + '/common/add.png" /><span class="taglib-text">' + Liferay.Language.get('add-translation') + '</span></a></strong><ul>{menuItems}</ul></li></ul>';
+		var TPL_ICON_MENU_NODE = '<ul class="' + [CSS_ICON_MENU, CSS_COMPONENT, CSS_ACTIONS, CSS_DIRECTION_DOWN, 'max-display-items-15', CSS_EXTENDED, CSS_SHOW_ARROW].join(STR_SPACE) + '">' +
+				'<li class="lfr-trigger">' +
+					'<strong>' +
+						'<a class="nobr" href="javascript:;">' +
+							'<img src="' + themeDisplay.getPathThemeImages() + '/common/add.png" />' +
+							'<span class="taglib-text">' + Liferay.Language.get('add-translation') + '</span>' +
+						'</a>' +
+					'</strong>' +
+					'<ul>{menuItems}</ul>' +
+				'</li>' +
+			'</ul>';
 
-		var TPL_ICON_NODE = '<li class="' + CSS_TRANSLATION_ITEM + '"><a href="javascript:;" class="taglib-icon" lang="{0}"><img src="' + themeDisplay.getPathThemeImages() + '/language/{0}.png" class="icon">{1}</a></li>';
+		var TPL_ICON_NODE = '<li class="' + CSS_TRANSLATION_ITEM + '">' +
+				'<a href="javascript:;" class="taglib-icon" lang="{0}">' +
+					'<img src="' + themeDisplay.getPathThemeImages() + '/language/{0}.png" class="icon">{1}' +
+				'</a>' +
+			'</li>';
 
 		var TPL_OPTION = '<option value="{0}">{1}</option>';
 

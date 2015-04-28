@@ -28,7 +28,9 @@ AUI.add(
 			iconUncheck: 'icon-check'
 		};
 
-		var TREE_LOADING_EL_TPL = '<div class="lfr-tree-loading"><span class="icon icon-loading lfr-tree-loading-icon"></span></div>';
+		var TREE_LOADING_EL_TPL = '<div class="lfr-tree-loading">' +
+				'<span class="icon icon-loading lfr-tree-loading-icon"></span>' +
+			'</div>';
 
 		var LayoutsTreeBase = function() {};
 

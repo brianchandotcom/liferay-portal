@@ -35,7 +35,11 @@ if (!themeDisplay.isStatePopUp()) {
 
 			var TPL_CANCEL_SEARCH_BUTTON = '<a class="icon-remove cancel-search" href="javascript:;"></a>';
 
-			var TPL_TOGGLE_PANELS_BUTTON = '<div class="minimize-panels"><a class="close-panel-button" href="javascript:;"><span>' + Liferay.Language.get('minimize-panels') + '</span></a></div>';
+			var TPL_TOGGLE_PANELS_BUTTON = '<div class="minimize-panels">' +
+					'<a class="close-panel-button" href="javascript:;">' +
+						'<span>' + Liferay.Language.get('minimize-panels') + '</span>' +
+					'</a>' +
+				'</div>';
 
 			var ControlPanel = {
 				init: function() {

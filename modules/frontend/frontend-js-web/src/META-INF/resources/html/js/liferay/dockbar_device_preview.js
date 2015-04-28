@@ -53,7 +53,9 @@ AUI.add(
 
 		var TPL_DEVICE_SIZE_INFO = '{width} x {height}';
 
-		var TPL_DEVICE_SIZE_STATUS = '<div class="lfr-device-size-status"><span class="lfr-device-size-status-content"></span></div>';
+		var TPL_DEVICE_SIZE_STATUS = '<div class="lfr-device-size-status">' +
+				'<span class="lfr-device-size-status-content"></span>' +
+			'</div>';
 
 		var WIN = A.config.win;
 

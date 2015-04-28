@@ -25,13 +25,18 @@ AUI.add(
 
 		var STR_TRUE = 'true';
 
-		var TPL_EDIT_SELECTION = '<button class="btn btn-default edit-selection" type="button"><i class="icon-edit"></i> <span class="btn-text">{0}</span></button>';
+		var TPL_EDIT_SELECTION = '<button class="btn btn-default edit-selection" type="button">' +
+				'<i class="icon-edit"></i> ' +
+				'<span class="btn-text">{0}</span>' +
+			'</button>';
 
 		var TPL_MOVE_OPTION = new A.Template(
 			'<tpl for="options">',
 				'<div class="move-option {[ values.selected ? "', STR_SELECTED, '" : "" ]}" data-value="{value}">',
 					'<i class="handle icon-reorder"></i>',
+
 					'<input {[ values.selected ? "', STR_CHECKED, '" : "" ]} class="checkbox" id="{value}CheckBox" type="checkbox" value="{value}" />',
+
 					'<label class="title" for="{value}CheckBox" title="{name}">{name}</label>',
 				'</div>',
 			'</tpl>'

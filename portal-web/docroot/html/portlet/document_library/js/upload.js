@@ -16,11 +16,25 @@ AUI.add(
 
 		var CSS_APP_VIEW_ENTRY = 'app-view-entry-taglib';
 
+		var CSS_DISPLAY_DESCRIPTIVE = 'display-descriptive';
+
+		var CSS_DISPLAY_ICON = 'display-icon';
+
+		var CSS_DOCUMENT_ENTRIES_PAGINATION = 'document-entries-pagination';
+
+		var CSS_ENTRIES_EMPTY = 'entries-empty';
+
 		var CSS_ENTRY_DISPLAY_STYLE = 'entry-display-style';
+
+		var CSS_ENTRY_LINK = 'entry-link';
 
 		var CSS_ENTRY_SELECTOR = 'entry-selector';
 
+		var CSS_ENTRY_TITLE_TEXT = 'entry-title-text';
+
 		var CSS_ICON = 'icon';
+
+		var CSS_SEARCHCONTAINER = 'searchcontainer';
 
 		var CSS_TAGLIB_ICON = 'taglib-icon';
 
@@ -46,31 +60,31 @@ AUI.add(
 
 		var REGEX_VIDEO = /\.(avi|flv|mpe|mpg|mpeg|mov|m4v|ogg|wmv)$/i;
 
-		var STR_DOT = '.';
-
 		var SELECTOR_DATA_FOLDER = '[data-folder="true"]';
 
 		var SELECTOR_DATA_FOLDER_DATA_TITLE = '[data-folder="true"][data-title]';
 
-		var SELECTOR_DISPLAY_DESCRIPTIVE = '.display-descriptive';
+		var STR_DOT = '.';
 
-		var SELECTOR_DISPLAY_ICON = '.display-icon';
+		var SELECTOR_DISPLAY_DESCRIPTIVE = STR_DOT + CSS_DISPLAY_DESCRIPTIVE;
 
-		var SELECTOR_DOCUMENT_ENTRIES_PAGINATION = '.document-entries-pagination';
+		var SELECTOR_DISPLAY_ICON = STR_DOT + CSS_DISPLAY_ICON;
 
-		var SELECTOR_ENTRIES_EMPTY = '.entries-empty';
+		var SELECTOR_DOCUMENT_ENTRIES_PAGINATION = STR_DOT + CSS_DOCUMENT_ENTRIES_PAGINATION;
+
+		var SELECTOR_ENTRIES_EMPTY = STR_DOT + CSS_ENTRIES_EMPTY;
 
 		var SELECTOR_ENTRY_DISPLAY_STYLE = STR_DOT + CSS_ENTRY_DISPLAY_STYLE;
 
-		var SELECTOR_ENTRY_LINK = '.entry-link';
+		var SELECTOR_ENTRY_LINK = STR_DOT + CSS_ENTRY_LINK;
 
 		var SELECTOR_ENTRY_SELECTOR = STR_DOT + CSS_ENTRY_SELECTOR;
 
-		var SELECTOR_ENTRY_TITLE_TEXT = '.entry-title-text';
+		var SELECTOR_ENTRY_TITLE_TEXT = STR_DOT + CSS_ENTRY_TITLE_TEXT;
 
 		var SELECTOR_IMAGE_ICON = 'img.icon';
 
-		var SELECTOR_SEARCH_CONTAINER = '.searchcontainer';
+		var SELECTOR_SEARCH_CONTAINER = STR_DOT + CSS_SEARCHCONTAINER;
 
 		var SELECTOR_TAGLIB_ICON = STR_DOT + CSS_TAGLIB_ICON;
 
@@ -123,7 +137,9 @@ AUI.add(
 
 		var TPL_ERROR_FOLDER = new A.Template(
 			'<span class="lfr-status-success-label">{validFilesLength}</span>',
+
 			'<span class="lfr-status-error-label">{invalidFilesLength}</span>',
+
 			'<ul class="list-unstyled">',
 				'<tpl for="invalidFiles">',
 					'<li><b>{name}</b>: {errorMessage}</li>',
@@ -671,14 +687,8 @@ AUI.add(
 						if (!tooltipDelegate) {
 							tooltipDelegate = new A.TooltipDelegate(
 								{
-									formatter: function() {
-										var tooltip = this;
-
-										tooltip.set('zIndex', 2);
-
-										var node = tooltip.get('trigger');
-
-										return node.attr('data-message');
+									formatter: function(val) {
+										return instance._formatTooltip(val, this);
 									},
 									trigger: '.app-view-entry.upload-error',
 									visible: false
@@ -713,6 +723,16 @@ AUI.add(
 							resultsNode.addClass(uploadResultClass);
 							resultsNode.addClass(CSS_ENTRY_DISPLAY_STYLE);
 						}
+					},
+
+					_formatTooltip: function(val, tooltip) {
+						var instance = this;
+
+						tooltip.set('zIndex', 2);
+
+						var node = tooltip.get('trigger');
+
+						return node.attr('data-message');
 					},
 
 					_getCurrentUploadData: function() {

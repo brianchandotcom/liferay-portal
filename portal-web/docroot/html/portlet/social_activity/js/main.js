@@ -113,6 +113,7 @@ AUI.add(
 
 		var TPL_FIELD = new A.Template(
 			'<span class="settings-label">{labelText}</span>',
+
 			'<div class="settings-controls">',
 				'<div class="field-values">',
 					'<span class="field field-text">{firstText}</span>',
@@ -131,8 +132,10 @@ AUI.add(
 						'</tpl>',
 					'</select>',
 
-					'<span class="field field-text">{thirdText}</span> <span class="field field-text field-contribution-text">{fourthText}</span>',
+					'<span class="field field-text">{thirdText}</span> ',
+					'<span class="field field-text field-contribution-text">{fourthText}</span>',
 				'</div>',
+
 				'<tpl if="rows.length">',
 					'<div class="settings-field-buttons">',
 						'<tpl for="buttons">',
@@ -147,16 +150,19 @@ AUI.add(
 					'<tpl for="rows">',
 						'<div class="settings-limit-row">',
 							'<span class="field field-text">{limitFirstText}</span>',
+
 							'<select id="{parent.languageKey}_{type}LimitValue" class="settings-field-node">',
 								'<tpl for="limitValues">',
 									'<option {[ (values == parent.limitValue) ? "selected" : "" ]} title="{.}" value="{.}">{.}</option>',
 								'</tpl>',
 							'</select>',
+
 							'<select id="{parent.languageKey}_{type}LimitPeriod" class="settings-field-node">',
 								'<tpl for="limitPeriods">',
 									'<option {[ ($index == parent.limitPeriod) ? "selected" : "" ]} title="{.}" value="{$index}">{.}</option>',
 								'</tpl>',
 							'</select>',
+
 							'<tpl if="limitSecondText">',
 								'<span class="field field-text">{limitSecondText}.</span>',
 							'</tpl>',
@@ -169,12 +175,16 @@ AUI.add(
 		var TPL_SETTINGS_DISPLAY = new A.Template(
 			'<div class="settings-header yui3-widget-hd">',
 				'<div class="settings-header-label">{headerText}</div>',
+
 				'<ul class="settings-actions">',
 					'<li class="actions-conjunction hide">{conjunctionText}</li>',
 				'</ul>',
 			'</div>',
+
 			'<div class="settings-container-label">{containerText}</div>',
+
 			'<ul class="container-drop-box yui3-widget-bd"></ul>',
+
 			'<div class="btn-row yui3-widget-ft">',
 				'<button class="btn btn-primary btn-submit">{saveText}</button>',
 			'</div>'

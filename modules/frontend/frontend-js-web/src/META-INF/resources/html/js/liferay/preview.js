@@ -25,7 +25,9 @@ AUI.add(
 
 		var MAP_IMAGE_DATA = {};
 
-		var TPL_IMAGES = '<a class="lfr-preview-file-image {selectedCssClass}" data-imageIndex="{index}" href="{url}" title="{displayedIndex}"><img src="{url}" /></a>';
+		var TPL_IMAGES = '<a class="lfr-preview-file-image {selectedCssClass}" data-imageIndex="{index}" href="{url}" title="{displayedIndex}">' +
+				'<img src="{url}" />' +
+			'</a>';
 
 		var TPL_LOADING_COUNT = '<span class="lfr-preview-file-loading-count"></span>';
 

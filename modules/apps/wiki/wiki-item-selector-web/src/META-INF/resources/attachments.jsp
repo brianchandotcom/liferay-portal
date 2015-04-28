@@ -17,80 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String itemSelectedCallback = (String)request.getAttribute(WikiAttachmentItemSelectorView.ITEM_SELECTED_CALLBACK);
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
 PortletURL portletURL = (PortletURL)request.getAttribute(WikiAttachmentItemSelectorView.PORTLET_URL);
 WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = (WikiAttachmentItemSelectorCriterion)request.getAttribute(WikiAttachmentItemSelectorView.WIKI_ATTACHMENT_ITEM_SELECTOR_CRITERION);
 
 WikiPageResource pageResource = WikiPageResourceLocalServiceUtil.fetchWikiPageResource(wikiAttachmentItemSelectorCriterion.getWikiPageResourceId());
 
 WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(pageResource.getNodeId(), pageResource.getTitle());
+
+SearchContainer wikiAttachmentsSearchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+wikiAttachmentsSearchContainer.setTotal(wikiPage.getAttachmentsFileEntriesCount());
+wikiAttachmentsSearchContainer.setResults(wikiPage.getAttachmentsFileEntries(wikiAttachmentsSearchContainer.getStart(), wikiAttachmentsSearchContainer.getEnd()));
 %>
 
-<aui:form method="post" name="selectDocumentFm">
-	<liferay-ui:search-container
-		emptyResultsMessage="this-page-does-not-have-file-attachments"
-		iteratorURL="<%= portletURL %>"
-		total="<%= wikiPage.getAttachmentsFileEntriesCount() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.repository.model.FileEntry"
-			keyProperty="fileEntryId"
-			modelVar="fileEntry"
-		>
-
-			<%
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
-			%>
-
-			<liferay-ui:search-container-column-text
-				name="file-name"
-			>
-				<liferay-ui:icon
-					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-					label="<%= true %>"
-					message="<%= fileEntry.getTitle() %>"
-				/>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				name="size"
-				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
-			/>
-
-			<liferay-ui:search-container-column-text>
-
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("fileEntryId", fileEntry.getFileEntryId());
-				%>
-
-				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator />
-	</liferay-ui:search-container>
-</aui:form>
-
-<aui:script>
-	var container = $('#<portlet:namespace />selectDocumentFm');
-
-	var selectorButtons = container.find('.selector-button');
-
-	container.on(
-		'click',
-		'.selector-button',
-		function(event) {
-			var fileEntryId = event.target.getAttribute('data-fileEntryId');
-
-			<%= itemSelectedCallback %>('<%= FileEntry.class.getName() %>', fileEntryId);
-		}
-	);
-</aui:script>
+<liferay-ui:item-browser
+	displayStyle="<%= displayStyle %>"
+	idPrefix="wikiAttachments"
+	itemSearchContainer="<%= wikiAttachmentsSearchContainer %>"
+	tabName='<%= LanguageUtil.get(request, "attachments") %>'
+/>

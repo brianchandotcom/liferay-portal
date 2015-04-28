@@ -535,6 +535,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			}
 		</#if>
 
+		<#if entity.hasColumn("createDate", "Date") && entity.hasColumn("modifiedDate", "Date") && (column.name == "modifiedDate")>
+			public boolean hasSetModifiedDate() {
+				return _setModifiedDate;
+			}
+		</#if>
+
 		@Override
 		public void set${column.methodName}(${column.genericizedType} ${column.name}) {
 			<#if column.name == "uuid">
@@ -546,6 +552,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 				_uuid = uuid;
 			<#else>
+				<#if entity.hasColumn("createDate", "Date") && entity.hasColumn("modifiedDate", "Date") && (column.name == "modifiedDate")>
+					_setModifiedDate = true;
+				</#if>
+
 				<#if column.isOrderColumn() && columnBitmaskEnabled>
 					_columnBitmask = -1L;
 				</#if>
@@ -1255,7 +1265,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	@Override
 	public void resetOriginalValues() {
 		<#list entity.regularColList as column>
-			<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name)) || ((column.type == "Blob") && column.lazy)>
+			<#if column.isFinderPath() || ((parentPKColumn != "") && (parentPKColumn.name == column.name)) || ((column.type == "Blob") && column.lazy) || (entity.hasColumn("createDate", "Date") && entity.hasColumn("modifiedDate", "Date"))>
 				<#if !cloneCastModelImpl??>
 					<#assign cloneCastModelImpl = true>
 
@@ -1273,6 +1283,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			<#if (column.type == "Blob") && column.lazy>
 				${entity.varName}ModelImpl._${column.name}BlobModel = null;
+			</#if>
+
+			<#if entity.hasColumn("createDate", "Date") && entity.hasColumn("modifiedDate", "Date") && (column.name == "modifiedDate")>
+				${entity.varName}ModelImpl._setModifiedDate = false;
 			</#if>
 		</#list>
 
@@ -1394,6 +1408,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				<#if column.isPrimitiveType()>
 					private boolean _setOriginal${column.methodName};
 				</#if>
+			</#if>
+
+			<#if entity.hasColumn("createDate", "Date") && entity.hasColumn("modifiedDate", "Date") && (column.name == "modifiedDate")>
+				private boolean _setModifiedDate;
 			</#if>
 		</#if>
 	</#list>

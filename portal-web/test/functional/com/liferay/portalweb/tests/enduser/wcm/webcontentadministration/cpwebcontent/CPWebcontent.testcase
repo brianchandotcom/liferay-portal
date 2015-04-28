@@ -29,9 +29,20 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
@@ -39,10 +50,16 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
 			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
 		</execute>
 	</command>
 
@@ -51,9 +68,22 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media" />
+			<var name="structureName" value="WC Structure Name 1" />
+		</execute>
+
+		<for list="Boolean,Date,Decimal,Documents and Media" param="structureFieldName">
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name 1" />
 		</execute>
 
@@ -61,9 +91,22 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="HTML,Image,Integer,Link to Page" />
+			<var name="structureName" value="WC Structure Name 2" />
+		</execute>
+
+		<for list="HTML,Image,Integer,Link to Page" param="structureFieldName">
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name 2" />
 		</execute>
 
@@ -71,9 +114,22 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Number,Radio,Select,Text,Text Box" />
+			<var name="structureName" value="WC Structure Name 3" />
+		</execute>
+
+		<for list="Number,Radio,Select,Text,Text Box" param="structureFieldName">
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name 3" />
 		</execute>
 
@@ -81,31 +137,55 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media" />
 			<var name="structureName" value="WC Structure Name 1" />
 		</execute>
 
+		<for list="Boolean,Date,Decimal,Documents and Media" param="structureFieldName">
+			<execute macro="DynamicDataMapping#viewField">
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="HTML,Image,Integer,Link to Page" />
 			<var name="structureName" value="WC Structure Name 2" />
 		</execute>
 
+		<for list="HTML,Image,Integer,Link to Page" param="structureFieldName">
+			<execute macro="DynamicDataMapping#viewField">
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Number,Radio,Select,Text,Text Box" />
 			<var name="structureName" value="WC Structure Name 3" />
 		</execute>
+
+		<for list="Number,Radio,Select,Text,Text Box" param="structureFieldName">
+			<execute macro="DynamicDataMapping#viewField">
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="AddStructureWithSeparator" priority="4">
@@ -113,9 +193,20 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Separator" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Separator" />
+			<var name="fieldFieldLabel" value="Separator" />
+			<var name="fieldName" value="Separator" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
@@ -123,11 +214,95 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Separator" />
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Separator" />
+			<var name="fieldName" value="Separator" />
+		</execute>
+	</command>
+
+	<command name="AddStructureWithSubfield" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#gotoCP" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addFieldNested">
+			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Integer" />
+			<var name="fieldName" value="Integer" />
+			<var name="parentField" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
+			<var name="webContentInteger" value="123" />
+			<var name="webContentText" value="Text" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="fieldName" value="Text" />
+			<var name="nestedField" value="Integer" />
+			<var name="nestedFieldData" value="123" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContentStructures#gotoCP" />
+
+		<execute macro="WebContentStructures#viewCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<for list="Text,Integer" param="structureFieldName">
+			<execute macro="DynamicDataMapping#viewField">
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var name="fieldName" value="${structureFieldName}" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="AddStructureWithUnlocalizableFields" priority="4">
@@ -135,15 +310,30 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text,Text Box" />
+			<var name="structureDescription" value="Structure Description" />
+			<var name="structureName" value="Structure Name" />
+		</execute>
+
+		<for list="Text,Text Box" param="structureFieldName">
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentStructures#gotoCP" />
 
 		<execute macro="WebContentStructures#editFieldSettingCP">
 			<var name="localizable" value="false" />
@@ -226,9 +416,20 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
@@ -454,9 +655,20 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
@@ -488,9 +700,20 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
@@ -528,15 +751,28 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentStructures#gotoCP" />
 
 		<execute macro="WebContentStructures#advancedSearchCP">
 			<var name="structureDescription" value="WC Structure Description" />
@@ -611,9 +847,22 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text,Text Box,Image,Documents and Media" />
+			<var name="structureName" value="WC Structure Name1" />
+		</execute>
+
+		<for list="Text,Text Box,Image,Documents and Media" param="structureFieldName">
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name1" />
 		</execute>
 
@@ -621,17 +870,30 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="parentStructureName" value="WC Structure Name1" />
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Integer" />
 			<var name="structureName" value="2" />
 			<var name="substructure" value="true" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Integer" />
+			<var name="fieldName" value="Integer" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentStructures#gotoCP" />
 
 		<execute macro="WebContentStructures#editSubstructureDefaultValuesCP">
 			<var name="editSubstructureFieldNames" value="Text" />
@@ -738,9 +1000,20 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
@@ -801,10 +1074,16 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
 			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -826,9 +1105,20 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="Test Structure Description" />
-			<var name="structureFieldNames" value="Link to Page" />
+			<var name="structureName" value="Test Structure" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Link to Page" />
+			<var name="fieldFieldLabel" value="Link to Page" />
+			<var name="fieldName" value="Link to Page" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="Test Structure" />
 		</execute>
 

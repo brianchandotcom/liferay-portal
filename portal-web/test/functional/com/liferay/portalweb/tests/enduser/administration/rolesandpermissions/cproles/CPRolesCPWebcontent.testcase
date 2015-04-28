@@ -22,91 +22,74 @@
 	</tear-down>
 
 	<command name="AddFolderSiteRole" priority="5">
-		<var name="folderDescription" value="WC Folder Description" />
-		<var name="folderName" value="WC Folder Name" />
-		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-		<var name="permissionDefinition1Value" value="Access in Site Administration" />
-		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_FOLDER_CHECKBOX" />
-		<var name="permissionDefinition2Value" value="Add Folder" />
-		<var name="portletName1" value="Web Content" />
-		<var name="roleName" value="Roles Siterole Name" />
-		<var name="roleType" value="Site" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName1}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="portletName" value="Web Content" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="CPWebcontent#TOOLBAR_ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_FOLDER_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Folder" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="${folderDescription}" />
-			<var name="folderName" value="${folderName}" />
+			<var name="folderDescription" value="WC Folder Description" />
+			<var name="folderName" value="WC Folder Name" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Siterole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_FOLDER_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Folder" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -114,95 +97,86 @@
 	</command>
 
 	<command name="AddStructureSiteRole" priority="5">
-		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-		<var name="permissionDefinition1Value" value="Access in Site Administration" />
-		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_STRUCTURE_CHECKBOX" />
-		<var name="permissionDefinition2Value" value="Add Structure" />
-		<var name="portletName1" value="Web Content" />
-		<var name="roleName" value="Roles Siterole Name" />
-		<var name="roleType" value="Site" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="structureDescription" value="WC Structure Description" />
-		<var name="structureFieldNames" value="Text" />
-		<var name="structureFormFieldKey" value="DIAGRAM_BUILDER_TEXT_FIELD_1" />
-		<var name="structureName" value="WC Structure Name" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName1}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="portletName" value="Web Content" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="CPWebcontent#TOOLBAR_MANAGE" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_STRUCTURE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Structure" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="${structureDescription}" />
-			<var name="structureFieldNames" value="${structureFieldNames}" />
-			<var name="structureFormFieldKey" value="${structureFormFieldKey}" />
-			<var name="structureName" value="${structureName}" />
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Siterole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_STRUCTURE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Structure" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -210,91 +184,74 @@
 	</command>
 
 	<command name="AddTemplateSiteRole" priority="5">
-		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-		<var name="permissionDefinition1Value" value="Access in Site Administration" />
-		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_TEMPLATE_CHECKBOX" />
-		<var name="permissionDefinition2Value" value="Add Template" />
-		<var name="portletName1" value="Web Content" />
-		<var name="roleName" value="Roles Siterole Name" />
-		<var name="roleType" value="Site" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="templateDescription" value="WC Template Description" />
-		<var name="templateName" value="WC Template Name" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName1}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="portletName" value="Web Content" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="CPWebcontent#TOOLBAR_MANAGE" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_TEMPLATE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Template" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateName" value="${templateName}" />
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateName" value="WC Template Name" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Siterole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_TEMPLATE_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Template" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -302,91 +259,74 @@
 	</command>
 
 	<command name="AddWebContentSiteRole" priority="5">
-		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinition1Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-		<var name="permissionDefinition1Value" value="Access in Site Administration" />
-		<var name="permissionDefinition2Key" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX" />
-		<var name="permissionDefinition2Value" value="Add Web Content" />
-		<var name="portletName1" value="Web Content" />
-		<var name="roleName" value="Roles Siterole Name" />
-		<var name="roleType" value="Site" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName1}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="portletName" value="Web Content" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="CPWebcontent#TOOLBAR_ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Web Content" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Siterole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Web Content" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -394,24 +334,15 @@
 	</command>
 
 	<command name="ViewWebContentPortletRegRole" priority="5">
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-		<var name="permissionDefinitionValue" value="Access in Site Administration" />
-		<var name="portletName1" value="Web Content" />
-		<var name="roleName" value="Regrole Name" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="portletName" value="${portletName1}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="portletName" value="Web Content" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#openURL" />
@@ -419,11 +350,11 @@
 		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP" />
@@ -433,17 +364,17 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#openURL" />
@@ -452,52 +383,39 @@
 	</command>
 
 	<command name="ViewWebContentPortletSiteRole" priority="5">
-		<var name="pageName" value="Web Content Page" />
-		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-		<var name="permissionDefinitionValue" value="Access in Site Administration" />
-		<var name="portletName1" value="Web Content" />
-		<var name="roleName" value="Roles Siterole Name" />
-		<var name="roleType" value="Site" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName1}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="portletName" value="Web Content" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleType" value="Site" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -506,22 +424,22 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Go to Site Administration" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleName" value="Roles Siterole Name" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+			<var name="roleName" value="Roles Siterole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 

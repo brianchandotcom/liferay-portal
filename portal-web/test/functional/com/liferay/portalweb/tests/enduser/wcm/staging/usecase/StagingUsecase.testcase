@@ -3453,9 +3453,22 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="Structure Description" />
-			<var name="structureFieldNames" value="Text,Text Box" />
+			<var name="structureName" value="Structure Name" />
+		</execute>
+
+		<for list="Text,Text Box" param="structureFieldName">
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="Structure Name" />
 		</execute>
 
@@ -3526,11 +3539,19 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="Web Content Title" />
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="Structure Description" />
-			<var name="structureFieldNames" value="Text,Text Box" />
 			<var name="structureName" value="Structure Name" />
 		</execute>
+
+		<for list="Text,Text Box" param="structureFieldName">
+			<execute macro="DynamicDataMapping#viewField">
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace('${structureFieldName}', ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

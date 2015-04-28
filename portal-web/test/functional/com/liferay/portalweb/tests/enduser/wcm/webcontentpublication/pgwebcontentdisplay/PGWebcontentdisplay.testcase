@@ -261,8 +261,19 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
-			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 

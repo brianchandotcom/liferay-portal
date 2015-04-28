@@ -223,9 +223,20 @@
 	</command>
 
 	<command name="ApproveInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
@@ -753,9 +764,20 @@
 	</command>
 
 	<command known-issues="LPS-51687" name="RejectInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
+		<execute macro="WebContentStructures#gotoCP" />
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Text" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 

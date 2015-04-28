@@ -26,7 +26,7 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface XSLContentConfiguration {
 
 	@Meta.AD(
-		deflt = "@portlet_context_url@,@portal_url@", id = "valid.url.prefixes"
+		deflt = "@portal_url@,@portlet_context_url@", id = "valid.url.prefixes"
 	)
 	public String validUrlPrefixes();
 

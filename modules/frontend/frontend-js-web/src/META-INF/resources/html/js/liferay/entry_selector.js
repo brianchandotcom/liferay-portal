@@ -93,7 +93,7 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandles = [
-							instance.after('selectedEntriesChange', instance._renderUI, instance),
+							instance.after('selectedEntriesChange', instance._syncUI, instance),
 							instance.one('.select-button').on(STR_CLICK, instance._onSelectClick, instance),
 							instance.one('.selected-entries').delegate(STR_CLICK, instance._onSummaryItemRemove, '.remove-button', instance)
 						];
@@ -102,7 +102,28 @@ AUI.add(
 					_getSelectDialog: function() {
 						var instance = this;
 
-						return Liferay.Util.getWindow(instance._dialogId);
+						var dialog = instance._dialog;
+
+						if (!dialog) {
+							var dialogConfig = {
+								'toolbars.footer': instance._getSelectDialogFooterToolbar(),
+								width: 540
+							};
+
+							dialog = Liferay.Util.Window.getWindow(
+								{
+									dialog: dialogConfig,
+									id: instance._dialogId,
+									title: instance.get('dialogTitle')
+								}
+							);
+
+							dialog.setStdModContent('body', instance._selectDialogContent);
+
+							instance._dialog = dialog;
+						}
+
+						return dialog;
 					},
 
 					_getSelectDialogContent: function() {
@@ -180,7 +201,29 @@ AUI.add(
 						instance.set(STR_SELECTED_ENTRIES, selectedEntries);
 					},
 
-					_renderUI: function() {
+					_setEntries: function(val) {
+						var instance = this;
+
+						var entriesMap = {};
+
+						AArray.each(
+							val,
+							function(item) {
+								entriesMap[item.key] = item;
+							}
+						);
+
+						instance._entriesMap = entriesMap;
+					},
+
+					_showSelectDialog: function() {
+						var instance = this;
+
+						instance._syncUI();
+						instance._getSelectDialog().show();
+					},
+
+					_syncUI: function() {
 						var instance = this;
 
 						var entries = instance.get(STR_ENTRIES);
@@ -205,49 +248,6 @@ AUI.add(
 						);
 
 						instance.one(STR_INPUT).val(selectedEntries.join(','));
-					},
-
-					_setEntries: function(val) {
-						var instance = this;
-
-						var entriesMap = {};
-
-						AArray.each(
-							val,
-							function(item) {
-								entriesMap[item.key] = item;
-							}
-						);
-
-						instance._entriesMap = entriesMap;
-					},
-
-					_showSelectDialog: function() {
-						var instance = this;
-
-						var dialog = instance._getSelectDialog();
-
-						if (!dialog) {
-							var dialogConfig = {
-								'toolbars.footer': instance._getSelectDialogFooterToolbar(),
-								width: 540
-							};
-
-							Liferay.Util.openWindow(
-								{
-									dialog: dialogConfig,
-									id: instance._dialogId,
-									title: instance.get('dialogTitle')
-								},
-								function(dialog) {
-									dialog.setStdModContent('body', instance._selectDialogContent);
-								}
-							);
-						}
-						else {
-							instance._renderUI();
-							dialog.show();
-						}
 					},
 
 					_updateSelectedEntries: function() {
@@ -275,6 +275,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'liferay-portlet-base']
+		requires: ['aui-component', 'liferay-portlet-base', 'liferay-util-window']
 	}
 );

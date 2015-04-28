@@ -388,7 +388,8 @@
 						path: 'entry_selector.js',
 						requires: [
 							'aui-component',
-							'liferay-portlet-base'
+							'liferay-portlet-base',
+							'liferay-util-window'
 						]
 					},
 					'liferay-form': {

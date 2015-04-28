@@ -17,6 +17,7 @@ package com.liferay.cobertura.instrument;
 import com.liferay.cobertura.coveragedata.TouchCollector;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -31,7 +32,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 
 	public TouchMethodVisitor(
 		String owner, MethodNode methodNode, MethodVisitor methodVisitor,
-		Map<Label, JumpHolder> jumpLabels, Map<Label, Integer> lineLabels,
+		Set<Label> jumpLabels, Map<Label, Integer> lineLabels,
 		Map<Label, SwitchHolder> switchLabels) {
 
 		super(Opcodes.ASM5, methodVisitor);
@@ -40,7 +41,6 @@ public class TouchMethodVisitor extends MethodVisitor {
 		_jumpLabels = jumpLabels;
 		_lineLabels = lineLabels;
 		_switchLabels = switchLabels;
-		_name = methodNode.name;
 
 		int variableCount = 0;
 
@@ -100,8 +100,8 @@ public class TouchMethodVisitor extends MethodVisitor {
 	public void visitJumpInsn(int opcode, Label label) {
 		_touchBranch();
 
-		if ((_currentLine != 0) && !_name.equals("<clinit>") &&
-			(opcode != Opcodes.GOTO) && (opcode != Opcodes.JSR)) {
+		if ((_currentLine != 0) && (opcode != Opcodes.GOTO) &&
+			(opcode != Opcodes.JSR)) {
 
 			_lastJump = new JumpHolder(_currentLine, _currentJump++);
 
@@ -118,21 +118,24 @@ public class TouchMethodVisitor extends MethodVisitor {
 	public void visitLabel(Label label) {
 		if (_started) {
 			_started = false;
-			_variableIndex = _variableCount;
 
-			mv.visitInsn(Opcodes.ICONST_0);
-			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex);
-			mv.visitIntInsn(Opcodes.SIPUSH, -1);
-			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
+			if (!_jumpLabels.isEmpty()) {
+				_variableIndex = _variableCount;
 
-			_startLabel = label;
+				mv.visitInsn(Opcodes.ICONST_0);
+				mv.visitVarInsn(Opcodes.ISTORE, _variableIndex);
+				mv.visitIntInsn(Opcodes.SIPUSH, -1);
+				mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
+
+				_startLabel = label;
+			}
 		}
 
 		_endLabel = label;
 
 		super.visitLabel(label);
 
-		if (_jumpLabels.containsKey(label)) {
+		if (_jumpLabels.contains(label)) {
 			if (_lastJump != null) {
 				Label label1 = _lastJump();
 
@@ -228,13 +231,15 @@ public class TouchMethodVisitor extends MethodVisitor {
 
 	@Override
 	public void visitMaxs(int maxStack, int maxLocals) {
-		mv.visitLocalVariable(
-			"__cobertura__line__number__", "I", null, _startLabel, _endLabel,
-			_variableIndex);
+		if (!_jumpLabels.isEmpty()) {
+			mv.visitLocalVariable(
+				"__cobertura__line__number__", "I", null, _startLabel,
+				_endLabel, _variableIndex);
 
-		mv.visitLocalVariable(
-			"__cobertura__branch__number__", "I", null, _startLabel, _endLabel,
-			_variableIndex + 1);
+			mv.visitLocalVariable(
+				"__cobertura__branch__number__", "I", null, _startLabel,
+				_endLabel, _variableIndex + 1);
+		}
 
 		super.visitMaxs(maxStack, maxLocals);
 	}
@@ -359,10 +364,9 @@ public class TouchMethodVisitor extends MethodVisitor {
 	private int _currentJump;
 	private int _currentLine;
 	private Label _endLabel;
-	private final Map<Label, JumpHolder> _jumpLabels;
+	private final Set<Label> _jumpLabels;
 	private JumpHolder _lastJump;
 	private final Map<Label, Integer> _lineLabels;
-	private final String _name;
 	private final String _owner;
 	private boolean _started;
 	private Label _startLabel;

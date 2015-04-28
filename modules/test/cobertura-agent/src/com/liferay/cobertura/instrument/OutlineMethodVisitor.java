@@ -15,7 +15,9 @@
 package com.liferay.cobertura.instrument;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.cobertura.coveragedata.ClassData;
 
@@ -30,9 +32,8 @@ import org.objectweb.asm.tree.MethodNode;
 public class OutlineMethodVisitor extends MethodVisitor {
 
 	public OutlineMethodVisitor(
-		ClassData classData, MethodVisitor methodVisitor, String owner,
-		int access, String name, String desc, String signature,
-		String[] exceptions) {
+		ClassData classData, MethodVisitor methodVisitor, int access,
+		String name, String desc, String signature, String[] exceptions) {
 
 		super(
 			Opcodes.ASM5,
@@ -41,7 +42,6 @@ public class OutlineMethodVisitor extends MethodVisitor {
 
 		_classData = classData;
 		_methodVisitor = methodVisitor;
-		_owner = owner;
 
 		_methodNode = (MethodNode)mv;
 	}
@@ -54,8 +54,8 @@ public class OutlineMethodVisitor extends MethodVisitor {
 
 		if (!_lineLabels.isEmpty()) {
 			methodVisitor = new TouchMethodVisitor(
-				_owner, _methodNode, _methodVisitor, _jumpLabels, _lineLabels,
-				_switchLabels);
+				_classData.getName(), _methodNode, _methodVisitor, _jumpLabels,
+				_lineLabels, _switchLabels);
 		}
 
 		_methodNode.accept(methodVisitor);
@@ -63,13 +63,12 @@ public class OutlineMethodVisitor extends MethodVisitor {
 
 	@Override
 	public void visitJumpInsn(int opcode, Label label) {
-		if ((_currentLine != 0) && !"<clinit>".equals(_methodNode.name) &&
-			(opcode != Opcodes.GOTO) && (opcode != Opcodes.JSR)) {
+		if ((_currentLine != 0) && (opcode != Opcodes.GOTO) &&
+			(opcode != Opcodes.JSR)) {
 
 			_classData.addLineJump(_currentLine, _currentJump);
 
-			_jumpLabels.put(
-				label, new JumpHolder(_currentLine, _currentJump++));
+			_jumpLabels.add(label);
 		}
 
 		super.visitJumpInsn(opcode, label);
@@ -94,7 +93,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 			_switchLabels.put(
 				dflt, new SwitchHolder(_currentLine, _currentSwitch, -1));
 
-			for (int i = labels.length -1; i >= 0; i--) {
+			for (int i = 0; i < labels.length; i++) {
 				_switchLabels.put(
 					labels[i],
 					new SwitchHolder(_currentLine, _currentSwitch, i));
@@ -114,7 +113,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 			_switchLabels.put(
 				dflt, new SwitchHolder(_currentLine, _currentSwitch, -1));
 
-			for (int i = labels.length -1; i >= 0; i--) {
+			for (int i = 0; i < labels.length; i++) {
 				_switchLabels.put(
 					labels[i],
 					new SwitchHolder(_currentLine, _currentSwitch, i));
@@ -128,11 +127,10 @@ public class OutlineMethodVisitor extends MethodVisitor {
 	private int _currentJump;
 	private int _currentLine;
 	private int _currentSwitch;
-	private final Map<Label, JumpHolder> _jumpLabels = new HashMap<>();
+	private final Set<Label> _jumpLabels = new HashSet<>();
 	private final Map<Label, Integer> _lineLabels = new HashMap<>();
 	private final MethodNode _methodNode;
 	private final MethodVisitor _methodVisitor;
-	private final String _owner;
 	private final Map<Label, SwitchHolder> _switchLabels = new HashMap<>();
 
 }

@@ -70,8 +70,8 @@ public class CoberturaClassVisitor extends ClassVisitor {
 		}
 
 		return new OutlineMethodVisitor(
-			_classData, methodVisitor, _classData.getName(), access, name, desc,
-			signature, exceptions);
+			_classData, methodVisitor, access, name, desc, signature,
+			exceptions);
 	}
 
 	@Override

@@ -20,22 +20,16 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
-page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
+<%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
-page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
-page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.wiki.item.selector.web.WikiAttachmentItemSelectorCriterion" %><%@
 page import="com.liferay.wiki.item.selector.web.WikiAttachmentItemSelectorView" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.model.WikiPageResource" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageResourceLocalServiceUtil" %>
-
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

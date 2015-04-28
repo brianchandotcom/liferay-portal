@@ -15,7 +15,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -88,9 +87,9 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 			_TEST_CLASS_NAME, _TEST_CLASS_PK);
 
 		Assert.assertEquals(totalEntries, ratingStats.getTotalEntries());
-		AssertUtils.assertEquals(totalScore, ratingStats.getTotalScore());
-		AssertUtils.assertEquals(
-			totalScore / totalEntries, ratingStats.getAverageScore());
+		Assert.assertEquals(totalScore, ratingStats.getTotalScore(), 0.0001);
+		Assert.assertEquals(
+			totalScore / totalEntries, ratingStats.getAverageScore(), 0.0001);
 	}
 
 	@Test
@@ -101,8 +100,8 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 			_TEST_CLASS_NAME, _TEST_CLASS_PK);
 
 		Assert.assertEquals(0, ratingStats.getTotalEntries());
-		AssertUtils.assertEquals(0.0, ratingStats.getTotalScore());
-		AssertUtils.assertEquals(0.0, ratingStats.getAverageScore());
+		Assert.assertEquals(0.0, ratingStats.getTotalScore(), 0.0001);
+		Assert.assertEquals(0.0, ratingStats.getAverageScore(), 0.0001);
 	}
 
 	protected double addVote() throws Exception {

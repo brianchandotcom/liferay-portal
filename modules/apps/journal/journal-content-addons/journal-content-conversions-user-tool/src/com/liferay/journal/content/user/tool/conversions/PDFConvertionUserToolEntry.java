@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = UserToolEntry.class
 )
-public class PDFConvertionSelectableEntry
-	extends BaseConvertionSelectableEntry implements UserToolEntry {
+public class PDFConvertionUserToolEntry
+	extends BaseConvertionUserToolEntry implements UserToolEntry {
 
 	@Override
 	public String getExtension() {

@@ -12,58 +12,40 @@
  * details.
  */
 
-package com.liferay.journal.content.content.metadata.ratings;
+package com.liferay.journal.content.content.metadata.comments;
 
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
-import com.liferay.portal.model.BaseJSPSelectableEntry;
-
-import javax.servlet.ServletContext;
+import com.liferay.portal.model.BaseSelectableEntry;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
  */
 @Component(
-	immediate = true, service = ContentMetadataEntry.class
+	immediate = true, service = {ContentMetadataEntry.class, CommentRatingsContentMetadaEntryEntry.class}
 )
-public class RatingsSelectableEntry
-	extends BaseJSPSelectableEntry implements ContentMetadataEntry {
+public class CommentRatingsContentMetadaEntryEntry
+	extends BaseSelectableEntry implements ContentMetadataEntry {
 
 	@Override
 	public String getIcon() {
-		return "star-half-full";
-	}
-
-	@Override
-	public String getJSPPath() {
-		return _JSP_PATH;
+		return "comment-alt";
 	}
 
 	@Override
 	public String getKey() {
-		return "enableRatings";
+		return "enableCommentRatings";
 	}
 
 	@Override
 	public String getLabel() {
-		return "ratings";
+		return "comment-ratings";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 2.0;
+		return 4.0;
 	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.content.metadata.ratings)"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	private static final String _JSP_PATH = "/META-INF/resources/ratings.jsp";
 
 }

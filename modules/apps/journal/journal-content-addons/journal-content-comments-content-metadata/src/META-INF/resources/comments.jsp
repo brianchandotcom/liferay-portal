@@ -22,7 +22,7 @@
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.journal.content.content.metadata.comments.CommentsSelectableEntry" %>
+<%@ page import="com.liferay.journal.content.content.metadata.comments.CommentsContentMetadataEntry" %>
 <%@ page import="com.liferay.portal.kernel.util.Constants" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
@@ -41,7 +41,7 @@
 String viewMode = ParamUtil.getString(request, "viewMode");
 
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
-CommentsSelectableEntry commentsSelectableEntry = (CommentsSelectableEntry)request.getAttribute(WebKeys.SELECTABLE_ENTRY);
+CommentsContentMetadataEntry commentsContentMetadataEntry = (CommentsContentMetadataEntry)request.getAttribute(WebKeys.SELECTABLE_ENTRY);
 
 int discussionMessagesCount = MBMessageLocalServiceUtil.getDiscussionMessagesCount(PortalUtil.getClassNameId(JournalArticle.class.getName()), articleDisplay.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
 
@@ -67,7 +67,7 @@ PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, life
 		formAction="<%= discussionURL %>"
 		hideControls="<%= viewMode.equals(Constants.PRINT) %>"
 		paginationURL="<%= discussionPaginationURL %>"
-		ratingsEnabled="<%= commentsSelectableEntry.isCommentsRatingsSelected(request) && !viewMode.equals(Constants.PRINT) %>"
+		ratingsEnabled="<%= commentsContentMetadataEntry.isCommentsRatingsSelected(request) && !viewMode.equals(Constants.PRINT) %>"
 		redirect="<%= currentURLObj.toString() %>"
 		userId="<%= articleDisplay.getUserId() %>"
 	/>

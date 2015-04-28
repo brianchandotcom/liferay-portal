@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.journal.content.user.tool.locales;
+package com.liferay.journal.content.user.tool.conversions;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
-import com.liferay.portal.model.BaseJSPSelectableEntry;
 
 import javax.servlet.ServletContext;
 
@@ -28,42 +27,40 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = UserToolEntry.class
 )
-public class LocalesSelectableEntry
-	extends BaseJSPSelectableEntry implements UserToolEntry {
+public class ODTConvertionUserToolEntry
+	extends BaseConvertionUserToolEntry implements UserToolEntry {
 
 	@Override
-	public String getIcon() {
-		return "flag";
+	public String getExtension() {
+		return "odt";
 	}
 
 	@Override
-	public String getJSPPath() {
-		return _JSP_PATH;
+	public String getIcon() {
+		return "font";
 	}
 
 	@Override
 	public String getKey() {
-		return "showAvailableLocales";
+		return "enableODT";
 	}
 
 	@Override
 	public String getLabel() {
-		return "translations";
+		return "download-as-odt";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 1.0;
+		return 5.0;
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.user.tool.locales)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.user.tool.conversions)"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH = "/META-INF/resources/locales.jsp";
 
 }

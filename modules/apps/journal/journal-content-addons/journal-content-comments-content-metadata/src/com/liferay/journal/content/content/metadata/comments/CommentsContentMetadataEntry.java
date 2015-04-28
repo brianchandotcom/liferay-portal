@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = ContentMetadataEntry.class
 )
-public class CommentsSelectableEntry
+public class CommentsContentMetadataEntry
 	extends BaseJSPSelectableEntry implements ContentMetadataEntry {
 
 	@Override
@@ -76,12 +76,14 @@ public class CommentsSelectableEntry
 	}
 
 	public boolean isCommentsRatingsSelected(HttpServletRequest request) {
-		if (_commentRatingsSelectableEntry != null) {
+		if (_commentRatingsContentMetadaEntryEntry != null) {
 			List<SelectableEntry> selectedEntries =
 				(List<SelectableEntry>)request.getAttribute(
 					"liferay-ui:entry-selector:selectedEntries");
 
-			if (selectedEntries.contains(_commentRatingsSelectableEntry)) {
+			if (selectedEntries.contains(
+					_commentRatingsContentMetadaEntryEntry)) {
+
 				return true;
 			}
 		}
@@ -99,10 +101,12 @@ public class CommentsSelectableEntry
 	}
 
 	@Reference
-	public void setCommentRatingsSelectableEntry(
-		CommentRatingsSelectableEntry commentRatingsSelectableEntry) {
+	public void setCommentRatingsContentMetadaEntryEntry(
+		CommentRatingsContentMetadaEntryEntry
+			commentRatingsContentMetadaEntryEntry) {
 
-		_commentRatingsSelectableEntry = commentRatingsSelectableEntry;
+		_commentRatingsContentMetadaEntryEntry =
+			commentRatingsContentMetadaEntryEntry;
 	}
 
 	@Override
@@ -115,6 +119,7 @@ public class CommentsSelectableEntry
 
 	private static final String _JSP_PATH = "/META-INF/resources/comments.jsp";
 
-	private CommentRatingsSelectableEntry _commentRatingsSelectableEntry;
+	private CommentRatingsContentMetadaEntryEntry
+		_commentRatingsContentMetadaEntryEntry;
 
 }

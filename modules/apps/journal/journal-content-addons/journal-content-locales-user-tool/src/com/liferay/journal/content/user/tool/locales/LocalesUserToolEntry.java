@@ -12,40 +12,58 @@
  * details.
  */
 
-package com.liferay.journal.content.content.metadata.comments;
+package com.liferay.journal.content.user.tool.locales;
 
-import com.liferay.journal.content.web.util.ContentMetadataEntry;
-import com.liferay.portal.model.BaseSelectableEntry;
+import com.liferay.journal.content.web.util.UserToolEntry;
+import com.liferay.portal.model.BaseJSPSelectableEntry;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
  */
 @Component(
-	immediate = true, service = {ContentMetadataEntry.class, CommentRatingsSelectableEntry.class}
+	immediate = true, service = UserToolEntry.class
 )
-public class CommentRatingsSelectableEntry
-	extends BaseSelectableEntry implements ContentMetadataEntry {
+public class LocalesUserToolEntry
+	extends BaseJSPSelectableEntry implements UserToolEntry {
 
 	@Override
 	public String getIcon() {
-		return "comment-alt";
+		return "flag";
+	}
+
+	@Override
+	public String getJSPPath() {
+		return _JSP_PATH;
 	}
 
 	@Override
 	public String getKey() {
-		return "enableCommentRatings";
+		return "showAvailableLocales";
 	}
 
 	@Override
 	public String getLabel() {
-		return "comment-ratings";
+		return "translations";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 4.0;
+		return 1.0;
 	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.user.tool.locales)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private static final String _JSP_PATH = "/META-INF/resources/locales.jsp";
 
 }

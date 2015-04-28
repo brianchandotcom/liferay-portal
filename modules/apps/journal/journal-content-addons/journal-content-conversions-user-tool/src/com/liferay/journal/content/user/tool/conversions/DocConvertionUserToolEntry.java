@@ -27,32 +27,32 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = UserToolEntry.class
 )
-public class TXTConvertionSelectableEntry
-	extends BaseConvertionSelectableEntry implements UserToolEntry {
+public class DocConvertionUserToolEntry
+	extends BaseConvertionUserToolEntry implements UserToolEntry {
 
 	@Override
 	public String getExtension() {
-		return "txt";
+		return "doc";
 	}
 
 	@Override
 	public String getIcon() {
-		return "file-alt";
+		return "font";
 	}
 
 	@Override
 	public String getKey() {
-		return "enableTXT";
+		return "enableDOC";
 	}
 
 	@Override
 	public String getLabel() {
-		return "download-as-txt";
+		return "download-as-doc";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 6.0;
+		return 4.0;
 	}
 
 	@Override

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = ContentMetadataEntry.class
 )
-public class RelatedAssetsSelectableEntry
+public class RelatedAssetsContentMetadataEntry
 	extends BaseJSPSelectableEntry implements ContentMetadataEntry {
 
 	@Override

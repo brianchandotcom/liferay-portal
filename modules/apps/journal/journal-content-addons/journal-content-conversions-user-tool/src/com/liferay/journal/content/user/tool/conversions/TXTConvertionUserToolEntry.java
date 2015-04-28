@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.journal.content.user.tool.print;
+package com.liferay.journal.content.user.tool.conversions;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
-import com.liferay.portal.model.BaseJSPSelectableEntry;
 
 import javax.servlet.ServletContext;
 
@@ -28,42 +27,40 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = UserToolEntry.class
 )
-public class PrintSelectableEntry
-	extends BaseJSPSelectableEntry implements UserToolEntry {
+public class TXTConvertionUserToolEntry
+	extends BaseConvertionUserToolEntry implements UserToolEntry {
 
 	@Override
-	public String getIcon() {
-		return "print";
+	public String getExtension() {
+		return "txt";
 	}
 
 	@Override
-	public String getJSPPath() {
-		return _JSP_PATH;
+	public String getIcon() {
+		return "file-alt";
 	}
 
 	@Override
 	public String getKey() {
-		return "enablePrint";
+		return "enableTXT";
 	}
 
 	@Override
 	public String getLabel() {
-		return "print";
+		return "download-as-txt";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 2.0;
+		return 6.0;
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.user.tool.print)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.user.tool.conversions)"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH = "/META-INF/resources/print.jsp";
 
 }

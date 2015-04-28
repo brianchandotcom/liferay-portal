@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.content.user.tool.conversions;
+package com.liferay.journal.content.content.metadata.ratings;
 
-import com.liferay.journal.content.web.util.UserToolEntry;
+import com.liferay.journal.content.web.util.ContentMetadataEntry;
+import com.liferay.portal.model.BaseJSPSelectableEntry;
 
 import javax.servlet.ServletContext;
 
@@ -25,42 +26,44 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(
-	immediate = true, service = UserToolEntry.class
+	immediate = true, service = ContentMetadataEntry.class
 )
-public class ODTConvertionSelectableEntry
-	extends BaseConvertionSelectableEntry implements UserToolEntry {
-
-	@Override
-	public String getExtension() {
-		return "odt";
-	}
+public class RatingsContentMetadataEntry
+	extends BaseJSPSelectableEntry implements ContentMetadataEntry {
 
 	@Override
 	public String getIcon() {
-		return "font";
+		return "star-half-full";
+	}
+
+	@Override
+	public String getJSPPath() {
+		return _JSP_PATH;
 	}
 
 	@Override
 	public String getKey() {
-		return "enableODT";
+		return "enableRatings";
 	}
 
 	@Override
 	public String getLabel() {
-		return "download-as-odt";
+		return "ratings";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 5.0;
+		return 2.0;
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.user.tool.conversions)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.content.metadata.ratings)"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	private static final String _JSP_PATH = "/META-INF/resources/ratings.jsp";
 
 }

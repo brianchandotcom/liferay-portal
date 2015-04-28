@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Julio Camarero
  */
-public abstract class BaseConvertionSelectableEntry
+public abstract class BaseConvertionUserToolEntry
 	extends BaseJSPSelectableEntry implements UserToolEntry {
 
 	public abstract String getExtension();

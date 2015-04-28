@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.cobertura.coveragedata;
 
 import com.liferay.cobertura.agent.InstrumentationAgent;
-import com.liferay.cobertura.coveragedata.ProjectData;
-import com.liferay.cobertura.coveragedata.TouchCollector;
 
 import java.io.File;
 import java.io.FileInputStream;

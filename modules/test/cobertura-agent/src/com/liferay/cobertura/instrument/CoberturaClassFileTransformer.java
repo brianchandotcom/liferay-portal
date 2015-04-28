@@ -16,6 +16,7 @@ package com.liferay.cobertura.instrument;
 
 import com.liferay.cobertura.agent.InstrumentationAgent;
 import com.liferay.cobertura.coveragedata.ProjectData;
+import com.liferay.cobertura.coveragedata.ProjectDataUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1344,44 +1344,6 @@
 			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
 		</action>
 
-		<!-- Sites Admin -->
-
-		<action path="/sites_admin/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/sites_admin/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/sites_admin/edit_site" type="com.liferay.portlet.sites.action.EditGroupAction">
-			<forward name="portlet.sites_admin.edit_site" path="portlet.sites_admin.edit_site" />
-			<forward name="portlet.sites_admin.error" path="portlet.sites_admin.error" />
-		</action>
-
-		<action path="/sites_admin/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
-		</action>
-
-		<action path="/sites_admin/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.import_layouts" path="portlet.layouts_admin.import_layouts" />
-		</action>
-
-		<action path="/sites_admin/page" type="com.liferay.portlet.myplaces.action.ViewAction" />
-
-		<action path="/sites_admin/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
-			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
-		</action>
-
-		<action path="/sites_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
-
-		<action path="/sites_admin/view" forward="portlet.sites_admin.view" />
-
 		<!-- Sites Directory -->
 
 		<action path="/sites_directory/view" forward="portlet.sites_directory.view" />

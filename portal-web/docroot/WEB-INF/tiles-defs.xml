@@ -1000,29 +1000,6 @@
 		<put name="portlet_content" value="/portlet/shopping/view_item.jsp" />
 	</definition>
 
-	<!-- Site Settings -->
-
-	<definition name="portlet.site_settings" extends="portlet" />
-
-	<!-- Sites Admin -->
-
-	<definition name="portlet.sites_admin" extends="portlet" />
-
-	<definition name="portlet.sites_admin.edit_site" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/edit_site.jsp" />
-	</definition>
-
-	<definition name="portlet.sites_admin.edit_user_group_roles" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/edit_user_group_roles.jsp" />
-	</definition>
-
-	<definition name="portlet.sites_admin.error" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.sites_admin.view" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/view.jsp" />
-	</definition>
 
 	<!-- Sites Directory -->
 

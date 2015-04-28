@@ -153,6 +153,18 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="typeCKEditor">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="typeCKEditor" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="typeFrame">
 		<execute selenium="waitForVisible" />
 

@@ -107,8 +107,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setCompanyId(user.getCompanyId());
 		dlFolder.setUserId(user.getUserId());
 		dlFolder.setUserName(user.getFullName());
-		dlFolder.setCreateDate(serviceContext.getCreateDate(now));
-		dlFolder.setModifiedDate(serviceContext.getModifiedDate(now));
 		dlFolder.setRepositoryId(repositoryId);
 		dlFolder.setMountPoint(mountPoint);
 		dlFolder.setParentFolderId(parentFolderId);
@@ -853,7 +851,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				dlFolder.getFolderId(), dlFolder.getGroupId(), parentFolderId,
 				dlFolder.getName());
 
-			dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
 			dlFolder.setParentFolderId(parentFolderId);
 			dlFolder.setTreePath(dlFolder.buildTreePath());
 			dlFolder.setExpandoBridgeAttributes(serviceContext);
@@ -1233,7 +1230,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			validateFolder(
 				folderId, dlFolder.getGroupId(), parentFolderId, name);
 
-			dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
 			dlFolder.setParentFolderId(parentFolderId);
 			dlFolder.setTreePath(dlFolder.buildTreePath());
 			dlFolder.setName(name);

@@ -66,7 +66,6 @@ public class LayoutSetBranchLocalServiceImpl
 		// Layout branch
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		validate(0, groupId, privateLayout, name, master);
 
@@ -115,8 +114,6 @@ public class LayoutSetBranchLocalServiceImpl
 		layoutSetBranch.setCompanyId(user.getCompanyId());
 		layoutSetBranch.setUserId(user.getUserId());
 		layoutSetBranch.setUserName(user.getFullName());
-		layoutSetBranch.setCreateDate(serviceContext.getCreateDate(now));
-		layoutSetBranch.setModifiedDate(serviceContext.getModifiedDate(now));
 		layoutSetBranch.setPrivateLayout(privateLayout);
 		layoutSetBranch.setName(name);
 		layoutSetBranch.setDescription(description);

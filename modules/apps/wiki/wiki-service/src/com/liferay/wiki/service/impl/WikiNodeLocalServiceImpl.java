@@ -82,7 +82,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
-		Date now = new Date();
 
 		validate(groupId, name);
 
@@ -95,8 +94,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		node.setCompanyId(user.getCompanyId());
 		node.setUserId(user.getUserId());
 		node.setUserName(user.getFullName());
-		node.setCreateDate(serviceContext.getCreateDate(now));
-		node.setModifiedDate(serviceContext.getModifiedDate(now));
 		node.setName(name);
 		node.setDescription(description);
 
@@ -454,7 +451,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		validate(nodeId, node.getGroupId(), name);
 
-		node.setModifiedDate(serviceContext.getModifiedDate(null));
 		node.setName(name);
 		node.setDescription(description);
 

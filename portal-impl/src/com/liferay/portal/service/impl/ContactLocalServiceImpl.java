@@ -49,7 +49,6 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		Date birthday = PortalUtil.getDate(
 			birthdayMonth, birthdayDay, birthdayYear,
 			ContactBirthdayException.class);
-		Date now = new Date();
 
 		validate(className, classPK);
 
@@ -60,8 +59,6 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setCompanyId(user.getCompanyId());
 		contact.setUserId(user.getUserId());
 		contact.setUserName(user.getFullName());
-		contact.setCreateDate(now);
-		contact.setModifiedDate(now);
 		contact.setClassName(className);
 		contact.setClassPK(classPK);
 		contact.setEmailAddress(emailAddress);
@@ -167,7 +164,6 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
 		Contact contact = contactPersistence.findByPrimaryKey(contactId);
 
-		contact.setModifiedDate(new Date());
 		contact.setEmailAddress(emailAddress);
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);

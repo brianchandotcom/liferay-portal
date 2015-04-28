@@ -75,9 +75,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Date now = new Date();
-
-		Date displayDate = now;
+		Date displayDate = new Date();
 
 		if (!displayImmediately) {
 			displayDate = PortalUtil.getDate(
@@ -101,8 +99,6 @@ public class AnnouncementsEntryLocalServiceImpl
 		entry.setCompanyId(user.getCompanyId());
 		entry.setUserId(user.getUserId());
 		entry.setUserName(user.getFullName());
-		entry.setCreateDate(now);
-		entry.setModifiedDate(now);
 		entry.setClassNameId(classNameId);
 		entry.setClassPK(classPK);
 		entry.setTitle(title);
@@ -337,9 +333,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Date now = new Date();
-
-		Date displayDate = now;
+		Date displayDate = new Date();
 
 		if (!displayImmediately) {
 			displayDate = PortalUtil.getDate(
@@ -358,7 +352,6 @@ public class AnnouncementsEntryLocalServiceImpl
 		AnnouncementsEntry entry =
 			announcementsEntryPersistence.findByPrimaryKey(entryId);
 
-		entry.setModifiedDate(now);
 		entry.setTitle(title);
 		entry.setContent(content);
 		entry.setUrl(url);

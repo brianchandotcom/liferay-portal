@@ -66,8 +66,6 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setCompanyId(user.getCompanyId());
 		fileShortcut.setUserId(user.getUserId());
 		fileShortcut.setUserName(user.getFullName());
-		fileShortcut.setCreateDate(serviceContext.getCreateDate(now));
-		fileShortcut.setModifiedDate(serviceContext.getModifiedDate(now));
 		fileShortcut.setRepositoryId(repositoryId);
 		fileShortcut.setFolderId(folderId);
 		fileShortcut.setToFileEntryId(toFileEntryId);
@@ -377,8 +375,6 @@ public class DLFileShortcutLocalServiceImpl
 
 		validate(user, toFileEntryId);
 
-		fileShortcut.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 		fileShortcut.setFolderId(folderId);
 		fileShortcut.setToFileEntryId(toFileEntryId);
 		fileShortcut.setTreePath(fileShortcut.buildTreePath());

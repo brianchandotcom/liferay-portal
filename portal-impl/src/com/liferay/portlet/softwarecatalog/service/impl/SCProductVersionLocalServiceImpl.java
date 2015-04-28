@@ -59,7 +59,6 @@ public class SCProductVersionLocalServiceImpl
 		SCProductEntry productEntry =
 			scProductEntryPersistence.findByPrimaryKey(productEntryId);
 		directDownloadURL = StringUtil.toLowerCase(directDownloadURL.trim());
-		Date now = new Date();
 
 		validate(
 			0, version, changeLog, downloadPageURL, directDownloadURL,
@@ -73,8 +72,6 @@ public class SCProductVersionLocalServiceImpl
 		productVersion.setCompanyId(user.getCompanyId());
 		productVersion.setUserId(user.getUserId());
 		productVersion.setUserName(user.getFullName());
-		productVersion.setCreateDate(now);
-		productVersion.setModifiedDate(now);
 		productVersion.setProductEntryId(productEntryId);
 		productVersion.setVersion(version);
 		productVersion.setChangeLog(changeLog);
@@ -91,7 +88,7 @@ public class SCProductVersionLocalServiceImpl
 
 		// Product entry
 
-		productEntry.setModifiedDate(now);
+		productEntry.setModifiedDate(new Date());
 
 		scProductEntryPersistence.update(productEntry);
 
@@ -171,7 +168,6 @@ public class SCProductVersionLocalServiceImpl
 		// Product version
 
 		directDownloadURL = StringUtil.toLowerCase(directDownloadURL.trim());
-		Date now = new Date();
 
 		validate(
 			productVersionId, version, changeLog, downloadPageURL,
@@ -180,7 +176,6 @@ public class SCProductVersionLocalServiceImpl
 		SCProductVersion productVersion =
 			scProductVersionPersistence.findByPrimaryKey(productVersionId);
 
-		productVersion.setModifiedDate(now);
 		productVersion.setVersion(version);
 		productVersion.setChangeLog(changeLog);
 		productVersion.setDownloadPageURL(downloadPageURL);
@@ -200,7 +195,7 @@ public class SCProductVersionLocalServiceImpl
 			scProductEntryPersistence.findByPrimaryKey(
 				productVersion.getProductEntryId());
 
-		productEntry.setModifiedDate(now);
+		productEntry.setModifiedDate(new Date());
 
 		scProductEntryPersistence.update(productEntry);
 

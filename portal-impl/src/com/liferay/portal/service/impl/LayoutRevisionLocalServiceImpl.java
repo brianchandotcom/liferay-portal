@@ -76,8 +76,6 @@ public class LayoutRevisionLocalServiceImpl
 		layoutRevision.setCompanyId(user.getCompanyId());
 		layoutRevision.setUserId(user.getUserId());
 		layoutRevision.setUserName(user.getFullName());
-		layoutRevision.setCreateDate(serviceContext.getCreateDate(now));
-		layoutRevision.setModifiedDate(serviceContext.getModifiedDate(now));
 		layoutRevision.setLayoutSetBranchId(layoutSetBranchId);
 		layoutRevision.setLayoutBranchId(layoutBranchId);
 		layoutRevision.setParentLayoutRevisionId(parentLayoutRevisionId);
@@ -411,8 +409,6 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setCompanyId(oldLayoutRevision.getCompanyId());
 			layoutRevision.setUserId(user.getUserId());
 			layoutRevision.setUserName(user.getFullName());
-			layoutRevision.setCreateDate(serviceContext.getCreateDate(now));
-			layoutRevision.setModifiedDate(serviceContext.getModifiedDate(now));
 			layoutRevision.setLayoutSetBranchId(
 				oldLayoutRevision.getLayoutSetBranchId());
 			layoutRevision.setParentLayoutRevisionId(

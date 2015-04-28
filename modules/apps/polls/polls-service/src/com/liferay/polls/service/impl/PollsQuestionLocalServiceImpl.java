@@ -67,8 +67,6 @@ public class PollsQuestionLocalServiceImpl
 				QuestionExpirationDateException.class);
 		}
 
-		Date now = new Date();
-
 		validate(titleMap, descriptionMap, choices);
 
 		long questionId = counterLocalService.increment();
@@ -80,8 +78,6 @@ public class PollsQuestionLocalServiceImpl
 		question.setCompanyId(user.getCompanyId());
 		question.setUserId(user.getUserId());
 		question.setUserName(user.getFullName());
-		question.setCreateDate(serviceContext.getCreateDate(now));
-		question.setModifiedDate(serviceContext.getModifiedDate(now));
 		question.setTitleMap(titleMap);
 		question.setDescriptionMap(descriptionMap);
 		question.setExpirationDate(expirationDate);
@@ -257,7 +253,6 @@ public class PollsQuestionLocalServiceImpl
 		PollsQuestion question = pollsQuestionPersistence.findByPrimaryKey(
 			questionId);
 
-		question.setModifiedDate(serviceContext.getModifiedDate(null));
 		question.setTitleMap(titleMap);
 		question.setDescriptionMap(descriptionMap);
 		question.setExpirationDate(expirationDate);

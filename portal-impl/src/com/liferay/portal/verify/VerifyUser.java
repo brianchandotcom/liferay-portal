@@ -28,7 +28,6 @@ import com.liferay.portal.service.ContactLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,8 +46,6 @@ public class VerifyUser extends VerifyProcess {
 				"Processing " + users.size() + " users with no contacts");
 		}
 
-		Date now = new Date();
-
 		for (User user : users) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Creating contact for user " + user.getUserId());
@@ -64,8 +61,6 @@ public class VerifyUser extends VerifyProcess {
 			contact.setCompanyId(user.getCompanyId());
 			contact.setUserId(user.getUserId());
 			contact.setUserName(StringPool.BLANK);
-			contact.setCreateDate(now);
-			contact.setModifiedDate(now);
 			contact.setAccountId(company.getAccountId());
 			contact.setParentContactId(
 				ContactConstants.DEFAULT_PARENT_CONTACT_ID);

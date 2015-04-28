@@ -27,7 +27,6 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
 import com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,7 +44,6 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(
 			serviceContext.getUserId());
 		long classNameId = classNameLocalService.getClassNameId(className);
-		Date now = new Date();
 
 		validate(classNameId, classPK, ruleGroupId);
 
@@ -58,8 +56,6 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		ruleGroupInstance.setUuid(serviceContext.getUuid());
 		ruleGroupInstance.setGroupId(groupId);
 		ruleGroupInstance.setCompanyId(serviceContext.getCompanyId());
-		ruleGroupInstance.setCreateDate(serviceContext.getCreateDate(now));
-		ruleGroupInstance.setModifiedDate(serviceContext.getModifiedDate(now));
 		ruleGroupInstance.setUserId(serviceContext.getUserId());
 		ruleGroupInstance.setUserName(user.getFullName());
 		ruleGroupInstance.setClassNameId(classNameId);

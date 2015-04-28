@@ -36,7 +36,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.PasswordPolicyLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -91,7 +90,6 @@ public class PasswordPolicyLocalServiceImpl
 		// Password policy
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		validate(0, user.getCompanyId(), name);
 
@@ -104,8 +102,6 @@ public class PasswordPolicyLocalServiceImpl
 		passwordPolicy.setCompanyId(user.getCompanyId());
 		passwordPolicy.setUserId(userId);
 		passwordPolicy.setUserName(user.getFullName());
-		passwordPolicy.setCreateDate(serviceContext.getCreateDate(now));
-		passwordPolicy.setModifiedDate(serviceContext.getModifiedDate(now));
 		passwordPolicy.setDefaultPolicy(defaultPolicy);
 		passwordPolicy.setName(name);
 		passwordPolicy.setDescription(description);
@@ -397,8 +393,6 @@ public class PasswordPolicyLocalServiceImpl
 			long resetTicketMaxAge, ServiceContext serviceContext)
 		throws PortalException {
 
-		Date now = new Date();
-
 		PasswordPolicy passwordPolicy =
 			passwordPolicyPersistence.findByPrimaryKey(passwordPolicyId);
 
@@ -408,7 +402,6 @@ public class PasswordPolicyLocalServiceImpl
 			passwordPolicy.setName(name);
 		}
 
-		passwordPolicy.setModifiedDate(serviceContext.getModifiedDate(now));
 		passwordPolicy.setDescription(description);
 		passwordPolicy.setChangeable(changeable);
 		passwordPolicy.setChangeRequired(changeRequired);

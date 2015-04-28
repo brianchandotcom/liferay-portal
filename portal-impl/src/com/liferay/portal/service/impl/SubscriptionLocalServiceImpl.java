@@ -28,7 +28,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -107,7 +106,6 @@ public class SubscriptionLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
-		Date now = new Date();
 
 		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
 			user.getCompanyId(), userId, classNameId, classPK);
@@ -121,8 +119,6 @@ public class SubscriptionLocalServiceImpl
 			subscription.setCompanyId(user.getCompanyId());
 			subscription.setUserId(user.getUserId());
 			subscription.setUserName(user.getFullName());
-			subscription.setCreateDate(now);
-			subscription.setModifiedDate(now);
 			subscription.setClassNameId(classNameId);
 			subscription.setClassPK(classPK);
 			subscription.setFrequency(frequency);

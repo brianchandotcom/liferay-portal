@@ -19,7 +19,6 @@ import com.liferay.portal.model.User;
 import com.liferay.social.networking.model.MeetupsRegistration;
 import com.liferay.social.networking.service.base.MeetupsRegistrationLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,7 +56,6 @@ public class MeetupsRegistrationLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUserById(userId);
-		Date now = new Date();
 
 		MeetupsRegistration meetupsRegistration =
 			meetupsRegistrationPersistence.fetchByU_ME(userId, meetupsEntryId);
@@ -71,11 +69,9 @@ public class MeetupsRegistrationLocalServiceImpl
 			meetupsRegistration.setCompanyId(user.getCompanyId());
 			meetupsRegistration.setUserId(user.getUserId());
 			meetupsRegistration.setUserName(user.getFullName());
-			meetupsRegistration.setCreateDate(now);
 			meetupsRegistration.setMeetupsEntryId(meetupsEntryId);
 		}
 
-		meetupsRegistration.setModifiedDate(now);
 		meetupsRegistration.setStatus(status);
 		meetupsRegistration.setComments(comments);
 

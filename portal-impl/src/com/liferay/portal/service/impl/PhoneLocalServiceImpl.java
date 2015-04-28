@@ -29,7 +29,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.PhoneLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,7 +61,6 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
-		Date now = new Date();
 
 		validate(
 			0, user.getCompanyId(), classNameId, classPK, number, extension,
@@ -76,8 +74,6 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		phone.setCompanyId(user.getCompanyId());
 		phone.setUserId(user.getUserId());
 		phone.setUserName(user.getFullName());
-		phone.setCreateDate(serviceContext.getCreateDate(now));
-		phone.setModifiedDate(serviceContext.getModifiedDate(now));
 		phone.setClassNameId(classNameId);
 		phone.setClassPK(classPK);
 		phone.setNumber(number);
@@ -144,7 +140,6 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 
 		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
 
-		phone.setModifiedDate(new Date());
 		phone.setNumber(number);
 		phone.setExtension(extension);
 		phone.setTypeId(typeId);

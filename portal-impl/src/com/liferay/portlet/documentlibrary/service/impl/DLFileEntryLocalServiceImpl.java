@@ -179,8 +179,6 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
 		}
 
-		Date now = new Date();
-
 		validateFileEntryTypeId(
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId,
 			fileEntryTypeId);
@@ -197,8 +195,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setCompanyId(user.getCompanyId());
 		dlFileEntry.setUserId(user.getUserId());
 		dlFileEntry.setUserName(user.getFullName());
-		dlFileEntry.setCreateDate(serviceContext.getCreateDate(now));
-		dlFileEntry.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		DLFolder repositoryDLFolder = null;
 
@@ -240,10 +236,9 @@ public class DLFileEntryLocalServiceImpl
 		// File version
 
 		addFileVersion(
-			user, dlFileEntry, serviceContext.getModifiedDate(now), fileName,
-			extension, mimeType, title, description, changeLog,
-			StringPool.BLANK, fileEntryTypeId, ddmFormValuesMap,
-			DLFileEntryConstants.VERSION_DEFAULT, size,
+			user, dlFileEntry, fileName, extension, mimeType, title,
+			description, changeLog, StringPool.BLANK, fileEntryTypeId,
+			ddmFormValuesMap, DLFileEntryConstants.VERSION_DEFAULT, size,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		// Folder
@@ -563,10 +558,9 @@ public class DLFileEntryLocalServiceImpl
 				long oldDLFileVersionId = dlFileVersion.getFileVersionId();
 
 				dlFileVersion = addFileVersion(
-					user, dlFileEntry, serviceContext.getModifiedDate(null),
-					dlFileVersion.getFileName(), dlFileVersion.getExtension(),
-					dlFileVersion.getMimeType(), dlFileVersion.getTitle(),
-					dlFileVersion.getDescription(),
+					user, dlFileEntry, dlFileVersion.getFileName(),
+					dlFileVersion.getExtension(), dlFileVersion.getMimeType(),
+					dlFileVersion.getTitle(), dlFileVersion.getDescription(),
 					dlFileVersion.getChangeLog(),
 					dlFileVersion.getExtraSettings(),
 					dlFileVersion.getFileEntryTypeId(), null,
@@ -1798,8 +1792,6 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileVersion.setUserId(user.getUserId());
 		dlFileVersion.setUserName(user.getFullName());
-		dlFileVersion.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
 
 		dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
@@ -2031,12 +2023,11 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected DLFileVersion addFileVersion(
-			User user, DLFileEntry dlFileEntry, Date modifiedDate,
-			String fileName, String extension, String mimeType, String title,
-			String description, String changeLog, String extraSettings,
-			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
-			String version, long size, int status,
-			ServiceContext serviceContext)
+			User user, DLFileEntry dlFileEntry, String fileName,
+			String extension, String mimeType, String title, String description,
+			String changeLog, String extraSettings, long fileEntryTypeId,
+			Map<String, DDMFormValues> ddmFormValuesMap, String version,
+			long size, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		long fileVersionId = counterLocalService.increment();
@@ -2053,8 +2044,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
 		dlFileVersion.setUserId(user.getUserId());
 		dlFileVersion.setUserName(user.getFullName());
-		dlFileVersion.setCreateDate(modifiedDate);
-		dlFileVersion.setModifiedDate(modifiedDate);
 		dlFileVersion.setRepositoryId(dlFileEntry.getRepositoryId());
 		dlFileVersion.setFolderId(dlFileEntry.getFolderId());
 		dlFileVersion.setFileEntryId(dlFileEntry.getFileEntryId());
@@ -2439,7 +2428,6 @@ public class DLFileEntryLocalServiceImpl
 			throw new DuplicateFileException(dlFileEntry.getName());
 		}
 
-		dlFileEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 		dlFileEntry.setFolderId(newFolderId);
 		dlFileEntry.setTreePath(dlFileEntry.buildTreePath());
 

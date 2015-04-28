@@ -23,7 +23,6 @@ import com.liferay.portlet.dynamicdatamapping.ContentNameException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMContentLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,8 +39,6 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Date now = new Date();
-
 		validate(name, data);
 
 		long contentId = counterLocalService.increment();
@@ -53,8 +50,6 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		content.setCompanyId(user.getCompanyId());
 		content.setUserId(user.getUserId());
 		content.setUserName(user.getFullName());
-		content.setCreateDate(serviceContext.getCreateDate(now));
-		content.setModifiedDate(serviceContext.getModifiedDate(now));
 		content.setName(name);
 		content.setDescription(description);
 		content.setData(data);
@@ -114,7 +109,6 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 
 		DDMContent content = ddmContentPersistence.findByPrimaryKey(contentId);
 
-		content.setModifiedDate(serviceContext.getModifiedDate(null));
 		content.setName(name);
 		content.setDescription(description);
 		content.setData(data);

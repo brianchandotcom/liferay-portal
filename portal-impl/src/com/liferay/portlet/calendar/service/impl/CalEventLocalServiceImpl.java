@@ -147,7 +147,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
-		Date now = new Date();
 
 		Locale locale = null;
 		TimeZone timeZone = null;
@@ -192,8 +191,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		event.setCompanyId(user.getCompanyId());
 		event.setUserId(user.getUserId());
 		event.setUserName(user.getFullName());
-		event.setCreateDate(serviceContext.getCreateDate(now));
-		event.setModifiedDate(serviceContext.getModifiedDate(now));
 		event.setTitle(title);
 		event.setDescription(description);
 		event.setLocation(location);
@@ -794,7 +791,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		CalEvent event = calEventPersistence.findByPrimaryKey(eventId);
 
-		event.setModifiedDate(serviceContext.getModifiedDate(null));
 		event.setTitle(title);
 		event.setDescription(description);
 		event.setLocation(location);

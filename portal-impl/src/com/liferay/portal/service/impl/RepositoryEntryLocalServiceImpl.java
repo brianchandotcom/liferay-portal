@@ -21,7 +21,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryEntryLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,7 +38,6 @@ public class RepositoryEntryLocalServiceImpl
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		long repositoryEntryId = counterLocalService.increment();
 
@@ -51,8 +49,6 @@ public class RepositoryEntryLocalServiceImpl
 		repositoryEntry.setCompanyId(user.getCompanyId());
 		repositoryEntry.setUserId(userId);
 		repositoryEntry.setUserName(user.getFullName());
-		repositoryEntry.setCreateDate(serviceContext.getCreateDate(now));
-		repositoryEntry.setModifiedDate(serviceContext.getModifiedDate(now));
 		repositoryEntry.setRepositoryId(repositoryId);
 		repositoryEntry.setMappedId(mappedId);
 
@@ -118,7 +114,6 @@ public class RepositoryEntryLocalServiceImpl
 		RepositoryEntry repositoryEntry =
 			repositoryEntryPersistence.findByPrimaryKey(repositoryEntryId);
 
-		repositoryEntry.setModifiedDate(new Date());
 		repositoryEntry.setMappedId(mappedId);
 
 		repositoryEntryPersistence.update(repositoryEntry);

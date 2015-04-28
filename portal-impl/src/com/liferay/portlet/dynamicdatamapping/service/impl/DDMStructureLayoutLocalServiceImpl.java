@@ -26,8 +26,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLayoutLocalServiceBaseImpl;
 
-import java.util.Date;
-
 /**
  * @author Marcellus Tavares
  */
@@ -42,7 +40,6 @@ public class DDMStructureLayoutLocalServiceImpl
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		long structureLayoutId = counterLocalService.increment();
 
@@ -54,8 +51,6 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setCompanyId(user.getCompanyId());
 		structureLayout.setUserId(user.getUserId());
 		structureLayout.setUserName(user.getFullName());
-		structureLayout.setCreateDate(serviceContext.getCreateDate(now));
-		structureLayout.setModifiedDate(serviceContext.getModifiedDate(now));
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setDefinition(
 			DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout));
@@ -105,7 +100,6 @@ public class DDMStructureLayoutLocalServiceImpl
 		DDMStructureLayout structureLayout =
 			ddmStructureLayoutPersistence.findByPrimaryKey(structureLayoutId);
 
-		structureLayout.setModifiedDate(serviceContext.getModifiedDate(null));
 		structureLayout.setDefinition(
 			DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout));
 

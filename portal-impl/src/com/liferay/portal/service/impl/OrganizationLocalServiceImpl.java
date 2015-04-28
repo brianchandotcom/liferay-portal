@@ -76,7 +76,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -237,7 +236,6 @@ public class OrganizationLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		parentOrganizationId = getParentOrganizationId(
 			user.getCompanyId(), parentOrganizationId);
-		Date now = new Date();
 
 		validate(
 			user.getCompanyId(), parentOrganizationId, name, type, countryId,
@@ -255,16 +253,6 @@ public class OrganizationLocalServiceImpl
 		organization.setCompanyId(user.getCompanyId());
 		organization.setUserId(user.getUserId());
 		organization.setUserName(user.getFullName());
-
-		if (serviceContext != null) {
-			organization.setCreateDate(serviceContext.getCreateDate(now));
-			organization.setModifiedDate(serviceContext.getModifiedDate(now));
-		}
-		else {
-			organization.setCreateDate(now);
-			organization.setModifiedDate(now);
-		}
-
 		organization.setParentOrganizationId(parentOrganizationId);
 		organization.setTreePath(organization.buildTreePath());
 		organization.setName(name);
@@ -1823,7 +1811,6 @@ public class OrganizationLocalServiceImpl
 		long oldParentOrganizationId = organization.getParentOrganizationId();
 		String oldName = organization.getName();
 
-		organization.setModifiedDate(new Date());
 		organization.setParentOrganizationId(parentOrganizationId);
 		organization.setTreePath(organization.buildTreePath());
 		organization.setName(name);

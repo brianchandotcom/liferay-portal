@@ -239,8 +239,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setCompanyId(user.getCompanyId());
 		entry.setUserId(user.getUserId());
 		entry.setUserName(user.getFullName());
-		entry.setCreateDate(serviceContext.getCreateDate(now));
-		entry.setModifiedDate(serviceContext.getModifiedDate(now));
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
 		entry.setUrlTitle(
@@ -1232,7 +1230,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		String oldUrlTitle = entry.getUrlTitle();
 
-		entry.setModifiedDate(serviceContext.getModifiedDate(null));
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
 		entry.setUrlTitle(
@@ -1476,7 +1473,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			status = WorkflowConstants.STATUS_SCHEDULED;
 		}
 
-		entry.setModifiedDate(serviceContext.getModifiedDate(now));
 		entry.setStatus(status);
 		entry.setStatusByUserId(user.getUserId());
 		entry.setStatusByUserName(user.getFullName());

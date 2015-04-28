@@ -58,7 +58,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -114,8 +113,6 @@ public class DDMStructureLocalServiceImpl
 			structureKey = StringUtil.toUpperCase(structureKey.trim());
 		}
 
-		Date now = new Date();
-
 		validate(
 			groupId, parentStructureId, classNameId, structureKey, nameMap,
 			ddmForm);
@@ -129,8 +126,6 @@ public class DDMStructureLocalServiceImpl
 		structure.setCompanyId(user.getCompanyId());
 		structure.setUserId(user.getUserId());
 		structure.setUserName(user.getFullName());
-		structure.setCreateDate(serviceContext.getCreateDate(now));
-		structure.setModifiedDate(serviceContext.getModifiedDate(now));
 		structure.setParentStructureId(parentStructureId);
 		structure.setClassNameId(classNameId);
 		structure.setStructureKey(structureKey);
@@ -1455,7 +1450,6 @@ public class DDMStructureLocalServiceImpl
 
 		validate(nameMap, parentDDMForm, ddmForm);
 
-		structure.setModifiedDate(serviceContext.getModifiedDate(null));
 		structure.setParentStructureId(parentStructureId);
 
 		DDMStructureVersion latestStructureVersion =

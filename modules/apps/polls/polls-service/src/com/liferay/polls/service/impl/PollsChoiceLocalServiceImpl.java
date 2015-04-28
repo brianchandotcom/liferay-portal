@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +39,6 @@ public class PollsChoiceLocalServiceImpl
 		validate(name, description);
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		long choiceId = counterLocalService.increment();
 
@@ -51,8 +49,6 @@ public class PollsChoiceLocalServiceImpl
 		choice.setCompanyId(user.getCompanyId());
 		choice.setUserId(user.getUserId());
 		choice.setUserName(user.getFullName());
-		choice.setCreateDate(serviceContext.getCreateDate(now));
-		choice.setModifiedDate(serviceContext.getModifiedDate(now));
 		choice.setQuestionId(questionId);
 		choice.setName(name);
 		choice.setDescription(description);
@@ -89,7 +85,6 @@ public class PollsChoiceLocalServiceImpl
 
 		PollsChoice choice = pollsChoicePersistence.findByPrimaryKey(choiceId);
 
-		choice.setModifiedDate(serviceContext.getModifiedDate(null));
 		choice.setQuestionId(questionId);
 		choice.setName(name);
 		choice.setDescription(description);

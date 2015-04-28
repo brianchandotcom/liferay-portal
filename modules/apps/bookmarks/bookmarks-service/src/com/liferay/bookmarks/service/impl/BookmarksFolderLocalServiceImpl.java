@@ -82,8 +82,6 @@ public class BookmarksFolderLocalServiceImpl
 		folder.setCompanyId(user.getCompanyId());
 		folder.setUserId(user.getUserId());
 		folder.setUserName(user.getFullName());
-		folder.setCreateDate(serviceContext.getCreateDate(now));
-		folder.setModifiedDate(serviceContext.getModifiedDate(now));
 		folder.setParentFolderId(parentFolderId);
 		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
@@ -602,7 +600,6 @@ public class BookmarksFolderLocalServiceImpl
 
 		validate(name);
 
-		folder.setModifiedDate(serviceContext.getModifiedDate(null));
 		folder.setParentFolderId(parentFolderId);
 		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);

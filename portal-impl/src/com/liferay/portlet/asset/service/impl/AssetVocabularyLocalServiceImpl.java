@@ -46,7 +46,6 @@ import com.liferay.portlet.asset.service.base.AssetVocabularyLocalServiceBaseImp
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -100,8 +99,6 @@ public class AssetVocabularyLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		String name = titleMap.get(LocaleUtil.getSiteDefault());
 
-		Date now = new Date();
-
 		validate(groupId, name);
 
 		long vocabularyId = counterLocalService.increment();
@@ -114,8 +111,6 @@ public class AssetVocabularyLocalServiceImpl
 		vocabulary.setCompanyId(user.getCompanyId());
 		vocabulary.setUserId(user.getUserId());
 		vocabulary.setUserName(user.getFullName());
-		vocabulary.setCreateDate(now);
-		vocabulary.setModifiedDate(now);
 		vocabulary.setName(name);
 
 		if (Validator.isNotNull(title)) {
@@ -406,7 +401,6 @@ public class AssetVocabularyLocalServiceImpl
 			validate(vocabulary.getGroupId(), name);
 		}
 
-		vocabulary.setModifiedDate(new Date());
 		vocabulary.setName(name);
 		vocabulary.setTitleMap(titleMap);
 

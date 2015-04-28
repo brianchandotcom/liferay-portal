@@ -20,8 +20,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.service.base.MBDiscussionLocalServiceBaseImpl;
 
-import java.util.Date;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -35,7 +33,6 @@ public class MBDiscussionLocalServiceImpl
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		long discussionId = counterLocalService.increment();
 
@@ -46,8 +43,6 @@ public class MBDiscussionLocalServiceImpl
 		discussion.setCompanyId(serviceContext.getCompanyId());
 		discussion.setUserId(userId);
 		discussion.setUserName(user.getFullName());
-		discussion.setCreateDate(serviceContext.getCreateDate(now));
-		discussion.setModifiedDate(serviceContext.getModifiedDate(now));
 		discussion.setClassNameId(classNameId);
 		discussion.setClassPK(classPK);
 		discussion.setThreadId(threadId);

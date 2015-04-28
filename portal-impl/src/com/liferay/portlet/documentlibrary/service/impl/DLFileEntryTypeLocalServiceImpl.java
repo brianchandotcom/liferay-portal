@@ -51,7 +51,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -99,8 +98,6 @@ public class DLFileEntryTypeLocalServiceImpl
 			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
 		}
 
-		Date now = new Date();
-
 		validate(fileEntryTypeId, groupId, fileEntryTypeKey, ddmStructureIds);
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
@@ -111,8 +108,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		dlFileEntryType.setCompanyId(user.getCompanyId());
 		dlFileEntryType.setUserId(user.getUserId());
 		dlFileEntryType.setUserName(user.getFullName());
-		dlFileEntryType.setCreateDate(serviceContext.getCreateDate(now));
-		dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(now));
 		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);
@@ -417,7 +412,6 @@ public class DLFileEntryTypeLocalServiceImpl
 			fileEntryTypeId, dlFileEntryType.getGroupId(),
 			dlFileEntryType.getFileEntryTypeKey(), ddmStructureIds);
 
-		dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(null));
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);
 

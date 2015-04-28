@@ -316,7 +316,7 @@ public class ServiceBuilder {
 			String modifiedFileNames = StringUtil.merge(
 				serviceBuilder.getModifiedFileNames());
 
-			System.setProperty("service.modified.files", modifiedFileNames);
+			System.setProperty(OUTPUT_KEY_MODIFIED_FILES, modifiedFileNames);
 		}
 		catch (Throwable t) {
 			String message =

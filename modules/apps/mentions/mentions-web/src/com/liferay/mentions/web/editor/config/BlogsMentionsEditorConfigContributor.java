@@ -14,6 +14,8 @@
 
 package com.liferay.mentions.web.editor.config;
 
+import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -24,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 		"editor.config.key=contentEditor", "javax.portlet.name=33",
 		"javax.portlet.name=161", "service.ranking:Integer=10"
 	},
-	service = EditorConfigContributor.class
+	service = BaseEditorConfigContributor.class
 )
 public class BlogsMentionsEditorConfigContributor
 	extends BaseMentionsEditorConfigContributor {

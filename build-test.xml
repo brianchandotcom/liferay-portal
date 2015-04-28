@@ -1058,9 +1058,9 @@
 				<then>
 					<echo file="${app.server.tomcat.dir}/bin/setenv.bat" append="true">
 						<![CDATA[
-							set JMX_OPTS="${testable.tomcat.jmx.opts}"
+							set "JMX_OPTS=${testable.tomcat.jmx.opts}"
 
-							set CATALINA_OPTS="%CATALINA_OPTS% %JMX_OPTS%"
+							set "CATALINA_OPTS=%CATALINA_OPTS% %JMX_OPTS%"
 						]]>
 					</echo>
 				</then>

@@ -35,7 +35,8 @@ String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:ent
 
 			<li class="list-entry" data-key="<%= entry.getKey() %>">
 				<span class="label label-circle label-entry">
-					<%= LanguageUtil.get(request, entry.getLabel()) %>
+					<liferay-ui:message key="<%= entry.getLabel() %>" />
+
 					<button class="remove-button" type="button">
 						<i class="icon-remove"></i>
 					</button>

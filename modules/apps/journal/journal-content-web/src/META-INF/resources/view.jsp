@@ -239,6 +239,5 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 <c:if test="<%= (articleDisplay != null) && journalContentDisplayContext.hasViewPermission() %>">
 	<div class="content-metadata-entries">
 		<liferay-ui:selectable-entry-display entries="<%= journalContentDisplayContext.getSelectedContentMetadataEntries() %>" />
-
 	</div>
 </c:if>

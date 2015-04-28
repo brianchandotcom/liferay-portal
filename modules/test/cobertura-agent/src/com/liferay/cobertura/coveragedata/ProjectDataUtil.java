@@ -48,32 +48,32 @@ public class ProjectDataUtil {
 	}
 
 	public static ProjectData captureProjectData(boolean saveSessionData) {
+		ProjectData masterProjectData = new ProjectData();
+
+		for (ProjectData projectData : _projectDatas.values()) {
+			masterProjectData.merge(projectData);
+		}
+
+		try {
+			_setThreadLocalProjectData(masterProjectData);
+
+			for (Runnable runnable :
+					ProjectDataUtil.<Set<Runnable>>_getFieldValue(
+						"_mergeHooks")) {
+
+				runnable.run();
+			}
+
+			masterProjectData = _getThreadLocalProjectData();
+		}
+		finally {
+			_removeThreadLocalProjectData();
+		}
+
 		String className = ProjectDataUtil.class.getName();
 
 		synchronized (className.intern()) {
 			FileLock fileLock = _lockFile();
-
-			ProjectData masterProjectData = new ProjectData();
-
-			for (ProjectData projectData : _projectDatas.values()) {
-				masterProjectData.merge(projectData);
-			}
-
-			try {
-				_setThreadLocalProjectData(masterProjectData);
-
-				for (Runnable runnable :
-						ProjectDataUtil.<Set<Runnable>>_getFieldValue(
-							"_mergeHooks")) {
-
-					runnable.run();
-				}
-
-				masterProjectData = _getThreadLocalProjectData();
-			}
-			finally {
-				_removeThreadLocalProjectData();
-			}
 
 			try {
 				File dataFile = new File(

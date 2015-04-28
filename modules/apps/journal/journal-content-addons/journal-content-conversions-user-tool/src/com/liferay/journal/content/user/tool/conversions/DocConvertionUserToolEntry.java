@@ -46,11 +46,6 @@ public class DocConvertionUserToolEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "download-as-doc";
-	}
-
-	@Override
 	public Double getWeight() {
 		return 4.0;
 	}

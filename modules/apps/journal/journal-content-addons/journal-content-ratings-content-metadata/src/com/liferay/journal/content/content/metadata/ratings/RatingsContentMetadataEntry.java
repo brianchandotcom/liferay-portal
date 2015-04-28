@@ -15,7 +15,10 @@
 package com.liferay.journal.content.content.metadata.ratings;
 
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.BaseJSPSelectableEntry;
+
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -47,8 +50,8 @@ public class RatingsContentMetadataEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "ratings";
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "ratings");
 	}
 
 	@Override

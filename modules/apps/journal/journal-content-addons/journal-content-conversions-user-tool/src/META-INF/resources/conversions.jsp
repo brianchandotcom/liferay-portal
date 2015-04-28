@@ -18,6 +18,7 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -31,6 +32,9 @@
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 <%@ page import="com.liferay.portlet.journal.model.JournalArticleDisplay" %>
 
+<%@ page import="java.util.ResourceBundle" %>
+
+<liferay-theme:defineObjects />
 <portlet:defineObjects />
 
 <%
@@ -39,6 +43,8 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 
 String extension = (String)request.getAttribute("extension");
+
+ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale);
 %>
 
 <c:if test="<%= !viewMode.equals(Constants.PRINT) %>">
@@ -52,7 +58,7 @@ String extension = (String)request.getAttribute("extension");
 		<liferay-ui:icon
 			iconCssClass="<%= DLUtil.getFileIconCssClass(extension) %>"
 			label="<%= true %>"
-			message='<%= LanguageUtil.format(request, "x-download-x-as-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
+			message='<%= LanguageUtil.format(resourceBundle, "x-download-x-as-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
 			method="get"
 			url="<%= exportArticleURL %>"
 		/>

@@ -46,11 +46,6 @@ public class TXTConvertionUserToolEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "download-as-txt";
-	}
-
-	@Override
 	public Double getWeight() {
 		return 6.0;
 	}

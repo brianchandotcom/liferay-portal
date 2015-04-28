@@ -15,7 +15,10 @@
 package com.liferay.journal.content.content.metadata.related.assets;
 
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.BaseJSPSelectableEntry;
+
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -47,8 +50,8 @@ public class RelatedAssetsContentMetadataEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "related-assets";
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "related-assets");
 	}
 
 	@Override

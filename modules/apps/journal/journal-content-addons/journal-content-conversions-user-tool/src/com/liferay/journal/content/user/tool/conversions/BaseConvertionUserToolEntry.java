@@ -15,14 +15,19 @@
 package com.liferay.journal.content.user.tool.conversions;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.BaseJSPSelectableEntry;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
 import java.io.IOException;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +43,16 @@ public abstract class BaseConvertionUserToolEntry
 	@Override
 	public String getJSPPath() {
 		return _JSP_PATH;
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", locale);
+
+		return LanguageUtil.format(
+			resourceBundle, "download-as-x",
+			StringUtil.toUpperCase(getExtension()));
 	}
 
 	@Override

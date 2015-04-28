@@ -46,11 +46,6 @@ public class PDFConvertionUserToolEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "download-as-pdf";
-	}
-
-	@Override
 	public Double getWeight() {
 		return 3.0;
 	}

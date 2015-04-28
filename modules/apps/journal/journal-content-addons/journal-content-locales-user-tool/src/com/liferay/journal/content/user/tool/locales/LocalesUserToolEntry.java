@@ -15,7 +15,10 @@
 package com.liferay.journal.content.user.tool.locales;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.BaseJSPSelectableEntry;
+
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -47,8 +50,8 @@ public class LocalesUserToolEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "translations";
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "translations");
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.journal.content.content.metadata.comments;
 
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.BaseJSPSelectableEntry;
 import com.liferay.portal.model.SelectableEntry;
@@ -23,6 +24,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -56,8 +58,8 @@ public class CommentsContentMetadataEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "comments";
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "comments");
 	}
 
 	@Override

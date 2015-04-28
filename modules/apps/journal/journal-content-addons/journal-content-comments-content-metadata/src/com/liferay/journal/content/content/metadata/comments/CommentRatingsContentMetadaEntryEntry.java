@@ -15,7 +15,10 @@
 package com.liferay.journal.content.content.metadata.comments;
 
 import com.liferay.journal.content.web.util.ContentMetadataEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.BaseSelectableEntry;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,8 +42,8 @@ public class CommentRatingsContentMetadaEntryEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "comment-ratings";
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "comment-ratings");
 	}
 
 	@Override

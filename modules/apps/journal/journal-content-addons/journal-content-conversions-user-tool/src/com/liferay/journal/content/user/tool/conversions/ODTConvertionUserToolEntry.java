@@ -46,11 +46,6 @@ public class ODTConvertionUserToolEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "download-as-odt";
-	}
-
-	@Override
 	public Double getWeight() {
 		return 5.0;
 	}

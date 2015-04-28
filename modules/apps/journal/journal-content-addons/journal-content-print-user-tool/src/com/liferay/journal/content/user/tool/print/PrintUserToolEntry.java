@@ -15,7 +15,10 @@
 package com.liferay.journal.content.user.tool.print;
 
 import com.liferay.journal.content.web.util.UserToolEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.BaseJSPSelectableEntry;
+
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -47,8 +50,8 @@ public class PrintUserToolEntry
 	}
 
 	@Override
-	public String getLabel() {
-		return "print";
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "print");
 	}
 
 	@Override

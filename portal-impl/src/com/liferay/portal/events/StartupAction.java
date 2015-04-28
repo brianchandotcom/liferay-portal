@@ -62,23 +62,6 @@ import org.apache.struts.taglib.tiles.ComponentConstants;
  */
 public class StartupAction extends SimpleAction {
 
-	public StartupAction() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceTracker<ClusterMasterExecutor, ClusterMasterExecutor>
-			clusterMasterExecutorServiceTracker = registry.trackServices(
-				ClusterMasterExecutor.class,
-				new ClusterMasterExecutorServiceTrackerCustomizer());
-
-		clusterMasterExecutorServiceTracker.open();
-
-		ServiceTracker<MessageBus, MessageBus> messageBusServiceTracker =
-			registry.trackServices(
-				MessageBus.class, new MessageBusServiceTrackerCustomizer());
-
-		messageBusServiceTracker.open();
-	}
-
 	@Override
 	public void run(String[] ids) throws ActionException {
 		try {
@@ -97,6 +80,16 @@ public class StartupAction extends SimpleAction {
 		// Print release information
 
 		System.out.println("Starting " + ReleaseInfo.getReleaseInfo());
+
+		// Portal resiliency
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceTracker<MessageBus, MessageBus> messageBusServiceTracker =
+			registry.trackServices(
+				MessageBus.class, new MessageBusServiceTrackerCustomizer());
+
+		messageBusServiceTracker.open();
 
 		// Shutdown hook
 
@@ -156,6 +149,15 @@ public class StartupAction extends SimpleAction {
 		}
 
 		DBUpgrader.verify();
+
+		// Background tasks
+
+		ServiceTracker<ClusterMasterExecutor, ClusterMasterExecutor>
+			clusterMasterExecutorServiceTracker = registry.trackServices(
+				ClusterMasterExecutor.class,
+				new ClusterMasterExecutorServiceTrackerCustomizer());
+
+		clusterMasterExecutorServiceTracker.open();
 
 		// Liferay JspFactory
 

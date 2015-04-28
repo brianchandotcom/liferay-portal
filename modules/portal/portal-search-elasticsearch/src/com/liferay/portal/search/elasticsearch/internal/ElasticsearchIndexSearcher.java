@@ -191,7 +191,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	@Override
-	@Reference
+	@Reference(service = ElasticsearchQuerySuggester.class)
 	public void setQuerySuggester(QuerySuggester querySuggester) {
 		super.setQuerySuggester(querySuggester);
 	}

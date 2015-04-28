@@ -180,7 +180,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	}
 
 	@Override
-	@Reference
+	@Reference(service = ElasticsearchSpellCheckIndexWriter.class)
 	public void setSpellCheckIndexWriter(
 		SpellCheckIndexWriter spellCheckIndexWriter) {
 

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SpellCheckIndexWriter.class)
+@Component(immediate = true, service = ElasticsearchSpellCheckIndexWriter.class)
 public class ElasticsearchSpellCheckIndexWriter
 	extends BaseGenericSpellCheckIndexWriter {
 

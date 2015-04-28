@@ -93,6 +93,10 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	public Comment getParentComment() throws PortalException {
 		long parentMessageId = _message.getParentMessageId();
 
+		if (parentMessageId == 0) {
+			return null;
+		}
+
 		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
 			parentMessageId);
 

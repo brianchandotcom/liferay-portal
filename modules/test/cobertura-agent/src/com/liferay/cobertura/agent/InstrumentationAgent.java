@@ -15,8 +15,8 @@
 package com.liferay.cobertura.agent;
 
 import com.liferay.cobertura.coveragedata.ProjectData;
+import com.liferay.cobertura.coveragedata.ProjectDataUtil;
 import com.liferay.cobertura.instrument.CoberturaClassFileTransformer;
-import com.liferay.cobertura.instrument.ProjectDataUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class InstrumentationAgent {
 		_coberturaClassFileTransformer = null;
 
 		try {
-			ProjectData projectData = ProjectDataUtil.captureProjectData();
+			ProjectData projectData = ProjectDataUtil.captureProjectData(false);
 
 			List<AssertionError> assertionErrors = new ArrayList<>();
 
@@ -198,7 +198,7 @@ public class InstrumentationAgent {
 
 					@Override
 					public void run() {
-						ProjectDataUtil.runMergeHooks();
+						ProjectDataUtil.captureProjectData(true);
 					}
 
 				});

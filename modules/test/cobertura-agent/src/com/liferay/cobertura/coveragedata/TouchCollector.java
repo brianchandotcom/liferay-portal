@@ -14,7 +14,6 @@
 
 package com.liferay.cobertura.coveragedata;
 
-import com.liferay.cobertura.instrument.ProjectDataUtil;
 import com.liferay.cobertura.util.HashUtil;
 
 import java.util.Map.Entry;

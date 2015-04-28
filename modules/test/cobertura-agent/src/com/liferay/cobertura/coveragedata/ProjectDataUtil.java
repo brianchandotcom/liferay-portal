@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.cobertura.coveragedata;
 
 import com.liferay.cobertura.agent.InstrumentationAgent;
-import com.liferay.cobertura.coveragedata.ProjectData;
-import com.liferay.cobertura.coveragedata.TouchCollector;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -42,24 +42,38 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class ProjectDataUtil {
 
 	public static void addMergeHook() {
-		Set<Runnable> mergeHooks = _getMergeHooks();
+		Set<Runnable> mergeHooks = _getFieldValue("_mergeHooks");
 
 		mergeHooks.add(_mergeHookRunnable);
 	}
 
-	public static ProjectData captureProjectData() {
-		runMergeHooks();
+	public static ProjectData captureProjectData(boolean saveSessionData) {
+		ProjectData masterProjectData = new ProjectData();
+
+		for (ProjectData projectData : _projectDatas.values()) {
+			masterProjectData.merge(projectData);
+		}
+
+		try {
+			_setThreadLocalProjectData(masterProjectData);
+
+			for (Runnable runnable :
+					ProjectDataUtil.<Set<Runnable>>_getFieldValue(
+						"_mergeHooks")) {
+
+				runnable.run();
+			}
+
+			masterProjectData = _getThreadLocalProjectData();
+		}
+		finally {
+			_removeThreadLocalProjectData();
+		}
 
 		String className = ProjectDataUtil.class.getName();
 
 		synchronized (className.intern()) {
 			FileLock fileLock = _lockFile();
-
-			ProjectData masterProjectData = new ProjectData();
-
-			for (ProjectData projectData : _projectDatas.values()) {
-				masterProjectData.merge(projectData);
-			}
 
 			try {
 				File dataFile = new File(
@@ -69,6 +83,10 @@ public class ProjectDataUtil {
 					masterProjectData.merge(_readProjectData(dataFile));
 
 					dataFile.delete();
+				}
+
+				if (saveSessionData) {
+					_writeProjectData(masterProjectData, dataFile);
 				}
 
 				return masterProjectData;
@@ -96,30 +114,32 @@ public class ProjectDataUtil {
 		return projectData;
 	}
 
-	public static void runMergeHooks() {
-		Set<Runnable> runnables = _getMergeHooks();
-
-		for (Runnable runnable : runnables) {
-			runnable.run();
-		}
-	}
-
-	private static Set<Runnable> _getMergeHooks() {
+	private static <T> T _getFieldValue(String fieldName) {
 		ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
-
-		if (ProjectDataUtil.class.getClassLoader() == systemClassLoader) {
-			return _mergeHooks;
-		}
 
 		try {
 			Class<?> clazz = systemClassLoader.loadClass(
 				ProjectDataUtil.class.getName());
 
-			Field field = clazz.getDeclaredField("_mergeHooks");
+			Field field = clazz.getDeclaredField(fieldName);
 
 			field.setAccessible(true);
 
-			return (Set<Runnable>)field.get(null);
+			return (T)field.get(null);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static ProjectData _getThreadLocalProjectData() {
+		ThreadLocal<byte[]> sessionDataThreadLocal = _getFieldValue(
+			"_sessionDataThreadLocal");
+
+		try (ObjectInputStream objectInputStream = new ObjectInputStream(
+			new ByteArrayInputStream(sessionDataThreadLocal.get()))) {
+
+			return (ProjectData)objectInputStream.readObject();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -141,14 +161,11 @@ public class ProjectDataUtil {
 	}
 
 	private static ProjectData _readProjectData(File dataFile) {
-		FileInputStream fileInputStream = null;
-		ObjectInputStream objectInputStream = null;
-
 		for (int i = 0; i < _RETRY_TIMES; i++) {
-			try {
-				fileInputStream = new FileInputStream(dataFile);
-
-				objectInputStream = new ObjectInputStream(fileInputStream);
+			try (FileInputStream fileInputStream = new FileInputStream(
+					dataFile);
+				ObjectInputStream objectInputStream = new ObjectInputStream(
+					fileInputStream)) {
 
 				return (ProjectData)objectInputStream.readObject();
 			}
@@ -158,28 +175,37 @@ public class ProjectDataUtil {
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-			finally {
-				if (objectInputStream != null) {
-					try {
-						objectInputStream.close();
-					}
-					catch (IOException ioe) {
-					}
-				}
-
-				if (fileInputStream != null) {
-					try {
-						fileInputStream.close();
-					}
-					catch (IOException ioe) {
-					}
-				}
-			}
 		}
 
 		throw new IllegalStateException(
 			"Unable to load project data after retry for " + _RETRY_TIMES +
 				" times");
+	}
+
+	private static void _removeThreadLocalProjectData() {
+		ThreadLocal<byte[]> sessionDataThreadLocal = _getFieldValue(
+			"_sessionDataThreadLocal");
+
+		sessionDataThreadLocal.remove();
+	}
+
+	private static void _setThreadLocalProjectData(ProjectData projectData) {
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+			byteArrayOutputStream)) {
+
+			objectOutputStream.writeObject(projectData);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		ThreadLocal<byte[]> sessionDataThreadLocal = _getFieldValue(
+			"_sessionDataThreadLocal");
+
+		sessionDataThreadLocal.set(byteArrayOutputStream.toByteArray());
 	}
 
 	private static void _unlockFile(FileLock fileLock) {
@@ -198,35 +224,14 @@ public class ProjectDataUtil {
 	private static void _writeProjectData(
 		ProjectData projectData, File dataFile) {
 
-		FileOutputStream fileOutputStream = null;
-		ObjectOutputStream objectOutputStream = null;
-
-		try {
-			fileOutputStream = new FileOutputStream(dataFile);
-
-			objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		try (FileOutputStream fileOutputStream = new FileOutputStream(dataFile);
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				fileOutputStream)) {
 
 			objectOutputStream.writeObject(projectData);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
-		}
-		finally {
-			if (objectOutputStream != null) {
-				try {
-					objectOutputStream.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
-
-			if (fileOutputStream != null) {
-				try {
-					fileOutputStream.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
 	}
 
@@ -236,35 +241,16 @@ public class ProjectDataUtil {
 
 			@Override
 			public void run() {
-				ProjectData projectData = new ProjectData();
+				ProjectData projectData = _getThreadLocalProjectData();
 
 				TouchCollector.applyTouchesOnProjectData(projectData);
 
-				String className = ProjectDataUtil.class.getName();
-
-				synchronized (className.intern()) {
-					FileLock fileLock = _lockFile();
-
-					try {
-						File dataFile = new File(
-							System.getProperty(
-								"net.sourceforge.cobertura.datafile"));
-
-						if (dataFile.exists()) {
-							projectData.merge(_readProjectData(dataFile));
-						}
-
-						_writeProjectData(projectData, dataFile);
-					}
-					finally {
-						_unlockFile(fileLock);
-					}
-				}
+				_setThreadLocalProjectData(projectData);
 
 				if (ProjectDataUtil.class.getClassLoader() !=
 						ClassLoader.getSystemClassLoader()) {
 
-					Set<Runnable> mergeHooks = _getMergeHooks();
+					Set<Runnable> mergeHooks = _getFieldValue("_mergeHooks");
 
 					mergeHooks.remove(this);
 				}
@@ -272,9 +258,15 @@ public class ProjectDataUtil {
 
 		};
 
+	@SuppressWarnings("unused")
 	private static final Set<Runnable> _mergeHooks =
 		new CopyOnWriteArraySet<>();
+
 	private static final ConcurrentMap<ClassLoader, ProjectData> _projectDatas =
 		new ConcurrentHashMap<>();
+
+	@SuppressWarnings("unused")
+	private static final ThreadLocal<byte[]> _sessionDataThreadLocal =
+		new ThreadLocal<>();
 
 }

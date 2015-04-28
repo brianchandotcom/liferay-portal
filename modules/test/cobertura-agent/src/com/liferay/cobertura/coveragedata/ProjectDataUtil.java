@@ -59,7 +59,21 @@ public class ProjectDataUtil {
 				masterProjectData.merge(projectData);
 			}
 
-			masterProjectData = _runMergeHooks(masterProjectData);
+			try {
+				_setThreadLocalProjectData(masterProjectData);
+
+				for (Runnable runnable :
+						ProjectDataUtil.<Set<Runnable>>_getFieldValue(
+							"_mergeHooks")) {
+
+					runnable.run();
+				}
+
+				masterProjectData = _getThreadLocalProjectData();
+			}
+			finally {
+				_removeThreadLocalProjectData();
+			}
 
 			try {
 				File dataFile = new File(
@@ -173,24 +187,6 @@ public class ProjectDataUtil {
 			"_sessionDataThreadLocal");
 
 		sessionDataThreadLocal.remove();
-	}
-
-	private static ProjectData _runMergeHooks(ProjectData projectData) {
-		try {
-			_setThreadLocalProjectData(projectData);
-
-			for (Runnable runnable :
-					ProjectDataUtil.<Set<Runnable>>_getFieldValue(
-						"_mergeHooks")) {
-
-				runnable.run();
-			}
-
-			return _getThreadLocalProjectData();
-		}
-		finally {
-			_removeThreadLocalProjectData();
-		}
 	}
 
 	private static void _setThreadLocalProjectData(ProjectData projectData) {

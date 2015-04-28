@@ -49,9 +49,8 @@
 
 		<execute function="AssertTextEquals" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
 		<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
-		<execute function="AssertClickNoError" locator1="PGCalendar#MY_CALENDARS_CALENDAR_MENULIST_DELETE" value1="Delete" />
-		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="PGCalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="Calendar#deleteCalendarCmd" />
 
 		<execute function="AssertElementNotPresent" locator1="PGCalendarAgendaView#MY_CALENDARS_CALENDAR_ADDITIONAL" />
 		<execute function="AssertTextNotPresent" value1="${user} - ${calendarName}" />
@@ -66,9 +65,8 @@
 			<condition function="IsElementPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
 			<then>
 				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
-				<execute function="AssertClickNoError" locator1="PGCalendar#MY_CALENDARS_CALENDAR_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="PGCalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+				<execute macro="Calendar#deleteCalendarCmd" />
 			</then>
 		</while>
 
@@ -76,16 +74,15 @@
 			<condition function="IsElementPresent" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
 			<then>
 				<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
-				<execute function="AssertClickNoError" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_DELETE" value1="Delete" />
-				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="PGCalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+				<execute macro="Calendar#deleteCalendarCmd" />
 			</then>
 		</while>
 
 		<while>
 			<condition function="IsElementPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
 			<then>
-				<execute macro="Calendar#chooseMenulistOption">
+				<execute macro="Calendar#chooseOtherCalendarMenulistOption">
 					<var name="calendarName" value="${calendarName}" />
 					<var name="menuListOption" value="Hide Calendar" />
 				</execute>

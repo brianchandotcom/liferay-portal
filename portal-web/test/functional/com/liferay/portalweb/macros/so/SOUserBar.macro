@@ -89,15 +89,15 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
 			<then>
-				<var name="goToMenuClickAttemptNumber" value="0" />
+				<var name="gotoMenuClickAttemptNumber" value="0" />
 
 				<while>
 					<not>
 						<condition function="IsVisible" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
-						<equals arg1="${goToMenuClickAttemptNumber}" arg2="5" />
+						<equals arg1="${gotoMenuClickAttemptNumber}" arg2="5" />
 					</not>
 					<then>
-						<var method="MathUtil#sum('${goToMenuClickAttemptNumber}', '1')" name="goToMenuClickAttemptNumber" />
+						<var method="MathUtil#sum('${gotoMenuClickAttemptNumber}', '1')" name="gotoMenuClickAttemptNumber" />
 
 						<execute function="SelectFrameTop" />
 						<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO" />
@@ -107,7 +107,7 @@
 				<if>
 					<and>
 						<condition function="IsNotVisible" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
-						<equals arg1="${goToMenuClickAttemptNumber}" arg2="5" />
+						<equals arg1="${gotoMenuClickAttemptNumber}" arg2="5" />
 					</and>
 					<then>
 						<fail message="Exceeded number of attempts to click on Go To menu successfully" />

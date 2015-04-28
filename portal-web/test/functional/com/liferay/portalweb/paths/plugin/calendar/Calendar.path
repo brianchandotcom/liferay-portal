@@ -204,47 +204,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--MY_CALENDARS_CALENDAR_MENULIST-->
-<tr>
-	<td>MY_CALENDARS_CALENDAR_MENULIST_ADD_EVENT</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='addEvent']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='settings']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_CALENDARS_CALENDAR_MENULIST_PERMISSIONS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='permissions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_CALENDARS_CALENDAR_MENULIST_DELETE</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_CALENDARS_CALENDAR_MENULIST_RSS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[contains(@class,'simple-menu-item') and contains(@class,'calendar-subscribe-link') and @data-id='subscribe']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='colorPicker']/div/div/div/div[contains(@style,'${key_color}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER_DEFAULT</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='colorPicker']/div/div/div/div[contains(@style,'D96666')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CURRENT_SITE_CALENDARS-->
 <tr>
 	<td>CURRENT_SITE_CALENDARS_HEADER</td>
@@ -326,42 +285,6 @@
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW</td>
 	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div[contains(., '${key_site} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CURRENT_SITE_CALENDARS_CALENDAR_MENULIST-->
-<tr>
-	<td>CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ADD_EVENT</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='addEvent']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='settings']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_PERMISSIONS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='permissions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_DELETE</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_RSS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item calendar-subscribe-link' and @data-id='subscribe']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_COLOR_PICKER</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='colorPicker']/div/div/div/div[contains(@style,'${key_color}')]</td>
 	<td></td>
 </tr>
 <tr>

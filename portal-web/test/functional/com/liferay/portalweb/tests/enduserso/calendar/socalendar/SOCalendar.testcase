@@ -76,7 +76,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addSetTimePG">
+		<execute macro="CalendarEvent#addSetTime">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="setEndDateTime" value="${setEndDateTime}" />
@@ -954,7 +954,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#changeCalendarViaQuickEditPG">
+		<execute macro="CalendarEvent#changeCalendarViaScheduler">
 			<var name="calendarDefaultName" value="${siteName}" />
 			<var name="calendarName" value="${siteName2}" />
 			<var name="eventTitle" value="${eventTitle}" />

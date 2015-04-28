@@ -37,19 +37,19 @@
 		<execute function="Click" locator1="PGKnowledgebasedisplay#SUGGESTION_TITLE" value1="${kbSuggestionBody}" />
 	</command>
 
-	<command name="goToSuggestionStatusInProgress">
+	<command name="gotoSuggestionStatusInProgress">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_IN_PROGRESS" value1="In Progress (${suggestionCount})" />
 	</command>
 
-	<command name="goToSuggestionStatusNew">
+	<command name="gotoSuggestionStatusNew">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_NEW" value1="New (${suggestionCount})" />
 	</command>
 
-	<command name="goToSuggestionStatusResolved">
+	<command name="gotoSuggestionStatusResolved">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_RESOLVED" value1="Resolved (${suggestionCount})" />

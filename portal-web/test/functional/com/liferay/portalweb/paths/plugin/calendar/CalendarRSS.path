@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>CalendarRSS</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CalendarRSS</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>FEED_TITLE</td>
+	<td>//*[@id='feedTitleText']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FEED_EVENT_LINK</td>
+	<td>//*[@class='entry']/*/*[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FEED_EVENT_TITLE</td>
+	<td>//*[@class='entry']/*[@class='feedEntryContent']/*[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FEED_EVENT_DATES</td>
+	<td>//*[@class='entry']/*[contains(.,'${key_eventTitle}')]/*[contains(.,'Start Date') and contains(.,'End Date')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

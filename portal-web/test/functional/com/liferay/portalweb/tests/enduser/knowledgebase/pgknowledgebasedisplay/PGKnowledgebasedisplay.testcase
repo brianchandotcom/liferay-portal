@@ -79,7 +79,7 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusNew">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
 			<var name="suggestionCount" value="1" />
 		</execute>
 
@@ -590,7 +590,7 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusNew">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
 			<var name="suggestionCount" value="1" />
 		</execute>
@@ -602,7 +602,7 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusInProgress">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusInProgress">
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
 			<var name="suggestionCount" value="1" />
 		</execute>
@@ -614,7 +614,7 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusResolved">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusResolved">
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
 			<var name="suggestionCount" value="1" />
 		</execute>
@@ -625,19 +625,19 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusNew">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
 			<var name="suggestionCount" value="0" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewDefaultNew" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusInProgress">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusInProgress">
 			<var name="suggestionCount" value="0" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewDefaultInProgress" />
 
-		<execute macro="KBArticleSuggestion#goToSuggestionStatusResolved">
+		<execute macro="KBArticleSuggestion#gotoSuggestionStatusResolved">
 			<var name="suggestionCount" value="1" />
 		</execute>
 

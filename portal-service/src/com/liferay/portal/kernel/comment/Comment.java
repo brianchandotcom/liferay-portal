@@ -43,9 +43,9 @@ public interface Comment {
 
 	public RatingsStats getRatingsStats();
 
-	public int getThreadCommentsCount();
-
 	public List<Comment> getThreadComments();
+
+	public int getThreadCommentsCount();
 
 	public CommentIterator getThreadCommentsIterator();
 

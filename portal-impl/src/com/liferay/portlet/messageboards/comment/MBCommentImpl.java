@@ -30,7 +30,6 @@ import com.liferay.portlet.ratings.service.persistence.RatingsStatsUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -147,13 +146,6 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
-	public int getThreadCommentsCount() {
-		List<MBMessage> messages = _treeWalker.getMessages();
-
-		return messages.size();
-	}
-
-	@Override
 	public List<Comment> getThreadComments() {
 		List<Comment> comments = new ArrayList<>();
 
@@ -164,6 +156,13 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 		}
 
 		return comments;
+	}
+
+	@Override
+	public int getThreadCommentsCount() {
+		List<MBMessage> messages = _treeWalker.getMessages();
+
+		return messages.size();
 	}
 
 	@Override

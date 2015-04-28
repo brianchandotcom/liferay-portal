@@ -16,20 +16,15 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext" %><%@
+<%@ page import="com.liferay.portal.kernel.comment.Comment" %><%@
+page import="com.liferay.portal.kernel.comment.CommentConstants" %><%@
+page import="com.liferay.portal.kernel.comment.CommentIterator" %><%@
+page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
+page import="com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext" %><%@
 page import="com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.context.MBCommentSectionDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.context.MBCommentTreeDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper" %><%@
-page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper" %><%@
-page import="com.liferay.portlet.messageboards.model.MBDiscussion" %><%@
-page import="com.liferay.portlet.messageboards.model.MBMessageDisplay" %><%@
-page import="com.liferay.portlet.messageboards.model.MBTreeWalker" %><%@
-page import="com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator" %><%@
-page import="com.liferay.portlet.ratings.model.RatingsEntry" %><%@
-page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@
-page import="com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %><%@
-page import="com.liferay.portlet.ratings.service.persistence.RatingsStatsUtil" %>
+page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper" %>
 
 <portlet:defineObjects />

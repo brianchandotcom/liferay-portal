@@ -12,26 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.comment.context;
+package com.liferay.portal.kernel.comment;
 
-import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.exception.PortalException;
+import java.util.Iterator;
 
 /**
  * @author Adolfo Pérez
  */
-public interface CommentSectionDisplayContext {
+public interface CommentIterator extends Iterator<Comment> {
 
-	public Comment getRootComment() throws PortalException;
-
-	public long getThreadId() throws PortalException;
-
-	public boolean isControlsVisible() throws PortalException;
-
-	public boolean isDiscussionMaxComments() throws PortalException;
-
-	public boolean isDiscussionVisible() throws PortalException;
-
-	public boolean isMessageThreadVisible() throws PortalException;
+	public int getIndexPage();
 
 }

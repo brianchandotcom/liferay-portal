@@ -16,10 +16,14 @@ package com.liferay.portal.kernel.comment.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Locale;
+
 /**
  * @author Adolfo Pérez
  */
 public interface CommentTreeDisplayContext {
+
+	public String getPublishButtonLabel(Locale locale) throws PortalException;
 
 	public boolean isActionControlsVisible() throws PortalException;
 

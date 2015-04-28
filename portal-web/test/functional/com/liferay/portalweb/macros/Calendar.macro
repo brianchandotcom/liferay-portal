@@ -542,7 +542,7 @@
 		<if>
 			<equals arg1="${menuListOption}" arg2="RSS" />
 			<then>
-				<execute function="SelectWindow" locator1="title=${calendarName}" />
+				<execute function="SelectWindow#selectPopUp" />
 			</then>
 		</if>
 	</command>

@@ -139,14 +139,11 @@ public class ProjectDataUtil {
 	}
 
 	private static ProjectData _readProjectData(File dataFile) {
-		FileInputStream fileInputStream = null;
-		ObjectInputStream objectInputStream = null;
-
 		for (int i = 0; i < _RETRY_TIMES; i++) {
-			try {
-				fileInputStream = new FileInputStream(dataFile);
-
-				objectInputStream = new ObjectInputStream(fileInputStream);
+			try (FileInputStream fileInputStream = new FileInputStream(
+					dataFile);
+				ObjectInputStream objectInputStream = new ObjectInputStream(
+					fileInputStream)) {
 
 				return (ProjectData)objectInputStream.readObject();
 			}
@@ -155,23 +152,6 @@ public class ProjectDataUtil {
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
-			}
-			finally {
-				if (objectInputStream != null) {
-					try {
-						objectInputStream.close();
-					}
-					catch (IOException ioe) {
-					}
-				}
-
-				if (fileInputStream != null) {
-					try {
-						fileInputStream.close();
-					}
-					catch (IOException ioe) {
-					}
-				}
 			}
 		}
 
@@ -196,35 +176,14 @@ public class ProjectDataUtil {
 	private static void _writeProjectData(
 		ProjectData projectData, File dataFile) {
 
-		FileOutputStream fileOutputStream = null;
-		ObjectOutputStream objectOutputStream = null;
-
-		try {
-			fileOutputStream = new FileOutputStream(dataFile);
-
-			objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		try (FileOutputStream fileOutputStream = new FileOutputStream(dataFile);
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				fileOutputStream)) {
 
 			objectOutputStream.writeObject(projectData);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
-		}
-		finally {
-			if (objectOutputStream != null) {
-				try {
-					objectOutputStream.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
-
-			if (fileOutputStream != null) {
-				try {
-					fileOutputStream.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
 	}
 

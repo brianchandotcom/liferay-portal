@@ -75,7 +75,6 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
@@ -85,7 +84,6 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -159,10 +157,6 @@ public class LayoutImporter {
 				t);
 
 			throw t;
-		}
-		finally {
-			CacheUtil.clearCache();
-			PermissionCacheUtil.clearCache();
 		}
 	}
 

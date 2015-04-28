@@ -69,11 +69,11 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= wikiPortletInstanceSettings.enableRss() %>">
+	<c:if test="<%= wikiGroupServiceSettings.enableRss() %>">
 		<liferay-ui:rss
-			delta="<%= GetterUtil.getInteger(wikiPortletInstanceSettings.rssDelta()) %>"
-			displayStyle="<%= wikiPortletInstanceSettings.rssDisplayStyle() %>"
-			feedType="<%= wikiPortletInstanceSettings.rssFeedType() %>"
+			delta="<%= GetterUtil.getInteger(wikiGroupServiceSettings.rssDelta()) %>"
+			displayStyle="<%= wikiGroupServiceSettings.rssDisplayStyle() %>"
+			feedType="<%= wikiGroupServiceSettings.rssFeedType() %>"
 			url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() %>'
 		/>
 	</c:if>

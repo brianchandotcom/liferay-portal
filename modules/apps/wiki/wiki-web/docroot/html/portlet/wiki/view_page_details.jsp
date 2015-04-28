@@ -150,16 +150,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 	</tr>
 </c:if>
 
-<c:if test="<%= wikiPortletInstanceSettings.enableRss() %>">
+<c:if test="<%= wikiGroupServiceSettings.enableRss() %>">
 	<tr>
 		<th class="table-header">
 			<liferay-ui:message key="rss-subscription" />
 		</th>
 		<td class="table-cell">
 			<liferay-ui:rss
-				delta="<%= GetterUtil.getInteger(wikiPortletInstanceSettings.rssDelta()) %>"
-				displayStyle="<%= wikiPortletInstanceSettings.rssDisplayStyle() %>"
-				feedType="<%= wikiPortletInstanceSettings.rssFeedType() %>"
+				delta="<%= GetterUtil.getInteger(wikiGroupServiceSettings.rssDelta()) %>"
+				displayStyle="<%= wikiGroupServiceSettings.rssDisplayStyle() %>"
+				feedType="<%= wikiGroupServiceSettings.rssFeedType() %>"
 				url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() %>'
 			/>
 		</td>

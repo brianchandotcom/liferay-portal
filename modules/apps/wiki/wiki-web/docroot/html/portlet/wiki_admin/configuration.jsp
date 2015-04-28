@@ -31,8 +31,16 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
+	<%
+	String tabs2Names = "email-from,page-added-email,page-updated-email";
+
+	if (PortalUtil.isRSSFeedsEnabled()) {
+		tabs2Names += ",rss";
+	}
+	%>
+
 	<liferay-ui:tabs
-		names="email-from,page-added-email,page-updated-email"
+		names="<%= tabs2Names %>"
 		refresh="<%= false %>"
 	>
 		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
@@ -100,6 +108,17 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 				emailSubject="<%= wikiGroupServiceSettings.emailPageUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
+
+		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+			<liferay-ui:section>
+				<liferay-ui:rss-settings
+					delta="<%= GetterUtil.getInteger(wikiGroupServiceSettings.rssDelta()) %>"
+					displayStyle="<%= wikiGroupServiceSettings.rssDisplayStyle() %>"
+					enabled="<%= wikiGroupServiceSettings.enableRss() %>"
+					feedType="<%= wikiGroupServiceSettings.rssFeedType() %>"
+				/>
+			</liferay-ui:section>
+		</c:if>
 	</liferay-ui:tabs>
 
 	<aui:button-row>

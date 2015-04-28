@@ -69,32 +69,9 @@ public interface WikiPortletInstanceConfiguration {
 	public boolean enableRelatedAssets();
 
 	@Meta.AD(
-		deflt = "true", required = false
-	)
-	public boolean enableRss();
-
-	@Meta.AD(
 		deflt = "", required = false
 	)
 	public String[] hiddenNodes();
-
-	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
-		required = false
-	)
-	public String rssDelta();
-
-	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/rss.feed.display.style.default}",
-		required = false
-	)
-	public String rssDisplayStyle();
-
-	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/rss.feed.type.default}",
-		required = false
-	)
-	public String rssFeedType();
 
 	@Meta.AD(
 		deflt = "", required = false

@@ -24,16 +24,8 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<%
-	String tabs2Names = "display-settings";
-
-	if (PortalUtil.isRSSFeedsEnabled()) {
-		tabs2Names += ",rss";
-	}
-	%>
-
 	<liferay-ui:tabs
-		names="<%= tabs2Names %>"
+		names="display-settings"
 		refresh="<%= false %>"
 	>
 		<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
@@ -41,17 +33,6 @@
 		<liferay-ui:section>
 			<%@ include file="/html/portlet/wiki/display_settings.jspf" %>
 		</liferay-ui:section>
-
-		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-			<liferay-ui:section>
-				<liferay-ui:rss-settings
-					delta="<%= GetterUtil.getInteger(wikiPortletInstanceSettings.rssDelta()) %>"
-					displayStyle="<%= wikiPortletInstanceSettings.rssDisplayStyle() %>"
-					enabled="<%= wikiPortletInstanceSettings.enableRss() %>"
-					feedType="<%= wikiPortletInstanceSettings.rssFeedType() %>"
-				/>
-			</liferay-ui:section>
-		</c:if>
 	</liferay-ui:tabs>
 
 	<aui:button-row>

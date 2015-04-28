@@ -196,6 +196,13 @@ public class JournalPortlet extends MVCPortlet {
 		updateFolder(actionRequest, actionResponse);
 	}
 
+	public void deleteArticle(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		doDeleteArticles(actionRequest, actionResponse, false);
+	}
+
 	public void deleteArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

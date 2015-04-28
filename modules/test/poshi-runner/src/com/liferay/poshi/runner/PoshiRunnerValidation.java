@@ -379,6 +379,19 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateHasNoChildElements(
+			Element element, String filePath)
+		throws PoshiRunnerException {
+
+		List<Element> childElements = element.elements();
+
+		if (!childElements.isEmpty()) {
+			throw new PoshiRunnerException(
+				"Invalid child elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+	}
+
 	private static void _validateMacroContext(
 			Element element, String macroType, String filePath)
 		throws PoshiRunnerException {
@@ -442,19 +455,6 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	private static void _validateNullChildElement(
-			Element element, String filePath)
-		throws PoshiRunnerException {
-
-		List<Element> childElements = element.elements();
-
-		if (!childElements.isEmpty()) {
-			throw new PoshiRunnerException(
-				"Invalid child elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-	}
-
 	private static void _validatePathFile(Element element, String filePath)
 		throws PoshiRunnerException {
 
@@ -505,10 +505,9 @@ public class PoshiRunnerValidation {
 			Element element, String filePath)
 		throws PoshiRunnerException {
 
+		_validateHasNoChildElements(element, filePath);
 		_validatePossibleAttributeNames(
 			element, Arrays.asList("line-number"), filePath);
-
-		_validateNullChildElement(element, filePath);
 	}
 
 	private static void _validateTaskElement(Element element, String filePath)

@@ -460,6 +460,7 @@ html {
 	}
 
 	.lfr-nav-item .lfr-nav-child-toggle {
+		display: inline;
 		padding: 10px;
 
 		i {

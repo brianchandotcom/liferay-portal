@@ -23,6 +23,10 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Julio Camarero
+ */
 public class EntrySelectorTag extends IncludeTag {
 
 	public void setEntries(List<SelectableEntry> entries) {

@@ -26,6 +26,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
+
+/**
+ * @author Julio Camarero
+ */
 public class SelectableEntryDisplayTag extends IncludeTag {
 
 	@Override

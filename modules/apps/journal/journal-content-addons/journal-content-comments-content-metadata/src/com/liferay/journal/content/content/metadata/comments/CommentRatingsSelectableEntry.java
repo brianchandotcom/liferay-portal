@@ -18,6 +18,10 @@ import com.liferay.journal.content.web.util.ContentMetadataEntry;
 import com.liferay.portal.model.BaseSelectableEntry;
 
 import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Julio Camarero
+ */
 @Component(
 	immediate = true, service = {ContentMetadataEntry.class, CommentRatingsSelectableEntry.class}
 )

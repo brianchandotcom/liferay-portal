@@ -30,6 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Julio Camarero
+ */
 @Component(
 	immediate = true, service = ContentMetadataEntry.class
 )

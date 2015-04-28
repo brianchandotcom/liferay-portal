@@ -106,8 +106,17 @@ public class BreadcrumbPortletDisplayTemplateHandler
 		fieldsTemplateVariableGroup.addVariable(
 			"breadcrumb-entry", BreadcrumbEntry.class,
 			PortletDisplayTemplateConstants.ENTRY, "getTitle()");
-		fieldsTemplateVariableGroup.addVariable(
+
+		String[] restrictedVariables = getRestrictedVariables(language);
+
+		TemplateVariableGroup breadcrumbUtilTemplateVariableGroup =
+			new TemplateVariableGroup("breadcrumb-util", restrictedVariables);
+
+		breadcrumbUtilTemplateVariableGroup.addVariable(
 			"breadcrumb-util", BreadcrumbUtil.class, "breadcrumbUtil");
+
+		templateVariableGroups.put(
+			"breadcrumb-util", breadcrumbUtilTemplateVariableGroup);
 
 		return templateVariableGroups;
 	}

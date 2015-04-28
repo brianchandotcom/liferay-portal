@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
@@ -31,6 +32,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.journal.DuplicateFeedIdException;
 import com.liferay.portlet.journal.FeedContentFieldException;
@@ -349,10 +351,42 @@ public class JournalFeedLocalServiceImpl
 			Map<String, DDMFormField> ddmFormFieldsMap =
 				ddmForm.getDDMFormFieldsMap(true);
 
-			return ddmFormFieldsMap.containsKey(contentField);
+			if (ddmFormFieldsMap.containsKey(contentField)) {
+				return true;
+			}
+
+			return isValidStructureOptionValue(ddmFormFieldsMap, contentField);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+
+		return false;
+	}
+
+	protected boolean isValidStructureOptionValue(
+		Map<String, DDMFormField> ddmFormFieldsMap, String contentField) {
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			String ddmFormFieldType = ddmFormField.getType();
+
+			if (!(ddmFormFieldType.equals("select") ||
+				  ddmFormFieldType.equals("radio"))) {
+
+				continue;
+			}
+
+			DDMFormFieldOptions ddmFormFieldOptions =
+				ddmFormField.getDDMFormFieldOptions();
+
+			for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
+				optionValue =
+					ddmFormField.getName() + StringPool.UNDERLINE + optionValue;
+
+				if (contentField.equals(optionValue)) {
+					return true;
+				}
+			}
 		}
 
 		return false;

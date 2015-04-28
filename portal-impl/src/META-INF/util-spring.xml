@@ -463,7 +463,7 @@
 		<property name="methodFactoryRegistry">
 			<bean class="com.liferay.portal.webdav.methods.MethodFactoryRegistryImpl">
 				<property name="defaultMethodFactory">
-					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil" />
+					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil,com.liferay.portal.kernel.webdav.WebDAVUtil" />
 				</property>
 			</bean>
 		</property>
@@ -491,6 +491,7 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.webdav.WebDAVUtil" class="com.liferay.portal.kernel.webdav.WebDAVUtil" init-method="init" />
 	<bean id="com.liferay.portal.kernel.xmlrpc.XmlRpc" class="com.liferay.portal.xmlrpc.XmlRpcImpl" />
 	<bean id="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil" class="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil">
 		<property name="xmlRpc" ref="com.liferay.portal.kernel.xmlrpc.XmlRpc" />

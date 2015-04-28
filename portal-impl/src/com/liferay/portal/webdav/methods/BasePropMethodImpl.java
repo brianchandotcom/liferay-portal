@@ -68,7 +68,7 @@ public abstract class BasePropMethodImpl implements Method {
 	public static final QName RESOURCETYPE = createQName("resourcetype");
 
 	protected static QName createQName(String name) {
-		return SAXReaderUtil.createQName(name, WebDAVUtil.DAV_URI);
+		return SAXReaderUtil.createQName(name, WebDAVUtil.getDAVNamespace());
 	}
 
 	protected void addResponse(String href, Element multistatusElement)

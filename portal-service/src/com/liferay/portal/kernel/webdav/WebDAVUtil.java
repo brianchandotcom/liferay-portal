@@ -63,8 +63,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class WebDAVUtil {
 
-	public static final Namespace DAV_URI = SAXReaderUtil.createNamespace(
-		"D", "DAV:");
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDAVNamespace()}
+	 */
+	@Deprecated
+	public static Namespace DAV_URI;
 
 	public static final int SC_LOCKED = 423;
 
@@ -79,8 +82,8 @@ public class WebDAVUtil {
 	public static Namespace createNamespace(String prefix, String uri) {
 		Namespace namespace = null;
 
-		if (uri.equals(WebDAVUtil.DAV_URI.getURI())) {
-			namespace = WebDAVUtil.DAV_URI;
+		if (uri.equals(_davNamespace.getURI())) {
+			namespace = _davNamespace;
 		}
 		else if (Validator.isNull(prefix)) {
 			namespace = SAXReaderUtil.createNamespace(uri);
@@ -94,6 +97,10 @@ public class WebDAVUtil {
 
 	public static void deleteStorage(WebDAVStorage storage) {
 		getInstance()._deleteStorage(storage);
+	}
+
+	public static Namespace getDAVNamespace() {
+		return _davNamespace;
 	}
 
 	public static long getDepth(HttpServletRequest request) {
@@ -316,6 +323,12 @@ public class WebDAVUtil {
 		return timeout * Time.SECOND;
 	}
 
+	public static void init() {
+		_davNamespace = SAXReaderUtil.createNamespace("D", "DAV:");
+
+		DAV_URI = _davNamespace;
+	}
+
 	public static boolean isOverwrite(HttpServletRequest request) {
 		return getInstance()._isOverwrite(request);
 	}
@@ -400,6 +413,8 @@ public class WebDAVUtil {
 	private static final Log _log = LogFactoryUtil.getLog(WebDAVUtil.class);
 
 	private static final WebDAVUtil _instance = new WebDAVUtil();
+
+	private static Namespace _davNamespace;
 
 	private final ServiceRegistrationMap<WebDAVStorage> _serviceRegistrations =
 		new ServiceRegistrationMap<>();

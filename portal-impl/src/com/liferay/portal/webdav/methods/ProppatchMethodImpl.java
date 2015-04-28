@@ -144,9 +144,11 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 
 				Element propElement = propElements.get(0);
 
+				Namespace davNamespace = WebDAVUtil.getDAVNamespace();
+
 				if (!propElement.getName().equals("prop") ||
 					!propElement.getNamespaceURI().equals(
-						WebDAVUtil.DAV_URI.getURI())) {
+						davNamespace.getURI())) {
 
 					throw new InvalidRequestException(
 						"Invalid <prop /> element " + propElement);

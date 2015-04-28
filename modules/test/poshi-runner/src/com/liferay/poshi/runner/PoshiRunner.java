@@ -94,7 +94,11 @@ public class PoshiRunner {
 			_runCommand();
 		}
 		catch (Exception e) {
-			throw new PoshiRunnerException(e.getMessage(), e);
+			PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
+
+			PoshiRunnerStackTraceUtil.emptyStackTrace();
+
+			throw new Exception(e.getMessage(), e);
 		}
 		finally {
 			try {

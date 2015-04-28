@@ -68,16 +68,36 @@ public final class XMLLoggerHandler {
 		btnContainerLoggerElement.setClassName("btn-container");
 		btnContainerLoggerElement.setName("div");
 
-		LoggerElement lineNumberLoggerElement = new LoggerElement();
+		StringBuilder sb = new StringBuilder();
 
-		lineNumberLoggerElement.setClassName("line-number");
-		lineNumberLoggerElement.setName("div");
-		lineNumberLoggerElement.setText(element.attributeValue("line-number"));
+		sb.append(
+			_getLineNumberItemText(element.attributeValue("line-number")));
 
-		btnContainerLoggerElement.addChildLoggerElement(
-			lineNumberLoggerElement);
+		List<Element> childElements = element.elements();
+
+		boolean executingMacro = _isExecutingMacro(element);
+
+		if (!childElements.isEmpty() || executingMacro) {
+			sb.append(_getBtnItemText("btn-collapse"));
+		}
+
+		if (!childElements.isEmpty() && executingMacro) {
+			sb.append(_getBtnItemText("btn-var"));
+		}
+
+		btnContainerLoggerElement.setText(sb.toString());
 
 		return btnContainerLoggerElement;
+	}
+
+	private static String _getBtnItemText(String className) {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("btn " + className);
+		loggerElement.setID(null);
+		loggerElement.setName("button");
+
+		return loggerElement.toString();
 	}
 
 	private static LoggerElement _getChildContainerLoggerElement() {
@@ -161,6 +181,23 @@ public final class XMLLoggerHandler {
 		loggerElement.setText(text);
 
 		return loggerElement.toString();
+	}
+
+	private static String _getLineNumberItemText(String lineNumber) {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("line-number");
+		loggerElement.setID(null);
+		loggerElement.setName("div");
+		loggerElement.setText(lineNumber);
+
+		return loggerElement.toString();
+	}
+
+	private static boolean _isExecutingMacro(Element element) {
+		return (element.attributeValue("macro") != null ||
+			element.attributeValue("macro-desktop") != null ||
+			element.attributeValue("macro-mobile") != null);
 	}
 
 }

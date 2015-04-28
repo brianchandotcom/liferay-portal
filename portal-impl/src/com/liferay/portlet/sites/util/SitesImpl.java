@@ -155,8 +155,6 @@ public class SitesImpl implements Sites {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/sites_admin/view");
-
 		List<Group> ancestorGroups = group.getAncestors();
 
 		Collections.reverse(ancestorGroups);

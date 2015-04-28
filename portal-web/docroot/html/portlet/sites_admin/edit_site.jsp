@@ -125,12 +125,9 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 	/>
 </c:if>
 
-<portlet:actionURL var="editSiteURL">
-	<portlet:param name="struts_action" value="/sites_admin/edit_site" />
-</portlet:actionURL>
+<portlet:actionURL name="editGroup" var="editGroupURL" />
 
-<aui:form action="<%= editSiteURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<aui:form action="<%= editGroupURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -162,8 +159,6 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 		var $ = AUI.$;
 
 		var form = $(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('<%= (group == null) ? Constants.ADD : Constants.UPDATE %>');
 
 		var ok = true;
 
@@ -206,7 +201,7 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 				form.fm('forceDisable').val(true);
 				form.fm('local').prop('checked', false);
 				form.fm('none').prop('checked', true);
-				form.fm('redirect').val('<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /><portlet:param name="historyKey" value='<%= renderResponse.getNamespace() + "staging" %>' /></portlet:renderURL>');
+				form.fm('redirect').val('<portlet:renderURL><portlet:param name="mvcPath" value="/html/portlet/sites_admin/edit_site.jsp" /><portlet:param name="historyKey" value='<%= renderResponse.getNamespace() + "staging" %>' /></portlet:renderURL>');
 				form.fm('remote').prop('checked', false);
 			}
 

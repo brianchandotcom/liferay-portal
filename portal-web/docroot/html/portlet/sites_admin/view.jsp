@@ -24,7 +24,6 @@ String sitesListView = ParamUtil.get(request, "sitesListView", SiteConstants.LIS
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/sites_admin/view");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("sitesListView", sitesListView);
 
@@ -32,7 +31,6 @@ String portletURLString = portletURL.toString();
 
 PortletURL searchURL = renderResponse.createRenderURL();
 
-searchURL.setParameter("struts_action", "/sites_admin/view");
 searchURL.setParameter("sitesListView", SiteConstants.LIST_VIEW_FLAT_SITES);
 searchURL.setParameter("toolbarItem", "view-all-sites");
 
@@ -43,7 +41,6 @@ String searchURLString = searchURL.toString();
 
 <aui:form action="<%= searchURLString %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 
@@ -82,11 +79,10 @@ String searchURLString = searchURL.toString();
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('redirect').val(form.fm('sitesRedirect').val());
 			form.fm('deleteGroupIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="deleteSites" />');
 		}
 	}
 </aui:script>

@@ -71,7 +71,6 @@
 	%>
 
 			<liferay-portlet:renderURL var="viewSubsitesURL">
-				<portlet:param name="struts_action" value="/sites_admin/view" />
 				<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
 				<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />

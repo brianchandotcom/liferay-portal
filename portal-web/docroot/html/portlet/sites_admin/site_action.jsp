@@ -80,7 +80,6 @@ if (row == null) {
 
 		<c:if test="<%= (childSitesCount > 0) && (row != null) %>">
 			<liferay-portlet:renderURL var="viewSubsitesURL">
-				<portlet:param name="struts_action" value="/sites_admin/view" />
 				<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 				<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
@@ -95,8 +94,7 @@ if (row == null) {
 
 		<c:if test="<%= !group.isCompany() && (PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) || GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_COMMUNITY)) %>">
 			<liferay-portlet:renderURL varImpl="addSiteURL">
-				<portlet:param name="struts_action" value="/sites_admin/edit_site" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+				<portlet:param name="mvcPath" value="/html/portlet/sites_admin/edit_site.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="parentGroupSearchContainerPrimaryKeys" value="<%= String.valueOf(group.getGroupId()) %>" />
 				<portlet:param name="showPrototypes" value="<%= Boolean.TRUE.toString() %>" />
@@ -185,9 +183,7 @@ if (row == null) {
 	</c:if>
 
 	<c:if test="<%= !group.isCompany() && (!(organizationUser || userGroupUser) && ((group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) && GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId())) && !SiteMembershipPolicyUtil.isMembershipRequired(user.getUserId(), group.getGroupId()) %>">
-		<portlet:actionURL var="leaveURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-			<portlet:param name="<%= Constants.CMD %>" value="group_users" />
+		<portlet:actionURL name="editGroupAssignments" var="leaveURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			<portlet:param name="removeUserIds" value="<%= String.valueOf(user.getUserId()) %>" />
@@ -201,18 +197,21 @@ if (row == null) {
 	</c:if>
 
 	<c:if test="<%= !group.isCompany() && hasUpdatePermission %>">
-		<portlet:actionURL var="activateURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_site" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= group.isActive() ? Constants.DEACTIVATE : Constants.RESTORE %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-		</portlet:actionURL>
-
 		<c:choose>
 			<c:when test="<%= group.isActive() %>">
+				<portlet:actionURL name="deactivate" var="activateURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+				</portlet:actionURL>
+
 				<liferay-ui:icon-deactivate url="<%= activateURL %>" />
 			</c:when>
 			<c:otherwise>
+				<portlet:actionURL name="activate" var="activateURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+				</portlet:actionURL>
+
 				<liferay-ui:icon
 					iconCssClass="icon-ok-sign"
 					message="activate"
@@ -223,9 +222,7 @@ if (row == null) {
 	</c:if>
 
 	<c:if test="<%= !group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.DELETE) && !PortalUtil.isSystemGroup(group.getGroupKey()) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_site" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deleteGroups" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 		</portlet:actionURL>

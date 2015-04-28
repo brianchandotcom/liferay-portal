@@ -60,7 +60,6 @@ if (group != null) {
 	%>
 
 	<portlet:renderURL var="headerBackURL">
-		<portlet:param name="struts_action" value="/sites_admin/view" />
 		<portlet:param name="groupId" value="<%= String.valueOf(parentGroupId) %>" />
 	</portlet:renderURL>
 

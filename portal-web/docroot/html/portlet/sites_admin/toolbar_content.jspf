@@ -25,13 +25,11 @@
 	%>
 
 	<portlet:renderURL var="viewSitesURL">
-		<portlet:param name="struts_action" value="/sites_admin/view" />
 		<portlet:param name="sitesListView" value="<%= sitesListView %>" />
 	</portlet:renderURL>
 
 	<liferay-portlet:renderURL varImpl="addSiteURL">
-		<portlet:param name="struts_action" value="/sites_admin/edit_site" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+		<portlet:param name="mvcPath" value="/html/portlet/sites_admin/edit_site.jsp" />
 		<portlet:param name="redirect" value="<%= viewSitesURL %>" />
 	</liferay-portlet:renderURL>
 

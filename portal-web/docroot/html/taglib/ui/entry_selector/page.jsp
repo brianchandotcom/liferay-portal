@@ -63,7 +63,7 @@ String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:ent
 			{
 				icon: '<%= entry.getIcon() %>',
 				key: '<%= entry.getKey() %>',
-				label: '<%= LanguageUtil.get(request, entry.getLabel()) %>'
+				label: '<liferay-ui:message key="<%= entry.getLabel() %>" />'
 			}
 		);
 
@@ -85,7 +85,7 @@ String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:ent
 
 	var selector = new Liferay.EntrySelector(
 		{
-			dialogTitle: '<%= LanguageUtil.get(request, title) %>',
+			dialogTitle: '<liferay-ui:message key="<%= title %>" />',
 			entries: entries,
 			rootNode: '#<%= namespace + id %>entrySelector',
 			selectedEntries: selectedEntries

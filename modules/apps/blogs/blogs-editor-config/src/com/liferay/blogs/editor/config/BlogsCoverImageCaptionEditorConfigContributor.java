@@ -46,15 +46,44 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 
 		jsonObject.put("allowedContent", "a");
 		jsonObject.put("disallowedContent", "br");
-		jsonObject.put("extraPlugins", "placeholder");
+		jsonObject.put("extraPlugins", "uicore,selectionregion,placeholder");
 
 		JSONObject toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			JSONArray stylesJSONObject = JSONFactoryUtil.createJSONArray(
-				"['a']");
+			JSONObject toolbarStylesJSONObject =
+				JSONFactoryUtil.createJSONObject();
 
-			toolbarsJSONObject.put("styles", stylesJSONObject);
+			JSONArray toolbarStylesSelectionJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			JSONObject toolbarStylesSelectionLinkJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			toolbarStylesSelectionLinkJSONObject.put(
+				"buttons", JSONFactoryUtil.createJSONArray("['linkEdit']"));
+			toolbarStylesSelectionLinkJSONObject.put("name", "link");
+			toolbarStylesSelectionLinkJSONObject.put("test", "link");
+
+			toolbarStylesSelectionJSONArray.put(
+				toolbarStylesSelectionLinkJSONObject);
+
+			JSONObject toolbarStylesSelectionTextJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			toolbarStylesSelectionTextJSONObject.put(
+				"buttons", JSONFactoryUtil.createJSONArray("['link']"));
+			toolbarStylesSelectionTextJSONObject.put("name", "text");
+			toolbarStylesSelectionTextJSONObject.put("test", "text");
+
+			toolbarStylesSelectionJSONArray.put(
+				toolbarStylesSelectionTextJSONObject);
+
+			toolbarStylesJSONObject.put(
+				"selections", toolbarStylesSelectionJSONArray);
+			toolbarStylesJSONObject.put("tabIndex", 1);
+
+			toolbarsJSONObject.put("styles", toolbarStylesJSONObject);
 		}
 		catch (JSONException jsone) {
 		}

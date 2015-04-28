@@ -69,7 +69,11 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 
 		jsonObject.put("language", languageId.replace("iw_", "he_"));
 		jsonObject.put(
-			"removePlugins", "toolbar,elementspath,resize,liststyle,link");
+			"extraPlugins",
+			"uicore,selectionregion,dragresize,dropimages,placeholder,tabletools,tableresize,autolink");
+		jsonObject.put(
+			"removePlugins",
+			"contextmenu,toolbar,elementspath,resize,liststyle,link");
 
 		if (liferayPortletResponse != null) {
 			LiferayPortletURL itemSelectorURL =
@@ -126,18 +130,80 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 		JSONObject toolbarsJSONObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			JSONArray toolbarAddJSONArray = JSONFactoryUtil.createJSONArray(
-				"['imageselector']");
+			JSONObject toolbarAddJSONObject =
+				JSONFactoryUtil.createJSONObject();
 
-			JSONArray toolbarImageJSONArray = JSONFactoryUtil.createJSONArray(
-				"['left', 'right']");
+			JSONArray toolbarAddButtonsJSONArray =
+				JSONFactoryUtil.createJSONArray(
+					"['imageselector', 'table', 'hline']");
 
-			JSONArray toolbarStylesJSONArray = JSONFactoryUtil.createJSONArray(
-				"['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']");
+			toolbarAddJSONObject.put("buttons", toolbarAddButtonsJSONArray);
+			toolbarAddJSONObject.put("tabIndex", 2);
 
-			toolbarsJSONObject.put("add", toolbarAddJSONArray);
-			toolbarsJSONObject.put("image", toolbarImageJSONArray);
-			toolbarsJSONObject.put("styles", toolbarStylesJSONArray);
+			toolbarsJSONObject.put("add", toolbarAddJSONObject);
+
+			JSONObject toolbarStylesJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			JSONArray toolbarStylesSelectionJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			JSONObject toolbarStylesSelectionLinkJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			toolbarStylesSelectionLinkJSONObject.put(
+				"buttons", JSONFactoryUtil.createJSONArray("['linkEdit']"));
+			toolbarStylesSelectionLinkJSONObject.put("name", "link");
+			toolbarStylesSelectionLinkJSONObject.put("test", "link");
+
+			toolbarStylesSelectionJSONArray.put(
+				toolbarStylesSelectionLinkJSONObject);
+
+			JSONObject toolbarStylesSelectionImageJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			toolbarStylesSelectionImageJSONObject.put(
+				"buttons",
+				JSONFactoryUtil.createJSONArray("['imageLeft', 'imageRight']"));
+			toolbarStylesSelectionImageJSONObject.put("name", "image");
+			toolbarStylesSelectionImageJSONObject.put("test", "image");
+
+			toolbarStylesSelectionJSONArray.put(
+				toolbarStylesSelectionImageJSONObject);
+
+			JSONObject toolbarStylesSelectionTextJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			toolbarStylesSelectionTextJSONObject.put(
+				"buttons", JSONFactoryUtil.createJSONArray(
+				"['styles', 'bold', 'italic', 'underline', 'link', 'twitter']"));
+			toolbarStylesSelectionTextJSONObject.put("name", "text");
+			toolbarStylesSelectionTextJSONObject.put("test", "text");
+
+			toolbarStylesSelectionJSONArray.put(
+				toolbarStylesSelectionTextJSONObject);
+
+			JSONObject toolbarStylesSelectionTableJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			toolbarStylesSelectionTableJSONObject.put(
+				"buttons",
+				JSONFactoryUtil.createJSONArray(
+					"['tableRow', 'tableColumn', 'tableCell', 'tableRemove']"));
+			toolbarStylesSelectionTableJSONObject.put(
+				"getArrowBoxClasses", "table");
+			toolbarStylesSelectionTableJSONObject.put("name", "table");
+			toolbarStylesSelectionTableJSONObject.put("setPosition", "table");
+			toolbarStylesSelectionTableJSONObject.put("test", "table");
+
+			toolbarStylesSelectionJSONArray.put(
+				toolbarStylesSelectionTableJSONObject);
+
+			toolbarStylesJSONObject.put(
+				"selections", toolbarStylesSelectionJSONArray);
+			toolbarStylesJSONObject.put("tabIndex", 1);
+
+			toolbarsJSONObject.put("styles", toolbarStylesJSONObject);
 		}
 		catch (JSONException jsone) {
 			if (_log.isErrorEnabled()) {
@@ -145,7 +211,7 @@ public class AlloyEditorConfigContributor implements EditorConfigContributor {
 			}
 		}
 
-		jsonObject.put("toolbarsJSONObject", toolbarsJSONObject);
+		jsonObject.put("toolbars", toolbarsJSONObject);
 	}
 
 	@Override

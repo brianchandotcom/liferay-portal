@@ -92,7 +92,7 @@ public class BaseMentionsEditorConfigContributor
 			extraPlugins += ",autocomplete";
 		}
 		else {
-			extraPlugins = "autocomplete";
+			extraPlugins = "uicore,selectionregion,placeholder,autocomplete";
 		}
 
 		jsonObject.put("extraPlugins", extraPlugins);

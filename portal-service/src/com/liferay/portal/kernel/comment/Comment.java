@@ -43,7 +43,7 @@ public interface Comment {
 
 	public RatingsStats getRatingsStats();
 
-	public int getThreadCommentCount();
+	public int getThreadCommentsCount();
 
 	public List<Comment> getThreadComments();
 

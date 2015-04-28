@@ -1,4 +1,3 @@
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -59,7 +58,7 @@ while (commentIterator.hasNext()) {
 	rootIndexPage.val('<%= String.valueOf(rootIndexPage) %>');
 	index.val('<%= String.valueOf(index) %>');
 
-	<c:if test="<%= rootComment.getThreadCommentCount() <= (index + 1) %>">
+	<c:if test="<%= rootComment.getThreadCommentsCount() <= (index + 1) %>">
 		var moreCommentsLink = $('#<%= namespace %>moreComments');
 
 		moreCommentsLink.hide();

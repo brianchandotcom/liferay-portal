@@ -1121,6 +1121,10 @@ body.yui3-skin-sam .yui3-widget-mask {
 	a {
 		font-weight: inherit;
 	}
+
+	pre {
+		min-height: 33px;
+	}
 }
 
 /* ---------- Extras ---------- */

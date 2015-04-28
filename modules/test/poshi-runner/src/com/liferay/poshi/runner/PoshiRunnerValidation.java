@@ -292,8 +292,10 @@ public class PoshiRunnerValidation {
 		List<String> attributeNames = Arrays.asList(
 			"line-number", "list", "param");
 
+		_validateHasChildElements(element, filePath);
 		_validatePossibleAttributeNames(element, attributeNames, filePath);
 		_validateRequiredAttributeNames(element, attributeNames, filePath);
+
 		_parseElements(element, filePath);
 	}
 
@@ -343,15 +345,10 @@ public class PoshiRunnerValidation {
 	private static void _validateFunctionFile(Element element, String filePath)
 		throws PoshiRunnerException {
 
+		_validateHasChildElements(element, filePath);
 		_validateDefinitionElement(element, filePath);
 
 		List<Element> childElements = element.elements();
-
-		if (childElements.isEmpty()) {
-			throw new PoshiRunnerException(
-				"Missing child elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
 
 		for (Element childElement : childElements) {
 			String childElementName = childElement.getName();
@@ -362,9 +359,36 @@ public class PoshiRunnerValidation {
 						":" + childElement.attributeValue("line-number"));
 			}
 
+			_validateHasChildElements(childElement, filePath);
 			_validateCommandElement(childElement, filePath);
 
 			_parseElements(childElement, filePath);
+		}
+	}
+
+	private static void _validateHasChildElements(
+			Element element, String filePath)
+		throws PoshiRunnerException {
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			throw new PoshiRunnerException(
+				"Missing child elements\n " + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+	}
+
+	private static void _validateHasNoChildElements(
+			Element element, String filePath)
+		throws PoshiRunnerException {
+
+		List<Element> childElements = element.elements();
+
+		if (!childElements.isEmpty()) {
+			throw new PoshiRunnerException(
+				"Invalid child elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
 		}
 	}
 
@@ -402,6 +426,7 @@ public class PoshiRunnerValidation {
 
 			if (childElementName.equals("command")) {
 				_validateCommandElement(childElement, filePath);
+				_validateHasChildElements(childElement, filePath);
 
 				_parseElements(childElement, filePath);
 			}
@@ -441,13 +466,7 @@ public class PoshiRunnerValidation {
 					element.attributeValue("line-number"));
 		}
 
-		List<Element> childElements = element.elements();
-
-		if (childElements.isEmpty()) {
-			throw new PoshiRunnerException(
-				"Missing child elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
+		_validateHasChildElements(element, filePath);
 	}
 
 	private static void _validatePossibleAttributeNames(
@@ -486,18 +505,9 @@ public class PoshiRunnerValidation {
 			Element element, String filePath)
 		throws PoshiRunnerException {
 
-		List<String> possibleAttributeNames = Arrays.asList("line-number");
-
+		_validateHasNoChildElements(element, filePath);
 		_validatePossibleAttributeNames(
-			element, possibleAttributeNames, filePath);
-
-		List<Element> childElements = element.elements();
-
-		if (!childElements.isEmpty()) {
-			throw new PoshiRunnerException(
-				"Invalid child elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
+			element, Arrays.asList("line-number"), filePath);
 	}
 
 	private static void _validateTaskElement(Element element, String filePath)
@@ -506,6 +516,7 @@ public class PoshiRunnerValidation {
 		List<String> possibleAttributeNames = Arrays.asList(
 			"line-number", "macro-summary", "summary");
 
+		_validateHasChildElements(element, filePath);
 		_validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
 
@@ -558,6 +569,7 @@ public class PoshiRunnerValidation {
 					"description", "known-issues", "line-number", "name",
 					"priority");
 
+				_validateHasChildElements(childElement, filePath);
 				_validatePossibleAttributeNames(
 					childElement, possibleAttributeNames, filePath);
 				_validateRequiredAttributeNames(
@@ -579,6 +591,7 @@ public class PoshiRunnerValidation {
 
 				List<String> attributeNames = Arrays.asList("line-number");
 
+				_validateHasChildElements(childElement, filePath);
 				_validatePossibleAttributeNames(
 					childElement, attributeNames, filePath);
 				_validateRequiredAttributeNames(

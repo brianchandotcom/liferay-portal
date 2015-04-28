@@ -15,7 +15,6 @@
 package com.liferay.sass.compiler.ruby;
 
 import java.io.InputStream;
-import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -84,7 +83,7 @@ public class RubySassCompiler implements AutoCloseable {
 		String rubyScript;
 
 		try (InputStream is =
-			 	clazz.getResourceAsStream("dependencies/main.rb")) {
+				clazz.getResourceAsStream("dependencies/main.rb")) {
 
 			rubyScript = new Scanner(is, "UTF-8").useDelimiter("\\A").next();
 		}
@@ -121,7 +120,7 @@ public class RubySassCompiler implements AutoCloseable {
 		try {
 			return _scriptingContainer.callMethod(
 				_scriptObject, "process",
-				new Object[]{input, includeDirName, _TMP_DIR, false},
+				new Object[] {input, includeDirName, _TMP_DIR, false},
 				String.class);
 		}
 		catch (Exception e) {

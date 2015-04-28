@@ -1,21 +1,16 @@
 <html>
 <head>
-<title>InputField</title>
+<title>TextInput</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">InputField</td></tr>
+<tr><td rowspan="1" colspan="3">TextInput</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>BODY</td>
 	<td>//body</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DESCRIPTION</td>
-	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PIWIK</td>
-	<td>//textarea[contains(@id,'_analytics_piwik')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REVIEW_DATE</td>
 	<td>//input[contains(@id,'reviewDate')]</td>
 	<td></td>
@@ -61,11 +51,6 @@
 <tr>
 	<td>REQUIRED_ALERT</td>
 	<td>//div[@class=&quot;required&quot; and contains(.,'This field is required')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUMMARY</td>
-	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>

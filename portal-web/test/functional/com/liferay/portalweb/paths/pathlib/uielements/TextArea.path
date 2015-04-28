@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>TextArea</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TextArea</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>DESCRIPTION</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PIWIK</td>
+	<td>//textarea[contains(@id,'_analytics_piwik')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUMMARY</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

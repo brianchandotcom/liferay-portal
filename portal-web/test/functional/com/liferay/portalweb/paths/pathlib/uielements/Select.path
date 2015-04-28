@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Select</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Select</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>LANGUAGE</td>
+	<td>//div[label[contains(.,'Language')]]/select</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

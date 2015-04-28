@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>Radio</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Radio</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>LOCAL_LIVE</td>
+	<td>//label[contains(.,'Local Live')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NONE</td>
+	<td>//label[contains(.,'None')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_LIVE</td>
+	<td>//label[contains(.,'Remote Live')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

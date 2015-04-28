@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.editor.config.EditorConfig;
 import com.liferay.portal.kernel.editor.config.EditorConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -33,6 +35,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -287,6 +290,12 @@ public class InputEditorTag extends IncludeTag {
 
 		return themeDisplay.getPathJavaScript() + "/editor/" +
 			editorName + ".jsp";
+	}
+
+	@Override
+	protected RequestDispatcher getRequestDispatcher(String page) {
+		return DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+			PortalWebResourcesUtil.getServletContext(), page);
 	}
 
 	@Override

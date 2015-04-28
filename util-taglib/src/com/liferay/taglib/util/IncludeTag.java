@@ -308,6 +308,11 @@ public class IncludeTag extends AttributesTagSupport {
 		return _page;
 	}
 
+	protected RequestDispatcher getRequestDispatcher(String page) {
+		return DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+			servletContext, page);
+	}
+
 	protected String getStartPage() {
 		return null;
 	}
@@ -345,9 +350,7 @@ public class IncludeTag extends AttributesTagSupport {
 				tagDynamicId, tagPointPrefix + "before", doStartTag);
 		}
 
-		RequestDispatcher requestDispatcher =
-			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-				servletContext, page);
+		RequestDispatcher requestDispatcher = getRequestDispatcher(page);
 
 		request.setAttribute(
 			WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT, _strict);

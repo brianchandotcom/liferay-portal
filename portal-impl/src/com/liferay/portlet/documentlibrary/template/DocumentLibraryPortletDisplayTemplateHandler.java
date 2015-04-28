@@ -83,15 +83,6 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			super.getTemplateVariableGroups(classPK, language, locale);
 
-		TemplateVariableGroup fieldsTemplateVariableGroup =
-			templateVariableGroups.get("fields");
-
-		fieldsTemplateVariableGroup.empty();
-
-		fieldsTemplateVariableGroup.addCollectionVariable(
-			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"document", FileEntry.class, "curFileEntry", "title");
-
 		String[] restrictedVariables = getRestrictedVariables(language);
 
 		TemplateVariableGroup documentUtilTemplateVariableGroup =
@@ -115,6 +106,15 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 		templateVariableGroups.put(
 			documentServicesTemplateVariableGroup.getLabel(),
 			documentServicesTemplateVariableGroup);
+
+		TemplateVariableGroup fieldsTemplateVariableGroup =
+			templateVariableGroups.get("fields");
+
+		fieldsTemplateVariableGroup.empty();
+
+		fieldsTemplateVariableGroup.addCollectionVariable(
+			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
+			"document", FileEntry.class, "curFileEntry", "title");
 
 		return templateVariableGroups;
 	}

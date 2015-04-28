@@ -90,13 +90,13 @@ else {
 
 <portlet:actionURL name="editCategory" var="editCategoryURL">
 	<portlet:param name="mvcPath" value="/edit_category.jsp" />
+	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editCategoryURL %>" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
-	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
 
 	<liferay-ui:error exception="<%= AssetCategoryNameException.class %>" message="please-enter-a-valid-name" />
 	<liferay-ui:error exception="<%= DuplicateCategoryException.class %>" message="please-enter-a-unique-name" />

@@ -292,9 +292,9 @@ public class PoshiRunnerValidation {
 		List<String> attributeNames = Arrays.asList(
 			"line-number", "list", "param");
 
+		_validateHasChildElements(element, filePath);
 		_validatePossibleAttributeNames(element, attributeNames, filePath);
 		_validateRequiredAttributeNames(element, attributeNames, filePath);
-		_validateRequiredChildElement(element, filePath);
 
 		_parseElements(element, filePath);
 	}
@@ -345,8 +345,8 @@ public class PoshiRunnerValidation {
 	private static void _validateFunctionFile(Element element, String filePath)
 		throws PoshiRunnerException {
 
+		_validateHasChildElements(element, filePath);
 		_validateDefinitionElement(element, filePath);
-		_validateRequiredChildElement(element, filePath);
 
 		List<Element> childElements = element.elements();
 
@@ -359,10 +359,23 @@ public class PoshiRunnerValidation {
 						":" + childElement.attributeValue("line-number"));
 			}
 
+			_validateHasChildElements(childElement, filePath);
 			_validateCommandElement(childElement, filePath);
-			_validateRequiredChildElement(childElement, filePath);
 
 			_parseElements(childElement, filePath);
+		}
+	}
+
+	private static void _validateHasChildElements(
+			Element element, String filePath)
+		throws PoshiRunnerException {
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			throw new PoshiRunnerException(
+				"Missing child elements\n " + filePath + ":" +
+					element.attributeValue("line-number"));
 		}
 	}
 
@@ -400,7 +413,7 @@ public class PoshiRunnerValidation {
 
 			if (childElementName.equals("command")) {
 				_validateCommandElement(childElement, filePath);
-				_validateRequiredChildElement(childElement, filePath);
+				_validateHasChildElements(childElement, filePath);
 
 				_parseElements(childElement, filePath);
 			}
@@ -440,7 +453,7 @@ public class PoshiRunnerValidation {
 					element.attributeValue("line-number"));
 		}
 
-		_validateRequiredChildElement(element, filePath);
+		_validateHasChildElements(element, filePath);
 	}
 
 	private static void _validatePossibleAttributeNames(
@@ -475,19 +488,6 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	private static void _validateRequiredChildElement(
-			Element element, String filePath)
-		throws PoshiRunnerException {
-
-		List<Element> childElements = element.elements();
-
-		if (childElements.isEmpty()) {
-			throw new PoshiRunnerException(
-				"Missing child elements\n " + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-	}
-
 	private static void _validateTakeScreenshotElement(
 			Element element, String filePath)
 		throws PoshiRunnerException {
@@ -512,9 +512,9 @@ public class PoshiRunnerValidation {
 		List<String> possibleAttributeNames = Arrays.asList(
 			"line-number", "macro-summary", "summary");
 
+		_validateHasChildElements(element, filePath);
 		_validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
-		_validateRequiredChildElement(element, filePath);
 
 		if (Validator.isNull(element.attributeValue("macro-summary")) &&
 			Validator.isNull(element.attributeValue("summary"))) {
@@ -565,11 +565,11 @@ public class PoshiRunnerValidation {
 					"description", "known-issues", "line-number", "name",
 					"priority");
 
+				_validateHasChildElements(childElement, filePath);
 				_validatePossibleAttributeNames(
 					childElement, possibleAttributeNames, filePath);
 				_validateRequiredAttributeNames(
 					childElement, Arrays.asList("name"), filePath);
-				_validateRequiredChildElement(childElement, filePath);
 
 				_parseElements(childElement, filePath);
 			}
@@ -587,11 +587,11 @@ public class PoshiRunnerValidation {
 
 				List<String> attributeNames = Arrays.asList("line-number");
 
+				_validateHasChildElements(childElement, filePath);
 				_validatePossibleAttributeNames(
 					childElement, attributeNames, filePath);
 				_validateRequiredAttributeNames(
 					childElement, attributeNames, filePath);
-				_validateRequiredChildElement(childElement, filePath);
 
 				_parseElements(childElement, filePath);
 			}

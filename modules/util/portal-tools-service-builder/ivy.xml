@@ -20,10 +20,14 @@
 		<dependency name="commons-io" org="commons-io" rev="2.1" />
 		<dependency name="log4j" org="log4j" rev="1.2.17" />
 		<dependency conf="default->master" name="dom4j" org="dom4j" rev="1.6.1" />
-		<dependency conf="default->master" name="jalopy" org="jalopy" rev="1.5rc3" />
+		<dependency conf="default->master" name="jalopy" org="com.github.rotty3000" rev="3000.0.0" />
 		<dependency conf="default->master" name="jaxen" org="jaxen" rev="1.1.1" />
 		<dependency conf="default->master" name="org.freemarker" org="com.liferay" rev="2.3.17.LIFERAY-PATCHED-1" />
 		<dependency conf="default->master" name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" />
 		<dependency conf="provided->master" name="ant" org="org.apache.ant" rev="1.9.3" />
+		<dependency conf="provided->master" name="gradle-base-services" org="org.gradle" rev="2.0" />
+		<dependency conf="provided->master" name="gradle-core" org="org.gradle" rev="2.0" />
+		<dependency conf="provided->master" name="groovy-all" org="org.codehaus.groovy" rev="2.0.1" />
+		<dependency conf="provided->master" name="maven-plugin-api" org="org.apache.maven" rev="3.0.4" />
 	</dependencies>
 </ivy-module>

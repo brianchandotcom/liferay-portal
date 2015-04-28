@@ -8,6 +8,7 @@
 @import url(portal/generic_portal.css);
 @import url(portal/generic_portlet.css);
 @import url(portal/header_row.css);
+@import url(portal/item_viewer.css);
 @import url(portal/javascript_template.css);
 @import url(portal/notifications.css);
 @import url(portal/openid.css);

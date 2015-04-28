@@ -613,7 +613,7 @@ input.switch {
 
 /* -------- Cover image ---------- */
 
-.taglib-image-selector {
+.taglib-image-selector, .item-selector-browser-container {
 	.glyphicon-ok {
 		@include transition(opacity 0.2s ease-in-out);
 	}

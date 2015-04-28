@@ -837,14 +837,14 @@
 	<portlet>
 		<portlet-name>134</portlet-name>
 		<display-name>Sites Admin</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/sites_admin/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/sites_admin/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/sites_admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -1245,14 +1245,14 @@
 	<portlet>
 		<portlet-name>165</portlet-name>
 		<display-name>Site Settings</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/sites_admin/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/sites_admin/edit_site</value>
+			<name>view-template</name>
+			<value>/html/portlet/sites_admin/edit_site.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

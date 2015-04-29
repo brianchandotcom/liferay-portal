@@ -1701,12 +1701,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Child pages
 
 		moveDependentChildPagesToTrash(
-			page, oldTitle, trashTitle, trashEntry.getEntryId(), true);
+			page.getNodeId(), oldTitle, trashTitle, trashEntry.getEntryId(),
+			true);
 
 		// Redirect pages
 
 		moveDependentRedirectPagesToTrash(
-			page, oldTitle, trashTitle, trashEntry.getEntryId(), true);
+			page.getNodeId(), oldTitle, trashTitle, trashEntry.getEntryId(),
+			true);
 
 		// Asset
 
@@ -2606,43 +2608,43 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void moveDependentChildPagesFromTrash(
-			WikiPage newParentPage, long parentNodeId,
-			String oldParentTrashTitle)
+			WikiPage newParentPage, long oldParentPageNodeId,
+			String oldParentPageTitle)
 		throws PortalException {
 
-		List<WikiPage> childPages = getChildren(
-			parentNodeId, true, oldParentTrashTitle,
+		List<WikiPage> dependentPages = getChildren(
+			oldParentPageNodeId, true, oldParentPageTitle,
 			WorkflowConstants.STATUS_IN_TRASH);
 
-		for (WikiPage childPage : childPages) {
-			childPage.setParentTitle(newParentPage.getTitle());
+		for (WikiPage dependentPage : dependentPages) {
+			dependentPage.setParentTitle(newParentPage.getTitle());
 
-			wikiPagePersistence.update(childPage);
+			wikiPagePersistence.update(dependentPage);
 
-			if (childPage.isInTrashImplicitly()) {
+			if (dependentPage.isInTrashImplicitly()) {
 				moveDependentFromTrash(
-					childPage,
-					newParentPage.getNodeId(), newParentPage.getTitle());
+					dependentPage, newParentPage.getNodeId(),
+					newParentPage.getTitle());
 			}
 		}
 	}
 
 	protected void moveDependentChildPagesToTrash(
-			WikiPage parentPage, String parentTitle, String trashTitle,
+			long parentNodeId, String parentTitle, String parentTrashTitle,
 			long trashEntryId, boolean createTrashVersion)
 		throws PortalException {
 
-		List<WikiPage> childPages = wikiPagePersistence.findByN_H_P(
-			parentPage.getNodeId(), true, parentTitle);
+		List<WikiPage> dependentPages = wikiPagePersistence.findByN_H_P(
+			parentNodeId, true, parentTitle);
 
-		for (WikiPage childPage : childPages) {
-			childPage.setParentTitle(trashTitle);
+		for (WikiPage dependentPage : dependentPages) {
+			dependentPage.setParentTitle(parentTrashTitle);
 
-			wikiPagePersistence.update(childPage);
+			wikiPagePersistence.update(dependentPage);
 
-			if (!childPage.isInTrash()) {
+			if (!dependentPage.isInTrash()) {
 				moveDependentToTrash(
-					childPage, trashEntryId, createTrashVersion);
+					dependentPage, trashEntryId, createTrashVersion);
 			}
 		}
 	}
@@ -2749,41 +2751,44 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void moveDependentRedirectPagesFromTrash(
-			WikiPage newRedirectPage, long oldNodeId,
-			String redirectPageTrashTitle)
+			WikiPage newRedirectPage, long oldRedirectPageNodeId,
+			String oldRedirectPageTrashTitle)
 		throws PortalException {
 
-		List<WikiPage> pages = getRedirectPages(
-			oldNodeId, true, redirectPageTrashTitle,
+		List<WikiPage> dependentPages = getRedirectPages(
+			oldRedirectPageNodeId, true, oldRedirectPageTrashTitle,
 			WorkflowConstants.STATUS_IN_TRASH);
 
-		for (WikiPage page : pages) {
-			page.setRedirectTitle(newRedirectPage.getTitle());
+		for (WikiPage dependentPage : dependentPages) {
+			dependentPage.setRedirectTitle(newRedirectPage.getTitle());
 
-			wikiPagePersistence.update(page);
+			wikiPagePersistence.update(dependentPage);
 
-			if (page.isInTrashImplicitly()) {
+			if (dependentPage.isInTrashImplicitly()) {
 				moveDependentFromTrash(
-					page, newRedirectPage.getNodeId(), page.getParentTitle());
+					dependentPage, newRedirectPage.getNodeId(),
+					dependentPage.getParentTitle());
 			}
 		}
 	}
 
 	protected void moveDependentRedirectPagesToTrash(
-			WikiPage redirectPage, String redirectPageTitle, String trashTitle,
-			long trashEntryId, boolean createTrashVersion)
+			long redirectPageNodeId, String redirectPageTitle,
+			String redirectPageTrashTitle, long trashEntryId,
+			boolean createTrashVersion)
 		throws PortalException {
 
-		List<WikiPage> pages = wikiPagePersistence.findByN_H_R(
-			redirectPage.getNodeId(), true, redirectPageTitle);
+		List<WikiPage> dependentPages = wikiPagePersistence.findByN_H_R(
+			redirectPageNodeId, true, redirectPageTitle);
 
-		for (WikiPage page : pages) {
-			page.setRedirectTitle(trashTitle);
+		for (WikiPage dependentPage : dependentPages) {
+			dependentPage.setRedirectTitle(redirectPageTrashTitle);
 
-			wikiPagePersistence.update(redirectPage);
+			wikiPagePersistence.update(dependentPage);
 
-			if (!redirectPage.isInTrash()) {
-				moveDependentToTrash(page, trashEntryId, createTrashVersion);
+			if (!dependentPage.isInTrash()) {
+				moveDependentToTrash(
+					dependentPage, trashEntryId, createTrashVersion);
 			}
 		}
 	}
@@ -2794,14 +2799,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Page
 
-		String title = page.getTitle();
+		String oldTitle = page.getTitle();
 
-		String trashTitle = title;
+		String trashTitle = oldTitle;
 
 		if (createTrashVersion) {
 			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
-			typeSettingsProperties.put("title", page.getTitle());
+			typeSettingsProperties.put("title", oldTitle);
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.addTrashVersion(
@@ -2892,12 +2897,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Child pages
 
 		moveDependentChildPagesToTrash(
-			page, title, trashTitle, trashEntryId, createTrashVersion);
+			page.getNodeId(), oldTitle, trashTitle, trashEntryId,
+			createTrashVersion);
 
 		// Redirect pages
 
 		moveDependentRedirectPagesToTrash(
-			page, title, trashTitle, trashEntryId, createTrashVersion);
+			page.getNodeId(), oldTitle, trashTitle, trashEntryId,
+			createTrashVersion);
 	}
 
 	protected void movePageFromTrash(

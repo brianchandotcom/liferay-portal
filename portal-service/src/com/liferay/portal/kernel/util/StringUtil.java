@@ -3720,36 +3720,6 @@ public class StringUtil {
 
 	/**
 	 * Returns a string representing the string <code>s</code> with all
-	 * occurrences of the specified characters removed.
-	 *
-	 * <p>
-	 * Example:
-	 * </p>
-	 *
-	 * <p>
-	 * <pre>
-	 * <code>
-	 * strip("Hello World", {' ', 'l', 'd'}) returns "HeoWor"
-	 * </code>
-	 * </pre>
-	 * </p>
-	 *
-	 * @param  s the string from which to strip all occurrences the characters
-	 * @param  remove the characters to strip from the string
-	 * @return a string representing the string <code>s</code> with all
-	 *         occurrences of the specified characters removed, or
-	 *         <code>null</code> if <code>s</code> is <code>null</code>
-	 */
-	public static String strip(String s, char[] remove) {
-		for (char c : remove) {
-			s = strip(s, c);
-		}
-
-		return s;
-	}
-
-	/**
-	 * Returns a string representing the string <code>s</code> with all
 	 * occurrences of the specified character removed.
 	 *
 	 * <p>
@@ -3796,6 +3766,36 @@ public class StringUtil {
 		sb.append(s.substring(y));
 
 		return sb.toString();
+	}
+
+	/**
+	 * Returns a string representing the string <code>s</code> with all
+	 * occurrences of the specified characters removed.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * strip("Hello World", {' ', 'l', 'd'}) returns "HeoWor"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the string from which to strip all occurrences the characters
+	 * @param  remove the characters to strip from the string
+	 * @return a string representing the string <code>s</code> with all
+	 *         occurrences of the specified characters removed, or
+	 *         <code>null</code> if <code>s</code> is <code>null</code>
+	 */
+	public static String strip(String s, char[] remove) {
+		for (char c : remove) {
+			s = strip(s, c);
+		}
+
+		return s;
 	}
 
 	/**

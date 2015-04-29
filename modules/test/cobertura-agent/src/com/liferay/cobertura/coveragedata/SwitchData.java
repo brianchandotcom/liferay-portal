@@ -54,40 +54,28 @@ public class SwitchData implements BranchCoverageData, Serializable
 		initLock();
 	}
 
-	public SwitchData(int switchNumber, int min, int max)
-	{
-		this.switchNumber = switchNumber;
-		hits = new long[max - min + 1];
-		initLock();
-	}
-
-	public SwitchData(int switchNumber)
-	{
-		this(switchNumber, 0);
-	}
-
 	private void initLock()
 	{
 		 lock = new ReentrantLock();
 	}
 
-	void touchBranch(int branch,int new_hits)
-	{
+	public void touchBranch(
+		String className, int lineNumber, int branch,int new_hits) {
+
 		lock.lock();
 		try
 		{
-			if (branch == -1)
+			if (branch >= hits.length) {
+				throw new IllegalStateException(
+				"No instrument data for class " + className + " line " +
+					lineNumber + " switch " + switchNumber + " branch " +
+						branch);
+			}
+
+			if (branch == -1) {
 				defaultHits++;
-			else
-			{
-				if (hits.length <= branch)
-				{
-					long[] old = hits;
-					hits = new long[branch + 1];
-					System.arraycopy(old, 0, hits, 0, old.length);
-					Arrays.fill(hits, old.length, hits.length - 1, 0);
-				}
-				hits[branch]+=new_hits;
+			} else {
+				hits[branch] += new_hits;
 			}
 		}
 		finally
@@ -170,6 +158,10 @@ public class SwitchData implements BranchCoverageData, Serializable
 		}
 	}
 
+	public int getSwitchNumber() {
+		return switchNumber;
+	}
+
 	public void merge(BranchCoverageData coverageData)
 	{
 		SwitchData switchData = (SwitchData) coverageData;
@@ -177,14 +169,14 @@ public class SwitchData implements BranchCoverageData, Serializable
 		try
 		{
 			defaultHits += switchData.defaultHits;
-			for (int i = Math.min(hits.length, switchData.hits.length) - 1; i >= 0; i--)
+
+			if (hits.length != switchData.hits.length) {
+				throw new IllegalArgumentException(
+					"Switch case number mismatch");
+			}
+
+			for (int i = 0; i < hits.length; i++) {
 				hits[i] += switchData.hits[i];
-			if (switchData.hits.length > hits.length)
-			{
-				long[] old = hits;
-				hits = new long[switchData.hits.length];
-				System.arraycopy(old, 0, hits, 0, old.length);
-				System.arraycopy(switchData.hits, old.length, hits, old.length, hits.length - old.length);
 			}
 		}
 		finally

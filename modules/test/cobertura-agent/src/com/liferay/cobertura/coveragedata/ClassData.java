@@ -178,24 +178,34 @@ public class ClassData extends CoverageDataContainer
 		branches.put(lineNumber, lineData);
 	}
 
-	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys)
-	{
-			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
-			if (lineData != null)
-			{
-				lineData.addSwitch(switchNumber, keys);
-				this.branches.put(Integer.valueOf(lineNumber), lineData);
-			}
+	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys) {
+		LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+
+		if (lineData == null) {
+			throw new IllegalStateException(
+				"No instrument data for class " + name + " line " +
+					lineNumber);
+		}
+
+		lineData.addSwitch(new SwitchData(switchNumber, keys.length));
+
+		branches.put(lineNumber, lineData);
 	}
 
-	public void addLineSwitch(int lineNumber, int switchNumber, int min, int max)
-	{
-			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
-			if (lineData != null)
-			{
-				lineData.addSwitch(switchNumber, min, max);
-				this.branches.put(Integer.valueOf(lineNumber), lineData);
-			}
+	public void addLineSwitch(
+		int lineNumber, int switchNumber, int min, int max) {
+
+		LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+
+		if (lineData == null) {
+			throw new IllegalStateException(
+				"No instrument data for class " + name + " line " +
+					lineNumber);
+		}
+
+		lineData.addSwitch(new SwitchData(switchNumber, max - min + 1));
+
+		branches.put(lineNumber, lineData);
 	}
 
 	/**
@@ -281,7 +291,7 @@ public class ClassData extends CoverageDataContainer
 					"No instrument data for class " + name + " line " +
 						lineNumber);
 			}
-			lineData.touchSwitch(switchNumber, branch,hits);
+			lineData.touchSwitch(name, switchNumber, branch,hits);
 	}
 
 }

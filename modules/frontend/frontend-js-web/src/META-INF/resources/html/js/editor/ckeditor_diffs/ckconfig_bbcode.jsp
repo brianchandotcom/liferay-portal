@@ -55,6 +55,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'div',
 		'flash',
 		'forms',
+		'indentblock',
 		'keystrokes',
 		'link',
 		'maximize',

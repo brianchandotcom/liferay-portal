@@ -88,6 +88,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'flash',
 		'font',
 		'forms',
+		'indentblock',
 		'justify',
 		'keystrokes',
 		'link',

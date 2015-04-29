@@ -85,7 +85,8 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 			"liferay-ui:item-selector-browser:uploadMessage", _uploadMessage);
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/item_browser/page.jsp";
+	private static final String _PAGE =
+		"/html/taglib/ui/item_selector_browser/page.jsp";
 
 	private String _displayStyle;
 	private String _idPrefix;

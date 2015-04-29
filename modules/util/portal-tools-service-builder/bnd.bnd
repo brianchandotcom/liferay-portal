@@ -6,7 +6,6 @@ Import-Package:\
 	!javax.servlet.*,\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
-	!org.gradle.api.*,\
 	*
 Include-Resource:\
 	classes,\
@@ -20,6 +19,7 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/servicebuilder/ServiceBuilderArgs.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportPackage.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportsFormatter.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/JavaImportsFormatter.class,\

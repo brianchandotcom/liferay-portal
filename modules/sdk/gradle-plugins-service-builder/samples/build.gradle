@@ -5,8 +5,13 @@ buildscript {
 	}
 
 	dependencies {
-		classpath "com.liferay:com.liferay.portal.tools.service.builder:1.0.0"
+		classpath "com.liferay:com.liferay.gradle.plugins.service.builder:latest.release"
 	}
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
 }
 
 apply plugin: "com.liferay.portal.tools.service.builder"

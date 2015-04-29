@@ -15,8 +15,8 @@
 package com.liferay.portal.tools.service.builder.ant;
 
 import com.liferay.portal.tools.service.builder.ServiceBuilder;
-import com.liferay.portal.tools.service.builder.ServiceBuilderArgs;
 import com.liferay.portal.tools.service.builder.ServiceBuilderInvoker;
+import com.liferay.portal.tools.servicebuilder.ServiceBuilderArgs;
 
 import java.util.Set;
 
@@ -41,7 +41,8 @@ public class ServiceBuilderTask extends Task {
 				serviceBuilder.getModifiedFileNames();
 
 			project.addIdReference(
-				ServiceBuilder.OUTPUT_KEY_MODIFIED_FILES, modifiedFileNames);
+				ServiceBuilderArgs.OUTPUT_KEY_MODIFIED_FILES,
+				modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);

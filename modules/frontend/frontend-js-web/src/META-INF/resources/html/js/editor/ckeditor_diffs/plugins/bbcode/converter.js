@@ -488,7 +488,7 @@
 				size = '1';
 			}
 
-			instance._result.push(STR_TAG_SPAN_STYLE_OPEN, 'font-size: ', instance._getFontSize(size), 'px;', STR_TAG_ATTR_CLOSE);
+			instance._result.push(STR_TAG_SPAN_STYLE_OPEN, 'font-size: ', instance._getFontSize(size), 'px', STR_TAG_ATTR_CLOSE);
 
 			instance._stack.push(STR_TAG_SPAN_CLOSE);
 		},

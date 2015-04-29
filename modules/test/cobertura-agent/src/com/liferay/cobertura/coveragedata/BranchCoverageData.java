@@ -17,8 +17,7 @@ package com.liferay.cobertura.coveragedata;
 /**
  * @author Shuyang Zhou
  */
-public interface BranchCoverageData
-{
+public interface BranchCoverageData<T extends BranchCoverageData> {
 
 	double getBranchCoverageRate();
 
@@ -26,5 +25,6 @@ public interface BranchCoverageData
 
 	int getNumberOfValidBranches();
 
-	void merge(BranchCoverageData coverageData);
+	void merge(T t);
+
 }

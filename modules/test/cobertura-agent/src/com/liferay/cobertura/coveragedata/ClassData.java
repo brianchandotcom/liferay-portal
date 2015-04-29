@@ -23,13 +23,13 @@ import java.util.TreeSet;
 /**
  * @author Shuyang Zhou
  */
-public class ClassData extends CoverageDataContainer
-	implements Comparable<ClassData>
-{
+public class ClassData
+	extends CoverageDataContainer<Integer, LineData, ClassData>
+	implements Comparable<ClassData> {
 
 	private static final long serialVersionUID = 5;
 
-	private Map<Integer,LineData> branches = new HashMap<Integer,LineData>();
+	private Map<Integer,LineData> branches = new HashMap<>();
 
 	private String name = null;
 
@@ -39,7 +39,7 @@ public class ClassData extends CoverageDataContainer
 	}
 
 	public LineData addLine(LineData lineData) {
-		LineData previousLineData = (LineData)children.putIfAbsent(
+		LineData previousLineData = children.putIfAbsent(
 			lineData.getLineNumber(), lineData);
 
 		if (previousLineData == null) {
@@ -79,9 +79,8 @@ public class ClassData extends CoverageDataContainer
 		return this.name.substring(lastDot + 1);
 	}
 
-	public SortedSet<CoverageData> getLines()
-	{
-			return new TreeSet<CoverageData>(this.children.values());
+	public SortedSet<LineData> getLines() {
+		return new TreeSet<>(children.values());
 	}
 
 	public String getName()
@@ -128,7 +127,7 @@ public class ClassData extends CoverageDataContainer
 	}
 
 	public void addLineJump(int lineNumber, int branchNumber) {
-		LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+		LineData lineData = children.get(lineNumber);
 
 		if (lineData == null) {
 			throw new IllegalStateException(
@@ -142,7 +141,7 @@ public class ClassData extends CoverageDataContainer
 	}
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys) {
-		LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+		LineData lineData = children.get(lineNumber);
 
 		if (lineData == null) {
 			throw new IllegalStateException(
@@ -158,7 +157,7 @@ public class ClassData extends CoverageDataContainer
 	public void addLineSwitch(
 		int lineNumber, int switchNumber, int min, int max) {
 
-		LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+		LineData lineData = children.get(lineNumber);
 
 		if (lineData == null) {
 			throw new IllegalStateException(
@@ -172,14 +171,11 @@ public class ClassData extends CoverageDataContainer
 	}
 
 	@Override
-	public void merge(CoverageData coverageData)
-	{
-		ClassData classData = (ClassData)coverageData;
-
+	public void merge(ClassData classData) {
 		if (!this.getName().equals(classData.getName()))
 			return;
 
-			super.merge(coverageData);
+			super.merge(classData);
 
 			for (Iterator<Integer> iter = classData.branches.keySet().iterator(); iter.hasNext();)
 			{
@@ -193,7 +189,7 @@ public class ClassData extends CoverageDataContainer
 
 	public void touch(int lineNumber,int hits)
 	{
-			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+			LineData lineData = children.get(lineNumber);
 			if (lineData == null) {
 				throw new IllegalStateException(
 					"No instrument data for class " + name + " line " +
@@ -203,7 +199,7 @@ public class ClassData extends CoverageDataContainer
 	}
 
 	public void touchJump(int lineNumber, int branchNumber, boolean branch,int hits) {
-			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+			LineData lineData = children.get(lineNumber);
 			if (lineData == null) {
 				throw new IllegalStateException(
 					"No instrument data for class " + name + " line " +
@@ -213,7 +209,7 @@ public class ClassData extends CoverageDataContainer
 	}
 
 	public void touchSwitch(int lineNumber, int switchNumber, int branch,int hits) {
-			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+			LineData lineData = children.get(lineNumber);
 			if (lineData == null) {
 				throw new IllegalStateException(
 					"No instrument data for class " + name + " line " +

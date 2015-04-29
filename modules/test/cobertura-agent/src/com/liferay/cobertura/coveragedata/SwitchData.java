@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicLongArray;
 /**
  * @author Shuyang Zhou
  */
-public class SwitchData implements BranchCoverageData, Serializable
+public class SwitchData implements BranchCoverageData<SwitchData>, Serializable
 {
 	private static final long serialVersionUID = 9;
 
@@ -115,10 +115,7 @@ public class SwitchData implements BranchCoverageData, Serializable
 	}
 
 	@Override
-	public void merge(BranchCoverageData coverageData)
-	{
-		SwitchData switchData = (SwitchData) coverageData;
-
+	public void merge(SwitchData switchData) {
 		if (_hitsArray.length() != switchData._hitsArray.length()) {
 			throw new IllegalArgumentException("Switch case number mismatch");
 		}

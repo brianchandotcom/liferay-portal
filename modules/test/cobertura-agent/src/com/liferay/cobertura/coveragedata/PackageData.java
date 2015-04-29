@@ -17,14 +17,15 @@ package com.liferay.cobertura.coveragedata;
 /**
  * @author Shuyang Zhou
  */
-public class PackageData extends CoverageDataContainer {
+public class PackageData
+	extends CoverageDataContainer<String, ClassData, PackageData> {
 
 	public PackageData(String name) {
 		_name = name;
 	}
 
 	public ClassData addClassData(ClassData classData) {
-		ClassData previousClassData = (ClassData)children.putIfAbsent(
+		ClassData previousClassData = children.putIfAbsent(
 			classData.getBaseName(), classData);
 
 		if (previousClassData != null) {

@@ -21,8 +21,8 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author Shuyang Zhou
  */
-public class JumpData implements BranchCoverageData, Serializable
-{
+public class JumpData implements BranchCoverageData<JumpData>, Serializable {
+
 	private static final long serialVersionUID = 8;
 
 	private int conditionNumber;
@@ -91,11 +91,9 @@ public class JumpData implements BranchCoverageData, Serializable
 	}
 
 	@Override
-	public void merge(BranchCoverageData coverageData)
-	{
-		JumpData jumpData = (JumpData) coverageData;
-			_trueHitsCounter.addAndGet(jumpData._trueHitsCounter.get());
-			_falseHitsCounter.addAndGet(jumpData._falseHitsCounter.get());
+	public void merge(JumpData jumpData) {
+		_trueHitsCounter.addAndGet(jumpData._trueHitsCounter.get());
+		_falseHitsCounter.addAndGet(jumpData._falseHitsCounter.get());
 	}
 
 }

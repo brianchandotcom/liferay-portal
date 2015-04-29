@@ -22,7 +22,8 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Shuyang Zhou
  */
-public class ProjectData extends CoverageDataContainer {
+public class ProjectData
+	extends CoverageDataContainer<String, PackageData, ProjectData> {
 
 	public ClassData getClassData(String className) {
 		return _classDataMap.get(className);
@@ -36,13 +37,13 @@ public class ProjectData extends CoverageDataContainer {
 
 			String packageName = classData.getPackageName();
 
-			PackageData packageData = (PackageData)children.get(packageName);
+			PackageData packageData = children.get(packageName);
 
 			if (packageData == null) {
 				packageData = new PackageData(packageName);
 
-				PackageData previousPackageData =
-					(PackageData)children.putIfAbsent(packageName, packageData);
+				PackageData previousPackageData = children.putIfAbsent(
+					packageName, packageData);
 
 				if (previousPackageData != null) {
 					packageData = previousPackageData;
@@ -58,13 +59,12 @@ public class ProjectData extends CoverageDataContainer {
 	}
 
 	@Override
-	public void merge(CoverageData coverageData) {
-		if (coverageData == null) {
+	public void merge(ProjectData projectData) {
+		if (projectData == null) {
 			return;
 		}
 
-		ProjectData projectData = (ProjectData)coverageData;
-			super.merge(coverageData);
+		super.merge(projectData);
 
 		Map<String, ClassData> classDataMap = projectData._classDataMap;
 

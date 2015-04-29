@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Shuyang Zhou
  */
 public class LineData
-		implements Comparable, CoverageData, Serializable
+		implements Comparable, CoverageData<LineData>, Serializable
 {
 	private static final long serialVersionUID = 4;
 
@@ -135,34 +135,32 @@ public class LineData
 	}
 
 	@Override
-	public void merge(CoverageData coverageData)
-	{
-		LineData lineData = (LineData)coverageData;
-			_hitCounter.addAndGet(lineData._hitCounter.get());
+	public void merge(LineData lineData) {
+		_hitCounter.addAndGet(lineData._hitCounter.get());
 
-			ConcurrentMap<Integer, JumpData> otherJumpDatas =
-				lineData._jumpDatas;
+		ConcurrentMap<Integer, JumpData> otherJumpDatas =
+			lineData._jumpDatas;
 
-			for (JumpData jumpData : otherJumpDatas.values()) {
-				JumpData previousJumpData = _jumpDatas.putIfAbsent(
-					jumpData.getConditionNumber(), jumpData);
+		for (JumpData jumpData : otherJumpDatas.values()) {
+			JumpData previousJumpData = _jumpDatas.putIfAbsent(
+				jumpData.getConditionNumber(), jumpData);
 
-				if (previousJumpData != null) {
-					previousJumpData.merge(jumpData);
-				}
+			if (previousJumpData != null) {
+				previousJumpData.merge(jumpData);
 			}
+		}
 
-			ConcurrentMap<Integer, SwitchData> otherSwitchDatas =
-				lineData._switchDatas;
+		ConcurrentMap<Integer, SwitchData> otherSwitchDatas =
+			lineData._switchDatas;
 
-			for (SwitchData switchData : otherSwitchDatas.values()) {
-				SwitchData previousSwitchData = _switchDatas.putIfAbsent(
-					switchData.getSwitchNumber(), switchData);
+		for (SwitchData switchData : otherSwitchDatas.values()) {
+			SwitchData previousSwitchData = _switchDatas.putIfAbsent(
+				switchData.getSwitchNumber(), switchData);
 
-				if (previousSwitchData != null) {
-					previousSwitchData.merge(switchData);
-				}
+			if (previousSwitchData != null) {
+				previousSwitchData.merge(switchData);
 			}
+		}
 	}
 
 	public JumpData addJump(JumpData jumpData) {

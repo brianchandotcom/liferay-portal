@@ -200,6 +200,7 @@ public class FileEventUtil {
 
 		Map<String, Object> parameters = new HashMap<>();
 
+		parameters.put("batch", true);
 		parameters.put("patch", true);
 		parameters.put("sourceVersionId", sourceVersionId);
 		parameters.put("syncFile", syncFile);

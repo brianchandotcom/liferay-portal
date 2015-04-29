@@ -74,6 +74,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CountDownLatch;
@@ -81,6 +82,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -2012,12 +2014,18 @@ public class LocalProcessExecutorTest {
 		implements ProcessCallable<Serializable> {
 
 		@Override
-		public Serializable call() {
-			Thread thread = ReturnWithoutExitProcessCallable._thread;
+		public Serializable call() throws ProcessException {
+			BlockingQueue<Thread> threadQueue =
+				ReturnWithoutExitProcessCallable._threadQueue;
 
-			Assert.assertNotNull(thread);
+			try {
+				Thread thread = threadQueue.take();
 
-			thread.interrupt();
+				thread.interrupt();
+			}
+			catch (InterruptedException ie) {
+				throw new ProcessException(ie);
+			}
 
 			return null;
 		}
@@ -2266,7 +2274,7 @@ public class LocalProcessExecutorTest {
 				processOutputStream.writeProcessCallable(
 					new ReturnProcessCallable<String>(_returnValue));
 
-				_thread = Thread.currentThread();
+				_threadQueue.put(Thread.currentThread());
 
 				Thread.sleep(Long.MAX_VALUE);
 			}
@@ -2293,7 +2301,8 @@ public class LocalProcessExecutorTest {
 			return sb.toString();
 		}
 
-		private static volatile Thread _thread;
+		private static final BlockingQueue<Thread> _threadQueue =
+			new SynchronousQueue<>();
 		private static final long serialVersionUID = 1L;
 
 		private final String _returnValue;

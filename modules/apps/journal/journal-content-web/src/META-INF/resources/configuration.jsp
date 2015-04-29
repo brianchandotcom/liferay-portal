@@ -172,7 +172,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					eventName: 'selectContent',
 					id: 'selectContent',
 					title: '<liferay-ui:message key="select-web-content" />',
-					uri: '<%= selectWebContentURL %>'
+					uri: '<%= HttpUtil.addParameter(selectWebContentURL.toString(), "doAsGroupId", scopeGroupId) %>'
 				},
 				function(event) {
 					form.fm('assetEntryId').val(event.assetentryid);

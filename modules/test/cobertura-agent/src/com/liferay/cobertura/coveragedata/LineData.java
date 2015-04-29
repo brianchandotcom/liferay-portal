@@ -1,27 +1,3 @@
-/*
- * Cobertura - http://cobertura.sourceforge.net/
- *
- * Copyright (C) 2003 jcoverage ltd.
- * Copyright (C) 2005 Mark Doliner
- * Copyright (C) 2005 Mark Sinke
- * Copyright (C) 2006 Jiri Mares
- *
- * Cobertura is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published
- * by the Free Software Foundation; either version 2 of the License,
- * or (at your option) any later version.
- *
- * Cobertura is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Cobertura; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA
- */
-
 package com.liferay.cobertura.coveragedata;
 
 import java.io.Serializable;
@@ -29,14 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-/**
- * <p>
- * This class implements HasBeenInstrumented so that when cobertura
- * instruments itself, it will omit this class.  It does this to
- * avoid an infinite recursion problem because instrumented classes
- * make use of this class.
- * </p>
- */
 public class LineData
 		implements Comparable, CoverageData, Serializable
 {
@@ -54,9 +22,6 @@ public class LineData
 		this.lineNumber = lineNumber;
 	}
 
-	/**
-	 * This is required because we implement Comparable.
-	 */
 	public int compareTo(Object o)
 	{
 		if (!o.getClass().equals(LineData.class))
@@ -100,18 +65,6 @@ public class LineData
 	public int getLineNumber() {
 		return lineNumber;
 	}
-
-	/**
-	 * @see net.sourceforge.cobertura.coveragedata.CoverageData#getNumberOfCoveredBranches()
-	 */
-	/*public int getNumberOfCoveredBranches()
-	{
-		if (this.branches == null)
-			return 0;
-		int covered = 0;
-		for (Iterator i = this.branches.iterator(); i.hasNext(); covered += ((BranchData) i.next()).getNumberOfCoveredBranches());
-		return covered;
-	}*/
 
 	public int getNumberOfCoveredLines()
 	{

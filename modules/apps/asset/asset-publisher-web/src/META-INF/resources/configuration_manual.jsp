@@ -138,7 +138,9 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 								data.put("groupid", String.valueOf(groupId));
 
 								if (!curRendererFactory.isSupportsClassTypes()) {
-									data.put("href", assetBrowserURL.toString());
+									String assetBrowserURLString = HttpUtil.addParameter(assetBrowserURL.toString(), "doAsGroupId", scopeGroupId);
+
+									data.put("href", assetBrowserURLString);
 
 									String type = curRendererFactory.getTypeName(locale);
 
@@ -165,7 +167,9 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 									for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
 										assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
 
-										data.put("href", assetBrowserURL.toString());
+										String assetBrowserURLString = HttpUtil.addParameter(assetBrowserURL.toString(), "doAsGroupId", scopeGroupId);
+
+										data.put("href", assetBrowserURLString);
 
 										String type = assetAvailableClassType.getName();
 

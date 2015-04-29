@@ -572,6 +572,10 @@ public class StringUtil_IW {
 		return StringUtil.strip(s, remove);
 	}
 
+	public java.lang.String strip(java.lang.String s, char[] remove) {
+		return StringUtil.strip(s, remove);
+	}
+
 	public java.lang.String stripBetween(java.lang.String s,
 		java.lang.String begin, java.lang.String end) {
 		return StringUtil.stripBetween(s, begin, end);

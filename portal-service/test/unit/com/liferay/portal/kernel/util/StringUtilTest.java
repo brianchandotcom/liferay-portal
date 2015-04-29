@@ -406,6 +406,14 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testStripCharArray() {
+		Assert.assertEquals(
+			"HeoWor",
+			StringUtil.strip(
+				"Hello World", new char[] {CharPool.SPACE, 'l', 'd'}));
+	}
+
+	@Test
 	public void testToLowerCase() throws Exception {
 		Assert.assertEquals(
 			"hello world", StringUtil.toLowerCase("hello world"));

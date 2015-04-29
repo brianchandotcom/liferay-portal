@@ -15,7 +15,16 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/META-INF/portal-model-hints.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/counter/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/mail/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/model/BaseModelHintsImpl.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportPackage.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/JavaImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/EntityResolver.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/announcements/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/asset/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/blogs/service.xml,\
@@ -33,15 +42,6 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/social/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/softwarecatalog/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/trash/service.xml,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/model/BaseModelHintsImpl.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportPackage.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportsFormatter.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/JavaImportsFormatter.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/EntityResolver.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/bean/BeanProperties.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/bean/BeanPropertiesUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/configuration/Filter.class,\
@@ -60,20 +60,20 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringWriter.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/json/JSONArray.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/nio/charset/*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/language/Language.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/language/LanguageUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/log/*,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/util/SearchUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/nio/charset/*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Document.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Field.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/util/SearchUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/RandomUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/DoPrivileged.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalFilePermission.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$NoPACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Accessor.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ArrayUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ArrayUtil_IW.class,\
@@ -96,9 +96,9 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringUtil_IW.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/TextFormatter.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ThreadUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Tuple.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/TextFormatter.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator_IW.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\

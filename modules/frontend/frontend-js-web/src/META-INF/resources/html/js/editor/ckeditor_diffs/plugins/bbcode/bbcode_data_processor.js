@@ -723,7 +723,7 @@
 			var marginLeft = style.marginLeft;
 
 			if (marginLeft) {
-				stylesTagsIn.push('[indent=', parseInt(marginLeft, 10), ']');
+				stylesTagsIn.push('[indent=', parseInt(marginLeft), ']');
 
 				stylesTagsOut.push('[/indent]');
 			}

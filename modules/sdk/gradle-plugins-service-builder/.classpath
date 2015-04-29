@@ -17,13 +17,8 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
-	<classpathentry kind="lib" path="lib/ant.jar" />
-	<classpathentry kind="lib" path="lib/commons-io.jar" />
-	<classpathentry kind="lib" path="lib/dom4j.jar" />
-	<classpathentry kind="lib" path="lib/jalopy.jar" />
-	<classpathentry kind="lib" path="lib/jaxen.jar" />
-	<classpathentry kind="lib" path="lib/maven-plugin-api.jar" />
-	<classpathentry kind="lib" path="lib/org.freemarker.jar" />
-	<classpathentry kind="lib" path="lib/qdox.jar" />
+	<classpathentry kind="lib" path="lib/gradle-base-services.jar" />
+	<classpathentry kind="lib" path="lib/gradle-core.jar" />
+	<classpathentry kind="lib" path="lib/groovy-all.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

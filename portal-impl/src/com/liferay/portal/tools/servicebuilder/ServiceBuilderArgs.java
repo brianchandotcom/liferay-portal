@@ -12,15 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.tools.service.builder;
-
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+package com.liferay.portal.tools.servicebuilder;
 
 /**
  * @author Raymond Augé
  */
 public class ServiceBuilderArgs {
+
+	public static final String[] MODEL_HINTS_CONFIGS = {
+		"classpath*:META-INF/portal-model-hints.xml",
+		"META-INF/portal-model-hints.xml",
+		"classpath*:META-INF/ext-model-hints.xml",
+		"META-INF/portlet-model-hints.xml"
+	};
+
+	public static final String OUTPUT_KEY_MODIFIED_FILES =
+		"service.builder.modified.files";
+
+	public static final String[] READ_ONLY_PREFIXES = {
+		"fetch", "get", "has", "is", "load", "reindex", "search"
+	};
+
+	public static final String[] RESOURCE_ACTION_CONFIGS = {
+		"META-INF/resource-actions/default.xml", "resource-actions/default.xml"
+	};
 
 	public String getApiDir() {
 		return _apiDir;
@@ -166,27 +181,24 @@ public class ServiceBuilderArgs {
 
 	public void setMergeModelHintsConfigs(String mergeModelHintsConfigs) {
 		_setModelHintsConfigs(
-			ArrayUtil.append(
-				_modelHintsConfigs, StringUtil.split(mergeModelHintsConfigs)));
+			_append(_modelHintsConfigs, _split(mergeModelHintsConfigs)));
 	}
 
 	public void setMergeReadOnlyPrefixes(String mergeReadOnlyPrefixes) {
 		_setReadOnlyPrefixes(
-			ArrayUtil.append(
-				_readOnlyPrefixes, StringUtil.split(mergeReadOnlyPrefixes)));
+			_append(_readOnlyPrefixes, _split(mergeReadOnlyPrefixes)));
 	}
 
 	public void setMergeResourceActionsConfigs(
 		String mergeResourceActionsConfigs) {
 
 		_setResourceActionsConfigs(
-			ArrayUtil.append(
-				_resourceActionsConfigs,
-				StringUtil.split(mergeResourceActionsConfigs)));
+			_append(
+				_resourceActionsConfigs, _split(mergeResourceActionsConfigs)));
 	}
 
 	public void setModelHintsConfigs(String modelHintsConfigs) {
-		_setModelHintsConfigs(StringUtil.split(modelHintsConfigs));
+		_setModelHintsConfigs(_split(modelHintsConfigs));
 	}
 
 	public void setModelHintsFileName(String modelHintsFileName) {
@@ -206,7 +218,7 @@ public class ServiceBuilderArgs {
 	}
 
 	public void setReadOnlyPrefixes(String readOnlyPrefixes) {
-		_setReadOnlyPrefixes(StringUtil.split(readOnlyPrefixes));
+		_setReadOnlyPrefixes(_split(readOnlyPrefixes));
 	}
 
 	public void setRemotingFileName(String remotingFileName) {
@@ -214,7 +226,7 @@ public class ServiceBuilderArgs {
 	}
 
 	public void setResourceActionsConfigs(String resourceActionsConfigs) {
-		_setResourceActionsConfigs(StringUtil.split(resourceActionsConfigs));
+		_setResourceActionsConfigs(_split(resourceActionsConfigs));
 	}
 
 	public void setResourcesDir(String resourcesDir) {
@@ -226,7 +238,7 @@ public class ServiceBuilderArgs {
 	}
 
 	public void setSpringNamespaces(String springNamespaces) {
-		_springNamespaces = StringUtil.split(springNamespaces);
+		_springNamespaces = _split(springNamespaces);
 	}
 
 	public void setSqlDir(String sqlDir) {
@@ -251,6 +263,16 @@ public class ServiceBuilderArgs {
 
 	public void setTestDir(String testDir) {
 		_testDir = testDir;
+	}
+
+	private String[] _append(String[] array1, String[] array2) {
+		String[] newArray = new String[array1.length + array2.length];
+
+		System.arraycopy(array1, 0, newArray, 0, array1.length);
+
+		System.arraycopy(array2, 0, newArray, array1.length, array2.length);
+
+		return newArray;
 	}
 
 	private void _setModelHintsConfigs(String[] modelHintsConfigs) {
@@ -289,6 +311,10 @@ public class ServiceBuilderArgs {
 		_resourceActionsConfigs = resourceActionsConfigs;
 	}
 
+	private String[] _split(String s) {
+		return s.split(",");
+	}
+
 	private String _apiDir = "../portal-service/src";
 	private boolean _autoImportDefaultReferences = true;
 	private boolean _autoNamespaceTables;
@@ -299,20 +325,17 @@ public class ServiceBuilderArgs {
 	private String _hbmFileName = "src/META-INF/portal-hbm.xml";
 	private String _implDir = "src";
 	private String _inputFileName = "service.xml";
-	private String[] _modelHintsConfigs = StringUtil.split(
-		ServiceBuilder.MODEL_HINTS_CONFIGS);
+	private String[] _modelHintsConfigs = MODEL_HINTS_CONFIGS;
 	private boolean _modelHintsConfigsSet;
 	private String _modelHintsFileName = "src/META-INF/portal-model-hints.xml";
 	private boolean _osgiModule;
 	private String _pluginName;
 	private String _propsUtil = "com.liferay.portal.util.PropsUtil";
-	private String[] _readOnlyPrefixes = StringUtil.split(
-		ServiceBuilder.READ_ONLY_PREFIXES);
+	private String[] _readOnlyPrefixes = READ_ONLY_PREFIXES;
 	private boolean _readOnlyPrefixesSet;
 	private String _remotingFileName =
 		"../portal-web/docroot/WEB-INF/remoting-servlet.xml";
-	private String[] _resourceActionsConfigs = StringUtil.split(
-		ServiceBuilder.RESOURCE_ACTION_CONFIGS);
+	private String[] _resourceActionsConfigs = RESOURCE_ACTION_CONFIGS;
 	private boolean _resourceActionsConfigsSet;
 	private String _resourcesDir = "src";
 	private String _springFileName = "src/META-INF/portal-spring.xml";

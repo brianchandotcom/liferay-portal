@@ -12,40 +12,48 @@
  * details.
  */
 
-package com.liferay.portal.tools.service.builder.ant;
+package com.liferay.portal.tools.service.builder.maven;
 
 import com.liferay.portal.tools.service.builder.ServiceBuilder;
 import com.liferay.portal.tools.service.builder.ServiceBuilderInvoker;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilderArgs;
 
+import java.io.File;
+
+import java.util.Map;
 import java.util.Set;
 
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * @author Raymond Augé
  */
-public class ServiceBuilderTask extends Task {
+public class ServicebuilderMojo extends AbstractMojo {
+
+	public ServicebuilderMojo() {
+		_serviceBuilderArgs = new ServiceBuilderArgs();
+	}
 
 	@Override
-	public void execute() throws BuildException {
+	@SuppressWarnings("rawtypes")
+	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
-			Project project = getProject();
+			Map pluginContext = getPluginContext();
 
 			ServiceBuilder serviceBuilder = ServiceBuilderInvoker.invoke(
-				project.getBaseDir(), _serviceBuilderArgs);
+				baseDir, _serviceBuilderArgs);
 
 			Set<String> modifiedFileNames =
 				serviceBuilder.getModifiedFileNames();
 
-			project.addIdReference(
+			pluginContext.put(
 				ServiceBuilderArgs.OUTPUT_KEY_MODIFIED_FILES,
 				modifiedFileNames);
 		}
 		catch (Exception e) {
-			throw new BuildException(e);
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 
@@ -171,7 +179,12 @@ public class ServiceBuilderTask extends Task {
 		_serviceBuilderArgs.setTestDir(testDir);
 	}
 
-	private final ServiceBuilderArgs _serviceBuilderArgs =
-		new ServiceBuilderArgs();
+	/**
+	 * @parameter default-value="${project.basedir}
+	 * @readonly
+	 */
+	protected File baseDir;
+
+	private final ServiceBuilderArgs _serviceBuilderArgs;
 
 }

@@ -52,7 +52,6 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
 	<c:if test="<%= !workflowDefinition.isActive() %>">
 		<liferay-portlet:actionURL var="restoreWorkflowDefinitionURL" name="restoreWorkflowDefinition">
-			<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 			<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
@@ -66,7 +65,6 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 	</c:if>
 
 	<liferay-portlet:actionURL var="deleteURL" name="<%= workflowDefinition.isActive() ? "deactivateWorkflowDefinition" : "deleteWorkflowDefinition" %>">
-		<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />

@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -52,10 +51,11 @@ import com.liferay.portal.util.WebKeys;
 	},
 	service = ActionCommand.class
 )
-public class UpdateWorkflowDefitionActionCommand extends BaseActionCommand {
+public class UpdateWorkflowDefitionActionCommand extends 
+	BaseWorkflowDefinitionActionCommand {
 
 	@Override
-	protected void doProcessCommand(
+	protected void doProcessWorkflowDefinitionCommand(
 		PortletRequest portletRequest, PortletResponse portletResponse) 
 		throws Exception {
 		

@@ -20,7 +20,6 @@ import javax.portlet.PortletResponse;
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -38,10 +37,11 @@ import com.liferay.portal.util.WebKeys;
 	},
 	service = ActionCommand.class
 )
-public class DeleteWorkflowDefinitionActionCommand extends BaseActionCommand {
+public class DeleteWorkflowDefinitionActionCommand extends 
+	BaseWorkflowDefinitionActionCommand {
 
 	@Override
-	protected void doProcessCommand(
+	protected void doProcessWorkflowDefinitionCommand(
 		PortletRequest portletRequest, PortletResponse portletResponse) 
 		throws Exception {
 		

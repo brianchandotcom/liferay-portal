@@ -16,8 +16,6 @@ package com.liferay.workflow.definition.web.portlet;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -40,7 +38,7 @@ import com.liferay.workflow.definition.web.portlet.action.ActionUtil;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.icon=/icons/workflow_definition.png",
-		"com.liferay.portlet.control-panel-entry-category=site_administration.configuration",
+		"com.liferay.portlet.control-panel-entry-category=configuration",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
@@ -67,9 +65,11 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
+			
 			ActionUtil.getWorkflowDefinition(request);
 		} catch (Exception e) {
 			if (e instanceof WorkflowException) {
+				hideDefaultErrorMessage(request);
 				
 				SessionErrors.add(request, e.getClass());
 
@@ -81,27 +81,6 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		}
 
 		super.render(request, response);
-	}
-	
-	@Override
-	public void processAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) 
-		throws IOException, PortletException {
-		try {
-			hideDefaultErrorMessage(actionRequest);
-			super.processAction(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (e instanceof RequiredWorkflowDefinitionException) {
-				include("/view.jsp", actionRequest, actionResponse);
-			}
-			else if (e instanceof WorkflowException) {
-				include("/error.jsp", actionRequest, actionResponse);
-			}
-			else {
-				throw e;
-			}
-		}
 	}
 	
 	@Override

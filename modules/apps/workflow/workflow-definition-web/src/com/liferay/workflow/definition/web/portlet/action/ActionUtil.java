@@ -14,6 +14,11 @@
 
 package com.liferay.workflow.definition.web.portlet.action;
 
+import java.util.List;
+
+import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -21,11 +26,6 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-
-import java.util.List;
-
-import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Bruno Farache
@@ -63,7 +63,7 @@ public class ActionUtil {
 
 	public static void getWorkflowDefinition(PortletRequest portletRequest)
 		throws Exception {
-
+		
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 

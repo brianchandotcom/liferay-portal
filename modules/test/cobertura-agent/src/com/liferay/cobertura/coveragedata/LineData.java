@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.cobertura.coveragedata;
 
 import java.io.Serializable;
@@ -5,6 +19,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * @author Shuyang Zhou
+ */
 public class LineData
 		implements Comparable, CoverageData, Serializable
 {
@@ -22,6 +39,7 @@ public class LineData
 		this.lineNumber = lineNumber;
 	}
 
+	@Override
 	public int compareTo(Object o)
 	{
 		if (!o.getClass().equals(LineData.class))
@@ -29,6 +47,7 @@ public class LineData
 		return this.lineNumber - ((LineData)o).lineNumber;
 	}
 
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
@@ -44,6 +63,7 @@ public class LineData
 					&& (this.lineNumber == lineData.lineNumber);
 	}
 
+	@Override
 	public double getBranchCoverageRate()
 	{
 		if (getNumberOfValidBranches() == 0)
@@ -66,11 +86,13 @@ public class LineData
 		return lineNumber;
 	}
 
+	@Override
 	public int getNumberOfCoveredLines()
 	{
 		return (_hitCounter.get() > 0) ? 1 : 0;
 	}
 
+	@Override
 	public int getNumberOfValidBranches()
 	{
 		int ret = 0;
@@ -85,6 +107,7 @@ public class LineData
 			return ret;
 	}
 
+	@Override
 	public int getNumberOfCoveredBranches()
 	{
 		int ret = 0;
@@ -99,16 +122,19 @@ public class LineData
 			return ret;
 	}
 
+	@Override
 	public int getNumberOfValidLines()
 	{
 		return 1;
 	}
 
+	@Override
 	public int hashCode()
 	{
 		return this.lineNumber;
 	}
 
+	@Override
 	public void merge(CoverageData coverageData)
 	{
 		LineData lineData = (LineData)coverageData;

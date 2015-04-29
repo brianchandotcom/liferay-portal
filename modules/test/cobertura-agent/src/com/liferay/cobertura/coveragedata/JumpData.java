@@ -1,9 +1,26 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.cobertura.coveragedata;
 
 import java.io.Serializable;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * @author Shuyang Zhou
+ */
 public class JumpData implements BranchCoverageData, Serializable
 {
 	private static final long serialVersionUID = 8;
@@ -31,6 +48,7 @@ public class JumpData implements BranchCoverageData, Serializable
 			}
 	}
 
+	@Override
 	public double getBranchCoverageRate()
 	{
 			return ((double) getNumberOfCoveredBranches()) / getNumberOfValidBranches();
@@ -40,6 +58,7 @@ public class JumpData implements BranchCoverageData, Serializable
 		return conditionNumber;
 	}
 
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
@@ -53,21 +72,25 @@ public class JumpData implements BranchCoverageData, Serializable
 					&& (this.conditionNumber == branchData.conditionNumber);
 	}
 
+	@Override
 	public int hashCode()
 	{
 		return this.conditionNumber;
 	}
 
+	@Override
 	public int getNumberOfCoveredBranches()
 	{
 			return ((_trueHitsCounter.get() > 0) ? 1 : 0) + ((_falseHitsCounter.get() > 0) ? 1: 0);
 	}
 
+	@Override
 	public int getNumberOfValidBranches()
 	{
 		return 2;
 	}
 
+	@Override
 	public void merge(BranchCoverageData coverageData)
 	{
 		JumpData jumpData = (JumpData) coverageData;

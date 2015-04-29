@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.cobertura.coveragedata;
 
 import java.util.HashMap;
@@ -6,6 +20,9 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+/**
+ * @author Shuyang Zhou
+ */
 public class ClassData extends CoverageDataContainer
 	implements Comparable<ClassData>
 {
@@ -32,11 +49,13 @@ public class ClassData extends CoverageDataContainer
 		return previousLineData;
 	}
 
+	@Override
 	public int compareTo(ClassData o)
 	{
 		return this.name.compareTo(o.name);
 	}
 
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
@@ -70,6 +89,7 @@ public class ClassData extends CoverageDataContainer
 		return name;
 	}
 
+	@Override
 	public int getNumberOfValidBranches()
 	{
 		int number = 0;
@@ -80,6 +100,7 @@ public class ClassData extends CoverageDataContainer
 			return number;
 	}
 
+	@Override
 	public int getNumberOfCoveredBranches()
 	{
 		int number = 0;
@@ -100,6 +121,7 @@ public class ClassData extends CoverageDataContainer
 		return this.name.substring(0, lastDot);
 	}
 
+	@Override
 	public int hashCode()
 	{
 		return this.name.hashCode();
@@ -149,6 +171,7 @@ public class ClassData extends CoverageDataContainer
 		branches.put(lineNumber, lineData);
 	}
 
+	@Override
 	public void merge(CoverageData coverageData)
 	{
 		ClassData classData = (ClassData)coverageData;

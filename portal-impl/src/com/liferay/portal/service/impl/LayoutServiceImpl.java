@@ -1929,6 +1929,48 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public MissingReferences validateImportLayoutsFile(
+			ExportImportConfiguration exportImportConfiguration, File file)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.validateImportLayoutsFile(
+			exportImportConfiguration, file);
+	}
+
+	@Override
+	public MissingReferences validateImportLayoutsFile(
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.validateImportLayoutsFile(
+			exportImportConfiguration, inputStream);
+	}
+
+	/**
+	 * @throws     PortalException
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public MissingReferences validateImportLayoutsFile(
 			long groupId, boolean privateLayout,
 			Map<String, String[]> parameterMap, File file)
 		throws PortalException {
@@ -1940,6 +1982,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), groupId, privateLayout, parameterMap, file);
 	}
 
+	/**
+	 * @throws     PortalException
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public MissingReferences validateImportLayoutsFile(
 			long groupId, boolean privateLayout,

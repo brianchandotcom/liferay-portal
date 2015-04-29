@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -40,8 +42,13 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -51,6 +58,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.Map;
 
@@ -423,13 +431,31 @@ public class ImportLayoutsAction extends PortletAction {
 			ActionRequest actionRequest, InputStream inputStream)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
+				themeDisplay.getUserId(), groupId, privateLayout, null,
+				actionRequest.getParameterMap(), StringPool.BLANK,
+				themeDisplay.getLocale(), themeDisplay.getTimeZone(),
+				StringPool.BLANK);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					themeDisplay.getUserId(), groupId, StringPool.BLANK,
+					StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
 		return LayoutServiceUtil.validateImportLayoutsFile(
-			groupId, privateLayout, actionRequest.getParameterMap(),
-			inputStream);
+			exportImportConfiguration, inputStream);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

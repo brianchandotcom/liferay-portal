@@ -3352,15 +3352,24 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public MissingReferences validateImportLayoutsFile(
-			long userId, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException {
 
 		try {
 			LayoutImporter layoutImporter = LayoutImporter.getInstance();
 
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			long userId = MapUtil.getLong(settingsMap, "userId");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+			boolean privateLayout = MapUtil.getBoolean(
+				settingsMap, "privateLayout");
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)settingsMap.get("parameterMap");
+
 			return layoutImporter.validateFile(
-				userId, groupId, privateLayout, parameterMap, file);
+				userId, targetGroupId, privateLayout, parameterMap, file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
@@ -3379,6 +3388,48 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public MissingReferences validateImportLayoutsFile(
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
+		throws PortalException {
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile("lar");
+
+			FileUtil.write(file, inputStream);
+
+			return validateImportLayoutsFile(exportImportConfiguration, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	/**
+	 * @throws     PortalException
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public MissingReferences validateImportLayoutsFile(
+			long userId, long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @throws     PortalException
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public MissingReferences validateImportLayoutsFile(
 			long userId, long groupId, boolean privateLayout,

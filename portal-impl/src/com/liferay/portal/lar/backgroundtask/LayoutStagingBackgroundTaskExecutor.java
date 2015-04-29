@@ -210,8 +210,7 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			MissingReferences missingReferences =
 				LayoutLocalServiceUtil.validateImportLayoutsFile(
-					_userId, _targetGroupId, _privateLayout, _parameterMap,
-					_file);
+					_exportImportConfiguration, _file);
 
 			markBackgroundTask(_backgroundTaskId, "validated");
 

@@ -424,8 +424,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 			MissingReferences missingReferences =
 				layoutLocalService.validateImportLayoutsFile(
-					userId, folder.getGroupId(), privateLayout, parameterMap,
-					file);
+					exportImportConfiguration, file);
 
 			layoutLocalService.importLayouts(
 				userId, folder.getGroupId(), privateLayout, parameterMap, file);

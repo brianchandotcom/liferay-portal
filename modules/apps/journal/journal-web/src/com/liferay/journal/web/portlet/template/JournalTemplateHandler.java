@@ -114,18 +114,17 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		String[] restrictedVariables = getRestrictedVariables(language);
 
 		TemplateVariableGroup journalUtilTemplateVariableGroup =
-			new TemplateVariableGroup("web-content-util", restrictedVariables);
+			new TemplateVariableGroup("journal-util", restrictedVariables);
 
 		journalUtilTemplateVariableGroup.addVariable(
 			"journal-content-util", JournalContentUtil.class,
 			"journalContentUtil");
 
 		templateVariableGroups.put(
-			"web-content-util", journalUtilTemplateVariableGroup);
+			"journal-util", journalUtilTemplateVariableGroup);
 
 		TemplateVariableGroup journalServicesTemplateVariableGroup =
-			new TemplateVariableGroup(
-				"web-content-services", restrictedVariables);
+			new TemplateVariableGroup("journal-services", restrictedVariables);
 
 		journalServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

@@ -24,13 +24,13 @@
 		<liferay-ui:section>
 			<dl>
 				<dt><liferay-ui:message key="format" /></dt>
-				<dd><%= latestFileVersion.getExtension() %></dd>
+				<dd><%= HtmlUtil.escape(latestFileVersion.getExtension()) %></dd>
 
 				<dt><liferay-ui:message key="size" /></dt>
 				<dd><%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %></dd>
 
 				<dt><liferay-ui:message key="name" />:</dt>
-				<dd><%= imageTitle %></dd>
+				<dd><%= HtmlUtil.escape(imageTitle) %></dd>
 
 				<dt><liferay-ui:message key="modified" />:</dt>
 				<dd><liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" /></dd>
@@ -40,7 +40,7 @@
 		<liferay-ui:section>
 			<dl>
 				<dt><liferay-ui:message key="version" />:</dt>
-				<dd><%= latestFileVersion.getVersion() %></dd>
+				<dd><%= HtmlUtil.escape(latestFileVersion.getVersion()) %></dd>
 
 				<dt><liferay-ui:message key="status" />:</dt>
 				<dd><aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" /></dd>

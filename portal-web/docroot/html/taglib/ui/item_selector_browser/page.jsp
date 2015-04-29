@@ -78,8 +78,8 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 						<aui:col cssClass="preview-content" width="<%= 25 %>">
-							<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
-								<img align="left" src="<%= DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, "&imageThumbnail=2") %>" />
+							<a class="item-preview" data-url="<%= HtmlUtil.escapeAttribute(imageURL) %>" href="<%= HtmlUtil.escapeHREF(imagePreviewURL) %>" title="<%= HtmlUtil.escapeAttribute(imageTitle) %>">
+								<img align="left" src="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, "&imageThumbnail=2")) %>" />
 							</a>
 
 							<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
@@ -92,8 +92,8 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 							</div>
 
 							<div style="float: left">
-								<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
-									<%= imageTitle %>
+								<a class="item-preview" data-url="<%= HtmlUtil.escapeAttribute(imageURL) %>" href="<%= HtmlUtil.escapeHREF(imagePreviewURL) %>" title="<%= HtmlUtil.escapeAttribute(imageTitle) %>">
+									<%= HtmlUtil.escape(imageTitle) %>
 								</a>
 
 								<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
@@ -150,13 +150,13 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 						%>
 
 						<liferay-ui:search-container-column-text name="title">
-							<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
+							<a class="item-preview" data-url="<%= HtmlUtil.escapeAttribute(imageURL) %>" href="<%= HtmlUtil.escapeHREF(imagePreviewURL) %>" title="<%= HtmlUtil.escapeAttribute(imageTitle) %>">
 								<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
 									<i class="<%= iconCssClass %>"></i>
 								</c:if>
 
 								<span class="taglib-text">
-									<%= imageTitle %>
+									<%= HtmlUtil.escape(imageTitle) %>
 								</span>
 							</a>
 

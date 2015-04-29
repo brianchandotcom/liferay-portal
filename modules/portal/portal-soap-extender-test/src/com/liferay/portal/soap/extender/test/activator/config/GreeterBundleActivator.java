@@ -83,6 +83,8 @@ public class GreeterBundleActivator implements BundleActivator {
 		}
 
 		if (servers.isEmpty()) {
+			cleanup(bundleContext);
+
 			throw new IllegalStateException(
 				"Endpoint has not been registered past 10 seconds");
 		}
@@ -90,6 +92,10 @@ public class GreeterBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) {
+		cleanup(bundleContext);
+	}
+
+	public void cleanup(BundleContext bundleContext) {
 		try {
 			_configAdminBundleActivator.stop(bundleContext);
 		}

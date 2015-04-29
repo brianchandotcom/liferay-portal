@@ -69,6 +69,14 @@
 		}
 	);
 
+	var onDestroyPortlet = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			delete Liferay.Form._INSTANCES['<%= namespace + name %>'];
+		}
+	};
+
+	Liferay.on('destroyPortlet', onDestroyPortlet);
+
 	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
 		A.all('#<%= namespace + name %> .input-container').removeAttribute('disabled');
 	</c:if>

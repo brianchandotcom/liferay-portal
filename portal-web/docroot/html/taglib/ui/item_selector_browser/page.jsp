@@ -125,6 +125,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 				<liferay-ui:search-container
 					searchContainer="<%= searchContainer %>"
 					total="<%= searchContainer.getTotal() %>"
+					var="listSearchContainer"
 				>
 					<liferay-ui:search-container-results
 						results="<%= searchContainer.getResults() %>"

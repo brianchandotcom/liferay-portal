@@ -41,9 +41,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_organization_assi
 	rowChecker="<%= new UserGroupGroupChecker(renderResponse, group) %>"
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
-	<liferay-ui:search-form
-		page="/html/portlet/user_groups_admin/user_group_search.jsp"
-	/>
+	<liferay-ui:user-group-search-form />
 
 	<%
 	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();

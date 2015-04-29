@@ -594,21 +594,10 @@ public class JournalArticleIndexer extends BaseIndexer {
 			articles = new ArrayList<>();
 
 			JournalArticle latestIndexableArticle =
-				JournalArticleLocalServiceUtil.fetchLatestArticle(
-					article.getResourcePrimKey(),
-					new int[] {
-						WorkflowConstants.STATUS_APPROVED,
-						WorkflowConstants.STATUS_IN_TRASH
-					});
-
-			if (latestIndexableArticle == null) {
-				latestIndexableArticle =
-					JournalArticleLocalServiceUtil.fetchLatestArticle(
-						article.getResourcePrimKey());
-			}
+				fetchLatestIndexableArticleVersion(
+					article.getResourcePrimKey());
 
 			if (latestIndexableArticle != null) {
-
 				articles.add(latestIndexableArticle);
 			}
 		}
@@ -620,6 +609,26 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return documents;
+	}
+
+	protected JournalArticle fetchLatestIndexableArticleVersion(
+		long resourcePrimKey) {
+
+		JournalArticle latestIndexableArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				resourcePrimKey,
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				});
+
+		if (latestIndexableArticle == null) {
+			latestIndexableArticle =
+				JournalArticleLocalServiceUtil.fetchLatestArticle(
+					resourcePrimKey);
+		}
+
+		return latestIndexableArticle;
 	}
 
 	protected String getDDMContentSummary(
@@ -701,19 +710,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 					if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 						JournalArticle latestIndexableArticle =
-							JournalArticleLocalServiceUtil.fetchLatestArticle(
-								article.getResourcePrimKey(),
-								new int[] {
-									WorkflowConstants.STATUS_APPROVED,
-									WorkflowConstants.STATUS_IN_TRASH
-								});
-
-						if (latestIndexableArticle == null) {
-							latestIndexableArticle =
-								JournalArticleLocalServiceUtil.
-									fetchLatestArticle(
-										article.getResourcePrimKey());
-						}
+							fetchLatestIndexableArticleVersion(
+								article.getResourcePrimKey());
 
 						if (latestIndexableArticle == null) {
 							return;

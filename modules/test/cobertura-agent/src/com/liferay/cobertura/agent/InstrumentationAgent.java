@@ -14,6 +14,9 @@
 
 package com.liferay.cobertura.agent;
 
+import com.liferay.cobertura.coveragedata.ClassData;
+import com.liferay.cobertura.coveragedata.CoverageData;
+import com.liferay.cobertura.coveragedata.LineData;
 import com.liferay.cobertura.coveragedata.ProjectData;
 import com.liferay.cobertura.coveragedata.ProjectDataUtil;
 import com.liferay.cobertura.instrument.CoberturaClassFileTransformer;
@@ -28,10 +31,6 @@ import java.lang.instrument.UnmodifiableClassException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import net.sourceforge.cobertura.coveragedata.ClassData;
-import net.sourceforge.cobertura.coveragedata.CoverageData;
-import net.sourceforge.cobertura.coveragedata.LineData;
 
 /**
  * @author Shuyang Zhou

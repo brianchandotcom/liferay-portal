@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.sourceforge.cobertura.coveragedata.CoverageData;
 import net.sourceforge.cobertura.util.StringUtil;
 
 /**

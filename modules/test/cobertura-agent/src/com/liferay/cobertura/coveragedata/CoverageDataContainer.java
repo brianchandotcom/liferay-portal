@@ -21,8 +21,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import net.sourceforge.cobertura.coveragedata.CoverageData;
-
 /**
  * @author Shuyang Zhou
  */

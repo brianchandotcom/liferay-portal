@@ -14,12 +14,12 @@
 
 package com.liferay.cobertura.instrument;
 
+import com.liferay.cobertura.coveragedata.ClassData;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import net.sourceforge.cobertura.coveragedata.ClassData;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;

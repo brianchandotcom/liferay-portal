@@ -14,8 +14,6 @@
 
 package com.liferay.cobertura.coveragedata;
 
-import net.sourceforge.cobertura.coveragedata.ClassData;
-
 /**
  * @author Shuyang Zhou
  */

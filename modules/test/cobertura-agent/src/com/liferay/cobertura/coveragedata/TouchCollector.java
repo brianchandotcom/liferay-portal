@@ -21,8 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.sourceforge.cobertura.coveragedata.ClassData;
-
 /**
  * @author Cristina González
  */

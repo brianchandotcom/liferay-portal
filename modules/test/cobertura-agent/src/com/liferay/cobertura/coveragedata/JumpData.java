@@ -26,7 +26,6 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import net.sourceforge.cobertura.coveragedata.BranchCoverageData;
 
 /**
  * <p>

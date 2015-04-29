@@ -1062,7 +1062,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-48640" name="AddUserScreenNameInvalid" priority="4">
+	<command name="AddUserScreenNameInvalid" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />

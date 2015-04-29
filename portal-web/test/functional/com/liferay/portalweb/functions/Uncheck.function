@@ -17,4 +17,19 @@
 
 		<execute selenium="assertLiferayErrors" />
 	</command>
+
+	<command name="uncheckNoError">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition selenium="isChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked#assertNotChecked" />
+	</command>
 </definition>

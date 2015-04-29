@@ -647,7 +647,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isGenerated(content)) {
+		if (hasGeneratedTag(content)) {
 			return content;
 		}
 
@@ -3134,6 +3134,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\n" + firstLine + "\n" + secondLine + "\n");
 	}
 
+	protected boolean hasGeneratedTag(String content) {
+		if ((content.contains("* @generated") || content.contains("$ANTLR")) &&
+			!content.contains("hasGeneratedTag")) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected boolean isAnnotationParameter(String content, String line) {
 		Matcher matcher = _annotationPattern.matcher(content);
 
@@ -3146,15 +3157,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return false;
-	}
-
-	protected boolean isGenerated(String content) {
-		if (content.contains("* @generated") || content.contains("$ANTLR")) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	protected boolean isValidJavaParameter(String javaParameter) {

@@ -15,6 +15,7 @@
 package com.liferay.frontend.alloy.editor.config;
 
 import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,7 +39,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(property = {"editor.name=alloyeditor"})
+@Component(
+	property = {"editor.name=alloyeditor"},
+	service = EditorConfigContributor.class
+)
 public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override
@@ -137,8 +141,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	protected JSONObject getToolbarsAddJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put(
-			"buttons", toJSONArray("['imageselector', 'table', 'hline']"));
+		jsonObject.put("buttons", toJSONArray("['image', 'table', 'hline']"));
 		jsonObject.put("tabIndex", 2);
 
 		return jsonObject;
@@ -167,7 +170,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonNObject.put("buttons", toJSONArray("['imageLeft', 'imageRight']"));
 		jsonNObject.put("name", "image");
-		jsonNObject.put("test", "image");
+		jsonNObject.put("test", "AlloyEditor.SelectionTest.image");
 
 		return jsonNObject;
 	}
@@ -188,7 +191,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("buttons", toJSONArray("['linkEdit']"));
 		jsonObject.put("name", "link");
-		jsonObject.put("test", "link");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
 
 		return jsonObject;
 	}
@@ -200,10 +203,12 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"buttons",
 			toJSONArray(
 				"['tableRow', 'tableColumn', 'tableCell', 'tableRemove']"));
-		jsonObject.put("getArrowBoxClasses", "table");
+		jsonObject.put(
+			"getArrowBoxClasses",
+			"AlloyEditor.SelectionGetArrowBoxClasses.table");
 		jsonObject.put("name", "table");
-		jsonObject.put("setPosition", "table");
-		jsonObject.put("test", "table");
+		jsonObject.put("setPosition", "AlloyEditor.SelectionSetPosition.table");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.table");
 
 		return jsonObject;
 	}
@@ -217,7 +222,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 				"['styles', 'bold', 'italic', 'underline', 'link', " +
 					"'twitter']"));
 		jsonObject.put("name", "text");
-		jsonObject.put("test", "text");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 
 		return jsonObject;
 	}

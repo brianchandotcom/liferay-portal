@@ -17,8 +17,9 @@ package com.liferay.item.selector.web;
 import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactory;
@@ -70,6 +71,8 @@ public class ItemSelectorImplTest extends PowerMockito {
 		);
 
 		new PortletURLFactoryUtil().setPortletURLFactory(portletURLFactory);
+
+		new JSONFactoryUtil().setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test
@@ -88,22 +91,12 @@ public class ItemSelectorImplTest extends PowerMockito {
 				FlickrItemSelectorCriterion.class.getName(),
 			parameters.get(ItemSelectorImpl.PARAMETER_CRITERIA)[0]);
 		Assert.assertNull(parameters.get("0_desiredReturnTypes"));
+		Assert.assertNotNull(parameters.get("0_json")[0]);
 		Assert.assertEquals(
 			URL.class.getName(), parameters.get("1_desiredReturnTypes")[0]);
-		Assert.assertEquals(
-			_flickrItemSelectorCriterion.getUser(),
-			parameters.get("1_user")[0]);
-		Assert.assertEquals(
-			StringUtil.merge(_flickrItemSelectorCriterion.getTags()),
-			parameters.get("1_tags")[0]);
-		Assert.assertEquals(
-			_mediaItemSelectorCriterion.getFileExtension(),
-			parameters.get("0_fileExtension")[0]);
-		Assert.assertEquals(
-			String.valueOf(_mediaItemSelectorCriterion.getMaxSize()),
-			parameters.get("0_maxSize")[0]);
+		Assert.assertNotNull(parameters.get("1_json")[0]);
 
-		Assert.assertEquals(7, parameters.size());
+		Assert.assertEquals(5, parameters.size());
 	}
 
 	@Test

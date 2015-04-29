@@ -164,14 +164,18 @@ public class ClassData extends CoverageDataContainer
 		return this.name.hashCode();
 	}
 
-	public void addLineJump(int lineNumber, int branchNumber)
-	{
-			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
-			if (lineData != null)
-			{
-				lineData.addJump(branchNumber);
-				this.branches.put(Integer.valueOf(lineNumber), lineData);
-			}
+	public void addLineJump(int lineNumber, int branchNumber) {
+		LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+
+		if (lineData == null) {
+			throw new IllegalStateException(
+				"No instrument data for class " + name + " line " +
+					lineNumber);
+		}
+
+		lineData.addJump(new JumpData(branchNumber));
+
+		branches.put(lineNumber, lineData);
 	}
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys)
@@ -259,7 +263,7 @@ public class ClassData extends CoverageDataContainer
 					"No instrument data for class " + name + " line " +
 						lineNumber);
 			}
-			lineData.touchJump(branchNumber, branch,hits);
+			lineData.touchJump(name, branchNumber, branch,hits);
 	}
 
 	/**

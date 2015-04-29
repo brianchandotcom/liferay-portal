@@ -64,6 +64,10 @@ public class JumpData implements BranchCoverageData, Serializable
 			return ((double) getNumberOfCoveredBranches()) / getNumberOfValidBranches();
 	}
 
+	public int getConditionNumber() {
+		return conditionNumber;
+	}
+
 	public boolean equals(Object obj)
 	{
 		if (this == obj)

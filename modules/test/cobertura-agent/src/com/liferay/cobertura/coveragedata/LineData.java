@@ -29,6 +29,9 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -48,14 +51,14 @@ public class LineData
 	private transient Lock lock;
 
 	private long hits;
-	private List jumps;
+	private final ConcurrentMap<Integer, JumpData> _jumpDatas =
+		new ConcurrentHashMap<>();
 	private List switches;
 	private final int lineNumber;
 
 	public LineData(int lineNumber)
 	{
 		this.hits = 0;
-		this.jumps = null;
 		this.lineNumber = lineNumber;
 		initLock();
 	}
@@ -87,7 +90,7 @@ public class LineData
 		try
 		{
 			return (this.hits == lineData.hits)
-					&& ((this.jumps == lineData.jumps) || ((this.jumps != null) && (this.jumps.equals(lineData.jumps))))
+					&& ((this._jumpDatas == lineData._jumpDatas) || (this._jumpDatas.equals(lineData._jumpDatas)))
 					&& ((this.switches == lineData.switches) || ((this.switches != null) && (this.switches.equals(lineData.switches))))
 					&& (this.lineNumber == lineData.lineNumber);
 		}
@@ -158,9 +161,9 @@ public class LineData
 		lock.lock();
 		try
 		{
-			if (jumps != null)
-				for (int i = jumps.size() - 1; i >= 0; i--)
-					ret += ((JumpData) jumps.get(i)).getNumberOfValidBranches();
+			for (JumpData jumpData : _jumpDatas.values()) {
+				ret += jumpData.getNumberOfValidBranches();
+			}
 			if (switches != null)
 				for (int i = switches.size() - 1; i >= 0; i--)
 					ret += ((SwitchData) switches.get(i)).getNumberOfValidBranches();
@@ -178,9 +181,9 @@ public class LineData
 		lock.lock();
 		try
 		{
-			if (jumps != null)
-				for (int i = jumps.size() - 1; i >= 0; i--)
-					ret += ((JumpData) jumps.get(i)).getNumberOfCoveredBranches();
+			for (JumpData jumpData : _jumpDatas.values()) {
+				ret += jumpData.getNumberOfCoveredBranches();
+			}
 			if (switches != null)
 				for (int i = switches.size() - 1; i >= 0; i--)
 					ret += ((SwitchData) switches.get(i)).getNumberOfCoveredBranches();
@@ -209,16 +212,18 @@ public class LineData
 		try
 		{
 			this.hits += lineData.hits;
-			if (lineData.jumps != null)
-				if (this.jumps == null)
-					this.jumps = lineData.jumps;
-				else
-				{
-					for (int i = Math.min(this.jumps.size(), lineData.jumps.size()) - 1; i >= 0; i--)
-						((JumpData) this.jumps.get(i)).merge((JumpData) lineData.jumps.get(i));
-					for (int i = Math.min(this.jumps.size(), lineData.jumps.size()); i < lineData.jumps.size(); i++)
-						this.jumps.add(lineData.jumps.get(i));
+
+			ConcurrentMap<Integer, JumpData> otherJumpDatas =
+				lineData._jumpDatas;
+
+			for (JumpData jumpData : otherJumpDatas.values()) {
+				JumpData previousJumpData = _jumpDatas.putIfAbsent(
+					jumpData.getConditionNumber(), jumpData);
+
+				if (previousJumpData != null) {
+					previousJumpData.merge(jumpData);
 				}
+			}
 			if (lineData.switches != null)
 				if (this.switches == null)
 					this.switches = lineData.switches;
@@ -237,9 +242,15 @@ public class LineData
 		}
 	}
 
-	void addJump(int jumpNumber)
-	{
-		getJumpData(jumpNumber);
+	public JumpData addJump(JumpData jumpData) {
+		JumpData previousJumpData = _jumpDatas.putIfAbsent(
+			jumpData.getConditionNumber(), jumpData);
+
+		if (previousJumpData != null) {
+			return previousJumpData;
+		}
+
+		return jumpData;
 	}
 
 	void addSwitch(int switchNumber, int[] keys)
@@ -265,35 +276,23 @@ public class LineData
 		}
 	}
 
-	void touchJump(int jumpNumber, boolean branch,int hits)
-	{
-		getJumpData(jumpNumber).touchBranch(branch,hits);
+	public void touchJump(
+		String className, int jumpNumber, boolean branch,int hits) {
+
+		JumpData jumpData = _jumpDatas.get(jumpNumber);
+
+		if (jumpData == null) {
+			throw new IllegalStateException(
+				"No instrument data for class " + className + " line " +
+					lineNumber + " jump " + jumpNumber);
+		}
+
+		jumpData.touchBranch(branch, hits);
 	}
 
 	void touchSwitch(int switchNumber, int branch,int hits)
 	{
 		getSwitchData(switchNumber, null).touchBranch(branch,hits);
-	}
-
-	JumpData getJumpData(int jumpNumber)
-	{
-		lock.lock();
-		try
-		{
-			if (jumps == null)
-			{
-				jumps = new ArrayList();
-			}
-			if (jumps.size() <= jumpNumber)
-			{
-				for (int i = jumps.size(); i <= jumpNumber; jumps.add(new JumpData(i++)));
-			}
-			return (JumpData) jumps.get(jumpNumber);
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	SwitchData getSwitchData(int switchNumber, SwitchData data)

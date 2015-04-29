@@ -17,7 +17,6 @@ package com.liferay.wiki.engine.input.editor.common;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.SessionClicks;
 import com.liferay.wiki.engine.BaseWikiEngine;
-import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.model.WikiPage;
 
 import java.io.IOException;

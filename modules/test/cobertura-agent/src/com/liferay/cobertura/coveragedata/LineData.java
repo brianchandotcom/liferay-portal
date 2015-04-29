@@ -22,9 +22,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author Shuyang Zhou
  */
-public class LineData
-		implements Comparable, CoverageData<LineData>, Serializable
-{
+public class LineData implements CoverageData<LineData>, Serializable {
 	private static final long serialVersionUID = 4;
 
 	private final AtomicLong _hitCounter = new AtomicLong();
@@ -37,14 +35,6 @@ public class LineData
 	public LineData(int lineNumber)
 	{
 		this.lineNumber = lineNumber;
-	}
-
-	@Override
-	public int compareTo(Object o)
-	{
-		if (!o.getClass().equals(LineData.class))
-			return Integer.MAX_VALUE;
-		return this.lineNumber - ((LineData)o).lineNumber;
 	}
 
 	@Override

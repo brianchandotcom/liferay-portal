@@ -14,18 +14,18 @@
 
 package com.liferay.cobertura.coveragedata;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.SortedSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
  * @author Shuyang Zhou
  */
 public class ClassData
-	extends CoverageDataContainer<Integer, LineData, ClassData>
-	implements Comparable<ClassData> {
+	extends CoverageDataContainer<Integer, LineData, ClassData> {
 
 	private static final long serialVersionUID = 5;
 
@@ -47,12 +47,6 @@ public class ClassData
 		}
 
 		return previousLineData;
-	}
-
-	@Override
-	public int compareTo(ClassData o)
-	{
-		return this.name.compareTo(o.name);
 	}
 
 	@Override
@@ -79,8 +73,21 @@ public class ClassData
 		return this.name.substring(lastDot + 1);
 	}
 
-	public SortedSet<LineData> getLines() {
-		return new TreeSet<>(children.values());
+	public Set<LineData> getLines() {
+		Set<LineData> set = new TreeSet<>(
+			new Comparator<LineData>() {
+
+				@Override
+				public int compare(LineData lineData1, LineData lineData2) {
+					return lineData1.getLineNumber() -
+						lineData2.getLineNumber();
+				}
+
+			});
+
+		set.addAll(children.values());
+
+		return set;
 	}
 
 	public String getName()

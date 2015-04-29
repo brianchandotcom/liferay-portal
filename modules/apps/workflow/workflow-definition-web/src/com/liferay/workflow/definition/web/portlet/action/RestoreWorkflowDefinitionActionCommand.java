@@ -14,17 +14,17 @@
 
 package com.liferay.workflow.definition.web.portlet.action;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
@@ -37,20 +37,20 @@ import com.liferay.portal.util.WebKeys;
 	},
 	service = ActionCommand.class
 )
-public class RestoreWorkflowDefinitionActionCommand extends 
-	BaseWorkflowDefinitionActionCommand {
+public class RestoreWorkflowDefinitionActionCommand
+	extends BaseWorkflowDefinitionActionCommand {
 
 	@Override
 	protected void doProcessWorkflowDefinitionCommand(
-		PortletRequest portletRequest, PortletResponse portletResponse) 
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
-		
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		String name = ParamUtil.getString(portletRequest, "name");
 		int version = ParamUtil.getInteger(portletRequest, "version");
-		
+
 		WorkflowDefinitionManagerUtil.updateActive(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
 			version, isActive());
@@ -59,4 +59,5 @@ public class RestoreWorkflowDefinitionActionCommand extends
 	protected boolean isActive() {
 		return true;
 	}
+
 }

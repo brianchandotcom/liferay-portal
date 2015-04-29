@@ -14,6 +14,12 @@
 
 package com.liferay.workflow.definition.web.portlet;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.definition.web.portlet.action.ActionUtil;
+
 import java.io.IOException;
 
 import javax.portlet.Portlet;
@@ -24,26 +30,20 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.definition.web.portlet.action.ActionUtil;
-
 /**
  * @author Leonardo Barros
  */
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.icon=/icons/workflow_definition.png",
 		"com.liferay.portlet.control-panel-entry-category=configuration",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
+		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definitions",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.icon=/icons/workflow_definition.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definitions",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Workflow Definition",
@@ -69,18 +69,17 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 			if (portletMode.equals(PortletMode.VIEW)) {
 				ActionUtil.getWorkflowDefinitions(request);
 			}
-			
+
 			ActionUtil.getWorkflowDefinition(request);
-		} 
+		}
 		catch (Exception e) {
 			if (e instanceof WorkflowException) {
 				hideDefaultErrorMessage(request);
-				
+
 				SessionErrors.add(request, e.getClass());
 
 				include("/error.jsp", request, response);
-
-			} 
+			}
 			else {
 				throw new PortletException(e);
 			}
@@ -88,5 +87,5 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 
 		super.render(request, response);
 	}
-	
+
 }

@@ -40,7 +40,7 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 	title='<%= (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName() %>'
 />
 
-<liferay-portlet:actionURL var="editWorkflowDefinitionURL" name="<%= (workflowDefinition == null) ? "addWorkflowDefinition" : "updateWorkflowDefinition" %>">
+<liferay-portlet:actionURL name='<%= (workflowDefinition == null) ? "addWorkflowDefinition" : "updateWorkflowDefinition" %>' var="editWorkflowDefinitionURL">
 	<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
 </liferay-portlet:actionURL>
 

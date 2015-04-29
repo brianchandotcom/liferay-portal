@@ -25,12 +25,9 @@ import com.liferay.portlet.ControlPanelEntry;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITIONS
-	},
+	property = {"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITIONS},
 	service = ControlPanelEntry.class
 )
-public class WorkflowDefintionControlPanelEntry extends
-	WorkflowControlPanelEntry {
-
+public class WorkflowDefintionControlPanelEntry
+	extends WorkflowControlPanelEntry {
 }

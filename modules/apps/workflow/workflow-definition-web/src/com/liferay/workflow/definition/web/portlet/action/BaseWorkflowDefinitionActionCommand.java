@@ -31,30 +31,30 @@ import com.liferay.portal.util.PortalUtil;
 /**
  * @author Leonardo Barros
  */
-public abstract class BaseWorkflowDefinitionActionCommand extends 
-	BaseActionCommand {
+public abstract class BaseWorkflowDefinitionActionCommand
+	extends BaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-		PortletRequest portletRequest, PortletResponse portletResponse) 
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
-		
+
 		try {
 			doProcessWorkflowDefinitionCommand(portletRequest, portletResponse);
 		}
 		catch (Exception e) {
-			if(e instanceof WorkflowDefinitionFileException) {
+			if (e instanceof WorkflowDefinitionFileException) {
 				hideDefaultErrorMessage(portletRequest);
-				
+
 				SessionErrors.add(portletRequest, e.getClass());
 			}
 			else if (e instanceof RequiredWorkflowDefinitionException) {
 				hideDefaultErrorMessage(portletRequest);
-				
+
 				SessionErrors.add(portletRequest, e.getClass());
-				
+
 				PortletSession portletSession =
-						portletRequest.getPortletSession();
+					portletRequest.getPortletSession();
 
 				PortletContext portletContext =
 					portletSession.getPortletContext();
@@ -67,7 +67,7 @@ public abstract class BaseWorkflowDefinitionActionCommand extends
 			}
 			else if (e instanceof WorkflowException) {
 				hideDefaultErrorMessage(portletRequest);
-				
+
 				SessionErrors.add(portletRequest, e.getClass());
 
 				PortletSession portletSession =
@@ -87,16 +87,16 @@ public abstract class BaseWorkflowDefinitionActionCommand extends
 			}
 		}
 	}
-	
+
+	protected abstract void doProcessWorkflowDefinitionCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception;
+
 	protected void hideDefaultErrorMessage(PortletRequest portletRequest) {
 		SessionMessages.add(
 			portletRequest,
 			PortalUtil.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 	}
-	
-	protected abstract void doProcessWorkflowDefinitionCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception;
 
 }

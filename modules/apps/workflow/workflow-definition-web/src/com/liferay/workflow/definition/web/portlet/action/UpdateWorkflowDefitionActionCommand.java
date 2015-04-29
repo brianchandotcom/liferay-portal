@@ -14,15 +14,6 @@
 
 package com.liferay.workflow.definition.web.portlet.action;
 
-import java.io.File;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -40,6 +31,16 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
+import java.io.File;
+
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Leonardo Barros
  */
@@ -51,16 +52,16 @@ import com.liferay.portal.util.WebKeys;
 	},
 	service = ActionCommand.class
 )
-public class UpdateWorkflowDefitionActionCommand extends 
-	BaseWorkflowDefinitionActionCommand {
+public class UpdateWorkflowDefitionActionCommand
+	extends BaseWorkflowDefinitionActionCommand {
 
 	@Override
 	protected void doProcessWorkflowDefinitionCommand(
-		PortletRequest portletRequest, PortletResponse portletResponse) 
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
-		
+
 		UploadPortletRequest uploadPortletRequest =
-				PortalUtil.getUploadPortletRequest(portletRequest);
+			PortalUtil.getUploadPortletRequest(portletRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -85,9 +86,10 @@ public class UpdateWorkflowDefitionActionCommand extends
 				version, getTitle(titleMap));
 		}
 		else {
-			if(file.length() == 0) {
+			if (file.length() == 0) {
 				throw new WorkflowDefinitionFileException();
 			}
+
 			workflowDefinition =
 				WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
@@ -96,9 +98,8 @@ public class UpdateWorkflowDefitionActionCommand extends
 
 		portletRequest.setAttribute(
 			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
-
 	}
-	
+
 	protected String getTitle(Map<Locale, String> titleMap) {
 		if (titleMap == null) {
 			return null;
@@ -107,7 +108,6 @@ public class UpdateWorkflowDefitionActionCommand extends
 		String value = StringPool.BLANK;
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			
 			String languageId = LocaleUtil.toLanguageId(locale);
 			String title = titleMap.get(locale);
 
@@ -123,11 +123,15 @@ public class UpdateWorkflowDefitionActionCommand extends
 
 		return value;
 	}
-	
-	private static final String _TITLE2 = "Title";
-	private static final String _VERSION = "version";
-	private static final String _NAME = "name";
+
 	private static final String _FILE = "file";
+
+	private static final String _NAME = "name";
+
 	private static final String _TITLE = "title";
+
+	private static final String _TITLE2 = "Title";
+
+	private static final String _VERSION = "version";
 
 }

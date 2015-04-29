@@ -26,32 +26,31 @@
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.portal.kernel.deploy.DeployManagerUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
+page import="com.liferay.portal.kernel.deploy.DeployManagerUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.security.auth.PrincipalException" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.deploy.DeployManagerUtil" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
-page import="java.util.List" %>
+page import="com.liferay.portal.util.WebKeys" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %>
+
+<%@ page import="java.util.List" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
 
 <%
-
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();

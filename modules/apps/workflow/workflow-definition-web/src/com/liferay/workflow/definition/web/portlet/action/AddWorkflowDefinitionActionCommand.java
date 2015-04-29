@@ -14,10 +14,10 @@
 
 package com.liferay.workflow.definition.web.portlet.action;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.util.PortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
@@ -30,7 +30,6 @@ import com.liferay.portal.util.PortletKeys;
 	},
 	service = ActionCommand.class
 )
-public class AddWorkflowDefinitionActionCommand extends 
-	UpdateWorkflowDefitionActionCommand {
-
+public class AddWorkflowDefinitionActionCommand
+	extends UpdateWorkflowDefitionActionCommand {
 }

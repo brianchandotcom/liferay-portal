@@ -35,9 +35,9 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 		message='<%= LanguageUtil.format(request, "add-new-x", "file") %>'
 		url="<%= editURL %>"
 	/>
-	
+
 	<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
-		
+
 		<%
 		String taglibOnClick = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('" + HtmlUtil.escapeJS(workflowDefinition.getName()) + "', '" + workflowDefinition.getVersion() + "', '', Liferay.Util.getWindowName());";
 		%>
@@ -47,11 +47,11 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 			message="edit"
 			url="<%= taglibOnClick %>"
 		/>
-		
+
 	</c:if>
 
 	<c:if test="<%= !workflowDefinition.isActive() %>">
-		<liferay-portlet:actionURL var="restoreWorkflowDefinitionURL" name="restoreWorkflowDefinition">
+		<liferay-portlet:actionURL name="restoreWorkflowDefinition" var="restoreWorkflowDefinitionURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 			<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
@@ -64,7 +64,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 		/>
 	</c:if>
 
-	<liferay-portlet:actionURL var="deleteURL" name="<%= workflowDefinition.isActive() ? "deactivateWorkflowDefinition" : "deleteWorkflowDefinition" %>">
+	<liferay-portlet:actionURL name='<%= workflowDefinition.isActive() ? "deactivateWorkflowDefinition" : "deleteWorkflowDefinition" %>' var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />

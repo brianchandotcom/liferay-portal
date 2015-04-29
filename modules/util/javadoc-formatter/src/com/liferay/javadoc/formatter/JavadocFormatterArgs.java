@@ -14,18 +14,25 @@
 
 package com.liferay.javadoc.formatter;
 
-import java.io.File;
-
 /**
  * @author Andrea Di Giorgi
  */
 public class JavadocFormatterArgs {
 
+	public static final String AUTHOR = "Brian Wing Shun Chan";
+
+	public static final double LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
+
+	public static final String OUTPUT_FILE_PREFIX = "javadocs";
+
+	public static final String OUTPUT_KEY_MODIFIED_FILES =
+		"javadoc.formatter.modified.files";
+
 	public String getAuthor() {
 		return _author;
 	}
 
-	public File getInputDir() {
+	public String getInputDir() {
 		return _inputDir;
 	}
 
@@ -59,12 +66,12 @@ public class JavadocFormatterArgs {
 		_initializeMissingJavadocs = initializeMissingJavadocs;
 	}
 
-	public void setInputDir(File inputDir) {
+	public void setInputDir(String inputDir) {
 		_inputDir = inputDir;
 	}
 
-	public void setLimits(String[] limits) {
-		_limits = limits;
+	public void setLimits(String limits) {
+		_limits = _split(limits);
 	}
 
 	public void setLowestSupportedJavaVersion(
@@ -81,13 +88,16 @@ public class JavadocFormatterArgs {
 		_updateJavadocs = updateJavadocs;
 	}
 
-	private String _author = JavadocFormatter.AUTHOR;
+	private String[] _split(String s) {
+		return s.split(",");
+	}
+
+	private String _author = AUTHOR;
 	private boolean _initializeMissingJavadocs;
-	private File _inputDir;
-	private String[] _limits;
-	private double _lowestSupportedJavaVersion =
-		JavadocFormatter.LOWEST_SUPPORTED_JAVA_VERSION;
-	private String _outputFilePrefix = JavadocFormatter.OUTPUT_FILE_PREFIX;
+	private String _inputDir = "./";
+	private String[] _limits = new String[0];
+	private double _lowestSupportedJavaVersion = LOWEST_SUPPORTED_JAVA_VERSION;
+	private String _outputFilePrefix = OUTPUT_FILE_PREFIX;
 	private boolean _updateJavadocs;
 
 }

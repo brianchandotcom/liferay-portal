@@ -87,12 +87,6 @@ import org.dom4j.io.XMLWriter;
  */
 public class JavadocFormatter {
 
-	public static final String AUTHOR = "Brian Wing Shun Chan";
-
-	public static final double LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
-
-	public static final String OUTPUT_FILE_PREFIX = "javadocs";
-
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
@@ -108,7 +102,7 @@ public class JavadocFormatter {
 		String author = GetterUtil.getString(arguments.get("javadoc.author"));
 
 		if (Validator.isNull(author) || author.startsWith("$")) {
-			author = AUTHOR;
+			author = JavadocFormatterArgs.AUTHOR;
 		}
 
 		_author = author;
@@ -149,7 +143,7 @@ public class JavadocFormatter {
 
 		_lowestSupportedJavaVersion = GetterUtil.getDouble(
 			arguments.get("javadoc.lowest.supported.java.version"),
-			LOWEST_SUPPORTED_JAVA_VERSION);
+			JavadocFormatterArgs.LOWEST_SUPPORTED_JAVA_VERSION);
 
 		String outputFilePrefix = GetterUtil.getString(
 			arguments.get("javadoc.output.file.prefix"));
@@ -157,7 +151,7 @@ public class JavadocFormatter {
 		if (Validator.isNull(outputFilePrefix) ||
 			outputFilePrefix.startsWith("$")) {
 
-			outputFilePrefix = OUTPUT_FILE_PREFIX;
+			outputFilePrefix = JavadocFormatterArgs.OUTPUT_FILE_PREFIX;
 		}
 
 		_outputFilePrefix = outputFilePrefix;
@@ -251,6 +245,8 @@ public class JavadocFormatter {
 			if (!oldJavadocsXmlContent.equals(newJavadocsXmlContent)) {
 				FileUtils.writeStringToFile(
 					javadocsXmlFile, newJavadocsXmlContent);
+
+				_modifiedFileNames.add(javadocsXmlFile.getAbsolutePath());
 			}
 
 			_detachUnnecessaryTypes(javadocsXmlRootElement);
@@ -274,8 +270,15 @@ public class JavadocFormatter {
 
 				FileUtils.writeStringToFile(
 					javadocsRuntimeXmlFile, newJavadocsRuntimeXmlContent);
+
+				_modifiedFileNames.add(
+					javadocsRuntimeXmlFile.getAbsolutePath());
 			}
 		}
+	}
+
+	public Set<String> getModifiedFileNames() {
+		return _modifiedFileNames;
 	}
 
 	private List<Tuple> _addAncestorJavaClassTuples(
@@ -1256,6 +1259,8 @@ public class JavadocFormatter {
 			FileUtils.writeStringToFile(
 				javadocsXmlFile,
 				"<?xml version=\"1.0\"?>\n\n<javadocs>\n</javadocs>");
+
+			_modifiedFileNames.add(javadocsXmlFile.getAbsolutePath());
 		}
 
 		String javadocsXmlContent = FileUtils.readFileToString(javadocsXmlFile);
@@ -1964,6 +1969,8 @@ public class JavadocFormatter {
 			FileUtils.writeByteArrayToFile(
 				file, formattedContent.getBytes(StringPool.UTF8));
 
+			_modifiedFileNames.add(file.getAbsolutePath());
+
 			System.out.println("Writing " + file);
 		}
 	}
@@ -2134,6 +2141,7 @@ public class JavadocFormatter {
 	private Properties _languageProperties;
 	private final File _languagePropertiesFile;
 	private final double _lowestSupportedJavaVersion;
+	private final Set<String> _modifiedFileNames = new HashSet<>();
 	private final String _outputFilePrefix;
 	private final Pattern _paragraphTagPattern = Pattern.compile(
 		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);

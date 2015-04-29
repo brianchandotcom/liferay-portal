@@ -647,7 +647,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isGenerated(content)) {
+		if (hasGeneratedTag(content)) {
 			return content;
 		}
 
@@ -3148,7 +3148,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
-	protected boolean isGenerated(String content) {
+	protected boolean hasGeneratedTag(String content) {
 		if (content.contains("* @generated") || content.contains("$ANTLR")) {
 			return true;
 		}

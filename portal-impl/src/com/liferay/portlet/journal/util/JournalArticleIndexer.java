@@ -699,6 +699,29 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 					JournalArticle article = (JournalArticle)object;
 
+					if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+						JournalArticle latestIndexableArticle =
+							JournalArticleLocalServiceUtil.fetchLatestArticle(
+								article.getResourcePrimKey(),
+								new int[] {
+									WorkflowConstants.STATUS_APPROVED,
+									WorkflowConstants.STATUS_IN_TRASH
+								});
+
+						if (latestIndexableArticle == null) {
+							latestIndexableArticle =
+								JournalArticleLocalServiceUtil.
+									fetchLatestArticle(
+										article.getResourcePrimKey());
+						}
+
+						if (latestIndexableArticle == null) {
+							return;
+						}
+
+						article = latestIndexableArticle;
+					}
+
 					Document document = getDocument(article);
 
 					actionableDynamicQuery.addDocument(document);

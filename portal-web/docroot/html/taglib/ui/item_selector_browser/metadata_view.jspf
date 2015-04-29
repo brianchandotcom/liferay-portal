@@ -43,7 +43,7 @@
 				<dd><%= latestFileVersion.getVersion() %></dd>
 
 				<dt><liferay-ui:message key="status" />:</dt>
-				<dd><aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" /> </dd>
+				<dd><aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" /></dd>
 			</dl>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

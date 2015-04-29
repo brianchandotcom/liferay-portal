@@ -90,6 +90,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 							<div class="thumbnail-container ">
 								<img align="left" src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" />
 							</div>
+
 							<div style="float: left">
 								<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
 									<%= imageTitle %>
@@ -118,7 +119,6 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 			%>
 
 			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
-
 		</c:when>
 		<c:otherwise>
 			<div class="list-content">
@@ -161,7 +161,6 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 							</a>
 
 							<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
-
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />

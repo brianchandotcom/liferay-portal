@@ -144,7 +144,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 						String imageURL = DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK);
 						String imageTitle = DLUtil.getTitleWithExtension(fileEntry);
 
-						String iconCssClass = DLUtil.getFileIconCssClass(imageTitle.substring(imageTitle.lastIndexOf(".") + 1));
+						String iconCssClass = DLUtil.getFileIconCssClass(fileEntry.getExtension());
 
 						String author = fileEntry.getUserName();
 						%>

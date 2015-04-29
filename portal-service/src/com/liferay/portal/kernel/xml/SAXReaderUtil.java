@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -249,6 +250,10 @@ public class SAXReaderUtil {
 	}
 
 	protected static boolean isCallerWhitelisted() {
+		if (!_XML_SECURITY_ENABLED) {
+			return true;
+		}
+
 		StringBundler sb = new StringBundler(3);
 
 		Exception e = new Exception();
@@ -290,6 +295,9 @@ public class SAXReaderUtil {
 
 		return false;
 	}
+
+	private static final boolean _XML_SECURITY_ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.XML_SECURITY_ENABLED));
 
 	private static final String[] _XML_SECURITY_WHITELIST = PropsUtil.getArray(
 		PropsKeys.XML_SECURITY_WHITELIST);

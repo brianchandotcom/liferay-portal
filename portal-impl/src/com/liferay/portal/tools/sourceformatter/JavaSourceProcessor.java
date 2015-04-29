@@ -3134,6 +3134,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\n" + firstLine + "\n" + secondLine + "\n");
 	}
 
+	protected boolean hasGeneratedTag(String content) {
+		if (content.contains("* @generated") || content.contains("$ANTLR")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected boolean isAnnotationParameter(String content, String line) {
 		Matcher matcher = _annotationPattern.matcher(content);
 
@@ -3146,15 +3155,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return false;
-	}
-
-	protected boolean hasGeneratedTag(String content) {
-		if (content.contains("* @generated") || content.contains("$ANTLR")) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	protected boolean isValidJavaParameter(String javaParameter) {

@@ -972,21 +972,57 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			DigesterUtil.digestHex(Digester.SHA_256, folderName));
 	}
 
+	@Override
+	public void importLayouts(
+			ExportImportConfiguration exportImportConfiguration, File file)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		layoutLocalService.importLayouts(exportImportConfiguration, file);
+	}
+
+	@Override
+	public void importLayouts(
+			ExportImportConfiguration exportImportConfiguration, InputStream is)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		layoutLocalService.importLayouts(exportImportConfiguration, is);
+	}
+
 	/**
 	 * Imports the layouts from the byte array.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information will be imported. For information on the keys used in
-	 *         the map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  bytes the byte array with the data
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found, if the group did not have permission to manage the
-	 *         layouts, or if some other portal exception occurred
-	 * @see    com.liferay.portal.lar.LayoutImporter
+	 * @param      groupId the primary key of the group
+	 * @param      privateLayout whether the layout is private to the group
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information will be imported. For information on the keys
+	 *             used in the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      bytes the byte array with the data
+	 * @throws     PortalException if a group with the primary key could not be
+	 *             found, if the group did not have permission to manage the
+	 *             layouts, or if some other portal exception occurred
+	 * @see        com.liferay.portal.lar.LayoutImporter
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public void importLayouts(
 			long groupId, boolean privateLayout,
@@ -1003,18 +1039,21 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	/**
 	 * Imports the layouts from the file.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information will be imported. For information on the keys used in
-	 *         the map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  file the LAR file with the data
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found, if the group did not have permission to manage the layouts
-	 *         and publish, or if some other portal exception occurred
-	 * @see    com.liferay.portal.lar.LayoutImporter
+	 * @param      groupId the primary key of the group
+	 * @param      privateLayout whether the layout is private to the group
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information will be imported. For information on the keys
+	 *             used in the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      file the LAR file with the data
+	 * @throws     PortalException if a group with the primary key could not be
+	 *             found, if the group did not have permission to manage the
+	 *             layouts and publish, or if some other portal exception
+	 *             occurred
+	 * @see        com.liferay.portal.lar.LayoutImporter
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public void importLayouts(
 			long groupId, boolean privateLayout,
@@ -1031,18 +1070,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	/**
 	 * Imports the layouts from the input stream.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  parameterMap the mapping of parameters indicating which
-	 *         information will be imported. For information on the keys used in
-	 *         the map see {@link
-	 *         com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
-	 * @param  is the input stream
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found, if the group did not have permission to manage the
-	 *         layouts, or if some other portal exception occurred
-	 * @see    com.liferay.portal.lar.LayoutImporter
+	 * @param      groupId the primary key of the group
+	 * @param      privateLayout whether the layout is private to the group
+	 * @param      parameterMap the mapping of parameters indicating which
+	 *             information will be imported. For information on the keys
+	 *             used in the map see {@link
+	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      is the input stream
+	 * @throws     PortalException if a group with the primary key could not be
+	 *             found, if the group did not have permission to manage the
+	 *             layouts, or if some other portal exception occurred
+	 * @see        com.liferay.portal.lar.LayoutImporter
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public void importLayouts(
 			long groupId, boolean privateLayout,

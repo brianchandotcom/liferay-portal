@@ -707,7 +707,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), _stagingGroup.getGroupId(), privateLayout,
+				user.getUserId(), _stagingGroup.getGroupId(),
+				_liveGroup.getGroupId(), privateLayout,
 				ExportImportHelperUtil.getLayoutIds(layouts),
 				new HashMap<String, String[]>(), user.getLocale(),
 				user.getTimeZone());
@@ -717,7 +718,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 				addExportImportConfiguration(
 					user.getUserId(), _stagingGroup.getGroupId(),
 					StringPool.BLANK, StringPool.BLANK,
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_LOCAL,
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
@@ -725,8 +727,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			exportImportConfiguration);
 
 		LayoutLocalServiceUtil.importLayouts(
-			TestPropsValues.getUserId(), _liveGroup.getGroupId(), privateLayout,
-			new HashMap<String, String[]>(), larFile);
+			exportImportConfiguration, larFile);
 	}
 
 	protected String getContent(String fileName) throws Exception {

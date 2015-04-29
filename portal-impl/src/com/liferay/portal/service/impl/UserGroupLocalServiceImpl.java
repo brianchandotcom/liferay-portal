@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1127,13 +1128,45 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		long groupId = user.getGroupId();
 
 		if (privateLayoutsFile != null) {
+			Map<String, Serializable> settingsMap =
+				ExportImportConfigurationSettingsMapFactory.
+					buildImportSettingsMap(
+						user.getUserId(), groupId, true, null, parameterMap,
+						Constants.IMPORT, user.getLocale(), user.getTimeZone(),
+						privateLayoutsFile.getName());
+
+			ExportImportConfiguration exportImportConfiguration =
+				exportImportConfigurationLocalService.
+					addExportImportConfiguration(
+						user.getUserId(), groupId, StringPool.BLANK,
+						StringPool.BLANK,
+						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+						settingsMap, WorkflowConstants.STATUS_DRAFT,
+						new ServiceContext());
+
 			layoutLocalService.importLayouts(
-				userId, groupId, true, parameterMap, privateLayoutsFile);
+				exportImportConfiguration, privateLayoutsFile);
 		}
 
 		if (publicLayoutsFile != null) {
+			Map<String, Serializable> settingsMap =
+				ExportImportConfigurationSettingsMapFactory.
+					buildImportSettingsMap(
+						user.getUserId(), groupId, false, null, parameterMap,
+						Constants.IMPORT, user.getLocale(), user.getTimeZone(),
+						publicLayoutsFile.getName());
+
+			ExportImportConfiguration exportImportConfiguration =
+				exportImportConfigurationLocalService.
+					addExportImportConfiguration(
+						user.getUserId(), groupId, StringPool.BLANK,
+						StringPool.BLANK,
+						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+						settingsMap, WorkflowConstants.STATUS_DRAFT,
+						new ServiceContext());
+
 			layoutLocalService.importLayouts(
-				userId, groupId, false, parameterMap, publicLayoutsFile);
+				exportImportConfiguration, publicLayoutsFile);
 		}
 	}
 

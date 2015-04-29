@@ -92,8 +92,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 			Map<Long, Boolean> layoutIdMap =
 				(Map<Long, Boolean>)settingsMap.get("layoutIdMap");
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
 			long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
 
 			Map<String, Serializable> taskContextMap =
@@ -116,8 +114,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				backgroundTask.getBackgroundTaskId(), "exported");
 
 			missingReferences = StagingServiceHttp.publishStagingRequest(
-				httpPrincipal, stagingRequestId, privateLayout, parameterMap,
-				exportImportConfiguration);
+				httpPrincipal, stagingRequestId, exportImportConfiguration);
 
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 

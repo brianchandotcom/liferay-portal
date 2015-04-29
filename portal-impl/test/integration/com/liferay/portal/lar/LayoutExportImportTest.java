@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -459,26 +460,39 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		User user = TestPropsValues.getUser();
 
-		Map<String, Serializable> settingsMap =
+		Map<String, Serializable> exportSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				user.getUserId(), group.getGroupId(), false, layoutIds,
 				getExportParameterMap(), user.getLocale(), user.getTimeZone());
 
-		ExportImportConfiguration exportImportConfiguration =
+		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
 					user.getUserId(), group.getGroupId(), StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					exportSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			exportImportConfiguration);
+			exportConfiguration);
 
-		LayoutLocalServiceUtil.importLayouts(
-			TestPropsValues.getUserId(), importedGroup.getGroupId(), false,
-			parameterMap, larFile);
+		Map<String, Serializable> importSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
+				user.getUserId(), importedGroup.getGroupId(), false, null,
+				parameterMap, Constants.IMPORT, user.getLocale(),
+				user.getTimeZone(), larFile.getName());
+
+		ExportImportConfiguration importConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					user.getUserId(), importedGroup.getGroupId(),
+					StringPool.BLANK, StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
+		LayoutLocalServiceUtil.importLayouts(importConfiguration, larFile);
 	}
 
 	protected void testAvailableLocales(

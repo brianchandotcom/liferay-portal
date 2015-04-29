@@ -399,8 +399,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	@Override
 	public MissingReferences publishStagingRequest(
-			long userId, long stagingRequestId, boolean privateLayout,
-			Map<String, String[]> parameterMap,
+			long userId, long stagingRequestId,
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
@@ -426,8 +425,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				layoutLocalService.validateImportLayoutsFile(
 					exportImportConfiguration, file);
 
-			layoutLocalService.importLayouts(
-				userId, folder.getGroupId(), privateLayout, parameterMap, file);
+			layoutLocalService.importLayouts(exportImportConfiguration, file);
 
 			return missingReferences;
 		}

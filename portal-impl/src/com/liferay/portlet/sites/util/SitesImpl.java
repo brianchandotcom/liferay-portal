@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -63,6 +64,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -300,29 +302,44 @@ public class SitesImpl implements Sites {
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
-		Map<String, Serializable> settingsMap =
+		Map<String, Serializable> exportSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				userId, sourceLayout.getGroupId(),
 				sourceLayout.isPrivateLayout(),
 				new long[] {sourceLayout.getLayoutId()}, parameterMap,
 				user.getLocale(), user.getTimeZone());
 
-		ExportImportConfiguration exportImportConfiguration =
+		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
 					userId, sourceLayout.getGroupId(), StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					exportSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			exportImportConfiguration);
+			exportConfiguration);
 
 		try {
-			LayoutLocalServiceUtil.importLayouts(
-				userId, targetLayout.getGroupId(),
-				targetLayout.isPrivateLayout(), parameterMap, file);
+			Map<String, Serializable> importSettingsMap =
+				ExportImportConfigurationSettingsMapFactory.
+					buildImportSettingsMap(
+						userId, targetLayout.getGroupId(),
+						targetLayout.isPrivateLayout(), null, parameterMap,
+						Constants.IMPORT, user.getLocale(), user.getTimeZone(),
+						file.getName());
+
+			ExportImportConfiguration importConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					addExportImportConfiguration(
+						userId, targetLayout.getGroupId(), StringPool.BLANK,
+						StringPool.BLANK,
+						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+						importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+						new ServiceContext());
+
+			LayoutLocalServiceUtil.importLayouts(importConfiguration, file);
 		}
 		finally {
 			file.delete();
@@ -860,9 +877,30 @@ public class SitesImpl implements Sites {
 		setLayoutSetPrototypeLinkEnabledParameter(
 			parameterMap, layoutSet, serviceContext);
 
-		LayoutServiceUtil.importLayouts(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), parameterMap,
-			inputStream);
+		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
+
+		if (user == null) {
+			user = UserLocalServiceUtil.getUser(
+				GetterUtil.getLong(PrincipalThreadLocal.getName()));
+		}
+
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
+				user.getUserId(), layoutSet.getGroupId(),
+				layoutSet.isPrivateLayout(), null, parameterMap,
+				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
+				StringPool.BLANK);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					user.getUserId(), layoutSet.getGroupId(), StringPool.BLANK,
+					StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					serviceContext);
+
+		LayoutServiceUtil.importLayouts(exportImportConfiguration, inputStream);
 	}
 
 	@Override
@@ -1848,8 +1886,22 @@ public class SitesImpl implements Sites {
 			newFile = true;
 		}
 
-		LayoutLocalServiceUtil.importLayouts(
-			user.getUserId(), groupId, privateLayout, parameterMap, file);
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
+				user.getUserId(), groupId, privateLayout, null, parameterMap,
+				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
+				file.getName());
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					user.getUserId(), groupId, StringPool.BLANK,
+					StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
+		LayoutLocalServiceUtil.importLayouts(exportImportConfiguration, file);
 
 		if (newFile) {
 			try {

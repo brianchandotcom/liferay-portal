@@ -16,6 +16,7 @@ package com.liferay.portal.staging;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
@@ -132,7 +133,10 @@ public class StagingLocalizationTest {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), _sourceGroup.getGroupId(), false, null,
+				user.getUserId(), _sourceGroup.getGroupId(),
+				_targetGroup.getGroupId(), false,
+				ExportImportHelperUtil.getAllLayoutIds(
+					_sourceGroup.getGroupId(), false),
 				parameterMap, user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
@@ -140,7 +144,8 @@ public class StagingLocalizationTest {
 				addExportImportConfiguration(
 					user.getUserId(), _sourceGroup.getGroupId(),
 					StringPool.BLANK, StringPool.BLANK,
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_LOCAL,
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
@@ -150,9 +155,7 @@ public class StagingLocalizationTest {
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), languageIds, defaultLanguageId);
 
-		LayoutLocalServiceUtil.importLayouts(
-			TestPropsValues.getUserId(), _targetGroup.getGroupId(), false,
-			parameterMap, file);
+		LayoutLocalServiceUtil.importLayouts(exportImportConfiguration, file);
 
 		JournalArticleResource articleResource =
 			JournalArticleResourceLocalServiceUtil.

@@ -89,9 +89,6 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			initThreadLocals(sourceGroupId, privateLayout);
 
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-
 			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 				exportImportConfiguration);
 
@@ -102,8 +99,8 @@ public class LayoutStagingBackgroundTaskExecutor
 				transactionAttribute,
 				new LayoutStagingImportCallable(
 					backgroundTask.getBackgroundTaskId(),
-					exportImportConfiguration, file, parameterMap,
-					privateLayout, sourceGroupId, targetGroupId, userId));
+					exportImportConfiguration, file, sourceGroupId,
+					targetGroupId, userId));
 
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
@@ -190,14 +187,11 @@ public class LayoutStagingBackgroundTaskExecutor
 		public LayoutStagingImportCallable(
 			long backgroundTaskId,
 			ExportImportConfiguration exportImportConfiguration, File file,
-			Map<String, String[]> parameterMap, boolean privateLayout,
 			long sourceGroupId, long targetGroupId, long userId) {
 
 			_backgroundTaskId = backgroundTaskId;
 			_exportImportConfiguration = exportImportConfiguration;
 			_file = file;
-			_parameterMap = parameterMap;
-			_privateLayout = privateLayout;
 			_sourceGroupId = sourceGroupId;
 			_targetGroupId = targetGroupId;
 			_userId = userId;
@@ -215,7 +209,7 @@ public class LayoutStagingBackgroundTaskExecutor
 			markBackgroundTask(_backgroundTaskId, "validated");
 
 			LayoutLocalServiceUtil.importLayouts(
-				_userId, _targetGroupId, _privateLayout, _parameterMap, _file);
+				_exportImportConfiguration, _file);
 
 			initLayoutSetBranches(_userId, _sourceGroupId, _targetGroupId);
 
@@ -225,8 +219,6 @@ public class LayoutStagingBackgroundTaskExecutor
 		private final long _backgroundTaskId;
 		private final ExportImportConfiguration _exportImportConfiguration;
 		private final File _file;
-		private final Map<String, String[]> _parameterMap;
-		private final boolean _privateLayout;
 		private final long _sourceGroupId;
 		private final long _targetGroupId;
 		private final long _userId;

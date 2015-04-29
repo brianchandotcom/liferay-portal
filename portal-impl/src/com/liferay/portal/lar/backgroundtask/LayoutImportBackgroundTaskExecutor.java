@@ -22,17 +22,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 
 import java.io.File;
-import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
@@ -58,16 +55,6 @@ public class LayoutImportBackgroundTaskExecutor
 		ExportImportConfiguration exportImportConfiguration =
 			getExportImportConfiguration(backgroundTask);
 
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
-		long userId = MapUtil.getLong(settingsMap, "userId");
-		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-		boolean privateLayout = MapUtil.getBoolean(
-			settingsMap, "privateLayout");
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)settingsMap.get("parameterMap");
-
 		List<FileEntry> attachmentsFileEntries =
 			backgroundTask.getAttachmentsFileEntries();
 
@@ -81,9 +68,7 @@ public class LayoutImportBackgroundTaskExecutor
 
 				TransactionHandlerUtil.invoke(
 					transactionAttribute,
-					new LayoutImportCallable(
-						exportImportConfiguration, file, parameterMap,
-						privateLayout, targetGroupId, userId));
+					new LayoutImportCallable(exportImportConfiguration, file));
 			}
 			catch (Throwable t) {
 				if (_log.isDebugEnabled()) {
@@ -109,16 +94,10 @@ public class LayoutImportBackgroundTaskExecutor
 	private class LayoutImportCallable implements Callable<Void> {
 
 		public LayoutImportCallable(
-			ExportImportConfiguration exportImportConfiguration, File file,
-			Map<String, String[]> parameterMap, boolean privateLayout,
-			long targetGroupId, long userId) {
+			ExportImportConfiguration exportImportConfiguration, File file) {
 
 			_exportImportConfiguration = exportImportConfiguration;
 			_file = file;
-			_parameterMap = parameterMap;
-			_privateLayout = privateLayout;
-			_targetGroupId = targetGroupId;
-			_userId = userId;
 		}
 
 		@Override
@@ -127,17 +106,13 @@ public class LayoutImportBackgroundTaskExecutor
 				_exportImportConfiguration, _file);
 
 			LayoutLocalServiceUtil.importLayouts(
-				_userId, _targetGroupId, _privateLayout, _parameterMap, _file);
+				_exportImportConfiguration, _file);
 
 			return null;
 		}
 
 		private final ExportImportConfiguration _exportImportConfiguration;
 		private final File _file;
-		private final Map<String, String[]> _parameterMap;
-		private final boolean _privateLayout;
-		private final long _targetGroupId;
-		private final long _userId;
 
 	}
 

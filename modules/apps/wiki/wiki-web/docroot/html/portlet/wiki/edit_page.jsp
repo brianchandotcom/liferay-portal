@@ -257,7 +257,7 @@ if (Validator.isNull(redirect)) {
 							for (String format : formats) {
 							%>
 
-								<aui:option label="<%= WikiUtil.getFormatLabel(format, request) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
+								<aui:option label="<%= WikiUtil.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
 
 							<%
 							}

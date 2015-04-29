@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -283,11 +282,10 @@ public class WikiUtil {
 		return entries;
 	}
 
-	public static String getFormatLabel(
-			String format, HttpServletRequest request)
+	public static String getFormatLabel(String format, Locale locale)
 		throws WikiFormatException {
 
-		return _instance._getFormatLabel(format, request);
+		return _instance._getFormatLabel(format, locale);
 	}
 
 	public static Collection<String> getFormats() {
@@ -580,12 +578,10 @@ public class WikiUtil {
 		return matcher.appendTail(sb).toString();
 	}
 
-	private String _getFormatLabel(String format, HttpServletRequest request)
+	private String _getFormatLabel(String format, Locale locale)
 		throws WikiFormatException {
 
 		WikiEngine wikiEngine = _getWikiEngine(format);
-
-		Locale locale = _getLocale(request);
 
 		return wikiEngine.getFormatLabel(locale);
 	}
@@ -601,26 +597,6 @@ public class WikiUtil {
 		catch (WikiFormatException wfe) {
 			return Collections.emptyMap();
 		}
-	}
-
-	private Locale _getLocale(HttpServletRequest request) {
-		Locale locale = null;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay != null) {
-			locale = themeDisplay.getLocale();
-		}
-		else {
-			locale = request.getLocale();
-
-			if (!LanguageUtil.isAvailableLocale(locale)) {
-				locale = LocaleUtil.getDefault();
-			}
-		}
-
-		return locale;
 	}
 
 	private WikiEngine _getWikiEngine(String format)

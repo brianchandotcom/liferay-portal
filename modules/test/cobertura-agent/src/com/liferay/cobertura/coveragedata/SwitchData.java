@@ -21,12 +21,9 @@
 
 package com.liferay.cobertura.coveragedata;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+
+import java.util.concurrent.atomic.AtomicLongArray;
 
 /**
  * <p>
@@ -39,65 +36,37 @@ public class SwitchData implements BranchCoverageData, Serializable
 {
 	private static final long serialVersionUID = 9;
 
-	private transient Lock lock;
 
 	private int switchNumber;
 
-	private long defaultHits;
-
-	private long[] hits;
+	private final AtomicLongArray _hitsArray;
 
 	public SwitchData(int switchNumber, int caseNumber)
 	{
 		this.switchNumber = switchNumber;
-		hits = new long[caseNumber];
-		initLock();
-	}
 
-	private void initLock()
-	{
-		 lock = new ReentrantLock();
+		_hitsArray = new AtomicLongArray(caseNumber + 1);
 	}
 
 	public void touchBranch(
 		String className, int lineNumber, int branch,int new_hits) {
 
-		lock.lock();
-		try
-		{
-			if (branch >= hits.length) {
-				throw new IllegalStateException(
-				"No instrument data for class " + className + " line " +
-					lineNumber + " switch " + switchNumber + " branch " +
-						branch);
-			}
+		if (branch >= _hitsArray.length()) {
+			throw new IllegalStateException(
+			"No instrument data for class " + className + " line " +
+				lineNumber + " switch " + switchNumber + " branch " +
+					branch);
+		}
 
-			if (branch == -1) {
-				defaultHits++;
-			} else {
-				hits[branch] += new_hits;
-			}
+		if (branch == -1) {
+			branch = _hitsArray.length() - 1;
 		}
-		finally
-		{
-			lock.unlock();
-		}
+
+		_hitsArray.addAndGet(branch, new_hits);
 	}
 
-	public double getBranchCoverageRate()
-	{
-		lock.lock();
-		try
-		{
-			int branches = hits.length + 1;
-			int hit = (defaultHits > 0) ? 1 : 0;
-			for (int i = hits.length - 1; i >= 0; hit += ((hits[i--] > 0) ? 1 : 0));
-			return ((double) hit) / branches;
-		}
-		finally
-		{
-			lock.unlock();
-		}
+	public double getBranchCoverageRate() {
+		return (double)getNumberOfCoveredBranches()/getNumberOfValidBranches();
 	}
 
 	public boolean equals(Object obj)
@@ -108,18 +77,20 @@ public class SwitchData implements BranchCoverageData, Serializable
 			return false;
 
 		SwitchData switchData = (SwitchData) obj;
-		getBothLocks(switchData);
-		try
-		{
-			return (this.defaultHits == switchData.defaultHits)
-					&& (Arrays.equals(this.hits, switchData.hits))
-					&& (this.switchNumber == switchData.switchNumber);
+
+		if ((switchNumber == switchData.switchNumber) &&
+			(_hitsArray.length() == switchData._hitsArray.length())) {
+
+			for (int i = 0; i < _hitsArray.length(); i++) {
+				if (_hitsArray.get(i) != _hitsArray.get(i)) {
+					return false;
+				}
+			}
+
+			return true;
 		}
-		finally
-		{
-			lock.unlock();
-			switchData.lock.unlock();
-		}
+
+		return false;
 	}
 
 	public int hashCode()
@@ -127,35 +98,22 @@ public class SwitchData implements BranchCoverageData, Serializable
 		return this.switchNumber;
 	}
 
-	public int getNumberOfCoveredBranches()
-	{
-		lock.lock();
-		try
-		{
-			int ret = (defaultHits > 0) ? 1 : 0;
-			for (int i = hits.length -1; i >= 0;i--)
-			{
-				if (hits[i] > 0) ret++;
+	public int getNumberOfCoveredBranches() {
+		int branches = 0;
+
+		for (int i = 0; i < _hitsArray.length(); i++) {
+			long hits = _hitsArray.get(i);
+
+			if (hits > 0) {
+				branches++;
 			}
-			return ret;
 		}
-		finally
-		{
-			lock.unlock();
-		}
+
+		return branches;
 	}
 
-	public int getNumberOfValidBranches()
-	{
-		lock.lock();
-		try
-		{
-			return hits.length + 1;
-		}
-		finally
-		{
-			lock.unlock();
-		}
+	public int getNumberOfValidBranches() {
+		return _hitsArray.length();
 	}
 
 	public int getSwitchNumber() {
@@ -165,67 +123,15 @@ public class SwitchData implements BranchCoverageData, Serializable
 	public void merge(BranchCoverageData coverageData)
 	{
 		SwitchData switchData = (SwitchData) coverageData;
-		getBothLocks(switchData);
-		try
-		{
-			defaultHits += switchData.defaultHits;
 
-			if (hits.length != switchData.hits.length) {
-				throw new IllegalArgumentException(
-					"Switch case number mismatch");
-			}
-
-			for (int i = 0; i < hits.length; i++) {
-				hits[i] += switchData.hits[i];
-			}
+		if (_hitsArray.length() != switchData._hitsArray.length()) {
+			throw new IllegalArgumentException("Switch case number mismatch");
 		}
-		finally
-		{
-			lock.unlock();
-			switchData.lock.unlock();
+
+		for (int i = 0; i < _hitsArray.length(); i++) {
+			_hitsArray.addAndGet(i, switchData._hitsArray.get(i));
 		}
 
 	}
 
-	private void getBothLocks(SwitchData other) {
-		/*
-		 * To prevent deadlock, we need to get both locks or none at all.
-		 *
-		 * When this method returns, the thread will have both locks.
-		 * Make sure you unlock them!
-		 */
-		boolean myLock = false;
-		boolean otherLock = false;
-		while ((!myLock) || (!otherLock))
-		{
-			try
-			{
-				myLock = lock.tryLock();
-				otherLock = other.lock.tryLock();
-			}
-			finally
-			{
-				if ((!myLock) || (!otherLock))
-				{
-					//could not obtain both locks - so unlock the one we got.
-					if (myLock)
-					{
-						lock.unlock();
-					}
-					if (otherLock)
-					{
-						other.lock.unlock();
-					}
-					//do a yield so the other threads will get to work.
-					Thread.yield();
-				}
-			}
-		}
-	}
-
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-	{
-		in.defaultReadObject();
-		initLock();
-	}
 }

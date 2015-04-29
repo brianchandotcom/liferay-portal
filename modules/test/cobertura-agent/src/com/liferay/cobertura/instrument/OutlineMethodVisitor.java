@@ -66,7 +66,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 		if ((_currentLine != 0) && (opcode != Opcodes.GOTO) &&
 			(opcode != Opcodes.JSR)) {
 
-			_classData.addLineJump(_currentLine, _currentJump);
+			_classData.addLineJump(_currentLine, _currentJump++);
 
 			_jumpLabels.add(label);
 		}

@@ -24,6 +24,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.Collection;
+
 /**
  * @author Cristina González
  */
@@ -35,21 +37,24 @@ public class ElasticsearchRegistrationTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetSearchEngineService() {
+	public void testGetSearchEngineService() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
-		SearchEngine searchEngine = registry.getService(SearchEngine.class);
+		Collection<SearchEngine> searchEngines = registry.getServices(
+			SearchEngine.class, "(search.engine.id=SYSTEM_ENGINE)");
 
-		Assert.assertNotNull(searchEngine);
+		Assert.assertEquals(1, searchEngines.size());
 
-		Class<? extends SearchEngine> searchEngineClass =
-			searchEngine.getClass();
+		for (SearchEngine searchEngine : searchEngines) {
+			Class<? extends SearchEngine> searchEngineClass =
+				searchEngine.getClass();
 
-		String searchEngineClassName = searchEngineClass.getName();
+			String searchEngineClassName = searchEngineClass.getName();
 
-		Assert.assertTrue(
-			"The registered search engine is " + searchEngineClassName,
-			searchEngineClassName.endsWith("ElasticsearchSearchEngine"));
+			Assert.assertTrue(
+				"The registered search engine is " + searchEngineClassName,
+				searchEngineClassName.endsWith("ElasticsearchSearchEngine"));
+		}
 	}
 
 }

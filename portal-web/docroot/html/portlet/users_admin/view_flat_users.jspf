@@ -162,7 +162,9 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
 
 			<c:if test="<%= userOrganization == null %>">
-				<aui:nav-bar-search file="/html/portlet/users_admin/user_search.jsp" searchContainer="<%= userSearchContainer %>" />
+				<aui:nav-bar-search>
+					<liferay-ui:user-search-form />
+				</aui:nav-bar-search>
 			</c:if>
 		</aui:nav-bar>
 	</c:if>

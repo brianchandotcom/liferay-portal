@@ -31,7 +31,6 @@ page import="com.liferay.portlet.sites.search.UserGroupRoleUserChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.SiteMembershipChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationGroupChecker" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %>
+page import="com.liferay.portlet.usersadmin.search.OrganizationGroupChecker" %>
 
 <%@ include file="/html/portlet/site_memberships/init-ext.jsp" %>

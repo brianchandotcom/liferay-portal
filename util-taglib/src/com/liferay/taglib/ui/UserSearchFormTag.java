@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.taglib.ui;
 
-<%@ page import="com.liferay.portal.NoSuchOrganizationException" %><%@
-page import="com.liferay.portal.NoSuchUserGroupException" %><%@
-page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public class UserSearchFormTag<R> extends SearchFormTag<R> {
 
-<%
-String tabs1 = ParamUtil.getString(request, "tabs1", "users");
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
 
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale);
-%>
+	private static final String _PAGE =
+		"/html/taglib/ui/user_search_form/page.jsp";
 
-<%@ include file="/html/portlet/directory/init-ext.jsp" %>
+}

@@ -61,7 +61,6 @@ page import="com.liferay.portlet.sitesadmin.search.UserGroupTeamChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserTeamChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>

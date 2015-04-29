@@ -76,7 +76,9 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	</c:if>
 
 	<aui:nav-bar>
-		<aui:nav-bar-search file="/html/portlet/directory/user_search.jsp" searchContainer="<%= userSearchContainer %>" />
+		<aui:nav-bar-search>
+			<liferay-ui:user-search-form />
+		</aui:nav-bar-search>
 	</aui:nav-bar>
 
 	<%

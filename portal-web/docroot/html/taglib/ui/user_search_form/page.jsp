@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
 UserSearch searchContainer = (UserSearch)request.getAttribute("liferay-ui:search:searchContainer");
@@ -23,22 +23,15 @@ UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerm
 %>
 
 <liferay-ui:search-toggle
-	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
-	id="toggle_id_site_teams_user_search"
+	id="toggle_id_user_search"
 >
-	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.FIRST_NAME %>" size="20" type="text" value="<%= displayTerms.getFirstName() %>" />
-
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.MIDDLE_NAME %>" size="20" type="text" value="<%= displayTerms.getMiddleName() %>" />
-
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.LAST_NAME %>" size="20" type="text" value="<%= displayTerms.getLastName() %>" />
-	</aui:fieldset>
+	<%@ include file="/html/taglib/ui/user_search_form/user_name.jspf" %>
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.SCREEN_NAME %>" size="20" value="<%= displayTerms.getScreenName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.SCREEN_NAME %>" size="20" type="text" value="<%= displayTerms.getScreenName() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.EMAIL_ADDRESS %>" size="20" value="<%= displayTerms.getEmailAddress() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= UserDisplayTerms.EMAIL_ADDRESS %>" size="20" type="text" value="<%= displayTerms.getEmailAddress() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>

@@ -18,7 +18,9 @@ import com.liferay.sync.engine.documentlibrary.handler.DownloadFileHandler;
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
 import com.liferay.sync.engine.documentlibrary.util.BatchDownloadEvent;
 import com.liferay.sync.engine.documentlibrary.util.BatchEventManager;
+import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 
 import java.util.Map;
@@ -78,7 +80,10 @@ public class DownloadFileEvent extends BaseEvent {
 			sb.append(syncFile.getVersion());
 		}
 
-		executeAsynchronousGet(sb.toString());
+		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+			getSyncAccountId());
+
+		executeAsynchronousGet(syncAccount.getUrl() + sb.toString());
 	}
 
 	private static final String _URL_PATH = "/sync-web/download";

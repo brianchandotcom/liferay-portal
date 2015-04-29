@@ -343,10 +343,10 @@
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
 		'*': 3,
 		li: 3,
-		tr: 3,
+		table: 2,
 		td: 3,
 		th: 3,
-		table: 2
+		tr: 3
 	};
 
 	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
@@ -685,7 +685,7 @@
 						hasOwnProperty.call(MAP_TOKENS_EXCLUDE_NEW_LINE, nextToken.value) &&
 						(nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value])) {
 
-							value = STR_BLANK;
+						value = STR_BLANK;
 					}
 				}
 				else if (REGEX_LASTCHAR_NEWLINE.test(value)) {
@@ -751,7 +751,7 @@
 				size = '1';
 			}
 
-			instance._result.push(STR_TAG_SPAN_STYLE_OPEN, 'font-size: ', instance._getFontSize(size), 'px', STR_TAG_ATTR_CLOSE);
+			instance._result.push(STR_TAG_SPAN_STYLE_OPEN, 'font-size: ', instance._getFontSize(size), 'px;', STR_TAG_ATTR_CLOSE);
 
 			instance._stack.push(STR_TAG_SPAN_CLOSE);
 		},

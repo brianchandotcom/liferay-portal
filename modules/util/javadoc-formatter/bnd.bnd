@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.javadoc.formatter
 Bundle-Version: 1.0.0
 Import-Package:\
 	!org.apache.tools.ant.*,\
-	!org.gradle.api.*,\
 	*
 Include-Resource:\
 	classes,\

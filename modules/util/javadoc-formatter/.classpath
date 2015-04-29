@@ -21,9 +21,6 @@
 	<classpathentry kind="lib" path="lib/ant.jar" />
 	<classpathentry kind="lib" path="lib/commons-io.jar" />
 	<classpathentry kind="lib" path="lib/dom4j.jar" />
-	<classpathentry kind="lib" path="lib/gradle-base-services.jar" />
-	<classpathentry kind="lib" path="lib/gradle-core.jar" />
-	<classpathentry kind="lib" path="lib/groovy-all.jar" />
 	<classpathentry kind="lib" path="lib/qdox.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

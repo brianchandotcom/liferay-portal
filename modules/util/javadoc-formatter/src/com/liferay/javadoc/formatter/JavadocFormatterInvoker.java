@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +29,7 @@ import java.util.Map;
 public class JavadocFormatterInvoker {
 
 	public static JavadocFormatter invoke(
-			JavadocFormatterArgs javadocFormatterArgs)
+			File baseDir, JavadocFormatterArgs javadocFormatterArgs)
 		throws Exception {
 
 		Map<String, String> arguments = new HashMap<>();
@@ -39,7 +40,7 @@ public class JavadocFormatterInvoker {
 			String.valueOf(javadocFormatterArgs.isInitializeMissingJavadocs()));
 		arguments.put(
 			"javadoc.input.dir",
-			_getAbsolutePath(javadocFormatterArgs.getInputDir()));
+			_getCanonicalPath(baseDir, javadocFormatterArgs.getInputDir()));
 		arguments.put(
 			"javadoc.limit",
 			StringUtil.merge(javadocFormatterArgs.getLimits()));
@@ -57,9 +58,13 @@ public class JavadocFormatterInvoker {
 		return new JavadocFormatter(arguments);
 	}
 
-	private static String _getAbsolutePath(File file) {
+	private static String _getCanonicalPath(File baseDir, String fileName)
+		throws IOException {
+
+		File file = new File(baseDir, fileName);
+
 		return StringUtil.replace(
-			file.getAbsolutePath(), CharPool.BACK_SLASH, CharPool.SLASH);
+			file.getCanonicalPath(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
 }

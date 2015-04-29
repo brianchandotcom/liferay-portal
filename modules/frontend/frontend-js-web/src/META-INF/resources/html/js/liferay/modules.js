@@ -513,7 +513,7 @@
 						]
 					},
 					'liferay-item-selector-browser': {
-						path: 'item_browser.js',
+						path: 'item_selector_browser.js',
 						requires: [
 							'liferay-item-viewer',
 							'liferay-portlet-base',

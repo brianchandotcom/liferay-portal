@@ -1054,7 +1054,7 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		// LPS-55120, temporary workaround while Brian Wulbern investigates it
+		// LPS-55120, temporary workaround until Matthew Tambara fixes it
 
 		if (line.contains("Stream closed.")) {
 			return true;

@@ -15,6 +15,7 @@
 package com.liferay.cobertura.instrument;
 
 import com.liferay.cobertura.coveragedata.ClassData;
+import com.liferay.cobertura.coveragedata.LineData;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -80,7 +81,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 		_currentJump = 0;
 		_currentSwitch = 0;
 
-		_classData.addLine(_currentLine, _methodNode.name, _methodNode.desc);
+		_classData.addLine(new LineData(_currentLine));
 
 		_lineLabels.put(start, line);
 	}

@@ -52,7 +52,7 @@ public class LineData
 	private List switches;
 	private final int lineNumber;
 
-	LineData(int lineNumber)
+	public LineData(int lineNumber)
 	{
 		this.hits = 0;
 		this.jumps = null;
@@ -129,6 +129,10 @@ public class LineData
 	public double getLineCoverageRate()
 	{
 		return (hits > 0) ? 1 : 0;
+	}
+
+	public int getLineNumber() {
+		return lineNumber;
 	}
 
 	/**

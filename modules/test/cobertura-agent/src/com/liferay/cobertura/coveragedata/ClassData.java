@@ -66,19 +66,15 @@ public class ClassData extends CoverageDataContainer
 		this.name = name;
 	}
 
-	public LineData addLine(int lineNumber, String methodName,
-			String methodDescriptor)
-	{
-			LineData lineData = getLineData(lineNumber);
-			if (lineData == null)
-			{
-				lineData = new LineData(lineNumber);
-				// Each key is a line number in this class, stored as an Integer object.
-				// Each value is information about the line, stored as a LineData object.
-				children.put(new Integer(lineNumber), lineData);
-			}
+	public LineData addLine(LineData lineData) {
+		LineData previousLineData = (LineData)children.putIfAbsent(
+			lineData.getLineNumber(), lineData);
 
+		if (previousLineData == null) {
 			return lineData;
+		}
+
+		return previousLineData;
 	}
 
 	/**
@@ -115,11 +111,6 @@ public class ClassData extends CoverageDataContainer
 			return this.name;
 		}
 		return this.name.substring(lastDot + 1);
-	}
-
-	private LineData getLineData(int lineNumber)
-	{
-			return (LineData)children.get(Integer.valueOf(lineNumber));
 	}
 
 	public SortedSet<CoverageData> getLines()
@@ -175,7 +166,7 @@ public class ClassData extends CoverageDataContainer
 
 	public void addLineJump(int lineNumber, int branchNumber)
 	{
-			LineData lineData = getLineData(lineNumber);
+			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
 			if (lineData != null)
 			{
 				lineData.addJump(branchNumber);
@@ -185,7 +176,7 @@ public class ClassData extends CoverageDataContainer
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys)
 	{
-			LineData lineData = getLineData(lineNumber);
+			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
 			if (lineData != null)
 			{
 				lineData.addSwitch(switchNumber, keys);
@@ -195,7 +186,7 @@ public class ClassData extends CoverageDataContainer
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int min, int max)
 	{
-			LineData lineData = getLineData(lineNumber);
+			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
 			if (lineData != null)
 			{
 				lineData.addSwitch(switchNumber, min, max);
@@ -244,9 +235,12 @@ public class ClassData extends CoverageDataContainer
 	 */
 	public void touch(int lineNumber,int hits)
 	{
-			LineData lineData = getLineData(lineNumber);
-			if (lineData == null)
-				lineData = addLine(lineNumber, null, null);
+			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+			if (lineData == null) {
+				throw new IllegalStateException(
+					"No instrument data for class " + name + " line " +
+						lineNumber);
+			}
 			lineData.touch(hits);
 	}
 
@@ -259,9 +253,12 @@ public class ClassData extends CoverageDataContainer
 	 * @param hits how many times the piece was called
 	 */
 	public void touchJump(int lineNumber, int branchNumber, boolean branch,int hits) {
-			LineData lineData = getLineData(lineNumber);
-			if (lineData == null)
-				lineData = addLine(lineNumber, null, null);
+			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+			if (lineData == null) {
+				throw new IllegalStateException(
+					"No instrument data for class " + name + " line " +
+						lineNumber);
+			}
 			lineData.touchJump(branchNumber, branch,hits);
 	}
 
@@ -274,9 +271,12 @@ public class ClassData extends CoverageDataContainer
 	 * @param hits how many times the piece was called
 	 */
 	public void touchSwitch(int lineNumber, int switchNumber, int branch,int hits) {
-			LineData lineData = getLineData(lineNumber);
-			if (lineData == null)
-				lineData = addLine(lineNumber, null, null);
+			LineData lineData = (LineData)children.get(Integer.valueOf(lineNumber));
+			if (lineData == null) {
+				throw new IllegalStateException(
+					"No instrument data for class " + name + " line " +
+						lineNumber);
+			}
 			lineData.touchSwitch(switchNumber, branch,hits);
 	}
 

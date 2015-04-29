@@ -19,7 +19,7 @@
 <%
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"), "icon");
 String idPrefix = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:idPrefix"));
-SearchContainer itemSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:itemSearchContainer");
+SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
 %>
@@ -66,7 +66,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 		<c:when test='<%= !displayStyle.equals("list") %>'>
 
 			<%
-			for (Object result : itemSearchContainer.getResults()) {
+			for (Object result : searchContainer.getResults()) {
 				FileEntry fileEntry = (FileEntry)result;
 				FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 
@@ -117,18 +117,18 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 			}
 			%>
 
-			<liferay-ui:search-paginator searchContainer="<%= itemSearchContainer %>" />
+			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 
 		</c:when>
 		<c:otherwise>
 			<div class="list-content">
 				<liferay-ui:search-container
-					searchContainer="<%= itemSearchContainer %>"
-					total="<%= itemSearchContainer.getTotal() %>"
+					searchContainer="<%= searchContainer %>"
+					total="<%= searchContainer.getTotal() %>"
 					totalVar="searchContainerTotal"
 				>
 					<liferay-ui:search-container-results
-						results="<%= itemSearchContainer.getResults() %>"
+						results="<%= searchContainer.getResults() %>"
 						resultsVar="searchContainerResults"
 					/>
 

@@ -299,6 +299,18 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateElseElement(Element element, String filePath)
+		throws Exception {
+
+		List<Element> elseElements = element.elements("else");
+
+		if (elseElements.size() > 1) {
+			throw new Exception(
+				"Too many else elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+	}
+
 	private static void _validateExecuteElement(
 			Element element, String filePath)
 		throws Exception {
@@ -535,23 +547,8 @@ public class PoshiRunnerValidation {
 			}
 		}
 
-		List<Element> thenElements = element.elements("then");
-
-		if (thenElements.size() > 1) {
-			throw new Exception(
-				"Too many then elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-
-		_validateHasChildElements(thenElements.get(0), filePath);
-
-		List<Element> elseElements = element.elements("else");
-
-		if (elseElements.size() > 1) {
-			throw new Exception(
-				"Too many else elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
+		_validateElseElement(element, filePath);
+		_validateThenElement(element, filePath);
 
 		List<String> conditionTags = Arrays.asList(
 			"and", "condition", "contains", "equals", "isset", "not", "or");
@@ -819,6 +816,23 @@ public class PoshiRunnerValidation {
 
 				throw new Exception("Invalid test case command " + commandName);
 			}
+		}
+	}
+
+	private static void _validateThenElement(Element element, String filePath)
+		throws Exception {
+
+		List<Element> thenElements = element.elements("then");
+
+		if (thenElements.isEmpty()) {
+			throw new Exception(
+				"Missing then elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+		else if (thenElements.size() > 1) {
+			throw new Exception(
+				"Too many then elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
 		}
 	}
 

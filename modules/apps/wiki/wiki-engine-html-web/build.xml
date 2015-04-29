@@ -3,6 +3,7 @@
 
 <project>
 	<property name="import.shared" value="wiki-api" />
+	<property name="osgi.compile.jsp.wab.dependencies" value="wiki-web" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

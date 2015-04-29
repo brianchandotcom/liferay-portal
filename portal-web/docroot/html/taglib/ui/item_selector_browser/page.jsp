@@ -187,7 +187,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 <aui:script use="aui-component,liferay-item-viewer,liferay-item-selector-browser">
 	var viewer = new A.LiferayItemViewer(
 		{
-			btnCloseCaption:'<%= tabName %>',
+			btnCloseCaption:'<%= UnicodeLanguageUtil.get(request, tabName) %>',
 			links: '#<%= idPrefix %>ItemSelectorContainer a.item-preview',
 		}
 	).render('#<%= idPrefix %>ItemViewerPreview');
@@ -195,7 +195,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 	var itemBrowser = new Liferay.ItemBrowser({
 		browseImageId: 'SelectFile',
 		inputFileId: 'InputFile',
-		itemViewerCloseCaption: '<%= tabName %>',
+		itemViewerCloseCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
 		itemViewerContainer: 'UploadImagePreview',
 		linkId: 'Image',
 		namespace: '<%= idPrefix %>',

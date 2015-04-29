@@ -95,7 +95,7 @@ public class JavadocFormatterArgs {
 	private String _author = AUTHOR;
 	private boolean _initializeMissingJavadocs;
 	private String _inputDir = "./";
-	private String[] _limits;
+	private String[] _limits = new String[0];
 	private double _lowestSupportedJavaVersion = LOWEST_SUPPORTED_JAVA_VERSION;
 	private String _outputFilePrefix = OUTPUT_FILE_PREFIX;
 	private boolean _updateJavadocs;

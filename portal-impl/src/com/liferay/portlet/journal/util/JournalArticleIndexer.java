@@ -476,18 +476,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 			return;
 		}
 
-		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-			int status = article.getStatus();
-
-			if (!article.isIndexable() ||
-				((status != WorkflowConstants.STATUS_APPROVED) &&
-				 (status != WorkflowConstants.STATUS_IN_TRASH))) {
-
-				deleteDocument(
-					article.getCompanyId(), article.getResourcePrimKey());
-			}
-		}
-
 		if (allVersions) {
 			reindexArticleVersions(article);
 		}

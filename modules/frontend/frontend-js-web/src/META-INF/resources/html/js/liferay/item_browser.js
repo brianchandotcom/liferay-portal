@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-item-browser',
+	'liferay-item-selector-browser',
 	function(A) {
 		var Lang = A.Lang;
 

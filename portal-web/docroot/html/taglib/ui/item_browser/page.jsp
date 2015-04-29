@@ -17,14 +17,14 @@
 <%@ include file="/html/taglib/ui/item_browser/init.jsp" %>
 
 <%
-String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-browser-tag:displayStyle"), "icon");
-String idPrefix = GetterUtil.getString(request.getAttribute("liferay-ui:item-browser-tag:idPrefix"));
-SearchContainer itemSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-browser-tag:itemSearchContainer");
-String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-browser-tag:tabName"));
-String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-browser-tag:uploadMessage"));
+String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"), "icon");
+String idPrefix = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:idPrefix"));
+SearchContainer itemSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:itemSearchContainer");
+String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
+String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
 %>
 
-<div class="taglib-item-browser style-<%= displayStyle %>" id="<%= idPrefix %>ItemSelectorContainer">
+<div class="taglib-item-selector-browser style-<%= displayStyle %>" id="<%= idPrefix %>ItemSelectorContainer">
 
 	<%
 	String dropContainerClass = displayStyle.equals("icon") ? "drop-zone preview-content" : "drop-zone";
@@ -106,7 +106,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 <div class="lfr-item-viewer" id="<%= idPrefix %>ItemViewerPreview"></div>
 <div class="lfr-item-viewer" id="<%= idPrefix %>UploadImagePreview"></div>
 
-<aui:script use="aui-component,liferay-item-viewer,liferay-item-browser">
+<aui:script use="aui-component,liferay-item-viewer,liferay-item-selector-browser">
 	var viewer = new A.LiferayItemViewer(
 		{
 			btnCloseCaption:'<%= tabName %>',

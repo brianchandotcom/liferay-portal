@@ -19,6 +19,8 @@ import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.util.List;
+
 import org.dom4j.Element;
 
 /**
@@ -46,6 +48,15 @@ public final class CommandLoggerHandler {
 
 		_commandLogLoggerElement.addChildLoggerElement(
 			dividerLineLoggerElement);
+	}
+
+	public static void logSeleniumCommand(
+		Element element, List<String> arguments) {
+
+		LoggerElement loggerElement = _commandLoggerElement.loggerElement("ul");
+
+		loggerElement.addChildLoggerElement(
+			_getRunLineLoggerElement(element, arguments));
 	}
 
 	public static void passCommand(Element element) {
@@ -182,6 +193,40 @@ public final class CommandLoggerHandler {
 		loggerElement.setText(text);
 
 		return loggerElement.toString();
+	}
+
+	private static LoggerElement _getRunLineLoggerElement(
+		Element element, List<String> arguments) {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("run-line");
+		loggerElement.setName("li");
+		loggerElement.setText(_getRunLineText(element, arguments));
+
+		return loggerElement;
+	}
+
+	private static String _getRunLineText(
+		Element element, List<String> arguments) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getLineItemText("misc", "Running "));
+		sb.append(
+			_getLineItemText(
+				"command-name", element.attributeValue("selenium")));
+
+		if (!arguments.isEmpty()) {
+			sb.append(_getLineItemText("misc", " with parameters"));
+
+			for (String argument : arguments) {
+				sb.append(_getLineItemText("misc", "&nbsp;"));
+				sb.append(_getLineItemText("param-value", argument));
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private static boolean _isCommand(Element element) {

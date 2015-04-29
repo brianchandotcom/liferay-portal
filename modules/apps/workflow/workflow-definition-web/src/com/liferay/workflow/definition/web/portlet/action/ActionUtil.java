@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.workflowdefinitions.action;
+package com.liferay.workflow.definition.web.portlet.action;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,11 +25,11 @@ import com.liferay.portal.util.WebKeys;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Bruno Farache
+ * @author Leonardo Barros
  */
 public class ActionUtil {
 
@@ -43,8 +43,8 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String name = ParamUtil.getString(request, "name");
-		int version = ParamUtil.getInteger(request, "version");
+		String name = ParamUtil.getString(request, _NAME);
+		int version = ParamUtil.getInteger(request, _VERSION);
 
 		List<WorkflowDefinition> workflowDefinitions =
 			WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
@@ -69,5 +69,8 @@ public class ActionUtil {
 
 		getWorkflowDefinition(request);
 	}
+
+	private static final String _VERSION = "version";
+	private static final String _NAME = "name";
 
 }

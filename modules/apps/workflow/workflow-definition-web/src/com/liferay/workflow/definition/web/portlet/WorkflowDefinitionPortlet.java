@@ -14,12 +14,24 @@
 
 package com.liferay.workflow.definition.web.portlet;
 
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.definition.web.portlet.action.ActionUtil;
 
 /**
  * @author Leonardo Barros
@@ -49,4 +61,55 @@ import com.liferay.portal.util.PortletKeys;
 )
 public class WorkflowDefinitionPortlet extends MVCPortlet {
 
+	@Override
+	public void render(RenderRequest request, RenderResponse response)
+		throws IOException, PortletException {
+
+		try {
+			ActionUtil.getWorkflowDefinition(request);
+		} catch (Exception e) {
+			if (e instanceof WorkflowException) {
+				
+				SessionErrors.add(request, e.getClass());
+
+				include("/error.jsp", request, response);
+
+			} else {
+				throw new PortletException(e);
+			}
+		}
+
+		super.render(request, response);
+	}
+	
+	@Override
+	public void processAction(
+		ActionRequest actionRequest, ActionResponse actionResponse) 
+		throws IOException, PortletException {
+		try {
+			super.processAction(actionRequest, actionResponse);
+		}
+		catch (Exception e) {
+			if (e instanceof RequiredWorkflowDefinitionException) {
+				SessionErrors.add(actionRequest, e.getClass());
+
+				hideDefaultErrorMessage(actionRequest);
+
+				include("/view.jsp", actionRequest, actionResponse);
+			}
+			else if (e instanceof WorkflowDefinitionFileException) {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof WorkflowException) {
+				
+				SessionErrors.add(actionRequest, e.getClass());
+				
+				include("/error.jsp", actionRequest, actionResponse);
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+	
 }

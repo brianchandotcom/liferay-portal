@@ -33,8 +33,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Iván Zaera
  */
-public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine
-	implements WikiEngine {
+public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 
 	public static BaseInputEditorWikiEngine getBaseInputEditorWikiEngine(
 		ServletRequest servletRequest) {

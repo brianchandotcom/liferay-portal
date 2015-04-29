@@ -48,9 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Miguel Pastor
  */
-@Component(
-	service = WikiEngine.class
-)
+@Component(service = WikiEngine.class)
 public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 
 	public CreoleWikiEngine() {

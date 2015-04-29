@@ -27,7 +27,8 @@ index++;
 request.setAttribute("liferay-ui:discussion:index", new Integer(index));
 
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
-Comment rootComment = (Comment)request.getAttribute("liferay-ui:discussion:rootComment");
+
+Comment rootComment = discussion.getRootComment();
 
 DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);

@@ -42,7 +42,6 @@ while (commentIterator.hasNext()) {
 
 	request.setAttribute("liferay-ui:discussion:currentComment", comment);
 	request.setAttribute("liferay-ui:discussion:discussion", discussion);
-	request.setAttribute("liferay-ui:discussion:rootComment", rootComment);
 %>
 
 	<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />

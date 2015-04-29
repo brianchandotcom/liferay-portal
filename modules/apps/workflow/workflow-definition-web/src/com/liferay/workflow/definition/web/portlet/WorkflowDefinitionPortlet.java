@@ -54,6 +54,7 @@ import com.liferay.workflow.definition.web.portlet.action.ActionUtil;
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITIONS,
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
 	},

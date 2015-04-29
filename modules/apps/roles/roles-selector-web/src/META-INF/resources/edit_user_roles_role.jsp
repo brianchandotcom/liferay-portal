@@ -14,15 +14,15 @@
  */
 --%>
 
-<%@ include file="/html/portlet/site_memberships/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-String redirect = (String)request.getAttribute("edit_user_group_roles.jsp-redirect");
+String redirect = (String)request.getAttribute("edit_user_roles.jsp-redirect");
 
-Group group = (Group)request.getAttribute("edit_user_group_roles.jsp-group");
-int roleType = (Integer)request.getAttribute("edit_user_group_roles.jsp-roleType");
+Group group = (Group)request.getAttribute("edit_user_roles.jsp-group");
+int roleType = (Integer)request.getAttribute("edit_user_roles.jsp-roleType");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.jsp-portletURL");
+PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-portletURL");
 %>
 
 <div>
@@ -63,7 +63,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 		modelVar="role"
 	>
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="mvcPath" value="/html/portlet/site_memberships/edit_user_group_roles.jsp" />
+			<portlet:param name="mvcPath" value="/edit_user_roles.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />

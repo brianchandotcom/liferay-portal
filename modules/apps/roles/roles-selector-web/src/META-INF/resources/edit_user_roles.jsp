@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/site_memberships/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "current");
@@ -57,7 +57,7 @@ if (group.isOrganization()) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/site_memberships/edit_user_roles.jsp");
+portletURL.setParameter("mvcPath", "/modules/apps/roles/roles-selector-web/edit_user_roles.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
@@ -110,10 +110,10 @@ request.setAttribute("edit_user_roles.jsp-portletURL", portletURL);
 
 	<c:choose>
 		<c:when test="<%= role == null %>">
-			<liferay-util:include page="/html/portlet/site_memberships/edit_user_roles_role.jsp" />
+			<liferay-util:include page="/edit_user_roles_role.jsp" />
 		</c:when>
 		<c:otherwise>
-			<liferay-util:include page="/html/portlet/site_memberships/edit_user_roles_users.jsp" />
+			<liferay-util:include page="/edit_user_roles_users.jsp" />
 		</c:otherwise>
 	</c:choose>
 </aui:form>

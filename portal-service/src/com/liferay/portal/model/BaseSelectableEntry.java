@@ -16,6 +16,7 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 
 import java.io.IOException;
 
@@ -66,6 +67,11 @@ public abstract class BaseSelectableEntry implements SelectableEntry {
 	@Override
 	public Double getWeight() {
 		return 10.0;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getKey());
 	}
 
 	@Override

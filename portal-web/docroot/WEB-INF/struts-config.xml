@@ -1550,31 +1550,6 @@
 
 		<action path="/users_admin/view_users" forward="portlet.users_admin.view" />
 
-		<!-- Workflow Definitions -->
-
-		<action path="/workflow_definitions/edit_workflow_definition" type="com.liferay.portlet.workflowdefinitions.action.EditWorkflowDefinitionAction">
-			<forward name="portlet.workflow_definitions.edit_workflow_definition" path="portlet.workflow_definitions.edit_workflow_definition" />
-			<forward name="portlet.workflow_definitions.error" path="portlet.workflow_definitions.error" />
-			<forward name="portlet.workflow_definitions.view" path="portlet.workflow_definitions.view" />
-		</action>
-
-		<action path="/workflow_definitions/edit_workflow_instance" type="com.liferay.portlet.workflowinstances.action.EditWorkflowInstanceAction">
-			<forward name="portlet.workflow_instances.edit_workflow_instance" path="portlet.workflow_instances.edit_workflow_instance" />
-			<forward name="portlet.workflow_instances.error" path="portlet.workflow_instances.error" />
-		</action>
-
-		<action path="/workflow_definitions/edit_workflow_instance_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.workflow_instances.error" />
-		</action>
-
-		<action path="/workflow_definitions/edit_workflow_instance_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
-			<forward name="portlet.workflow_tasks.error" path="portlet.workflow_instances.error" />
-		</action>
-
-		<action path="/workflow_definitions/view" forward="portlet.workflow_definitions.view" />
-
-		<action path="/workflow_definitions/view_content" forward="portlet.workflow_instances.view_content" />
-
 		<!-- Workflow Instances -->
 
 		<action path="/workflow_instances/edit_workflow_instance" type="com.liferay.portlet.workflowinstances.action.EditWorkflowInstanceAction">

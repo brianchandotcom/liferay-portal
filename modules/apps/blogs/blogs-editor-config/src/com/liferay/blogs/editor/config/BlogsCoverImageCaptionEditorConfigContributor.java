@@ -15,6 +15,7 @@
 package com.liferay.blogs.editor.config;
 
 import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"editor.config.key=coverImageCaptionEditor", "javax.portlet.name=33",
 		"javax.portlet.name=161"
-	}
+	},
+	service = EditorConfigContributor.class
 )
 public class BlogsCoverImageCaptionEditorConfigContributor
 	extends BaseEditorConfigContributor {
@@ -87,7 +89,7 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 
 		jsonObject.put("buttons", toJSONArray("['linkEdit']"));
 		jsonObject.put("name", "link");
-		jsonObject.put("test", "link");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
 
 		return jsonObject;
 	}
@@ -97,7 +99,7 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 
 		jsonObject.put("buttons", toJSONArray("['link']"));
 		jsonObject.put("name", "text");
-		jsonObject.put("test", "text");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 
 		return jsonObject;
 	}

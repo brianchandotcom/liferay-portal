@@ -15,6 +15,7 @@
 package com.liferay.blogs.editor.config;
 
 import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
 		"editor.config.key=descriptionEditor",
 		"editor.config.key=subtitleEditor", "editor.config.key=titleEditor",
 		"javax.portlet.name=33", "javax.portlet.name=161"
-	}
+	},
+	service = EditorConfigContributor.class
 )
 public class BlogsTextEditorConfigContributor
 	extends BaseEditorConfigContributor {

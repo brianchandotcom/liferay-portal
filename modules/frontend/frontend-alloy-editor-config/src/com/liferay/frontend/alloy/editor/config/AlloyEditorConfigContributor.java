@@ -141,8 +141,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	protected JSONObject getToolbarsAddJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put(
-			"buttons", toJSONArray("['image', 'table', 'hline']"));
+		jsonObject.put("buttons", toJSONArray("['image', 'table', 'hline']"));
 		jsonObject.put("tabIndex", 2);
 
 		return jsonObject;

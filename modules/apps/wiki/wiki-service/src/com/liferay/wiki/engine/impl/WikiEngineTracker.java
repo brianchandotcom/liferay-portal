@@ -22,11 +22,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.wiki.engine.WikiEngine;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -79,32 +77,6 @@ public class WikiEngineTracker {
 					finally {
 						_bundleContext.ungetService(serviceReference);
 					}
-				}
-			},
-			new Comparator<ServiceReference<WikiEngine>>() {
-
-				@Override
-				public int compare(
-					ServiceReference<WikiEngine> serviceReference1,
-					ServiceReference<WikiEngine> serviceReference2) {
-
-					Integer serviceRanking1 = (Integer)
-						serviceReference1.getProperty(
-							Constants.SERVICE_RANKING);
-
-					if (serviceRanking1 == null) {
-						serviceRanking1 = 0;
-					}
-
-					Integer serviceRanking2 = (Integer)
-						serviceReference2.getProperty(
-							Constants.SERVICE_RANKING);
-
-					if (serviceRanking2 == null) {
-						serviceRanking2 = 0;
-					}
-
-					return -serviceRanking1.compareTo(serviceRanking2);
 				}
 			});
 

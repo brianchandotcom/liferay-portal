@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
+List<WorkflowDefinition> workflowDefinitions = (List<WorkflowDefinition>)request.getAttribute(WebKeys.WORKFLOW_DEFINITIONS);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -25,8 +26,6 @@ import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.workflow.definition.web.portlet.action.ActionUtil;
@@ -65,9 +64,15 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
+			PortletMode portletMode = request.getPortletMode();
+
+			if (portletMode.equals(PortletMode.VIEW)) {
+				ActionUtil.getWorkflowDefinitions(request);
+			}
 			
 			ActionUtil.getWorkflowDefinition(request);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			if (e instanceof WorkflowException) {
 				hideDefaultErrorMessage(request);
 				
@@ -75,25 +80,13 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 
 				include("/error.jsp", request, response);
 
-			} else {
+			} 
+			else {
 				throw new PortletException(e);
 			}
 		}
 
 		super.render(request, response);
-	}
-	
-	@Override
-	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof WorkflowDefinitionFileException ||
-			cause instanceof WorkflowException ||
-			cause instanceof RequiredWorkflowDefinitionException ||
-			super.isSessionErrorException(cause)) {
-
-			return true;
-		}
-
-		return false;
 	}
 	
 }

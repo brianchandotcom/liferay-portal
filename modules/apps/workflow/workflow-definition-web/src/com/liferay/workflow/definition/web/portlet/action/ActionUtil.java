@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -60,6 +61,22 @@ public class ActionUtil {
 			}
 		}
 	}
+	
+	public static void getWorkflowDefinitions(HttpServletRequest request)
+			throws Exception {
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		
+		Company company = themeDisplay.getCompany();
+		
+		List<WorkflowDefinition> workflowDefinitions = 
+			WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
+				company.getCompanyId(), 0, 100, null);
+		
+		request.setAttribute(
+			WebKeys.WORKFLOW_DEFINITIONS, workflowDefinitions);
+	}
 
 	public static void getWorkflowDefinition(PortletRequest portletRequest)
 		throws Exception {
@@ -68,6 +85,15 @@ public class ActionUtil {
 			portletRequest);
 
 		getWorkflowDefinition(request);
+	}
+	
+	public static void getWorkflowDefinitions(PortletRequest portletRequest)
+		throws Exception {
+		
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		getWorkflowDefinitions(request);
 	}
 
 	private static final String _VERSION = "version";

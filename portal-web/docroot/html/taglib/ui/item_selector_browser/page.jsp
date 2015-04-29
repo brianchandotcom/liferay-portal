@@ -25,13 +25,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 %>
 
 <div class="taglib-item-selector-browser style-<%= displayStyle %>" id="<%= idPrefix %>ItemSelectorContainer">
-
-	<%
-	String dropContainerClass = displayStyle.equals("icon") ? "drop-zone preview-content" : "drop-zone";
-	Integer dropContainerWidth = displayStyle.equals("icon") ? 25 : 100;
-	%>
-
-	<aui:col cssClass="<%= dropContainerClass %>" width="<%= dropContainerWidth %>">
+	<aui:col cssClass='<%= displayStyle.equals("icon") ? "drop-zone preview-content" : "drop-zone" %>' width='<%= displayStyle.equals("icon") ? 25 : 100 %>'>
 		<a class="browse-image btn btn-primary" href="javascript:;" id="<%= idPrefix %>SelectFile"><liferay-ui:message key="select-file" />
 
 		<input id="<%= idPrefix %>InputFile" style="visibility: hidden; width: 0; height: 0" type="file" />

@@ -4,8 +4,7 @@
 <routes>
 	<route>
 		<pattern>/{instanceId}/rss</pattern>
-		<implicit-parameter name="p_p_lifecycle">2</implicit-parameter>
-		<implicit-parameter name="cmd">rss</implicit-parameter>
+		<ignored-parameter name="p_p_cacheability" />
 	</route>
 	<route>
 		<pattern>/{instanceId}/{type}/{urlTitle:(?!id)[^/]+}/{groupId:\d+}</pattern>

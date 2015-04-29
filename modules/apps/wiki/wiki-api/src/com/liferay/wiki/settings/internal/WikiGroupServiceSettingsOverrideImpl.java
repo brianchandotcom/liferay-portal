@@ -16,6 +16,7 @@ package com.liferay.wiki.settings.internal;
 
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.settings.WikiGroupServiceSettingsOverride;
 
 /**
@@ -54,6 +55,15 @@ public class WikiGroupServiceSettingsOverrideImpl
 		return LocalizationUtil.getXml(
 			_typedSettings.getLocalizedValuesMap("emailPageUpdatedSubject"),
 			"emailPageUpdatedSubject");
+	}
+
+	@Override
+	public boolean enableRss() {
+		if (!PortalUtil.isRSSFeedsEnabled()) {
+			return false;
+		}
+
+		return _typedSettings.getBooleanValue("enableRss");
 	}
 
 	private final TypedSettings _typedSettings;

@@ -23,8 +23,6 @@ import javax.portlet.ValidatorException;
  */
 public interface WikiPortletInstanceSettingsOverride {
 
-	public boolean enableRss();
-
 	public void setHiddenNodes(String[] hiddenNodes);
 
 	public void setVisibleNodes(String[] visibleNodes);

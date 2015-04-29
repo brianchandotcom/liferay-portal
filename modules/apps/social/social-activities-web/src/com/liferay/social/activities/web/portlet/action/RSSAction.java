@@ -55,6 +55,7 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceURL;
@@ -83,6 +84,22 @@ public class RSSAction implements ActionCommand {
 		throws PortletException {
 
 		if (!(portletResponse instanceof MimeResponse)) {
+			return false;
+		}
+
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
+
+		boolean enableRss = GetterUtil.getBoolean(
+			portletPreferences.getValue("enableRss", null));
+
+		if (!PortalUtil.isRSSFeedsEnabled() || !enableRss) {
+			try {
+				PortalUtil.sendRSSFeedsDisabledError(
+					portletRequest, portletResponse);
+			}
+			catch (Exception e) {
+			}
+
 			return false;
 		}
 

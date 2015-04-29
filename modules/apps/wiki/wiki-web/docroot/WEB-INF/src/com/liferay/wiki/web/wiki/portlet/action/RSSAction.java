@@ -28,7 +28,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.settings.WikiGroupServiceSettings;
 import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import java.util.Locale;
 
@@ -95,6 +97,18 @@ public class RSSAction extends BaseRSSStrutsAction {
 		}
 
 		return rss.getBytes(StringPool.UTF8);
+	}
+
+	@Override
+	protected boolean isRSSFeedsEnabled(HttpServletRequest request)
+		throws Exception {
+
+		WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
+
+		WikiGroupServiceSettings wikiGroupServiceSettings =
+			wikiRequestHelper.getWikiGroupServiceSettings();
+
+		return wikiGroupServiceSettings.enableRss();
 	}
 
 }

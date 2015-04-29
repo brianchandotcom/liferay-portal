@@ -17,7 +17,6 @@ package com.liferay.wiki.web.settings.internal;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettingsOverride;
 
 import java.io.IOException;
@@ -34,15 +33,6 @@ public class WikiPortletInstanceSettingsOverrideImpl
 		TypedSettings typedSettings) {
 
 		_typedSettings = typedSettings;
-	}
-
-	@Override
-	public boolean enableRss() {
-		if (!PortalUtil.isRSSFeedsEnabled()) {
-			return false;
-		}
-
-		return _typedSettings.getBooleanValue("enableRss");
 	}
 
 	@Override

@@ -78,6 +78,11 @@ public interface WikiGroupServiceConfiguration {
 	)
 	public LocalizedValuesMap emailPageUpdatedSubject();
 
+	@Meta.AD(
+		deflt = "true", required = false
+	)
+	public boolean enableRss();
+
 	/**
 	 * Set the name of the default page for a wiki node. The name for the
 	 * default page must be a valid wiki word. A wiki word follows the format of
@@ -171,5 +176,23 @@ public interface WikiGroupServiceConfiguration {
 		deflt = "200", required = false
 	)
 	public int rssAbstractLength();
+
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
+		required = false
+	)
+	public String rssDelta();
+
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/rss.feed.display.style.default}",
+		required = false
+	)
+	public String rssDisplayStyle();
+
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/rss.feed.type.default}",
+		required = false
+	)
+	public String rssFeedType();
 
 }

@@ -317,8 +317,13 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		long classPK = article.getId();
 
-		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-			classPK = article.getResourcePrimKey();
+		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS &&
+			 (JournalArticleLocalServiceUtil.getArticlesCount(
+				article.getGroupId(), article.getArticleId()) > 0)) {
+
+			doReindex(obj);
+
+			return;
 		}
 
 		deleteDocument(article.getCompanyId(), classPK);
@@ -332,8 +337,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 				article.getResourcePrimKey());
 
 		if ((latestIndexableArticle == null) ||
-			(PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS &&
-			 (latestIndexableArticle.getVersion() > article.getVersion()))) {
+			(latestIndexableArticle.getVersion() > article.getVersion())) {
 
 			return;
 		}

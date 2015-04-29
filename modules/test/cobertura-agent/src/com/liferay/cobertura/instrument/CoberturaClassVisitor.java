@@ -38,8 +38,6 @@ public class CoberturaClassVisitor extends ClassVisitor {
 		int version, int access, String name, String signature,
 		String superName, String[] interfaces) {
 
-		_classData.setContainsInstrumentationInfo();
-
 		if ((access & Opcodes.ACC_INTERFACE) == 0) {
 			_instrument = true;
 		}
@@ -72,13 +70,6 @@ public class CoberturaClassVisitor extends ClassVisitor {
 		return new OutlineMethodVisitor(
 			_classData, methodVisitor, access, name, desc, signature,
 			exceptions);
-	}
-
-	@Override
-	public void visitSource(String source, String debug) {
-		super.visitSource(source, debug);
-
-		_classData.setSourceFileName(source);
 	}
 
 	private final ClassData _classData;

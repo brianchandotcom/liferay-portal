@@ -32,8 +32,6 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.sourceforge.cobertura.util.StringUtil;
-
 /**
  * <p>
  * This class implements HasBeenInstrumented so that when cobertura
@@ -53,21 +51,12 @@ public class LineData
 	private List jumps;
 	private List switches;
 	private final int lineNumber;
-	private String methodDescriptor;
-	private String methodName;
 
 	LineData(int lineNumber)
-	{
-		this(lineNumber, null, null);
-	}
-
-	LineData(int lineNumber, String methodName, String methodDescriptor)
 	{
 		this.hits = 0;
 		this.jumps = null;
 		this.lineNumber = lineNumber;
-		this.methodName = methodName;
-		this.methodDescriptor = methodDescriptor;
 		initLock();
 	}
 
@@ -100,9 +89,7 @@ public class LineData
 			return (this.hits == lineData.hits)
 					&& ((this.jumps == lineData.jumps) || ((this.jumps != null) && (this.jumps.equals(lineData.jumps))))
 					&& ((this.switches == lineData.switches) || ((this.switches != null) && (this.switches.equals(lineData.switches))))
-					&& (this.lineNumber == lineData.lineNumber)
-					&& (this.methodDescriptor.equals(lineData.methodDescriptor))
-					&& (this.methodName.equals(lineData.methodName));
+					&& (this.lineNumber == lineData.lineNumber);
 		}
 		finally
 		{
@@ -126,48 +113,12 @@ public class LineData
 		}
 	}
 
-	public String getConditionCoverage()
-	{
-		StringBuffer ret = new StringBuffer();
-		if (getNumberOfValidBranches() == 0)
-		{
-			ret.append(StringUtil.getPercentValue(1.0));
-		}
-		else
-		{
-			lock.lock();
-			try
-			{
-				ret.append(StringUtil.getPercentValue(getBranchCoverageRate()));
-				ret.append(" (").append(getNumberOfCoveredBranches()).append("/").append(getNumberOfValidBranches()).append(")");
-			}
-			finally
-			{
-				lock.unlock();
-			}
-		}
-		return ret.toString();
-	}
-
-	public long getHits()
-	{
-		lock.lock();
-		try
-		{
-			return hits;
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
 	public boolean isCovered()
 	{
 		lock.lock();
 		try
 		{
-			return (getHits() > 0) && ((getNumberOfValidBranches() == 0) || ((1.0 - getBranchCoverageRate()) < 0.0001));
+			return (hits > 0) && ((getNumberOfValidBranches() == 0) || ((1.0 - getBranchCoverageRate()) < 0.0001));
 		}
 		finally
 		{
@@ -177,38 +128,7 @@ public class LineData
 
 	public double getLineCoverageRate()
 	{
-		return (getHits() > 0) ? 1 : 0;
-	}
-
-	public int getLineNumber()
-	{
-		return lineNumber;
-	}
-
-	public String getMethodDescriptor()
-	{
-		lock.lock();
-		try
-		{
-			return methodDescriptor;
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
-	public String getMethodName()
-	{
-		lock.lock();
-		try
-		{
-			return methodName;
-		}
-		finally
-		{
-			lock.unlock();
-		}
+		return (hits > 0) ? 1 : 0;
 	}
 
 	/**
@@ -225,7 +145,7 @@ public class LineData
 
 	public int getNumberOfCoveredLines()
 	{
-		return (getHits() > 0) ? 1 : 0;
+		return (hits > 0) ? 1 : 0;
 	}
 
 	public int getNumberOfValidBranches()
@@ -278,19 +198,6 @@ public class LineData
 		return this.lineNumber;
 	}
 
-	public boolean hasBranch()
-	{
-		lock.lock();
-		try
-		{
-			return (jumps != null) || (switches != null);
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
 	public void merge(CoverageData coverageData)
 	{
 		LineData lineData = (LineData)coverageData;
@@ -318,10 +225,6 @@ public class LineData
 					for (int i = Math.min(this.switches.size(), lineData.switches.size()); i < lineData.switches.size(); i++)
 						this.switches.add(lineData.switches.get(i));
 				}
-			if (lineData.methodName != null)
-				this.methodName = lineData.methodName;
-			if (lineData.methodDescriptor != null)
-				this.methodDescriptor = lineData.methodDescriptor;
 		}
 		finally
 		{
@@ -345,20 +248,6 @@ public class LineData
 		getSwitchData(switchNumber, new SwitchData(switchNumber, min, max));
 	}
 
-	void setMethodNameAndDescriptor(String name, String descriptor)
-	{
-		lock.lock();
-		try
-		{
-			this.methodName = name;
-			this.methodDescriptor = descriptor;
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
 	void touch(int new_hits)
 	{
 		lock.lock();
@@ -380,61 +269,6 @@ public class LineData
 	void touchSwitch(int switchNumber, int branch,int hits)
 	{
 		getSwitchData(switchNumber, null).touchBranch(branch,hits);
-	}
-
-	public int getConditionSize() {
-		lock.lock();
-		try
-		{
-			return ((jumps == null) ? 0 : jumps.size()) + ((switches == null) ? 0 :switches.size());
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
-	public Object getConditionData(int index)
-	{
-		Object branchData = null;
-		lock.lock();
-		try
-		{
-			int jumpsSize = (jumps == null) ? 0 : jumps.size();
-			int switchesSize = (switches == null) ? 0 :switches.size();
-			if (index < jumpsSize)
-			{
-				branchData = jumps.get(index);
-			}
-			else if (index < jumpsSize + switchesSize)
-			{
-				branchData = switches.get(index - jumpsSize);
-			}
-			return branchData;
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
-	public String getConditionCoverage(int index) {
-		Object branchData = getConditionData(index);
-		if (branchData == null)
-		{
-			return StringUtil.getPercentValue(1.0);
-		}
-		else if (branchData instanceof JumpData)
-		{
-			JumpData jumpData = (JumpData) branchData;
-			return StringUtil.getPercentValue(jumpData.getBranchCoverageRate());
-		}
-		else
-		{
-			SwitchData switchData = (SwitchData) branchData;
-			return StringUtil.getPercentValue(switchData.getBranchCoverageRate());
-
-		}
 	}
 
 	JumpData getJumpData(int jumpNumber)

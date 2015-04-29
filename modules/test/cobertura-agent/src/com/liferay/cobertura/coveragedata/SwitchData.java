@@ -35,7 +35,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * problem because instrumented classes make use of this class.
  * </p>
  */
-public class SwitchData implements BranchCoverageData, Comparable, Serializable
+public class SwitchData implements BranchCoverageData, Serializable
 {
 	private static final long serialVersionUID = 9;
 
@@ -83,13 +83,6 @@ public class SwitchData implements BranchCoverageData, Comparable, Serializable
 		 lock = new ReentrantLock();
 	}
 
-	public int compareTo(Object o)
-	{
-		if (!o.getClass().equals(SwitchData.class))
-			return Integer.MAX_VALUE;
-		return this.switchNumber - ((SwitchData) o).switchNumber;
-	}
-
 	void touchBranch(int branch,int new_hits)
 	{
 		lock.lock();
@@ -108,39 +101,6 @@ public class SwitchData implements BranchCoverageData, Comparable, Serializable
 				}
 				hits[branch]+=new_hits;
 			}
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
-	public int getSwitchNumber()
-	{
-		return this.switchNumber;
-	}
-
-	public long getHits(int branch)
-	{
-		lock.lock();
-		try
-		{
-			if (hits.length > branch)
-				return hits[branch];
-			return -1;
-		}
-		finally
-		{
-			lock.unlock();
-		}
-	}
-
-	public long getDefaultHits()
-	{
-		lock.lock();
-		try
-		{
-			return defaultHits;
 		}
 		finally
 		{

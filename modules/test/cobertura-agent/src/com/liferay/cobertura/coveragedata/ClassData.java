@@ -23,13 +23,9 @@
 
 package com.liferay.cobertura.coveragedata;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -60,13 +56,7 @@ public class ClassData extends CoverageDataContainer
 	 */
 	private Map<Integer,LineData> branches = new HashMap<Integer,LineData>();
 
-	private boolean containsInstrumentationInfo = false;
-
-	private Set<String> methodNamesAndDescriptors = new HashSet<String>();
-
 	private String name = null;
-
-	private String sourceFileName = null;
 
 	/**
 	 * @param name In the format "net.sourceforge.cobertura.coveragedata.ClassData"
@@ -90,12 +80,7 @@ public class ClassData extends CoverageDataContainer
 				// Each value is information about the line, stored as a LineData object.
 				children.put(new Integer(lineNumber), lineData);
 			}
-			lineData.setMethodNameAndDescriptor(methodName, methodDescriptor);
 
-			// methodName and methodDescriptor can be null when cobertura.ser with
-			// no line information was loaded (or was not loaded at all).
-			if( methodName!=null && methodDescriptor!=null)
-				methodNamesAndDescriptors.add(methodName + methodDescriptor);
 			return lineData;
 	}
 
@@ -105,11 +90,6 @@ public class ClassData extends CoverageDataContainer
 	public int compareTo(ClassData o)
 	{
 		return this.name.compareTo(o.name);
-	}
-
-	public boolean containsInstrumentationInfo()
-	{
-			return this.containsInstrumentationInfo;
 	}
 
 	/**
@@ -127,10 +107,7 @@ public class ClassData extends CoverageDataContainer
 		ClassData classData = (ClassData)obj;
 			return super.equals(obj)
 				&& this.branches.equals(classData.branches)
-				&& this.methodNamesAndDescriptors
-					.equals(classData.methodNamesAndDescriptors)
-				&& this.name.equals(classData.name)
-				&& this.sourceFileName.equals(classData.sourceFileName);
+				&& this.name.equals(classData.name);
 	}
 
 	public String getBaseName()
@@ -143,70 +120,6 @@ public class ClassData extends CoverageDataContainer
 		return this.name.substring(lastDot + 1);
 	}
 
-	/**
-	 * @return The branch coverage rate for a particular method.
-	 */
-	public double getBranchCoverageRate(String methodNameAndDescriptor)
-	{
-		int total = 0;
-		int covered = 0;
-
-			for (Iterator<LineData> iter = branches.values().iterator(); iter.hasNext();) {
-				LineData next = (LineData) iter.next();
-				if (methodNameAndDescriptor.equals(next.getMethodName() + next.getMethodDescriptor()))
-				{
-					total += next.getNumberOfValidBranches();
-					covered += next.getNumberOfCoveredBranches();
-				}
-			}
-			if (total == 0) return 1.0;
-			return (double) covered / total;
-	}
-
-	public Collection<Integer> getBranches()
-	{
-			return Collections.unmodifiableCollection(branches.keySet());
-	}
-
-	/**
-	 * @param lineNumber The source code line number.
-	 * @return The coverage of the line
-	 */
-	public LineData getLineCoverage(int lineNumber)
-	{
-		Integer lineObject = new Integer(lineNumber);
-			if (!children.containsKey(lineObject))
-			{
-				return null;
-			}
-
-			return (LineData) children.get(lineObject);
-	}
-
-	/**
-	 * @return The line coverage rate for particular method
-	 */
-	public double getLineCoverageRate(String methodNameAndDescriptor)
-	{
-		int total = 0;
-		int hits = 0;
-
-			Iterator<CoverageData> iter = children.values().iterator();
-			while (iter.hasNext())
-			{
-				LineData next = (LineData) iter.next();
-				if (methodNameAndDescriptor.equals(next.getMethodName() + next.getMethodDescriptor()))
-				{
-					total++;
-					if (next.getHits() > 0) {
-						hits++;
-					}
-				}
-			}
-			if (total == 0) return 1d;
-			return (double) hits / total;
-	}
-
 	private LineData getLineData(int lineNumber)
 	{
 			return (LineData)children.get(Integer.valueOf(lineNumber));
@@ -215,31 +128,6 @@ public class ClassData extends CoverageDataContainer
 	public SortedSet<CoverageData> getLines()
 	{
 			return new TreeSet<CoverageData>(this.children.values());
-	}
-
-	public Collection<CoverageData> getLines(String methodNameAndDescriptor)
-	{
-		Collection<CoverageData> lines = new HashSet<CoverageData>();
-			Iterator<CoverageData> iter = children.values().iterator();
-			while (iter.hasNext())
-			{
-				LineData next = (LineData)iter.next();
-				if (methodNameAndDescriptor.equals(next.getMethodName()
-						+ next.getMethodDescriptor()))
-				{
-					lines.add(next);
-				}
-			}
-			return lines;
-	}
-
-	/**
-	 * @return The method name and descriptor of each method found in the
-	 *         class represented by this instrumentation.
-	 */
-	public Set<String> getMethodNamesAndDescriptors()
-	{
-			return methodNamesAndDescriptors;
 	}
 
 	public String getName()
@@ -283,59 +171,9 @@ public class ClassData extends CoverageDataContainer
 		return this.name.substring(0, lastDot);
 	}
 
-	 /**
-	 * Return the name of the file containing this class.  If this
-	 * class' sourceFileName has not been set (for whatever reason)
-	 * then this method will attempt to infer the name of the source
-	 * file using the class name.
-	 *
-	 * @return The name of the source file, for example
-	 *         net/sourceforge/cobertura/coveragedata/ClassData.java
-	 */
-	public String getSourceFileName()
-	{
-		String baseName;
-			if (sourceFileName != null)
-				baseName = sourceFileName;
-			else
-			{
-				baseName = getBaseName();
-				int firstDollarSign = baseName.indexOf('$');
-				if (firstDollarSign == -1 || firstDollarSign == 0)
-					baseName += ".java";
-				else
-					baseName = baseName.substring(0, firstDollarSign)
-						+ ".java";
-			}
-
-			String packageName = getPackageName();
-			if (packageName.equals(""))
-				return baseName;
-			return packageName.replace('.', '/') + '/' + baseName;
-	}
-
 	public int hashCode()
 	{
 		return this.name.hashCode();
-	}
-
-	/**
-	 * @return True if the line contains at least one condition jump (branch)
-	 */
-	public boolean hasBranch(int lineNumber)
-	{
-			return branches.containsKey(Integer.valueOf(lineNumber));
-	}
-
-	/**
-	 * Determine if a given line number is a valid line of code.
-	 *
-	 * @return True if the line contains executable code.  False
-	 *         if the line is empty, or a comment, etc.
-	 */
-	public boolean isValidSourceLineNumber(int lineNumber)
-	{
-			return children.containsKey(Integer.valueOf(lineNumber));
 	}
 
 	public void addLineJump(int lineNumber, int branchNumber)
@@ -399,29 +237,6 @@ public class ClassData extends CoverageDataContainer
 					this.branches.put(key, classData.branches.get(key));
 				}
 			}
-
-			this.containsInstrumentationInfo |= classData.containsInstrumentationInfo;
-			this.methodNamesAndDescriptors.addAll(classData
-					.getMethodNamesAndDescriptors());
-			if (classData.sourceFileName != null)
-				this.sourceFileName = classData.sourceFileName;
-	}
-
-	public void removeLine(int lineNumber)
-	{
-		Integer lineObject = Integer.valueOf(lineNumber);
-			children.remove(lineObject);
-			branches.remove(lineObject);
-	}
-
-	public void setContainsInstrumentationInfo()
-	{
-			this.containsInstrumentationInfo = true;
-	}
-
-	public void setSourceFileName(String sourceFileName)
-	{
-			this.sourceFileName = sourceFileName;
 	}
 
 	/**

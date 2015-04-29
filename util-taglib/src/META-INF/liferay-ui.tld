@@ -3129,8 +3129,8 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>item-browser</name>
-		<tag-class>com.liferay.taglib.ui.ItemBrowserTag</tag-class>
+		<name>item-selector-browser</name>
+		<tag-class>com.liferay.taglib.ui.ItemSelectorBrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>displayStyle</name>

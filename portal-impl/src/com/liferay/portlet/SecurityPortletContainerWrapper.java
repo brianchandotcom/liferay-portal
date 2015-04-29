@@ -169,10 +169,11 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 		if (!isValidPortletId(portlet.getPortletId())) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Invalid portlet id " + portlet.getPortletId());
+				_log.warn("Invalid portlet id: " + portlet.getPortletId());
 			}
 
-			throw new PrincipalException();
+			throw new PrincipalException(
+				"Invalid portlet id: " + portlet.getPortletId());
 		}
 
 		if (portlet.isUndeployedPortlet()) {
@@ -323,18 +324,20 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	protected ActionResult processActionException(
 		HttpServletRequest request, HttpServletResponse response,
-		Portlet portlet, PrincipalException e) {
+		Portlet portlet, PrincipalException pe) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(e);
+			_log.debug(pe);
 		}
 
 		String url = getOriginalURL(request);
 
 		if (_log.isWarnEnabled()) {
 			_log.warn(
-				"Reject process action for " + url + " on " +
-					portlet.getPortletId());
+				String.format(
+					"Action denied for user %s with url %s and portlet %s",
+					PortalUtil.getUserId(request), url,
+					portlet.getPortletId()));
 		}
 
 		return ActionResult.EMPTY_ACTION_RESULT;

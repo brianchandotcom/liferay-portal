@@ -77,7 +77,9 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			}
 		}
 
-		throw new PrincipalException();
+		throw new PrincipalException(
+			"User does not have permission to access portlet: " +
+				portlet.getPortletId());
 	}
 
 	@Override
@@ -196,7 +198,9 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			return;
 		}
 
-		throw new PrincipalException();
+		throw new PrincipalException(
+			"User does not have permission access control panel portlet: " +
+				portlet.getPortletId());
 	}
 
 	protected boolean isAccessAllowedToLayoutPortlet(

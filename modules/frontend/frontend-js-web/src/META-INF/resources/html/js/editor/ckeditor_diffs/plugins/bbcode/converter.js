@@ -1,6 +1,4 @@
 ;(function() {
-	var A = AUI();
-
 	var BBCodeUtil = Liferay.BBCodeUtil;
 	var CKTools = CKEDITOR.tools;
 
@@ -110,15 +108,11 @@
 
 	var STR_NEW_LINE = '\n';
 
-	var STR_TAG_A_CLOSE = '</a>';
-
 	var STR_TAG_ATTR_CLOSE = '">';
 
 	var STR_TAG_ATTR_HREF_OPEN = '<a href="';
 
-	var STR_TAG_DIV_CLOSE = '</div>';
-
-	var STR_TAG_DIV_STYLE_OPEN = '<div style="';
+	var STR_TAG_A_CLOSE = '</a>';
 
 	var STR_TAG_END_CLOSE = '>';
 
@@ -133,6 +127,8 @@
 	var STR_TAG_SPAN_CLOSE = '</span>';
 
 	var STR_TAG_SPAN_STYLE_OPEN = '<span style="';
+
+	var STR_TAG_DIV_STYLE_OPEN = '<div style="';
 
 	var STR_TAG_URL = 'url';
 
@@ -222,6 +218,7 @@
 				if (token.type == TOKEN_DATA) {
 					result.push(token.value);
 				}
+
 			}
 			while ((token.type != TOKEN_TAG_END) && (token.value != toTagName));
 
@@ -379,8 +376,6 @@
 			var indent = token.attribute;
 
 			instance._result.push(STR_TAG_DIV_STYLE_OPEN, 'margin-left: ', indent, 'px;', STR_TAG_ATTR_CLOSE);
-
-			instance._stack.push(STR_TAG_DIV_CLOSE);
 		},
 
 		_handleList: function(token) {

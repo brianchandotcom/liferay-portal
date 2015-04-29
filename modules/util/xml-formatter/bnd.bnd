@@ -1,6 +1,9 @@
 Bundle-Name: Liferay XML Formatter
 Bundle-SymbolicName: com.liferay.xml.formatter
 Bundle-Version: 1.0.0
+Import-Package:\
+	!org.apache.tools.ant.*,\
+	*
 Include-Resource:\
 	classes,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\

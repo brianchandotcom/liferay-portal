@@ -17,6 +17,7 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/ant.jar" />
 	<classpathentry kind="lib" path="lib/dom4j.jar" />
 	<classpathentry kind="lib" path="lib/xml-apis.jar" />
 	<classpathentry kind="output" path="bin" />

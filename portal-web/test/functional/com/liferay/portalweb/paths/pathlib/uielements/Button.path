@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTINUE</td>
+	<td>//button[contains(.,'Continue')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COPY</td>
 	<td>//button[contains(.,'Copy')]</td>
 	<td></td>
@@ -221,6 +226,11 @@
 <tr>
 	<td>SELECT</td>
 	<td>//a[contains(.,'Select') and contains(@class,'btn')] | //button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILE</td>
+	<td>//button[contains(.,'Select File')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,8 +1,11 @@
 Bundle-Name: Liferay Journal Content Web
 Bundle-SymbolicName: com.liferay.journal.content.web
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.journal.content.web.util
 Include-Resource:\
 	classes,\
 	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
 	META-INF/resources=src/META-INF/resources,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/PropertyComparator.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/log4j/Log4JUtil.class

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_definitions/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
@@ -32,12 +32,12 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 		</c:if>
 
 		<portlet:renderURL var="viewDefinitionsURL">
-			<portlet:param name="struts_action" value="/workflow_definitions/view" />
+			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="tabs1" value="workflow-definitions" />
 		</portlet:renderURL>
 
 		<portlet:renderURL var="addWorkflowDefinitionURL">
-			<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
+			<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
 			<portlet:param name="tabs1" value="workflow-definitions" />
 			<portlet:param name="redirect" value="<%= viewDefinitionsURL %>" />
 			<portlet:param name="backURL" value="<%= viewDefinitionsURL %>" />

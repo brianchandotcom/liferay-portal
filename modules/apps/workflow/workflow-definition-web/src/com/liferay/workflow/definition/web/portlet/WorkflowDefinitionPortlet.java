@@ -40,7 +40,7 @@ import com.liferay.workflow.definition.web.portlet.action.ActionUtil;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.icon=/icons/workflow_definition.png",
-		"com.liferay.portlet.control-panel-entry-category=configuration",
+		"com.liferay.portlet.control-panel-entry-category=site_administration.configuration",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
@@ -87,29 +87,33 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		ActionRequest actionRequest, ActionResponse actionResponse) 
 		throws IOException, PortletException {
 		try {
+			hideDefaultErrorMessage(actionRequest);
 			super.processAction(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof RequiredWorkflowDefinitionException) {
-				SessionErrors.add(actionRequest, e.getClass());
-
-				hideDefaultErrorMessage(actionRequest);
-
 				include("/view.jsp", actionRequest, actionResponse);
 			}
-			else if (e instanceof WorkflowDefinitionFileException) {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
 			else if (e instanceof WorkflowException) {
-				
-				SessionErrors.add(actionRequest, e.getClass());
-				
 				include("/error.jsp", actionRequest, actionResponse);
 			}
 			else {
 				throw e;
 			}
 		}
+	}
+	
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof WorkflowDefinitionFileException ||
+			cause instanceof WorkflowException ||
+			cause instanceof RequiredWorkflowDefinitionException ||
+			super.isSessionErrorException(cause)) {
+
+			return true;
+		}
+
+		return false;
 	}
 	
 }

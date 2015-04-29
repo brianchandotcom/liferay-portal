@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_definitions/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -31,7 +31,7 @@ if (workflowDefinition != null) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/workflow_definitions/view");
+portletURL.setParameter("mvcPath", "/view.jsp");
 %>
 
 <liferay-ui:header
@@ -40,12 +40,11 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 	title='<%= (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName() %>'
 />
 
-<portlet:actionURL var="editWorkflowDefinitionURL">
-	<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
-</portlet:actionURL>
+<liferay-portlet:actionURL var="editWorkflowDefinitionURL" name="<%= (workflowDefinition == null) ? "addWorkflowDefinition" : "updateWorkflowDefinition" %>">
+	<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
+</liferay-portlet:actionURL>
 
 <aui:form action="<%= editWorkflowDefinitionURL %>" enctype="multipart/form-data" method="post">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (workflowDefinition == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="name" type="hidden" value="<%= name %>" />
 	<aui:input name="version" type="hidden" value="<%= version %>" />

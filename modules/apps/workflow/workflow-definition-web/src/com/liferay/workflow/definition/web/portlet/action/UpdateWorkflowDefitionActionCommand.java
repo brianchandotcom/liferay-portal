@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -71,10 +72,10 @@ public class UpdateWorkflowDefitionActionCommand extends BaseActionCommand {
 
 		WorkflowDefinition workflowDefinition = null;
 
-		if (file == null) {
-			String name = ParamUtil.getString(portletRequest, _NAME);
-			int version = ParamUtil.getInteger(portletRequest, _VERSION);
+		String name = ParamUtil.getString(portletRequest, _NAME);
+		int version = ParamUtil.getInteger(portletRequest, _VERSION);
 
+		if (Validator.isNotNull(name)) {
 			workflowDefinition =
 				WorkflowDefinitionManagerUtil.getWorkflowDefinition(
 					themeDisplay.getCompanyId(), name, version);
@@ -84,6 +85,9 @@ public class UpdateWorkflowDefitionActionCommand extends BaseActionCommand {
 				version, getTitle(titleMap));
 		}
 		else {
+			if(file.length() == 0) {
+				throw new WorkflowDefinitionFileException();
+			}
 			workflowDefinition =
 				WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),

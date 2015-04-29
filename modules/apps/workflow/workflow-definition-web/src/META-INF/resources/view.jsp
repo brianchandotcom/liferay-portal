@@ -14,41 +14,60 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_definitions/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<c:choose>
-	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
+<%
+List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
 
-		<%
-		String tabs1 = ParamUtil.getString(request, "tabs1", "definitions");
+PortletURL portletURL = renderResponse.createRenderURL();
 
-		PortletURL portletURL = renderResponse.createRenderURL();
+portletURL.setParameter("mvcPath", "/view.jsp");
+%>
 
-		portletURL.setParameter("tabs1", tabs1);
-		%>
+<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="you-cannot-deactivate-or-delete-this-definition" />
 
-		<liferay-ui:tabs
-			names="definitions,submissions"
-			portletURL="<%= portletURL %>"
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+
+<liferay-ui:search-container
+	emptyResultsMessage="no-workflow-definitions-are-defined"
+	iteratorURL="<%= portletURL %>"
+	total="<%= workflowDefinitions.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= ListUtil.subList(workflowDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.kernel.workflow.WorkflowDefinition"
+		modelVar="workflowDefinition"
+	>
+
+		<liferay-ui:search-container-column-text
+			name="name"
+			value="<%= HtmlUtil.escape(workflowDefinition.getName()) %>"
 		/>
 
-		<c:choose>
-			<c:when test='<%= tabs1.equals("submissions") %>'>
-				<liferay-util:include page="/html/portlet/workflow_instances/view.jsp" />
-			</c:when>
-			<c:otherwise>
-				<%@ include file="/html/portlet/workflow_definitions/view_definitions.jspf" %>
-			</c:otherwise>
-		</c:choose>
+		<liferay-ui:search-container-column-text
+			name="title"
+			value="<%= HtmlUtil.escape(workflowDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+		/>
 
-		<%
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), currentURL);
-		%>
+		<liferay-ui:search-container-column-text
+			name="version"
+			value="<%= String.valueOf(workflowDefinition.getVersion()) %>"
+		/>
 
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="no-workflow-engine-is-deployed" />
-		</div>
-	</c:otherwise>
-</c:choose>
+		<liferay-ui:search-container-column-text
+			name="active"
+			value='<%= workflowDefinition.isActive() ? LanguageUtil.get(locale, "yes") : LanguageUtil.get(locale, "no") %>'
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			align="right"
+			cssClass="entry-action"
+			path="/workflow_definition_action.jsp"
+		/>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

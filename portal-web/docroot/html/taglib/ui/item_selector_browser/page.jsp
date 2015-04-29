@@ -101,7 +101,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 									<small>
 										<dl>
 											<dt><liferay-ui:message key="status" />:</dt>
-											<dd><aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" /> </dd>
+											<dd><aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" /></dd>
 
 											<dt><liferay-ui:message key="modified" />:</dt>
 											<dd><liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" /></dd>
@@ -125,11 +125,9 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 				<liferay-ui:search-container
 					searchContainer="<%= searchContainer %>"
 					total="<%= searchContainer.getTotal() %>"
-					totalVar="searchContainerTotal"
 				>
 					<liferay-ui:search-container-results
 						results="<%= searchContainer.getResults() %>"
-						resultsVar="searchContainerResults"
 					/>
 
 					<liferay-ui:search-container-row

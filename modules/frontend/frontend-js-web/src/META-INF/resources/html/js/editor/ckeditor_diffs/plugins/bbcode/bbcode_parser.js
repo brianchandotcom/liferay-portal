@@ -344,10 +344,10 @@
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
 		'*': 3,
 		li: 3,
-		table: 2,
+		tr: 3,
 		td: 3,
 		th: 3,
-		tr: 3
+		table: 2
 	};
 
 	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
@@ -699,7 +699,7 @@
 						hasOwnProperty.call(MAP_TOKENS_EXCLUDE_NEW_LINE, nextToken.value) &&
 						(nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value])) {
 
-						value = STR_BLANK;
+							value = STR_BLANK;
 					}
 				}
 				else if (REGEX_LASTCHAR_NEWLINE.test(value)) {

@@ -46,7 +46,7 @@ public class SiteDocumentsAndMediaFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Group group) {
-		if (group == null) {
+		if ((group == null) || group.isCompany()) {
 			return false;
 		}
 

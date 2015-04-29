@@ -93,7 +93,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 					if (dependencies.isEmpty()) {
 						addPoshiRunnerDependenciesPoshiRunner(
 							project, poshiRunnerExtension);
-						addPoshiRunnerDependenciesSikuli(project);
+						addPoshiRunnerDependenciesSikuli(
+							project, poshiRunnerExtension);
 					}
 				}
 
@@ -109,7 +110,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			null);
 	}
 
-	protected void addPoshiRunnerDependenciesSikuli(Project project) {
+	protected void addPoshiRunnerDependenciesSikuli(
+		Project project, PoshiRunnerExtension poshiRunnerExtension) {
+
 		String bitMode = OSDetector.getBitmode();
 
 		if (bitMode.equals("32")) {
@@ -132,7 +135,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		GradleUtil.addDependency(
 			project, _POSHI_RUNNER_CONFIGURATION_NAME,
-			"org.bytedeco.javacpp-presets", "opencv", "2.4.9-0.9", classifier);
+			"org.bytedeco.javacpp-presets", "opencv",
+			poshiRunnerExtension.getOpenCVVersion(), classifier);
 	}
 
 	protected void addTasksExpandPoshiRunner(Project project) {

@@ -21,11 +21,9 @@
 
 package com.liferay.cobertura.coveragedata;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * <p>
@@ -38,59 +36,32 @@ public class JumpData implements BranchCoverageData, Serializable
 {
 	private static final long serialVersionUID = 8;
 
-	protected transient Lock lock;
-
 	private int conditionNumber;
 
-	private long trueHits;
+	private final AtomicLong _trueHitsCounter = new AtomicLong();
 
-	private long falseHits;
+	private final AtomicLong _falseHitsCounter = new AtomicLong();
 
 	JumpData(int conditionNumber)
 	{
-		super();
 		this.conditionNumber = conditionNumber;
-		this.trueHits = 0L;
-		this.falseHits = 0L;
-		initLock();
-	}
-
-	private void initLock()
-	{
-		lock = new ReentrantLock();
 	}
 
 	void touchBranch(boolean branch,int new_hits)
 	{
-		lock.lock();
-		try
-		{
 			if (branch)
 			{
-				this.trueHits+=new_hits;
+				_trueHitsCounter.addAndGet(new_hits);
 			}
 			else
 			{
-				this.falseHits+=new_hits;
+				_falseHitsCounter.addAndGet(new_hits);
 			}
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public double getBranchCoverageRate()
 	{
-		lock.lock();
-		try
-		{
 			return ((double) getNumberOfCoveredBranches()) / getNumberOfValidBranches();
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public boolean equals(Object obj)
@@ -101,18 +72,9 @@ public class JumpData implements BranchCoverageData, Serializable
 			return false;
 
 		JumpData branchData = (JumpData) obj;
-		getBothLocks(branchData);
-		try
-		{
-			return (this.trueHits == branchData.trueHits)
-					&& (this.falseHits == branchData.falseHits)
+			return (_trueHitsCounter.get() == branchData._trueHitsCounter.get())
+					&& (_falseHitsCounter.get() == branchData._falseHitsCounter.get())
 					&& (this.conditionNumber == branchData.conditionNumber);
-		}
-		finally
-		{
-			lock.unlock();
-			branchData.lock.unlock();
-		}
 	}
 
 	public int hashCode()
@@ -122,15 +84,7 @@ public class JumpData implements BranchCoverageData, Serializable
 
 	public int getNumberOfCoveredBranches()
 	{
-		lock.lock();
-		try
-		{
-			return ((trueHits > 0) ? 1 : 0) + ((falseHits > 0) ? 1: 0);
-		}
-		finally
-		{
-			lock.unlock();
-		}
+			return ((_trueHitsCounter.get() > 0) ? 1 : 0) + ((_falseHitsCounter.get() > 0) ? 1: 0);
 	}
 
 	public int getNumberOfValidBranches()
@@ -141,59 +95,8 @@ public class JumpData implements BranchCoverageData, Serializable
 	public void merge(BranchCoverageData coverageData)
 	{
 		JumpData jumpData = (JumpData) coverageData;
-		getBothLocks(jumpData);
-		try
-		{
-			this.trueHits += jumpData.trueHits;
-			this.falseHits += jumpData.falseHits;
-		}
-		finally
-		{
-			lock.unlock();
-			jumpData.lock.unlock();
-		}
-	}
-
-	private void getBothLocks(JumpData other) {
-		/*
-		 * To prevent deadlock, we need to get both locks or none at all.
-		 *
-		 * When this method returns, the thread will have both locks.
-		 * Make sure you unlock them!
-		 */
-		boolean myLock = false;
-		boolean otherLock = false;
-		while ((!myLock) || (!otherLock))
-		{
-			try
-			{
-				myLock = lock.tryLock();
-				otherLock = other.lock.tryLock();
-			}
-			finally
-			{
-				if ((!myLock) || (!otherLock))
-				{
-					//could not obtain both locks - so unlock the one we got.
-					if (myLock)
-					{
-						lock.unlock();
-					}
-					if (otherLock)
-					{
-						other.lock.unlock();
-					}
-					//do a yield so the other threads will get to work.
-					Thread.yield();
-				}
-			}
-		}
-	}
-
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-	{
-		in.defaultReadObject();
-		initLock();
+			_trueHitsCounter.addAndGet(jumpData._trueHitsCounter.get());
+			_falseHitsCounter.addAndGet(jumpData._falseHitsCounter.get());
 	}
 
 }

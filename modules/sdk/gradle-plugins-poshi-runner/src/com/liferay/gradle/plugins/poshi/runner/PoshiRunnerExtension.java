@@ -34,6 +34,10 @@ public class PoshiRunnerExtension {
 		return _baseDir;
 	}
 
+	public String getOpenCVVersion() {
+		return _openCVVersion;
+	}
+
 	public Map<String, Object> getPoshiProperties() {
 		return _poshiProperties;
 	}
@@ -50,6 +54,10 @@ public class PoshiRunnerExtension {
 		_baseDir = baseDir;
 	}
 
+	public void setOpenCVVersion(String openCVVersion) {
+		_openCVVersion = openCVVersion;
+	}
+
 	public void setPoshiProperties(Map<String, ?> poshiProperties) {
 		_poshiProperties.clear();
 
@@ -61,6 +69,7 @@ public class PoshiRunnerExtension {
 	}
 
 	private File _baseDir;
+	private String _openCVVersion = "2.4.9-0.9";
 	private final Map<String, Object> _poshiProperties = new HashMap<>();
 	private String _version = "latest.release";
 

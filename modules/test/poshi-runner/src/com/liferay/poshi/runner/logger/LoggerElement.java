@@ -56,32 +56,18 @@ public class LoggerElement {
 	public LoggerElement(String id) {
 		_id = id;
 
-		if (_isWrittenToLogger()) {
-			String className = LoggerUtil.getClassName(this);
-
-			if (Validator.isNotNull(className)) {
-				_className = _fixClassName(className);
-			}
-
-			String name = LoggerUtil.getName(this);
-
-			if (Validator.isNotNull(name)) {
-				_name = name;
-			}
-
-			String text = LoggerUtil.getText(this);
-
-			if (Validator.isNotNull(text)) {
-				_text = text;
-			}
+		if (Validator.isNotNull(id) && LoggerUtil.isWrittenToLogger(this)) {
+			_writtenToLogger = true;
 		}
 	}
 
 	public void addChildLoggerElement(LoggerElement childLoggerElement) {
 		_childLoggerElements.add(childLoggerElement);
 
-		if (_isWrittenToLogger()) {
+		if (_writtenToLogger) {
 			LoggerUtil.addChildLoggerElement(this, childLoggerElement);
+
+			childLoggerElement.setWrittenToLogger(true);
 
 			childLoggerElement.writeChildLoggerElements();
 		}
@@ -171,7 +157,7 @@ public class LoggerElement {
 	public void setAttribute(String attributeName, String attributeValue) {
 		_attributes.put(attributeName, attributeValue);
 
-		if (_isWrittenToLogger()) {
+		if (_writtenToLogger) {
 			LoggerUtil.setAttribute(this, attributeName, attributeValue);
 		}
 	}
@@ -179,7 +165,7 @@ public class LoggerElement {
 	public void setClassName(String className) {
 		_className = _fixClassName(className);
 
-		if (_isWrittenToLogger()) {
+		if (_writtenToLogger) {
 			LoggerUtil.setClassName(this);
 		}
 	}
@@ -187,7 +173,7 @@ public class LoggerElement {
 	public void setID(String id) {
 		_id = id;
 
-		if (_isWrittenToLogger()) {
+		if (_writtenToLogger) {
 			LoggerUtil.setID(this);
 		}
 	}
@@ -195,7 +181,7 @@ public class LoggerElement {
 	public void setName(String name) {
 		_name = name;
 
-		if (_isWrittenToLogger()) {
+		if (_writtenToLogger) {
 			LoggerUtil.setName(this);
 		}
 	}
@@ -203,9 +189,13 @@ public class LoggerElement {
 	public void setText(String text) {
 		_text = text;
 
-		if (_isWrittenToLogger()) {
+		if (_writtenToLogger) {
 			LoggerUtil.setText(this);
 		}
+	}
+
+	public void setWrittenToLogger(boolean writtenToLogger) {
+		_writtenToLogger = writtenToLogger;
 	}
 
 	@Override
@@ -260,9 +250,11 @@ public class LoggerElement {
 	}
 
 	public void writeChildLoggerElements() {
-		if (_isWrittenToLogger()) {
+		if (_writtenToLogger) {
 			for (LoggerElement childLoggerElement : _childLoggerElements) {
 				LoggerUtil.addChildLoggerElement(this, childLoggerElement);
+
+				childLoggerElement.setWrittenToLogger(true);
 
 				childLoggerElement.writeChildLoggerElements();
 			}
@@ -288,20 +280,6 @@ public class LoggerElement {
 		className = sb.toString();
 
 		return className.trim();
-	}
-
-	private boolean _isWrittenToLogger() {
-		if (_writtenToLogger) {
-			return true;
-		}
-
-		if (LoggerUtil.isWrittenToLogger(this)) {
-			_writtenToLogger = true;
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Set<String> _usedIds = new HashSet<>();

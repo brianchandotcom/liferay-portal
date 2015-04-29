@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/item_browser/init.jsp" %>
+<%@ include file="/html/taglib/ui/item_selector_browser/init.jsp" %>
 
 <%
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"), "icon");
@@ -83,10 +83,10 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
-						<%@ include file="/html/taglib/ui/item_browser/icon_view.jspf" %>
+						<%@ include file="/html/taglib/ui/item_selector_browser/icon_view.jspf" %>
 					</c:when>
 					<c:otherwise>
-						<%@ include file="/html/taglib/ui/item_browser/descriptive_view.jspf" %>
+						<%@ include file="/html/taglib/ui/item_selector_browser/descriptive_view.jspf" %>
 					</c:otherwise>
 				</c:choose>
 
@@ -98,7 +98,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 
 		</c:when>
 		<c:otherwise>
-			<%@ include file="/html/taglib/ui/item_browser/list_view.jspf" %>
+			<%@ include file="/html/taglib/ui/item_selector_browser/list_view.jspf" %>
 		</c:otherwise>
 	</c:choose>
 </div>

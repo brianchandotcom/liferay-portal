@@ -673,10 +673,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	protected boolean isHead(JournalArticle article) {
-		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-			return true;
-		}
-
 		JournalArticle latestArticle =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(
 				article.getResourcePrimKey(),

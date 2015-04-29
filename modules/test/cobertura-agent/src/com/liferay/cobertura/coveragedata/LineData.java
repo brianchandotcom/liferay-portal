@@ -24,16 +24,10 @@
 
 package com.liferay.cobertura.coveragedata;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * <p>
@@ -48,9 +42,7 @@ public class LineData
 {
 	private static final long serialVersionUID = 4;
 
-	private transient Lock lock;
-
-	private long hits;
+	private final AtomicLong _hitCounter = new AtomicLong();
 	private final ConcurrentMap<Integer, JumpData> _jumpDatas =
 		new ConcurrentHashMap<>();
 	private final ConcurrentMap<Integer, SwitchData> _switchDatas =
@@ -59,14 +51,7 @@ public class LineData
 
 	public LineData(int lineNumber)
 	{
-		this.hits = 0;
 		this.lineNumber = lineNumber;
-		initLock();
-	}
-
-	private void initLock()
-	{
-		 lock = new ReentrantLock();
 	}
 
 	/**
@@ -87,52 +72,29 @@ public class LineData
 			return false;
 
 		LineData lineData = (LineData)obj;
-		getBothLocks(lineData);
-		try
-		{
-			return (this.hits == lineData.hits)
+
+			return (_hitCounter.get() == lineData._hitCounter.get())
 					&& ((this._jumpDatas == lineData._jumpDatas) || (this._jumpDatas.equals(lineData._jumpDatas)))
 					&& ((this._switchDatas == lineData._switchDatas) || ((this._switchDatas != null) && (this._switchDatas.equals(lineData._switchDatas))))
 					&& (this.lineNumber == lineData.lineNumber);
-		}
-		finally
-		{
-			lock.unlock();
-			lineData.lock.unlock();
-		}
 	}
 
 	public double getBranchCoverageRate()
 	{
 		if (getNumberOfValidBranches() == 0)
 			return 1d;
-		lock.lock();
-		try
-		{
+
 			return ((double) getNumberOfCoveredBranches()) / getNumberOfValidBranches();
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public boolean isCovered()
 	{
-		lock.lock();
-		try
-		{
-			return (hits > 0) && ((getNumberOfValidBranches() == 0) || ((1.0 - getBranchCoverageRate()) < 0.0001));
-		}
-		finally
-		{
-			lock.unlock();
-		}
+		return (_hitCounter.get() > 0) && ((getNumberOfValidBranches() == 0) || ((1.0 - getBranchCoverageRate()) < 0.0001));
 	}
 
 	public double getLineCoverageRate()
 	{
-		return (hits > 0) ? 1 : 0;
+		return (_hitCounter.get() > 0) ? 1 : 0;
 	}
 
 	public int getLineNumber() {
@@ -153,15 +115,12 @@ public class LineData
 
 	public int getNumberOfCoveredLines()
 	{
-		return (hits > 0) ? 1 : 0;
+		return (_hitCounter.get() > 0) ? 1 : 0;
 	}
 
 	public int getNumberOfValidBranches()
 	{
 		int ret = 0;
-		lock.lock();
-		try
-		{
 			for (JumpData jumpData : _jumpDatas.values()) {
 				ret += jumpData.getNumberOfValidBranches();
 			}
@@ -171,19 +130,11 @@ public class LineData
 			}
 
 			return ret;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public int getNumberOfCoveredBranches()
 	{
 		int ret = 0;
-		lock.lock();
-		try
-		{
 			for (JumpData jumpData : _jumpDatas.values()) {
 				ret += jumpData.getNumberOfCoveredBranches();
 			}
@@ -193,11 +144,6 @@ public class LineData
 			}
 
 			return ret;
-		}
-		finally
-		{
-			lock.unlock();
-		}
 	}
 
 	public int getNumberOfValidLines()
@@ -213,10 +159,7 @@ public class LineData
 	public void merge(CoverageData coverageData)
 	{
 		LineData lineData = (LineData)coverageData;
-		getBothLocks(lineData);
-		try
-		{
-			this.hits += lineData.hits;
+			_hitCounter.addAndGet(lineData._hitCounter.get());
 
 			ConcurrentMap<Integer, JumpData> otherJumpDatas =
 				lineData._jumpDatas;
@@ -241,12 +184,6 @@ public class LineData
 					previousSwitchData.merge(switchData);
 				}
 			}
-		}
-		finally
-		{
-			lock.unlock();
-			lineData.lock.unlock();
-		}
 	}
 
 	public JumpData addJump(JumpData jumpData) {
@@ -271,17 +208,8 @@ public class LineData
 		return switchData;
 	}
 
-	void touch(int new_hits)
-	{
-		lock.lock();
-		try
-		{
-			this.hits+=new_hits;
-		}
-		finally
-		{
-			lock.unlock();
-		}
+	public void touch(int new_hits) {
+		_hitCounter.addAndGet(new_hits);
 	}
 
 	public void touchJump(
@@ -312,45 +240,4 @@ public class LineData
 		switchData.touchBranch(className, lineNumber, branch, hits);
 	}
 
-	private void getBothLocks(LineData other) {
-		/*
-		 * To prevent deadlock, we need to get both locks or none at all.
-		 *
-		 * When this method returns, the thread will have both locks.
-		 * Make sure you unlock them!
-		 */
-		boolean myLock = false;
-		boolean otherLock = false;
-		while ((!myLock) || (!otherLock))
-		{
-			try
-			{
-				myLock = lock.tryLock();
-				otherLock = other.lock.tryLock();
-			}
-			finally
-			{
-				if ((!myLock) || (!otherLock))
-				{
-					//could not obtain both locks - so unlock the one we got.
-					if (myLock)
-					{
-						lock.unlock();
-					}
-					if (otherLock)
-					{
-						other.lock.unlock();
-					}
-					//do a yield so the other threads will get to work.
-					Thread.yield();
-				}
-			}
-		}
-	}
-
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
-	{
-		in.defaultReadObject();
-		initLock();
-	}
 }

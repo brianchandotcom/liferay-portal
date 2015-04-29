@@ -35,13 +35,13 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 		<div class="hide image-info">
 			<dl>
 				<dt><liferay-ui:message key="format" /></dt>
-				<dd id="imageExtension"></dd>
+				<dd id="<%= idPrefix %>imageExtension"></dd>
 
 				<dt><liferay-ui:message key="size" /></dt>
-				<dd id="imageSize"></dd>
+				<dd id="<%= idPrefix %>imageSize"></dd>
 
 				<dt><liferay-ui:message key="name" /></dt>
-				<dd id="imageName"></dd>
+				<dd id="<%= idPrefix %>imageName"></dd>
 			</dl>
 		</div>
 

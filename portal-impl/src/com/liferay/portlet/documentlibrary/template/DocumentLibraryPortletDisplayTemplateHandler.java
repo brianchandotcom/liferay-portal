@@ -83,17 +83,16 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			super.getTemplateVariableGroups(classPK, language, locale);
 
-		TemplateVariableGroup templateVariableGroup =
-			templateVariableGroups.get("fields");
-
-		templateVariableGroup.empty();
-
-		templateVariableGroup.addCollectionVariable(
-			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"document", FileEntry.class, "curFileEntry", "title");
-		templateVariableGroup.addVariable("dl-util", DLUtil.class, "dlUtil");
-
 		String[] restrictedVariables = getRestrictedVariables(language);
+
+		TemplateVariableGroup documentUtilTemplateVariableGroup =
+			new TemplateVariableGroup("document-util", restrictedVariables);
+
+		documentUtilTemplateVariableGroup.addVariable(
+			"dl-util", DLUtil.class, "dlUtil");
+
+		templateVariableGroups.put(
+			"document-util", documentUtilTemplateVariableGroup);
 
 		TemplateVariableGroup documentServicesTemplateVariableGroup =
 			new TemplateVariableGroup("document-services", restrictedVariables);
@@ -107,6 +106,15 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 		templateVariableGroups.put(
 			documentServicesTemplateVariableGroup.getLabel(),
 			documentServicesTemplateVariableGroup);
+
+		TemplateVariableGroup fieldsTemplateVariableGroup =
+			templateVariableGroups.get("fields");
+
+		fieldsTemplateVariableGroup.empty();
+
+		fieldsTemplateVariableGroup.addCollectionVariable(
+			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
+			"document", FileEntry.class, "curFileEntry", "title");
 
 		return templateVariableGroups;
 	}

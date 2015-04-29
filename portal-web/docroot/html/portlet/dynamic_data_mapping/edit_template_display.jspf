@@ -57,7 +57,7 @@ if (Validator.isNotNull(scriptContent)) {
 								}
 							%>
 
-								<liferay-ui:panel collapsible="<%= true %>" cssClass="palette-section" extended="<%= false %>" id="<%= templateVariableGroup.getLabel() %>" title="<%= templateVariableGroup.getLabel() %>">
+								<liferay-ui:panel collapsible="<%= true %>" cssClass="palette-section" extended="<%= false %>" id="<%= templateVariableGroup.getLabel() %>" title="<%= LanguageUtil.get(request, resourceBundle, templateVariableGroup.getLabel()) %>">
 									<ul class="palette-item-content">
 
 										<%

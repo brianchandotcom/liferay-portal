@@ -1,6 +1,6 @@
 @import "bourbon";
 
-.taglib-item-browser {
+.taglib-item-selector-browser {
 	position: relative;
 
 	.drop-zone {
@@ -161,7 +161,7 @@
 
 /* Skin */
 
-.taglib-item-browser {
+.taglib-item-selector-browser {
 	.drop-zone {
 		outline-color: rgba(176, 180, 187, 0.5);
 	}

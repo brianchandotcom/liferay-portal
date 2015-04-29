@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Roberto Díaz
  */
-public class ItemBrowserTag extends IncludeTag {
+public class ItemSelectorBrowserTag extends IncludeTag {
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
@@ -65,12 +65,14 @@ public class ItemBrowserTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:item-browser-tag:displayStyle", _displayStyle);
-		request.setAttribute("liferay-ui:item-browser-tag:idPrefix", _idPrefix);
+			"liferay-ui:item-selector-browser:displayStyle", _displayStyle);
 		request.setAttribute(
-			"liferay-ui:item-browser-tag:itemSearchContainer",
+			"liferay-ui:item-selector-browser:idPrefix", _idPrefix);
+		request.setAttribute(
+			"liferay-ui:item-selector-browser:itemSearchContainer",
 			_itemSearchContainer);
-		request.setAttribute("liferay-ui:item-browser-tag:tabName", _tabName);
+		request.setAttribute(
+			"liferay-ui:item-selector-browser:tabName", _tabName);
 
 		if (Validator.isNull(_uploadMessage)) {
 			_uploadMessage = LanguageUtil.get(
@@ -80,7 +82,7 @@ public class ItemBrowserTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:item-browser-tag:uploadMessage", _uploadMessage);
+			"liferay-ui:item-selector-browser:uploadMessage", _uploadMessage);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/item_browser/page.jsp";

@@ -64,7 +64,7 @@ MembershipRequest membershipRequest = MembershipRequestLocalServiceUtil.getMembe
 	<aui:fieldset>
 		<aui:input name="userName" type="resource" value="<%= PortalUtil.getUserName(membershipRequest.getUserId(), StringPool.BLANK) %>" />
 
-		<aui:input name="userComments" readonly="<%= true %>" type="textarea" value="<%= HtmlUtil.escape(membershipRequest.getComments()) %>" />
+		<aui:input name="userComments" readonly="<%= true %>" type="textarea" value="<%= membershipRequest.getComments() %>" />
 
 		<aui:select autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="status" name="statusId">
 			<aui:option label="approve" value="<%= MembershipRequestConstants.STATUS_APPROVED %>" />

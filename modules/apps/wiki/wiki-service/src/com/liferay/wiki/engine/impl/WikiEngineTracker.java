@@ -42,11 +42,11 @@ import org.osgi.service.component.annotations.Deactivate;
 public class WikiEngineTracker {
 
 	public Collection<String> getFormats() {
-		return _wikiEngines.keySet();
+		return _serviceTrackerMap.keySet();
 	}
 
 	public WikiEngine getWikiEngine(String format) {
-		List<WikiEngine> wikiEngines = _wikiEngines.getService(format);
+		List<WikiEngine> wikiEngines = _serviceTrackerMap.getService(format);
 
 		if (wikiEngines == null) {
 			return null;
@@ -61,9 +61,10 @@ public class WikiEngineTracker {
 
 		_bundleContext = bundleContext;
 
-		_wikiEngines = ServiceTrackerMapFactory.multiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
 			bundleContext, WikiEngine.class, null,
 			new ServiceReferenceMapper<String, WikiEngine>() {
+
 				@Override
 				public void map(
 					ServiceReference<WikiEngine> serviceReference,
@@ -81,6 +82,7 @@ public class WikiEngineTracker {
 				}
 			},
 			new Comparator<ServiceReference<WikiEngine>>() {
+
 				@Override
 				public int compare(
 					ServiceReference<WikiEngine> serviceReference1,
@@ -106,18 +108,18 @@ public class WikiEngineTracker {
 				}
 			});
 
-		_wikiEngines.open();
+		_serviceTrackerMap.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_wikiEngines.close();
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiEngineTracker.class);
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<String, List<WikiEngine>> _wikiEngines;
+	private ServiceTrackerMap<String, List<WikiEngine>> _serviceTrackerMap;
 
 }

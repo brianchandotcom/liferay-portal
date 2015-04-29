@@ -83,10 +83,39 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
-						<%@ include file="/html/taglib/ui/item_selector_browser/icon_view.jspf" %>
+						<aui:col cssClass="preview-content" width="<%= 25 %>">
+							<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
+								<img align="left" src="<%= DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, "&imageThumbnail=2") %>" />
+							</a>
+
+							<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
+						</aui:col>
 					</c:when>
 					<c:otherwise>
-						<%@ include file="/html/taglib/ui/item_selector_browser/descriptive_view.jspf" %>
+						<div class="list-content">
+							<div class="thumbnail-container ">
+								<img align="left" src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" />
+							</div>
+							<div style="float: left">
+								<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
+									<%= imageTitle %>
+								</a>
+
+								<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
+
+								<div>
+									<small>
+										<dl>
+											<dt><liferay-ui:message key="status" />:</dt>
+											<dd><aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" /> </dd>
+
+											<dt><liferay-ui:message key="modified" />:</dt>
+											<dd><liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" /></dd>
+										</dl>
+									</small>
+								</div>
+							</div>
+						</div>
 					</c:otherwise>
 				</c:choose>
 
@@ -98,7 +127,63 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 
 		</c:when>
 		<c:otherwise>
-			<%@ include file="/html/taglib/ui/item_selector_browser/list_view.jspf" %>
+			<div class="list-content">
+				<liferay-ui:search-container
+					searchContainer="<%= itemSearchContainer %>"
+					total="<%= itemSearchContainer.getTotal() %>"
+					totalVar="searchContainerTotal"
+				>
+					<liferay-ui:search-container-results
+						results="<%= itemSearchContainer.getResults() %>"
+						resultsVar="searchContainerResults"
+					/>
+
+					<liferay-ui:search-container-row
+						className="com.liferay.portal.kernel.repository.model.FileEntry"
+						keyProperty="fileEntryId"
+						modelVar="fileEntry"
+					>
+
+						<%
+						FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+
+						String imagePreviewURL = DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+						String imageURL = DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK);
+						String imageTitle = DLUtil.getTitleWithExtension(fileEntry);
+
+						String iconCssClass = DLUtil.getFileIconCssClass(imageTitle.substring(imageTitle.lastIndexOf(".") + 1));
+
+						String author = fileEntry.getUserName();
+						%>
+
+						<liferay-ui:search-container-column-text name="title">
+							<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
+								<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
+									<i class="<%= iconCssClass %>"></i>
+								</c:if>
+
+								<span class="taglib-text">
+									<%= imageTitle %>
+								</span>
+							</a>
+
+							<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
+
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />
+
+						<liferay-ui:search-container-column-status name="status" status="<%= latestFileVersion.getStatus() %>" />
+
+						<liferay-ui:search-container-column-text name="modified-date">
+							<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(author)} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+						</liferay-ui:search-container-column-text>
+
+					</liferay-ui:search-container-row>
+
+					<liferay-ui:search-iterator />
+				</liferay-ui:search-container>
+			</div>
 		</c:otherwise>
 	</c:choose>
 </div>

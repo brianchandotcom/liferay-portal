@@ -49,9 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jonathan Potter
  */
-@Component(
-	service = WikiEngine.class
-)
+@Component(service = WikiEngine.class)
 public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 
 	public MediaWikiEngine() {

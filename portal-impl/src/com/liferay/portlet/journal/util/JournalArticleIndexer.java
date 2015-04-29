@@ -609,8 +609,13 @@ public class JournalArticleIndexer extends BaseIndexer {
 						WorkflowConstants.STATUS_IN_TRASH
 					});
 
-			if ((latestIndexableArticle != null) &&
-				latestIndexableArticle.isIndexable()) {
+			if (latestIndexableArticle == null) {
+				latestIndexableArticle =
+					JournalArticleLocalServiceUtil.fetchLatestArticle(
+						article.getResourcePrimKey());
+			}
+
+			if (latestIndexableArticle != null) {
 
 				articles.add(latestIndexableArticle);
 			}

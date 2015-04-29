@@ -41,7 +41,8 @@ public class JavadocFormatterTask extends Task {
 				javadocFormatter.getModifiedFileNames();
 
 			project.addIdReference(
-				JavadocFormatter.OUTPUT_KEY_MODIFIED_FILES, modifiedFileNames);
+				JavadocFormatterArgs.OUTPUT_KEY_MODIFIED_FILES,
+				modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);

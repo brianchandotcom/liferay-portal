@@ -36,5 +36,5 @@ wikiAttachmentsSearchContainer.setResults(wikiPage.getAttachmentsFileEntries(wik
 	displayStyle="<%= displayStyle %>"
 	idPrefix="wikiAttachments"
 	searchContainer="<%= wikiAttachmentsSearchContainer %>"
-	tabName='<%= LanguageUtil.get(request, "attachments") %>'
+	tabName="attachments"
 />

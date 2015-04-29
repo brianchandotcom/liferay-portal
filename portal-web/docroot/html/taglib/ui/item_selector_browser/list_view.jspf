@@ -54,7 +54,7 @@
 					</span>
 				</a>
 
-				<%@ include file="/html/taglib/ui/item_browser/metadata_view.jspf" %>
+				<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
 
 			</liferay-ui:search-container-column-text>
 

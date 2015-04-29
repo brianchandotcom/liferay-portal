@@ -34,8 +34,8 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 		_idPrefix = idPrefix;
 	}
 
-	public void setItemSearchContainer(SearchContainer itemSearchContainer) {
-		_itemSearchContainer = itemSearchContainer;
+	public void setSearchContainer(SearchContainer searchContainer) {
+		_searchContainer = searchContainer;
 	}
 
 	public void setTabName(String tabName) {
@@ -52,7 +52,7 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 
 		_displayStyle = "icon";
 		_idPrefix = null;
-		_itemSearchContainer = null;
+		_searchContainer = null;
 		_tabName = null;
 		_uploadMessage = null;
 	}
@@ -69,8 +69,8 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:idPrefix", _idPrefix);
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:itemSearchContainer",
-			_itemSearchContainer);
+			"liferay-ui:item-selector-browser:searchContainer",
+			_searchContainer);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:tabName", _tabName);
 
@@ -90,7 +90,7 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 
 	private String _displayStyle;
 	private String _idPrefix;
-	private SearchContainer _itemSearchContainer;
+	private SearchContainer _searchContainer;
 	private String _tabName;
 	private String _uploadMessage;
 

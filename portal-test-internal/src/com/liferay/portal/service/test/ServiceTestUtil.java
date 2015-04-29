@@ -15,7 +15,6 @@
 package com.liferay.portal.service.test;
 
 import com.liferay.portal.jcr.JCRFactoryUtil;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
@@ -146,16 +145,8 @@ public class ServiceTestUtil {
 
 		MessageBusUtil messageBusUtil = new MessageBusUtil();
 
-		MessageBus messageBus = (MessageBus)PortalBeanLocatorUtil.locate(
-			MessageBus.class.getName());
-
-		messageBusUtil.setMessageBus(messageBus);
-
-		SynchronousMessageSender synchronousMessageSender =
-			(SynchronousMessageSender)PortalBeanLocatorUtil.locate(
-				SynchronousMessageSender.class.getName());
-
-		messageBusUtil.setSynchronousMessageSender(synchronousMessageSender);
+		messageBusUtil.setSynchronousMessageSenderMode(
+			SynchronousMessageSender.Mode.DEFAULT);
 
 		// Scheduler
 

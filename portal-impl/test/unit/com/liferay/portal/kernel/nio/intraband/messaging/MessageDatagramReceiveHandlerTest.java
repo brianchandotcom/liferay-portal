@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.nio.intraband.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseDestination;
-import com.liferay.portal.kernel.messaging.DefaultMessageBus;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusException;
@@ -47,6 +46,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+
 /**
  * @author Shuyang Zhou
  */
@@ -73,7 +75,7 @@ public class MessageDatagramReceiveHandlerTest {
 		PortalClassLoaderUtil.setClassLoader(
 			MessageDatagramReceiveHandlerTest.class.getClassLoader());
 
-		MessageBus messageBus = new DefaultMessageBus();
+		MessageBus messageBus = Mockito.mock(MessageBus.class);
 
 		MessageDatagramReceiveHandler messageDatagramReceiveHandler =
 			new MessageDatagramReceiveHandler(messageBus);
@@ -122,6 +124,10 @@ public class MessageDatagramReceiveHandlerTest {
 			MessageDatagramReceiveHandlerTest.class.getName());
 
 		messageBus.addDestination(baseDestination);
+
+		Mockito.when(
+			messageBus.getDestination(Matchers.anyString())).thenReturn(
+				baseDestination);
 
 		datagram = Datagram.createRequestDatagram(
 			systemDataType.getValue(), messageRoutingBag.toByteArray());
@@ -230,6 +236,10 @@ public class MessageDatagramReceiveHandlerTest {
 			};
 
 		messageBus.addDestination(intrabandBridgeDestination);
+
+		Mockito.when(
+			messageBus.getDestination(Matchers.anyString())).thenReturn(
+				intrabandBridgeDestination);
 
 		datagram = Datagram.createRequestDatagram(
 			systemDataType.getValue(), messageRoutingBag.toByteArray());

@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging.sender;
+package com.liferay.portal.messaging.internal.sender;
 
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusException;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationSynchronousMessageSender;
+import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 
 /**
  * @author Michael C. Han

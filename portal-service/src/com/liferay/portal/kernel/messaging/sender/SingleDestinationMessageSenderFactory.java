@@ -26,4 +26,9 @@ public interface SingleDestinationMessageSenderFactory {
 		createSingleDestinationSynchronousMessageSender(
 			String destinationName, SynchronousMessageSender.Mode mode);
 
+	public int getModesCount();
+
+	public SynchronousMessageSender getSynchronousMessageSender(
+		SynchronousMessageSender.Mode mode);
+
 }

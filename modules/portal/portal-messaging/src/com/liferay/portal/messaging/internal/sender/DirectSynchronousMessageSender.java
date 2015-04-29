@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging.sender;
+package com.liferay.portal.messaging.internal.sender;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
+import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.nio.intraband.messaging.IntrabandBridgeDestination;
 
 import java.util.Set;

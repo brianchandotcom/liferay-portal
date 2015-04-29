@@ -16,6 +16,7 @@ package com.liferay.registry.dependency;
 
 import com.liferay.registry.Filter;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -29,6 +30,12 @@ public class ServiceDependency {
 	public ServiceDependency(Filter filter) {
 		_serviceDependencyVerifier = new FilterServiceDependencyVerifier(
 			filter);
+	}
+
+	public void close() {
+		_serviceTracker.close();
+
+		_serviceTracker = null;
 	}
 
 	@Override
@@ -62,7 +69,18 @@ public class ServiceDependency {
 		return _fulfilled;
 	}
 
+	public void open() {
+		_serviceTracker.open();
+	}
+
+	public void setServiceTracker(
+		ServiceTracker<Object, Object> serviceTracker) {
+
+		_serviceTracker = serviceTracker;
+	}
+
 	private boolean _fulfilled;
 	private final ServiceDependencyVerifier _serviceDependencyVerifier;
+	private ServiceTracker<Object, Object> _serviceTracker;
 
 }

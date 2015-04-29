@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Messaging
+Bundle-SymbolicName: com.liferay.portal.messaging
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes

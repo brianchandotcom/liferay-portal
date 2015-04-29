@@ -36,13 +36,13 @@ public class ServiceDependencyManager {
 	}
 
 	public void destroy() {
-		_serviceDependencies.clear();
-
-		for (ServiceTracker<Object, Object> serviceTracker : _serviceTrackers) {
-			serviceTracker.close();
+		synchronized (_serviceDependencies) {
+			for (ServiceDependency serviceDependency : _serviceDependencies) {
+				serviceDependency.close();
+			}
 		}
 
-		_serviceTrackers.clear();
+		_serviceDependencies.clear();
 
 		for (ServiceDependencyListener serviceDependencyListener :
 				_serviceDependencyListeners) {
@@ -53,44 +53,49 @@ public class ServiceDependencyManager {
 		_serviceDependencyListeners.clear();
 	}
 
-	public synchronized void registerDependencies(Class<?>... serviceClasses) {
+	public void registerDependencies(Class<?>... serviceClasses) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		for (Class<?> serviceClass : serviceClasses) {
-			ServiceDependency serviceDependency = new ServiceDependency(
-				serviceClass);
+		synchronized (_serviceDependencies) {
+			for (Class<?> serviceClass : serviceClasses) {
+				ServiceDependency serviceDependency = new ServiceDependency(
+					serviceClass);
 
-			_serviceDependencies.add(serviceDependency);
+				_serviceDependencies.add(serviceDependency);
 
-			ServiceTracker<Object, Object> serviceTracker =
-				registry.trackServices(
-					(Class<Object>)serviceClass,
-					new ServiceDependencyServiceTrackerCustomizer(
-						serviceDependency));
+				ServiceTracker<Object, Object> serviceTracker =
+					registry.trackServices(
+						(Class<Object>)serviceClass,
+						new ServiceDependencyServiceTrackerCustomizer(
+							serviceDependency));
 
-			serviceTracker.open();
+				serviceDependency.setServiceTracker(serviceTracker);
+			}
 
-			_serviceTrackers.add(serviceTracker);
+			for (ServiceDependency serviceDependency : _serviceDependencies) {
+				serviceDependency.open();
+			}
 		}
 	}
 
-	public synchronized void registerDependencies(Filter... filters) {
+	public void registerDependencies(Filter... filters) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		for (Filter filter : filters) {
-			ServiceDependency serviceDependency = new ServiceDependency(filter);
+		synchronized (_serviceDependencies) {
+			for (Filter filter : filters) {
+				ServiceDependency serviceDependency = new ServiceDependency(
+					filter);
 
-			_serviceDependencies.add(serviceDependency);
+				_serviceDependencies.add(serviceDependency);
 
-			ServiceTracker<Object, Object> serviceTracker =
-				registry.trackServices(
-					filter,
-					new ServiceDependencyServiceTrackerCustomizer(
-						serviceDependency));
+				ServiceTracker<Object, Object> serviceTracker =
+					registry.trackServices(
+						filter,
+						new ServiceDependencyServiceTrackerCustomizer(
+							serviceDependency));
 
-			serviceTracker.open();
-
-			_serviceTrackers.add(serviceTracker);
+				serviceDependency.setServiceTracker(serviceTracker);
+			}
 		}
 	}
 
@@ -100,24 +105,24 @@ public class ServiceDependencyManager {
 		_serviceDependencyListeners.remove(serviceDependencyListener);
 	}
 
-	public synchronized void verifyDependencies() {
-		for (ServiceDependency serviceDependency : _serviceDependencies) {
-			if (!serviceDependency.isFulfilled()) {
-				return;
+	public void verifyDependencies() {
+		synchronized (_serviceDependencies) {
+			for (ServiceDependency serviceDependency : _serviceDependencies) {
+				if (!serviceDependency.isFulfilled()) {
+					return;
+				}
 			}
-		}
 
-		for (ServiceDependencyListener serviceDependencyListener :
-				_serviceDependencyListeners) {
+			for (ServiceDependencyListener serviceDependencyListener :
+					_serviceDependencyListeners) {
 
-			serviceDependencyListener.dependenciesFulfilled();
+				serviceDependencyListener.dependenciesFulfilled();
+			}
 		}
 	}
 
 	private final Set<ServiceDependency> _serviceDependencies = new HashSet<>();
 	private final Set<ServiceDependencyListener> _serviceDependencyListeners =
-		new HashSet<>();
-	private final Set<ServiceTracker<Object, Object>> _serviceTrackers =
 		new HashSet<>();
 
 	private class ServiceDependencyServiceTrackerCustomizer
@@ -131,15 +136,17 @@ public class ServiceDependencyManager {
 
 		@Override
 		public Object addingService(ServiceReference<Object> serviceReference) {
-			Registry registry = RegistryUtil.getRegistry();
+			synchronized (_serviceDependencies) {
+				Registry registry = RegistryUtil.getRegistry();
 
-			Object service = registry.getService(serviceReference);
+				Object service = registry.getService(serviceReference);
 
-			_serviceDependency.fulfilled(serviceReference);
+				_serviceDependency.fulfilled(serviceReference);
 
-			verifyDependencies();
+				verifyDependencies();
 
-			return service;
+				return service;
+			}
 		}
 
 		@Override

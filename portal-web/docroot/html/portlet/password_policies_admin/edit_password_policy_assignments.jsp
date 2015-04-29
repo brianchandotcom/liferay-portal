@@ -165,9 +165,7 @@ portletURL.setParameter("tabs3", tabs3);
 				searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 				var="organizationSearchContainer"
 			>
-				<liferay-ui:search-form
-					page="/html/portlet/users_admin/organization_search.jsp"
-				/>
+				<liferay-ui:organization-search-form />
 
 				<%
 				OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();

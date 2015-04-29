@@ -14,16 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.NoSuchOrganizationException" %><%@
-page import="com.liferay.portal.NoSuchUserGroupException" %><%@
-page import="com.liferay.portlet.social.model.SocialRelationConstants" %>
-
-<%
-String tabs1 = ParamUtil.getString(request, "tabs1", "users");
-
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale);
-%>
-
-<%@ include file="/html/portlet/directory/init-ext.jsp" %>
+<%@ page import="com.liferay.portal.NoSuchOrganizationException" %>

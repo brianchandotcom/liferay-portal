@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/site_memberships/init.jsp" %>
+<%@ include file="/html/taglib/ui/organization_search_form/init.jsp" %>
 
 <%
 OrganizationSearch searchContainer = (OrganizationSearch)request.getAttribute("liferay-ui:search:searchContainer");
@@ -25,20 +25,13 @@ String type = displayTerms.getType();
 %>
 
 <liferay-ui:search-toggle
-	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
-	id="toggle_id_site_memberships_organization_search"
+	id="toggle_id_organization_search"
 >
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 
-		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.STREET %>" size="20" value="<%= displayTerms.getStreet() %>" />
-
-		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.CITY %>" size="20" value="<%= displayTerms.getCity() %>" />
-	</aui:fieldset>
-
-	<aui:fieldset>
 		<aui:select inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.TYPE %>">
 			<aui:option value=""></aui:option>
 
@@ -54,15 +47,41 @@ String type = displayTerms.getType();
 
 		</aui:select>
 
-		<aui:select inlineField="<%= true %>" label="country" name="<%= OrganizationDisplayTerms.COUNTRY_ID %>"></aui:select>
-
-		<aui:select inlineField="<%= true %>" label="region" name="<%= OrganizationDisplayTerms.REGION_ID %>"></aui:select>
+		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.STREET %>" size="20" type="text" value="<%= displayTerms.getStreet() %>" />
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input inlineField="<%= true %>" label="postal-code" name="<%= OrganizationDisplayTerms.ZIP %>" size="20" value="<%= displayTerms.getZip() %>" />
+		<aui:select inlineField="<%= true %>" label="country" name="<%= OrganizationDisplayTerms.COUNTRY_ID %>" />
+
+		<aui:input inlineField="<%= true %>" name="<%= OrganizationDisplayTerms.CITY %>" size="20" type="text" value="<%= displayTerms.getCity() %>" />
+
+		<aui:select inlineField="<%= true %>" label="region" name="<%= OrganizationDisplayTerms.REGION_ID %>" />
+	</aui:fieldset>
+
+	<aui:fieldset>
+		<aui:input inlineField="<%= true %>" label="postal-code" name="<%= OrganizationDisplayTerms.ZIP %>" size="20" type="text" value="<%= displayTerms.getZip() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>
+
+<%
+Organization parentOrganization = null;
+
+if (displayTerms.getParentOrganizationId() > 0) {
+	try {
+		parentOrganization = OrganizationLocalServiceUtil.getOrganization(displayTerms.getParentOrganizationId());
+	}
+	catch (NoSuchOrganizationException nsoe) {
+	}
+}
+%>
+
+<c:if test="<%= parentOrganization != null %>">
+	<aui:input name="<%= OrganizationDisplayTerms.PARENT_ORGANIZATION_ID %>" type="hidden" value="<%= parentOrganization.getOrganizationId() %>" />
+
+	<br />
+
+	<liferay-ui:message key="filter-by-organization" />: <%= HtmlUtil.escape(parentOrganization.getName()) %><br />
+</c:if>
 
 <aui:script use="liferay-dynamic-select">
 	new Liferay.DynamicSelect(

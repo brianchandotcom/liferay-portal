@@ -278,6 +278,7 @@ page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
+page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@

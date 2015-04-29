@@ -3415,6 +3415,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>organization-search-form</name>
+		<tag-class>com.liferay.taglib.ui.OrganizationSearchFormTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<description>Creates a page iterator for paginating through lists of items.</description>
 		<name>page-iterator</name>
 		<tag-class>com.liferay.taglib.ui.PageIteratorTag</tag-class>

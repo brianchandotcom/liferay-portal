@@ -32,9 +32,7 @@ if (parentOrganizationId > 0) {
 >
 	<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-	<liferay-ui:search-form
-		page="/html/portlet/directory/organization_search.jsp"
-	/>
+	<liferay-ui:organization-search-form />
 
 	<%
 	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();

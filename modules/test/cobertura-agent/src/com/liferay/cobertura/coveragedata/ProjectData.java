@@ -14,68 +14,33 @@
 
 package com.liferay.cobertura.coveragedata;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 /**
  * @author Shuyang Zhou
  */
 public class ProjectData
-	extends CoverageDataContainer<String, PackageData, ProjectData> {
+	extends CoverageDataContainer<String, ClassData, ProjectData> {
 
 	public ClassData getClassData(String className) {
-		return _classDataMap.get(className);
+		return children.get(className);
 	}
 
 	public ClassData getOrCreateClassData(String className) {
-		ClassData classData = _classDataMap.get(className);
+		ClassData classData = children.get(className);
 
 		if (classData == null) {
 			classData = new ClassData(className);
 
-			String packageName = classData.getPackageName();
+			ClassData previousClassData = children.putIfAbsent(
+				className, classData);
 
-			PackageData packageData = children.get(packageName);
-
-			if (packageData == null) {
-				packageData = new PackageData(packageName);
-
-				PackageData previousPackageData = children.putIfAbsent(
-					packageName, packageData);
-
-				if (previousPackageData != null) {
-					packageData = previousPackageData;
-				}
-			}
-
-			if (packageData.addClassData(classData) == classData) {
-				_classDataMap.put(classData.getName(), classData);
+			if (previousClassData != null) {
+				classData = previousClassData;
 			}
 		}
 
 		return classData;
 	}
 
-	@Override
-	public void merge(ProjectData projectData) {
-		if (projectData == null) {
-			return;
-		}
-
-		super.merge(projectData);
-
-		Map<String, ClassData> classDataMap = projectData._classDataMap;
-
-		for (Entry<String, ClassData> entry : classDataMap.entrySet()) {
-			_classDataMap.putIfAbsent(entry.getKey(), entry.getValue());
-		}
-	}
-
 	private static final long serialVersionUID = 1;
-
-	private final ConcurrentMap<String, ClassData> _classDataMap =
-		new ConcurrentHashMap<>();
 
 }

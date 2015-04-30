@@ -44,16 +44,6 @@ public class ClassData
 		return previousLineData;
 	}
 
-	public String getBaseName()
-	{
-		int lastDot = this.name.lastIndexOf('.');
-		if (lastDot == -1)
-		{
-			return this.name;
-		}
-		return this.name.substring(lastDot + 1);
-	}
-
 	public Set<LineData> getLines() {
 		Set<LineData> set = new TreeSet<>(
 			new Comparator<LineData>() {
@@ -96,16 +86,6 @@ public class ClassData
 		}
 
 		return numberOfCoveredBranches;
-	}
-
-	public String getPackageName()
-	{
-		int lastDot = this.name.lastIndexOf('.');
-		if (lastDot == -1)
-		{
-			return "";
-		}
-		return this.name.substring(0, lastDot);
 	}
 
 	public void addLineJump(int lineNumber, int branchNumber) {

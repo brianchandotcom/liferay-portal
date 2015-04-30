@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.util.FileUtil;
+import com.liferay.gradle.util.FileUtil;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;

@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.sass.compiler.jni;
+package com.liferay.sass.compiler;
 
 /**
- * @author Gregory Amerson
+ * @author David Truong
  */
-public class JniSassCompilerException extends Exception {
+public class SassCompilerException extends Exception {
 
-	public JniSassCompilerException() {
+	public SassCompilerException() {
 	}
 
-	public JniSassCompilerException(String message) {
+	public SassCompilerException(String message) {
 		super(message);
 	}
 
-	public JniSassCompilerException(String message, Throwable throwable) {
+	public SassCompilerException(String message, Throwable throwable) {
 		super(message, throwable);
 	}
 
-	public JniSassCompilerException(Throwable throwable) {
+	public SassCompilerException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.sass.compiler.ruby;
+package com.liferay.sass.compiler.jni.internal;
+
+import com.liferay.sass.compiler.SassCompilerException;
 
 /**
- * @author David Truong
+ * @author Gregory Amerson
  */
-public class RubySassCompilerException extends Exception {
+public class JniSassCompilerException extends SassCompilerException {
 
-	public RubySassCompilerException() {
+	public JniSassCompilerException() {
 	}
 
-	public RubySassCompilerException(String message) {
+	public JniSassCompilerException(String message) {
 		super(message);
 	}
 
-	public RubySassCompilerException(String message, Throwable throwable) {
+	public JniSassCompilerException(String message, Throwable throwable) {
 		super(message, throwable);
 	}
 
-	public RubySassCompilerException(Throwable throwable) {
+	public JniSassCompilerException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.sass.compiler.ruby;
+package com.liferay.sass.compiler.ruby.internal;
+
+import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,10 +30,13 @@ public class RubySassCompilerTest {
 			Assert.assertNotNull(rubySassCompiler);
 
 			String expectedOutput = "foo {\n  margin: 42px; }\n";
+
+			Class<?> clazz = getClass();
+
+			URL inputUrl = clazz.getResource("dependencies/input.scss");
+
 			String actualOutput = rubySassCompiler.compileFile(
-				System.getProperty("user.dir") + "/test-classes/unit/com" +
-					"/liferay/sass/compiler/ruby/dependencies/input.scss",
-				"", "");
+				inputUrl.getFile(), "", "");
 
 			Assert.assertEquals(expectedOutput, actualOutput);
 		}

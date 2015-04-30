@@ -233,6 +233,12 @@ public class InvokerFilterHelper {
 		_invokerFilters.add(invokerFilter);
 	}
 
+	protected void clearInvokerFilterChainsCache() {
+		for (InvokerFilter invokerFilter : _invokerFilters) {
+			invokerFilter.clearFilterChainsCache();
+		}
+	}
+
 	protected InvokerFilterChain createInvokerFilterChain(
 		HttpServletRequest request, Dispatcher dispatcher, String uri,
 		FilterChain filterChain) {
@@ -383,12 +389,6 @@ public class InvokerFilterHelper {
 					filterName);
 
 			registerFilterMapping(filterMapping, filterName, true);
-		}
-	}
-
-	private void clearInvokerFilterChainsCache() {
-		for (InvokerFilter invokerFilter : _invokerFilters) {
-			invokerFilter.clearFilterChainsCache();
 		}
 	}
 

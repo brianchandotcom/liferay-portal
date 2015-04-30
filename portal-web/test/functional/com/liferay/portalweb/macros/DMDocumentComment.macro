@@ -9,9 +9,6 @@
 			<then>
 				<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" value1="Be the first." />
 			</then>
-			<else>
-				<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_ADD_COMMENT" value1="Add Comment" />
-			</else>
 		</if>
 
 		<execute function="Type" locator1="PGDocumentsandmediaDocument#COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
@@ -38,6 +35,6 @@
 
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#COMMENTS_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#COMMENTS_BODY" value1="${commentBody}" />
 	</command>
 </definition>

@@ -24,12 +24,6 @@ import java.util.concurrent.atomic.AtomicLongArray;
 public class SwitchData
 	implements BranchCoverageData<SwitchData>, Serializable {
 
-	private static final long serialVersionUID = 1;
-
-	private final int _switchNumber;
-
-	private final AtomicLongArray _hitsArray;
-
 	public SwitchData(
 		String className, int lineNumber, int switchNumber, int caseNumber) {
 
@@ -38,21 +32,6 @@ public class SwitchData
 		_switchNumber = switchNumber;
 
 		_hitsArray = new AtomicLongArray(caseNumber + 1);
-	}
-
-	public void touchBranch(int branch, int hits) {
-		if (branch >= _hitsArray.length()) {
-			throw new IllegalStateException(
-				"No instrument data for class " + _className + " line " +
-					_lineNumber + " switch " + _switchNumber + " branch " +
-						branch);
-		}
-
-		if (branch == -1) {
-			branch = _hitsArray.length() - 1;
-		}
-
-		_hitsArray.addAndGet(branch, hits);
 	}
 
 	@Override
@@ -102,7 +81,6 @@ public class SwitchData
 		for (int i = 0; i < _hitsArray.length(); i++) {
 			_hitsArray.addAndGet(i, switchData._hitsArray.get(i));
 		}
-
 	}
 
 	@Override
@@ -122,7 +100,26 @@ public class SwitchData
 		return sb.toString();
 	}
 
+	public void touchBranch(int branch, int hits) {
+		if (branch >= _hitsArray.length()) {
+			throw new IllegalStateException(
+				"No instrument data for class " + _className + " line " +
+					_lineNumber + " switch " + _switchNumber + " branch " +
+						branch);
+		}
+
+		if (branch == -1) {
+			branch = _hitsArray.length() - 1;
+		}
+
+		_hitsArray.addAndGet(branch, hits);
+	}
+
+	private static final long serialVersionUID = 1;
+
 	private final String _className;
+	private final AtomicLongArray _hitsArray;
 	private final int _lineNumber;
+	private final int _switchNumber;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.cobertura.coveragedata;
 
 import java.io.Serializable;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -24,18 +25,31 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class LineData implements CoverageData<LineData>, Serializable {
 
-	private static final long serialVersionUID = 1;
-
-	private final AtomicLong _hitCounter = new AtomicLong();
-	private final ConcurrentMap<Integer, JumpData> _jumpDatas =
-		new ConcurrentHashMap<>();
-	private final ConcurrentMap<Integer, SwitchData> _switchDatas =
-		new ConcurrentHashMap<>();
-	private final int _lineNumber;
-
 	public LineData(String className, int lineNumber) {
 		_className = className;
 		_lineNumber = lineNumber;
+	}
+
+	public JumpData addJump(JumpData jumpData) {
+		JumpData previousJumpData = _jumpDatas.putIfAbsent(
+			jumpData.getJumpNumber(), jumpData);
+
+		if (previousJumpData != null) {
+			return previousJumpData;
+		}
+
+		return jumpData;
+	}
+
+	public SwitchData addSwitch(SwitchData switchData) {
+		SwitchData previousSwitchData = _switchDatas.putIfAbsent(
+			switchData.getSwitchNumber(), switchData);
+
+		if (previousSwitchData != null) {
+			return previousSwitchData;
+		}
+
+		return switchData;
 	}
 
 	@Override
@@ -49,16 +63,6 @@ public class LineData implements CoverageData<LineData>, Serializable {
 		return (double)getNumberOfCoveredBranches() / numberOfValidBranches;
 	}
 
-	public boolean isCovered() {
-		if ((_hitCounter.get() > 0) &&
-			(getNumberOfCoveredBranches() == getNumberOfValidBranches())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	@Override
 	public double getLineCoverageRate() {
 		return getNumberOfCoveredLines();
@@ -66,6 +70,21 @@ public class LineData implements CoverageData<LineData>, Serializable {
 
 	public int getLineNumber() {
 		return _lineNumber;
+	}
+
+	@Override
+	public int getNumberOfCoveredBranches() {
+		int numberOfCoveredBranches = 0;
+
+		for (JumpData jumpData : _jumpDatas.values()) {
+			numberOfCoveredBranches += jumpData.getNumberOfCoveredBranches();
+		}
+
+		for (SwitchData switchData : _switchDatas.values()) {
+			numberOfCoveredBranches += switchData.getNumberOfCoveredBranches();
+		}
+
+		return numberOfCoveredBranches;
 	}
 
 	@Override
@@ -93,23 +112,18 @@ public class LineData implements CoverageData<LineData>, Serializable {
 	}
 
 	@Override
-	public int getNumberOfCoveredBranches() {
-		int numberOfCoveredBranches = 0;
-
-		for (JumpData jumpData : _jumpDatas.values()) {
-			numberOfCoveredBranches += jumpData.getNumberOfCoveredBranches();
-		}
-
-		for (SwitchData switchData : _switchDatas.values()) {
-			numberOfCoveredBranches += switchData.getNumberOfCoveredBranches();
-		}
-
-		return numberOfCoveredBranches;
-	}
-
-	@Override
 	public int getNumberOfValidLines() {
 		return 1;
+	}
+
+	public boolean isCovered() {
+		if ((_hitCounter.get() > 0) &&
+			(getNumberOfCoveredBranches() == getNumberOfValidBranches())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -124,8 +138,7 @@ public class LineData implements CoverageData<LineData>, Serializable {
 
 		_hitCounter.addAndGet(lineData._hitCounter.get());
 
-		ConcurrentMap<Integer, JumpData> otherJumpDatas =
-			lineData._jumpDatas;
+		ConcurrentMap<Integer, JumpData> otherJumpDatas = lineData._jumpDatas;
 
 		for (JumpData jumpData : otherJumpDatas.values()) {
 			JumpData previousJumpData = _jumpDatas.putIfAbsent(
@@ -149,26 +162,17 @@ public class LineData implements CoverageData<LineData>, Serializable {
 		}
 	}
 
-	public JumpData addJump(JumpData jumpData) {
-		JumpData previousJumpData = _jumpDatas.putIfAbsent(
-			jumpData.getJumpNumber(), jumpData);
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
 
-		if (previousJumpData != null) {
-			return previousJumpData;
-		}
+		sb.append("{className=");
+		sb.append(_className);
+		sb.append(", lineNumber=");
+		sb.append(_lineNumber);
+		sb.append("}");
 
-		return jumpData;
-	}
-
-	public SwitchData addSwitch(SwitchData switchData) {
-		SwitchData previousSwitchData = _switchDatas.putIfAbsent(
-			switchData.getSwitchNumber(), switchData);
-
-		if (previousSwitchData != null) {
-			return previousSwitchData;
-		}
-
-		return switchData;
+		return sb.toString();
 	}
 
 	public void touch(int hits) {
@@ -199,19 +203,14 @@ public class LineData implements CoverageData<LineData>, Serializable {
 		switchData.touchBranch(branch, hits);
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("{className=");
-		sb.append(_className);
-		sb.append(", lineNumber=");
-		sb.append(_lineNumber);
-		sb.append("}");
-
-		return sb.toString();
-	}
+	private static final long serialVersionUID = 1;
 
 	private final String _className;
+	private final AtomicLong _hitCounter = new AtomicLong();
+	private final ConcurrentMap<Integer, JumpData> _jumpDatas =
+		new ConcurrentHashMap<>();
+	private final int _lineNumber;
+	private final ConcurrentMap<Integer, SwitchData> _switchDatas =
+		new ConcurrentHashMap<>();
 
 }

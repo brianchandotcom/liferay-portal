@@ -23,29 +23,10 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 
-	private static final long serialVersionUID = 1;
-
-	private final int _jumpNumber;
-
-	private final AtomicLong _trueHitsCounter = new AtomicLong();
-
-	private final AtomicLong _falseHitsCounter = new AtomicLong();
-
-	public JumpData(
-		String className, int lineNumber, int jumpNumber) {
-
+	public JumpData(String className, int lineNumber, int jumpNumber) {
 		_className = className;
 		_lineNumber = lineNumber;
 		_jumpNumber = jumpNumber;
-	}
-
-	public void touchBranch(boolean branch, int hits) {
-		if (branch) 		{
-			_trueHitsCounter.addAndGet(hits);
-		}
-		else {
-			_falseHitsCounter.addAndGet(hits);
-		}
 	}
 
 	@Override
@@ -108,7 +89,21 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 		return sb.toString();
 	}
 
+	public void touchBranch(boolean branch, int hits) {
+		if (branch) {
+			_trueHitsCounter.addAndGet(hits);
+		}
+		else {
+			_falseHitsCounter.addAndGet(hits);
+		}
+	}
+
+	private static final long serialVersionUID = 1;
+
 	private final String _className;
+	private final AtomicLong _falseHitsCounter = new AtomicLong();
+	private final int _jumpNumber;
 	private final int _lineNumber;
+	private final AtomicLong _trueHitsCounter = new AtomicLong();
 
 }

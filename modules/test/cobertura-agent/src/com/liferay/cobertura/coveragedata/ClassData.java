@@ -24,10 +24,6 @@ import java.util.TreeSet;
 public class ClassData
 	extends CoverageDataContainer<Integer, LineData, ClassData> {
 
-	private static final long serialVersionUID = 1;
-
-	private final String _name;
-
 	public ClassData(String name) {
 		_name = name;
 	}
@@ -41,6 +37,28 @@ public class ClassData
 		}
 
 		return previousLineData;
+	}
+
+	public void addLineJump(int lineNumber, int branchNumber) {
+		LineData lineData = _getLineData(lineNumber);
+
+		lineData.addJump(new JumpData(_name, lineNumber, branchNumber));
+	}
+
+	public void addLineSwitch(
+		int lineNumber, int switchNumber, int min, int max) {
+
+		LineData lineData = _getLineData(lineNumber);
+
+		lineData.addSwitch(
+			new SwitchData(_name, lineNumber, switchNumber, max - min + 1));
+	}
+
+	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys) {
+		LineData lineData = _getLineData(lineNumber);
+
+		lineData.addSwitch(
+			new SwitchData(_name, lineNumber, switchNumber, keys.length));
 	}
 
 	public Set<LineData> getLines() {
@@ -65,47 +83,25 @@ public class ClassData
 	}
 
 	@Override
-	public int getNumberOfValidBranches() {
-		int numberOfValidBranches = 0;
-
-		for (LineData lineData :  children.values()) {
-			numberOfValidBranches += lineData.getNumberOfValidBranches();
-		}
-
-		return numberOfValidBranches;
-	}
-
-	@Override
 	public int getNumberOfCoveredBranches() {
 		int numberOfCoveredBranches = 0;
 
-		for (LineData lineData :  children.values()) {
+		for (LineData lineData : children.values()) {
 			numberOfCoveredBranches += lineData.getNumberOfCoveredBranches();
 		}
 
 		return numberOfCoveredBranches;
 	}
 
-	public void addLineJump(int lineNumber, int branchNumber) {
-		LineData lineData = _getLineData(lineNumber);
+	@Override
+	public int getNumberOfValidBranches() {
+		int numberOfValidBranches = 0;
 
-		lineData.addJump(new JumpData(_name, lineNumber, branchNumber));
-	}
+		for (LineData lineData : children.values()) {
+			numberOfValidBranches += lineData.getNumberOfValidBranches();
+		}
 
-	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys) {
-		LineData lineData = _getLineData(lineNumber);
-
-		lineData.addSwitch(
-			new SwitchData(_name, lineNumber, switchNumber, keys.length));
-	}
-
-	public void addLineSwitch(
-		int lineNumber, int switchNumber, int min, int max) {
-
-		LineData lineData = _getLineData(lineNumber);
-
-		lineData.addSwitch(
-			new SwitchData(_name, lineNumber, switchNumber, max - min + 1));
+		return numberOfValidBranches;
 	}
 
 	@Override
@@ -130,7 +126,7 @@ public class ClassData
 
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.touchJump(branchNumber, branch,hits);
+		lineData.touchJump(branchNumber, branch, hits);
 	}
 
 	public void touchSwitch(
@@ -138,7 +134,7 @@ public class ClassData
 
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.touchSwitch(switchNumber, branch,hits);
+		lineData.touchSwitch(switchNumber, branch, hits);
 	}
 
 	private LineData _getLineData(int lineNumber) {
@@ -152,5 +148,9 @@ public class ClassData
 
 		return lineData;
 	}
+
+	private static final long serialVersionUID = 1;
+
+	private final String _name;
 
 }

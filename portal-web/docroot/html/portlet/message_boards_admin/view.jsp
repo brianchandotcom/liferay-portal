@@ -253,8 +253,16 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							<liferay-ui:search-container-column-text
 								href="<%= rowURL %>"
 								name="flag"
-								value='<%= MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()) ? LanguageUtil.get(request, "resolved") : LanguageUtil.get(request, "waiting-for-an-answer") %>'
-							/>
+							>
+								<c:choose>
+									<c:when test="<%= MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()) %>">
+										<liferay-ui:message escapeAttribute="<%= true %>" key="resolved" />
+									</c:when>
+									<c:when test="<%= thread.isQuestion() %>">
+										<liferay-ui:message escapeAttribute="<%= true %>" key="waiting-for-an-answer" />
+									</c:when>
+								</c:choose>
+							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
 								href="<%= rowURL %>"

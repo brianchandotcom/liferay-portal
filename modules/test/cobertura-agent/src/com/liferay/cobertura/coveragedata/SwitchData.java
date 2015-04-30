@@ -21,10 +21,10 @@ import java.util.concurrent.atomic.AtomicLongArray;
 /**
  * @author Shuyang Zhou
  */
-public class SwitchData implements BranchCoverageData<SwitchData>, Serializable
-{
-	private static final long serialVersionUID = 9;
+public class SwitchData
+	implements BranchCoverageData<SwitchData>, Serializable {
 
+	private static final long serialVersionUID = 1;
 
 	private final int _switchNumber;
 
@@ -40,39 +40,40 @@ public class SwitchData implements BranchCoverageData<SwitchData>, Serializable
 		_hitsArray = new AtomicLongArray(caseNumber + 1);
 	}
 
-	public void touchBranch(int branch,int new_hits) {
+	public void touchBranch(int branch, int hits) {
 		if (branch >= _hitsArray.length()) {
 			throw new IllegalStateException(
-			"No instrument data for class " + _className + " line " +
-				_lineNumber + " switch " + _switchNumber + " branch " +
-					branch);
+				"No instrument data for class " + _className + " line " +
+					_lineNumber + " switch " + _switchNumber + " branch " +
+						branch);
 		}
 
 		if (branch == -1) {
 			branch = _hitsArray.length() - 1;
 		}
 
-		_hitsArray.addAndGet(branch, new_hits);
+		_hitsArray.addAndGet(branch, hits);
 	}
 
 	@Override
 	public double getBranchCoverageRate() {
-		return (double)getNumberOfCoveredBranches()/getNumberOfValidBranches();
+		return (double)getNumberOfCoveredBranches() /
+			getNumberOfValidBranches();
 	}
 
 	@Override
 	public int getNumberOfCoveredBranches() {
-		int branches = 0;
+		int numberOfCoveredBranches = 0;
 
 		for (int i = 0; i < _hitsArray.length(); i++) {
 			long hits = _hitsArray.get(i);
 
 			if (hits > 0) {
-				branches++;
+				numberOfCoveredBranches++;
 			}
 		}
 
-		return branches;
+		return numberOfCoveredBranches;
 	}
 
 	@Override

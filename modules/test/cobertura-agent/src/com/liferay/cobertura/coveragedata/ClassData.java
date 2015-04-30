@@ -24,13 +24,12 @@ import java.util.TreeSet;
 public class ClassData
 	extends CoverageDataContainer<Integer, LineData, ClassData> {
 
-	private static final long serialVersionUID = 5;
+	private static final long serialVersionUID = 1;
 
-	private String name = null;
+	private final String _name;
 
-	public ClassData(String name)
-	{
-		this.name = name;
+	public ClassData(String name) {
+		_name = name;
 	}
 
 	public LineData addLine(LineData lineData) {
@@ -61,9 +60,8 @@ public class ClassData
 		return set;
 	}
 
-	public String getName()
-	{
-		return name;
+	public String getName() {
+		return _name;
 	}
 
 	@Override
@@ -91,14 +89,14 @@ public class ClassData
 	public void addLineJump(int lineNumber, int branchNumber) {
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.addJump(new JumpData(name, lineNumber, branchNumber));
+		lineData.addJump(new JumpData(_name, lineNumber, branchNumber));
 	}
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys) {
 		LineData lineData = _getLineData(lineNumber);
 
 		lineData.addSwitch(
-			new SwitchData(name, lineNumber, switchNumber, keys.length));
+			new SwitchData(_name, lineNumber, switchNumber, keys.length));
 	}
 
 	public void addLineSwitch(
@@ -107,15 +105,15 @@ public class ClassData
 		LineData lineData = _getLineData(lineNumber);
 
 		lineData.addSwitch(
-			new SwitchData(name, lineNumber, switchNumber, max - min + 1));
+			new SwitchData(_name, lineNumber, switchNumber, max - min + 1));
 	}
 
 	@Override
 	public void merge(ClassData classData) {
-		if (!name.equals(classData.name)) {
+		if (!_name.equals(classData._name)) {
 			throw new IllegalArgumentException(
-				"Class data mismatch, left : " + name + ", right : " +
-					classData.name);
+				"Class data mismatch, left : " + _name + ", right : " +
+					classData._name);
 		}
 
 		super.merge(classData);
@@ -148,7 +146,7 @@ public class ClassData
 
 		if (lineData == null) {
 			throw new IllegalStateException(
-				"No instrument data for class " + name + " line " +
+				"No instrument data for class " + _name + " line " +
 					lineNumber);
 		}
 

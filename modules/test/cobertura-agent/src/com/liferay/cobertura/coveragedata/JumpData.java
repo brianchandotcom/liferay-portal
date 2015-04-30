@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 
-	private static final long serialVersionUID = 8;
+	private static final long serialVersionUID = 1;
 
 	private final int _jumpNumber;
 
@@ -39,22 +39,19 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 		_jumpNumber = jumpNumber;
 	}
 
-	void touchBranch(boolean branch,int new_hits)
-	{
-			if (branch)
-			{
-				_trueHitsCounter.addAndGet(new_hits);
-			}
-			else
-			{
-				_falseHitsCounter.addAndGet(new_hits);
-			}
+	public void touchBranch(boolean branch, int hits) {
+		if (branch) 		{
+			_trueHitsCounter.addAndGet(hits);
+		}
+		else {
+			_falseHitsCounter.addAndGet(hits);
+		}
 	}
 
 	@Override
-	public double getBranchCoverageRate()
-	{
-			return ((double) getNumberOfCoveredBranches()) / getNumberOfValidBranches();
+	public double getBranchCoverageRate() {
+		return (double)getNumberOfCoveredBranches() /
+			getNumberOfValidBranches();
 	}
 
 	public int getJumpNumber() {
@@ -62,14 +59,22 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 	}
 
 	@Override
-	public int getNumberOfCoveredBranches()
-	{
-			return ((_trueHitsCounter.get() > 0) ? 1 : 0) + ((_falseHitsCounter.get() > 0) ? 1: 0);
+	public int getNumberOfCoveredBranches() {
+		int numberOfCoveredBranches = 0;
+
+		if (_trueHitsCounter.get() > 0) {
+			numberOfCoveredBranches++;
+		}
+
+		if (_falseHitsCounter.get() > 0) {
+			numberOfCoveredBranches++;
+		}
+
+		return numberOfCoveredBranches;
 	}
 
 	@Override
-	public int getNumberOfValidBranches()
-	{
+	public int getNumberOfValidBranches() {
 		return 2;
 	}
 

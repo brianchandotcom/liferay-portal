@@ -19,18 +19,18 @@ package com.liferay.cobertura.coveragedata;
  */
 public interface CoverageData<T extends CoverageData> {
 
-	double getBranchCoverageRate();
+	public double getBranchCoverageRate();
 
-	double getLineCoverageRate();
+	public double getLineCoverageRate();
 
-	int getNumberOfCoveredBranches();
+	public int getNumberOfCoveredBranches();
 
-	int getNumberOfCoveredLines();
+	public int getNumberOfCoveredLines();
 
-	int getNumberOfValidBranches();
+	public int getNumberOfValidBranches();
 
-	int getNumberOfValidLines();
+	public int getNumberOfValidLines();
 
-	void merge(T t);
+	public void merge(T t);
 
 }

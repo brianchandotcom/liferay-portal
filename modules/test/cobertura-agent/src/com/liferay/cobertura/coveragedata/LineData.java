@@ -23,7 +23,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Shuyang Zhou
  */
 public class LineData implements CoverageData<LineData>, Serializable {
-	private static final long serialVersionUID = 4;
+
+	private static final long serialVersionUID = 1;
 
 	private final AtomicLong _hitCounter = new AtomicLong();
 	private final ConcurrentMap<Integer, JumpData> _jumpDatas =
@@ -38,22 +39,29 @@ public class LineData implements CoverageData<LineData>, Serializable {
 	}
 
 	@Override
-	public double getBranchCoverageRate()
-	{
-		if (getNumberOfValidBranches() == 0)
-			return 1d;
+	public double getBranchCoverageRate() {
+		int numberOfValidBranches = getNumberOfValidBranches();
 
-			return ((double) getNumberOfCoveredBranches()) / getNumberOfValidBranches();
+		if (numberOfValidBranches == 0) {
+			return 1;
+		}
+
+		return (double)getNumberOfCoveredBranches() / numberOfValidBranches;
 	}
 
-	public boolean isCovered()
-	{
-		return (_hitCounter.get() > 0) && ((getNumberOfValidBranches() == 0) || ((1.0 - getBranchCoverageRate()) < 0.0001));
+	public boolean isCovered() {
+		if ((_hitCounter.get() > 0) &&
+			(getNumberOfCoveredBranches() == getNumberOfValidBranches())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
-	public double getLineCoverageRate()
-	{
-		return (_hitCounter.get() > 0) ? 1 : 0;
+	@Override
+	public double getLineCoverageRate() {
+		return getNumberOfCoveredLines();
 	}
 
 	public int getLineNumber() {
@@ -61,44 +69,46 @@ public class LineData implements CoverageData<LineData>, Serializable {
 	}
 
 	@Override
-	public int getNumberOfCoveredLines()
-	{
-		return (_hitCounter.get() > 0) ? 1 : 0;
+	public int getNumberOfCoveredLines() {
+		if (_hitCounter.get() > 0) {
+			return 1;
+		}
+
+		return 0;
 	}
 
 	@Override
-	public int getNumberOfValidBranches()
-	{
-		int ret = 0;
-			for (JumpData jumpData : _jumpDatas.values()) {
-				ret += jumpData.getNumberOfValidBranches();
-			}
+	public int getNumberOfValidBranches() {
+		int numberOfValidBranches = 0;
 
-			for (SwitchData switchData : _switchDatas.values()) {
-				ret += switchData.getNumberOfValidBranches();
-			}
+		for (JumpData jumpData : _jumpDatas.values()) {
+			numberOfValidBranches += jumpData.getNumberOfValidBranches();
+		}
 
-			return ret;
+		for (SwitchData switchData : _switchDatas.values()) {
+			numberOfValidBranches += switchData.getNumberOfValidBranches();
+		}
+
+		return numberOfValidBranches;
 	}
 
 	@Override
-	public int getNumberOfCoveredBranches()
-	{
-		int ret = 0;
-			for (JumpData jumpData : _jumpDatas.values()) {
-				ret += jumpData.getNumberOfCoveredBranches();
-			}
+	public int getNumberOfCoveredBranches() {
+		int numberOfCoveredBranches = 0;
 
-			for (SwitchData switchData : _switchDatas.values()) {
-				ret += switchData.getNumberOfCoveredBranches();
-			}
+		for (JumpData jumpData : _jumpDatas.values()) {
+			numberOfCoveredBranches += jumpData.getNumberOfCoveredBranches();
+		}
 
-			return ret;
+		for (SwitchData switchData : _switchDatas.values()) {
+			numberOfCoveredBranches += switchData.getNumberOfCoveredBranches();
+		}
+
+		return numberOfCoveredBranches;
 	}
 
 	@Override
-	public int getNumberOfValidLines()
-	{
+	public int getNumberOfValidLines() {
 		return 1;
 	}
 
@@ -161,11 +171,11 @@ public class LineData implements CoverageData<LineData>, Serializable {
 		return switchData;
 	}
 
-	public void touch(int new_hits) {
-		_hitCounter.addAndGet(new_hits);
+	public void touch(int hits) {
+		_hitCounter.addAndGet(hits);
 	}
 
-	public void touchJump(int jumpNumber, boolean branch,int hits) {
+	public void touchJump(int jumpNumber, boolean branch, int hits) {
 		JumpData jumpData = _jumpDatas.get(jumpNumber);
 
 		if (jumpData == null) {
@@ -177,7 +187,7 @@ public class LineData implements CoverageData<LineData>, Serializable {
 		jumpData.touchBranch(branch, hits);
 	}
 
-	public void touchSwitch(int switchNumber, int branch,int hits) {
+	public void touchSwitch(int switchNumber, int branch, int hits) {
 		SwitchData switchData = _switchDatas.get(switchNumber);
 
 		if (switchData == null) {

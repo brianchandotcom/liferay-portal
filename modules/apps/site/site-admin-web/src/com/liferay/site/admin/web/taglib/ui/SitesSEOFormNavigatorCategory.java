@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
@@ -24,9 +24,8 @@ import java.util.Locale;
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=20"})
-public class SitesAdvancedFormNavigatorCategory
-	implements FormNavigatorCategory {
+@OSGiBeanProperties(property = {"service.ranking:Integer=30"})
+public class SitesSEOFormNavigatorCategory implements FormNavigatorCategory {
 
 	@Override
 	public String getFormNavigatorId() {
@@ -35,12 +34,12 @@ public class SitesAdvancedFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_SEO;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "advanced");
+		return LanguageUtil.get(locale, "search-engine-optimization");
 	}
 
 }

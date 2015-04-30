@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 
@@ -28,35 +26,26 @@ import java.util.Locale;
  * @author Sergio González
  */
 @OSGiBeanProperties(property = {"service.ranking:Integer=20"})
-public class SiteContentSharingFormNavigatorEntry
-	extends BaseSiteFormNavigatorEntry {
+public class SiteSitemapFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_SEO;
 	}
 
 	@Override
 	public String getKey() {
-		return "content-sharing";
+		return "sitemap";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "content-sharing");
+		return LanguageUtil.get(locale, "sitemap");
 	}
 
 	@Override
 	public boolean isVisible(User user, Group group) {
-		if (group == null) {
-			return false;
-		}
-
-		int contentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(
-			group.getCompanyId(),
-			PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
-
-		if (contentSharingWithChildrenEnabled == 0) {
+		if ((group == null) || group.isCompany()) {
 			return false;
 		}
 
@@ -65,7 +54,7 @@ public class SiteContentSharingFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/content_sharing.jsp";
+		return "/site/sitemap.jsp";
 	}
 
 }

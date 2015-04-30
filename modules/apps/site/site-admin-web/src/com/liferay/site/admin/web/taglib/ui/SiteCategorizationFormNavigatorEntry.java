@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
@@ -25,27 +25,28 @@ import java.util.Locale;
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=20"})
-public class SiteSitemapFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
+@OSGiBeanProperties(property = {"service.ranking:Integer=40"})
+public class SiteCategorizationFormNavigatorEntry
+	extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_SEO;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION;
 	}
 
 	@Override
 	public String getKey() {
-		return "sitemap";
+		return "categorization";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "sitemap");
+		return LanguageUtil.get(locale, "categorization");
 	}
 
 	@Override
 	public boolean isVisible(User user, Group group) {
-		if ((group == null) || group.isCompany()) {
+		if ((group != null) && group.isCompany()) {
 			return false;
 		}
 
@@ -54,7 +55,7 @@ public class SiteSitemapFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/sitemap.jsp";
+		return "/site/categorization.jsp";
 	}
 
 }

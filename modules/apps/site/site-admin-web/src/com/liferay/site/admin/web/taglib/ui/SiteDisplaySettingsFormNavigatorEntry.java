@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
@@ -25,28 +25,28 @@ import java.util.Locale;
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=40"})
-public class SiteCategorizationFormNavigatorEntry
+@OSGiBeanProperties(property = {"service.ranking:Integer=20"})
+public class SiteDisplaySettingsFormNavigatorEntry
 	extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_MISCELLANEOUS;
 	}
 
 	@Override
 	public String getKey() {
-		return "categorization";
+		return "display-settings";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "categorization");
+		return LanguageUtil.get(locale, "display-settings");
 	}
 
 	@Override
 	public boolean isVisible(User user, Group group) {
-		if ((group != null) && group.isCompany()) {
+		if ((group == null) || group.isCompany()) {
 			return false;
 		}
 
@@ -55,7 +55,7 @@ public class SiteCategorizationFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/categorization.jsp";
+		return "/site/display_settings.jsp";
 	}
 
 }

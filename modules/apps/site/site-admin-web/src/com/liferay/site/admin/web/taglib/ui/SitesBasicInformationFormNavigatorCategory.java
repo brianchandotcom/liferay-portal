@@ -12,20 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.model.Group;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+
+import java.util.Locale;
 
 /**
  * @author Sergio González
  */
-public abstract class BaseSiteFormNavigatorEntry
-	extends BaseFormNavigatorEntry<Group> {
+@OSGiBeanProperties(property = {"service.ranking:Integer=40"})
+public class SitesBasicInformationFormNavigatorCategory
+	implements FormNavigatorCategory {
 
 	@Override
 	public String getFormNavigatorId() {
 		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
+	}
+
+	@Override
+	public String getKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION;
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "basic-information");
 	}
 
 }

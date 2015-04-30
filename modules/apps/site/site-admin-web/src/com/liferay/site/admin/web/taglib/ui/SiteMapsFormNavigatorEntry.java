@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 
@@ -28,9 +25,8 @@ import java.util.Locale;
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=40"})
-public class SiteAnalyticsFormNavigatorEntry
-	extends BaseSiteFormNavigatorEntry {
+@OSGiBeanProperties(property = {"service.ranking:Integer=30"})
+public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -39,25 +35,17 @@ public class SiteAnalyticsFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "analytics";
+		return "maps";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "analytics");
+		return LanguageUtil.get(locale, "maps");
 	}
 
 	@Override
 	public boolean isVisible(User user, Group group) {
-		if ((group == null) || group.isCompany()) {
-			return false;
-		}
-
-		String[] analyticsTypes = PrefsPropsUtil.getStringArray(
-			group.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES,
-			StringPool.NEW_LINE);
-
-		if (analyticsTypes.length == 0) {
+		if (group == null) {
 			return false;
 		}
 
@@ -66,7 +54,7 @@ public class SiteAnalyticsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/analytics.jsp";
+		return "/site/maps.jsp";
 	}
 
 }

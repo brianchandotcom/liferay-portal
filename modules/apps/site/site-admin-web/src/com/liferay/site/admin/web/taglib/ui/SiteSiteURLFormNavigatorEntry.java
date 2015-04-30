@@ -12,35 +12,49 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 
 import java.util.Locale;
 
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=10"})
-public class SitesMiscellaneousFormNavigatorCategory
-	implements FormNavigatorCategory {
+@OSGiBeanProperties(property = {"service.ranking:Integer=30"})
+public class SiteSiteURLFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
-	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
+	public String getCategoryKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION;
 	}
 
 	@Override
 	public String getKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_MISCELLANEOUS;
+		return "site-url";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "miscellaneous");
+		return LanguageUtil.get(locale, "site-url");
+	}
+
+	@Override
+	public boolean isVisible(User user, Group group) {
+		if ((group == null) || group.isCompany()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/site/site_url.jsp";
 	}
 
 }

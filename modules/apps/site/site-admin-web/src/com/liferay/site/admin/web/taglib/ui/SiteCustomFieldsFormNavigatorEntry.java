@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
@@ -26,26 +26,27 @@ import java.util.Locale;
  * @author Sergio González
  */
 @OSGiBeanProperties(property = {"service.ranking:Integer=30"})
-public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
+public class SiteCustomFieldsFormNavigatorEntry
+	extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_MISCELLANEOUS;
 	}
 
 	@Override
 	public String getKey() {
-		return "maps";
+		return "custom-fields";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "maps");
+		return LanguageUtil.get(locale, "custom-fields");
 	}
 
 	@Override
 	public boolean isVisible(User user, Group group) {
-		if (group == null) {
+		if ((group == null) || group.isCompany()) {
 			return false;
 		}
 
@@ -54,7 +55,7 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/maps.jsp";
+		return "/site/custom_fields.jsp";
 	}
 
 }

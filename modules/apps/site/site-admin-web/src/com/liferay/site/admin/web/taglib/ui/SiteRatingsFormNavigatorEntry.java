@@ -12,35 +12,38 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionValues;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Sergio González
  */
 @OSGiBeanProperties(property = {"service.ranking:Integer=10"})
-public class SiteRobotsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
+public class SiteRatingsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_SEO;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_MISCELLANEOUS;
 	}
 
 	@Override
 	public String getKey() {
-		return "robots";
+		return "ratings";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "robots");
+		return LanguageUtil.get(locale, "ratings");
 	}
 
 	@Override
@@ -49,12 +52,17 @@ public class SiteRobotsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 			return false;
 		}
 
-		return true;
+		Map<String, PortletRatingsDefinitionValues>
+			portletRatingsDefinitionValuesMap =
+				PortletRatingsDefinitionUtil.
+					getPortletRatingsDefinitionValuesMap();
+
+		return !portletRatingsDefinitionValuesMap.isEmpty();
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/robots.jsp";
+		return "/site/ratings.jsp";
 	}
 
 }

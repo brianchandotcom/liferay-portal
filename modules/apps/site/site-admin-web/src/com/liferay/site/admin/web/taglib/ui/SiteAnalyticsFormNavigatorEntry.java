@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 
 import java.util.Locale;
 
@@ -25,22 +29,44 @@ import java.util.Locale;
  * @author Sergio González
  */
 @OSGiBeanProperties(property = {"service.ranking:Integer=40"})
-public class SitesBasicInformationFormNavigatorCategory
-	implements FormNavigatorCategory {
+public class SiteAnalyticsFormNavigatorEntry
+	extends BaseSiteFormNavigatorEntry {
 
 	@Override
-	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
+	public String getCategoryKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
 	}
 
 	@Override
 	public String getKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION;
+		return "analytics";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "basic-information");
+		return LanguageUtil.get(locale, "analytics");
+	}
+
+	@Override
+	public boolean isVisible(User user, Group group) {
+		if ((group == null) || group.isCompany()) {
+			return false;
+		}
+
+		String[] analyticsTypes = PrefsPropsUtil.getStringArray(
+			group.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES,
+			StringPool.NEW_LINE);
+
+		if (analyticsTypes.length == 0) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/site/analytics.jsp";
 	}
 
 }

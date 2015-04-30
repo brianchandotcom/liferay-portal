@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 
@@ -25,28 +27,35 @@ import java.util.Locale;
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=20"})
-public class SiteDisplaySettingsFormNavigatorEntry
+@OSGiBeanProperties(property = {"service.ranking:Integer=10"})
+public class SiteRecycleBinFormNavigatorEntry
 	extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_MISCELLANEOUS;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
 	}
 
 	@Override
 	public String getKey() {
-		return "display-settings";
+		return "recycle-bin";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "display-settings");
+		return LanguageUtil.get(locale, "recycle-bin");
 	}
 
 	@Override
 	public boolean isVisible(User user, Group group) {
-		if ((group == null) || group.isCompany()) {
+		if (group == null) {
+			return false;
+		}
+
+		boolean trashEnabled = PrefsPropsUtil.getBoolean(
+			group.getCompanyId(), PropsKeys.TRASH_ENABLED);
+
+		if (!trashEnabled) {
 			return false;
 		}
 
@@ -55,7 +64,7 @@ public class SiteDisplaySettingsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/display_settings.jsp";
+		return "/site/recycle_bin.jsp";
 	}
 
 }

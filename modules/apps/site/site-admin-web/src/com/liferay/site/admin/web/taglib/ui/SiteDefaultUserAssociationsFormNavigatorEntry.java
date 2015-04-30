@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
@@ -25,22 +25,23 @@ import java.util.Locale;
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=30"})
-public class SiteSiteURLFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
+@OSGiBeanProperties(property = {"service.ranking:Integer=60"})
+public class SiteDefaultUserAssociationsFormNavigatorEntry
+	extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
 	}
 
 	@Override
 	public String getKey() {
-		return "site-url";
+		return "default-user-associations";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "site-url");
+		return LanguageUtil.get(locale, "default-user-associations");
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class SiteSiteURLFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/site_url.jsp";
+		return "/site/default_user_associations.jsp";
 	}
 
 }

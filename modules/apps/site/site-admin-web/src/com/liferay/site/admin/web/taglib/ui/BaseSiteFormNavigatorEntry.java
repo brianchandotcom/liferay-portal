@@ -12,30 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin;
+package com.liferay.site.admin.web.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portal.servlet.taglib.ui.BaseFormNavigatorEntry;
 
 /**
- * @author Jorge Ferrer
+ * @author Sergio González
  */
-public class SiteCustomAttributesDisplay extends BaseCustomAttributesDisplay {
+public abstract class BaseSiteFormNavigatorEntry
+	extends BaseFormNavigatorEntry<Group> {
 
 	@Override
-	public String getClassName() {
-		return Group.class.getName();
-	}
-
-	@Override
-	public String getIconCssClass() {
-		return "icon-globe";
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/site_icon.png";
+	public String getFormNavigatorId() {
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
 	}
 
 }

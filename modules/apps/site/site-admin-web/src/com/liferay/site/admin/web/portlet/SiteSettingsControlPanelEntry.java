@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin;
+package com.liferay.site.admin.web.portlet;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;

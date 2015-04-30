@@ -12,48 +12,40 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
 
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=50"})
-public class SiteStagingFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
+@OSGiBeanProperties(property = {"service.ranking:Integer=10"})
+public class SiteRobotsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_SEO;
 	}
 
 	@Override
 	public String getKey() {
-		return "staging";
+		return "robots";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "staging");
+		return LanguageUtil.get(locale, "robots");
 	}
 
 	@Override
 	public boolean isVisible(User user, Group group) {
-		if (group == null) {
-			return false;
-		}
-
-		if (group.hasStagingGroup() ||
-			(group.hasRemoteStagingGroup() &&
-			 !PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED)) {
-
+		if ((group == null) || group.isCompany()) {
 			return false;
 		}
 
@@ -62,7 +54,7 @@ public class SiteStagingFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/sites_admin/site/staging.jsp";
+		return "/site/robots.jsp";
 	}
 
 }

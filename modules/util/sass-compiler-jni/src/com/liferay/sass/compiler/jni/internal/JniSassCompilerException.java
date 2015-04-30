@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.sass.compiler.jni;
+package com.liferay.sass.compiler.jni.internal;
+
+import com.liferay.sass.compiler.SassCompilerException;
 
 /**
  * @author Gregory Amerson
  */
-public class JniSassCompilerException extends Exception {
+public class JniSassCompilerException extends SassCompilerException {
 
 	public JniSassCompilerException() {
 	}

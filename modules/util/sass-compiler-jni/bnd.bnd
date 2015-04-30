@@ -1,14 +1,14 @@
-Bundle-Name: Liferay Sass Compiler JNI
-Bundle-SymbolicName: com.liferay.sass.compiler.jni
+Bundle-Name: JNI Sass Compiler
+Bundle-SymbolicName: com.liferay.sass.compiler.jni.internal
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.sass.compiler.jni
+Export-Package: com.liferay.sass.compiler.jni.internal
 Include-Resource:\
 	classes,\
 	@lib/jna.jar,\
 	@lib/jnaerator-runtime.jar,\
 	@lib/ochafik-util.jar,\
 	resources
-Main-Class: com.liferay.sass.compiler.jni.SassCompiler
+Main-Class: com.liferay.sass.compiler.jni.internal.SassCompiler
 Private-Package:\
 	com.liferay.sass.compiler.jni.libsass,\
 	com.ochafik.*,\

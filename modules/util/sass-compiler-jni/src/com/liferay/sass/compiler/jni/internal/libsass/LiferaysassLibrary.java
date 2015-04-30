@@ -1,4 +1,4 @@
-/* @generated */package com.liferay.sass.compiler.jni.libsass;
+/* @generated *//* @generated */package com.liferay.sass.compiler.jni.internal.libsass;
 import com.ochafik.lang.jnaerator.runtime.LibraryExtractor;
 import com.ochafik.lang.jnaerator.runtime.MangledFunctionMapper;
 import com.ochafik.lang.jnaerator.runtime.NativeSize;
@@ -181,7 +181,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_number_set_unit(Sass_Value*, char*)</code><br>
 	 * <i>native declaration : sass_values.h:49</i><br>
-	 * @deprecated use the safer methods {@link #sass_number_set_unit(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_number_set_unit(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_number_set_unit(LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_number_set_unit(LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_number_set_unit(LiferaysassLibrary.Sass_Value v, Pointer unit);
@@ -199,7 +199,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_string_set_value(Sass_Value*, char*)</code><br>
 	 * <i>native declaration : sass_values.h:53</i><br>
-	 * @deprecated use the safer methods {@link #sass_string_set_value(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_string_set_value(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_string_set_value(LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_string_set_value(LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_string_set_value(LiferaysassLibrary.Sass_Value v, Pointer value);
@@ -324,7 +324,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_error_set_message(Sass_Value*, char*)</code><br>
 	 * <i>native declaration : sass_values.h:88</i><br>
-	 * @deprecated use the safer methods {@link #sass_error_set_message(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_error_set_message(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_error_set_message(LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_error_set_message(LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_error_set_message(LiferaysassLibrary.Sass_Value v, Pointer msg);
@@ -342,7 +342,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_warning_set_message(Sass_Value*, char*)</code><br>
 	 * <i>native declaration : sass_values.h:92</i><br>
-	 * @deprecated use the safer methods {@link #sass_warning_set_message(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_warning_set_message(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_warning_set_message(LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_warning_set_message(LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_warning_set_message(LiferaysassLibrary.Sass_Value v, Pointer msg);
@@ -496,7 +496,7 @@ public interface LiferaysassLibrary extends Library {
 	 * Since we are dealing with pointers they should have a guaranteed and fixed size<br>
 	 * Original signature : <code>void sass_import_set_list_entry(Sass_Import**, size_t, Sass_Import*)</code><br>
 	 * <i>native declaration : sass_functions.h:37</i><br>
-	 * @deprecated use the safer method {@link #sass_import_set_list_entry(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Import[], com.ochafik.lang.jnaerator.runtime.NativeSize, com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Import)} instead
+	 * @deprecated use the safer method {@link #sass_import_set_list_entry(LiferaysassLibrary.Sass_Import[], com.ochafik.lang.jnaerator.runtime.NativeSize, LiferaysassLibrary.Sass_Import)} instead
 	 */
 	@Deprecated 
 	void sass_import_set_list_entry(PointerByReference list, NativeSize idx, LiferaysassLibrary.Sass_Import entry);
@@ -509,7 +509,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>Sass_Import* sass_import_get_list_entry(Sass_Import**, size_t)</code><br>
 	 * <i>native declaration : sass_functions.h:38</i><br>
-	 * @deprecated use the safer method {@link #sass_import_get_list_entry(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Import[], com.ochafik.lang.jnaerator.runtime.NativeSize)} instead
+	 * @deprecated use the safer method {@link #sass_import_get_list_entry(LiferaysassLibrary.Sass_Import[], com.ochafik.lang.jnaerator.runtime.NativeSize)} instead
 	 */
 	@Deprecated 
 	LiferaysassLibrary.Sass_Import sass_import_get_list_entry(PointerByReference list, NativeSize idx);
@@ -554,7 +554,7 @@ public interface LiferaysassLibrary extends Library {
 	 * Deallocator for associated memory (incl. entries)<br>
 	 * Original signature : <code>void sass_delete_import_list(Sass_Import**)</code><br>
 	 * <i>native declaration : sass_functions.h:51</i><br>
-	 * @deprecated use the safer method {@link #sass_delete_import_list(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Import[])} instead
+	 * @deprecated use the safer method {@link #sass_delete_import_list(LiferaysassLibrary.Sass_Import[])} instead
 	 */
 	@Deprecated 
 	void sass_delete_import_list(PointerByReference Sass_ImportPtrPtr1);
@@ -579,7 +579,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>Sass_C_Function_Callback sass_make_function(const char*, Sass_C_Function, void*)</code><br>
 	 * <i>native declaration : sass_functions.h:68</i><br>
-	 * @deprecated use the safer methods {@link #sass_make_function(java.lang.String, com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_C_Function, com.sun.jna.Pointer)} and {@link #sass_make_function(com.sun.jna.Pointer, com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_C_Function, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_make_function(java.lang.String, LiferaysassLibrary.Sass_C_Function, com.sun.jna.Pointer)} and {@link #sass_make_function(com.sun.jna.Pointer, LiferaysassLibrary.Sass_C_Function, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	LiferaysassLibrary.Sass_C_Function_Callback sass_make_function(Pointer signature, LiferaysassLibrary.Sass_C_Function fn, Pointer cookie);
@@ -876,7 +876,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_option_set_input_path(Sass_Options*, const char*)</code><br>
 	 * <i>native declaration : sass_context.h:84</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_input_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_input_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_option_set_input_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_input_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_set_input_path(LiferaysassLibrary.Sass_Options options, Pointer input_path);
@@ -888,7 +888,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_option_set_output_path(Sass_Options*, const char*)</code><br>
 	 * <i>native declaration : sass_context.h:85</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_output_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_output_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_option_set_output_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_output_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_set_output_path(LiferaysassLibrary.Sass_Options options, Pointer output_path);
@@ -900,7 +900,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_option_set_image_path(Sass_Options*, const char*)</code><br>
 	 * <i>native declaration : sass_context.h:86</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_image_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_image_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_option_set_image_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_image_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_set_image_path(LiferaysassLibrary.Sass_Options options, Pointer image_path);
@@ -912,7 +912,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_option_set_include_path(Sass_Options*, const char*)</code><br>
 	 * <i>native declaration : sass_context.h:87</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_include_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_include_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_option_set_include_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_include_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_set_include_path(LiferaysassLibrary.Sass_Options options, Pointer include_path);
@@ -924,7 +924,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_option_set_source_map_file(Sass_Options*, const char*)</code><br>
 	 * <i>native declaration : sass_context.h:88</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_source_map_file(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_source_map_file(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_option_set_source_map_file(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_source_map_file(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_set_source_map_file(LiferaysassLibrary.Sass_Options options, Pointer source_map_file);
@@ -1019,7 +1019,7 @@ public interface LiferaysassLibrary extends Library {
 	 * Push function for include paths (no manipulation support for now)<br>
 	 * Original signature : <code>void sass_option_push_include_path(Sass_Options*, const char*)</code><br>
 	 * <i>native declaration : sass_context.h:112</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_push_include_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_push_include_path(com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_option_push_include_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_push_include_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_push_include_path(LiferaysassLibrary.Sass_Options options, Pointer path);

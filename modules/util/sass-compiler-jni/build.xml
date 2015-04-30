@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project>
+	<property name="import.shared" value="sass-compiler-api" />
+
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<macrodef name="build-libsass">
@@ -102,7 +104,7 @@
 	<target name="compile">
 		<if>
 			<not>
-				<available file="src/com/liferay/sass/compiler/jni/libsass/LiferaysassLibrary.java" />
+				<available file="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java" />
 			</not>
 			<then>
 				<mirrors-get
@@ -128,17 +130,17 @@
 					fork="true"
 					failonerror="true"
 				>
-					<arg line="-f -library liferaysass -mode Directory -o ../../src -package com.liferay.sass.compiler.jni.libsass -runtime JNAerator sass_context.h" />
+					<arg line="-f -library liferaysass -mode Directory -o ../../src -package com.liferay.sass.compiler.jni.internal.libsass -runtime JNAerator sass_context.h" />
 				</java>
 
 				<delete file="jnaerator-0.11-shaded.jar" />
 
 				<move
-					file="src/com/liferay/sass/compiler/jni/libsass/LiferaysassLibrary.java"
+					file="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java"
 					todir="tmp"
 				/>
 
-				<concat destfile="src/com/liferay/sass/compiler/jni/libsass/LiferaysassLibrary.java">
+				<concat destfile="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java">
 					<header >/* @generated */</header>
 					<filelist dir="tmp" files="LiferaysassLibrary.java" />
 				</concat>
@@ -149,10 +151,10 @@
 
 		<if>
 			<not>
-				<available file="test/unit/com/liferay/sass/compiler/jni/dependencies/sass-spec" />
+				<available file="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec" />
 			</not>
 			<then>
-				<mkdir dir="test/unit/com/liferay/sass/compiler/jni/dependencies/sass-spec" />
+				<mkdir dir="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec" />
 
 				<mirrors-get
 					dest="sass-spec.zip"
@@ -160,7 +162,7 @@
 				/>
 
 				<unzip
-					dest="test/unit/com/liferay/sass/compiler/jni/dependencies/sass-spec"
+					dest="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec"
 					src="sass-spec.zip"
 				>
 					<patternset>

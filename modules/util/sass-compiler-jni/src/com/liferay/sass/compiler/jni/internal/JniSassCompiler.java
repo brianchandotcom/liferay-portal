@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.sass.compiler.jni;
+package com.liferay.sass.compiler.jni.internal;
 
-import com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary;
-import com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Context;
-import com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Data_Context;
-import com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_File_Context;
-import com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Options;
-import com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_Output_Style;
+import com.liferay.sass.compiler.SassCompiler;
+import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary;
+import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Context;
+import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Data_Context;
+import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_File_Context;
+import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options;
+import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Output_Style;
 
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
@@ -33,7 +34,7 @@ import java.io.Writer;
 /**
  * @author Gregory Amerson
  */
-public class JniSassCompiler {
+public class JniSassCompiler implements SassCompiler {
 
 	public static void main(String[] args) {
 		try {
@@ -63,31 +64,32 @@ public class JniSassCompiler {
 		}
 	}
 
+	@Override
 	public String compileFile(
-			String inputFile, String includePath, String imgPath)
+			String inputFileName, String includeDirName, String imgDirName)
 		throws JniSassCompilerException {
 
 		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
 
 		byte sourceComments = (byte)0;
 
-		String includePaths =
-			includePath + File.pathSeparator + new File(inputFile).getParent();
+		String includeDirNames = includeDirName + File.pathSeparator + new File(
+			inputFileName).getParent();
 
 		Sass_File_Context sassFileContext = null;
 
 		try {
 			sassFileContext = _liferaysassLibrary.sass_make_file_context(
-				inputFile);
+				inputFileName);
 
 			Sass_Options sassOptions = _liferaysassLibrary.sass_make_options();
 
 			_liferaysassLibrary.sass_option_set_image_path(
-				sassOptions, imgPath);
+				sassOptions, imgDirName);
 			_liferaysassLibrary.sass_option_set_include_path(
-				sassOptions, includePaths);
+				sassOptions, includeDirNames);
 			_liferaysassLibrary.sass_option_set_input_path(
-				sassOptions, inputFile);
+				sassOptions, inputFileName);
 			_liferaysassLibrary.sass_option_set_output_path(sassOptions, "");
 			_liferaysassLibrary.sass_option_set_output_style(
 				sassOptions, Sass_Output_Style.SASS_STYLE_COMPACT);
@@ -138,7 +140,7 @@ public class JniSassCompiler {
 
 	@SuppressWarnings("deprecation")
 	public String compileString(
-			String input, String includePath, String imgPath)
+			String input, String includeDirName, String imgDirName)
 		throws JniSassCompilerException {
 
 		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
@@ -156,9 +158,9 @@ public class JniSassCompiler {
 			Sass_Options sassOptions = _liferaysassLibrary.sass_make_options();
 
 			_liferaysassLibrary.sass_option_set_image_path(
-				sassOptions, imgPath);
+				sassOptions, imgDirName);
 			_liferaysassLibrary.sass_option_set_include_path(
-				sassOptions, includePath);
+				sassOptions, includeDirName);
 			_liferaysassLibrary.sass_option_set_output_style(
 				sassOptions, Sass_Output_Style.SASS_STYLE_COMPACT);
 			_liferaysassLibrary.sass_option_set_source_comments(

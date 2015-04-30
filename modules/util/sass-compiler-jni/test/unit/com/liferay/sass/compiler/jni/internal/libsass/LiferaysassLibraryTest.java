@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.sass.compiler.jni.libsass;
+package com.liferay.sass.compiler.jni.internal.libsass;
 
-import com.liferay.sass.compiler.jni.libsass.LiferaysassLibrary.Sass_File_Context;
-import com.liferay.sass.compiler.jni.util.test.JniSassCompilerTestUtil;
+import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_File_Context;
+import com.liferay.sass.compiler.jni.internal.util.test.JniSassCompilerTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;

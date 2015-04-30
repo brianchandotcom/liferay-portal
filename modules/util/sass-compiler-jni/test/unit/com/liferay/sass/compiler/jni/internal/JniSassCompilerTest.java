@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.sass.compiler.jni;
+package com.liferay.sass.compiler.jni.internal;
 
-import com.liferay.sass.compiler.jni.util.test.JniSassCompilerTestUtil;
+import com.liferay.sass.compiler.jni.internal.util.test.JniSassCompilerTestUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+
+import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -42,9 +43,11 @@ public class JniSassCompilerTest {
 
 		Assert.assertNotNull(sassCompiler);
 
-		File sassSpecDir = new File(
-			getBaseDir(),
-			"com/liferay/sass/compiler/jni/dependencies/sass-spec");
+		Class<?> clazz = getClass();
+
+		URL sassSpecUrl = clazz.getResource("dependencies/sass-spec");
+
+		File sassSpecDir = new File(sassSpecUrl.toURI());
 
 		for (File testDir : sassSpecDir.listFiles()) {
 			File inputFile = new File(testDir, "input.scss");
@@ -60,7 +63,7 @@ public class JniSassCompilerTest {
 
 			File expectedOutputFile = new File(testDir, "expected_output.css");
 
-			String expectedOutput = read(expectedOutputFile.getCanonicalPath());
+			String expectedOutput = read(expectedOutputFile.toPath());
 
 			Assert.assertEquals(
 				stripNewLines(expectedOutput), stripNewLines(actualOutput));
@@ -81,47 +84,10 @@ public class JniSassCompilerTest {
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
-	protected String getBaseDir() {
-		File binDir = new File("bin");
+	protected String read(Path filePath) throws Exception {
+		String content = new String(Files.readAllBytes(filePath));
 
-		if (binDir.exists()) {
-			return "bin";
-		}
-
-		return "test-classes/unit";
-	}
-
-	protected String read(InputStream inputStream) throws Exception {
-		if (inputStream == null) {
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		char[] chars = new char[0x10000];
-
-		Reader reader = new InputStreamReader(inputStream, "UTF-8");
-
-		int read = 0;
-
-		do {
-			read = reader.read(chars, 0, chars.length);
-
-			if (read > 0) {
-				sb.append(chars, 0, read);
-			}
-		}
-		while (read >= 0);
-
-		inputStream.close();
-
-		return sb.toString();
-	}
-
-	protected String read(String fileName) throws Exception {
-		String content = read(new FileInputStream(new File(fileName)));
-
-		return content.replaceAll("\\r", "");
+		return stripNewLines(content);
 	}
 
 	protected String stripNewLines(String string) {

@@ -48,12 +48,10 @@ public abstract class BaseStore implements Store {
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
-	 * @throws PortalException if the directory's information was invalid
 	 */
 	@Override
 	public abstract void addDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
 	/**
 	 * Adds a file based on a byte array.
@@ -186,12 +184,10 @@ public abstract class BaseStore implements Store {
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
-	 * @throws PortalException if the directory's information was invalid
 	 */
 	@Override
 	public abstract void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
 	/**
 	 * Deletes a file. If a file has multiple versions, all versions will be
@@ -201,12 +197,10 @@ public abstract class BaseStore implements Store {
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract void deleteFile(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException;
+		long companyId, long repositoryId, String fileName);
 
 	/**
 	 * Deletes a file at a particular version.
@@ -216,13 +210,11 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException;
+		long companyId, long repositoryId, String fileName,
+		String versionLabel);
 
 	/**
 	 * Returns the file as a {@link File} object.
@@ -387,12 +379,10 @@ public abstract class BaseStore implements Store {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @return Returns all files of the directory
-	 * @throws PortalException if the directory's information was invalid
 	 */
 	@Override
 	public abstract String[] getFileNames(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
 	/**
 	 * Returns the size of the file.
@@ -418,12 +408,10 @@ public abstract class BaseStore implements Store {
 	 * @param  dirName the directory's name
 	 * @return <code>true</code> if the directory exists; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if the directory's information was invalid
 	 */
 	@Override
 	public abstract boolean hasDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
 	/**
 	 * Returns <code>true</code> if the file exists.
@@ -434,12 +422,9 @@ public abstract class BaseStore implements Store {
 	 * @param  fileName the file's name
 	 * @return <code>true</code> if the file exists; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
-	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public boolean hasFile(long companyId, long repositoryId, String fileName) {
 		return hasFile(companyId, repositoryId, fileName, VERSION_DEFAULT);
 	}
 
@@ -453,13 +438,11 @@ public abstract class BaseStore implements Store {
 	 * @param  versionLabel the file's version label
 	 * @return <code>true</code> if the file exists; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if the file's information was invalid
 	 */
 	@Override
 	public abstract boolean hasFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException;
+		long companyId, long repositoryId, String fileName,
+		String versionLabel);
 
 	/**
 	 * Moves an existing directory. Only implemented by {@link

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
@@ -61,8 +60,8 @@ import org.apache.commons.lang.StringUtils;
 public class JCRStore extends BaseStore {
 
 	@Override
-	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException {
+	public void addDirectory(
+		long companyId, long repositoryId, String dirName) {
 
 		Session session = null;
 
@@ -74,7 +73,7 @@ public class JCRStore extends BaseStore {
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
 
 			if (repositoryNode.hasNode(dirName)) {
-				throw new DuplicateDirectoryException(dirName);
+				return;
 			}
 
 			String[] dirNameArray = StringUtil.split(dirName, '/');

@@ -32,8 +32,8 @@ public class SafeFileNameStoreWrapper implements Store {
 	}
 
 	@Override
-	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException {
+	public void addDirectory(
+		long companyId, long repositoryId, String dirName) {
 
 		String safeDirName = FileUtil.encodeSafeFileName(dirName);
 
@@ -106,8 +106,7 @@ public class SafeFileNameStoreWrapper implements Store {
 
 	@Override
 	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		String safeDirName = FileUtil.encodeSafeFileName(dirName);
 
@@ -125,9 +124,7 @@ public class SafeFileNameStoreWrapper implements Store {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
 		if (!safeFileName.equals(fileName) &&
@@ -143,9 +140,8 @@ public class SafeFileNameStoreWrapper implements Store {
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
@@ -279,8 +275,7 @@ public class SafeFileNameStoreWrapper implements Store {
 
 	@Override
 	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		String safeDirName = FileUtil.encodeSafeFileName(dirName);
 
@@ -321,8 +316,7 @@ public class SafeFileNameStoreWrapper implements Store {
 
 	@Override
 	public boolean hasDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		String safeDirName = FileUtil.encodeSafeFileName(dirName);
 
@@ -330,9 +324,7 @@ public class SafeFileNameStoreWrapper implements Store {
 	}
 
 	@Override
-	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public boolean hasFile(long companyId, long repositoryId, String fileName) {
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
 		if (!safeFileName.equals(fileName) &&
@@ -346,9 +338,8 @@ public class SafeFileNameStoreWrapper implements Store {
 
 	@Override
 	public boolean hasFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 

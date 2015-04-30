@@ -31,8 +31,7 @@ public interface Store {
 
 	public static final String VERSION_DEFAULT = "1.0";
 
-	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException;
+	public void addDirectory(long companyId, long repositoryId, String dirName);
 
 	public void addFile(
 			long companyId, long repositoryId, String fileName, byte[] bytes)
@@ -54,16 +53,13 @@ public interface Store {
 		throws PortalException;
 
 	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException;
+	public void deleteFile(long companyId, long repositoryId, String fileName);
 
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException;
+		long companyId, long repositoryId, String fileName,
+		String versionLabel);
 
 	public File getFile(long companyId, long repositoryId, String fileName)
 		throws PortalException;
@@ -94,23 +90,19 @@ public interface Store {
 	public String[] getFileNames(long companyId, long repositoryId);
 
 	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
 	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException;
 
 	public boolean hasDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
-	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException;
+	public boolean hasFile(long companyId, long repositoryId, String fileName);
 
 	public boolean hasFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException;
+		long companyId, long repositoryId, String fileName,
+		String versionLabel);
 
 	public void move(String srcDir, String destDir);
 

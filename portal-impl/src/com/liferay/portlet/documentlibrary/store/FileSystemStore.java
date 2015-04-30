@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -57,13 +56,13 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
-	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException {
+	public void addDirectory(
+		long companyId, long repositoryId, String dirName) {
 
 		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
 
 		if (dirNameDir.exists()) {
-			throw new DuplicateDirectoryException(dirNameDir.getPath());
+			return;
 		}
 
 		try {

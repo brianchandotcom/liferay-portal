@@ -311,15 +311,11 @@ public class DBStore extends BaseStore {
 			String fileName)
 		throws DuplicateFileException, NoSuchFileException {
 
-		if (!DLContentLocalServiceUtil.hasContent(
-				companyId, repositoryId, fileName, VERSION_DEFAULT)) {
-
+		if (!hasFile(companyId, repositoryId, fileName)) {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 
-		if (DLContentLocalServiceUtil.hasContent(
-				companyId, newRepositoryId, fileName, VERSION_DEFAULT)) {
-
+		if (hasFile(companyId, newRepositoryId, fileName)) {
 			throw new DuplicateFileException(
 				companyId, newRepositoryId, fileName);
 		}
@@ -334,15 +330,11 @@ public class DBStore extends BaseStore {
 			String newFileName)
 		throws DuplicateFileException, NoSuchFileException {
 
-		if (!DLContentLocalServiceUtil.hasContent(
-				companyId, repositoryId, fileName, VERSION_DEFAULT)) {
-
+		if (!hasFile(companyId, repositoryId, fileName)) {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 
-		if (DLContentLocalServiceUtil.hasContent(
-				companyId, repositoryId, newFileName, VERSION_DEFAULT)) {
-
+		if (hasFile(companyId, repositoryId, newFileName)) {
 			throw new DuplicateFileException(
 				companyId, repositoryId, newFileName);
 		}
@@ -357,9 +349,7 @@ public class DBStore extends BaseStore {
 			String versionLabel, byte[] bytes)
 		throws DuplicateFileException {
 
-		if (DLContentLocalServiceUtil.hasContent(
-				companyId, repositoryId, fileName, versionLabel)) {
-
+		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
 			throw new DuplicateFileException(
 				companyId, repositoryId, fileName, versionLabel);
 		}
@@ -374,9 +364,7 @@ public class DBStore extends BaseStore {
 			String versionLabel, File file)
 		throws DuplicateFileException {
 
-		if (DLContentLocalServiceUtil.hasContent(
-				companyId, repositoryId, fileName, versionLabel)) {
-
+		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
 			throw new DuplicateFileException(
 				companyId, repositoryId, fileName, versionLabel);
 		}

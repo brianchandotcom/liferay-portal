@@ -1,7 +1,7 @@
 Bundle-Name: JNI Sass Compiler
-Bundle-SymbolicName: com.liferay.sass.compiler.jni.internal
+Bundle-SymbolicName: com.liferay.sass.compiler.jni
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.sass.compiler.jni.internal
+Export-Package: com.liferay.sass.compiler.jni
 Include-Resource:\
 	classes,\
 	@lib/jna.jar,\
@@ -10,6 +10,6 @@ Include-Resource:\
 	resources
 Main-Class: com.liferay.sass.compiler.jni.internal.SassCompiler
 Private-Package:\
-	com.liferay.sass.compiler.jni.libsass,\
+	com.liferay.sass.compiler.jni.internal.libsass,\
 	com.ochafik.*,\
 	com.sun.jna

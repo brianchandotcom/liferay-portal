@@ -1,7 +1,7 @@
 Bundle-Name: Ruby Sass Compiler
-Bundle-SymbolicName: com.liferay.sass.compiler.ruby.internal
+Bundle-SymbolicName: com.liferay.sass.compiler.ruby
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.sass.compiler.ruby.internal
+Export-Package: com.liferay.sass.compiler.ruby
 Include-Resource:\
 	classes,\
 	@lib/asm-commons.jar,\

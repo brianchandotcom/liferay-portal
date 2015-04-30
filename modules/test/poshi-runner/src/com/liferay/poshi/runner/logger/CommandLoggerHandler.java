@@ -85,6 +85,9 @@ public final class CommandLoggerHandler {
 
 		lineGroupLoggerElement.addClassName("failed");
 
+		lineGroupLoggerElement.addChildLoggerElement(
+			_getErrorContainerLoggerElement());
+
 		LoggerElement childContainerLoggerElement =
 			lineGroupLoggerElement.loggerElement("ul");
 
@@ -106,6 +109,29 @@ public final class CommandLoggerHandler {
 		return loggerElement;
 	}
 
+	private static LoggerElement _getCauseHeaderLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("cause-header");
+		loggerElement.setName("h4");
+		loggerElement.setText("Cause:");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getCauseLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("cause");
+
+		loggerElement.addChildLoggerElement(_getCauseHeaderLoggerElement());
+
+		loggerElement.addChildLoggerElement(
+			SummaryLoggerHandler.getCauseBodyLoggerElement());
+
+		return loggerElement;
+	}
+
 	private static LoggerElement _getChildContainerLoggerElement(
 		int btnLinkId) {
 
@@ -118,6 +144,30 @@ public final class CommandLoggerHandler {
 		return loggerElement;
 	}
 
+	private static LoggerElement _getConsoleLoggerElement(int errorLinkId) {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setAttribute(
+			"data-errorlinkid", "console-" + errorLinkId);
+		loggerElement.setClassName("console errorPanel toggle");
+
+		loggerElement.addChildLoggerElement(_getConsoleLogLoggerElement());
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getConsoleLogLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("console-log");
+
+		loggerElement.addChildLoggerElement(_getStepsLoggerElement());
+
+		loggerElement.addChildLoggerElement(_getCauseLoggerElement());
+
+		return loggerElement;
+	}
+
 	private static LoggerElement _getDividerLineLoggerElement(
 		String classCommandName) {
 
@@ -125,6 +175,19 @@ public final class CommandLoggerHandler {
 
 		loggerElement.setClassName("divider-line");
 		loggerElement.setText(classCommandName);
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getErrorContainerLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("error-container hidden");
+
+		loggerElement.addChildLoggerElement(
+			_getConsoleLoggerElement(_errorLinkId));
+
+		_errorLinkId++;
 
 		return loggerElement;
 	}
@@ -256,6 +319,29 @@ public final class CommandLoggerHandler {
 		return sb.toString();
 	}
 
+	private static LoggerElement _getStepsHeaderLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("steps-header");
+		loggerElement.setName("h4");
+		loggerElement.setText("Steps:");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getStepsLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("steps");
+
+		loggerElement.addChildLoggerElement(_getStepsHeaderLoggerElement());
+
+		loggerElement.addChildLoggerElement(
+			SummaryLoggerHandler.getMajorStepsLoggerElement());
+
+		return loggerElement;
+	}
+
 	private static boolean _isCommand(Element element) {
 		if (!Validator.equals(element.getName(), "execute")) {
 			return false;
@@ -280,6 +366,7 @@ public final class CommandLoggerHandler {
 	private static Element _commandElement;
 	private static final LoggerElement _commandLogLoggerElement =
 		new LoggerElement("commandLog");
+	private static int _errorLinkId;
 	private static LoggerElement _lineGroupLoggerElement;
 
 	static {

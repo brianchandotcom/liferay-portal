@@ -257,7 +257,7 @@ if (Validator.isNull(redirect)) {
 							for (String format : formats) {
 							%>
 
-								<aui:option label='<%= LanguageUtil.get(request, "wiki.formats." + format) %>' selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
+								<aui:option label="<%= WikiUtil.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
 
 							<%
 							}
@@ -276,9 +276,10 @@ if (Validator.isNull(redirect)) {
 
 				<%
 				request.setAttribute("edit_page.jsp-wikiPage", wikiPage);
+
+				WikiUtil.renderEditPageHTML(selectedFormat, pageContext, wikiPage);
 				%>
 
-				<liferay-util:include page="<%= WikiUtil.getEditPage(selectedFormat) %>" servletContext="<%= application %>" />
 			</div>
 
 			<c:if test="<%= wikiPage != null %>">

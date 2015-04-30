@@ -15,9 +15,6 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -577,6 +574,26 @@ public class JournalArticleIndexer extends BaseIndexer {
 			ddmStructure, ddmFormValues, LocaleUtil.fromLanguageId(languageId));
 	}
 
+	protected JournalArticle fetchLatestIndexableArticleVersion(
+		long resourcePrimKey) {
+
+		JournalArticle latestIndexableArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				resourcePrimKey,
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				});
+
+		if (latestIndexableArticle == null) {
+			latestIndexableArticle =
+				JournalArticleLocalServiceUtil.fetchLatestArticle(
+					resourcePrimKey);
+		}
+
+		return latestIndexableArticle;
+	}
+
 	protected Collection<Document> getArticleVersions(JournalArticle article)
 		throws PortalException {
 
@@ -609,26 +626,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return documents;
-	}
-
-	protected JournalArticle fetchLatestIndexableArticleVersion(
-		long resourcePrimKey) {
-
-		JournalArticle latestIndexableArticle =
-			JournalArticleLocalServiceUtil.fetchLatestArticle(
-				resourcePrimKey,
-				new int[] {
-					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_IN_TRASH
-				});
-
-		if (latestIndexableArticle == null) {
-			latestIndexableArticle =
-				JournalArticleLocalServiceUtil.fetchLatestArticle(
-					resourcePrimKey);
-		}
-
-		return latestIndexableArticle;
 	}
 
 	protected String getDDMContentSummary(

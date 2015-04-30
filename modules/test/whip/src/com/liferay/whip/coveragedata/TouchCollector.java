@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.cobertura.coveragedata;
+package com.liferay.whip.coveragedata;
 
-import com.liferay.cobertura.util.HashUtil;
+import com.liferay.whip.util.HashUtil;
 
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;

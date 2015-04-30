@@ -12,35 +12,27 @@
  * details.
  */
 
-package com.liferay.cobertura.coveragedata;
+package com.liferay.whip.util;
 
 /**
  * @author Shuyang Zhou
  */
-public class ProjectData
-	extends CoverageDataContainer<String, ClassData, ProjectData> {
+public class HashUtil {
 
-	public ClassData getClassData(String className) {
-		return children.get(className);
+	public static int hash(int seed, boolean value) {
+		return seed * 11 + (value ? 1 : 0);
 	}
 
-	public ClassData getOrCreateClassData(String className) {
-		ClassData classData = children.get(className);
-
-		if (classData == null) {
-			classData = new ClassData(className);
-
-			ClassData previousClassData = children.putIfAbsent(
-				className, classData);
-
-			if (previousClassData != null) {
-				classData = previousClassData;
-			}
-		}
-
-		return classData;
+	public static int hash(int seed, int value) {
+		return seed * 11 + value;
 	}
 
-	private static final long serialVersionUID = 1;
+	public static int hash(int seed, long value) {
+		return (int)(seed * 11 + value);
+	}
+
+	public static int hash(int seed, Object value) {
+		return seed * 11 + (value == null ? 0 : value.hashCode());
+	}
 
 }

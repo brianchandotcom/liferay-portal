@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.cobertura.coveragedata;
+package com.liferay.whip.coveragedata;
 
 /**
  * @author Shuyang Zhou
  */
-public interface CoverageData<T extends CoverageData<T>>
-	extends BranchCoverageData<T> {
+public interface BranchCoverageData<T extends BranchCoverageData<T>> {
 
-	public double getLineCoverageRate();
+	public double getBranchCoverageRate();
 
-	public int getNumberOfCoveredLines();
+	public int getNumberOfCoveredBranches();
 
-	public int getNumberOfValidLines();
+	public int getNumberOfValidBranches();
+
+	public void merge(T t);
 
 }

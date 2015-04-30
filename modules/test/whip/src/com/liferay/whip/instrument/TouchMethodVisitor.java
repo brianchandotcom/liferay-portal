@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.whip.instrument;
 
-import com.liferay.cobertura.coveragedata.TouchCollector;
+import com.liferay.whip.coveragedata.TouchCollector;
 
 import java.util.Map;
 import java.util.Set;
@@ -233,12 +233,12 @@ public class TouchMethodVisitor extends MethodVisitor {
 	public void visitMaxs(int maxStack, int maxLocals) {
 		if (!_jumpLabels.isEmpty()) {
 			mv.visitLocalVariable(
-				"__cobertura__line__number__", "I", null, _startLabel,
-				_endLabel, _variableIndex);
+				"__whip__line__number__", "I", null, _startLabel, _endLabel,
+				_variableIndex);
 
 			mv.visitLocalVariable(
-				"__cobertura__branch__number__", "I", null, _startLabel,
-				_endLabel, _variableIndex + 1);
+				"__whip__branch__number__", "I", null, _startLabel, _endLabel,
+				_variableIndex + 1);
 		}
 
 		super.visitMaxs(maxStack, maxLocals);

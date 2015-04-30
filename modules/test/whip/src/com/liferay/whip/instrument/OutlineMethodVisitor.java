@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.whip.instrument;
 
-import com.liferay.cobertura.coveragedata.ClassData;
+import com.liferay.whip.coveragedata.ClassData;
 
 import java.util.HashMap;
 import java.util.HashSet;

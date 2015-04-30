@@ -12,23 +12,18 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.whip.coveragedata;
 
 /**
- * @author Cristina González
+ * @author Shuyang Zhou
  */
-public class SwitchHolder extends JumpHolder {
+public interface CoverageData<T extends CoverageData<T>>
+	extends BranchCoverageData<T> {
 
-	public SwitchHolder(int lineNumber, int switchNumber, int branch) {
-		super(lineNumber, switchNumber);
+	public double getLineCoverageRate();
 
-		_branch = branch;
-	}
+	public int getNumberOfCoveredLines();
 
-	public int getBranch() {
-		return _branch;
-	}
-
-	private final int _branch;
+	public int getNumberOfValidLines();
 
 }

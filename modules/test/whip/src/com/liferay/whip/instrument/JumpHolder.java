@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.cobertura.util;
+package com.liferay.whip.instrument;
 
 /**
- * @author Shuyang Zhou
+ * @author Cristina González
  */
-public class HashUtil {
+public class JumpHolder {
 
-	public static int hash(int seed, boolean value) {
-		return seed * 11 + (value ? 1 : 0);
+	public JumpHolder(int lineNumber, int jumpNumber) {
+		_lineNumber = lineNumber;
+		_jumpNumber = jumpNumber;
 	}
 
-	public static int hash(int seed, int value) {
-		return seed * 11 + value;
+	public int getJumpNumber() {
+		return _jumpNumber;
 	}
 
-	public static int hash(int seed, long value) {
-		return (int)(seed * 11 + value);
+	public int getLineNumber() {
+		return _lineNumber;
 	}
 
-	public static int hash(int seed, Object value) {
-		return seed * 11 + (value == null ? 0 : value.hashCode());
-	}
+	private final int _jumpNumber;
+	private final int _lineNumber;
 
 }

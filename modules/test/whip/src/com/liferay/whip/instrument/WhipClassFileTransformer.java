@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.whip.instrument;
 
-import com.liferay.cobertura.agent.InstrumentationAgent;
-import com.liferay.cobertura.coveragedata.ProjectData;
-import com.liferay.cobertura.coveragedata.ProjectDataUtil;
+import com.liferay.whip.agent.InstrumentationAgent;
+import com.liferay.whip.coveragedata.ProjectData;
+import com.liferay.whip.coveragedata.ProjectDataUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,9 +40,9 @@ import org.objectweb.asm.ClassWriter;
 /**
  * @author Shuyang Zhou
  */
-public class CoberturaClassFileTransformer implements ClassFileTransformer {
+public class WhipClassFileTransformer implements ClassFileTransformer {
 
-	public CoberturaClassFileTransformer(String[] includes, String[] excludes) {
+	public WhipClassFileTransformer(String[] includes, String[] excludes) {
 		_includePatterns = new Pattern[includes.length];
 
 		for (int i = 0; i < includes.length; i++) {
@@ -106,7 +106,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 				String name = className.replace('/', '.');
 
-				ClassVisitor classVisitor = new CoberturaClassVisitor(
+				ClassVisitor classVisitor = new WhipClassVisitor(
 					projectData.getOrCreateClassData(name), classWriter);
 
 				ClassReader classReader = new ClassReader(classfileBuffer);
@@ -188,7 +188,7 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 		_dumpDir = new File(
 			System.getProperty("java.io.tmpdir"),
-			"cobertura-dump/" + processId);
+			"whip-dump/" + processId);
 	}
 
 	private final Pattern[] _excludePatterns;

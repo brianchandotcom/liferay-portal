@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.whip.instrument;
 
-import com.liferay.cobertura.coveragedata.ClassData;
+import com.liferay.whip.coveragedata.ClassData;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -23,11 +23,9 @@ import org.objectweb.asm.Opcodes;
 /**
  * @author Shuyang Zhou
  */
-public class CoberturaClassVisitor extends ClassVisitor {
+public class WhipClassVisitor extends ClassVisitor {
 
-	public CoberturaClassVisitor(
-		ClassData classData, ClassVisitor classVisitor) {
-
+	public WhipClassVisitor(ClassData classData, ClassVisitor classVisitor) {
 		super(Opcodes.ASM5, classVisitor);
 
 		_classData = classData;

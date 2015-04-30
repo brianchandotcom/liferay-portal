@@ -12,19 +12,35 @@
  * details.
  */
 
-package com.liferay.cobertura.coveragedata;
+package com.liferay.whip.coveragedata;
 
 /**
  * @author Shuyang Zhou
  */
-public interface BranchCoverageData<T extends BranchCoverageData<T>> {
+public class ProjectData
+	extends CoverageDataContainer<String, ClassData, ProjectData> {
 
-	public double getBranchCoverageRate();
+	public ClassData getClassData(String className) {
+		return children.get(className);
+	}
 
-	public int getNumberOfCoveredBranches();
+	public ClassData getOrCreateClassData(String className) {
+		ClassData classData = children.get(className);
 
-	public int getNumberOfValidBranches();
+		if (classData == null) {
+			classData = new ClassData(className);
 
-	public void merge(T t);
+			ClassData previousClassData = children.putIfAbsent(
+				className, classData);
+
+			if (previousClassData != null) {
+				classData = previousClassData;
+			}
+		}
+
+		return classData;
+	}
+
+	private static final long serialVersionUID = 1;
 
 }

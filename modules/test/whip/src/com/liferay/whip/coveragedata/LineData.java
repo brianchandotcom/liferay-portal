@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cobertura.coveragedata;
+package com.liferay.whip.coveragedata;
 
 import java.io.Serializable;
 

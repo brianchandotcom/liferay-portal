@@ -136,7 +136,9 @@ public class LineData implements CoverageData<LineData>, Serializable {
 					lineData);
 		}
 
-		_hitCounter.addAndGet(lineData._hitCounter.get());
+		AtomicLong hitCounter = lineData._hitCounter;
+
+		_hitCounter.addAndGet(hitCounter.get());
 
 		ConcurrentMap<Integer, JumpData> otherJumpDatas = lineData._jumpDatas;
 

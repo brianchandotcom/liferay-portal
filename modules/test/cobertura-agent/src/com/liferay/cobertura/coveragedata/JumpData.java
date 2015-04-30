@@ -43,11 +43,11 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 	public int getNumberOfCoveredBranches() {
 		int numberOfCoveredBranches = 0;
 
-		if (_trueHitsCounter.get() > 0) {
+		if (_trueHitCounter.get() > 0) {
 			numberOfCoveredBranches++;
 		}
 
-		if (_falseHitsCounter.get() > 0) {
+		if (_falseHitCounter.get() > 0) {
 			numberOfCoveredBranches++;
 		}
 
@@ -70,8 +70,13 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 					jumpData);
 		}
 
-		_trueHitsCounter.addAndGet(jumpData._trueHitsCounter.get());
-		_falseHitsCounter.addAndGet(jumpData._falseHitsCounter.get());
+		AtomicLong trueHitCounter = jumpData._trueHitCounter;
+
+		_trueHitCounter.addAndGet(trueHitCounter.get());
+
+		AtomicLong falseHitCounter = jumpData._falseHitCounter;
+
+		_falseHitCounter.addAndGet(falseHitCounter.get());
 	}
 
 	@Override
@@ -91,19 +96,19 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 
 	public void touchBranch(boolean branch, int hits) {
 		if (branch) {
-			_trueHitsCounter.addAndGet(hits);
+			_trueHitCounter.addAndGet(hits);
 		}
 		else {
-			_falseHitsCounter.addAndGet(hits);
+			_falseHitCounter.addAndGet(hits);
 		}
 	}
 
 	private static final long serialVersionUID = 1;
 
 	private final String _className;
-	private final AtomicLong _falseHitsCounter = new AtomicLong();
+	private final AtomicLong _falseHitCounter = new AtomicLong();
 	private final int _jumpNumber;
 	private final int _lineNumber;
-	private final AtomicLong _trueHitsCounter = new AtomicLong();
+	private final AtomicLong _trueHitCounter = new AtomicLong();
 
 }

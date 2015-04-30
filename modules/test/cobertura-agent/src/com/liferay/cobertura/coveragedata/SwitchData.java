@@ -31,7 +31,7 @@ public class SwitchData
 		_lineNumber = lineNumber;
 		_switchNumber = switchNumber;
 
-		_hitsArray = new AtomicLongArray(caseNumber + 1);
+		_hitCounterArray = new AtomicLongArray(caseNumber + 1);
 	}
 
 	@Override
@@ -44,10 +44,8 @@ public class SwitchData
 	public int getNumberOfCoveredBranches() {
 		int numberOfCoveredBranches = 0;
 
-		for (int i = 0; i < _hitsArray.length(); i++) {
-			long hits = _hitsArray.get(i);
-
-			if (hits > 0) {
+		for (int i = 0; i < _hitCounterArray.length(); i++) {
+			if (_hitCounterArray.get(i) > 0) {
 				numberOfCoveredBranches++;
 			}
 		}
@@ -57,7 +55,7 @@ public class SwitchData
 
 	@Override
 	public int getNumberOfValidBranches() {
-		return _hitsArray.length();
+		return _hitCounterArray.length();
 	}
 
 	public int getSwitchNumber() {
@@ -66,20 +64,20 @@ public class SwitchData
 
 	@Override
 	public void merge(SwitchData switchData) {
-		AtomicLongArray hitsArray = switchData._hitsArray;
+		AtomicLongArray hitCounterArray = switchData._hitCounterArray;
 
 		if (!_className.equals(switchData._className) ||
 			(_lineNumber != switchData._lineNumber) ||
 			(_switchNumber != switchData._switchNumber) ||
-			(_hitsArray.length() != hitsArray.length())) {
+			(_hitCounterArray.length() != hitCounterArray.length())) {
 
 			throw new IllegalArgumentException(
 				"Switch data mismatch, left : " + toString() + ", right : " +
 					switchData);
 		}
 
-		for (int i = 0; i < _hitsArray.length(); i++) {
-			_hitsArray.addAndGet(i, switchData._hitsArray.get(i));
+		for (int i = 0; i < _hitCounterArray.length(); i++) {
+			_hitCounterArray.addAndGet(i, hitCounterArray.get(i));
 		}
 	}
 
@@ -94,14 +92,14 @@ public class SwitchData
 		sb.append(", switchNumber=");
 		sb.append(_switchNumber);
 		sb.append(", caseNumber=");
-		sb.append(_hitsArray.length());
+		sb.append(_hitCounterArray.length());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public void touchBranch(int branch, int hits) {
-		if (branch >= _hitsArray.length()) {
+		if (branch >= _hitCounterArray.length()) {
 			throw new IllegalStateException(
 				"No instrument data for class " + _className + " line " +
 					_lineNumber + " switch " + _switchNumber + " branch " +
@@ -109,16 +107,16 @@ public class SwitchData
 		}
 
 		if (branch == -1) {
-			branch = _hitsArray.length() - 1;
+			branch = _hitCounterArray.length() - 1;
 		}
 
-		_hitsArray.addAndGet(branch, hits);
+		_hitCounterArray.addAndGet(branch, hits);
 	}
 
 	private static final long serialVersionUID = 1;
 
 	private final String _className;
-	private final AtomicLongArray _hitsArray;
+	private final AtomicLongArray _hitCounterArray;
 	private final int _lineNumber;
 	private final int _switchNumber;
 

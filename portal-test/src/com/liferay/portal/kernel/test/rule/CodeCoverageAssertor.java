@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.net.URL;
@@ -81,7 +82,7 @@ public class CodeCoverageAssertor implements TestRule {
 	}
 
 	protected void afterClass(Description description, String className)
-		throws Exception {
+		throws Throwable {
 
 		List<Class<?>> assertClasses = new ArrayList<>();
 
@@ -95,12 +96,17 @@ public class CodeCoverageAssertor implements TestRule {
 
 		_purgeSyntheticClasses(assertClasses);
 
-		_ASSERT_COVERAGE_METHOD.invoke(
-			null, _includeInnerClasses,
-			assertClasses.toArray(new Class<?>[assertClasses.size()]));
+		try {
+			_ASSERT_COVERAGE_METHOD.invoke(
+				null, _includeInnerClasses,
+				assertClasses.toArray(new Class<?>[assertClasses.size()]));
+		}
+		catch (InvocationTargetException ite) {
+			throw ite.getCause();
+		}
 	}
 
-	protected String beforeClass(Description description) throws Exception {
+	protected String beforeClass(Description description) throws Throwable {
 		String className = description.getClassName();
 
 		if (className.endsWith("Test")) {
@@ -113,7 +119,12 @@ public class CodeCoverageAssertor implements TestRule {
 			includes = _generateIncludes(className);
 		}
 
-		_DYNAMICALLY_INSTRUMENT_METHOD.invoke(null, includes, _excludes);
+		try {
+			_DYNAMICALLY_INSTRUMENT_METHOD.invoke(null, includes, _excludes);
+		}
+		catch (InvocationTargetException ite) {
+			throw ite.getCause();
+		}
 
 		return className;
 	}

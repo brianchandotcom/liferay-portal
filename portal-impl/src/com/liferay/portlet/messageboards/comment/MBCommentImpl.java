@@ -220,16 +220,6 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
-	public boolean isApproved() {
-		return _message.isApproved();
-	}
-
-	@Override
-	public boolean isPending() {
-		return _message.isPending();
-	}
-
-	@Override
 	public boolean isRoot() {
 		return _message.isRoot();
 	}

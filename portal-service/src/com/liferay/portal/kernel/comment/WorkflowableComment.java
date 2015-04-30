@@ -27,8 +27,4 @@ public interface WorkflowableComment extends Comment {
 
 	public int getStatus();
 
-	public boolean isApproved();
-
-	public boolean isPending();
-
 }

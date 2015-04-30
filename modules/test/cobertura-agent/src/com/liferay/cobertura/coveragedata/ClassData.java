@@ -28,7 +28,9 @@ public class ClassData
 		_name = name;
 	}
 
-	public LineData addLine(LineData lineData) {
+	public LineData addLine(int lineNumber) {
+		LineData lineData = new LineData(_name, lineNumber);
+
 		LineData previousLineData = children.putIfAbsent(
 			lineData.getLineNumber(), lineData);
 

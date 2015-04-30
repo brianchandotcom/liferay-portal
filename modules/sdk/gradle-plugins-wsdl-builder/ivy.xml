@@ -18,5 +18,12 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency conf="provided->default" name="groovy-all" org="org.codehaus.groovy" rev="2.3.9" />
+		<dependency conf="provided->default" name="org.gradle.gradle-base-services" org="com.liferay" rev="2.3" />
+		<dependency conf="provided->default" name="org.gradle.gradle-core" org="com.liferay" rev="2.3" />
+		<dependency conf="provided->default" name="org.gradle.gradle-language-java" org="com.liferay" rev="2.3" />
+		<dependency conf="provided->default" name="org.gradle.gradle-language-jvm" org="com.liferay" rev="2.3" />
+		<dependency conf="provided->default" name="org.gradle.gradle-platform-jvm" org="com.liferay" rev="2.3" />
+		<dependency conf="provided->default" name="org.gradle.gradle-plugins" org="com.liferay" rev="2.3" />
 	</dependencies>
 </ivy-module>

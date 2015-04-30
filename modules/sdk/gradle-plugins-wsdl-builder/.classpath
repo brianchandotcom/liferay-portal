@@ -18,5 +18,12 @@
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.util.jar" />
+	<classpathentry kind="lib" path="lib/groovy-all.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-core.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-language-java.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-language-jvm.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-platform-jvm.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-plugins.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

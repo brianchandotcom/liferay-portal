@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.registry,\
 	com.liferay.registry.collections,\
+	com.liferay.registry.dependency,\
 	com.liferay.registry.util
 Import-Package:\
 	com.liferay.registry;version=${@},\

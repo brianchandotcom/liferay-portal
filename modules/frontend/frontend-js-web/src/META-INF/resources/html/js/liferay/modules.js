@@ -384,6 +384,14 @@
 							'uploader'
 						]
 					},
+					'liferay-entry-selector': {
+						path: 'entry_selector.js',
+						requires: [
+							'aui-component',
+							'liferay-portlet-base',
+							'liferay-util-window'
+						]
+					},
 					'liferay-form': {
 						path: 'form.js',
 						requires: [

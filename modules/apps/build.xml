@@ -18,7 +18,8 @@
 		<dirset dir="iframe" includes="*" />
 		<dirset dir="invitation" includes="*" />
 		<dirset dir="item-selector" includes="*" />
-		<dirset dir="journal" includes="*" />
+		<dirset dir="journal" excludes="journal-content-addons" includes="*" />
+		<dirset dir="journal/journal-content-addons" includes="*" />
 		<dirset dir="layout" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
 		<dirset dir="marketplace" includes="*" />

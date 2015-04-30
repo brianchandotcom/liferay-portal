@@ -16,10 +16,11 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
-import com.liferay.gradle.plugins.tasks.BuildWsdlTask;
 import com.liferay.gradle.plugins.tasks.BuildXsdTask;
 import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
+import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderExtension;
+import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
@@ -80,6 +81,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureDependencies(project, liferayExtension);
 		configureRepositories(project);
 		configureSourceSets(project);
+		configureWSDLBuilderExtension(project);
 
 		addConfigurations(project);
 		addTasks(project, liferayExtension);
@@ -147,16 +149,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return buildCssTask;
 	}
 
-	protected BuildWsdlTask addTaskBuildWsdl(Project project) {
-		BuildWsdlTask buildWsdlTask = GradleUtil.addTask(
-			project, BUILD_WSDL_TASK_NAME, BuildWsdlTask.class);
-
-		buildWsdlTask.setDescription("Generates WSDL client stubs.");
-		buildWsdlTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		return buildWsdlTask;
-	}
-
 	protected BuildXsdTask addTaskBuildXsd(Project project) {
 		BuildXsdTask buildXsdTask = GradleUtil.addTask(
 			project, BUILD_XSD_TASK_NAME, BuildXsdTask.class);
@@ -192,7 +184,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		addTaskBuildCss(project);
-		addTaskBuildWsdl(project);
 		addTaskBuildXsd(project);
 		addTaskFormatSource(project);
 		addTaskInitGradle(project);
@@ -216,6 +207,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
+		GradleUtil.applyPlugin(project, WSDLBuilderPlugin.class);
 	}
 
 	protected void configureConfigurations(
@@ -417,45 +409,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskBuildWsdl(Project project) {
-		BuildWsdlTask buildWsdlTask = (BuildWsdlTask)GradleUtil.getTask(
-			project, BUILD_WSDL_TASK_NAME);
-
-		configureTaskBuildWsdlDestinationDir(buildWsdlTask);
-		configureTaskBuildWsdlRootDirs(buildWsdlTask);
-
-		buildWsdlTask.addTasks();
-
-		TaskOutputs taskOutputs = buildWsdlTask.getOutputs();
-
-		GradleUtil.addDependency(
-			buildWsdlTask.getProject(), JavaPlugin.COMPILE_CONFIGURATION_NAME,
-			taskOutputs.getFiles());
-	}
-
-	protected void configureTaskBuildWsdlDestinationDir(
-		BuildWsdlTask buildWsdlTask) {
-
-		if (buildWsdlTask.getDestinationDir() == null) {
-			buildWsdlTask.setDestinationDir(
-				getLibDir(buildWsdlTask.getProject()));
-		}
-	}
-
-	protected void configureTaskBuildWsdlRootDirs(BuildWsdlTask buildWsdlTask) {
-		FileCollection rootDirs = buildWsdlTask.getRootDirs();
-
-		if ((rootDirs != null) && !rootDirs.isEmpty()) {
-			return;
-		}
-
-		Project project = buildWsdlTask.getProject();
-
-		File rootDir = project.file("wsdl");
-
-		buildWsdlTask.rootDirs(rootDir);
-	}
-
 	protected void configureTaskBuildXsd(Project project) {
 		BuildXsdTask buildXsdTask = (BuildXsdTask)GradleUtil.getTask(
 			project, BUILD_XSD_TASK_NAME);
@@ -541,7 +494,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		configureTaskBuildCss(project, liferayExtension);
-		configureTaskBuildWsdl(project);
 		configureTaskBuildXsd(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);
@@ -552,6 +504,35 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		project.setVersion(
 			liferayExtension.getVersionPrefix() + "." + project.getVersion());
+	}
+
+	protected void configureWSDLBuilderExtension(Project project) {
+		WSDLBuilderExtension wsdlBuilderExtension = GradleUtil.getExtension(
+			project, WSDLBuilderExtension.class);
+
+		configureWSDLBuilderExtensionDestinationDir(
+			project, wsdlBuilderExtension);
+		configureWSDLBuilderExtensionWSDLDir(project, wsdlBuilderExtension);
+	}
+
+	protected void configureWSDLBuilderExtensionDestinationDir(
+		Project project, WSDLBuilderExtension wsdlBuilderExtension) {
+
+		File destinationDir = wsdlBuilderExtension.getDestinationDir();
+
+		if (!destinationDir.exists()) {
+			wsdlBuilderExtension.setDestinationDir("lib");
+		}
+	}
+
+	protected void configureWSDLBuilderExtensionWSDLDir(
+		Project project, WSDLBuilderExtension wsdlBuilderExtension) {
+
+		File wsdlDir = wsdlBuilderExtension.getWSDLDir();
+
+		if (!wsdlDir.exists()) {
+			wsdlBuilderExtension.setWSDLDir("wsdl");
+		}
 	}
 
 	protected File getAppServerDir(

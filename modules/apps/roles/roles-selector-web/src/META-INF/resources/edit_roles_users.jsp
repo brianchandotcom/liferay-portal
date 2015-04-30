@@ -17,17 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_user_roles.jsp-tabs1");
+String tabs1 = (String)request.getAttribute("edit_roles.jsp-tabs1");
 
-int cur = (Integer)request.getAttribute("edit_user_roles.jsp-cur");
+int cur = (Integer)request.getAttribute("edit_roles.jsp-cur");
 
-Group group = (Group)request.getAttribute("edit_user_roles.jsp-group");
-String groupDescriptiveName = (String)request.getAttribute("edit_user_roles.jsp-groupDescriptiveName");
-Role role = (Role)request.getAttribute("edit_user_roles.jsp-role");
-long roleId = (Long)request.getAttribute("edit_user_roles.jsp-roleId");
-Organization organization = (Organization)request.getAttribute("edit_user_roles.jsp-organization");
+Group group = (Group)request.getAttribute("edit_roles.jsp-group");
+String groupDescriptiveName = (String)request.getAttribute("edit_roles.jsp-groupDescriptiveName");
+Role role = (Role)request.getAttribute("edit_roles.jsp-role");
+long roleId = (Long)request.getAttribute("edit_roles.jsp-roleId");
+Organization organization = (Organization)request.getAttribute("edit_roles.jsp-organization");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-portletURL");
+PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
 %>
 
 <aui:input name="addUserIds" type="hidden" />
@@ -40,8 +40,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-po
 </div>
 
 <br />
-
-<h3><liferay-ui:message key="users" /></h3>
 
 <liferay-ui:tabs
 	names="current,available"

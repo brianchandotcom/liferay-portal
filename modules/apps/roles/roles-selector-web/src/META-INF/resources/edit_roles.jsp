@@ -17,12 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = (String)request.getAttribute("edit_user_group_roles.jsp-redirect");
+String redirect = (String)request.getAttribute("edit_roles.jsp-redirect");
 
-Group group = (Group)request.getAttribute("edit_user_group_roles.jsp-group");
-int roleType = (Integer)request.getAttribute("edit_user_group_roles.jsp-roleType");
+String className = (String)request.getAttribute("edit_roles.jsp-className");
+Group group = (Group)request.getAttribute("edit_roles.jsp-group");
+int roleType = (Integer)request.getAttribute("edit_roles.jsp-roleType");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.jsp-portletURL");
+PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
 %>
 
 <div>
@@ -32,8 +33,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 </div>
 
 <br />
-
-<h3><liferay-ui:message key="roles" /></h3>
 
 <liferay-ui:search-container
 	searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
@@ -63,8 +62,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 		modelVar="role"
 	>
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="mvcPath" value="/html/portlet/site_memberships/edit_user_group_roles.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="className" value="<%= className %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		</portlet:renderURL>

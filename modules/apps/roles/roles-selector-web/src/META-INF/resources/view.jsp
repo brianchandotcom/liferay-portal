@@ -27,6 +27,10 @@ long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId
 
 Group group = GroupLocalServiceUtil.getGroup(groupId);
 
+if (group != null) {
+	group = StagingUtil.getLiveGroup(group.getGroupId());
+}
+
 String groupDescriptiveName = group.getDescriptiveName(locale);
 
 Role role = ActionUtil.getRole(request);
@@ -46,55 +50,40 @@ int roleType = ParamUtil.getInteger(request, "roleType", RoleConstants.TYPE_SITE
 Organization organization = null;
 
 if (group.isOrganization()) {
+	roleType = RoleConstants.TYPE_ORGANIZATION;
+
 	organization = OrganizationLocalServiceUtil.getOrganization(group.getClassPK());
 }
 
+String className = ParamUtil.getString(request, "className", User.class.getName());
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/edit_user_group_roles.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("redirect", redirect);
+portletURL.setParameter("className", className);
 portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-
-// Breadcrumbs
-
-if (organization != null) {
-	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
-}
-else if (group != null) {
-	PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
-}
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-user-group-roles"), portletURL.toString());
 
 if (role != null) {
 	portletURL.setParameter("roleId", String.valueOf(roleId));
-
-	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.escape(role.getTitle(locale)), currentURL);
 }
 
-request.setAttribute("edit_user_group_roles.jsp-tabs1", tabs1);
+request.setAttribute("edit_roles.jsp-tabs1", tabs1);
 
-request.setAttribute("edit_user_group_roles.jsp-cur", cur);
+request.setAttribute("edit_roles.jsp-cur", cur);
 
-request.setAttribute("edit_user_group_roles.jsp-redirect", redirect);
+request.setAttribute("edit_roles.jsp-redirect", redirect);
 
-request.setAttribute("edit_user_group_roles.jsp-group", group);
-request.setAttribute("edit_user_group_roles.jsp-groupDescriptiveName", groupDescriptiveName);
-request.setAttribute("edit_user_group_roles.jsp-role", role);
-request.setAttribute("edit_user_group_roles.jsp-roleId", roleId);
-request.setAttribute("edit_user_group_roles.jsp-roleType", roleType);
-request.setAttribute("edit_user_group_roles.jsp-organization", organization);
+request.setAttribute("edit_roles.jsp-className", className);
+request.setAttribute("edit_roles.jsp-group", group);
+request.setAttribute("edit_roles.jsp-groupDescriptiveName", groupDescriptiveName);
+request.setAttribute("edit_roles.jsp-role", role);
+request.setAttribute("edit_roles.jsp-roleId", roleId);
+request.setAttribute("edit_roles.jsp-roleType", roleType);
+request.setAttribute("edit_roles.jsp-organization", organization);
 
-request.setAttribute("edit_user_group_roles.jsp-portletURL", portletURL);
+request.setAttribute("edit_roles.jsp-portletURL", portletURL);
 %>
-
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	escapeXml="<%= false %>"
-	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.get(request, "add-site-roles-to") + ": " + LanguageUtil.get(request, "user-groups") %>'
-/>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
@@ -104,12 +93,23 @@ request.setAttribute("edit_user_group_roles.jsp-portletURL", portletURL);
 
 	<c:choose>
 		<c:when test="<%= role == null %>">
-			<liferay-util:include page="/edit_user_group_roles_role.jsp" />
+			<liferay-util:include page="/edit_roles.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>
-			<liferay-util:include page="/edit_user_group_roles_users.jsp" />
+			<c:choose>
+				<c:when test="<%= className.equals(User.class.getName()) %>">
+					<liferay-util:include page="/edit_roles_users.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:otherwise>
+					<liferay-util:include page="/edit_roles_user_groups.jsp" servletContext="<%= application %>" />
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>
+
+	<aui:button-row>
+		<aui:button type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>
@@ -123,5 +123,17 @@ request.setAttribute("edit_user_group_roles.jsp-portletURL", portletURL);
 		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 		submitForm(form, '<portlet:actionURL name="editUserGroupGroupRoleUsers" />');
+	}
+
+	function <portlet:namespace />updateUserGroupRoleUsers(redirect) {
+		var Util = Liferay.Util;
+
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('redirect').val(redirect);
+		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+		submitForm(form, '<portlet:actionURL name="editUserGroupRoleUsers" />');
 	}
 </aui:script>

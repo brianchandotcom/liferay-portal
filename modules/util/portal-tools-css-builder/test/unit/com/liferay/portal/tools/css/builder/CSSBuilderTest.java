@@ -14,19 +14,21 @@
 
 package com.liferay.portal.tools.css.builder;
 
-import java.io.File;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
 import com.helger.commons.charset.CCharset;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CSSStyleRule;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriterSettings;
+
+import java.io.File;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,40 +41,34 @@ public class CSSBuilderTest {
 	public void testLibsassGeneratedCss() throws Exception {
 		generateCSS("libsass");
 
-		String expectedTestCss = readFile(_WORKING_DIR + "expected/test.css");
-		String generatedTestCss = readFile(
-			_WORKING_DIR + "/libsass/.sass-cache/test.css");
+		String expectedTestCss = getFile("expected/test.css");
+		String generatedTestCss = getFile("/libsass/.sass-cache/test.css");
 
-		Assert.assertEquals(formatCss(expectedTestCss), formatCss(generatedTestCss));
+		Assert.assertEquals(expectedTestCss, generatedTestCss);
 
-		String expectedTestRtlCss = readFile(
-			_WORKING_DIR + "/expected/test_rtl.css");
-		String generatedTestRtlCss = readFile(
-			_WORKING_DIR + "/libsass/.sass-cache/test_rtl.css");
+		String expectedTestRtlCss = getFile("/expected/test_rtl.css");
+		String generatedTestRtlCss = getFile(
+			"/libsass/.sass-cache/test_rtl.css");
 
-		Assert.assertEquals(formatCss(expectedTestRtlCss), formatCss(generatedTestRtlCss));
+		Assert.assertEquals(expectedTestRtlCss, generatedTestRtlCss);
 
-		String expectedMainCss = readFile(_WORKING_DIR + "/expected/main.css");
-		String generatedMainCss = readFile(
-			_WORKING_DIR + "/libsass/.sass-cache/main.css");
+		String expectedMainCss = getFile("/expected/main.css");
+		String generatedMainCss = getFile("/libsass/.sass-cache/main.css");
 
-		Assert.assertEquals(formatCss(expectedMainCss), formatCss(generatedMainCss));
+		Assert.assertEquals(expectedMainCss, generatedMainCss);
 
-		String expectedMainRtlCss = readFile(
-			_WORKING_DIR + "/expected/main_rtl.css");
-		String generatedMainRtlCss = readFile(
-			_WORKING_DIR + "/libsass/.sass-cache/main_rtl.css");
+		String expectedMainRtlCss = getFile("/expected/main_rtl.css");
+		String generatedMainRtlCss = getFile(
+			"/libsass/.sass-cache/main_rtl.css");
 
-		Assert.assertEquals(formatCss(expectedMainRtlCss), formatCss(generatedMainRtlCss));
+		Assert.assertEquals(expectedMainRtlCss, generatedMainRtlCss);
 
-		File previousTestFile = new File(
-			_WORKING_DIR + "/libsass/.sass-cache/test.css");
+		File previousTestFile = new File("/libsass/.sass-cache/test.css");
 		File previousTestRtlFile = new File(
-			_WORKING_DIR + "/libsass/.sass-cache/test_rtl.css");
-		File previousMainFile = new File(
-			_WORKING_DIR + "/libsass/.sass-cache/main.css");
+			"/libsass/.sass-cache/test_rtl.css");
+		File previousMainFile = new File("/libsass/.sass-cache/main.css");
 		File previousMainRtlFile = new File(
-			_WORKING_DIR + "/libsass/.sass-cache/main_rtl.css");
+			"/libsass/.sass-cache/main_rtl.css");
 
 		long previousTestFileModifiedDate = previousTestFile.lastModified();
 		long previousTestRtlFileModifiedDate =
@@ -83,14 +79,10 @@ public class CSSBuilderTest {
 
 		generateCSS("libsass");
 
-		File newTestFile = new File(
-			_WORKING_DIR + "/libsass/.sass-cache/test.css");
-		File newTestRtlFile = new File(
-			_WORKING_DIR + "/libsass/.sass-cache/test_rtl.css");
-		File newMainFile = new File(
-			_WORKING_DIR + "/libsass/.sass-cache/main.css");
-		File newMainRtlFile = new File(
-			_WORKING_DIR + "/libsass/.sass-cache/main_rtl.css");
+		File newTestFile = new File("/libsass/.sass-cache/test.css");
+		File newTestRtlFile = new File("/libsass/.sass-cache/test_rtl.css");
+		File newMainFile = new File("/libsass/.sass-cache/main.css");
+		File newMainRtlFile = new File("/libsass/.sass-cache/main_rtl.css");
 
 		long newTestFileModifiedDate = newTestFile.lastModified();
 		long newTestRtlFileModifiedDate = newTestRtlFile.lastModified();
@@ -111,40 +103,25 @@ public class CSSBuilderTest {
 	public void testRubyGeneratedCss() throws Exception {
 		generateCSS("ruby");
 
-		String expectedTestCss = readFile(_WORKING_DIR + "expected/test.css");
-		String generatedTestCss = readFile(
-			_WORKING_DIR + "/ruby/.sass-cache/test.css");
+		String expectedTestCss = getFile("expected/test.css");
+		String generatedTestCss = getFile("/ruby/.sass-cache/test.css");
 
-		Assert.assertEquals(formatCss(expectedTestCss), formatCss(generatedTestCss));
+		Assert.assertEquals(expectedTestCss, generatedTestCss);
 
-		String expectedTestRtlCss = readFile(
-			_WORKING_DIR + "/expected/test_rtl.css");
-		String generatedTestRtlCss = readFile(
-			_WORKING_DIR + "/ruby/.sass-cache/test_rtl.css");
+		String expectedTestRtlCss = getFile("/expected/test_rtl.css");
+		String generatedTestRtlCss = getFile("/ruby/.sass-cache/test_rtl.css");
 
-		Assert.assertEquals(formatCss(expectedTestRtlCss), formatCss(generatedTestRtlCss));
+		Assert.assertEquals(expectedTestRtlCss, generatedTestRtlCss);
 
-		String expectedMainCss = readFile(_WORKING_DIR + "/expected/main.css");
-		String generatedMainCss = readFile(
-			_WORKING_DIR + "/ruby/.sass-cache/main.css");
+		String expectedMainCss = getFile("/expected/main.css");
+		String generatedMainCss = getFile("/ruby/.sass-cache/main.css");
 
-		Assert.assertEquals(formatCss(expectedMainCss), formatCss(generatedMainCss));
+		Assert.assertEquals(expectedMainCss, generatedMainCss);
 
-		String expectedMainRtlCss = readFile(
-			_WORKING_DIR + "/expected/main_rtl.css");
-		String generatedMainRtlCss = readFile(
-			_WORKING_DIR + "/ruby/.sass-cache/main_rtl.css");
+		String expectedMainRtlCss = getFile("/expected/main_rtl.css");
+		String generatedMainRtlCss = getFile("/ruby/.sass-cache/main_rtl.css");
 
-		Assert.assertEquals(formatCss(expectedMainRtlCss), formatCss(generatedMainRtlCss));
-	}
-
-	private void generateCSS(String sassImpl) throws Exception {
-		String sassDir = "/" + sassImpl + "/";
-		String docrootDirName = _WORKING_DIR;
-		String portalCommonDirName =
-			_WORKING_DIR + "common";
-
-		new CSSBuilder(sassDir, docrootDirName, portalCommonDirName, sassImpl);
+		Assert.assertEquals(expectedMainRtlCss, generatedMainRtlCss);
 	}
 
 	protected String formatCss(String css) {
@@ -166,14 +143,29 @@ public class CSSBuilderTest {
 		return sb.toString();
 	}
 
-	private String readFile(String fileName) throws Exception {
-		Path path = Paths.get(fileName);
+	private void generateCSS(String sassImpl) throws Exception {
+		String sassDir = "/" + sassImpl + "/";
+		String docrootDirName = _WORKING_DIR;
+		String portalCommonDirName = _WORKING_DIR + "common";
 
-		return new String(Files.readAllBytes(path));
+		String args[] = new String[] {
+			"sass.dir=" + sassDir, "sass.docroot.dir=" + docrootDirName,
+			"sass.portal.common.dir=" + portalCommonDirName,
+			"sass.compiler.impl=" + sassImpl
+		};
+
+		CSSBuilder.main(args);
 	}
 
-	private static final String _WORKING_DIR =
-		System.getProperty("user.dir") + "/test-classes/unit/" +
-		"com/liferay/portal/tools/css/builder/dependencies/";
+	private String getFile(String fileName) throws Exception {
+		Path path = Paths.get(_WORKING_DIR + fileName);
+
+		String css = new String(Files.readAllBytes(path));
+
+		return formatCss(css);
+	}
+
+	private static final String _WORKING_DIR = CSSBuilderTest.class.getResource(
+		"dependencies/").getFile();
 
 }

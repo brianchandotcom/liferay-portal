@@ -1,8 +1,12 @@
 Bundle-Name: Liferay CSS Builder
-Bundle-SymbolicName: com.liferay.css.builder
+Bundle-SymbolicName: com.liferay.portal.tools.css.builder
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.css.builder
+Export-Package: com.liferay.portal.tools.css.builder
 Include-Resource:\
-	classes
-
+	classes,\
+	@lib/com.liferay.rtl.css.jar,\
+	@lib/com.liferay.sass.compiler.jni.jar,\
+	@lib/com.liferay.sass.compiler.ruby.jar,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/ModelHintsConstants.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringUtil.class
 Main-Class: com.liferay.portal.tools.css.builder.CSSBuilder

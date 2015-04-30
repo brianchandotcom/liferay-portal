@@ -1,0 +1,4 @@
+Bundle-SymbolicName: sample.appsforyourdomain
+Bundle-Version: 1.4.7
+Export-Package: sample.appsforyourdomain.*
+Include-Resource: classes

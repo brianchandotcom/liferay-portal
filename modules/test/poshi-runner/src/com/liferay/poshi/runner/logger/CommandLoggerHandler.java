@@ -34,6 +34,8 @@ public final class CommandLoggerHandler {
 		}
 
 		_commandElement = null;
+
+		_failLineGroupLoggerElement(_lineGroupLoggerElement);
 	}
 
 	public static String getCommandLogText() {
@@ -76,6 +78,23 @@ public final class CommandLoggerHandler {
 		_lineGroupLoggerElement = _getLineGroupLoggerElement(element);
 
 		_commandLogLoggerElement.addChildLoggerElement(_lineGroupLoggerElement);
+	}
+
+	private static void _failLineGroupLoggerElement(
+		LoggerElement lineGroupLoggerElement) {
+
+		lineGroupLoggerElement.addClassName("failed");
+
+		LoggerElement childContainerLoggerElement =
+			lineGroupLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> runLineLoggerElements =
+			childContainerLoggerElement.loggerElements("li");
+
+		LoggerElement runLineLoggerElement = runLineLoggerElements.get(
+			runLineLoggerElements.size() - 1);
+
+		runLineLoggerElement.addClassName("error-line");
 	}
 
 	private static LoggerElement _getButtonLoggerElement(int btnLinkId) {

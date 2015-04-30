@@ -41,10 +41,8 @@ public final class CommandLoggerHandler {
 	}
 
 	public static void logClassCommandName(String classCommandName) {
-		LoggerElement dividerLineLoggerElement = new LoggerElement();
-
-		dividerLineLoggerElement.setClassName("divider-line");
-		dividerLineLoggerElement.setText(classCommandName);
+		LoggerElement dividerLineLoggerElement = _getDividerLoggerElement(
+			classCommandName);
 
 		_commandLogLoggerElement.addChildLoggerElement(
 			dividerLineLoggerElement);
@@ -80,59 +78,68 @@ public final class CommandLoggerHandler {
 	}
 
 	private static LoggerElement _getButtonLoggerElement(int btnLinkId) {
-		LoggerElement buttonLoggerElement = new LoggerElement();
+		LoggerElement loggerElement = new LoggerElement();
 
-		buttonLoggerElement.setAttribute(
-			"data-btnlinkid", "command-" + btnLinkId);
-		buttonLoggerElement.setClassName("btn expand-toggle");
+		loggerElement.setAttribute("data-btnlinkid", "command-" + btnLinkId);
+		loggerElement.setClassName("btn expand-toggle");
 
-		return buttonLoggerElement;
+		return loggerElement;
 	}
 
 	private static LoggerElement _getChildContainerLoggerElement(
 		int btnLinkId) {
 
-		LoggerElement childContainerLoggerElement = new LoggerElement();
+		LoggerElement loggerElement = new LoggerElement();
 
-		childContainerLoggerElement.setAttribute(
-			"data-btnlinkid", "command-" + btnLinkId);
-		childContainerLoggerElement.setClassName("child-container collapse");
-		childContainerLoggerElement.setName("ul");
+		loggerElement.setAttribute("data-btnlinkid", "command-" + btnLinkId);
+		loggerElement.setClassName("child-container collapse");
+		loggerElement.setName("ul");
 
-		return childContainerLoggerElement;
+		return loggerElement;
 	}
 
 	private static LoggerElement _getCommandLoggerElement(Element element)
 		throws Exception {
 
-		LoggerElement commandLoggerElement = new LoggerElement();
+		LoggerElement loggerElement = new LoggerElement();
 
-		commandLoggerElement.setClassName("line-group linkable");
-		commandLoggerElement.setName("li");
+		loggerElement.setClassName("line-group linkable");
+		loggerElement.setName("li");
 
-		commandLoggerElement.addChildLoggerElement(
+		loggerElement.addChildLoggerElement(
 			_getButtonLoggerElement(_btnLinkId));
 
-		commandLoggerElement.addChildLoggerElement(
+		loggerElement.addChildLoggerElement(
 			_getLineContainerLoggerElement(element));
 
-		commandLoggerElement.addChildLoggerElement(
+		loggerElement.addChildLoggerElement(
 			_getChildContainerLoggerElement(_btnLinkId));
 
 		_btnLinkId++;
 
-		return commandLoggerElement;
+		return loggerElement;
+	}
+
+	private static LoggerElement _getDividerLoggerElement(
+		String classCommandName) {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("divider-line");
+		loggerElement.setText(classCommandName);
+
+		return loggerElement;
 	}
 
 	private static LoggerElement _getLineContainerLoggerElement(Element element)
 		throws Exception {
 
-		LoggerElement lineContainerLoggerElement = new LoggerElement();
+		LoggerElement loggerElement = new LoggerElement();
 
-		lineContainerLoggerElement.setClassName("line-container");
-		lineContainerLoggerElement.setText(_getLineContainerText(element));
+		loggerElement.setClassName("line-container");
+		loggerElement.setText(_getLineContainerText(element));
 
-		return lineContainerLoggerElement;
+		return loggerElement;
 	}
 
 	private static String _getLineContainerText(Element element)

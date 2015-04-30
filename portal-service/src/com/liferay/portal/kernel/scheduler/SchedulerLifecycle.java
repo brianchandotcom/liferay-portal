@@ -20,98 +20,62 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.dependency.ServiceDependencyListener;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 
 /**
  * @author Tina Tian
  */
 public class SchedulerLifecycle extends BasePortalLifecycle {
 
-	public SchedulerLifecycle() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			ClusterMasterExecutor.class,
-			new ClusterMasterExecutorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	protected synchronized void clusteredInit() throws Exception {
-		if ((_clusterMasterExecutor == null) || !_portalInitialized) {
-			return;
-		}
-
-		_clusterMasterExecutor.initialize();
-
-		SchedulerEngineHelperUtil.start();
-	}
-
 	@Override
 	protected void doPortalDestroy() throws Exception {
-		_serviceTracker.close();
 	}
 
 	@Override
 	protected void doPortalInit() throws Exception {
-		_portalInitialized = true;
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
 
-		if (!SchedulerEngineHelperUtil.isClusteredSchedulerEngine()) {
-			SchedulerEngineHelperUtil.start();
-		}
-		else {
-			clusteredInit();
-		}
+		serviceDependencyManager.addServiceDependencyListener(
+
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					Registry registry = RegistryUtil.getRegistry();
+
+					SchedulerEngineHelper schedulerEngineHelper =
+						registry.getService(SchedulerEngineHelper.class);
+
+					if (schedulerEngineHelper.isClusteredSchedulerEngine()) {
+						ClusterMasterExecutor clusterMasterExecutor =
+							registry.getService(ClusterMasterExecutor.class);
+
+						clusterMasterExecutor.initialize();
+					}
+
+					try {
+						schedulerEngineHelper.start();
+					}
+					catch (SchedulerException e) {
+						if (_log.isErrorEnabled()) {
+							_log.error("Unable to start scheduler engine", e);
+						}
+					}
+				}
+
+				@Override
+				public void destroy() {
+				}
+			}
+		);
+
+		serviceDependencyManager.registerDependencies(
+			ClusterMasterExecutor.class, SchedulerEngineHelper.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerLifecycle.class);
-
-	private volatile ClusterMasterExecutor _clusterMasterExecutor;
-	private volatile boolean _portalInitialized;
-	private final ServiceTracker<ClusterMasterExecutor, ClusterMasterExecutor>
-		_serviceTracker;
-
-	private class ClusterMasterExecutorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ClusterMasterExecutor, ClusterMasterExecutor> {
-
-		@Override
-		public ClusterMasterExecutor addingService(
-			ServiceReference<ClusterMasterExecutor> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			_clusterMasterExecutor = registry.getService(serviceReference);
-
-			try {
-				clusteredInit();
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to start scheduling engine", e);
-				}
-			}
-
-			return _clusterMasterExecutor;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ClusterMasterExecutor> serviceReference,
-			ClusterMasterExecutor clusterMasterExecutor) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ClusterMasterExecutor> serviceReference,
-			ClusterMasterExecutor clusterMasterExecutor) {
-
-			_clusterMasterExecutor = null;
-		}
-
-	}
 
 }

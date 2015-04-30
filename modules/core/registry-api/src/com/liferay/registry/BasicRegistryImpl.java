@@ -460,6 +460,11 @@ public class BasicRegistryImpl implements Registry {
 			return matches(properties);
 		}
 
+		@Override
+		public String toString() {
+			return _filter.toString();
+		}
+
 		private aQute.lib.filter.Filter _filter;
 
 	}

@@ -140,8 +140,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(e, e);
 		}
 
-		_serviceDependecyManager.destroy();
-
 		try {
 			ModuleFrameworkUtilAdapter.stopRuntime();
 		}
@@ -256,17 +254,26 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			throw new RuntimeException(e);
 		}
 
-		_serviceDependecyManager = new ServiceDependencyManager();
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
 
-		_serviceDependecyManager.addServiceDependencyListener(
+		serviceDependencyManager.addServiceDependencyListener(
 
 			new ServiceDependencyListener() {
 
 				@Override
 				public void destroy() {
-					_indexerPostProcessorRegistry.close();
-					_schedulerEntryRegistry.close();
-					_serviceWrapperRegistry.close();
+					if (_indexerPostProcessorRegistry != null) {
+						_indexerPostProcessorRegistry.close();
+					}
+
+					if (_schedulerEntryRegistry != null) {
+						_schedulerEntryRegistry.close();
+					}
+
+					if (_serviceWrapperRegistry != null) {
+						_serviceWrapperRegistry.close();
+					}
 				}
 
 				@Override
@@ -284,7 +291,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 			});
 
-		_serviceDependecyManager.registerDependencies(
+		serviceDependencyManager.registerDependencies(
 			MessageBus.class, PortalExecutorManager.class,
 			SchedulerEngineHelperUtil.class,
 			SingleDestinationMessageSenderFactory.class);
@@ -408,6 +415,5 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 	}
 
 	private ArrayApplicationContext _arrayApplicationContext;
-	private ServiceDependencyManager _serviceDependecyManager;
 
 }

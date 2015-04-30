@@ -70,7 +70,7 @@ public class ServiceDependency {
 	}
 
 	public void open() {
-		_serviceTracker.open();
+		_serviceTracker.open(true);
 	}
 
 	public void setServiceTracker(

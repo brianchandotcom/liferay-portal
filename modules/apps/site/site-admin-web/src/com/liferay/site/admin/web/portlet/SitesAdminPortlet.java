@@ -78,11 +78,11 @@ import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.site.admin.web.constants.SitesAdminPortletKeys;
 
 import java.io.IOException;
 
@@ -172,11 +172,11 @@ public class SitesAdminPortlet extends MVCPortlet {
 				PortletURL siteAdministrationURL =
 					PortalUtil.getSiteAdministrationURL(
 						actionResponse, themeDisplay,
-						PortletKeys.SITE_SETTINGS);
+						SitesAdminPortletKeys.SITE_SETTINGS);
 
 				String controlPanelURL = HttpUtil.setParameter(
 					themeDisplay.getURLControlPanel(), "p_p_id",
-					PortletKeys.SITES_ADMIN);
+					SitesAdminPortletKeys.SITES_ADMIN);
 
 				controlPanelURL = HttpUtil.setParameter(
 					controlPanelURL, "controlPanelCategory",
@@ -190,7 +190,7 @@ public class SitesAdminPortlet extends MVCPortlet {
 
 				MultiSessionMessages.add(
 					actionRequest,
-					PortletKeys.SITE_SETTINGS + "requestProcessed");
+					SitesAdminPortletKeys.SITE_SETTINGS + "requestProcessed");
 			}
 			else {
 				long newRefererPlid = getRefererPlid(

@@ -79,7 +79,7 @@ if (layoutSetPrototypeId > 0) {
 
 boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 
-if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
+if (!portletName.equals(SitesAdminPortletKeys.SITE_SETTINGS)) {
 	if (group != null) {
 		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
@@ -92,7 +92,7 @@ if (!portletName.equals(PortletKeys.SITE_SETTINGS)) {
 }
 %>
 
-<liferay-ui:success key='<%= PortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
+<liferay-ui:success key='<%= SitesAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
 
 <c:if test="<%= (group == null) || !layout.isTypeControlPanel() %>">
 

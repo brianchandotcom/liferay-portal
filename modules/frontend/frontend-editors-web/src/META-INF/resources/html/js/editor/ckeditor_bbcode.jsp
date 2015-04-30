@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/html/js/editor/init.jsp" %>
+
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <liferay-util:include page='<%= themeDisplay.getPathEditors() + "/editor/ckeditor.jsp" %>'>

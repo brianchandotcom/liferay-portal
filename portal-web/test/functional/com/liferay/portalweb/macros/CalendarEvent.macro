@@ -1017,6 +1017,12 @@
 		<execute function="SikuliClick" locator1="PGCalendar#SCHEDULER_DAY_VIEW_PNG" />
 	</command>
 
+	<command name="gotoDetailsViaSchedulerDialogBoxCmd">
+		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
+
+		<execute function="SelectFrame" locator1="PGCalendarVieweventdetails#VIEW_EVENT_IFRAME" />
+	</command>
+
 	<command name="gotoEdit">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
@@ -1306,6 +1312,11 @@
 	<command name="setTimes">
 		<execute function="Type" locator1="PGCalendarAddevent#START_DATE_TIME" value1="${startDateTime}" />
 		<execute function="Type" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${endDateTime}" />
+
+		<execute macro="CalendarEvent#viewTimesCmd">
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="startDateTime" value="${startDateTime}" />
+		</execute>
 	</command>
 
 	<command name="tag">
@@ -1541,6 +1552,11 @@
 		</execute>
 	</command>
 
+	<command name="viewDefaultTimes">
+		<execute function="AssertTextEquals#assertValue" locator1="PGCalendarAddevent#START_DATE_TIME" value1="${startDateTime}" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${endDateTime}" />
+	</command>
+
 	<command name="viewDefaultWeekPG">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
@@ -1549,6 +1565,37 @@
 		<execute macro="CalendarEvent#viewSpecificEventNotPresent">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
+	</command>
+
+	<command name="viewDurationViaScheduler">
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<if>
+			<equals arg1="${minutes}" arg2="15" />
+			<then>
+				<var name="key_pixelHeight" value="26" />
+			</then>
+			<elseif>
+				<equals arg1="${minutes}" arg2="30" />
+				<then>
+					<var name="key_pixelHeight" value="26" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${minutes}" arg2="60" />
+				<then>
+					<var name="key_pixelHeight" value="52" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${minutes}" arg2="120" />
+				<then>
+					<var name="key_pixelHeight" value="104" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_SPECIFIC_HEIGHT" />
 	</command>
 
 	<command name="viewEventDetails">
@@ -1598,11 +1645,6 @@
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="viewEventDetailsTime">
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
 	</command>
 
 	<command name="viewEventWithRemindersPG">
@@ -1793,10 +1835,23 @@
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 	</command>
 
-	<command name="viewTitleViaDetailsCmd">
-		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
+	<command name="viewTimesCmd">
+		<execute function="AssertTextEquals#assertValue" locator1="PGCalendarAddevent#START_DATE_TIME" value1="${startDateTime}" />
+		<execute function="AssertTextEquals#assertValue" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${endDateTime}" />
+	</command>
 
-		<execute function="SelectFrame" locator1="PGCalendarVieweventdetails#VIEW_EVENT_IFRAME" />
+	<command name="viewTimesViaDetailsCmd">
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
+	</command>
+
+	<command name="viewTimesViaSchedulerDialogBoxCmd">
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_WHEN_FIELD" value1="${startDateTime}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_WHEN_FIELD" value1="${endDateTime}" />
+	</command>
+
+	<command name="viewTitleViaDetailsCmd">
+		<execute macro="CalendarEvent#gotoDetailsViaSchedulerDialogBoxCmd" />
 
 		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
 	</command>

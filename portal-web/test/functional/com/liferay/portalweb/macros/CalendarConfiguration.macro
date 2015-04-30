@@ -1,12 +1,44 @@
 <definition>
+	<command name="disableGlobalTimeZone">
+		<execute function="Uncheck" locator1="CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX" />
+	</command>
+
+	<command name="editTimeZonePacific">
+		<execute macro="CalendarConfiguration#disableGlobalTimeZone" />
+
+		<if>
+			<condition function="IsTextNotEqual" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_LOS_ANGELES_SELECT_OPTION" value1="(UTC -07:00) Pacific Daylight Time" />
+			<then>
+				<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -08:00) Pacific Standard Time" />
+			</then>
+			<else>
+				<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+			</else>
+		</if>
+	</command>
+
+	<command name="enableGlobalTimeZone">
+		<execute function="Check" locator1="CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX" />
+	</command>
+
 	<command name="save">
 		<execute function="AssertClick" locator1="CalendarConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CalendarConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
-	<command name="selectWeekStartsOn">
-		<execute function="SelectFrame" locator1="CalendarConfiguration#CALENDAR_CONFIGURATION_IFRAME" />
+	<command name="selectDefaultDuration">
+		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_DEFAULT_DURATION_SELECT" value1="${defaultDuration}" />
+	</command>
 
+	<command name="selectDefaultView">
+		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_DEFAULT_VIEW_SELECT" value1="${defaultView}" />
+	</command>
+
+	<command name="selectTimeFormat">
+		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_FORMAT_SELECT" value1="${timeFormat}" />
+	</command>
+
+	<command name="selectWeekStartsOn">
 		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_WEEK_STARTS_ON_SELECT" value1="${weekStartDay}" />
 	</command>
 
@@ -14,6 +46,14 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Calendar" />
 			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#selectDefaultDuration">
+			<var name="defaultDuration" value="60 Minutes" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#selectDefaultView">
+			<var name="defaultView" value="Week" />
 		</execute>
 
 		<execute macro="CalendarConfiguration#selectWeekStartsOn">

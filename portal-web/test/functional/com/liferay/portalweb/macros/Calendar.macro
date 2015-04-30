@@ -810,6 +810,34 @@
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
 	</command>
 
+	<command name="viewFirstHourViaScheduler">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_DAY_FIRST_HOUR" value1="${firstHour}" />
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_WEEK_FIRST_HOUR" value1="${firstHour}" />
+	</command>
+
+	<command name="viewLastHourViaScheduler">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_DAY_LAST_HOUR" value1="${lastHour}" />
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_WEEK_LAST_HOUR" value1="${lastHour}" />
+	</command>
+
 	<command name="viewMonth">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Month" />
@@ -991,6 +1019,13 @@
 		<execute function="AssertTextEquals" locator1="CalendarRSS#FEED_EVENT_LINK" value1="${eventTitle}" />
 		<execute function="AssertTextEquals" locator1="CalendarRSS#FEED_EVENT_TITLE" value1="${eventTitle}" />
 		<execute function="AssertElementPresent" locator1="CalendarRSS#FEED_EVENT_DATES" />
+	</command>
+
+	<command name="viewSelectedSchedulerView">
+		<var method="StringUtil#upperCase(${view})" name="viewUppercase" />
+
+		<execute function="AssertElementPresent" locator1="PGCalendar#VIEW_${viewUppercase}_BUTTON_ACTIVE" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendar#SCHEDULER_VIEW_${viewUppercase}" />
 	</command>
 
 	<command name="viewWeekCountViaMonthView">

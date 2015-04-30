@@ -15,11 +15,11 @@
 package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gradle.plugins.LiferayThemePlugin;
-import com.liferay.gradle.plugins.util.ArrayUtil;
-import com.liferay.gradle.plugins.util.FileUtil;
-import com.liferay.gradle.plugins.util.GradleUtil;
-import com.liferay.gradle.plugins.util.StringUtil;
-import com.liferay.gradle.plugins.util.Validator;
+import com.liferay.gradle.util.ArrayUtil;
+import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 

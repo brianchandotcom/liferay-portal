@@ -124,11 +124,11 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 			_portletContainer.render(request, response, portlet);
 		}
-		catch (PrincipalException e) {
+		catch (PrincipalException pe) {
 			processRenderException(request, response, portlet);
 		}
-		catch (PortletContainerException e) {
-			throw e;
+		catch (PortletContainerException pce) {
+			throw pce;
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
@@ -169,11 +169,11 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 		if (!isValidPortletId(portlet.getPortletId())) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Invalid portlet id: " + portlet.getPortletId());
+				_log.warn("Invalid portlet id " + portlet.getPortletId());
 			}
 
 			throw new PrincipalException(
-				"Invalid portlet id: " + portlet.getPortletId());
+				"Invalid portlet id " + portlet.getPortletId());
 		}
 
 		if (portlet.isUndeployedPortlet()) {
@@ -362,17 +362,17 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 				requestDispatcher.include(request, response);
 			}
 		}
-		catch (Exception ex) {
-			throw new PortletContainerException(ex);
+		catch (Exception e) {
+			throw new PortletContainerException(e);
 		}
 	}
 
 	protected void processServeResourceException(
 		HttpServletRequest request, HttpServletResponse response,
-		Portlet portlet, PrincipalException e) {
+		Portlet portlet, PrincipalException pe) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(e);
+			_log.debug(pe);
 		}
 
 		String url = getOriginalURL(request);

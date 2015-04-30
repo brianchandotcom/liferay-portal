@@ -78,7 +78,7 @@ public class DefaultLayoutTypeAccessPolicyImpl
 		}
 
 		throw new PrincipalException(
-			"User does not have permission to access portlet: " +
+			"User does not have permission to access portlet " +
 				portlet.getPortletId());
 	}
 
@@ -199,7 +199,7 @@ public class DefaultLayoutTypeAccessPolicyImpl
 		}
 
 		throw new PrincipalException(
-			"User does not have permission access control panel portlet: " +
+			"User does not have permission to access control panel portlet " +
 				portlet.getPortletId());
 	}
 

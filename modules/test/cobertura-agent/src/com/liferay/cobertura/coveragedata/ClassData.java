@@ -15,9 +15,7 @@
 package com.liferay.cobertura.coveragedata;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -28,8 +26,6 @@ public class ClassData
 	extends CoverageDataContainer<Integer, LineData, ClassData> {
 
 	private static final long serialVersionUID = 5;
-
-	private Map<Integer,LineData> branches = new HashMap<>();
 
 	private String name = null;
 
@@ -85,7 +81,7 @@ public class ClassData
 	public int getNumberOfValidBranches()
 	{
 		int number = 0;
-			for (Iterator<LineData> i = branches.values().iterator();
+			for (Iterator<LineData> i = children.values().iterator();
 				i.hasNext();
 				number += (i.next()).getNumberOfValidBranches())
 				;
@@ -96,7 +92,7 @@ public class ClassData
 	public int getNumberOfCoveredBranches()
 	{
 		int number = 0;
-			for (Iterator<LineData> i = branches.values().iterator();
+			for (Iterator<LineData> i = children.values().iterator();
 				i.hasNext();
 				number += (i.next()).getNumberOfCoveredBranches())
 				;
@@ -123,8 +119,6 @@ public class ClassData
 		}
 
 		lineData.addJump(new JumpData(branchNumber));
-
-		branches.put(lineNumber, lineData);
 	}
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys) {
@@ -137,8 +131,6 @@ public class ClassData
 		}
 
 		lineData.addSwitch(new SwitchData(switchNumber, keys.length));
-
-		branches.put(lineNumber, lineData);
 	}
 
 	public void addLineSwitch(
@@ -153,8 +145,6 @@ public class ClassData
 		}
 
 		lineData.addSwitch(new SwitchData(switchNumber, max - min + 1));
-
-		branches.put(lineNumber, lineData);
 	}
 
 	@Override
@@ -163,15 +153,6 @@ public class ClassData
 			return;
 
 			super.merge(classData);
-
-			for (Iterator<Integer> iter = classData.branches.keySet().iterator(); iter.hasNext();)
-			{
-				Integer key = iter.next();
-				if (!this.branches.containsKey(key))
-				{
-					this.branches.put(key, classData.branches.get(key));
-				}
-			}
 	}
 
 	public void touch(int lineNumber,int hits)

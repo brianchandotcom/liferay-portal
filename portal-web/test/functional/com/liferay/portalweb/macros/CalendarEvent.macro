@@ -116,7 +116,9 @@
 				<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
 				<var locator="PGCalendarAddevent#START_DATE_TIME" name="startDateTime" />
 
-				<execute macro="CalendarEvent#selectCalendar" />
+				<execute macro="CalendarEvent#selectCalendar">
+					<var name="calendarName" value="${calendarName}" />
+				</execute>
 
 				<if>
 					<equals arg1="${optionSet}" arg2="true" />
@@ -148,7 +150,9 @@
 					<var locator="PGCalendarAddevent#END_DATE" name="endDate" />
 					<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
 
-					<execute macro="CalendarEvent#selectCalendar" />
+					<execute macro="CalendarEvent#selectCalendar">
+						<var name="calendarName" value="${calendarName}" />
+					</execute>
 
 					<if>
 						<equals arg1="${optionSet}" arg2="true" />
@@ -189,7 +193,9 @@
 						<var name="frequency" value="${frequency}" />
 					</execute>
 
-					<execute macro="CalendarEvent#selectCalendar" />
+					<execute macro="CalendarEvent#selectCalendar">
+						<var name="calendarName" value="${calendarName}" />
+					</execute>
 
 					<if>
 						<equals arg1="${optionSet}" arg2="true" />
@@ -305,7 +311,9 @@
 
 				<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
 
-				<execute macro="CalendarEvent#selectCalendar" />
+				<execute macro="CalendarEvent#selectCalendar">
+					<var name="calendarName" value="${calendarName}" />
+				</execute>
 
 				<if>
 					<equals arg1="${optionSet}" arg2="true" />
@@ -345,7 +353,9 @@
 					<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="Daily, 1 Times" />
 
-					<execute macro="CalendarEvent#selectCalendar" />
+					<execute macro="CalendarEvent#selectCalendar">
+						<var name="calendarName" value="${calendarName}" />
+					</execute>
 
 					<execute function="Click" locator1="PGCalendarAddevent#SAVE_BUTTON" />
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#SUCCESS_MESSAGE" value1="Your request completed successfully." />

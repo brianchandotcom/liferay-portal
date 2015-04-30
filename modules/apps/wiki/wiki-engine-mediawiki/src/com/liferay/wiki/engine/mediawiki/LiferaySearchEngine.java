@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki.web;
+package com.liferay.wiki.engine.mediawiki;
 
 import java.util.List;
 

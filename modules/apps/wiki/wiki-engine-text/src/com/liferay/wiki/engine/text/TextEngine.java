@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.text.web;
+package com.liferay.wiki.engine.text;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.engine.BaseWikiEngine;

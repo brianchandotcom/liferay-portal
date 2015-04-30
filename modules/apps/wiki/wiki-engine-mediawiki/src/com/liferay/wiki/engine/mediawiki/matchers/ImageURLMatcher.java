@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki.web.matchers;
+package com.liferay.wiki.engine.mediawiki.matchers;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.CallbackMatcher;
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.wiki.model.WikiPage;
 
 import java.util.regex.MatchResult;
 
 /**
- * @author Kenneth Chang
+ * @author Jonathan Potter
+ * @author Brian Wing Shun Chan
  */
-public class DirectTagMatcher extends CallbackMatcher {
+public class ImageURLMatcher extends CallbackMatcher {
 
-	public DirectTagMatcher(WikiPage page) {
-		_page = page;
+	public ImageURLMatcher(String attachmentURLPrefix) {
+		_attachmentURLPrefix = attachmentURLPrefix;
 
 		setRegex(_REGEX);
 	}
@@ -38,43 +38,31 @@ public class DirectTagMatcher extends CallbackMatcher {
 		return replaceMatches(charSequence, _callBack);
 	}
 
-	private static final String _REGEX = "\\[\\[([^\\]]+)\\]\\]";
+	private static final String _REGEX =
+		"<a href=\"[^\"]*?Special:Upload[^\"]*?topic=Image:([^\"]*?)\".*?</a>";
+
+	private final String _attachmentURLPrefix;
 
 	private final Callback _callBack = new Callback() {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {
-			String fileName = matchResult.group(1);
+			String title = StringUtil.replace(
+				matchResult.group(1), "%5F", StringPool.UNDERLINE);
 
-			if (!fileName.contains(StringPool.UNDERLINE)) {
-				return null;
-			}
+			String url = _attachmentURLPrefix + HttpUtil.encodeURL(title);
 
-			if (fileName.indexOf(CharPool.PIPE) >= 0) {
-				fileName = StringUtil.extractFirst(fileName, CharPool.PIPE);
-			}
+			StringBundler sb = new StringBundler(5);
 
-			try {
-				for (FileEntry fileEntry : _page.getAttachmentsFileEntries()) {
-					if (!fileName.equals(fileEntry.getTitle())) {
-						continue;
-					}
+			sb.append("<img alt=\"");
+			sb.append(title);
+			sb.append("\" class=\"wikiimg\" src=\"");
+			sb.append(url);
+			sb.append("\" />");
 
-					fileName = StringUtil.replace(
-						fileName, StringPool.UNDERLINE, "%5F");
-
-					return StringUtil.replace(
-						matchResult.group(0), matchResult.group(1), fileName);
-				}
-			}
-			catch (Exception e) {
-			}
-
-			return null;
+			return sb.toString();
 		}
 
 	};
-
-	private final WikiPage _page;
 
 }

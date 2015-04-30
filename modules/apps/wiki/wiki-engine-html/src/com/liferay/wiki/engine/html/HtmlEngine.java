@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.html.web;
+package com.liferay.wiki.engine.html;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

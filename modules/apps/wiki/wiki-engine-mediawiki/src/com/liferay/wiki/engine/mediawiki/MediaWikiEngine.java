@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki.web;
+package com.liferay.wiki.engine.mediawiki;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
-import com.liferay.wiki.engine.mediawiki.web.matchers.DirectTagMatcher;
-import com.liferay.wiki.engine.mediawiki.web.matchers.DirectURLMatcher;
-import com.liferay.wiki.engine.mediawiki.web.matchers.EditURLMatcher;
-import com.liferay.wiki.engine.mediawiki.web.matchers.ImageTagMatcher;
-import com.liferay.wiki.engine.mediawiki.web.matchers.ImageURLMatcher;
-import com.liferay.wiki.engine.mediawiki.web.matchers.ViewURLMatcher;
+import com.liferay.wiki.engine.mediawiki.matchers.DirectTagMatcher;
+import com.liferay.wiki.engine.mediawiki.matchers.DirectURLMatcher;
+import com.liferay.wiki.engine.mediawiki.matchers.EditURLMatcher;
+import com.liferay.wiki.engine.mediawiki.matchers.ImageTagMatcher;
+import com.liferay.wiki.engine.mediawiki.matchers.ImageURLMatcher;
+import com.liferay.wiki.engine.mediawiki.matchers.ViewURLMatcher;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
@@ -42,7 +42,6 @@ import org.jamwiki.parser.ParserInput;
 import org.jamwiki.parser.ParserOutput;
 import org.jamwiki.parser.ParserUtil;
 import org.jamwiki.parser.TableOfContents;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

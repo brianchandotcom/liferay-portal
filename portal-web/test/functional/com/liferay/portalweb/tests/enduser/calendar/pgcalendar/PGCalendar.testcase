@@ -2500,6 +2500,21 @@
 		</execute>
 	</command>
 
+	<command name="ImportMicrosoftOutlookCalendarICS" priority="5">
+		<description message="This is a use case for LPS-53072." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#gotoCurrentSiteCalendarsManage" />
+
+		<execute macro="Calendar#importCalendarFile">
+			<var name="calendarFile" value="calendar_microsoft_outlook_calendar.ics" />
+			<var name="calendarName" value="Liferay" />
+		</execute>
+	</command>
+
 	<command name="InviteAndViewAdditionalUsers" priority="5">
 		<description message="This is a use case for LPS-46700." />
 
@@ -3416,7 +3431,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#gotoConfiguration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Calendar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute macro="CalendarConfiguration#selectWeekStartsOn">
 			<var name="weekStartDay" value="Monday" />
@@ -3460,7 +3478,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Calendar#gotoConfiguration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Calendar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute macro="CalendarConfiguration#selectWeekStartsOn">
 			<var name="weekStartDay" value="Saturday" />

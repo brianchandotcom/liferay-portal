@@ -5,11 +5,16 @@
 	</command>
 
 	<command name="selectWeekStartsOn">
+		<execute function="SelectFrame" locator1="CalendarConfiguration#CALENDAR_CONFIGURATION_IFRAME" />
+
 		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_WEEK_STARTS_ON_SELECT" value1="${weekStartDay}" />
 	</command>
 
 	<command name="tearDown">
-		<execute macro="Calendar#gotoConfiguration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Calendar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute macro="CalendarConfiguration#selectWeekStartsOn">
 			<var name="weekStartDay" value="Sunday" />

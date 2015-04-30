@@ -527,11 +527,9 @@
 		<execute function="Pause" locator1="5000" />
 	</command>
 
-	<command name="gotoConfiguration">
-		<execute function="Click" locator1="PGCalendar#COG_ICON" />
-		<execute function="AssertClick" locator1="PGCalendar#COG_MENULIST_CONFIGURATION" value1="Configuration" />
-
-		<execute function="SelectFrame" locator1="CalendarConfiguration#CALENDAR_CONFIGURATION_IFRAME" />
+	<command name="gotoCurrentSiteCalendarsManage">
+		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
+		<execute function="AssertClick" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
 	</command>
 
 	<command name="gotoMenulistOptionCmd">
@@ -608,6 +606,21 @@
 		</execute>
 	</command>
 
+	<command name="importCalendarFile">
+		<var name="key_calendarName" value="${calendarName}" />
+
+		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_NAME" value1="${calendarName}" />
+		<execute function="Click" locator1="CalendarManageCalendars#CALENDAR_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="CalendarManageCalendars#ACTIONS_MENULIST_IMPORT" value1="Import" />
+
+		<execute function="UploadCommonFile" locator1="CalendarImport#FILE_FIELD" value1="${calendarFile}" />
+
+		<execute function="Click" locator1="CalendarImport#IMPORT_BUTTON" />
+
+		<execute function="AssertTextEquals" locator1="CalendarImport#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="removeViewPermissionsPG">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
@@ -666,9 +679,9 @@
 	</command>
 
 	<command name="selectPermissionsIframeCmd">
-		<execute function="AssertTextEquals" locator1="PGCalendarPermissions#PERMISSIONS_TITLE" value1="Permissions" />
+		<execute function="AssertTextEquals" locator1="CalendarPermissions#PERMISSIONS_TITLE" value1="Permissions" />
 
-		<execute function="SelectFrame" locator1="PGCalendarPermissions#CALENDAR_PERMISSIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="CalendarPermissions#CALENDAR_PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="tearDownColorPG">
@@ -927,7 +940,7 @@
 	</command>
 
 	<command name="viewPermissionsIframeCmd">
-		<execute function="AssertTextEquals" locator1="PGCalendarPermissions#HEADER_TITLE" value1="${calendarName}" />
+		<execute function="AssertTextEquals" locator1="CalendarPermissions#HEADER_TITLE" value1="${calendarName}" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>

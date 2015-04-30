@@ -198,6 +198,7 @@
 			file="${alloy.dir}/aui_deprecated.css"
 			tofile="docroot/html/css/portal/aui_deprecated.css"
 			overwrite="true"
+			preservelastmodified="true"
 		/>
 	</target>
 

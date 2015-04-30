@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Wiki Engine MediaWiki Web
-Bundle-SymbolicName: com.liferay.wiki.engine.mediawiki.web
+Bundle-Name: Liferay Wiki Engine MediaWiki
+Bundle-SymbolicName: com.liferay.wiki.engine.mediawiki
 Bundle-Version: 1.0.0
 Export-Package:
 Import-Package:\

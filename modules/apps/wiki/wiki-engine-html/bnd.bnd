@@ -1,9 +1,9 @@
-Bundle-Name: Liferay Wiki Engine HTML Web
-Bundle-SymbolicName: com.liferay.wiki.engine.html.web
+Bundle-Name: Liferay Wiki Engine HTML
+Bundle-SymbolicName: com.liferay.wiki.engine.html
 Bundle-Version: 1.0.0
 Import-Package: *
 Include-Resource:\
 	classes,\
 	../wiki-engine-input-editor-common/classes,\
 	@../../../../lib/portal/jericho-html.jar
-Web-ContextPath: /wiki-engine-html-web
+Web-ContextPath: /wiki-engine-html

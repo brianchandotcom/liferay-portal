@@ -1,9 +1,9 @@
-Bundle-Name: Liferay Wiki Engine Text Web
-Bundle-SymbolicName: com.liferay.wiki.engine.text.web
+Bundle-Name: Liferay Wiki Engine Text
+Bundle-SymbolicName: com.liferay.wiki.engine.text
 Bundle-Version: 1.0.0
 Export-Package:
 Import-Package: *
 Include-Resource:\
 	classes,\
 	../wiki-engine-input-editor-common/classes
-Web-ContextPath: /wiki-engine-text-web
+Web-ContextPath: /wiki-engine-text

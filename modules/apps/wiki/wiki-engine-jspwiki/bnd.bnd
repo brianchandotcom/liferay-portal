@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Wiki Engine JSPWiki Web
-Bundle-SymbolicName: com.liferay.wiki.engine.jspwiki.web
+Bundle-Name: Liferay Wiki Engine JSPWiki
+Bundle-SymbolicName: com.liferay.wiki.engine.jspwiki
 Bundle-Version: 1.0.0
 Export-Package:
 Import-Package:\
@@ -23,4 +23,4 @@ Include-Resource:\
 	@../../../../lib/portal/jspwiki.jar,\
 	@../../../../lib/portal/oro.jar,\
 	@../../../../lib/portal/oscache.jar
-Web-ContextPath: /wiki-engine-jspwiki-web
+Web-ContextPath: /wiki-engine-jspwiki

@@ -15,10 +15,16 @@
 package com.liferay.roles.selector.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.UserGroupGroupRoleServiceUtil;
+import com.liferay.portal.service.UserGroupRoleServiceUtil;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-
-import javax.portlet.Portlet;
 
 /**
  * @author Eudaldo Alonso
@@ -42,4 +48,40 @@ import javax.portlet.Portlet;
 	service = Portlet.class
 )
 public class RolesSelectorPortlet extends MVCPortlet {
+
+	public void editUserGroupGroupRoleUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+
+		long[] addUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
+		long[] removeUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
+
+		UserGroupGroupRoleServiceUtil.addUserGroupGroupRoles(
+			addUserGroupIds, groupId, roleId);
+		UserGroupGroupRoleServiceUtil.deleteUserGroupGroupRoles(
+			removeUserGroupIds, groupId, roleId);
+	}
+
+	public void editUserGroupRoleUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		UserGroupRoleServiceUtil.addUserGroupRoles(addUserIds, groupId, roleId);
+		UserGroupRoleServiceUtil.deleteUserGroupRoles(
+			removeUserIds, groupId, roleId);
+	}
+
 }

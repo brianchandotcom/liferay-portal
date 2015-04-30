@@ -168,24 +168,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 	}
 
-	public void editUserGroupGroupRoleUsers(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		long roleId = ParamUtil.getLong(actionRequest, "roleId");
-
-		long[] addUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
-
-		UserGroupGroupRoleServiceUtil.addUserGroupGroupRoles(
-			addUserGroupIds, groupId, roleId);
-		UserGroupGroupRoleServiceUtil.deleteUserGroupGroupRoles(
-			removeUserGroupIds, groupId, roleId);
-	}
-
 	public void editUserGroupRole(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -214,23 +196,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		if (Validator.isNotNull(redirect)) {
 			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
-	}
-
-	public void editUserGroupRoleUsers(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		long roleId = ParamUtil.getLong(actionRequest, "roleId");
-
-		long[] addUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
-		long[] removeUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
-
-		UserGroupRoleServiceUtil.addUserGroupRoles(addUserIds, groupId, roleId);
-		UserGroupRoleServiceUtil.deleteUserGroupRoles(
-			removeUserIds, groupId, roleId);
 	}
 
 	public void replyMembershipRequest(

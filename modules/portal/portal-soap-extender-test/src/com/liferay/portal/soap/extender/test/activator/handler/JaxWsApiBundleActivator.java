@@ -12,11 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.test.activator;
+package com.liferay.portal.soap.extender.test.activator.handler;
 
+import com.liferay.portal.soap.extender.test.activator.configuration.ConfigurationAdminBundleActivator;
+import com.liferay.portal.soap.extender.test.handler.SampleHandler;
 import com.liferay.portal.soap.extender.test.service.GreeterImpl;
 
+import java.util.List;
+
+import javax.xml.ws.Binding;
 import javax.xml.ws.Endpoint;
+import javax.xml.ws.handler.Handler;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -24,18 +30,42 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Carlos Sierra Andrés
  */
-public class JaxwsApiBundleActivator implements BundleActivator {
+public class JaxWsApiBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
+		_configurationAdminBundleActivator =
+			new ConfigurationAdminBundleActivator();
+
+		_configurationAdminBundleActivator.start(bundleContext);
+
 		_endpoint = Endpoint.publish("/greeterApi", new GreeterImpl());
+
+		Binding binding = _endpoint.getBinding();
+
+		@SuppressWarnings("rawtypes")
+		List<Handler> handlers = binding.getHandlerChain();
+
+		Handler<?> handler = new SampleHandler();
+
+		handlers.add(handler);
+
+		binding.setHandlerChain(handlers);
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
+	public void stop(BundleContext bundleContext) {
+		try {
+			_configurationAdminBundleActivator.stop(bundleContext);
+		}
+		catch (Exception e) {
+		}
+
 		_endpoint.stop();
 	}
 
+	private ConfigurationAdminBundleActivator
+		_configurationAdminBundleActivator;
 	private Endpoint _endpoint;
 
 }

@@ -34,14 +34,14 @@ import org.junit.runner.RunWith;
 /**
  * @author Carlos Sierra Andrés
  */
-@BndFile("bnd-component-handler.bnd")
+@BndFile("bnd-component.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class JaxwsComponentHandlerRegistrationTest {
+public class JaxWsComponentRegistrationTest {
 
 	@Test
-	public void testHandlerIsRegistered() throws Exception {
-		URL url = new URL(_url, "/o/soap/greeter?wsdl");
+	public void testIsRegistered() throws Exception {
+		URL url = new URL(_url, "/o/soap-test/greeter?wsdl");
 
 		QName qName = new QName(
 			"http://service.test.extender.soap.portal.liferay.com/",
@@ -51,9 +51,7 @@ public class JaxwsComponentHandlerRegistrationTest {
 
 		Greeter greeter = service.getPort(Greeter.class);
 
-		String greeting = greeter.greet();
-
-		Assert.assertTrue(greeting.endsWith("was handled."));
+		Assert.assertEquals("Greetings!", greeter.greet());
 	}
 
 	@ArquillianResource

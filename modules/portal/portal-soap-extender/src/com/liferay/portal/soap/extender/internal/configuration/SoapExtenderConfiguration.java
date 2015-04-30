@@ -12,20 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.configuration;
+package com.liferay.portal.soap.extender.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Meta.OCD(id = "com.liferay.portal.soap.extender.SoapExtenderConfiguration")
+@Meta.OCD(
+	factory = true,
+	id = "com.liferay.portal.soap.extender.internal.configuration.SoapExtenderConfiguration"
+)
 public interface SoapExtenderConfiguration {
 
-	@Meta.AD(deflt = "/soap", required = false)
-	public String contextPath();
+	@Meta.AD(required = false)
+	public String[] contextPaths();
 
-	@Meta.AD(name = "soap.extensions", required = false)
-	public String[] extensions();
+	@Meta.AD(name = "jax.ws.handler.filters", required = false)
+	public String[] jaxWsHandlerFilterStrings();
+
+	@Meta.AD(name = "jax.ws.service.filters", required = false)
+	public String[] jaxWsServiceFilterStrings();
+
+	@Meta.AD(name = "soap.descriptor.builder", required = false)
+	public String soapDescriptorBuilderFilter();
 
 }

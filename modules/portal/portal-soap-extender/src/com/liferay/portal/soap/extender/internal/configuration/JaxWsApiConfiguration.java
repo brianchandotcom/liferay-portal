@@ -12,16 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.test.service;
+package com.liferay.portal.soap.extender.internal.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class GreeterImpl implements Greeter {
+@Meta.OCD(
+	id = "com.liferay.portal.soap.extender.internal.configuration.JaxWsApiConfiguration"
+)
+public interface JaxWsApiConfiguration {
 
-	@Override
-	public String greet() {
-		return "Greetings!";
-	}
+	@Meta.AD(required = true)
+	public String contextPath();
+
+	@Meta.AD(deflt = "10000", required = true)
+	public long timeout();
 
 }

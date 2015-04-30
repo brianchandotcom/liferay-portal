@@ -12,32 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.configuration;
+package com.liferay.portal.soap.extender;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.namespace.QName;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class ExtensionManager {
+public interface SoapDescriptorBuilder {
 
-	public Map<Class<?>, Object> getExtensions() {
-		return _extensions;
+	public SoapDescriptor buildSoapDescriptor(
+		Object service, Map<String, Object> properties);
+
+	public interface SoapDescriptor {
+
+		public QName getEndpointName();
+
+		public String getPublicationAddress();
+
+		public Class<?> getServiceClass();
+
+		public String getWsdlLocation();
+
 	}
-
-	protected void addExtension(
-		Map<String, Object> properties, Object extension) {
-
-		Class<?> extensionClass = (Class<?>)properties.get(
-			"soap.extension.class");
-
-		_extensions.put(extensionClass, extension);
-	}
-
-	protected void removeExtension(Object extension) {
-	}
-
-	private final Map<Class<?>, Object> _extensions = new HashMap<>();
 
 }

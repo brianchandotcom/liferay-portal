@@ -14,14 +14,115 @@
 
 package com.liferay.portlet.sitesadmin;
 
+import com.liferay.portal.DuplicateGroupException;
+import com.liferay.portal.GroupFriendlyURLException;
+import com.liferay.portal.GroupInheritContentException;
+import com.liferay.portal.GroupKeyException;
+import com.liferay.portal.GroupParentException;
+import com.liferay.portal.LayoutSetVirtualHostException;
+import com.liferay.portal.LocaleException;
+import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.PendingBackgroundTaskException;
+import com.liferay.portal.RemoteExportException;
+import com.liferay.portal.RemoteOptionsException;
+import com.liferay.portal.RequiredGroupException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.liveusers.LiveUsers;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.MembershipRequest;
+import com.liferay.portal.model.MembershipRequestConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.Team;
+import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.RemoteAuthException;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetServiceUtil;
+import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
+import com.liferay.portal.service.MembershipRequestServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
+import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.asset.AssetCategoryException;
+import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.sites.util.Sites;
+import com.liferay.portlet.sites.util.SitesUtil;
+
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Eudaldo Alonso
  */
 public class SitesAdminPortlet extends MVCPortlet {
 
-	public void deleteGroups(ActionRequest actionRequest) throws Exception {
+	public void activate(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		updateActive(actionRequest, true);
+	}
+
+	public void deactivate(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		updateActive(actionRequest, false);
+	}
+
+	public void deleteGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -44,147 +145,208 @@ public class SitesAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void editGroup(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		Callable<Group> groupCallable = new GroupCallable(actionRequest);
 
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				Callable<Group> groupCallable = new GroupCallable(
-					actionRequest);
+			Group group = TransactionHandlerUtil.invoke(
+				_transactionAttribute, groupCallable);
 
-				Group group = TransactionHandlerUtil.invoke(
-					_transactionAttribute, groupCallable);
+			String redirect = StringPool.BLANK;
 
-				if (cmd.equals(Constants.ADD)) {
-					themeDisplay.setScopeGroupId(group.getGroupId());
+			long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
-					PortletURL siteAdministrationURL =
-						PortalUtil.getSiteAdministrationURL(
-							actionResponse, themeDisplay,
-							PortletKeys.SITE_SETTINGS);
+			if (liveGroupId <= 0) {
+				themeDisplay.setScopeGroupId(group.getGroupId());
 
-					String controlPanelURL = HttpUtil.setParameter(
-						themeDisplay.getURLControlPanel(), "p_p_id",
-						PortletKeys.SITES_ADMIN);
+				PortletURL siteAdministrationURL =
+					PortalUtil.getSiteAdministrationURL(
+						actionResponse, themeDisplay,
+						PortletKeys.SITE_SETTINGS);
 
-					controlPanelURL = HttpUtil.setParameter(
-						controlPanelURL, "controlPanelCategory",
-						themeDisplay.getControlPanelCategory());
+				String controlPanelURL = HttpUtil.setParameter(
+					themeDisplay.getURLControlPanel(), "p_p_id",
+					PortletKeys.SITES_ADMIN);
 
-					siteAdministrationURL.setParameter(
-						"redirect", controlPanelURL);
+				controlPanelURL = HttpUtil.setParameter(
+					controlPanelURL, "controlPanelCategory",
+					themeDisplay.getControlPanelCategory());
 
-					redirect = siteAdministrationURL.toString();
+				siteAdministrationURL.setParameter("redirect", controlPanelURL);
 
-					hideDefaultSuccessMessage(actionRequest);
+				redirect = siteAdministrationURL.toString();
 
-					MultiSessionMessages.add(
-						actionRequest,
-						PortletKeys.SITE_SETTINGS + "requestProcessed");
-				}
-				else {
-					long newRefererPlid = getRefererPlid(
-						group, themeDisplay.getScopeGroupId(), redirect);
+				hideDefaultSuccessMessage(actionRequest);
 
-					redirect = HttpUtil.setParameter(
-						redirect, "doAsGroupId", group.getGroupId());
-					redirect = HttpUtil.setParameter(
-						redirect, "refererPlid", newRefererPlid);
-				}
-			}
-			else if (cmd.equals(Constants.DEACTIVATE) ||
-					 cmd.equals(Constants.RESTORE)) {
-
-				updateActive(actionRequest, cmd);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteGroups(actionRequest);
-			}
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchGroupException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.sites_admin.error");
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException ||
-					 e instanceof AuthException ||
-					 e instanceof DuplicateGroupException ||
-					 e instanceof GroupFriendlyURLException ||
-					 e instanceof GroupInheritContentException ||
-					 e instanceof GroupKeyException ||
-					 e instanceof GroupParentException ||
-					 e instanceof LayoutSetVirtualHostException ||
-					 e instanceof LocaleException ||
-					 e instanceof PendingBackgroundTaskException ||
-					 e instanceof RemoteAuthException ||
-					 e instanceof RemoteExportException ||
-					 e instanceof RemoteOptionsException ||
-					 e instanceof RequiredGroupException ||
-					 e instanceof SystemException) {
-
-				if (e instanceof RemoteAuthException) {
-					SessionErrors.add(actionRequest, AuthException.class, e);
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass(), e);
-				}
+				MultiSessionMessages.add(
+					actionRequest,
+					PortletKeys.SITE_SETTINGS + "requestProcessed");
 			}
 			else {
-				throw e;
+				long newRefererPlid = getRefererPlid(
+					group, themeDisplay.getScopeGroupId(), redirect);
+
+				redirect = HttpUtil.setParameter(
+					redirect, "doAsGroupId", group.getGroupId());
+				redirect = HttpUtil.setParameter(
+					redirect, "refererPlid", newRefererPlid);
+			}
+
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+		catch (Throwable throwable) {
+		}
+	}
+
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchGroupException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	protected Group getLiveGroup(PortletRequest portletRequest)
+		throws PortalException {
+
+		long liveGroupId = ParamUtil.getLong(portletRequest, "liveGroupId");
+
+		if (liveGroupId > 0) {
+			return GroupLocalServiceUtil.getGroup(liveGroupId);
+		}
+
+		return null;
+	}
+
+	protected long getRefererGroupId(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		long refererGroupId = 0;
+
+		try {
+			Layout refererLayout = LayoutLocalServiceUtil.getLayout(
+				themeDisplay.getRefererPlid());
+
+			refererGroupId = refererLayout.getGroupId();
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		return refererGroupId;
+	}
+
+	protected long getRefererPlid(
+		Group liveGroup, long scopeGroupId, String redirect) {
+
+		long refererPlid = GetterUtil.getLong(
+			HttpUtil.getParameter(redirect, "refererPlid", false));
+
+		if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
+			(scopeGroupId != liveGroup.getGroupId())) {
+
+			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+				liveGroup.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (firstLayout == null) {
+				firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+					liveGroup.getGroupId(), true,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			}
+
+			if (firstLayout != null) {
+				return firstLayout.getPlid();
 			}
 		}
-		catch (Throwable t) {
-			_log.error(t);
 
-			setForward(actionRequest, "portlet.sites_admin.error");
+		return LayoutConstants.DEFAULT_PLID;
+	}
+
+	protected List<Role> getRoles(PortletRequest portletRequest)
+		throws Exception {
+
+		List<Role> roles = new ArrayList<>();
+
+		long[] siteRolesRoleIds = StringUtil.split(
+			ParamUtil.getString(portletRequest, "siteRolesRoleIds"), 0L);
+
+		for (long siteRolesRoleId : siteRolesRoleIds) {
+			if (siteRolesRoleId == 0) {
+				continue;
+			}
+
+			Role role = RoleLocalServiceUtil.getRole(siteRolesRoleId);
+
+			roles.add(role);
 		}
+
+		return roles;
+	}
+
+	protected List<Team> getTeams(PortletRequest portletRequest)
+		throws Exception {
+
+		List<Team> teams = new ArrayList<>();
+
+		long[] teamsTeamIds = ArrayUtil.unique(
+				StringUtil.split(
+						ParamUtil.getString(portletRequest, "teamsTeamIds"), 0L)
+		);
+
+		for (long teamsTeamId : teamsTeamIds) {
+			if (teamsTeamId == 0) {
+				continue;
+			}
+
+			Team team = TeamLocalServiceUtil.getTeam(teamsTeamId);
+
+			teams.add(team);
+		}
+
+		return teams;
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof AssetCategoryException ||
+			cause instanceof AssetTagException ||
+			cause instanceof AuthException ||
+			cause instanceof DuplicateGroupException ||
+			cause instanceof GroupFriendlyURLException ||
+			cause instanceof GroupInheritContentException ||
+			cause instanceof GroupKeyException ||
+			cause instanceof GroupParentException ||
+			cause instanceof LayoutSetVirtualHostException ||
+			cause instanceof LocaleException ||
+			cause instanceof PendingBackgroundTaskException ||
+			cause instanceof RemoteAuthException ||
+			cause instanceof RemoteExportException ||
+			cause instanceof RemoteOptionsException ||
+			cause instanceof RequiredGroupException ||
+			cause instanceof SystemException ||
+			super.isSessionErrorException(cause)) {
 
-		try {
-			ActionUtil.getGroup(renderRequest);
+			return true;
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchGroupException ||
-				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.sites_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.sites_admin.edit_site"));
+		return false;
 	}
 
-	public void updateActive(ActionRequest actionRequest, String cmd)
+	protected void updateActive(ActionRequest actionRequest, boolean active)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -201,12 +363,6 @@ public class SitesAdminPortlet extends MVCPortlet {
 
 		Group group = GroupServiceUtil.getGroup(groupId);
 
-		boolean active = false;
-
-		if (cmd.equals(Constants.RESTORE)) {
-			active = true;
-		}
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Group.class.getName(), actionRequest);
 
@@ -218,7 +374,7 @@ public class SitesAdminPortlet extends MVCPortlet {
 			serviceContext);
 	}
 
-	public Group updateGroup(ActionRequest actionRequest) throws Exception {
+	protected Group updateGroup(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -568,127 +724,7 @@ public class SitesAdminPortlet extends MVCPortlet {
 		return liveGroup;
 	}
 
-	protected String getGroupFriendlyURL(Group liveGroup) {
-		if (liveGroup != null) {
-			return liveGroup.getFriendlyURL();
-		}
-
-		return null;
-	}
-
-	protected Group getLiveGroup(PortletRequest portletRequest)
-		throws PortalException {
-
-		long liveGroupId = ParamUtil.getLong(portletRequest, "liveGroupId");
-
-		if (liveGroupId > 0) {
-			return GroupLocalServiceUtil.getGroup(liveGroupId);
-		}
-
-		return null;
-	}
-
-	protected long getRefererGroupId(ThemeDisplay themeDisplay)
-		throws Exception {
-
-		long refererGroupId = 0;
-
-		try {
-			Layout refererLayout = LayoutLocalServiceUtil.getLayout(
-				themeDisplay.getRefererPlid());
-
-			refererGroupId = refererLayout.getGroupId();
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
-
-		return refererGroupId;
-	}
-
-	protected long getRefererPlid(
-		Group liveGroup, long scopeGroupId, String redirect) {
-
-		long refererPlid = GetterUtil.getLong(
-			HttpUtil.getParameter(redirect, "refererPlid", false));
-
-		if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
-			(scopeGroupId != liveGroup.getGroupId())) {
-
-			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				liveGroup.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (firstLayout == null) {
-				firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-					liveGroup.getGroupId(), true,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-			}
-
-			if (firstLayout != null) {
-				return firstLayout.getPlid();
-			}
-		}
-
-		return LayoutConstants.DEFAULT_PLID;
-	}
-
-	protected List<Role> getRoles(PortletRequest portletRequest)
-		throws Exception {
-
-		List<Role> roles = new ArrayList<>();
-
-		long[] siteRolesRoleIds = StringUtil.split(
-			ParamUtil.getString(portletRequest, "siteRolesRoleIds"), 0L);
-
-		for (long siteRolesRoleId : siteRolesRoleIds) {
-			if (siteRolesRoleId == 0) {
-				continue;
-			}
-
-			Role role = RoleLocalServiceUtil.getRole(siteRolesRoleId);
-
-			roles.add(role);
-		}
-
-		return roles;
-	}
-
-	protected String getStagingGroupFriendlyURL(Group liveGroup) {
-		if ((liveGroup != null) && liveGroup.hasStagingGroup()) {
-			Group stagingGroup = liveGroup.getStagingGroup();
-
-			return stagingGroup.getFriendlyURL();
-		}
-
-		return null;
-	}
-
-	protected List<Team> getTeams(PortletRequest portletRequest)
-		throws Exception {
-
-		List<Team> teams = new ArrayList<>();
-
-		long[] teamsTeamIds = ArrayUtil.unique(
-			StringUtil.split(
-				ParamUtil.getString(portletRequest, "teamsTeamIds"), 0L));
-
-		for (long teamsTeamId : teamsTeamIds) {
-			if (teamsTeamId == 0) {
-				continue;
-			}
-
-			Team team = TeamLocalServiceUtil.getTeam(teamsTeamId);
-
-			teams.add(team);
-		}
-
-		return teams;
-	}
-
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SitesAdminPortlet.class);
 
 	private final TransactionAttribute _transactionAttribute =
 		TransactionAttributeBuilder.build(

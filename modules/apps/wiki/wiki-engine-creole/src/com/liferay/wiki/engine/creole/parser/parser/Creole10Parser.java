@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 Creole10.g 2014-11-25 11:19:16
+// $ANTLR 3.0.1 Creole10.g 2015-04-30 14:33:42
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -77,15 +77,11 @@ import java.util.Stack;
 */
 
 
-
-
-
-
-
 import org.antlr.runtime.*;
-
+import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 @SuppressWarnings("all")
 public class Creole10Parser extends Parser {
@@ -15726,8 +15722,8 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_9 = input.LA(2);
 
-                if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
-                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
+                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
+                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {
@@ -15746,8 +15742,8 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_10 = input.LA(2);
 
-                if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
-                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
+                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
+                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {
@@ -15885,7 +15881,7 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_14 = input.LA(2);
 
-                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) == EQUAL ))) ) {
+                if ( ((( input.LA(2) != STAR && input.LA(2) == EQUAL )|| input.LA(2) != STAR )) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {

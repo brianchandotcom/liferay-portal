@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 Creole10.g 2014-11-25 11:19:20
+// $ANTLR 3.0.1 Creole10.g 2015-04-30 14:33:43
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -18,6 +18,9 @@
 
 
 import org.antlr.runtime.*;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class Creole10Lexer extends Lexer {

@@ -18,7 +18,7 @@ options {
  * details.
  */
 
- package com.liferay.wiki.parser.creole.parser;
+ package com.liferay.wiki.engine.creole.parser.parser;
 }
 
 T41 : ':' ;

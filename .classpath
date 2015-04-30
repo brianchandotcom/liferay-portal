@@ -32,7 +32,7 @@
 	<classpathentry kind="lib" path="lib/development/catalina.jar"/>
 	<classpathentry kind="lib" path="lib/development/cobertura.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.bnd.jar"/>
-	<classpathentry kind="lib" path="lib/development/com.liferay.cobertura.agent.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.whip.jar"/>
 	<classpathentry kind="lib" path="lib/development/deployment.jar"/>
 	<classpathentry kind="lib" path="lib/development/derby.jar"/>
 	<classpathentry kind="lib" path="lib/development/derbytools.jar"/>

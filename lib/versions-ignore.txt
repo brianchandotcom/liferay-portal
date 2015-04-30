@@ -1,5 +1,5 @@
 lib/development/com.liferay.ant.bnd.jar
-lib/development/com.liferay.cobertura.agent.jar
+lib/development/com.liferay.whip.jar
 lib/development/liferay-doclet.jar
 lib/portal/com.liferay.rtl.css.jar
 lib/portal/com.liferay.ruby.gems.jar

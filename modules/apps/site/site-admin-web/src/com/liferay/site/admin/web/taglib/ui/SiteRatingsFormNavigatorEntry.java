@@ -16,7 +16,7 @@ package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
@@ -25,10 +25,15 @@ import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionValues;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=10"})
+@Component(
+	property = {"service.ranking:Integer=10"},
+	service = FormNavigatorEntry.class
+)
 public class SiteRatingsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override

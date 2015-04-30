@@ -17,14 +17,18 @@ package com.liferay.site.admin.web.taglib.ui;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=40"})
+@Component(
+	property = {"service.ranking:Integer=40"},
+	service = FormNavigatorCategory.class
+)
 public class SitesBasicInformationFormNavigatorCategory
 	implements FormNavigatorCategory {
 

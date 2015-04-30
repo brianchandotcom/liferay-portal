@@ -16,14 +16,19 @@ package com.liferay.site.admin.web.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=50"})
+@Component(
+	property = {"service.ranking:Integer=50"},
+	service = FormNavigatorEntry.class
+)
 public class SiteDetailsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override

@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.cobertura.coveragedata;
+package com.liferay.whip.coveragedata;
 
-import com.liferay.cobertura.util.HashUtil;
+import com.liferay.whip.util.HashUtil;
 
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import net.sourceforge.cobertura.coveragedata.ClassData;
 
 /**
  * @author Cristina González

@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.cobertura.agent;
+package com.liferay.whip.agent;
 
-import com.liferay.cobertura.coveragedata.ProjectData;
-import com.liferay.cobertura.coveragedata.ProjectDataUtil;
-import com.liferay.cobertura.instrument.CoberturaClassFileTransformer;
+import com.liferay.whip.coveragedata.ClassData;
+import com.liferay.whip.coveragedata.LineData;
+import com.liferay.whip.coveragedata.ProjectData;
+import com.liferay.whip.coveragedata.ProjectDataUtil;
+import com.liferay.whip.instrument.WhipClassFileTransformer;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +29,6 @@ import java.lang.instrument.UnmodifiableClassException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import net.sourceforge.cobertura.coveragedata.ClassData;
-import net.sourceforge.cobertura.coveragedata.CoverageData;
-import net.sourceforge.cobertura.coveragedata.LineData;
 
 /**
  * @author Shuyang Zhou
@@ -45,9 +42,9 @@ public class InstrumentationAgent {
 			return;
 		}
 
-		_instrumentation.removeTransformer(_coberturaClassFileTransformer);
+		_instrumentation.removeTransformer(_whipClassFileTransformer);
 
-		_coberturaClassFileTransformer = null;
+		_whipClassFileTransformer = null;
 
 		try {
 			ProjectData projectData = ProjectDataUtil.captureProjectData(false);
@@ -141,7 +138,7 @@ public class InstrumentationAgent {
 			excludes = _excludes;
 		}
 
-		String agentLine = System.getProperty("junit.cobertura.agent");
+		String agentLine = System.getProperty("junit.whip.agent");
 
 		int index = agentLine.indexOf('=');
 
@@ -170,15 +167,15 @@ public class InstrumentationAgent {
 				sb.setLength(sb.length() - 1);
 			}
 
-			System.setProperty("junit.cobertura.agent", sb.toString());
+			System.setProperty("junit.whip.agent", sb.toString());
 		}
 
-		if (_coberturaClassFileTransformer == null) {
-			_coberturaClassFileTransformer = new CoberturaClassFileTransformer(
+		if (_whipClassFileTransformer == null) {
+			_whipClassFileTransformer = new WhipClassFileTransformer(
 				includes, excludes);
 		}
 
-		_instrumentation.addTransformer(_coberturaClassFileTransformer, true);
+		_instrumentation.addTransformer(_whipClassFileTransformer, true);
 
 		Class<?>[] allLoadedClasses =_instrumentation.getAllLoadedClasses();
 
@@ -190,7 +187,7 @@ public class InstrumentationAgent {
 
 				className = className.replace('.', '/');
 
-				if (_coberturaClassFileTransformer.matches(className)) {
+				if (_whipClassFileTransformer.matches(className)) {
 					modifiableClasses.add(loadedClass);
 				}
 			}
@@ -218,10 +215,10 @@ public class InstrumentationAgent {
 		String[] excludes = arguments[1].split(",");
 
 		if (Boolean.getBoolean("junit.code.coverage")) {
-			final CoberturaClassFileTransformer coberturaClassFileTransformer =
-				new CoberturaClassFileTransformer(includes, excludes);
+			final WhipClassFileTransformer whipClassFileTransformer =
+				new WhipClassFileTransformer(includes, excludes);
 
-			instrumentation.addTransformer(coberturaClassFileTransformer);
+			instrumentation.addTransformer(whipClassFileTransformer);
 
 			Runtime runtime = Runtime.getRuntime();
 
@@ -316,29 +313,21 @@ public class InstrumentationAgent {
 			(classData.getLineCoverageRate() != 1.0)) {
 
 			System.out.printf(
-				"%n[Cobertura] %s is not fully covered.%n[Cobertura]Branch " +
+				"%n[Whip] %s is not fully covered.%n[Whip]Branch " +
 					"coverage rate : %.2f, line coverage rate : %.2f.%n" +
-						"[Cobertura]Please rerun test with -Djunit.code." +
+						"[Whip]Please rerun test with -Djunit.code." +
 							"coverage=true to see coverage report.%n",
 				classData.getName(), classData.getBranchCoverageRate(),
 				classData.getLineCoverageRate());
 
-			Set<CoverageData> coverageDatas = classData.getLines();
-
-			for (CoverageData coverageData : coverageDatas) {
-				if (!(coverageData instanceof LineData)) {
-					continue;
-				}
-
-				LineData lineData = (LineData)coverageData;
-
+			for (LineData lineData : classData.getLines()) {
 				if (lineData.isCovered()) {
 					continue;
 				}
 
 				System.out.printf(
-					"[Cobertura] %s line %d is not covered %n",
-					classData.getName(), lineData.getLineNumber());
+					"[Whip] %s line %d is not covered %n", classData.getName(),
+					lineData.getLineNumber());
 			}
 
 			assertionErrors.add(
@@ -348,17 +337,16 @@ public class InstrumentationAgent {
 			return;
 		}
 
-		System.out.printf(
-			"[Cobertura] %s is fully covered.%n", classData.getName());
+		System.out.printf("[Whip] %s is fully covered.%n", classData.getName());
 	}
 
-	private static CoberturaClassFileTransformer _coberturaClassFileTransformer;
 	private static boolean _dynamicallyInstrumented;
 	private static String[] _excludes;
 	private static String[] _includes;
 	private static Instrumentation _instrumentation;
 	private static final File _lockFile;
 	private static List<OriginalClassDefinition> _originalClassDefinitions;
+	private static WhipClassFileTransformer _whipClassFileTransformer;
 
 	static {
 		File dataFile = new File(

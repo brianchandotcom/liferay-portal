@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.whip.instrument;
+
+import com.liferay.whip.coveragedata.ClassData;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import net.sourceforge.cobertura.coveragedata.ClassData;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -80,7 +80,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 		_currentJump = 0;
 		_currentSwitch = 0;
 
-		_classData.addLine(_currentLine, _methodNode.name, _methodNode.desc);
+		_classData.addLine(_currentLine);
 
 		_lineLabels.put(start, line);
 	}

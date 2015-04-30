@@ -12,27 +12,23 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.whip.instrument;
 
 /**
  * @author Cristina González
  */
-public class JumpHolder {
+public class SwitchHolder extends JumpHolder {
 
-	public JumpHolder(int lineNumber, int jumpNumber) {
-		_lineNumber = lineNumber;
-		_jumpNumber = jumpNumber;
+	public SwitchHolder(int lineNumber, int switchNumber, int branch) {
+		super(lineNumber, switchNumber);
+
+		_branch = branch;
 	}
 
-	public int getJumpNumber() {
-		return _jumpNumber;
+	public int getBranch() {
+		return _branch;
 	}
 
-	public int getLineNumber() {
-		return _lineNumber;
-	}
-
-	private final int _jumpNumber;
-	private final int _lineNumber;
+	private final int _branch;
 
 }

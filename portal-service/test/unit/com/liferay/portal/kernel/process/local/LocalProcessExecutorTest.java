@@ -1375,11 +1375,11 @@ public class LocalProcessExecutorTest {
 			arguments.add("-Djunit.debug=true");
 		}
 
-		String agentLine = System.getProperty("junit.cobertura.agent");
+		String agentLine = System.getProperty("junit.whip.agent");
 
 		if (Validator.isNotNull(agentLine)) {
 			arguments.add(agentLine);
-			arguments.add("-Djunit.cobertura.agent=" + agentLine);
+			arguments.add("-Djunit.whip.agent=" + agentLine);
 		}
 
 		if (Boolean.getBoolean("junit.code.coverage")) {

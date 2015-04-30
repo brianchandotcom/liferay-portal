@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cobertura.coveragedata;
+package com.liferay.whip.coveragedata;
 
 import java.io.Serializable;
 
@@ -21,13 +21,12 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import net.sourceforge.cobertura.coveragedata.CoverageData;
-
 /**
  * @author Shuyang Zhou
  */
 public abstract class CoverageDataContainer
-	implements CoverageData, Serializable {
+		<K, V extends CoverageData<V>, T extends CoverageDataContainer<K, V, T>>
+	implements CoverageData<T>, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -39,8 +38,8 @@ public abstract class CoverageDataContainer
 			return false;
 		}
 
-		CoverageDataContainer coverageDataContainer =
-			(CoverageDataContainer)obj;
+		CoverageDataContainer<K, V, T> coverageDataContainer =
+			(CoverageDataContainer<K, V, T>)obj;
 
 		return children.equals(coverageDataContainer.children);
 	}
@@ -50,7 +49,7 @@ public abstract class CoverageDataContainer
 		int numberOfCoveredBranches = 0;
 		int numberOfValidBranches = 0;
 
-		for (CoverageData coverageData : children.values()) {
+		for (CoverageData<V> coverageData : children.values()) {
 			numberOfCoveredBranches +=
 				coverageData.getNumberOfCoveredBranches();
 			numberOfValidBranches += coverageData.getNumberOfValidBranches();
@@ -68,7 +67,7 @@ public abstract class CoverageDataContainer
 		int numberOfCoveredLines = 0;
 		int numberOfValidLines = 0;
 
-		for (CoverageData coverageData : children.values()) {
+		for (CoverageData<V> coverageData : children.values()) {
 			numberOfCoveredLines += coverageData.getNumberOfCoveredLines();
 			numberOfValidLines += coverageData.getNumberOfValidLines();
 		}
@@ -84,7 +83,7 @@ public abstract class CoverageDataContainer
 	public int getNumberOfCoveredBranches() {
 		int numberOfCoveredBranches = 0;
 
-		for (CoverageData coverageData : children.values()) {
+		for (CoverageData<V> coverageData : children.values()) {
 			numberOfCoveredBranches +=
 				coverageData.getNumberOfCoveredBranches();
 		}
@@ -96,7 +95,7 @@ public abstract class CoverageDataContainer
 	public int getNumberOfCoveredLines() {
 		int numberOfCoveredLines = 0;
 
-		for (CoverageData coverageData : children.values()) {
+		for (CoverageData<V> coverageData : children.values()) {
 			numberOfCoveredLines += coverageData.getNumberOfCoveredLines();
 		}
 
@@ -107,7 +106,7 @@ public abstract class CoverageDataContainer
 	public int getNumberOfValidBranches() {
 		int numberOfValidBranches = 0;
 
-		for (CoverageData coverageData : children.values()) {
+		for (CoverageData<V> coverageData : children.values()) {
 			numberOfValidBranches += coverageData.getNumberOfValidBranches();
 		}
 
@@ -118,7 +117,7 @@ public abstract class CoverageDataContainer
 	public int getNumberOfValidLines() {
 		int numberOfValidLines = 0;
 
-		for (CoverageData coverageData : children.values()) {
+		for (CoverageData<V> coverageData : children.values()) {
 			numberOfValidLines += coverageData.getNumberOfValidLines();
 		}
 
@@ -131,17 +130,13 @@ public abstract class CoverageDataContainer
 	}
 
 	@Override
-	public void merge(CoverageData otherCoverageData) {
-		CoverageDataContainer otherCoverageDataContainer =
-			(CoverageDataContainer)otherCoverageData;
+	public void merge(T otherCoverageDataContainer) {
+		Map<K, V> otherChildren = otherCoverageDataContainer.children;
 
-		Map<Object, CoverageData> otherChildren =
-			otherCoverageDataContainer.children;
+		for (Entry<K, V> entry : otherChildren.entrySet()) {
+			V otherChildCoverageData = entry.getValue();
 
-		for (Entry<Object, CoverageData> entry : otherChildren.entrySet()) {
-			CoverageData otherChildCoverageData = entry.getValue();
-
-			CoverageData myChildCoverageData = children.putIfAbsent(
+			V myChildCoverageData = children.putIfAbsent(
 				entry.getKey(), otherChildCoverageData);
 
 			if (myChildCoverageData != null) {
@@ -150,8 +145,7 @@ public abstract class CoverageDataContainer
 		}
 	}
 
-	protected final ConcurrentMap<Object, CoverageData> children =
-		new ConcurrentHashMap<>();
+	protected final ConcurrentMap<K, V> children = new ConcurrentHashMap<>();
 
 	private static final long serialVersionUID = 1;
 

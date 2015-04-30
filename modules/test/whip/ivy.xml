@@ -18,9 +18,5 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="asm-debug-all" org="org.ow2.asm" rev="5.0.1" />
-		<dependency name="cobertura" org="net.sourceforge.cobertura" rev="1.9.4.1">
-			<exclude name="asm" org="asm" />
-			<exclude name="asm-tree" org="asm" />
-		</dependency>
 	</dependencies>
 </ivy-module>

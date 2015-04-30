@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cobertura.instrument;
+package com.liferay.whip.instrument;
 
 import java.io.IOException;
 import java.io.InputStream;

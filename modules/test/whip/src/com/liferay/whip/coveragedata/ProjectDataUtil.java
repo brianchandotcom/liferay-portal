@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.cobertura.coveragedata;
+package com.liferay.whip.coveragedata;
 
-import com.liferay.cobertura.agent.InstrumentationAgent;
+import com.liferay.whip.agent.InstrumentationAgent;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -21,6 +21,29 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
  */
 public class SitesAdminPortlet extends MVCPortlet {
 
+	public void deleteGroups(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] deleteGroupIds = null;
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		if (groupId > 0) {
+			deleteGroupIds = new long[] {groupId};
+		}
+		else {
+			deleteGroupIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteGroupIds"), 0L);
+		}
+
+		for (long deleteGroupId : deleteGroupIds) {
+			GroupServiceUtil.deleteGroup(deleteGroupId);
+
+			LiveUsers.deleteGroup(themeDisplay.getCompanyId(), deleteGroupId);
+		}
+	}
+
 	@Override
 	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -161,147 +184,7 @@ public class SitesAdminPortlet extends MVCPortlet {
 			getForward(renderRequest, "portlet.sites_admin.edit_site"));
 	}
 
-	protected void deleteGroups(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long[] deleteGroupIds = null;
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
-		if (groupId > 0) {
-			deleteGroupIds = new long[] {groupId};
-		}
-		else {
-			deleteGroupIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteGroupIds"), 0L);
-		}
-
-		for (long deleteGroupId : deleteGroupIds) {
-			GroupServiceUtil.deleteGroup(deleteGroupId);
-
-			LiveUsers.deleteGroup(themeDisplay.getCompanyId(), deleteGroupId);
-		}
-	}
-
-	protected String getGroupFriendlyURL(Group liveGroup) {
-		if (liveGroup != null) {
-			return liveGroup.getFriendlyURL();
-		}
-
-		return null;
-	}
-
-	protected Group getLiveGroup(PortletRequest portletRequest)
-		throws PortalException {
-
-		long liveGroupId = ParamUtil.getLong(portletRequest, "liveGroupId");
-
-		if (liveGroupId > 0) {
-			return GroupLocalServiceUtil.getGroup(liveGroupId);
-		}
-
-		return null;
-	}
-
-	protected long getRefererGroupId(ThemeDisplay themeDisplay)
-		throws Exception {
-
-		long refererGroupId = 0;
-
-		try {
-			Layout refererLayout = LayoutLocalServiceUtil.getLayout(
-				themeDisplay.getRefererPlid());
-
-			refererGroupId = refererLayout.getGroupId();
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
-
-		return refererGroupId;
-	}
-
-	protected long getRefererPlid(
-		Group liveGroup, long scopeGroupId, String redirect) {
-
-		long refererPlid = GetterUtil.getLong(
-			HttpUtil.getParameter(redirect, "refererPlid", false));
-
-		if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
-			(scopeGroupId != liveGroup.getGroupId())) {
-
-			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				liveGroup.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (firstLayout == null) {
-				firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-					liveGroup.getGroupId(), true,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-			}
-
-			if (firstLayout != null) {
-				return firstLayout.getPlid();
-			}
-		}
-
-		return LayoutConstants.DEFAULT_PLID;
-	}
-
-	protected List<Role> getRoles(PortletRequest portletRequest)
-		throws Exception {
-
-		List<Role> roles = new ArrayList<>();
-
-		long[] siteRolesRoleIds = StringUtil.split(
-			ParamUtil.getString(portletRequest, "siteRolesRoleIds"), 0L);
-
-		for (long siteRolesRoleId : siteRolesRoleIds) {
-			if (siteRolesRoleId == 0) {
-				continue;
-			}
-
-			Role role = RoleLocalServiceUtil.getRole(siteRolesRoleId);
-
-			roles.add(role);
-		}
-
-		return roles;
-	}
-
-	protected String getStagingGroupFriendlyURL(Group liveGroup) {
-		if ((liveGroup != null) && liveGroup.hasStagingGroup()) {
-			Group stagingGroup = liveGroup.getStagingGroup();
-
-			return stagingGroup.getFriendlyURL();
-		}
-
-		return null;
-	}
-
-	protected List<Team> getTeams(PortletRequest portletRequest)
-		throws Exception {
-
-		List<Team> teams = new ArrayList<>();
-
-		long[] teamsTeamIds = ArrayUtil.unique(
-			StringUtil.split(
-				ParamUtil.getString(portletRequest, "teamsTeamIds"), 0L));
-
-		for (long teamsTeamId : teamsTeamIds) {
-			if (teamsTeamId == 0) {
-				continue;
-			}
-
-			Team team = TeamLocalServiceUtil.getTeam(teamsTeamId);
-
-			teams.add(team);
-		}
-
-		return teams;
-	}
-
-	protected void updateActive(ActionRequest actionRequest, String cmd)
+	public void updateActive(ActionRequest actionRequest, String cmd)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -335,7 +218,7 @@ public class SitesAdminPortlet extends MVCPortlet {
 			serviceContext);
 	}
 
-	protected Group updateGroup(ActionRequest actionRequest) throws Exception {
+	public Group updateGroup(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -685,10 +568,127 @@ public class SitesAdminPortlet extends MVCPortlet {
 		return liveGroup;
 	}
 
+	protected String getGroupFriendlyURL(Group liveGroup) {
+		if (liveGroup != null) {
+			return liveGroup.getFriendlyURL();
+		}
+
+		return null;
+	}
+
+	protected Group getLiveGroup(PortletRequest portletRequest)
+		throws PortalException {
+
+		long liveGroupId = ParamUtil.getLong(portletRequest, "liveGroupId");
+
+		if (liveGroupId > 0) {
+			return GroupLocalServiceUtil.getGroup(liveGroupId);
+		}
+
+		return null;
+	}
+
+	protected long getRefererGroupId(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		long refererGroupId = 0;
+
+		try {
+			Layout refererLayout = LayoutLocalServiceUtil.getLayout(
+				themeDisplay.getRefererPlid());
+
+			refererGroupId = refererLayout.getGroupId();
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		return refererGroupId;
+	}
+
+	protected long getRefererPlid(
+		Group liveGroup, long scopeGroupId, String redirect) {
+
+		long refererPlid = GetterUtil.getLong(
+			HttpUtil.getParameter(redirect, "refererPlid", false));
+
+		if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
+			(scopeGroupId != liveGroup.getGroupId())) {
+
+			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+				liveGroup.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (firstLayout == null) {
+				firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+					liveGroup.getGroupId(), true,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			}
+
+			if (firstLayout != null) {
+				return firstLayout.getPlid();
+			}
+		}
+
+		return LayoutConstants.DEFAULT_PLID;
+	}
+
+	protected List<Role> getRoles(PortletRequest portletRequest)
+		throws Exception {
+
+		List<Role> roles = new ArrayList<>();
+
+		long[] siteRolesRoleIds = StringUtil.split(
+			ParamUtil.getString(portletRequest, "siteRolesRoleIds"), 0L);
+
+		for (long siteRolesRoleId : siteRolesRoleIds) {
+			if (siteRolesRoleId == 0) {
+				continue;
+			}
+
+			Role role = RoleLocalServiceUtil.getRole(siteRolesRoleId);
+
+			roles.add(role);
+		}
+
+		return roles;
+	}
+
+	protected String getStagingGroupFriendlyURL(Group liveGroup) {
+		if ((liveGroup != null) && liveGroup.hasStagingGroup()) {
+			Group stagingGroup = liveGroup.getStagingGroup();
+
+			return stagingGroup.getFriendlyURL();
+		}
+
+		return null;
+	}
+
+	protected List<Team> getTeams(PortletRequest portletRequest)
+		throws Exception {
+
+		List<Team> teams = new ArrayList<>();
+
+		long[] teamsTeamIds = ArrayUtil.unique(
+			StringUtil.split(
+				ParamUtil.getString(portletRequest, "teamsTeamIds"), 0L));
+
+		for (long teamsTeamId : teamsTeamIds) {
+			if (teamsTeamId == 0) {
+				continue;
+			}
+
+			Team team = TeamLocalServiceUtil.getTeam(teamsTeamId);
+
+			teams.add(team);
+		}
+
+		return teams;
+	}
+
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditGroupAction.class);
+		SitesAdminPortlet.class);
 
 	private final TransactionAttribute _transactionAttribute =
 		TransactionAttributeBuilder.build(

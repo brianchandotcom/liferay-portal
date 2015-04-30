@@ -100,7 +100,7 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 
 	private static final String _BASE_INPUT_EDITOR_WIKI_ENGINE =
 		BaseInputEditorWikiEngine.class.getName() +
-			"#baseInputEditorWikiEngine";
+			"#BASE_INPUT_EDITOR_WIKI_ENGINE";
 
 	private final String _helpPage;
 	private final String _helpURL;

@@ -41,7 +41,7 @@ public final class CommandLoggerHandler {
 	}
 
 	public static void logClassCommandName(String classCommandName) {
-		LoggerElement dividerLineLoggerElement = _getDividerLoggerElement(
+		LoggerElement dividerLineLoggerElement = _getDividerLineLoggerElement(
 			classCommandName);
 
 		_commandLogLoggerElement.addChildLoggerElement(
@@ -99,7 +99,7 @@ public final class CommandLoggerHandler {
 		return loggerElement;
 	}
 
-	private static LoggerElement _getDividerLoggerElement(
+	private static LoggerElement _getDividerLineLoggerElement(
 		String classCommandName) {
 
 		LoggerElement loggerElement = new LoggerElement();

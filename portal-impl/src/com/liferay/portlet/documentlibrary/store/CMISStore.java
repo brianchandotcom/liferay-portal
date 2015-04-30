@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -95,7 +94,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, is);
 	}
@@ -108,10 +107,20 @@ public class CMISStore extends BaseStore {
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
+
+		if (versioningFolder == null) {
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, fromVersionLabel);
+		}
+
+		if (hasFile(companyId, repositoryId, fileName, toVersionLabel)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, toVersionLabel);
+		}
 
 		ObjectId versioningFolderObjectId = new ObjectIdImpl(
 			versioningFolder.getId());
@@ -184,7 +193,7 @@ public class CMISStore extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		if (Validator.isNull(versionLabel)) {
 			versionLabel = getHeadVersionLabel(
@@ -233,7 +242,7 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		String versionLabel = getHeadVersionLabel(
 			companyId, repositoryId, fileName);
@@ -311,11 +320,22 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, long newRepositoryId,
-		String fileName) {
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder oldVersioningFolderEntry = getVersioningFolder(
-			companyId, repositoryId, fileName, true);
+			companyId, repositoryId, fileName, false);
+
+		if (oldVersioningFolderEntry == null) {
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
+		}
+
+		if (hasFile(companyId, newRepositoryId, fileName)) {
+			throw new DuplicateFileException(
+				companyId, newRepositoryId, fileName);
+		}
+
 		Folder newVersioningFolderEntry = getVersioningFolder(
 			companyId, newRepositoryId, fileName, true);
 
@@ -335,11 +355,22 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String newFileName) {
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder oldVersioningFolderEntry = getVersioningFolder(
-			companyId, repositoryId, fileName, true);
+			companyId, repositoryId, fileName, false);
+
+		if (oldVersioningFolderEntry == null) {
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
+		}
+
+		if (hasFile(companyId, repositoryId, newFileName)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, newFileName);
+		}
+
 		Folder newVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, newFileName, true);
 
@@ -361,7 +392,7 @@ public class CMISStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, true);
@@ -382,10 +413,15 @@ public class CMISStore extends BaseStore {
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
+
+		if (versioningFolder == null) {
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, fromVersionLabel);
+		}
 
 		String title = String.valueOf(toVersionLabel);
 

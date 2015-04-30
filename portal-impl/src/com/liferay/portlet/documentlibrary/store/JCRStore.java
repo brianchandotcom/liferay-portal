@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.jcr.JCRConstants;
 import com.liferay.portal.jcr.JCRFactory;
 import com.liferay.portal.jcr.JCRFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.io.InputStream;
@@ -108,7 +106,7 @@ public class JCRStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		Session session = null;
 
@@ -433,7 +431,7 @@ public class JCRStore extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		Session session = null;
 
@@ -495,8 +493,8 @@ public class JCRStore extends BaseStore {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (RepositoryException re) {
+			throw new SystemException(re);
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
@@ -539,9 +537,9 @@ public class JCRStore extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws NoSuchFileException {
 
-		long size;
+		long size = 0;
 
 		Session session = null;
 
@@ -629,7 +627,7 @@ public class JCRStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Session session = null;
 
@@ -690,7 +688,7 @@ public class JCRStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Session session = null;
 
@@ -749,7 +747,7 @@ public class JCRStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Session session = null;
 
@@ -797,6 +795,11 @@ public class JCRStore extends BaseStore {
 
 			VersionHistory versionHistory = versionManager.getVersionHistory(
 				contentNode.getPath());
+
+			if (versionHistory.hasVersionLabel(versionLabel)) {
+				throw new DuplicateFileException(
+					companyId, repositoryId, fileName, versionLabel);
+			}
 
 			versionHistory.addVersionLabel(
 				version.getName(), versionLabel,

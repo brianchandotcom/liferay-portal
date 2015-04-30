@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.io.File;
@@ -90,7 +90,12 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void addFile(
-		long companyId, long repositoryId, String fileName, InputStream is) {
+			long companyId, long repositoryId, String fileName, InputStream is)
+		throws DuplicateFileException {
+
+		if (hasFile(companyId, repositoryId, fileName)) {
+			throw new DuplicateFileException(companyId, repositoryId, fileName);
+		}
 
 		try {
 			S3Object s3Object = new S3Object(
@@ -181,7 +186,7 @@ public class S3Store extends BaseStore {
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		try {
 			if (Validator.isNull(versionLabel)) {
@@ -199,11 +204,13 @@ public class S3Store extends BaseStore {
 
 			return tempFile;
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		catch (ServiceException se) {
-			throw new SystemException(se);
+		catch (Exception e) {
+			if (isS3NoSuchKeyException(e)) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName, versionLabel, e);
+			}
+
+			throw new SystemException(e);
 		}
 	}
 
@@ -211,7 +218,7 @@ public class S3Store extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		try {
 			if (Validator.isNull(versionLabel)) {
@@ -226,6 +233,11 @@ public class S3Store extends BaseStore {
 			return s3Object.getDataInputStream();
 		}
 		catch (ServiceException se) {
+			if (isS3NoSuchKeyException(se)) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName, versionLabel, se);
+			}
+
 			throw new SystemException(se);
 		}
 	}
@@ -269,7 +281,7 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		try {
 			String versionLabel = getHeadVersionLabel(
@@ -325,12 +337,22 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, long newRepositoryId,
-		String fileName) {
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws DuplicateFileException, NoSuchFileException {
 
 		File tempFile = null;
 		InputStream is = null;
 		S3Object newS3Object = null;
+
+		if (!hasFile(companyId, repositoryId, fileName)) {
+			throw new NoSuchFileException(companyId, newRepositoryId, fileName);
+		}
+
+		if (hasFile(companyId, newRepositoryId, fileName)) {
+			throw new DuplicateFileException(
+				companyId, newRepositoryId, fileName);
+		}
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
@@ -366,11 +388,8 @@ public class S3Store extends BaseStore {
 				_s3Service.deleteObject(_s3Bucket, oldKey);
 			}
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		catch (ServiceException se) {
-			throw new SystemException(se);
+		catch (Exception e) {
+			throw new SystemException(e);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -381,12 +400,22 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String newFileName) {
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws DuplicateFileException, NoSuchFileException {
 
 		File tempFile = null;
 		InputStream is = null;
 		S3Object newS3Object = null;
+
+		if (!hasFile(companyId, repositoryId, fileName)) {
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
+		}
+
+		if (hasFile(companyId, repositoryId, newFileName)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, newFileName);
+		}
 
 		try {
 			S3Object[] s3Objects = _s3Service.listObjects(
@@ -425,11 +454,8 @@ public class S3Store extends BaseStore {
 				_s3Service.deleteObject(_s3Bucket, oldKey);
 			}
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		catch (ServiceException se) {
-			throw new SystemException(se);
+		catch (Exception e) {
+			throw new SystemException(e);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -440,8 +466,14 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, String fileName, String versionLabel,
-		InputStream is) {
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is)
+		throws DuplicateFileException, NoSuchFileException {
+
+		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
+		}
 
 		try {
 			S3Object s3Object = new S3Object(
@@ -452,8 +484,13 @@ public class S3Store extends BaseStore {
 
 			_s3Service.putObject(_s3Bucket, s3Object);
 		}
-		catch (S3ServiceException s3se) {
-			throw new SystemException(s3se);
+		catch (Exception e) {
+			if (isS3NoSuchKeyException(e)) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName, versionLabel, e);
+			}
+
+			throw new SystemException(e);
 		}
 		finally {
 			StreamUtil.cleanUp(is);
@@ -557,7 +594,7 @@ public class S3Store extends BaseStore {
 
 	protected String getHeadVersionLabel(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException, S3ServiceException {
+		throws NoSuchFileException, S3ServiceException {
 
 		S3Object[] s3Objects = _s3Service.listObjects(
 			_s3Bucket.getName(), getKey(companyId, repositoryId, fileName),

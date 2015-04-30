@@ -48,6 +48,14 @@ public final class SummaryLoggerHandler {
 		}
 	}
 
+	public static LoggerElement getCauseBodyLoggerElement() {
+		return _causeBodyLoggerElement;
+	}
+
+	public static LoggerElement getMajorStepsLoggerElement() {
+		return _majorStepsLoggerElement;
+	}
+
 	public static void passSummary(Element element) {
 		if (_isCurrentMajorStep(element)) {
 			_passStepLoggerElement(_majorStepLoggerElement);
@@ -60,6 +68,11 @@ public final class SummaryLoggerHandler {
 
 			_stopMinorStep();
 		}
+	}
+
+	public static void startMajorSteps() throws Exception {
+		_causeBodyLoggerElement = _getCauseBodyLoggerElement();
+		_majorStepsLoggerElement = _getMajorStepsLoggerElement();
 	}
 
 	public static void startSummary(Element element) throws Exception {
@@ -86,6 +99,8 @@ public final class SummaryLoggerHandler {
 
 	private static void _failStepLoggerElement(
 		LoggerElement stepLoggerElement) {
+
+		stepLoggerElement.addClassName("fail");
 
 		LoggerElement lineContainerLoggerElement =
 			stepLoggerElement.loggerElement("div");
@@ -360,12 +375,10 @@ public final class SummaryLoggerHandler {
 		_minorStepLoggerElement = null;
 	}
 
-	private static final LoggerElement _causeBodyLoggerElement =
-		new LoggerElement("cause-body");
+	private static LoggerElement _causeBodyLoggerElement = null;
 	private static Element _majorStepElement = null;
 	private static LoggerElement _majorStepLoggerElement = null;
-	private static final LoggerElement _majorStepsLoggerElement =
-		new LoggerElement("major-steps");
+	private static LoggerElement _majorStepsLoggerElement = null;
 	private static Element _minorStepElement;
 	private static LoggerElement _minorStepLoggerElement;
 	private static LoggerElement _minorStepsLoggerElement;

@@ -89,25 +89,13 @@ public class ClassData
 	}
 
 	public void addLineJump(int lineNumber, int branchNumber) {
-		LineData lineData = children.get(lineNumber);
-
-		if (lineData == null) {
-			throw new IllegalStateException(
-				"No instrument data for class " + name + " line " +
-					lineNumber);
-		}
+		LineData lineData = _getLineData(lineNumber);
 
 		lineData.addJump(new JumpData(branchNumber));
 	}
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys) {
-		LineData lineData = children.get(lineNumber);
-
-		if (lineData == null) {
-			throw new IllegalStateException(
-				"No instrument data for class " + name + " line " +
-					lineNumber);
-		}
+		LineData lineData = _getLineData(lineNumber);
 
 		lineData.addSwitch(new SwitchData(switchNumber, keys.length));
 	}
@@ -115,13 +103,7 @@ public class ClassData
 	public void addLineSwitch(
 		int lineNumber, int switchNumber, int min, int max) {
 
-		LineData lineData = children.get(lineNumber);
-
-		if (lineData == null) {
-			throw new IllegalStateException(
-				"No instrument data for class " + name + " line " +
-					lineNumber);
-		}
+		LineData lineData = _getLineData(lineNumber);
 
 		lineData.addSwitch(new SwitchData(switchNumber, max - min + 1));
 	}
@@ -134,35 +116,38 @@ public class ClassData
 			super.merge(classData);
 	}
 
-	public void touch(int lineNumber,int hits)
-	{
-			LineData lineData = children.get(lineNumber);
-			if (lineData == null) {
-				throw new IllegalStateException(
-					"No instrument data for class " + name + " line " +
-						lineNumber);
-			}
-			lineData.touch(hits);
+	public void touch(int lineNumber, int hits) {
+		LineData lineData = _getLineData(lineNumber);
+
+		lineData.touch(hits);
 	}
 
-	public void touchJump(int lineNumber, int branchNumber, boolean branch,int hits) {
-			LineData lineData = children.get(lineNumber);
-			if (lineData == null) {
-				throw new IllegalStateException(
-					"No instrument data for class " + name + " line " +
-						lineNumber);
-			}
-			lineData.touchJump(name, branchNumber, branch,hits);
+	public void touchJump(
+		int lineNumber, int branchNumber, boolean branch, int hits) {
+
+		LineData lineData = _getLineData(lineNumber);
+
+		lineData.touchJump(name, branchNumber, branch,hits);
 	}
 
-	public void touchSwitch(int lineNumber, int switchNumber, int branch,int hits) {
-			LineData lineData = children.get(lineNumber);
-			if (lineData == null) {
-				throw new IllegalStateException(
-					"No instrument data for class " + name + " line " +
-						lineNumber);
-			}
-			lineData.touchSwitch(name, switchNumber, branch,hits);
+	public void touchSwitch(
+		int lineNumber, int switchNumber, int branch, int hits) {
+
+		LineData lineData = _getLineData(lineNumber);
+
+		lineData.touchSwitch(name, switchNumber, branch,hits);
+	}
+
+	private LineData _getLineData(int lineNumber) {
+		LineData lineData = children.get(lineNumber);
+
+		if (lineData == null) {
+			throw new IllegalStateException(
+				"No instrument data for class " + name + " line " +
+					lineNumber);
+		}
+
+		return lineData;
 	}
 
 }

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
@@ -29,6 +28,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * <p>
@@ -40,24 +40,6 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class AdvancedFileSystemStore extends FileSystemStore {
-
-	@Override
-	public String[] getFileNames(long companyId, long repositoryId) {
-		File repositoryDir = getRepositoryDir(companyId, repositoryId);
-
-		String[] directories = FileUtil.listDirs(repositoryDir);
-
-		List<String> fileNames = new ArrayList<>();
-
-		for (String directory : directories) {
-			fileNames.addAll(
-				getAdvancedFileNames(
-					companyId, repositoryId,
-					repositoryDir.getPath() + StringPool.SLASH + directory));
-		}
-
-		return fileNames.toArray(new String[fileNames.size()]);
-	}
 
 	@Override
 	public void updateFile(
@@ -75,16 +57,18 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		for (String fileNameVersion : fileNameVersions) {
 			String ext = FileUtil.getExtension(fileNameVersion);
 
+			String newFileNameVersion = newFileName;
+
 			if (ext.equals(_HOOK_EXTENSION)) {
-				continue;
+				int pos = fileNameVersion.lastIndexOf(CharPool.UNDERLINE);
+
+				newFileNameVersion += fileNameVersion.substring(pos);
 			}
 
 			File fileNameVersionFile = new File(
 				newFileNameDir + StringPool.SLASH + fileNameVersion);
 			File newFileNameVersionFile = new File(
-				newFileNameDir + StringPool.SLASH +
-					FileUtil.stripExtension(fileNameVersion) +
-						StringPool.PERIOD + _HOOK_EXTENSION);
+				newFileNameDir + StringPool.SLASH + newFileNameVersion);
 
 			boolean renamed = FileUtil.move(
 				fileNameVersionFile, newFileNameVersionFile);
@@ -117,30 +101,36 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		}
 	}
 
+	@Override
+	protected void doGetFileNames(
+		List<String> fileNames, String dirName, String path) {
+
+		super.doGetFileNames(fileNames, dirName, path);
+
+		ListIterator<String> itr = fileNames.listIterator();
+
+		while (itr.hasNext()) {
+			String shortFileName = itr.next();
+
+			if (path.endsWith(_HOOK_EXTENSION)) {
+				shortFileName = FileUtil.stripExtension(shortFileName);
+
+				itr.set(shortFileName);
+			}
+		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0 as of 7.0, replaced by {@link
+	 *             #doGetFileNames(List, String, String)}
+	 */
+	@Deprecated
 	protected List<String> getAdvancedFileNames(
 		long companyId, long repositoryId, String fileName) {
 
 		List<String> fileNames = new ArrayList<>();
 
-		String shortFileName = FileUtil.getShortFileName(fileName);
-
-		if (shortFileName.equals("DLFE") || Validator.isNumber(shortFileName)) {
-			String[] curFileNames = FileUtil.listDirs(fileName);
-
-			for (String curFileName : curFileNames) {
-				fileNames.addAll(
-					getAdvancedFileNames(
-						companyId, repositoryId,
-						fileName + StringPool.SLASH + curFileName));
-			}
-		}
-		else {
-			if (shortFileName.endsWith(_HOOK_EXTENSION)) {
-				shortFileName = FileUtil.stripExtension(shortFileName);
-			}
-
-			fileNames.add(shortFileName);
-		}
+		doGetFileNames(fileNames, StringPool.BLANK, fileName);
 
 		return fileNames;
 	}

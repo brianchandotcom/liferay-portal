@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,7 +33,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -230,7 +233,17 @@ public class FileSystemStore extends BaseStore {
 	public String[] getFileNames(long companyId, long repositoryId) {
 		File repositoryDir = getRepositoryDir(companyId, repositoryId);
 
-		return FileUtil.listDirs(repositoryDir);
+		List<String> fileNames = new ArrayList<>();
+
+		String[] directories = FileUtil.listDirs(repositoryDir);
+
+		for (String directory : directories) {
+			doGetFileNames(
+				fileNames, directory,
+				repositoryDir.getPath() + StringPool.SLASH + directory);
+		}
+
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
@@ -244,18 +257,13 @@ public class FileSystemStore extends BaseStore {
 			throw new NoSuchDirectoryException(dirNameDir.getPath());
 		}
 
-		String[] fileNames = FileUtil.listDirs(dirNameDir);
+		List<String> fileNames = new ArrayList<>();
 
-		Arrays.sort(fileNames);
+		doGetFileNames(fileNames, dirName, dirNameDir.getPath());
 
-		// Convert /${fileName} to /${dirName}/${fileName}
+		Collections.sort(fileNames);
 
-		for (int i = 0; i < fileNames.length; i++) {
-			fileNames[i] =
-				StringPool.SLASH + dirName + StringPool.SLASH + fileNames[i];
-		}
-
-		return fileNames;
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
@@ -434,6 +442,32 @@ public class FileSystemStore extends BaseStore {
 
 		if (file.delete() && (parentFile != null)) {
 			deleteEmptyAncestors(companyId, repositoryId, parentFile);
+		}
+	}
+
+	protected void doGetFileNames(
+		List<String> fileNames, String dirName, String path) {
+
+		String[] curFileNames = FileUtil.listDirs(path);
+
+		if (ArrayUtil.isNotEmpty(curFileNames)) {
+			for (String curFileName : curFileNames) {
+				String subDirName = null;
+
+				if (Validator.isBlank(dirName)) {
+					subDirName = curFileName;
+				}
+				else {
+					subDirName = dirName + StringPool.SLASH + curFileName;
+				}
+
+				doGetFileNames(
+					fileNames, subDirName,
+					path + StringPool.SLASH + curFileName);
+			}
+		}
+		else {
+			fileNames.add(dirName);
 		}
 	}
 

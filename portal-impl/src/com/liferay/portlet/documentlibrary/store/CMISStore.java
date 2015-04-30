@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -192,50 +193,34 @@ public class CMISStore extends BaseStore {
 	public String[] getFileNames(long companyId, long repositoryId) {
 		Folder folder = getRepositoryFolder(companyId, repositoryId);
 
-		List<Folder> folders = getFolders(folder);
+		List<String> fileNames = new ArrayList<>();
 
-		String[] fileNames = new String[folders.size()];
+		doGetFileNames(fileNames, StringPool.BLANK, folder);
 
-		for (int i = 0; i < folders.size(); i++) {
-			Folder curFolder = folders.get(i);
-
-			fileNames[i] = curFolder.getName();
-		}
-
-		return fileNames;
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
-		Folder folder = getRepositoryFolder(companyId, repositoryId);
+		Folder directory = getRepositoryFolder(companyId, repositoryId);
 
-		String[] dirNames = StringUtil.split(dirName, CharPool.SLASH);
+		String[] subFolderNames = StringUtil.split(dirName, StringPool.SLASH);
 
-		for (String curDirName : dirNames) {
-			Folder subFolder = getFolder(folder, curDirName);
+		for (String subFolderName : subFolderNames) {
+			directory = getFolder(directory, subFolderName);
 
-			if (subFolder == null) {
-				subFolder = createFolder(folder, curDirName);
+			if (directory == null) {
+				return new String[0];
 			}
-
-			folder = subFolder;
 		}
 
-		List<Folder> folders = getFolders(folder);
+		List<String> fileNames = new ArrayList<>();
 
-		String[] fileNames = new String[folders.size()];
+		doGetFileNames(fileNames, dirName, directory);
 
-		for (int i = 0; i < folders.size(); i++) {
-			Folder curFolder = folders.get(i);
-
-			String fileName = curFolder.getName();
-
-			fileNames[i] = dirName.concat(StringPool.SLASH).concat(fileName);
-		}
-
-		return fileNames;
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
@@ -262,13 +247,11 @@ public class CMISStore extends BaseStore {
 			throw new NoSuchFileException();
 		}
 
-		List<Folder> folders = getFolders(versioningFolder);
-
 		String headVersionLabel = VERSION_DEFAULT;
 
-		for (Folder folder : folders) {
-			String versionLabel = folder.getName();
+		List<String> versionLabels = getVersionLabels(versioningFolder);
 
+		for (String versionLabel : versionLabels) {
 			if (DLUtil.compareVersions(versionLabel, headVersionLabel) > 0) {
 				headVersionLabel = versionLabel;
 			}
@@ -328,17 +311,15 @@ public class CMISStore extends BaseStore {
 		Folder newVersioningFolderEntry = getVersioningFolder(
 			companyId, newRepositoryId, fileName, true);
 
-		List<Folder> folders = getFolders(oldVersioningFolderEntry);
+		List<String> versionLabels = getVersionLabels(oldVersioningFolderEntry);
 
-		for (Folder folder : folders) {
-			String curFileName = folder.getName();
-
+		for (String versionLabel : versionLabels) {
 			Document document = getDocument(
-				oldVersioningFolderEntry, curFileName);
+				oldVersioningFolderEntry, versionLabel);
 
 			InputStream is = document.getContentStream().getStream();
 
-			createDocument(newVersioningFolderEntry, curFileName, is);
+			createDocument(newVersioningFolderEntry, versionLabel, is);
 		}
 
 		oldVersioningFolderEntry.deleteTree(true, UnfileObject.DELETE, false);
@@ -354,17 +335,15 @@ public class CMISStore extends BaseStore {
 		Folder newVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, newFileName, true);
 
-		List<Folder> folders = getFolders(oldVersioningFolderEntry);
+		List<String> versionLabels = getVersionLabels(oldVersioningFolderEntry);
 
-		for (Folder folder : folders) {
-			String curFileName = folder.getName();
-
+		for (String versionLabel : versionLabels) {
 			Document document = getDocument(
-				oldVersioningFolderEntry, curFileName);
+				oldVersioningFolderEntry, versionLabel);
 
 			InputStream is = document.getContentStream().getStream();
 
-			createDocument(newVersioningFolderEntry, curFileName, is);
+			createDocument(newVersioningFolderEntry, versionLabel, is);
 		}
 
 		oldVersioningFolderEntry.deleteTree(true, UnfileObject.DELETE, false);
@@ -444,6 +423,31 @@ public class CMISStore extends BaseStore {
 			properties, parentFolderId);
 
 		return (Folder)SessionHolder.session.getObject(objectId);
+	}
+
+	protected void doGetFileNames(
+		List<String> fileNames, String dirName, Folder folder) {
+
+		List<Folder> folders = getFolders(folder);
+
+		if (ListUtil.isNotEmpty(folders)) {
+			for (Folder curFolder : folders) {
+				String subDirName = null;
+
+				if (Validator.isBlank(dirName)) {
+					subDirName = curFolder.getName();
+				}
+				else {
+					subDirName =
+						dirName + StringPool.SLASH + curFolder.getName();
+				}
+
+				doGetFileNames(fileNames, subDirName, curFolder);
+			}
+		}
+		else {
+			fileNames.add(dirName);
+		}
 	}
 
 	protected Folder getCompanyFolder(long companyId) {
@@ -555,6 +559,20 @@ public class CMISStore extends BaseStore {
 		}
 
 		return versioningFolder;
+	}
+
+	protected List<String> getVersionLabels(Folder versioningFolder) {
+		List<String> versions = new ArrayList<>();
+
+		ItemIterable<CmisObject> cmisObjects = versioningFolder.getChildren();
+
+		for (CmisObject cmisObject : cmisObjects) {
+			if (cmisObject instanceof Document) {
+				versions.add(cmisObject.getName());
+			}
+		}
+
+		return versions;
 	}
 
 	private final Folder _systemRootDir;

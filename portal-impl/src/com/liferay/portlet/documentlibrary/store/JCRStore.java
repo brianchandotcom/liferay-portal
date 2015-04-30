@@ -206,6 +206,10 @@ public class JCRStore extends BaseStore {
 
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
 
+			if (dirName.equals(StringPool.SLASH)) {
+				dirName = StringPool.BLANK;
+			}
+
 			Node dirNode = repositoryNode.getNode(dirName);
 
 			dirNode.remove();
@@ -485,7 +489,10 @@ public class JCRStore extends BaseStore {
 
 				String primaryNodeTypeName = primaryNodeType.getName();
 
-				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
+				if (primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
+					doGetFileNames(fileNames, node.getName(), node);
+				}
+				else if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
 					fileNames.add(node.getName());
 				}
 			}
@@ -518,19 +525,7 @@ public class JCRStore extends BaseStore {
 
 			Node dirNode = repositoryNode.getNode(dirName);
 
-			NodeIterator itr = dirNode.getNodes();
-
-			while (itr.hasNext()) {
-				Node node = (Node)itr.next();
-
-				NodeType primaryNodeType = node.getPrimaryNodeType();
-
-				String primaryNodeTypeName = primaryNodeType.getName();
-
-				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
-					fileNames.add(dirName + "/" + node.getName());
-				}
-			}
+			doGetFileNames(fileNames, dirName, dirNode);
 		}
 		catch (PathNotFoundException pnfe) {
 			throw new NoSuchDirectoryException(dirName);
@@ -817,6 +812,37 @@ public class JCRStore extends BaseStore {
 		}
 		finally {
 			JCRFactoryUtil.closeSession(session);
+		}
+	}
+
+	protected void doGetFileNames(
+			List<String> fileNames, String dirName, Node node)
+		throws RepositoryException {
+
+		NodeType primaryNodeType = node.getPrimaryNodeType();
+
+		String primaryNodeTypeName = primaryNodeType.getName();
+
+		if (primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
+			NodeIterator itr = node.getNodes();
+
+			while (itr.hasNext()) {
+				Node curNode = itr.nextNode();
+
+				String subDirName = null;
+
+				if (Validator.isBlank(dirName)) {
+					subDirName = curNode.getName();
+				}
+				else {
+					subDirName = dirName + StringPool.SLASH + curNode.getName();
+				}
+
+				doGetFileNames(fileNames, subDirName, curNode);
+			}
+		}
+		else if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
+			fileNames.add(dirName);
 		}
 	}
 

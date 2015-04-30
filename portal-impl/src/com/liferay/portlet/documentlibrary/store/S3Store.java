@@ -505,7 +505,7 @@ public class S3Store extends BaseStore {
 	protected String getFileName(String key) {
 
 		// Convert /${companyId}/${repositoryId}/${dirName}/${fileName}
-		// /${versionLabel} to /${dirName}/${fileName}
+		// /${versionLabel} to ${dirName}/${fileName}
 
 		int x = key.indexOf(CharPool.SLASH);
 
@@ -513,7 +513,7 @@ public class S3Store extends BaseStore {
 
 		int y = key.lastIndexOf(CharPool.SLASH);
 
-		return key.substring(x, y);
+		return key.substring(x + 1, y);
 	}
 
 	protected String[] getFileNames(S3Object[] s3Objects) {

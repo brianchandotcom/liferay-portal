@@ -46,6 +46,11 @@ public class FilterServiceDependencyVerifier
 	}
 
 	@Override
+	public String toString() {
+		return _filter.toString();
+	}
+
+	@Override
 	public boolean verify(ServiceReference<?> serviceReference) {
 		return _filter.matches(serviceReference);
 	}

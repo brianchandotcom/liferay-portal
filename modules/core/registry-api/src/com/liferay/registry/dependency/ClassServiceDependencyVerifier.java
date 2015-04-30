@@ -47,6 +47,11 @@ public class ClassServiceDependencyVerifier
 	}
 
 	@Override
+	public String toString() {
+		return _clazz.getName();
+	}
+
+	@Override
 	public boolean verify(ServiceReference<?> serviceReference) {
 		Registry registry = RegistryUtil.getRegistry();
 

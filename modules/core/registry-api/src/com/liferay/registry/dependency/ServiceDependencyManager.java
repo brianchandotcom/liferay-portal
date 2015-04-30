@@ -21,6 +21,7 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +30,12 @@ import java.util.Set;
  */
 public class ServiceDependencyManager {
 
+	public ServiceDependencyManager() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerServiceDependencyManager(this);
+	}
+
 	public void addServiceDependencyListener(
 		ServiceDependencyListener serviceDependencyListener) {
 
@@ -36,6 +43,14 @@ public class ServiceDependencyManager {
 	}
 
 	public void destroy() {
+		for (ServiceDependencyListener serviceDependencyListener :
+				_serviceDependencyListeners) {
+
+			serviceDependencyListener.destroy();
+		}
+
+		_serviceDependencyListeners.clear();
+
 		synchronized (_serviceDependencies) {
 			for (ServiceDependency serviceDependency : _serviceDependencies) {
 				serviceDependency.close();
@@ -44,33 +59,43 @@ public class ServiceDependencyManager {
 
 		_serviceDependencies.clear();
 
-		for (ServiceDependencyListener serviceDependencyListener :
-				_serviceDependencyListeners) {
+		Registry registry = RegistryUtil.getRegistry();
 
-			serviceDependencyListener.destroy();
-		}
-
-		_serviceDependencyListeners.clear();
+		registry.unregisterServiceDependencyManager(this);
 	}
 
 	public void registerDependencies(Class<?>... serviceClasses) {
-		Registry registry = RegistryUtil.getRegistry();
+		synchronized (_serviceDependencies) {
+			doRegisterDependencies(serviceClasses);
+
+			for (ServiceDependency serviceDependency : _serviceDependencies) {
+				serviceDependency.open();
+			}
+		}
+	}
+
+	public void registerDependencies(
+		Class<?>[] serviceClasses, Filter[] filters) {
 
 		synchronized (_serviceDependencies) {
-			for (Class<?> serviceClass : serviceClasses) {
-				ServiceDependency serviceDependency = new ServiceDependency(
-					serviceClass);
+			doRegisterDependencies(serviceClasses);
 
-				_serviceDependencies.add(serviceDependency);
+			doRegisterDependencies(filters);
 
-				ServiceTracker<Object, Object> serviceTracker =
-					registry.trackServices(
-						(Class<Object>)serviceClass,
-						new ServiceDependencyServiceTrackerCustomizer(
-							serviceDependency));
-
-				serviceDependency.setServiceTracker(serviceTracker);
+			for (ServiceDependency serviceDependency : _serviceDependencies) {
+				serviceDependency.open();
 			}
+		}
+	}
+
+	public void registerDependencies(
+		Collection<Class<?>> serviceClasses, Collection<Filter> filters) {
+
+		synchronized (_serviceDependencies) {
+			doRegisterDependencies(
+				serviceClasses.toArray(new Class<?>[serviceClasses.size()]));
+
+			doRegisterDependencies(filters.toArray(new Filter[filters.size()]));
 
 			for (ServiceDependency serviceDependency : _serviceDependencies) {
 				serviceDependency.open();
@@ -79,22 +104,11 @@ public class ServiceDependencyManager {
 	}
 
 	public void registerDependencies(Filter... filters) {
-		Registry registry = RegistryUtil.getRegistry();
-
 		synchronized (_serviceDependencies) {
-			for (Filter filter : filters) {
-				ServiceDependency serviceDependency = new ServiceDependency(
-					filter);
+			doRegisterDependencies(filters);
 
-				_serviceDependencies.add(serviceDependency);
-
-				ServiceTracker<Object, Object> serviceTracker =
-					registry.trackServices(
-						filter,
-						new ServiceDependencyServiceTrackerCustomizer(
-							serviceDependency));
-
-				serviceDependency.setServiceTracker(serviceTracker);
+			for (ServiceDependency serviceDependency : _serviceDependencies) {
+				serviceDependency.open();
 			}
 		}
 	}
@@ -103,6 +117,18 @@ public class ServiceDependencyManager {
 		ServiceDependencyListener serviceDependencyListener) {
 
 		_serviceDependencyListeners.remove(serviceDependencyListener);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("ServiceDependencyManager{");
+		sb.append("_serviceDependencies=");
+		sb.append(_serviceDependencies);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public void verifyDependencies() {
@@ -118,6 +144,45 @@ public class ServiceDependencyManager {
 
 				serviceDependencyListener.dependenciesFulfilled();
 			}
+
+			destroy();
+		}
+	}
+
+	protected void doRegisterDependencies(Class<?>[] serviceClasses) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		for (Class<?> serviceClass : serviceClasses) {
+			ServiceDependency serviceDependency = new ServiceDependency(
+				serviceClass);
+
+			_serviceDependencies.add(serviceDependency);
+
+			ServiceTracker<Object, Object> serviceTracker =
+				registry.trackServices(
+					(Class<Object>)serviceClass,
+					new ServiceDependencyServiceTrackerCustomizer(
+						serviceDependency));
+
+			serviceDependency.setServiceTracker(serviceTracker);
+		}
+	}
+
+	protected void doRegisterDependencies(Filter[] filters) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		for (Filter filter : filters) {
+			ServiceDependency serviceDependency = new ServiceDependency(filter);
+
+			_serviceDependencies.add(serviceDependency);
+
+			ServiceTracker<Object, Object> serviceTracker =
+				registry.trackServices(
+					filter,
+					new ServiceDependencyServiceTrackerCustomizer(
+						serviceDependency));
+
+			serviceDependency.setServiceTracker(serviceTracker);
 		}
 	}
 

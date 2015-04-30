@@ -70,13 +70,27 @@ public class ServiceDependency {
 	}
 
 	public void open() {
-		_serviceTracker.open();
+		_serviceTracker.open(true);
 	}
 
 	public void setServiceTracker(
 		ServiceTracker<Object, Object> serviceTracker) {
 
 		_serviceTracker = serviceTracker;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("ServiceDependency{");
+		sb.append("_fulfilled=");
+		sb.append(_fulfilled);
+		sb.append(", _serviceDependencyVerifier=");
+		sb.append(_serviceDependencyVerifier);
+		sb.append('}');
+
+		return sb.toString();
 	}
 
 	private boolean _fulfilled;

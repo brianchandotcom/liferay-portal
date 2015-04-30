@@ -362,7 +362,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="WebContentStructures#gotoCP" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="Advertisement Structure Description" />
@@ -401,7 +401,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="WebContentStructures#gotoCP" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="Press Release Structure Description" />
@@ -627,7 +627,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="WebContentStructures#gotoCP" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="Advertisement Structure Description" />
@@ -706,7 +706,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="WebContentStructures#gotoCP" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="Press Release Structure Description" />

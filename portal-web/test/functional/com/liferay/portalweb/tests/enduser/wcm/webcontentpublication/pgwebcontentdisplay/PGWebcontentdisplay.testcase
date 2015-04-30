@@ -261,7 +261,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentStructures#gotoCP" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureName" value="WC Structure Name" />

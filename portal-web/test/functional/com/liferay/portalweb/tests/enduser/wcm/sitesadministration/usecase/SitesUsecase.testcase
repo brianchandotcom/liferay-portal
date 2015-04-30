@@ -369,7 +369,7 @@
 			<var name="siteScopeName" value="${globalSiteName}" />
 		</execute>
 
-		<execute macro="WebContentStructures#gotoCP" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="${structureDescription}" />
@@ -477,7 +477,7 @@
 			<var name="siteScopeName" value="${globalSiteName}" />
 		</execute>
 
-		<execute macro="WebContentStructures#gotoCP" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="${structureDescription}" />

@@ -223,7 +223,7 @@
 	</command>
 
 	<command name="ApproveInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
-		<execute macro="WebContentStructures#gotoCP" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
@@ -764,7 +764,7 @@
 	</command>
 
 	<command known-issues="LPS-51687" name="RejectInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
-		<execute macro="WebContentStructures#gotoCP" />
+		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />

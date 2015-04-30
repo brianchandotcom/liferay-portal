@@ -17,7 +17,9 @@ package com.liferay.portal.tools.css.builder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.rtl.css.RTLCSSConverter;
-import com.liferay.sass.compiler.jni.JniSassCompiler;
+import com.liferay.sass.compiler.SassCompiler;
+import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
+import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 
 import java.io.File;
 
@@ -33,7 +35,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.liferay.sass.compiler.ruby.RubySassCompiler;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -41,7 +42,7 @@ import org.apache.tools.ant.DirectoryScanner;
  */
 public class CSSBuilder {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		Map<String, String> arguments = _parseArguments(args);
 
 		String sassDir = arguments.get("sass.dir");
@@ -49,79 +50,29 @@ public class CSSBuilder {
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 		String compilerImpl = arguments.get("sass.compiler.impl");
 
-		if(compilerImpl == null) {
+		if (compilerImpl == null) {
 			compilerImpl = "libsass";
 		}
 
-		new CSSBuilder(
-			sassDir, docrootDirName, portalCommonDirName, compilerImpl);
+		CSSBuilder cssBuilder = new CSSBuilder(
+			sassDir, docrootDirName, portalCommonDirName);
+
+		try {
+			cssBuilder.configure(compilerImpl);
+
+			cssBuilder.execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public CSSBuilder(
-			String sassDir, String docrootDirName, String portalCommonDirName)
-		throws Exception{
-
-		this(sassDir,docrootDirName,portalCommonDirName,"libsass");
-	}
-
-	public CSSBuilder(
-			String sassDir, String docrootDirName, String portalCommonDirName,
-			String compilerImpl)
-		throws Exception {
-
-		long start = System.currentTimeMillis();
+		String sassDir, String docrootDirName, String portalCommonDirName) {
 
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
-
-		if (compilerImpl.equals("libsass")) {
-			try {
-				_jniSassCompiler = new JniSassCompiler();
-			}
-			catch (Exception e) {
-				System.err.println(
-					"Could not load JniSassCompiler, using RubySassCompiler " +
-						"instead");
-
-				_rubySassCompiler = new RubySassCompiler();
-			}
-		}
-		else {
-			_rubySassCompiler = new RubySassCompiler();
-		}
-
-		_rtlCSSConverter = new RTLCSSConverter();
-
-		List<String> dirNames = new ArrayList<>();
-
-		if (sassDir != null) {
-			dirNames.addAll(Arrays.asList(sassDir.split(",")));
-		}
-
-		List<String> fileNames = new ArrayList<>();
-
-		for (String dirName : dirNames) {
-			_collectSassFiles(fileNames, dirName, _docrootDirName);
-		}
-
-		for (String fileName : fileNames) {
-			try {
-				_build(fileName);
-			}
-			catch (Exception e) {
-				System.out.println("Could not build " + fileName);
-			}
-		}
-
-		long finished = System.currentTimeMillis() - start;
-
-		StringBuilder finishedMessage = new StringBuilder(5);
-
-		finishedMessage.append("Total build time finished in ");
-		finishedMessage.append(finished);
-		finishedMessage.append("ms.");
-
-		System.out.println(finishedMessage.toString());
+		_sassDir = sassDir;
 	}
 
 	public void _build(String fileName) throws Exception {
@@ -176,6 +127,61 @@ public class CSSBuilder {
 		parsedMessage.append("ms of that time");
 
 		System.out.println(parsedMessage.toString());
+	}
+
+	public void configure(String compilerImpl) throws Exception {
+		if (compilerImpl.equals("libsass")) {
+			try {
+				_sassCompiler = new JniSassCompiler();
+			}
+			catch (Exception e) {
+				System.err.println(
+					"Could not load JniSassCompiler, using RubySassCompiler " +
+						"instead");
+
+				_sassCompiler = new RubySassCompiler();
+			}
+		}
+		else {
+			_sassCompiler = new RubySassCompiler();
+		}
+
+		_rtlCSSConverter = new RTLCSSConverter();
+	}
+
+	public void execute() throws Exception {
+		long start = System.currentTimeMillis();
+
+		List<String> dirNames = new ArrayList<>();
+
+		if (_sassDir != null) {
+			dirNames.addAll(Arrays.asList(_sassDir.split(",")));
+		}
+
+		List<String> fileNames = new ArrayList<>();
+
+		for (String dirName : dirNames) {
+			_collectSassFiles(fileNames, dirName, _docrootDirName);
+		}
+
+		for (String fileName : fileNames) {
+			try {
+				_build(fileName);
+			}
+			catch (Exception e) {
+				System.out.println("Could not build " + fileName);
+			}
+		}
+
+		long finished = System.currentTimeMillis() - start;
+
+		StringBuilder finishedMessage = new StringBuilder(5);
+
+		finishedMessage.append("Total build time finished in ");
+		finishedMessage.append(finished);
+		finishedMessage.append("ms.");
+
+		System.out.println(finishedMessage.toString());
 	}
 
 	private static Map<String, String> _parseArguments(String[] args) {
@@ -428,21 +434,12 @@ public class CSSBuilder {
 		filePath = filePath.substring(0, filePath.lastIndexOf("/"));
 
 		try {
-			if (_jniSassCompiler != null) {
-				return _jniSassCompiler.compileString(
-					content,
-					_portalCommonDirName + File.pathSeparator + filePath,
-					"");
-			}
-			else {
-				return _rubySassCompiler.compileString(
-					content,
-					_portalCommonDirName + File.pathSeparator + filePath,
-					"");
-			}
+			return _sassCompiler.compileString(
+				content, _portalCommonDirName + File.pathSeparator + filePath,
+				"");
 		}
 		catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 
 			System.out.println("Unable to parse " + fileName);
 		}
@@ -555,10 +552,10 @@ public class CSSBuilder {
 
 	private final String _docrootDirName;
 	private final Map<String, String> _fileCache = new HashMap<>();
-	private JniSassCompiler _jniSassCompiler;
-	private RubySassCompiler _rubySassCompiler;
 	private final Pattern[] _patterns = {Pattern.compile(".*\\/ckeditor\\/.*")};
 	private final String _portalCommonDirName;
-	private final RTLCSSConverter _rtlCSSConverter;
+	private RTLCSSConverter _rtlCSSConverter;
+	private SassCompiler _sassCompiler;
+	private final String _sassDir;
 
 }

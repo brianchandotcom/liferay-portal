@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");

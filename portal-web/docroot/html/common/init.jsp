@@ -295,7 +295,6 @@ page import="com.liferay.taglib.util.OutputTag" %><%@
 page import="com.liferay.util.ContentUtil" %><%@
 page import="com.liferay.util.CreditCard" %><%@
 page import="com.liferay.util.Encryptor" %><%@
-page import="com.liferay.util.PKParser" %><%@
 page import="com.liferay.util.State" %><%@
 page import="com.liferay.util.StateUtil" %><%@
 page import="com.liferay.util.log4j.Levels" %>

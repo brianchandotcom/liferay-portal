@@ -14,19 +14,11 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<%
-Group liveGroup = (Group)request.getAttribute("site.liveGroup");
-%>
+<liferay-ui:error-header />
 
-<h3><liferay-ui:message key="custom-fields" /></h3>
-
-<aui:fieldset>
-	<liferay-ui:custom-attribute-list
-		className="<%= Group.class.getName() %>"
-		classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
-		editable="<%= true %>"
-		label="<%= true %>"
-	/>
-</aui:fieldset>
+<liferay-ui:error exception="<%= NoSuchGroupException.class %>" message="the-site-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchLayoutException.class %>" message="the-page-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchRoleException.class %>" message="the-role-could-not-be-found" />
+<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

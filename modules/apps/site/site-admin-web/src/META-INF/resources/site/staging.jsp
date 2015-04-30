@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
@@ -168,12 +168,12 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 		<div class="<%= showRemoteOptions ? StringPool.BLANK : "hide" %> staging-section" id="<portlet:namespace />remoteStagingOptions">
 			<br />
 
-			<%@ include file="/html/portlet/sites_admin/error_auth_exception.jspf" %>
+			<%@ include file="/error_auth_exception.jspf" %>
 
-			<%@ include file="/html/portlet/sites_admin/error_remote_export_exception.jspf" %>
+			<%@ include file="/error_remote_export_exception.jspf" %>
 
 			<aui:fieldset label="remote-live-connection-settings">
-				<%@ include file="/html/portlet/sites_admin/error_remote_options_exception.jspf" %>
+				<%@ include file="/error_remote_options_exception.jspf" %>
 
 				<div class="alert alert-info">
 					<liferay-ui:message key="remote-publish-help" />

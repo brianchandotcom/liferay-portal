@@ -57,7 +57,7 @@
 
 	</liferay-ui:search-container-results>
 
-	<%@ include file="/html/portlet/sites_admin/toolbar.jspf" %>
+	<%@ include file="/toolbar.jspf" %>
 
 	<c:if test="<%= !results.isEmpty() %>">
 		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
@@ -86,7 +86,7 @@
 		}
 		%>
 
-		<%@ include file="/html/portlet/sites_admin/site_columns.jspf" %>
+		<%@ include file="/site_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

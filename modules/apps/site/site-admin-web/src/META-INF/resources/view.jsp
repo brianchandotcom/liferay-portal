@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/sites_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
@@ -63,10 +63,10 @@ String searchURLString = searchURL.toString();
 
 	<c:choose>
 		<c:when test="<%= sitesListView.equals(SiteConstants.LIST_VIEW_FLAT_SITES) %>">
-			<%@ include file="/html/portlet/sites_admin/view_flat_sites.jspf" %>
+			<%@ include file="/view_flat_sites.jspf" %>
 		</c:when>
 		<c:otherwise>
-			<%@ include file="/html/portlet/sites_admin/view_tree.jspf" %>
+			<%@ include file="/view_tree.jspf" %>
 		</c:otherwise>
 	</c:choose>
 </aui:form>

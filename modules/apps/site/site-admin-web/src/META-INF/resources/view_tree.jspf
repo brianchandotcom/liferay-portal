@@ -74,7 +74,7 @@ if (group != null) {
 <aui:row>
 	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= (group != null) ? 75 : 100 %>">
 		<c:if test="<%= group != null %>">
-			<%@ include file="/html/portlet/sites_admin/view_site_info.jspf" %>
+			<%@ include file="/view_site_info.jspf" %>
 
 			<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
 				<div class="description">
@@ -184,7 +184,7 @@ if (group != null) {
 			</liferay-ui:search-container-results>
 
 			<c:if test="<%= group == null %>">
-				<%@ include file="/html/portlet/sites_admin/toolbar.jspf" %>
+				<%@ include file="/toolbar.jspf" %>
 			</c:if>
 
 			<c:if test="<%= !results.isEmpty() %>">
@@ -214,7 +214,7 @@ if (group != null) {
 				}
 				%>
 
-				<%@ include file="/html/portlet/sites_admin/site_columns.jspf" %>
+				<%@ include file="/site_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator />
@@ -245,7 +245,7 @@ if (group != null) {
 			request.setAttribute("view_tree.jspf-site", group);
 			%>
 
-			<liferay-util:include page="/html/portlet/sites_admin/site_action.jsp" />
+			<liferay-util:include page="/site_action.jsp" />
 		</aui:col>
 	</c:if>
 </aui:row>

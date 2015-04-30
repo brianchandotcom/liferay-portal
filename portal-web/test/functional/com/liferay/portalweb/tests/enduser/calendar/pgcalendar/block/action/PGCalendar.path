@@ -405,10 +405,31 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SCHEDULER_VIEW_DAY-->
+<tr>
+	<td>SCHEDULER_VIEW_DAY</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-day') and not(contains(@class,'scheduler-view-week'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_DAY_FIRST_HOUR</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_DAY_LAST_HOUR</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[24]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SCHEDULER_VIEW_WEEK-->
 <tr>
 	<td>SCHEDULER_VIEW_WEEK</td>
-	<td>//div[@class='yui3-widget component scheduler-view scheduler-view-day scheduler-view-week']</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-day scheduler-view-week')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -417,11 +438,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_VIEW_WEEK_FIRST_HOUR</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and contains(@class,'scheduler-view-week-content')]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_WEEK_LAST_HOUR</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and contains(@class,'scheduler-view-week-content')]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[24]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SCHEDULER_VIEW_MONTH-->
+<tr>
+	<td>SCHEDULER_VIEW_MONTH</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-table scheduler-view-month scheduler-month-view')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SCHEDULER_VIEW_MONTH_WEEK_START_DAY</td>
 	<td>xpath=(//div[contains(@class,'scheduler-view-month-content')]//tr[@class='scheduler-view-table-header-col']//th[@class='scheduler-view-table-header-day']/div)[1]</td>
@@ -522,6 +558,11 @@
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_FONT_COLOR_DEFAULT</td>
 	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(217, 104, 104)')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_SPECIFIC_HEIGHT</td>
+	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'height: ${key_pixelHeight}px;')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

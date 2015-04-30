@@ -60,37 +60,6 @@ public class SwitchData implements BranchCoverageData<SwitchData>, Serializable
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if ((obj == null) || !(obj.getClass().equals(this.getClass())))
-			return false;
-
-		SwitchData switchData = (SwitchData) obj;
-
-		if ((switchNumber == switchData.switchNumber) &&
-			(_hitsArray.length() == switchData._hitsArray.length())) {
-
-			for (int i = 0; i < _hitsArray.length(); i++) {
-				if (_hitsArray.get(i) != _hitsArray.get(i)) {
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		return this.switchNumber;
-	}
-
-	@Override
 	public int getNumberOfCoveredBranches() {
 		int branches = 0;
 

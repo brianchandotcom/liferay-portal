@@ -49,20 +49,6 @@ public class ClassData
 		return previousLineData;
 	}
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if ((obj == null) || !(obj.getClass().equals(this.getClass())))
-			return false;
-
-		ClassData classData = (ClassData)obj;
-			return super.equals(obj)
-				&& this.branches.equals(classData.branches)
-				&& this.name.equals(classData.name);
-	}
-
 	public String getBaseName()
 	{
 		int lastDot = this.name.lastIndexOf('.');
@@ -125,12 +111,6 @@ public class ClassData
 			return "";
 		}
 		return this.name.substring(0, lastDot);
-	}
-
-	@Override
-	public int hashCode()
-	{
-		return this.name.hashCode();
 	}
 
 	public void addLineJump(int lineNumber, int branchNumber) {

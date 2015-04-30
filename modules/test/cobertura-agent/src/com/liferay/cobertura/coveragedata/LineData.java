@@ -38,22 +38,6 @@ public class LineData implements CoverageData<LineData>, Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if ((obj == null) || !(obj.getClass().equals(this.getClass())))
-			return false;
-
-		LineData lineData = (LineData)obj;
-
-			return (_hitCounter.get() == lineData._hitCounter.get())
-					&& ((this._jumpDatas == lineData._jumpDatas) || (this._jumpDatas.equals(lineData._jumpDatas)))
-					&& ((this._switchDatas == lineData._switchDatas) || ((this._switchDatas != null) && (this._switchDatas.equals(lineData._switchDatas))))
-					&& (this.lineNumber == lineData.lineNumber);
-	}
-
-	@Override
 	public double getBranchCoverageRate()
 	{
 		if (getNumberOfValidBranches() == 0)
@@ -116,12 +100,6 @@ public class LineData implements CoverageData<LineData>, Serializable {
 	public int getNumberOfValidLines()
 	{
 		return 1;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		return this.lineNumber;
 	}
 
 	@Override

@@ -59,26 +59,6 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if ((obj == null) || !(obj.getClass().equals(this.getClass())))
-			return false;
-
-		JumpData branchData = (JumpData) obj;
-			return (_trueHitsCounter.get() == branchData._trueHitsCounter.get())
-					&& (_falseHitsCounter.get() == branchData._falseHitsCounter.get())
-					&& (this.conditionNumber == branchData.conditionNumber);
-	}
-
-	@Override
-	public int hashCode()
-	{
-		return this.conditionNumber;
-	}
-
-	@Override
 	public int getNumberOfCoveredBranches()
 	{
 			return ((_trueHitsCounter.get() > 0) ? 1 : 0) + ((_falseHitsCounter.get() > 0) ? 1: 0);

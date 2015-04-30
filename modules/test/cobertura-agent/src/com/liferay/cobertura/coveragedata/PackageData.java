@@ -35,30 +35,6 @@ public class PackageData
 		return classData;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PackageData)) {
-			return false;
-		}
-
-		PackageData packageData = (PackageData)obj;
-
-		if (_name.equals(packageData._name) && super.equals(packageData)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return _name.hashCode();
-	}
-
 	private static final long serialVersionUID = 1;
 
 	private final String _name;

@@ -1,0 +1,21 @@
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.wsdd.builder", version: "latest.release"
+	}
+}
+
+apply plugin: "com.liferay.portal.tools.wsdd.builder"
+
+wsddBuilder {
+	fileName = "docroot/WEB-INF/service.xml"
+	outputPath = "docroot/WEB-INF/src"
+	serverConfigFileName = "docroot/WEB-INF/server-config.wsdd"
+}

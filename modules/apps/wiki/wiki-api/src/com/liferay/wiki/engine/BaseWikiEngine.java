@@ -111,7 +111,7 @@ public abstract class BaseWikiEngine implements WikiEngine {
 	}
 
 	private static final String _WIKI_PAGE =
-		BaseWikiEngine.class.getName() + "#wikiPage";
+		BaseWikiEngine.class.getName() + "#WIKI_PAGE";
 
 	private final String _editPage;
 

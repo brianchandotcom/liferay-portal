@@ -62,6 +62,7 @@ public class WikiEngineTracker {
 		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
 			bundleContext, WikiEngine.class, null,
 			new ServiceReferenceMapper<String, WikiEngine>() {
+
 				@Override
 				public void map(
 					ServiceReference<WikiEngine> serviceReference,
@@ -76,6 +77,7 @@ public class WikiEngineTracker {
 					finally {
 						_bundleContext.ungetService(serviceReference);
 					}
+
 				}
 			});
 

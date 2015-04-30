@@ -18,8 +18,8 @@
 
 	<dependencies defaultconf="default">
 		<dependency org="com.liferay" name="com.liferay.ruby.gems" rev="1.0.0-SNAPSHOT" />
-		<dependency org="org.jodd" name="jodd-core" rev="3.6.5" />
-		<dependency org="org.jruby" name="jruby" rev="1.7.19" />
+		<dependency org="org.jruby" name="jruby-core" rev="1.7.19" />
+		<dependency org="org.jruby" name="jruby-stdlib" rev="1.7.19" />
 		<dependency conf="test->default" name="junit" org="junit" rev="4.12" />
 	</dependencies>
 </ivy-module>

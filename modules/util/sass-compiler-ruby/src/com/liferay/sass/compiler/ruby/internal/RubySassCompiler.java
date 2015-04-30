@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.sass.compiler.ruby;
+package com.liferay.sass.compiler.ruby.internal;
+
+import com.liferay.sass.compiler.SassCompiler;
 
 import java.io.InputStream;
 
@@ -32,7 +34,7 @@ import org.jruby.embed.internal.LocalContextProvider;
 /**
  * @author David Truong
  */
-public class RubySassCompiler implements AutoCloseable {
+public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 	public RubySassCompiler() throws Exception {
 		this(_COMPILE_MODE_JIT, _COMPILE_DEFAULT_THRESHOLD);
@@ -100,6 +102,7 @@ public class RubySassCompiler implements AutoCloseable {
 		_scriptingContainer.terminate();
 	}
 
+	@Override
 	public String compileFile(
 			String inputFileName, String includeDirName, String imgDirName)
 		throws RubySassCompilerException {
@@ -117,6 +120,7 @@ public class RubySassCompiler implements AutoCloseable {
 		}
 	}
 
+	@Override
 	public String compileString(
 			String input, String includeDirName, String imgDirName)
 		throws RubySassCompilerException {

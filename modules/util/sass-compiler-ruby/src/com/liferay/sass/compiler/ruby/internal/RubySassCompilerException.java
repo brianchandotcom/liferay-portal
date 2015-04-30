@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.sass.compiler.ruby;
+package com.liferay.sass.compiler.ruby.internal;
+
+import com.liferay.sass.compiler.SassCompilerException;
 
 /**
  * @author David Truong
  */
-public class RubySassCompilerException extends Exception {
+public class RubySassCompilerException extends SassCompilerException {
 
 	public RubySassCompilerException() {
 	}

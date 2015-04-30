@@ -1054,9 +1054,18 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		// LPS-55120, temporary workaround while Brian Wulbern investigates it
+		// LPS-55120, temporary workaround until Matthew Tambara fixes it
 
-		if (line.contains("java.io.IOException: Stream closed.")) {
+		if (line.contains("Stream closed.")) {
+			return true;
+		}
+
+		// LPS-55154, temporary workaround until Shuyang Zhou fixes it
+
+		if (line.contains(
+				"Unable to process message " +
+					"{destinationName=liferay/hot_deploy")) {
+
 			return true;
 		}
 

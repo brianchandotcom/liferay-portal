@@ -77,7 +77,6 @@ public class WikiEngineTracker {
 					finally {
 						_bundleContext.ungetService(serviceReference);
 					}
-
 				}
 			});
 

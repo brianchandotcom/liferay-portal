@@ -663,23 +663,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>134</portlet-name>
-		<icon>/html/icons/sites_admin.png</icon>
-		<control-panel-entry-category>sites</control-panel-entry-category>
-		<control-panel-entry-weight>1.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.sitesadmin.SitesControlPanelEntry</control-panel-entry-class>
-		<custom-attributes-display>com.liferay.portlet.sitesadmin.SiteCustomAttributesDisplay</custom-attributes-display>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/sites_admin/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/layouts_admin/js/main.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-sites-admin</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-	</portlet>
-	<portlet>
 		<portlet-name>135</portlet-name>
 		<icon>/html/icons/admin_instances.png</icon>
 		<struts-path>admin_instances</struts-path>

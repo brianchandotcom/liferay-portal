@@ -51,7 +51,8 @@ public final class CommandLoggerHandler {
 	public static void logSeleniumCommand(
 		Element element, List<String> arguments) {
 
-		LoggerElement loggerElement = _commandLoggerElement.loggerElement("ul");
+		LoggerElement loggerElement = _lineGroupLoggerElement.loggerElement(
+			"ul");
 
 		loggerElement.addChildLoggerElement(
 			_getRunLineLoggerElement(element, arguments));
@@ -72,9 +73,9 @@ public final class CommandLoggerHandler {
 
 		_commandElement = element;
 
-		_commandLoggerElement = _getCommandLoggerElement(element);
+		_lineGroupLoggerElement = _getLineGroupLoggerElement(element);
 
-		_commandLogLoggerElement.addChildLoggerElement(_commandLoggerElement);
+		_commandLogLoggerElement.addChildLoggerElement(_lineGroupLoggerElement);
 	}
 
 	private static LoggerElement _getButtonLoggerElement(int btnLinkId) {
@@ -94,28 +95,6 @@ public final class CommandLoggerHandler {
 		loggerElement.setAttribute("data-btnlinkid", "command-" + btnLinkId);
 		loggerElement.setClassName("child-container collapse");
 		loggerElement.setName("ul");
-
-		return loggerElement;
-	}
-
-	private static LoggerElement _getCommandLoggerElement(Element element)
-		throws Exception {
-
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("line-group linkable");
-		loggerElement.setName("li");
-
-		loggerElement.addChildLoggerElement(
-			_getButtonLoggerElement(_btnLinkId));
-
-		loggerElement.addChildLoggerElement(
-			_getLineContainerLoggerElement(element));
-
-		loggerElement.addChildLoggerElement(
-			_getChildContainerLoggerElement(_btnLinkId));
-
-		_btnLinkId++;
 
 		return loggerElement;
 	}
@@ -191,6 +170,28 @@ public final class CommandLoggerHandler {
 		return sb.toString();
 	}
 
+	private static LoggerElement _getLineGroupLoggerElement(Element element)
+		throws Exception {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("line-group linkable");
+		loggerElement.setName("li");
+
+		loggerElement.addChildLoggerElement(
+			_getButtonLoggerElement(_btnLinkId));
+
+		loggerElement.addChildLoggerElement(
+			_getLineContainerLoggerElement(element));
+
+		loggerElement.addChildLoggerElement(
+			_getChildContainerLoggerElement(_btnLinkId));
+
+		_btnLinkId++;
+
+		return loggerElement;
+	}
+
 	private static String _getLineItemText(String className, String text) {
 		LoggerElement loggerElement = new LoggerElement();
 
@@ -258,9 +259,9 @@ public final class CommandLoggerHandler {
 
 	private static int _btnLinkId;
 	private static Element _commandElement;
-	private static LoggerElement _commandLoggerElement;
 	private static final LoggerElement _commandLogLoggerElement =
 		new LoggerElement("commandLog");
+	private static LoggerElement _lineGroupLoggerElement;
 
 	static {
 		_commandLogLoggerElement.setAttribute("data-logid", "01");

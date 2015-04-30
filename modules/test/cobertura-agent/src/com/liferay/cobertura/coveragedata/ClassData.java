@@ -97,7 +97,8 @@ public class ClassData
 	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys) {
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.addSwitch(new SwitchData(switchNumber, keys.length));
+		lineData.addSwitch(
+			new SwitchData(name, lineNumber, switchNumber, keys.length));
 	}
 
 	public void addLineSwitch(
@@ -105,7 +106,8 @@ public class ClassData
 
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.addSwitch(new SwitchData(switchNumber, max - min + 1));
+		lineData.addSwitch(
+			new SwitchData(name, lineNumber, switchNumber, max - min + 1));
 	}
 
 	@Override
@@ -127,7 +129,7 @@ public class ClassData
 
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.touchJump(name, branchNumber, branch,hits);
+		lineData.touchJump(branchNumber, branch,hits);
 	}
 
 	public void touchSwitch(
@@ -135,7 +137,7 @@ public class ClassData
 
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.touchSwitch(name, switchNumber, branch,hits);
+		lineData.touchSwitch(switchNumber, branch,hits);
 	}
 
 	private LineData _getLineData(int lineNumber) {

@@ -26,24 +26,25 @@ public class SwitchData implements BranchCoverageData<SwitchData>, Serializable
 	private static final long serialVersionUID = 9;
 
 
-	private int switchNumber;
+	private final int _switchNumber;
 
 	private final AtomicLongArray _hitsArray;
 
-	public SwitchData(int switchNumber, int caseNumber)
-	{
-		this.switchNumber = switchNumber;
+	public SwitchData(
+		String className, int lineNumber, int switchNumber, int caseNumber) {
+
+		_className = className;
+		_lineNumber = lineNumber;
+		_switchNumber = switchNumber;
 
 		_hitsArray = new AtomicLongArray(caseNumber + 1);
 	}
 
-	public void touchBranch(
-		String className, int lineNumber, int branch,int new_hits) {
-
+	public void touchBranch(int branch,int new_hits) {
 		if (branch >= _hitsArray.length()) {
 			throw new IllegalStateException(
-			"No instrument data for class " + className + " line " +
-				lineNumber + " switch " + switchNumber + " branch " +
+			"No instrument data for class " + _className + " line " +
+				_lineNumber + " switch " + _switchNumber + " branch " +
 					branch);
 		}
 
@@ -80,7 +81,7 @@ public class SwitchData implements BranchCoverageData<SwitchData>, Serializable
 	}
 
 	public int getSwitchNumber() {
-		return switchNumber;
+		return _switchNumber;
 	}
 
 	@Override
@@ -94,5 +95,8 @@ public class SwitchData implements BranchCoverageData<SwitchData>, Serializable
 		}
 
 	}
+
+	private final String _className;
+	private final int _lineNumber;
 
 }

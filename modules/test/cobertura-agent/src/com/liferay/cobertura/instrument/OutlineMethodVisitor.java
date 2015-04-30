@@ -81,7 +81,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 		_currentJump = 0;
 		_currentSwitch = 0;
 
-		_classData.addLine(new LineData(_currentLine));
+		_classData.addLine(new LineData(_classData.getName(), _currentLine));
 
 		_lineLabels.put(start, line);
 	}

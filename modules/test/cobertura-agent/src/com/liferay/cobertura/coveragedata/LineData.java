@@ -30,11 +30,11 @@ public class LineData implements CoverageData<LineData>, Serializable {
 		new ConcurrentHashMap<>();
 	private final ConcurrentMap<Integer, SwitchData> _switchDatas =
 		new ConcurrentHashMap<>();
-	private final int lineNumber;
+	private final int _lineNumber;
 
-	public LineData(int lineNumber)
-	{
-		this.lineNumber = lineNumber;
+	public LineData(String className, int lineNumber) {
+		_className = className;
+		_lineNumber = lineNumber;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class LineData implements CoverageData<LineData>, Serializable {
 	}
 
 	public int getLineNumber() {
-		return lineNumber;
+		return _lineNumber;
 	}
 
 	@Override
@@ -157,32 +157,30 @@ public class LineData implements CoverageData<LineData>, Serializable {
 		_hitCounter.addAndGet(new_hits);
 	}
 
-	public void touchJump(
-		String className, int jumpNumber, boolean branch,int hits) {
-
+	public void touchJump(int jumpNumber, boolean branch,int hits) {
 		JumpData jumpData = _jumpDatas.get(jumpNumber);
 
 		if (jumpData == null) {
 			throw new IllegalStateException(
-				"No instrument data for class " + className + " line " +
-					lineNumber + " jump " + jumpNumber);
+				"No instrument data for class " + _className + " line " +
+					_lineNumber + " jump " + jumpNumber);
 		}
 
 		jumpData.touchBranch(branch, hits);
 	}
 
-	public void touchSwitch(
-		String className, int switchNumber, int branch,int hits) {
-
+	public void touchSwitch(int switchNumber, int branch,int hits) {
 		SwitchData switchData = _switchDatas.get(switchNumber);
 
 		if (switchData == null) {
 			throw new IllegalStateException(
-				"No instrument data for class " + className + " line " +
-					lineNumber + " switch " + switchNumber);
+				"No instrument data for class " + _className + " line " +
+					_lineNumber + " switch " + switchNumber);
 		}
 
-		switchData.touchBranch(className, lineNumber, branch, hits);
+		switchData.touchBranch(branch, hits);
 	}
+
+	private final String _className;
 
 }

@@ -21,15 +21,12 @@ import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.ResolvableDependencies;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -202,32 +199,23 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected Configuration addWSDLBuilderConfiguration(final Project project) {
-		final Configuration configuration = GradleUtil.addConfiguration(
+		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
 		configuration.setDescription(
 			"Configures Apache Axis for generating WSDL client stubs.");
 		configuration.setVisible(false);
 
-		ResolvableDependencies resolvableDependencies =
-			configuration.getIncoming();
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
 
-		resolvableDependencies.beforeResolve(
-			new Action<ResolvableDependencies>() {
+			@Override
+			public void execute(Configuration configuration) {
+				addWSDLBuilderDependencies(project);
+			}
 
-				@Override
-				public void execute(
-					ResolvableDependencies resolvableDependencies) {
-
-					Set<Dependency> dependencies =
-						configuration.getDependencies();
-
-					if (dependencies.isEmpty()) {
-						addWSDLBuilderDependencies(project);
-					}
-				}
-
-			});
+		});
 
 		return configuration;
 	}

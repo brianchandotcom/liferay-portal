@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/wiki-engine-input-editor-common/init.jsp" %>
+<%@ include file="/wiki_engine_input_editor_common/init.jsp" %>
 
 <%
 BaseInputEditorWikiEngine baseInputEditorWikiEngine = BaseInputEditorWikiEngine.getBaseInputEditorWikiEngine(request);
@@ -38,7 +38,7 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 <div>
 	<aui:row>
 		<aui:col id="wikiEditorContainer" width="<%= baseInputEditorWikiEngine.isSyntaxHelpVisible(pageContext) ? 70 : 100 %>">
-			<%@ include file="/wiki-engine-input-editor-common/editor_config.jspf" %>
+			<%@ include file="/wiki_engine_input_editor_common/editor_config.jspf" %>
 
 			<liferay-ui:input-editor
 				configParams="<%= configParams %>"

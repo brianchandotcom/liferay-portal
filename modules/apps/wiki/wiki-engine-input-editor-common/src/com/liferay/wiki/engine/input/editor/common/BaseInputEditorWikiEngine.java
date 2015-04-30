@@ -92,7 +92,7 @@ public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {
 	}
 
 	protected BaseInputEditorWikiEngine(String helpPage, String helpURL) {
-		super("/wiki-engine-input-editor-common/edit_page.jsp");
+		super("/wiki_engine_input_editor_common/edit_page.jsp");
 
 		_helpPage = helpPage;
 		_helpURL = helpURL;

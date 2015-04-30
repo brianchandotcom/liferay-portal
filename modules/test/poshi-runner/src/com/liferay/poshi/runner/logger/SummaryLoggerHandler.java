@@ -29,25 +29,14 @@ import org.dom4j.Element;
  */
 public final class SummaryLoggerHandler {
 
-	public static void failSummary(Element element) {
-		failSummary(element, null);
-	}
-
 	public static void failSummary(Element element, String message) {
 		if (_isCurrentMajorStep(element)) {
+			_causeBodyLoggerElement.setText("ERROR: " + message);
+
 			_failStepLoggerElement(_majorStepLoggerElement);
 
 			_majorStepLoggerElement.addChildLoggerElement(
 				_minorStepsLoggerElement);
-
-			if (Validator.isNotNull(message)) {
-				LoggerElement errorLoggerElement = new LoggerElement();
-
-				errorLoggerElement.setText("ERROR: " + message);
-
-				_causeBodyLoggerElement.addChildLoggerElement(
-					errorLoggerElement);
-			}
 
 			_stopMajorStep();
 		}
@@ -77,20 +66,18 @@ public final class SummaryLoggerHandler {
 		if (_isMajorStep(element)) {
 			_startMajorStep(element);
 
-			_majorStepLoggerElement = _getStepLoggerElement(element);
+			_majorStepLoggerElement = _getMajorStepLoggerElement(element);
 
 			_majorStepsLoggerElement.addChildLoggerElement(
 				_majorStepLoggerElement);
 
-			_minorStepsLoggerElement = new LoggerElement();
-
-			_minorStepsLoggerElement.setName("ul");
+			_minorStepsLoggerElement = _getMinorStepsLoggerElement();
 		}
 
 		if (_isMinorStep(element)) {
 			_startMinorStep(element);
 
-			_minorStepLoggerElement = _getStepLoggerElement(element);
+			_minorStepLoggerElement = _getMinorStepLoggerElement(element);
 
 			_minorStepsLoggerElement.addChildLoggerElement(
 				_minorStepLoggerElement);
@@ -108,29 +95,85 @@ public final class SummaryLoggerHandler {
 		lineContainerLoggerElement.setName("strong");
 	}
 
+	private static LoggerElement _getCauseBodyLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("cause-body");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getLineContainerLoggerElement(Element element)
+		throws Exception {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("line-container");
+		loggerElement.setText(_getSummary(element));
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getMajorStepLoggerElement(Element element)
+		throws Exception {
+
+		LoggerElement loggerElement = _getStepLoggerElement(element);
+
+		loggerElement.setClassName("major-step");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getMajorStepsLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("major-steps");
+		loggerElement.setName("ul");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getMinorStepLoggerElement(Element element)
+		throws Exception {
+
+		LoggerElement loggerElement = _getStepLoggerElement(element);
+
+		loggerElement.setClassName("minor-step");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getMinorStepsLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("minor-steps");
+		loggerElement.setName("ul");
+
+		return loggerElement;
+	}
+
 	private static LoggerElement _getStatusLoggerElement(String status) {
-		LoggerElement statusLoggerElement = new LoggerElement();
+		LoggerElement loggerElement = new LoggerElement();
 
-		statusLoggerElement.setName("span");
-		statusLoggerElement.setText(" --> " + status);
+		loggerElement.setClassName("status");
+		loggerElement.setID(null);
+		loggerElement.setName("span");
+		loggerElement.setText(" --> " + status);
 
-		return statusLoggerElement;
+		return loggerElement;
 	}
 
 	private static LoggerElement _getStepLoggerElement(Element element)
 		throws Exception {
 
-		LoggerElement stepLoggerElement = new LoggerElement();
+		LoggerElement loggerElement = new LoggerElement();
 
-		stepLoggerElement.setName("li");
+		loggerElement.setName("li");
 
-		LoggerElement lineContainerLoggerElement = new LoggerElement();
+		loggerElement.addChildLoggerElement(
+			_getLineContainerLoggerElement(element));
 
-		lineContainerLoggerElement.setText(_getSummary(element));
-
-		stepLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
-
-		return stepLoggerElement;
+		return loggerElement;
 	}
 
 	private static String _getSummary(Element element) throws Exception {

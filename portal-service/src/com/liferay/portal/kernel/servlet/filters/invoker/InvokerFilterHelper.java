@@ -111,41 +111,38 @@ public class InvokerFilterHelper {
 		FilterMapping filterMapping, String filterName, boolean after) {
 
 		while (true) {
-			boolean putIfAbsent = false;
-			List<FilterMapping> previousFilterMappings = _filterMappingsMap.get(
+			List<FilterMapping> oldFilterMappings = _filterMappingsMap.get(
 				filterName);
-			List<FilterMapping> filterMappings;
 
-			if (previousFilterMappings == null) {
-				putIfAbsent = true;
-				filterMappings = new ArrayList<>();
+			List<FilterMapping> newFilterMappings = null;
+
+			if (oldFilterMappings == null) {
+				newFilterMappings = new ArrayList<>();
 			}
 			else {
-				filterMappings = new ArrayList<>(previousFilterMappings);
+				newFilterMappings = new ArrayList<>(oldFilterMappings);
 			}
 
 			if (after) {
-				filterMappings.add(filterMapping);
+				newFilterMappings.add(filterMapping);
 			}
 			else {
-				filterMappings.add(0, filterMapping);
+				newFilterMappings.add(0, filterMapping);
 			}
 
-			if (putIfAbsent) {
+			if (newFilterMappings.size() == 1) {
 				if (_filterMappingsMap.putIfAbsent(
-						filterName, filterMappings)== null) {
+						filterName, newFilterMappings) == null) {
 
 					_filterNames.add(filterName);
 
 					break;
 				}
 			}
-			else {
-				if (_filterMappingsMap.replace(
-						filterName, previousFilterMappings, filterMappings)) {
+			else if (_filterMappingsMap.replace(
+						filterName, oldFilterMappings, newFilterMappings)) {
 
-					break;
-				}
+				break;
 			}
 		}
 	}
@@ -154,28 +151,25 @@ public class InvokerFilterHelper {
 		String filterName = filterMapping.getFilterName();
 
 		while (true) {
-			List<FilterMapping> previousFilterMappings = _filterMappingsMap.get(
+			List<FilterMapping> oldFilterMappings = _filterMappingsMap.get(
 				filterName);
-			List<FilterMapping> filterMappings = new ArrayList<>(
-				previousFilterMappings);
 
-			filterMappings.remove(filterMapping);
+			List<FilterMapping> newFilterMappings = new ArrayList<>(
+				oldFilterMappings);
 
-			if (filterMappings.isEmpty()) {
-				if (_filterMappingsMap.remove(
-						filterName, previousFilterMappings)) {
+			newFilterMappings.remove(filterMapping);
 
+			if (newFilterMappings.isEmpty()) {
+				if (_filterMappingsMap.remove(filterName, oldFilterMappings)) {
 					_filterNames.remove(filterName);
 
 					break;
 				}
 			}
-			else {
-				if (_filterMappingsMap.replace(
-						filterName, previousFilterMappings, filterMappings)) {
+			else if (_filterMappingsMap.replace(
+						filterName, oldFilterMappings, newFilterMappings)) {
 
-					break;
-				}
+				break;
 			}
 		}
 	}
@@ -208,21 +202,26 @@ public class InvokerFilterHelper {
 
 	public void updateFilterMappings(String filterName, Filter filter) {
 		while (true) {
-			List<FilterMapping> previousFilterMappings = _filterMappingsMap.get(
+			List<FilterMapping> oldFilterMappings = _filterMappingsMap.get(
 				filterName);
 
-			if (previousFilterMappings == null) {
+			if (oldFilterMappings == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No filter mapping is under filter name " + filterName);
+				}
+
 				return;
 			}
 
-			List<FilterMapping> filterMappings = new ArrayList<>();
+			List<FilterMapping> newFilterMappings = new ArrayList<>();
 
-			for (FilterMapping filterMapping : previousFilterMappings) {
-				filterMappings.add(filterMapping.replaceFilter(filter));
+			for (FilterMapping oldFilterMapping : oldFilterMappings) {
+				newFilterMappings.add(oldFilterMapping.replaceFilter(filter));
 			}
 
 			if (_filterMappingsMap.replace(
-					filterName, previousFilterMappings, filterMappings)) {
+					filterName, oldFilterMappings, newFilterMappings)) {
 
 				break;
 			}

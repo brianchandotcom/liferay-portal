@@ -64,8 +64,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			properties = new Hashtable<>();
 
 			properties.put("contextPaths", new String[] {_TEST_CONTEXT_PATH});
-			properties.put("jaxWsHandlerFilterStrings", new String[] {"(soap.address=*)"});
-			properties.put("jaxWsServiceFilterStrings", new String[] {"(jaxws=true)"});
+			properties.put(
+				"jaxWsHandlerFilterStrings", new String[] {"(soap.address=*)"});
+			properties.put(
+				"jaxWsServiceFilterStrings", new String[] {"(jaxws=true)"});
 
 			_soapConfiguration.update(properties);
 		}

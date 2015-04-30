@@ -178,10 +178,21 @@ public final class XMLLoggerHandler {
 
 		List<Element> elements = element.elements();
 
-		if (elements.isEmpty()) {
+		String innerText = element.getText();
+
+		innerText = innerText.trim();
+
+		if (elements.isEmpty() && Validator.isNull(innerText)) {
 			sb.append(_getLineItemText("misc", "/&gt;"));
 		}
 		else {
+			sb.append(_getLineItemText("misc", "&gt;"));
+		}
+
+		if (Validator.isNotNull(innerText)) {
+			sb.append(_getLineItemText("name", _escapeHTML(innerText)));
+			sb.append(_getLineItemText("misc", "&lt;/"));
+			sb.append(_getLineItemText("action-type", element.getName()));
 			sb.append(_getLineItemText("misc", "&gt;"));
 		}
 

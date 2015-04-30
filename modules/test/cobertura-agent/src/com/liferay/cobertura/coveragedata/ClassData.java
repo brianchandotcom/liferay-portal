@@ -15,7 +15,6 @@
 package com.liferay.cobertura.coveragedata;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -78,25 +77,25 @@ public class ClassData
 	}
 
 	@Override
-	public int getNumberOfValidBranches()
-	{
-		int number = 0;
-			for (Iterator<LineData> i = children.values().iterator();
-				i.hasNext();
-				number += (i.next()).getNumberOfValidBranches())
-				;
-			return number;
+	public int getNumberOfValidBranches() {
+		int numberOfValidBranches = 0;
+
+		for (LineData lineData :  children.values()) {
+			numberOfValidBranches += lineData.getNumberOfValidBranches();
+		}
+
+		return numberOfValidBranches;
 	}
 
 	@Override
-	public int getNumberOfCoveredBranches()
-	{
-		int number = 0;
-			for (Iterator<LineData> i = children.values().iterator();
-				i.hasNext();
-				number += (i.next()).getNumberOfCoveredBranches())
-				;
-			return number;
+	public int getNumberOfCoveredBranches() {
+		int numberOfCoveredBranches = 0;
+
+		for (LineData lineData :  children.values()) {
+			numberOfCoveredBranches += lineData.getNumberOfCoveredBranches();
+		}
+
+		return numberOfCoveredBranches;
 	}
 
 	public String getPackageName()

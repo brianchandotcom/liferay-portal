@@ -64,9 +64,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 	var="userSearchContainer"
 >
 	<c:if test='<%= !tabs1.equals("summary") %>'>
-		<liferay-ui:search-form
-			page="/html/portlet/site_memberships/user_search.jsp"
-		/>
+		<liferay-ui:user-search-form />
 
 		<div class="separator"><!-- --></div>
 	</c:if>

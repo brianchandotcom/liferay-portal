@@ -20,18 +20,12 @@
 page import="com.liferay.portal.GroupKeyException" %><%@
 page import="com.liferay.portal.MembershipRequestCommentsException" %><%@
 page import="com.liferay.portal.RequiredGroupException" %><%@
-page import="com.liferay.portlet.rolesadmin.action.ActionUtil" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
-page import="com.liferay.portlet.sites.search.OrganizationRoleUserChecker" %><%@
 page import="com.liferay.portlet.sites.search.UserGroupGroupRoleRoleChecker" %><%@
-page import="com.liferay.portlet.sites.search.UserGroupGroupRoleUserGroupChecker" %><%@
 page import="com.liferay.portlet.sites.search.UserGroupRoleRoleChecker" %><%@
-page import="com.liferay.portlet.sites.search.UserGroupRoleUserChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.SiteMembershipChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationGroupChecker" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %>
+page import="com.liferay.portlet.usersadmin.search.OrganizationGroupChecker" %>
 
 <%@ include file="/html/portlet/site_memberships/init-ext.jsp" %>

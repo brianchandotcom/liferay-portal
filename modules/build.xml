@@ -32,6 +32,7 @@
 		<dirset dir="apps/portlet-css" includes="*" />
 		<dirset dir="apps/productivity-center" includes="*" />
 		<dirset dir="apps/quick-note" includes="*" />
+		<dirset dir="apps/roles" includes="*" />
 		<dirset dir="apps/rss" includes="*" />
 		<dirset dir="apps/search" includes="*" />
 		<dirset dir="apps/service-access-control-profile" includes="*" />

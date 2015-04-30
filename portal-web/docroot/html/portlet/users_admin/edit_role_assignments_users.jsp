@@ -42,9 +42,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 	var="userSearchContainer"
 >
-	<liferay-ui:search-form
-		page="/html/portlet/users_admin/user_search.jsp"
-	/>
+	<liferay-ui:user-search-form />
 
 	<%
 	UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();

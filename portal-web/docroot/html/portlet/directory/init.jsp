@@ -18,9 +18,7 @@
 
 <%@ page import="com.liferay.portal.NoSuchOrganizationException" %><%@
 page import="com.liferay.portal.NoSuchUserGroupException" %><%@
-page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %>
+page import="com.liferay.portlet.social.model.SocialRelationConstants" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");

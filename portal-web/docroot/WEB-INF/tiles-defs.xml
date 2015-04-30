@@ -1016,10 +1016,6 @@
 		<put name="portlet_content" value="/portlet/sites_admin/edit_user_group_roles.jsp" />
 	</definition>
 
-	<definition name="portlet.sites_admin.edit_user_roles" extends="portlet.sites_admin">
-		<put name="portlet_content" value="/portlet/sites_admin/edit_user_roles.jsp" />
-	</definition>
-
 	<definition name="portlet.sites_admin.error" extends="portlet.sites_admin">
 		<put name="portlet_content" value="/portlet/sites_admin/error.jsp" />
 	</definition>

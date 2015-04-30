@@ -49,10 +49,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 	</portlet:renderURL>
 
 	<aui:form action="<%= searchURL %>" name="searchFm">
-		<liferay-ui:search-form
-			page="/user_search.jsp"
-			servletContext="<%= application %>"
-		/>
+		<liferay-ui:user-search-form />
 	</aui:form>
 
 	<%

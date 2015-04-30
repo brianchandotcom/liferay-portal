@@ -59,9 +59,7 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 	searchContainer="<%= userGroupSearch %>"
 >
 	<c:if test='<%= !tabs1.equals("summary") %>'>
-		<liferay-ui:search-form
-			page="/html/portlet/site_memberships/user_group_search.jsp"
-		/>
+		<liferay-ui:user-group-search-form />
 
 		<div class="separator"><!-- --></div>
 	</c:if>

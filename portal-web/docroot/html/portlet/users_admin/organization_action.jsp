@@ -105,17 +105,21 @@ if (row == null) {
 	</c:if>
 
 	<c:if test="<%= permissionChecker.isGroupOwner(organizationGroupId) || OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_USER_ROLES) %>">
-		<portlet:renderURL var="assignUserRolesURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user_roles" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+
+		<%
+		String portletId = PortletProviderUtil.getPortletId(UserGroupRole.class.getName(), PortletProvider.Action.EDIT);
+		%>
+
+		<liferay-portlet:renderURL portletName="<%= portletId %>" var="assignUserRolesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="className" value="<%= User.class.getName() %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(organizationGroupId) %>" />
-			<portlet:param name="roleType" value="<%= String.valueOf(RoleConstants.TYPE_ORGANIZATION) %>" />
-		</portlet:renderURL>
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
 			iconCssClass="icon-signin"
 			message="assign-organization-roles"
 			url="<%= assignUserRolesURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

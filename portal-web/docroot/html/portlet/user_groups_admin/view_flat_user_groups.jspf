@@ -41,7 +41,9 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 			</c:if>
 		</aui:nav>
 
-		<aui:nav-bar-search file="/html/portlet/user_groups_admin/user_group_search.jsp" searchContainer="<%= userGroupSearch %>" />
+		<aui:nav-bar-search>
+			<liferay-ui:user-group-search-form />
+		</aui:nav-bar-search>
 	</aui:nav-bar>
 
 	<%

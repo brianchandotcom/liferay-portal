@@ -28,14 +28,7 @@ UserSearch searchContainer = new UserSearch(renderRequest, portletURL);
 request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 
 searchContainer.setRowChecker(rowChecker);
-%>
 
-<liferay-ui:search-form
-	page="/html/portlet/users_admin/user_search.jsp"
-	searchContainer="<%= searchContainer %>"
-/>
-
-<%
 SearchContainer userSearchContainer = searchContainer;
 
 UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
@@ -43,6 +36,8 @@ UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 List<User> results = null;
 int total = 0;
 %>
+
+<liferay-ui:user-search-form />
 
 <%@ include file="/html/portlet/users_admin/user_search_results.jspf" %>
 

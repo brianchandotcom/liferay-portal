@@ -66,9 +66,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 		var="userSearchContainer"
 	>
-		<liferay-ui:search-form
-			page="/html/portlet/users_admin/user_search.jsp"
-		/>
+		<liferay-ui:user-search-form />
 
 		<%
 		UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();

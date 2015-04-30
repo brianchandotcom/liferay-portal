@@ -40,9 +40,7 @@ portletURL.setParameter("eventName", eventName);
 	<liferay-ui:search-container
 		searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 	>
-		<liferay-ui:search-form
-			page="/html/portlet/user_groups_admin/user_group_search.jsp"
-		/>
+		<liferay-ui:user-group-search-form />
 
 		<%
 		UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();

@@ -187,8 +187,7 @@ public class WhipClassFileTransformer implements ClassFileTransformer {
 		}
 
 		_dumpDir = new File(
-			System.getProperty("java.io.tmpdir"),
-			"whip-dump/" + processId);
+			System.getProperty("java.io.tmpdir"), "whip-dump/" + processId);
 	}
 
 	private final Pattern[] _excludePatterns;

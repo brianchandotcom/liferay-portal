@@ -326,8 +326,8 @@ public class InstrumentationAgent {
 				}
 
 				System.out.printf(
-					"[Whip] %s line %d is not covered %n",
-					classData.getName(), lineData.getLineNumber());
+					"[Whip] %s line %d is not covered %n", classData.getName(),
+					lineData.getLineNumber());
 			}
 
 			assertionErrors.add(
@@ -337,17 +337,16 @@ public class InstrumentationAgent {
 			return;
 		}
 
-		System.out.printf(
-			"[Whip] %s is fully covered.%n", classData.getName());
+		System.out.printf("[Whip] %s is fully covered.%n", classData.getName());
 	}
 
-	private static WhipClassFileTransformer _whipClassFileTransformer;
 	private static boolean _dynamicallyInstrumented;
 	private static String[] _excludes;
 	private static String[] _includes;
 	private static Instrumentation _instrumentation;
 	private static final File _lockFile;
 	private static List<OriginalClassDefinition> _originalClassDefinitions;
+	private static WhipClassFileTransformer _whipClassFileTransformer;
 
 	static {
 		File dataFile = new File(

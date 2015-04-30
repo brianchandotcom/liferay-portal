@@ -86,14 +86,39 @@ public class SwitchData implements BranchCoverageData<SwitchData>, Serializable
 
 	@Override
 	public void merge(SwitchData switchData) {
-		if (_hitsArray.length() != switchData._hitsArray.length()) {
-			throw new IllegalArgumentException("Switch case number mismatch");
+		AtomicLongArray hitsArray = switchData._hitsArray;
+
+		if (!_className.equals(switchData._className) ||
+			(_lineNumber != switchData._lineNumber) ||
+			(_switchNumber != switchData._switchNumber) ||
+			(_hitsArray.length() != hitsArray.length())) {
+
+			throw new IllegalArgumentException(
+				"Switch data mismatch, left : " + toString() + ", right : " +
+					switchData);
 		}
 
 		for (int i = 0; i < _hitsArray.length(); i++) {
 			_hitsArray.addAndGet(i, switchData._hitsArray.get(i));
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{className=");
+		sb.append(_className);
+		sb.append(", lineNumber=");
+		sb.append(_lineNumber);
+		sb.append(", switchNumber=");
+		sb.append(_switchNumber);
+		sb.append(", caseNumber=");
+		sb.append(_hitsArray.length());
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final String _className;

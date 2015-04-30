@@ -104,6 +104,14 @@ public class LineData implements CoverageData<LineData>, Serializable {
 
 	@Override
 	public void merge(LineData lineData) {
+		if (!_className.equals(lineData._className) ||
+			(_lineNumber != lineData._lineNumber)) {
+
+			throw new IllegalArgumentException(
+				"Line data mismatch, left : " + toString() + ", right : " +
+					lineData);
+		}
+
 		_hitCounter.addAndGet(lineData._hitCounter.get());
 
 		ConcurrentMap<Integer, JumpData> otherJumpDatas =
@@ -111,7 +119,7 @@ public class LineData implements CoverageData<LineData>, Serializable {
 
 		for (JumpData jumpData : otherJumpDatas.values()) {
 			JumpData previousJumpData = _jumpDatas.putIfAbsent(
-				jumpData.getConditionNumber(), jumpData);
+				jumpData.getJumpNumber(), jumpData);
 
 			if (previousJumpData != null) {
 				previousJumpData.merge(jumpData);
@@ -133,7 +141,7 @@ public class LineData implements CoverageData<LineData>, Serializable {
 
 	public JumpData addJump(JumpData jumpData) {
 		JumpData previousJumpData = _jumpDatas.putIfAbsent(
-			jumpData.getConditionNumber(), jumpData);
+			jumpData.getJumpNumber(), jumpData);
 
 		if (previousJumpData != null) {
 			return previousJumpData;
@@ -179,6 +187,19 @@ public class LineData implements CoverageData<LineData>, Serializable {
 		}
 
 		switchData.touchBranch(branch, hits);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{className=");
+		sb.append(_className);
+		sb.append(", lineNumber=");
+		sb.append(_lineNumber);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final String _className;

@@ -91,7 +91,7 @@ public class ClassData
 	public void addLineJump(int lineNumber, int branchNumber) {
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.addJump(new JumpData(branchNumber));
+		lineData.addJump(new JumpData(name, lineNumber, branchNumber));
 	}
 
 	public void addLineSwitch(int lineNumber, int switchNumber, int[] keys) {
@@ -112,10 +112,13 @@ public class ClassData
 
 	@Override
 	public void merge(ClassData classData) {
-		if (!this.getName().equals(classData.getName()))
-			return;
+		if (!name.equals(classData.name)) {
+			throw new IllegalArgumentException(
+				"Class data mismatch, left : " + name + ", right : " +
+					classData.name);
+		}
 
-			super.merge(classData);
+		super.merge(classData);
 	}
 
 	public void touch(int lineNumber, int hits) {

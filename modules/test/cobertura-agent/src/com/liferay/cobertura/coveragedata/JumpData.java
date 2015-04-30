@@ -25,15 +25,18 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 
 	private static final long serialVersionUID = 8;
 
-	private int conditionNumber;
+	private final int _jumpNumber;
 
 	private final AtomicLong _trueHitsCounter = new AtomicLong();
 
 	private final AtomicLong _falseHitsCounter = new AtomicLong();
 
-	JumpData(int conditionNumber)
-	{
-		this.conditionNumber = conditionNumber;
+	public JumpData(
+		String className, int lineNumber, int jumpNumber) {
+
+		_className = className;
+		_lineNumber = lineNumber;
+		_jumpNumber = jumpNumber;
 	}
 
 	void touchBranch(boolean branch,int new_hits)
@@ -54,8 +57,8 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 			return ((double) getNumberOfCoveredBranches()) / getNumberOfValidBranches();
 	}
 
-	public int getConditionNumber() {
-		return conditionNumber;
+	public int getJumpNumber() {
+		return _jumpNumber;
 	}
 
 	@Override
@@ -72,8 +75,35 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 
 	@Override
 	public void merge(JumpData jumpData) {
+		if (!_className.equals(jumpData._className) ||
+			(_lineNumber != jumpData._lineNumber) ||
+			(_jumpNumber != jumpData._jumpNumber)) {
+
+			throw new IllegalArgumentException(
+				"Jump data mismatch, left : " + toString() + ", right : " +
+					jumpData);
+		}
+
 		_trueHitsCounter.addAndGet(jumpData._trueHitsCounter.get());
 		_falseHitsCounter.addAndGet(jumpData._falseHitsCounter.get());
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{className=");
+		sb.append(_className);
+		sb.append(", lineNumber=");
+		sb.append(_lineNumber);
+		sb.append(", jumpNumber=");
+		sb.append(_jumpNumber);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private final String _className;
+	private final int _lineNumber;
 
 }

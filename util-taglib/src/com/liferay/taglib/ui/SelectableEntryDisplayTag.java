@@ -16,7 +16,7 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.SelectableEntry;
+import com.liferay.portal.util.SelectableEntry;
 import com.liferay.taglib.servlet.JspWriterHttpServletResponse;
 import com.liferay.taglib.util.IncludeTag;
 

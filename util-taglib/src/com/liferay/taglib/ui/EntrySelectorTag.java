@@ -16,8 +16,8 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.SelectableEntry;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.SelectableEntry;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;

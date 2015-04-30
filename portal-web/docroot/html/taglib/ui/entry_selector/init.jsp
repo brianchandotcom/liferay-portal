@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.model.SelectableEntry" %>
+<%@ page import="com.liferay.portal.util.SelectableEntry" %>
 
 <%
 List<SelectableEntry> entries = (List<SelectableEntry>)request.getAttribute("liferay-ui:entry-selector:entries");

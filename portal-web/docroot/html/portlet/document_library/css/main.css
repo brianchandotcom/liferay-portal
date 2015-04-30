@@ -282,8 +282,14 @@
 			overflow: hidden;
 		}
 
-		.document-type .lfr-panel-content {
-			min-height: 35px;
+		.document-type {
+			.lfr-panel-content {
+				min-height: 35px;
+			}
+
+			.document-type-selector .btn {
+				white-space: normal;
+			}
 		}
 
 		.document-type-fields {

@@ -149,10 +149,10 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 			configuration,
 			new Action<Configuration>() {
 
-			@Override
-			public void execute(Configuration configuration) {
-				addXSDBuilderDependencies(project);
-			}
+				@Override
+				public void execute(Configuration configuration) {
+					addXSDBuilderDependencies(project);
+				}
 
 		});
 

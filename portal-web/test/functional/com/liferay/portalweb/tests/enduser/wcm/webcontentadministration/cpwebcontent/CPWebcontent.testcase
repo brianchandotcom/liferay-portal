@@ -227,7 +227,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55243" name="AddStructureWithSubfield" priority="5">
+	<command known-issues="LPS-52917" name="AddStructureWithSubfield" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

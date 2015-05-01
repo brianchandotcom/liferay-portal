@@ -35,10 +35,51 @@
 						</then>
 					</if>
 
+					<var name="dest.dir" unset="true" />
+					<var name="dest.file" unset="true" />
+
+					<propertyregex
+						input="@{dest}"
+						property="dest.dir"
+						regexp="(\w+\.\w+)"
+						replace=""
+					/>
+
+					<if>
+						<isset property="dest.dir" />
+						<then>
+							<propertyregex
+								input="@{dest}"
+								property="dest.file"
+								regexp="${dest.dir}"
+								replace=""
+							/>
+
+							<if>
+								<equals arg1="${dest.dir}" arg2="" />
+								<then>
+									<var name="dest.dir" value="." />
+								</then>
+							</if>
+						</then>
+						<else>
+							<var name="dest.dir" value="@{dest}" />
+
+							<propertyregex
+								input="@{src}"
+								property="dest.file"
+								regexp=".*\/(\w+\.\w+)"
+								replace="\1"
+							/>
+						</else>
+					</if>
+
+					<mkdir dir="${dest.dir}" />
+
 					<copy
 						file="/opt/dev/cache/${mirrors.get.cache.file}"
 						overwrite="true"
-						tofile="@{dest}"
+						tofile="${dest.dir}/${dest.file}"
 					/>
 
 					<var name="mirrors.get.cache.file" unset="true" />

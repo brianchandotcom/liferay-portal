@@ -31,7 +31,7 @@ import org.gradle.process.JavaExecSpec;
 /**
  * @author Andrea Di Giorgi
  */
-public class JavadocFormatterTask extends JavaExec {
+public class FormatJavadocTask extends JavaExec {
 
 	@Override
 	public JavaExecSpec args(Iterable<?> args) {

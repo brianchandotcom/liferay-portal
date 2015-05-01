@@ -49,7 +49,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		TaskContainer taskContainer = project.getTasks();
 
 		Task task = taskContainer.create(
-			"formatJavadoc", JavadocFormatterTask.class);
+			"formatJavadoc", FormatJavadocTask.class);
 
 		task.setDescription("Runs Liferay Javadoc Formatter to format files.");
 

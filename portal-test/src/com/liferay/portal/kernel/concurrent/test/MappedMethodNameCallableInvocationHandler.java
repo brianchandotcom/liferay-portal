@@ -39,7 +39,7 @@ public class MappedMethodNameCallableInvocationHandler
 	public Object invoke(Object proxy, Method method, Object[] args)
 		throws Throwable {
 
-		Callable beforeCallable = null;
+		Callable<?> beforeCallable = null;
 
 		if (_removeOnCall) {
 			beforeCallable = _beforeCallables.remove(method.getName());
@@ -59,7 +59,7 @@ public class MappedMethodNameCallableInvocationHandler
 			throw ite.getTargetException();
 		}
 		finally {
-			Callable afterCallable = null;
+			Callable<?> afterCallable = null;
 
 			if (_removeOnCall) {
 				afterCallable = _afterCallables.remove(method.getName());
@@ -74,16 +74,16 @@ public class MappedMethodNameCallableInvocationHandler
 		}
 	}
 
-	public void putAfterCallable(String methodName, Callable callable) {
+	public void putAfterCallable(String methodName, Callable<?> callable) {
 		_afterCallables.put(methodName, callable);
 	}
 
-	public void putBeforeCallable(String methodName, Callable callable) {
+	public void putBeforeCallable(String methodName, Callable<?> callable) {
 		_beforeCallables.put(methodName, callable);
 	}
 
-	private final Map<String, Callable> _afterCallables = new HashMap<>();
-	private final Map<String, Callable> _beforeCallables = new HashMap<>();
+	private final Map<String, Callable<?>> _afterCallables = new HashMap<>();
+	private final Map<String, Callable<?>> _beforeCallables = new HashMap<>();
 	private final Object _instance;
 	private final boolean _removeOnCall;
 

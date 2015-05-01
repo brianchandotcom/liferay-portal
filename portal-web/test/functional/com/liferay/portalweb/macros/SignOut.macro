@@ -1,0 +1,34 @@
+<definition>
+	<command name="_signOut">
+		<if>
+			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />
+			<then>
+				<execute function="Click" locator1="Dockbar#USER_NAME" />
+
+				<execute function="Click" locator1="Dockbar#USER_SIGN_OUT" />
+			</then>
+		</if>
+	</command>
+
+	<command name="signOut">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SignOut#_signOut" />
+	</command>
+
+	<command name="signOutOfSite">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="SignOut#_signOut" />
+	</command>
+
+	<command name="signOutOfSpecificURL">
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${url}" />
+		</execute>
+
+		<execute macro="SignOut#_signOut" />
+	</command>
+</definition>

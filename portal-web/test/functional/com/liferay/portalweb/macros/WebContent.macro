@@ -1191,7 +1191,7 @@
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute macro="WebContent#gotoCP">
-			<var name="key_webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
@@ -1374,6 +1374,16 @@
 				<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#BODY_FIELD" value1="${webContentContent}" />
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
+		</if>
+
+		<if>
+			<isset var="nestedField" />
+			<then>
+				<var name="key_fieldName" value="${fieldName}" />
+				<var name="key_nestedFieldName" value="${nestedField}" />
+
+				<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#NESTED_FIELD" value1="${nestedFieldData}" />
+			</then>
 		</if>
 
 		<if>

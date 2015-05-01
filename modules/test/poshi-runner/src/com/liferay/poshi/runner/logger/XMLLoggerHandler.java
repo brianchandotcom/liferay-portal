@@ -175,6 +175,29 @@ public final class XMLLoggerHandler {
 		return closingLineContainerLoggerElement;
 	}
 
+	private static LoggerElement _getConditionalLoggerElement(Element element) {
+		LoggerElement loggerElement = _getLineGroupLoggerElement(
+			"conditional", element);
+
+		List<Element> childElements = element.elements();
+
+		if (!childElements.isEmpty()) {
+			LoggerElement childContainerLoggerElement =
+				_getChildContainerLoggerElement();
+
+			for (Element childElement : childElements) {
+				childContainerLoggerElement.addChildLoggerElement(
+					_getConditionalLoggerElement(childElement));
+			}
+
+			loggerElement.addChildLoggerElement(childContainerLoggerElement);
+			loggerElement.addChildLoggerElement(
+				_getClosingLineContainerLoggerElement(element));
+		}
+
+		return loggerElement;
+	}
+
 	private static LoggerElement _getEchoLoggerElement(Element element) {
 		return _getLineGroupLoggerElement("echo", element);
 	}

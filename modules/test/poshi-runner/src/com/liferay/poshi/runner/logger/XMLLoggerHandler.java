@@ -255,6 +255,10 @@ public final class XMLLoggerHandler {
 		return loggerElement;
 	}
 
+	private static LoggerElement _getVarLoggerElement(Element element) {
+		return _getLineGroupLoggerElement("var", element);
+	}
+
 	private static boolean _isExecutingMacro(Element element) {
 		if ((element.attributeValue("macro") != null) ||
 			(element.attributeValue("macro-desktop") != null) ||

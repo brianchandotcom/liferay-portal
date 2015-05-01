@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.xml.formatter;
 
+import com.liferay.gradle.util.FileUtil;
+
 import groovy.lang.Closure;
 
 import java.io.File;
@@ -82,7 +84,8 @@ public class FormatXMLTask extends SourceTask {
 	protected Map<String, Object> getSystemProperties(File file) {
 		Map<String, Object> systemProperties = new HashMap<>();
 
-		systemProperties.put("xml.formatter.file", file.getAbsolutePath());
+		systemProperties.put(
+			"xml.formatter.file", FileUtil.getAbsolutePath(file));
 		systemProperties.put("xml.formatter.strip.comments", isStripComments());
 
 		return systemProperties;

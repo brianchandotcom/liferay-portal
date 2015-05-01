@@ -14,18 +14,12 @@
 
 package com.liferay.gradle.plugins.xml.formatter;
 
-import java.util.Set;
+import com.liferay.gradle.util.GradleUtil;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.ResolvableDependencies;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
-import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -43,46 +37,33 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 		addFormatXMLTask(project);
 	}
 
-	protected Task addFormatXMLTask(Project project) {
-		TaskContainer taskContainer = project.getTasks();
+	protected FormatXMLTask addFormatXMLTask(Project project) {
+		FormatXMLTask formatXMLTask = GradleUtil.addTask(
+			project, FORMAT_XML_TASK_NAME, FormatXMLTask.class);
 
-		Task task = taskContainer.create(
-			FORMAT_XML_TASK_NAME, FormatXMLTask.class);
+		formatXMLTask.setDescription(
+			"Runs Liferay XML Formatter to format files.");
 
-		task.setDescription("Runs Liferay XML Formatter to format files.");
-
-		return task;
+		return formatXMLTask;
 	}
 
 	protected Configuration addXMLFormatterConfiguration(
 		final Project project) {
 
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		final Configuration configuration = configurationContainer.create(
-			CONFIGURATION_NAME);
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CONFIGURATION_NAME);
 
 		configuration.setDescription(
 			"Configures Liferay XML Formatter for this project.");
 		configuration.setVisible(false);
 
-		ResolvableDependencies resolvableDependencies =
-			configuration.getIncoming();
-
-		resolvableDependencies.beforeResolve(
-			new Action<ResolvableDependencies>() {
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
 
 				@Override
-				public void execute(
-					ResolvableDependencies resolvableDependencies) {
-
-					Set<Dependency> dependencies =
-						configuration.getDependencies();
-
-					if (dependencies.isEmpty()) {
-						addXMLFormatterDependencies(project);
-					}
+				public void execute(Configuration configuration) {
+					addXMLFormatterDependencies(project);
 				}
 
 			});
@@ -91,11 +72,9 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 	}
 
 	protected void addXMLFormatterDependencies(Project project) {
-		DependencyHandler dependencyHandler = project.getDependencies();
-
-		dependencyHandler.add(
-			CONFIGURATION_NAME,
-			"com.liferay:com.liferay.xml.formatter:latest.release");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.xml.formatter", "latest.release");
 	}
 
 }

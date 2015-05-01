@@ -14,21 +14,15 @@
 
 package com.liferay.gradle.plugins.service.builder;
 
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.portal.tools.service.builder.ServiceBuilderArgs;
-
-import java.util.Set;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.ResolvableDependencies;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionContainer;
-import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -47,47 +41,33 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 		addBuildServiceTask(project);
 	}
 
-	protected Task addBuildServiceTask(Project project) {
-		TaskContainer taskContainer = project.getTasks();
+	protected BuildServiceTask addBuildServiceTask(Project project) {
+		BuildServiceTask buildServiceTask = GradleUtil.addTask(
+			project, BUILD_SERVICE_TASK_NAME, BuildServiceTask.class);
 
-		Task task = taskContainer.create(
-			BUILD_SERVICE_TASK_NAME, BuildServiceTask.class);
+		buildServiceTask.setDescription("Runs Liferay Service Builder.");
+		buildServiceTask.setGroup(BasePlugin.BUILD_GROUP);
 
-		task.setDescription("Runs Liferay Service Builder.");
-		task.setGroup("build");
-
-		return task;
+		return buildServiceTask;
 	}
 
 	protected Configuration addServiceBuilderConfiguration(
 		final Project project) {
 
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		final Configuration configuration = configurationContainer.create(
-			CONFIGURATION_NAME);
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CONFIGURATION_NAME);
 
 		configuration.setDescription(
 			"Configures Liferay Service Builder for this project.");
 		configuration.setVisible(false);
 
-		ResolvableDependencies resolvableDependencies =
-			configuration.getIncoming();
-
-		resolvableDependencies.beforeResolve(
-			new Action<ResolvableDependencies>() {
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
 
 				@Override
-				public void execute(
-					ResolvableDependencies resolvableDependencies) {
-
-					Set<Dependency> dependencies =
-						configuration.getDependencies();
-
-					if (dependencies.isEmpty()) {
-						addServiceBuilderDependencies(project);
-					}
+				public void execute(Configuration configuration) {
+					addServiceBuilderDependencies(project);
 				}
 
 			});
@@ -96,12 +76,9 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected void addServiceBuilderDependencies(Project project) {
-		DependencyHandler dependencyHandler = project.getDependencies();
-
-		dependencyHandler.add(
-			CONFIGURATION_NAME,
-			"com.liferay:com.liferay.portal.tools.service.builder:" +
-				"latest.release");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.portal.tools.service.builder", "latest.release");
 	}
 
 	protected ServiceBuilderArgs addServiceBuilderExtension(Project project) {

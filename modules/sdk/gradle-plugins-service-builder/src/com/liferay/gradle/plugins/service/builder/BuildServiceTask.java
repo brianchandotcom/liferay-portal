@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.service.builder;
 
+import com.liferay.gradle.util.StringUtil;
 import com.liferay.portal.tools.service.builder.ServiceBuilderArgs;
 
 import java.io.File;
@@ -87,7 +88,8 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.input.file=" + serviceBuilderArgs.getInputFileName());
 		args.add(
 			"service.model.hints.configs=" +
-				_merge(serviceBuilderArgs.getModelHintsConfigs()));
+				StringUtil.merge(
+					serviceBuilderArgs.getModelHintsConfigs(), ","));
 		args.add(
 			"service.model.hints.file=" +
 				serviceBuilderArgs.getModelHintsFileName());
@@ -96,13 +98,15 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.props.util=" + serviceBuilderArgs.getPropsUtil());
 		args.add(
 			"service.read.only.prefixes=" +
-				_merge(serviceBuilderArgs.getReadOnlyPrefixes()));
+				StringUtil.merge(
+					serviceBuilderArgs.getReadOnlyPrefixes(), ","));
 		args.add(
 			"service.remoting.file=" +
 				serviceBuilderArgs.getRemotingFileName());
 		args.add(
 			"service.resource.actions.configs=" +
-				_merge(serviceBuilderArgs.getResourceActionsConfigs()));
+				StringUtil.merge(
+					serviceBuilderArgs.getResourceActionsConfigs(), ","));
 		args.add(
 			"service.resources.dir=" +
 				serviceBuilderArgs.getResourcesDirName());
@@ -110,7 +114,8 @@ public class BuildServiceTask extends JavaExec {
 			"service.spring.file=" + serviceBuilderArgs.getSpringFileName());
 		args.add(
 			"service.spring.namespaces=" +
-				_merge(serviceBuilderArgs.getSpringNamespaces()));
+				StringUtil.merge(
+					serviceBuilderArgs.getSpringNamespaces(), ","));
 		args.add("service.sql.dir=" + serviceBuilderArgs.getSqlDirName());
 		args.add("service.sql.file=" + serviceBuilderArgs.getSqlFileName());
 		args.add(
@@ -163,20 +168,6 @@ public class BuildServiceTask extends JavaExec {
 	@Override
 	public void setWorkingDir(Object dir) {
 		throw new UnsupportedOperationException();
-	}
-
-	private String _merge(String[] array) {
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-
-			if ((i + 1) < array.length) {
-				sb.append(',');
-			}
-		}
-
-		return sb.toString();
 	}
 
 }

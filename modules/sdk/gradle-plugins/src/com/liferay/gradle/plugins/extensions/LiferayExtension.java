@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.extensions;
 
-import com.liferay.gradle.plugins.util.ClosureBackedScript;
+import com.liferay.gradle.util.ClosureBackedScript;
 
 import groovy.lang.Closure;
 

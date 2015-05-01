@@ -12,32 +12,28 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.util;
+package com.liferay.gradle.util;
+
+import groovy.lang.Closure;
+import groovy.lang.Script;
 
 /**
- * @author Brian Wing Shun Chan
  * @author Andrea Di Giorgi
  */
-public class Validator {
+public class ClosureBackedScript extends Script {
 
-	public static boolean isNotNull(String s) {
-		return !isNull(s);
+	public ClosureBackedScript(Closure<?> closure) {
+		_closure = closure;
 	}
 
-	public static boolean isNull(String s) {
-		if (s == null) {
-			return true;
-		}
+	@Override
+	public Object run() {
+		_closure.setDelegate(this);
+		_closure.setResolveStrategy(Closure.DELEGATE_FIRST);
 
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			if (!Character.isWhitespace(c)) {
-				return false;
-			}
-		}
-
-		return true;
+		return _closure.call();
 	}
+
+	private final Closure<?> _closure;
 
 }

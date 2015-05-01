@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.javadoc.formatter;
 
+import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.StringUtil;
 import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 
 import java.io.File;
@@ -24,7 +26,6 @@ import java.util.List;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.process.JavaExecSpec;
 
@@ -63,26 +64,22 @@ public class FormatJavadocTask extends JavaExec {
 
 		Project project = getProject();
 
-		ExtensionContainer extensionContainer = project.getExtensions();
-
-		JavadocFormatterArgs javadocFormatterArgs =
-			extensionContainer.getByType(JavadocFormatterArgs.class);
-
-		args.add("javadoc.author=" + javadocFormatterArgs.getAuthor());
+		args.add("javadoc.author=" + getAuthor());
+		args.add("javadoc.init=" + isInitializeMissingJavadocs());
 		args.add(
-			"javadoc.init=" +
-				javadocFormatterArgs.isInitializeMissingJavadocs());
-		args.add("javadoc.input.dir=" + javadocFormatterArgs.getInputDirName());
-		args.add("javadoc.limit=" + _merge(javadocFormatterArgs.getLimits()));
+			"javadoc.input.dir=" + FileUtil.getAbsolutePath(getInputDir()));
+		args.add("javadoc.limit=" + StringUtil.merge(getLimits(), ","));
 		args.add(
 			"javadoc.lowest.supported.java.version=" +
-				javadocFormatterArgs.getLowestSupportedJavaVersion());
-		args.add(
-			"javadoc.output.file.prefix=" +
-				javadocFormatterArgs.getOutputFilePrefix());
-		args.add("javadoc.update=" + javadocFormatterArgs.isUpdateJavadocs());
+				getLowestSupportedJavaVersion());
+		args.add("javadoc.output.file.prefix=" + getOutputFilePrefix());
+		args.add("javadoc.update=" + isUpdateJavadocs());
 
 		return args;
+	}
+
+	public String getAuthor() {
+		return _javadocFormatterArgs.getAuthor();
 	}
 
 	@Override
@@ -96,9 +93,27 @@ public class FormatJavadocTask extends JavaExec {
 			JavadocFormatterPlugin.CONFIGURATION_NAME);
 	}
 
+	public File getInputDir() {
+		Project project = getProject();
+
+		return project.file(_javadocFormatterArgs.getInputDirName());
+	}
+
+	public String[] getLimits() {
+		return _javadocFormatterArgs.getLimits();
+	}
+
+	public double getLowestSupportedJavaVersion() {
+		return _javadocFormatterArgs.getLowestSupportedJavaVersion();
+	}
+
 	@Override
 	public String getMain() {
 		return "com.liferay.javadoc.formatter.JavadocFormatter";
+	}
+
+	public String getOutputFilePrefix() {
+		return _javadocFormatterArgs.getOutputFilePrefix();
 	}
 
 	@Override
@@ -108,9 +123,21 @@ public class FormatJavadocTask extends JavaExec {
 		return project.getProjectDir();
 	}
 
+	public boolean isInitializeMissingJavadocs() {
+		return _javadocFormatterArgs.isInitializeMissingJavadocs();
+	}
+
+	public boolean isUpdateJavadocs() {
+		return _javadocFormatterArgs.isUpdateJavadocs();
+	}
+
 	@Override
 	public JavaExec setArgs(Iterable<?> applicationArgs) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void setAuthor(String author) {
+		_javadocFormatterArgs.setAuthor(author);
 	}
 
 	@Override
@@ -118,23 +145,42 @@ public class FormatJavadocTask extends JavaExec {
 		throw new UnsupportedOperationException();
 	}
 
+	public void setInitializeMissingJavadocs(
+		boolean initializeMissingJavadocs) {
+
+		_javadocFormatterArgs.setInitializeMissingJavadocs(
+			initializeMissingJavadocs);
+	}
+
+	public void setInputDirName(String inputDirName) {
+		_javadocFormatterArgs.setInputDirName(inputDirName);
+	}
+
+	public void setLimits(String[] limits) {
+		_javadocFormatterArgs.setLimits(limits);
+	}
+
+	public void setLowestSupportedJavaVersion(
+		double lowestSupportedJavaVersion) {
+
+		_javadocFormatterArgs.setLowestSupportedJavaVersion(
+			lowestSupportedJavaVersion);
+	}
+
+	public void setOutputFilePrefix(String outputFilePrefix) {
+		_javadocFormatterArgs.setOutputFilePrefix(outputFilePrefix);
+	}
+
+	public void setUpdateJavadocs(boolean updateJavadocs) {
+		_javadocFormatterArgs.setUpdateJavadocs(updateJavadocs);
+	}
+
 	@Override
 	public void setWorkingDir(Object dir) {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _merge(String[] array) {
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-
-			if ((i + 1) < array.length) {
-				sb.append(',');
-			}
-		}
-
-		return sb.toString();
-	}
+	private final JavadocFormatterArgs _javadocFormatterArgs =
+		new JavadocFormatterArgs();
 
 }

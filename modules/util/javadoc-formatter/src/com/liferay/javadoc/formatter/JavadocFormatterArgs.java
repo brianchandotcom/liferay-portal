@@ -74,6 +74,10 @@ public class JavadocFormatterArgs {
 		_limits = _split(limits);
 	}
 
+	public void setLimits(String[] limits) {
+		_limits = limits;
+	}
+
 	public void setLowestSupportedJavaVersion(
 		double lowestSupportedJavaVersion) {
 

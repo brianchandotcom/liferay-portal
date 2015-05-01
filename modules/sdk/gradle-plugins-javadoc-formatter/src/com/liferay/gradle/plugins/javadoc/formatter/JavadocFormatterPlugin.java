@@ -15,13 +15,11 @@
 package com.liferay.gradle.plugins.javadoc.formatter;
 
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.plugins.ExtensionContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -35,7 +33,6 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		addJavadocFormatterConfiguration(project);
-		addJavadocFormatterExtension(project);
 
 		addFormatJavadocTask(project);
 	}
@@ -78,15 +75,6 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.javadoc.formatter", "latest.release");
-	}
-
-	protected JavadocFormatterArgs addJavadocFormatterExtension(
-		Project project) {
-
-		ExtensionContainer extensionContainer = project.getExtensions();
-
-		return extensionContainer.create(
-			"javadocFormatter", JavadocFormatterArgs.class);
 	}
 
 }

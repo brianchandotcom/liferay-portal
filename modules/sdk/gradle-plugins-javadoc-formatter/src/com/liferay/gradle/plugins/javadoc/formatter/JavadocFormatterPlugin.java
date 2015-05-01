@@ -14,21 +14,14 @@
 
 package com.liferay.gradle.plugins.javadoc.formatter;
 
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.javadoc.formatter.JavadocFormatterArgs;
-
-import java.util.Set;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.ResolvableDependencies;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.plugins.ExtensionContainer;
-import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -36,6 +29,8 @@ import org.gradle.api.tasks.TaskContainer;
 public class JavadocFormatterPlugin implements Plugin<Project> {
 
 	public static final String CONFIGURATION_NAME = "javadocFormatter";
+
+	public static final String FORMAT_JAVADOC_TASK_NAME = "formatJavadoc";
 
 	@Override
 	public void apply(Project project) {
@@ -45,59 +40,44 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		addFormatJavadocTask(project);
 	}
 
-	protected Task addFormatJavadocTask(Project project) {
-		TaskContainer taskContainer = project.getTasks();
+	protected FormatJavadocTask addFormatJavadocTask(Project project) {
+		FormatJavadocTask formatJavadocTask = GradleUtil.addTask(
+			project, FORMAT_JAVADOC_TASK_NAME, FormatJavadocTask.class);
 
-		Task task = taskContainer.create(
-			"formatJavadoc", FormatJavadocTask.class);
+		formatJavadocTask.setDescription(
+			"Runs Liferay Javadoc Formatter to format files.");
 
-		task.setDescription("Runs Liferay Javadoc Formatter to format files.");
-
-		return task;
+		return formatJavadocTask;
 	}
 
 	protected Configuration addJavadocFormatterConfiguration(
 		final Project project) {
 
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		final Configuration configuration = configurationContainer.create(
-			CONFIGURATION_NAME);
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CONFIGURATION_NAME);
 
 		configuration.setDescription(
 			"Configures Liferay Javadoc Formatter for this project.");
 		configuration.setVisible(false);
 
-		ResolvableDependencies resolvableDependencies =
-			configuration.getIncoming();
-
-		resolvableDependencies.beforeResolve(
-			new Action<ResolvableDependencies>() {
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
 
 				@Override
-				public void execute(
-					ResolvableDependencies resolvableDependencies) {
-
-					Set<Dependency> dependencies =
-						configuration.getDependencies();
-
-					if (dependencies.isEmpty()) {
-						addJavadocFormatterDependencies(project);
-					}
+				public void execute(Configuration configuration) {
+					addJavadocFormatterDependencies(project);
 				}
 
-			});
+		});
 
 		return configuration;
 	}
 
 	protected void addJavadocFormatterDependencies(Project project) {
-		DependencyHandler dependencyHandler = project.getDependencies();
-
-		dependencyHandler.add(
-			CONFIGURATION_NAME,
-			"com.liferay:com.liferay.javadoc.formatter:latest.release");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.javadoc.formatter", "latest.release");
 	}
 
 	protected JavadocFormatterArgs addJavadocFormatterExtension(

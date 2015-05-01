@@ -79,6 +79,20 @@ public class ServiceDependency {
 		_serviceTracker = serviceTracker;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("ServiceDependency{");
+		sb.append("_fulfilled=");
+		sb.append(_fulfilled);
+		sb.append(", _serviceDependencyVerifier=");
+		sb.append(_serviceDependencyVerifier);
+		sb.append('}');
+
+		return sb.toString();
+	}
+
 	private boolean _fulfilled;
 	private final ServiceDependencyVerifier _serviceDependencyVerifier;
 	private ServiceTracker<Object, Object> _serviceTracker;

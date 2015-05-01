@@ -14,6 +14,8 @@
 
 package com.liferay.registry;
 
+import com.liferay.registry.dependency.ServiceDependencyManager;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -31,6 +33,8 @@ public interface Registry {
 	public <T> T getService(ServiceReference<T> serviceReference);
 
 	public <T> T getService(String className);
+
+	public Collection<ServiceDependencyManager> getServiceDependencyManagers();
 
 	public <T> ServiceReference<T> getServiceReference(Class<T> clazz);
 
@@ -68,6 +72,9 @@ public interface Registry {
 	public <T> ServiceRegistration<T> registerService(
 		String[] classNames, T service, Map<String, Object> properties);
 
+	public void registerServiceDependencyManager(
+		ServiceDependencyManager serviceDependencyManager);
+
 	public Registry setRegistry(Registry registry) throws SecurityException;
 
 	public <S, T> ServiceTracker<S, T> trackServices(Class<S> clazz);
@@ -89,5 +96,8 @@ public interface Registry {
 		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer);
 
 	public <T> boolean ungetService(ServiceReference<T> serviceReference);
+
+	public void unregisterServiceDependencyManager(
+		ServiceDependencyManager serviceDependencyManager);
 
 }

@@ -30,6 +30,12 @@ import java.util.Set;
  */
 public class ServiceDependencyManager {
 
+	public ServiceDependencyManager() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerServiceDependencyManager(this);
+	}
+
 	public void addServiceDependencyListener(
 		ServiceDependencyListener serviceDependencyListener) {
 
@@ -52,6 +58,10 @@ public class ServiceDependencyManager {
 		}
 
 		_serviceDependencies.clear();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.unregisterServiceDependencyManager(this);
 	}
 
 	public void registerDependencies(Class<?>... serviceClasses) {
@@ -107,6 +117,18 @@ public class ServiceDependencyManager {
 		ServiceDependencyListener serviceDependencyListener) {
 
 		_serviceDependencyListeners.remove(serviceDependencyListener);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("ServiceDependencyManager{");
+		sb.append("_serviceDependencies=");
+		sb.append(_serviceDependencies);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public void verifyDependencies() {

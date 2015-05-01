@@ -20,6 +20,7 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.lang.reflect.Array;
 
@@ -27,9 +28,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -90,6 +93,11 @@ public class RegistryImpl implements Registry {
 		}
 
 		return (T)_bundleContext.getService(serviceReference);
+	}
+
+	@Override
+	public Collection<ServiceDependencyManager> getServiceDependencyManagers() {
+		return Collections.unmodifiableCollection(_serviceDependencyManagers);
 	}
 
 	@Override
@@ -301,6 +309,13 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
+	public synchronized void registerServiceDependencyManager(
+		ServiceDependencyManager serviceDependencyManager) {
+
+		_serviceDependencyManagers.add(serviceDependencyManager);
+	}
+
+	@Override
 	public Registry setRegistry(Registry registry) throws SecurityException {
 		return registry;
 	}
@@ -399,6 +414,13 @@ public class RegistryImpl implements Registry {
 			serviceReferenceWrapper.getServiceReference());
 	}
 
+	@Override
+	public void unregisterServiceDependencyManager(
+		ServiceDependencyManager serviceDependencyManager) {
+
+		_serviceDependencyManagers.remove(serviceDependencyManager);
+	}
+
 	private Map<String, Object> addBundleContextProperties(
 		Map<String, Object> properties) {
 
@@ -416,5 +438,7 @@ public class RegistryImpl implements Registry {
 	}
 
 	private final BundleContext _bundleContext;
+	private final Set<ServiceDependencyManager> _serviceDependencyManagers =
+		new HashSet<>();
 
 }

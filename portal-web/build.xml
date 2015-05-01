@@ -12,6 +12,7 @@
 
 	<path id="jspc.common.classpath">
 		<pathelement path="docroot/WEB-INF/classes" />
+		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
 		<pathelement location="${project.dir}/portal-impl/portal-impl.jar" />
 		<pathelement location="${project.dir}/portal-pacl/portal-pacl.jar" />
 		<pathelement location="${project.dir}/portal-service/portal-service.jar" />
@@ -678,13 +679,13 @@ ${oversize.files.jsp}</fail>
 	<target name="compile-resin">
 		<if>
 			<not>
-				<isset property="jdk.6.home" />
+				<isset property="jdk.7.home" />
 			</not>
 			<then>
 				<fail>
 .
 
-Please set the property "jdk.6.home" in build.properties.
+Please set the property "jdk.7.home" in build.properties.
 				</fail>
 			</then>
 		</if>
@@ -692,8 +693,8 @@ Please set the property "jdk.6.home" in build.properties.
 		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
 
 		<path id="jspc.classpath">
-			<pathelement location="${jdk.6.home}/jre/lib/rt.jar" />
-			<pathelement location="${jdk.6.home}/lib/tools.jar" />
+			<pathelement location="${jdk.7.home}/jre/lib/rt.jar" />
+			<pathelement location="${jdk.7.home}/lib/tools.jar" />
 			<path refid="jspc.common.classpath" />
 			<pathelement location="${app.server.dir}/lib/resin.jar" />
 			<pathelement location="${project.dir}/lib/portal/abdera.jar" />
@@ -724,7 +725,7 @@ Please set the property "jdk.6.home" in build.properties.
 			fork="true"
 			maxmemory="512m"
 			newenvironment="true"
-			jvm="${jdk.6.home}\bin\java"
+			jvm="${jdk.7.home}\bin\java"
 		>
 			<arg line="docroot ${jspc.classes.dir}" />
 		</java>

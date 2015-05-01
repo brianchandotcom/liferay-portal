@@ -44,6 +44,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.io.WriteAbortedException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -303,8 +304,19 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				}
 
 				while (true) {
-					ProcessCallable<?> processCallable =
-						(ProcessCallable<?>)objectInputStream.readObject();
+					ProcessCallable<?> processCallable = null;
+
+					try {
+						processCallable =
+							(ProcessCallable<?>)objectInputStream.readObject();
+					}
+					catch (WriteAbortedException wae) {
+						if (_log.isWarnEnabled()) {
+							_log.warn("Caught a write aborted exception", wae);
+						}
+
+						continue;
+					}
 
 					if ((processCallable instanceof ExceptionProcessCallable) ||
 						(processCallable instanceof ReturnProcessCallable<?>)) {

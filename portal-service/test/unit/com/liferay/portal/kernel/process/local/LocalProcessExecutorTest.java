@@ -1288,7 +1288,7 @@ public class LocalProcessExecutorTest {
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					LocalProcessExecutor.class.getName(), Level.SEVERE)) {
+					LocalProcessExecutor.class.getName(), Level.WARNING)) {
 
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
@@ -1306,6 +1306,13 @@ public class LocalProcessExecutorTest {
 			catch (ExecutionException ee) {
 				Throwable cause = ee.getCause();
 
+				Assert.assertSame(ProcessException.class, cause.getClass());
+
+				cause = cause.getCause();
+
+				Assert.assertSame(
+					NotSerializableException.class, cause.getClass());
+
 				List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 				Assert.assertEquals(1, logRecords.size());
@@ -1313,8 +1320,10 @@ public class LocalProcessExecutorTest {
 				LogRecord logRecord = logRecords.get(0);
 
 				Assert.assertEquals(
-					"Abort subprocess piping", logRecord.getMessage());
-				Assert.assertSame(cause, logRecord.getThrown());
+					"Caught a write aborted exception", logRecord.getMessage());
+
+				cause = logRecord.getThrown();
+
 				Assert.assertSame(
 					WriteAbortedException.class, cause.getClass());
 
@@ -1322,6 +1331,39 @@ public class LocalProcessExecutorTest {
 
 				Assert.assertSame(
 					NotSerializableException.class, cause.getClass());
+			}
+		}
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.OFF)) {
+
+			ProcessChannel<Serializable> processChannel =
+				_localProcessExecutor.execute(
+					_createJPDAProcessConfig(_JPDA_OPTIONS1),
+					unserializablePipingBackProcessCallable);
+
+			NoticeableFuture<Serializable> noticeableFuture =
+				processChannel.getProcessNoticeableFuture();
+
+			try {
+				noticeableFuture.get();
+
+				Assert.fail();
+			}
+			catch (ExecutionException ee) {
+				Throwable cause = ee.getCause();
+
+				Assert.assertSame(ProcessException.class, cause.getClass());
+
+				cause = cause.getCause();
+
+				Assert.assertSame(
+					NotSerializableException.class, cause.getClass());
+
+				List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+				Assert.assertTrue(logRecords.isEmpty());
 			}
 		}
 	}

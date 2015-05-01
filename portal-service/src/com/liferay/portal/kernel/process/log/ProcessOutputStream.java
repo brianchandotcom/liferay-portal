@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.process.ProcessCallable;
 
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
 
 /**
@@ -69,9 +70,17 @@ public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 		throws IOException {
 
 		synchronized (_objectOutputStream) {
-			_objectOutputStream.writeObject(processCallable);
+			try {
+				_objectOutputStream.writeObject(processCallable);
+			}
+			catch (NotSerializableException nse) {
+				_objectOutputStream.reset();
 
-			_objectOutputStream.flush();
+				throw nse;
+			}
+			finally {
+				_objectOutputStream.flush();
+			}
 		}
 	}
 

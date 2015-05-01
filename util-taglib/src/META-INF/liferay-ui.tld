@@ -1488,6 +1488,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a liferay-ui:header with a back button that can be displayed above an error message.</description>
 		<name>error-header</name>
 		<tag-class>com.liferay.taglib.ui.ErrorHeaderTag</tag-class>
 		<body-content>JSP</body-content>

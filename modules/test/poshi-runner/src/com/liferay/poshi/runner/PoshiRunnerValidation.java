@@ -125,6 +125,9 @@ public class PoshiRunnerValidation {
 			else if (elementName.equals("var")) {
 				_validateVarElement(childElement, filePath);
 			}
+			else if (elementName.equals("while")) {
+				_validateWhileElement(childElement, filePath);
+			}
 		}
 	}
 
@@ -858,6 +861,41 @@ public class PoshiRunnerValidation {
 
 		_validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
+	}
+
+	private static void _validateWhileElement(Element element, String filePath)
+		throws Exception {
+
+		_validateHasNoAttributes(element, filePath);
+		_validateThenElement(element, filePath);
+
+		List<String> conditionTags = Arrays.asList(
+			"and", "condition", "contains", "equals", "isset", "not", "or");
+
+		int i = 0;
+
+		List<Element> childElements = element.elements();
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.getName();
+
+			if (conditionTags.contains(childElementName) && (i == 0)) {
+				_validateConditionElement(childElement, filePath);
+			}
+			else if (childElementName.equals("then")) {
+				_validateHasChildElements(childElement, filePath);
+				_validateHasNoAttributes(childElement, filePath);
+
+				_parseElements(childElement, filePath);
+			}
+			else {
+				throw new Exception(
+					"Invalid " + childElementName + " element\n" + filePath +
+						":" + childElement.attributeValue("line-number"));
+			}
+
+			i++;
+		}
 	}
 
 	private static final String _BASE_DIR =

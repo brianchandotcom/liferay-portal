@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE_IMAGE_1</td>
-	<td>xpath=(//ul[@class='title-list']/li/span/a/i)[1]</td>
+	<td>xpath=(//ul[@class='asset-links-list']/li/span/a/i)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//ul[@class='title-list']/li/span/a/span[contains(.,'${key_assetTitle}')]</td>
+	<td>//ul[@class='asset-links-list']/li/span/a/span[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_1</td>
-	<td>xpath=(//ul[@class='title-list']/li/span/a/span)[1]</td>
+	<td>xpath=(//ul[@class='asset-links-list']/li/span/a/span)[1]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1150,4 +1150,112 @@
 			<var name="language" value="English (United States)" />
 		</execute>
 	</command>
+
+	<command name="WebContentAdministrationPaginatingRelatedAssets" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent 1 Content" />
+			<var name="webContentTitle" value="WC WebContent 1 Title" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent 2 Content" />
+			<var name="webContentTitle" value="WC WebContent 2 Title" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent 3 Content" />
+			<var name="webContentTitle" value="WC WebContent 3 Title" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent 4 Content" />
+			<var name="webContentTitle" value="WC WebContent 4 Title" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent 5 Content" />
+			<var name="webContentTitle" value="WC WebContent 5 Title" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent 6 Content" />
+			<var name="webContentTitle" value="WC WebContent 6 Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#paginateRelatedAssets">
+			<var name="assetType" value="Basic Web Content" />
+			<var name="itemsPerPage" value="5" />
+			<var name="webContentTitle" value="WC WebContent 3 Title" />
+		</execute>
+
+		<execute macro="WebContent#viewPaginateRelatedAssets">
+			<var name="itemsPerPage" value="5 Items per Page" />
+			<var name="numberOfPages" value="Page 1 of 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addExistingRelatedAssetCP">
+			<var name="assetTitle" value="WC WebContent 5 Title" />
+			<var name="assetType" value="Basic Web Content" />
+			<var name="siteName" value="Liferay" />
+			<var name="webContentTitle" value="WC WebContent 3 Title" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="webContentTitle" value="WC WebContent 3 Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#viewRelatedAssetsPGViaWCD">
+			<var name="assetTitle" value="WC WebContent 5 Title" />
+		</execute>
+	</command>
+
+	<command name="WebcontentAdministrationTemplateValidation" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContentStructures#addPGViaWCD">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureFieldNames" value="Image" />
+			<var name="structureName" value="WC Structure Name" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#saveAsDraft" />
+
+		<execute macro="WebContentStructures#viewTemplateValidation" />
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContentStructures#viewTemplateValidation" />
+	</command>
 </definition>

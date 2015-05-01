@@ -67,6 +67,47 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addPGViaWCD">
+		<execute function="Click" locator1="PGWebcontentdisplay#ADD_WEB_CONTENT" />
+		<execute function="AssertClick" locator1="PGWebcontentdisplay#ADD_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+
+		<execute function="SelectFrame" locator1="PGWebcontentdisplayAddwebcontent#WEB_CONTENT_IFRAME" />
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+		<execute function="SelectFrame" />
+
+		<execute function="SelectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
+		<execute function="AssertClick" locator1="CPWebcontentStructures#ADD" value1="Add" />
+		<execute function="SelectFrame" />
+
+		<execute function="SelectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
+		<execute function="Type#clickAtSendKeys" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${structureName}" />
+
+		<for list="${structureFieldNames}" param="structureFieldName">
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+				<var method="StringUtil#replace(${structureFieldName}, ' ', '_')" name="fieldName" />
+			</execute>
+		</for>
+
+		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
+		<execute function="AssertClick" locator1="CPWebcontentStructuresAddstructure#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrame" />
+
+		<execute function="SelectFrame" locator1="CPWebcontentStructuresAddstructure#STRUCTURES_IFRAME" />
+		<execute function="AssertTextEquals" locator1="CPWebcontentStructures#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_structureName" value="${structureName}" />
+
+		<execute function="AssertClickNoError" locator1="PGWebcontentdisplayAddwebcontentStructures#STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="PGWebcontentdisplayAddwebcontent#WEB_CONTENT_IFRAME" />
+		<execute function="Type" locator1="PGWebcontentdisplayAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
+	</command>
+
 	<command name="advancedSearchCP">
 		<var name="key_structureName" value="${structureName}" />
 
@@ -293,5 +334,9 @@
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewTemplateValidation">
+		<execute function="Confirm" value1="Please add a template to render this structure." />
 	</command>
 </definition>

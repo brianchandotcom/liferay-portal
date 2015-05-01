@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//button[contains(@onclick, '_166_saveStructure')]</td>
+	<td>//button[contains(@class,'btn') and contains(@onClick,'save')]</td>
 	<td></td>
 </tr>
 <tr>

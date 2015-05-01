@@ -205,7 +205,7 @@
 </tr>
 <tr>
 	<td>SELECT</td>
-	<td>//button[contains(.,'Select')]</td>
+	<td>//a[contains(.,'Select') and contains(@class,'btn')] | //button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//a[@id='toggle_id_users_admin_user_searchtoggleAdvanced']</td>
+	<td>//a[contains(@id,'toggle') and contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_STATUS_SELECT</td>
-	<td>//select[@id='_125_status']</td>
+	<td>//select[contains(@id,'userStatusSelect')]</td>
 	<td></td>
 </tr>
 <tr>

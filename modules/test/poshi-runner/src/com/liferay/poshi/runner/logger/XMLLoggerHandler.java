@@ -14,7 +14,10 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.runner.PoshiRunnerContext;
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
+import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.util.List;
@@ -146,6 +149,29 @@ public final class XMLLoggerHandler {
 					if (childElement.attributeValue("function") != null) {
 						loggerElement.addChildLoggerElement(
 							_getFunctionExecuteLoggerElement(childElement));
+					}
+					else if (childElement.attributeValue("macro") != null) {
+						loggerElement.addChildLoggerElement(
+							_getMacroExecuteLoggerElement(
+								childElement, "macro"));
+					}
+					else if (Validator.isNotNull(
+								childElement.attributeValue("macro-desktop")) &&
+							 Validator.isNull(
+								 PropsValues.MOBILE_DEVICE_TYPE)) {
+
+						loggerElement.addChildLoggerElement(
+							_getMacroExecuteLoggerElement(
+								childElement, "macro-desktop"));
+					}
+					else if (Validator.isNotNull(
+								childElement.attributeValue("macro-mobile")) &&
+							 Validator.isNotNull(
+								 PropsValues.MOBILE_DEVICE_TYPE)) {
+
+						loggerElement.addChildLoggerElement(
+							_getMacroExecuteLoggerElement(
+								childElement, "macro-mobile"));
 					}
 				}
 				else if (childElementName.equals("fail")) {
@@ -396,6 +422,22 @@ public final class XMLLoggerHandler {
 		Element rootElement = PoshiRunnerContext.getMacroRootElement(className);
 
 		return _getChildContainerLoggerElement(commandElement, rootElement);
+	}
+
+	private static LoggerElement _getMacroExecuteLoggerElement(
+		Element executeElement, String macroType) {
+
+		LoggerElement loggerElement = _getLineGroupLoggerElement(
+			"macro", executeElement);
+
+		String classCommandName = executeElement.attributeValue(macroType);
+
+		loggerElement.addChildLoggerElement(
+			_getMacroCommandLoggerElement(classCommandName));
+		loggerElement.addChildLoggerElement(
+			_getClosingLineContainerLoggerElement(executeElement));
+
+		return loggerElement;
 	}
 
 	private static LoggerElement _getVarLoggerElement(Element element) {

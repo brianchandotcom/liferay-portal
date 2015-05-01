@@ -16,25 +16,53 @@ package com.liferay.gradle.plugins.wsdl.builder;
 
 import java.io.File;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.SkipWhenEmpty;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class WSDLBuilderExtension {
-
-	public WSDLBuilderExtension(Project project) {
-		_project = project;
-	}
+public class BuildWSDLTask extends DefaultTask {
 
 	public File getDestinationDir() {
-		return _project.file(_destinationDir);
+		Project project = getProject();
+
+		return project.file(_destinationDir);
 	}
 
-	public File getWSDLDir() {
-		return _project.file(_wsdlDir);
+	public File getInputDir() {
+		Project project = getProject();
+
+		return project.file(_inputDir);
 	}
 
+	@InputFiles
+	@SkipWhenEmpty
+	public FileCollection getInputFiles() {
+		Project project = getProject();
+
+		File wsdlDir = getInputDir();
+
+		if (wsdlDir == null) {
+			return project.files();
+		}
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", wsdlDir);
+		args.put("include", "*.wsdl");
+
+		return project.fileTree(args);
+	}
+
+	@Input
 	public boolean isIncludeSource() {
 		return _includeSource;
 	}
@@ -47,13 +75,12 @@ public class WSDLBuilderExtension {
 		_includeSource = includeSource;
 	}
 
-	public void setWSDLDir(Object wsdlDir) {
-		_wsdlDir = wsdlDir;
+	public void setInputDir(Object InputDir) {
+		_inputDir = InputDir;
 	}
 
 	private Object _destinationDir = "lib";
 	private boolean _includeSource = true;
-	private final Project _project;
-	private Object _wsdlDir = "wsdl";
+	private Object _inputDir = "wsdl";
 
 }

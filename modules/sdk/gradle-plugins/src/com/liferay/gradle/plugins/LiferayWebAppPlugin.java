@@ -18,7 +18,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.BuildXsdTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
-import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderExtension;
+import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -196,6 +196,25 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		Project project = buildCssTask.getProject();
 
 		buildCssTask.setRootDirs(getWebAppDir(project));
+	}
+
+	protected void configureTaskBuildWSDLDestinationDir(
+		BuildWSDLTask buildWSDLTask) {
+
+		File destinationDir = buildWSDLTask.getDestinationDir();
+
+		if (!destinationDir.exists()) {
+			buildWSDLTask.setDestinationDir("docroot/WEB-INF/lib");
+		}
+	}
+
+	@Override
+	protected void configureTaskBuildWSDLInputDir(BuildWSDLTask buildWSDLTask) {
+		File inputDir = buildWSDLTask.getInputDir();
+
+		if (!inputDir.exists()) {
+			buildWSDLTask.setInputDir("docroot/WEB-INF/wsdl");
+		}
 	}
 
 	protected void configureTaskBuildXsdRootDir(BuildXsdTask buildXsdTask) {
@@ -516,27 +535,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 			project, WarPluginConvention.class);
 
 		warPluginConvention.setWebAppDirName("docroot");
-	}
-
-	protected void configureWSDLBuilderExtensionDestinationDir(
-		Project project, WSDLBuilderExtension wsdlBuilderExtension) {
-
-		File destinationDir = wsdlBuilderExtension.getDestinationDir();
-
-		if (!destinationDir.exists()) {
-			wsdlBuilderExtension.setDestinationDir("docroot/WEB-INF/lib");
-		}
-	}
-
-	@Override
-	protected void configureWSDLBuilderExtensionWSDLDir(
-		Project project, WSDLBuilderExtension wsdlBuilderExtension) {
-
-		File wsdlDir = wsdlBuilderExtension.getWSDLDir();
-
-		if (!wsdlDir.exists()) {
-			wsdlBuilderExtension.setWSDLDir("docroot/WEB-INF/wsdl");
-		}
 	}
 
 	@Override

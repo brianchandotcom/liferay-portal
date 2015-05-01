@@ -19,7 +19,7 @@ import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.BuildXsdTask;
 import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
-import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderExtension;
+import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -81,12 +81,13 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureDependencies(project, liferayExtension);
 		configureRepositories(project);
 		configureSourceSets(project);
-		configureWSDLBuilderExtension(project);
 
 		addConfigurations(project);
 		addTasks(project, liferayExtension);
 
 		applyConfigScripts(project);
+
+		configureTaskBuildWSDL(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -409,6 +410,32 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
+	protected void configureTaskBuildWSDL(Project project) {
+		BuildWSDLTask buildWSDLTask = (BuildWSDLTask)GradleUtil.getTask(
+			project, WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME);
+
+		configureTaskBuildWSDLDestinationDir(buildWSDLTask);
+		configureTaskBuildWSDLInputDir(buildWSDLTask);
+	}
+
+	protected void configureTaskBuildWSDLDestinationDir(
+		BuildWSDLTask buildWSDLTask) {
+
+		File destinationDir = buildWSDLTask.getDestinationDir();
+
+		if (!destinationDir.exists()) {
+			buildWSDLTask.setDestinationDir("lib");
+		}
+	}
+
+	protected void configureTaskBuildWSDLInputDir(BuildWSDLTask buildWSDLTask) {
+		File inputDir = buildWSDLTask.getInputDir();
+
+		if (!inputDir.exists()) {
+			buildWSDLTask.setInputDir("wsdl");
+		}
+	}
+
 	protected void configureTaskBuildXsd(Project project) {
 		BuildXsdTask buildXsdTask = (BuildXsdTask)GradleUtil.getTask(
 			project, BUILD_XSD_TASK_NAME);
@@ -504,35 +531,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		project.setVersion(
 			liferayExtension.getVersionPrefix() + "." + project.getVersion());
-	}
-
-	protected void configureWSDLBuilderExtension(Project project) {
-		WSDLBuilderExtension wsdlBuilderExtension = GradleUtil.getExtension(
-			project, WSDLBuilderExtension.class);
-
-		configureWSDLBuilderExtensionDestinationDir(
-			project, wsdlBuilderExtension);
-		configureWSDLBuilderExtensionWSDLDir(project, wsdlBuilderExtension);
-	}
-
-	protected void configureWSDLBuilderExtensionDestinationDir(
-		Project project, WSDLBuilderExtension wsdlBuilderExtension) {
-
-		File destinationDir = wsdlBuilderExtension.getDestinationDir();
-
-		if (!destinationDir.exists()) {
-			wsdlBuilderExtension.setDestinationDir("lib");
-		}
-	}
-
-	protected void configureWSDLBuilderExtensionWSDLDir(
-		Project project, WSDLBuilderExtension wsdlBuilderExtension) {
-
-		File wsdlDir = wsdlBuilderExtension.getWSDLDir();
-
-		if (!wsdlDir.exists()) {
-			wsdlBuilderExtension.setWSDLDir("wsdl");
-		}
 	}
 
 	protected File getAppServerDir(

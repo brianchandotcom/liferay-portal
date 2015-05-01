@@ -19,9 +19,6 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -31,6 +28,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
@@ -47,10 +45,6 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		final WSDLBuilderExtension wsdlBuilderExtension =
-			GradleUtil.addExtension(
-				project, "wsdlBuilder", WSDLBuilderExtension.class);
-
 		addWSDLBuilderConfiguration(project);
 
 		addTaskBuildWSDL(project);
@@ -58,28 +52,32 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		project.afterEvaluate(
 			new Action<Project>() {
 
-			@Override
-			public void execute(Project project) {
-				addTaskBuildWSDLTasks(project, wsdlBuilderExtension);
-			}
+				@Override
+				public void execute(Project project) {
+					configureTaskBuildWSDL(project);
+				}
 
-		});
+			});
 	}
 
-	protected Task addTaskBuildWSDL(Project project) {
-		Task task = project.task(BUILD_WSDL_TASK_NAME);
+	protected BuildWSDLTask addTaskBuildWSDL(Project project) {
+		BuildWSDLTask buildWSDLTask = GradleUtil.addTask(
+			project, BUILD_WSDL_TASK_NAME, BuildWSDLTask.class);
 
-		task.setDescription("Generates WSDL client stubs.");
-		task.setGroup(BasePlugin.BUILD_GROUP);
+		buildWSDLTask.setDescription("Generates WSDL client stubs.");
+		buildWSDLTask.setGroup(BasePlugin.BUILD_GROUP);
 
-		return task;
+		return buildWSDLTask;
 	}
 
 	protected Task addTaskBuildWSDLCompile(
-		Project project, File wsdlFile, File tmpDir, Task generateTask) {
+		BuildWSDLTask buildWSDLTask, File inputFile, File tmpDir,
+		Task generateTask) {
+
+		Project project = buildWSDLTask.getProject();
 
 		String taskName = GradleUtil.getTaskName(
-			BUILD_WSDL_TASK_NAME + "Compile", wsdlFile);
+			buildWSDLTask.getName() + "Compile", inputFile);
 
 		JavaCompile javaCompile = GradleUtil.addTask(
 			project, taskName, JavaCompile.class);
@@ -97,10 +95,12 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected Task addTaskBuildWSDLGenerate(
-		Project project, File wsdlFile, File tmpDir) {
+		BuildWSDLTask buildWSDLTask, File inputFile, File tmpDir) {
+
+		Project project = buildWSDLTask.getProject();
 
 		String taskName = GradleUtil.getTaskName(
-			BUILD_WSDL_TASK_NAME + "Generate", wsdlFile);
+			buildWSDLTask.getName() + "Generate", inputFile);
 
 		JavaExec javaExec = GradleUtil.addTask(
 			project, taskName, JavaExec.class);
@@ -109,7 +109,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 		javaExec.args("--output=" + FileUtil.getAbsolutePath(tmpSrcDir));
 
-		javaExec.args(FileUtil.getAbsolutePath(wsdlFile));
+		javaExec.args(FileUtil.getAbsolutePath(inputFile));
 
 		javaExec.setClasspath(
 			GradleUtil.getConfiguration(project, CONFIGURATION_NAME));
@@ -117,7 +117,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 		TaskInputs taskInputs = javaExec.getInputs();
 
-		taskInputs.file(wsdlFile);
+		taskInputs.file(inputFile);
 
 		TaskOutputs taskOutputs = javaExec.getOutputs();
 
@@ -127,23 +127,24 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected Task addTaskBuildWSDLJar(
-		Project project, WSDLBuilderExtension wsdlBuilderExtension,
-		File wsdlFile, Task compileTask, Task generateTask) {
+		BuildWSDLTask buildWSDLTask, File inputFile, Task compileTask,
+		Task generateTask) {
 
 		String taskName = GradleUtil.getTaskName(
-			BUILD_WSDL_TASK_NAME, wsdlFile);
+			buildWSDLTask.getName(), inputFile);
 
-		Jar jar = GradleUtil.addTask(project, taskName, Jar.class);
+		Jar jar = GradleUtil.addTask(
+			buildWSDLTask.getProject(), taskName, Jar.class);
 
 		jar.from(compileTask.getOutputs());
 
-		if (wsdlBuilderExtension.isIncludeSource()) {
+		if (buildWSDLTask.isIncludeSource()) {
 			jar.from(generateTask.getOutputs());
 		}
 
-		jar.setDestinationDir(wsdlBuilderExtension.getDestinationDir());
+		jar.setDestinationDir(buildWSDLTask.getDestinationDir());
 
-		String wsdlName = FileUtil.stripExtension(wsdlFile.getName());
+		String wsdlName = FileUtil.stripExtension(inputFile.getName());
 
 		jar.setArchiveName(wsdlName + "-ws.jar");
 
@@ -151,45 +152,23 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected void addTaskBuildWSDLTasks(
-		Project project, WSDLBuilderExtension wsdlBuilderExtension) {
-
-		FileCollection wsdlFiles = getWSDLFiles(project, wsdlBuilderExtension);
-
-		if (wsdlFiles.isEmpty()) {
-			return;
-		}
-
-		Task buildWSDLTask = GradleUtil.getTask(project, BUILD_WSDL_TASK_NAME);
-
-		for (File file : wsdlFiles) {
-			addTaskBuildWSDLTasks(buildWSDLTask, wsdlBuilderExtension, file);
-		}
-
-		TaskOutputs taskOutputs = buildWSDLTask.getOutputs();
-
-		GradleUtil.addDependency(
-			buildWSDLTask.getProject(), JavaPlugin.COMPILE_CONFIGURATION_NAME,
-			taskOutputs.getFiles());
-	}
-
-	protected void addTaskBuildWSDLTasks(
-		Task buildWSDLTask, WSDLBuilderExtension wsdlBuilderExtension,
-		File wsdlFile) {
+		BuildWSDLTask buildWSDLTask, File inputFile) {
 
 		Project project = buildWSDLTask.getProject();
 
 		String tmpDirName = "build-wsdl/" + FileUtil.stripExtension(
-			wsdlFile.getName());
+			inputFile.getName());
 
 		File tmpDir = new File(project.getBuildDir(), tmpDirName);
 
-		Task generateTask = addTaskBuildWSDLGenerate(project, wsdlFile, tmpDir);
+		Task generateTask = addTaskBuildWSDLGenerate(
+			buildWSDLTask, inputFile, tmpDir);
 
 		Task compileTask = addTaskBuildWSDLCompile(
-			project, wsdlFile, tmpDir, generateTask);
+			buildWSDLTask, inputFile, tmpDir, generateTask);
 
 		Task jarTask = addTaskBuildWSDLJar(
-			project, wsdlBuilderExtension, wsdlFile, compileTask, generateTask);
+			buildWSDLTask, inputFile, compileTask, generateTask);
 
 		buildWSDLTask.dependsOn(jarTask);
 
@@ -244,15 +223,37 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			project, CONFIGURATION_NAME, "org.apache.axis", "axis-saaj", "1.4");
 	}
 
-	protected FileCollection getWSDLFiles(
-		Project project, WSDLBuilderExtension wsdlBuilderExtension) {
+	protected void configureTaskBuildWSDL(BuildWSDLTask buildWSDLTask) {
+		FileCollection inputFiles = buildWSDLTask.getInputFiles();
 
-		Map<String, Object> args = new HashMap<>();
+		if (inputFiles.isEmpty()) {
+			return;
+		}
 
-		args.put("dir", wsdlBuilderExtension.getWSDLDir());
-		args.put("include", "*.wsdl");
+		for (File inputFile : inputFiles) {
+			addTaskBuildWSDLTasks(buildWSDLTask, inputFile);
+		}
 
-		return project.fileTree(args);
+		TaskOutputs taskOutputs = buildWSDLTask.getOutputs();
+
+		GradleUtil.addDependency(
+			buildWSDLTask.getProject(), JavaPlugin.COMPILE_CONFIGURATION_NAME,
+			taskOutputs.getFiles());
+	}
+
+	protected void configureTaskBuildWSDL(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildWSDLTask.class,
+			new Action<BuildWSDLTask>() {
+
+				@Override
+				public void execute(BuildWSDLTask buildWSDLTask) {
+					configureTaskBuildWSDL(buildWSDLTask);
+				}
+
+			});
 	}
 
 }

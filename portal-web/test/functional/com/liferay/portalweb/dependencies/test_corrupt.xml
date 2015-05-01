@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="Catologo.xsl"?>
+<catalog>
+	asdfasdfasdfasdfsdfsdf
+		<country>Ireland</country>
+		<year>700</year>
+	</cd>
+	<cd>
+		<title>All Creatures of our God and King</title>
+		<artist>Francis of Assisi</artist>
+		<country>Italy</country>
+		<year>1225</year>
+	</cd>
+	<cd>
+		<title>A Mighty Fortress Is Our God</title>
+		<artist>Martin Luther</artist>
+		<country>Germany</country>
+		<year>1529</year>
+	</cd>
+	<cd>
+		<title>Doxology</title>
+		<artist>Thom­as Ken</artist>
+		<country>UK</country>
+		<year>1674</year>
+	</cd>
+	<cd>
+		<title>When I Survey the Wondrous Cross</title>
+		<artist>Isaac Watts</artist>
+		<country>UK</country>
+		<year>1707</year>
+	</cd>
+	<cd>
+		<title>And Can It Be That I Should Gain</title>
+		<artist>Charles Wesley</artist>
+		<country>UK</country>
+		<year>1738</year>
+	</cd>
+	<cd>
+		<title>Come Thou Fount of Every Blessing</title>
+		<artist>Robert Robinson</artist>
+		<country>US</country>
+		<year>1758</year>
+	</cd>
+	<cd>
+		<title>Amazing Grace</title>
+		<artist>John Newton</artist>
+		<country>UK</country>
+		<year>1779</year>
+	</cd>
+	<cd>
+		<title>Holy, Holy, Holy</title>
+		<artist>Reginald Heber</artist>
+		<country>UK</country>
+		<year>1783-1826</year>
+	</cd>
+	<cd>
+		<title>Before the throne of God above</title>
+		<artist>Charitie L. Bancroft</artist>
+		<country>Ireland</country>
+		<year>1863</year>
+	</cd>
+	<cd>
+		<title>Jesus Paid It All</title>
+		<artist>Elvina M. Hall</artist>
+		<country>US</country>
+		<year>1865</year>
+	</cd>
+	<cd>
+		<title>It Is Well with My Soul</title>
+		<artist>Horatio G. Spafford</artist>
+		<country>US</country>
+		<year>1873</year>
+	</cd>
+	<cd>
+		<title>Great is Thy faithfulness</title>
+		<artist>Thomas Obediah Chisholm</artist>
+		<country>US</country>
+		<year>1923</year>
+	</cd>
+	<cd>
+		<title>How Deep the Father's Love for Us</title>
+		<artist>Stuart Townend</artist>
+		<country>US</country>
+		<year>1995</year>
+	</cd>
+	<cd>
+		<title>In Christ Alone</title>
+		<artist>Keith and Kristyn Getty</artist>
+		<country>Ireland</country>
+		<year>2001</year>
+	</cd>
+	<cd>
+		<title>All I Have Is Christ</title>
+		<artist>Jordan Kauflin</artist>
+		<country>US</country>
+		<year>2009</year>
+	</cd>
+	<cd>
+		<title>Let it Go</title>
+		<artist>Keroshi L.</artist>
+		<country>US</country>
+		<year>2015</year>
+	</cd>
+	<cd>
+		<title>What Does the Fox Say?</title>
+		<artist>Wulberine</artist>
+		<country>US</country>
+		<year>2015</year>
+	</cd>
+	<cd>
+		<title>Say Something</title>
+		<artist>Stanley Gai</artist>
+		<country>US</country>
+		<year>2015</year>
+	</cd>
+</catalog>

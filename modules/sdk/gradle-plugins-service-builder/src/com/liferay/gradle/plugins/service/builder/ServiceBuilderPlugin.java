@@ -35,6 +35,8 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class ServiceBuilderPlugin implements Plugin<Project> {
 
+	public static final String BUILD_SERVICE_TASK_NAME = "buildService";
+
 	public static final String CONFIGURATION_NAME = "serviceBuilder";
 
 	@Override
@@ -49,7 +51,7 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 		TaskContainer taskContainer = project.getTasks();
 
 		Task task = taskContainer.create(
-			"buildService", ServiceBuilderTask.class);
+			BUILD_SERVICE_TASK_NAME, BuildServiceTask.class);
 
 		task.setDescription("Runs Liferay Service Builder.");
 		task.setGroup("build");

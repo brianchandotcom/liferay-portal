@@ -31,7 +31,7 @@ import org.gradle.process.JavaExecSpec;
 /**
  * @author Andrea Di Giorgi
  */
-public class ServiceBuilderTask extends JavaExec {
+public class BuildServiceTask extends JavaExec {
 
 	@Override
 	public JavaExecSpec args(Iterable<?> args) {

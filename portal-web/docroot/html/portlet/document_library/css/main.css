@@ -287,8 +287,14 @@
 				min-height: 35px;
 			}
 
-			.document-type-selector .btn {
-				white-space: normal;
+			.document-type-selector .btn-group {
+				max-width: 100%;
+
+				.btn {
+					max-width: 100%;
+					overflow: hidden;
+					white-space: normal;
+				}
 			}
 		}
 

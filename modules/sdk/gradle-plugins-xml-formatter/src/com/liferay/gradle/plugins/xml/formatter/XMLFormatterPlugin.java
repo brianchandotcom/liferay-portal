@@ -34,6 +34,8 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 
 	public static final String CONFIGURATION_NAME = "xmlFormatter";
 
+	public static final String FORMAT_XML_TASK_NAME = "formatXML";
+
 	@Override
 	public void apply(Project project) {
 		addXMLFormatterConfiguration(project);
@@ -44,7 +46,8 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 	protected Task addFormatXMLTask(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
-		Task task = taskContainer.create("formatXML", XMLFormatterTask.class);
+		Task task = taskContainer.create(
+			FORMAT_XML_TASK_NAME, FormatXMLTask.class);
 
 		task.setDescription("Runs Liferay XML Formatter to format files.");
 

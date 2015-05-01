@@ -32,7 +32,7 @@ import org.gradle.process.JavaExecSpec;
 /**
  * @author Andrea Di Giorgi
  */
-public class XMLFormatterTask extends SourceTask {
+public class FormatXMLTask extends SourceTask {
 
 	@TaskAction
 	public void formatXML() {

@@ -104,13 +104,42 @@ public final class XMLLoggerHandler {
 	}
 
 	private static LoggerElement _getChildContainerLoggerElement() {
-		LoggerElement childContainerLoggerElement = new LoggerElement();
 
-		childContainerLoggerElement.setClassName(
-			"child-container collapse collapsible");
-		childContainerLoggerElement.setName("ul");
+		return _getChildContainerLoggerElement(null);
+	}
 
-		return childContainerLoggerElement;
+	private static LoggerElement _getChildContainerLoggerElement(
+		Element element) {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("child-container collapse collapsible");
+		loggerElement.setName("ul");
+
+		if (Validator.isNotNull(element)) {
+			List<Element> childElements = element.elements();
+
+			for (Element childElement : childElements) {
+				String childElementName = childElement.getName();
+
+				if (childElementName.equals("description") ||
+					childElementName.equals("echo")) {
+
+					loggerElement.addChildLoggerElement(
+						_getEchoLoggerElement(childElement));
+				}
+				else if (childElementName.equals("fail")) {
+					loggerElement.addChildLoggerElement(
+						_getFailLoggerElement(childElement));
+				}
+				else if (childElementName.equals("var")) {
+					loggerElement.addChildLoggerElement(
+						_getVarLoggerElement(childElement));
+				}
+			}
+		}
+
+		return loggerElement;
 	}
 
 	private static LoggerElement _getClosingLineContainerLoggerElement(

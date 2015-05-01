@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ANSWER</td>
+	<td>//div[label[contains(.,'Answer')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY</td>
 	<td>//body</td>
 	<td></td>
@@ -21,6 +26,16 @@
 <tr>
 	<td>DISPLAY_DATE_TIME</td>
 	<td>//input[contains(@id,'displayDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS</td>
+	<td>//div[label[contains(.,'Email Address')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTER_AGAIN</td>
+	<td>//div[label[contains(.,'Enter Again')]]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,6 +59,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_PASSWORD</td>
+	<td>//div[label[contains(.,'New Password')]]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD</td>
+	<td>//div[label[contains(.,'Password')]]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVIEW_DATE</td>
 	<td>//input[contains(@id,'reviewDate')]</td>
 	<td></td>
@@ -51,6 +76,11 @@
 <tr>
 	<td>REQUIRED_ALERT</td>
 	<td>//div[@class=&quot;required&quot; and contains(.,'This field is required')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREEN_NAME</td>
+	<td>//div[label[contains(.,'Screen Name')]]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

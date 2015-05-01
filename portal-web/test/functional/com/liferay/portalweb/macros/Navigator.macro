@@ -1,0 +1,20 @@
+<definition>
+	<command name="openSiteURL">
+		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
+		<var method="StringUtil#lowerCase('/${siteNameURL}')" name="siteNameURL" />
+
+		<execute function="Open" locator1="/web/${siteNameURL}/home" />
+	</command>
+
+	<command name="openSpecificURL">
+		<execute function="Open" locator1="${url}" />
+	</command>
+
+	<command name="openStagingURL">
+		<execute function="Open" locator1="/web/guest-staging/home" />
+	</command>
+
+	<command name="openURL">
+		<execute function="Open" locator1="/web/guest/home" />
+	</command>
+</definition>

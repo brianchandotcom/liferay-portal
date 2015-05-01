@@ -109,11 +109,11 @@
 
 	var STR_NEW_LINE = '\n';
 
+	var STR_TAG_A_CLOSE = '</a>';
+
 	var STR_TAG_ATTR_CLOSE = '">';
 
 	var STR_TAG_ATTR_HREF_OPEN = '<a href="';
-
-	var STR_TAG_A_CLOSE = '</a>';
 
 	var STR_TAG_END_CLOSE = '>';
 

@@ -75,7 +75,7 @@ public class PoshiRunnerValidation {
 
 				_validatePathFile(element, filePath);
 			}
-			else if (classType.equals("testcase")) {
+			else if (classType.equals("test-case")) {
 				Element element = PoshiRunnerContext.getTestCaseRootElement(
 					className);
 

@@ -42,10 +42,10 @@ public class MappedMethodNameCallableInvocationHandler
 		Callable<?> beforeCallable = null;
 
 		if (_removeOnCall) {
-			beforeCallable = _beforeCallables.remove(method.getName());
+			beforeCallable = _beforeCallables.remove(method);
 		}
 		else {
-			beforeCallable = _beforeCallables.get(method.getName());
+			beforeCallable = _beforeCallables.get(method);
 		}
 
 		if (beforeCallable != null) {
@@ -62,10 +62,10 @@ public class MappedMethodNameCallableInvocationHandler
 			Callable<?> afterCallable = null;
 
 			if (_removeOnCall) {
-				afterCallable = _afterCallables.remove(method.getName());
+				afterCallable = _afterCallables.remove(method);
 			}
 			else {
-				afterCallable = _afterCallables.get(method.getName());
+				afterCallable = _afterCallables.get(method);
 			}
 
 			if (afterCallable != null) {
@@ -74,16 +74,16 @@ public class MappedMethodNameCallableInvocationHandler
 		}
 	}
 
-	public void putAfterCallable(String methodName, Callable<?> callable) {
-		_afterCallables.put(methodName, callable);
+	public void putAfterCallable(Method method, Callable<?> callable) {
+		_afterCallables.put(method, callable);
 	}
 
-	public void putBeforeCallable(String methodName, Callable<?> callable) {
-		_beforeCallables.put(methodName, callable);
+	public void putBeforeCallable(Method method, Callable<?> callable) {
+		_beforeCallables.put(method, callable);
 	}
 
-	private final Map<String, Callable<?>> _afterCallables = new HashMap<>();
-	private final Map<String, Callable<?>> _beforeCallables = new HashMap<>();
+	private final Map<Method, Callable<?>> _afterCallables = new HashMap<>();
+	private final Map<Method, Callable<?>> _beforeCallables = new HashMap<>();
 	private final Object _instance;
 	private final boolean _removeOnCall;
 

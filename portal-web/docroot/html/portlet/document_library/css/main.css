@@ -260,6 +260,12 @@
 	.common-file-metadata-container {
 		padding: 1em;
 
+		.panel-group {
+			input, select, textarea {
+				max-width: 100%;
+			}
+		}
+
 		.field-element {
 			display: block;
 
@@ -549,6 +555,11 @@
 	.portlet-document-library, .portlet-document-library-display {
 		.audio-node {
 			height: 28px;
+		}
+
+		.common-file-metadata-container fieldset {
+			display: table-column;
+			overflow: hidden;
 		}
 	}
 }

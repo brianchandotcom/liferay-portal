@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>XSLContentPortlet</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">XSLContentPortlet</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TITLE</td>
+	<td>//div[@class='portlet-body']/h2</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TABLE-->
+<tr>
+	<td>TABLE_TITLE_HEADER</td>
+	<td>//table/tbody/tr/th[contains(.,'Title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_TITLE_ENTRY</td>
+	<td>//tbody/tr[contains(.,'${key_titleEntry}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ARTIST_HEADER</td>
+	<td>//table/tbody/tr/th[contains(.,'Artist')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ARTIST_ENTRY</td>
+	<td>//tbody/tr[contains(.,'${key_titleEntry}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_COUNTRY_HEADER</td>
+	<td>//table/tbody/tr/th[contains(.,'Country')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_COUNTRY_ENTRY</td>
+	<td>//tbody/tr[contains(.,'${key_titleEntry}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_YEAR_HEADER</td>
+	<td>//table/tbody/tr/th[contains(.,'Year')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_YEAR_ENTRY</td>
+	<td>//tbody/tr[contains(.,'${key_titleEntry}')]/td[4]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -2,4 +2,6 @@ Bundle-Name: Liferay Gradle Plugins XML Formatter
 Bundle-SymbolicName: com.liferay.gradle.plugins.xml.formatter
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.gradle.plugins.xml.formatter
-Include-Resource: classes
+Include-Resource:\
+	classes,\
+	@lib/com.liferay.xml.formatter.jar!/com/liferay/xml/formatter/XMLFormatterArgs.class

@@ -6763,9 +6763,9 @@ public class JournalArticleLocalServiceImpl
 			ddmTemplateKey = defaultDDMTemplateKey;
 		}
 
-		tokens.put(
-			"structure_id",
-			String.valueOf(article.getDDMStructure().getStructureId()));
+		DDMStructure structure = article.getDDMStructure();
+
+		tokens.put("structure_id", String.valueOf(structure.getStructureId()));
 
 		tokens.put("template_id", ddmTemplateKey);
 

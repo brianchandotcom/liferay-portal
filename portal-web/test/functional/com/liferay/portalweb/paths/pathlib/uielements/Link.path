@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>RSS</td>
-	<td>//span[contains(@class,'taglib-text') and contains(.,'RSS')]</td>
+	<td>//a/span[contains(@class,'taglib-text') and contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBSCRIBE</td>
-	<td>//span[contains(@class,'taglib-text') and contains(.,'Subscribe')]</td>
+	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 </tbody>

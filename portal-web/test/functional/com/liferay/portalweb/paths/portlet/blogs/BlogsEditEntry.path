@@ -60,6 +60,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_TAB_SEND_EMAIL_ENTRY_UPDATED_CHECKBOX</td>
+	<td>//label[contains(.,'Send Email Entry Updated')]/input[contains(@id,'sendEmailEntryUpdated')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_TAB_USE_THE_FIRST_400_CHARACTERS_ABSTRACT_RADIO</td>
 	<td>//label[contains(.,'Use the first 400 characters of the entry content.')]/input[contains(@id,'customAbstract')]</td>
 	<td></td>

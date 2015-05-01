@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD_BLOGS_ENTRY</td>
-	<td>//a[contains(@class,'btn') and contains(.,'Add Blog Entry')]</td>
+	<td>//a[contains(.,'Add Blog Entry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td[5]/span/span/span[@class='workflow-status']/strong</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[5]//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>
 <tr>

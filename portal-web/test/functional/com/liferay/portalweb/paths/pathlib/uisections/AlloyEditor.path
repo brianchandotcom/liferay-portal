@@ -40,11 +40,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_ADD_MENUBAR_IMAGE_FROM_CAMERA</td>
-	<td>//button[contains(@data-type,'image-camera')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_ADD_MENUBAR_HORIZONTAL_LINE</td>
 	<td>//button[contains(@data-type,'hline')]</td>
 	<td></td>

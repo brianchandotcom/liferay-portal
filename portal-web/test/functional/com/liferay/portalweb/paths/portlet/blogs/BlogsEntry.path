@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//div[contains(@class,'entry-title')]//h2[contains(.,'key_entryTitle')]</td>
+	<td>//div[contains(@class,'entry-title')]//h2[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBTITLE</td>
-	<td>//div[contains(@class,'entry-subtitle')]/p[contains(.,'key_entrySubtitle')]</td>
+	<td>//div[contains(@class,'entry-subtitle')]/p[contains(.,'${key_entrySubtitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[contains(@class,'entry-body')]/p[contains(.,'key_entryContent')]</td>
+	<td>//div[contains(@class,'entry-body')]/p[contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 <tr>

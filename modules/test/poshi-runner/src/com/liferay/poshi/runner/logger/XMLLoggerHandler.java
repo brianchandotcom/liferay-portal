@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.logger;
 
+import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.util.List;
@@ -60,14 +61,6 @@ public final class XMLLoggerHandler {
 		lineContainerLoggerElement.addChildLoggerElement(lineLoggerElement);
 
 		xmlLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
-	}
-
-	private static String _escapeHTML(String content) {
-		content = content.replaceAll("<", "&lt;");
-		content = content.replaceAll(">", "&gt;");
-		content = content.replaceAll("\"", "&quot;");
-
-		return content;
 	}
 
 	private static LoggerElement _getBtnContainerLoggerElement(
@@ -190,7 +183,7 @@ public final class XMLLoggerHandler {
 		}
 
 		if (Validator.isNotNull(innerText)) {
-			sb.append(_getLineItemText("name", _escapeHTML(innerText)));
+			sb.append(_getLineItemText("name", HtmlUtil.escape(innerText)));
 			sb.append(_getLineItemText("misc", "&lt;/"));
 			sb.append(_getLineItemText("action-type", element.getName()));
 			sb.append(_getLineItemText("misc", "&gt;"));

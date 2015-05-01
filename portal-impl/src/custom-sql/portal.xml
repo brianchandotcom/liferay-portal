@@ -930,7 +930,7 @@
 				(ResourcePermission.scope = ?) AND
 				(ResourcePermission.primKey = ?) AND
 				(ResourcePermission.roleId = ?) AND
-				(BITAND(CAST_LONG(ResourcePermission.actionIds, ?)) = ?)
+				(BITAND(CAST_LONG(ResourcePermission.actionIds), ?) = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByResource">

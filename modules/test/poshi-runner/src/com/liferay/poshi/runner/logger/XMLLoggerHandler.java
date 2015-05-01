@@ -383,6 +383,21 @@ public final class XMLLoggerHandler {
 		return loggerElement;
 	}
 
+	private static LoggerElement _getMacroCommandLoggerElement(
+		String classCommandName) {
+
+		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
+			classCommandName);
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		Element rootElement = PoshiRunnerContext.getMacroRootElement(className);
+
+		return _getChildContainerLoggerElement(commandElement, rootElement);
+	}
+
 	private static LoggerElement _getVarLoggerElement(Element element) {
 		return _getLineGroupLoggerElement("var", element);
 	}

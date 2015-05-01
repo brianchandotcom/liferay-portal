@@ -45,7 +45,8 @@ public class WebLogicIncludeFilter
 
 			FilterConfig filterConfig = getFilterConfig();
 
-			invokerFilterHelper.unregisterFilter(filterConfig.getFilterName());
+			invokerFilterHelper.unregisterFilterMappings(
+				filterConfig.getFilterName());
 		}
 
 		if (isWrap(response)) {

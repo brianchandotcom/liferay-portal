@@ -159,8 +159,9 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 				"default-locale", defaultLanguageId);
 
 			filterByLocalizability(rootElement, defaultLocale, structure);
-		} catch (PortalException e) {
-			e.printStackTrace();
+		}
+		catch (PortalException pe) {
+			_log.error(pe.getMessage());
 		}
 	}
 
@@ -179,6 +180,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 
 			if (!structure.hasField(name)) {
 				listIndex--;
+
 				continue;
 			}
 
@@ -193,8 +195,9 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 	}
 
 	protected void filterFields(
-		Element dynamicElementElement, DDMStructure ddmStructure,
-		String name, String defaultLanguageId) throws PortalException {
+			Element dynamicElementElement, DDMStructure ddmStructure,
+			String name, String defaultLanguageId)
+		throws PortalException {
 
 		boolean localizable = GetterUtil.getBoolean(
 			ddmStructure.getFieldProperty(name, "localizable"));
@@ -208,8 +211,6 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 
 			if (!localizable && !languageId.equals(defaultLanguageId)) {
 				dynamicElementElement.remove(dynamicContentElement);
-
-				continue;
 			}
 		}
 	}

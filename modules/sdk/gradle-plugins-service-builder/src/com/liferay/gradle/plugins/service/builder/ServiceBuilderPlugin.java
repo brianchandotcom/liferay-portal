@@ -15,14 +15,12 @@
 package com.liferay.gradle.plugins.service.builder;
 
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.portal.tools.service.builder.ServiceBuilderArgs;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.ExtensionContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -36,7 +34,6 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		addServiceBuilderConfiguration(project);
-		addServiceBuilderExtension(project);
 
 		addBuildServiceTask(project);
 	}
@@ -79,13 +76,6 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.portal.tools.service.builder", "latest.release");
-	}
-
-	protected ServiceBuilderArgs addServiceBuilderExtension(Project project) {
-		ExtensionContainer extensionContainer = project.getExtensions();
-
-		return extensionContainer.create(
-			"serviceBuilder", ServiceBuilderArgs.class);
 	}
 
 }

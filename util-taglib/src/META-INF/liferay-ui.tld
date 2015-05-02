@@ -11,7 +11,7 @@
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
-		<description>Deprecated as of 7.0.0, replaced by liferay-aui:nav-item</description>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-aui:nav-item</code>]]>.</description>
 		<name>app-view-display-style</name>
 		<tag-class>com.liferay.taglib.ui.AppViewDisplayStyleTag</tag-class>
 		<body-content>empty</body-content>
@@ -47,43 +47,43 @@
 		<tag-class>com.liferay.taglib.ui.AppViewEntryTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>A path for the action JSP page.</description>
+			<description>The path for to an action JSP page.</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A Service Context for the action JSP page.</description>
+			<description>The service context of the <![CDATA[<code>actionJsp</code>]]>.</description>
 			<name>actionJspServletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A Java Class Name for categories added to the entry.</description>
+			<description>The Java class name for any categories added to the entry.</description>
 			<name>assetCategoryClassName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A Java Class Primary Key for categories added to the entry. This number is a Java long.</description>
+			<description>The Java class primary key for any categories added to the entry. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>assetCategoryClassPK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A Java Class Name for tags added to the entry.</description>
+			<description>The Java class name for any tags added to the entry.</description>
 			<name>assetTagClassName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A Java Class Primary Key for tags added to the entry. This number is a Java long.</description>
+			<description>The Java class primary key for any tags added to the entry. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>assetTagClassPK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the author of the entry.</description>
+			<description>The name of the entry's author.</description>
 			<name>author</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -95,7 +95,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Date the entry was first created.</description>
+			<description>The date the entry was created.</description>
 			<name>createDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -120,7 +120,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Date to display the entry.</description>
+			<description>A date to display the entry.</description>
 			<name>displayDate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -145,7 +145,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A group id number for the entry. This is a Java long.</description>
+			<description>The group ID of the entry. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>groupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -207,40 +207,40 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether the entry is selectable or not. An actual checkbox is used when the display style is <![CDATA[<code>icon</code>]]> or <![CDATA[<code>descriptive</code>]]>. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether the entry is selectable. An actual checkbox is used when the display style is <![CDATA[<code>icon</code>]]> or <![CDATA[<code>descriptive</code>]]>. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>showCheckbox</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to show the Link Title. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<description>Whether to show the link title. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showLinkTitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The current status of the entry as represented by an integer. Options are <![CDATA[<code>-1: STATUS_ANY</code>]]>, <![CDATA[<code>0: STATUS_APPROVED</code>]]>, <![CDATA[<code>1: ACTION_PUBLISH</code>]]>, <![CDATA[<code>2: STATUS_DRAFT</code>]]>, and <![CDATA[<code>4: STATUS_DENIED</code>]]>. The default value is <![CDATA[<code>-1</code>]]>.</description>
+			<description>The current status of the entry, as represented by an integer. Options are <![CDATA[<code>-1: STATUS_ANY</code>]]>, <![CDATA[<code>0: STATUS_APPROVED</code>]]>, <![CDATA[<code>1: ACTION_PUBLISH</code>]]>, <![CDATA[<code>2: STATUS_DRAFT</code>]]>, and <![CDATA[<code>4: STATUS_DENIED</code>]]>. The default value is <![CDATA[<code>-1</code>]]>.</description>
 			<name>status</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>CSS styles to be applied to the div containing the thumbnail for the entry.</description>
+			<description>A CSS style to be applied to the div containing the thumbnail for the entry.</description>
 			<name>thumbnailDivStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A source URL for the entry thumbnail image.</description>
+			<description>The source URL for an entry thumbnail image.</description>
 			<name>thumbnailSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>CSS styles to be applied to the thumbnail for the entry.</description>
+			<description>A CSS style to be applied to the thumbnail for the entry.</description>
 			<name>thumbnailStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -265,12 +265,12 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a nav list item component for navigating app view entries.</description>
+		<description>Creates a navigation list item component for navigating app view entries.</description>
 		<name>app-view-navigation-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewNavigationEntryTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>A path for the action JSP page.</description>
+			<description>The path for an action JSP page.</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -282,7 +282,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data to be applied to the component link and stored via a map. This data is not shared with the browser. The map holds key value pairs of type <![CDATA[<code>&lt;String, Object&gt;</code>]]>..</description>
+			<description>Data to be applied to the component link and stored via a map. This data is not shared with the browser. The map holds key value pairs of type <![CDATA[<code>&lt;String, Object&gt;</code>]]>.</description>
 			<name>dataView</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -301,7 +301,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0 and replaced with <![CDATA[<code>iconImage</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>iconImage</code>]]>.</description>
 			<name>iconSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -326,63 +326,63 @@
 		<tag-class>com.liferay.taglib.ui.AppViewToolbarTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether to include the option to choose a display style for component items. If the value is <![CDATA[<code>true</code>]]> a list of display style options is rendered. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether to include the option to choose a display style for component items. If the value is <![CDATA[<code>true</code>]]>, a list of display style options is rendered. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>includeDisplayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to include the option to select all component items. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether to include an option to select all component items. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>includeSelectAll</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A file path for the search JSP page.</description>
+			<description>The file path for a search JSP page.</description>
 			<name>searchJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a UI component for displaying search results of entries in app view.</description>
+		<description>Creates a component for displaying search results of entries in app view.</description>
 		<name>app-view-search-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewSearchEntryTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>A file path for the action JSP page.</description>
+			<description>The file path for an action JSP page.</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A Service Context for the action JSP page.</description>
+			<description>The service context of the <![CDATA[<code>actionJsp</code>]]>.</description>
 			<name>actionJspServletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0. with no replacement.</description>
+			<description>Deprecated as of 7.0.0, with no replacement.</description>
 			<name>containerIcon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the container that the entry is in such as the name of a folder.</description>
+			<description>The name of the container that the entry is in, such as the name of a folder.</description>
 			<name>containerName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0. with no replacement.</description>
+			<description>Deprecated as of 7.0.0, with no replacement.</description>
 			<name>containerSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The type of container the entry is in such as <![CDATA[<code>Folder</code>]]>.</description>
+			<description>The type of container the entry is in, such as <![CDATA[<code>Folder</code>]]>.</description>
 			<name>containerType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -400,7 +400,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A list of objects containing information such as content, user ID, and title of the entry file attachments.</description>
+			<description>A list of objects containing information such as content, user ID, and titles of the entry file attachments.</description>
 			<name>fileEntryTuples</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -432,7 +432,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A checkbox input ID to be used for the entry row checker. This number is a Java long.</description>
+			<description>A checkbox input ID to be used for the entry row checker. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>rowCheckerId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -444,7 +444,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the entry is selectable via checkbox. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<description>Whether the entry is selectable via a checkbox. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showCheckbox</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -457,7 +457,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A URL for the entry thumbnail image.</description>
+			<description>The URL for an entry thumbnail image.</description>
 			<name>thumbnailSrc</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2365,7 +2365,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:input-editor#editorName</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>editorName</code>]]>.</description>
 			<name>editorImpl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2398,7 +2398,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:input-editor#contents</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>contents</code>]]>.</description>
 			<name>initMethod</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4500,13 +4500,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 6.2.0, replaced by liferay-ui:search-container#total</description>
+			<description>Deprecated as of 6.2.0, replaced by the <![CDATA[<code>liferay-aui:search-container</code>]]> attribute <![CDATA[<code>total</code>]]>.</description>
 			<name>total</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 6.2.0, replaced by liferay-ui:search-container#totalVar</description>
+			<description>Deprecated as of 6.2.0, replaced by the <![CDATA[<code>liferay-aui:search-container</code>]]> attribute <![CDATA[<code>totalVar</code>]]>.</description>
 			<name>totalVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5030,7 +5030,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A design type for the tabs. Possible values are <![CDATA[<code>tabs</code>]]> and <![CDATA[<code>pills</code>.]]></description>
+			<description>A design type for the tabs. Possible values are <![CDATA[<code>tabs</code>]]> and <![CDATA[<code>pills</code>]]>.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5047,67 +5047,67 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url0</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url1</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url2</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url3</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url4</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url5</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url6</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url7</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url8</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by liferay-ui:tabs#urls</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>urls</code>]]>.</description>
 			<name>url9</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>An active tab from the value given in the <![CDATA[<code>tabsValues</code>]]> attribute. No matter which tab a user selects, the tab given for this value always remains active.</description>
+			<description>An active tab from the value given in the attribute <![CDATA[<code>tabsValues</code>]]>. No matter which tab a user selects, the tab given for this value always remains active.</description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5238,24 +5238,24 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component for users to permanently delete items such as images, articles, etc. from the recycling bin.</description>
+		<description>Creates a component for users to permanently delete items such as images, articles, etc. from the recycle bin.</description>
 		<name>trash-empty</name>
 		<tag-class>com.liferay.taglib.ui.TrashEmptyTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>Message to be displayed to ensure the user wants to remove the item(s) from the trash.</description>
+			<description>A message to display to confirm that the user wants to remove the item(s) from the recycle bin.</description>
 			<name>confirmMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Message to be used for the <![CDATA[<code>empty-trash</code>]]> button and link.</description>
+			<description>A message to be used for the <![CDATA[<code>empty-trash</code>]]> button and link.</description>
 			<name>emptyMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Message to display to give users information about removing items from the trash.</description>
+			<description>A message to display to give users information about removing items from the recycle bin.</description>
 			<name>infoMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5267,7 +5267,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The number of items to be removed from the trash.</description>
+			<description>The number of items to be removed from the recycle bin.</description>
 			<name>totalEntries</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5275,7 +5275,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a message confirming items were moved to the trash and an option to restore them.</description>
+		<description>Creates a message confirming items were moved to the recycle bin and presenting an option to restore them.</description>
 		<name>trash-undo</name>
 		<tag-class>com.liferay.taglib.ui.TrashUndoTag</tag-class>
 		<body-content>empty</body-content>
@@ -5286,7 +5286,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The redirect URL.</description>
+			<description>A redirect URL.</description>
 			<name>redirect</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

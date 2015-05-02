@@ -94,12 +94,12 @@ public class JumpData implements BranchCoverageData<JumpData>, Serializable {
 		return sb.toString();
 	}
 
-	public void touchBranch(boolean branch, int hits) {
+	public void touchBranch(boolean branch) {
 		if (branch) {
-			_trueHitCounter.addAndGet(hits);
+			_trueHitCounter.incrementAndGet();
 		}
 		else {
-			_falseHitCounter.addAndGet(hits);
+			_falseHitCounter.incrementAndGet();
 		}
 	}
 

@@ -177,11 +177,11 @@ public class LineData implements CoverageData<LineData>, Serializable {
 		return sb.toString();
 	}
 
-	public void touch(int hits) {
-		_hitCounter.addAndGet(hits);
+	public void touch() {
+		_hitCounter.incrementAndGet();
 	}
 
-	public void touchJump(int jumpNumber, boolean branch, int hits) {
+	public void touchJump(int jumpNumber, boolean branch) {
 		JumpData jumpData = _jumpDatas.get(jumpNumber);
 
 		if (jumpData == null) {
@@ -190,10 +190,10 @@ public class LineData implements CoverageData<LineData>, Serializable {
 					_lineNumber + " jump " + jumpNumber);
 		}
 
-		jumpData.touchBranch(branch, hits);
+		jumpData.touchBranch(branch);
 	}
 
-	public void touchSwitch(int switchNumber, int branch, int hits) {
+	public void touchSwitch(int switchNumber, int branch) {
 		SwitchData switchData = _switchDatas.get(switchNumber);
 
 		if (switchData == null) {
@@ -202,7 +202,7 @@ public class LineData implements CoverageData<LineData>, Serializable {
 					_lineNumber + " switch " + switchNumber);
 		}
 
-		switchData.touchBranch(branch, hits);
+		switchData.touchBranch(branch);
 	}
 
 	private static final long serialVersionUID = 1;

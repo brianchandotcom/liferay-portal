@@ -98,8 +98,7 @@ public class WhipClassFileTransformer implements ClassFileTransformer {
 				InstrumentationAgent.recordInstrumentation(
 					classLoader, className, classfileBuffer);
 
-				ProjectData projectData =
-					ProjectDataUtil.getOrCreateProjectData(classLoader);
+				ProjectData projectData = ProjectDataUtil.getProjectData();
 
 				ClassWriter classWriter = new ContextAwareClassWriter(
 					ClassWriter.COMPUTE_FRAMES);

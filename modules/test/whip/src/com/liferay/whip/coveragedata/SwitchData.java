@@ -98,7 +98,7 @@ public class SwitchData
 		return sb.toString();
 	}
 
-	public void touchBranch(int branch, int hits) {
+	public void touchBranch(int branch) {
 		if (branch >= _hitCounterArray.length()) {
 			throw new IllegalStateException(
 				"No instrument data for class " + _className + " line " +
@@ -110,7 +110,7 @@ public class SwitchData
 			branch = _hitCounterArray.length() - 1;
 		}
 
-		_hitCounterArray.addAndGet(branch, hits);
+		_hitCounterArray.incrementAndGet(branch);
 	}
 
 	private static final long serialVersionUID = 1;

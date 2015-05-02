@@ -16,8 +16,6 @@ package com.liferay.whip.coveragedata;
 
 import com.liferay.whip.agent.InstrumentationAgent;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,50 +24,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 
-import java.lang.reflect.Field;
-
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
-
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author Shuyang Zhou
  */
 public class ProjectDataUtil {
 
-	public static void addMergeHook() {
-		Set<Runnable> mergeHooks = _getFieldValue("_mergeHooks");
-
-		mergeHooks.add(_mergeHookRunnable);
-	}
-
 	public static ProjectData captureProjectData(boolean saveSessionData) {
-		ProjectData masterProjectData = new ProjectData();
-
-		for (ProjectData projectData : _projectDatas.values()) {
-			masterProjectData.merge(projectData);
-		}
-
-		try {
-			_setThreadLocalProjectData(masterProjectData);
-
-			for (Runnable runnable :
-					ProjectDataUtil.<Set<Runnable>>_getFieldValue(
-						"_mergeHooks")) {
-
-				runnable.run();
-			}
-
-			masterProjectData = _getThreadLocalProjectData();
-		}
-		finally {
-			_removeThreadLocalProjectData();
-		}
-
 		String className = ProjectDataUtil.class.getName();
 
 		synchronized (className.intern()) {
@@ -80,16 +43,16 @@ public class ProjectDataUtil {
 					System.getProperty("net.sourceforge.cobertura.datafile"));
 
 				if (dataFile.exists()) {
-					masterProjectData.merge(_readProjectData(dataFile));
+					_projectData.merge(_readProjectData(dataFile));
 
 					dataFile.delete();
 				}
 
 				if (saveSessionData) {
-					_writeProjectData(masterProjectData, dataFile);
+					_writeProjectData(_projectData, dataFile);
 				}
 
-				return masterProjectData;
+				return _projectData;
 			}
 			finally {
 				_unlockFile(fileLock);
@@ -97,53 +60,8 @@ public class ProjectDataUtil {
 		}
 	}
 
-	public static ProjectData getOrCreateProjectData(ClassLoader classLoader) {
-		ProjectData projectData = _projectDatas.get(classLoader);
-
-		if (projectData == null) {
-			projectData = new ProjectData();
-
-			ProjectData previousProjectData = _projectDatas.putIfAbsent(
-				classLoader, projectData);
-
-			if (previousProjectData != null) {
-				projectData = previousProjectData;
-			}
-		}
-
-		return projectData;
-	}
-
-	private static <T> T _getFieldValue(String fieldName) {
-		ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
-
-		try {
-			Class<?> clazz = systemClassLoader.loadClass(
-				ProjectDataUtil.class.getName());
-
-			Field field = clazz.getDeclaredField(fieldName);
-
-			field.setAccessible(true);
-
-			return (T)field.get(null);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private static ProjectData _getThreadLocalProjectData() {
-		ThreadLocal<byte[]> sessionDataThreadLocal = _getFieldValue(
-			"_sessionDataThreadLocal");
-
-		try (ObjectInputStream objectInputStream = new ObjectInputStream(
-				new ByteArrayInputStream(sessionDataThreadLocal.get()))) {
-
-			return (ProjectData)objectInputStream.readObject();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+	public static ProjectData getProjectData() {
+		return _projectData;
 	}
 
 	private static FileLock _lockFile() {
@@ -182,32 +100,6 @@ public class ProjectDataUtil {
 				" times");
 	}
 
-	private static void _removeThreadLocalProjectData() {
-		ThreadLocal<byte[]> sessionDataThreadLocal = _getFieldValue(
-			"_sessionDataThreadLocal");
-
-		sessionDataThreadLocal.remove();
-	}
-
-	private static void _setThreadLocalProjectData(ProjectData projectData) {
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				byteArrayOutputStream)) {
-
-			objectOutputStream.writeObject(projectData);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-
-		ThreadLocal<byte[]> sessionDataThreadLocal = _getFieldValue(
-			"_sessionDataThreadLocal");
-
-		sessionDataThreadLocal.set(byteArrayOutputStream.toByteArray());
-	}
-
 	private static void _unlockFile(FileLock fileLock) {
 		try {
 			fileLock.release();
@@ -237,36 +129,6 @@ public class ProjectDataUtil {
 
 	private static final int _RETRY_TIMES = 10;
 
-	private static final Runnable _mergeHookRunnable = new Runnable() {
-
-			@Override
-			public void run() {
-				ProjectData projectData = _getThreadLocalProjectData();
-
-				TouchCollector.applyTouchesOnProjectData(projectData);
-
-				_setThreadLocalProjectData(projectData);
-
-				if (ProjectDataUtil.class.getClassLoader() !=
-						ClassLoader.getSystemClassLoader()) {
-
-					Set<Runnable> mergeHooks = _getFieldValue("_mergeHooks");
-
-					mergeHooks.remove(this);
-				}
-			}
-
-		};
-
-	@SuppressWarnings("unused")
-	private static final Set<Runnable> _mergeHooks =
-		new CopyOnWriteArraySet<>();
-
-	private static final ConcurrentMap<ClassLoader, ProjectData> _projectDatas =
-		new ConcurrentHashMap<>();
-
-	@SuppressWarnings("unused")
-	private static final ThreadLocal<byte[]> _sessionDataThreadLocal =
-		new ThreadLocal<>();
+	private static final ProjectData _projectData = new ProjectData();
 
 }

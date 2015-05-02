@@ -117,26 +117,22 @@ public class ClassData
 		super.merge(classData);
 	}
 
-	public void touch(int lineNumber, int hits) {
+	public void touch(int lineNumber) {
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.touch(hits);
+		lineData.touch();
 	}
 
-	public void touchJump(
-		int lineNumber, int branchNumber, boolean branch, int hits) {
-
+	public void touchJump(int lineNumber, int branchNumber, boolean branch) {
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.touchJump(branchNumber, branch, hits);
+		lineData.touchJump(branchNumber, branch);
 	}
 
-	public void touchSwitch(
-		int lineNumber, int switchNumber, int branch, int hits) {
-
+	public void touchSwitch(int lineNumber, int switchNumber, int branch) {
 		LineData lineData = _getLineData(lineNumber);
 
-		lineData.touchSwitch(switchNumber, branch, hits);
+		lineData.touchSwitch(switchNumber, branch);
 	}
 
 	private LineData _getLineData(int lineNumber) {

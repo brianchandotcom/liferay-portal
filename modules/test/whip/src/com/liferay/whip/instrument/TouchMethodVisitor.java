@@ -14,7 +14,7 @@
 
 package com.liferay.whip.instrument;
 
-import com.liferay.whip.coveragedata.TouchCollector;
+import com.liferay.whip.coveragedata.TouchUtil;
 
 import java.util.Map;
 import java.util.Set;
@@ -204,7 +204,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 		mv.visitLdcInsn(_owner);
 		mv.visitIntInsn(Opcodes.SIPUSH, line);
 		mv.visitMethodInsn(
-			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touch",
+			Opcodes.INVOKESTATIC, _TOUCH_UTIL_CLASS, "touch",
 			"(Ljava/lang/String;I)V", false);
 
 		super.visitLineNumber(line, start);
@@ -339,7 +339,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 		}
 
 		mv.visitMethodInsn(
-			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchJump",
+			Opcodes.INVOKESTATIC, _TOUCH_UTIL_CLASS, "touchJump",
 			"(Ljava/lang/String;IIZ)V", false);
 
 		mv.visitIntInsn(Opcodes.SIPUSH, -1);
@@ -354,12 +354,12 @@ public class TouchMethodVisitor extends MethodVisitor {
 		mv.visitIntInsn(Opcodes.SIPUSH, branch);
 
 		mv.visitMethodInsn(
-			Opcodes.INVOKESTATIC, _TOUCH_COLLECTOR_CLASS, "touchSwitch",
+			Opcodes.INVOKESTATIC, _TOUCH_UTIL_CLASS, "touchSwitch",
 			"(Ljava/lang/String;III)V", false);
 	}
 
-	private static final String _TOUCH_COLLECTOR_CLASS = Type.getInternalName(
-		TouchCollector.class);
+	private static final String _TOUCH_UTIL_CLASS = Type.getInternalName(
+		TouchUtil.class);
 
 	private int _currentJump;
 	private int _currentLine;

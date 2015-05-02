@@ -16,13 +16,15 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.index.IndexedCacheKey;
+import com.liferay.portal.kernel.cache.index.PortalCacheIndexer;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.util.PropsValues;
-
-import java.io.Serializable;
 
 /**
  * @author Charles May
@@ -49,9 +51,7 @@ public class PermissionCacheUtil {
 		PermissionCacheUtil.class.getName() + "_USER_ROLE";
 
 	public static void clearCache() {
-		if (ExportImportThreadLocal.isImportInProcess() ||
-			!PermissionThreadLocal.isFlushEnabled()) {
-
+		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}
 
@@ -60,6 +60,58 @@ public class PermissionCacheUtil {
 		_permissionPortalCache.removeAll();
 		_resourceBlockIdsBagCache.removeAll();
 		_userPermissionCheckerBagPortalCache.removeAll();
+	}
+
+	public static void clearCache(long... userIds) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		for (long userId : userIds) {
+			_userPermissionCheckerBagPortalCache.remove(userId);
+
+			_userRolePortalCacheIndexer.removeIndexedCacheKeys(userId);
+			_permissionCheckerBagPortalCacheIndexer.removeIndexedCacheKeys(
+				userId);
+		}
+
+		_permissionPortalCache.removeAll();
+		_resourceBlockIdsBagCache.removeAll();
+	}
+
+	public static void clearResourceBlockCache(
+		long companyId, long groupId, String name) {
+
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			!PermissionThreadLocal.isFlushResourceBlockEnabled(
+				companyId, groupId, name)) {
+
+			return;
+		}
+
+		_resourceBlockIdsBagCacheIndexer.removeIndexedCacheKeys(
+			ResourceBlockIdsBagKey.getIndex(companyId, groupId, name));
+	}
+
+	public static void clearResourceCache() {
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			_resourceBlockIdsBagCache.removeAll();
+			_permissionPortalCache.removeAll();
+		}
+	}
+
+	public static void clearResourcePermissionCache(
+		String name, String primKey) {
+
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			!PermissionThreadLocal.isFlushResourcePermissionEnabled(
+				name, primKey)) {
+
+			return;
+		}
+
+		_permissionPortalCacheIndexer.removeIndexedCacheKeys(
+			PermissionKey.getIndex(name, primKey));
 	}
 
 	public static PermissionCheckerBag getBag(long userId, long groupId) {
@@ -92,10 +144,9 @@ public class PermissionCacheUtil {
 	}
 
 	public static Boolean getUserRole(long userId, Role role) {
-		String key = String.valueOf(role.getRoleId()).concat(
-			String.valueOf(userId));
+		UserRoleKey userRoleKey = new UserRoleKey(userId, role.getRoleId());
 
-		Boolean userRole = _userRolePortalCache.get(key);
+		Boolean userRole = _userRolePortalCache.get(userRoleKey);
 
 		if (userRole != null) {
 			return userRole;
@@ -109,7 +160,7 @@ public class PermissionCacheUtil {
 
 		userRole = userPermissionCheckerBag.hasRole(role);
 
-		_userRolePortalCache.put(key, userRole);
+		_userRolePortalCache.put(userRoleKey, userRole);
 
 		return userRole;
 	}
@@ -163,40 +214,47 @@ public class PermissionCacheUtil {
 			return;
 		}
 
-		String key = String.valueOf(role.getRoleId()).concat(
-			String.valueOf(userId));
+		UserRoleKey userRoleKey = new UserRoleKey(userId, role.getRoleId());
 
-		_userRolePortalCache.put(key, value);
+		_userRolePortalCache.put(userRoleKey, value);
 	}
 
 	private static final PortalCache<BagKey, PermissionCheckerBag>
 		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
 			PERMISSION_CHECKER_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+	private static final PortalCacheIndexer<Long, BagKey, PermissionCheckerBag>
+		_permissionCheckerBagPortalCacheIndexer = new PortalCacheIndexer<>(
+			_permissionCheckerBagPortalCache);
 	private static final PortalCache<PermissionKey, Boolean>
 		_permissionPortalCache = MultiVMPoolUtil.getCache(
 			PERMISSION_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+	private static final PortalCacheIndexer<String, PermissionKey, Boolean>
+		_permissionPortalCacheIndexer = new PortalCacheIndexer<>(
+			_permissionPortalCache);
 	private static final
 		PortalCache<ResourceBlockIdsBagKey, ResourceBlockIdsBag>
 			_resourceBlockIdsBagCache = MultiVMPoolUtil.getCache(
 				RESOURCE_BLOCK_IDS_BAG_CACHE_NAME,
 				PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+	private static final PortalCacheIndexer
+		<String, ResourceBlockIdsBagKey, ResourceBlockIdsBag>
+			_resourceBlockIdsBagCacheIndexer = new PortalCacheIndexer<>(
+				_resourceBlockIdsBagCache);
 	private static final PortalCache<Long, UserPermissionCheckerBag>
 		_userPermissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
 			USER_PERMISSION_CHECKER_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
-	private static final PortalCache<String, Boolean> _userRolePortalCache =
-		MultiVMPoolUtil.getCache(
+	private static final PortalCache<UserRoleKey, Boolean>
+		_userRolePortalCache = MultiVMPoolUtil.getCache(
 			USER_ROLE_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
+	private static final PortalCacheIndexer<Long, UserRoleKey, Boolean>
+		_userRolePortalCacheIndexer = new PortalCacheIndexer<>(
+			_userRolePortalCache);
 
-	private static class BagKey implements Serializable {
-
-		public BagKey(long userId, long groupId) {
-			_userId = userId;
-			_groupId = groupId;
-		}
+	private static class BagKey implements IndexedCacheKey<Long> {
 
 		@Override
 		public boolean equals(Object obj) {
@@ -205,14 +263,25 @@ public class PermissionCacheUtil {
 			if ((bagKey._userId == _userId) && (bagKey._groupId == _groupId)) {
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
+		}
+
+		@Override
+		public Long getIndex() {
+			return _userId;
 		}
 
 		@Override
 		public int hashCode() {
-			return (int)(_userId * 11 + _groupId);
+			int hashCode = HashUtil.hash(0, _userId);
+
+			return HashUtil.hash(hashCode, _groupId);
+		}
+
+		private BagKey(long userId, long groupId) {
+			_userId = userId;
+			_groupId = groupId;
 		}
 
 		private static final long serialVersionUID = 1L;
@@ -222,18 +291,10 @@ public class PermissionCacheUtil {
 
 	}
 
-	private static class PermissionKey implements Serializable {
+	private static class PermissionKey implements IndexedCacheKey<String> {
 
-		public PermissionKey(
-			long userId, boolean signedIn, long groupId, String name,
-			String primKey, String actionId) {
-
-			_userId = userId;
-			_signedIn = signedIn;
-			_groupId = groupId;
-			_name = name;
-			_primKey = primKey;
-			_actionId = actionId;
+		public static String getIndex(String name, String primKey) {
+			return name.concat(StringPool.UNDERLINE).concat(primKey);
 		}
 
 		@Override
@@ -249,9 +310,13 @@ public class PermissionCacheUtil {
 
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
+		}
+
+		@Override
+		public String getIndex() {
+			return getIndex(_name, _primKey);
 		}
 
 		@Override
@@ -267,6 +332,18 @@ public class PermissionCacheUtil {
 			return hashCode;
 		}
 
+		private PermissionKey(
+			long userId, boolean signedIn, long groupId, String name,
+			String primKey, String actionId) {
+
+			_userId = userId;
+			_signedIn = signedIn;
+			_groupId = groupId;
+			_name = name;
+			_primKey = primKey;
+			_actionId = actionId;
+		}
+
 		private static final long serialVersionUID = 1L;
 
 		private final String _actionId;
@@ -278,15 +355,21 @@ public class PermissionCacheUtil {
 
 	}
 
-	private static class ResourceBlockIdsBagKey implements Serializable {
+	private static class ResourceBlockIdsBagKey
+		implements IndexedCacheKey<String> {
 
-		public ResourceBlockIdsBagKey(
-			long companyId, long groupId, long userId, String name) {
+		public static String getIndex(
+			long companyId, long groupId, String name) {
 
-			_companyId = companyId;
-			_groupId = groupId;
-			_userId = userId;
-			_name = name;
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(companyId);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(groupId);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(name);
+
+			return sb.toString();
 		}
 
 		@Override
@@ -301,9 +384,13 @@ public class PermissionCacheUtil {
 
 				return true;
 			}
-			else {
-				return false;
-			}
+
+			return false;
+		}
+
+		@Override
+		public String getIndex() {
+			return getIndex(_companyId, _groupId, _name);
 		}
 
 		@Override
@@ -317,11 +404,59 @@ public class PermissionCacheUtil {
 			return hashCode;
 		}
 
+		private ResourceBlockIdsBagKey(
+			long companyId, long groupId, long userId, String name) {
+
+			_companyId = companyId;
+			_groupId = groupId;
+			_userId = userId;
+			_name = name;
+		}
+
 		private static final long serialVersionUID = 1L;
 
 		private final long _companyId;
 		private final long _groupId;
 		private final String _name;
+		private final long _userId;
+
+	}
+
+	private static class UserRoleKey implements IndexedCacheKey<Long> {
+
+		@Override
+		public boolean equals(Object obj) {
+			UserRoleKey userRoleKey = (UserRoleKey)obj;
+
+			if ((userRoleKey._userId == _userId) &&
+				(userRoleKey._roleId == _roleId)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public Long getIndex() {
+			return _userId;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _userId);
+
+			return HashUtil.hash(hashCode, _roleId);
+		}
+
+		private UserRoleKey(long userId, long roleId) {
+			_userId = userId;
+			_roleId = roleId;
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final long _roleId;
 		private final long _userId;
 
 	}

@@ -260,12 +260,6 @@
 	.common-file-metadata-container {
 		padding: 1em;
 
-		.panel-group {
-			input, select, textarea {
-				max-width: 100%;
-			}
-		}
-
 		.field-element {
 			display: block;
 
@@ -558,7 +552,7 @@
 		}
 
 		.common-file-metadata-container fieldset {
-			display: table-column;
+			display: table-cell;
 			overflow: hidden;
 		}
 	}

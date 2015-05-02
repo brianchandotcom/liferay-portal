@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.wsdd.builder;
 
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.portal.tools.wsdd.builder.WSDDBuilderArgs;
 
 import java.io.File;
@@ -131,9 +132,7 @@ public class BuildWSDDTask extends JavaExec {
 			file = new File(project.getProjectDir(), fileName);
 		}
 
-		String absolutePath = file.getAbsolutePath();
-
-		return absolutePath.replace('\\', '/');
+		return FileUtil.getAbsolutePath(file);
 	}
 
 }

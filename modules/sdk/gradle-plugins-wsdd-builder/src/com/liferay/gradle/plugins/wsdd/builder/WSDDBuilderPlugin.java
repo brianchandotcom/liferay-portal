@@ -14,10 +14,9 @@
 
 package com.liferay.gradle.plugins.wsdd.builder;
 
-import com.liferay.gradle.plugins.wsdd.builder.util.Validator;
+import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.wsdd.builder.WSDDBuilderArgs;
-
-import java.util.Set;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -25,9 +24,6 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.ResolvableDependencies;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.TaskContainer;
@@ -62,45 +58,31 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected Task addBuildWSDDTask(Project project) {
-		TaskContainer taskContainer = project.getTasks();
+	protected BuildWSDDTask addBuildWSDDTask(Project project) {
+		BuildWSDDTask buildWSDDTask = GradleUtil.addTask(
+			project, BUILD_WSDD_TASK_NAME, BuildWSDDTask.class);
 
-		Task task = taskContainer.create(
-			BUILD_WSDD_TASK_NAME, BuildWSDDTask.class);
+		buildWSDDTask.setDescription("Runs Liferay WSDD Builder.");
+		buildWSDDTask.setGroup("build");
 
-		task.setDescription("Runs Liferay WSDD Builder.");
-		task.setGroup("build");
-
-		return task;
+		return buildWSDDTask;
 	}
 
 	protected Configuration addWSDDBuilderConfiguration(final Project project) {
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		final Configuration configuration = configurationContainer.create(
-			CONFIGURATION_NAME);
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CONFIGURATION_NAME);
 
 		configuration.setDescription(
 			"Configures Liferay WSDD Builder for this project.");
 		configuration.setVisible(false);
 
-		ResolvableDependencies resolvableDependencies =
-			configuration.getIncoming();
-
-		resolvableDependencies.beforeResolve(
-			new Action<ResolvableDependencies>() {
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
 
 				@Override
-				public void execute(
-					ResolvableDependencies resolvableDependencies) {
-
-					Set<Dependency> dependencies =
-						configuration.getDependencies();
-
-					if (dependencies.isEmpty()) {
-						addWSDDBuilderDependencies(project);
-					}
+				public void execute(Configuration configuration) {
+					addWSDDBuilderDependencies(project);
 				}
 
 			});
@@ -109,11 +91,9 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected void addWSDDBuilderDependencies(Project project) {
-		DependencyHandler dependencyHandler = project.getDependencies();
-
-		dependencyHandler.add(
-			CONFIGURATION_NAME,
-			"com.liferay:com.liferay.portal.tools.wsdd.builder:latest.release");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.portal.tools.wsdd.builder", "latest.release");
 	}
 
 	protected WSDDBuilderArgs addWSDDBuilderExtension(Project project) {
@@ -137,7 +117,7 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 			return;
 		}
 
-		Task buildWSDDTask = taskContainer.getByName(BUILD_WSDD_TASK_NAME);
+		Task buildWSDDTask = GradleUtil.getTask(project, BUILD_WSDD_TASK_NAME);
 
 		buildWSDDTask.dependsOn(compileJavaTask);
 

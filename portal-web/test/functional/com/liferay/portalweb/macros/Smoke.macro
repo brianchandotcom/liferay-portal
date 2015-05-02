@@ -17,7 +17,7 @@
 		<var name="portletName" value="Hello World" />
 
 		<task summary="Add a '${portletName}' portlet to the page named '${pageName}'">
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="${pageName}" />
 			</execute>
 
@@ -34,7 +34,7 @@
 				<var name="portletName" value="${portletName}" />
 			</execute>
 
-			<execute macro="Page#gotoPG">
+			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="${pageName}" />
 			</execute>
 

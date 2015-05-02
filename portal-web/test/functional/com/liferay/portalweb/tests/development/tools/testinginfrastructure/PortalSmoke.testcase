@@ -1,15 +1,13 @@
 <definition component-name="portal-smoke">
 	<property name="testray.main.component.name" value="Tools" />
 
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<command name="Smoke" priority="5">
-		<execute macro="Smoke#runSmoke" />
-	</command>
-
 	<tear-down>
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
+
+	<command name="Smoke" priority="5">
+		<execute macro="SignIn#signInFirstTime" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
 </definition>

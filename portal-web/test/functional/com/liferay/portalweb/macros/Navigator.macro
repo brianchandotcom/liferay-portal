@@ -1,4 +1,46 @@
 <definition>
+	<command name="_gotoPage">
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
+	</command>
+
+	<command name="gotoPage" summary="Navigate to the page named '${pageName}'">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitePage">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="gotoSpecificURLPage">
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${url}" />
+		</execute>
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="gotoStagingPage">
+		<execute macro="Navigator#openStagingURL" />
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
 	<command name="openSiteURL">
 		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
 		<var method="StringUtil#lowerCase('/${siteNameURL}')" name="siteNameURL" />

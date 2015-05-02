@@ -43,7 +43,9 @@ public class JournalArticleModelListener
 
 		// Journal content
 
-		JournalContentUtil.clearCache();
+		JournalContentUtil.clearCache(
+			article.getGroupId(), article.getArticleId(),
+			article.getDDMTemplateKey());
 
 		// Layout cache
 

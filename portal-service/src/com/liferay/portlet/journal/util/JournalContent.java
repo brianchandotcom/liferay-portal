@@ -23,22 +23,6 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
  */
 public interface JournalContent {
 
-	public static final String ARTICLE_SEPARATOR = "_ARTICLE_";
-
-	public static final String LANGUAGE_SEPARATOR = "_LANGUAGE_";
-
-	public static final String LAYOUT_SET_SEPARATOR = "_LAYOUT_SET_";
-
-	public static final String PAGE_SEPARATOR = "_PAGE_";
-
-	public static final String SECURE_SEPARATOR = "_SECURE_";
-
-	public static final String TEMPLATE_SEPARATOR = "_TEMPLATE_";
-
-	public static final String VERSION_SEPARATOR = "_VERSION_";
-
-	public static final String VIEW_MODE_SEPARATOR = "_VIEW_MODE_";
-
 	public void clearCache();
 
 	public void clearCache(

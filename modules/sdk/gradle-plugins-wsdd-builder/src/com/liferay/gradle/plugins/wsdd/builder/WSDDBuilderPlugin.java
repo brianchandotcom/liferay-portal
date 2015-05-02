@@ -66,7 +66,7 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		TaskContainer taskContainer = project.getTasks();
 
 		Task task = taskContainer.create(
-			BUILD_WSDD_TASK_NAME, WSDDBuilderTask.class);
+			BUILD_WSDD_TASK_NAME, BuildWSDDTask.class);
 
 		task.setDescription("Runs Liferay WSDD Builder.");
 		task.setGroup("build");

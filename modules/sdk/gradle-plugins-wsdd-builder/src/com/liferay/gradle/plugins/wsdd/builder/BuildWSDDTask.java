@@ -31,7 +31,7 @@ import org.gradle.process.JavaExecSpec;
 /**
  * @author Andrea Di Giorgi
  */
-public class WSDDBuilderTask extends JavaExec {
+public class BuildWSDDTask extends JavaExec {
 
 	@Override
 	public JavaExecSpec args(Iterable<?> args) {

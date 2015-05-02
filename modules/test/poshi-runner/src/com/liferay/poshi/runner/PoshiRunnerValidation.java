@@ -645,16 +645,11 @@ public class PoshiRunnerValidation {
 		throws Exception {
 
 		_validateDefinitionElement(element, filePath);
+		_validateHasChildElements(element, filePath);
 		_validateRequiredChildElementNames(
 			element, Arrays.asList("command"), filePath);
 
 		List<Element> childElements = element.elements();
-
-		if (childElements.isEmpty()) {
-			throw new Exception(
-				"Missing child elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
 
 		List<String> possibleTagElementNames = Arrays.asList("command", "var");
 
@@ -809,12 +804,7 @@ public class PoshiRunnerValidation {
 		List<Element> childElements = element.elements();
 
 		if (Validator.isNull(element.attributeValue("extends"))) {
-			if (childElements.isEmpty()) {
-				throw new Exception(
-					"Missing child elements\n" + filePath + ":" +
-						element.attributeValue("line-number"));
-			}
-
+			_validateHasChildElements(element, filePath);
 			_validateRequiredChildElementNames(
 				element, Arrays.asList("command"), filePath);
 		}

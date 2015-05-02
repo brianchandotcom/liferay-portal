@@ -8,6 +8,8 @@
 	<command name="Smoke" priority="5">
 		<execute macro="SignIn#signInFirstTime" />
 
+		<execute macro="Smoke#viewWelcomePage" />
+
 		<execute macro="Smoke#runSmoke" />
 	</command>
 </definition>

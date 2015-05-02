@@ -12,28 +12,37 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.util;
-
-import groovy.lang.Closure;
-import groovy.lang.Script;
+package com.liferay.gradle.util;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Brian Wing Shun Chan
  */
-public class ClosureBackedScript extends Script {
+public class ArrayUtil {
 
-	public ClosureBackedScript(Closure<?> closure) {
-		_closure = closure;
+	public static boolean contains(Object[] array, Object value) {
+		if (isEmpty(array) || (value == null)) {
+			return false;
+		}
+
+		for (int i = 0; i < array.length; i++) {
+			if (value.equals(array[i])) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
-	@Override
-	public Object run() {
-		_closure.setDelegate(this);
-		_closure.setResolveStrategy(Closure.DELEGATE_FIRST);
+	public static boolean isEmpty(Object[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
 
-		return _closure.call();
+		return false;
 	}
 
-	private final Closure<?> _closure;
+	public static boolean isNotEmpty(Object[] array) {
+		return !isEmpty(array);
+	}
 
 }

@@ -16,12 +16,12 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
-import com.liferay.gradle.plugins.tasks.BuildWsdlTask;
 import com.liferay.gradle.plugins.tasks.BuildXsdTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
-import com.liferay.gradle.plugins.util.FileUtil;
-import com.liferay.gradle.plugins.util.GradleUtil;
-import com.liferay.gradle.plugins.util.Validator;
+import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
+import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -198,19 +198,23 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		buildCssTask.setRootDirs(getWebAppDir(project));
 	}
 
-	@Override
-	protected void configureTaskBuildWsdlRootDirs(BuildWsdlTask buildWsdlTask) {
-		FileCollection rootDirs = buildWsdlTask.getRootDirs();
+	protected void configureTaskBuildWSDLDestinationDir(
+		BuildWSDLTask buildWSDLTask) {
 
-		if ((rootDirs != null) && !rootDirs.isEmpty()) {
-			return;
+		File destinationDir = buildWSDLTask.getDestinationDir();
+
+		if (!destinationDir.exists()) {
+			buildWSDLTask.setDestinationDir("docroot/WEB-INF/lib");
 		}
+	}
 
-		Project project = buildWsdlTask.getProject();
+	@Override
+	protected void configureTaskBuildWSDLInputDir(BuildWSDLTask buildWSDLTask) {
+		File inputDir = buildWSDLTask.getInputDir();
 
-		File rootDir = new File(getWebAppDir(project), "WEB-INF/wsdl");
-
-		buildWsdlTask.rootDirs(rootDir);
+		if (!inputDir.exists()) {
+			buildWSDLTask.setInputDir("docroot/WEB-INF/wsdl");
+		}
 	}
 
 	protected void configureTaskBuildXsdRootDir(BuildXsdTask buildXsdTask) {

@@ -58,7 +58,7 @@
 					<propertyregex
 						input="@{src}"
 						property="dest.file"
-						regexp=".*\/(\w+\.\w+)"
+						regexp=".*/(.*)"
 						replace="\1"
 					/>
 				</else>

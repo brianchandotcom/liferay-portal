@@ -1,4 +1,5 @@
-/* Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -19,8 +20,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portlet.dynamicdatamapping.storage.bundle.storageadapterregistryimpl.TestStorageAdapterImpl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -83,4 +82,5 @@ public class StorageAdapterRegistryImplTest {
 		Assert.assertTrue(storageTypes.contains("json"));
 		Assert.assertTrue(storageTypes.contains("testStorageAdapterImpl"));
 	}
+
 }

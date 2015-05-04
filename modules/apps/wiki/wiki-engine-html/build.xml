@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="import.shared" value="wiki-api,wiki-engine-input-editor-common" />
+	<property name="osgi.compile.jsp.wab.dependencies" value="wiki-web" />
+	<property name="osgi.ide.dependencies" value="jericho-html.jar" />
+
+	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+</project>

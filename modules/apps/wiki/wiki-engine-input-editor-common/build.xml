@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="import.shared" value="wiki-api" />
+
+	<import file="../../../../tools/sdk/build-common-plugin.xml" />
+</project>

@@ -24,6 +24,8 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.osgi.service.tracker.map.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portal.settings.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.wiki.api.jar" />
 	<classpathentry kind="lib" path="lib/org.freemarker.jar" />

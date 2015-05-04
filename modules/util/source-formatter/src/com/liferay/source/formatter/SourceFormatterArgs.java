@@ -21,8 +21,20 @@ import java.util.List;
  */
 public class SourceFormatterArgs {
 
+	public static final boolean AUTO_FIX = true;
+
+	public static final String BASE_DIR_NAME = "./";
+
+	public static final String COPYRIGHT_FILE_NAME = "copyright.txt";
+
 	public static final String OUTPUT_KEY_MODIFIED_FILES =
 		"source.formatter.modified.files";
+
+	public static final boolean PRINT_ERRORS = true;
+
+	public static final boolean THROW_EXCEPTION = false;
+
+	public static final boolean USE_PROPERTIES = false;
 
 	public String getCopyrightFileName() {
 		return _copyrightFileName;
@@ -78,7 +90,7 @@ public class SourceFormatterArgs {
 			throw new RuntimeException("Filenames are already initialized.");
 		}
 
-		if (_baseDirName != _BASE_DIR_NAME) {
+		if (_baseDirName != BASE_DIR_NAME) {
 			throw new RuntimeException("Base directory was already set.");
 		}
 
@@ -98,14 +110,12 @@ public class SourceFormatterArgs {
 		_useProperties = useProperties;
 	}
 
-	private static final String _BASE_DIR_NAME = "./";
-
-	private boolean _autoFix = true;
-	private String _baseDirName = _BASE_DIR_NAME;
-	private String _copyrightFileName = "copyright.txt";
+	private boolean _autoFix = AUTO_FIX;
+	private String _baseDirName = BASE_DIR_NAME;
+	private String _copyrightFileName = COPYRIGHT_FILE_NAME;
 	private List<String> _fileNames;
-	private boolean _printErrors = true;
-	private boolean _throwException = false;
-	private boolean _useProperties = false;
+	private boolean _printErrors = PRINT_ERRORS;
+	private boolean _throwException = THROW_EXCEPTION;
+	private boolean _useProperties = USE_PROPERTIES;
 
 }

@@ -47,6 +47,17 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		return fixHexColors(newContent);
 	}
 
+	@Override
+	protected List<String> doGetFileNames() {
+		String[] excludes = {
+			"**\\.ivy\\**", "**\\.sass-cache\\**", "**\\__MACOSX\\**",
+			"**\\aui_deprecated.css", "**\\expected\\**", "**\\js\\aui\\**",
+			"**\\js\\editor\\**", "**\\js\\misc\\**", "**\\VAADIN\\**"
+		};
+
+		return getFileNames(excludes, getIncludes());
+	}
+
 	protected String fixComments(String content) {
 		Matcher matcher = _commentPattern.matcher(content);
 
@@ -93,17 +104,6 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	@Override
-	protected List<String> doGetFileNames() {
-		String[] excludes = {
-			"**\\.ivy\\**", "**\\.sass-cache\\**", "**\\__MACOSX\\**",
-			"**\\aui_deprecated.css", "**\\expected\\**", "**\\js\\aui\\**",
-			"**\\js\\editor\\**", "**\\js\\misc\\**", "**\\VAADIN\\**"
-		};
-
-		return getFileNames(excludes, getIncludes());
 	}
 
 	private static final String[] _INCLUDES = {"**\\*.css"};

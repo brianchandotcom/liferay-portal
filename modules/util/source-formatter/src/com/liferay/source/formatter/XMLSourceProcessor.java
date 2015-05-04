@@ -80,16 +80,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	public static String sortAttributes(String content) throws Exception {
-		XMLSourceProcessor xmlSourceProcessor = new XMLSourceProcessor();
-
-		Document document = xmlSourceProcessor.readXML(content);
-
-		sortAttributes(document.getRootElement(), true);
-
-		return XMLFormatter.toString(document);
-	}
-
 	public static void sortAttributes(Element element, boolean recursive) {
 		Map<String, Attribute> attributesMap = new TreeMap<>();
 
@@ -116,6 +106,16 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		for (Element curElement : elements) {
 			sortAttributes(curElement, recursive);
 		}
+	}
+
+	public static String sortAttributes(String content) throws Exception {
+		XMLSourceProcessor xmlSourceProcessor = new XMLSourceProcessor();
+
+		Document document = xmlSourceProcessor.readXML(content);
+
+		sortAttributes(document.getRootElement(), true);
+
+		return XMLFormatter.toString(document);
 	}
 
 	public static void sortElementsByAttribute(
@@ -371,8 +371,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatFriendlyURLRoutesXML(newContent);
 		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
-				 (portalSource &&
-				  fileName.endsWith("/portlet-custom.xml")) ||
+				 (portalSource && fileName.endsWith("/portlet-custom.xml")) ||
 				 (!portalSource && fileName.endsWith("/portlet.xml"))) {
 
 			newContent = formatPortletXML(fileName, absolutePath, newContent);
@@ -404,6 +403,22 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return formatXML(newContent);
+	}
+
+	@Override
+	protected List<String> doGetFileNames() {
+		String[] excludes = new String[] {
+			"**\\.bnd\\**", "**\\.idea\\**", "**\\.ivy\\**", "bin\\**",
+			"portal-impl\\**\\*.action", "portal-impl\\**\\*.function",
+			"portal-impl\\**\\*.macro", "portal-impl\\**\\*.testcase",
+			"test-classes\\unit\\**", "test-results\\**", "test\\unit\\**"
+		};
+
+		_numericalPortletNameElementExclusionFiles = getPropertyList(
+			"numerical.portlet.name.element.excludes.files");
+		_xmlExclusionFiles = getPropertyList("xml.excludes.files");
+
+		return getFileNames(excludes, getIncludes());
 	}
 
 	protected String fixAntXMLProjectName(String fileName, String content) {
@@ -627,22 +642,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	@Override
-	protected List<String> doGetFileNames() {
-		String[] excludes = new String[] {
-			"**\\.bnd\\**", "**\\.idea\\**", "**\\.ivy\\**", "bin\\**",
-			"portal-impl\\**\\*.action", "portal-impl\\**\\*.function",
-			"portal-impl\\**\\*.macro", "portal-impl\\**\\*.testcase",
-			"test-classes\\unit\\**", "test-results\\**", "test\\unit\\**"
-		};
-
-		_numericalPortletNameElementExclusionFiles = getPropertyList(
-			"numerical.portlet.name.element.excludes.files");
-		_xmlExclusionFiles = getPropertyList("xml.excludes.files");
-
-		return getFileNames(excludes, getIncludes());
 	}
 
 	protected String formatAntXML(String fileName, String content)
@@ -942,7 +941,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Arrays.sort(locales);
 
-		Set<String> urlPatterns = new TreeSet<String>();
+		Set<String> urlPatterns = new TreeSet<>();
 
 		for (String locale : locales) {
 			int pos = locale.indexOf(StringPool.UNDERLINE);
@@ -1006,7 +1005,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected List<String> getColumnNames(String fileName, String entityName)
 		throws Exception {
 
-		List<String> columnNames = new ArrayList<String>();
+		List<String> columnNames = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(
 			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
@@ -1113,7 +1112,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String sortPoshiCommands(String content) {
 		Matcher matcher = _poshiCommandsPattern.matcher(content);
 
-		Map<String, String> commandBlocksMap = new TreeMap<String, String>(
+		Map<String, String> commandBlocksMap = new TreeMap<>(
 			String.CASE_INSENSITIVE_ORDER);
 
 		String previousName = StringPool.BLANK;
@@ -1186,7 +1185,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String previousName = StringPool.BLANK;
 			String tabs = StringPool.BLANK;
 
-			Map<String, String> variableLinesMap = new TreeMap<String, String>(
+			Map<String, String> variableLinesMap = new TreeMap<>(
 				String.CASE_INSENSITIVE_ORDER);
 
 			String variableBlock = matcher.group(1);
@@ -1243,7 +1242,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = new String[] {
-		"**\\*.action","**\\*.function","**\\*.macro","**\\*.testcase",
+		"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.testcase",
 		"**\\*.testxml", "**\\*.xml"
 	};
 

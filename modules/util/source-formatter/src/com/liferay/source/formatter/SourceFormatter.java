@@ -155,12 +155,12 @@ public class SourceFormatter {
 		return _modifiedFileNames;
 	}
 
-	public SourceMismatchException getSourceMismatchException() {
-		return _firstSourceMismatchException;
+	public SourceFormatterArgs getSourceFormatterArgs() {
+		return _sourceFormatterArgs;
 	}
 
-	public SourceFormatterArgs getSourceformatterArgs() {
-		return _sourceFormatterArgs;
+	public SourceMismatchException getSourceMismatchException() {
+		return _firstSourceMismatchException;
 	}
 
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)
@@ -180,9 +180,9 @@ public class SourceFormatter {
 	}
 
 	private final Set<String> _errorMessages = new ConcurrentSkipListSet<>();
+	private volatile SourceMismatchException _firstSourceMismatchException;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
-	private volatile SourceMismatchException _firstSourceMismatchException;
 	private final SourceFormatterArgs _sourceFormatterArgs;
 
 }

@@ -151,8 +151,7 @@ public class BaseSourceProcessorTestCase {
 				new File(modifiedFileNames.get(0)));
 
 			URL expectedUrl = classLoader.getResource(
-				_DIR_NAME + "/expected/" + fileName + "." +
-					originalExtension);
+				_DIR_NAME + "/expected/" + fileName + "." + originalExtension);
 
 			String expectedFormattedContent = IOUtils.toString(
 				expectedUrl, StringPool.UTF8);
@@ -168,10 +167,9 @@ public class BaseSourceProcessorTestCase {
 
 	protected final ClassLoader classLoader =
 		BaseSourceProcessorTestCase.class.getClassLoader();
+	protected boolean keepTestExtension = false;
 
 	private static final String _DIR_NAME =
 		"com/liferay/source/formatter/dependencies";
-
-	protected boolean keepTestExtension = false;
 
 }

@@ -31,10 +31,6 @@ AUI.add(
 						value: {}
 					},
 
-					initMethod: {
-						validator: Lang.isFunction
-					},
-
 					onBlurMethod: {
 						validator: Lang.isFunction
 					},

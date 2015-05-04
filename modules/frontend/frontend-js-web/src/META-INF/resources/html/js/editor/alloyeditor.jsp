@@ -193,7 +193,6 @@ if (showSource) {
 			{
 				editorConfig: editorConfig,
 				editorOptions: <%= editorOptionsJSONObject %>,
-				initMethod: window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'],
 				namespace: '<%= name %>',
 				onBlurMethod: window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'],
 				onChangeMethod: window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'],

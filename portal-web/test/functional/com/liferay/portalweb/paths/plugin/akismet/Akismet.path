@@ -38,11 +38,6 @@
 	<td>//input[@id='_1_WAR_akismetportlet_checkThreshold']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>SpamModeration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SpamModeration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_MESSAGE_BOARDS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Message Boards')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DISCUSSIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Discussions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_WIKIS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Wikis')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -64,4 +64,10 @@
 			<test name="com.liferay.poshi.runner.PoshiRunner" todir="test-results" />
 		</junit>
 	</target>
+
+	<target name="validate" depends="compile, jar">
+	    <java classname="com.liferay.poshi.runner.PoshiRunnerValidation" classpath="classes">
+	    	<classpath refid="plugin.classpath" />
+	    </java>
+	</target>
 </project>

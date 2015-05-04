@@ -34,6 +34,12 @@ import org.dom4j.Element;
  */
 public class PoshiRunnerValidation {
 
+	public static void main(String[] args) throws Exception {
+		PoshiRunnerContext.readFiles();
+
+		validate();
+	}
+
 	public static void validate() throws Exception {
 		_validateTestName();
 

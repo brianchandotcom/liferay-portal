@@ -66,7 +66,7 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{templateVersionId=");
 		sb.append(templateVersionId);
@@ -80,6 +80,10 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", templateId=");
 		sb.append(templateId);
 		sb.append(", version=");
@@ -120,6 +124,8 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 			ddmTemplateVersionImpl.setCreateDate(new Date(createDate));
 		}
 
+		ddmTemplateVersionImpl.setClassNameId(classNameId);
+		ddmTemplateVersionImpl.setClassPK(classPK);
 		ddmTemplateVersionImpl.setTemplateId(templateId);
 
 		if (version == null) {
@@ -170,6 +176,8 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
+		classNameId = objectInput.readLong();
+		classPK = objectInput.readLong();
 		templateId = objectInput.readLong();
 		version = objectInput.readUTF();
 		name = objectInput.readUTF();
@@ -194,6 +202,8 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		}
 
 		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(classNameId);
+		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(templateId);
 
 		if (version == null) {
@@ -238,6 +248,8 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 	public long userId;
 	public String userName;
 	public long createDate;
+	public long classNameId;
+	public long classPK;
 	public long templateId;
 	public String version;
 	public String name;

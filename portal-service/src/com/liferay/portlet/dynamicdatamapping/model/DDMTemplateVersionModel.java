@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
@@ -45,8 +46,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface DDMTemplateVersionModel extends BaseModel<DDMTemplateVersion>,
-	LocalizedModel {
+public interface DDMTemplateVersionModel extends AttachedModel,
+	BaseModel<DDMTemplateVersion>, LocalizedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -165,6 +166,48 @@ public interface DDMTemplateVersionModel extends BaseModel<DDMTemplateVersion>,
 	 * @param createDate the create date of this d d m template version
 	 */
 	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the fully qualified class name of this d d m template version.
+	 *
+	 * @return the fully qualified class name of this d d m template version
+	 */
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this d d m template version.
+	 *
+	 * @return the class name ID of this d d m template version
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this d d m template version.
+	 *
+	 * @param classNameId the class name ID of this d d m template version
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
+
+	/**
+	 * Returns the class p k of this d d m template version.
+	 *
+	 * @return the class p k of this d d m template version
+	 */
+	@Override
+	public long getClassPK();
+
+	/**
+	 * Sets the class p k of this d d m template version.
+	 *
+	 * @param classPK the class p k of this d d m template version
+	 */
+	@Override
+	public void setClassPK(long classPK);
 
 	/**
 	 * Returns the template ID of this d d m template version.

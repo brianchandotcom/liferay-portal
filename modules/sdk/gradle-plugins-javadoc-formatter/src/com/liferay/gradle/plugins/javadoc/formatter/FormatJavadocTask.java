@@ -62,8 +62,6 @@ public class FormatJavadocTask extends JavaExec {
 	public List<String> getArgs() {
 		List<String> args = new ArrayList<>();
 
-		Project project = getProject();
-
 		args.add("javadoc.author=" + getAuthor());
 		args.add("javadoc.init=" + isInitializeMissingJavadocs());
 		args.add(

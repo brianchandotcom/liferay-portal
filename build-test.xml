@@ -1053,7 +1053,7 @@
 		<sequential>
 			<if>
 				<not>
-					<resourcecontains resource="${app.server.tomcat.dir}/conf/logging.properties" substring="org.apache.catalina.core.ContainerBase.level" />
+					<resourcecontains resource="${app.server.tomcat.dir}/conf/logging.properties" substring="org.apache.catalina.level" />
 				</not>
 				<then>
 					<echo file="${app.server.tomcat.dir}/conf/logging.properties" append="true">

@@ -55,8 +55,6 @@ public interface Comment {
 
 	public CommentIterator getThreadCommentsIterator(int from);
 
-	public long getThreadId();
-
 	public String getTranslatedBody();
 
 	public User getUser() throws PortalException;

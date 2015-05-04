@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Document Library Item Selector Web
+Bundle-SymbolicName: com.document.library.item.selector.web
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.document.library.item.selector.web
+Include-Resource: classes
+Web-ContextPath: /document-library-item-selector-web

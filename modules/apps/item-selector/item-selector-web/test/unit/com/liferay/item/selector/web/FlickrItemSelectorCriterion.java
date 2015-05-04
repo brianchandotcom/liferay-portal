@@ -29,8 +29,16 @@ public class FlickrItemSelectorCriterion extends BaseItemSelectorCriterion {
 		super(_AVAILABLE_RETURN_TYPES);
 	}
 
+	public String[] getTags() {
+		return _tags;
+	}
+
 	public String getUser() {
 		return _user;
+	}
+
+	public void setTags(String[] tags) {
+		_tags = tags;
 	}
 
 	public void setUser(String user) {
@@ -40,6 +48,7 @@ public class FlickrItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
 		getInmutableSet(URL.class, String.class);
 
+	private String[] _tags = {"me", "photo", "picture"};
 	private String _user = "anonymous";
 
 }

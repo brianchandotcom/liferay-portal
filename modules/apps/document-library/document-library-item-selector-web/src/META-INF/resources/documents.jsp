@@ -31,9 +31,7 @@ Folder folder = null;
 
 if (folderId > 0) {
 	folder = DLAppLocalServiceUtil.getFolder(folderId);
-}
 
-if (folder != null) {
 	groupId = folder.getGroupId();
 
 	repositoryId = folder.getRepositoryId();

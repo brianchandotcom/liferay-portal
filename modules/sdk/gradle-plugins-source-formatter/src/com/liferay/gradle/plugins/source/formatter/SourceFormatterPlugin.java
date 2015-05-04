@@ -14,27 +14,68 @@
 
 package com.liferay.gradle.plugins.source.formatter;
 
-import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.gradle.util.GradleUtil;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.plugins.ExtensionContainer;
-import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.artifacts.Configuration;
 
 /**
  * @author Raymond Augé
+ * @author Andrea Di Giorgi
  */
 public class SourceFormatterPlugin implements Plugin<Project> {
 
+	public static final String CONFIGURATION_NAME = "sourceFormatter";
+
+	public static final String FORMAT_SOURCE_TASK_NAME = "formatSource";
+
 	@Override
 	public void apply(Project project) {
-		ExtensionContainer extensionContainer = project.getExtensions();
+		addSourceFormatterConfiguration(project);
 
-		extensionContainer.create("sourceFormatter", SourceFormatterArgs.class);
+		addFormatSourceTask(project);
+	}
 
-		TaskContainer taskContainer = project.getTasks();
+	protected FormatSourceTask addFormatSourceTask(Project project) {
+		FormatSourceTask formatSourceTask = GradleUtil.addTask(
+			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
 
-		taskContainer.create("formatSource", FormatSourceTask.class);
+		formatSourceTask.setDescription(
+			"Runs Liferay Source Formatter to format files.");
+
+		return formatSourceTask;
+	}
+
+	protected Configuration addSourceFormatterConfiguration(
+		final Project project) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures Liferay Source Formatter for this project.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					addSourceFormatterDependencies(project);
+				}
+
+		});
+
+		return configuration;
+	}
+
+	protected void addSourceFormatterDependencies(Project project) {
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.source.formatter", "latest.release");
 	}
 
 }

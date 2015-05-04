@@ -22,6 +22,6 @@ repositories {
 
 apply plugin: "com.liferay.source.formatter"
 
-sourceFormatter {
-	baseDir = "src/main"
+formatSource {
+	baseDirName = "src/main"
 }

@@ -107,8 +107,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public List<String> getProcessedFiles() {
-		return _processedFiles;
+	public List<String> getModifiedFileNames() {
+		return _modifiedFileNames;
 	}
 
 	@Override
@@ -1229,7 +1229,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 		}
 
-		_processedFiles.add(file.getAbsolutePath());
+		_modifiedFileNames.add(file.getAbsolutePath());
 
 		if (content.equals(newContent)) {
 			return;
@@ -1721,9 +1721,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
 	private String _mainReleaseVersion;
+	private List<String> _modifiedFileNames = new ArrayList<>();
 	private String _oldCopyright;
 	private Properties _portalLanguageProperties;
-	private List<String> _processedFiles = new ArrayList<>();
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusionPaths;
 	private SourceFormatterArgs _sourceFormatterArgs;

@@ -109,12 +109,12 @@ public class SourceFormatter {
 		return new ArrayList<>(_errorMessages);
 	}
 
-	public SourceMismatchException getSourceMismatchException() {
-		return _firstSourceMismatchException;
+	public List<String> getModifiedFileNames() {
+		return _modifiedFileNames;
 	}
 
-	public List<String> getProcessedFiles() {
-		return _processedFiles;
+	public SourceMismatchException getSourceMismatchException() {
+		return _firstSourceMismatchException;
 	}
 
 	public SourceFormatterArgs getSourceformatterArgs() {
@@ -129,7 +129,7 @@ public class SourceFormatter {
 		sourceProcessor.format();
 
 		_errorMessages.addAll(sourceProcessor.getErrorMessages());
-		_processedFiles.addAll(sourceProcessor.getProcessedFiles());
+		_modifiedFileNames.addAll(sourceProcessor.getModifiedFileNames());
 
 		if (_firstSourceMismatchException == null) {
 			_firstSourceMismatchException =
@@ -138,8 +138,9 @@ public class SourceFormatter {
 	}
 
 	private final Set<String> _errorMessages = new ConcurrentSkipListSet<>();
+	private final List<String> _modifiedFileNames =
+		new CopyOnWriteArrayList<>();
 	private volatile SourceMismatchException _firstSourceMismatchException;
-	private final List<String> _processedFiles = new CopyOnWriteArrayList<>();
 	private final SourceFormatterArgs _sourceFormatterArgs;
 
 }

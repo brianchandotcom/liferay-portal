@@ -44,9 +44,9 @@ public class SourceFormatterTest {
 
 		sourceFormatter.format();
 
-		List<String> processedFiles = sourceFormatter.getProcessedFiles();
+		List<String> modifiedFileNames = sourceFormatter.getModifiedFileNames();
 
-		Assert.assertTrue(processedFiles.isEmpty());
+		Assert.assertTrue(modifiedFileNames.isEmpty());
 	}
 
 	@Test

@@ -29,7 +29,7 @@ public interface SourceProcessor {
 
 	public String[] getIncludes();
 
-	public List<String> getProcessedFiles();
+	public List<String> getModifiedFileNames();
 
 	public SourceFormatterArgs getSourceFormatterArgs();
 

@@ -40,12 +40,13 @@ public class SourceFormatterMojo extends AbstractMojo {
 
 			sourceFormatter.format();
 
-			List<String> processedFiles = sourceFormatter.getProcessedFiles();
+			List<String> modifiedFileNames =
+				sourceFormatter.getModifiedFileNames();
 
 			Map pluginContext = getPluginContext();
 
 			pluginContext.put(
-				SourceFormatter.PROCESSED_FILES_ATTRIBUTE, processedFiles);
+				SourceFormatter.PROCESSED_FILES_ATTRIBUTE, modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);

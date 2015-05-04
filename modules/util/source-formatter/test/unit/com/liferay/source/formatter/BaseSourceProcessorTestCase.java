@@ -114,9 +114,9 @@ public class BaseSourceProcessorTestCase {
 
 		sourceFormatter.format();
 
-		List<String> processedFiles = sourceFormatter.getProcessedFiles();
+		List<String> modifiedFileNames = sourceFormatter.getModifiedFileNames();
 
-		if (processedFiles.isEmpty()) {
+		if (modifiedFileNames.isEmpty()) {
 			throw new IllegalArgumentException(
 				"The file name " + newFile.getAbsolutePath() +
 					" does not end with a valid extension");
@@ -148,7 +148,7 @@ public class BaseSourceProcessorTestCase {
 		}
 		else {
 			String actualFormattedContent = FileUtils.readFileToString(
-				new File(processedFiles.get(0)));
+				new File(modifiedFileNames.get(0)));
 
 			URL expectedUrl = classLoader.getResource(
 				_DIR_NAME + "/expected/" + fileName + "." +

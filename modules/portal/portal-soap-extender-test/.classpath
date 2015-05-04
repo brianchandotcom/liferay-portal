@@ -39,6 +39,7 @@
 	<classpathentry kind="lib" path="lib/arquillian-container-impl-base.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-container-karaf-remote.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-container-liferay.jar" />
+	<classpathentry kind="lib" path="lib/arquillian-container-osgi-with-extensions.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-container-osgi.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-container-spi.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-container-test-api.jar" />

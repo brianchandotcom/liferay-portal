@@ -39,7 +39,7 @@ page import="java.util.Set" %>
 <portlet:defineObjects />
 
 <%
-LanguageDisplayContext languageDisplayContext = new LanguageDisplayContext(request, portletPreferences);
+LanguageDisplayContext languageDisplayContext = new LanguageDisplayContext(request);
 %>
 
 <%@ include file="/init-ext.jsp" %>

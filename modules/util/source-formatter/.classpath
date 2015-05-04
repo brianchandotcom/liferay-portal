@@ -28,14 +28,28 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/ant-launcher.jar" />
 	<classpathentry kind="lib" path="lib/ant.jar" />
 	<classpathentry kind="lib" path="lib/commons-io.jar" />
 	<classpathentry kind="lib" path="lib/dom4j.jar" />
-	<classpathentry kind="lib" path="lib/gradle-base-services.jar" />
-	<classpathentry kind="lib" path="lib/gradle-core.jar" />
-	<classpathentry kind="lib" path="lib/groovy-all.jar" />
+	<classpathentry kind="lib" path="lib/icu4j.jar" />
 	<classpathentry kind="lib" path="lib/jaxen.jar" />
+	<classpathentry kind="lib" path="lib/jdom.jar" />
+	<classpathentry kind="lib" path="lib/maven-artifact.jar" />
+	<classpathentry kind="lib" path="lib/maven-model.jar" />
 	<classpathentry kind="lib" path="lib/maven-plugin-api.jar" />
+	<classpathentry kind="lib" path="lib/plexus-classworlds.jar" />
+	<classpathentry kind="lib" path="lib/plexus-component-annotations.jar" />
+	<classpathentry kind="lib" path="lib/plexus-utils.jar" />
 	<classpathentry kind="lib" path="lib/qdox.jar" />
+	<classpathentry kind="lib" path="lib/sisu-guava.jar" />
+	<classpathentry kind="lib" path="lib/sisu-guice.jar" />
+	<classpathentry kind="lib" path="lib/sisu-inject-bean.jar" />
+	<classpathentry kind="lib" path="lib/sisu-inject-plexus.jar" />
+	<classpathentry kind="lib" path="lib/xalan.jar" />
+	<classpathentry kind="lib" path="lib/xercesImpl.jar" />
+	<classpathentry kind="lib" path="lib/xml-apis.jar" />
+	<classpathentry kind="lib" path="lib/xmlParserAPIs.jar" />
+	<classpathentry kind="lib" path="lib/xom.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

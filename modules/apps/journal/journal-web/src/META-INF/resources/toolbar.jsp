@@ -61,35 +61,35 @@ boolean isSearch = Validator.isNull(keywords) && !advancedSearch;
 				<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
 			</aui:nav-item>
 
-			<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
-
 			<c:if test="<%= !isSearch %>">
+				<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
+
 				<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
-			</c:if>
 
-			<c:if test="<%= !user.isDefaultUser() %>">
-				<aui:nav-item dropdown="<%= true %>" label="manage">
+				<c:if test="<%= !user.isDefaultUser() %>">
+					<aui:nav-item dropdown="<%= true %>" label="manage">
 
-					<%
-					String taglibURL = "javascript:" + renderResponse.getNamespace() + "openStructuresView()";
-					%>
+						<%
+						String taglibURL = "javascript:" + renderResponse.getNamespace() + "openStructuresView()";
+						%>
 
-					<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-th-large" label="structures" />
+						<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-th-large" label="structures" />
 
-					<%
-					taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
-					%>
+						<%
+						taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
+						%>
 
-					<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-list-alt" label="templates" />
+						<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-list-alt" label="templates" />
 
-					<%
-					taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
-					%>
+						<%
+						taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
+						%>
 
-					<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-						<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-rss" label="feeds" />
-					</c:if>
-				</aui:nav-item>
+						<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+							<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-rss" label="feeds" />
+						</c:if>
+					</aui:nav-item>
+				</c:if>
 			</c:if>
 		</aui:nav>
 

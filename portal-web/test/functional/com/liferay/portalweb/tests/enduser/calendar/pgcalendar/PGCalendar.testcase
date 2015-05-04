@@ -3099,7 +3099,7 @@
 		</execute>
 	</command>
 
-	<command name="View24hourTimeFormat" priority="5">
+	<command known-issues="LPS-55278" name="View24hourTimeFormat" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

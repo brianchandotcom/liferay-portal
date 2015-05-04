@@ -18,7 +18,6 @@
 
 <%
 String redirectURL = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
 
 long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("exportImportConfigurationId"));
 
@@ -140,7 +139,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 			<aui:button-row>
 				<aui:button type="submit" value="<%= LanguageUtil.get(request, submitLanguageKey) %>" />
 
-				<aui:button href="<%= backURL %>" type="cancel" />
+				<aui:button type="cancel" />
 			</aui:button-row>
 		</ul>
 	</div>

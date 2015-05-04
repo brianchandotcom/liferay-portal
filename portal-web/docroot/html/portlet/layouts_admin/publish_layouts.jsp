@@ -200,7 +200,6 @@ else if (!quickPublish) {
 		<portlet:renderURL var="simplePublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/staging_bar/publish_layouts_simple" />
 			<portlet:param name="redirect" value="<%= simplePublishRedirectURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			<portlet:param name="quickPublish" value="<%= Boolean.FALSE.toString() %>" />

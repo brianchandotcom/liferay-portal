@@ -23,9 +23,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.Portal;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
+import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
@@ -47,7 +48,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsigmond Rab
  */
 @Component(service = WikiEngine.class)
-public class HtmlEngine extends BaseWikiEngine {
+public class HtmlEngine extends BaseInputEditorWikiEngine {
+
+	public HtmlEngine() {
+		super(null, null);
+	}
+
+	@Override
+	public String getEditorName() {
+		return _wikiGroupServiceConfiguration.getHTMLEditor();
+	}
 
 	@Override
 	public String getFormat() {
@@ -72,6 +82,19 @@ public class HtmlEngine extends BaseWikiEngine {
 			Portal.FRIENDLY_URL_SEPARATOR + friendlyURLMapper.getMapping();
 
 		_router = friendlyURLMapper.getRouter();
+	}
+
+	@Reference
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = null;
 	}
 
 	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
@@ -145,5 +168,6 @@ public class HtmlEngine extends BaseWikiEngine {
 
 	private String _friendlyURLMapping;
 	private Router _router;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

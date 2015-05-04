@@ -65,7 +65,8 @@ public class PortletServiceImpl extends PortletServiceBaseImpl {
 		if (!roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserRole(
+				getUserId(), RoleConstants.ADMINISTRATOR);
 		}
 
 		return portletLocalService.updatePortlet(

@@ -938,7 +938,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 				if (portlet != null) {
 					if (!strutsPath.equals(portlet.getStrutsPath())) {
-						throw new PrincipalException();
+						throw new PrincipalException.MustBePortletStrutsPath(
+							strutsPath, portletId);
 					}
 				}
 				else {

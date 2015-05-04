@@ -36,7 +36,9 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, group, role)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserGroupRole(
+				permissionChecker.getUserId(), role.getName(),
+				group.getGroupId());
 		}
 	}
 
@@ -45,9 +47,10 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 			PermissionChecker permissionChecker, long groupId, long roleId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, roleId)) {
-			throw new PrincipalException();
-		}
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Role role = RoleLocalServiceUtil.getRole(roleId);
+
+		check(permissionChecker, group, role);
 	}
 
 	@Override

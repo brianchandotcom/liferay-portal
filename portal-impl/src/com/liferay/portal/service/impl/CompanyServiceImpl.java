@@ -75,7 +75,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(
+				permissionChecker.getUserId());
 		}
 
 		return companyLocalService.addCompany(
@@ -88,7 +89,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(
+				permissionChecker.getUserId());
 		}
 
 		return companyLocalService.deleteCompany(companyId);
@@ -107,7 +109,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		if (!roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserRole(
+				getUserId(), RoleConstants.ADMINISTRATOR);
 		}
 
 		companyLocalService.deleteLogo(companyId);
@@ -199,7 +202,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		if (!roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserRole(
+				getUserId(), RoleConstants.ADMINISTRATOR);
 		}
 
 		companyLocalService.removePreferences(companyId, keys);
@@ -228,7 +232,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(
+				permissionChecker.getUserId());
 		}
 
 		return companyLocalService.updateCompany(
@@ -275,7 +280,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		if (!roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserRole(
+				getUserId(), RoleConstants.ADMINISTRATOR);
 		}
 
 		return companyLocalService.updateCompany(
@@ -488,7 +494,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		if (!roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserRole(
+				getUserId(), RoleConstants.ADMINISTRATOR);
 		}
 
 		companyLocalService.updateDisplay(companyId, languageId, timeZoneId);
@@ -511,7 +518,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		if (!roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserRole(
+				getUserId(), RoleConstants.ADMINISTRATOR);
 		}
 
 		return companyLocalService.updateLogo(companyId, bytes);
@@ -535,7 +543,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		if (!roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserRole(
+				getUserId(), RoleConstants.ADMINISTRATOR);
 		}
 
 		return companyLocalService.updateLogo(companyId, inputStream);
@@ -558,7 +567,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		if (!roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserRole(
+				getUserId(), RoleConstants.ADMINISTRATOR);
 		}
 
 		companyLocalService.updatePreferences(companyId, properties);
@@ -594,7 +604,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		if (!roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHaveUserRole(
+				getUserId(), RoleConstants.ADMINISTRATOR);
 		}
 
 		companyLocalService.updateSecurity(

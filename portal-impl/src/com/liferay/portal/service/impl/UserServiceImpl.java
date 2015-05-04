@@ -720,7 +720,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeCompanyAdmin(
+				permissionChecker.getUserId());
 		}
 
 		return userPersistence.findByCompanyId(companyId, start, end);
@@ -731,7 +732,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeCompanyAdmin(
+				permissionChecker.getUserId());
 		}
 
 		return userPersistence.countByCompanyId(companyId);

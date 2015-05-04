@@ -577,8 +577,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if ((permissionChecker == null) || !permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+		if (permissionChecker == null) {
+			throw new PrincipalException.MustHavePermissionChecker(0);
+		}
+
+		if (!permissionChecker.isOmniadmin()) {
+			throw new PrincipalException.MustBeOmniadmin(
+				permissionChecker.getUserId());
 		}
 	}
 

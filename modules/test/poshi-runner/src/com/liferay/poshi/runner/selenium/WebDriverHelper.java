@@ -29,11 +29,13 @@ import junit.framework.TestCase;
 
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -171,6 +173,26 @@ public class WebDriverHelper {
 		String attribute = attributeLocator.substring(pos + 1);
 
 		return webElement.getAttribute(attribute);
+	}
+
+	public String getConfirmation() {
+		switchTo();
+
+		WebDriverWait webDriverWait = new WebDriverWait(this, 1);
+
+		try {
+			Alert alert = webDriverWait.until(
+				ExpectedConditions.alertIsPresent());
+
+			String confirmation = alert.getText();
+
+			alert.accept();
+
+			return confirmation;
+		}
+		catch (Exception e) {
+			throw new WebDriverException();
+		}
 	}
 
 	public static String getDefaultWindowHandle() {

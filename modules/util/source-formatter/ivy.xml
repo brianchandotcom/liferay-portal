@@ -17,14 +17,11 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="ant" org="org.apache.ant" rev="1.8.2" transitive="false" />
+		<dependency name="ant" org="org.apache.ant" rev="1.8.2" />
 		<dependency name="commons-io" org="commons-io" rev="2.1" />
-		<dependency name="dom4j" org="dom4j" rev="1.6.1" transitive="false" />
-		<dependency conf="internal->default;provided" name="gradle-base-services" org="org.gradle" rev="2.0" transitive="false" />
-		<dependency conf="internal->default;provided" name="gradle-core" org="org.gradle" rev="2.0" transitive="false" />
-		<dependency conf="internal->default;provided" name="groovy-all" org="org.codehaus.groovy" rev="2.0.1" transitive="false" />
-		<dependency conf="internal->default;provided" name="maven-plugin-api" org="org.apache.maven" rev="3.0.4" transitive="false" />
-		<dependency name="jaxen" org="jaxen" rev="1.1.1" transitive="false" />
-		<dependency name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" transitive="false" />
+		<dependency name="dom4j" org="dom4j" rev="1.6.1" />
+		<dependency name="jaxen" org="jaxen" rev="1.1.1" />
+		<dependency name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" />
+		<dependency conf="provided->default" name="maven-plugin-api" org="org.apache.maven" rev="3.0.4" />
 	</dependencies>
 </ivy-module>

@@ -14,14 +14,17 @@
 
 package com.liferay.site.navigation.language.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class LanguageWebConfigurationValues {
+@Meta.OCD(
+	id = "com.liferay.site.navigation.language.web.configuration.LanguageWebConfiguration"
+)
+public interface LanguageWebConfiguration {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		LanguageWebConfigurationUtil.get("display.templates.config"));
+	@Meta.AD(deflt = "language-icon-ftl", required = false)
+	public String ddmTemplateKey();
 
 }

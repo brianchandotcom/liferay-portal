@@ -1,7 +1,0 @@
-Bundle-Activator: com.liferay.portal.soap.extender.test.activator.configuration.GreeterBundleActivator
-Bundle-Name: Liferay Portal SOAP Extender Test Component
-Bundle-SymbolicName: com.liferay.portal.soap.extender.test.component
-Bundle-Version: 1.0.0
-Include-Resource:\
-	com/liferay/portal/soap/extender/test/activator/configuration=classes/com/liferay/portal/soap/extender/test/activator/configuration,\
-	com/liferay/portal/soap/extender/test/service=classes/com/liferay/portal/soap/extender/test/service

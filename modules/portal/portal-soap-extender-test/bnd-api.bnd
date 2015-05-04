@@ -1,9 +1,0 @@
-Bundle-Activator: com.liferay.portal.soap.extender.test.activator.JaxWsApiBundleActivator
-Bundle-Name: Liferay Portal SOAP Extender Test API
-Bundle-SymbolicName: com.liferay.portal.soap.extender.test.api
-Bundle-Version: 1.0.0
-Include-Resource:\
-	com/liferay/portal/soap/extender/test/activator=classes/com/liferay/portal/soap/extender/test/activator,\
-	com/liferay/portal/soap/extender/test/activator/configuration=classes/com/liferay/portal/soap/extender/test/activator/configuration,\
-	com/liferay/portal/soap/extender/test/handler=classes/com/liferay/portal/soap/extender/test/handler,\
-	com/liferay/portal/soap/extender/test/service=classes/com/liferay/portal/soap/extender/test/service

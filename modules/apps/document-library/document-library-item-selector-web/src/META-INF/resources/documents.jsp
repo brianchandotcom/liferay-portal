@@ -21,7 +21,7 @@ String itemSelectedCallback = (String)request.getAttribute(DLItemSelectorView.IT
 PortletURL portletURL = (PortletURL)request.getAttribute(DLItemSelectorView.PORTLET_URL);
 DLItemSelectorCriterion dlItemSelectorCriterion = (DLItemSelectorCriterion)request.getAttribute(DLItemSelectorView.DL_ITEM_SELECTOR_CRITERION);
 
-long groupId = scopeGroupId;
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
 long folderId = ParamUtil.getLong(request, "folderId", dlItemSelectorCriterion.getFolderId());
 

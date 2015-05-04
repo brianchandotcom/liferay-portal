@@ -1,0 +1,31 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form select field.
+ *
+ * @param childElementsHTML
+ * @param dir
+ * @param label
+ * @param multiple
+ * @param name
+ * @param options
+ */
+{template .select}
+	<div class="form-group field-wrapper" data-fieldname="{$name}">
+		<div class="form-group input-select-wrapper">
+			<label class="control-label" for="{$name}">
+				{$label}
+			</label>
+
+			<select id="{$name}" class="form-control" dir="{$dir}" name="{$name}" {$multiple}>
+				{foreach $option in $options}
+					<option dir="{$dir}" {$option.status} value="{$option.value}">
+						{$option.label}
+					</option>
+				{/foreach}
+			</select>
+
+			{$childElementsHTML|noAutoescape}
+		</div>
+	</div>
+{/template}

@@ -67,6 +67,15 @@ public class DDMFormFieldValue implements Serializable {
 		return false;
 	}
 
+	public DDMFormField getDDMFormField() {
+		DDMForm ddmForm = _ddmFormValues.getDDMForm();
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		return ddmFormFieldsMap.get(_name);
+	}
+
 	public DDMFormValues getDDMFormValues() {
 		return _ddmFormValues;
 	}
@@ -111,12 +120,7 @@ public class DDMFormFieldValue implements Serializable {
 	}
 
 	public String getType() {
-		DDMForm ddmForm = _ddmFormValues.getDDMForm();
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
-		DDMFormField ddmFormField = ddmFormFieldsMap.get(_name);
+		DDMFormField ddmFormField = getDDMFormField();
 
 		return ddmFormField.getType();
 	}

@@ -112,6 +112,8 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 							if (showPublicSiteStaging) {
 								siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
 							}
+
+							themeDisplay.setDoAsGroupId(siteGroup.getGroupId());
 							%>
 
 							<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
@@ -161,6 +163,8 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 							if (showPrivateSiteStaging) {
 								siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
 							}
+
+							themeDisplay.setDoAsGroupId(siteGroup.getGroupId());
 							%>
 
 							<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">

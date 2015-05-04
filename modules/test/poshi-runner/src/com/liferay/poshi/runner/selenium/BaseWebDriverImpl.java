@@ -433,7 +433,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isElementNotPresent(String locator) {
-		return LiferaySeleniumHelper.isElementNotPresent(this, locator);
+		return WebDriverHelper.isElementNotPresent(this, locator);
 	}
 
 	@Override

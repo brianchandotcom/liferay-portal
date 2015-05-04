@@ -661,12 +661,6 @@ public class LiferaySeleniumHelper {
 		return matcher.find();
 	}
 
-	public static boolean isElementNotPresent(
-		LiferaySelenium liferaySelenium, String locator) {
-
-		return !liferaySelenium.isElementPresent(locator);
-	}
-
 	public static boolean isElementPresentAfterWait(
 			LiferaySelenium liferaySelenium, String locator)
 		throws Exception {

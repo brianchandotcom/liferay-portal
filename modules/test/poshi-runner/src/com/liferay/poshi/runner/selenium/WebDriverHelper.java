@@ -382,6 +382,12 @@ public class WebDriverHelper {
 		navigation.back();
 	}
 
+	public static boolean isElementNotPresent(
+		WebDriver webDriver, String locator) {
+
+		return !isElementPresent(webDriver, locator);
+	}
+
 	public static boolean isElementPresent(
 		WebDriver webDriver, String locator) {
 

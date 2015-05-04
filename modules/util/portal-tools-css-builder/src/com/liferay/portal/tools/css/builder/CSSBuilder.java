@@ -116,7 +116,7 @@ public class CSSBuilder {
 
 		long finished = System.currentTimeMillis() - start;
 
-		StringBuilder parsedMessage = new StringBuilder(5);
+		StringBuilder parsedMessage = new StringBuilder(7);
 
 		parsedMessage.append("Parsed ");
 		parsedMessage.append(fileName);
@@ -169,13 +169,15 @@ public class CSSBuilder {
 				_build(fileName);
 			}
 			catch (Exception e) {
-				System.out.println("Could not build " + fileName);
+				System.err.println("Could not build " + fileName);
+
+				e.printStackTrace();
 			}
 		}
 
 		long finished = System.currentTimeMillis() - start;
 
-		StringBuilder finishedMessage = new StringBuilder(5);
+		StringBuilder finishedMessage = new StringBuilder(3);
 
 		finishedMessage.append("Total build time finished in ");
 		finishedMessage.append(finished);
@@ -439,9 +441,9 @@ public class CSSBuilder {
 				"");
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("Unable to parse " + fileName);
 
-			System.out.println("Unable to parse " + fileName);
+			e.printStackTrace();
 		}
 
 		return content;

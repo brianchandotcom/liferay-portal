@@ -144,6 +144,11 @@ public class BasicRegistryImpl implements Registry {
 	}
 
 	@Override
+	public <T> ServiceRegistrar<T> getServiceRegistrar(Class<T> clazz) {
+		return new ServiceRegistrar(this, clazz);
+	}
+
+	@Override
 	public <T> Collection<T> getServices(Class<T> clazz, String filterString)
 		throws Exception {
 

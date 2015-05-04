@@ -48,6 +48,8 @@ public interface Registry {
 			String className, String filterString)
 		throws Exception;
 
+	public <T> ServiceRegistrar<T> getServiceRegistrar(Class<T> clazz);
+
 	public <T> Collection<T> getServices(Class<T> clazz, String filterString)
 		throws Exception;
 

@@ -17,7 +17,7 @@ package com.liferay.portal.soap.extender.internal;
 import aQute.bnd.annotation.component.Modified;
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.soap.extender.internal.configuration.JaxWsApiConfiguration;
+import com.liferay.portal.soap.extender.configuration.JaxWsApiConfiguration;
 
 import java.util.Map;
 
@@ -42,7 +42,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	configurationPid = "com.liferay.portal.soap.extender.internal.configuration.JaxWsApiConfiguration",
+	configurationPid = "com.liferay.portal.soap.extender.configuration.JaxWsApiConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class JaxWsApiEnabler {

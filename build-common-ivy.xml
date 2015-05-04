@@ -2,6 +2,83 @@
 <!DOCTYPE project>
 
 <project name="build-common-ivy" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<macrodef name="get-dest">
+		<attribute name="dest" />
+		<attribute name="src" />
+
+		<sequential>
+			<var name="dest" unset="true" />
+			<var name="dest.dir" unset="true" />
+			<var name="dest.file" unset="true" />
+
+			<if>
+				<matches string="@{dest}" pattern=".*/.*" />
+				<then>
+					<propertyregex
+						input="@{dest}"
+						property="dest.last"
+						regexp=".*/(.*)"
+						replace="\1"
+					/>
+
+					<propertyregex
+						input="${dest.last}"
+						property="dest.file"
+						regexp="[\w\-\.]+\.\w+"
+						replace="\0"
+					/>
+
+					<var name="dest.last" unset="true" />
+
+					<if>
+						<isset property="dest.file" />
+						<then>
+							<propertyregex
+								input="@{dest}"
+								property="dest.dir"
+								regexp="(.*)/.*"
+								replace="\1"
+							/>
+						</then>
+						<else>
+							<var name="dest.dir" value="@{dest}" />
+
+							<propertyregex
+								input="@{src}"
+								property="dest.file"
+								regexp=".*/(.*)"
+								replace="\1"
+							/>
+						</else>
+					</if>
+				</then>
+				<elseif>
+					<matches string="@{dest}" pattern="[\w\-\.]+\.\w+" />
+					<then>
+						<var name="dest.dir" value="." />
+
+						<var name="dest.file" value="@{dest}" />
+					</then>
+				</elseif>
+				<else>
+					<var name="dest.dir" value="@{dest}" />
+
+					<propertyregex
+						input="@{src}"
+						property="dest.file"
+						regexp=".*/(.*)"
+						replace="\1"
+					/>
+				</else>
+			</if>
+
+			<var name="dest" value="${dest.dir}/${dest.file}" />
+
+			<var name="dest.dir" unset="true" />
+			<var name="dest.file" unset="true" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="mirrors-get">
 		<attribute name="dest" />
 		<attribute default="false" name="ignoreerrors" />
@@ -35,12 +112,15 @@
 						</then>
 					</if>
 
+					<get-dest dest="@{dest}" src="@{src}" />
+
 					<copy
 						file="/opt/dev/cache/${mirrors.get.cache.file}"
 						overwrite="true"
-						tofile="@{dest}"
+						tofile="${dest}"
 					/>
 
+					<var name="dest" unset="true" />
 					<var name="mirrors.get.cache.file" unset="true" />
 				</then>
 				<else>

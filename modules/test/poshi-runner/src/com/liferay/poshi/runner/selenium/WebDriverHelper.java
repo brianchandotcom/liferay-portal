@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 
@@ -496,6 +498,61 @@ public class WebDriverHelper {
 		navigation.refresh();
 	}
 
+	public void select(String selectLocator, String optionLocator) {
+		WebElement webElement = getWebElement(selectLocator);
+
+		Select select = new Select(webElement);
+
+		String label = optionLocator;
+
+		if (optionLocator.startsWith("index=")) {
+			String indexString = optionLocator.substring(6);
+
+			int index = GetterUtil.getInteger(indexString);
+
+			select.selectByIndex(index - 1);
+		}
+		else if (optionLocator.startsWith("value=")) {
+			String value = optionLocator.substring(6);
+
+			if (value.startsWith("regexp:")) {
+				String regexp = value.substring(7);
+
+				selectByRegexpValue(selectLocator, regexp);
+			}
+			else {
+				List<WebElement> optionWebElements = select.getOptions();
+
+				for (WebElement optionWebElement : optionWebElements) {
+					String optionWebElementValue =
+						optionWebElement.getAttribute("value");
+
+					if (optionWebElementValue.equals(value)) {
+						label = optionWebElement.getText();
+
+						break;
+					}
+				}
+
+				select.selectByValue(label);
+			}
+		}
+		else {
+			if (optionLocator.startsWith("label=")) {
+				label = optionLocator.substring(6);
+			}
+
+			if (label.startsWith("regexp:")) {
+				String regexp = label.substring(7);
+
+				selectByRegexpText(selectLocator, regexp);
+			}
+			else {
+				select.selectByVisibleText(label);
+			}
+		}
+	}
+
 	public static void selectFrame(WebDriver webDriver, String locator) {
 		WebDriver.TargetLocator targetLocator = webDriver.switchTo();
 
@@ -734,6 +791,59 @@ public class WebDriverHelper {
 
 		javascriptExecutor.executeScript(
 			"arguments[0].scrollIntoView();", webElement);
+	}
+
+	protected void selectByRegexpText(String selectLocator, String regexp) {
+		WebElement webElement = getWebElement(selectLocator);
+
+		Select select = new Select(webElement);
+
+		List<WebElement> optionWebElements = select.getOptions();
+
+		Pattern pattern = Pattern.compile(regexp);
+
+		int index = -1;
+
+		for (WebElement optionWebElement : optionWebElements) {
+			String optionWebElementText = optionWebElement.getText();
+
+			Matcher matcher = pattern.matcher(optionWebElementText);
+
+			if (matcher.matches()) {
+				index = optionWebElements.indexOf(optionWebElement);
+
+				break;
+			}
+		}
+
+		select.selectByIndex(index);
+	}
+
+	protected void selectByRegexpValue(String selectLocator, String regexp) {
+		WebElement webElement = getWebElement(selectLocator);
+
+		Select select = new Select(webElement);
+
+		List<WebElement> optionWebElements = select.getOptions();
+
+		Pattern pattern = Pattern.compile(regexp);
+
+		int index = -1;
+
+		for (WebElement optionWebElement : optionWebElements) {
+			String optionWebElementValue = optionWebElement.getAttribute(
+				"value");
+
+			Matcher matcher = pattern.matcher(optionWebElementValue);
+
+			if (matcher.matches()) {
+				index = optionWebElements.indexOf(optionWebElement);
+
+				break;
+			}
+		}
+
+		select.selectByIndex(index);
 	}
 
 	private static String _defaultWindowHandle;

@@ -47,7 +47,7 @@
 		<tag-class>com.liferay.taglib.ui.AppViewEntryTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The path for to an action JSP page.</description>
+			<description>The path to an action JSP page.</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -27,7 +27,7 @@ long folderId = ParamUtil.getLong(request, "folderId", dlItemSelectorCriterion.g
 
 long repositoryId = scopeGroupId;
 
-	Folder folder = null;
+Folder folder = null;
 
 if (folderId > 0) {
 	folder = DLAppLocalServiceUtil.getFolder(folderId);
@@ -45,13 +45,7 @@ if (folder != null) {
 
 		groupId = group.getGroupId();
 	}
-}
 
-boolean showGroupsSelector = dlItemSelectorCriterion.isShowGroupsSelector();
-String type = dlItemSelectorCriterion.getType();
-String[] mimeTypes = dlItemSelectorCriterion.getMimeTypes();
-
-if (folder != null) {
 	PortletURL breadcrumbURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
 	breadcrumbURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
@@ -64,7 +58,7 @@ if (folder != null) {
 }
 %>
 
-<c:if test="<%= showGroupsSelector %>">
+<c:if test="<%= dlItemSelectorCriterion.isShowGroupsSelector() %>">
 	<liferay-util:include page="/group_selector.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="documents" />
 	</liferay-util:include>
@@ -123,7 +117,7 @@ if (folder != null) {
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-							<portlet:param name="type" value="<%= type %>" />
+							<portlet:param name="type" value="<%= dlItemSelectorCriterion.getType() %>" />
 						</liferay-portlet:renderURL>
 
 						<%
@@ -148,7 +142,7 @@ if (folder != null) {
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
-							<portlet:param name="type" value="<%= type %>" />
+							<portlet:param name="type" value="<%= dlItemSelectorCriterion.getType() %>" />
 						</liferay-portlet:renderURL>
 
 						<%
@@ -285,6 +279,8 @@ if (folder != null) {
 
 		<%
 		String keywords = ParamUtil.getString(request, "keywords");
+
+		String[] mimeTypes = dlItemSelectorCriterion.getMimeTypes();
 
 		if (Validator.isNotNull(keywords)) {
 			SearchContext searchContext = SearchContextFactory.getInstance(request);

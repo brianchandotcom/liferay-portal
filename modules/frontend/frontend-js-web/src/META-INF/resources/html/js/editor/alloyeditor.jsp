@@ -154,6 +154,19 @@ if (showSource) {
 
 	var alloyEditor;
 
+	var getInitialContent = function() {
+		var data;
+
+		if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+		}
+		else {
+			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+		}
+
+		return data;
+	};
+
 	var createInstance = function() {
 		document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
@@ -236,8 +249,8 @@ if (showSource) {
 			if (alloyEditor && alloyEditor.instanceReady) {
 				data = alloyEditor.getHTML();
 			}
-			else if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
-				data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+			else {
+				getInitialContent();
 			}
 
 			return data;
@@ -249,8 +262,8 @@ if (showSource) {
 			if (alloyEditor && alloyEditor.instanceReady) {
 				data = alloyEditor.getText();
 			}
-			else if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
-				data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+			else {
+				data = getInitialContent();
 			}
 
 			return data;

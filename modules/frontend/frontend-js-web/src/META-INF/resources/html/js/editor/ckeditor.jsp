@@ -187,18 +187,12 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	var getInitialContent = function() {
 		var data;
 
-		<c:choose>
-			<c:when test="<%= contents != null %>">
-				data = '<%= UnicodeFormatter.toString(contents) %>';
-			</c:when>
-			<c:otherwise>
-				data = '';
-
-				if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
-					data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
-				}
-			</c:otherwise>
-		</c:choose>
+		if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+		}
+		else {
+			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+		}
 
 		return data;
 	};

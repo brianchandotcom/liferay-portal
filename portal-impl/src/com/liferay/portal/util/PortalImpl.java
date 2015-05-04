@@ -1111,17 +1111,19 @@ public class PortalImpl implements Portal {
 
 				int[] friendlyURLIndex = getGroupFriendlyURLIndex(currentURL);
 
+				boolean replaceFriendlyURL = true;
+
 				if (friendlyURLIndex != null) {
 					int y = friendlyURLIndex[1];
 
 					currentURL = currentURL.substring(y);
 
 					if (currentURL.equals(StringPool.SLASH)) {
-						currentURL = StringPool.BLANK;
+						replaceFriendlyURL = false;
 					}
 				}
 
-				if (Validator.isNotNull(currentURL)) {
+				if (replaceFriendlyURL) {
 					String canonicalURLPrefix = canonicalURL.substring(0, pos);
 
 					String canonicalURLSuffix = canonicalURL.substring(pos);

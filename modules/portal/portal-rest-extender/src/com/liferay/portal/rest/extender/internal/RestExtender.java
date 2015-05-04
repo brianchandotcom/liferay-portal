@@ -105,7 +105,8 @@ public class RestExtender {
 		RestExtenderConfiguration soapExtenderConfiguration =
 			getRestExtenderConfiguration();
 
-		String[] providerFilters = soapExtenderConfiguration.jaxRsProviderFilterStrings();
+		String[] providerFilters =
+			soapExtenderConfiguration.jaxRsProviderFilterStrings();
 
 		if (providerFilters != null) {
 			for (String providerFilter : providerFilters) {
@@ -120,7 +121,8 @@ public class RestExtender {
 		RestExtenderConfiguration soapExtenderConfiguration =
 			getRestExtenderConfiguration();
 
-		String[] serviceFilters = soapExtenderConfiguration.jaxRsServiceFilterStrings();
+		String[] serviceFilters =
+			soapExtenderConfiguration.jaxRsServiceFilterStrings();
 
 		if (serviceFilters != null) {
 			for (String serviceFilter : serviceFilters) {

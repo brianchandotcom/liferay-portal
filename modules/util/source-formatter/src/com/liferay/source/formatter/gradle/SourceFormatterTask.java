@@ -50,13 +50,14 @@ public class SourceFormatterTask extends DefaultTask {
 
 			sourceFormatter.format();
 
-			List<String> processedFiles = sourceFormatter.getProcessedFiles();
+			List<String> modifiedFileNames =
+				sourceFormatter.getModifiedFileNames();
 
 			ExtraPropertiesExtension extraProperties =
 				extensionContainer.getExtraProperties();
 
 			extraProperties.set(
-				SourceFormatter.PROCESSED_FILES_ATTRIBUTE, processedFiles);
+				SourceFormatter.PROCESSED_FILES_ATTRIBUTE, modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new GradleException(e.getMessage(), e);

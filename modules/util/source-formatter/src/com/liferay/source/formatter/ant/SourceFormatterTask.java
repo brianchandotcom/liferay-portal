@@ -53,12 +53,13 @@ public class SourceFormatterTask extends Task {
 
 			sourceFormatter.format();
 
-			List<String> processedFiles = sourceFormatter.getProcessedFiles();
+			List<String> modifiedFileNames =
+				sourceFormatter.getModifiedFileNames();
 
 			Project project = getProject();
 
 			project.addIdReference(
-				SourceFormatter.PROCESSED_FILES_ATTRIBUTE, processedFiles);
+				SourceFormatter.PROCESSED_FILES_ATTRIBUTE, modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);

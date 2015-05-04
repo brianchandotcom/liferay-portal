@@ -14,9 +14,16 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -24,6 +31,42 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 public class PortletProviderUtil {
 
 	public static String getPortletId(
+		String className, PortletProvider.Action action) {
+
+		PortletProvider portletProvider = getPortletProvider(className, action);
+
+		if (portletProvider != null) {
+			return portletProvider.getPortletId();
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public static PortletURL getPortletURL(
+			HttpServletRequest request, String className,
+			PortletProvider.Action action)
+		throws PortalException {
+
+		PortletProvider portletProvider = getPortletProvider(className, action);
+
+		if (portletProvider != null) {
+			return portletProvider.getPortletURL(request);
+		}
+
+		return null;
+	}
+
+	public static PortletURL getPortletURL(
+			PortletRequest portletRequest, String className,
+			PortletProvider.Action action)
+		throws PortalException {
+
+		return getPortletURL(
+			PortalUtil.getHttpServletRequest(portletRequest), className,
+			action);
+	}
+
+	protected static PortletProvider getPortletProvider(
 		String className, PortletProvider.Action action) {
 
 		PortletProvider portletProvider = null;
@@ -61,11 +104,7 @@ public class PortletProviderUtil {
 			}
 		}
 
-		if (portletProvider != null) {
-			return portletProvider.getPortletId();
-		}
-
-		return StringPool.BLANK;
+		return portletProvider;
 	}
 
 	private static final ServiceTrackerMap<String, AddPortletProvider>

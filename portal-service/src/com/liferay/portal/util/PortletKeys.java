@@ -167,8 +167,6 @@ public class PortletKeys {
 
 	public static final String SITE_MEMBERS_DIRECTORY = "187";
 
-	public static final String SITE_MEMBERSHIPS_ADMIN = "174";
-
 	public static final String SITE_SETTINGS = "165";
 
 	public static final String SITES_ADMIN = "134";

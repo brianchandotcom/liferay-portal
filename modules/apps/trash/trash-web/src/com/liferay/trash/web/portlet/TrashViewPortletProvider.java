@@ -14,6 +14,7 @@
 
 package com.liferay.trash.web.portlet;
 
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.trash.web.constants.TrashPortletKeys;
 
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {"model.class.name=com.liferay.portlet.trash.model.TrashEntry"},
 	service = ViewPortletProvider.class
 )
-public class TrashViewPortletProvider implements ViewPortletProvider {
+public class TrashViewPortletProvider
+	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {

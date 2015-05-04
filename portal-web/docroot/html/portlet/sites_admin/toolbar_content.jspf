@@ -65,13 +65,11 @@
 					<aui:nav-item cssClass="divider" />
 
 					<%
-					String portletId = PortletProviderUtil.getPortletId(LayoutSetPrototype.class.getName(), PortletProvider.Action.VIEW);
-					%>
+					PortletURL manageSiteTemplateURL = PortletProviderUtil.getPortletURL(request, LayoutSetPrototype.class.getName(), PortletProvider.Action.VIEW);
 
-					<liferay-portlet:renderURL portletName="<%= portletId %>" varImpl="manageSiteTemplateURL">
-						<portlet:param name="redirect" value="<%= viewSitesURL %>" />
-						<portlet:param name="backURL" value="<%= viewSitesURL %>" />
-					</liferay-portlet:renderURL>
+					manageSiteTemplateURL.setParameter("redirect", viewSitesURL);
+					manageSiteTemplateURL.setParameter("backURL", viewSitesURL);
+					%>
 
 					<aui:nav-item href="<%= manageSiteTemplateURL.toString() %>" label="manage-site-template" />
 				</c:if>

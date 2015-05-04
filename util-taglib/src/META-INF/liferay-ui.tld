@@ -1697,6 +1697,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>group-search-form</name>
+		<tag-class>com.liferay.taglib.ui.GroupSearchFormTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<description>Creates a header that displays its text above a horizontal rule accompanied by a configurable back URL button.</description>
 		<name>header</name>
 		<tag-class>com.liferay.taglib.ui.HeaderTag</tag-class>

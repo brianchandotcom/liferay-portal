@@ -34,10 +34,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	<liferay-ui:search-container
 		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 	>
-		<liferay-ui:search-form
-			page="/html/portlet/users_admin/group_search.jsp"
-			searchContainer="<%= searchContainer %>"
-		/>
+		<liferay-ui:group-search-form />
 
 		<div class="separator"><!-- --></div>
 

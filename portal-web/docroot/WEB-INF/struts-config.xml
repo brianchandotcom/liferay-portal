@@ -1384,8 +1384,6 @@
 
 		<action path="/sites_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
 
-		<action path="/sites_admin/select_team" forward="portlet.sites_admin.select_team" />
-
 		<action path="/sites_admin/view" forward="portlet.sites_admin.view" />
 
 		<!-- Sites Directory -->

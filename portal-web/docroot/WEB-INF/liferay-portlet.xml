@@ -1070,23 +1070,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>174</portlet-name>
-		<icon>/html/icons/site_memberships_admin.png</icon>
-		<control-panel-entry-category>site_administration.users</control-panel-entry-category>
-		<control-panel-entry-weight>1.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.sitesadmin.SiteMembershipsControlPanelEntry</control-panel-entry-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<header-portlet-css>/html/portlet/sites_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-communities</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>176</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>license_manager</struts-path>

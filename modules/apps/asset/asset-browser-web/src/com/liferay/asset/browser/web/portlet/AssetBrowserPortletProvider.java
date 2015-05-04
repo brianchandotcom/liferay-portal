@@ -15,6 +15,7 @@
 package com.liferay.asset.browser.web.portlet;
 
 import com.liferay.asset.browser.web.constants.AssetBrowserPortletKeys;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 
@@ -28,7 +29,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {"model.class.name=" + PortletProvider.CLASS_NAME_ANY},
 	service = BrowsePortletProvider.class
 )
-public class AssetBrowserPortletProvider implements BrowsePortletProvider {
+public class AssetBrowserPortletProvider
+	extends BasePortletProvider implements BrowsePortletProvider {
 
 	@Override
 	public String getPortletId() {

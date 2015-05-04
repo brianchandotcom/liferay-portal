@@ -40,6 +40,8 @@ int pendingRequests = 0;
 if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 	pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
 }
+
+String portletId = PortletProviderUtil.getPortletId(MembershipRequest.class.getName(), PortletProvider.Action.VIEW);
 %>
 
 <c:if test="<%= group.isOrganization() %>">
@@ -66,7 +68,7 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 				<liferay-ui:message key="none" />
 			</c:if>
 
-			<liferay-portlet:renderURL doAsGroupId="<%= groupId %>" portletName="<%= PortletKeys.SITE_MEMBERSHIPS_ADMIN %>" var="assignMembersURL">
+			<liferay-portlet:renderURL doAsGroupId="<%= groupId %>" portletName="<%= portletId %>" var="assignMembersURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</liferay-portlet:renderURL>
 
@@ -89,8 +91,8 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 			</dt>
 
 			<dd class="membership-requests">
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.SITE_MEMBERSHIPS_ADMIN %>" var="viewMembershipRequestsURL">
-					<portlet:param name="mvcPath" value="/html/portlet/site_memberships/view_membership_requests.jsp" />
+				<liferay-portlet:renderURL portletName="<%= portletId %>" var="viewMembershipRequestsURL">
+					<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 				</liferay-portlet:renderURL>

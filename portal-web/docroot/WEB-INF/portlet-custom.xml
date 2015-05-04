@@ -1361,27 +1361,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>174</portlet-name>
-		<display-name>Site Memberships Admin</display-name>
-		<portlet-class>com.liferay.portlet.sitememberships.SiteMembershipsPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/site_memberships/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/site_memberships/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>176</portlet-name>
 		<display-name>License Manager</display-name>
 		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>

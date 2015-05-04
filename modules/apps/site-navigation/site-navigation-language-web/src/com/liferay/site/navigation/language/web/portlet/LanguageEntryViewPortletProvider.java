@@ -14,7 +14,10 @@
 
 package com.liferay.site.navigation.language.web.provider;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,11 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ViewPortletProvider.class
 )
-public class LanguageEntryViewPortletProvider implements ViewPortletProvider {
+public class LanguageEntryViewPortletProvider
+	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
 		return LanguagePortletKeys.LANGUAGE;
+	}
+
+	@Override
+	protected long getPlid(ThemeDisplay themeDisplay) throws PortalException {
+		return themeDisplay.getPlid();
 	}
 
 }

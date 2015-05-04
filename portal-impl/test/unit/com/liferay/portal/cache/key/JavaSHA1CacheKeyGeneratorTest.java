@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cache.key;
 
+import com.liferay.portal.kernel.util.Digester;
+
 /**
  * @author Vilmos Papp
  */
@@ -22,7 +24,7 @@ public class JavaSHA1CacheKeyGeneratorTest
 
 	@Override
 	public void setUp() throws Exception {
-		cacheKeyGenerator = new JavaSHA1CacheKeyGenerator();
+		cacheKeyGenerator = new MessageDigestCacheKeyGenerator(Digester.SHA_1);
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cache.key;
 
+import com.liferay.portal.kernel.util.Digester;
+
 /**
  * @author Shuyang Zhou
  */
@@ -22,7 +24,7 @@ public class JavaMD5CacheKeyGeneratorTest
 
 	@Override
 	public void setUp() throws Exception {
-		cacheKeyGenerator = new JavaMD5CacheKeyGenerator();
+		cacheKeyGenerator = new MessageDigestCacheKeyGenerator(Digester.MD5);
 	}
 
 }

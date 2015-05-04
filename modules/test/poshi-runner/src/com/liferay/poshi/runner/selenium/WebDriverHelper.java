@@ -36,11 +36,30 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * @author Kenji Heigel
  */
 public class WebDriverHelper {
+
+	public void addSelection(String locator, String optionLocator) {
+		Select select = new Select(getWebElement(locator));
+
+		if (optionLocator.startsWith("index=")) {
+			select.selectByIndex(
+				GetterUtil.getInteger(optionLocator.substring(6)));
+		}
+		else if (optionLocator.startsWith("label=")) {
+			select.selectByVisibleText(optionLocator.substring(6));
+		}
+		else if (optionLocator.startsWith("value=")) {
+			select.selectByValue(optionLocator.substring(6));
+		}
+		else {
+			select.selectByVisibleText(optionLocator);
+		}
+	}
 
 	public static void assertJavaScriptErrors(
 			WebDriver webDriver, String ignoreJavaScriptError)

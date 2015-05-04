@@ -249,6 +249,9 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			String sql = sb.toString();
 
 			ps = con.prepareStatement(sql);
+			
+			long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+			long classPK = ddmStructureId;
 
 			ps.setString(1, uuid);
 			ps.setLong(2, ddmTemplateId);
@@ -258,8 +261,8 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			ps.setString(6, StringPool.BLANK);
 			ps.setTimestamp(7, now);
 			ps.setTimestamp(8, now);
-			ps.setLong(9, PortalUtil.getClassNameId(DDMStructure.class));
-			ps.setLong(10, ddmStructureId);
+			ps.setLong(9, classNameId);
+			ps.setLong(10, classPK);
 			ps.setString(11, templateKey);
 			ps.setString(12, DDMTemplateConstants.VERSION_DEFAULT);
 			ps.setString(13, localizedName);
@@ -277,8 +280,9 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 			addTemplateVersion(
 				increment(), groupId, companyId, getDefaultUserId(companyId),
-				StringPool.BLANK, now, ddmTemplateId, localizedName,
-				localizedDescription, TemplateConstants.LANG_TYPE_FTL, script);
+				StringPool.BLANK, now, classNameId, classPK,  ddmTemplateId,
+				localizedName, localizedDescription,
+				TemplateConstants.LANG_TYPE_FTL, script);
 
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				DDMTemplate.class.getName());

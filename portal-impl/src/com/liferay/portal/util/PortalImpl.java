@@ -1127,7 +1127,7 @@ public class PortalImpl implements Portal {
 					String canonicalURLSuffix = canonicalURL.substring(pos);
 
 					canonicalURLSuffix = StringUtil.replaceFirst(
-						canonicalURLSuffix, currentURL,
+						canonicalURLSuffix, layout.getFriendlyURL(),
 						layout.getFriendlyURL(locale));
 
 					canonicalURL = canonicalURLPrefix.concat(

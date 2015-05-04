@@ -83,6 +83,7 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.site.admin.web.constants.SitesAdminPortletKeys;
+import com.liferay.site.admin.web.upgrade.SitesAdminWebUpgrade;
 
 import java.io.IOException;
 
@@ -104,6 +105,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
@@ -414,6 +416,11 @@ public class SitesAdminPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSitesAdminWebUpgrade(
+		SitesAdminWebUpgrade sitesAdminWebUpgrade) {
 	}
 
 	protected void updateActive(ActionRequest actionRequest, boolean active)

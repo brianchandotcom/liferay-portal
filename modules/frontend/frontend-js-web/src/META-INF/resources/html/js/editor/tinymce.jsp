@@ -164,7 +164,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			else {
 				var editorBody = tinyMCE.editors['<%= name %>'].getBody();
 
-				data = editorBody.textContent || editorBody.innerText;
+				data = editorBody.textContent;
 			}
 
 			return data;

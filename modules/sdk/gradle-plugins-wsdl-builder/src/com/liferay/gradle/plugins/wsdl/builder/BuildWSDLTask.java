@@ -75,8 +75,8 @@ public class BuildWSDLTask extends DefaultTask {
 		_includeSource = includeSource;
 	}
 
-	public void setInputDir(Object InputDir) {
-		_inputDir = InputDir;
+	public void setInputDir(Object inputDir) {
+		_inputDir = inputDir;
 	}
 
 	private Object _destinationDir = "lib";

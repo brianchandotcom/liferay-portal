@@ -40,7 +40,7 @@ public class BuildXSDTask extends Zip {
 	public File getInputDir() {
 		Project project = getProject();
 
-		return project.file(_inputDirName);
+		return project.file(_inputDir);
 	}
 
 	@InputFiles
@@ -62,10 +62,10 @@ public class BuildXSDTask extends Zip {
 		return project.fileTree(args);
 	}
 
-	public void setInputDir(Object inputDirName) {
-		_inputDirName = String.valueOf(inputDirName);
+	public void setInputDir(Object inputDir) {
+		_inputDir = inputDir;
 	}
 
-	private String _inputDirName = "xsd";
+	private Object _inputDir = "xsd";
 
 }

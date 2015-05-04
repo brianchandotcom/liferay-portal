@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class SourceFormatterArgs {
 
-
 	public String getCopyright() {
 		return _copyright;
 	}

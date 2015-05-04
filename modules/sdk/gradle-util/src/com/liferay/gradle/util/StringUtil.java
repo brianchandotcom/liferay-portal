@@ -31,6 +31,20 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String merge(String[] array, String separator) {
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < array.length; i++) {
+			sb.append(array[i]);
+
+			if ((i + 1) < array.length) {
+				sb.append(separator);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public static String[] prepend(String[] array, String prefix) {
 		if (ArrayUtil.isEmpty(array) || Validator.isNull(prefix)) {
 			return array;

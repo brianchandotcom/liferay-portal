@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder;
 
 /**
  * @author Raymond Augé
+ * @author Andrea Di Giorgi
  */
 public class ServiceBuilderArgs {
 
@@ -180,25 +181,41 @@ public class ServiceBuilderArgs {
 	}
 
 	public void setMergeModelHintsConfigs(String mergeModelHintsConfigs) {
+		setMergeModelHintsConfigs(_split(mergeModelHintsConfigs));
+	}
+
+	public void setMergeModelHintsConfigs(String[] mergeModelHintsConfigs) {
 		_setModelHintsConfigs(
-			_append(_modelHintsConfigs, _split(mergeModelHintsConfigs)));
+			_append(_modelHintsConfigs, mergeModelHintsConfigs));
 	}
 
 	public void setMergeReadOnlyPrefixes(String mergeReadOnlyPrefixes) {
-		_setReadOnlyPrefixes(
-			_append(_readOnlyPrefixes, _split(mergeReadOnlyPrefixes)));
+		setMergeReadOnlyPrefixes(_split(mergeReadOnlyPrefixes));
+	}
+
+	public void setMergeReadOnlyPrefixes(String[] mergeReadOnlyPrefixes) {
+		_setReadOnlyPrefixes(_append(_readOnlyPrefixes, mergeReadOnlyPrefixes));
 	}
 
 	public void setMergeResourceActionsConfigs(
 		String mergeResourceActionsConfigs) {
 
+		setMergeResourceActionsConfigs(_split(mergeResourceActionsConfigs));
+	}
+
+	public void setMergeResourceActionsConfigs(
+		String[] mergeResourceActionsConfigs) {
+
 		_setResourceActionsConfigs(
-			_append(
-				_resourceActionsConfigs, _split(mergeResourceActionsConfigs)));
+			_append(_resourceActionsConfigs, mergeResourceActionsConfigs));
 	}
 
 	public void setModelHintsConfigs(String modelHintsConfigs) {
-		_setModelHintsConfigs(_split(modelHintsConfigs));
+		setModelHintsConfigs(_split(modelHintsConfigs));
+	}
+
+	public void setModelHintsConfigs(String[] modelHintsConfigs) {
+		_setModelHintsConfigs(modelHintsConfigs);
 	}
 
 	public void setModelHintsFileName(String modelHintsFileName) {
@@ -218,7 +235,11 @@ public class ServiceBuilderArgs {
 	}
 
 	public void setReadOnlyPrefixes(String readOnlyPrefixes) {
-		_setReadOnlyPrefixes(_split(readOnlyPrefixes));
+		setReadOnlyPrefixes(_split(readOnlyPrefixes));
+	}
+
+	public void setReadOnlyPrefixes(String[] readOnlyPrefixes) {
+		_setReadOnlyPrefixes(readOnlyPrefixes);
 	}
 
 	public void setRemotingFileName(String remotingFileName) {
@@ -226,7 +247,11 @@ public class ServiceBuilderArgs {
 	}
 
 	public void setResourceActionsConfigs(String resourceActionsConfigs) {
-		_setResourceActionsConfigs(_split(resourceActionsConfigs));
+		setResourceActionsConfigs(_split(resourceActionsConfigs));
+	}
+
+	public void setResourceActionsConfigs(String[] resourceActionsConfigs) {
+		_setResourceActionsConfigs(resourceActionsConfigs);
 	}
 
 	public void setResourcesDirName(String resourcesDirName) {
@@ -238,7 +263,11 @@ public class ServiceBuilderArgs {
 	}
 
 	public void setSpringNamespaces(String springNamespaces) {
-		_springNamespaces = _split(springNamespaces);
+		setSpringNamespaces(_split(springNamespaces));
+	}
+
+	public void setSpringNamespaces(String[] springNamespaces) {
+		_springNamespaces = springNamespaces;
 	}
 
 	public void setSqlDirName(String sqlDirName) {

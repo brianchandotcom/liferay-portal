@@ -189,10 +189,10 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			configuration,
 			new Action<Configuration>() {
 
-			@Override
-			public void execute(Configuration configuration) {
-				addWSDLBuilderDependencies(project);
-			}
+				@Override
+				public void execute(Configuration configuration) {
+					addWSDLBuilderDependencies(project);
+				}
 
 		});
 

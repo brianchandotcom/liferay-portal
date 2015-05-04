@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Gradle Plugins XSD Builder
+Bundle-SymbolicName: com.liferay.gradle.plugins.xsd.builder
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.gradle.plugins.xsd.builder
+Include-Resource: classes

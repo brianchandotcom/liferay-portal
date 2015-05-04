@@ -14,8 +14,8 @@ buildscript {
 
 apply plugin: "com.liferay.portal.tools.wsdd.builder"
 
-wsddBuilder {
-	fileName = "docroot/WEB-INF/service.xml"
-	outputPath = "docroot/WEB-INF/src"
+buildWSDD {
+	inputFileName = "docroot/WEB-INF/service.xml"
+	outputDirName = "docroot/WEB-INF/src"
 	serverConfigFileName = "docroot/WEB-INF/server-config.wsdd"
 }

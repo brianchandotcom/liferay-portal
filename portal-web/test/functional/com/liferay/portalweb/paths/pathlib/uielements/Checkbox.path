@@ -119,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MERGE_WITH_PARENT_FOLDER</td>
+	<td>//input[contains(@id,'mergeWithParentFolder')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEVER_EXPIRE</td>
 	<td>//input[contains(@name,'neverExpire')]</td>
 	<td></td>

@@ -219,6 +219,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE</td>
+	<td>//button[contains(.,'Remove')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPLY_BUTTON</td>
 	<td>//button[contains(.,'Reply')]</td>
 	<td></td>

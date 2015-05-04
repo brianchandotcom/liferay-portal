@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RELATED_ASSETS_SELECT</td>
+	<td>//div[contains(@class,'select-existing')]/a[@title='Select']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RELATED_ASSETS_SELECT_MENULIST_ASSET</td>
 	<td>//a[@data-title='Select ${key_assetType}']</td>
 	<td></td>
@@ -94,6 +99,17 @@
 <tr>
 	<td>BLOGS_ENTRY_CONTENT</td>
 	<td>//div[@class='asset-content']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BOOKMARKS_ENTRY-->
+<tr>
+	<td>BOOKMARKS_ENTRY_NAVIGATION_ADD_BOOKMARKS_ENTRY</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//li/a[contains(@href,'BookmarksEntry')]</td>
 	<td></td>
 </tr>
 <tr>

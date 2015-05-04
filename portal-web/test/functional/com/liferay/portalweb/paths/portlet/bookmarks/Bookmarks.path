@@ -8,6 +8,150 @@
 <tr><td rowspan="1" colspan="3">Bookmarks</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_NAME</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_folderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVBAR_CONTAINER</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_HOME</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//li/a[contains(@href,'home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_RECENT</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//li/a[contains(@href,'recent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_MINE</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//li/a[contains(@href,'mine')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDERS_TABLE-->
+<tr>
+	<td>FOLDERS_TABLE_FOLDER_NAME</td>
+	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[1]/a/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDERS_TABLE_FOLDER_DESCRIPTION</td>
+	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN</td>
+	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN_GENERIC</td>
+	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BOOKMARKS_TABLE-->
+<tr>
+	<td>BOOKMARKS_TABLE_NAME</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_TABLE_URL</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_TABLE_ACTIONS_DROPDOWN</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[5]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_TABLE_ACTIONS_DROPDOWN_GENERIC</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr/td[5]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_TABLE_VISITS</td>
+	<td>//tr[contains(.,'${key_bookmarkName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARK_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_bookmarkName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_MENU-->
+<tr>
+	<td>FOLDER_MENU_ADD_FOLDER</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_ADD_SUBFOLDER</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_ADD_BOOKMARK</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Bookmark')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_EDIT</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_PERMISSIONS</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_SUBSCRIBE</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

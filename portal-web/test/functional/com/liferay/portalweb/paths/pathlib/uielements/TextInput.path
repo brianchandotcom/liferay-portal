@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLDER_NAME</td>
+	<td>//input[contains(@id,'folderName')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_ANALYTICS_ID</td>
 	<td>//input[contains(@id,'_165_googleAnalyticsId')]</td>
 	<td></td>
@@ -121,6 +126,11 @@
 <tr>
 	<td>URL</td>
 	<td>//input[contains(@id,'url')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_FIELD_REQUIRED</td>
+	<td>//div[contains(@class,'error')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -61,6 +61,11 @@ page import="com.liferay.wiki.web.display.context.util.WikiURLHelper" %><%@
 page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %><%@
 page import="com.liferay.wiki.web.util.WikiWebComponentProvider" %>
 
+page import="com.liferay.item.selector.ItemSelector" %><%@
+page import="com.liferay.wiki.item.selector.web.WikiAttachmentItemSelectorCriterion" %><%@
+page import="com.liferay.document.library.item.selector.web.DLItemSelectorCriterion" %><%@
+page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
+
 <%
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 

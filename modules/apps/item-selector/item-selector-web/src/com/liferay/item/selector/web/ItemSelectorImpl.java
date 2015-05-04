@@ -21,6 +21,7 @@ import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
+import com.liferay.item.selector.web.util.ItemSelectorCriterionSerializer;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Accessor;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
@@ -46,8 +48,6 @@ import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -191,26 +191,23 @@ public class ItemSelectorImpl implements ItemSelector {
 		Class<T> itemSelectorCriterionClass) {
 
 		try {
-			T itemSelectorCriterion = itemSelectorCriterionClass.newInstance();
+			Constructor<T> constructor =
+				itemSelectorCriterionClass.getConstructor();
 
-			Map<String, String> properties = new HashMap<>();
+			constructor.setAccessible(true);
 
-			for (String key : parameters.keySet()) {
-				if (!key.startsWith(paramPrefix)) {
-					continue;
-				}
+			T itemSelectorCriterion = constructor.newInstance();
 
-				properties.put(
-					key.substring(paramPrefix.length()),
-					getValue(parameters, key));
-			}
+			ItemSelectorCriterionSerializer<?> itemSelectorCriterionSerializer =
+				new ItemSelectorCriterionSerializer<>(
+					itemSelectorCriterion, paramPrefix);
 
-			BeanUtils.populate(itemSelectorCriterion, properties);
+			itemSelectorCriterionSerializer.setProperties(parameters);
 
 			return itemSelectorCriterion;
 		}
 		catch (InvocationTargetException | InstantiationException |
-			IllegalAccessException e) {
+			IllegalAccessException | NoSuchMethodException e) {
 
 			throw new SystemException(
 				"Unable to unmarshall item selector criterion", e);
@@ -357,31 +354,12 @@ public class ItemSelectorImpl implements ItemSelector {
 		Map<String, String[]> parameters, String paramPrefix,
 		ItemSelectorCriterion itemSelectorCriterion) {
 
-		try {
-			Map<String, ?> properties = BeanUtils.describe(
-				itemSelectorCriterion);
+		ItemSelectorCriterionSerializer<ItemSelectorCriterion>
+			itemSelectorCriterionSerializer =
+				new ItemSelectorCriterionSerializer<>(
+					itemSelectorCriterion, paramPrefix);
 
-			for (Map.Entry<String, ?> entry : properties.entrySet()) {
-				String key = entry.getKey();
-
-				if (key.equals("availableReturnTypes") || key.equals("class") ||
-					key.equals("desiredReturnTypes")) {
-
-					continue;
-				}
-
-				Object value = entry.getValue();
-
-				parameters.put(
-					paramPrefix + key, new String[] {value.toString()});
-			}
-		}
-		catch (IllegalAccessException | InvocationTargetException |
-			NoSuchMethodException e) {
-
-			throw new SystemException(
-				"Unable to marshall item selector criterion", e);
-		}
+		parameters.putAll(itemSelectorCriterionSerializer.getProperties());
 	}
 
 	@Reference(

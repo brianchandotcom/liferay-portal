@@ -1,0 +1,99 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+import com.liferay.portal.kernel.util.StringUtil;
+
+/**
+ * @author Hugo Huijser
+ */
+public class IncorrectLineBreaks1 {
+	public void method1() {
+		String thisIsAStringWithAVeryVeryVeryLongName = "";
+
+		String thisIsAStringWithAVeryVeryVeryLongName2
+			= thisIsAStringWithAVeryVeryVeryLongName;
+
+		String test = "";
+
+		if ((test == null) || StringUtil.contains(
+				thisIsAStringWithAVeryVeryVeryLongName, test)) {
+
+			test = thisIsAStringWithAVeryVeryVeryLongName;
+		}
+
+		String test2 =
+			test1 + StringUtil.trim(thisIsAStringWithAVeryVeryVeryLongName +
+				StringPool.Period);
+
+		boolean b = StringUtil.contains(
+			thisIsAStringWithAVeryVeryVeryLongName, StringUtil.trim(
+				thisIsAStringWithAVeryVeryVeryLongName2);
+
+		String test3 = thisIsAStringWithAVeryVeryVeryLongName +
+			thisIsAStringWithAVeryVeryVeryLongName2;
+
+		boolean booleanWithAVeryVeryVeryVeryVeryVeryLongName = StringUtil.
+			contains(test1, test2);
+
+		boolean booleanWithAVeryVeryVeryVeryVeryVeryLongName = StringUtil
+			.contains(test1, test2);
+	}
+
+	public void method2(String test1, String test2, String test3) throws
+		Exception {
+
+		if (test1.equals(test2)) {
+			System.out.println(test1);
+		} else {
+			System.out.println(test3);
+		}
+	}
+
+	public void method3(String testStringName1, String testStringName2,
+			String[] testStringNames)
+		throws Exception {
+
+		methodWithASlightlyLongerName(testStringName1, testStringName2,
+			testStringNames);
+	}
+
+	public void method4() {
+		for (String number : _NUMBERS) {
+			if (number !=
+					null) {
+
+				return;
+			}
+		}
+	}
+
+	public void methodWithASlightlyLongerName(
+		String test1, String test2, String[] testStringArray) throws Exception {
+
+		for (String testStringWithAVeryVeryVeryVeryVeryVeryVeryLongName :
+			testStringArray) {
+
+			continue;
+		}
+	}
+
+	private static final String _NUMBERS =
+		new String[] {
+			"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+			"Nine", "Ten"
+		}; 
+
+}

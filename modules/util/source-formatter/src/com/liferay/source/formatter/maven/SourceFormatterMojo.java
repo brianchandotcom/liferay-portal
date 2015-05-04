@@ -46,7 +46,8 @@ public class SourceFormatterMojo extends AbstractMojo {
 			Map pluginContext = getPluginContext();
 
 			pluginContext.put(
-				SourceFormatter.PROCESSED_FILES_ATTRIBUTE, modifiedFileNames);
+				SourceFormatterArgs.OUTPUT_KEY_MODIFIED_FILES,
+				modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);

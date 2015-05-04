@@ -57,7 +57,8 @@ public class SourceFormatterTask extends DefaultTask {
 				extensionContainer.getExtraProperties();
 
 			extraProperties.set(
-				SourceFormatter.PROCESSED_FILES_ATTRIBUTE, modifiedFileNames);
+				SourceFormatterArgs.OUTPUT_KEY_MODIFIED_FILES,
+				modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new GradleException(e.getMessage(), e);

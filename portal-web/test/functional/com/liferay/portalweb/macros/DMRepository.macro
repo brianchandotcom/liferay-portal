@@ -27,6 +27,7 @@
 			<condition function="IsElementPresent" locator1="CPDocumentsandmedia#FILTER_REPOSITORY_GENERIC" />
 			<then>
 				<execute function="Click" locator1="CPDocumentsandmedia#FILTER_REPOSITORY_GENERIC" />
+				<execute function="Pause" locator1="1000" />
 
 				<if>
 					<condition function="IsElementPresent" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />

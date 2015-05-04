@@ -1517,6 +1517,146 @@
 		</execute>
 	</command>
 
+	<command name="ConfigureCalendarTimeZone" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoAdd" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="01:00 PM" />
+			<var name="startDateTime" value="12:00 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#save">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Calendar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#editTimeZonePacific" />
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectViaSchedulerCmd">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimesViaSchedulerDialogBoxCmd">
+			<var name="endDateTime" value="6:00am" />
+			<var name="startDateTime" value="5:00am" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoDetailsViaSchedulerDialogBoxCmd" />
+
+		<execute macro="CalendarEvent#viewTimesViaDetailsCmd">
+			<var name="endDateTime" value="06:00 AM" />
+			<var name="startDateTime" value="05:00 AM" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoEdit">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimesCmd">
+			<var name="endDateTime" value="06:00 AM" />
+			<var name="startDateTime" value="05:00 AM" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Calendar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#enableGlobalTimeZone" />
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectViaSchedulerCmd">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimesViaSchedulerDialogBoxCmd">
+			<var name="endDateTime" value="1:00pm" />
+			<var name="startDateTime" value="12:00pm" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoDetailsViaSchedulerDialogBoxCmd" />
+
+		<execute macro="CalendarEvent#viewTimesViaDetailsCmd">
+			<var name="endDateTime" value="01:00 PM" />
+			<var name="startDateTime" value="12:00 PM" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoEdit">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimesCmd">
+			<var name="endDateTime" value="01:00 PM" />
+			<var name="startDateTime" value="12:00 PM" />
+		</execute>
+	</command>
+
+	<command name="ConfigureDefaultView" priority="4">
+		<for list="Day,Week,Month" param="defaultView">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+
+			<execute macro="Portlet#gotoPortletOptions">
+				<var name="portletName" value="Calendar" />
+				<var name="portletOption" value="Configuration" />
+			</execute>
+
+			<execute macro="CalendarConfiguration#selectDefaultView">
+				<var name="defaultView" value="${defaultView}" />
+			</execute>
+
+			<execute macro="CalendarConfiguration#save" />
+
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+
+			<execute macro="Calendar#viewSelectedSchedulerView">
+				<var name="view" value="${defaultView}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -2959,6 +3099,147 @@
 		</execute>
 	</command>
 
+	<command name="View24hourTimeFormat" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#viewFirstHourViaScheduler">
+			<var name="firstHour" value="12am" />
+		</execute>
+
+		<execute macro="Calendar#viewLastHourViaScheduler">
+			<var name="lastHour" value="11pm" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoAdd" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="11:00 PM" />
+			<var name="startDateTime" value="09:00 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#save">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Calendar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#selectTimeFormat">
+			<var name="timeFormat" value="24 Hour" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#viewFirstHourViaScheduler">
+			<var name="firstHour" value="00:00" />
+		</execute>
+
+		<execute macro="Calendar#viewLastHourViaScheduler">
+			<var name="lastHour" value="23:00" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectViaSchedulerCmd">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimesViaSchedulerDialogBoxCmd">
+			<var name="endDateTime" value="23:00" />
+			<var name="startDateTime" value="21:00" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoDetailsViaSchedulerDialogBoxCmd" />
+
+		<execute macro="CalendarEvent#viewTimesViaDetailsCmd">
+			<var name="endDateTime" value="23:00" />
+			<var name="startDateTime" value="21:00" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoEdit">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimesCmd">
+			<var name="endDateTime" value="23:00" />
+			<var name="startDateTime" value="21:00" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Calendar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#selectTimeFormat">
+			<var name="timeFormat" value="AM/PM" />
+		</execute>
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#viewFirstHourViaScheduler">
+			<var name="firstHour" value="12am" />
+		</execute>
+
+		<execute macro="Calendar#viewLastHourViaScheduler">
+			<var name="lastHour" value="11pm" />
+		</execute>
+
+		<execute macro="CalendarEvent#selectViaSchedulerCmd">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimesViaSchedulerDialogBoxCmd">
+			<var name="endDateTime" value="11:00pm" />
+			<var name="startDateTime" value="9:00pm" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoDetailsViaSchedulerDialogBoxCmd" />
+
+		<execute macro="CalendarEvent#viewTimesViaDetailsCmd">
+			<var name="endDateTime" value="11:00 PM" />
+			<var name="startDateTime" value="09:00 PM" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoEdit">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimesCmd">
+			<var name="endDateTime" value="11:00 PM" />
+			<var name="startDateTime" value="09:00 PM" />
+		</execute>
+	</command>
+
 	<command name="ViewAvailableCalendars" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -3109,7 +3390,7 @@
 			<var name="eventType" value="All Day" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewEventDetailsTime">
+		<execute macro="CalendarEvent#viewTimesViaDetailsCmd">
 			<var name="endDateTime" value="11:59 PM" />
 			<var name="startDateTime" value="12:00 AM" />
 		</execute>
@@ -3225,6 +3506,44 @@
 		<execute macro="Calendar#viewWeekCountViaMonthView">
 			<var name="weekNumber" value="5" />
 		</execute>
+	</command>
+
+	<command name="ViewDefaultDurationsViaScheduler" priority="4">
+		<for list="15,30,60,120" param="minutes">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+
+			<execute macro="Portlet#gotoPortletOptions">
+				<var name="portletName" value="Calendar" />
+				<var name="portletOption" value="Configuration" />
+			</execute>
+
+			<execute macro="CalendarConfiguration#selectDefaultDuration">
+				<var name="defaultDuration" value="${minutes} Minutes" />
+			</execute>
+
+			<execute macro="CalendarConfiguration#save" />
+
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+
+			<execute macro="CalendarEvent#changeViewPG">
+				<var name="viewType" value="Day" />
+			</execute>
+
+			<execute macro="CalendarEvent#addViaDayView">
+				<var name="eventTitle" value="Calendar Event ${minutes} Minutes Title" />
+			</execute>
+
+			<execute macro="CalendarEvent#viewDurationViaScheduler">
+				<var name="eventTitle" value="Calendar Event ${minutes} Minutes Title" />
+				<var name="minutes" value="${minutes}" />
+			</execute>
+
+			<execute macro="CalendarEvent#tearDown" />
+		</for>
 	</command>
 
 	<command name="ViewEventCalendarChange" priority="5">

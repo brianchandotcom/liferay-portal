@@ -72,11 +72,11 @@ public class SourceFormatterTask extends Task {
 	}
 
 	public void setBaseDir(String baseDir) {
-		_sourceFormatterArgs.setBaseDir(baseDir);
+		_sourceFormatterArgs.setBaseDirName(baseDir);
 	}
 
 	public void setCopyright(String copyright) {
-		_sourceFormatterArgs.setCopyright(copyright);
+		_sourceFormatterArgs.setCopyrightFileName(copyright);
 	}
 
 	public void setFileNames(String fileNames) {

@@ -26,8 +26,8 @@ public class SourceFormatterArgs {
 	public static final String OUTPUT_KEY_MODIFIED_FILES =
 		"source.formatter.modified.files";
 
-	public String getCopyright() {
-		return _copyright;
+	public String getCopyrightFileName() {
+		return _copyrightFileName;
 	}
 
 	public boolean isAutoFix() {
@@ -46,8 +46,8 @@ public class SourceFormatterArgs {
 		return _useProperties;
 	}
 
-	public String getBaseDir() {
-		return _baseDir;
+	public String getBaseDirName() {
+		return _baseDirName;
 	}
 
 	public List<String> getFileNames() {
@@ -58,32 +58,33 @@ public class SourceFormatterArgs {
 		_autoFix = autoFix;
 	}
 
-	public void setBaseDir(String baseDir) {
+	public void setBaseDirName(String baseDirName) {
 		if (_fileNames != null) {
 			throw new RuntimeException("Filenames are already initialized.");
 		}
 
-		if (!baseDir.endsWith(StringPool.SLASH)) {
-			baseDir += StringPool.SLASH;
+		if (!baseDirName.endsWith(StringPool.SLASH)) {
+			baseDirName += StringPool.SLASH;
 		}
 
-		_baseDir = baseDir;
+		_baseDirName = baseDirName;
 	}
 
 
-	public void setCopyright(String copyright) {
-		_copyright = copyright;
+	public void setCopyrightFileName(String copyrightFileName) {
+		_copyrightFileName = copyrightFileName;
 	}
 
 	public void setFileNames(List<String> fileNames) {
 		if (_fileNames != null) {
 			throw new RuntimeException("Filenames are already initialized.");
 		}
-		if (_baseDir != _BASE_DIR) {
+
+		if (_baseDirName != _BASE_DIR_NAME) {
 			throw new RuntimeException("Base directory was already set.");
 		}
 
-		_baseDir = StringPool.BLANK;
+		_baseDirName = StringPool.BLANK;
 		_fileNames = fileNames;
 	}
 
@@ -99,11 +100,11 @@ public class SourceFormatterArgs {
 		_useProperties = useProperties;
 	}
 
-	private static final String _BASE_DIR = "./";
+	private static final String _BASE_DIR_NAME = "./";
 
 	private boolean _autoFix = true;
-	private String _baseDir = _BASE_DIR;
-	private String _copyright = "copyright.txt";
+	private String _baseDirName = _BASE_DIR_NAME;
+	private String _copyrightFileName = "copyright.txt";
 	private List<String> _fileNames;
 	private boolean _printErrors = true;
 	private boolean _throwException = false;

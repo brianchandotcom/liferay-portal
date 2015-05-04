@@ -14,10 +14,16 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ArgumentsUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -30,14 +36,53 @@ import java.util.concurrent.Executors;
  */
 public class SourceFormatter {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+
 		try {
 			SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
 
-			sourceFormatterArgs.setAutoFix(true);
-			sourceFormatterArgs.setPrintErrors(true);
-			sourceFormatterArgs.setThrowException(false);
-			sourceFormatterArgs.setUseProperties(false);
+			boolean autoFix = GetterUtil.getBoolean(
+				arguments.get("source.auto.fix"), SourceFormatterArgs.AUTO_FIX);
+
+			sourceFormatterArgs.setAutoFix(autoFix);
+
+			String baseDirName = GetterUtil.getString(
+				arguments.get("source.base.dir"),
+				SourceFormatterArgs.BASE_DIR_NAME);
+
+			sourceFormatterArgs.setBaseDirName(baseDirName);
+
+			String copyrightFileName = GetterUtil.getString(
+				arguments.get("source.copyright.file"),
+				SourceFormatterArgs.COPYRIGHT_FILE_NAME);
+
+			sourceFormatterArgs.setCopyrightFileName(copyrightFileName);
+
+			String[] fileNames = StringUtil.split(
+				arguments.get("source.files"), StringPool.COMMA);
+
+			if (ArrayUtil.isNotEmpty(fileNames)) {
+				sourceFormatterArgs.setFileNames(Arrays.asList(fileNames));
+			}
+
+			boolean printErrors = GetterUtil.getBoolean(
+				arguments.get("source.print.errors"),
+				SourceFormatterArgs.PRINT_ERRORS);
+
+			sourceFormatterArgs.setPrintErrors(printErrors);
+
+			boolean throwException = GetterUtil.getBoolean(
+				arguments.get("source.throw.exception"),
+				SourceFormatterArgs.THROW_EXCEPTION);
+
+			sourceFormatterArgs.setThrowException(throwException);
+
+			boolean useProperties = GetterUtil.getBoolean(
+				arguments.get("source.use.properties"),
+				SourceFormatterArgs.USE_PROPERTIES);
+
+			sourceFormatterArgs.setUseProperties(useProperties);
 
 			SourceFormatter sourceFormatter = new SourceFormatter(
 				sourceFormatterArgs);
@@ -45,7 +90,7 @@ public class SourceFormatter {
 			sourceFormatter.format();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			ArgumentsUtil.processMainException(arguments, e);
 		}
 	}
 

@@ -20,11 +20,20 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
+import com.liferay.site.admin.web.constants.SitesAdminPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eric Min
  * @author Jorge Ferrer
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + SitesAdminPortletKeys.SITE_SETTINGS},
+	service = ControlPanelEntry.class
+)
 public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override

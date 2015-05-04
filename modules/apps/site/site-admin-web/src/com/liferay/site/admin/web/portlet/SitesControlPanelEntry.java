@@ -20,14 +20,23 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
+import com.liferay.site.admin.web.constants.SitesAdminPortletKeys;
 
 import java.util.LinkedHashMap;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  * @author Sergio González
  * @author Miguel Pastor
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + SitesAdminPortletKeys.SITES_ADMIN},
+	service = ControlPanelEntry.class
+)
 public class SitesControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override

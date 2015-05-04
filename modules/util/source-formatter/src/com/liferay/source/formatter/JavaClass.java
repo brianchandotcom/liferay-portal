@@ -159,8 +159,7 @@ public class JavaClass {
 	protected Set<JavaTerm> addStaticBlocks(
 		Set<JavaTerm> javaTerms, List<JavaTerm> staticBlocks) {
 
-		Set<JavaTerm> newJavaTerms = new TreeSet<JavaTerm>(
-			new JavaTermComparator());
+		Set<JavaTerm> newJavaTerms = new TreeSet<>(new JavaTermComparator());
 
 		Iterator<JavaTerm> javaTermsIterator = javaTerms.iterator();
 
@@ -486,7 +485,6 @@ public class JavaClass {
 			newName = sb.toString();
 		}
 
-
 		if (!newName.equals(oldName)) {
 			_content = _content.replaceAll(
 				"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
@@ -757,11 +755,9 @@ public class JavaClass {
 
 			if (expectedTabCount == -1) {
 				if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-					expectedTabCount =
-						Math.max(
-							JavaSourceProcessor.getLeadingTabCount(line),
-							_indent.length()) +
-								1;
+					expectedTabCount = Math.max(
+						JavaSourceProcessor.getLeadingTabCount(line),
+						_indent.length()) + 1;
 
 					if (throwsException &&
 						(expectedTabCount == (_indent.length() + 1))) {
@@ -899,9 +895,8 @@ public class JavaClass {
 	}
 
 	protected Set<JavaTerm> getJavaTerms() throws Exception {
-		Set<JavaTerm> javaTerms = new TreeSet<JavaTerm>(
-			new JavaTermComparator(false));
-		List<JavaTerm> staticBlocks = new ArrayList<JavaTerm>();
+		Set<JavaTerm> javaTerms = new TreeSet<>(new JavaTermComparator(false));
+		List<JavaTerm> staticBlocks = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(_content));
@@ -1139,7 +1134,7 @@ public class JavaClass {
 			}
 		}
 
-		line = StringUtil.replace(line, " synchronized " , StringPool.SPACE);
+		line = StringUtil.replace(line, " synchronized ", StringPool.SPACE);
 
 		for (String accessModifier : _ACCESS_MODIFIERS) {
 			Tuple tuple = getJavaTermTuple(line, accessModifier);

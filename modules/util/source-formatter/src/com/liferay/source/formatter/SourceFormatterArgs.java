@@ -36,8 +36,16 @@ public class SourceFormatterArgs {
 
 	public static final boolean USE_PROPERTIES = false;
 
+	public String getBaseDirName() {
+		return _baseDirName;
+	}
+
 	public String getCopyrightFileName() {
 		return _copyrightFileName;
+	}
+
+	public List<String> getFileNames() {
+		return _fileNames;
 	}
 
 	public boolean isAutoFix() {
@@ -56,14 +64,6 @@ public class SourceFormatterArgs {
 		return _useProperties;
 	}
 
-	public String getBaseDirName() {
-		return _baseDirName;
-	}
-
-	public List<String> getFileNames() {
-		return _fileNames;
-	}
-
 	public void setAutoFix(boolean autoFix) {
 		_autoFix = autoFix;
 	}
@@ -79,7 +79,6 @@ public class SourceFormatterArgs {
 
 		_baseDirName = baseDirName;
 	}
-
 
 	public void setCopyrightFileName(String copyrightFileName) {
 		_copyrightFileName = copyrightFileName;

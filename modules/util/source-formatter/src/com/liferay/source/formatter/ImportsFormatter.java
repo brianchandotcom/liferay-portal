@@ -35,7 +35,7 @@ public abstract class ImportsFormatter {
 			return imports + "\n";
 		}
 
-		Set<ImportPackage> importPackages = new TreeSet<ImportPackage>();
+		Set<ImportPackage> importPackages = new TreeSet<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));

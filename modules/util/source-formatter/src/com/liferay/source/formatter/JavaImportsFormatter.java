@@ -35,25 +35,6 @@ import java.util.regex.Pattern;
  */
 public class JavaImportsFormatter extends ImportsFormatter {
 
-	@Override
-	protected ImportPackage createImportPackage(String line) {
-		Matcher matcher = _javaImportPattern.matcher(line);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		boolean isStatic = false;
-
-		if (Validator.isNotNull(matcher.group(1))) {
-			isStatic = true;
-		}
-
-		String importString = matcher.group(2);
-
-		return new ImportPackage(importString, isStatic, line);
-	}
-
 	public static String getImports(String content) {
 		Matcher matcher = _importsPattern.matcher(content);
 
@@ -132,9 +113,27 @@ public class JavaImportsFormatter extends ImportsFormatter {
 		return content;
 	}
 
+	@Override
+	protected ImportPackage createImportPackage(String line) {
+		Matcher matcher = _javaImportPattern.matcher(line);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		boolean isStatic = false;
+
+		if (Validator.isNotNull(matcher.group(1))) {
+			isStatic = true;
+		}
+
+		String importString = matcher.group(2);
+
+		return new ImportPackage(importString, isStatic, line);
+	}
+
 	private static final Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
-
 	private static final Pattern _javaImportPattern = Pattern.compile(
 		"import( static)? ([^;]+);");
 

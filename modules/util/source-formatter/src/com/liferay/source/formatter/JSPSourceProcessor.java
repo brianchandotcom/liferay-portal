@@ -363,8 +363,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (portalSource &&
-			content.contains("page import=") &&
+		if (portalSource && content.contains("page import=") &&
 			!fileName.contains("init.jsp") &&
 			!fileName.contains("init-ext.jsp") &&
 			!fileName.contains("/taglib/aui/") &&
@@ -466,20 +465,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected String fixRedirectBackURL(String content) {
-		Matcher matcher = _redirectBackURLPattern.matcher(content);
-
-		String newContent = content;
-
-		while (matcher.find()) {
-			newContent = StringUtil.replaceFirst(
-				newContent, matcher.group(),
-				matcher.group(1) + "\n\n" + matcher.group(2), matcher.start());
-		}
-
-		return newContent;
-	}
-
 	@Override
 	protected List<String> doGetFileNames() {
 		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
@@ -498,8 +483,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 			for (String fileName : fileNames) {
-				File file =
-					new File(sourceFormatterArgs.getBaseDirName() + fileName);
+				File file = new File(
+					sourceFormatterArgs.getBaseDirName() + fileName);
 
 				fileName = StringUtil.replace(
 					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -521,8 +506,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				processFormattedFile(file, fileName, content, newContent);
 
-				if (portalSource &&
-					_moveFrequentlyUsedImportsToCommonInit &&
+				if (portalSource && _moveFrequentlyUsedImportsToCommonInit &&
 					fileName.endsWith("/init.jsp") &&
 					!absolutePath.contains("/modules/") &&
 					!fileName.endsWith("/common/init.jsp")) {
@@ -544,6 +528,20 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return fileNames;
 	}
 
+	protected String fixRedirectBackURL(String content) {
+		Matcher matcher = _redirectBackURLPattern.matcher(content);
+
+		String newContent = content;
+
+		while (matcher.find()) {
+			newContent = StringUtil.replaceFirst(
+				newContent, matcher.group(),
+				matcher.group(1) + "\n\n" + matcher.group(2), matcher.start());
+		}
+
+		return newContent;
+	}
+
 	protected String formatJSP(
 			String fileName, String absolutePath, String content)
 		throws Exception {
@@ -563,8 +561,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-			_checkedForIncludesFileNames = new HashSet<String>();
-			_includeFileNames = new HashSet<String>();
+			_checkedForIncludesFileNames = new HashSet<>();
+			_includeFileNames = new HashSet<>();
 
 			int lineCount = 0;
 
@@ -1028,7 +1026,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected List<String> getJSPDuplicateImports(
 		String fileName, String content, List<String> importLines) {
 
-		List<String> duplicateImports = new ArrayList<String>();
+		List<String> duplicateImports = new ArrayList<>();
 
 		for (String importLine : importLines) {
 			int x = content.indexOf("<%@ include file=");
@@ -1204,7 +1202,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		_includeFileNames.add(fileName);
 
-		Set<String> checkedForUnusedJSPTerm = new HashSet<String>();
+		Set<String> checkedForUnusedJSPTerm = new HashSet<>();
 
 		return !isJSPTermRequired(
 			fileName, regex, type, checkedForUnusedJSPTerm);
@@ -1486,7 +1484,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			imports, new String[] {"%><%@\r\n", "%><%@\n"},
 			new String[] {"%>\r\n<%@ ", "%>\n<%@ "});
 
-		List<String> importLines = new ArrayList<String>();
+		List<String> importLines = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));

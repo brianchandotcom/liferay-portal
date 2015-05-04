@@ -23,15 +23,19 @@ import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerImpl
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistry;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
+import com.liferay.portlet.dynamicdatamapping.registry.DefaultDDMFormFieldValueParameterSerializer;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -59,6 +63,7 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 	@Before
 	public void setUp() {
 		setUpDDMFormValuesJSONSerializerUtil();
+		setUpDDMFormFieldTypeRegistryUtil();
 		setUpJSONFactoryUtil();
 		setUpLocaleUtil();
 	}
@@ -548,8 +553,8 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField separatorDDMFormField = DDMFormTestUtil.createDDMFormField(
-			"Separator", "Separator", DDMFormFieldType.SEPARATOR,
-			StringPool.BLANK, false, true, false);
+			"Separator", "Separator", "ddm-separator", StringPool.BLANK, false,
+			true, false);
 
 		DDMFormField nameDDMFormField = DDMFormTestUtil.createTextDDMFormField(
 			"Name", true, false, false);
@@ -629,16 +634,15 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 			DDMFormTestUtil.createTextDDMFormField(
 				"Name", false, false, false));
 
-		DDMFormField checkbockDDMFormField = DDMFormTestUtil.createDDMFormField(
-			"Boolean", "Boolean", DDMFormFieldType.CHECKBOX, "boolean", false,
-			false, false);
+		DDMFormField checkboxDDMFormField = DDMFormTestUtil.createDDMFormField(
+			"Boolean", "Boolean", "checkbox", "boolean", false, false, false);
 
 		LocalizedValue predefinedValue =
-			checkbockDDMFormField.getPredefinedValue();
+			checkboxDDMFormField.getPredefinedValue();
 
 		predefinedValue.addString(LocaleUtil.US, "false");
 
-		ddmForm.addDDMFormField(checkbockDDMFormField);
+		ddmForm.addDDMFormField(checkboxDDMFormField);
 
 		DDMFormValues expectedDDMFormValues = createDDMFormValues(
 			ddmForm, createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
@@ -743,6 +747,22 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 			enValue, ptValue, defaultLocale);
 	}
 
+	protected void setUpDDMFormFieldTypeRegistryUtil() {
+		DDMFormFieldType ddmFormFieldType = mock(DDMFormFieldType.class);
+
+		when(
+			ddmFormFieldType.getDDMFormFieldValueParameterSerializer()
+		).thenReturn(
+			new DefaultDDMFormFieldValueParameterSerializer()
+		);
+
+		DDMFormFieldTypeRegistryUtil ddmFormFieldTypeRegistryUtil =
+			new DDMFormFieldTypeRegistryUtil();
+
+		ddmFormFieldTypeRegistryUtil.setDDMFormFieldTypeRegistry(
+			new MockDDMFormFieldTypeRegistryImpl(ddmFormFieldType));
+	}
+
 	protected void setUpDDMFormValuesJSONSerializerUtil() {
 		DDMFormValuesJSONSerializerUtil ddmFormValuesJSONSerializerUtil =
 			new DDMFormValuesJSONSerializerUtil();
@@ -793,5 +813,33 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 
 	private final DDMFormValuesFactory _ddmFormValuesFactory =
 		new DDMFormValuesFactoryImpl();
+
+	private static class MockDDMFormFieldTypeRegistryImpl
+		implements DDMFormFieldTypeRegistry {
+
+		@Override
+		public DDMFormFieldType getDDMFormFieldType(String name) {
+			return _ddmFormFieldType;
+		}
+
+		@Override
+		public Set<String> getDDMFormFieldTypeNames() {
+			return Collections.emptySet();
+		}
+
+		@Override
+		public List<DDMFormFieldType> getDDMFormFieldTypes() {
+			return Collections.emptyList();
+		}
+
+		private MockDDMFormFieldTypeRegistryImpl(
+			DDMFormFieldType ddmFormFieldType) {
+
+			_ddmFormFieldType = ddmFormFieldType;
+		}
+
+		private final DDMFormFieldType _ddmFormFieldType;
+
+	}
 
 }

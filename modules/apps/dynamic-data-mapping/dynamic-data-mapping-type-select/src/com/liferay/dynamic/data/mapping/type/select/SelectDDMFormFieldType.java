@@ -12,25 +12,30 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.text;
+package com.liferay.dynamic.data.mapping.type.select;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueParameterSerializer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueRendererAccessor;
-import com.liferay.portlet.dynamicdatamapping.registry.DefaultDDMFormFieldValueParameterSerializer;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marcellus Tavares
+ * @author Renato Rego
  */
 @Component(immediate = true, service = DDMFormFieldType.class)
-public class TextDDMFormFieldType implements DDMFormFieldType {
+public class SelectDDMFormFieldType implements DDMFormFieldType {
 
 	@Override
 	public DDMFormFieldRenderer getDDMFormFieldRenderer() {
@@ -38,33 +43,48 @@ public class TextDDMFormFieldType implements DDMFormFieldType {
 	}
 
 	@Override
-	public DDMFormFieldValueAccessor<String> getDDMFormFieldValueAccessor(
+	public DDMFormFieldValueAccessor<JSONArray> getDDMFormFieldValueAccessor(
 		Locale locale) {
 
-		return new TextDDMFormFieldValueAccessor(locale);
+		return new SelectDDMFormFieldValueAccessor(locale);
 	}
 
 	@Override
 	public DDMFormFieldValueParameterSerializer
 		getDDMFormFieldValueParameterSerializer() {
 
-		return new DefaultDDMFormFieldValueParameterSerializer();
+		return new DDMFormFieldValueParameterSerializer() {
+
+			@Override
+			public String getParameterValue(
+				HttpServletRequest httpServletRequest,
+				String ddmFormFieldParameterName,
+				String defaultDDMFormFieldParameterValue) {
+
+				String[] parameterValues = ParamUtil.getParameterValues(
+					httpServletRequest, ddmFormFieldParameterName,
+					GetterUtil.DEFAULT_STRING_VALUES);
+
+				return JSONFactoryUtil.serialize(parameterValues);
+			}
+
+		};
 	}
 
 	@Override
 	public DDMFormFieldValueRendererAccessor
 		getDDMFormFieldValueRendererAccessor(Locale locale) {
 
-		return new TextDDMFormFieldValueRendererAccessor(
+		return new SelectDDMFormFieldValueRendererAccessor(
 			getDDMFormFieldValueAccessor(locale));
 	}
 
 	@Override
 	public String getName() {
-		return "text";
+		return "select";
 	}
 
-	@Reference(service = TextDDMFormFieldRenderer.class, unbind = "-")
+	@Reference(service = SelectDDMFormFieldRenderer.class, unbind = "-")
 	protected void setDDMFormFieldRenderer(
 		DDMFormFieldRenderer ddmFormFieldRenderer) {
 

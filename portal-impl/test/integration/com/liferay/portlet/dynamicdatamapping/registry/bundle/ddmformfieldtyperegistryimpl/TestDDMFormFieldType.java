@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.registry.bundle.ddmformfieldtyper
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueParameterSerializer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueRendererAccessor;
 
 import java.util.Locale;
@@ -40,6 +41,13 @@ public class TestDDMFormFieldType implements DDMFormFieldType {
 	@Override
 	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
 		Locale locale) {
+
+		return null;
+	}
+
+	@Override
+	public DDMFormFieldValueParameterSerializer
+		getDDMFormFieldValueParameterSerializer() {
 
 		return null;
 	}

@@ -14,24 +14,24 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
-import java.util.Locale;
+import com.liferay.portal.kernel.util.ParamUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldType {
+public class DefaultDDMFormFieldValueParameterSerializer
+	implements DDMFormFieldValueParameterSerializer {
 
-	public DDMFormFieldRenderer getDDMFormFieldRenderer();
+	@Override
+	public String getParameterValue(
+		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
+		String defaultDDMFormFieldParameterValue) {
 
-	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
-		Locale locale);
-
-	public DDMFormFieldValueParameterSerializer
-		getDDMFormFieldValueParameterSerializer();
-
-	public DDMFormFieldValueRendererAccessor
-		getDDMFormFieldValueRendererAccessor(Locale locale);
-
-	public String getName();
+		return ParamUtil.getString(
+			httpServletRequest, ddmFormFieldParameterName,
+			defaultDDMFormFieldParameterValue);
+	}
 
 }

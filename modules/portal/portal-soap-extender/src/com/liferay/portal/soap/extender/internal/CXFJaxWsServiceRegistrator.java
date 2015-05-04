@@ -80,16 +80,14 @@ public class CXFJaxWsServiceRegistrator {
 	public synchronized void removeBus(Bus bus) {
 		_buses.remove(bus);
 
-		synchronized (_busServers) {
-			Map<Object, Server> servers = _busServers.remove(bus);
+		Map<Object, Server> servers = _busServers.remove(bus);
 
-			if (servers == null) {
-				return;
-			}
+		if (servers == null) {
+			return;
+		}
 
-			for (Server server : servers.values()) {
-				server.destroy();
-			}
+		for (Server server : servers.values()) {
+			server.destroy();
 		}
 	}
 
@@ -173,17 +171,15 @@ public class CXFJaxWsServiceRegistrator {
 	}
 
 	protected void store(Bus bus, Server server, Object service) {
-		synchronized (_busServers) {
-			Map<Object, Server> servers = _busServers.get(bus);
+		Map<Object, Server> servers = _busServers.get(bus);
 
-			if (servers == null) {
-				servers = new HashMap<>();
+		if (servers == null) {
+			servers = new HashMap<>();
 
-				_busServers.put(bus, servers);
-			}
-
-			servers.put(service, server);
+			_busServers.put(bus, servers);
 		}
+
+		servers.put(service, server);
 	}
 
 	private final Collection<Bus> _buses = new ArrayList<>();

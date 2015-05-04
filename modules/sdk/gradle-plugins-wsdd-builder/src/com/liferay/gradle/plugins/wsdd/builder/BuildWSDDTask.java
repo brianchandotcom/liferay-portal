@@ -25,7 +25,6 @@ import java.util.List;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.process.JavaExecSpec;
 
@@ -61,13 +60,6 @@ public class BuildWSDDTask extends JavaExec {
 	@Override
 	public List<String> getArgs() {
 		List<String> args = new ArrayList<>();
-
-		Project project = getProject();
-
-		ExtensionContainer extensionContainer = project.getExtensions();
-
-		WSDDBuilderArgs wsddBuilderArgs = extensionContainer.getByType(
-			WSDDBuilderArgs.class);
 
 		args.add("wsdd.class.path=" + getBuilderClasspath());
 		args.add("wsdd.input.file=" + FileUtil.getAbsolutePath(getInputFile()));
@@ -164,18 +156,6 @@ public class BuildWSDDTask extends JavaExec {
 	@Override
 	public void setWorkingDir(Object dir) {
 		throw new UnsupportedOperationException();
-	}
-
-	private String _getAbsolutePath(String fileName) {
-		File file = new File(fileName);
-
-		if (!file.isAbsolute()) {
-			Project project = getProject();
-
-			file = new File(project.getProjectDir(), fileName);
-		}
-
-		return FileUtil.getAbsolutePath(file);
 	}
 
 	private final WSDDBuilderArgs _wsddBuilderArgs = new WSDDBuilderArgs();

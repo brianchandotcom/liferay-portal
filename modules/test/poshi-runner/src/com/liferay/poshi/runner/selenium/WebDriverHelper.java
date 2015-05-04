@@ -368,6 +368,12 @@ public class WebDriverHelper {
 		return point.getY();
 	}
 
+	public void goBack() {
+		WebDriver.Navigation navigation = navigate();
+
+		navigation.back();
+	}
+
 	public static boolean isElementPresent(
 		WebDriver webDriver, String locator) {
 

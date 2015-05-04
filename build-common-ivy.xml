@@ -23,7 +23,7 @@
 			<propertyregex
 				input="@{dest}"
 				property="dest.has.file"
-				regexp="\w+\.\w+"
+				regexp="[\w\-\.]+\.\w+"
 				replace=""
 			/>
 
@@ -33,7 +33,7 @@
 					<propertyregex
 						input="@{dest}"
 						property="dest.file"
-						regexp=".*/(\w+\.\w+)"
+						regexp=".*/([\w\-\.]+\.\w+)"
 						replace="\1"
 					/>
 

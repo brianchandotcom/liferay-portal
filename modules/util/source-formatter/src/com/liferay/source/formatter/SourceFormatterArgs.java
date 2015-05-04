@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Raymond Augé
  */
-public class SourceFormatterBean {
+public class SourceFormatterArgs {
 
 
 	public String getCopyright() {

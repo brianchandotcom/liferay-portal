@@ -495,11 +495,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			Pattern pattern = Pattern.compile(
 				"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 
-			SourceFormatterBean sourceFormatterBean = getSourceFormatterBean();
+			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 			for (String fileName : fileNames) {
 				File file =
-					new File(sourceFormatterBean.getBaseDir() + fileName);
+					new File(sourceFormatterArgs.getBaseDir() + fileName);
 
 				fileName = StringUtil.replace(
 					fileName, StringPool.BACK_SLASH, StringPool.SLASH);

@@ -42,15 +42,15 @@ public class BaseSourceProcessorTestCase {
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	protected SourceFormatterBean getSourceFormatterBean() {
-		SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();
+	protected SourceFormatterArgs getSourceFormatterArgs() {
+		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
 
-		sourceFormatterBean.setAutoFix(true);
-		sourceFormatterBean.setPrintErrors(false);
-		sourceFormatterBean.setThrowException(false);
-		sourceFormatterBean.setUseProperties(false);
+		sourceFormatterArgs.setAutoFix(true);
+		sourceFormatterArgs.setPrintErrors(false);
+		sourceFormatterArgs.setThrowException(false);
+		sourceFormatterArgs.setUseProperties(false);
 
-		return sourceFormatterBean;
+		return sourceFormatterArgs;
 	}
 
 	protected void test(String fileName) throws Exception {
@@ -104,13 +104,13 @@ public class BaseSourceProcessorTestCase {
 			FileUtils.copyInputStreamToFile(inputStream, newFile);
 		}
 
-		SourceFormatterBean sourceFormatterBean = getSourceFormatterBean();
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
-		sourceFormatterBean.setFileNames(
+		sourceFormatterArgs.setFileNames(
 			Collections.singletonList(newFile.getAbsolutePath()));
 
 		SourceFormatter sourceFormatter = new SourceFormatter(
-			sourceFormatterBean);
+			sourceFormatterArgs);
 
 		sourceFormatter.format();
 

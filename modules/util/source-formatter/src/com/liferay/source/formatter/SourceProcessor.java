@@ -31,8 +31,8 @@ public interface SourceProcessor {
 
 	public List<String> getProcessedFiles();
 
-	public SourceFormatterBean getSourceFormatterBean();
+	public SourceFormatterArgs getSourceFormatterArgs();
 
-	public void setSourceFormatterBean(SourceFormatterBean sourceFormatterBean);
+	public void setSourceFormatterArgs(SourceFormatterArgs sourceFormatterArgs);
 
 }

@@ -27,20 +27,20 @@ public class SourceFormatterTest {
 
 	@Test
 	public void testFileNameWithIncorrectExtension() throws Exception {
-		SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();
+		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
 
-		sourceFormatterBean.setAutoFix(false);
-		sourceFormatterBean.setPrintErrors(false);
-		sourceFormatterBean.setThrowException(false);
-		sourceFormatterBean.setUseProperties(false);
+		sourceFormatterArgs.setAutoFix(false);
+		sourceFormatterArgs.setPrintErrors(false);
+		sourceFormatterArgs.setThrowException(false);
+		sourceFormatterArgs.setUseProperties(false);
 
 		String fileName =
 			"test/unit/com/liferay/source/formatter/dependencies/wrong.foo";
 
-		sourceFormatterBean.setFileNames(Collections.singletonList(fileName));
+		sourceFormatterArgs.setFileNames(Collections.singletonList(fileName));
 
 		SourceFormatter sourceFormatter = new SourceFormatter(
-			sourceFormatterBean);
+			sourceFormatterArgs);
 
 		sourceFormatter.format();
 
@@ -51,15 +51,15 @@ public class SourceFormatterTest {
 
 	@Test
 	public void testSourceFormatter() throws Exception {
-		SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();
+		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
 
-		sourceFormatterBean.setAutoFix(false);
-		sourceFormatterBean.setPrintErrors(false);
-		sourceFormatterBean.setThrowException(true);
-		sourceFormatterBean.setUseProperties(false);
+		sourceFormatterArgs.setAutoFix(false);
+		sourceFormatterArgs.setPrintErrors(false);
+		sourceFormatterArgs.setThrowException(true);
+		sourceFormatterArgs.setUseProperties(false);
 
 		SourceFormatter sourceFormatter = new SourceFormatter(
-			sourceFormatterBean);
+			sourceFormatterArgs);
 
 		try {
 			sourceFormatter.format();

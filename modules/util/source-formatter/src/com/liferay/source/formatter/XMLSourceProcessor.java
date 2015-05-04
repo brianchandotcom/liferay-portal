@@ -927,10 +927,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Properties properties = new Properties();
 
-		SourceFormatterBean sourceFormatterBean = getSourceFormatterBean();
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 		File propertiesFile = new File(
-			sourceFormatterBean.getBaseDir(),
+			sourceFormatterArgs.getBaseDir(),
 			"portal-impl/src/portal.properties");
 
 		String propertiesContent = FileUtils.readFileToString(propertiesFile);

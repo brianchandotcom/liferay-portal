@@ -23,6 +23,9 @@ import java.util.List;
  */
 public class SourceFormatterArgs {
 
+	public static final String OUTPUT_KEY_MODIFIED_FILES =
+		"source.formatter.modified.files";
+
 	public String getCopyright() {
 		return _copyright;
 	}

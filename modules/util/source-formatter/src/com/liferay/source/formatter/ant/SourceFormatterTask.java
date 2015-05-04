@@ -59,7 +59,8 @@ public class SourceFormatterTask extends Task {
 			Project project = getProject();
 
 			project.addIdReference(
-				SourceFormatter.PROCESSED_FILES_ATTRIBUTE, modifiedFileNames);
+				SourceFormatterArgs.OUTPUT_KEY_MODIFIED_FILES,
+				modifiedFileNames);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);

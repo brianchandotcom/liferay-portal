@@ -431,6 +431,11 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			contextObjects.putAll(_getPortletPreferences(renderRequest));
 		}
 
+		if (_transformer == null) {
+			_transformer = new Transformer(
+				PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true);
+		}
+
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(), language,
 			unsyncStringWriter);
@@ -496,7 +501,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDisplayTemplateImpl.class);
 
-	private final Transformer _transformer = new Transformer(
-		PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true);
+	private Transformer _transformer;
 
 }

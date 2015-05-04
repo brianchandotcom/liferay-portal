@@ -7,7 +7,9 @@ Bundle-ClassPath:\
 Bundle-Name: Liferay Portal SOAP Extender
 Bundle-SymbolicName: com.liferay.portal.soap.extender
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.soap.extender
+Export-Package:\
+	com.liferay.portal.soap.extender,
+	com.liferay.portal.soap.extender.configuration
 Import-Package:\
 	!com.sun.*,\
 	!org.springframework.*,\

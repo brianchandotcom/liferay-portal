@@ -22,7 +22,6 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
@@ -36,7 +35,8 @@ page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
 page import="com.liferay.portal.util.LayoutListUtil" %><%@
-page import="com.liferay.portal.util.PortalUtil" %>
+page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration" %>
 
 <%@ page import="java.util.List" %>
 
@@ -44,14 +44,16 @@ page import="com.liferay.portal.util.PortalUtil" %>
 <portlet:defineObjects />
 
 <%
-int displayDepth = GetterUtil.getInteger(portletPreferences.getValue("displayDepth", StringPool.BLANK));
-String displayStyle = GetterUtil.getString(portletPreferences.getValue("displayStyle", StringPool.BLANK));
-long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
-boolean includeRootInTree = GetterUtil.getBoolean(portletPreferences.getValue("includeRootInTree", StringPool.BLANK));
-String rootLayoutUuid = GetterUtil.getString(portletPreferences.getValue("rootLayoutUuid", StringPool.BLANK));
-boolean showCurrentPage = GetterUtil.getBoolean(portletPreferences.getValue("showCurrentPage", StringPool.BLANK));
-boolean useHtmlTitle = GetterUtil.getBoolean(portletPreferences.getValue("useHtmlTitle", StringPool.BLANK));
-boolean showHiddenPages = GetterUtil.getBoolean(portletPreferences.getValue("showHiddenPages", StringPool.BLANK));
+SiteMapPortletInstanceConfiguration siteMapPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(SiteMapPortletInstanceConfiguration.class);
+
+int displayDepth = siteMapPortletInstanceConfiguration.displayDepth();
+String displayStyle = siteMapPortletInstanceConfiguration.displayStyle();
+long displayStyleGroupId = siteMapPortletInstanceConfiguration.displayStyleGroupId(themeDisplay.getScopeGroupId());
+boolean includeRootInTree = siteMapPortletInstanceConfiguration.includeRootInTree();
+String rootLayoutUuid = siteMapPortletInstanceConfiguration.rootLayoutUuid();
+boolean showCurrentPage = siteMapPortletInstanceConfiguration.showCurrentPage();
+boolean showHiddenPages = siteMapPortletInstanceConfiguration.showHiddenPages();
+boolean useHtmlTitle = siteMapPortletInstanceConfiguration.useHtmlTitle();
 
 Layout rootLayout = null;
 

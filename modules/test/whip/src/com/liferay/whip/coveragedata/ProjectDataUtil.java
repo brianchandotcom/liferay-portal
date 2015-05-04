@@ -79,25 +79,15 @@ public class ProjectDataUtil {
 	}
 
 	private static ProjectData _readProjectData(File dataFile) {
-		for (int i = 0; i < _RETRY_TIMES; i++) {
-			try (FileInputStream fileInputStream = new FileInputStream(
-					dataFile);
-				ObjectInputStream objectInputStream = new ObjectInputStream(
-					fileInputStream)) {
+		try (FileInputStream fileInputStream = new FileInputStream(dataFile);
+			ObjectInputStream objectInputStream = new ObjectInputStream(
+				fileInputStream)) {
 
-				return (ProjectData)objectInputStream.readObject();
-			}
-			catch (IOException ioe) {
-				continue;
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+			return (ProjectData)objectInputStream.readObject();
 		}
-
-		throw new IllegalStateException(
-			"Unable to load project data after retry for " + _RETRY_TIMES +
-				" times");
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private static void _unlockFile(FileLock fileLock) {
@@ -126,8 +116,6 @@ public class ProjectDataUtil {
 			throw new RuntimeException(e);
 		}
 	}
-
-	private static final int _RETRY_TIMES = 10;
 
 	private static final ProjectData _projectData = new ProjectData();
 

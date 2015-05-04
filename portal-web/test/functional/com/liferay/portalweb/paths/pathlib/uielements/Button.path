@@ -278,6 +278,16 @@
 	<td>//button[contains(.,'View History')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WIKIS_NOT_SPAM</td>
+	<td>//button[contains(.,'Not Spam')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKIS_SPAM</td>
+	<td>//button[contains(.,'Spam')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

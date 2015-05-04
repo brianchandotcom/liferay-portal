@@ -34,7 +34,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 		TaskContainer taskContainer = project.getTasks();
 
-		taskContainer.create("formatSource", SourceFormatterTask.class);
+		taskContainer.create("formatSource", FormatSourceTask.class);
 	}
 
 }

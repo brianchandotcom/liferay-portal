@@ -29,7 +29,7 @@ import org.gradle.api.tasks.TaskAction;
 /**
  * @author Raymond Augé
  */
-public class SourceFormatterTask extends DefaultTask {
+public class FormatSourceTask extends DefaultTask {
 
 	@TaskAction
 	public void buildService() {

@@ -383,7 +383,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
-			sb.append(sourceFormatterArgs.getBaseDir());
+			sb.append(sourceFormatterArgs.getBaseDirName());
 			sb.append(fileName.substring(0, fileName.indexOf("/src/") + 5));
 			sb.append(
 				StringUtil.replace(

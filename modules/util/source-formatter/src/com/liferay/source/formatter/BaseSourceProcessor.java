@@ -512,7 +512,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		throws IOException {
 
 		if (_copyright == null) {
-			_copyright = getContent(_sourceFormatterArgs.getCopyright(), 4);
+			_copyright = getContent(
+				_sourceFormatterArgs.getCopyrightFileName(), 4);
 		}
 
 		String copyright = _copyright;
@@ -728,7 +729,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		File file = new File(_sourceFormatterArgs.getBaseDir() + fileName);
+		File file = new File(_sourceFormatterArgs.getBaseDirName() + fileName);
 
 		fileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -820,7 +821,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			"**\\portal-compat-shared\\src\\com\\liferay\\compat\\**\\*.java"
 		};
 
-		String basedir = _sourceFormatterArgs.getBaseDir();
+		String basedir = _sourceFormatterArgs.getBaseDirName();
 
 		List<String> fileNames = new ArrayList<String>();
 
@@ -940,7 +941,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected List<String> getFileNames(String[] excludes, String[] includes) {
 		return getFileNames(
-			_sourceFormatterArgs.getBaseDir(), excludes, includes);
+			_sourceFormatterArgs.getBaseDirName(), excludes, includes);
 	}
 
 	protected Set<String> getImmutableFieldTypes() {
@@ -1036,7 +1037,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		int pos = fileName.indexOf("/docroot/");
 
-		sb.append(_sourceFormatterArgs.getBaseDir());
+		sb.append(_sourceFormatterArgs.getBaseDirName());
 
 		if (pos != -1) {
 			sb.append(fileName.substring(0, pos + 9));

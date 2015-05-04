@@ -499,7 +499,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			for (String fileName : fileNames) {
 				File file =
-					new File(sourceFormatterArgs.getBaseDir() + fileName);
+					new File(sourceFormatterArgs.getBaseDirName() + fileName);
 
 				fileName = StringUtil.replace(
 					fileName, StringPool.BACK_SLASH, StringPool.SLASH);

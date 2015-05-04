@@ -92,7 +92,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	public final List<String> getFileNames() {
-		List<String> fileNames = _sourceFormatterBean.getFileNames();
+		List<String> fileNames = _sourceFormatterArgs.getFileNames();
 
 		if (fileNames != null) {
 			return fileNames;
@@ -112,15 +112,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public SourceFormatterBean getSourceFormatterBean() {
-		return _sourceFormatterBean;
+	public SourceFormatterArgs getSourceFormatterArgs() {
+		return _sourceFormatterArgs;
 	}
 
 	@Override
-	public void setSourceFormatterBean(
-		SourceFormatterBean sourceFormatterBean) {
+	public void setSourceFormatterArgs(
+		SourceFormatterArgs sourceFormatterArgs) {
 
-		_sourceFormatterBean = sourceFormatterBean;
+		_sourceFormatterArgs = sourceFormatterArgs;
 
 		_init();
 	}
@@ -512,7 +512,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		throws IOException {
 
 		if (_copyright == null) {
-			_copyright = getContent(_sourceFormatterBean.getCopyright(), 4);
+			_copyright = getContent(_sourceFormatterArgs.getCopyright(), 4);
 		}
 
 		String copyright = _copyright;
@@ -728,7 +728,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		File file = new File(_sourceFormatterBean.getBaseDir() + fileName);
+		File file = new File(_sourceFormatterArgs.getBaseDir() + fileName);
 
 		fileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -760,8 +760,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		else {
 			javaSourceProcessor = new JavaSourceProcessor();
 
-			javaSourceProcessor.setSourceFormatterBean(
-				getSourceFormatterBean());
+			javaSourceProcessor.setSourceFormatterArgs(
+				getSourceFormatterArgs());
 		}
 
 		JavaClass javaClass = new JavaClass(
@@ -820,7 +820,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			"**\\portal-compat-shared\\src\\com\\liferay\\compat\\**\\*.java"
 		};
 
-		String basedir = _sourceFormatterBean.getBaseDir();
+		String basedir = _sourceFormatterArgs.getBaseDir();
 
 		List<String> fileNames = new ArrayList<String>();
 
@@ -940,7 +940,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected List<String> getFileNames(String[] excludes, String[] includes) {
 		return getFileNames(
-			_sourceFormatterBean.getBaseDir(), excludes, includes);
+			_sourceFormatterArgs.getBaseDir(), excludes, includes);
 	}
 
 	protected Set<String> getImmutableFieldTypes() {
@@ -1036,7 +1036,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		int pos = fileName.indexOf("/docroot/");
 
-		sb.append(_sourceFormatterBean.getBaseDir());
+		sb.append(_sourceFormatterArgs.getBaseDir());
 
 		if (pos != -1) {
 			sb.append(fileName.substring(0, pos + 9));
@@ -1219,7 +1219,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String content, String newContent)
 		throws IOException {
 
-		if (_sourceFormatterBean.isPrintErrors()) {
+		if (_sourceFormatterArgs.isPrintErrors()) {
 			List<String> errorMessages = _errorMessagesMap.get(fileName);
 
 			if (errorMessages != null) {
@@ -1235,7 +1235,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		if (_sourceFormatterBean.isAutoFix()) {
+		if (_sourceFormatterArgs.isAutoFix()) {
 			FileUtils.writeStringToFile(file, newContent);
 		}
 		else if (_firstSourceMismatchException == null) {
@@ -1243,7 +1243,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				fileName, content, newContent);
 		}
 
-		if (_sourceFormatterBean.isPrintErrors()) {
+		if (_sourceFormatterArgs.isPrintErrors()) {
 			_sourceFormatterHelper.printError(fileName, file);
 		}
 	}
@@ -1567,7 +1567,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.MULTILINE);
 
 	private String[] _getExcludes() {
-		if (_sourceFormatterBean.getFileNames() != null) {
+		if (_sourceFormatterArgs.getFileNames() != null) {
 			return new String[0];
 		}
 
@@ -1666,7 +1666,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_errorMessagesMap = new HashMap<String, List<String>>();
 
 		_sourceFormatterHelper = new SourceFormatterHelper(
-			_sourceFormatterBean.isUseProperties());
+			_sourceFormatterArgs.isUseProperties());
 
 		try {
 			_sourceFormatterHelper.init();
@@ -1726,7 +1726,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private List<String> _processedFiles = new ArrayList<>();
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusionPaths;
-	private SourceFormatterBean _sourceFormatterBean;
+	private SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterHelper _sourceFormatterHelper;
 	private boolean _usePortalCompatImport;
 

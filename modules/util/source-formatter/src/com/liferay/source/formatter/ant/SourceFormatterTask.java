@@ -16,7 +16,7 @@ package com.liferay.source.formatter.ant;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatter;
-import com.liferay.source.formatter.SourceFormatterBean;
+import com.liferay.source.formatter.SourceFormatterArgs;
 
 import java.io.File;
 
@@ -49,7 +49,7 @@ public class SourceFormatterTask extends Task {
 
 		try {
 			SourceFormatter sourceFormatter = new SourceFormatter(
-				_sourceFormatterBean);
+				_sourceFormatterArgs);
 
 			sourceFormatter.format();
 
@@ -66,32 +66,32 @@ public class SourceFormatterTask extends Task {
 	}
 
 	public void setAutoFix(boolean autoFix) {
-		_sourceFormatterBean.setAutoFix(autoFix);
+		_sourceFormatterArgs.setAutoFix(autoFix);
 	}
 
 	public void setBaseDir(String baseDir) {
-		_sourceFormatterBean.setBaseDir(baseDir);
+		_sourceFormatterArgs.setBaseDir(baseDir);
 	}
 
 	public void setCopyright(String copyright) {
-		_sourceFormatterBean.setCopyright(copyright);
+		_sourceFormatterArgs.setCopyright(copyright);
 	}
 
 	public void setFileNames(String fileNames) {
-		_sourceFormatterBean.setFileNames(
+		_sourceFormatterArgs.setFileNames(
 			Arrays.asList(StringUtil.split(fileNames)));
 	}
 
 	public void setPrintErrors(boolean printErrors) {
-		_sourceFormatterBean.setPrintErrors(printErrors);
+		_sourceFormatterArgs.setPrintErrors(printErrors);
 	}
 
 	public void setThrowException(boolean throwException) {
-		_sourceFormatterBean.setThrowException(throwException);
+		_sourceFormatterArgs.setThrowException(throwException);
 	}
 
 	public void setUseProperties(boolean useProperties) {
-		_sourceFormatterBean.setUseProperties(useProperties);
+		_sourceFormatterArgs.setUseProperties(useProperties);
 	}
 
 	private void _collectFromFileSets() {
@@ -114,11 +114,11 @@ public class SourceFormatterTask extends Task {
 			fileNames.addAll(Arrays.asList(includedFiles));
 		}
 
-		_sourceFormatterBean.setFileNames(fileNames);
+		_sourceFormatterArgs.setFileNames(fileNames);
 	}
 
 	private final Set<FileSet> _fileSets = new HashSet<>();
-	private final SourceFormatterBean _sourceFormatterBean =
-		new SourceFormatterBean();
+	private final SourceFormatterArgs _sourceFormatterArgs =
+		new SourceFormatterArgs();
 
 }

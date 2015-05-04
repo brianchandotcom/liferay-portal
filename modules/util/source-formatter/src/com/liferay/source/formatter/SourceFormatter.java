@@ -35,15 +35,15 @@ public class SourceFormatter {
 
 	public static void main(String[] args) {
 		try {
-			SourceFormatterBean sourceFormatterBean = new SourceFormatterBean();
+			SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
 
-			sourceFormatterBean.setAutoFix(true);
-			sourceFormatterBean.setPrintErrors(true);
-			sourceFormatterBean.setThrowException(false);
-			sourceFormatterBean.setUseProperties(false);
+			sourceFormatterArgs.setAutoFix(true);
+			sourceFormatterArgs.setPrintErrors(true);
+			sourceFormatterArgs.setThrowException(false);
+			sourceFormatterArgs.setUseProperties(false);
 
 			SourceFormatter sourceFormatter = new SourceFormatter(
-				sourceFormatterBean);
+				sourceFormatterArgs);
 
 			sourceFormatter.format();
 		}
@@ -52,8 +52,8 @@ public class SourceFormatter {
 		}
 	}
 
-	public SourceFormatter(SourceFormatterBean sourceFormatterBean) {
-		_sourceFormatterBean = sourceFormatterBean;
+	public SourceFormatter(SourceFormatterArgs sourceFormatterArgs) {
+		_sourceFormatterArgs = sourceFormatterArgs;
 	}
 
 	public void format() throws Exception {
@@ -94,7 +94,7 @@ public class SourceFormatter {
 			Thread.sleep(20);
 		}
 
-		if (_sourceFormatterBean.isThrowException()) {
+		if (_sourceFormatterArgs.isThrowException()) {
 			if (!_errorMessages.isEmpty()) {
 				throw new Exception(StringUtil.merge(_errorMessages, "\n"));
 			}
@@ -117,14 +117,14 @@ public class SourceFormatter {
 		return _processedFiles;
 	}
 
-	public SourceFormatterBean getSourceformatterBean() {
-		return _sourceFormatterBean;
+	public SourceFormatterArgs getSourceformatterArgs() {
+		return _sourceFormatterArgs;
 	}
 
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)
 		throws Exception {
 
-		sourceProcessor.setSourceFormatterBean(_sourceFormatterBean);
+		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
 
 		sourceProcessor.format();
 
@@ -140,6 +140,6 @@ public class SourceFormatter {
 	private final Set<String> _errorMessages = new ConcurrentSkipListSet<>();
 	private volatile SourceMismatchException _firstSourceMismatchException;
 	private final List<String> _processedFiles = new CopyOnWriteArrayList<>();
-	private final SourceFormatterBean _sourceFormatterBean;
+	private final SourceFormatterArgs _sourceFormatterArgs;
 
 }

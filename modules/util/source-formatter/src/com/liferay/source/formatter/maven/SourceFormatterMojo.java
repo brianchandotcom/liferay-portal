@@ -15,7 +15,7 @@
 package com.liferay.source.formatter.maven;
 
 import com.liferay.source.formatter.SourceFormatter;
-import com.liferay.source.formatter.SourceFormatterBean;
+import com.liferay.source.formatter.SourceFormatterArgs;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +36,7 @@ public class SourceFormatterMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
 			SourceFormatter sourceFormatter = new SourceFormatter(
-				_sourceFormatterBean);
+				_sourceFormatterArgs);
 
 			sourceFormatter.format();
 
@@ -53,34 +53,34 @@ public class SourceFormatterMojo extends AbstractMojo {
 	}
 
 	public void setAutoFix(boolean autoFix) {
-		_sourceFormatterBean.setAutoFix(autoFix);
+		_sourceFormatterArgs.setAutoFix(autoFix);
 	}
 
 	public void setBaseDir(String baseDir) {
-		_sourceFormatterBean.setBaseDir(baseDir);
+		_sourceFormatterArgs.setBaseDir(baseDir);
 	}
 
 	public void setCopyright(String copyright) {
-		_sourceFormatterBean.setCopyright(copyright);
+		_sourceFormatterArgs.setCopyright(copyright);
 	}
 
 	public void setFileNames(String[] fileNames) {
-		_sourceFormatterBean.setFileNames(Arrays.asList(fileNames));
+		_sourceFormatterArgs.setFileNames(Arrays.asList(fileNames));
 	}
 
 	public void setPrintErrors(boolean printErrors) {
-		_sourceFormatterBean.setPrintErrors(printErrors);
+		_sourceFormatterArgs.setPrintErrors(printErrors);
 	}
 
 	public void setThrowException(boolean throwException) {
-		_sourceFormatterBean.setThrowException(throwException);
+		_sourceFormatterArgs.setThrowException(throwException);
 	}
 
 	public void setUseProperties(boolean useProperties) {
-		_sourceFormatterBean.setUseProperties(useProperties);
+		_sourceFormatterArgs.setUseProperties(useProperties);
 	}
 
-	private final SourceFormatterBean _sourceFormatterBean =
-		new SourceFormatterBean();
+	private final SourceFormatterArgs _sourceFormatterArgs =
+		new SourceFormatterArgs();
 
 }

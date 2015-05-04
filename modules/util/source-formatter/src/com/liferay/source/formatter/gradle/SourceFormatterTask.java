@@ -15,7 +15,7 @@
 package com.liferay.source.formatter.gradle;
 
 import com.liferay.source.formatter.SourceFormatter;
-import com.liferay.source.formatter.SourceFormatterBean;
+import com.liferay.source.formatter.SourceFormatterArgs;
 
 import java.util.List;
 
@@ -37,16 +37,16 @@ public class SourceFormatterTask extends DefaultTask {
 
 		ExtensionContainer extensionContainer = project.getExtensions();
 
-		SourceFormatterBean sourceFormatterBean = extensionContainer.findByType(
-			SourceFormatterBean.class);
+		SourceFormatterArgs sourceFormatterArgs = extensionContainer.findByType(
+			SourceFormatterArgs.class);
 
-		if (sourceFormatterBean == null) {
-			sourceFormatterBean = new SourceFormatterBean();
+		if (sourceFormatterArgs == null) {
+			sourceFormatterArgs = new SourceFormatterArgs();
 		}
 
 		try {
 			SourceFormatter sourceFormatter = new SourceFormatter(
-				sourceFormatterBean);
+				sourceFormatterArgs);
 
 			sourceFormatter.format();
 

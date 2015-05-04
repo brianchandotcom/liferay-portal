@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.gradle;
 
-import com.liferay.source.formatter.SourceFormatterBean;
+import com.liferay.source.formatter.SourceFormatterArgs;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -30,7 +30,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		ExtensionContainer extensionContainer = project.getExtensions();
 
-		extensionContainer.create("sourceFormatter", SourceFormatterBean.class);
+		extensionContainer.create("sourceFormatter", SourceFormatterArgs.class);
 
 		TaskContainer taskContainer = project.getTasks();
 

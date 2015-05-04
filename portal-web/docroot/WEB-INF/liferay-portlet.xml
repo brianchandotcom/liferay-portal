@@ -667,7 +667,6 @@
 		<icon>/html/icons/sites_admin.png</icon>
 		<struts-path>sites_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<staged-model-data-handler-class>com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>sites</control-panel-entry-category>
 		<control-panel-entry-weight>1.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.sitesadmin.SitesControlPanelEntry</control-panel-entry-class>

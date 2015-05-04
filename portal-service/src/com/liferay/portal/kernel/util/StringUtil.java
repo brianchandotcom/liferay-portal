@@ -226,21 +226,14 @@ public class StringUtil {
 	 * @return the string representing the bytes in hexadecimal form
 	 */
 	public static String bytesToHexString(byte[] bytes) {
-		StringBundler sb = new StringBundler(bytes.length * 2);
+		char[] chars = new char[bytes.length * 2];
 
-		for (byte b : bytes) {
-			String hex = Integer.toHexString(0x0100 + (b & 0x00FF));
-
-			hex = hex.substring(1);
-
-			if (hex.length() < 2) {
-				sb.append("0");
-			}
-
-			sb.append(hex);
+		for (int i = 0; i < bytes.length; i++) {
+			chars[i * 2] = _HEX_DIGITS[(bytes[i] & 0xFF) >> 4];
+			chars[i * 2 + 1] = _HEX_DIGITS[bytes[i] & 0x0F];
 		}
 
-		return sb.toString();
+		return new String(chars);
 	}
 
 	/**

@@ -36,46 +36,42 @@ public class ProjectDataUtil {
 		String className = ProjectDataUtil.class.getName();
 
 		synchronized (className.intern()) {
-			FileLock fileLock = _lockFile();
+			try (RandomAccessFile randomAccessFile = new RandomAccessFile(
+					InstrumentationAgent.getLockFile(), "rw")) {
 
-			try {
-				File dataFile = new File(
-					System.getProperty("net.sourceforge.cobertura.datafile"));
+				FileChannel fileChannel = randomAccessFile.getChannel();
 
-				if (dataFile.exists()) {
-					_projectData.merge(_readProjectData(dataFile));
+				FileLock fileLock = fileChannel.lock();
 
-					dataFile.delete();
+				try {
+					File dataFile = new File(
+						System.getProperty(
+							"net.sourceforge.cobertura.datafile"));
+
+					if (dataFile.exists()) {
+						_projectData.merge(_readProjectData(dataFile));
+
+						dataFile.delete();
+					}
+
+					if (saveSessionData) {
+						_writeProjectData(_projectData, dataFile);
+					}
+
+					return _projectData;
 				}
-
-				if (saveSessionData) {
-					_writeProjectData(_projectData, dataFile);
+				finally {
+					fileLock.release();
 				}
-
-				return _projectData;
 			}
-			finally {
-				_unlockFile(fileLock);
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
 			}
 		}
 	}
 
 	public static ProjectData getProjectData() {
 		return _projectData;
-	}
-
-	private static FileLock _lockFile() {
-		try {
-			RandomAccessFile randomAccessFile = new RandomAccessFile(
-				InstrumentationAgent.getLockFile(), "rw");
-
-			FileChannel fileChannel = randomAccessFile.getChannel();
-
-			return fileChannel.lock();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
 	}
 
 	private static ProjectData _readProjectData(File dataFile) {
@@ -87,19 +83,6 @@ public class ProjectDataUtil {
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
-		}
-	}
-
-	private static void _unlockFile(FileLock fileLock) {
-		try {
-			fileLock.release();
-
-			FileChannel fileChannel = fileLock.channel();
-
-			fileChannel.close();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
 		}
 	}
 

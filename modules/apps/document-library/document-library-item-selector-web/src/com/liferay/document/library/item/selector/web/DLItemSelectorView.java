@@ -59,9 +59,8 @@ public class DLItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			DLItemSelectorCriterion
-				dlItemSelectorCriterion, PortletURL portletURL,
-			String itemSelectedCallback)
+			DLItemSelectorCriterion dlItemSelectorCriterion,
+			PortletURL portletURL, String itemSelectedCallback)
 		throws IOException, ServletException {
 
 		request.setAttribute(ITEM_SELECTED_CALLBACK, itemSelectedCallback);

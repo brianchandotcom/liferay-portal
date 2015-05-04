@@ -60,6 +60,15 @@ public class DDMFormValuesTestUtil {
 		return createDDMFormFieldValue(StringUtil.randomString(), name, value);
 	}
 
+	public static DDMFormValues createDDMFormValues(DDMForm ddmForm) {
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setAvailableLocales(ddmForm.getAvailableLocales());
+		ddmFormValues.setDefaultLocale(ddmForm.getDefaultLocale());
+
+		return ddmFormValues;
+	}
+
 	public static DDMFormValues createDDMFormValues(
 		DDMForm ddmForm, Set<Locale> availableLocales, Locale defaultLocale) {
 

@@ -36,26 +36,36 @@ public class ProjectDataUtil {
 		String className = ProjectDataUtil.class.getName();
 
 		synchronized (className.intern()) {
-			FileLock fileLock = _lockFile();
+			try (RandomAccessFile randomAccessFile = new RandomAccessFile(
+					InstrumentationAgent.getLockFile(), "rw")) {
 
-			try {
-				File dataFile = new File(
-					System.getProperty("net.sourceforge.cobertura.datafile"));
+				FileChannel fileChannel = randomAccessFile.getChannel();
 
-				if (dataFile.exists()) {
-					_projectData.merge(_readProjectData(dataFile));
+				FileLock fileLock = fileChannel.lock();
 
-					dataFile.delete();
+				try {
+					File dataFile = new File(
+						System.getProperty(
+							"net.sourceforge.cobertura.datafile"));
+
+					if (dataFile.exists()) {
+						_projectData.merge(_readProjectData(dataFile));
+
+						dataFile.delete();
+					}
+
+					if (saveSessionData) {
+						_writeProjectData(_projectData, dataFile);
+					}
+
+					return _projectData;
 				}
-
-				if (saveSessionData) {
-					_writeProjectData(_projectData, dataFile);
+				finally {
+					fileLock.release();
 				}
-
-				return _projectData;
 			}
-			finally {
-				_unlockFile(fileLock);
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
 			}
 		}
 	}
@@ -64,52 +74,15 @@ public class ProjectDataUtil {
 		return _projectData;
 	}
 
-	private static FileLock _lockFile() {
-		try {
-			RandomAccessFile randomAccessFile = new RandomAccessFile(
-				InstrumentationAgent.getLockFile(), "rw");
-
-			FileChannel fileChannel = randomAccessFile.getChannel();
-
-			return fileChannel.lock();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
 	private static ProjectData _readProjectData(File dataFile) {
-		for (int i = 0; i < _RETRY_TIMES; i++) {
-			try (FileInputStream fileInputStream = new FileInputStream(
-					dataFile);
-				ObjectInputStream objectInputStream = new ObjectInputStream(
-					fileInputStream)) {
+		try (FileInputStream fileInputStream = new FileInputStream(dataFile);
+			ObjectInputStream objectInputStream = new ObjectInputStream(
+				fileInputStream)) {
 
-				return (ProjectData)objectInputStream.readObject();
-			}
-			catch (IOException ioe) {
-				continue;
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+			return (ProjectData)objectInputStream.readObject();
 		}
-
-		throw new IllegalStateException(
-			"Unable to load project data after retry for " + _RETRY_TIMES +
-				" times");
-	}
-
-	private static void _unlockFile(FileLock fileLock) {
-		try {
-			fileLock.release();
-
-			FileChannel fileChannel = fileLock.channel();
-
-			fileChannel.close();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -126,8 +99,6 @@ public class ProjectDataUtil {
 			throw new RuntimeException(e);
 		}
 	}
-
-	private static final int _RETRY_TIMES = 10;
 
 	private static final ProjectData _projectData = new ProjectData();
 

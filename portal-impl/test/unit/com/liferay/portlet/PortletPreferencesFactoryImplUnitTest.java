@@ -15,10 +15,8 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.cache.SingleVMPoolImpl;
-import com.liferay.portal.cache.key.JavaSHA1CacheKeyGenerator;
 import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
@@ -27,48 +25,20 @@ import com.liferay.portal.service.util.test.PortletPreferencesImplTestUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
 import com.liferay.portal.util.HtmlImpl;
 
-import java.security.NoSuchAlgorithmException;
-
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
- * @author Vilmos Papp
  */
-@PrepareForTest(
-	{
-		CacheKeyGeneratorUtil.class
-	}
-)
-@RunWith(PowerMockRunner.class)
-public class PortletPreferencesFactoryImplUnitTest extends PowerMockito {
+public class PortletPreferencesFactoryImplUnitTest {
 
 	@Before
 	public void setUp() {
-		mockStatic(CacheKeyGeneratorUtil.class);
-
-		try {
-			when(
-				CacheKeyGeneratorUtil.getCacheKeyGenerator(
-					PortletPreferencesFactoryImpl.class.getName())
-			).thenReturn(
-				new JavaSHA1CacheKeyGenerator()
-			);
-		}
-		catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(new HtmlImpl());

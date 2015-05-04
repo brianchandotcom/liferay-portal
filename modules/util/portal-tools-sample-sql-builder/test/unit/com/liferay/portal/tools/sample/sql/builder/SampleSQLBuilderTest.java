@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.portal.cache.key.JavaSHA1CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -27,11 +25,8 @@ import com.liferay.portal.test.rule.LogAssertionTestRule;
 import com.liferay.portal.tools.DBLoader;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.tools.sql.SQLQueryProvider;
-import com.liferay.portlet.PortletPreferencesFactoryImpl;
 
 import java.io.File;
-
-import java.security.NoSuchAlgorithmException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -42,23 +37,11 @@ import java.util.ServiceLoader;
 
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Tina Tian
- * @author Vilmos Papp
  */
-@PrepareForTest(
-	{
-		CacheKeyGeneratorUtil.class
-	}
-)
-@RunWith(PowerMockRunner.class)
-public class SampleSQLBuilderTest extends PowerMockito {
+public class SampleSQLBuilderTest {
 
 	@ClassRule
 	public static final LogAssertionTestRule logAssertionTestRule =
@@ -66,20 +49,6 @@ public class SampleSQLBuilderTest extends PowerMockito {
 
 	@Test
 	public void testGenerateAndInsertSampleSQL() throws Exception {
-		mockStatic(CacheKeyGeneratorUtil.class);
-
-		try {
-			when(
-				CacheKeyGeneratorUtil.getCacheKeyGenerator(
-					PortletPreferencesFactoryImpl.class.getName())
-			).thenReturn(
-				new JavaSHA1CacheKeyGenerator()
-			);
-		}
-		catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-
 		ToolDependencies.wireBasic();
 
 		Properties properties = new SortedProperties();

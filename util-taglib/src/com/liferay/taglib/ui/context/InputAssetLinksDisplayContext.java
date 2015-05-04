@@ -34,7 +34,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -305,14 +304,9 @@ public class InputAssetLinksDisplayContext {
 			AssetRendererFactory assetRendererFactory)
 		throws Exception {
 
-		long controlPanelPlid = PortalUtil.getControlPanelPlid(
-			_themeDisplay.getCompanyId());
-
-		String portletId = PortletProviderUtil.getPortletId(
-			assetRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_request, portletId, controlPanelPlid, PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			_request, assetRendererFactory.getClassName(),
+			PortletProvider.Action.BROWSE);
 
 		long groupId = _getAssetBrowserGroupId(assetRendererFactory);
 

@@ -15,6 +15,7 @@
 package com.liferay.layout.set.prototype.web.portlet;
 
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	service = ViewPortletProvider.class
 )
 public class LayoutSetPrototypeViewPortletProvider
-	implements ViewPortletProvider {
+	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {

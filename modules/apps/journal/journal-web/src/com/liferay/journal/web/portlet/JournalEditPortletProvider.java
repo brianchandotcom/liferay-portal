@@ -15,6 +15,7 @@
 package com.liferay.journal.web.portlet;
 
 import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = EditPortletProvider.class
 )
-public class JournalEditPortletProvider implements EditPortletProvider {
+public class JournalEditPortletProvider
+	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
 	public String getPortletId() {

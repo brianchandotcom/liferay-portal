@@ -14,7 +14,10 @@
 
 package com.liferay.site.navigation.breadcrumb.web.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,11 +32,17 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ViewPortletProvider.class
 )
-public class BreadcrumbEntryViewPortletProvider implements ViewPortletProvider {
+public class BreadcrumbEntryViewPortletProvider
+	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
 		return BreadcrumbPortletKeys.BREADCRUMB;
+	}
+
+	@Override
+	protected long getPlid(ThemeDisplay themeDisplay) throws PortalException {
+		return themeDisplay.getPlid();
 	}
 
 }

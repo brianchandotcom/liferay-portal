@@ -28,19 +28,14 @@ GroupSearch searchContainer = new GroupSearch(renderRequest, portletURL);
 request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 
 searchContainer.setRowChecker(rowChecker);
-%>
 
-<liferay-ui:search-form
-	page="/html/portlet/users_admin/group_search.jsp"
-	searchContainer="<%= searchContainer %>"
-/>
-
-<%
 GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
 List<Group> results = null;
 int total = 0;
 %>
+
+<liferay-ui:group-search-form />
 
 <%@ include file="/html/portlet/users_admin/group_search_results.jspf" %>
 

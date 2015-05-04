@@ -121,9 +121,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 									continue;
 								}
 
-								String portletId = PortletProviderUtil.getPortletId(curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
-
-								PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, portletId, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
+								PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(request, curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
 
 								assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
 								assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));

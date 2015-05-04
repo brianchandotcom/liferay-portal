@@ -304,10 +304,13 @@ for (long defaultTeamId : defaultTeamIds) {
 					id: '<portlet:namespace />selectTeam',
 					title: '<liferay-ui:message arguments="team" key="select-x" />',
 
-					<portlet:renderURL var="selectTeamURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/sites_admin/select_team" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					</portlet:renderURL>
+					<%
+					PortletURL selectTeamURL = PortletProviderUtil.getPortletURL(request, Team.class.getName(), PortletProvider.Action.BROWSE);
+
+					selectTeamURL.setParameter("groupId", String.valueOf(groupId));
+					selectTeamURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectTeam");
+					selectTeamURL.setWindowState(LiferayWindowState.POP_UP);
+					%>
 
 					uri: '<%= selectTeamURL.toString() %>'
 				},

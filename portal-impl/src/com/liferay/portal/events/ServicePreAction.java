@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
@@ -60,6 +62,7 @@ import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
@@ -1054,10 +1057,14 @@ public class ServicePreAction extends Action {
 
 					themeDisplay.setShowManageSiteMembershipsIcon(true);
 
+					String portletId = PortletProviderUtil.getPortletId(
+						MembershipRequest.class.getName(),
+						PortletProvider.Action.VIEW);
+
 					LiferayPortletURL manageSiteMembershipsURL =
 						new PortletURLImpl(
-							request, PortletKeys.SITE_MEMBERSHIPS_ADMIN,
-							controlPanelPlid, PortletRequest.RENDER_PHASE);
+							request, portletId, controlPanelPlid,
+							PortletRequest.RENDER_PHASE);
 
 					manageSiteMembershipsURL.setDoAsGroupId(scopeGroupId);
 					manageSiteMembershipsURL.setParameter(

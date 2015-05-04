@@ -19,5 +19,7 @@
 		<%@ include file="/html/portlet/sites_admin/toolbar_content.jspf" %>
 	</aui:nav>
 
-	<aui:nav-bar-search file="/html/portlet/users_admin/group_search.jsp" searchContainer="<%= searchContainer %>" />
+	<aui:nav-bar-search>
+		<liferay-ui:group-search-form />
+	</aui:nav-bar-search>
 </aui:nav-bar>

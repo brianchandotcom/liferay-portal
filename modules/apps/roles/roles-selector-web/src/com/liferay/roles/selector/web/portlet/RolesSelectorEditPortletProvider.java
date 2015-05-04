@@ -14,6 +14,7 @@
 
 package com.liferay.roles.selector.web.portlet;
 
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.roles.selector.web.constants.RolesSelectorPortletKeys;
 
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {"model.class.name=com.liferay.portal.model.UserGroupRole"},
 	service = EditPortletProvider.class
 )
-public class RolesSelectorEditPortletProvider implements EditPortletProvider {
+public class RolesSelectorEditPortletProvider
+	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
 	public String getPortletId() {

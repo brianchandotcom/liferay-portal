@@ -16,7 +16,9 @@ package com.liferay.asset.publisher.web.portlet;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -24,6 +26,9 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,12 +40,23 @@ import org.osgi.service.component.annotations.Component;
 	property = {"model.class.name=" + PortletProvider.CLASS_NAME_ANY},
 	service = {AddPortletProvider.class, ViewPortletProvider.class}
 )
-public class AssetPublisherPortletProvider
+public class AssetPublisherPortletProvider extends BasePortletProvider
 	implements AddPortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
 		return AssetPublisherPortletKeys.ASSET_PUBLISHER;
+	}
+
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest request)
+		throws PortalException {
+
+		PortletURL assetPublisherURL = super.getPortletURL(request);
+
+		assetPublisherURL.setParameter("mvcPath", "/view_content.jsp");
+
+		return assetPublisherURL;
 	}
 
 	@Override
@@ -64,6 +80,11 @@ public class AssetPublisherPortletProvider
 		AssetPublisherUtil.addSelection(
 			themeDisplay, portletPreferences, portletId,
 			assetEntry.getEntryId(), -1, assetEntry.getClassName());
+	}
+
+	@Override
+	protected long getPlid(ThemeDisplay themeDisplay) throws PortalException {
+		return themeDisplay.getPlid();
 	}
 
 }

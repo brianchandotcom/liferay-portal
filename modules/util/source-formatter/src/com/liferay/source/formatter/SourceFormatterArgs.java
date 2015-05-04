@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.StringPool;
-
 import java.util.List;
 
 /**
@@ -63,8 +61,8 @@ public class SourceFormatterArgs {
 			throw new RuntimeException("Filenames are already initialized.");
 		}
 
-		if (!baseDirName.endsWith(StringPool.SLASH)) {
-			baseDirName += StringPool.SLASH;
+		if (!baseDirName.endsWith("/")) {
+			baseDirName += "/";
 		}
 
 		_baseDirName = baseDirName;
@@ -84,7 +82,7 @@ public class SourceFormatterArgs {
 			throw new RuntimeException("Base directory was already set.");
 		}
 
-		_baseDirName = StringPool.BLANK;
+		_baseDirName = "";
 		_fileNames = fileNames;
 	}
 

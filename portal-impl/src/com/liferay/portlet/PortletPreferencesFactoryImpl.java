@@ -56,8 +56,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.xml.StAXReaderUtil;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationPortletRequest;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -903,12 +901,10 @@ public class PortletPreferencesFactoryImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"CacheKeyGenerator implementation: " +
-					cacheKeyGenerator.getClass().getName());
+					cacheKeyGenerator.getClass());
 		}
 
-		Serializable cacheKey = cacheKeyGenerator.getCacheKey(xml);
-
-		return String.valueOf(cacheKey);
+		return String.valueOf(cacheKeyGenerator.getCacheKey(xml));
 	}
 
 	private final Log _log = LogFactoryUtil.getLog(

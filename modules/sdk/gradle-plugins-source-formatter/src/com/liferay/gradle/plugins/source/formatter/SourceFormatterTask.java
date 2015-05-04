@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.source.formatter.gradle;
+package com.liferay.gradle.plugins.source.formatter;
 
 import com.liferay.source.formatter.SourceFormatter;
 import com.liferay.source.formatter.SourceFormatterArgs;

@@ -2,5 +2,7 @@
 <!DOCTYPE project>
 
 <project>
+	<property name="import.shared" value="../util/source-formatter" />
+
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

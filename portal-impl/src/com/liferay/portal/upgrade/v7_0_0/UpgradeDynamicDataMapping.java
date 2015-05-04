@@ -195,8 +195,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	protected void addTemplateVersion(
 			long templateVersionId, long groupId, long companyId, long userId,
-			String userName, Timestamp createDate, long templateId, String name,
-			String description, String language, String script)
+			String userName, Timestamp createDate, long classNameId, 
+			long classPK, long templateId, String name, String description,
+			String language, String script)
 		throws Exception {
 
 		Connection con = null;
@@ -205,12 +206,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("insert into DDMTemplateVersion (templateVersionId, ");
 			sb.append("groupId, companyId, userId, userName, createDate, ");
-			sb.append("templateId, version, name, description, language, ");
-			sb.append("script) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			sb.append("classNameId, classPK, templateId, version, name, ");
+			sb.append("description, language, script) values (?, ?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
@@ -222,12 +224,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ps.setLong(4, userId);
 			ps.setString(5, userName);
 			ps.setTimestamp(6, createDate);
-			ps.setLong(7, templateId);
-			ps.setString(8, DDMStructureConstants.VERSION_DEFAULT);
-			ps.setString(9, name);
-			ps.setString(10, description);
-			ps.setString(11, language);
-			ps.setString(12, script);
+			ps.setLong(7, classNameId);
+			ps.setLong(8, classPK);
+			ps.setLong(9, templateId);
+			ps.setString(10, DDMStructureConstants.VERSION_DEFAULT);
+			ps.setString(11, name);
+			ps.setString(12, description);
+			ps.setString(13, language);
+			ps.setString(14, script);
 
 			ps.executeUpdate();
 		}
@@ -664,6 +668,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
+				long classNameId = rs.getLong("classNameId");
+				long classPK = rs.getLong("classPK");
 				long templateId = rs.getLong("templateId");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
@@ -688,8 +694,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				addTemplateVersion(
 					increment(), groupId, companyId, userId, userName,
-					modifiedDate, templateId, name, description, language,
-					script);
+					modifiedDate, classNameId, classPK, templateId, name,
+					description, language, script);
 			}
 		}
 		finally {

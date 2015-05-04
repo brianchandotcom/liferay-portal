@@ -6,7 +6,6 @@
 	<import class="com.liferay.social.networking.model.MeetupsRegistration" />
 	<import class="com.liferay.social.networking.model.WallEntry" />
 	<class name="com.liferay.social.networking.model.impl.MeetupsEntryImpl" table="MeetupsEntry">
-		<cache usage="read-write" />
 		<id name="meetupsEntryId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -25,7 +24,6 @@
 		<property name="thumbnailId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.social.networking.model.impl.MeetupsRegistrationImpl" table="MeetupsRegistration">
-		<cache usage="read-write" />
 		<id name="meetupsRegistrationId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -39,7 +37,6 @@
 		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.social.networking.model.impl.WallEntryImpl" table="WallEntry">
-		<cache usage="read-write" />
 		<id name="wallEntryId" type="long">
 			<generator class="assigned" />
 		</id>

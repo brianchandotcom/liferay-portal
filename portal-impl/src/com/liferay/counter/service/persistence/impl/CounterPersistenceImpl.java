@@ -22,7 +22,6 @@ import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.counter.model.impl.CounterModelImpl;
 import com.liferay.counter.service.persistence.CounterPersistence;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -127,10 +126,6 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 */
 	@Override
 	public void clearCache() {
-		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(CounterImpl.class.getName());
-		}
-
 		EntityCacheUtil.clearCache(CounterImpl.class);
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
@@ -692,7 +687,6 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	private static final String _SQL_COUNT_COUNTER = "SELECT COUNT(counter) FROM Counter counter";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "counter.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Counter exists with the primary key ";
-	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static final Log _log = LogFactoryUtil.getLog(CounterPersistenceImpl.class);
 	private static final Counter _nullCounter = new CounterImpl() {
 			@Override

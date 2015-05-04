@@ -38,7 +38,6 @@ import com.liferay.portal.service.persistence.RolePersistence;
 import com.liferay.portal.service.persistence.RoleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -490,10 +489,6 @@ public class RolePersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		Role newRole = addRole();
 
 		_persistence.clearCache();

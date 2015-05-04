@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.social.NoSuchActivityLimitException;
 import com.liferay.portlet.social.model.SocialActivityLimit;
@@ -425,10 +424,6 @@ public class SocialActivityLimitPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		SocialActivityLimit newSocialActivityLimit = addSocialActivityLimit();
 
 		_persistence.clearCache();

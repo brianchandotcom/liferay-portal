@@ -284,12 +284,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			getPortalCacheConfigurationURL(
 				portletPropertiesConfiguration, classLoader,
 				PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
-
-		PortalCacheConfiguratorUtil.reconfigureCaches(
-			PortalCacheManagerNames.HIBERNATE, classLoader,
-			getPortalCacheConfigurationURL(
-				portletPropertiesConfiguration, classLoader,
-				PropsKeys.NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

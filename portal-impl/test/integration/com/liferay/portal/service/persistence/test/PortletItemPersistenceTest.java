@@ -38,7 +38,6 @@ import com.liferay.portal.service.persistence.PortletItemPersistence;
 import com.liferay.portal.service.persistence.PortletItemUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -430,10 +429,6 @@ public class PortletItemPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		PortletItem newPortletItem = addPortletItem();
 
 		_persistence.clearCache();

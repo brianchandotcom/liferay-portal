@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
@@ -470,10 +469,6 @@ public class DDLRecordSetPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		DDLRecordSet newDDLRecordSet = addDDLRecordSet();
 
 		_persistence.clearCache();

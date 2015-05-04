@@ -37,7 +37,6 @@ import com.liferay.portal.service.persistence.LayoutBranchPersistence;
 import com.liferay.portal.service.persistence.LayoutBranchUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -432,10 +431,6 @@ public class LayoutBranchPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		LayoutBranch newLayoutBranch = addLayoutBranch();
 
 		_persistence.clearCache();

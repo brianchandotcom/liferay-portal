@@ -37,7 +37,6 @@ import com.liferay.portal.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.service.persistence.PluginSettingUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -398,10 +397,6 @@ public class PluginSettingPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		PluginSetting newPluginSetting = addPluginSetting();
 
 		_persistence.clearCache();

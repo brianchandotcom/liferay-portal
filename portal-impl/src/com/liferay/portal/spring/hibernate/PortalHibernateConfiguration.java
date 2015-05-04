@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.Converter;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -129,6 +128,40 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 	protected Configuration newConfiguration() {
 		Configuration configuration = new Configuration();
 
+		Properties properties = PropsUtil.getProperties();
+
+		Properties hibernateProperties = getHibernateProperties();
+
+		for (Map.Entry<Object, Object> entry : hibernateProperties.entrySet()) {
+			String key = (String)entry.getKey();
+			String value = (String)entry.getValue();
+
+			properties.setProperty(key, value);
+		}
+
+		if (Validator.isNull(PropsValues.HIBERNATE_DIALECT)) {
+			Dialect dialect = determineDialect();
+
+			setDB(dialect);
+
+			Class<?> clazz = dialect.getClass();
+
+			properties.setProperty("hibernate.dialect", clazz.getName());
+		}
+
+		if (_shardEnabled) {
+			properties.setProperty(
+				Environment.CURRENT_SESSION_CONTEXT_CLASS,
+				ShardSpringSessionContext.class.getName());
+		}
+
+		properties.setProperty("hibernate.cache.use_query_cache", "false");
+		properties.setProperty(
+			"hibernate.cache.use_second_level_cache", "false");
+		properties.remove("hibernate.cache.region.factory_class");
+
+		configuration.setProperties(properties);
+
 		try {
 			String[] resources = getConfigurationResources();
 
@@ -141,29 +174,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 						_log.warn(e2, e2);
 					}
 				}
-			}
-
-			Properties properties = PropsUtil.getProperties();
-
-			if (SPIUtil.isSPI()) {
-				properties.put(
-					"hibernate.cache.use_query_cache",
-					Boolean.FALSE.toString());
-				properties.put(
-					"hibernate.cache.use_second_level_cache",
-					Boolean.FALSE.toString());
-			}
-
-			configuration.setProperties(properties);
-
-			if (Validator.isNull(PropsValues.HIBERNATE_DIALECT)) {
-				Dialect dialect = determineDialect();
-
-				setDB(dialect);
-
-				Class<?> clazz = dialect.getClass();
-
-				configuration.setProperty("hibernate.dialect", clazz.getName());
 			}
 
 			DB db = DBFactoryUtil.getDB();
@@ -190,21 +200,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		}
 		catch (Exception e1) {
 			_log.error(e1, e1);
-		}
-
-		Properties hibernateProperties = getHibernateProperties();
-
-		if (_shardEnabled) {
-			hibernateProperties.setProperty(
-				Environment.CURRENT_SESSION_CONTEXT_CLASS,
-				ShardSpringSessionContext.class.getName());
-		}
-
-		for (Map.Entry<Object, Object> entry : hibernateProperties.entrySet()) {
-			String key = (String)entry.getKey();
-			String value = (String)entry.getValue();
-
-			configuration.setProperty(key, value);
 		}
 
 		return configuration;

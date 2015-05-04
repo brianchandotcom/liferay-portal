@@ -1,0 +1,30 @@
+.nav.list-group {
+	li > a {
+		&:focus, &:hover {
+			background-color: #E5F5FC;
+			color: #009AE5;
+		}
+	}
+
+	> .active {
+		border-width: 1px 0 0 0;
+
+		> a {
+			&, &:focus, &:hover {
+				background-color: #60BFEF;
+				border: 1px solid #60BFEF;
+				color: #FFF;
+			}
+		}
+	}
+
+	.list-group-item {
+		padding: 0;
+
+		&.nav-header {
+			background-color: #F3F3F3;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	}
+}

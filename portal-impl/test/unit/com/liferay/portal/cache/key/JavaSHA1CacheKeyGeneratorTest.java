@@ -17,14 +17,14 @@ package com.liferay.portal.cache.key;
 import com.liferay.portal.kernel.util.Digester;
 
 /**
- * @author Shuyang Zhou
+ * @author Vilmos Papp
  */
-public class JavaMD5CacheKeyGeneratorTest
+public class JavaSHA1CacheKeyGeneratorTest
 	extends BaseCacheKeyGeneratorTestCase {
 
 	@Override
 	public void setUp() throws Exception {
-		cacheKeyGenerator = new MessageDigestCacheKeyGenerator(Digester.MD5);
+		cacheKeyGenerator = new MessageDigestCacheKeyGenerator(Digester.SHA_1);
 	}
 
 }

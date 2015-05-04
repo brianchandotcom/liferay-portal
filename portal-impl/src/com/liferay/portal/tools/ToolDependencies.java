@@ -16,10 +16,12 @@ package com.liferay.portal.tools;
 
 import com.liferay.portal.cache.MultiVMPoolImpl;
 import com.liferay.portal.cache.SingleVMPoolImpl;
+import com.liferay.portal.cache.key.SimpleCacheKeyGenerator;
 import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -70,6 +72,12 @@ public class ToolDependencies {
 
 		registry.registerService(
 			FullNameGenerator.class, new DefaultFullNameGenerator());
+
+		CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
+			new CacheKeyGeneratorUtil();
+
+		cacheKeyGeneratorUtil.setDefaultCacheKeyGenerator(
+			new SimpleCacheKeyGenerator());
 
 		DigesterUtil digesterUtil = new DigesterUtil();
 

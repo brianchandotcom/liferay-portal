@@ -225,12 +225,14 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void clickAndWait(String locator) {
-		throw new UnsupportedOperationException();
+		super.click(locator);
+		super.waitForPageToLoad("30000");
 	}
 
 	@Override
 	public void clickAtAndWait(String locator, String coordString) {
-		throw new UnsupportedOperationException();
+		super.clickAt(locator, coordString);
+		super.waitForPageToLoad("30000");
 	}
 
 	@Override
@@ -338,7 +340,8 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void goBackAndWait() {
-		throw new UnsupportedOperationException();
+		super.goBack();
+		super.waitForPageToLoad("30000");
 	}
 
 	@Override
@@ -507,7 +510,8 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void selectAndWait(String selectLocator, String optionLocator) {
-		throw new UnsupportedOperationException();
+		super.select(selectLocator, optionLocator);
+		super.waitForPageToLoad("30000");
 	}
 
 	@Override

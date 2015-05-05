@@ -137,7 +137,7 @@ public class ServiceTrackerCollections {
 
 	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
 		Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, S> serviceReferenceMapper) {
+		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper) {
 
 		ServiceTrackerMapFactory serviceTrackerMapFactory =
 			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
@@ -148,7 +148,7 @@ public class ServiceTrackerCollections {
 
 	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
 		Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, S> serviceReferenceMapper,
+		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator) {
 
 		ServiceTrackerMapFactory serviceTrackerMapFactory =
@@ -160,7 +160,7 @@ public class ServiceTrackerCollections {
 
 	public static <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
 		Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
 
 		ServiceTrackerMapFactory serviceTrackerMapFactory =
@@ -173,7 +173,7 @@ public class ServiceTrackerCollections {
 
 	public static <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
 		Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
 		Comparator<ServiceReference<SR>> comparator) {
 
@@ -207,7 +207,7 @@ public class ServiceTrackerCollections {
 
 	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
 		Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, S> serviceReferenceMapper) {
+		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper) {
 
 		ServiceTrackerMapFactory serviceTrackerMapFactory =
 			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
@@ -218,7 +218,7 @@ public class ServiceTrackerCollections {
 
 	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
 		Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, S> serviceReferenceMapper,
+		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator) {
 
 		ServiceTrackerMapFactory serviceTrackerMapFactory =
@@ -230,7 +230,7 @@ public class ServiceTrackerCollections {
 
 	public static <K, SR, S> ServiceTrackerMap<K, S> singleValueMap(
 		Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
 
 		ServiceTrackerMapFactory serviceTrackerMapFactory =
@@ -243,7 +243,7 @@ public class ServiceTrackerCollections {
 
 	public static <K, SR, S> ServiceTrackerMap<K, S> singleValueMap(
 		Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
 		Comparator<ServiceReference<SR>> comparator) {
 

@@ -45,7 +45,7 @@ public class ServiceTrackerMapFactory {
 
 	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
 			BundleContext bundleContext, Class<S> clazz, String filterString,
-			ServiceReferenceMapper<K, S> serviceReferenceMapper)
+			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper)
 		throws InvalidSyntaxException {
 
 		return new ServiceTrackerMapImpl<>(
@@ -56,7 +56,7 @@ public class ServiceTrackerMapFactory {
 
 	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
 			BundleContext bundleContext, Class<S> clazz, String filterString,
-			ServiceReferenceMapper<K, S> serviceReferenceMapper,
+			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 			Comparator<ServiceReference<S>> comparator)
 		throws InvalidSyntaxException {
 
@@ -68,7 +68,7 @@ public class ServiceTrackerMapFactory {
 
 	public static <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
 			BundleContext bundleContext, Class<SR> clazz, String filterString,
-			ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer)
 		throws InvalidSyntaxException {
 
@@ -80,7 +80,7 @@ public class ServiceTrackerMapFactory {
 
 	public static <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
 			BundleContext bundleContext, Class<SR> clazz, String filterString,
-			ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
 			Comparator<ServiceReference<SR>> comparator)
 		throws InvalidSyntaxException {
@@ -116,7 +116,7 @@ public class ServiceTrackerMapFactory {
 
 	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
 			BundleContext bundleContext, Class<S> clazz, String filterString,
-			ServiceReferenceMapper<K, S> serviceReferenceMapper)
+			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper)
 		throws InvalidSyntaxException {
 
 		return new ServiceTrackerMapImpl<>(
@@ -127,7 +127,7 @@ public class ServiceTrackerMapFactory {
 
 	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
 			BundleContext bundleContext, Class<S> clazz, String filterString,
-			ServiceReferenceMapper<K, S> serviceReferenceMapper,
+			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 			Comparator<ServiceReference<S>> comparator)
 		throws InvalidSyntaxException {
 
@@ -139,7 +139,7 @@ public class ServiceTrackerMapFactory {
 
 	public static <K, SR, S> ServiceTrackerMap<K, S> singleValueMap(
 			BundleContext bundleContext, Class<SR> clazz, String filterString,
-			ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer)
 		throws InvalidSyntaxException {
 
@@ -151,7 +151,7 @@ public class ServiceTrackerMapFactory {
 
 	public static <K, SR, S> ServiceTrackerMap<K, S> singleValueMap(
 			BundleContext bundleContext, Class<SR> clazz, String filterString,
-			ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
 			Comparator<ServiceReference<SR>> comparator)
 		throws InvalidSyntaxException {

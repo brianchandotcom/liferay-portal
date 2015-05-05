@@ -25,18 +25,13 @@ import org.osgi.framework.ServiceReference;
 /**
 * @author Adolfo Pérez
 */
-public class PanelCategoryServiceReferenceMapper<T extends PanelEntry>
-	implements ServiceReferenceMapper<String, T> {
-
-	public static <S extends PanelEntry>
-		PanelCategoryServiceReferenceMapper<S> create() {
-
-		return new PanelCategoryServiceReferenceMapper<>();
-	}
+public class PanelCategoryServiceReferenceMapper
+	implements ServiceReferenceMapper<String, PanelEntry> {
 
 	@Override
 	public void map(
-		ServiceReference<T> serviceReference, Emitter<String> emitter) {
+		ServiceReference<PanelEntry> serviceReference,
+		Emitter<String> emitter) {
 
 		String panelCategoryKey = (String)serviceReference.getProperty(
 			"panel.category.key");

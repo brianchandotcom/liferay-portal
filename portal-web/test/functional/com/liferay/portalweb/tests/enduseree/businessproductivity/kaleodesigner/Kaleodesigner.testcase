@@ -799,7 +799,7 @@
 		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command known-issues="LIFERAYQA-11686" name="PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage" priority="5">
+	<command name="PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage" priority="5">
 		<var name="nodeScript" >
 <![CDATA[
 	import com.liferay.portal.kernel.util.GetterUtil;${line.separator}

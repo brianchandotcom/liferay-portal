@@ -25,8 +25,10 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLinkLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
@@ -79,6 +81,10 @@ public class JournalArticleLocalServiceTest {
 				curArticle.getResourcePrimKey());
 
 			Assert.assertNull(assetEntry);
+
+			DDMTemplateLinkLocalServiceUtil.deleteTemplateLink(
+				PortalUtil.getClassNameId(JournalArticle.class),
+				curArticle.getPrimaryKey());
 
 			JournalArticleLocalServiceUtil.deleteJournalArticle(
 				curArticle.getPrimaryKey());

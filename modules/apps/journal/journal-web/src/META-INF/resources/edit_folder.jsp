@@ -38,7 +38,9 @@ if (workflowEnabled) {
 }
 %>
 
-<portlet:actionURL name='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? "addFolder" : "updateFolder") %>' var="editFolderURL" />
+<portlet:actionURL name='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? "addFolder" : "updateFolder") %>' var="editFolderURL">
+	<portlet:param name="mvcPath" value="/edit_folder.jsp" />
+</portlet:actionURL>
 
 <liferay-util:buffer var="removeDDMStructureIcon">
 	<liferay-ui:icon

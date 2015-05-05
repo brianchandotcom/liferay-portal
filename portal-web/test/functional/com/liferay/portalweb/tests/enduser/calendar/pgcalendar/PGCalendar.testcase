@@ -535,40 +535,6 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRegularOnSpecificDayOfWeekViaScheduler" priority="5">
-		<var name="eventTitle" value="Calendar Event Regular Title" />
-		<var name="eventType" value="Regular" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Calendar#gotoSpecificDayViaSmallCalendar">
-			<var name="dateNumber" value="8" />
-		</execute>
-
-		<execute macro="CalendarEvent#gotoAddOnSpecifcDayOfWeekViaWeekView">
-			<var name="dayOfWeek" value="2" />
-		</execute>
-
-		<execute macro="CalendarEvent#addPG">
-			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Calendar#gotoBusyDayViaSmallCalendar" />
-
-		<execute macro="CalendarEvent#viewPG">
-			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
-
-		<execute macro="CalendarEvent#tearDownOnBusyDayInCurrentMonth" />
-	</command>
-
 	<command name="AddCalendarEventRegularRSVPYes" priority="5">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
@@ -1183,6 +1149,62 @@
 			<var name="deleteOptionSet" value="All Events in the Series" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+		</execute>
+	</command>
+
+	<command name="AddCalendarEventsViaScheduler" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute macro="CalendarEvent#addViaDayView">
+			<var name="eventTitle" value="Calendar Event Today Day" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="Calendar Event Today Day" />
+		</execute>
+
+		<execute macro="CalendarEvent#tearDown" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarEvent#addTodayViaScheduler">
+			<var name="eventTitle" value="Calendar Event Today Week" />
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="Calendar Event Today Week" />
+		</execute>
+
+		<execute macro="CalendarEvent#tearDown" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Month" />
+		</execute>
+
+		<execute macro="CalendarEvent#addTodayViaScheduler">
+			<var name="eventTitle" value="Calendar Event Today Month" />
+			<var name="viewType" value="Month" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="Calendar Event Today Month" />
 		</execute>
 	</command>
 

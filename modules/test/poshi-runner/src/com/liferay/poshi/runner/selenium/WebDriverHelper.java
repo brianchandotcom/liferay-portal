@@ -38,7 +38,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * @author Kenji Heigel
@@ -175,10 +177,10 @@ public class WebDriverHelper {
 		return webElement.getAttribute(attribute);
 	}
 
-	public String getConfirmation() {
-		switchTo();
+	public static String getConfirmation(WebDriver webDriver) {
+		webDriver.switchTo();
 
-		WebDriverWait webDriverWait = new WebDriverWait(this, 1);
+		WebDriverWait webDriverWait = new WebDriverWait(webDriver, 1);
 
 		try {
 			Alert alert = webDriverWait.until(

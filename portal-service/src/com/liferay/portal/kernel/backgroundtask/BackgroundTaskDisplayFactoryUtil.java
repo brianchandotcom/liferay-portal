@@ -40,11 +40,11 @@ public class BackgroundTaskDisplayFactoryUtil {
 	}
 
 	public void setBackgroundTaskDisplayFactory(
-		BackgroundTaskDisplayFactory BackgroundTaskDisplayFactory) {
+		BackgroundTaskDisplayFactory backgroundTaskDisplayFactory) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_backgroundTaskDisplayFactory = BackgroundTaskDisplayFactory;
+		_backgroundTaskDisplayFactory = backgroundTaskDisplayFactory;
 	}
 
 	private static BackgroundTaskDisplayFactory _backgroundTaskDisplayFactory;

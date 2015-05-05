@@ -1,0 +1,105 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.upload.UploadException;
+
+/**
+ * @author Hugo Huijser
+ */
+public class ThrowsSystemException {
+
+	public void method1() {
+		return;
+	}
+
+	public void method2(
+		String string1, String string2, String string3, String string4,
+		String string5) {
+
+		return;
+	}
+
+	public void method3(String string1, String string2, String string3) {
+		return;
+	}
+
+	public void method4() throws PortalException {
+		return;
+	}
+
+	public void method5(
+			String string1, String string2, String string3, String string4,
+			String string5)
+		throws PortalException {
+
+		return;
+	}
+
+	public void method6() throws UploadException {
+		return;
+	}
+
+	public void method7(
+			String string1, String string2, String string3, String string4,
+			String string5)
+		throws UploadException {
+
+		return;
+	}
+
+	public void method8();
+
+	public void method9(
+		String string1, String string2, String string3, String string4,
+		String string5);
+
+	public void method10(String string1, String string2, String string3);
+
+	public void method11() throws PortalException;
+
+	public void method12(
+			String string1, String string2, String string3, String string4,
+			String string5)
+		throws PortalException;
+
+	public void method13() throws UploadException;
+
+	public void method14(
+			String string1, String string2, String string3, String string4,
+			String string5)
+		throws UploadException;
+
+	public void n1() throws PortalException, UploadException {
+		return;
+	}
+
+	public void n2(
+			String string1, String string2, String string3, String string4,
+			String string5)
+		throws PortalException, UploadException {
+
+		return;
+	}
+
+	public void n3() throws PortalException, UploadException;
+
+	public void n4(
+			String string1, String string2, String string3, String string4,
+			String string5)
+		throws PortalException, UploadException;
+
+}

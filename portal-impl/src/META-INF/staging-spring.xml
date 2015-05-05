@@ -24,6 +24,11 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.lar.ExportImportProcessCallbackRegistryUtil" class="com.liferay.portal.kernel.lar.ExportImportProcessCallbackRegistryUtil">
+		<property name="exportImportProcessCallbackRegistry">
+			<bean class="com.liferay.portal.lar.ExportImportProcessCallbackRegistryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEventFactoryUtil" class="com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEventFactoryUtil">
 		<property name="exportImportLifecycleEventFactory">
 			<bean class="com.liferay.portal.lar.lifecycle.ExportImportLifecycleEventFactoryImpl" />
@@ -47,6 +52,7 @@
 	<bean id="com.liferay.portal.lar.lifecycle.CacheExportImportLifecycleListener" class="com.liferay.portal.lar.lifecycle.CacheExportImportLifecycleListener" />
 	<bean id="com.liferay.portal.lar.lifecycle.IndexingExportImportLifecycleListener" class="com.liferay.portal.lar.lifecycle.IndexingExportImportLifecycleListener" />
 	<bean id="com.liferay.portal.lar.lifecycle.LoggerExportImportLifecycleListener" class="com.liferay.portal.lar.lifecycle.LoggerExportImportLifecycleListener" />
+	<bean id="com.liferay.portal.lar.ExportImportProcessCallbackLifecycleListener" class="com.liferay.portal.lar.ExportImportProcessCallbackLifecycleListener" />
 	<bean id="com.liferay.portal.model.adapter.builder.StagedGroupModelAdapterBuilder" class="com.liferay.portal.model.adapter.builder.StagedGroupModelAdapterBuilder" />
 	<bean id="com.liferay.portal.model.adapter.builder.StagedThemeModelAdapterBuilder" class="com.liferay.portal.model.adapter.builder.StagedThemeModelAdapterBuilder" />
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" />

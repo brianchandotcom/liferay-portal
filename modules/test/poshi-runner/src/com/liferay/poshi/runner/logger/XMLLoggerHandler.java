@@ -154,6 +154,10 @@ public final class XMLLoggerHandler {
 					loggerElement.addChildLoggerElement(
 						_getVarLoggerElement(childElement));
 				}
+				else if (childElementName.equals("while")) {
+					loggerElement.addChildLoggerElement(
+						_getWhileLoggerElement(childElement));
+				}
 			}
 		}
 
@@ -363,6 +367,31 @@ public final class XMLLoggerHandler {
 
 	private static LoggerElement _getVarLoggerElement(Element element) {
 		return _getLineGroupLoggerElement("var", element);
+	}
+
+	private static LoggerElement _getWhileLoggerElement(Element element) {
+		LoggerElement childContainerLoggerElement =
+			_getChildContainerLoggerElement();
+
+		List<Element> whileChildElements = element.elements();
+
+		Element conditionElement = whileChildElements.get(0);
+
+		childContainerLoggerElement.addChildLoggerElement(
+			_getConditionalLoggerElement(conditionElement));
+
+		Element thenElement = element.element("then");
+
+		childContainerLoggerElement.addChildLoggerElement(
+			_getLoggerElementFromElement(thenElement));
+
+		LoggerElement loggerElement = _getLineGroupLoggerElement(element);
+
+		loggerElement.addChildLoggerElement(childContainerLoggerElement);
+		loggerElement.addChildLoggerElement(
+			_getClosingLineContainerLoggerElement(element));
+
+		return loggerElement;
 	}
 
 	private static boolean _isExecutingMacro(Element element) {

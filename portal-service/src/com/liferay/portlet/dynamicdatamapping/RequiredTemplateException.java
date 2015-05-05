@@ -36,4 +36,17 @@ public class RequiredTemplateException extends PortalException {
 		super(cause);
 	}
 
+	public static class MustNotDeleteTemplateReferencedByTemplateLinks
+		extends RequiredTemplateException {
+
+		public MustNotDeleteTemplateReferencedByTemplateLinks(long templateId) {
+			super(
+				String.format(
+					"Template %s cannot be deleted because it is " +
+						"referenced by one or more template links",
+					templateId));
+		}
+
+	}
+
 }

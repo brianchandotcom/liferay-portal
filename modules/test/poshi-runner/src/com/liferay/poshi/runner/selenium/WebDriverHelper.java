@@ -368,8 +368,8 @@ public class WebDriverHelper {
 		return point.getY();
 	}
 
-	public void goBack() {
-		WebDriver.Navigation navigation = navigate();
+	public static void goBack(WebDriver webDriver) {
+		WebDriver.Navigation navigation = webDriver.navigate();
 
 		navigation.back();
 	}

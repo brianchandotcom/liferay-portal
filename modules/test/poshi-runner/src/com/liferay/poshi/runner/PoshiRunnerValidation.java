@@ -773,6 +773,170 @@ public class PoshiRunnerValidation {
 		}
 
 		_validateHasChildElements(element, filePath);
+
+		List<Element> childElements = element.elements();
+
+		String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
+			filePath);
+
+		for (Element childElement : childElements) {
+			if (StringUtils.equals(childElement.getName(), "body")) {
+				_validateHasChildElements(childElement, filePath);
+
+				List<Element> tableElements = childElement.elements();
+
+				for (Element tableElement : tableElements) {
+					if (!StringUtils.equals(tableElement.getName(), "table") ||
+						Validator.isNull(tableElement)) {
+
+						throw new Exception(
+							"Missing or invalid table element" + filePath +
+								":" +
+								childElement.attributeValue("line-number"));
+					}
+					else {
+						List<String> requiredTableAttributes = Arrays.asList(
+							"border", "cellpadding", "cellspacing",
+							"line-number");
+
+						_validateRequiredAttributeNames(
+							tableElement, requiredTableAttributes, filePath);
+
+						_validateHasChildElements(tableElement, filePath);
+
+						Element tBodyElement = tableElement.element("tbody");
+
+						if (!className.equals("BaseLiferay")) {
+							_validateHasChildElements(tBodyElement, filePath);
+						}
+
+						List<Element> trElements = tBodyElement.elements("tr");
+
+						for (Element trElement : trElements) {
+							List<Element> tdElements = trElement.elements();
+
+							if (tdElements.size() != 3) {
+								throw new Exception(
+									"<tr> must have 3 <td> following it\n" +
+										filePath + ":" +
+										trElement.attributeValue(
+											"line-number"));
+							}
+
+							Element descriptionElement = tdElements.get(2);
+							Element locatorKeyElement = tdElements.get(0);
+							Element locatorElement = tdElements.get(1);
+
+							String description = descriptionElement.getText();
+							String locator = locatorElement.getText();
+							String locatorKey = locatorKeyElement.getText();
+
+							if (Validator.isNull(description) &&
+								Validator.isNull(locator) &&
+								Validator.isNull(locatorKey)) {
+
+								continue;
+							}
+							else if (Validator.isNotNull(description) &&
+									 Validator.isNotNull(locator) &&
+									 Validator.isNotNull(locatorKey)) {
+
+								continue;
+							}
+							else if (Validator.isNull(description) &&
+									 Validator.isNotNull(locator) &&
+									 Validator.isNotNull(locatorKey)) {
+
+								continue;
+							}
+							else {
+								throw new Exception(
+									"Invalid or missing locator text\n" +
+										filePath + ":" +
+										trElement.attributeValue(
+											"line-number"));
+							}
+						}
+
+						Element theadElement = tableElement.element("thead");
+
+						_validateHasChildElements(theadElement, filePath);
+
+						List<Element> theadChildElements =
+							theadElement.elements();
+
+						if (theadChildElements.size() > 1) {
+							throw new Exception(
+								"Too many child elements\n" + filePath + ":" +
+									theadElement.attributeValue("line-number"));
+						}
+
+						Element trElement = theadChildElements.get(0);
+
+						_validateHasChildElements(trElement, filePath);
+
+						List<Element> tdElements = trElement.elements();
+
+						if (tdElements.size() > 1) {
+							throw new Exception(
+								"Too many td child elements\n" + filePath +
+									":" + trElement.attributeValue(
+										"line-number"));
+						}
+
+						Element tdElement = tdElements.get(0);
+
+						List<String> requiredTdAttributes = Arrays.asList(
+							"colspan", "rowspan");
+
+						_validateRequiredAttributeNames(
+							tdElement, requiredTdAttributes, filePath);
+
+						String text = tdElement.getText();
+
+						if (Validator.isNull(text)) {
+							throw new Exception(
+								"Missing file name\n" + filePath + ":" +
+									trElement.attributeValue("line-number"));
+						}
+						else if (!text.equals(className)) {
+							throw new Exception(
+								"File name and text are different\n" +
+									filePath + ":" +
+									trElement.attributeValue("line-number"));
+						}
+					}
+				}
+			}
+			else if (StringUtils.equals(childElement.getName(), "head")) {
+				List<Element> headChildElements = childElement.elements();
+
+				if (headChildElements.size() > 1) {
+					throw new Exception(
+						"Too many child elements\n" + filePath +
+							":" + childElement.attributeValue("line-number"));
+				}
+
+				Element titleElement = headChildElements.get(0);
+
+				String name = titleElement.getName();
+
+				if (!StringUtils.equals(name, "title")) {
+					throw new Exception(
+						"Invalid " + name + " element\n"+
+							filePath + ":" +
+							childElement.attributeValue("line-number"));
+				}
+				else if (!StringUtils.equals(
+							titleElement.getText(), className)) {
+
+					throw new Exception(
+						"File name and title are different\n" +
+							filePath + ":" +
+							titleElement.attributeValue("line-number"));
+				}
+			}
+		}
 	}
 
 	private static void _validatePossibleAttributeNames(

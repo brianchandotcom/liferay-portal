@@ -1586,10 +1586,6 @@
 		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_REVIEW_EMAIL" value1="Web Content Review Email" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_UPDATED_EMAIL" value1="Web Content Updated Email" />
 
-		<execute function="AssertClick" locator1="CPWebcontentConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
-		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#NAME_FIELD" value1="${authorName}" />
-		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#ADDRESS_FIELD" value1="${authorAddress}" />
-
 		<if>
 			<equals arg1="${webContentWorkflowEnabled}" arg2="true" />
 			<then>

@@ -17,6 +17,7 @@ package com.liferay.registry.internal;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistrar;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
@@ -182,6 +183,11 @@ public class RegistryImpl implements Registry {
 		}
 
 		return serviceReferences;
+	}
+
+	@Override
+	public <T> ServiceRegistrar<T> getServiceRegistrar(Class<T> clazz) {
+		return new ServiceRegistrar(this, clazz);
 	}
 
 	@Override

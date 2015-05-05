@@ -14,39 +14,29 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RequiredTemplateException extends PortalException {
+@ProviderType
+public class NoSuchTemplateLinkException extends NoSuchModelException {
 
-	public RequiredTemplateException() {
+	public NoSuchTemplateLinkException() {
 	}
 
-	public RequiredTemplateException(String msg) {
+	public NoSuchTemplateLinkException(String msg) {
 		super(msg);
 	}
 
-	public RequiredTemplateException(String msg, Throwable cause) {
+	public NoSuchTemplateLinkException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public RequiredTemplateException(Throwable cause) {
+	public NoSuchTemplateLinkException(Throwable cause) {
 		super(cause);
-	}
-
-	public static class MustNotDeleteTemplateReferencedByTemplateLinks
-		extends RequiredTemplateException {
-
-		public MustNotDeleteTemplateReferencedByTemplateLinks(long templateId) {
-			super(
-				String.format(
-					"Template %s cannot be deleted because it is " +
-						"referenced by one or more template links",
-					templateId));
-		}
-
 	}
 
 }

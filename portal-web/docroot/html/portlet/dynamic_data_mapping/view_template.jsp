@@ -62,9 +62,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale);
 %>
 
-<liferay-ui:error exception="<%= RequiredTemplateException.class %>">
-	<liferay-ui:message key="required-templates-could-not-be-deleted-they-are-referenced-by-web-content" />
-</liferay-ui:error>
+<liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
 
 <c:if test="<%= showHeader %>">
 	<liferay-ui:header

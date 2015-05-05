@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -136,7 +137,12 @@ public class BaseSourceProcessorTestCase {
 
 				sb.append(expectedErrorMessage);
 				sb.append(StringPool.SPACE);
-				sb.append(newFile.getAbsolutePath());
+
+				String absolutePath = StringUtil.replace(
+					newFile.getAbsolutePath(), CharPool.BACK_SLASH,
+					CharPool.SLASH);
+
+				sb.append(absolutePath);
 
 				if (lineNumbers != null) {
 					sb.append(StringPool.SPACE);

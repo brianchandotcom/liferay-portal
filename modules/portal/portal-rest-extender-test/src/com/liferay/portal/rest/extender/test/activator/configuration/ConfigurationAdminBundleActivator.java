@@ -29,11 +29,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(BundleContext context) throws Exception {
+	public void start(BundleContext bundleContext) throws Exception {
 		ServiceReference<ConfigurationAdmin> serviceReference =
-			context.getServiceReference(ConfigurationAdmin.class);
+			bundleContext.getServiceReference(ConfigurationAdmin.class);
 
-		ConfigurationAdmin configurationAdmin = context.getService(
+		ConfigurationAdmin configurationAdmin = bundleContext.getService(
 			serviceReference);
 
 		try {
@@ -61,12 +61,12 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			_restConfiguration.update(properties);
 		}
 		finally {
-			context.ungetService(serviceReference);
+			bundleContext.ungetService(serviceReference);
 		}
 	}
 
 	@Override
-	public void stop(BundleContext context) throws Exception {
+	public void stop(BundleContext bundleContext) throws Exception {
 		_restConfiguration.delete();
 
 		_cxfConfiguration.delete();

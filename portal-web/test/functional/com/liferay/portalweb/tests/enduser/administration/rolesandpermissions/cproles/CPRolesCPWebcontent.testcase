@@ -359,7 +359,7 @@
 
 		<execute macro="Page#gotoContentCP" />
 
-		<execute macro="WebContentPortlet#viewNoPermissionCP" />
+		<execute macro="WebContent#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />
@@ -419,7 +419,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="WebContentPortlet#viewNoPermissionCP" />
+		<execute macro="WebContent#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_GO_TO_SITE_ADMINISTRATION_CHECKBOX" />

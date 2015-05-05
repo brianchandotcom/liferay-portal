@@ -19,6 +19,6 @@ package com.liferay.registry;
  */
 public interface ServiceFinalizer<T> {
 
-	public void finalize(T service);
+	public void finalize(ServiceReference<T> serviceReference, T service);
 
 }

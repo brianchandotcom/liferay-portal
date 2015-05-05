@@ -38,10 +38,12 @@ public class ServiceRegistrar<T> {
 				_serviceRegistrations) {
 
 			if (serviceFinalizer != null) {
-				T service = _registry.getService(
-					serviceRegistration.getServiceReference());
+				ServiceReference<T> serviceReference =
+					serviceRegistration.getServiceReference();
 
-				serviceFinalizer.finalize(service);
+				T service = _registry.getService(serviceReference);
+
+				serviceFinalizer.finalize(serviceReference, service);
 			}
 
 			serviceRegistration.unregister();

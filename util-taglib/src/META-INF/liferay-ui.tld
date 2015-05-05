@@ -1335,6 +1335,46 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>entry-selector</name>
+		<tag-class>com.liferay.taglib.ui.EntrySelectorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>entries</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>hiddenInput</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>selectedEntries</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>entry-selector-display</name>
+		<tag-class>com.liferay.taglib.ui.EntrySelectorDisplayTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>entries</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>email-notification-settings</name>
 		<tag-class>com.liferay.taglib.ui.EmailNotificationSettingsTag</tag-class>
 		<body-content>JSP</body-content>

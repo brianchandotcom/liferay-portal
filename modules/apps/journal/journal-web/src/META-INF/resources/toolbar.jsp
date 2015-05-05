@@ -23,7 +23,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);
 
-boolean search = Validator.isNull(keywords) && !advancedSearch;
+boolean search = Validator.isNotNull(keywords) || advancedSearch;
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 

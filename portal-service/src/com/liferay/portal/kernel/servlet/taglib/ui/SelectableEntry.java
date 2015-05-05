@@ -12,16 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.soap.extender.test.service;
+package com.liferay.portal.kernel.servlet.taglib.ui;
+
+import java.io.IOException;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Julio Camarero
  */
-public class GreeterImpl implements Greeter {
+public interface SelectableEntry {
 
-	@Override
-	public String greet() {
-		return "Greetings!";
-	}
+	public String getIcon();
+
+	public String getKey();
+
+	public String getLabel(Locale locale);
+
+	public Double getWeight();
+
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
+
+	public boolean isEnabled();
 
 }

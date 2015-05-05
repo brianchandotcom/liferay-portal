@@ -167,8 +167,8 @@
 					if (parentTagName) {
 						parentTagName = parentTagName.toLowerCase();
 
-						if ((parentTagName == TAG_PARAGRAPH && parentNode.style.cssText) ||
-							(CKEDITOR.env.gecko && element.tagName && element.tagName.toLowerCase() == TAG_BR && parentTagName == TAG_TD && !element.nextSibling)) {
+						if (parentTagName == TAG_PARAGRAPH && parentNode.style.cssText ||
+							CKEDITOR.env.gecko && element.tagName && element.tagName.toLowerCase() == TAG_BR && parentTagName == TAG_TD && !element.nextSibling) {
 
 							allowNewLine = false;
 						}
@@ -184,7 +184,7 @@
 
 			var parentNode = element.parentNode;
 
-			return (parentNode && parentNode.tagName && (parentNode.tagName.toLowerCase() == tagName));
+			return parentNode && parentNode.tagName && parentNode.tagName.toLowerCase() == tagName;
 		},
 
 		_convert: function(data) {
@@ -268,7 +268,7 @@
 
 				fontSize = parseFloat(fontSize, 10);
 
-				fontSize = Math.round((fontSize * bodySize)) + 'px';
+				fontSize = Math.round(fontSize * bodySize) + 'px';
 
 				fontSize = instance._getFontSize(fontSize);
 			}
@@ -276,7 +276,7 @@
 				bodySize = instance._getBodySize();
 
 				fontSize = parseFloat(fontSize, 10);
-				fontSize = Math.round(((fontSize * bodySize) / 100)) + 'px';
+				fontSize = Math.round(fontSize * bodySize / 100) + 'px';
 
 				fontSize = instance._getFontSize(fontSize);
 			}
@@ -390,12 +390,12 @@
 
 			if (parentNode &&
 				parentNode.tagName &&
-				(parentNode.tagName.toLowerCase() == TAG_BLOCKQUOTE) &&
+				parentNode.tagName.toLowerCase() == TAG_BLOCKQUOTE &&
 				!parentNode.getAttribute(TAG_CITE)) {
 
 				var endResult = instance._endResult;
 
-				for (var i = (endResult.length - 1); i >= 0; i--) {
+				for (var i = endResult.length - 1; i >= 0; i--) {
 					if (endResult[i] === '[quote]') {
 						endResult[i] = '[quote=';
 
@@ -828,7 +828,7 @@
 
 			var endResult = instance._endResult;
 
-			return (endResult && REGEX_LASTCHAR_NEWLINE_WHITESPACE.test(endResult.slice(-1)));
+			return endResult && REGEX_LASTCHAR_NEWLINE_WHITESPACE.test(endResult.slice(-1));
 		},
 
 		_pushTagList: function(tagsList) {

@@ -92,15 +92,18 @@ if (row == null) {
 	</c:if>--%>
 
 	<c:if test="<%= organizationGroup.isSite() && (GroupPermissionUtil.contains(permissionChecker, organizationGroup, ActionKeys.MANAGE_STAGING) || hasUpdatePermission) %>">
-		<liferay-portlet:renderURL doAsGroupId="<%= organizationGroupId %>" portletName="<%= PortletKeys.SITE_SETTINGS %>" var="editSettingsURL">
-			<portlet:param name="struts_action" value="/sites_admin/edit_site" />
-			<portlet:param name="viewOrganizationsRedirect" value="<%= currentURL %>" />
-		</liferay-portlet:renderURL>
+
+		<%
+		LiferayPortletURL editSettingsURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.EDIT);
+
+		editSettingsURL.setDoAsGroupId(organizationGroupId);
+		editSettingsURL.setParameter("viewOrganizationsRedirect", currentURL);
+		%>
 
 		<liferay-ui:icon
 			iconCssClass="icon-cog"
 			message="manage-site"
-			url="<%= editSettingsURL %>"
+			url="<%= editSettingsURL.toString() %>"
 		/>
 	</c:if>
 

@@ -1048,10 +1048,6 @@
 		<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOSTNAME}.properties" />
 	</target>
 
-	<target name="setup-testable-tomcat">
-		<setup-testable-tomcat />
-	</target>
-
 	<target name="sort-xml-attributes">
 		<java
 			classname="com.liferay.portal.tools.XMLAttributesSorter"

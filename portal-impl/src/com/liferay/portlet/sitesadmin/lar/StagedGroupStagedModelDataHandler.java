@@ -16,6 +16,7 @@ package com.liferay.portlet.sitesadmin.lar;
 
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -29,6 +30,7 @@ import java.util.Map;
 /**
  * @author Daniel Kocsis
  */
+@OSGiBeanProperties
 public class StagedGroupStagedModelDataHandler
 	extends BaseStagedModelDataHandler<StagedGroup> {
 

@@ -667,7 +667,6 @@
 		<icon>/html/icons/sites_admin.png</icon>
 		<struts-path>sites_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<staged-model-data-handler-class>com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>sites</control-panel-entry-category>
 		<control-panel-entry-weight>1.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.sitesadmin.SitesControlPanelEntry</control-panel-entry-class>
@@ -677,10 +676,9 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
+		<header-portlet-css>/html/portlet/sites_admin/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>/html/portlet/layouts_admin/js/main.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
+		<css-class-wrapper>portlet-sites-admin</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>

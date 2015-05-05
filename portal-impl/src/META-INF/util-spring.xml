@@ -1204,6 +1204,7 @@
 	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
 		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />
 	</bean>
+	<bean id="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" class="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" class="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil">
 		<property name="socialActivityPermission">
 			<bean class="com.liferay.portlet.social.service.permission.SocialActivityPermissionImpl" />

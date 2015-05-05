@@ -245,7 +245,7 @@ if (group != null) {
 			request.setAttribute("view_tree.jspf-site", group);
 			%>
 
-			<liferay-util:include page="/site_action.jsp" />
+			<liferay-util:include page="/site_action.jsp" servletContext="<%= application %>" />
 		</aui:col>
 	</c:if>
 </aui:row>

@@ -63,12 +63,9 @@ public final class PoshiRunnerStackTraceUtil {
 		return sb.toString();
 	}
 
-	public static String popFilePath() {
-		return _filePaths.pop();
-	}
-
-	public static String popStackTrace() {
-		return _stackTrace.pop();
+	public static void popStackTrace() {
+		_filePaths.pop();
+		_stackTrace.pop();
 	}
 
 	public static void printStackTrace() {
@@ -79,11 +76,40 @@ public final class PoshiRunnerStackTraceUtil {
 		System.out.println(getStackTrace(msg));
 	}
 
-	public static void pushFilePath(String className, String classType) {
-		if (className.contains("#")) {
-			className = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				className);
+	public static void pushStackTrace(Element element) throws Exception {
+		_stackTrace.push(
+			_filePaths.peek() + ":" + element.attributeValue("line-number"));
+
+		String classCommandName;
+		String classType;
+
+		if (element.attributeValue("function") != null) {
+			classCommandName = element.attributeValue("function");
+			classType = "function";
 		}
+		else if (element.attributeValue("macro") != null) {
+			classCommandName = element.attributeValue("macro");
+			classType = "macro";
+		}
+		else if (element.attributeValue("macro-desktop") != null) {
+			classCommandName = element.attributeValue("macro-desktop");
+			classType = "macro";
+		}
+		else if (element.attributeValue("macro-mobile") != null) {
+			classCommandName = element.attributeValue("macro-mobile");
+			classType = "macro";
+		}
+		else {
+			printStackTrace();
+
+			throw new Exception(
+				"Missing (function|macro|macro-desktop|macro-mobile) " +
+					"attribute");
+		}
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
 
 		String fileExtension =
 			PoshiRunnerGetterUtil.getFileExtensionFromClassType(classType);
@@ -91,10 +117,6 @@ public final class PoshiRunnerStackTraceUtil {
 		_filePaths.push(
 			PoshiRunnerContext.getFilePathFromFileName(
 				className + "." + fileExtension));
-	}
-
-	public static void pushStackTrace(String lineNumber) {
-		_stackTrace.push(_filePaths.peek() + ":" + lineNumber);
 	}
 
 	public static void setCurrentElement(Element currentElement) {

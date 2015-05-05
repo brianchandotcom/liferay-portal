@@ -26,17 +26,17 @@
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@id='toggle_id_site_memberships_user_searchkeywords']</td>
+	<td>//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_ORGANIZATION_FIELD</td>
-	<td>//input[@id='toggle_id_users_admin_organization_searchkeywords']</td>
+	<td>//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_USER_GROUP_FIELD</td>
-	<td>//input[@id='toggle_id_users_groups_admin_group_searchkeywords']</td>
+	<td>//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>

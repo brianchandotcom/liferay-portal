@@ -759,10 +759,10 @@
 		<var name="field" value="Date" />
 		<var name="fieldFieldLabel" value="Date" />
 		<var name="fieldName" value="Date" />
-		<var name="fieldPredefinedValue" value="04/01/2015" />
+		<var name="fieldPredefinedValue" value="06/01/2015" />
 		<var name="fieldPredefinedValueDay" value="1" />
-		<var name="fieldPredefinedValueFormatted" value="4/1/15" />
-		<var name="fieldPredefinedValueMonth" value="April" />
+		<var name="fieldPredefinedValueFormatted" value="6/1/15" />
+		<var name="fieldPredefinedValueMonth" value="June" />
 		<var name="fieldPredefinedValueYear" value="2015" />
 
 		<execute macro="Page#gotoContentCP">

@@ -359,10 +359,12 @@ public class WebDriverHelper {
 		return GetterUtil.getInteger(pageYOffset);
 	}
 
-	public String getSelectedLabel(String selectLocator, String timeout) {
+	public static String getSelectedLabel(
+		WebDriver webDriver, String selectLocator, String timeout) {
+
 		try {
 			WebElement selectLocatorWebElement = getWebElement(
-				selectLocator, timeout);
+				webDriver, selectLocator, timeout);
 
 			Select select = new Select(selectLocatorWebElement);
 
@@ -376,8 +378,11 @@ public class WebDriverHelper {
 		}
 	}
 
-	public String[] getSelectedLabels(String selectLocator) {
-		WebElement selectLocatorWebElement = getWebElement(selectLocator);
+	public static String[] getSelectedLabels(
+		WebDriver webDriver, String selectLocator) {
+
+		WebElement selectLocatorWebElement = getWebElement(
+			webDriver, selectLocator);
 
 		Select select = new Select(selectLocatorWebElement);
 
@@ -462,12 +467,14 @@ public class WebDriverHelper {
 		return !webElements.isEmpty();
 	}
 
-	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
-		if (isElementNotPresent(selectLocator)) {
+	public static boolean isNotSelectedLabel(
+		WebDriver webDriver, String selectLocator, String pattern) {
+
+		if (isElementNotPresent(webDriver, selectLocator)) {
 			return false;
 		}
 
-		String[] selectedLabels = getSelectedLabels(selectLocator);
+		String[] selectedLabels = getSelectedLabels(webDriver, selectLocator);
 
 		List<String> selectedLabelsList = Arrays.asList(selectedLabels);
 
@@ -484,12 +491,14 @@ public class WebDriverHelper {
 		return text.contains(value);
 	}
 
-	public boolean isSelectedLabel(String selectLocator, String pattern) {
-		if (isElementNotPresent(selectLocator)) {
+	public static boolean isSelectedLabel(
+		WebDriver webDriver, String selectLocator, String pattern) {
+
+		if (isElementNotPresent(webDriver, selectLocator)) {
 			return false;
 		}
 
-		return pattern.equals(getSelectedLabel(selectLocator, "1"));
+		return pattern.equals(getSelectedLabel(webDriver, selectLocator, "1"));
 	}
 
 	public static void makeVisible(WebDriver webDriver, String locator) {

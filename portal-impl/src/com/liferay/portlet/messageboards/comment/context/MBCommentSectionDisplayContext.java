@@ -15,30 +15,12 @@
 package com.liferay.portlet.messageboards.comment.context;
 
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentConstants;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.messageboards.comment.MBCommentImpl;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.model.MBTreeWalker;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
-import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
-import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
-import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -48,91 +30,38 @@ public class MBCommentSectionDisplayContext
 
 	public MBCommentSectionDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionRequestHelper discussionRequestHelper) {
+		DiscussionRequestHelper discussionRequestHelper,
+		DiscussionPermission discussionPermission, Discussion discussion) {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
+		_discussionPermission = discussionPermission;
+		_rootComment = discussion.getRootComment();
 	}
 
 	@Override
-	public Comment getRootComment() throws PortalException {
-		if (_rootComment == null) {
-			List<MBMessage> messages = getMessages();
-
-			List<RatingsEntry> ratingsEntries = Collections.emptyList();
-			List<RatingsStats> ratingsStats = Collections.emptyList();
-
-			if (messages.size() > 1) {
-				List<Long> classPKs = new ArrayList<>();
-
-				for (MBMessage curMessage : messages) {
-					if (!curMessage.isRoot()) {
-						classPKs.add(curMessage.getMessageId());
-					}
-				}
-
-				ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(
-					_discussionTaglibHelper.getUserId(),
-					CommentConstants.getDiscussionClassName(), classPKs);
-				ratingsStats = RatingsStatsLocalServiceUtil.getStats(
-					CommentConstants.getDiscussionClassName(), classPKs);
-			}
-
-			MBTreeWalker treeWalker = getTreeWalker();
-
-			MBMessage rootMessage = treeWalker.getRoot();
-
-			ThemeDisplay themeDisplay =
-				_discussionRequestHelper.getThemeDisplay();
-
-			_rootComment = new MBCommentImpl(
-				rootMessage, treeWalker, ratingsEntries, ratingsStats,
-				themeDisplay.getPathThemeImages());
-		}
-
-		return _rootComment;
-	}
-
-	@Override
-	public long getThreadId() throws PortalException {
-		if (_thread == null) {
-			MBMessageDisplay messageDisplay = getMBMessageDisplay();
-
-			_thread = messageDisplay.getThread();
-		}
-
-		return _thread.getThreadId();
-	}
-
-	@Override
-	public boolean isControlsVisible() {
+	public boolean isControlsVisible() throws PortalException {
 		if (_discussionTaglibHelper.isHideControls()) {
 			return false;
 		}
 
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+		return _discussionPermission.hasAddPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
-	}
-
-	@Override
-	public boolean isDiscussionMaxComments() throws PortalException {
-		if (_discussionMaxComments == null) {
-			MBMessageDisplay messageDisplay = getMBMessageDisplay();
-
-			_discussionMaxComments = messageDisplay.isDiscussionMaxComments();
-		}
-
-		return _discussionMaxComments;
+			_discussionTaglibHelper.getUserId());
 	}
 
 	@Override
 	public boolean isDiscussionVisible() throws PortalException {
-		if ((getMessagesCount() > 1) || hasViewPermission()) {
+		if (_rootComment == null) {
+			return false;
+		}
+
+		if ((_rootComment.getThreadCommentsCount() > 1) ||
+			hasViewPermission()) {
+
 			return true;
 		}
 
@@ -141,71 +70,27 @@ public class MBCommentSectionDisplayContext
 
 	@Override
 	public boolean isMessageThreadVisible() throws PortalException {
-		if (getMessagesCount() > 1) {
+		if ((_rootComment != null) &&
+			(_rootComment.getThreadCommentsCount() > 1)) {
+
 			return true;
 		}
 
 		return false;
 	}
 
-	protected MBMessageDisplay getMBMessageDisplay() throws PortalException {
-		if (_discussionMessageDisplay == null) {
-			_discussionMessageDisplay =
-				MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-					_discussionTaglibHelper.getUserId(),
-					_discussionRequestHelper.getScopeGroupId(),
-					_discussionTaglibHelper.getClassName(),
-					_discussionTaglibHelper.getClassPK(),
-					WorkflowConstants.STATUS_ANY,
-					new MessageThreadComparator());
-		}
-
-		return _discussionMessageDisplay;
-	}
-
-	protected List<MBMessage> getMessages() throws PortalException {
-		MBTreeWalker treeWalker = getTreeWalker();
-
-		return treeWalker.getMessages();
-	}
-
-	protected int getMessagesCount() throws PortalException {
-		if (_messagesCount == null) {
-			List<MBMessage> messages = getMessages();
-
-			_messagesCount = messages.size();
-		}
-
-		return _messagesCount;
-	}
-
-	protected MBTreeWalker getTreeWalker() throws PortalException {
-		if (_treeWalker == null) {
-			MBMessageDisplay messageDisplay = getMBMessageDisplay();
-
-			_treeWalker = messageDisplay.getTreeWalker();
-		}
-
-		return _treeWalker;
-	}
-
-	protected boolean hasViewPermission() {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+	protected boolean hasViewPermission() throws PortalException {
+		return _discussionPermission.hasViewPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId(), ActionKeys.VIEW);
+			_discussionTaglibHelper.getUserId());
 	}
 
-	private Boolean _discussionMaxComments;
-	private MBMessageDisplay _discussionMessageDisplay;
+	private final DiscussionPermission _discussionPermission;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;
-	private Integer _messagesCount;
-	private Comment _rootComment;
-	private MBThread _thread;
-	private MBTreeWalker _treeWalker;
+	private final Comment _rootComment;
 
 }

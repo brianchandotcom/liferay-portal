@@ -12,19 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.comment.context;
+package com.liferay.portal.kernel.comment;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Adolfo Pérez
  */
-public interface CommentSectionDisplayContext {
+public class CommentManagerUtil {
 
-	public boolean isControlsVisible() throws PortalException;
+	public static CommentManager getCommentManager() {
+		PortalRuntimePermission.checkGetBeanProperty(CommentManagerUtil.class);
 
-	public boolean isDiscussionVisible() throws PortalException;
+		return _commentManager;
+	}
 
-	public boolean isMessageThreadVisible() throws PortalException;
+	public void setCommentManager(CommentManager commentManager) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_commentManager = commentManager;
+	}
+
+	private static CommentManager _commentManager;
 
 }

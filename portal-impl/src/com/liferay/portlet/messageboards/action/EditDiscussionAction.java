@@ -291,6 +291,13 @@ public class EditDiscussionAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MBMessage.class.getName(), actionRequest);
 
+		if ((threadId == 0) && (parentMessageId != 0)) {
+			MBMessage parentMessage = MBMessageServiceUtil.getMessage(
+				parentMessageId);
+
+			threadId = parentMessage.getThreadId();
+		}
+
 		MBMessage message = null;
 
 		if (messageId <= 0) {

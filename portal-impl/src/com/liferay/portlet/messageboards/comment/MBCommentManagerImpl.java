@@ -14,19 +14,32 @@
 
 package com.liferay.portlet.messageboards.comment;
 
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
+import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.portlet.ratings.model.RatingsStats;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -120,6 +133,50 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		return _mbMessageLocalService.getDiscussionMessagesCount(
 			classNameId, classPK, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public Discussion getDiscussion(
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		MBMessageDisplay messageDisplay =
+			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+				userId, groupId, className, classPK,
+				WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
+
+		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
+
+		List<MBMessage> messages = treeWalker.getMessages();
+
+		List<RatingsEntry> ratingsEntries = Collections.emptyList();
+		List<RatingsStats> ratingsStats = Collections.emptyList();
+
+		if (messages.size() > 1) {
+			List<Long> classPKs = new ArrayList<>();
+
+			for (MBMessage curMessage : messages) {
+				if (!curMessage.isRoot()) {
+					classPKs.add(curMessage.getMessageId());
+				}
+			}
+
+			ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(
+				userId, CommentConstants.getDiscussionClassName(), classPKs);
+
+			ratingsStats = RatingsStatsLocalServiceUtil.getStats(
+				CommentConstants.getDiscussionClassName(), classPKs);
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		Comment rootComment = new MBCommentImpl(
+			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats,
+			themeDisplay.getPathThemeImages());
+
+		return new MBDiscussionImpl(
+			rootComment, messageDisplay.isDiscussionMaxComments());
 	}
 
 	public void setMBMessageLocalService(

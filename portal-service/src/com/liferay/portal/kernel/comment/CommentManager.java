@@ -46,4 +46,9 @@ public interface CommentManager {
 
 	public int getCommentsCount(String className, long classPK);
 
+	public Discussion getDiscussion(
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 }

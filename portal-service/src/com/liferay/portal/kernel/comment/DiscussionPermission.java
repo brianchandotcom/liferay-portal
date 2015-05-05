@@ -12,19 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.kernel.comment.context;
+package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Adolfo Pérez
  */
-public interface CommentSectionDisplayContext {
+public interface DiscussionPermission {
 
-	public boolean isControlsVisible() throws PortalException;
+	public boolean hasAddPermission(
+			long companyId, long groupId, String className, long classPK,
+			long userId)
+		throws PortalException;
 
-	public boolean isDiscussionVisible() throws PortalException;
+	public boolean hasDeletePermission(
+			long companyId, long groupId, String className, long classPK,
+			long commentId, long userId)
+		throws PortalException;
 
-	public boolean isMessageThreadVisible() throws PortalException;
+	public boolean hasUpdatePermission(
+			long companyId, long groupId, String className, long classPK,
+			long commentId, long userId)
+		throws PortalException;
+
+	public boolean hasViewPermission(
+			long companyId, long groupId, String className, long classPK,
+			long userId)
+		throws PortalException;
 
 }

@@ -16,19 +16,18 @@ package com.liferay.portlet.messageboards.comment.context;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.messageboards.comment.MBCommentImpl;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Locale;
@@ -40,11 +39,13 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	public MBCommentTreeDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionRequestHelper discussionRequestHelper, Comment comment) {
+		DiscussionRequestHelper discussionRequestHelper,
+		DiscussionPermission discussionPermission, Comment comment) {
 
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionRequestHelper = discussionRequestHelper;
-		_message = ((MBCommentImpl)comment).getMessage();
+		_discussionPermission = discussionPermission;
+		_comment = comment;
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 				_discussionRequestHelper.getScopeGroupId(),
 				CommentConstants.getDiscussionClassName())) {
 
-			if (_message.isPending()) {
+			if (isCommentPending()) {
 				publishButtonLabel = "save";
 			}
 			else {
@@ -77,24 +78,22 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		}
 
 		return !TrashUtil.isInTrash(
-			_message.getClassName(), _message.getClassPK());
+			_comment.getModelClassName(), _comment.getCommentId());
 	}
 
 	@Override
 	public boolean isDeleteActionControlVisible() throws PortalException {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+		return _discussionPermission.hasDeletePermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_message.getMessageId(), _message.getUserId(),
-			ActionKeys.DELETE_DISCUSSION);
+			_comment.getCommentId(), _comment.getUserId());
 	}
 
 	@Override
-	public boolean isDiscussionVisible() {
-		if (!_message.isApproved() && !isCommentAuthor() && !isGroupAdmin()) {
+	public boolean isDiscussionVisible() throws PortalException {
+		if (!isCommentApproved() && !isCommentAuthor() && !isGroupAdmin()) {
 			return false;
 		}
 
@@ -103,14 +102,12 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 
 	@Override
 	public boolean isEditActionControlVisible() throws PortalException {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+		return _discussionPermission.hasUpdatePermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_message.getMessageId(), _message.getUserId(),
-			ActionKeys.UPDATE_DISCUSSION);
+			_comment.getCommentId(), _comment.getUserId());
 	}
 
 	@Override
@@ -129,23 +126,22 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		}
 
 		return !TrashUtil.isInTrash(
-			_message.getClassName(), _message.getClassPK());
+			_comment.getModelClassName(), _comment.getCommentId());
 	}
 
 	@Override
-	public boolean isReplyActionControlVisible() {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+	public boolean isReplyActionControlVisible() throws PortalException {
+		return _discussionPermission.hasAddPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId(), ActionKeys.ADD_DISCUSSION);
+			_discussionTaglibHelper.getUserId());
 	}
 
 	@Override
 	public boolean isWorkflowStatusVisible() {
-		if ((_message != null) && !_message.isApproved()) {
+		if ((_comment != null) && !isCommentApproved()) {
 			return true;
 		}
 
@@ -159,36 +155,73 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 	}
 
 	protected boolean hasUpdatePermission() throws PortalException {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+		return _discussionPermission.hasUpdatePermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_message.getMessageId(), _message.getUserId(),
-			ActionKeys.UPDATE_DISCUSSION);
+			_comment.getCommentId(), _comment.getUserId());
 	}
 
-	protected boolean hasViewPermission() {
-		return MBDiscussionPermission.contains(
-			_discussionRequestHelper.getPermissionChecker(),
+	protected boolean hasViewPermission() throws PortalException {
+		return _discussionPermission.hasViewPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId(), ActionKeys.VIEW);
+			_discussionTaglibHelper.getUserId());
+	}
+
+	protected boolean isCommentApproved() {
+		boolean approved = true;
+
+		if (_comment instanceof WorkflowableComment) {
+			WorkflowableComment workflowableComment =
+				(WorkflowableComment)_comment;
+
+			if (workflowableComment.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				approved = true;
+			}
+			else {
+				approved = false;
+			}
+		}
+
+		return approved;
 	}
 
 	protected boolean isCommentAuthor() {
 		User user = getUser();
 
-		if ((_message.getUserId() == user.getUserId()) &&
+		if ((_comment.getUserId() == user.getUserId()) &&
 			!user.isDefaultUser()) {
 
 			return true;
 		}
 
 		return false;
+	}
+
+	protected boolean isCommentPending() {
+		boolean pending = false;
+
+		if (_comment instanceof WorkflowableComment) {
+			WorkflowableComment workflowableComment =
+				(WorkflowableComment)_comment;
+
+			if (workflowableComment.getStatus() ==
+					WorkflowConstants.STATUS_PENDING) {
+
+				pending = true;
+			}
+			else {
+				pending = false;
+			}
+		}
+
+		return pending;
 	}
 
 	protected boolean isGroupAdmin() {
@@ -199,8 +232,9 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 			_discussionRequestHelper.getScopeGroupId());
 	}
 
+	private final Comment _comment;
+	private final DiscussionPermission _discussionPermission;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;
-	private final MBMessage _message;
 
 }

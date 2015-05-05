@@ -72,6 +72,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -85,9 +87,11 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -204,6 +208,29 @@ public class SitesAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	public void editGroupAssignments(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		UserServiceUtil.unsetGroupUsers(groupId, removeUserIds, serviceContext);
+
+		LiveUsers.leaveGroup(
+			themeDisplay.getCompanyId(), groupId, removeUserIds);
+	}
+
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -218,6 +245,21 @@ public class SitesAdminPortlet extends MVCPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
+	}
+
+	protected long[] filterRemoveUserIds(long groupId, long[] userIds)
+		throws Exception {
+
+		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
+
+		for (long userId : userIds) {
+			if (UserLocalServiceUtil.hasGroupUser(groupId, userId)) {
+				filteredUserIds.add(userId);
+			}
+		}
+
+		return ArrayUtil.toArray(
+			filteredUserIds.toArray(new Long[filteredUserIds.size()]));
 	}
 
 	protected Group getLiveGroup(PortletRequest portletRequest)

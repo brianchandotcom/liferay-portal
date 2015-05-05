@@ -69,7 +69,7 @@ public class PanelCategoryRegistry {
 		_childPanelCategoriesServiceTrackerMap =
 			ServiceTrackerMapFactory.multiValueMap(
 				bundleContext, PanelCategory.class, "(panel.category.key=*)",
-				PanelCategoryServiceReferenceMapper.<PanelCategory>create());
+				new PanelCategoryServiceReferenceMapper());
 
 		_childPanelCategoriesServiceTrackerMap.open();
 

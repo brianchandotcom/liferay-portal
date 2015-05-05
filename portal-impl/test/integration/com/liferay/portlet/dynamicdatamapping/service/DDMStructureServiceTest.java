@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
@@ -39,7 +37,6 @@ import com.liferay.portlet.dynamicdatamapping.util.comparator.StructureIdCompara
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,11 +53,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() {
-		_CLASS_NAME_ID = PortalUtil.getClassNameId(DDLRecordSet.class);
-	}
 
 	@Test
 	public void testAddStructureMissingRequiredElementAttribute()
@@ -426,6 +418,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
-	private static long _CLASS_NAME_ID;
+	private static final long _CLASS_NAME_ID = RandomTestUtil.randomLong();
 
 }

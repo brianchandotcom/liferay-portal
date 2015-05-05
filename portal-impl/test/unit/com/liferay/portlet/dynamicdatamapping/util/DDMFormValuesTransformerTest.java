@@ -161,7 +161,9 @@ public class DDMFormValuesTransformerTest extends BaseDDMTestCase {
 		}
 
 		@Override
-		public void transform(Value value) {
+		public void transform(DDMFormFieldValue ddmFormFieldValue) {
+			Value value = ddmFormFieldValue.getValue();
+
 			for (Locale locale : value.getAvailableLocales()) {
 				value.addString(
 					locale, _prefix.concat(value.getString(locale)));

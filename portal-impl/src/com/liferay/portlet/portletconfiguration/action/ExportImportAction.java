@@ -45,7 +45,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 import com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction;
 
@@ -175,8 +174,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 					(e instanceof NoSuchLayoutException) ||
 					(e instanceof PortletIdException) ||
 					(e instanceof PrincipalException) ||
-					(e instanceof StructureDuplicateStructureKeyException) ||
-					(e instanceof RecordSetDuplicateRecordSetKeyException)) {
+					(e instanceof StructureDuplicateStructureKeyException)) {
 
 					SessionErrors.add(actionRequest, e.getClass());
 				}

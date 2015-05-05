@@ -489,7 +489,6 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void saveScreenshotAndSource() throws Exception {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -558,7 +557,6 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void setDefaultTimeout() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -655,7 +653,6 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void stopLogger() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

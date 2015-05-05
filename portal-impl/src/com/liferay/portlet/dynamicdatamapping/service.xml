@@ -94,7 +94,6 @@
 		<!-- Relationships -->
 
 		<column name="dlFileEntryTypes" type="Collection" entity="com.liferay.portlet.documentlibrary.DLFileEntryType" mapping-table="DLFileEntryTypes_DDMStructures" />
-		<column name="journalFolders" type="Collection" entity="com.liferay.portlet.journal.JournalFolder" mapping-table="JournalFolders_DDMStructures" />
 
 		<!-- Finder methods -->
 

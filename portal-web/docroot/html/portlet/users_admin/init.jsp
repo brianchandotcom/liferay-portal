@@ -59,6 +59,7 @@ page import="com.liferay.portlet.announcements.model.AnnouncementsDelivery" %><%
 page import="com.liferay.portlet.announcements.model.AnnouncementsEntryConstants" %><%@
 page import="com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl" %><%@
 page import="com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil" %><%@
+page import="com.liferay.portlet.rolesadmin.search.GroupRoleChecker" %><%@
 page import="com.liferay.portlet.rolesadmin.search.OrganizationRoleChecker" %><%@
 page import="com.liferay.portlet.rolesadmin.search.UserGroupRoleChecker" %><%@
 page import="com.liferay.portlet.rolesadmin.search.UserRoleChecker" %><%@

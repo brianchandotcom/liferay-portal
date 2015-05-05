@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.escape.WikiEscapeUtil;
 
 import java.util.Properties;
 
@@ -77,7 +77,7 @@ public class LiferayURLConstructor implements URLConstructor {
 		else if (context.equals(WikiContext.VIEW)) {
 			path =
 				"[$BEGIN_PAGE_TITLE$]" +
-					WikiUtil.escapeName(
+					WikiEscapeUtil.escapeName(
 						JSPWikiEngine.decodeJSPWikiName(name)) +
 						"[$END_PAGE_TITLE$]";
 		}

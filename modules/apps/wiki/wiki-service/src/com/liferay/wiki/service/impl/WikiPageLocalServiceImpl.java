@@ -97,6 +97,7 @@ import com.liferay.wiki.settings.WikiGroupServiceSettings;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
+import com.liferay.wiki.escape.WikiEscapeUtil;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
@@ -2525,7 +2526,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
 				page.getNodeId() + StringPool.SLASH +
-					HttpUtil.encodeURL(WikiUtil.escapeName(page.getTitle()));
+					HttpUtil.encodeURL(
+						WikiEscapeUtil.escapeName(page.getTitle()));
 		}
 		else {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(

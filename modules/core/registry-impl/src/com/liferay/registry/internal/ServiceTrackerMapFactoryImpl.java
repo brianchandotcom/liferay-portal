@@ -394,6 +394,7 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		}
 
 		@Override
+		@SuppressWarnings({"rawtypes","unchecked"})
 		public void map(
 			org.osgi.framework.ServiceReference<S> serviceReference,
 			final Emitter<K> emitter) {

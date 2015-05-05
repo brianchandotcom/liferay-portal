@@ -1,0 +1,69 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+import com.liferay.portal.kernel.util.StringUtil;
+
+/**
+ * @author Hugo Huijser
+ */
+public class IfClauseIncorrectLineBreaks {
+
+	public void method() {
+		String test1 = "hello world";
+
+		if (test1.equals("hello world1") ||
+			test1.equals("hello world2") ||
+			test1.equals("hello world3") ||
+			test1.equals("hello world4") ||
+			test1.equals("hello world5") ||
+			test1.equals("hello world6")) {
+
+			return;
+		}
+
+		String test2 = "test";
+
+		if ((StringUtil.isLowerCase(test1) &&
+			 test1.equals(test2)) ||
+			StringUtil.isUpperCase(test2)) {
+
+			return;
+		}
+
+		if (StringUtil.isLowerCase(test1) &&
+			(test1.equals(test2) ||
+			 StringUtil.isUpperCase(test2))) {
+
+			return;
+		}
+
+		if ((test1 == null) || (test1.equals("hello world") &&
+			test2.equals("hello world"))) {
+
+			return;
+		}
+
+		int thisIsAnIntegerWithARatherLongName1 = 0;
+		int thisIsAnIntegerWithARatherLongName2 = 0;
+
+		if ((thisIsAnIntegerWithARatherLongName1 ==
+				thisIsAnIntegerWithARatherLongName2) && test1.equals(test2)) {
+
+			return;
+		}
+	}
+
+}

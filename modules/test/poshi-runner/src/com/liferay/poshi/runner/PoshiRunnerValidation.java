@@ -41,8 +41,6 @@ public class PoshiRunnerValidation {
 	}
 
 	public static void validate() throws Exception {
-		_validateTestName();
-
 		String[] filePathsArray = PoshiRunnerContext.getFilePathsArray();
 
 		for (String filePath : filePathsArray) {
@@ -82,6 +80,12 @@ public class PoshiRunnerValidation {
 				_validateTestCaseFile(element, filePath);
 			}
 		}
+	}
+
+	public static void validate(String testName) throws Exception {
+		_validateTestName(testName);
+
+		validate();
 	}
 
 	private static void _parseElements(Element element, String filePath)
@@ -797,9 +801,7 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	private static void _validateTestName() throws Exception {
-		String testName = PropsValues.TEST_NAME;
-
+	private static void _validateTestName(String testName) throws Exception {
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(testName);
 

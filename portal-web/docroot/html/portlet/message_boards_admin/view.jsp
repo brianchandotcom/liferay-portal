@@ -256,10 +256,10 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							>
 								<c:choose>
 									<c:when test="<%= MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()) %>">
-										<liferay-ui:message escapeAttribute="<%= true %>" key="resolved" />
+										<liferay-ui:message escape="<%= true %>" key="resolved" />
 									</c:when>
 									<c:when test="<%= thread.isQuestion() %>">
-										<liferay-ui:message escapeAttribute="<%= true %>" key="waiting-for-an-answer" />
+										<liferay-ui:message escape="<%= true %>" key="waiting-for-an-answer" />
 									</c:when>
 								</c:choose>
 							</liferay-ui:search-container-column-text>

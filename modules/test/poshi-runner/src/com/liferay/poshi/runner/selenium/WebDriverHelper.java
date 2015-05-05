@@ -43,8 +43,10 @@ import org.openqa.selenium.support.ui.Select;
  */
 public class WebDriverHelper {
 
-	public void addSelection(String locator, String optionLocator) {
-		Select select = new Select(getWebElement(locator));
+	public static void addSelection(
+		WebDriver webDriver, String locator, String optionLocator) {
+
+		Select select = new Select(getWebElement(webDriver, locator));
 
 		if (optionLocator.startsWith("index=")) {
 			select.selectByIndex(

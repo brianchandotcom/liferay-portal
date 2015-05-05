@@ -158,18 +158,6 @@ public class BuildWSDDTask extends JavaExec {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _getAbsolutePath(String fileName) {
-		File file = new File(fileName);
-
-		if (!file.isAbsolute()) {
-			Project project = getProject();
-
-			file = new File(project.getProjectDir(), fileName);
-		}
-
-		return FileUtil.getAbsolutePath(file);
-	}
-
 	private final WSDDBuilderArgs _wsddBuilderArgs = new WSDDBuilderArgs();
 
 }

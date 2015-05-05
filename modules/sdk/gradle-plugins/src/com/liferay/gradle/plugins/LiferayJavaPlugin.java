@@ -19,6 +19,8 @@ import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
+import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
+import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
@@ -91,6 +93,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyConfigScripts(project);
 
+		configureTaskBuildWSDD(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
 
@@ -226,6 +229,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
+		GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WSDLBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, XSDBuilderPlugin.class);
@@ -431,6 +435,30 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 			buildCssTask.setTmpDir(tmpDir);
 		}
+	}
+
+	protected void configureTaskBuildWSDD(Project project) {
+		BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
+			project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
+
+		configureTaskBuildWSDDOutputDirName(buildWSDDTask);
+	}
+
+	protected void configureTaskBuildWSDDOutputDirName(
+		BuildWSDDTask buildWSDDTask) {
+
+		Project project = buildWSDDTask.getProject();
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
+
+		Set<File> srcDirs = javaSourceDirectorySet.getSrcDirs();
+
+		File outputDir = srcDirs.iterator().next();
+
+		buildWSDDTask.setOutputDirName(project.relativePath(outputDir));
 	}
 
 	protected void configureTaskBuildWSDL(Project project) {

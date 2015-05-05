@@ -17,6 +17,8 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
+import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
+import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
 import com.liferay.gradle.util.FileUtil;
@@ -194,6 +196,39 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		Project project = buildCssTask.getProject();
 
 		buildCssTask.setRootDirs(getWebAppDir(project));
+	}
+
+	@Override
+	protected void configureTaskBuildWSDD(Project project) {
+		super.configureTaskBuildWSDD(project);
+
+		BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
+			project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
+
+		configureTaskBuildWSDDInputFileName(buildWSDDTask);
+		configureTaskBuildWSDDServerConfigFileName(buildWSDDTask);
+	}
+
+	protected void configureTaskBuildWSDDInputFileName(
+		BuildWSDDTask buildWSDDTask) {
+
+		Project project = buildWSDDTask.getProject();
+
+		File inputFile = new File(getWebAppDir(project), "WEB-INF/service.xml");
+
+		buildWSDDTask.setInputFileName(project.relativePath(inputFile));
+	}
+
+	protected void configureTaskBuildWSDDServerConfigFileName(
+		BuildWSDDTask buildWSDDTask) {
+
+		Project project = buildWSDDTask.getProject();
+
+		File serverConfigFile = new File(
+			getWebAppDir(project), "WEB-INF/server-config.wsdd");
+
+		buildWSDDTask.setServerConfigFileName(
+			project.relativePath(serverConfigFile));
 	}
 
 	@Override

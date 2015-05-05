@@ -36,6 +36,8 @@ import java.util.Map;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
+
 import org.jamwiki.model.WikiUser;
 import org.jamwiki.parser.ParserException;
 import org.jamwiki.parser.ParserInput;
@@ -51,11 +53,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = WikiEngine.class)
 public class MediaWikiEngine extends BaseInputEditorWikiEngine {
-
-	public MediaWikiEngine() {
-		super(
-			"/help_page.jsp", "http://www.mediawiki.org/wiki/Help:Formatting");
-	}
 
 	@Override
 	public String convert(
@@ -76,6 +73,11 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 	@Override
 	public String getFormat() {
 		return "mediawiki";
+	}
+
+	@Override
+	public String getHelpURL() {
+		return "http://www.mediawiki.org/wiki/Help:Formatting";
 	}
 
 	@Override
@@ -129,6 +131,11 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		Class<?> clazz = getClass();
 
 		return clazz.getClassLoader();
+	}
+
+	@Override
+	protected ServletContext getHelpPageServletContext() {
+		return _servletContext;
 	}
 
 	protected ParserInput getParserInput(long nodeId, String topicName) {
@@ -250,6 +257,13 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		return content;
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.mediawiki)"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Reference
 	protected void setWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
@@ -263,6 +277,7 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		_wikiGroupServiceConfiguration = null;
 	}
 
+	private ServletContext _servletContext;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

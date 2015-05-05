@@ -24,7 +24,10 @@ import java.util.Map;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -54,5 +57,19 @@ public class TextEngine extends BaseWikiEngine {
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page) {
 		return Collections.emptyMap();
 	}
+
+	@Override
+	protected ServletContext getEditPageServletContext() {
+		return _servletContext;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.text)"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
+	private ServletContext _servletContext;
 
 }

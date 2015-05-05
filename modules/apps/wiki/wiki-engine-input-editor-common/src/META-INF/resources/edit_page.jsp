@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/wiki_engine_input_editor_common/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 BaseInputEditorWikiEngine baseInputEditorWikiEngine = BaseInputEditorWikiEngine.getBaseInputEditorWikiEngine(request);
@@ -38,7 +38,7 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 <div>
 	<aui:row>
 		<aui:col id="wikiEditorContainer" width="<%= baseInputEditorWikiEngine.isSyntaxHelpVisible(pageContext) ? 70 : 100 %>">
-			<%@ include file="/wiki_engine_input_editor_common/editor_config.jspf" %>
+			<%@ include file="/editor_config.jspf" %>
 
 			<liferay-ui:input-editor
 				configParams="<%= configParams %>"
@@ -58,7 +58,9 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 					<liferay-ui:message key="syntax-help" />
 				</h3>
 
-				<liferay-util:include page="<%= baseInputEditorWikiEngine.getHelpPage() %>" servletContext="<%= application %>" />
+				<%
+				baseInputEditorWikiEngine.renderHelpPage(pageContext);
+				%>
 
 				<aui:a href="<%= baseInputEditorWikiEngine.getHelpURL() %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
 			</aui:col>

@@ -275,8 +275,6 @@ if (Validator.isNull(redirect)) {
 			<div>
 
 				<%
-				request.setAttribute("edit_page.jsp-wikiPage", wikiPage);
-
 				WikiUtil.renderEditPageHTML(selectedFormat, pageContext, wikiPage);
 				%>
 

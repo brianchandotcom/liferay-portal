@@ -1,4 +1,21 @@
 <definition>
+	<command name="configurationCP">
+		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="Click" locator1="Icon#COG" />
+		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+	</command>
+
+	<command name="configureDisplaySettingsPG">
+		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+
+		<for list="${uncheckSetting}" param="SettingName">
+			<execute function="Uncheck" locator1="Checkbox#${SettingName}" />
+		</for>
+
+		<execute function="Click" locator1="Button#SAVE" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="configureSharingAllowUsersToAddWikiToAnyWebsite">
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertClick" locator1="BasePortletConfiguration#NAVIGATION_SHARING" value1="Sharing" />
@@ -42,6 +59,18 @@
 		<execute function="AssertTextEquals" locator1="CPWiki#WIKI_NODE_MENULIST_SUBSCRIBE" value1="Subscribe" />
 	</command>
 
+	<command name="viewConfigurationTabs">
+		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+
+		<for list="${isPresent}" param="isPresent">
+			<execute function="AssertElementPresent" locator1="Configuration#${isPresent}" />
+		</for>
+
+		<for list="${isNotPresent}" param="isNotPresent">
+			<execute function="AssertElementNotPresent" locator1="Configuration#${isNotPresent}" />
+		</for>
+	</command>
+
 	<command name="viewConfigureSharingAllowUsersToAddWikiToAnyWebsite">
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertClick" locator1="BasePortletConfiguration#NAVIGATION_SHARING" value1="Sharing" />
@@ -57,6 +86,14 @@
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewDisplaySettingsPG">
+		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+
+		<for list="${uncheckedSetting}" param="SettingName">
+			<execute function="AssertNotChecked" locator1="Checkbox#${SettingName}" />
+		</for>
 	</command>
 
 	<command name="viewNoPermissionCP">

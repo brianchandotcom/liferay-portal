@@ -8,6 +8,52 @@
 <tr><td rowspan="1" colspan="3">Configuration</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_SETUP</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PERMISSIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SHARING</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_EMAIL_FROM</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Email From')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PAGE_ADDED_EMAIL</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Page Added Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PAGE_UPDATED_EMAIL</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Page Updated Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SETUP-->
 <tr>
 	<td>ARCHIVE_RESTORE</td>
@@ -17,11 +63,20 @@
 <tr>
 	<td>MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
 	<td>//select[contains(@id,'pageDelta')]</td>
-	<td></td>
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_SELECT</td>
 	<td>//div[@class='select-asset-selector']/div/a[@title='Select']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_DISPLAY_SETTINGS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Display Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_RSS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 </tbody>

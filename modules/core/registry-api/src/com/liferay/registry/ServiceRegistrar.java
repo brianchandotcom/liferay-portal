@@ -30,7 +30,20 @@ public class ServiceRegistrar<T> {
 	}
 
 	public void destroy() {
-		for (ServiceRegistration serviceRegistration : _serviceRegistrations) {
+		destroy(null);
+	}
+
+	public void destroy(ServiceFinalizer<T> serviceFinalizer) {
+		for (ServiceRegistration<T> serviceRegistration :
+				_serviceRegistrations) {
+
+			if (serviceFinalizer != null) {
+				T service = _registry.getService(
+					serviceRegistration.getServiceReference());
+
+				serviceFinalizer.finalize(service);
+			}
+
 			serviceRegistration.unregister();
 		}
 

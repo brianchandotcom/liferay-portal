@@ -287,8 +287,14 @@
 				min-height: 35px;
 			}
 
-			.document-type-selector .btn {
-				white-space: normal;
+			.document-type-selector .btn-group {
+				max-width: 100%;
+
+				.btn {
+					max-width: 100%;
+					overflow: hidden;
+					white-space: normal;
+				}
 			}
 		}
 
@@ -543,6 +549,11 @@
 	.portlet-document-library, .portlet-document-library-display {
 		.audio-node {
 			height: 28px;
+		}
+
+		.common-file-metadata-container fieldset {
+			display: table-cell;
+			overflow: hidden;
 		}
 	}
 }

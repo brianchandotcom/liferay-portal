@@ -13,6 +13,46 @@
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'portlet_configuration')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COPY_STRUCTURE</td>
+	<td>//iframe[contains(@id,'copyStructure_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DDL</td>
+	<td>//iframe[contains(@src,'dynamic_data_mapping')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_ASSET</td>
+	<td>//iframe[contains(@id,'editAsset_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CONTENT</td>
+	<td>//iframe[contains(@id,'selectContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER</td>
+	<td>//iframe[contains(@id,'selectFolder_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_SITES</td>
+	<td>//iframe[contains(@src,'selectSite')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATES</td>
+	<td>//iframe[contains(@src,'scopeTitle=Templates')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

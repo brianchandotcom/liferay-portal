@@ -249,6 +249,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOOK_AND_FEEL</td>
+	<td>//a[@role='menuitem' and contains(.,'Look and Feel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td></td>
@@ -289,8 +294,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MAXIMIZE</td>
+	<td>//a[@role='menuitem' and contains(.,'Maximize')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METADATA_SETS</td>
 	<td>//a[@role='menuitem' and contains(.,'Metadata Sets')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIMIZE</td>
+	<td>//a[@role='menuitem' and contains(.,'Minimize')]</td>
 	<td></td>
 </tr>
 <tr>

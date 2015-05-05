@@ -29,8 +29,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE</td>
+	<td>//li[@class='asset-links-list-item']//i</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RELATED_ASSETS_SELECT_MENULIST_ASSET</td>
 	<td>//a[@data-title='Select ${key_assetType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TITLE</td>
+	<td>//li[@class='asset-links-list-item']//a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_CONTENT</td>
+	<td>//div[@class='asset-content']</td>
 	<td></td>
 </tr>
 <!--This is temporary. After path restructure, the ideal solution is to make the path variable more generic.-->
@@ -142,6 +157,42 @@
 <tr>
 	<td>KB_ASSET_TABLE_ACTION</td>
 	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[6]/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_TABLE-->
+<tr>
+	<td>ASSET_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'Title')]/preceding-sibling::th) + 1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'Description')]/preceding-sibling::th) + 1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_USER_NAME</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'User Name')]/preceding-sibling::th) + 1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'Modified Date')]/preceding-sibling::th) + 1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_SITE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[count(//th[contains(.,'Site')]/preceding-sibling::th) + 1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_CHOOSE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td/button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

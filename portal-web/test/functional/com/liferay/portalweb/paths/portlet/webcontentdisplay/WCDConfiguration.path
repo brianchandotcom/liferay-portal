@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>WCDConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WCDConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTING_CHECKBOX</td>
+	<td>//div[contains(@class,'form-group')]/label[contains(.,'${key_configurationSetting}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_FILE_TYPES_SELECT</td>
+	<td>//select[contains(@id,'currentExtensions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVAILABLE_FILE_TYPES_SELECT</td>
+	<td>//select[contains(@id,'availableExtensions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVAILABLE_FILE_TYPES_PRESENT</td>
+	<td>//select[contains(@id,'availableExtensions')]/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_SETUP</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PERMISSIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SHARING</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SCOPE</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WEB_CONTENT_TABLE-->
+<tr>
+	<td>WEB_CONTENT_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TABLE_USER_NAME</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TABLE_SITE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td/button</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

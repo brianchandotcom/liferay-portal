@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>APAsset</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">APAsset</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TITLE</td>
+	<td>//h4[@class='asset-title']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_CONVERSION-->
+<tr>
+	<td>DOCUMENT_CONVERSION_DOC</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'DOC')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_DOC_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'DOC')]/../img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_ODT</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'ODT')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_ODT_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'ODT')]/../img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_PDF</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'PDF')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_PDF_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'PDF')]/../img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_RTF</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'RTF')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_RTF_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'RTF')]/../img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_SXW</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'SXW')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_SXW_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'SXW')]/../img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_TXT</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'TXT')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_TXT_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'TXT')]/../img</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

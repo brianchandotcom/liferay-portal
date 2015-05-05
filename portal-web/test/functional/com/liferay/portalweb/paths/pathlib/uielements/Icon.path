@@ -49,6 +49,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FLAG</td>
+	<td>//div[contains(@class,'asset-actions')]/div[@title='Flag']/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GOOGLE_PLUS</td>
+	<td>//span[@class='social-bookmark']//span[contains(.,'Google+')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZED_FLAG</td>
 	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
 	<td></td>
@@ -56,6 +66,16 @@
 <tr>
 	<td>PREVIEW</td>
 	<td>//a[contains(@id,'previewPanel') and i[contains(@class,'icon-desktop')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRINT</td>
+	<td>//span/a[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TWITTER</td>
+	<td>//span[@class='social-bookmark']//span[contains(.,'Twitter')]</td>
 	<td></td>
 </tr>
 </tbody>

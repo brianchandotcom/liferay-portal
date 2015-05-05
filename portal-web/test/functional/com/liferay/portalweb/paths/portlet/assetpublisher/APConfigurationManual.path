@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>APConfigurationManual</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">APConfigurationManual</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT</td>
+	<td>//span[contains(.,'Asset Entries')]/../..//a[@title='Select']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM</td>
+	<td>//li[@class='asset-selector']//span[contains(.,'${key_assetEntryType}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

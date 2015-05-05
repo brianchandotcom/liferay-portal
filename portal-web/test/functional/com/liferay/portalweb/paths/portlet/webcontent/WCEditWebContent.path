@@ -9,13 +9,23 @@
 </thead>
 <tbody>
 <tr>
+	<td>ARTICLE_ID</td>
+	<td>//span[@class='workflow-id']/span[@class='workflow-value']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STATUS_LABEL</td>
 	<td>//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECTED_STRUCTURE</td>
-	<td>//span[@id='_15_structureNameLabel']</td>
+	<td>//span[contains(@id,'structureNameLabel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_STRUCTURE_LINK</td>
+	<td>//a[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -24,13 +34,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NONE_TEMPLATE</td>
+	<td>//span[contains(.,'None')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTED_TEMPLATE</td>
-	<td>//span[@id='_15_templateNameLabel']</td>
+	<td>//span[contains(@id,'templateNameLabel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_TEMPLATE</td>
+	<td>//a[contains(@id,'editDDMTemplate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_TEMPLATE</td>
 	<td>xpath=(//a[contains(.,'Select')]/span)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_LANGUAGE</td>
+	<td>//span[contains(@class,'locale-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_DEFAULT_LANGUAGE</td>
+	<td>//a[contains(@class,'change') and contains(@class,'locale')]</td>
 	<td></td>
 </tr>
 <tr>

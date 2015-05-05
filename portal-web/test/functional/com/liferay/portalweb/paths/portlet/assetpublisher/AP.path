@@ -1,0 +1,327 @@
+<html>
+<head>
+<title>AP</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AP</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_DROPDOWN</td>
+	<td>//div[contains(@class,'add-asset-selector') and contains(@class,'lfr-meta-actions')]//ul/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_DROPDOWN_SITE_NAME</td>
+	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//span[contains(.,'Add New in ${key_siteName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_DROPDOWN_CHILD_SITENAME</td>
+	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//span[contains(.,'Add New in ${key_childSiteName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_DROPDOWN_IN_SCOPED_SITE</td>
+	<td>//div[contains(@class,'lfr-meta-actions') and contains(@class,'add-asset-selector')]//span[contains(.,'Add New in ${key_siteScope}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BLOGS_ENTRY_BUTTON</td>
+	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Blogs Entry']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BASIC_WEB_CONTENT_BUTTON</td>
+	<td>//ul[@aria-label='Asset Publisher']/li/a[@title='Add Basic Web Content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_LINK</td>
+	<td>//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher_web_portlet_AssetPublisherPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORIES_FILTER-->
+<tr>
+	<td>CATEGORIES_FILTER_CATEGORY</td>
+	<td>//div[contains(@class,'portlet-asset-publisher')]//div[@class='portlet-body']//span[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_NEW-->
+<tr>
+	<td>ADD_NEW_BLOGS_ENTRY</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Blogs Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_BOOKMARKS_ENTRY</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Bookmarks Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_CALENDAR_EVENT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Calendar Event')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_BASIC_DOCUMENT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Basic Document')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_CONTRACT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Contract')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_MARKETING_BANNER</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Marketing Banner')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_ONLINE_TRAINING</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Online Training')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_SALES_PRESENTATION</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Sales Presentation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_BASIC_WEB_CONTENT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Basic Web Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_2_BASIC_WEB_CONTENT</td>
+	<td>xpath=(//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Basic Web Content')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_CUSTOM_STRUCTURE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'${key_structureName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_ABSTRACT-->
+<tr>
+	<td>ASSET_ABSTRACT_TITLE</td>
+	<td>//section[@class='portlet']//h4[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_GENERIC_TITLE_1</td>
+	<td>//h4[@class='asset-title']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_GENERIC_TITLE_2</td>
+	<td>xPath=(//h4[@class='asset-title']/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_GENERIC_TITLE_3</td>
+	<td>xPath=(//h4[@class='asset-title']/a)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_EDIT</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[contains(.,'Edit')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_THUMBNAIL</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//div[@class='asset-resource-info']/div/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_DESCRIPTION</td>
+	<td>//div[contains(@class,'asset-abstract') and contains(.,'${key_assetTitle}')]//div[@class='asset-summary']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_DESCRIPTION_SMALL_IMAGE</td>
+	<td>//div[contains(.,'${key_assetTitle}')]//div[@class='asset-small-image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_VIEW</td>
+	<td>//h4[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_COMMENTS_BE_THE_FIRST</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/a[contains(.,'Be the first.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_COMMENTS_SUBCRIBE_TO_COMMENTS</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/span[@class='subscribe-link']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_GENERIC</td>
+	<td>//div[contains(@class,'asset-abstract')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_ABSTRACT_DETAIL-->
+<tr>
+	<td>ASSET_ABSTRACT_DETAIL_TITLE</td>
+	<td>//h3[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_DETAIL_CONTENT</td>
+	<td>//div[@class='asset-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_ORDER-->
+<tr>
+	<td>ASSET_ORDER_FIRST</td>
+	<td>//div[@class='portlet-body']/div[3]/h4/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ORDER_SECOND</td>
+	<td>//div[@class='portlet-body']/div[4]/h4/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ORDER_THIRD</td>
+	<td>//div[@class='portlet-body']/div[5]/h4/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_ABSTRACT_BOOKMARK-->
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_TABLE_DISPLAY_TEMPLATE_BOOKMARK_ICON</td>
+	<td>//h3/a[contains(.,'${key_bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_TITLE_LIST_DISPLAY_TEMPLATE_BOOKMARK_ICON</td>
+	<td>//a[contains(.,'${key_bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_ABSTRACT_BOOKMARK_DETAIL-->
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_DETAIL_NAME</td>
+	<td>//h3[contains(.,'${key_bookmarkName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK</td>
+	<td>//div/a[contains(@title,'(Opens New Window)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO</td>
+	<td>//img[@alt='Liferay']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--METADATA-->
+<tr>
+	<td>METADATA_AUTHOR</td>
+	<td>//div[@class='asset-author']/div/span[contains(.,'${key_author}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_VOCABULARY</td>
+	<td>//span[contains(@class,'metadata-entry')]/span[contains(.,'${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_CATEGORY</td>
+	<td>//span[contains(@class,'metadata-categories')]/span/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_CREATE_DATE</td>
+	<td>//span[@class='metadata-entry metadata-create-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_EXPIRATION_DATE</td>
+	<td>//span[@class='metadata-entry metadata-expiration-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_MODIFIED_DATE</td>
+	<td>//span[@class='metadata-entry metadata-modified-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PRIORITY</td>
+	<td>//span[@class='metadata-entry metadata-priority']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PUBLISH_DATE</td>
+	<td>//span[@class='metadata-entry metadata-publish-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_TAGS</td>
+	<td>//span[contains(@class,'metadata-tags')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_VIEW_COUNT</td>
+	<td>//span[@class='metadata-entry metadata-view-count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

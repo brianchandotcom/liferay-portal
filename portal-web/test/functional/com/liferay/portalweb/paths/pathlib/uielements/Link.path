@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>READ_MORE</td>
+	<td>//a[contains(.,'Read More')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIBE</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Subscribe')]</td>
 	<td></td>

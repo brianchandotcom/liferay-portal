@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>WCDConfigurationScope</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WCDConfigurationScope</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_MENULIST</td>
+	<td>//a[contains(@id,'_menu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCOPE_MENULIST-->
+<tr>
+	<td>SCOPE_MENULIST_SELECTION</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_scopeSelection}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

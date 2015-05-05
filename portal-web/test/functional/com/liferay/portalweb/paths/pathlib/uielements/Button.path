@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_TAGS</td>
+	<td>//button[contains(.,'Add Tags')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_TEAM</td>
 	<td>//a[contains(.,'Add Team')]</td>
 	<td></td>
@@ -119,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_FILTER_APPLY</td>
+	<td>//tr[contains(.,'${key_fieldName}')]//button[contains(.,'Apply')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>I_AGREE</td>
 	<td>//button[contains(.,'I Agree')]</td>
 	<td></td>
@@ -141,6 +151,16 @@
 <tr>
 	<td>MOVE_THREAD</td>
 	<td>//button[contains(.,'Move Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_AVAILABLE_TO_CURRENT</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_TO_AVAILABLE</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
 	<td></td>
 </tr>
 <tr>
@@ -181,6 +201,11 @@
 <tr>
 	<td>PUBLISH</td>
 	<td>//button[contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_LOCALIZED</td>
+	<td>//button[contains(@id,'publishButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -239,8 +264,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_CATEGORIES</td>
+	<td>//button[contains(.,'Select Categories')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_SCOPE</td>
 	<td>//div[contains (@class,'btn-group')]/a[@title='Default']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_WEB_CONTENT</td>
+	<td>//button[contains(.,'Select Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -276,6 +311,11 @@
 <tr>
 	<td>VIEW_HISTORY</td>
 	<td>//button[contains(.,'View History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_CHOOSE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td/button</td>
 	<td></td>
 </tr>
 </tbody>

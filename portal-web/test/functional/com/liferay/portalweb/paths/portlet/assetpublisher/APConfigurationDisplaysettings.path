@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>APConfigurationDisplaysettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">APConfigurationDisplaysettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_TEMPLATE_SELECT</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ABSTRACT_LENGTH_SELECT</td>
+	<td>//select[contains(@id,'abstractLength')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_LINK_BEHAVIOR_SELECT</td>
+	<td>//select[contains(@id,'assetLinkBehavior')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_OF_ITEMS_TO_DISPLAY_FIELD</td>
+	<td>//input[contains(@id,'delta')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_TYPE_SELECT</td>
+	<td>//select[contains(@id,'paginationType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SHOW_METADATA-->
+<tr>
+	<td>SHOW_METADATA_CURRENT_FIELD_SELECT</td>
+	<td>//select[contains(@id,'currentMetadataFields')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_METADATA_AVAILABLE_FIELD_SELECT</td>
+	<td>//select[contains(@id,'availableMetadataFields')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

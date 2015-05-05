@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>APConfigurationFilterbyfield</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">APConfigurationFilterbyfield</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BY_FIELD_IFRAME</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'select_structure_field')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_FILTER_RADIO_BUTTON</td>
+	<td>//tr[contains(.,'${key_fieldName}')]/td/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_FILTER_FIELD_NAME</td>
+	<td>//td//label[contains(.,'${key_fieldName}')] | //td//span[contains(.,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

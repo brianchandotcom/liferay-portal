@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CUSTOMIZED_PAGE_INFO</td>
+	<td>//div[@class='page-customization-bar']/div[contains(@class,'page-customization-bar-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
@@ -64,8 +69,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CUSTOMIZED_PAGE_INFO</td>
-	<td>//div[@class='page-customization-bar']/div[contains(@class,'page-customization-bar-text')]</td>
+	<td>INFO_ARTICLE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NO_COMMENTS</td>
+	<td>//div[contains(.,'No comments yet')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,6 +106,11 @@
 <tr>
 	<td>SUCCESS_RECYCLE_BIN</td>
 	<td>//form[contains(@id,'undoForm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_UNAPPROVED</td>
+	<td>//div[@class='portlet-body']/div[contains(@class,'alert-block')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -29,13 +29,83 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_COMMENTS</td>
+	<td>//label[contains(.,'Enable Comments')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_COMMENT_RATINGS</td>
+	<td>//label[contains(.,'Enable Comment Ratings')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_DOC</td>
+	<td>//label[contains(.,'DOC')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_ODT</td>
+	<td>//label[contains(.,'ODT')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_PDF</td>
+	<td>//label[contains(.,'PDF')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_RTF</td>
+	<td>//label[contains(.,'RTF')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_SXW</td>
+	<td>//label[contains(.,'SXW')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_TXT</td>
+	<td>//label[contains(.,'TXT')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_FLAGS</td>
+	<td>//label[contains(.,'Enable Flags')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_PRINT</td>
+	<td>//label[contains(.,'Enable Print')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_PROPAGATION</td>
 	<td>//label[contains(.,'Enable propagation of changes')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_RATINGS</td>
+	<td>//label[contains(.,'Enable Ratings')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_RECYCLE_BIN</td>
 	<td>//label[contains(.,'Enable Recycle Bin')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RELATED_ASSETS</td>
+	<td>//label[contains(.,'Enable Related Assets')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_SOCIAL_BOOKMARKS</td>
+	<td>//label[contains(.,'Enable Social Bookmarks')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_VIEW_COUNT_INCREMENT</td>
+	<td>//label[contains(.,'Enable View Count Increment')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,6 +141,21 @@
 <tr>
 	<td>SELECT_ALL</td>
 	<td>//input[contains(@id,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE_CHECKBOX</td>
+	<td>//label[contains(.,'Set as the Default Asset Publisher for This Page')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_ADD_CONTENT_BUTTON</td>
+	<td>//label[contains(.,'Show Add Content Button')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_AVAILABLE_LOCALES</td>
+	<td>//label[contains(.,'Show Available Locales')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

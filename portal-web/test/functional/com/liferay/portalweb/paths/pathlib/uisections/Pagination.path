@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>PAGES</td>
+	<td>//div[@class='search-results' and contains(.,'Pages')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIRST_LINK</td>
 	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li/a[contains(.,'First')]</td>
 	<td></td>
@@ -29,6 +34,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_1</td>
+	<td>//div[@class='search-results']/a[contains(.,'1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_2</td>
+	<td>//div[@class='search-results']/a[contains(.,'2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARTICULAR_PAGE</td>
+	<td>//div[@class='lfr-pagination-page-selector']/div/a[contains(.,'Page ${key_pageNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_PAGE_SELECT</td>
 	<td>//div[contains(@class,'current-page-menu')]/a</td>
 	<td></td>
@@ -41,6 +61,16 @@
 <tr>
 	<td>FIVE_ITEMS_PER_PAGE</td>
 	<td>//a[contains(@id,'5')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VARIABLE_ITEMS_PER_PAGE</td>
+	<td>//div[@class='clearfix lfr-pagination']/div/div[contains(.,'${key_paginationNumber} Items per Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VARIABLE_TOTAL_ITEMS</td>
+	<td>//div[@class='clearfix lfr-pagination']/small[contains(.,'Showing ${key_pageMod} results.')]</td>
 	<td></td>
 </tr>
 </tbody>

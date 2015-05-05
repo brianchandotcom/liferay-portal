@@ -9,16 +9,12 @@
 </thead>
 <tbody>
 <tr>
-	<td>CONFIGURATION_IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_COMMUNICATION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Communication')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>NAVIGATION_SETUP</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
@@ -35,14 +31,44 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_SUBSCRIPTIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Subscriptions')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SUPPORTED_CLIENTS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Supported Clients')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SETUP-->
 <tr>
+	<td>ARCHIVE_RESTORE</td>
+	<td>//div[@class='archived-setups']/span/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
 	<td>//select[contains(@id,'pageDelta')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_SCOPE_MENULIST_GLOBAL</td>
+	<td>//a[@role='menuitem' and contains(.,'Global')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_SCOPE_MENULIST_OTHER_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Other Site...')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_SCOPE_SELECT</td>
+	<td>//div[@class='select-asset-selector']/div/a[@title='Select']/span</td>
 	<td></td>
 </tr>
 </tbody>

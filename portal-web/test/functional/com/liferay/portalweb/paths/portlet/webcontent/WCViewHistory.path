@@ -30,6 +30,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VERSIONS_TABLE_STATUS</td>
+	<td>//span[@class='workflow-status']/strong[contains(.,'${key_historyStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VERSIONS_TABLE_STATUS_EXPIRED</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'Expired')]</td>
 	<td></td>
@@ -42,6 +47,11 @@
 <tr>
 	<td>VERSIONS_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]/td/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_EXPIRE</td>
+	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Expire')]</td>
 	<td></td>
 </tr>
 </tbody>

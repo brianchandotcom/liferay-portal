@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>WCD</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WCD</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_WEB_CONTENT</td>
+	<td>//i[@class='icon-pencil']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_TEMPLATE</td>
+	<td>//i[@class='icon-edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_WEB_CONTENT</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select Web Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_WEB_CONTENT</td>
+	<td>//span[contains(@class,'lfr-icon-action-add')]/a | //div[contains(@class,'lfr-icon-action-add')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BASIC_WEB_CONTENT</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'Basic Web Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BASIC_WEB_CONTENT_LOCALIZED</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_localizedBasicWebContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_STRUCTURED_WEB_CONTENT</td>
+	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_structureName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS</td>
+	<td>//div[contains(@class,'asset-links')]//a[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_CONVERSION-->
+<tr>
+	<td>DOCUMENT_CONVERSION_TYPE</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'${key_fileType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONVERSION_TYPE_ICON</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'${key_fileType}')]/../i</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WEB_CONTENT-->
+<tr>
+	<td>WEB_CONTENT_CONTENT</td>
+	<td>//div[@class='journal-content-article']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_CONTENT_IMAGE</td>
+	<td>//div[@class='journal-content-article']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_LINK_TO_PAGE</td>
+	<td>//div[@class='journal-content-article']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_AUDIO</td>
+	<td>//div[@class='audio-content']/audio[@class='audio-node']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_MENU-->
+<tr>
+	<td>ADD_MENU_BASIC_WEB_CONTENT</td>
+	<td>//li[contains(@class,'lfr-icon-action')]/a[contains(.,'Basic Web Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENU_WEB_CONTENT_STRUCTURE</td>
+	<td>//li[contains(@class,'lfr-icon-action')]/a[contains(.,'${key_selectStructureName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

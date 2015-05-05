@@ -23,9 +23,9 @@ long backgroundTaskId = ParamUtil.getLong(request, "backgroundTaskId");
 
 BackgroundTask backgroundTask = BackgroundTaskLocalServiceUtil.fetchBackgroundTask(backgroundTaskId);
 
-String backgroundTaskStatusMessage = backgroundTask.getStatusMessage();
-
 int backgroundTaskStatus = backgroundTask.getStatus();
+
+String backgroundTaskStatusMessage = backgroundTask.getStatusMessage();
 %>
 
 <c:choose>
@@ -79,10 +79,10 @@ int backgroundTaskStatus = backgroundTask.getStatus();
 						</c:if>
 					</li>
 
-				<%
-					}
+			<%
 				}
-				%>
+			}
+			%>
 
 			</ul>
 	</c:otherwise>

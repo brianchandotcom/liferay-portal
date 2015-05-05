@@ -66,9 +66,9 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 	</div>
 
 	<%
-		BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId(), locale);
+	BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId(), locale);
 
-		request.setAttribute("backgroundTaskDisplay", backgroundTaskDisplay);
+	request.setAttribute("backgroundTaskDisplay", backgroundTaskDisplay);
 	%>
 
 	<liferay-util:include page="/html/portlet/background_task/background_task_details.jsp">

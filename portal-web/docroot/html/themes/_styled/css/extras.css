@@ -587,16 +587,6 @@ body:first-of-type {
 	}
 }
 
-.taglib-image-selector {
-	.glyphicon-ok {
-		border-radius: 30px;
-	}
-
-	.progress-wrapper .progressbar {
-		border-radius: 0;
-	}
-}
-
 /* ---------- Switches ---------- */
 
 input.switch {
@@ -611,56 +601,64 @@ input.switch {
 	}
 }
 
-/* -------- Cover image ---------- */
+/* -------- Image Selector ---------- */
 
-.taglib-image-selector, .item-selector-browser-container {
+.taglib-image-selector {
 	.glyphicon-ok {
 		@include transition(opacity 0.2s ease-in-out);
+
+		border-radius: 30px;
 	}
 
-	.drop-here-info {
+	.progress-wrapper .progressbar {
+		border-radius: 0;
+	}
+}
+
+/* -------- Drop Here Info ---------- */
+
+.drop-here-info {
+	@include transition(all 0.2s ease-in-out);
+
+	.drop-icons {
 		@include transition(all 0.2s ease-in-out);
 
-		.drop-icons {
-			@include transition(all 0.2s ease-in-out);
+		span {
+			@include transition(all 0.3s ease-in-out);
 
-			span {
-				@include transition(all 0.3s ease-in-out);
-
-				border-radius: 3px;
-			}
-
-			span:nth-of-type(1) {
-				@include transform(rotate(25deg));
-
-				box-shadow: 5px 4px 0 0 rgba(0, 0, 0, 0.08);
-			}
-
-			span:nth-of-type(2) {
-				@include transform(scale(0.8));
-
-				box-shadow: 0 6px 0 -2px rgba(0, 0, 0, 0.15);
-			}
-
-			span:nth-of-type(3) {
-				@include transform(rotate(-25deg));
-
-				box-shadow: -5px 4px 0 0 rgba(0, 0, 0, 0.08);
-			}
+			border-radius: 3px;
 		}
-	}
 
-	&.drop-active .drop-here-info {
 		span:nth-of-type(1) {
-			@include transform(rotate(-20deg));
+			@include transform(rotate(25deg));
+
+			box-shadow: 5px 4px 0 0 rgba(0, 0, 0, 0.08);
 		}
 
 		span:nth-of-type(2) {
-			@include transform(scale(1));
+			@include transform(scale(0.8));
+
+			box-shadow: 0 6px 0 -2px rgba(0, 0, 0, 0.15);
 		}
 
 		span:nth-of-type(3) {
-			@include transform(rotate(15deg));
+			@include transform(rotate(-25deg));
+
+			box-shadow: -5px 4px 0 0 rgba(0, 0, 0, 0.08);
 		}
+	}
+}
+
+.drop-active .drop-here-info {
+	span:nth-of-type(1) {
+		@include transform(rotate(-20deg));
+	}
+
+	span:nth-of-type(2) {
+		@include transform(scale(1));
+	}
+
+	span:nth-of-type(3) {
+		@include transform(rotate(15deg));
 	}
 }

@@ -25,5 +25,5 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 %>
 
 <div class="<%= cssClass %>">
-	<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+	<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
 </div>

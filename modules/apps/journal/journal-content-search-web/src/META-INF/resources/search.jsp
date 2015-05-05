@@ -117,7 +117,7 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 	%>
 
 		<div class="form-search">
-			<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+			<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
 		</div>
 
 		<div class="search-results">

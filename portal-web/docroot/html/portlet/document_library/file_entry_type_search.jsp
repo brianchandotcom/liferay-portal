@@ -17,5 +17,5 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <div class="form-search">
-	<liferay-ui:input-search placeholder='<%= LanguageUtil.get(locale, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-documents") %>' />
+	<liferay-ui:input-search placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-documents") %>' />
 </div>

@@ -30,8 +30,8 @@ String layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(targetLayout, themeDi
 
 <strong><liferay-ui:message key="page" />:</strong> <a href="<%= HtmlUtil.escapeHREF(layoutFriendlyURL) + "?layoutSetBranchId=" + layoutRevision.getLayoutSetBranchId() + "&layoutRevisionId=" + layoutRevision.getLayoutRevisionId() %>"><%= HtmlUtil.escape(targetLayout.getHTMLTitle(locale)) %></a><br />
 
-<strong><liferay-ui:message key="site-pages-variation" />:</strong> <%= LanguageUtil.get(locale, HtmlUtil.escape(layoutSetBranch.getName())) %><br />
+<strong><liferay-ui:message key="site-pages-variation" />:</strong> <%= LanguageUtil.get(request, HtmlUtil.escape(layoutSetBranch.getName())) %><br />
 
-<strong><liferay-ui:message key="page-variation" />:</strong> <%= LanguageUtil.get(locale, HtmlUtil.escape(layoutBranch.getName())) %><br />
+<strong><liferay-ui:message key="page-variation" />:</strong> <%= LanguageUtil.get(request, HtmlUtil.escape(layoutBranch.getName())) %><br />
 
 <strong><liferay-ui:message key="revision-id" />:</strong> <%= layoutRevision.getLayoutRevisionId() %>

@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Wiki Engine Input Editor Common
 Bundle-SymbolicName: com.liferay.wiki.engine.input.editor.common
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.wiki.engine.input.editor.common
 Include-Resource: classes
+Web-ContextPath: /wiki-engine-input-editor-common

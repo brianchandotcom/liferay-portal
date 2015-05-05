@@ -28,6 +28,56 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="ConfigurePortletDisplaySettings" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="WikiPortlet#viewConfigurationTabs">
+			<var name="isNotPresent" value="NAVIGATION_EMAIL_FROM, NAVIGATION_PAGE_ADDED_EMAIL, NAVIGATION_PAGE_UPDATED_EMAIL,SETUP_RSS" />
+			<var name="isPresent" value="SETUP_DISPLAY_SETTINGS" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPortlet#configurationCP" />
+
+		<execute macro="WikiPortlet#viewConfigurationTabs">
+			<var name="isNotPresent" value="SETUP_DISPLAY_SETTINGS" />
+			<var name="isPresent" value="NAVIGATION_EMAIL_FROM,NAVIGATION_PAGE_ADDED_EMAIL,NAVIGATION_PAGE_UPDATED_EMAIL,SETUP_RSS" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="WikiPortlet#configureDisplaySettings">
+			<var name="uncheckSetting" value="ENABLE_COMMENTS,ENABLE_COMMENTS_RATINGS,ENABLE_PAGE_RATINGS,ENABLE_RELATED_ASSETS" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="WikiPortlet#viewDisplaySettings">
+			<var name="uncheckedSetting" value="ENABLE_COMMENTS,ENABLE_COMMENTS_RATINGS,ENABLE_PAGE_RATINGS,ENABLE_RELATED_ASSETS" />
+		</execute>
+	</command>
+
 	<command name="SearchWikiCommentsAndAttachments" priority="4">
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiNodeName" value="Main" />

@@ -5,59 +5,51 @@ AUI.add(
 
 		var CSS_DROP_ACTIVE = 'drop-active';
 
-		var EVENT_FILE_SELECT = 'fileSelect';
+		var UPLOAD_ITEM_LINK_TPL = '<a href="{preview}" title="{title}"></a>';
 
-		var ItemBrowser = A.Component.create(
+		var ItemSelectorBrowser = A.Component.create(
 			{
 				ATTRS: {
-					browseImageId: {
-						validator: Lang.isString
-					},
-
-					inputFileId: {
-						validator: Lang.isString
-					},
-
-					itemViewerCloseCaption: {
+					closeCaption: {
 						validator: Lang.isString,
 						value: ''
-					},
-
-					itemViewerContainer: {
-						validator: Lang.isString
-					},
-
-					linkId: {
-						validator: Lang.isString
 					}
 				},
 
-				AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
+				AUGMENTS: [Liferay.PortletBase],
 
 				EXTENDS: A.Base,
 
-				NAME: 'itembrowser',
+				NAME: 'itemselectorbrowser',
 
 				prototype: {
 					initializer: function() {
 						var instance = this;
 
-						instance._bindUI();
-
 						instance._itemViewer = new A.LiferayItemViewer(
 							{
-								btnCloseCaption: instance.get('itemViewerCloseCaption'),
-								infoTemplate: '',
-								links: '#' + instance.ns(instance.get('linkId')),
+								btnCloseCaption: instance.get('closeCaption'),
+								links: instance.all('a.item-preview')
+							}
+						);
+
+						instance._uploadItemViewer = new A.LiferayItemViewer(
+							{
+								btnCloseCaption: instance.get('closeCaption'),
+								links: '',
 								renderControls: false
 							}
-						).render('#' + instance.ns(instance.get('itemViewerContainer')));
+						);
+
+						instance._bindUI();
+						instance._renderUI();
 					},
 
 					destructor: function() {
 						var instance = this;
 
 						instance._itemViewer.destroy();
+						instance._uploadItemViewer.destroy();
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
@@ -65,13 +57,10 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						var browseImageNode = instance._getNodeById(instance.get('browseImageId'));
-						var inputFileNode = instance._getNodeById(instance.get('inputFileId'));
+						var inputFileNode = instance.one('input[type="file"]');
 
 						instance._eventHandles = [
-							browseImageNode.on('click', A.bind(instance._onBrowseClick, instance)),
 							inputFileNode.on('change', A.bind(instance._onInputFileChanged, instance)),
-							instance.on(EVENT_FILE_SELECT, instance._onFileSelect, instance),
 							instance.rootNode.on('dragover', instance._ddEventHandler, instance),
 							instance.rootNode.on('dragleave', instance._ddEventHandler, instance),
 							instance.rootNode.on('drop', instance._ddEventHandler, instance)
@@ -87,96 +76,73 @@ AUI.add(
 						switch (event.type) {
 							case 'dragover':
 								instance.rootNode.addClass(CSS_DROP_ACTIVE);
-
 								break;
+
 							case 'dragleave':
 								instance.rootNode.removeClass(CSS_DROP_ACTIVE);
-
 								break;
+
 							case 'drop':
 								instance.rootNode.removeClass(CSS_DROP_ACTIVE);
-
-								var file = event._event.dataTransfer.files[0];
-
-								if (file) {
-									instance.fire(
-										EVENT_FILE_SELECT,
-										{
-											file: file
-										}
-									);
-								}
-
+								instance._previewFile(event._event.dataTransfer.files[0]);
 								break;
 						}
-					},
-
-					_getNodeById: function(id) {
-						var instance = this;
-
-						return AUI.$('#' + instance.ns(id));
-					},
-
-					_onBrowseClick: function() {
-						var instance = this;
-
-						var inputFileNode = instance._getNodeById(instance.get('inputFileId'));
-
-						inputFileNode.click();
-					},
-
-					_onFileSelect: function(evt) {
-						var instance = this;
-
-						var file = evt.file;
-
-						var reader = new FileReader();
-
-						reader.onload = function(event) {
-							var imageSrc = event.target.result;
-							var fileName = file.name;
-
-							var imageLinkNode = instance._getNodeById(instance.get('linkId'));
-
-							imageLinkNode.attr('href', imageSrc);
-							imageLinkNode.attr('title', fileName);
-
-							var imageInfoNode = imageLinkNode.siblings('.image-info');
-
-							imageInfoNode.find('#imageName').html(fileName);
-							imageInfoNode.find('#imageSize').html(instance.formatStorage(file.size));
-							imageInfoNode.find('#imageExtension').html(fileName.substring(fileName.lastIndexOf('.') + 1));
-
-							var itemViewer = instance._itemViewer;
-
-							itemViewer.set('links', '#' + instance.ns(instance.get('linkId')));
-
-							itemViewer.show();
-						};
-
-						reader.readAsDataURL(file);
 					},
 
 					_onInputFileChanged: function(event) {
 						var instance = this;
 
-						var file = event.target.files[0];
+						instance._previewFile(event.currentTarget.getDOMNode().files[0])
+					},
 
-						instance.fire(
-							EVENT_FILE_SELECT,
-							{
-								file: file
-							}
+					_previewFile: function(file) {
+						var instance = this;
+
+						if (A.config.win.FileReader) {
+							var reader = new FileReader();
+
+							reader.addEventListener(
+								'loadend',
+								function(event) {
+									instance._showFile(file, event.target.result);
+								}
+							);
+
+							reader.readAsDataURL(file);
+						}
+					},
+
+					_renderUI: function() {
+						var instance = this;
+
+						instance._itemViewer.render(instance.rootNode);
+						instance._uploadItemViewer.render(instance.rootNode);
+					},
+
+					_showFile: function(file, preview) {
+						var instance = this;
+
+						var linkNode = A.Node.create(
+							Lang.sub(
+								UPLOAD_ITEM_LINK_TPL,
+								{
+									title: file.name,
+									preview: preview
+								}
+							)
 						);
+
+						instance._uploadItemViewer.set('links', new A.NodeList(linkNode));
+						instance._uploadItemViewer.show();
 					}
 				}
 			}
 		);
 
-		Liferay.ItemBrowser = ItemBrowser;
+		Liferay.ItemSelectorBrowser = ItemSelectorBrowser;
 	},
 	'',
 	{
-		requires: ['liferay-item-viewer', 'liferay-portlet-base', 'liferay-storage-formatter']
+		requires: ['liferay-item-viewer', 'liferay-portlet-base']
 	}
 );

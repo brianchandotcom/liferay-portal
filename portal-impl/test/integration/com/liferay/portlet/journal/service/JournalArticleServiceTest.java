@@ -35,6 +35,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.RequiredTemplateException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
@@ -42,6 +43,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -161,6 +163,30 @@ public class JournalArticleServiceTest {
 			article.getDDMStructureKey());
 
 		checkArticleMatchesStructure(article, ddmStructure);
+	}
+
+	@Test
+	public void testDeleteTemplateReferencedByJournalArticles()
+		throws Exception {
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId());
+
+		JournalTestUtil.addArticleWithXMLContent(
+			_group.getGroupId(), "<title>Test Article</title>",
+			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
+
+		try {
+			DDMTemplateLocalServiceUtil.deleteTemplate(
+				ddmTemplate.getTemplateId());
+
+			Assert.fail();
+		}
+		catch (RequiredTemplateException rse) {
+		}
 	}
 
 	@Test

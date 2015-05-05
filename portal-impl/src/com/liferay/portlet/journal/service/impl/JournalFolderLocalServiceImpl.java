@@ -961,36 +961,6 @@ public class JournalFolderLocalServiceImpl
 		validateArticleDDMStructures(folderId, ddmStructureIds);
 	}
 
-	protected void deleteWorkflowDefinitionLink(JournalFolder folder) {
-		List<Long> ddmStructureIds = new ArrayList<>();
-
-		for (DDMStructure ddmStructure :
-				ddmStructureLocalService.getJournalFolderDDMStructures(
-					folder.getFolderId())) {
-
-			ddmStructureIds.add(ddmStructure.getStructureId());
-		}
-
-		if (ddmStructureIds.isEmpty()) {
-			ddmStructureIds.add(JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
-		}
-
-		for (long ddmStructureId : ddmStructureIds) {
-			WorkflowDefinitionLink workflowDefinitionLink =
-				workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
-					folder.getCompanyId(), folder.getGroupId(),
-					JournalFolder.class.getName(), folder.getFolderId(),
-					ddmStructureId);
-
-			if (workflowDefinitionLink == null) {
-				continue;
-			}
-
-			workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-				workflowDefinitionLink);
-		}
-	}
-
 	protected JournalFolder doUpdateFolder(
 			long userId, long folderId, long parentFolderId, String name,
 			String description, long[] ddmStructureIds, int restrictionType,

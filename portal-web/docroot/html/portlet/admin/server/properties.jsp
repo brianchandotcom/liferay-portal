@@ -34,7 +34,7 @@ serverURL.setParameter("tabs3", tabs3);
 />
 
 <div class="form-search">
-	<liferay-ui:input-search placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+	<liferay-ui:input-search placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
 </div>
 
 <%

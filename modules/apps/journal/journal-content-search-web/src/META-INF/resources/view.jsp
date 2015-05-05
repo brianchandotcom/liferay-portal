@@ -28,6 +28,6 @@
 
 <aui:form action="<%= searchURL %>" method="post" name="fm">
 	<div class="form-search">
-		<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+		<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
 	</div>
 </aui:form>

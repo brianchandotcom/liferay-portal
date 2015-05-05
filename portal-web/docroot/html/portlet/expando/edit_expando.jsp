@@ -55,7 +55,7 @@ portletURL.setParameter("modelResource", modelResource);
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= false %>"
-	title='<%= modelResourceName + ": " + ((column == null) ? LanguageUtil.get(locale, "new-custom-field") : column.getName()) %>'
+	title='<%= modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()) %>'
 />
 
 <portlet:actionURL var="editExpandoURL">

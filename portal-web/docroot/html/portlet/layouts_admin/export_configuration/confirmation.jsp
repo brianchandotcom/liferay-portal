@@ -100,28 +100,28 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 							long[] allLayoutIds = ExportImportHelperUtil.getAllLayoutIds(sourceGroupId, privateLayout);
 
 							if (ArrayUtil.containsAll(layoutIds, allLayoutIds)) {
-								sb.append(LanguageUtil.get(locale, "all-pages"));
+								sb.append(LanguageUtil.get(request, "all-pages"));
 							}
 							else if (ArrayUtil.isNotEmpty(layoutIds)) {
-								sb.append(LanguageUtil.get(locale, "selected-pages"));
+								sb.append(LanguageUtil.get(request, "selected-pages"));
 							}
 							else {
-								sb.append(LanguageUtil.get(locale, "no-pages"));
+								sb.append(LanguageUtil.get(request, "no-pages"));
 							}
 
 							if (MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS)) {
 								sb.append(", ");
-								sb.append(LanguageUtil.get(locale, "site-pages-settings"));
+								sb.append(LanguageUtil.get(request, "site-pages-settings"));
 							}
 
 							if (MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE)) {
 								sb.append(", ");
-								sb.append(LanguageUtil.get(locale, "theme-settings"));
+								sb.append(LanguageUtil.get(request, "theme-settings"));
 							}
 
 							if (MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO)) {
 								sb.append(", ");
-								sb.append(LanguageUtil.get(locale, "logo"));
+								sb.append(LanguageUtil.get(request, "logo"));
 							}
 							%>
 

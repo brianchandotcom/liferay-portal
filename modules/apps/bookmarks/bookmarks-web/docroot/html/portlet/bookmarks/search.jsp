@@ -126,7 +126,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 						name="type"
 						target="_blank"
 						title="<%= entry.getDescription() %>"
-						value='<%= LanguageUtil.get(locale, "entry") %>'
+						value='<%= LanguageUtil.get(request, "entry") %>'
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -182,14 +182,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 						href="<%= rowURL %>"
 						name="type"
 						title="<%= folder.getDescription() %>"
-						value='<%= LanguageUtil.get(locale, "folder") %>'
+						value='<%= LanguageUtil.get(request, "folder") %>'
 					/>
 
 					<liferay-ui:search-container-column-text
 						href="<%= rowURL %>"
 						name="folder"
 						title="<%= folder.getDescription() %>"
-						value='<%= (parentFolder != null) ? parentFolder.getName() : LanguageUtil.get(locale, "home") %>'
+						value='<%= (parentFolder != null) ? parentFolder.getName() : LanguageUtil.get(request, "home") %>'
 					/>
 
 					<c:if test='<%= ArrayUtil.contains(folderColumns, "action") %>'>
@@ -203,7 +203,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 		</liferay-ui:search-container-row>
 
 		<div class="form-search">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-categories") %>' />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-categories") %>' />
 		</div>
 
 		<liferay-ui:search-iterator type="more" />

@@ -20,7 +20,7 @@
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-search-entry:actionJsp");
 ServletContext actionJspServletContext = (ServletContext)request.getAttribute("liferay-ui:app-view-entry:actionJspServletContext");
 String containerName = (String)request.getAttribute("liferay-ui:app-view-search-entry:containerName");
-String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerType"), LanguageUtil.get(locale, "folder"));
+String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerType"), LanguageUtil.get(request, "folder"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-search-entry:cssClass"));
 String description = (String)request.getAttribute("liferay-ui:app-view-search-entry:description");
 List<Tuple> fileEntryTuples = (List<Tuple>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntryTuples");
@@ -80,7 +80,7 @@ summary.setQueryTerms(queryTerms);
 
 						<c:if test="<%= Validator.isNotNull(containerName) %>">
 							<dt>
-								<%= LanguageUtil.get(locale, containerType) %>:
+								<liferay-ui:message key="<%= containerType %>" />:
 							</dt>
 							<dd>
 

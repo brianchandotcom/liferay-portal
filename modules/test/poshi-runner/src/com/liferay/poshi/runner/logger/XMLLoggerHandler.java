@@ -142,6 +142,12 @@ public final class XMLLoggerHandler {
 					loggerElement.addChildLoggerElement(
 						_getEchoLoggerElement(childElement));
 				}
+				else if (childElementName.equals("execute")) {
+					if (childElement.attributeValue("function") != null) {
+						loggerElement.addChildLoggerElement(
+							_getFunctionExecuteLoggerElement(childElement));
+					}
+				}
 				else if (childElementName.equals("fail")) {
 					loggerElement.addChildLoggerElement(
 						_getFailLoggerElement(childElement));
@@ -212,6 +218,12 @@ public final class XMLLoggerHandler {
 
 	private static LoggerElement _getFailLoggerElement(Element element) {
 		return _getLineGroupLoggerElement(element);
+	}
+
+	private static LoggerElement _getFunctionExecuteLoggerElement(
+		Element element) {
+
+		return _getLineGroupLoggerElement("function", element);
 	}
 
 	private static LoggerElement _getIfChildContainerLoggerElement(

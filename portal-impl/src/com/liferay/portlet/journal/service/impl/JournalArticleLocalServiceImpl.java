@@ -441,6 +441,16 @@ public class JournalArticleLocalServiceImpl
 			updateDDMStructurePredefinedValues(
 				classPK, content, serviceContext);
 		}
+		else {
+			DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
+				PortalUtil.getSiteGroupId(groupId),
+				classNameLocalService.getClassNameId(DDMStructure.class),
+				ddmTemplateKey, true);
+
+			ddmTemplateLinkLocalService.addTemplateLink(
+				classNameLocalService.getClassNameId(JournalArticle.class), id,
+				ddmTemplate.getTemplateId());
+		}
 
 		// Message boards
 
@@ -960,6 +970,12 @@ public class JournalArticleLocalServiceImpl
 
 		journalArticleImageLocalService.deleteImages(
 			article.getGroupId(), articleId, article.getVersion());
+
+		// Dynamic data mapping
+
+		ddmTemplateLinkLocalService.deleteTemplateLink(
+			classNameLocalService.getClassNameId(JournalArticle.class),
+			article.getId());
 
 		// Expando
 
@@ -5260,6 +5276,23 @@ public class JournalArticleLocalServiceImpl
 
 			updateDDMStructurePredefinedValues(
 				article.getClassPK(), content, serviceContext);
+		}
+		else {
+			DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
+				PortalUtil.getSiteGroupId(groupId),
+				classNameLocalService.getClassNameId(DDMStructure.class),
+				ddmTemplateKey, true);
+
+			if (addNewVersion) {
+				ddmTemplateLinkLocalService.addTemplateLink(
+					classNameLocalService.getClassNameId(JournalArticle.class),
+					article.getId(), ddmTemplate.getTemplateId());
+			}
+			else {
+				ddmTemplateLinkLocalService.updateTemplateLink(
+					classNameLocalService.getClassNameId(JournalArticle.class),
+					latestArticle.getId(), ddmTemplate.getTemplateId());
+			}
 		}
 
 		// Small image

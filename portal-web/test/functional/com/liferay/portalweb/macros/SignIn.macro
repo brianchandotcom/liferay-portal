@@ -1,0 +1,162 @@
+<definition>
+	<var name="userEmailAddress" value="test@liferay.com" />
+	<var name="userPassword" value="test" />
+	<var name="userReminderQueryAnswer" value="test" />
+
+	<command name="_signIn">
+		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="TextInput#PASSWORD" value1="${userPassword}" />
+
+		<if>
+			<equals arg1="${rememberMe}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="Checkbox#REMEMBER_ME" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#SIGN_IN" value1="Sign In" />
+	</command>
+
+	<command name="_signInByScreenName">
+		<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="Type" locator1="TextInput#PASSWORD" value1="${userPassword}" />
+
+		<if>
+			<equals arg1="${rememberMe}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="Checkbox#REMEMBER_ME" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#SIGN_IN" value1="Sign In" />
+	</command>
+
+	<command name="_signInViaDockbar">
+		<execute function="AssertClick" locator1="Dockbar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute macro="SignIn#_signIn">
+			<var name="rememberMe" value="${rememberMe}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+	</command>
+
+	<command name="agreeToTermsOfUse">
+		<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />
+	</command>
+
+	<command name="setNewPassword">
+		<if>
+			<isset var="userNewPassword" />
+			<then>
+				<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="${userNewPassword}" />
+				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${userNewPassword}" />
+
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+			</then>
+		</if>
+	</command>
+
+	<command name="setReminderQuery">
+		<if>
+			<isset var="userReminderQueryQuestion" />
+			<then>
+				<execute function="Select" locator1="Select#QUESTION" value1="${userReminderQueryQuestion}" />
+			</then>
+		</if>
+
+		<execute function="Type" locator1="TextInput#ANSWER" value1="${userReminderQueryAnswer}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
+
+	<command name="signIn" summary="Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SignIn#_signIn">
+			<var name="rememberMe" value="${rememberMe}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+	</command>
+
+	<command name="signInByScreenName">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SignIn#_signInByScreenName">
+			<var name="rememberMe" value="${rememberMe}" />
+			<var name="userEmailAddress" value="${userScreenName}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+	</command>
+
+	<command name="signInFirstTime" summary="Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}' for the first time">
+		<execute macro="SignIn#signIn">
+			<var name="rememberMe" value="${rememberMe}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="SignIn#agreeToTermsOfUse" />
+
+		<execute macro="SignIn#setNewPassword">
+			<var name="userNewPassword" value="${userNewPassword}" />
+		</execute>
+
+		<execute macro="SignIn#setReminderQuery">
+			<var name="userReminderQueryAnswer" value="${userReminderQueryAnswer}" />
+		</execute>
+	</command>
+
+	<command name="signInSite">
+		<execute macro="Navigator#openSiteURL" />
+
+		<execute macro="SignIn#_signIn">
+			<var name="rememberMe" value="${rememberMe}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+	</command>
+
+	<command name="signInSpecificURL">
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${url}" />
+		</execute>
+
+		<execute macro="SignIn#_signIn">
+			<var name="rememberMe" value="${rememberMe}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+	</command>
+
+	<command name="signInTestSetup" summary="Set up test by signing in as super admin">
+		<execute macro="SignOut#signOut" />
+
+		<execute macro="SignIn#signIn" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Button#I_AGREE" />
+			<then>
+				<execute macro="SignIn#agreeToTermsOfUse" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Select#QUESTION" />
+			<then>
+				<execute macro="SignIn#setReminderQuery" />
+			</then>
+		</if>
+	</command>
+
+	<command name="signInViaDockbar">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SignIn#_signInViaDockbar">
+			<var name="rememberMe" value="${rememberMe}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+	</command>
+</definition>

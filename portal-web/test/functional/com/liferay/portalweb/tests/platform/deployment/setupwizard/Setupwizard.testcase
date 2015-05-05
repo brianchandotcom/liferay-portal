@@ -5,10 +5,7 @@
 	<command name="MySQLtoMySQL" priority="5">
 		<execute macro="SetupWizard#configureDefaultPG" />
 
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-		</execute>
+		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Smoke#runSmoke" />
 	</command>
@@ -28,8 +25,8 @@
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage">
-			<var name="administratorFirstName" value="Joe" />
-			<var name="administratorLastName" value="Bloggs" />
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
 		</execute>
 
 		<execute macro="Smoke#runSmoke" />
@@ -50,10 +47,7 @@
 			<var name="jdbcURL" value="jdbc:mysql://localhost/lportal1?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false" />
 		</execute>
 
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-		</execute>
+		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Smoke#runSmoke" />
 	</command>
@@ -64,10 +58,7 @@
 			<var name="addSampleData" value="false" />
 		</execute>
 
-		<execute macro="Smoke#viewWelcomePage">
-			<var name="administratorFirstName" value="Test" />
-			<var name="administratorLastName" value="Test" />
-		</execute>
+		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Smoke#runSmoke" />
 	</command>

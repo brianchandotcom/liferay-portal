@@ -13,6 +13,11 @@
 	<td>//div[label[contains(.,'Language')]]/select</td>
 	<td></td>
 </tr>
+<tr>
+	<td>QUESTION</td>
+	<td>//div[label[contains(.,'Question')]]/select</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

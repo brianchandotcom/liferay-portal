@@ -22,7 +22,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
@@ -32,9 +35,12 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +65,24 @@ public abstract class BaseStagingBackgroundTaskExecutor
 				backgroundTask.getBackgroundTaskId());
 
 		backgroundTaskStatus.clearAttributes();
+	}
+
+	protected void deleteTempLarOnFailure(File file) {
+		if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_FAILURE) {
+			FileUtil.delete(file);
+		}
+		else if ((file != null) && _log.isErrorEnabled()) {
+			_log.error("Kept temporary LAR file " + file.getAbsolutePath());
+		}
+	}
+
+	protected void deleteTempLarOnSuccess(File file) {
+		if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS) {
+			FileUtil.delete(file);
+		}
+		else if ((file != null) && _log.isDebugEnabled()) {
+			_log.debug("Kept temporary LAR file " + file.getAbsolutePath());
+		}
 	}
 
 	protected void initThreadLocals(long groupId, boolean privateLayout)
@@ -137,5 +161,8 @@ public abstract class BaseStagingBackgroundTaskExecutor
 
 		return backgroundTaskResult;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseStagingBackgroundTaskExecutor.class);
 
 }

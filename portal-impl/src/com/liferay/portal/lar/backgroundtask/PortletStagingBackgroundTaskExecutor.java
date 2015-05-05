@@ -56,6 +56,7 @@ public class PortletStagingBackgroundTaskExecutor
 		ExportImportConfiguration exportImportConfiguration =
 			getExportImportConfiguration(backgroundTask);
 
+		File file = null;
 		MissingReferences missingReferences = null;
 
 		try {
@@ -66,11 +67,17 @@ public class PortletStagingBackgroundTaskExecutor
 				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
 				exportImportConfiguration);
 
+			file = LayoutLocalServiceUtil.exportPortletInfoAsFile(
+				exportImportConfiguration);
+
+			markBackgroundTask(
+				backgroundTask.getBackgroundTaskId(), "exported");
+
 			missingReferences = TransactionHandlerUtil.invoke(
 				transactionAttribute,
 				new PortletStagingCallable(
 					backgroundTask.getBackgroundTaskId(),
-					exportImportConfiguration));
+					exportImportConfiguration, file));
 
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 
@@ -96,6 +103,9 @@ public class PortletStagingBackgroundTaskExecutor
 
 			throw new SystemException(t);
 		}
+		finally {
+			file.delete();
+		}
 
 		return processMissingReferences(
 			backgroundTask.getBackgroundTaskId(), missingReferences);
@@ -109,44 +119,33 @@ public class PortletStagingBackgroundTaskExecutor
 
 		public PortletStagingCallable(
 			long backgroundTaskId,
-			ExportImportConfiguration exportImportConfiguration) {
+			ExportImportConfiguration exportImportConfiguration, File file) {
 
 			_backgroundTaskId = backgroundTaskId;
 			_exportImportConfiguration = exportImportConfiguration;
+			_file = file;
 		}
 
 		@Override
 		public MissingReferences call() throws PortalException {
-			File larFile = null;
-			MissingReferences missingReferences = null;
+			LayoutLocalServiceUtil.importPortletDataDeletions(
+				_exportImportConfiguration, _file);
 
-			try {
-				larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-					_exportImportConfiguration);
+			MissingReferences missingReferences =
+				LayoutLocalServiceUtil.validateImportPortletInfo(
+					_exportImportConfiguration, _file);
 
-				markBackgroundTask(_backgroundTaskId, "exported");
+			markBackgroundTask(_backgroundTaskId, "validated");
 
-				LayoutLocalServiceUtil.importPortletDataDeletions(
-					_exportImportConfiguration, larFile);
-
-				missingReferences =
-					LayoutLocalServiceUtil.validateImportPortletInfo(
-						_exportImportConfiguration, larFile);
-
-				markBackgroundTask(_backgroundTaskId, "validated");
-
-				LayoutLocalServiceUtil.importPortletInfo(
-					_exportImportConfiguration, larFile);
-			}
-			finally {
-				larFile.delete();
-			}
+			LayoutLocalServiceUtil.importPortletInfo(
+				_exportImportConfiguration, _file);
 
 			return missingReferences;
 		}
 
 		private final long _backgroundTaskId;
 		private final ExportImportConfiguration _exportImportConfiguration;
+		private final File _file;
 
 	}
 

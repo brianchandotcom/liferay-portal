@@ -123,6 +123,21 @@ public final class PoshiRunnerStackTraceUtil {
 		_currentElement = currentElement;
 	}
 
+	public static void startStackTrace(
+		String classCommandName, String classType) {
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		String fileExtension =
+			PoshiRunnerGetterUtil.getFileExtensionFromClassType(classType);
+
+		_filePaths.push(
+			PoshiRunnerContext.getFilePathFromFileName(
+				className + "." + fileExtension));
+	}
+
 	private static Element _currentElement;
 	private static final Stack<String> _filePaths = new Stack<>();
 	private static final Stack<String> _stackTrace = new Stack<>();

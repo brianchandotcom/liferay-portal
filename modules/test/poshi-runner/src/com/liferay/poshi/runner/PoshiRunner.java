@@ -134,12 +134,12 @@ public class PoshiRunner {
 			classCommandName);
 
 		if (commandElement != null) {
-			PoshiRunnerStackTraceUtil.pushFilePath(
+			PoshiRunnerStackTraceUtil.startStackTrace(
 				classCommandName, "test-case");
 
 			PoshiRunnerExecutor.parseElement(commandElement);
 
-			PoshiRunnerStackTraceUtil.popFilePath();
+			PoshiRunnerStackTraceUtil.emptyStackTrace();
 		}
 	}
 

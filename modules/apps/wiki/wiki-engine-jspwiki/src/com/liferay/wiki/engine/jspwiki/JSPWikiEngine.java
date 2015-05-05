@@ -47,6 +47,8 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,10 +65,6 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 	public static String decodeJSPWikiName(String jspWikiName) {
 		return StringUtil.replace(
 			jspWikiName, _JSP_WIKI_NAME_2, _JSP_WIKI_NAME_1);
-	}
-
-	public JSPWikiEngine() {
-		super("/help_page.jsp", "http://www.wikicreole.org/wiki/Creole1.0");
 	}
 
 	@Override
@@ -91,6 +89,11 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 	@Override
 	public String getFormat() {
 		return "creole";
+	}
+
+	@Override
+	public String getHelpURL() {
+		return "http://www.wikicreole.org/wiki/Creole1.0";
 	}
 
 	@Override
@@ -222,6 +225,11 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 		}
 	}
 
+	@Override
+	protected ServletContext getHelpPageServletContext() {
+		return _servletContext;
+	}
+
 	protected synchronized void setProperties(String configuration) {
 		_properties = new Properties();
 
@@ -234,6 +242,13 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
 		}
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.jspwiki)"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	@Reference
@@ -343,6 +358,7 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 	private final Map<Long, LiferayJSPWikiEngine> _engines =
 		new ConcurrentHashMap<>();
 	private Properties _properties = new Properties();
+	private ServletContext _servletContext;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

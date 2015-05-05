@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
@@ -50,10 +52,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = WikiEngine.class)
 public class HtmlEngine extends BaseInputEditorWikiEngine {
 
-	public HtmlEngine() {
-		super(null, null);
-	}
-
 	@Override
 	public String getEditorName() {
 		return _wikiGroupServiceConfiguration.getHTMLEditor();
@@ -62,6 +60,11 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 	@Override
 	public String getFormat() {
 		return "html";
+	}
+
+	@Override
+	public String getHelpURL() {
+		return null;
 	}
 
 	@Override
@@ -74,6 +77,11 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 		catch (PortalException pe) {
 			throw new PageContentException(pe);
 		}
+	}
+
+	@Override
+	protected ServletContext getHelpPageServletContext() {
+		return null;
 	}
 
 	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")")

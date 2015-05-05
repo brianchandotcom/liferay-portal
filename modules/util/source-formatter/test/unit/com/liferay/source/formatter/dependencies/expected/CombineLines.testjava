@@ -1,0 +1,123 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+import com.liferay.portal.kernel.provider.AddPortletProvider;
+import com.liferay.portal.kernel.provider.ViewPortletProvider;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * @author Hugo Huijser
+ */
+@Component(
+	immediate = true,
+	property = {"editor.config.key=contentEditor", "service.ranking:Integer=0"},
+	service = {AddPortletProvider.class, ViewPortletProvider.class}
+)
+public class CombineLines extends SuperClass {
+
+	public static final String STRING_1;
+
+	public String getString(String test) {
+		return test;
+	}
+
+	public String[][] getStringArray() {
+		return new String[][] {new String[] {"hello", "world"}};
+	}
+
+	public void method1(String test1, String test2, String test3, String test4)
+		throws Exception {
+
+		int i1 = 0;
+		int i2 = 0;
+
+		if ((i1 == 0) || (i2 == 0)) {
+		}
+	}
+
+	public void method2() throws Exception {
+		String test1 = getString("test1");
+
+		String test2 = getString(
+			"test1", "test2", "test3", "test4", "test5", "test6");
+
+		String test3 = getString(
+			"test1", "test2", "test3", "test4", "test5", "test6", "test7");
+
+		String test4 =
+			getString("test1", "test2", "test3") + getString("test4", "test5");
+
+		String test5 = getString(
+			"test1", "test2", "test3", "test4", "test5", "test6", "test7",
+			"test8", "test9", "test10", "test11", "test12", "test13", "test14",
+			"test15", "test16", "test17", "test18", "test19);
+
+		String test6 =
+			getString(
+				"test1", "test2", "test3", "test4", "test5", "test6", "test7",
+				"test8", "test9", "test10", "test11", "test12", "test13",
+				"test14", "test15", "test16", "test17", "test18", "test19) +
+			getString(
+				"test1", "test2", "test3", "test4", "test5", "test6", "test7",
+				"test8", "test9", "test10", "test11", "test12", "test13",
+				"test14", "test15", "test16", "test17", "test18", "test19);
+
+		List<String> testList = new ArrayList<>();
+
+		for (String test2 : testList) {
+		}
+	}
+
+	public String method3() {
+		String test1 = getString(
+			"hello world" + "hello world" + "hello world" + "hello world");
+
+		String test2 =
+			"hello world" + "hello world" + "hello world" + "hello world";
+
+		return test1 + test2;
+	}
+
+	public String method4() {
+		String stringWithAFairlyMediumLongName =
+			StringPool.GREATER_THAN_OR_EQUAL;
+
+		return stringWithAFairlyMediumLongName;
+	}
+
+	public Set<String> method5() {
+		Set<String> numbers = SetUtil.fromArray(
+			new String[] {
+				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+				"Nine", "Ten"
+			});
+
+		return numbers;
+	}
+
+	public String method6(String s) {
+		return StringUtil.replace(
+			s, new String[] {StringPool.PERIOD, StringPool.SLASH},
+			new String[] {StringPool.COMMA, StringPool.BACK_SLASH});
+	}
+
+}

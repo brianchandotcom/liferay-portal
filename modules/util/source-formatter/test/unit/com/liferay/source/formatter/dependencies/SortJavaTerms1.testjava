@@ -1,0 +1,118 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+/**
+ * @author Hugo Huijser
+ */
+public class SortJavaTerms1 {
+
+	protected static void method1() {
+	}
+
+	protected SortJavaTerms1() {
+		_var12 = "test";
+	}
+
+	protected class Class1 {
+
+		public Class1() {
+		}
+
+	}
+
+	protected static String var1;
+
+	private static String _var2;
+
+	protected void method2() {
+	}
+
+	public void method3() {
+	}
+
+	protected static final String VAR3 = "test";
+
+	public static final String VAR4 = "test";
+
+	private static class Class2 {
+
+		public Class2() {
+		}
+
+	}
+
+	public class Class3 {
+
+		public Class3() {
+		}
+
+	}
+
+	private String _var5;
+
+	public static void method4() {
+	}
+
+	private void _method5() {
+	}
+
+	public static class Class4 {
+
+		public Class4() {
+		}
+
+	}
+
+	private static final String _variableName6 = "test";
+
+	protected String var7;
+
+	private class Class5 {
+
+		public Class5() {
+		}
+
+	}
+
+	public SortJavaTerms1(String testArgument1) {
+		_var12 = testArgument1;
+	}
+
+	public String var8;
+
+	public static String var9;
+
+	private SortJavaTerms1(String testArgument1, String testArgument2) {
+		_var12 = testArgument1 + testArgument2;
+	}
+
+	protected static class Class6 {
+
+		public Class6() {
+		}
+
+	}
+
+	private static void method6() {
+	}
+
+	private final String _var10 = "hello";
+
+	private final int _var11 = 10;
+
+	private final String _var12;
+
+}

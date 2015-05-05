@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>MySitesAvailableSites</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MySitesAvailableSites</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_TABLE-->
+<tr>
+	<td>SITE_TABLE_JOIN_SITE_NAME</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[4]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_LEAVE_SITE_NAME</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[4]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_REQUEST_MEMBERSHIP</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[4]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_MEMBERSHIP_REQUESTED</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[4]/span/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -158,11 +158,12 @@ public class JournalContentImpl implements JournalContent {
 			secure = themeDisplay.isSecure();
 		}
 
-		JournalContentKey key = new JournalContentKey(
+		JournalContentKey journalContentKey = new JournalContentKey(
 			groupId, articleId, version, ddmTemplateKey, layoutSetId, viewMode,
 			languageId, page, secure);
 
-		JournalArticleDisplay articleDisplay = _portalCache.get(key);
+		JournalArticleDisplay articleDisplay = _portalCache.get(
+			journalContentKey);
 
 		boolean lifecycleRender = false;
 
@@ -179,7 +180,7 @@ public class JournalContentImpl implements JournalContent {
 			if ((articleDisplay != null) && articleDisplay.isCacheable() &&
 				lifecycleRender) {
 
-				_portalCache.put(key, articleDisplay);
+				_portalCache.put(journalContentKey, articleDisplay);
 			}
 		}
 
@@ -344,9 +345,8 @@ public class JournalContentImpl implements JournalContent {
 			hashCode = HashUtil.hash(hashCode, _viewMode);
 			hashCode = HashUtil.hash(hashCode, _languageId);
 			hashCode = HashUtil.hash(hashCode, _page);
-			hashCode = HashUtil.hash(hashCode, _secure);
 
-			return hashCode;
+			return HashUtil.hash(hashCode, _secure);
 		}
 
 		private JournalContentKey(

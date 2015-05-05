@@ -21,16 +21,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
-
-import org.osgi.service.component.annotations.Component;
-
-/**
- * @author Carlos Sierra Andrés
- */
-@Component(
-	immediate = true, property = {"jaxrs.application=true"},
-	service = Application.class
-)
 @Path("/testApp")
 public class Greeter extends Application {
 

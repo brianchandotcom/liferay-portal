@@ -14,12 +14,15 @@
 
 package com.liferay.portal.soap.extender.test;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -32,11 +35,9 @@ public class JaxrsComponentRegistrationTest {
 
 	@Test
 	public void testIsRegistered() throws Exception {
-		Thread.sleep(2000L);
-
 		URL url = new URL(_url, "/o/rest-test/testApp/sayHello");
 
-		System.out.println(url.getContent());
+		Assert.assertEquals("Hello!", StringUtil.read(url.openStream()));
 	}
 
 	@ArquillianResource

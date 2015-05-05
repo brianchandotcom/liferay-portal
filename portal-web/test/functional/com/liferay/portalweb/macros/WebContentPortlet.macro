@@ -4,10 +4,13 @@
 		<execute function="AssertClick" locator1="CPWebcontent#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="CPWebcontentConfiguration#CONFIGURATION_IFRAME" />
+
 		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_ADDED_EMAIL" value1="Web Content Added Email" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_REVIEW_EMAIL" value1="Web Content Review Email" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#NAVIGATION_WEB_CONTENT_UPDATED_EMAIL" value1="Web Content Updated Email" />
+
+		<execute function="AssertClick" locator1="CPWebcontentConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#NAME_FIELD" value1="${authorName}" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentConfiguration#ADDRESS_FIELD" value1="${authorAddress}" />
 

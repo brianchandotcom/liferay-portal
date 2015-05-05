@@ -2621,6 +2621,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WorkflowConstants.STATUS_IN_TRASH);
 
 		for (WikiPage childPage : childPages) {
+			childPage = getPageByPageId(childPage.getPageId());
+
 			childPage.setParentTitle(newParentPage.getTitle());
 
 			wikiPagePersistence.update(childPage);
@@ -2642,6 +2644,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			parentNodeId, true, parentTitle);
 
 		for (WikiPage childPage : childPages) {
+			childPage = getPageByPageId(childPage.getPageId());
+
 			childPage.setParentTitle(parentTrashTitle);
 
 			wikiPagePersistence.update(childPage);
@@ -2764,6 +2768,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WorkflowConstants.STATUS_IN_TRASH);
 
 		for (WikiPage redirectorPage : redirectorPages) {
+			redirectorPage = getPageByPageId(redirectorPage.getPageId());
+
 			redirectorPage.setRedirectTitle(newRedirectPage.getTitle());
 
 			wikiPagePersistence.update(redirectorPage);
@@ -2786,6 +2792,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			redirectPageNodeId, true, redirectPageTitle);
 
 		for (WikiPage redirectorPage : redirectorPages) {
+			redirectorPage = getPageByPageId(redirectorPage.getPageId());
+
 			redirectorPage.setRedirectTitle(redirectPageTrashTitle);
 
 			wikiPagePersistence.update(redirectorPage);

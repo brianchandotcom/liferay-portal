@@ -117,7 +117,7 @@
 <!--BASIC_SEARCH-->
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>
-	<td>//input[@id='toggle_id_users_admin_group_searchkeywords']</td>
+	<td>//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -67,7 +67,15 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		_restConfiguration.delete();
+		cleanUp();
+	}
+
+	private void cleanUp() {
+		try {
+			_serviceRegistration.unregister();
+		}
+		catch (Exception e) {
+		}
 
 		_cxfConfiguration.delete();
 	}

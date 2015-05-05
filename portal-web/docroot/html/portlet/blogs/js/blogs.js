@@ -69,7 +69,7 @@ AUI.add(
 
 						var userEntry = entry && entry.userId === themeDisplay.getUserId();
 
-						if (!entry || (userEntry && draftEntry)) {
+						if (!entry || userEntry && draftEntry) {
 							instance._initDraftSaveInterval();
 						}
 
@@ -167,7 +167,7 @@ AUI.add(
 
 						var description = instance._customDescription;
 
-						instance._shortenDescription = (target.val() === 'false');
+						instance._shortenDescription = target.val() === 'false';
 
 						if (instance._shortenDescription) {
 							instance._customDescription = window[instance.ns('descriptionEditor')].getHTML();
@@ -245,9 +245,9 @@ AUI.add(
 						var form = instance._getPrincipalForm();
 
 						if (draft && ajax) {
-							var hasData = (content !== STR_BLANK) && (title !== STR_BLANK);
+							var hasData = content !== STR_BLANK && title !== STR_BLANK;
 
-							var hasChanged = (instance._oldContent !== content) || (instance._oldSubtitle !== subtitle) || (instance._oldTitle !== title);
+							var hasChanged = instance._oldContent !== content || instance._oldSubtitle !== subtitle || instance._oldTitle !== title;
 
 							if (hasData && hasChanged) {
 								var strings = instance.get('strings');
@@ -334,7 +334,7 @@ AUI.add(
 													if (saveStatus) {
 														var entry = instance.get('entry');
 
-														var saveText = (entry && entry.pending) ? strings.savedAtMessage : strings.savedDraftAtMessage;
+														var saveText = entry && entry.pending ? strings.savedAtMessage : strings.savedDraftAtMessage;
 
 														var now = saveText.replace(/\{0\}/gim, (new Date()).toString());
 
@@ -384,7 +384,7 @@ AUI.add(
 							text = text.substring(0, descriptionLength);
 
 							if (STR_SUFFIX.length < descriptionLength) {
-								var spaceIndex = text.lastIndexOf(' ', (descriptionLength - STR_SUFFIX.length));
+								var spaceIndex = text.lastIndexOf(' ', descriptionLength - STR_SUFFIX.length);
 
 								text = text.substring(0, spaceIndex).concat(STR_SUFFIX);
 							}

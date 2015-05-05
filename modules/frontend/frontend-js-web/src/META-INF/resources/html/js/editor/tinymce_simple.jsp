@@ -185,7 +185,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					file_browser_callback: window['<%= name %>'].fileBrowserCallback,
 					init_instance_callback: window['<%= name %>'].initInstanceCallback,
 					invalid_elements: 'script',
-					language: tinyMCELanguage['<%= HtmlUtil.escape(contentsLanguageId) %>'] || tinyMCELanguage['en_US'],
+					language: tinyMCELanguage['<%= HtmlUtil.escape(contentsLanguageId) %>'] || tinyMCELanguage.en_US,
 					menubar: false,
 					mode: 'textareas',
 					plugins: 'contextmenu preview print <c:if test="<%= showSource %>">code</c:if>',

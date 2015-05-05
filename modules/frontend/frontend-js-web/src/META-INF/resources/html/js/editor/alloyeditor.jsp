@@ -170,7 +170,7 @@ if (showSource) {
 	var createInstance = function() {
 		document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
-		var editorConfig = (<%= Validator.isNotNull(editorConfigJSONObject) %>) ? <%= editorConfigJSONObject %> : {};
+		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
 
 		var plugins = [];
 

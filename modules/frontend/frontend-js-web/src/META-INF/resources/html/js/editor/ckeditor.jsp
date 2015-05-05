@@ -104,7 +104,7 @@ if (!inlineEdit) {
 			}
 
 			a.cke_dialog_tab_selected {
-				display:block !important;
+				display: block !important;
 			}
 		</style>
 	</liferay-util:html-top>
@@ -245,7 +245,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			else {
 				data = CKEDITOR.instances['<%= name %>'].getData();
 
-				if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
+				if (CKEDITOR.env.gecko && CKEDITOR.tools.trim(data) == '<br />') {
 					data = '';
 				}
 			}

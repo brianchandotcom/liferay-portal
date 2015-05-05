@@ -115,7 +115,7 @@ AUI.add(
 
 						var data = instance.getNativeEditor().getData();
 
-						if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) === '<br />')) {
+						if (CKEDITOR.env.gecko && CKEDITOR.tools.trim(data) === '<br />') {
 							data = '';
 						}
 

@@ -491,7 +491,7 @@
 				}
 
 			}
-			while ((token.type != TOKEN_TAG_END) && (token.value != toTagName));
+			while (token.type != TOKEN_TAG_END && token.value != toTagName);
 
 			if (consume) {
 				instance._tokenPointer = index - 1;
@@ -625,7 +625,7 @@
 			if (token.attribute) {
 				var bbCodeAttr;
 
-				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
+				while (bbCodeAttr = REGEX_ATTRS.exec(token.attribute)) {
 					var attrName = bbCodeAttr[1];
 
 					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
@@ -683,7 +683,7 @@
 
 					if (nextToken &&
 						hasOwnProperty.call(MAP_TOKENS_EXCLUDE_NEW_LINE, nextToken.value) &&
-						(nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value])) {
+						nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value]) {
 
 						value = STR_BLANK;
 					}
@@ -692,8 +692,8 @@
 					nextToken = instance._parsedData[instance._tokenPointer + 1];
 
 					if (nextToken &&
-						(nextToken.type == TOKEN_TAG_END) &&
-						(nextToken.value == STR_TAG_LIST_ITEM_SHORT)) {
+						nextToken.type == TOKEN_TAG_END &&
+						nextToken.value == STR_TAG_LIST_ITEM_SHORT) {
 
 						value = value.substring(0, value.length - 1);
 					}

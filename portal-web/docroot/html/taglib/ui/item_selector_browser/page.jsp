@@ -24,26 +24,10 @@ String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-sele
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
 %>
 
-<div class="taglib-item-selector-browser" id="<%= idPrefix %>ItemSelectorContainer">
+<div class="lfr-item-viewer" id="<%= idPrefix %>ItemSelectorContainer">
 	<div class="drop-zone">
-		<aui:a cssClass="browse-image btn btn-primary" href="javascript:;" id='<%= idPrefix + "SelectFile" %>' label="select-file" />
-
-		<input id="<%= idPrefix %>InputFile" style="visibility: hidden; width: 0; height: 0" type="file" />
-
-		<a href="" id="<%= idPrefix %>Image"></a>
-
-		<div class="hide image-info">
-			<dl>
-				<dt><liferay-ui:message key="format" /></dt>
-				<dd id="<%= idPrefix %>imageExtension"></dd>
-
-				<dt><liferay-ui:message key="size" /></dt>
-				<dd id="<%= idPrefix %>imageSize"></dd>
-
-				<dt><liferay-ui:message key="name" /></dt>
-				<dd id="<%= idPrefix %>imageName"></dd>
-			</dl>
-		</div>
+		<label class="btn btn-primary" for="<%= idPrefix %>InputFile"><liferay-ui:message key="select-file" /></label>
+		<input class="hide" id="<%= idPrefix %>InputFile" type="file" />
 
 		<p><%= uploadMessage %></p>
 	</div>
@@ -155,27 +139,11 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 	</c:choose>
 
 	<liferay-ui:drop-here-info message="drop-files-here" />
-
-	<div class="lfr-item-viewer" id="<%= idPrefix %>ItemViewerPreview"></div>
-	<div class="lfr-item-viewer" id="<%= idPrefix %>UploadImagePreview"></div>
 </div>
 
-<aui:script use="aui-component,liferay-item-viewer,liferay-item-selector-browser">
-	var viewer = new A.LiferayItemViewer(
-		{
-			btnCloseCaption:'<%= UnicodeLanguageUtil.get(request, tabName) %>',
-			links: '#<%= idPrefix %>ItemSelectorContainer a.item-preview',
-		}
-	).render('#<%= idPrefix %>ItemViewerPreview');
-
-	var itemBrowser = new Liferay.ItemBrowser({
-		browseImageId: 'SelectFile',
-		inputFileId: 'InputFile',
-		itemViewerCloseCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
-		itemViewerContainer: 'UploadImagePreview',
-		linkId: 'Image',
-		namespace: '<%= idPrefix %>',
+<aui:script use="liferay-item-selector-browser">
+	new Liferay.ItemSelectorBrowser({
+		closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
 		rootNode: '#<%= idPrefix %>ItemSelectorContainer'
 	});
-
 </aui:script>

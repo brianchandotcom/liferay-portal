@@ -390,8 +390,10 @@ public class WebDriverHelper {
 		return !webElements.isEmpty();
 	}
 
-	public boolean isPartialText(String locator, String value) {
-		WebElement webElement = getWebElement(locator, "1");
+	public static boolean isPartialText(
+		WebDriver webDriver, String locator, String value) {
+
+		WebElement webElement = getWebElement(webDriver, locator, "1");
 
 		String text = webElement.getText();
 

@@ -61,9 +61,14 @@ public class DDMTemplateLinkLocalServiceImpl
 	public DDMTemplateLink deleteTemplateLink(long classNameId, long classPK)
 		throws PortalException {
 
-		DDMTemplateLink templateLink = getTemplateLink(classNameId, classPK);
+		DDMTemplateLink templateLink = ddmTemplateLinkPersistence.fetchByC_C(
+			classNameId, classPK);
 
-		return deleteDDMTemplateLink(templateLink);
+		if (templateLink != null) {
+			deleteDDMTemplateLink(templateLink);
+		}
+
+		return templateLink;
 	}
 
 	@Override
@@ -103,8 +108,12 @@ public class DDMTemplateLinkLocalServiceImpl
 			long classNameId, long classPK, long templateId)
 		throws PortalException {
 
-		DDMTemplateLink templateLink = ddmTemplateLinkPersistence.findByC_C(
+		DDMTemplateLink templateLink = ddmTemplateLinkPersistence.fetchByC_C(
 			classNameId, classPK);
+
+		if (templateLink == null) {
+			return addTemplateLink(classNameId, classPK, templateId);
+		}
 
 		templateLink.setTemplateId(templateId);
 

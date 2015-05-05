@@ -412,6 +412,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_VIEW_DAY_CURRENT_DAY</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-day') and not(contains(@class,'scheduler-view-week'))]//td[contains(@class,'scheduler-today')]/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_VIEW_DAY_FIRST_HOUR</td>
 	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[1]</td>
 	<td></td>

@@ -1161,8 +1161,9 @@
 			<var name="viewType" value="Day" />
 		</execute>
 
-		<execute macro="CalendarEvent#addViaDayView">
+		<execute macro="CalendarEvent#addTodayViaScheduler">
 			<var name="eventTitle" value="Calendar Event Today Day" />
+			<var name="viewType" value="Day" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewPG">

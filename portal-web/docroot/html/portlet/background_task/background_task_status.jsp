@@ -29,9 +29,7 @@ BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.g
 </strong>
 
 <c:if test="<%= backgroundTask.isInProgress() %>">
-
 	<c:if test="<%= backgroundTaskDisplay.hasBackgroundTaskStatus() %>">
-
 		<div class="active progress progress-striped">
 			<c:choose>
 				<c:when test="<%= backgroundTaskDisplay.hasPercentage() %>">

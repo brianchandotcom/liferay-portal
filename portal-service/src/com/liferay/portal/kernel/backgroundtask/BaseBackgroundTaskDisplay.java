@@ -35,7 +35,7 @@ public class BaseBackgroundTaskDisplay implements BackgroundTaskDisplay {
 		_details = null;
 		_locale = locale;
 		_message = null;
-		_percentage = 0;
+		_percentage = -1;
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class BaseBackgroundTaskDisplay implements BackgroundTaskDisplay {
 
 	@Override
 	public boolean hasPercentage() {
-		if (_percentage > 0) {
+		if (_percentage >= 0) {
 			return true;
 		}
 

@@ -104,13 +104,56 @@ public final class XMLLoggerHandler {
 	}
 
 	private static LoggerElement _getChildContainerLoggerElement() {
-		LoggerElement childContainerLoggerElement = new LoggerElement();
+		return _getChildContainerLoggerElement(null, null);
+	}
 
-		childContainerLoggerElement.setClassName(
-			"child-container collapse collapsible");
-		childContainerLoggerElement.setName("ul");
+	private static LoggerElement _getChildContainerLoggerElement(
+		Element element) {
 
-		return childContainerLoggerElement;
+		return _getChildContainerLoggerElement(element, null);
+	}
+
+	private static LoggerElement _getChildContainerLoggerElement(
+		Element element, Element rootElement) {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("child-container collapse collapsible");
+		loggerElement.setName("ul");
+
+		if (Validator.isNotNull(rootElement)) {
+			List<Element> rootVarElements = rootElement.elements("var");
+
+			for (Element rootVarElement : rootVarElements) {
+				loggerElement.addChildLoggerElement(
+					_getVarLoggerElement(rootVarElement));
+			}
+		}
+
+		if (Validator.isNotNull(element)) {
+			List<Element> childElements = element.elements();
+
+			for (Element childElement : childElements) {
+				String childElementName = childElement.getName();
+
+				if (childElementName.equals("description") ||
+					childElementName.equals("echo")) {
+
+					loggerElement.addChildLoggerElement(
+						_getEchoLoggerElement(childElement));
+				}
+				else if (childElementName.equals("fail")) {
+					loggerElement.addChildLoggerElement(
+						_getFailLoggerElement(childElement));
+				}
+				else if (childElementName.equals("var")) {
+					loggerElement.addChildLoggerElement(
+						_getVarLoggerElement(childElement));
+				}
+			}
+		}
+
+		return loggerElement;
 	}
 
 	private static LoggerElement _getClosingLineContainerLoggerElement(
@@ -241,18 +284,19 @@ public final class XMLLoggerHandler {
 	}
 
 	private static LoggerElement _getLoggerElementFromElement(Element element) {
-		String elementName = element.getName();
+		LoggerElement loggerElement = _getLineGroupLoggerElement(element);
 
-		LoggerElement loggerElement = new LoggerElement();
+		loggerElement.addChildLoggerElement(
+			_getChildContainerLoggerElement(element));
 
-		if (elementName.equals("description") || elementName.equals("echo")) {
-			loggerElement = _getEchoLoggerElement(element);
-		}
-		else if (elementName.equals("fail")) {
-			loggerElement = _getFailLoggerElement(element);
-		}
+		loggerElement.addChildLoggerElement(
+			_getClosingLineContainerLoggerElement(element));
 
 		return loggerElement;
+	}
+
+	private static LoggerElement _getVarLoggerElement(Element element) {
+		return _getLineGroupLoggerElement("var", element);
 	}
 
 	private static boolean _isExecutingMacro(Element element) {

@@ -152,7 +152,13 @@ public class BasicRegistryImpl implements Registry {
 	public <T> Collection<T> getServices(Class<T> clazz, String filterString)
 		throws Exception {
 
-		return getServices(clazz, filterString);
+		T[] services = getServices(clazz.getName(), filterString);
+
+		if (services == null) {
+			return Collections.emptyList();
+		}
+
+		return Arrays.asList(services);
 	}
 
 	@Override
@@ -160,6 +166,10 @@ public class BasicRegistryImpl implements Registry {
 		throws Exception {
 
 		List<T> services = new ArrayList<>();
+
+		if ((filterString == null) || filterString.equals("")) {
+			filterString = "(objectClass=" + className + ")";
+		}
 
 		Filter filter = new BasicFilter(filterString);
 

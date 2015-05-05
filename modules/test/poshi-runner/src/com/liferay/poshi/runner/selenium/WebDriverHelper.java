@@ -151,8 +151,8 @@ public class WebDriverHelper {
 		}
 	}
 
-	public void check(String locator) {
-		WebElement webElement = getWebElement(locator);
+	public static void check(WebDriver webDriver, String locator) {
+		WebElement webElement = getWebElement(webDriver, locator);
 
 		if (!webElement.isSelected()) {
 			webElement.click();
@@ -589,8 +589,8 @@ public class WebDriverHelper {
 		javascriptExecutor.executeScript(sb.toString());
 	}
 
-	public void uncheck(String locator) {
-		WebElement webElement = getWebElement(locator);
+	public static void uncheck(WebDriver webdDriver, String locator) {
+		WebElement webElement = getWebElement(webdDriver, locator);
 
 		if (webElement.isSelected()) {
 			webElement.click();

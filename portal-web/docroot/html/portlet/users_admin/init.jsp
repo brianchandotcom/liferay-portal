@@ -67,12 +67,6 @@ page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %
 page import="com.liferay.portlet.usersadmin.search.UserOrganizationChecker" %>
 
 <%
-boolean showActiveUserSelect = true;
-
-if (!(portletName.equals(PortletKeys.PASSWORD_POLICIES_ADMIN) || portletName.equals(PortletKeys.PORTAL_SETTINGS) || portletName.equals(PortletKeys.ROLES_ADMIN) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN))) {
-	showActiveUserSelect = false;
-}
-
 boolean filterManageableGroups = true;
 
 boolean filterManageableOrganizations = true;

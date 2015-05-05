@@ -253,4 +253,26 @@ public class ServiceTrackerMapFactory {
 
 	}
 
+	public static <K, S> ServiceReferenceMapper<K, S> fromService(
+		final BundleContext bundleContext,
+		final ServiceMapper<K, S> serviceMapper) {
+
+		return new ServiceReferenceMapper<K, S>() {
+			@Override
+			public void map(
+				ServiceReference<S> serviceReference, Emitter<K> emitter) {
+
+				S service = bundleContext.getService(serviceReference);
+
+				try {
+					serviceMapper.map(service, emitter);
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			}
+		};
+
+	}
+
 }

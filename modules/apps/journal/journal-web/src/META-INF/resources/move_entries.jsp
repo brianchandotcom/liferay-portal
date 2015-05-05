@@ -65,7 +65,9 @@ for (JournalArticle curArticle : articles) {
 }
 %>
 
-<portlet:actionURL name="moveEntries" var="moveArticleURL" />
+<portlet:actionURL name="moveEntries" var="moveArticleURL">
+	<portlet:param name="mvcPath" value="/move_entries.jsp" />
+</portlet:actionURL>
 
 <aui:form action="<%= moveArticleURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveArticle();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

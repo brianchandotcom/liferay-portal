@@ -973,9 +973,13 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		ddmTemplateLinkLocalService.deleteTemplateLink(
-			classNameLocalService.getClassNameId(JournalArticle.class),
-			article.getId());
+		if (article.getClassNameId() !=
+				classNameLocalService.getClassNameId(DDMStructure.class)) {
+
+			ddmTemplateLinkLocalService.deleteTemplateLink(
+				classNameLocalService.getClassNameId(JournalArticle.class),
+				article.getId());
+		}
 
 		// Expando
 

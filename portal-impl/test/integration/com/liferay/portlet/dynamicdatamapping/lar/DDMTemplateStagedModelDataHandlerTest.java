@@ -16,12 +16,12 @@ package com.liferay.portlet.dynamicdatamapping.lar;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -59,7 +59,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 			new HashMap<>();
 
 		DDMStructure structure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DDLRecordSet.class.getName());
+			group.getGroupId(), _CLASS_NAME);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMStructure.class, structure);
@@ -114,5 +114,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 		DDMStructureLocalServiceUtil.getDDMStructureByUuidAndGroupId(
 			structure.getUuid(), group.getGroupId());
 	}
+
+	private static final String _CLASS_NAME = StringUtil.randomString();
 
 }

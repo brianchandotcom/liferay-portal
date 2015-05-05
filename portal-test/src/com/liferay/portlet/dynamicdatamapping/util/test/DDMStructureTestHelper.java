@@ -18,10 +18,9 @@ import com.liferay.portal.kernel.locale.test.LocaleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordTestUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
@@ -40,6 +39,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 public class DDMStructureTestHelper {
 
 	public DDMStructureTestHelper(Group group) throws Exception {
+		_classNameId = PortalUtil.getClassNameId(StringUtil.randomString());
 		_group = group;
 	}
 
@@ -48,9 +48,8 @@ public class DDMStructureTestHelper {
 		throws Exception {
 
 		return addStructure(
-			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			PortalUtil.getClassNameId(DDLRecordSet.class), null,
-			"Test Structure", StringPool.BLANK, ddmForm, ddmFormLayout,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, _classNameId,
+			null, "Test Structure", StringPool.BLANK, ddmForm, ddmFormLayout,
 			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 
@@ -58,8 +57,7 @@ public class DDMStructureTestHelper {
 		throws Exception {
 
 		return addStructure(
-			PortalUtil.getClassNameId(DDLRecordSet.class), null,
-			"Test Structure", ddmForm, storageType,
+			_classNameId, null, "Test Structure", ddmForm, storageType,
 			DDMStructureConstants.TYPE_DEFAULT);
 	}
 
@@ -90,21 +88,13 @@ public class DDMStructureTestHelper {
 			storageType, type);
 	}
 
-	public DDMStructure addStructureXsd(Class<?> testClass) throws Exception {
-		String definition = DDLRecordTestUtil.read(
-			testClass, "test-structure.xsd");
-
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
-
-		return addStructure(ddmForm, StorageType.JSON.toString());
-	}
-
 	public DDMForm toDDMForm(String definition) throws Exception {
 		DDMXMLUtil.validateXML(definition);
 
 		return DDMFormXSDDeserializerUtil.deserialize(definition);
 	}
 
+	private final long _classNameId;
 	private final Group _group;
 
 }

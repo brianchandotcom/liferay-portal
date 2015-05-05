@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
 
@@ -42,7 +43,11 @@ public class HTMLSanitizerDDMFormFieldValueTransformer
 	}
 
 	@Override
-	public void transform(Value value) throws PortalException {
+	public void transform(DDMFormFieldValue ddmFormFieldValue)
+		throws PortalException {
+
+		Value value = ddmFormFieldValue.getValue();
+
 		for (Locale locale : value.getAvailableLocales()) {
 			String sanitizedValue = sanitize(value.getString(locale));
 

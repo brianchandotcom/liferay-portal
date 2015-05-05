@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
@@ -59,7 +58,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_CLASS_NAME_ID = PortalUtil.getClassNameId(DDLRecordSet.class);
+		_CLASS_NAME_ID = PortalUtil.getClassNameId(StringUtil.randomString());
 	}
 
 	@Test

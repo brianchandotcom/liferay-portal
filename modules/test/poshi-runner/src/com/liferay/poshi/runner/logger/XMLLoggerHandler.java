@@ -146,6 +146,10 @@ public final class XMLLoggerHandler {
 					loggerElement.addChildLoggerElement(
 						_getFailLoggerElement(childElement));
 				}
+				else if (childElementName.equals("if")) {
+					loggerElement.addChildLoggerElement(
+						_getIfLoggerElement(childElement));
+				}
 				else if (childElementName.equals("var")) {
 					loggerElement.addChildLoggerElement(
 						_getVarLoggerElement(childElement));
@@ -204,6 +208,46 @@ public final class XMLLoggerHandler {
 
 	private static LoggerElement _getFailLoggerElement(Element element) {
 		return _getLineGroupLoggerElement(element);
+	}
+
+	private static LoggerElement _getIfLoggerElement(Element element) {
+		LoggerElement childContainerLoggerElement =
+			_getChildContainerLoggerElement();
+
+		List<Element> childElements = element.elements();
+
+		Element conditionElement = childElements.get(0);
+
+		childContainerLoggerElement.addChildLoggerElement(
+			_getConditionalLoggerElement(conditionElement));
+
+		Element thenElement = element.element("then");
+
+		childContainerLoggerElement.addChildLoggerElement(
+			_getLoggerElementFromElement(thenElement));
+
+		List<Element> elseIfElements = element.elements("elseif");
+
+		for (Element elseIfElement : elseIfElements) {
+			childContainerLoggerElement.addChildLoggerElement(
+				_getIfLoggerElement(elseIfElement));
+		}
+
+		Element elseElement = element.element("else");
+
+		if (elseElement != null) {
+			childContainerLoggerElement.addChildLoggerElement(
+				_getLoggerElementFromElement(elseElement));
+		}
+
+		LoggerElement loggerElement = _getLineGroupLoggerElement(
+			"conditional", element);
+
+		loggerElement.addChildLoggerElement(childContainerLoggerElement);
+		loggerElement.addChildLoggerElement(
+			_getClosingLineContainerLoggerElement(element));
+
+		return loggerElement;
 	}
 
 	private static LoggerElement _getLineContainerLoggerElement(

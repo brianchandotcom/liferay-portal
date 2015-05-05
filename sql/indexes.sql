@@ -156,6 +156,9 @@ create index IX_C4F283C8 on DDMTemplate (type_);
 create index IX_D4C2C221 on DDMTemplate (uuid_, companyId);
 create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId);
 
+create unique index IX_6F3B3E9C on DDMTemplateLink (classNameId, classPK);
+create index IX_85278170 on DDMTemplateLink (templateId);
+
 create unique index IX_8854A128 on DDMTemplateVersion (templateId, version);
 
 create unique index IX_FDD1AAA8 on DLContent (companyId, repositoryId, path_, version);

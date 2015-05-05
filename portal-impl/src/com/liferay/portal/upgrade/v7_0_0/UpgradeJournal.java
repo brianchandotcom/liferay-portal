@@ -308,6 +308,74 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		return ddmTemplateId;
 	}
 
+	protected void addDDMTemplateLink(
+			long classNameId, long classPK, long templateId)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"insert into DDMTemplateLink (templateLinkId, classNameId, " +
+					"classPK, templateId) values (?, ?, ?, ?)");
+
+			ps.setLong(1, increment());
+			ps.setLong(2, classNameId);
+			ps.setLong(3, classPK);
+			ps.setLong(4, templateId);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			_log.error("Unable to create template link for journal article");
+
+			throw e;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void addDDMTemplateLinks() throws Exception {
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("select DDMTemplate.templateId, JournalArticle.id_ ");
+			sb.append("from JournalArticle inner join DDMTemplate on (");
+			sb.append("DDMTemplate.groupId = JournalArticle.groupId and ");
+			sb.append("DDMTemplate.templateKey = ");
+			sb.append("JournalArticle.ddmTemplateKey and ");
+			sb.append("JournalArticle.classNameId != ?)");
+
+			ps = con.prepareStatement(sb.toString());
+
+			ps.setLong(1, classNameId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long templateId = rs.getLong("templateId");
+				long id_ = rs.getLong("id_");
+
+				addDDMTemplateLink(classNameId, id_, templateId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected String convertStaticContentToDynamic(String content)
 		throws Exception {
 
@@ -392,6 +460,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		}
 
 		updateBasicWebContentStructure();
+		addDDMTemplateLinks();
 	}
 
 	protected String getContent(String fileName) {

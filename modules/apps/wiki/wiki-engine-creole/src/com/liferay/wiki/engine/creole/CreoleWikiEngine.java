@@ -38,6 +38,8 @@ import java.util.Map;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
+
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -50,10 +52,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = WikiEngine.class)
 public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
-
-	public CreoleWikiEngine() {
-		super("/help_page.jsp", "http://www.wikicreole.org/wiki/Creole1.0");
-	}
 
 	@Override
 	public String convert(
@@ -75,6 +73,11 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 	@Override
 	public String getFormat() {
 		return "creole";
+	}
+
+	@Override
+	public String getHelpURL() {
+		return "http://www.wikicreole.org/wiki/Creole1.0";
 	}
 
 	@Override
@@ -128,6 +131,11 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 		return new Creole10Parser(commonTokenStream);
 	}
 
+	@Override
+	protected ServletContext getHelpPageServletContext() {
+		return _servletContext;
+	}
+
 	protected WikiPageNode parse(String creoleCode) {
 		Creole10Parser creole10Parser = build(creoleCode);
 
@@ -147,6 +155,13 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 		return creole10Parser.getWikiPageNode();
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.creole)"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Reference
 	protected void setWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
@@ -163,6 +178,7 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreoleWikiEngine.class);
 
+	private ServletContext _servletContext;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

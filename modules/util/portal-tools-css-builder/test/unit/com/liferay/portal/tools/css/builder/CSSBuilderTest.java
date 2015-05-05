@@ -23,6 +23,8 @@ import com.helger.css.writer.CSSWriterSettings;
 
 import java.io.File;
 
+import java.net.URL;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,6 +32,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -37,29 +40,38 @@ import org.junit.Test;
  */
 public class CSSBuilderTest {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		URL url = CSSBuilderTest.class.getResource("dependencies/");
+
+		Path path = Paths.get(url.toURI());
+
+		_WORKING_DIR = path.toString();
+	}
+
 	@Test
 	public void testLibsassGeneratedCss() throws Exception {
 		generateCSS("libsass");
 
 		String expectedTestCss = getFile("expected/test.css");
-		String generatedTestCss = getFile("/libsass/.sass-cache/test.css");
+		String generatedTestCss = getFile("libsass/.sass-cache/test.css");
 
 		Assert.assertEquals(expectedTestCss, generatedTestCss);
 
-		String expectedTestRtlCss = getFile("/expected/test_rtl.css");
+		String expectedTestRtlCss = getFile("expected/test_rtl.css");
 		String generatedTestRtlCss = getFile(
-			"/libsass/.sass-cache/test_rtl.css");
+			"libsass/.sass-cache/test_rtl.css");
 
 		Assert.assertEquals(expectedTestRtlCss, generatedTestRtlCss);
 
-		String expectedMainCss = getFile("/expected/main.css");
-		String generatedMainCss = getFile("/libsass/.sass-cache/main.css");
+		String expectedMainCss = getFile("expected/main.css");
+		String generatedMainCss = getFile("libsass/.sass-cache/main.css");
 
 		Assert.assertEquals(expectedMainCss, generatedMainCss);
 
-		String expectedMainRtlCss = getFile("/expected/main_rtl.css");
+		String expectedMainRtlCss = getFile("expected/main_rtl.css");
 		String generatedMainRtlCss = getFile(
-			"/libsass/.sass-cache/main_rtl.css");
+			"libsass/.sass-cache/main_rtl.css");
 
 		Assert.assertEquals(expectedMainRtlCss, generatedMainRtlCss);
 
@@ -104,22 +116,22 @@ public class CSSBuilderTest {
 		generateCSS("ruby");
 
 		String expectedTestCss = getFile("expected/test.css");
-		String generatedTestCss = getFile("/ruby/.sass-cache/test.css");
+		String generatedTestCss = getFile("ruby/.sass-cache/test.css");
 
 		Assert.assertEquals(expectedTestCss, generatedTestCss);
 
-		String expectedTestRtlCss = getFile("/expected/test_rtl.css");
-		String generatedTestRtlCss = getFile("/ruby/.sass-cache/test_rtl.css");
+		String expectedTestRtlCss = getFile("expected/test_rtl.css");
+		String generatedTestRtlCss = getFile("ruby/.sass-cache/test_rtl.css");
 
 		Assert.assertEquals(expectedTestRtlCss, generatedTestRtlCss);
 
-		String expectedMainCss = getFile("/expected/main.css");
-		String generatedMainCss = getFile("/ruby/.sass-cache/main.css");
+		String expectedMainCss = getFile("expected/main.css");
+		String generatedMainCss = getFile("ruby/.sass-cache/main.css");
 
 		Assert.assertEquals(expectedMainCss, generatedMainCss);
 
-		String expectedMainRtlCss = getFile("/expected/main_rtl.css");
-		String generatedMainRtlCss = getFile("/ruby/.sass-cache/main_rtl.css");
+		String expectedMainRtlCss = getFile("expected/main_rtl.css");
+		String generatedMainRtlCss = getFile("ruby/.sass-cache/main_rtl.css");
 
 		Assert.assertEquals(expectedMainRtlCss, generatedMainRtlCss);
 	}
@@ -143,7 +155,7 @@ public class CSSBuilderTest {
 		return sb.toString();
 	}
 
-	private void generateCSS(String sassImpl) throws Exception {
+	protected void generateCSS(String sassImpl) throws Exception {
 		String sassDir = "/" + sassImpl + "/";
 		String docrootDirName = _WORKING_DIR;
 		String portalCommonDirName =
@@ -158,15 +170,14 @@ public class CSSBuilderTest {
 		CSSBuilder.main(args);
 	}
 
-	private String getFile(String fileName) throws Exception {
-		Path path = Paths.get(_WORKING_DIR + fileName);
+	protected String getFile(String fileName) throws Exception {
+		Path path = Paths.get(_WORKING_DIR, fileName);
 
 		String css = new String(Files.readAllBytes(path));
 
 		return formatCss(css);
 	}
 
-	private static final String _WORKING_DIR = CSSBuilderTest.class.getResource(
-		"dependencies/").getFile();
+	private static String _WORKING_DIR;
 
 }

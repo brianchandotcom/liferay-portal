@@ -3,6 +3,36 @@ AUI.add(
 	function(A) {
 		var Surface = Liferay.Surface;
 
+		var addContentFn = A.Surface.prototype.addContent;
+
+		A.Surface.prototype.addContent = function(screenId, opt_content) {
+			if (!opt_content) {
+				return addContentFn.call(this, screenId, opt_content);
+			}
+
+			var frag = A.Node.create(opt_content);
+
+			A.Array.each(
+				Liferay.Data.sharedResources,
+				function(outputKey) {
+					frag.all('[data-outputkey="' + outputKey + '"]').remove();
+				}
+			);
+
+			var newResources = A.Array.dedupe(
+				A.Array.map(
+					frag.all('[data-outputkey]').getDOMNodes(),
+					function(node) {
+						return node.getAttribute('data-outputkey');
+					}
+				)
+			);
+
+			Liferay.Data.sharedResources = Liferay.Data.sharedResources.concat(newResources);
+
+			return addContentFn.call(this, screenId, frag);
+		};
+
 		A.ready(
 			function() {
 				Surface.app = new A.SurfaceApp(

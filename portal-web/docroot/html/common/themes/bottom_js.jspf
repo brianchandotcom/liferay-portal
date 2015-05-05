@@ -49,6 +49,23 @@
 			</c:if>
 		</c:otherwise>
 	</c:choose>
+
+	<%
+	OutputData outputData = (OutputData)request.getAttribute(WebKeys.OUTPUT_DATA);
+
+	if (outputData != null) {
+		Set<String> outputKeys = outputData.getOutputKeys();
+
+		for (String outputKey : outputKeys) {
+	%>
+
+			Liferay.Data.sharedResources.push('<%= outputKey %>');
+
+	<%
+		}
+	}
+	%>
+
 </aui:script>
 
 <aui:script use="aui-base">

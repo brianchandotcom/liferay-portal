@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.StagedModel;
 
@@ -232,33 +233,43 @@ public class LoggerExportImportLifecycleListener
 
 	@Override
 	protected void onPortletPublicationFailed(
-			Map<String, Serializable> taskContextMap, Throwable throwable)
+			ExportImportConfiguration exportImportConfiguration,
+			Throwable throwable)
 		throws Exception {
 
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		String portletId = MapUtil.getString(settingsMap, "portletId");
+
 		_log.debug(
-			"Portlet publication failed for portlet " +
-				taskContextMap.get("portletId"),
-			throwable);
+			"Portlet publication failed for portlet " + portletId, throwable);
 	}
 
 	@Override
 	protected void onPortletPublicationStarted(
-			Map<String, Serializable> taskContextMap)
+			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 
-		_log.debug(
-			"Portlet publication started for portlet " +
-				taskContextMap.get("portletId"));
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		String portletId = MapUtil.getString(settingsMap, "portletId");
+
+		_log.debug("Portlet publication started for portlet " + portletId);
 	}
 
 	@Override
 	protected void onPortletPublicationSucceeded(
-			Map<String, Serializable> taskContextMap)
+			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 
-		_log.debug(
-			"Portlet publication succeeded for portlet " +
-				taskContextMap.get("portletId"));
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		String portletId = MapUtil.getString(settingsMap, "portletId");
+
+		_log.debug("Portlet publication succeeded for portlet " + portletId);
 	}
 
 	@Override

@@ -343,7 +343,33 @@
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplateLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplateVersion" />
+	</entity>
+	<entity name="DDMTemplateLink" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="templateLinkId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="templateId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="ClassNameId" return-type="Collection">
+			<finder-column name="classNameId" />
+		</finder>
+		<finder name="TemplateId" return-type="Collection">
+			<finder-column name="templateId" />
+		</finder>
+		<finder name="C_C" return-type="DDMTemplateLink" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 	</entity>
 	<entity name="DDMTemplateVersion" local-service="true" remote-service="true">
 

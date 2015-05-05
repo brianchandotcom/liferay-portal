@@ -29,6 +29,11 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.lar.StagingBackgroundTaskDisplayHelperUtil" class="com.liferay.portal.kernel.lar.StagingBackgroundTaskDisplayHelperUtil">
+		<property name="stagingBackgroundTaskHelper">
+			<bean class="com.liferay.portal.lar.backgroundtask.StagingBackgroundTaskDisplayHelperImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEventFactoryUtil" class="com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEventFactoryUtil">
 		<property name="exportImportLifecycleEventFactory">
 			<bean class="com.liferay.portal.lar.lifecycle.ExportImportLifecycleEventFactoryImpl" />
@@ -37,11 +42,6 @@
 	<bean id="com.liferay.portal.kernel.staging.LayoutStagingUtil" class="com.liferay.portal.kernel.staging.LayoutStagingUtil">
 		<property name="layoutStaging">
 			<bean class="com.liferay.portal.staging.LayoutStagingImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.kernel.lar.StagingBackgroundTaskDisplayHelperUtil" class="com.liferay.portal.kernel.lar.StagingBackgroundTaskDisplayHelperUtil">
-		<property name="stagingBackgroundTaskHelper">
-			<bean class="com.liferay.portal.lar.backgroundtask.StagingBackgroundTaskDisplayHelperImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.staging.StagingUtil" class="com.liferay.portal.kernel.staging.StagingUtil">

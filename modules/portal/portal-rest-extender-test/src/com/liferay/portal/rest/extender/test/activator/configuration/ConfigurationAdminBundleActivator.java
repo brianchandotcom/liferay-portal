@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.rest.extender.test.activator.config;
+package com.liferay.portal.rest.extender.test.activator.configuration;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -26,7 +26,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ConfigAdminActivator implements BundleActivator {
+public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext context) throws Exception {

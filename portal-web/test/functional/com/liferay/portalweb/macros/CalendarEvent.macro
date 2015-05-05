@@ -394,6 +394,18 @@
 		</if>
 	</command>
 
+	<command name="addTodayViaScheduler">
+		<execute macro="CalendarEvent#gotoAddTodayViaScheduler">
+			<var name="viewType" value="${viewType}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editTitleViaScheduler">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarEvent#saveViaScheduler" />
+	</command>
+
 	<command name="addViaDayView">
 		<execute macro="CalendarEvent#gotoAddViaDayView" />
 
@@ -1011,6 +1023,12 @@
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
 		<execute macro="CalendarEvent#selectEventIframeCmd" />
+	</command>
+
+	<command name="gotoAddTodayViaScheduler">
+		<var method="StringUtil#upperCase('${viewType}')" name="viewTypeUppercase" />
+
+		<execute function="Click" locator1="PGCalendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY" />
 	</command>
 
 	<command name="gotoAddViaDayView">

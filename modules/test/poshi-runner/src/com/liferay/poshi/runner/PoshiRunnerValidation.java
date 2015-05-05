@@ -125,6 +125,9 @@ public class PoshiRunnerValidation {
 			else if (elementName.equals("var")) {
 				_validateVarElement(childElement, filePath);
 			}
+			else if (elementName.equals("while")) {
+				_validateWhileElement(childElement, filePath);
+			}
 		}
 	}
 
@@ -296,6 +299,18 @@ public class PoshiRunnerValidation {
 				element, possibleAttributeNames, filePath);
 			_validateRequiredAttributeNames(
 				element, Arrays.asList("component-name"), filePath);
+		}
+	}
+
+	private static void _validateElseElement(Element element, String filePath)
+		throws Exception {
+
+		List<Element> elseElements = element.elements("else");
+
+		if (elseElements.size() > 1) {
+			throw new Exception(
+				"Too many else elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
 		}
 	}
 
@@ -535,23 +550,8 @@ public class PoshiRunnerValidation {
 			}
 		}
 
-		List<Element> thenElements = element.elements("then");
-
-		if (thenElements.size() > 1) {
-			throw new Exception(
-				"Too many then elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-
-		_validateHasChildElements(thenElements.get(0), filePath);
-
-		List<Element> elseElements = element.elements("else");
-
-		if (elseElements.size() > 1) {
-			throw new Exception(
-				"Too many else elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
+		_validateElseElement(element, filePath);
+		_validateThenElement(element, filePath);
 
 		List<String> conditionTags = Arrays.asList(
 			"and", "condition", "contains", "equals", "isset", "not", "or");
@@ -822,6 +822,23 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateThenElement(Element element, String filePath)
+		throws Exception {
+
+		List<Element> thenElements = element.elements("then");
+
+		if (thenElements.isEmpty()) {
+			throw new Exception(
+				"Missing then elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+		else if (thenElements.size() > 1) {
+			throw new Exception(
+				"Too many then elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+	}
+
 	private static void _validateVarElement(Element element, String filePath)
 		throws Exception {
 
@@ -844,6 +861,41 @@ public class PoshiRunnerValidation {
 
 		_validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
+	}
+
+	private static void _validateWhileElement(Element element, String filePath)
+		throws Exception {
+
+		_validateHasNoAttributes(element, filePath);
+		_validateThenElement(element, filePath);
+
+		List<String> conditionTags = Arrays.asList(
+			"and", "condition", "contains", "equals", "isset", "not", "or");
+
+		int i = 0;
+
+		List<Element> childElements = element.elements();
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.getName();
+
+			if (conditionTags.contains(childElementName) && (i == 0)) {
+				_validateConditionElement(childElement, filePath);
+			}
+			else if (childElementName.equals("then")) {
+				_validateHasChildElements(childElement, filePath);
+				_validateHasNoAttributes(childElement, filePath);
+
+				_parseElements(childElement, filePath);
+			}
+			else {
+				throw new Exception(
+					"Invalid " + childElementName + " element\n" + filePath +
+						":" + childElement.attributeValue("line-number"));
+			}
+
+			i++;
+		}
 	}
 
 	private static final String _BASE_DIR =

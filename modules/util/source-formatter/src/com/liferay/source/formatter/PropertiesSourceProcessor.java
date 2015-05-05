@@ -32,7 +32,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -106,7 +105,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		File file = getFile(fileName, 4);
 
-		String content = FileUtils.readFileToString(file);
+		String content = readFileToString(file);
 
 		StringBundler sb = new StringBundler();
 

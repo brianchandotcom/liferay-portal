@@ -41,8 +41,6 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FileUtils;
-
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -932,7 +930,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			sourceFormatterArgs.getBaseDirName(),
 			"portal-impl/src/portal.properties");
 
-		String propertiesContent = FileUtils.readFileToString(propertiesFile);
+		String propertiesContent = readFileToString(propertiesFile);
 
 		PropertiesUtil.load(properties, propertiesContent);
 

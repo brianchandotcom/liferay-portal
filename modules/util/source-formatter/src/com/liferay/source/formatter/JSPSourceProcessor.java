@@ -491,7 +491,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				String absolutePath = getAbsolutePath(file);
 
-				String content = FileUtils.readFileToString(file);
+				String content = readFileToString(file);
 
 				Matcher matcher = pattern.matcher(content);
 
@@ -1418,8 +1418,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if (commonInitFileContent == null) {
 				commonInitFile = new File(commonInitFileName);
 
-				commonInitFileContent = FileUtils.readFileToString(
-					commonInitFile);
+				commonInitFileContent = readFileToString(commonInitFile);
 
 				x = commonInitFileContent.indexOf("<%@ page import");
 			}

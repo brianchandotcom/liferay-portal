@@ -36,8 +36,6 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FileUtils;
-
 /**
  * @author Hugo Huijser
  */
@@ -395,7 +393,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String localServiceImplFileName = sb.toString();
 
-			String localServiceImplContent = FileUtils.readFileToString(
+			String localServiceImplContent = readFileToString(
 				new File(localServiceImplFileName));
 
 			if (localServiceImplContent == null) {

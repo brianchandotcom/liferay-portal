@@ -736,7 +736,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String absolutePath = getAbsolutePath(file);
 
-		String content = FileUtils.readFileToString(file);
+		String content = readFileToString(file);
 
 		String newContent = format(file, fileName, absolutePath, content);
 
@@ -842,7 +842,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			File file = new File(basedir + fileName);
 
-			String content = FileUtils.readFileToString(file);
+			String content = readFileToString(file);
 
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -874,7 +874,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		File file = getFile(fileName, level);
 
 		if (file != null) {
-			String content = FileUtils.readFileToString(file);
+			String content = readFileToString(file);
 
 			if (Validator.isNotNull(content)) {
 				return content;
@@ -894,7 +894,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				break;
 			}
 
-			String copyright = FileUtils.readFileToString(
+			String copyright = readFileToString(
 				new File(absolutePath.substring(0, x + 1) + "copyright.txt"));
 
 			if (Validator.isNotNull(copyright)) {
@@ -1247,6 +1247,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (_sourceFormatterArgs.isPrintErrors()) {
 			_sourceFormatterHelper.printError(fileName, file);
 		}
+	}
+
+	protected String readFileToString(File file) throws IOException {
+		return _sourceFormatterHelper.readFileToString(file);
 	}
 
 	protected String replacePrimitiveWrapperInstantiation(

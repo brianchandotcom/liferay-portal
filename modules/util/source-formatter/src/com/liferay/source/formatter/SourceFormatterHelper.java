@@ -70,7 +70,7 @@ public class SourceFormatterHelper {
 		_propertiesFile = new File(propertiesFileName);
 
 		if (_propertiesFile.exists()) {
-			_propertiesContent = FileUtils.readFileToString(_propertiesFile);
+			_propertiesContent = readFileToString(_propertiesFile);
 
 			PropertiesUtil.load(_properties, _propertiesContent);
 		}
@@ -89,6 +89,13 @@ public class SourceFormatterHelper {
 		}
 
 		System.out.println(message);
+	}
+
+	public String readFileToString(File file) throws IOException {
+		String s = FileUtils.readFileToString(file);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	public List<String> scanForFiles(DirectoryScanner directoryScanner) {

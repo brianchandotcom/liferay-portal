@@ -146,7 +146,8 @@ public class CSSBuilderTest {
 	private void generateCSS(String sassImpl) throws Exception {
 		String sassDir = "/" + sassImpl + "/";
 		String docrootDirName = _WORKING_DIR;
-		String portalCommonDirName = _WORKING_DIR + "common";
+		String portalCommonDirName =
+			"../../../portal-web/docroot/html/css/common/";
 
 		String args[] = new String[] {
 			"sass.dir=" + sassDir, "sass.docroot.dir=" + docrootDirName,

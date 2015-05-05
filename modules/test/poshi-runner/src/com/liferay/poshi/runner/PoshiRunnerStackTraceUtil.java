@@ -107,16 +107,7 @@ public final class PoshiRunnerStackTraceUtil {
 					"attribute");
 		}
 
-		String className =
-			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				classCommandName);
-
-		String fileExtension =
-			PoshiRunnerGetterUtil.getFileExtensionFromClassType(classType);
-
-		_filePaths.push(
-			PoshiRunnerContext.getFilePathFromFileName(
-				className + "." + fileExtension));
+		_pushFilePath(classCommandName, classType);
 	}
 
 	public static void setCurrentElement(Element currentElement) {
@@ -124,6 +115,12 @@ public final class PoshiRunnerStackTraceUtil {
 	}
 
 	public static void startStackTrace(
+		String classCommandName, String classType) {
+
+		_pushFilePath(classCommandName, classType);
+	}
+
+	private static void _pushFilePath(
 		String classCommandName, String classType) {
 
 		String className =

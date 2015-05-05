@@ -49,7 +49,7 @@
 
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(locale, "recycle-bin"), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle-bin"), portletURL.toString());
 
 	PortletURL containerModelURL = renderResponse.createRenderURL();
 

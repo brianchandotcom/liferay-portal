@@ -167,7 +167,7 @@ if (workflowEnabled) {
 					<%
 					JournalFolder parentFolder = JournalFolderLocalServiceUtil.fetchFolder(folder.getParentFolderId());
 
-					String parentFolderName = LanguageUtil.get(locale, "home");
+					String parentFolderName = LanguageUtil.get(request, "home");
 
 					if (parentFolder != null) {
 						parentFolderName = parentFolder.getName();

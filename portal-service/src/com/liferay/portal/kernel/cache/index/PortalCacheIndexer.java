@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.cache.index;
 
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -63,57 +64,40 @@ public class PortalCacheIndexer<I, K extends IndexedCacheKey<I>, V> {
 	private void _addIndexedCacheKey(K indexedCacheKey) {
 		I index = indexedCacheKey.getIndex();
 
-		while (true) {
-			Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
+		Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
 
-			if (indexedCacheKeys == null) {
-				Set<K> newIndexedCacheKeys = new HashSet<>();
-
-				newIndexedCacheKeys.add(indexedCacheKey);
-
-				indexedCacheKeys = _indexedCacheKeys.putIfAbsent(
-					index, newIndexedCacheKeys);
-
-				if (indexedCacheKeys == null) {
-					return;
-				}
-			}
-
-			Set<K> newIndexedCacheKeys = new HashSet<>(indexedCacheKeys);
+		if (indexedCacheKeys == null) {
+			Set<K> newIndexedCacheKeys = new ConcurrentHashSet<>();
 
 			newIndexedCacheKeys.add(indexedCacheKey);
 
-			if (_indexedCacheKeys.replace(
-					index, indexedCacheKeys, newIndexedCacheKeys)) {
+			indexedCacheKeys = _indexedCacheKeys.putIfAbsent(
+				index, newIndexedCacheKeys);
 
+			if (indexedCacheKeys == null) {
 				return;
 			}
 		}
+
+		indexedCacheKeys.add(indexedCacheKey);
 	}
 
 	private void _removeIndexedCacheKey(K indexedCacheKey) {
 		I index = indexedCacheKey.getIndex();
 
-		while (true) {
-			Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
+		Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
 
-			if (indexedCacheKeys == null) {
-				return;
-			}
+		if (indexedCacheKeys == null) {
+			return;
+		}
 
-			Set<K> newIndexedCacheKeys = new HashSet<>(indexedCacheKeys);
+		indexedCacheKeys.remove(indexedCacheKey);
 
-			newIndexedCacheKeys.remove(indexedCacheKey);
+		if (indexedCacheKeys.isEmpty() &&
+			_indexedCacheKeys.remove(index, indexedCacheKeys)) {
 
-			if (newIndexedCacheKeys.isEmpty()) {
-				if (_indexedCacheKeys.remove(index, indexedCacheKeys)) {
-					return;
-				}
-			}
-			else if (_indexedCacheKeys.replace(
-						index, indexedCacheKeys, newIndexedCacheKeys)) {
-
-				return;
+			for (K victimIndexedCacheKey : indexedCacheKeys) {
+				_addIndexedCacheKey(victimIndexedCacheKey);
 			}
 		}
 	}

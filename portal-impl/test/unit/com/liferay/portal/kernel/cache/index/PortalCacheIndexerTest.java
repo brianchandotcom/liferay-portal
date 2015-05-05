@@ -93,45 +93,6 @@ public class PortalCacheIndexerTest {
 	}
 
 	@Test
-	public void testAddIndexedCacheKeyConcurrentPutRemove()
-		throws ReflectiveOperationException {
-
-		_portalCache.put(_INDEX_1_KEY_1, _VALUE);
-
-		_mappedMethodNameCallableInvocationHandler.putBeforeCallable(
-			ConcurrentMap.class.getMethod(
-				"putIfAbsent", Object.class, Object.class),
-			new Callable<Void>() {
-
-				@Override
-				public Void call() {
-					_portalCache.put(_INDEX_1_KEY_1, _VALUE);
-
-					return null;
-				}
-
-			});
-
-		_mappedMethodNameCallableInvocationHandler.putBeforeCallable(
-			ConcurrentMap.class.getMethod(
-				"replace", Object.class, Object.class, Object.class),
-			new Callable<Void>() {
-
-				@Override
-				public Void call() {
-					_portalCache.remove(_INDEX_1_KEY_1);
-
-					return null;
-				}
-
-			});
-
-		_portalCache.put(_INDEX_1_KEY_2, _VALUE);
-
-		assertIndexCacheSynchronization();
-	}
-
-	@Test
 	public void testAddIndexedCacheKeyPutSameKey() {
 		_portalCache.put(_INDEX_1_KEY_1, _VALUE);
 		_portalCache.put(_INDEX_1_KEY_1, _VALUE);
@@ -282,23 +243,21 @@ public class PortalCacheIndexerTest {
 		throws ReflectiveOperationException {
 
 		_portalCache.put(_INDEX_1_KEY_1, _VALUE);
-		_portalCache.put(_INDEX_1_KEY_2, _VALUE);
 
 		_mappedMethodNameCallableInvocationHandler.putBeforeCallable(
-			ConcurrentMap.class.getMethod(
-				"replace", Object.class, Object.class, Object.class),
+			ConcurrentMap.class.getMethod("remove", Object.class, Object.class),
 			new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {
-					_portalCache.remove(_INDEX_1_KEY_1);
+					_portalCacheIndexer.removeIndexedCacheKeys(1L);
 
 					return null;
 				}
 
 			});
 
-		_portalCache.remove(_INDEX_1_KEY_2);
+		_portalCache.remove(_INDEX_1_KEY_1);
 
 		assertIndexCacheSynchronization();
 	}

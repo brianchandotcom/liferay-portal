@@ -35,6 +35,8 @@ public class SyncAccount extends StateAwareModel {
 
 	public static final int UI_EVENT_CONNECTION_EXCEPTION = 2;
 
+	public static final int UI_EVENT_MIN_BUILD_REQUIREMENT_FAILED = 6;
+
 	public static final int UI_EVENT_SYNC_ACCOUNT_FOLDER_MISSING = 3;
 
 	public static final int UI_EVENT_SYNC_SERVICES_NOT_ACTIVE = 6;

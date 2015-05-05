@@ -1,4 +1,4 @@
-<definition component-name="portal-wcm">
+<definition component-name="portal-rss">
 	<property name="testray.main.component.name" value="Rss" />
 
 	<set-up>

@@ -16,42 +16,32 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%
+Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+int endHour = ParamUtil.get(request, "schedulerEndDateHour", cal.get(Calendar.HOUR_OF_DAY));
+int startHour = ParamUtil.get(request, "schedulerStartDateHour", cal.get(Calendar.HOUR_OF_DAY));
+
+if (DateUtil.isFormatAmPm(locale)) {
+	endHour = ParamUtil.get(request, "schedulerEndDateHour", cal.get(Calendar.HOUR));
+	startHour = ParamUtil.get(request, "schedulerStartDateHour", cal.get(Calendar.HOUR));
+}
+
+int endAmPm = ParamUtil.get(request, "schedulerEndDateAmPm", cal.get(Calendar.AM_PM));
+int endDay = ParamUtil.get(request, "schedulerEndDateDay", cal.get(Calendar.DATE));
+int endMinute = ParamUtil.get(request, "schedulerEndDateMinute", cal.get(Calendar.MINUTE));
+int endMonth = ParamUtil.get(request, "schedulerEndDateMonth", cal.get(Calendar.MONTH));
+int endYear = ParamUtil.get(request, "schedulerEndDateYear", cal.get(Calendar.YEAR));
+
+int startAmPm = ParamUtil.get(request, "schedulerStartDateAmPm", cal.get(Calendar.AM_PM));
+int startDay = ParamUtil.get(request, "schedulerStartDateDay", cal.get(Calendar.DATE));
+int startMinute = ParamUtil.get(request, "schedulerStartDateMinute", cal.get(Calendar.MINUTE));
+int startMonth = ParamUtil.get(request, "schedulerStartDateMonth", cal.get(Calendar.MONTH));
+int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calendar.YEAR));
+%>
+
 <aui:fieldset>
 
-	<%
-	Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
-	int startHour = ParamUtil.get(request, "schedulerStartDateHour", cal.get(Calendar.HOUR_OF_DAY));
-
-	int endHour = ParamUtil.get(request, "schedulerEndDateHour", cal.get(Calendar.HOUR_OF_DAY));
-
-	if (DateUtil.isFormatAmPm(locale)) {
-		startHour = ParamUtil.get(request, "schedulerStartDateHour", cal.get(Calendar.HOUR));
-
-		endHour = ParamUtil.get(request, "schedulerEndDateHour", cal.get(Calendar.HOUR));
-	}
-
-	int startDay = ParamUtil.get(request, "schedulerStartDateDay", cal.get(Calendar.DATE));
-
-	int endDay = ParamUtil.get(request, "schedulerEndDateDay", cal.get(Calendar.DATE));
-
-	int startMonth = ParamUtil.get(request, "schedulerStartDateMonth", cal.get(Calendar.MONTH));
-
-	int endMonth = ParamUtil.get(request, "schedulerEndDateMonth", cal.get(Calendar.MONTH));
-
-	int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calendar.YEAR));
-
-	int endYear = ParamUtil.get(request, "schedulerEndDateYear", cal.get(Calendar.YEAR));
-
-	int startAmPm = ParamUtil.get(request, "schedulerStartDateAmPm", cal.get(Calendar.AM_PM));
-
-	int endAmPm = ParamUtil.get(request, "schedulerEndDateAmPm", cal.get(Calendar.AM_PM));
-
-	int startMinute = ParamUtil.get(request, "schedulerStartDateMinute", cal.get(Calendar.MINUTE));
-
-	int endMinute = ParamUtil.get(request, "schedulerEndDateMinute", cal.get(Calendar.MINUTE));
-
-	%>
 
 	<aui:field-wrapper label="start-date">
 		<div class="field-row">

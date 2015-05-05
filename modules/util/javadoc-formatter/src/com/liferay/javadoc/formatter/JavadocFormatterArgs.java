@@ -71,7 +71,7 @@ public class JavadocFormatterArgs {
 	}
 
 	public void setLimits(String limits) {
-		setLimits(_split(limits));;
+		setLimits(_split(limits));
 	}
 
 	public void setLimits(String[] limits) {

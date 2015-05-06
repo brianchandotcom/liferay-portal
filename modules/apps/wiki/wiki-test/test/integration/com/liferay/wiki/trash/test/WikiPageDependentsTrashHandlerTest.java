@@ -442,7 +442,7 @@ public class WikiPageDependentsTrashHandlerTest {
 	}
 
 	@Test
-	public void testMoveToTrashPageWithRedirectPageAndChildPageWithRedirectorPage()
+	public void testMoveToTrashPageWithRedirectorPageAndChildPageWithRedirectorPage()
 		throws Exception {
 
 		RelatedPages relatedPages = buildRelatedPages();
@@ -568,7 +568,7 @@ public class WikiPageDependentsTrashHandlerTest {
 	}
 
 	@Test
-	public void testRestoreExplicitlyTrashedPageWithRedirectPageFromTrash()
+	public void testRestoreExplicitlyTrashedPageWithRedirectorPageFromTrash()
 		throws Exception {
 
 		RelatedPages relatedPages = buildRelatedPages();
@@ -591,7 +591,7 @@ public class WikiPageDependentsTrashHandlerTest {
 
 	@Test
 	public void
-			testRestoreExplicitlyTrashedParentPageAndChildPageAndRedirectPageFromTrash()
+			testRestoreExplicitlyTrashedParentPageAndChildPageAndRedirectorPageFromTrash()
 		throws Exception {
 
 		RelatedPages relatedPages = buildRelatedPages();
@@ -964,7 +964,7 @@ public class WikiPageDependentsTrashHandlerTest {
 	}
 
 	@Test
-	public void testRestoreRedirectPageWithParentPageFromTrash()
+	public void testRestoreRedirectorPageWithParentPageFromTrash()
 		throws Exception {
 
 		int initialBaseModelsCount =
@@ -1171,14 +1171,14 @@ public class WikiPageDependentsTrashHandlerTest {
 		public RelatedPages(
 			WikiPage parentPage, WikiPage page, WikiPage childPage,
 			WikiPage grandchildPage, WikiPage redirectorPage,
-			WikiPage childRedirectPage) {
+			WikiPage childRedirectorPage) {
 
 			_parentPage = parentPage;
 			_page = page;
 			_grandchildPage = grandchildPage;
 			_childPage = childPage;
 			_redirectorPage = redirectorPage;
-			_childRedirectorPage = childRedirectPage;
+			_childRedirectorPage = childRedirectorPage;
 		}
 
 		public WikiPage getChildPage() {

@@ -377,11 +377,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (_portalLanguageProperties == null) {
 			_portalLanguageProperties = new Properties();
 
-			ClassLoader classLoader =
-				BaseSourceProcessor.class.getClassLoader();
+			File portalLanguagePropertiesFile = new File(
+				getFile("portal-impl", 4), "src/content/Language.properties");
 
-			InputStream inputStream = classLoader.getResourceAsStream(
-				"content/Language.properties");
+			InputStream inputStream = new FileInputStream(
+				portalLanguagePropertiesFile);
 
 			_portalLanguageProperties.load(inputStream);
 		}

@@ -178,6 +178,11 @@
 	<td>xpath=(//input[contains(@name,'rowIds')])[2]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>THIS_IS_A_MINOR_EDIT_CHECKBOX</td>
+	<td>//label[contains(.,'This is a minor edit.')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

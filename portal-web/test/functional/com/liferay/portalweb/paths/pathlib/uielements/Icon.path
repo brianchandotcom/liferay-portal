@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS</td>
+	<td>//div[contains(.,'Details')]/span/a/i[@class='icon-file-alt']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
 	<td>//a[contains(@id,'editLayoutPanel') and i[contains(@class,'icon-edit')]]</td>
 	<td></td>

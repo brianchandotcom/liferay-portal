@@ -34,6 +34,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_ENTER_A_VALID_TITLE</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter a valid title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_REQUEST_FAILED_TO_COMPLETE</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'Your request failed to complete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_FIELD_REQUIRED</td>
 	<td>//span[contains(@id,'title')]//div[contains(.,'This field is required.')]</td>
 	<td></td>
@@ -71,6 +81,16 @@
 <tr>
 	<td>INFO_ARTICLE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_NO_PAGES_FOUND</td>
+	<td>//div[@class='alert alert-info' and contains(.,'No pages were found that matched the keywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PAGE_DOES_NOT_EXIST</td>
+	<td>//div[@class='alert alert-info' and contains(.,'This page does not exist yet. Use the form below to create it')]</td>
 	<td></td>
 </tr>
 <tr>

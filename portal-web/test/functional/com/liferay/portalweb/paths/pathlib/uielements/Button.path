@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ATTACHMENTS</td>
+	<td>//button[contains(.,'Add Attachments')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_ENTRY</td>
 	<td>//button[contains(.,'Add Entry')]</td>
 	<td></td>
@@ -25,7 +30,12 @@
 </tr>
 <tr>
 	<td>ADD_PAGE</td>
-	<td>//button[contains(.,'Add Page')]</td>
+	<td>//a[contains(.,'Add Page')] | //button[contains(.,'Add Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBFOLDER</td>
+	<td>//a[contains(.,'Add Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,13 +54,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BROWSE</td>
-	<td>//input[@id='_195_fileName']</td>
+	<td>ADD_WIKI</td>
+	<td>//a[contains(@id,'addNodeButton')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SUBFOLDER</td>
-	<td>//a[contains(.,'Add Subfolder')]</td>
+	<td>BACK_BUTTON</td>
+	<td>//a[@title='Back']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BROWSE</td>
+	<td>//input[@id='_195_fileName']</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,12 +205,12 @@
 </tr>
 <tr>
 	<td>PARENT_FOLDER_SELECT</td>
-	<td>//button[contains(@id,'selecFolderButton')]</td>
+	<td>//button[contains(@id,'selectFolderButton')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//button[contains(.,'Permissions')]</td>
+	<td>//a[contains(.,'Permissions')] | //button[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -214,6 +229,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_BUTTON_LOCALIZED</td>
+	<td>//button[contains(@id,'publishButton')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_LOCALIZED</td>
 	<td>//button[contains(@id,'publishButton')]</td>
 	<td></td>
@@ -221,6 +241,21 @@
 <tr>
 	<td>REMOVE</td>
 	<td>//button[contains(.,'Remove')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_REDIRECT</td>
+	<td>//button[contains(.,'Remove Redirect')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RENAME</td>
+	<td>//button[contains(.,'Rename')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPLY</td>
+	<td>//button[contains(.,'Reply')]</td>
 	<td></td>
 </tr>
 <tr>

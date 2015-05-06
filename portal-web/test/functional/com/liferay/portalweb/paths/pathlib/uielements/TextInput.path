@@ -19,6 +19,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURRENT_PARENT</td>
+	<td>//input[contains(@id,'currentParent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_TITLE</td>
+	<td>//input[contains(@id,'currentTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELD</td>
+	<td>//input[contains(@name,'ExpandoAttribute')] | //textarea[contains(@name,'ExpandoAttribute')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE</td>
 	<td>//input[contains(@id,'displayDate')]</td>
 	<td></td>
@@ -69,8 +84,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_PARENT</td>
+	<td>//input[contains(@id,'newParent')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_PASSWORD</td>
 	<td>//div[label[contains(.,'New Password')]]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_TITLE</td>
+	<td>//input[contains(@id,'newTitle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -101,6 +126,11 @@
 <tr>
 	<td>SEARCH</td>
 	<td>//input[@title='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILES_FIELD</td>
+	<td>//div[contains(@id,'uploaderContent') and contains(.,'Select Files')]/input</td>
 	<td></td>
 </tr>
 <tr>

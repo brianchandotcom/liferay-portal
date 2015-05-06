@@ -149,8 +149,8 @@ public class NewEnvTestRule implements TestRule {
 		arguments.add("-Djava.net.preferIPv4Stack=true");
 		arguments.add("-Dwhip.static.instrument=true");
 
-		if (Boolean.getBoolean("junit.code.coverage.dump")) {
-			arguments.add("-Djunit.code.coverage.dump=true");
+		if (Boolean.getBoolean("whip.instrument.dump")) {
+			arguments.add("-Dwhip.instrument.dump=true");
 		}
 
 		if (Boolean.getBoolean("junit.debug")) {

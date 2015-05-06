@@ -116,7 +116,7 @@ public class WhipClassFileTransformer implements ClassFileTransformer {
 
 				byte[] data = classWriter.toByteArray();
 
-				dumpIntrumentedClass(classLoader, className, data);
+				dumpInstrumentedClass(classLoader, className, data);
 
 				return data;
 			}
@@ -130,11 +130,11 @@ public class WhipClassFileTransformer implements ClassFileTransformer {
 		return null;
 	}
 
-	protected void dumpIntrumentedClass(
+	protected void dumpInstrumentedClass(
 			ClassLoader classLoader, String className, byte[] data)
 		throws IOException {
 
-		if (!Boolean.getBoolean("junit.code.coverage.dump")) {
+		if (!Boolean.getBoolean("whip.instrument.dump")) {
 			return;
 		}
 

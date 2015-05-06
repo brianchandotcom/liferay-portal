@@ -1413,8 +1413,8 @@ public class LocalProcessExecutorTest {
 			"-D" + SystemProperties.SYSTEM_PROPERTIES_QUIET + "=true");
 		arguments.add("-Dwhip.static.instrument=true");
 
-		if (Boolean.getBoolean("junit.code.coverage.dump")) {
-			arguments.add("-Djunit.code.coverage.dump=true");
+		if (Boolean.getBoolean("whip.instrument.dump")) {
+			arguments.add("-Dwhip.instrument.dump=true");
 		}
 
 		if (Boolean.getBoolean("junit.debug")) {

@@ -22,12 +22,16 @@ import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriterSettings;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.net.URL;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.List;
 
@@ -37,6 +41,7 @@ import org.junit.Test;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class CSSBuilderTest {
 
@@ -47,6 +52,9 @@ public class CSSBuilderTest {
 		Path path = Paths.get(url.toURI());
 
 		_WORKING_DIR = path.toString();
+
+		copySassDir("libsass");
+		copySassDir("ruby");
 	}
 
 	@Test
@@ -134,6 +142,45 @@ public class CSSBuilderTest {
 		String generatedMainRtlCss = getFile("ruby/.sass-cache/main_rtl.css");
 
 		Assert.assertEquals(expectedMainRtlCss, generatedMainRtlCss);
+	}
+
+	protected static void copySassDir(String compilerImpl) throws IOException {
+		final Path fromPath = Paths.get(_WORKING_DIR, "sass");
+		final Path toPath = Paths.get(_WORKING_DIR, compilerImpl);
+
+		Files.createDirectory(toPath);
+
+		Files.walkFileTree(
+			fromPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dir, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path toDir = toPath.resolve(fromPath.relativize(dir));
+
+					if (!Files.exists(toDir)) {
+						Files.copy(dir, toDir);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path file, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path toFile = toPath.resolve(fromPath.relativize(file));
+
+					Files.copy(file, toFile);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	protected String formatCss(String css) {

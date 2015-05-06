@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.xml.SAXReaderFactory;
+import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.xml.XMLFormatter;
 
@@ -930,7 +931,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			sourceFormatterArgs.getBaseDirName(),
 			"portal-impl/src/portal.properties");
 
-		String propertiesContent = readFileToString(propertiesFile);
+		String propertiesContent = FileUtil.read(propertiesFile);
 
 		PropertiesUtil.load(properties, propertiesContent);
 

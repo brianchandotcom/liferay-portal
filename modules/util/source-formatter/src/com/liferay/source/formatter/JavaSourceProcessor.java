@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.FileUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaSource;
@@ -391,7 +392,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String localServiceImplFileName = sb.toString();
 
-			String localServiceImplContent = readFileToString(
+			String localServiceImplContent = FileUtil.read(
 				new File(localServiceImplFileName));
 
 			if (localServiceImplContent == null) {

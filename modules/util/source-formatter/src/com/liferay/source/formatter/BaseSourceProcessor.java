@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,7 +46,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
@@ -731,7 +731,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String absolutePath = getAbsolutePath(file);
 
-		String content = readFileToString(file);
+		String content = FileUtil.read(file);
 
 		String newContent = format(file, fileName, absolutePath, content);
 
@@ -839,7 +839,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			File file = new File(basedir + fileName);
 
-			String content = readFileToString(file);
+			String content = FileUtil.read(file);
 
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -871,7 +871,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		File file = getFile(fileName, level);
 
 		if (file != null) {
-			String content = readFileToString(file);
+			String content = FileUtil.read(file);
 
 			if (Validator.isNotNull(content)) {
 				return content;
@@ -891,7 +891,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				break;
 			}
 
-			String copyright = readFileToString(
+			String copyright = FileUtil.read(
 				new File(absolutePath.substring(0, x + 1) + "copyright.txt"));
 
 			if (Validator.isNotNull(copyright)) {
@@ -1234,7 +1234,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (sourceFormatterArgs.isAutoFix()) {
-			FileUtils.writeStringToFile(file, newContent, StringPool.UTF8);
+			FileUtil.write(file, newContent);
 		}
 		else if (_firstSourceMismatchException == null) {
 			_firstSourceMismatchException = new SourceMismatchException(
@@ -1244,10 +1244,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (sourceFormatterArgs.isPrintErrors()) {
 			_sourceFormatterHelper.printError(fileName, file);
 		}
-	}
-
-	protected String readFileToString(File file) throws IOException {
-		return _sourceFormatterHelper.readFileToString(file);
 	}
 
 	protected String replacePrimitiveWrapperInstantiation(

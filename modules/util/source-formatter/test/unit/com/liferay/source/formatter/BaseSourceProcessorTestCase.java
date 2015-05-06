@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -153,7 +154,7 @@ public class BaseSourceProcessorTestCase {
 			}
 		}
 		else {
-			String actualFormattedContent = FileUtils.readFileToString(
+			String actualFormattedContent = FileUtil.read(
 				new File(modifiedFileNames.get(0)));
 
 			URL expectedURL = classLoader.getResource(

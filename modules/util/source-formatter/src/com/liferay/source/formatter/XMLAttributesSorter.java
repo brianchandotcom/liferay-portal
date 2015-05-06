@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -82,12 +82,12 @@ public class XMLAttributesSorter {
 			fullFileName = StringUtil.replace(
 				fullFileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			String content = FileUtils.readFileToString(file, StringPool.UTF8);
+			String content = FileUtil.read(file);
 
 			String newContent = XMLSourceProcessor.sortAttributes(content);
 
 			if (!content.equals(newContent)) {
-				FileUtils.writeStringToFile(file, newContent, StringPool.UTF8);
+				FileUtil.write(file, newContent);
 
 				System.out.println(fullFileName);
 			}

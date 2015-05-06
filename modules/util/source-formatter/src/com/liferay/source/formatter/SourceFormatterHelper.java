@@ -19,16 +19,15 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -49,8 +48,7 @@ public class SourceFormatterHelper {
 		String newPropertiesContent = PropertiesUtil.toString(_properties);
 
 		if (!_propertiesContent.equals(newPropertiesContent)) {
-			FileUtils.writeStringToFile(
-				_propertiesFile, newPropertiesContent, StringPool.UTF8);
+			FileUtil.write(_propertiesFile, newPropertiesContent);
 		}
 	}
 
@@ -72,7 +70,7 @@ public class SourceFormatterHelper {
 		_propertiesFile = new File(propertiesFileName);
 
 		if (_propertiesFile.exists()) {
-			_propertiesContent = readFileToString(_propertiesFile);
+			_propertiesContent = FileUtil.read(_propertiesFile);
 
 			PropertiesUtil.load(_properties, _propertiesContent);
 		}
@@ -91,18 +89,6 @@ public class SourceFormatterHelper {
 		}
 
 		System.out.println(message);
-	}
-
-	public String readFileToString(File file) throws IOException {
-		try {
-			String s = FileUtils.readFileToString(file, StringPool.UTF8);
-
-			return StringUtil.replace(
-				s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
-		}
-		catch (FileNotFoundException fnfe) {
-			return null;
-		}
 	}
 
 	public List<String> scanForFiles(DirectoryScanner directoryScanner) {

@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.map;
 
+import com.liferay.osgi.service.tracker.map.ServiceReferenceMappers.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.internal.DefaultServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.map.internal.MultiValueServiceTrackerBucketFactory;
 import com.liferay.osgi.service.tracker.map.internal.ServiceTrackerMapImpl;
@@ -172,107 +173,6 @@ public class ServiceTrackerMapFactory {
 			new PropertyServiceReferenceMapper<String, SR>(propertyKey),
 			serviceTrackerCustomizer,
 			new SingleValueServiceTrackerBucketFactory<SR, S>());
-	}
-
-	public static class PropertyServiceReferenceComparator <T>
-		implements Comparator<ServiceReference<T>> {
-
-		public PropertyServiceReferenceComparator(String propertyKey) {
-			_propertyKey = propertyKey;
-		}
-
-		@Override
-		public int compare(
-			ServiceReference<T> serviceReference1,
-			ServiceReference<T> serviceReference2) {
-
-			if (serviceReference1 == null) {
-				if (serviceReference2 == null) {
-					return 0;
-				}
-				else {
-					return -1;
-				}
-			}
-			else if (serviceReference2 == null) {
-				return 1;
-			}
-
-			Object propertyValue1 = serviceReference1.getProperty(_propertyKey);
-
-			if (!(propertyValue1 instanceof Comparable)) {
-				return -(serviceReference1.compareTo(serviceReference2));
-			}
-
-			Comparable<Object> propertyValueComparable1 =
-				(Comparable<Object>)propertyValue1;
-
-			Object propertyValue2 = serviceReference2.getProperty(_propertyKey);
-
-			if (propertyValue1 == null) {
-				if (propertyValue2 != null) {
-					return -1;
-				}
-
-				return -(serviceReference1.compareTo(serviceReference2));
-			}
-
-			return -(propertyValueComparable1.compareTo(propertyValue2));
-		}
-
-		private String _propertyKey;
-
-	}
-
-	public static class PropertyServiceReferenceMapper<T, S>
-		implements ServiceReferenceMapper<T, S> {
-
-		public PropertyServiceReferenceMapper(String propertyKey) {
-			_propertyKey = propertyKey;
-		}
-
-		@Override
-		public void map(
-			ServiceReference<S> serviceReference, Emitter<T> emitter) {
-
-			Object propertyValue = serviceReference.getProperty(_propertyKey);
-
-			if (propertyValue != null) {
-				if (propertyValue instanceof Object[]) {
-					for (T t : (T[])propertyValue) {
-						emitter.emit(t);
-					}
-				}
-				else {
-					emitter.emit((T)propertyValue);
-				}
-			}
-		}
-
-		private String _propertyKey;
-
-	}
-
-	public static <K, S> ServiceReferenceMapper<K, S> fromService(
-		final BundleContext bundleContext,
-		final ServiceMapper<K, S> serviceMapper) {
-
-		return new ServiceReferenceMapper<K, S>() {
-			@Override
-			public void map(
-				ServiceReference<S> serviceReference, Emitter<K> emitter) {
-
-				S service = bundleContext.getService(serviceReference);
-
-				try {
-					serviceMapper.map(service, emitter);
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-			}
-		};
-
 	}
 
 }

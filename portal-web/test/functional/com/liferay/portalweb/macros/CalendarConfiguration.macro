@@ -43,10 +43,7 @@
 	</command>
 
 	<command name="tearDown">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Calendar" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		<execute macro="Calendar#gotoConfiguration" />
 
 		<execute macro="CalendarConfiguration#selectDefaultDuration">
 			<var name="defaultDuration" value="60 Minutes" />

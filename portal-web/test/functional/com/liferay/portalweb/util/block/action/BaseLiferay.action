@@ -65,6 +65,14 @@
 		</default>
 	</command>
 
+	<command name="assertConsoleTextPresentNoError">
+		<default>
+			<description message="Assert that the text ${value1} is present within the console output." />
+
+			<execute function="AssertConsoleTextPresent#assertConsoleTextPresent" />
+		</default>
+	</command>
+
 	<command name="assertElementNotPresent">
 		<default>
 			<description message="Assert that the ${locator1} is NOT present." />
@@ -352,6 +360,12 @@
 	</command>
 
 	<command name="refresh">
+		<default>
+			<execute function="Refresh#refresh" />
+		</default>
+	</command>
+
+	<command name="refreshNoError">
 		<default>
 			<execute function="Refresh#refresh" />
 		</default>

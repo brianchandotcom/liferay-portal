@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>RssFeed</title>
+<title>RSSFeed</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">RssFeed</td></tr>
+<tr><td rowspan="1" colspan="3">RSSFeed</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -21,6 +21,11 @@
 <tr>
 	<td>FEED_NAVIGATION_DISPLAY_STYLE</td>
 	<td>//div[contains(@id,'feedsTab')]/ul/li[contains(.,'${key_feedTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FEED_PANEL_TOGGLE</td>
+	<td>//div[@id='rssFeedsPanelContainer']//div[@class='panel-toggle']</td>
 	<td></td>
 </tr>
 <tr>

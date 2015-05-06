@@ -207,6 +207,8 @@ public class ZipReaderImpl implements ZipReader {
 			new DefaultArchiveDetector(
 				ArchiveDetector.ALL, "lar|" + ArchiveDetector.ALL.getSuffixes(),
 				new ZipDriver()));
+
+		TrueZipHelperUtil.initialize();
 	}
 
 	private final File _zipFile;

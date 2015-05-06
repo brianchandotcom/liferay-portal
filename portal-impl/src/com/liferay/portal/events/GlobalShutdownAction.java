@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.zip.TrueZipHelperUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.util.ThirdPartyThreadLocalRegistry;
 
@@ -265,6 +266,10 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Portal executors
 
 		PortalExecutorManagerUtil.shutdown(true);
+
+		// TrueZip graceful shutdown
+
+		TrueZipHelperUtil.shutdown();
 	}
 
 	protected void shutdownLevel6() {

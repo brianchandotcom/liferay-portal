@@ -527,6 +527,15 @@
 		<execute function="Pause" locator1="5000" />
 	</command>
 
+	<command name="gotoConfiguration">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Calendar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="CalendarConfiguration#CALENDAR_CONFIGURATION_IFRAME" />
+	</command>
+
 	<command name="gotoCurrentSiteCalendarsManage">
 		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
 		<execute function="AssertClick" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />

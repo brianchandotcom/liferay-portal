@@ -130,9 +130,14 @@ public final class PoshiRunnerStackTraceUtil {
 		String fileExtension =
 			PoshiRunnerGetterUtil.getFileExtensionFromClassType(classType);
 
-		_filePaths.push(
-			PoshiRunnerContext.getFilePathFromFileName(
-				className + "." + fileExtension));
+		String filePath = PoshiRunnerContext.getFilePathFromFileName(
+			className + "." + fileExtension);
+
+		String commandName =
+			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+				classCommandName);
+
+		_filePaths.push(filePath + "[" + commandName + "]");
 	}
 
 	private static Element _currentElement;

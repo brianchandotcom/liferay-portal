@@ -645,10 +645,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_INFO_MESSAGE" value1="× Esta página se muestra en inglés (Estados Unidos). Establecer inglés (Estados Unidos) como su idioma preferido." />
+		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_INFO_MESSAGE" value1="× Esta página se muestra en inglés (Estados Unidos). Mostrar la página en español (España). Establecer inglés (Estados Unidos) como su idioma preferido." />
 
-		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Establecer inglés (Estados Unidos) como su idioma preferido." />
+		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE" value1="Mostrar la página en español (España)." />
 
+		<execute function="AssertTextEquals" locator1="Home#PORTAL_LOCALIZATION_PREFERRED_MESSAGE" value1="Establecer inglés (Estados Unidos) como su idioma preferido." />
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG" />

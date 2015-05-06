@@ -65,6 +65,10 @@ create table DDMTemplateVersion (
 	script TEXT null
 );
 
+alter table DLFileEntryMetadata drop column fileEntryTypeId;
+
+drop index IX_F8E90438 on DLFileEntryMetadata;
+
 alter table DLFolder add restrictionType INTEGER;
 
 update DLFolder set restrictionType = 1 where overrideFileEntryTypes = 1;

@@ -1446,8 +1446,6 @@ public class DataFactory {
 		dlFileEntryMetadataModel.setFileEntryMetadataId(_counter.get());
 		dlFileEntryMetadataModel.setDDMStorageId(ddmStorageLinkId);
 		dlFileEntryMetadataModel.setDDMStructureId(ddmStructureId);
-		dlFileEntryMetadataModel.setFileEntryTypeId(
-			dlFileVersionModel.getFileEntryTypeId());
 		dlFileEntryMetadataModel.setFileEntryId(
 			dlFileVersionModel.getFileEntryId());
 		dlFileEntryMetadataModel.setFileVersionId(

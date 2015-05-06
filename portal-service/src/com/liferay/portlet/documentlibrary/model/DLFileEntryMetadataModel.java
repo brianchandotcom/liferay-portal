@@ -118,20 +118,6 @@ public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>
 	public void setDDMStructureId(long DDMStructureId);
 
 	/**
-	 * Returns the file entry type ID of this document library file entry metadata.
-	 *
-	 * @return the file entry type ID of this document library file entry metadata
-	 */
-	public long getFileEntryTypeId();
-
-	/**
-	 * Sets the file entry type ID of this document library file entry metadata.
-	 *
-	 * @param fileEntryTypeId the file entry type ID of this document library file entry metadata
-	 */
-	public void setFileEntryTypeId(long fileEntryTypeId);
-
-	/**
 	 * Returns the file entry ID of this document library file entry metadata.
 	 *
 	 * @return the file entry ID of this document library file entry metadata

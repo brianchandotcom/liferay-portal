@@ -172,7 +172,7 @@ public class RawMetadataProcessorImpl
 		serviceContext.setUserId(fileVersion.getUserId());
 
 		DLFileEntryMetadataLocalServiceUtil.updateFileEntryMetadata(
-			fileVersion.getCompanyId(), ddmStructures, 0L,
+			fileVersion.getCompanyId(), ddmStructures,
 			fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 			rawMetadataMap, serviceContext);
 

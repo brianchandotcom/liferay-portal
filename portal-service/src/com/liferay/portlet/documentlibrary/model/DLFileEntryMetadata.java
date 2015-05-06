@@ -38,9 +38,6 @@ public interface DLFileEntryMetadata extends DLFileEntryMetadataModel,
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

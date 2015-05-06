@@ -56,7 +56,6 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
 		attributes.put("DDMStorageId", getDDMStorageId());
 		attributes.put("DDMStructureId", getDDMStructureId());
-		attributes.put("fileEntryTypeId", getFileEntryTypeId());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("fileVersionId", getFileVersionId());
 
@@ -87,12 +86,6 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 
 		if (DDMStructureId != null) {
 			setDDMStructureId(DDMStructureId);
-		}
-
-		Long fileEntryTypeId = (Long)attributes.get("fileEntryTypeId");
-
-		if (fileEntryTypeId != null) {
-			setFileEntryTypeId(fileEntryTypeId);
 		}
 
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
@@ -168,22 +161,6 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	@Override
 	public long getFileEntryMetadataId() {
 		return _dlFileEntryMetadata.getFileEntryMetadataId();
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryMetadata.getFileEntryType();
-	}
-
-	/**
-	* Returns the file entry type ID of this document library file entry metadata.
-	*
-	* @return the file entry type ID of this document library file entry metadata
-	*/
-	@Override
-	public long getFileEntryTypeId() {
-		return _dlFileEntryMetadata.getFileEntryTypeId();
 	}
 
 	@Override
@@ -313,16 +290,6 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	@Override
 	public void setFileEntryMetadataId(long fileEntryMetadataId) {
 		_dlFileEntryMetadata.setFileEntryMetadataId(fileEntryMetadataId);
-	}
-
-	/**
-	* Sets the file entry type ID of this document library file entry metadata.
-	*
-	* @param fileEntryTypeId the file entry type ID of this document library file entry metadata
-	*/
-	@Override
-	public void setFileEntryTypeId(long fileEntryTypeId) {
-		_dlFileEntryMetadata.setFileEntryTypeId(fileEntryTypeId);
 	}
 
 	/**

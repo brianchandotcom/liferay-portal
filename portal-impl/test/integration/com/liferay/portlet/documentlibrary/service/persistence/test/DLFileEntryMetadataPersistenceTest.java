@@ -122,8 +122,6 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		newDLFileEntryMetadata.setDDMStructureId(RandomTestUtil.nextLong());
 
-		newDLFileEntryMetadata.setFileEntryTypeId(RandomTestUtil.nextLong());
-
 		newDLFileEntryMetadata.setFileEntryId(RandomTestUtil.nextLong());
 
 		newDLFileEntryMetadata.setFileVersionId(RandomTestUtil.nextLong());
@@ -140,8 +138,6 @@ public class DLFileEntryMetadataPersistenceTest {
 			newDLFileEntryMetadata.getDDMStorageId());
 		Assert.assertEquals(existingDLFileEntryMetadata.getDDMStructureId(),
 			newDLFileEntryMetadata.getDDMStructureId());
-		Assert.assertEquals(existingDLFileEntryMetadata.getFileEntryTypeId(),
-			newDLFileEntryMetadata.getFileEntryTypeId());
 		Assert.assertEquals(existingDLFileEntryMetadata.getFileEntryId(),
 			newDLFileEntryMetadata.getFileEntryId());
 		Assert.assertEquals(existingDLFileEntryMetadata.getFileVersionId(),
@@ -155,13 +151,6 @@ public class DLFileEntryMetadataPersistenceTest {
 		_persistence.countByUuid(StringPool.NULL);
 
 		_persistence.countByUuid((String)null);
-	}
-
-	@Test
-	public void testCountByFileEntryTypeId() throws Exception {
-		_persistence.countByFileEntryTypeId(RandomTestUtil.nextLong());
-
-		_persistence.countByFileEntryTypeId(0L);
 	}
 
 	@Test
@@ -218,8 +207,7 @@ public class DLFileEntryMetadataPersistenceTest {
 	protected OrderByComparator<DLFileEntryMetadata> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileEntryMetadata",
 			"uuid", true, "fileEntryMetadataId", true, "DDMStorageId", true,
-			"DDMStructureId", true, "fileEntryTypeId", true, "fileEntryId",
-			true, "fileVersionId", true);
+			"DDMStructureId", true, "fileEntryId", true, "fileVersionId", true);
 	}
 
 	@Test
@@ -449,8 +437,6 @@ public class DLFileEntryMetadataPersistenceTest {
 		dlFileEntryMetadata.setDDMStorageId(RandomTestUtil.nextLong());
 
 		dlFileEntryMetadata.setDDMStructureId(RandomTestUtil.nextLong());
-
-		dlFileEntryMetadata.setFileEntryTypeId(RandomTestUtil.nextLong());
 
 		dlFileEntryMetadata.setFileEntryId(RandomTestUtil.nextLong());
 

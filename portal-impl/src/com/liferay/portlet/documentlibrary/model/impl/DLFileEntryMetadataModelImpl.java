@@ -64,11 +64,10 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 			{ "fileEntryMetadataId", Types.BIGINT },
 			{ "DDMStorageId", Types.BIGINT },
 			{ "DDMStructureId", Types.BIGINT },
-			{ "fileEntryTypeId", Types.BIGINT },
 			{ "fileEntryId", Types.BIGINT },
 			{ "fileVersionId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntryMetadata (uuid_ VARCHAR(75) null,fileEntryMetadataId LONG not null primary key,DDMStorageId LONG,DDMStructureId LONG,fileEntryTypeId LONG,fileEntryId LONG,fileVersionId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntryMetadata (uuid_ VARCHAR(75) null,fileEntryMetadataId LONG not null primary key,DDMStorageId LONG,DDMStructureId LONG,fileEntryId LONG,fileVersionId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryMetadata";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntryMetadata.fileEntryMetadataId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntryMetadata.fileEntryMetadataId ASC";
@@ -86,10 +85,9 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 			true);
 	public static final long DDMSTRUCTUREID_COLUMN_BITMASK = 1L;
 	public static final long FILEENTRYID_COLUMN_BITMASK = 2L;
-	public static final long FILEENTRYTYPEID_COLUMN_BITMASK = 4L;
-	public static final long FILEVERSIONID_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long FILEENTRYMETADATAID_COLUMN_BITMASK = 32L;
+	public static final long FILEVERSIONID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long FILEENTRYMETADATAID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata"));
 
@@ -134,7 +132,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
 		attributes.put("DDMStorageId", getDDMStorageId());
 		attributes.put("DDMStructureId", getDDMStructureId());
-		attributes.put("fileEntryTypeId", getFileEntryTypeId());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("fileVersionId", getFileVersionId());
 
@@ -168,12 +165,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		if (DDMStructureId != null) {
 			setDDMStructureId(DDMStructureId);
-		}
-
-		Long fileEntryTypeId = (Long)attributes.get("fileEntryTypeId");
-
-		if (fileEntryTypeId != null) {
-			setFileEntryTypeId(fileEntryTypeId);
 		}
 
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
@@ -255,28 +246,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	}
 
 	@Override
-	public long getFileEntryTypeId() {
-		return _fileEntryTypeId;
-	}
-
-	@Override
-	public void setFileEntryTypeId(long fileEntryTypeId) {
-		_columnBitmask |= FILEENTRYTYPEID_COLUMN_BITMASK;
-
-		if (!_setOriginalFileEntryTypeId) {
-			_setOriginalFileEntryTypeId = true;
-
-			_originalFileEntryTypeId = _fileEntryTypeId;
-		}
-
-		_fileEntryTypeId = fileEntryTypeId;
-	}
-
-	public long getOriginalFileEntryTypeId() {
-		return _originalFileEntryTypeId;
-	}
-
-	@Override
 	public long getFileEntryId() {
 		return _fileEntryId;
 	}
@@ -355,7 +324,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		dlFileEntryMetadataImpl.setFileEntryMetadataId(getFileEntryMetadataId());
 		dlFileEntryMetadataImpl.setDDMStorageId(getDDMStorageId());
 		dlFileEntryMetadataImpl.setDDMStructureId(getDDMStructureId());
-		dlFileEntryMetadataImpl.setFileEntryTypeId(getFileEntryTypeId());
 		dlFileEntryMetadataImpl.setFileEntryId(getFileEntryId());
 		dlFileEntryMetadataImpl.setFileVersionId(getFileVersionId());
 
@@ -426,10 +394,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		dlFileEntryMetadataModelImpl._setOriginalDDMStructureId = false;
 
-		dlFileEntryMetadataModelImpl._originalFileEntryTypeId = dlFileEntryMetadataModelImpl._fileEntryTypeId;
-
-		dlFileEntryMetadataModelImpl._setOriginalFileEntryTypeId = false;
-
 		dlFileEntryMetadataModelImpl._originalFileEntryId = dlFileEntryMetadataModelImpl._fileEntryId;
 
 		dlFileEntryMetadataModelImpl._setOriginalFileEntryId = false;
@@ -459,8 +423,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		dlFileEntryMetadataCacheModel.DDMStructureId = getDDMStructureId();
 
-		dlFileEntryMetadataCacheModel.fileEntryTypeId = getFileEntryTypeId();
-
 		dlFileEntryMetadataCacheModel.fileEntryId = getFileEntryId();
 
 		dlFileEntryMetadataCacheModel.fileVersionId = getFileVersionId();
@@ -470,7 +432,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -480,8 +442,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		sb.append(getDDMStorageId());
 		sb.append(", DDMStructureId=");
 		sb.append(getDDMStructureId());
-		sb.append(", fileEntryTypeId=");
-		sb.append(getFileEntryTypeId());
 		sb.append(", fileEntryId=");
 		sb.append(getFileEntryId());
 		sb.append(", fileVersionId=");
@@ -493,7 +453,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -515,10 +475,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		sb.append(
 			"<column><column-name>DDMStructureId</column-name><column-value><![CDATA[");
 		sb.append(getDDMStructureId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryTypeId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryTypeId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
@@ -545,9 +501,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	private long _DDMStructureId;
 	private long _originalDDMStructureId;
 	private boolean _setOriginalDDMStructureId;
-	private long _fileEntryTypeId;
-	private long _originalFileEntryTypeId;
-	private boolean _setOriginalFileEntryTypeId;
 	private long _fileEntryId;
 	private long _originalFileEntryId;
 	private boolean _setOriginalFileEntryId;

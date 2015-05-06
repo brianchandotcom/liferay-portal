@@ -317,13 +317,13 @@ public class DLFileEntryMetadataLocalServiceUtil {
 
 	public static void updateFileEntryMetadata(long companyId,
 		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures,
-		long fileEntryTypeId, long fileEntryId, long fileVersionId,
+		long fileEntryId, long fileVersionId,
 		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> ddmFormValuesMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
-			.updateFileEntryMetadata(companyId, ddmStructures, fileEntryTypeId,
-			fileEntryId, fileVersionId, ddmFormValuesMap, serviceContext);
+			.updateFileEntryMetadata(companyId, ddmStructures, fileEntryId,
+			fileVersionId, ddmFormValuesMap, serviceContext);
 	}
 
 	public static void updateFileEntryMetadata(long fileEntryTypeId,

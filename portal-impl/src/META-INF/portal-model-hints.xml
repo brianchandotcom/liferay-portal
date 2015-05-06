@@ -1534,7 +1534,6 @@
 		<field name="fileEntryMetadataId" type="long" />
 		<field name="DDMStorageId" type="long" />
 		<field name="DDMStructureId" type="long" />
-		<field name="fileEntryTypeId" type="long" />
 		<field name="fileEntryId" type="long" />
 		<field name="fileVersionId" type="long" />
 	</model>

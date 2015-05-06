@@ -15,8 +15,14 @@
 package com.liferay.workflow.instance.web.portlet;
 
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.instance.web.portlet.context.MyWorkflowInstanceEditDisplayContext;
+import com.liferay.workflow.instance.web.portlet.context.MyWorkflowInstanceViewDisplayContext;
+import com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceEditDisplayContext;
+import com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceViewDisplayContext;
 
 import javax.portlet.Portlet;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,7 +33,6 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.control-panel-entry-category=my",
-		"com.liferay.portlet.control-panel-entry-class=com.liferay.workflow.instance.web.portlet.MyWorkflowInstancesControlPanelEntry",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
 		"com.liferay.portlet.icon=/icons/my_workflow_instance.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
@@ -39,12 +44,31 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCES,
+		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = { MyWorkflowInstancePortlet.class, Portlet.class }
+	service = Portlet.class
 )
 public class MyWorkflowInstancePortlet extends WorkflowInstancePortlet {
+
+	@Override
+	protected WorkflowInstanceEditDisplayContext
+		createWorkflowInstanceEditDisplayContext(
+			RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return new MyWorkflowInstanceEditDisplayContext(
+			renderRequest, renderResponse);
+	}
+
+	@Override
+	protected WorkflowInstanceViewDisplayContext
+		createWorkflowInstanceViewDisplayContext(
+			RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return new MyWorkflowInstanceViewDisplayContext(
+			renderRequest, renderResponse);
+	}
+
 }

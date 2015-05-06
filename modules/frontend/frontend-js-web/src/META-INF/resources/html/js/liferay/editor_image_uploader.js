@@ -217,8 +217,8 @@ AUI.add(
 					_uploadImage: function(event) {
 						var instance = this;
 
-						var image = event.data.el.$;
 						var file = event.data.file;
+						var image = event.data.el.$;
 
 						image = A.one(image);
 

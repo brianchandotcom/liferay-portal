@@ -357,14 +357,16 @@ public class JournalContentDisplayContext {
 		JournalArticle article = getArticle();
 		JournalArticleDisplay articleDisplay = getArticleDisplay();
 
-		if ((article != null) && hasViewPermission() &&
-			(articleDisplay != null) && !isExpired() &&
-			isEnableViewCountIncrement()) {
+		if ((article == null) || !hasViewPermission() ||
+			(articleDisplay == null) || isExpired() ||
+			!isEnableViewCountIncrement()) {
 
-			AssetEntryServiceUtil.incrementViewCounter(
-				JournalArticle.class.getName(),
-				articleDisplay.getResourcePrimKey());
+			return;
 		}
+
+		AssetEntryServiceUtil.incrementViewCounter(
+			JournalArticle.class.getName(),
+			articleDisplay.getResourcePrimKey());
 	}
 
 	public boolean isCommentsEnabled() {

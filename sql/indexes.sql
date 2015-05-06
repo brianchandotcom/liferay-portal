@@ -176,7 +176,6 @@ create unique index IX_BC2E7E6A on DLFileEntry (uuid_, groupId);
 
 create unique index IX_7332B44F on DLFileEntryMetadata (DDMStructureId, fileVersionId);
 create index IX_4F40FE5E on DLFileEntryMetadata (fileEntryId);
-create index IX_F8E90438 on DLFileEntryMetadata (fileEntryTypeId);
 create index IX_1FE9C04 on DLFileEntryMetadata (fileVersionId);
 create index IX_D49AB5D1 on DLFileEntryMetadata (uuid_);
 

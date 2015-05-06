@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(liferayPortletRequest, renderResponse);
+WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = (WorkflowInstanceViewDisplayContext)request.getAttribute(WebKeys.DISPLAY_CONTEXT);
 
 PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 %>
@@ -32,79 +32,79 @@ PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 try {
 %>
 
-<liferay-ui:search-container
-	iteratorURL="<%= portletURL %>"
->
-
-	<%
-	workflowInstanceViewDisplayContext.loadSearchContainer(searchContainer);
-	%>
-
-	<liferay-ui:search-container-results results="<%= searchContainer.getResults() %>" />
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.workflow.WorkflowInstance"
-		modelVar="workflowInstance"
-		stringKey="<%= Boolean.TRUE %>"
+	<liferay-ui:search-container
+		emptyResultsMessage="<%= workflowInstanceViewDisplayContext.getSearchContainerEmptyResultsMessage() %>"
+		iteratorURL="<%= portletURL %>"
 	>
-		<liferay-ui:search-container-row-parameter
-			name="workflowInstance"
-			value="<%= workflowInstance %>"
+
+		<liferay-ui:search-container-results
+			results="<%= workflowInstanceViewDisplayContext.getSearchContainerResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
+			total="<%= workflowInstanceViewDisplayContext.getSearchContainerTotal() %>"
 		/>
 
-		<portlet:renderURL var="rowURL">
-			<portlet:param name="mvcPath" value="/edit_workflow_instance.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="workflowInstanceId" value="<%= String.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="definition"
-			value="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="asset-title"
-			value="<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="asset-type"
-			value="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="status"
-			value="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="last-activity-date"
-			value="<%= workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="end-date"
-			value="<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) %>"
-		/>
-
-		<c:if test="<%= workflowInstanceViewDisplayContext.showEntryAction() %>">
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
-				path="/workflow_instance_action.jsp"
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.workflow.WorkflowInstance"
+			modelVar="workflowInstance"
+			stringKey="<%= Boolean.TRUE %>"
+		>
+			<liferay-ui:search-container-row-parameter
+				name="workflowInstance"
+				value="<%= workflowInstance %>"
 			/>
-		</c:if>
-	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/edit_workflow_instance.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="workflowInstanceId" value="<%= String.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
+			</portlet:renderURL>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="definition"
+				value="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="asset-title"
+				value="<%= workflowInstanceViewDisplayContext.getAssetTitle(workflowInstance) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="asset-type"
+				value="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="status"
+				value="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="last-activity-date"
+				value="<%= workflowInstanceViewDisplayContext.getLastActivityDate(workflowInstance) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="end-date"
+				value="<%= workflowInstanceViewDisplayContext.getEndDate(workflowInstance) %>"
+			/>
+
+			<c:if test="<%= workflowInstanceViewDisplayContext.isShowEntryAction() %>">
+				<liferay-ui:search-container-column-jsp
+					align="right"
+					cssClass="entry-action"
+					path="/workflow_instance_action.jsp"
+				/>
+			</c:if>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 
 <%
 }
@@ -121,7 +121,7 @@ catch (Exception e) {
 <%
 }
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, workflowInstanceViewDisplayContext.getViewTab2()), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, workflowInstanceViewDisplayContext.getTabs2Param()), currentURL);
 %>
 
 <%!

@@ -15,7 +15,7 @@
 --%>
 
 <%
-for (WorkflowLog workflowLog : workflowLogs) {
+for (WorkflowLog workflowLog : workflowInstanceEditDisplayContext.getWorkflowLogs()) {
 %>
 
 	<div class="task-activity">

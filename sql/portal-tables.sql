@@ -540,6 +540,13 @@ create table DDMTemplate (
 	smallImageURL VARCHAR(75) null
 );
 
+create table DDMTemplateLink (
+	templateLinkId LONG not null primary key,
+	classNameId LONG,
+	classPK LONG,
+	templateId LONG
+);
+
 create table DDMTemplateVersion (
 	templateVersionId LONG not null primary key,
 	groupId LONG,

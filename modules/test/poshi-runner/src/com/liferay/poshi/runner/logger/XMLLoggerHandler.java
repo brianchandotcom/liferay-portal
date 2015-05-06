@@ -146,9 +146,17 @@ public final class XMLLoggerHandler {
 					loggerElement.addChildLoggerElement(
 						_getFailLoggerElement(childElement));
 				}
+				else if (childElementName.equals("if")) {
+					loggerElement.addChildLoggerElement(
+						_getIfLoggerElement(childElement));
+				}
 				else if (childElementName.equals("var")) {
 					loggerElement.addChildLoggerElement(
 						_getVarLoggerElement(childElement));
+				}
+				else if (childElementName.equals("while")) {
+					loggerElement.addChildLoggerElement(
+						_getWhileLoggerElement(childElement));
 				}
 			}
 		}
@@ -175,12 +183,81 @@ public final class XMLLoggerHandler {
 		return closingLineContainerLoggerElement;
 	}
 
+	private static LoggerElement _getConditionalLoggerElement(Element element) {
+		LoggerElement loggerElement = _getLineGroupLoggerElement(
+			"conditional", element);
+
+		List<Element> childElements = element.elements();
+
+		if (!childElements.isEmpty()) {
+			LoggerElement childContainerLoggerElement =
+				_getChildContainerLoggerElement();
+
+			for (Element childElement : childElements) {
+				childContainerLoggerElement.addChildLoggerElement(
+					_getConditionalLoggerElement(childElement));
+			}
+
+			loggerElement.addChildLoggerElement(childContainerLoggerElement);
+			loggerElement.addChildLoggerElement(
+				_getClosingLineContainerLoggerElement(element));
+		}
+
+		return loggerElement;
+	}
+
 	private static LoggerElement _getEchoLoggerElement(Element element) {
 		return _getLineGroupLoggerElement("echo", element);
 	}
 
 	private static LoggerElement _getFailLoggerElement(Element element) {
 		return _getLineGroupLoggerElement(element);
+	}
+
+	private static LoggerElement _getIfChildContainerLoggerElement(
+		Element element) {
+
+		LoggerElement loggerElement = _getChildContainerLoggerElement();
+
+		List<Element> childElements = element.elements();
+
+		Element conditionElement = childElements.get(0);
+
+		loggerElement.addChildLoggerElement(
+			_getConditionalLoggerElement(conditionElement));
+
+		Element thenElement = element.element("then");
+
+		loggerElement.addChildLoggerElement(
+			_getLoggerElementFromElement(thenElement));
+
+		List<Element> elseIfElements = element.elements("elseif");
+
+		for (Element elseIfElement : elseIfElements) {
+			loggerElement.addChildLoggerElement(
+				_getIfLoggerElement(elseIfElement));
+		}
+
+		Element elseElement = element.element("else");
+
+		if (elseElement != null) {
+			loggerElement.addChildLoggerElement(
+				_getLoggerElementFromElement(elseElement));
+		}
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getIfLoggerElement(Element element) {
+		LoggerElement loggerElement = _getLineGroupLoggerElement(
+			"conditional", element);
+
+		loggerElement.addChildLoggerElement(
+			_getIfChildContainerLoggerElement(element));
+		loggerElement.addChildLoggerElement(
+			_getClosingLineContainerLoggerElement(element));
+
+		return loggerElement;
 	}
 
 	private static LoggerElement _getLineContainerLoggerElement(
@@ -296,6 +373,17 @@ public final class XMLLoggerHandler {
 
 	private static LoggerElement _getVarLoggerElement(Element element) {
 		return _getLineGroupLoggerElement("var", element);
+	}
+
+	private static LoggerElement _getWhileLoggerElement(Element element) {
+		LoggerElement loggerElement = _getLineGroupLoggerElement(element);
+
+		loggerElement.addChildLoggerElement(
+			_getIfChildContainerLoggerElement(element));
+		loggerElement.addChildLoggerElement(
+			_getClosingLineContainerLoggerElement(element));
+
+		return loggerElement;
 	}
 
 	private static boolean _isExecutingMacro(Element element) {

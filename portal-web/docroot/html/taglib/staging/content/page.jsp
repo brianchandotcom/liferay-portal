@@ -115,7 +115,7 @@
 													<liferay-ui:input-time
 														amPmParam='<%= "endDateAmPm" %>'
 														amPmValue="<%= endCalendar.get(Calendar.AM_PM) %>"
-														dateParam="startDateTime"
+														dateParam="endDateTime"
 														dateValue="<%= endCalendar.getTime() %>"
 														disabled="<%= false %>"
 														hourParam='<%= "endDateHour" %>'

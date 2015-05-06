@@ -1411,10 +1411,7 @@ public class LocalProcessExecutorTest {
 
 		arguments.add(
 			"-D" + SystemProperties.SYSTEM_PROPERTIES_QUIET + "=true");
-
-		if (Boolean.getBoolean("junit.code.coverage")) {
-			arguments.add("-Djunit.code.coverage=true");
-		}
+		arguments.add("-Dwhip.static.instrument=true");
 
 		if (Boolean.getBoolean("junit.code.coverage.dump")) {
 			arguments.add("-Djunit.code.coverage.dump=true");

@@ -87,8 +87,6 @@ public class InstrumentationAgent {
 			}
 		}
 		finally {
-			System.clearProperty("junit.code.coverage");
-
 			_dynamicallyInstrumented = false;
 
 			if (_originalClassDefinitions != null) {
@@ -198,8 +196,6 @@ public class InstrumentationAgent {
 
 		_dynamicallyInstrumented = true;
 		_originalClassDefinitions = null;
-
-		System.setProperty("junit.code.coverage", "true");
 	}
 
 	public static File getDataFile() {
@@ -218,7 +214,7 @@ public class InstrumentationAgent {
 		String[] includes = arguments[0].split(",");
 		String[] excludes = arguments[1].split(",");
 
-		if (Boolean.getBoolean("junit.code.coverage")) {
+		if (Boolean.getBoolean("whip.static.instrument")) {
 			final WhipClassFileTransformer whipClassFileTransformer =
 				new WhipClassFileTransformer(includes, excludes);
 

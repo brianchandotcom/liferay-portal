@@ -383,10 +383,7 @@ public class WikiPageDependentsTrashHandlerTest {
 	}
 
 	@Test
-	public void
-			testMoveParentPageWithRedirectorAndChildPageAndGrandchildPageToTrash()
-		throws Exception {
-
+	public void testMoveRedirectorPageToTrash() throws Exception {
 		int initialBaseModelsCount =
 			WikiPageTrashHandlerTestUtil.getNotInTrashBaseModelsCount(_node);
 		int initialTrashEntriesCount =

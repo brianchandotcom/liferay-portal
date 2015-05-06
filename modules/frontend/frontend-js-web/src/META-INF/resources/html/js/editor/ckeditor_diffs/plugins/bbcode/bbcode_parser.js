@@ -298,7 +298,6 @@
 		font: '_handleFont',
 		i: '_handleEm',
 		img: '_handleImage',
-		indent: '_handleIndent',
 		list: '_handleList',
 		s: '_handleStrikeThrough',
 		size: '_handleSize',
@@ -366,7 +365,7 @@
 
 	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
 
-	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|indent|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
+	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
 	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,512}$|\${\S+}/i;
 
@@ -387,10 +386,6 @@
 	var STR_TAG_ATTR_CLOSE = '">';
 
 	var STR_TAG_ATTR_HREF_OPEN = '<a href="';
-
-	var STR_TAG_DIV_CLOSE = '</div>';
-
-	var STR_TAG_DIV_STYLE_OPEN = '<div style="';
 
 	var STR_TAG_END_CLOSE = '>';
 
@@ -494,8 +489,9 @@
 				if (token.type == TOKEN_DATA) {
 					result.push(token.value);
 				}
+
 			}
-			while ((token.type != TOKEN_TAG_END) && (token.value != toTagName));
+			while (token.type != TOKEN_TAG_END && token.value != toTagName);
 
 			if (consume) {
 				instance._tokenPointer = index - 1;
@@ -629,7 +625,7 @@
 			if (token.attribute) {
 				var bbCodeAttr;
 
-				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
+				while (bbCodeAttr = REGEX_ATTRS.exec(token.attribute)) {
 					var attrName = bbCodeAttr[1];
 
 					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
@@ -643,16 +639,6 @@
 			}
 
 			return attrs;
-		},
-
-		_handleIndent: function(token) {
-			var instance = this;
-
-			var indent = token.attribute;
-
-			instance._result.push(STR_TAG_DIV_STYLE_OPEN, 'margin-left: ', indent, 'px;', STR_TAG_ATTR_CLOSE);
-
-			instance._stack.push(STR_TAG_DIV_CLOSE);
 		},
 
 		_handleList: function(token) {
@@ -697,7 +683,7 @@
 
 					if (nextToken &&
 						hasOwnProperty.call(MAP_TOKENS_EXCLUDE_NEW_LINE, nextToken.value) &&
-						(nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value])) {
+						nextToken.type & MAP_TOKENS_EXCLUDE_NEW_LINE[nextToken.value]) {
 
 						value = STR_BLANK;
 					}
@@ -706,8 +692,8 @@
 					nextToken = instance._parsedData[instance._tokenPointer + 1];
 
 					if (nextToken &&
-						(nextToken.type == TOKEN_TAG_END) &&
-						(nextToken.value == STR_TAG_LIST_ITEM_SHORT)) {
+						nextToken.type == TOKEN_TAG_END &&
+						nextToken.value == STR_TAG_LIST_ITEM_SHORT) {
 
 						value = value.substring(0, value.length - 1);
 					}

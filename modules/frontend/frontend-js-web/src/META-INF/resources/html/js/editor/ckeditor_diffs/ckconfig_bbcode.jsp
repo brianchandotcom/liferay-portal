@@ -49,12 +49,12 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	config.height = 265;
 
 	config.removePlugins = [
-		'elementspath',
-		'save',
 		'bidi',
 		'div',
+		'elementspath',
 		'flash',
 		'forms',
+		'indentblock',
 		'keystrokes',
 		'link',
 		'maximize',

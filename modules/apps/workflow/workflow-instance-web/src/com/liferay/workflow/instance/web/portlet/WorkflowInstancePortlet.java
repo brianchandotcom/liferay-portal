@@ -14,28 +14,34 @@
 
 package com.liferay.workflow.instance.web.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.workflow.instance.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.util.log4j.Log4JUtil;
 import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
+import com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceEditDisplayContext;
+import com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceViewDisplayContext;
 
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -61,7 +67,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = { WorkflowInstancePortlet.class, Portlet.class }
+	service = Portlet.class
 )
 public class WorkflowInstancePortlet extends MVCPortlet {
 
@@ -73,46 +79,138 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 		String actionName = ParamUtil.getString(
 			actionRequest, ActionRequest.ACTION_NAME);
 
-		if (Validator.isNotNull(actionName) &&
-			StringUtil.equalsIgnoreCase(actionName, _DISCUSSION_ACTION)) {
-
-			SessionMessages.add(
-				actionRequest, getPortletConfig().getPortletName() +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+		if (StringUtil.equalsIgnoreCase(actionName, _DISCUSSION_ACTION)) {
+			hideDefaultSuccessMessage(actionRequest);
 		}
 
 		super.processAction(actionRequest, actionResponse);
 	}
 
 	@Override
-	public void render(RenderRequest request, RenderResponse response)
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
 		try {
-			ActionUtil.getWorkflowInstance(request);
+			setWorkflowInstanceRenderRequestAttribute(renderRequest);
+
+			setDisplayContextRenderRequestAttribute(
+				renderRequest, renderResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof WorkflowException) {
-				SessionErrors.add(request, e.getClass());
+			if (isSessionErrorException(e)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
+				}
 
-				PortletSession portletSession = request.getPortletSession();
+				hideDefaultErrorMessage(renderRequest);
 
-				PortletContext portletContext =
-					portletSession.getPortletContext();
-
-				PortletRequestDispatcher portletRequestDispatcher =
-					portletContext.getRequestDispatcher("/error.jsp");
-
-				portletRequestDispatcher.include(request, response);
+				SessionErrors.add(renderRequest, e.getClass());
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		super.render(request, response);
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Activate
+	protected void activate() {
+		Class<? extends MVCPortlet> clazz = getClass();
+
+		initLogger(clazz.getClassLoader());
+	}
+
+	protected WorkflowInstanceEditDisplayContext
+		createWorkflowInstanceEditDisplayContext(
+			RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return new WorkflowInstanceEditDisplayContext(
+			renderRequest, renderResponse);
+	}
+
+	protected WorkflowInstanceViewDisplayContext
+		createWorkflowInstanceViewDisplayContext(
+			RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return new WorkflowInstanceViewDisplayContext(
+			renderRequest, renderResponse);
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, WorkflowException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	protected void initLogger(ClassLoader classLoader) {
+		Log4JUtil.configureLog4J(
+			classLoader.getResource("META-INF/portal-log4j.xml"));
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof WorkflowException) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void setDisplayContextRenderRequestAttribute(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		String path = getPath(renderRequest);
+
+		if (Validator.equals(path, "/edit_workflow_instance.jsp")) {
+			renderRequest.setAttribute(
+				WebKeys.DISPLAY_CONTEXT,
+				createWorkflowInstanceEditDisplayContext(
+					renderRequest, renderResponse));
+
+			return;
+		}
+
+		renderRequest.setAttribute(
+			WebKeys.DISPLAY_CONTEXT,
+			createWorkflowInstanceViewDisplayContext(
+				renderRequest, renderResponse));
+	}
+
+	protected void setWorkflowInstanceRenderRequestAttribute(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long workflowInstanceId = ParamUtil.getLong(
+			renderRequest, "workflowInstanceId");
+
+		WorkflowInstance workflowInstance = null;
+
+		if (workflowInstanceId != 0) {
+			workflowInstance = WorkflowInstanceManagerUtil.getWorkflowInstance(
+				themeDisplay.getCompanyId(), workflowInstanceId);
+		}
+
+		renderRequest.setAttribute(WebKeys.WORKFLOW_INSTANCE, workflowInstance);
 	}
 
 	private static final String _DISCUSSION_ACTION = "invokeTaglibDiscussion";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowInstancePortlet.class);
 
 }

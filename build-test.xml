@@ -5903,6 +5903,8 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="test-package">
+		<ant dir="modules" target="test-package" inheritAll="false" />
+
 		<ant dir="portal-service" target="test-package" inheritAll="false" />
 
 		<ant dir="portal-impl" target="test-package" inheritAll="false" />

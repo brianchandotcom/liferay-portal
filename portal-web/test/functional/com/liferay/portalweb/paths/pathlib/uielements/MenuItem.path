@@ -514,6 +514,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VERSION</td>
+	<td>//span[@class='workflow-version']/strong</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW</td>
 	<td>//a[@role='menuitem' and contains(.,'View')]</td>
 	<td></td>

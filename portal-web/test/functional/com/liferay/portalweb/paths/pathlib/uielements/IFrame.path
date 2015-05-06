@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIGURATION_DIALOG</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COPY_STRUCTURE</td>
 	<td>//iframe[contains(@id,'copyStructure_iframe_')]</td>
 	<td></td>

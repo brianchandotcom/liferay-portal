@@ -214,40 +214,46 @@ public final class XMLLoggerHandler {
 		return _getLineGroupLoggerElement(element);
 	}
 
-	private static LoggerElement _getIfLoggerElement(Element element) {
-		LoggerElement childContainerLoggerElement =
-			_getChildContainerLoggerElement();
+	private static LoggerElement _getIfChildContainerLoggerElement(
+		Element element) {
+
+		LoggerElement loggerElement = _getChildContainerLoggerElement();
 
 		List<Element> childElements = element.elements();
 
 		Element conditionElement = childElements.get(0);
 
-		childContainerLoggerElement.addChildLoggerElement(
+		loggerElement.addChildLoggerElement(
 			_getConditionalLoggerElement(conditionElement));
 
 		Element thenElement = element.element("then");
 
-		childContainerLoggerElement.addChildLoggerElement(
+		loggerElement.addChildLoggerElement(
 			_getLoggerElementFromElement(thenElement));
 
 		List<Element> elseIfElements = element.elements("elseif");
 
 		for (Element elseIfElement : elseIfElements) {
-			childContainerLoggerElement.addChildLoggerElement(
+			loggerElement.addChildLoggerElement(
 				_getIfLoggerElement(elseIfElement));
 		}
 
 		Element elseElement = element.element("else");
 
 		if (elseElement != null) {
-			childContainerLoggerElement.addChildLoggerElement(
+			loggerElement.addChildLoggerElement(
 				_getLoggerElementFromElement(elseElement));
 		}
 
+		return loggerElement;
+	}
+
+	private static LoggerElement _getIfLoggerElement(Element element) {
 		LoggerElement loggerElement = _getLineGroupLoggerElement(
 			"conditional", element);
 
-		loggerElement.addChildLoggerElement(childContainerLoggerElement);
+		loggerElement.addChildLoggerElement(
+			_getIfChildContainerLoggerElement(element));
 		loggerElement.addChildLoggerElement(
 			_getClosingLineContainerLoggerElement(element));
 
@@ -370,24 +376,10 @@ public final class XMLLoggerHandler {
 	}
 
 	private static LoggerElement _getWhileLoggerElement(Element element) {
-		LoggerElement childContainerLoggerElement =
-			_getChildContainerLoggerElement();
-
-		List<Element> whileChildElements = element.elements();
-
-		Element conditionElement = whileChildElements.get(0);
-
-		childContainerLoggerElement.addChildLoggerElement(
-			_getConditionalLoggerElement(conditionElement));
-
-		Element thenElement = element.element("then");
-
-		childContainerLoggerElement.addChildLoggerElement(
-			_getLoggerElementFromElement(thenElement));
-
 		LoggerElement loggerElement = _getLineGroupLoggerElement(element);
 
-		loggerElement.addChildLoggerElement(childContainerLoggerElement);
+		loggerElement.addChildLoggerElement(
+			_getIfChildContainerLoggerElement(element));
 		loggerElement.addChildLoggerElement(
 			_getClosingLineContainerLoggerElement(element));
 

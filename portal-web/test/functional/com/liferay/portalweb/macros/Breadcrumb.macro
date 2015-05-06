@@ -25,6 +25,13 @@
 		</if>
 
 		<if>
+			<isset var="selectADTType" />
+			<then>
+				<execute function="Select" locator1="PGBreadcrumbConfiguration#SELECT_ADT" value1="${selectADTType}" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${configureWithoutSave}" arg2="true" />
 			<then>
 				<echo message="Configuring Breadcrumb without saving to check bug." />
@@ -36,6 +43,12 @@
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewADTApplied">
+		<var name="key_breadcrumbADTType" value="${breadcrumbADTType}" />
+
+		<execute function="AssertElementPresent" locator1="PGBreadcrumb#BREADCRUMB_ADT" />
 	</command>
 
 	<command name="viewConfigurationCheckboxes">

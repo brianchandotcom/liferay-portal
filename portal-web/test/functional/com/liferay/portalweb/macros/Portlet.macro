@@ -184,8 +184,6 @@
 				<equals arg1="${portletOption}" arg2="Configuration" />
 				<then>
 					<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-
-					<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
 				</then>
 			</elseif>
 			<elseif>

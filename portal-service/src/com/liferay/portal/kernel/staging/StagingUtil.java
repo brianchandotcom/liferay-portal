@@ -181,6 +181,13 @@ public class StagingUtil {
 			user, layoutSetBranchId, plid);
 	}
 
+	public static void deleteRecentLayoutRevisionId(
+		long userId, long layoutSetBranchId, long plid, boolean isDefaultUser) {
+
+		getStaging().deleteRecentLayoutRevisionId(
+			userId, layoutSetBranchId, plid, isDefaultUser);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.service.StagingLocalService#disableStaging(

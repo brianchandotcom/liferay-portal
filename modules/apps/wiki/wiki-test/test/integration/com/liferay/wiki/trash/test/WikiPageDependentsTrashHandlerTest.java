@@ -1041,23 +1041,22 @@ public class WikiPageDependentsTrashHandlerTest {
 			TrashVersionLocalServiceUtil.getTrashVersionsCount());
 	}
 
+	protected void createRedirectorAndRedirectPage(
+			String parentPageTitle, String oldTitle, String newTitle,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			oldTitle, RandomTestUtil.randomString(),
+			parentPageTitle, true, serviceContext);
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			oldTitle, newTitle, serviceContext);
+	}
+
 	protected RelatedPages buildRelatedPages() throws Exception {
-
-
-		/*
-		*
-		* hierarchy:
-		*
-		* 	parentPage
-		* 		|
-		* 	  page - redirectorPage
-		* 		|
-		* 	  child - redirectorChild
-		* 		|
-		* 	grandchild*
-		* */
-
-		// Create parent page
 		WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			_PARENT_PAGE_TITLE, true);
@@ -1065,34 +1064,13 @@ public class WikiPageDependentsTrashHandlerTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		// Create further redirector page (will be renamed)
-
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _node.getNodeId(),
-			_REDIRECTOR_PAGE_TITLE, RandomTestUtil.randomString(),
-			_PARENT_PAGE_TITLE, true, serviceContext);
-
-		// Rename redirector page (and create page)
-
-		WikiPageLocalServiceUtil.renamePage(
-			TestPropsValues.getUserId(), _node.getNodeId(),
-			_REDIRECTOR_PAGE_TITLE, _PAGE_TITLE, serviceContext);
-
-		// Create a redirector child page (will be renamed)
-
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _node.getNodeId(),
-			_CHILD_REDIRECTOR_PAGE_TITLE, RandomTestUtil.randomString(),
-			_PAGE_TITLE, true,
+		createRedirectorAndRedirectPage(
+			_PARENT_PAGE_TITLE, _REDIRECTOR_PAGE_TITLE, _PAGE_TITLE,
 			serviceContext);
 
-		// Rename redirector child page (and create child page)
-
-		WikiPageLocalServiceUtil.renamePage(
-			TestPropsValues.getUserId(), _node.getNodeId(),
-			_CHILD_REDIRECTOR_PAGE_TITLE, _CHILD_PAGE_TITLE, serviceContext);
-
-		// Create a grand child page
+		createRedirectorAndRedirectPage(
+			_PAGE_TITLE, _CHILD_REDIRECTOR_PAGE_TITLE, _CHILD_PAGE_TITLE,
+			serviceContext);
 
 		WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _node.getNodeId(),

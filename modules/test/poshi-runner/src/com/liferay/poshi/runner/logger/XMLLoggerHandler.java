@@ -31,39 +31,62 @@ import org.dom4j.Element;
 public final class XMLLoggerHandler {
 
 	public static void generateXMLLog(String classCommandName) {
-		LoggerElement xmlLoggerElement = new LoggerElement();
+		LoggerElement loggerElement = new LoggerElement();
 
-		xmlLoggerElement.setClassName("header");
-		xmlLoggerElement.setName("li");
-
-		LoggerElement btnContainerLoggerElement = new LoggerElement();
-
-		btnContainerLoggerElement.setClassName("btn-container");
-		btnContainerLoggerElement.setName("div");
-
-		LoggerElement btnLoggerElement = new LoggerElement();
-
-		btnLoggerElement.setClassName("btn btn-collapse");
-		btnLoggerElement.setName("button");
-
-		btnContainerLoggerElement.addChildLoggerElement(btnLoggerElement);
-
-		xmlLoggerElement.addChildLoggerElement(btnContainerLoggerElement);
+		loggerElement.setClassName("header");
+		loggerElement.setName("li");
 
 		LoggerElement lineContainerLoggerElement = new LoggerElement();
 
 		lineContainerLoggerElement.setClassName("line-container");
+		lineContainerLoggerElement.setID(null);
 		lineContainerLoggerElement.setName("div");
 
 		LoggerElement lineLoggerElement = new LoggerElement();
 
 		lineLoggerElement.setClassName("test-case-command");
+		lineLoggerElement.setID(null);
 		lineLoggerElement.setName("h3");
 		lineLoggerElement.setText(classCommandName);
 
 		lineContainerLoggerElement.addChildLoggerElement(lineLoggerElement);
 
-		xmlLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
+		loggerElement.addChildLoggerElement(lineContainerLoggerElement);
+
+		LoggerElement childContainerLoggerElement = new LoggerElement();
+
+		childContainerLoggerElement.setClassName("child-container");
+		childContainerLoggerElement.setID(null);
+		childContainerLoggerElement.setName("ul");
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		Element setUpElement = PoshiRunnerContext.getTestCaseCommandElement(
+			className + "#set-up");
+
+		if (setUpElement != null) {
+			childContainerLoggerElement.addChildLoggerElement(
+				_getLoggerElementFromElement(setUpElement));
+		}
+
+		childContainerLoggerElement.addChildLoggerElement(
+			_getLoggerElementFromElement(
+				PoshiRunnerContext.getTestCaseCommandElement(
+					classCommandName)));
+
+		Element tearDownElement = PoshiRunnerContext.getTestCaseCommandElement(
+			className + "#tear-down");
+
+		if (tearDownElement != null) {
+			childContainerLoggerElement.addChildLoggerElement(
+				_getLoggerElementFromElement(tearDownElement));
+		}
+
+		loggerElement.addChildLoggerElement(childContainerLoggerElement);
+
+		_xmlLogLoggerElement.addChildLoggerElement(loggerElement);
 	}
 
 	public static String getXMLLogText() {

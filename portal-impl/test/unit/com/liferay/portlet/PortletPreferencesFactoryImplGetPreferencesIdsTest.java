@@ -23,6 +23,7 @@ import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.tools.ToolDependencies;
@@ -33,9 +34,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.Mockito;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -45,7 +44,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Jorge Ferrer
  */
 @PrepareForTest( {
-	LayoutPermissionUtil.class, PortletLocalServiceUtil.class
+	LayoutPermissionUtil.class, PermissionThreadLocal.class,
+	PortletLocalServiceUtil.class	
 })
 @RunWith(PowerMockRunner.class)
 public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
@@ -219,7 +219,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 			_layout.getPlid(), portletPreferencesIds.getPlid());
 	}
 
-	@Test(expected = PrincipalException.class)
+	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testPreferencesWithModeEditGuestInPrivateLayout()
 		throws Exception {
 
@@ -241,6 +241,14 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 		).thenReturn(
 			true
 		);
+		
+		PowerMockito.mockStatic(PermissionThreadLocal.class);
+
+		Mockito.when(
+			PermissionThreadLocal.getPermissionChecker()
+		).thenReturn(
+			PowerMockito.mock(PermissionChecker.class)
+		);
 
 		long siteGroupId = _layout.getGroupId();
 		boolean modeEditGuest = true;
@@ -249,7 +257,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 			siteGroupId, _USER_ID, _layout, _PORTLET_ID, modeEditGuest);
 	}
 
-	@Test(expected = PrincipalException.class)
+	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void
 			testPreferencesWithModeEditGuestInPublicLayoutWithoutPermission()
 		throws Exception {
@@ -273,6 +281,14 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 				Mockito.eq(ActionKeys.UPDATE))
 		).thenReturn(
 			false
+		);
+		
+		PowerMockito.mockStatic(PermissionThreadLocal.class);
+
+		Mockito.when(
+			PermissionThreadLocal.getPermissionChecker()
+		).thenReturn(
+			PowerMockito.mock(PermissionChecker.class)
 		);
 
 		long siteGroupId = _layout.getGroupId();

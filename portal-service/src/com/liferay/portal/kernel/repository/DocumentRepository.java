@@ -80,6 +80,10 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public void deleteFolder(long folderId) throws PortalException;
 
+	public List<FileEntry> getFileEntries(
+			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
+		throws PortalException;
+
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
 
 	public FileEntry getFileEntry(long folderId, String title)

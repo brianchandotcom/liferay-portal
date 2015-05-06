@@ -102,7 +102,8 @@ public interface PortletFileRepository {
 		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString,
 		boolean absoluteURL);
 
-	public List<FileEntry> getPortletFileEntries(long groupId, long folderId);
+	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
+		throws PortalException;
 
 	public List<FileEntry> getPortletFileEntries(
 		long groupId, long folderId, int status);
@@ -112,7 +113,8 @@ public interface PortletFileRepository {
 		OrderByComparator<FileEntry> obc);
 
 	public List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, OrderByComparator<FileEntry> obc);
+			long groupId, long folderId, OrderByComparator<FileEntry> obc)
+		throws PortalException;
 
 	public int getPortletFileEntriesCount(long groupId, long folderId);
 

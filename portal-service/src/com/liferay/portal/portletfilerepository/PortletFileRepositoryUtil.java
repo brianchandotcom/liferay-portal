@@ -169,7 +169,8 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId) {
+			long groupId, long folderId)
+		throws PortalException {
 
 		return getPortletFileRepository().getPortletFileEntries(
 			groupId, folderId);
@@ -191,7 +192,8 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, OrderByComparator<FileEntry> obc) {
+			long groupId, long folderId, OrderByComparator<FileEntry> obc)
+		throws PortalException {
 
 		return getPortletFileRepository().getPortletFileEntries(
 			groupId, folderId, obc);

@@ -143,6 +143,14 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	@Override
+	public List<FileEntry> getFileEntries(
+			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		return _localRepository.getFileEntries(folderId, start, end, obc);
+	}
+
+	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
 		return _localRepository.getFileEntry(fileEntryId);
 	}

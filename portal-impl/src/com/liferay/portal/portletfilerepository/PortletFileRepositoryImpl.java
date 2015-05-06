@@ -259,11 +259,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public void deletePortletFileEntries(long groupId, long folderId)
 		throws PortalException {
 
-		List<DLFileEntry> dlFileEntries =
-			DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId);
+		LocalRepository localRepository =
+			RepositoryLocalServiceUtil.getLocalRepositoryImpl(groupId);
 
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			deletePortletFileEntry(dlFileEntry.getFileEntryId());
+		List<FileEntry> fileEntries = localRepository.getFileEntries(
+			folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (FileEntry fileEntry : fileEntries) {
+			deletePortletFileEntry(fileEntry.getFileEntryId());
 		}
 	}
 
@@ -389,9 +392,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
-	public List<FileEntry> getPortletFileEntries(long groupId, long folderId) {
-		return toFileEntries(
-			DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId));
+	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryLocalServiceUtil.getLocalRepositoryImpl(groupId);
+
+		return localRepository.getFileEntries(
+			folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	@Override
@@ -416,12 +424,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, OrderByComparator<FileEntry> obc) {
+			long groupId, long folderId, OrderByComparator<FileEntry> obc)
+		throws PortalException {
 
-		return toFileEntries(
-			DLFileEntryLocalServiceUtil.getFileEntries(
-				groupId, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				DLFileEntryOrderByComparator.getOrderByComparator(obc)));
+		LocalRepository localRepository =
+			RepositoryLocalServiceUtil.getLocalRepositoryImpl(groupId);
+
+		return localRepository.getFileEntries(
+			folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
 	}
 
 	@Override

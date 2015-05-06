@@ -165,6 +165,16 @@ public class InitializedDocumentRepository implements DocumentRepository {
 	}
 
 	@Override
+	public List<FileEntry> getFileEntries(
+			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		_checkDocumentRepository();
+
+		return _documentRepository.getFileEntries(folderId, start, end, obc);
+	}
+
+	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
 		_checkDocumentRepository();
 

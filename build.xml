@@ -1038,7 +1038,6 @@
 			liferay.home=${liferay.home}
 			lp.portal.project.dir=${project.dir}
 			module.framework.base.dir=${liferay.home}/osgi
-			upgrade.table.dir=${upgrade.table.dir}
 			-baselinerepo=${-baselinerepo}
 			-metatype=${-metatype}
 			-plugin=${-plugin}

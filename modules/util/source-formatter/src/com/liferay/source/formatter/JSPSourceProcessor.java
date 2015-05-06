@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.FileUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
@@ -44,8 +45,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.io.FileUtils;
 
 /**
  * @author Hugo Huijser
@@ -489,7 +488,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				String absolutePath = getAbsolutePath(file);
 
-				String content = readFileToString(file);
+				String content = FileUtil.read(file);
 
 				Matcher matcher = pattern.matcher(content);
 
@@ -1416,7 +1415,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if (commonInitFileContent == null) {
 				commonInitFile = new File(commonInitFileName);
 
-				commonInitFileContent = readFileToString(commonInitFile);
+				commonInitFileContent = FileUtil.read(commonInitFile);
 
 				x = commonInitFileContent.indexOf("<%@ page import");
 			}
@@ -1427,8 +1426,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (commonInitFileContent != null) {
-			FileUtils.write(
-				commonInitFile, commonInitFileContent, StringPool.UTF8);
+			FileUtil.write(commonInitFile, commonInitFileContent);
 
 			_jspContents.put(commonInitFileName, commonInitFileContent);
 		}

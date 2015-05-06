@@ -172,17 +172,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SUBCATEGORY_ENTRY_MENULIST-->
-<tr>
-	<td>SUBCATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY</td>
-	<td>//ul/li/a[contains(.,'Add Subcategory')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VOCABULARY_ENTRY-->
 <tr>
 	<td>VOCABULARY_ENTRY_GENERIC</td>
@@ -207,17 +196,6 @@
 <tr>
 	<td>VOCABULARY_ENTRY_MENULIST_ARROW</td>
 	<td>//tr[contains(.,'${key_vocabularyName}')]//a[contains(@id,'assetVocabularies')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--VOCABULARY_ENTRY_MENULIST-->
-<tr>
-	<td>VOCABULARY_ENTRY_MENULIST_ADD_CATEGORY</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Add Category')]</td>
 	<td></td>
 </tr>
 <tr>

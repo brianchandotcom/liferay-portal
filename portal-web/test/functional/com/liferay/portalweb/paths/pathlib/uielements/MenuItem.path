@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_SUBCATEGORY</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Subcategory')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_SUBFOLDER</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
 	<td></td>

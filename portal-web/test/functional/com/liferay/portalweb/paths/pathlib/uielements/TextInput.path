@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH</td>
+	<td>//input[@title='Search']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBJECT</td>
 	<td>//input[contains(@id,'subject')]</td>
 	<td></td>

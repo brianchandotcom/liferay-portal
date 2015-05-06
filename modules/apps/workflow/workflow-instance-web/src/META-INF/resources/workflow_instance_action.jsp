@@ -37,7 +37,7 @@ else {
 			<portlet:param name="mvcPath" value="/view.jsp" />
 		</portlet:renderURL>
 
-		<portlet:actionURL name="deleteInstance" var="deleteURL">
+		<portlet:actionURL name="deleteWorkflowInstance" var="deleteURL">
 			<portlet:param name="redirect" value="<%= redirectURL %>" />
 			<portlet:param name="workflowInstanceId" value="<%= StringUtil.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
 		</portlet:actionURL>

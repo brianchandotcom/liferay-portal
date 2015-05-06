@@ -45,17 +45,18 @@ public class CSSBuilder {
 	public static void main(String[] args) {
 		Map<String, String> arguments = _parseArguments(args);
 
-		String sassDir = arguments.get("sass.dir");
-		String docrootDirName = arguments.get("sass.docroot.dir");
-		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 		String compilerImpl = arguments.get("sass.compiler.impl");
 
 		if (compilerImpl == null) {
 			compilerImpl = "libsass";
 		}
 
+		String docrootDirName = arguments.get("sass.docroot.dir");
+		String portalCommonDirName = arguments.get("sass.portal.common.dir");
+		String sassDir = arguments.get("sass.dir");
+
 		CSSBuilder cssBuilder = new CSSBuilder(
-			sassDir, docrootDirName, portalCommonDirName);
+			docrootDirName, portalCommonDirName, sassDir);
 
 		try {
 			cssBuilder.configure(compilerImpl);
@@ -68,7 +69,7 @@ public class CSSBuilder {
 	}
 
 	public CSSBuilder(
-		String sassDir, String docrootDirName, String portalCommonDirName) {
+		String docrootDirName, String portalCommonDirName, String sassDir) {
 
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;

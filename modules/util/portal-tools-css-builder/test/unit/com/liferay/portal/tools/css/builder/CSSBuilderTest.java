@@ -155,16 +155,16 @@ public class CSSBuilderTest {
 		return sb.toString();
 	}
 
-	protected void generateCSS(String sassImpl) throws Exception {
-		String sassDir = "/" + sassImpl + "/";
+	protected void generateCSS(String compilerImpl) throws Exception {
+		String dirName = "/" + compilerImpl + "/";
 		String docrootDirName = _WORKING_DIR;
 		String portalCommonDirName =
 			"../../../portal-web/docroot/html/css/common/";
 
 		String args[] = new String[] {
-			"sass.dir=" + sassDir, "sass.docroot.dir=" + docrootDirName,
-			"sass.portal.common.dir=" + portalCommonDirName,
-			"sass.compiler.impl=" + sassImpl
+			"sass.compiler.impl=" + compilerImpl, "sass.dir=" + dirName,
+			"sass.docroot.dir=" + docrootDirName,
+			"sass.portal.common.dir=" + portalCommonDirName
 		};
 
 		CSSBuilder.main(args);

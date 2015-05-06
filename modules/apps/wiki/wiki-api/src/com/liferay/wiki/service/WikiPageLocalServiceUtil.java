@@ -691,9 +691,15 @@ public class WikiPageLocalServiceUtil {
 		return getService().getRecentChangesCount(nodeId);
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getRedirectPages(
+	public static java.util.List<com.liferay.wiki.model.WikiPage> getRedirectorPages(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status) {
-		return getService().getRedirectPages(nodeId, head, redirectTitle, status);
+		return getService()
+				   .getRedirectorPages(nodeId, head, redirectTitle, status);
+	}
+
+	public static java.util.List<com.liferay.wiki.model.WikiPage> getRedirectorPages(
+		long nodeId, java.lang.String redirectTitle) {
+		return getService().getRedirectorPages(nodeId, redirectTitle);
 	}
 
 	public static java.lang.String[] getTempFileNames(long groupId,

@@ -769,10 +769,16 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiPage> getRedirectPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getRedirectorPages(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status) {
-		return _wikiPageLocalService.getRedirectPages(nodeId, head,
+		return _wikiPageLocalService.getRedirectorPages(nodeId, head,
 			redirectTitle, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.wiki.model.WikiPage> getRedirectorPages(
+		long nodeId, java.lang.String redirectTitle) {
+		return _wikiPageLocalService.getRedirectorPages(nodeId, redirectTitle);
 	}
 
 	@Override

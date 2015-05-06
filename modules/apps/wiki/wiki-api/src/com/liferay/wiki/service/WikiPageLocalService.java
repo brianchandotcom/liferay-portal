@@ -517,8 +517,12 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public int getRecentChangesCount(long nodeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiPage> getRedirectPages(
+	public java.util.List<com.liferay.wiki.model.WikiPage> getRedirectorPages(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.wiki.model.WikiPage> getRedirectorPages(
+		long nodeId, java.lang.String redirectTitle);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getTempFileNames(long groupId, long userId,

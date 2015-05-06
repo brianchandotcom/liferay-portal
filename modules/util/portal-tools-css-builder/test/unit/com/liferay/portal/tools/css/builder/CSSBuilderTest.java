@@ -83,40 +83,33 @@ public class CSSBuilderTest {
 
 		Assert.assertEquals(expectedMainRtlCss, generatedMainRtlCss);
 
-		File previousTestFile = new File("/libsass/.sass-cache/test.css");
-		File previousTestRtlFile = new File(
-			"/libsass/.sass-cache/test_rtl.css");
-		File previousMainFile = new File("/libsass/.sass-cache/main.css");
-		File previousMainRtlFile = new File(
-			"/libsass/.sass-cache/main_rtl.css");
+		File mainFile = new File(_WORKING_DIR, "libsass/.sass-cache/main.css");
+		File mainRtlFile = new File(
+			_WORKING_DIR, "libsass/.sass-cache/main_rtl.css");
+		File testFile = new File(_WORKING_DIR, "libsass/.sass-cache/test.css");
+		File testRtlFile = new File(
+			_WORKING_DIR, "libsass/.sass-cache/test_rtl.css");
 
-		long previousTestFileModifiedDate = previousTestFile.lastModified();
-		long previousTestRtlFileModifiedDate =
-			previousTestRtlFile.lastModified();
-		long previousMainFileModifiedDate = previousMainFile.lastModified();
-		long previousMainRtlFileModifiedDate =
-			previousMainRtlFile.lastModified();
+		long previousMainFileModifiedDate = mainFile.lastModified();
+		long previousMainRtlFileModifiedDate = mainRtlFile.lastModified();
+		long previousTestFileModifiedDate = testFile.lastModified();
+		long previousTestRtlFileModifiedDate = testRtlFile.lastModified();
 
 		generateCSS("libsass");
 
-		File newTestFile = new File("/libsass/.sass-cache/test.css");
-		File newTestRtlFile = new File("/libsass/.sass-cache/test_rtl.css");
-		File newMainFile = new File("/libsass/.sass-cache/main.css");
-		File newMainRtlFile = new File("/libsass/.sass-cache/main_rtl.css");
+		long newMainFileModifiedDate = mainFile.lastModified();
+		long newMainRtlFileModifiedDate = mainRtlFile.lastModified();
+		long newTestFileModifiedDate = testFile.lastModified();
+		long newTestRtlFileModifiedDate = testRtlFile.lastModified();
 
-		long newTestFileModifiedDate = newTestFile.lastModified();
-		long newTestRtlFileModifiedDate = newTestRtlFile.lastModified();
-		long newMainFileModifiedDate = newMainFile.lastModified();
-		long newMainRtlFileModifiedDate = newMainRtlFile.lastModified();
-
-		Assert.assertEquals(
-			previousTestFileModifiedDate, newTestFileModifiedDate);
-		Assert.assertEquals(
-			previousTestRtlFileModifiedDate, newTestRtlFileModifiedDate);
 		Assert.assertEquals(
 			previousMainFileModifiedDate, newMainFileModifiedDate);
 		Assert.assertEquals(
 			previousMainRtlFileModifiedDate, newMainRtlFileModifiedDate);
+		Assert.assertEquals(
+			previousTestFileModifiedDate, newTestFileModifiedDate);
+		Assert.assertEquals(
+			previousTestRtlFileModifiedDate, newTestRtlFileModifiedDate);
 	}
 
 	@Test

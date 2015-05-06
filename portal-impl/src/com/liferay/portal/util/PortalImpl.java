@@ -2476,6 +2476,10 @@ public class PortalImpl implements Portal {
 		return facebookURL;
 	}
 
+	/**
+	 * @deprecated Since 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay) {
 		List<Portlet> portlets = getControlPanelPortlets(

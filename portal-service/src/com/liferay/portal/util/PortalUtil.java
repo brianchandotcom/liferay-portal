@@ -975,6 +975,10 @@ public class PortalUtil {
 			portlet, facebookCanvasPageURL, themeDisplay);
 	}
 
+	/**
+	 * @deprecated Since 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay) {
 		return getPortal().getFirstMyAccountPortlet(themeDisplay);
 	}

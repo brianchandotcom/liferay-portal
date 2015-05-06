@@ -1,5 +1,5 @@
 <definition component-name="portal-rss">
-	<property name="testray.main.component.name" value="Rss" />
+	<property name="testray.main.component.name" value="RSS" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -48,14 +48,14 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#addFeed">
+		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="1" />
 			<var name="feedRowIndexNumber" value="3" />
 			<var name="feedTitle" value="Latimes > Technology News" />
 			<var name="feedUrlLink" value="http://www.latimes.com/business/technology/rss2.0.xml" />
 		</execute>
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
@@ -64,7 +64,7 @@
 		</execute>
 
 		<for list="Liferay Blogs - General,Latimes > Technology News,NYT > Technology" param="feedTitle" >
-			<execute macro="Rss#viewDefaultDisplayFeedTitle">
+			<execute macro="RSS#viewDefaultDisplayFeedTitle">
 				<var name="feedTitle" value="${feedTitle}" />
 			</execute>
 		</for>
@@ -107,14 +107,14 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#addFeed">
+		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="2" />
 			<var name="feedRowIndexNumber" value="3" />
 			<var name="feedTitle" value="General Announcement" />
 			<var name="feedUrlLink" value="www.theverge.com/rss/index.xml" />
 		</execute>
 
-		<execute macro="Rss#viewWarningMessageDisplay">
+		<execute macro="RSS#viewWarningMessageDisplay">
 			<var name="errorMessage" value="The following are invalid URLs: www.theverge.com/rss/index.xml." />
 			<var name="warningMessage" value="Your request failed to complete." />
 		</execute>
@@ -125,7 +125,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Rss#viewDeleteFeed">
+		<execute macro="RSS#viewDeleteFeed">
 			<var name="feedTitle" value="General Announcement" />
 		</execute>
 
@@ -134,14 +134,14 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#addFeed">
+		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="2" />
 			<var name="feedRowIndexNumber" value="3" />
 			<var name="feedTitle" value="General Announcement" />
 			<var name="feedUrlLink" value="http://www.theverge.com/rss/index.xml" />
 		</execute>
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
@@ -149,12 +149,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Rss#viewDefaultDisplayFeedTitle">
+		<execute macro="RSS#viewDefaultDisplayFeedTitle">
 			<var name="feedTitle" value="General Announcement" />
 		</execute>
 	</command>
 
-	<command name="AddRssFeed" priority="5">
+	<command name="AddRSSFeed" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -191,14 +191,14 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#addFeed">
+		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="2" />
 			<var name="feedRowIndexNumber" value="3" />
 			<var name="feedTitle" value="Latimes > Technology News" />
 			<var name="feedUrlLink" value="http://www.latimes.com/business/technology/rss2.0.xml" />
 		</execute>
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
@@ -207,13 +207,13 @@
 		</execute>
 
 		<for list="Liferay Blogs - General,Latimes > Technology News,NYT > Technology" param="feedTitle" >
-			<execute macro="Rss#viewDefaultDisplayFeedTitle">
+			<execute macro="RSS#viewDefaultDisplayFeedTitle">
 				<var name="feedTitle" value="${feedTitle}" />
 			</execute>
 		</for>
 	</command>
 
-	<command name="AddRssPortlet" priority="5">
+	<command name="AddRSSPortlet" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -250,7 +250,7 @@
 		</execute>
 
 		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
-			<execute macro="Rss#viewDefaultDisplayFeedTitle">
+			<execute macro="RSS#viewDefaultDisplayFeedTitle">
 				<var name="feedTitle" value="${feedTitle}" />
 			</execute>
 		</for>
@@ -293,11 +293,11 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#deleteFeed">
+		<execute macro="RSS#deleteFeed">
 			<var name="buttonRowIndexNumber" value="1" />
 		</execute>
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
@@ -305,7 +305,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Rss#viewDeleteFeed">
+		<execute macro="RSS#viewDeleteFeed">
 			<var name="feedTitle" value="Liferay Blogs - General" />
 		</execute>
 
@@ -314,18 +314,18 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#addFeed">
+		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="1" />
 			<var name="feedRowIndexNumber" value="2" />
 			<var name="feedTitle" value="Latimes > Technology News" />
 			<var name="feedUrlLink" value="http://www.latimes.com/business/technology/rss2.0.xml" />
 		</execute>
 
-		<execute macro="Rss#configureFeedDisplayStyle">
+		<execute macro="RSS#configureFeedDisplayStyle">
 			<var name="feedDisplayStyle" value="Navigation" />
 		</execute>
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
@@ -334,13 +334,13 @@
 		</execute>
 
 		<for list="Latimes > Technology News,NYT > Technology" param="feedTitle" >
-			<execute macro="Rss#viewNavigationDisplayFeedTitle">
+			<execute macro="RSS#viewNavigationDisplayFeedTitle">
 				<var name="feedTitle" value="${feedTitle}" />
 			</execute>
 		</for>
 	</command>
 
-	<command name="ChangeOrderOfRssFeeds" priority="3">
+	<command name="ChangeOrderOfRSSFeeds" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -377,19 +377,19 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#viewPG">
+		<execute macro="RSS#viewPG">
 			<var name="feedRowIndexNumber" value="0" />
 			<var name="feedUrlLink" value="http://www.liferay.com/community/blogs/-/blogs_stream/community/rss" />
 			<var name="rowIndexNumber" value="1" />
 		</execute>
 
-		<execute macro="Rss#changeFeedsOrder">
+		<execute macro="RSS#changeFeedsOrder">
 			<var name="fromRowNumber" value="1" />
 			<var name="rowLocation" value="Title URL" />
 			<var name="toRowNumber" value="2" />
 		</execute>
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
@@ -402,7 +402,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#viewPG">
+		<execute macro="RSS#viewPG">
 			<var name="feedRowIndexNumber" value="0" />
 			<var name="feedUrlLink" value="http://partners.userland.com/nytRss/technology.xml" />
 			<var name="rowIndexNumber" value="1" />
@@ -419,14 +419,14 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#viewPG">
+		<execute macro="RSS#viewPG">
 			<var name="feedRowIndexNumber" value="1" />
 			<var name="feedUrlLink" value="http://www.liferay.com/community/blogs/-/blogs_stream/community/rss" />
 			<var name="rowIndexNumber" value="2" />
 		</execute>
 	</command>
 
-	<command name="DeleteFeedFromRss" priority="5">
+	<command name="DeleteFeedFromRSS" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Page Name" />
 		</execute>
@@ -442,21 +442,21 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#addFeed">
+		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="2" />
 			<var name="feedRowIndexNumber" value="3" />
 			<var name="feedTitle" value="Latimes > Technology News" />
 			<var name="feedUrlLink" value="http://www.latimes.com/business/technology/rss2.0.xml" />
 		</execute>
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page Name" />
 		</execute>
 
 		<for list="Liferay Blogs - General,Latimes > Technology News,NYT > Technology" param="feedTitle" >
-			<execute macro="Rss#viewDefaultDisplayFeedTitle">
+			<execute macro="RSS#viewDefaultDisplayFeedTitle">
 				<var name="feedTitle" value="${feedTitle}" />
 			</execute>
 		</for>
@@ -466,17 +466,17 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#deleteFeed">
+		<execute macro="RSS#deleteFeed">
 			<var name="buttonRowIndexNumber" value="3" />
 		</execute>
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute macro="Rss#viewDeleteFeed">
+		<execute macro="RSS#viewDeleteFeed">
 			<var name="feedTitle" value="Latimes > Technology News" />
 		</execute>
 	</command>
@@ -518,7 +518,7 @@
 		</execute>
 
 		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
-			<execute macro="Rss#viewDefaultDisplayFeedTitle">
+			<execute macro="RSS#viewDefaultDisplayFeedTitle">
 				<var name="feedTitle" value="${feedTitle}" />
 			</execute>
 		</for>
@@ -528,9 +528,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#disableShowFeedTitle" />
+		<execute macro="RSS#disableShowFeedTitle" />
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
@@ -539,13 +539,13 @@
 		</execute>
 
 		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
-			<execute macro="Rss#viewNoFeedTitle">
+			<execute macro="RSS#viewNoFeedTitle">
 				<var name="feedTitle" value="${feedTitle}" />
 			</execute>
 		</for>
 	</command>
 
-	<command name="EnableRssFeedFromAssetpublisher" priority="5">
+	<command name="EnableRSSFeedFromAssetpublisher" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -603,9 +603,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#enableRssSubscription" />
+		<execute macro="AssetPublisherPortlet#enableRSSSubscription" />
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page2 Name" />
@@ -626,14 +626,14 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="Rss#addFeed">
+		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="2" />
 			<var name="feedRowIndexNumber" value="3" />
 			<var name="feedTitle" value="Web Asset Publisher" />
 			<var name="feedUrlLink" value="${rssFeedUrl}" />
 		</execute>
 
-		<execute macro="Rss#save" />
+		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page1 Name" />
@@ -641,16 +641,16 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Rss#viewDefaultDisplayFeedTitle">
+		<execute macro="RSS#viewDefaultDisplayFeedTitle">
 			<var name="feedTitle" value="Web Asset Publisher" />
 		</execute>
 
-		<execute macro="Rss#viewFeedContentTitle">
+		<execute macro="RSS#viewFeedContentTitle">
 			<var name="feedContentTitle" value="Web Content Title" />
 		</execute>
 	</command>
 
-	<command name="RemoveRssPortlet" priority="5">
+	<command name="RemoveRSSPortlet" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Page Name" />
 		</execute>
@@ -666,7 +666,7 @@
 		</execute>
 
 		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
-			<execute macro="Rss#viewDefaultDisplayFeedTitle">
+			<execute macro="RSS#viewDefaultDisplayFeedTitle">
 				<var name="feedTitle" value="${feedTitle}" />
 			</execute>
 		</for>

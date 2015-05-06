@@ -317,7 +317,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addCP">
-			<var name="adtFile" value="portlet_display_template_basic.ftl" />
+			<var name="adtFile" value="adt_blogs_basic.ftl" />
 			<var name="adtType" value="Blogs" />
 		</execute>
 

@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Collections;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
@@ -68,6 +71,20 @@ public abstract class BaseDestination implements Destination {
 				invokerMessageListener.getMessageListener(),
 				invokerMessageListener.getClassLoader());
 		}
+	}
+
+	@Override
+	public void destroy() {
+		close(true);
+
+		removeDestinationEventListeners();
+
+		unregisterMessageListeners();
+	}
+
+	@Override
+	public DestinationStatistics getDestinationStatistics() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -129,6 +146,11 @@ public abstract class BaseDestination implements Destination {
 		_destinationEventListeners.clear();
 	}
 
+	@Override
+	public void send(Message message) {
+		throw new UnsupportedOperationException();
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -155,6 +177,16 @@ public abstract class BaseDestination implements Destination {
 		for (MessageListener messageListener : messageListeners) {
 			unregisterMessageListener((InvokerMessageListener)messageListener);
 		}
+	}
+
+	@Activate
+	protected void activate() {
+		afterPropertiesSet();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		destroy();
 	}
 
 	protected void fireMessageListenerRegisteredEvent(

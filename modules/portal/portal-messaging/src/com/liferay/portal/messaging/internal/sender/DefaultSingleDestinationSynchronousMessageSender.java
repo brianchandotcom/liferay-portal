@@ -25,21 +25,6 @@ import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 public class DefaultSingleDestinationSynchronousMessageSender
 	implements SingleDestinationSynchronousMessageSender {
 
-	public DefaultSingleDestinationSynchronousMessageSender() {
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	public DefaultSingleDestinationSynchronousMessageSender(
-		String destinationName,
-		SynchronousMessageSender synchronousMessageSender) {
-
-		_destinationName = destinationName;
-		_synchronousMessageSender = synchronousMessageSender;
-	}
-
 	@Override
 	public Object send(Message message) throws MessageBusException {
 		return _synchronousMessageSender.send(_destinationName, message);

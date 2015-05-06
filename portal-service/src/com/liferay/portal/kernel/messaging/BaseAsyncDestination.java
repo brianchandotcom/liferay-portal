@@ -80,6 +80,8 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	}
 
 	public void destroy() {
+		super.destroy();
+
 		serviceTracker.close();
 	}
 

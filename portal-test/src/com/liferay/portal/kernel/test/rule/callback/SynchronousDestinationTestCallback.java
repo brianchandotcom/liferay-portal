@@ -123,7 +123,7 @@ public class SynchronousDestinationTestCallback
 				_asyncServiceDestinations.add(destination);
 
 				messageBus.replace(
-					createSynchronousDestination(destinationName));
+					createSynchronousDestination(destinationName), false);
 			}
 
 			if (destination == null) {

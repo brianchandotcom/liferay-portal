@@ -22,13 +22,26 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.nio.intraband.messaging.IntrabandBridgeDestination;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -38,6 +51,12 @@ public class DefaultMessageBus implements MessageBus {
 
 	@Override
 	public synchronized void addDestination(Destination destination) {
+		if (SPIUtil.isSPI() &&
+			!destination.getClass().equals(IntrabandBridgeDestination.class)) {
+
+			destination = new IntrabandBridgeDestination(destination);
+		}
+
 		_destinations.put(destination.getName(), destination);
 
 		for (MessageBusEventListener messageBusEventListener :
@@ -106,10 +125,21 @@ public class DefaultMessageBus implements MessageBus {
 	}
 
 	@Override
-	public synchronized Destination removeDestination(String destinationName) {
+	public Destination removeDestination(String destinationName) {
+		return removeDestination(destinationName, true);
+	}
+
+	@Override
+	public synchronized Destination removeDestination(
+		String destinationName, boolean closeOnRemove) {
+
 		Destination destination = _destinations.remove(destinationName);
 
 		if (destination != null) {
+			if (closeOnRemove) {
+				destination.close(true);
+			}
+
 			destination.removeDestinationEventListeners();
 			destination.unregisterMessageListeners();
 
@@ -132,14 +162,23 @@ public class DefaultMessageBus implements MessageBus {
 
 	@Override
 	public void replace(Destination destination) {
+		replace(destination, true);
+	}
+
+	@Override
+	public void replace(Destination destination, boolean closeOnRemove) {
 		Destination oldDestination = _destinations.get(destination.getName());
 
 		oldDestination.copyDestinationEventListeners(destination);
 		oldDestination.copyMessageListeners(destination);
 
-		removeDestination(oldDestination.getName());
+		removeDestination(oldDestination.getName(), closeOnRemove);
 
 		addDestination(destination);
+
+		if (closeOnRemove) {
+			destination.open();
+		}
 	}
 
 	@Override
@@ -185,11 +224,155 @@ public class DefaultMessageBus implements MessageBus {
 		return destination.unregister(messageListener);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, Destination.class,
+			new DestinationServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(destination.name=*)"
+	)
+	protected synchronized void addDestination(
+		Destination destination, Map<String, Object> properties) {
+
+		if (SPIUtil.isSPI() &&
+			!destination.getClass().equals(IntrabandBridgeDestination.class)) {
+
+			destination = new IntrabandBridgeDestination(destination);
+		}
+
+		if (_destinations.containsKey(destination.getName())) {
+			replace(destination);
+		}
+		else {
+			_destinations.put(destination.getName(), destination);
+		}
+
+		for (MessageBusEventListener messageBusEventListener :
+				_messageBusEventListeners) {
+
+			messageBusEventListener.destinationAdded(destination);
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		shutdown(true);
+
+		for (Destination destination : _destinations.values()) {
+			destination.destroy();
+		}
+
+		_messageBusEventListeners.clear();
+
+		_serviceTracker.close();
+
+		_serviceTracker = null;
+
+		_bundleContext = null;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void registerMessageBusEventListener(
+		MessageBusEventListener messageBusEventListener) {
+
+		addMessageBusEventListener(messageBusEventListener);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(destination.name=*)"
+	)
+	protected synchronized void registerMessageListener(
+		MessageListener messageListener, Map<String, Object> properties) {
+
+		String destinationName = MapUtil.getString(
+			properties, "destination.name");
+
+		ClassLoader operatingClassLoader = (ClassLoader)properties.get(
+			"operatingClassLoader");
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(operatingClassLoader);
+
+			registerMessageListener(destinationName, messageListener);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
+	}
+
+	protected synchronized void removeDestination(
+		Destination destination, Map<String, Object> properties) {
+
+		removeDestination(destination.getName());
+	}
+
+	protected void unregisterMessageBusEventListener(
+		MessageBusEventListener messageBusEventListener) {
+
+		removeMessageBusEventListener(messageBusEventListener);
+	}
+
+	protected void unregisterMessageListener(
+		MessageListener messageListener, Map<String, Object> properties) {
+
+		String destinationName = MapUtil.getString(
+			properties, "destination.name");
+
+		unregisterMessageListener(destinationName, messageListener);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultMessageBus.class);
 
+	private BundleContext _bundleContext;
 	private final Map<String, Destination> _destinations = new HashMap<>();
 	private final Set<MessageBusEventListener> _messageBusEventListeners =
 		new ConcurrentHashSet<>();
+	private ServiceTracker<Destination, Destination> _serviceTracker;
+
+	private class DestinationServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Destination, Destination> {
+
+		@Override
+		public Destination addingService(
+			ServiceReference<Destination> reference) {
+
+			return _bundleContext.getService(reference);
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Destination> reference, Destination destination) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Destination> reference, Destination destination) {
+
+			destination.destroy();
+		}
+
+	}
 
 }

@@ -32,6 +32,8 @@ public interface Destination {
 
 	public void copyMessageListeners(Destination destination);
 
+	public void destroy();
+
 	public DestinationStatistics getDestinationStatistics();
 
 	public int getMessageListenerCount();

@@ -26,7 +26,7 @@ WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = (Workflo
 
 <liferay-ui:header
 	backURL="<%= backURL.toString() %>"
-	localizeTitle="<%= Boolean.FALSE %>"
+	localizeTitle="<%= false %>"
 	title="<%= workflowInstanceEditDisplayContext.getHeaderTitle() %>"
 />
 
@@ -42,7 +42,7 @@ WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = (Workflo
 			</aui:col>
 		</aui:row>
 
-		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= Boolean.TRUE %>" id="preview">
+		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>" id="preview">
 
 			<%
 			AssetRenderer assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
@@ -76,7 +76,7 @@ WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = (Workflo
 					<h3 class="task-content-title">
 						<liferay-ui:icon
 							iconCssClass="<%= workflowInstanceEditDisplayContext.getIconCssClass() %>"
-							label="<%= Boolean.TRUE %>"
+							label="<%= true %>"
 							message="<%= workflowInstanceEditDisplayContext.getTaskContentTitleMessage() %>"
 						/>
 					</h3>
@@ -108,7 +108,7 @@ WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = (Workflo
 						formAction="<%= discussionURL %>"
 						formName='<%= "fm" + assetRenderer.getClassPK() %>'
 						paginationURL="<%= discussionPaginationURL %>"
-						ratingsEnabled="<%= Boolean.FALSE %>"
+						ratingsEnabled="<%= false %>"
 						redirect="<%= currentURL %>"
 						userId="<%= user.getUserId() %>" />
 				</liferay-ui:panel>
@@ -128,7 +128,7 @@ WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = (Workflo
 						<liferay-ui:search-container-row
 							className="com.liferay.portal.kernel.workflow.WorkflowTask"
 							modelVar="workflowTask"
-							stringKey="<%= Boolean.TRUE %>"
+							stringKey="<%= true %>"
 						>
 							<liferay-ui:search-container-row-parameter
 								name="workflowTask"
@@ -165,7 +165,7 @@ WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = (Workflo
 		</liferay-ui:panel-container>
 	</aui:col>
 
-	<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= Boolean.TRUE %>" width="<%= 25 %>">
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
 		<div class="lfr-asset-summary">
 			<liferay-ui:icon
 				cssClass="lfr-asset-avatar"

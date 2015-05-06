@@ -52,16 +52,17 @@ AUI.add(
 
 						var editor = host.getNativeEditor();
 
+						editor.on('imagedrop', instance._uploadImage, instance);
+
+						instance._editor = editor;
+
 						var uploader = instance._getUploader();
 
 						instance._eventHandles = [
-							editor.on('imagedrop', instance._uploadImage, instance),
 							uploader.on('uploadcomplete', instance._onUploadComplete, instance),
 							uploader.on('uploaderror', instance._onUploadError, instance),
 							uploader.on('uploadprogress', instance._onUploadProgress, instance)
 						];
-
-						instance._editor = editor;
 					},
 
 					destructor: function() {
@@ -74,6 +75,8 @@ AUI.add(
 						if (instance._alert) {
 							instance._alert.destroy();
 						}
+
+						instance._editor.removeListener('imagedrop', instance._uploadImage);
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
@@ -214,8 +217,8 @@ AUI.add(
 					_uploadImage: function(event) {
 						var instance = this;
 
-						var image = event.data.el.$;
 						var file = event.data.file;
+						var image = event.data.el.$;
 
 						image = A.one(image);
 

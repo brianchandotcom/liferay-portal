@@ -49,6 +49,8 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 request.setAttribute("view.jsp-fullContentRedirect", currentURL);
 request.setAttribute("view.jsp-showIconLabel", true);
+
+assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 %>
 
 <c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
@@ -97,24 +99,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	</c:if>
 
 	<%
-
-	// Dynamically created asset entries are never persisted so incrementing the view counter breaks
-
-	if (!assetEntry.isNew() && assetEntry.isVisible()) {
-		AssetEntry incrementAssetEntry = null;
-
-		if (assetPublisherDisplayContext.isEnablePermissions()) {
-			incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(assetEntry.getClassName(), assetEntry.getClassPK());
-		}
-		else {
-			incrementAssetEntry = AssetEntryLocalServiceUtil.incrementViewCounter(user.getUserId(), assetEntry.getClassName(), assetEntry.getClassPK());
-		}
-
-		if (incrementAssetEntry != null) {
-			assetEntry = incrementAssetEntry;
-		}
-	}
-
 	if (assetPublisherDisplayContext.isShowContextLink()) {
 		if (PortalUtil.getPlidFromPortletId(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) == 0) {
 			assetPublisherDisplayContext.setShowContextLink(false);

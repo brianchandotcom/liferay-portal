@@ -134,6 +134,8 @@
 	<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
 		<aui:input helpMessage="enable-tag-based-navigation-help" label="enable-tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableTagBasedNavigation() %>" />
 	</c:if>
+
+	<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableViewCountIncrement() %>" />
 </aui:fieldset>
 
 <aui:fieldset label="show-metadata">

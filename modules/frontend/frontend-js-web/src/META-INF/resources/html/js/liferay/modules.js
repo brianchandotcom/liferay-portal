@@ -104,6 +104,14 @@
 							'liferay-portlet-base'
 						]
 					},
+					'liferay-asset-add-on-entry-selector': {
+						path: 'asset_add_on_entry_selector.js',
+						requires: [
+							'aui-component',
+							'liferay-portlet-base',
+							'liferay-util-window'
+						]
+					},
 					'liferay-asset-categories-selector': {
 						path: 'asset_categories_selector.js',
 						requires: [

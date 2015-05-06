@@ -1,3 +1,18 @@
+/* ---------- Labels ---------- */
+
+$label-circle-border-radius: 20px;
+$label-rounded-border-radius: 3px;
+$label-square-border-radius: 0;
+
+$label-entry-bg: #FFF;
+$label-entry-border-color: #000;
+$label-entry-border-width: 1px;
+$label-entry-button-height: $input-height-base;
+$label-entry-button-width: $input-height-base;
+$label-entry-color: #000;
+$label-entry-font-size: 14px;
+$label-entry-padding: 0 0 0 12px;
+
 /* ---------- Toggle card ---------- */
 
 $toggle-card-height: 104px;
@@ -28,11 +43,11 @@ $toggle-card-on-icon-border-width: 0;
 
 /* ---------- Switches ---------- */
 
-$toggle-switch-button-width: 25px;
 $toggle-switch-bar-padding: 0;
+$toggle-switch-button-width: 25px;
 
-$toggle-switch-bar-width: 50px;
 $toggle-switch-bar-height: ($toggle-switch-bar-padding * 2) + $toggle-switch-button-width;
+$toggle-switch-bar-width: 50px;
 
 $toggle-switch-bar-border-radius: 3px;
 $toggle-switch-button-border-radius: 3px;

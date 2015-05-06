@@ -1427,7 +1427,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (commonInitFileContent != null) {
-			FileUtils.write(commonInitFile, commonInitFileContent);
+			FileUtils.write(
+				commonInitFile, commonInitFileContent, StringPool.UTF8);
 
 			_jspContents.put(commonInitFileName, commonInitFileContent);
 		}

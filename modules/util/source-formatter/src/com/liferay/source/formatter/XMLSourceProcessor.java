@@ -344,7 +344,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isExcludedFile(_xmlExclusionFiles, absolutePath)) {
+		if (isExcludedFile(_xmlExclusionFiles, absolutePath) ||
+			fileName.contains("/com/liferay/source/formatter/dependencies/")) {
+
 			return content;
 		}
 

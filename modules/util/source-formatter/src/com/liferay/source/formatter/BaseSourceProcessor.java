@@ -787,6 +787,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String getAbsolutePath(File file) {
 		String absolutePath = file.getAbsolutePath();
 
+		absolutePath = StringUtil.replace(
+			absolutePath, CharPool.BACK_SLASH, CharPool.SLASH);
+
 		return StringUtil.replace(absolutePath, "/./", StringPool.SLASH);
 	}
 
@@ -1231,7 +1234,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (sourceFormatterArgs.isAutoFix()) {
-			FileUtils.writeStringToFile(file, newContent);
+			FileUtils.writeStringToFile(file, newContent, StringPool.UTF8);
 		}
 		else if (_firstSourceMismatchException == null) {
 			_firstSourceMismatchException = new SourceMismatchException(

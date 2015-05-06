@@ -48,7 +48,8 @@ public class SourceFormatterHelper {
 		String newPropertiesContent = PropertiesUtil.toString(_properties);
 
 		if (!_propertiesContent.equals(newPropertiesContent)) {
-			FileUtils.writeStringToFile(_propertiesFile, newPropertiesContent);
+			FileUtils.writeStringToFile(
+				_propertiesFile, newPropertiesContent, StringPool.UTF8);
 		}
 	}
 
@@ -92,7 +93,7 @@ public class SourceFormatterHelper {
 	}
 
 	public String readFileToString(File file) throws IOException {
-		String s = FileUtils.readFileToString(file);
+		String s = FileUtils.readFileToString(file, StringPool.UTF8);
 
 		return StringUtil.replace(
 			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);

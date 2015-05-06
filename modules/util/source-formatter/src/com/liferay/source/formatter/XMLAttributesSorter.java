@@ -82,12 +82,12 @@ public class XMLAttributesSorter {
 			fullFileName = StringUtil.replace(
 				fullFileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			String content = FileUtils.readFileToString(file);
+			String content = FileUtils.readFileToString(file, StringPool.UTF8);
 
 			String newContent = XMLSourceProcessor.sortAttributes(content);
 
 			if (!content.equals(newContent)) {
-				FileUtils.writeStringToFile(file, newContent);
+				FileUtils.writeStringToFile(file, newContent, StringPool.UTF8);
 
 				System.out.println(fullFileName);
 			}

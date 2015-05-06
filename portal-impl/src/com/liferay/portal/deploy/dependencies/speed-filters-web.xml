@@ -101,6 +101,10 @@
 		<param-name>filter-class</param-name>
 		<param-value>com.liferay.portal.servlet.filters.gzip.GZipFilter</param-value>
 	</init-param>
+	<init-param>
+		<param-name>Vary</param-name>
+		<param-value>Accept-Encoding</param-value>
+	</init-param>
 </filter>
 <filter>
 	<filter-name>GZip Filter - Theme PNG</filter-name>
@@ -112,6 +116,10 @@
 	<init-param>
 		<param-name>url-regex-pattern</param-name>
 		<param-value>.+/themes/.*/images/.*\.png</param-value>
+	</init-param>
+	<init-param>
+		<param-name>Vary</param-name>
+		<param-value>Accept-Encoding</param-value>
 	</init-param>
 </filter>
 <filter>
@@ -132,10 +140,6 @@
 	<init-param>
 		<param-name>Expires</param-name>
 		<param-value>315360000</param-value>
-	</init-param>
-	<init-param>
-		<param-name>Vary</param-name>
-		<param-value>Accept-Encoding</param-value>
 	</init-param>
 </filter>
 <filter>

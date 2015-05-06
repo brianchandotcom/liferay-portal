@@ -16,9 +16,6 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Portlet;
 import com.liferay.registry.Filter;
@@ -47,14 +44,6 @@ public class ResourceBundleTracker implements Closeable {
 	public ResourceBundleTracker(ClassLoader classLoader, Portlet portlet) {
 		_classLoader = classLoader;
 		_portlet = portlet;
-
-		Set<String> supportedLanguageIds = portlet.getSupportedLocales();
-
-		if (supportedLanguageIds.isEmpty()) {
-			supportedLanguageIds = _LANGUAGE_IDS;
-		}
-
-		_supportedLanguageIds = supportedLanguageIds;
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -114,17 +103,10 @@ public class ResourceBundleTracker implements Closeable {
 			}
 		}
 
-		if (!_supportedLanguageIds.contains(languageId)) {
-			return null;
-		}
-
 		return ResourceBundle.getBundle(
 			_portlet.getResourceBundle(), LocaleUtil.fromLanguageId(languageId),
 			_classLoader, UTF8Control.INSTANCE);
 	}
-
-	private static final Set<String> _LANGUAGE_IDS = SetUtil.fromArray(
-		PropsUtil.getArray(PropsKeys.LOCALES));
 
 	private final ClassLoader _classLoader;
 	private final Portlet _portlet;
@@ -134,7 +116,6 @@ public class ResourceBundleTracker implements Closeable {
 		_serviceRegistrations = new StringServiceRegistrationMap<>();
 	private final ServiceTracker<ResourceBundle, ResourceBundle>
 		_serviceTracker;
-	private final Set<String> _supportedLanguageIds;
 
 	private class ResourceBundleServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<ResourceBundle, ResourceBundle> {

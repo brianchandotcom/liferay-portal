@@ -14,12 +14,12 @@
 
 package com.liferay.wiki.engine.input.editor.common.util;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.servlet.ServletContext;
 
 /**
  * @author Iván Zaera

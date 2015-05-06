@@ -202,6 +202,10 @@ public class InstrumentationAgent {
 		System.setProperty("junit.code.coverage", "true");
 	}
 
+	public static File getDataFile() {
+		return _dataFile;
+	}
+
 	public static File getLockFile() {
 		return _lockFile;
 	}
@@ -242,10 +246,7 @@ public class InstrumentationAgent {
 			// Forcibly clear the data file to make sure that the coverage
 			// assert is based on the current test
 
-			File dataFile = new File(
-				System.getProperty("net.sourceforge.cobertura.datafile"));
-
-			dataFile.delete();
+			_dataFile.delete();
 		}
 		else {
 			StringBuilder sb = new StringBuilder();
@@ -340,6 +341,7 @@ public class InstrumentationAgent {
 		System.out.printf("[Whip] %s is fully covered.%n", classData.getName());
 	}
 
+	private static final File _dataFile;
 	private static boolean _dynamicallyInstrumented;
 	private static String[] _excludes;
 	private static String[] _includes;
@@ -349,10 +351,10 @@ public class InstrumentationAgent {
 	private static WhipClassFileTransformer _whipClassFileTransformer;
 
 	static {
-		File dataFile = new File(
+		_dataFile = new File(
 			System.getProperty("net.sourceforge.cobertura.datafile"));
 
-		File parentFolder = dataFile.getParentFile();
+		File parentFolder = _dataFile.getParentFile();
 
 		if (!parentFolder.exists()) {
 			parentFolder.mkdirs();

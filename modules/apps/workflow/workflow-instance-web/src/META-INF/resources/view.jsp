@@ -45,7 +45,7 @@ try {
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.workflow.WorkflowInstance"
 			modelVar="workflowInstance"
-			stringKey="<%= Boolean.TRUE %>"
+			stringKey="<%= true %>"
 		>
 			<liferay-ui:search-container-row-parameter
 				name="workflowInstance"

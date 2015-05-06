@@ -64,7 +64,7 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -74,8 +74,6 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		sb.append(DDMStorageId);
 		sb.append(", DDMStructureId=");
 		sb.append(DDMStructureId);
-		sb.append(", fileEntryTypeId=");
-		sb.append(fileEntryTypeId);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
 		sb.append(", fileVersionId=");
@@ -99,7 +97,6 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		dlFileEntryMetadataImpl.setFileEntryMetadataId(fileEntryMetadataId);
 		dlFileEntryMetadataImpl.setDDMStorageId(DDMStorageId);
 		dlFileEntryMetadataImpl.setDDMStructureId(DDMStructureId);
-		dlFileEntryMetadataImpl.setFileEntryTypeId(fileEntryTypeId);
 		dlFileEntryMetadataImpl.setFileEntryId(fileEntryId);
 		dlFileEntryMetadataImpl.setFileVersionId(fileVersionId);
 
@@ -114,7 +111,6 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		fileEntryMetadataId = objectInput.readLong();
 		DDMStorageId = objectInput.readLong();
 		DDMStructureId = objectInput.readLong();
-		fileEntryTypeId = objectInput.readLong();
 		fileEntryId = objectInput.readLong();
 		fileVersionId = objectInput.readLong();
 	}
@@ -132,7 +128,6 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		objectOutput.writeLong(fileEntryMetadataId);
 		objectOutput.writeLong(DDMStorageId);
 		objectOutput.writeLong(DDMStructureId);
-		objectOutput.writeLong(fileEntryTypeId);
 		objectOutput.writeLong(fileEntryId);
 		objectOutput.writeLong(fileVersionId);
 	}
@@ -141,7 +136,6 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 	public long fileEntryMetadataId;
 	public long DDMStorageId;
 	public long DDMStructureId;
-	public long fileEntryTypeId;
 	public long fileEntryId;
 	public long fileVersionId;
 }

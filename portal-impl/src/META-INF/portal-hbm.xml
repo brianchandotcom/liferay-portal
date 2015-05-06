@@ -1587,7 +1587,6 @@
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="DDMStorageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="DDMStructureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="fileEntryTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="fileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>

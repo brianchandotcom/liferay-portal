@@ -276,7 +276,7 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 
 	public void updateFileEntryMetadata(long companyId,
 		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures,
-		long fileEntryTypeId, long fileEntryId, long fileVersionId,
+		long fileEntryId, long fileVersionId,
 		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> ddmFormValuesMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;

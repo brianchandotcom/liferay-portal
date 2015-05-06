@@ -603,7 +603,6 @@ create table DLFileEntryMetadata (
 	fileEntryMetadataId LONG not null primary key,
 	DDMStorageId LONG,
 	DDMStructureId LONG,
-	fileEntryTypeId LONG,
 	fileEntryId LONG,
 	fileVersionId LONG
 );

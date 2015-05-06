@@ -54,6 +54,16 @@
 	<td>//select[contains(@id,'timeZoneId')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>USER_SETTINGS_TIME_ZONE_LOS_ANGELES_SELECT_OPTION</td>
+	<td>//select[contains(@id,'timeZoneId')]/option[@value='America/Los_Angeles']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX</td>
+	<td>//input[contains(@id,'usePortalTimeZone')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

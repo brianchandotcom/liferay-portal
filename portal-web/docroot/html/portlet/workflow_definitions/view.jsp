@@ -20,30 +20,10 @@
 	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
 
 		<%
-		String tabs1 = ParamUtil.getString(request, "tabs1", "definitions");
-
 		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("tabs1", tabs1);
 		%>
 
-		<liferay-ui:tabs
-			names="definitions,submissions"
-			portletURL="<%= portletURL %>"
-		/>
-
-		<c:choose>
-			<c:when test='<%= tabs1.equals("submissions") %>'>
-				<liferay-util:include page="/html/portlet/workflow_instances/view.jsp" />
-			</c:when>
-			<c:otherwise>
-				<%@ include file="/html/portlet/workflow_definitions/view_definitions.jspf" %>
-			</c:otherwise>
-		</c:choose>
-
-		<%
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), currentURL);
-		%>
+		<%@ include file="/html/portlet/workflow_definitions/view_definitions.jspf" %>
 
 	</c:when>
 	<c:otherwise>

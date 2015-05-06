@@ -275,7 +275,7 @@ PortletURL viewDiffsPortletURL = workflowHandler.getURLViewDiffs(classPK, lifera
 				List<WorkflowLog> workflowLogs = WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(company.getCompanyId(), workflowTask.getWorkflowInstanceId(), logTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowComparatorFactoryUtil.getLogCreateDateComparator(true));
 				%>
 
-				<%@ include file="/html/portlet/workflow_instances/workflow_logs.jspf" %>
+				<%@ include file="/html/portlet/workflow_tasks/workflow_logs.jspf" %>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
 	</aui:col>

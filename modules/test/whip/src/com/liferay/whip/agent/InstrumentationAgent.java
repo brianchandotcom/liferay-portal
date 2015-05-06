@@ -136,7 +136,7 @@ public class InstrumentationAgent {
 			excludes = _excludes;
 		}
 
-		String agentLine = System.getProperty("junit.whip.agent");
+		String agentLine = System.getProperty("whip.agent");
 
 		int index = agentLine.indexOf('=');
 
@@ -165,7 +165,7 @@ public class InstrumentationAgent {
 				sb.setLength(sb.length() - 1);
 			}
 
-			System.setProperty("junit.whip.agent", sb.toString());
+			System.setProperty("whip.agent", sb.toString());
 		}
 
 		if (_whipClassFileTransformer == null) {

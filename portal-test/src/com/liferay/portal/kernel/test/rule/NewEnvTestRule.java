@@ -158,11 +158,11 @@ public class NewEnvTestRule implements TestRule {
 			arguments.add("-Djunit.debug=true");
 		}
 
-		String junitWhipAgentLine = System.getProperty("junit.whip.agent");
+		String whipAgentLine = System.getProperty("whip.agent");
 
-		if (Validator.isNotNull(junitWhipAgentLine)) {
-			arguments.add(junitWhipAgentLine);
-			arguments.add("-Djunit.whip.agent=" + junitWhipAgentLine);
+		if (Validator.isNotNull(whipAgentLine)) {
+			arguments.add(whipAgentLine);
+			arguments.add("-Dwhip.agent=" + whipAgentLine);
 		}
 
 		arguments.add("-Dliferay.mode=test");

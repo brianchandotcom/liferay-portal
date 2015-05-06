@@ -21,7 +21,7 @@ import java.util.Locale;
 /**
  * @author Adolfo Pérez
  */
-public interface CommentTreeDisplayContext {
+public interface CommentTreeDisplayContext extends CommentDisplayContext {
 
 	public String getPublishButtonLabel(Locale locale) throws PortalException;
 

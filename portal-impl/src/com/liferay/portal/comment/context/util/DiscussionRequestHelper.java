@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.comment.context;
+package com.liferay.portal.comment.context.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
  */
-public interface CommentSectionDisplayContext extends CommentDisplayContext {
+public class DiscussionRequestHelper extends BaseRequestHelper {
 
-	public boolean isControlsVisible() throws PortalException;
-
-	public boolean isDiscussionVisible() throws PortalException;
-
-	public boolean isMessageThreadVisible() throws PortalException;
+	public DiscussionRequestHelper(HttpServletRequest request) {
+		super(request);
+	}
 
 }

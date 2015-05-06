@@ -12,19 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.comment.context.util;
-
-import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
-
-import javax.servlet.http.HttpServletRequest;
+package com.liferay.portal.kernel.comment.context;
 
 /**
  * @author Adolfo Pérez
  */
-public class DiscussionRequestHelper extends BaseRequestHelper {
+public interface CommentDisplayContext {
 
-	public DiscussionRequestHelper(HttpServletRequest request) {
-		super(request);
-	}
+	public boolean isReplyButtonVisible();
 
 }

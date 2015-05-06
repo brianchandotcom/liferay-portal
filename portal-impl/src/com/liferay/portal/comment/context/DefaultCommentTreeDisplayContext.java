@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.comment.context;
+package com.liferay.portal.comment.context;
 
+import com.liferay.portal.comment.context.util.DiscussionRequestHelper;
+import com.liferay.portal.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
@@ -26,8 +28,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
-import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Locale;
@@ -35,9 +35,10 @@ import java.util.Locale;
 /**
  * @author Adolfo Pérez
  */
-public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
+public class DefaultCommentTreeDisplayContext
+	extends BaseCommentDisplayContext implements CommentTreeDisplayContext {
 
-	public MBCommentTreeDisplayContext(
+	public DefaultCommentTreeDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
 		DiscussionRequestHelper discussionRequestHelper,
 		DiscussionPermission discussionPermission, Comment comment) {
@@ -146,6 +147,11 @@ public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
 		}
 
 		return false;
+	}
+
+	@Override
+	protected ThemeDisplay getThemeDisplay() {
+		return _discussionRequestHelper.getThemeDisplay();
 	}
 
 	protected User getUser() {

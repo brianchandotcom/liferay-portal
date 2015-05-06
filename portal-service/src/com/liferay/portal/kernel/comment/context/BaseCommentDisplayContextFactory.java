@@ -14,17 +14,11 @@
 
 package com.liferay.portal.kernel.comment.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.display.context.BaseDisplayContextFactory;
 
 /**
  * @author Adolfo Pérez
  */
-public interface CommentSectionDisplayContext extends CommentDisplayContext {
-
-	public boolean isControlsVisible() throws PortalException;
-
-	public boolean isDiscussionVisible() throws PortalException;
-
-	public boolean isMessageThreadVisible() throws PortalException;
-
+public abstract class BaseCommentDisplayContextFactory
+	extends BaseDisplayContextFactory implements CommentDisplayContextFactory {
 }

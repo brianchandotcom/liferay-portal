@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.comment.context;
+package com.liferay.portal.comment.context;
 
+import com.liferay.portal.comment.context.util.DiscussionRequestHelper;
+import com.liferay.portal.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
-import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
+import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Adolfo Pérez
  */
-public class MBCommentSectionDisplayContext
-	implements CommentSectionDisplayContext {
+public class DefaultCommentSectionDisplayContext
+	extends BaseCommentDisplayContext implements CommentSectionDisplayContext {
 
-	public MBCommentSectionDisplayContext(
+	public DefaultCommentSectionDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
 		DiscussionRequestHelper discussionRequestHelper,
 		DiscussionPermission discussionPermission, Discussion discussion) {
@@ -77,6 +78,11 @@ public class MBCommentSectionDisplayContext
 		}
 
 		return false;
+	}
+
+	@Override
+	protected ThemeDisplay getThemeDisplay() {
+		return _discussionRequestHelper.getThemeDisplay();
 	}
 
 	protected boolean hasViewPermission() throws PortalException {

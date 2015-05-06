@@ -12,19 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.comment.context;
+package com.liferay.portal.comment.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.comment.context.CommentDisplayContext;
+import com.liferay.portal.security.sso.SSOUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Adolfo Pérez
  */
-public interface CommentSectionDisplayContext extends CommentDisplayContext {
+public abstract class BaseCommentDisplayContext
+	implements CommentDisplayContext {
 
-	public boolean isControlsVisible() throws PortalException;
+	@Override
+	public boolean isReplyButtonVisible() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
 
-	public boolean isDiscussionVisible() throws PortalException;
+		if (themeDisplay.isSignedIn() ||
+			!SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId())) {
 
-	public boolean isMessageThreadVisible() throws PortalException;
+			return true;
+		}
+
+		return false;
+	}
+
+	protected abstract ThemeDisplay getThemeDisplay();
 
 }

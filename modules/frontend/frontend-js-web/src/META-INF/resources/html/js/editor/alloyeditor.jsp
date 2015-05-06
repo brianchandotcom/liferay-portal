@@ -154,10 +154,23 @@ if (showSource) {
 
 	var alloyEditor;
 
+	var getInitialContent = function() {
+		var data;
+
+		if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+		}
+		else {
+			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+		}
+
+		return data;
+	};
+
 	var createInstance = function() {
 		document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
-		var editorConfig = (<%= Validator.isNotNull(editorConfigJSONObject) %>) ? <%= editorConfigJSONObject %> : {};
+		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
 
 		var plugins = [];
 
@@ -180,7 +193,6 @@ if (showSource) {
 			{
 				editorConfig: editorConfig,
 				editorOptions: <%= editorOptionsJSONObject %>,
-				initMethod: window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'],
 				namespace: '<%= name %>',
 				onBlurMethod: window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'],
 				onChangeMethod: window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'],
@@ -230,25 +242,30 @@ if (showSource) {
 			}
 		},
 
-		getCkData: function() {
-			var data;
+		getHTML: function() {
+			var data = '';
 
 			if (alloyEditor && alloyEditor.instanceReady) {
-				data = alloyEditor.getCkData();
+				data = alloyEditor.getHTML();
 			}
-			else if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
-				data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+			else {
+				getInitialContent();
 			}
 
 			return data;
 		},
 
-		getHTML: function() {
-			return alloyEditor ? alloyEditor.getHTML() : window['<%= name %>'].getCkData();
-		},
-
 		getText: function() {
-			return window['<%= name %>'].getCkData();
+			var data = '';
+
+			if (alloyEditor && alloyEditor.instanceReady) {
+				data = alloyEditor.getText();
+			}
+			else {
+				data = getInitialContent();
+			}
+
+			return data;
 		},
 
 		initEditor: function() {

@@ -65,7 +65,7 @@ if (resizable) {
 
 	window['<%= name %>'] = {
 		create: function() {
-			if (! window['<%= name %>'].instanceReady) {
+			if (!window['<%= name %>'].instanceReady) {
 				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
 				var editorContainer = A.one('#<%= name %>Container');
@@ -101,6 +101,10 @@ if (resizable) {
 		},
 
 		getHTML: function() {
+			return document.getElementById('<%= name %>').value;
+		},
+
+		getText: function() {
 			return document.getElementById('<%= name %>').value;
 		},
 

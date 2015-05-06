@@ -77,6 +77,19 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 </div>
 
 <aui:script use="aui-node-base">
+	var getInitialContent = function() {
+		var data;
+
+		if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
+			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+		}
+		else {
+			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+		}
+
+		return data;
+	};
+
 	window['<%= name %>'] = {
 		init: function(value) {
 			if (typeof value != 'string') {
@@ -133,15 +146,25 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			var data;
 
 			if (!window['<%= name %>'].instanceReady) {
-				if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
-					data = <%= HtmlUtil.escape(namespace + initMethod) %>();
-				}
-				else {
-					data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
-				}
+				data = getInitialContent();
 			}
 			else {
 				data = tinyMCE.editors['<%= name %>'].getBody().innerHTML;
+			}
+
+			return data;
+		},
+
+		getText: function() {
+			var data;
+
+			if (!window['<%= name %>'].instanceReady) {
+				data = getInitialContent();
+			}
+			else {
+				var editorBody = tinyMCE.editors['<%= name %>'].getBody();
+
+				data = editorBody.textContent;
 			}
 
 			return data;
@@ -182,7 +205,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 				currentToolbarSet = 'tablet';
 			}
 
-			var currentToolbar = toolbars[currentToolbarSet] || toolbars['liferay'];
+			var currentToolbar = toolbars[currentToolbarSet] || toolbars.liferay;
 
 			var tinyMCELanguage = {'ar_SA': 'ar', 'bg_BG': 'bg_BG', 'ca_ES': 'ca', 'cs_CZ': 'cs', 'de_DE': 'de', 'el_GR': 'el', 'en_AU': 'en_GB', 'en_GB': 'en_GB',
 				'en_US': 'en_GB', 'es_ES': 'es', 'et_EE': 'et', 'eu_ES': 'eu', 'fa_IR': 'fa', 'fi_FI': 'fi', 'fr_FR': 'fr_FR', 'gl_ES': 'gl', 'hr_HR': 'hr', 'hu_HU': 'hu_HU',
@@ -199,7 +222,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 					file_browser_callback: window['<%= name %>'].fileBrowserCallback,
 					init_instance_callback: window['<%= name %>'].initInstanceCallback,
 					invalid_elements: 'script',
-					language: tinyMCELanguage['<%= HtmlUtil.escape(contentsLanguageId) %>'] || tinyMCELanguage['en_US'],
+					language: tinyMCELanguage['<%= HtmlUtil.escape(contentsLanguageId) %>'] || tinyMCELanguage.en_US,
 					menubar: false,
 					mode: 'exact',
 					plugins: [
@@ -229,17 +252,17 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 					%>
 
 					style_formats: [
-						{title: 'Normal', inline: 'p'},
-						{title: 'Heading 1', block: 'h1'},
-						{title: 'Heading 2', block: 'h2'},
-						{title: 'Heading 3', block: 'h3'},
-						{title: 'Heading 4', block: 'h4'},
-						{title: 'Preformatted Text', block: 'pre'},
-						{title: 'Cited Work', inline: 'cite'},
-						{title: 'Computer Code', inline: 'code'},
-						{title: 'Info Message', block: 'div', classes: 'portlet-msg-info'},
-						{title: 'Alert Message', block: 'div', classes: 'portlet-msg-alert'},
-						{title: 'Error Message', block: 'div', classes: 'portlet-msg-error'}
+						{inline: 'p', title: 'Normal'},
+						{block: 'h1', title: 'Heading 1'},
+						{block: 'h2', title: 'Heading 2'},
+						{block: 'h3', title: 'Heading 3'},
+						{block: 'h4', title: 'Heading 4'},
+						{block: 'pre', title: 'Preformatted Text'},
+						{inline: 'cite', title: 'Cited Work'},
+						{inline: 'code', title: 'Computer Code'},
+						{block: 'div', classes: 'portlet-msg-info', title: 'Info Message'},
+						{block: 'div', classes: 'portlet-msg-alert', title: 'Alert Message'},
+						{block: 'div', classes: 'portlet-msg-error', title: 'Error Message'}
 					],
 					toolbar: currentToolbar,
 					toolbar_items_size: 'small'

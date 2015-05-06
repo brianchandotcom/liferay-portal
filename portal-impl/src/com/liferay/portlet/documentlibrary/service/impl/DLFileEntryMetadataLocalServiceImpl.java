@@ -130,9 +130,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 	@Override
 	public void updateFileEntryMetadata(
-			long companyId, List<DDMStructure> ddmStructures,
-			long fileEntryTypeId, long fileEntryId, long fileVersionId,
-			Map<String, DDMFormValues> ddmFormValuesMap,
+			long companyId, List<DDMStructure> ddmStructures, long fileEntryId,
+			long fileVersionId, Map<String, DDMFormValues> ddmFormValuesMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -142,8 +141,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 			if (ddmFormValues != null) {
 				updateFileEntryMetadata(
-					companyId, ddmStructure, fileEntryTypeId, fileEntryId,
-					fileVersionId, ddmFormValues, serviceContext);
+					companyId, ddmStructure, fileEntryId, fileVersionId,
+					ddmFormValues, serviceContext);
 			}
 		}
 	}
@@ -161,8 +160,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 		updateFileEntryMetadata(
-			fileEntryType.getCompanyId(), ddmStructures, fileEntryTypeId,
-			fileEntryId, fileVersionId, ddmFormValuesMap, serviceContext);
+			fileEntryType.getCompanyId(), ddmStructures, fileEntryId,
+			fileVersionId, ddmFormValuesMap, serviceContext);
 	}
 
 	protected void deleteFileEntryMetadata(
@@ -184,8 +183,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 	}
 
 	protected void updateFileEntryMetadata(
-			long companyId, DDMStructure ddmStructure, long fileEntryTypeId,
-			long fileEntryId, long fileVersionId, DDMFormValues ddmFormValues,
+			long companyId, DDMStructure ddmStructure, long fileEntryId,
+			long fileVersionId, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
 		throws StorageException {
 
@@ -214,7 +213,6 @@ public class DLFileEntryMetadataLocalServiceImpl
 			fileEntryMetadata.setDDMStorageId(ddmStorageId);
 
 			fileEntryMetadata.setDDMStructureId(ddmStructure.getStructureId());
-			fileEntryMetadata.setFileEntryTypeId(fileEntryTypeId);
 			fileEntryMetadata.setFileEntryId(fileEntryId);
 			fileEntryMetadata.setFileVersionId(fileVersionId);
 

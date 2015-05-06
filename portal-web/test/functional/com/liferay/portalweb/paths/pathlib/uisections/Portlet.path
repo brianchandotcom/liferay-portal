@@ -18,6 +18,31 @@
 	<td>//input[contains(@id,'layoutTemplateId2')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>H1_HEADER</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>H2_HEADER</td>
+	<td>//h2[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>H3_HEADER</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>H3_HEADER_2</td>
+	<td>xpath=(//h3[@class='header-title']/span)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

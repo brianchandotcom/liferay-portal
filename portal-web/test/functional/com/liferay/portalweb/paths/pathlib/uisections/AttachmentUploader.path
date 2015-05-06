@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>AttachmentUploader</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AttachmentUploader</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPLOADER</td>
+	<td>//div[@class='lfr-dynamic-uploader']//div[contains(@class,'upload-target')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILES_BUTTON</td>
+	<td>//button[contains(.,'Select Files')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ALL_CHECKBOX</td>
+	<td>//input[@class='select-all-files']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILE_CHECKBOX</td>
+	<td>//input[@class='select-file' and contains (@value,'${key_fileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_FILE_BUTTON</td>
+	<td>//a[contains(@class,'delete-button') and contains(.,'Delete File')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

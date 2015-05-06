@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_TOGGLE</td>
+	<td>//div[contains(.,'Comment')]//div[@class='panel-toggle']/</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BE_THE_FIRST_LINK</td>
 	<td>link=Be the first.</td>
 	<td></td>
@@ -56,6 +61,11 @@
 <tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'lfr-message-response') and contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_NAME</td>
+	<td>//span[@class='user-name']</td>
 	<td></td>
 </tr>
 </tbody>

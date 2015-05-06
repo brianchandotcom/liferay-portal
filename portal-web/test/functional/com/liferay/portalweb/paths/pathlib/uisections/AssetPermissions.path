@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_roleName}')]//input[@value='${key_permissionsDefinitionKey}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GUEST_ACCESS_CHECKBOX</td>
 	<td>//tr[contains(.,'Guest')]//input[@value='ACCESS']</td>
 	<td></td>

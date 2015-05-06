@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORIES_CATEGORY</td>
+	<td>//div[contains(@class,'lfr-tags-selector-list')]//span[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORIES_CATEGORY_CHECKBOX</td>
 	<td>//li[contains(@id,'category') and contains(.,'${key_categoryName}')]//span[contains(@class,'tree-node-checkbox')]</td>
 	<td></td>

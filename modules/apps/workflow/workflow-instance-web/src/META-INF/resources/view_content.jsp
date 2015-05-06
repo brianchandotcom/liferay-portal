@@ -18,6 +18,7 @@
 
 <%
 long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
+
 String type = ParamUtil.getString(request, "type");
 
 AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);

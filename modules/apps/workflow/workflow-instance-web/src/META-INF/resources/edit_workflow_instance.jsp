@@ -17,25 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest);
-
-AssetRenderer assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
-
-AssetEntry assetEntry = workflowInstanceEditDisplayContext.getAssetEntry();
-
-List<WorkflowTask> workflowTasks = workflowInstanceEditDisplayContext.getWorkflowTasks();
-
-PortletURL portletURL = null;
-
-if (!workflowTasks.isEmpty()) {
-	portletURL = renderResponse.createRenderURL();
-}
-
-String[] metadataFields = new String[] {"author", "categories", "tags"};
-
-List<WorkflowLog> workflowLogs = workflowInstanceEditDisplayContext.getWorkflowLogs();
+WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = (WorkflowInstanceEditDisplayContext)request.getAttribute(WebKeys.DISPLAY_CONTEXT);
 %>
 
 <portlet:renderURL var="backURL">
@@ -52,15 +34,21 @@ List<WorkflowLog> workflowLogs = workflowInstanceEditDisplayContext.getWorkflowL
 	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">
 		<aui:row>
 			<aui:col width="<%= 60 %>">
-				<aui:input name="state" type="resource" value="<%= workflowInstanceEditDisplayContext.getState() %>" />
+				<aui:input name="state" type="resource" value="<%= workflowInstanceEditDisplayContext.getWorkflowInstanceState() %>" />
 			</aui:col>
 
 			<aui:col width="<%= 33 %>">
-				<aui:input name="endDate" type="resource" value="<%= workflowInstanceEditDisplayContext.getEndDate() %>" />
+				<aui:input name="endDate" type="resource" value="<%= workflowInstanceEditDisplayContext.getWorkflowInstanceEndDate() %>" />
 			</aui:col>
 		</aui:row>
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= Boolean.TRUE %>" id="preview">
+
+			<%
+			AssetRenderer assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
+
+			AssetEntry assetEntry = workflowInstanceEditDisplayContext.getAssetEntry();
+			%>
 
 			<c:if test="<%= assetRenderer != null %>">
 				<liferay-ui:panel defaultState="open" title="<%= workflowInstanceEditDisplayContext.getPanelTitle() %>">
@@ -98,11 +86,13 @@ List<WorkflowLog> workflowLogs = workflowInstanceEditDisplayContext.getWorkflowL
 						template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
 					/>
 
-					<liferay-ui:asset-metadata
-						className="<%= assetEntry.getClassName() %>"
-						classPK="<%= assetEntry.getClassPK() %>"
-						metadataFields="<%= metadataFields %>"
-					/>
+					<c:if test="<%= assetEntry != null %>">
+						<liferay-ui:asset-metadata
+							className="<%= assetEntry.getClassName() %>"
+							classPK="<%= assetEntry.getClassPK() %>"
+							metadataFields='<%= new String[] {"author", "categories", "tags"} %>'
+						/>
+					</c:if>
 				</liferay-ui:panel>
 
 				<liferay-ui:panel title="comments">
@@ -124,15 +114,15 @@ List<WorkflowLog> workflowLogs = workflowInstanceEditDisplayContext.getWorkflowL
 				</liferay-ui:panel>
 			</c:if>
 
-			<c:if test="<%= !workflowTasks.isEmpty() %>">
+			<c:if test="<%= !workflowInstanceEditDisplayContext.isWorkflowTasksEmpty() %>">
 				<liferay-ui:panel defaultState="open" title="tasks">
 
 					<liferay-ui:search-container
 						emptyResultsMessage="there-are-no-tasks"
-						iteratorURL="<%= portletURL %>"
+						iteratorURL="<%= renderResponse.createRenderURL() %>"
 					>
 						<liferay-ui:search-container-results
-							results="<%= workflowTasks %>"
+							results="<%= workflowInstanceEditDisplayContext.getWorkflowTasks() %>"
 						/>
 
 						<liferay-ui:search-container-row

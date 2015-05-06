@@ -96,8 +96,6 @@ public class BookmarksEntryLocalServiceImpl
 			name = url;
 		}
 
-		Date now = new Date();
-
 		validate(url);
 
 		long entryId = counterLocalService.increment();

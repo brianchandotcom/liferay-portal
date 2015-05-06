@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>WikiCompareVersions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WikiCompareVersions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION_TAB-->
+<tr>
+	<td>NAVIGATION_TAB_SETUP</td>
+	<td>//li[contains(@class,'tab') and contains(.,'Setup')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_PERMISSIONS</td>
+	<td>//li[contains(@class,'tab') and contains(.,'Permissions')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_COMMUNICATION</td>
+	<td>//li[contains(@class,'tab') and contains(.,'Communication')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_SHARING</td>
+	<td>//li[contains(@class,'tab') and contains(.,'Sharing')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_SCOPE</td>
+	<td>//li[contains(@class,'tab') and contains(.,'Scope')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMUNICATION-->
+<tr>
+	<td>COMMUNICATION_SELECT_NODE_ID</td>
+	<td>//select[contains(@id,'nodeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMUNICATION_SELECT_TITLE</td>
+	<td>//select[contains(@Id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCOPE-->
+<tr>
+	<td>SCOPE_SELECT</td>
+	<td>//div[@class='btn-group lfr-icon-menu']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_MENULIST_SITE_NAME</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_siteName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

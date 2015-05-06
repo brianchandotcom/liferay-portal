@@ -16,6 +16,7 @@ package com.liferay.workflow.definition.web.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.workflow.definition.web.portlet.constants.WorkflowDefinitionConstants;
 
 import java.io.File;
 
@@ -52,11 +54,10 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ActionCommand.class
 )
-public class UpdateWorkflowDefitionActionCommand
-	extends BaseWorkflowDefinitionActionCommand {
+public class UpdateWorkflowDefitionActionCommand extends BaseActionCommand {
 
 	@Override
-	protected void doProcessWorkflowDefinitionCommand(
+	protected void doProcessCommand(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
@@ -67,14 +68,17 @@ public class UpdateWorkflowDefitionActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, _TITLE);
+			portletRequest, WorkflowDefinitionConstants.TITLE);
 
-		File file = uploadPortletRequest.getFile(_FILE);
+		File file = uploadPortletRequest.getFile(
+			WorkflowDefinitionConstants.FILE);
 
 		WorkflowDefinition workflowDefinition = null;
 
-		String name = ParamUtil.getString(portletRequest, _NAME);
-		int version = ParamUtil.getInteger(portletRequest, _VERSION);
+		String name = ParamUtil.getString(
+			portletRequest, WorkflowDefinitionConstants.NAME);
+		int version = ParamUtil.getInteger(
+			portletRequest, WorkflowDefinitionConstants.VERSION);
 
 		if (Validator.isNotNull(name)) {
 			workflowDefinition =
@@ -101,7 +105,7 @@ public class UpdateWorkflowDefitionActionCommand
 	}
 
 	protected String getTitle(Map<Locale, String> titleMap) {
-		if (titleMap == null) {
+		if (Validator.isNull(titleMap)) {
 			return null;
 		}
 
@@ -113,25 +117,16 @@ public class UpdateWorkflowDefitionActionCommand
 
 			if (Validator.isNotNull(title)) {
 				value = LocalizationUtil.updateLocalization(
-					value, _TITLE2, title, languageId);
+					value, WorkflowDefinitionConstants.TITLE2, title,
+					languageId);
 			}
 			else {
 				value = LocalizationUtil.removeLocalization(
-					value, _TITLE2, languageId);
+					value, WorkflowDefinitionConstants.TITLE2, languageId);
 			}
 		}
 
 		return value;
 	}
-
-	private static final String _FILE = "file";
-
-	private static final String _NAME = "name";
-
-	private static final String _TITLE = "title";
-
-	private static final String _TITLE2 = "Title";
-
-	private static final String _VERSION = "version";
 
 }

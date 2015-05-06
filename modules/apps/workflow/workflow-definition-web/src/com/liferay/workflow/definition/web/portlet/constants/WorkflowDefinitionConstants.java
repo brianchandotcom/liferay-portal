@@ -11,23 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-package com.liferay.workflow.definition.web.portlet;
-
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.workflow.WorkflowControlPanelEntry;
-import com.liferay.portlet.ControlPanelEntry;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.workflow.definition.web.portlet.constants;
 
 /**
  * @author Leonardo Barros
  */
-@Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITIONS},
-	service = ControlPanelEntry.class
-)
-public class WorkflowDefintionControlPanelEntry
-	extends WorkflowControlPanelEntry {
+public class WorkflowDefinitionConstants {
+
+	public static final String FILE = "file";
+
+	public static final String NAME = "name";
+
+	public static final String TITLE = "title";
+
+	public static final String TITLE2 = "Title";
+
+	public static final String VERSION = "version";
+
 }

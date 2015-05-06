@@ -14,17 +14,28 @@
 
 package com.liferay.workflow.definition.web.portlet;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.definition.web.portlet.action.ActionUtil;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.workflow.definition.web.portlet.constants.WorkflowDefinitionConstants;
 
 import java.io.IOException;
 
+import java.util.List;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletMode;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -64,21 +75,13 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			PortletMode portletMode = request.getPortletMode();
-
-			if (portletMode.equals(PortletMode.VIEW)) {
-				ActionUtil.getWorkflowDefinitions(request);
-			}
-
-			ActionUtil.getWorkflowDefinition(request);
+			setWorkflowDefinitionRenderRequestAttribute(request);
 		}
 		catch (Exception e) {
-			if (e instanceof WorkflowException) {
+			if (isSessionErrorException(e)) {
 				hideDefaultErrorMessage(request);
 
 				SessionErrors.add(request, e.getClass());
-
-				include("/error.jsp", request, response);
 			}
 			else {
 				throw new PortletException(e);
@@ -86,6 +89,90 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		}
 
 		super.render(request, response);
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, WorkflowException.class.getName())) {
+
+			hideDefaultErrorMessage(renderRequest);
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else if (SessionErrors.contains(
+					renderRequest,
+					RequiredWorkflowDefinitionException.class.getName())) {
+
+			hideDefaultErrorMessage(renderRequest);
+
+			include("/view.jsp", renderRequest, renderResponse);
+		}
+		else {
+			if (SessionErrors.contains(
+					renderRequest,
+					WorkflowDefinitionFileException.class.getName())) {
+
+				hideDefaultErrorMessage(renderRequest);
+			}
+
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof WorkflowException ||
+			cause instanceof WorkflowDefinitionFileException ||
+			cause instanceof RequiredWorkflowDefinitionException) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void setWorkflowDefinitionRenderRequestAttribute(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		Object workflowDefinitionAttr = renderRequest.getAttribute(
+			WebKeys.WORKFLOW_DEFINITION);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNull(workflowDefinitionAttr)) {
+			String name = ParamUtil.getString(
+				renderRequest, WorkflowDefinitionConstants.NAME);
+			int version = ParamUtil.getInteger(
+				renderRequest, WorkflowDefinitionConstants.VERSION);
+
+			List<WorkflowDefinition> workflowDefinitions =
+				WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
+					themeDisplay.getCompanyId(), name, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+				if (version == workflowDefinition.getVersion()) {
+					renderRequest.setAttribute(
+						WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
+
+					break;
+				}
+			}
+		}
+
+		List<WorkflowDefinition> workflowDefinitions =
+			WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
+				themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		renderRequest.setAttribute(
+			WebKeys.WORKFLOW_DEFINITIONS, workflowDefinitions);
 	}
 
 }

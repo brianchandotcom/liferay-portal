@@ -875,6 +875,22 @@ public class AssetPublisherDisplayContext {
 		return _showContextLink;
 	}
 
+	public Boolean isShowContextLink(long groupId, String portletId)
+		throws PortalException {
+
+		if (_showContextLink == null) {
+			_showContextLink = isShowContextLink();
+
+			if (_showContextLink) {
+				if (PortalUtil.getPlidFromPortletId(groupId, portletId) == 0) {
+					_showContextLink = false;
+				}
+			}
+		}
+
+		return _showContextLink;
+	}
+
 	public boolean isShowEnableAddContentButton() {
 		String rootPortletId = getRootPortletId();
 

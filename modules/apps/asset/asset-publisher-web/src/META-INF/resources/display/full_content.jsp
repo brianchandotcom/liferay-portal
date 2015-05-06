@@ -99,12 +99,6 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 	</c:if>
 
 	<%
-	if (assetPublisherDisplayContext.isShowContextLink()) {
-		if (PortalUtil.getPlidFromPortletId(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) == 0) {
-			assetPublisherDisplayContext.setShowContextLink(false);
-		}
-	}
-
 	PortletURL viewFullContentURL = renderResponse.createRenderURL();
 
 	viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
@@ -173,7 +167,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 			</div>
 		</c:if>
 
-		<c:if test="<%= assetPublisherDisplayContext.isShowContextLink() && !print && assetEntry.isVisible() %>">
+		<c:if test="<%= assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible() %>">
 			<div class="asset-more">
 				<a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString) %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
 			</div>

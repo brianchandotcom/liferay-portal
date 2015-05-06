@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -93,10 +94,15 @@ public class SourceFormatterHelper {
 	}
 
 	public String readFileToString(File file) throws IOException {
-		String s = FileUtils.readFileToString(file, StringPool.UTF8);
+		try {
+			String s = FileUtils.readFileToString(file, StringPool.UTF8);
 
-		return StringUtil.replace(
-			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+			return StringUtil.replace(
+				s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+		}
+		catch (FileNotFoundException fnfe) {
+			return null;
+		}
 	}
 
 	public List<String> scanForFiles(DirectoryScanner directoryScanner) {

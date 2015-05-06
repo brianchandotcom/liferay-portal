@@ -82,7 +82,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	public static void sortAttributes(Element element, boolean recursive) {
 		Map<String, Attribute> attributesMap = new TreeMap<>();
 
-		List<Attribute> attributes = element.attributes();
+		List<Attribute> attributes = new ArrayList<>(element.attributes());
 
 		for (Attribute attribute : attributes) {
 			attribute.detach();

@@ -121,7 +121,12 @@ public class SourceFormatter {
 
 					@Override
 					public Void call() throws Exception {
-						_runSourceProcessor(sourceProcessor);
+						try {
+							_runSourceProcessor(sourceProcessor);
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+						}
 
 						return null;
 					}

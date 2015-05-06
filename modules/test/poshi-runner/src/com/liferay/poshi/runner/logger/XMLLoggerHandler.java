@@ -66,6 +66,10 @@ public final class XMLLoggerHandler {
 		xmlLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
 	}
 
+	public static String getXMLLogText() {
+		return _xmlLogLoggerElement.toString();
+	}
+
 	private static LoggerElement _getBtnContainerLoggerElement(
 		Element element) {
 

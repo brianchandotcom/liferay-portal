@@ -25,10 +25,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=deleteInstance",
-		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCES
+		"action.command.name=deleteWorkflowInstance",
+		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCE
 	},
 	service = ActionCommand.class
 )
-public class MyDeleteInstanceActionCommand extends DeleteInstanceActionCommand {
+public class MyDeleteWorkflowInstanceActionCommand
+	extends DeleteWorkflowInstanceActionCommand {
 }

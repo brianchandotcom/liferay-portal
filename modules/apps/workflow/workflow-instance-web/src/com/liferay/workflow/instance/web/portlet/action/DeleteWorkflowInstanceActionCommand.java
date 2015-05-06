@@ -26,14 +26,9 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
 
 import java.io.Serializable;
@@ -54,33 +49,19 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=deleteInstance",
+		"action.command.name=deleteWorkflowInstance",
 		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE
 	},
 	service = ActionCommand.class
 )
-public class DeleteInstanceActionCommand extends BaseActionCommand {
+public class DeleteWorkflowInstanceActionCommand extends BaseActionCommand {
 
-	protected String deleteInstance(PortletRequest portletRequest)
+	protected void deleteWorkflowInstance(
+			Map<String, Serializable> workflowContext)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long workflowInstanceId = ParamUtil.getLong(
-			portletRequest, "workflowInstanceId");
-
-		WorkflowInstance workflowInstance =
-			WorkflowInstanceManagerUtil.getWorkflowInstance(
-				themeDisplay.getCompanyId(), workflowInstanceId);
-
-		Map<String, Serializable> workflowContext =
-			workflowInstance.getWorkflowContext();
 
 		long companyId = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-		long userId = GetterUtil.getLong(
-			workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 		long groupId = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
 		String className = GetterUtil.getString(
@@ -88,36 +69,8 @@ public class DeleteInstanceActionCommand extends BaseActionCommand {
 		long classPK = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		WorkflowHandler<?> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
-
-		workflowHandler.updateStatus(
-			WorkflowConstants.STATUS_DRAFT, workflowContext);
-
 		WorkflowInstanceLinkLocalServiceUtil.deleteWorkflowInstanceLink(
 			companyId, groupId, className, classPK);
-
-		Layout layout = themeDisplay.getLayout();
-
-		Group layoutGroup = layout.getGroup();
-
-		if (layoutGroup.isControlPanel() &&
-			(WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
-				companyId, userId, null, null, null) == 0)) {
-
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
-			String portletId = PortalUtil.getPortletId(portletRequest);
-
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
-					permissionChecker, groupId, portletId)) {
-
-				return themeDisplay.getURLControlPanel();
-			}
-		}
-
-		return null;
 	}
 
 	@Override
@@ -126,8 +79,12 @@ public class DeleteInstanceActionCommand extends BaseActionCommand {
 		throws Exception {
 
 		try {
-			String redirect = deleteInstance(portletRequest);
-			portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
+			WorkflowInstance workflowInstance = getWorkflowInstance(
+				portletRequest);
+
+			updateEntryStatus(workflowInstance.getWorkflowContext());
+
+			deleteWorkflowInstance(workflowInstance.getWorkflowContext());
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException ||
@@ -151,6 +108,33 @@ public class DeleteInstanceActionCommand extends BaseActionCommand {
 				throw e;
 			}
 		}
+	}
+
+	protected WorkflowInstance getWorkflowInstance(
+			PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long workflowInstanceId = ParamUtil.getLong(
+			portletRequest, "workflowInstanceId");
+
+		return WorkflowInstanceManagerUtil.getWorkflowInstance(
+			themeDisplay.getCompanyId(), workflowInstanceId);
+	}
+
+	protected void updateEntryStatus(Map<String, Serializable> workflowContext)
+		throws Exception {
+
+		String className = GetterUtil.getString(
+			workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
+
+		WorkflowHandler<?> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
+
+		workflowHandler.updateStatus(
+			WorkflowConstants.STATUS_DRAFT, workflowContext);
 	}
 
 }

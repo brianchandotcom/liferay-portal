@@ -121,6 +121,7 @@ public interface Staging {
 	public void deleteRecentLayoutRevisionId(
 		HttpServletRequest request, long layoutSetBranchId, long plid);
 
+	@Deprecated
 	public void deleteRecentLayoutRevisionId(
 		User user, long layoutSetBranchId, long plid);
 

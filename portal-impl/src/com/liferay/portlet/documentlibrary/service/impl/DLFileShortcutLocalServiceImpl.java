@@ -429,7 +429,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setStatus(status);
 		fileShortcut.setStatusByUserId(user.getUserId());
 		fileShortcut.setStatusByUserName(user.getFullName());
-		fileShortcut.setStatusDate(serviceContext.getModifiedDate(new Date()));
+		fileShortcut.setStatusDate(serviceContext.getModifiedDate(null));
 
 		dlFileShortcutPersistence.update(fileShortcut);
 	}

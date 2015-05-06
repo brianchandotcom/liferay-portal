@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_HEADER</td>
+	<td>//h3[contains(@class,'alert') and contains(@class,'alert-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
@@ -28,7 +33,23 @@
 	<td></td>
 	<td></td>
 </tr>
-<!-- USER_SETTINGS -->
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_USER_SETTINGS</td>
+	<td>//ul[@class='lfr-nav nav nav-tabs']/li/a[contains(.,'User Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_USER_RSS</td>
+	<td>//ul[@class='lfr-nav nav nav-tabs']/li/a[contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_SETTINGS-->
 <tr>
 	<td>USER_SETTINGS_TIME_FORMAT_SELECT</td>
 	<td>//select[contains(@id,'TimeFormat')]</td>
@@ -62,6 +83,17 @@
 <tr>
 	<td>USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX</td>
 	<td>//input[contains(@id,'usePortalTimeZone')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RSS-->
+<tr>
+	<td>RSS_ENABLE_RSS_SUBSCRIPTION_CHECKBOX</td>
+	<td>//input[contains(@id,'enableRss')]</td>
 	<td></td>
 </tr>
 </tbody>

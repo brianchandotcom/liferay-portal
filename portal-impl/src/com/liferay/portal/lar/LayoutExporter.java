@@ -621,7 +621,9 @@ public class LayoutExporter {
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
-		if (updateLastPublishDate) {
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			updateLastPublishDate) {
+
 			ExportImportProcessCallbackRegistryUtil.registerCallback(
 				new UpdateLayoutSetLastPublishDateCallable(
 					portletDataContext.getDateRange(),
@@ -812,9 +814,7 @@ public class LayoutExporter {
 				endDate = _dateRange.getEndDate();
 			}
 
-			if (ExportImportThreadLocal.isStagingInProcess() &&
-				group.hasStagingGroup()) {
-
+			if (group.hasStagingGroup()) {
 				Group stagingGroup = group.getStagingGroup();
 
 				ExportImportDateUtil.updateLastPublishDate(

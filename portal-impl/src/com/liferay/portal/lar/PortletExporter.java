@@ -229,7 +229,9 @@ public class PortletExporter {
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
-		if (updateLastPublishDate) {
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			updateLastPublishDate) {
+
 			DateRange adjustedDateRange = new DateRange(
 				portletLastPublishDate, portletDataContext.getEndDate());
 
@@ -1219,9 +1221,7 @@ public class PortletExporter {
 
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
 
-			if (ExportImportThreadLocal.isStagingInProcess() &&
-				group.hasStagingGroup()) {
-
+			if (group.hasStagingGroup()) {
 				group = group.getStagingGroup();
 
 				if (layout != null) {

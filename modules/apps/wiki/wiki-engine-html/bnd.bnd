@@ -4,6 +4,5 @@ Bundle-Version: 1.0.0
 Import-Package: *
 Include-Resource:\
 	classes,\
-	../wiki-engine-input-editor-common/classes,\
 	@../../../../lib/portal/jericho-html.jar
 Web-ContextPath: /wiki-engine-html

@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.wiki.engine.creole.parser.visitor.impl.XhtmlTranslationVisitor;
+import com.liferay.wiki.engine.creole.util.WikiEngineCreoleComponentProvider;
 import com.liferay.wiki.engine.creole.util.test.CreoleTestUtil;
-import com.liferay.wiki.service.util.WikiServiceComponentProvider;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -39,13 +39,13 @@ public class XhtmlTranslationVisitorTest {
 
 		htmlUtil.setHtml(new HtmlImpl());
 
-		_wikiServiceComponentProvider =
-			CreoleTestUtil.getWikiSettingsProvider();
+		_wikiEngineCreoleComponentProvider =
+			CreoleTestUtil.getWikiEngineCreoleComponentProvider();
 	}
 
 	@After
 	public void tearDown() {
-		_wikiServiceComponentProvider.deactivate();
+		_wikiEngineCreoleComponentProvider.deactivate();
 	}
 
 	@Test
@@ -732,7 +732,8 @@ public class XhtmlTranslationVisitorTest {
 
 	private static final String _NEW_LINE = StringPool.NEW_LINE;
 
-	private WikiServiceComponentProvider _wikiServiceComponentProvider;
+	private WikiEngineCreoleComponentProvider
+		_wikiEngineCreoleComponentProvider;
 	private final XhtmlTranslationVisitor _xhtmlTranslationVisitor =
 		new XhtmlTranslationVisitor();
 

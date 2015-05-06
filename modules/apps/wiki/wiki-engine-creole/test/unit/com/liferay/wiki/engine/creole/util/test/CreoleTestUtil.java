@@ -18,7 +18,7 @@ import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.creole.parser.ast.WikiPageNode;
 import com.liferay.wiki.engine.creole.parser.parser.Creole10Lexer;
 import com.liferay.wiki.engine.creole.parser.parser.Creole10Parser;
-import com.liferay.wiki.service.util.WikiServiceComponentProvider;
+import com.liferay.wiki.engine.creole.util.WikiEngineCreoleComponentProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +33,29 @@ import org.mockito.Mockito;
  * @author Roberto Díaz
  */
 public class CreoleTestUtil {
+
+	public static WikiEngineCreoleComponentProvider
+			getWikiEngineCreoleComponentProvider() {
+
+		WikiEngineCreoleComponentProvider wikiEngineCreoleComponentProvider =
+			new WikiEngineCreoleComponentProvider();
+
+		wikiEngineCreoleComponentProvider.activate();
+
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+			Mockito.mock(WikiGroupServiceConfiguration.class);
+
+		Mockito.when(
+			wikiGroupServiceConfiguration.parsersCreoleSupportedProtocols()
+		).thenReturn(
+			new String[] {"ftp://", "http://", "https://", "mailto", "mms://"}
+		);
+
+		wikiEngineCreoleComponentProvider.setWikiGroupServiceConfiguration(
+			wikiGroupServiceConfiguration);
+
+		return wikiEngineCreoleComponentProvider;
+	}
 
 	public static WikiPageNode getWikiPageNode(
 		String fileName, Class<?> clazz) {
@@ -52,27 +75,6 @@ public class CreoleTestUtil {
 		}
 
 		return creole10parser.getWikiPageNode();
-	}
-
-	public static WikiServiceComponentProvider getWikiSettingsProvider() {
-		WikiServiceComponentProvider wikiServiceComponentProvider =
-			new WikiServiceComponentProvider();
-
-		wikiServiceComponentProvider.activate();
-
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			Mockito.mock(WikiGroupServiceConfiguration.class);
-
-		Mockito.when(
-			wikiGroupServiceConfiguration.parsersCreoleSupportedProtocols()
-		).thenReturn(
-			new String[] {"ftp://", "http://", "https://", "mailto", "mms://"}
-		);
-
-		wikiServiceComponentProvider.setWikiGroupServiceConfiguration(
-			wikiGroupServiceConfiguration);
-
-		return wikiServiceComponentProvider;
 	}
 
 	protected static Creole10Parser getCreole10Parser(

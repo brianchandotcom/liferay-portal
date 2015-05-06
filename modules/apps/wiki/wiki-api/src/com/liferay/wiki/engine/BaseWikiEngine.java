@@ -20,7 +20,6 @@ import com.liferay.wiki.model.WikiPage;
 import java.io.IOException;
 
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -29,12 +28,10 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Iván Zaera
@@ -82,15 +79,10 @@ public abstract class BaseWikiEngine implements WikiEngine {
 			WikiPage page)
 		throws IOException, ServletException {
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		Dictionary<String, String> headers = bundle.getHeaders();
-
-		String webContextPath = headers.get("Web-ContextPath");
+		ServletContext servletContext = getEditPageServletContext();
 
 		RequestDispatcher requestDispatcher =
-			servletRequest.getRequestDispatcher(
-				"/o" + webContextPath + _editPage);
+			servletContext.getRequestDispatcher(getEditPageJSP());
 
 		servletRequest.setAttribute(_WIKI_PAGE, page);
 
@@ -102,17 +94,13 @@ public abstract class BaseWikiEngine implements WikiEngine {
 		return true;
 	}
 
-	protected BaseWikiEngine() {
-		this("/edit_page.jsp");
+	protected String getEditPageJSP() {
+		return "/edit_page.jsp";
 	}
 
-	protected BaseWikiEngine(String editPage) {
-		_editPage = editPage;
-	}
+	protected abstract ServletContext getEditPageServletContext();
 
 	private static final String _WIKI_PAGE =
 		BaseWikiEngine.class.getName() + "#WIKI_PAGE";
-
-	private final String _editPage;
 
 }

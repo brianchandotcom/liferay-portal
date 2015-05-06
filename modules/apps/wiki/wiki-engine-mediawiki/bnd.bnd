@@ -10,6 +10,5 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	../wiki-engine-input-editor-common/classes,\
 	@../../../../lib/portal/jamwiki-core.jar
 Web-ContextPath: /wiki-engine-mediawiki

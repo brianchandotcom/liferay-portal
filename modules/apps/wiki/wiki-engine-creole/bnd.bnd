@@ -5,8 +5,7 @@ Export-Package:
 Import-Package: *
 Include-Resource:\
 	classes,\
-	../wiki-engine-input-editor-common/classes,\
 	@../../../../lib/portal/antlr2.jar,\
 	@../../../../lib/portal/antlr3.jar,\
 	@../../../../lib/portal/stringtemplate.jar
-Web-ContextPath: /wiki-engine-creole-web
+Web-ContextPath: /wiki-engine-creole

@@ -882,7 +882,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
 				<sysproperty key="junit.debug" value="${junit.debug}" />
 				<sysproperty key="whip.agent" value="${whip.agent}" />
-				<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/@{test.type}/cobertura.ser" />
+				<sysproperty key="whip.datafile" file="test-coverage/@{test.type}/whip.dat" />
 				<sysproperty key="whip.instrument.dump" value="${whip.instrument.dump}" />
 				<jvmarg line="${junit.debug.jpda}" />
 				<jvmarg line="${whip.agent}" />

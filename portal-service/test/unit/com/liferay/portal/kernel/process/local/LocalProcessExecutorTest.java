@@ -1429,11 +1429,10 @@ public class LocalProcessExecutorTest {
 			arguments.add("-Dwhip.agent=" + whipAgentLine);
 		}
 
-		String fileName = System.getProperty(
-			"net.sourceforge.cobertura.datafile");
+		String fileName = System.getProperty("whip.datafile");
 
 		if (fileName != null) {
-			arguments.add("-Dnet.sourceforge.cobertura.datafile=" + fileName);
+			arguments.add("-Dwhip.datafile=" + fileName);
 		}
 
 		return arguments;

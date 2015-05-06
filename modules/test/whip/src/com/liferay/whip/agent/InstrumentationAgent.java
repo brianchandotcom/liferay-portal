@@ -347,8 +347,7 @@ public class InstrumentationAgent {
 	private static WhipClassFileTransformer _whipClassFileTransformer;
 
 	static {
-		_dataFile = new File(
-			System.getProperty("net.sourceforge.cobertura.datafile"));
+		_dataFile = new File(System.getProperty("whip.datafile"));
 
 		File parentFolder = _dataFile.getParentFile();
 

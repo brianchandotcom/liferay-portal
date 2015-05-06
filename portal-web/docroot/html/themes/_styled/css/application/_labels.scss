@@ -1,0 +1,35 @@
+.label-circle {
+	&, .label {
+		border-radius: $label-circle-border-radius;
+	}
+}
+
+.label-rounded {
+	&, .label {
+		border-radius: $label-rounded-border-radius;
+	}
+}
+
+.label-square {
+	&, .label {
+		border-radius: $label-square-border-radius;
+	}
+}
+
+.label-entry {
+	background-color: $label-entry-bg;
+	border: solid $label-entry-border-width $label-entry-border-color;
+	color: $label-entry-color;
+	display: inline-block;
+	font-size: $label-entry-font-size;
+	font-weight: normal;
+	padding: $label-entry-padding;
+
+	button {
+		background-color: transparent;
+		border-width: 0;
+		color: inherit;
+		height: $label-entry-button-height;
+		width: $label-entry-button-width;
+	}
+}

@@ -180,16 +180,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
-	<td>//div[contains(.,'Public Pages')]//i[contains(@class,'icon-check')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGES_SPECIFIC_PAGE_NAME</td>
-	<td>//li/div[contains(.,'${key_pageName}')]/i[contains(@class,'icon-check')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
 	<td>//input[@id='_156_DELETE_MISSING_LAYOUTS']</td>
 	<td></td>
@@ -231,21 +221,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>APPLICATION_CONFIGURATION_APPLICATION_CHANGE_LINK</td>
-	<td>//a[@data-portlettitle='${key_applicationName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_CHECKBOX</td>
-	<td>//div[contains(@class,'widget-content-expanded') and contains(.,'${key_applicationName}')]//div[contains(@class,'modal-body')]//input[@data-name='${key_subApplication}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_OK_BUTTON</td>
-	<td>//div[contains(@class,'widget-content-expanded') and contains(.,'${key_applicationName}')]//button[contains(.,'OK')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -269,11 +244,6 @@
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK</td>
 	<td>//a[@data-portlettitle='${key_contentName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
-	<td>//ul[@class='portlet-list']//label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

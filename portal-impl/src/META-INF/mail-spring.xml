@@ -4,9 +4,9 @@
 	default-destroy-method="destroy"
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
->
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 	<bean id="com.liferay.mail.service.CyrusService" class="com.liferay.mail.service.impl.CyrusServiceImpl" />
 	<bean id="com.liferay.mail.service.MailService" class="com.liferay.mail.service.impl.MailServiceImpl" />
 	<bean id="com.liferay.mail.service.persistence.CyrusUserPersistence" class="com.liferay.mail.service.persistence.CyrusUserPersistenceImpl" parent="basePersistence" />
@@ -14,15 +14,17 @@
 
 	<!-- Messaging -->
 
-	<bean id="destination.mail" class="com.liferay.portal.kernel.messaging.ParallelDestination">
-		<property name="name" value="liferay/mail" />
-	</bean>
 	<bean id="messageListener.mail" class="com.liferay.mail.messaging.MailMessageListener" />
 	<bean id="messagingConfigurator.mail" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
-		<property name="destinations">
-			<list>
-				<ref bean="destination.mail" />
-			</list>
+		<property name="destinationConfigurations">
+			<util:set>
+				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration" >
+					<constructor-arg name="destinationName" value="liferay/mail" />
+					<constructor-arg name="destinationType">
+						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
+					</constructor-arg>
+				</bean>
+			</util:set>
 		</property>
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">

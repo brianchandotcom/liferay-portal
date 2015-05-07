@@ -1466,34 +1466,37 @@ public class LiferaySeleniumHelper {
 	public static void typeAceEditor(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
+		liferaySelenium.typeKeys(locator, "");
+
+		Pattern pattern = Pattern.compile("\\(|\\$\\{line\\.separator\\}");
+
+		Matcher matcher = pattern.matcher(value);
+
 		int x = 0;
-		int y = value.indexOf("${line.separator}");
 
-		String line = value;
+		while (matcher.find()) {
+			int y = matcher.start();
 
-		if (y != -1) {
-			line = value.substring(x, y);
-		}
+			String line = value.substring(x, y);
 
-		liferaySelenium.typeKeys(locator, line.trim());
+			_screen.type(line.trim());
 
-		liferaySelenium.keyPress(locator, "\\RETURN");
+			String specialCharacter = matcher.group();
 
-		while (y != -1) {
-			x = value.indexOf("}", x) + 1;
-			y = value.indexOf("${line.separator}", x);
-
-			if (y != -1) {
-				line = value.substring(x, y);
+			if (specialCharacter.equals("(")) {
+				_screen.type("9", Key.SHIFT);
 			}
-			else {
-				line = value.substring(x, value.length());
+			else if (specialCharacter.equals("${line.separator}")) {
+				liferaySelenium.keyPress(locator, "\\ESCAPE");
+				liferaySelenium.keyPress(locator, "\\RETURN");
 			}
 
-			liferaySelenium.typeKeys(locator, line.trim());
-
-			liferaySelenium.keyPress(locator, "\\RETURN");
+			x = y + specialCharacter.length();
 		}
+
+		String line = value.substring(x);
+
+		_screen.type(line.trim());
 	}
 
 	public static void typeFrame(

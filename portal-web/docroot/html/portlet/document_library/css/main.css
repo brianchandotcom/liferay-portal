@@ -260,6 +260,10 @@
 	.common-file-metadata-container {
 		padding: 1em;
 
+		fieldset {
+			overflow: hidden;
+		}
+
 		.field-element {
 			display: block;
 
@@ -282,25 +286,23 @@
 			overflow: hidden;
 		}
 
-		.document-type {
-			.lfr-panel-content {
+		.document-type .lfr-panel-content {
 				min-height: 35px;
-			}
-
-			.document-type-selector .btn-group {
-				max-width: 100%;
-
-				.btn {
-					max-width: 100%;
-					overflow: hidden;
-					white-space: normal;
-				}
-			}
 		}
 
 		.document-type-fields {
 			clear: left;
 			padding-top: 0.5em;
+		}
+
+		.document-type-selector, .tagselector {
+			.btn-group {
+				&, & .btn {
+					max-width: 100%;
+					overflow: hidden;
+					white-space: normal;
+				}
+			}
 		}
 
 		.categorization-panel {
@@ -553,7 +555,6 @@
 
 		.common-file-metadata-container fieldset {
 			display: table-cell;
-			overflow: hidden;
 		}
 	}
 }

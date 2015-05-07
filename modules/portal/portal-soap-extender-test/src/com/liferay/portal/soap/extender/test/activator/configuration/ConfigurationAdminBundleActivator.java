@@ -28,8 +28,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 public class ConfigurationAdminBundleActivator implements BundleActivator {
 
-	public static final String _TEST_CONTEXT_PATH = "/soap-test";
-
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		ServiceReference<ConfigurationAdmin> serviceReference =
@@ -40,30 +38,36 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 				serviceReference);
 
 			_cxfConfiguration = configurationAdmin.createFactoryConfiguration(
-				_CXF_ENDPOINT_PUBLISHER_CONFIGURATION, null);
+				"com.liferay.portal.cxf.common.configuration." +
+					"CXFEndpointPublisherConfiguration",
+				null);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 
-			properties.put("contextPath", _TEST_CONTEXT_PATH);
+			properties.put("contextPath", "/soap-test");
 
 			_cxfConfiguration.update(properties);
 
 			_jaxWsApiConfiguration = configurationAdmin.getConfiguration(
-				_JAX_WS_API_CONFIGURATION, null);
+				"com.liferay.portal.soap.extender.configuration." +
+					"JaxWsApiConfiguration",
+				null);
 
 			properties = new Hashtable<>();
 
-			properties.put("contextPath", _TEST_CONTEXT_PATH);
+			properties.put("contextPath", "/soap-test");
 			properties.put("timeout", 10000);
 
 			_jaxWsApiConfiguration.update(properties);
 
 			_soapConfiguration = configurationAdmin.createFactoryConfiguration(
-				_SOAP_EXTENDER_CONFIGURATION, null);
+				"com.liferay.portal.soap.extender.configuration." +
+					"SoapExtenderConfiguration",
+				null);
 
 			properties = new Hashtable<>();
 
-			properties.put("contextPaths", new String[] {_TEST_CONTEXT_PATH});
+			properties.put("contextPaths", new String[] {"/soap-test"});
 			properties.put(
 				"jaxWsHandlerFilterStrings", new String[] {"(soap.address=*)"});
 			properties.put(
@@ -96,18 +100,6 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 		catch (Exception e) {
 		}
 	}
-
-	private static final String _CXF_ENDPOINT_PUBLISHER_CONFIGURATION =
-		"com.liferay.portal.cxf.common.configuration." +
-			"CXFEndpointPublisherConfiguration";
-
-	private static final String _JAX_WS_API_CONFIGURATION =
-		"com.liferay.portal.soap.extender.configuration." +
-			"JaxWsApiConfiguration";
-
-	private static final String _SOAP_EXTENDER_CONFIGURATION =
-		"com.liferay.portal.soap.extender.configuration." +
-			"SoapExtenderConfiguration";
 
 	private Configuration _cxfConfiguration;
 	private Configuration _jaxWsApiConfiguration;

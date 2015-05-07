@@ -79,7 +79,7 @@ public class GreeterBundleActivator implements BundleActivator {
 				break;
 			}
 
-			Thread.sleep(100L);
+			Thread.sleep(100);
 		}
 
 		if (servers.isEmpty()) {

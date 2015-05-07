@@ -51,12 +51,12 @@ public class CSSBuilder {
 			compilerImpl = "libsass";
 		}
 
+		String dirName = arguments.get("sass.dir");
 		String docrootDirName = arguments.get("sass.docroot.dir");
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
-		String sassDir = arguments.get("sass.dir");
 
 		CSSBuilder cssBuilder = new CSSBuilder(
-			docrootDirName, portalCommonDirName, sassDir);
+			dirName, docrootDirName, portalCommonDirName);
 
 		try {
 			cssBuilder.configure(compilerImpl);
@@ -69,11 +69,11 @@ public class CSSBuilder {
 	}
 
 	public CSSBuilder(
-		String docrootDirName, String portalCommonDirName, String sassDir) {
+		String dirName, String docrootDirName, String portalCommonDirName) {
 
+		_dirName = dirName;
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
-		_sassDir = sassDir;
 	}
 
 	public void _build(String fileName) throws Exception {
@@ -155,8 +155,8 @@ public class CSSBuilder {
 
 		List<String> dirNames = new ArrayList<>();
 
-		if (_sassDir != null) {
-			dirNames.addAll(Arrays.asList(_sassDir.split(",")));
+		if (_dirName != null) {
+			dirNames.addAll(Arrays.asList(_dirName.split(",")));
 		}
 
 		List<String> fileNames = new ArrayList<>();
@@ -553,12 +553,12 @@ public class CSSBuilder {
 		"url("
 	};
 
+	private final String _dirName;
 	private final String _docrootDirName;
 	private final Map<String, String> _fileCache = new HashMap<>();
 	private final Pattern[] _patterns = {Pattern.compile(".*\\/ckeditor\\/.*")};
 	private final String _portalCommonDirName;
 	private RTLCSSConverter _rtlCSSConverter;
 	private SassCompiler _sassCompiler;
-	private final String _sassDir;
 
 }

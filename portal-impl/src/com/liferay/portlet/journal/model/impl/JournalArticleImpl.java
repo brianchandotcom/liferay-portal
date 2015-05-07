@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -53,6 +54,7 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.LocaleTransformerListener;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -62,6 +64,18 @@ import java.util.Set;
  * @author Wesley Gong
  */
 public class JournalArticleImpl extends JournalArticleBaseImpl {
+
+	public static String getContentByLocale(
+		Document document, String languageId, Map<String, String> tokens) {
+
+		TransformerListener transformerListener =
+			new LocaleTransformerListener();
+
+		document = transformerListener.onXml(
+			document.clone(), languageId, tokens);
+
+		return document.asXML();
+	}
 
 	public static String getContentByLocale(
 		Document document, String languageId) {
@@ -174,7 +188,23 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public String getContentByLocale(String languageId) {
-		return getContentByLocale(getDocument(), languageId);
+		Map<String, String> tokens = new HashMap<String, String>();
+
+		try {
+			DDMStructure ddmStructure = getDDMStructure();
+
+			tokens.put("ddm_structure_id", String.valueOf(
+				ddmStructure.getStructureId()));
+		}
+		catch (PortalException pe) {
+		}
+
+		if(tokens.isEmpty()) {
+			return getContentByLocale(getDocument(), languageId);
+		}
+		else {
+			return getContentByLocale(getDocument(), languageId, tokens);
+		}
 	}
 
 	@Override

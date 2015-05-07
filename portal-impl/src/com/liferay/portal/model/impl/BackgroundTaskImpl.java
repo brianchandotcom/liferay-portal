@@ -89,7 +89,7 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 	}
 
 	@Override
-	public int getAttachmentsFileEntriesCount() {
+	public int getAttachmentsFileEntriesCount() throws PortalException {
 		int attachmentsFileEntriesCount = 0;
 
 		long attachmentsFolderId = getAttachmentsFolderId();

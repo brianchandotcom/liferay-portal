@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.document.library.events;
 
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;

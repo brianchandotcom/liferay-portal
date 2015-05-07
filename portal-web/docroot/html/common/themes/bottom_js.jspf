@@ -55,14 +55,11 @@
 
 	if (outputData != null) {
 		Set<String> outputKeys = outputData.getOutputKeys();
-
-		for (String outputKey : outputKeys) {
 	%>
 
-			Liferay.Data.sharedResources.push('<%= outputKey %>');
+		Liferay.Data.sharedResources.push('<%= StringUtil.merge(outputKeys.toArray(new String[outputKeys.size()]), "','") %>');
 
 	<%
-		}
 	}
 	%>
 

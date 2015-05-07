@@ -132,39 +132,49 @@ public abstract class AbstractMessagingConfigurator
 
 		_messageBusEventListeners.clear();
 
-		_messageBusEventListenerServiceRegistrar.destroy();
+		if (_messageBusEventListenerServiceRegistrar != null) {
+			_messageBusEventListenerServiceRegistrar.destroy();
+		}
 
 		_destinationConfigurations.clear();
 
-		_destinationConfigServiceRegistrar.destroy();
+		if (_destinationConfigServiceRegistrar != null) {
+			_destinationConfigServiceRegistrar.destroy();
+		}
 
 		_destinations.clear();
 
-		_destinationServiceRegistrar.destroy(
+		if (_destinationServiceRegistrar != null) {
+			_destinationServiceRegistrar.destroy(
 
-			new ServiceFinalizer<Destination>() {
+				new ServiceFinalizer<Destination>() {
 
-				@Override
-				public void finalize(
-					ServiceReference<Destination> serviceReference,
-					Destination destination) {
+					@Override
+					public void finalize(
+						ServiceReference<Destination> serviceReference,
+						Destination destination) {
 
-					destination.close();
+						destination.close();
 
-					destination.removeDestinationEventListeners();
+						destination.removeDestinationEventListeners();
 
-					destination.unregisterMessageListeners();
-			}
+						destination.unregisterMessageListeners();
+					}
 
-		});
+				});
+		}
 
 		_messageListeners.clear();
 
-		_messageListenerServiceRegistrar.destroy();
+		if (_messageListenerServiceRegistrar != null) {
+			_messageListenerServiceRegistrar.destroy();
+		}
 
 		_destinationEventListeners.clear();
 
-		_destinationEventListenerServiceRegistrar.destroy();
+		if (_destinationEventListenerServiceRegistrar != null) {
+			_destinationEventListenerServiceRegistrar.destroy();
+		}
 
 		ClassLoader operatingClassLoader = getOperatingClassloader();
 
@@ -397,12 +407,14 @@ public abstract class AbstractMessagingConfigurator
 	}
 
 	protected void registerDestinations() {
+		if (_destinations.isEmpty()) {
+			return;
+		}
+
 		Registry registry = RegistryUtil.getRegistry();
 
-		if (_destinationServiceRegistrar == null) {
-			_destinationServiceRegistrar = registry.getServiceRegistrar(
-				Destination.class);
-		}
+		_destinationServiceRegistrar = registry.getServiceRegistrar(
+			Destination.class);
 
 		for (Destination destination : _destinations) {
 			String destinationName = destination.getName();

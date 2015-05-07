@@ -54,6 +54,7 @@ public class SourceFormatterTest {
 		SourceFormatterArgs sourceFormatterArgs = new SourceFormatterArgs();
 
 		sourceFormatterArgs.setAutoFix(false);
+		sourceFormatterArgs.setBaseDirName("../../../");
 		sourceFormatterArgs.setPrintErrors(false);
 		sourceFormatterArgs.setThrowException(true);
 		sourceFormatterArgs.setUseProperties(false);

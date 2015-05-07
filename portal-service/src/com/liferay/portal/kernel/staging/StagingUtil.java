@@ -174,6 +174,13 @@ public class StagingUtil {
 			request, layoutSetBranchId, plid);
 	}
 
+	public static void deleteRecentLayoutRevisionId(
+		long userId, long layoutSetBranchId, long plid, boolean isDefaultUser) {
+
+		getStaging().deleteRecentLayoutRevisionId(
+			userId, layoutSetBranchId, plid, isDefaultUser);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 * #deleteRecentLayoutRevisionId(long, long, long, boolean)}
@@ -184,13 +191,6 @@ public class StagingUtil {
 
 		getStaging().deleteRecentLayoutRevisionId(
 			user, layoutSetBranchId, plid);
-	}
-
-	public static void deleteRecentLayoutRevisionId(
-		long userId, long layoutSetBranchId, long plid, boolean isDefaultUser) {
-
-		getStaging().deleteRecentLayoutRevisionId(
-			userId, layoutSetBranchId, plid, isDefaultUser);
 	}
 
 	/**

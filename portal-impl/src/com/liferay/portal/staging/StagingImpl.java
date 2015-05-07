@@ -431,6 +431,18 @@ public class StagingImpl implements Staging {
 			portalPreferences, layoutSetBranchId, plid);
 	}
 
+	@Override
+	public void deleteRecentLayoutRevisionId(
+		long userId, long layoutSetBranchId, long plid, boolean isDefaultUser) {
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				userId, isDefaultUser);
+
+		deleteRecentLayoutRevisionId(
+			portalPreferences, layoutSetBranchId, plid);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 * #deleteRecentLayoutRevisionId(long, long, long, boolean)}
@@ -441,18 +453,6 @@ public class StagingImpl implements Staging {
 		User user, long layoutSetBranchId, long plid) {
 
 		PortalPreferences portalPreferences = getPortalPreferences(user);
-
-		deleteRecentLayoutRevisionId(
-			portalPreferences, layoutSetBranchId, plid);
-	}
-
-	@Override
-	public void deleteRecentLayoutRevisionId(
-		long userId, long layoutSetBranchId, long plid, boolean isDefaultUser) {
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				userId, isDefaultUser);
 
 		deleteRecentLayoutRevisionId(
 			portalPreferences, layoutSetBranchId, plid);

@@ -121,12 +121,12 @@ public interface Staging {
 	public void deleteRecentLayoutRevisionId(
 		HttpServletRequest request, long layoutSetBranchId, long plid);
 
+	public void deleteRecentLayoutRevisionId(
+		long userId, long layoutSetBranchId, long plid, boolean isDefaultUser);
+
 	@Deprecated
 	public void deleteRecentLayoutRevisionId(
 		User user, long layoutSetBranchId, long plid);
-
-	public void deleteRecentLayoutRevisionId(
-		long userId, long layoutSetBranchId, long plid, boolean isDefaultUser);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link

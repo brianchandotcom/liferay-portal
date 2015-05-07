@@ -48,7 +48,7 @@
 			editor.once(
 				'instanceReady',
 				function(event) {
-					var editorBody = A.one(event.editor.document.$.body);
+					var editorBody = A.one(event.editor.element.$);
 
 					instance._eventHandles.push(
 						editorBody.on('mousedown', A.bind('soon', A, instance._processCaret))

@@ -53,6 +53,11 @@
 	<td>//div[label[contains(.,'Root Page Level')]]/select</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SITES</td>
+	<td>//div[label[contains(.,'Sites')]]/select</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

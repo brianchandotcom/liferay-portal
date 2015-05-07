@@ -567,6 +567,7 @@ public class PoshiRunnerExecutor {
 				sb.append(element.attributeValue("input"));
 				sb.append(StringPool.COMMA);
 				sb.append(element.attributeValue("pattern"));
+				sb.append(StringPool.COMMA);
 				sb.append(element.attributeValue("group"));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 

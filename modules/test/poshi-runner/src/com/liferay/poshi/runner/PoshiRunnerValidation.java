@@ -318,6 +318,51 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateElseIfElement(Element element, String filePath)
+		throws Exception {
+
+		_validateHasChildElements(element, filePath);
+		_validateHasNoAttributes(element, filePath);
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.size() > 2) {
+			throw new Exception(
+				"Too many elseif child elements" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+
+		List<String> conditionTags = Arrays.asList(
+			"and", "condition", "contains", "equals", "isset", "not", "or");
+
+		Element conditionElement = childElements.get(0);
+
+		String conditionElementName = conditionElement.getName();
+
+		if (conditionTags.contains(conditionElementName)) {
+			_validateConditionElement(conditionElement, filePath);
+		}
+		else {
+			throw new Exception(
+				"Invalid " + conditionElementName + " element" + filePath +
+					":" + element.attributeValue("line-number"));
+		}
+
+		Element thenElement = childElements.get(1);
+
+		if (StringUtils.equals("then", thenElement.getName())) {
+			_validateHasChildElements(thenElement, filePath);
+			_validateHasNoAttributes(thenElement, filePath);
+
+			_parseElements(thenElement, filePath);
+		}
+		else {
+			throw new Exception(
+				"Missing then element" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+	}
+
 	private static void _validateExecuteElement(
 			Element element, String filePath)
 		throws Exception {
@@ -578,7 +623,7 @@ public class PoshiRunnerValidation {
 				_validateHasChildElements(childElement, filePath);
 				_validateHasNoAttributes(childElement, filePath);
 
-				_validateIfElement(childElement, filePath);
+				_validateElseIfElement(childElement, filePath);
 			}
 			else if (childElementName.equals("then")) {
 				_validateHasChildElements(childElement, filePath);

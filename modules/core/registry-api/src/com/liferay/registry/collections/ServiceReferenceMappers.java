@@ -22,6 +22,7 @@ import com.liferay.registry.ServiceReference;
  * @author Carlos Sierra Andrés
  */
 public class ServiceReferenceMappers {
+
 	public static <K, S> ServiceReferenceMapper<K, S> fromServiceMapper(
 		final ServiceMapper<K, S> serviceMapper) {
 
@@ -42,6 +43,6 @@ public class ServiceReferenceMappers {
 				}
 			}
 		};
-
 	}
+
 }

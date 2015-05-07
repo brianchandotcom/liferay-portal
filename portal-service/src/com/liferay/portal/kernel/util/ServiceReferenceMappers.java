@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceMapper;
 import com.liferay.registry.collections.ServiceReferenceMapper;
@@ -64,4 +62,5 @@ public class ServiceReferenceMappers {
 			}
 		};
 	}
+
 }

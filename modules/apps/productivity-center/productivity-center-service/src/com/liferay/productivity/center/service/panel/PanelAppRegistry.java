@@ -14,6 +14,7 @@
 
 package com.liferay.productivity.center.service.panel;
 
+import com.liferay.osgi.service.tracker.map.ServiceReferenceComparators.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.productivity.center.panel.PanelApp;
@@ -67,8 +68,7 @@ public class PanelAppRegistry {
 	private ServiceTrackerMap<String, List<PanelApp>> _serviceTrackerMap;
 
 	private static class ServiceRankingPropertyServiceReferenceComparator
-		extends ServiceTrackerMapFactory.
-			PropertyServiceReferenceComparator<PanelApp> {
+		extends PropertyServiceReferenceComparator<PanelApp> {
 
 		public ServiceRankingPropertyServiceReferenceComparator() {
 			super("service.ranking");

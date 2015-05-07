@@ -195,7 +195,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	protected void addTemplateVersion(
 			long templateVersionId, long groupId, long companyId, long userId,
-			String userName, Timestamp createDate, long classNameId, 
+			String userName, Timestamp createDate, long classNameId,
 			long classPK, long templateId, String name, String description,
 			String language, String script)
 		throws Exception {
@@ -668,14 +668,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long classNameId = rs.getLong("classNameId");
-				long classPK = rs.getLong("classPK");
-				long templateId = rs.getLong("templateId");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
 				String userName = rs.getString("userName");
 				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				long classNameId = rs.getLong("classNameId");
+				long classPK = rs.getLong("classPK");
+				long templateId = rs.getLong("templateId");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
 				String language = rs.getString("language");

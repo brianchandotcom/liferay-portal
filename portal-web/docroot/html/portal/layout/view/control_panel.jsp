@@ -155,7 +155,10 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 
 									<c:if test="<%= !singlePortlet %>">
 										<aui:col cssClass="panel-page-menu" width="<%= 25 %>">
-											<liferay-portlet:runtime portletName="160" />
+											<liferay-portlet:runtime
+												portletProviderAction="<%= PortletProvider.Action.VIEW %>"
+												portletProviderClassName="<%= PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME %>"
+											/>
 										</aui:col>
 									</c:if>
 

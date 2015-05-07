@@ -442,6 +442,10 @@ public interface UserService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyUsersCount(long companyId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.User getCurrentUser()
+		throws PortalException;
+
 	/**
 	* Returns the primary keys of all the users belonging to the group.
 	*

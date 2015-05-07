@@ -133,6 +133,15 @@ public final class XMLLoggerHandler {
 	private static String _getBtnItemText(String className) {
 		LoggerElement loggerElement = new LoggerElement();
 
+		if (className.equals("btn-collapse")) {
+			loggerElement.setAttribute(
+				"data-btnlinkid", "collapse-" + _btnLinkCollapseId);
+		}
+		else if (className.equals("btn-var")) {
+			loggerElement.setAttribute(
+				"data-btnlinkid", "var-" + _btnLinkVarId);
+		}
+
 		loggerElement.setClassName("btn " + className);
 		loggerElement.setID(null);
 		loggerElement.setName("button");
@@ -154,6 +163,9 @@ public final class XMLLoggerHandler {
 		Element element, Element rootElement) {
 
 		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setAttribute(
+			"data-btnlinkid", "collapse-" + _btnLinkCollapseId);
 
 		loggerElement.setClassName("child-container collapse collapsible");
 		loggerElement.setName("ul");
@@ -410,6 +422,9 @@ public final class XMLLoggerHandler {
 	private static LoggerElement _getLineGroupLoggerElement(
 		String className, Element element) {
 
+		_btnLinkCollapseId++;
+		_btnLinkVarId++;
+
 		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setClassName("line-group");
@@ -502,6 +517,7 @@ public final class XMLLoggerHandler {
 
 		LoggerElement loggerElement = new LoggerElement();
 
+		loggerElement.setAttribute("data-btnlinkid", "var-" + _btnLinkVarId);
 		loggerElement.setClassName("collapsible parameter-container collapse");
 		loggerElement.setID(null);
 		loggerElement.setName("div");
@@ -552,6 +568,8 @@ public final class XMLLoggerHandler {
 		return false;
 	}
 
+	private static int _btnLinkCollapseId;
+	private static int _btnLinkVarId;
 	private static LoggerElement _xmlLogLoggerElement = null;
 
 }

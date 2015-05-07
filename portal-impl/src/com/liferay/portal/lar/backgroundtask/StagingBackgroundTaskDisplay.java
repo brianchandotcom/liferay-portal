@@ -249,16 +249,6 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 	}
 
 	protected String processMessage(Locale locale) {
-		String messageKey = "exporting";
-
-		if (Validator.equals(_cmd, Constants.IMPORT)) {
-			messageKey = "importing";
-		}
-		else if (Validator.equals(_cmd, Constants.PUBLISH_TO_LIVE) ||
-				 Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE)) {
-
-			messageKey = "publishing";
-		}
 
 		String message = StringPool.BLANK;
 
@@ -267,8 +257,18 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 				locale,
 				"please-wait-as-the-publication-processes-on-the-remote-site");
 		}
+		else if (hasStagedModelMessage()) {
+			String messageKey = "exporting";
 
-		if (hasStagedModelMessage()) {
+			if (Validator.equals(_cmd, Constants.IMPORT)) {
+				messageKey = "importing";
+			}
+			else if (Validator.equals(_cmd, Constants.PUBLISH_TO_LIVE) ||
+					 Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE)) {
+
+				messageKey = "publishing";
+			}
+
 			StringBundler sb = new StringBundler();
 
 			sb.append("<strong>");

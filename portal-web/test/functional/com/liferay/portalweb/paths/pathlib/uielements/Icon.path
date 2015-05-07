@@ -44,8 +44,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_CONTROLS</td>
+	<td>//li[contains(@id,'toggleControls')]/a[i[contains(@class,'icon-eye-close') or contains(@class,'icon-eye-open')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZED_FLAG</td>
 	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW</td>
+	<td>//a[contains(@id,'previewPanel') and i[contains(@class,'icon-desktop')]]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -8,47 +8,6 @@
 <tr><td rowspan="1" colspan="3">DockbarAddPanel</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>CONTENT_TAB</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATIONS_TAB</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Applications')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TAB</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_CONTENT</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_APPLICATIONS</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Applications')]</td>
-	<td>Applications Link</td>
-</tr>
-<tr>
-	<td>NAVIGATION_PAGE</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Page')]</td>
-	<td>Add Page Link</td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_TITLE</td>
@@ -58,11 +17,6 @@
 <tr>
 	<td>ADD_NEW_MENULIST</td>
 	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'${key_assetType}')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>POPOVER_ADD_BUTTON</td>
-	<td>//button[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

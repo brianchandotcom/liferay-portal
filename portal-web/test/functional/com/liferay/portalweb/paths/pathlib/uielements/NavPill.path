@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>NavPill</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">NavPill</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>APPLICATIONS</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Applications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Page')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

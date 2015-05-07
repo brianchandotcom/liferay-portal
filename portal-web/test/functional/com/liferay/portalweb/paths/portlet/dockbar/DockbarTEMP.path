@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW</td>
-	<td>//a[@id='_145_previewPanel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_CONTROLS</td>
-	<td>//li[@id='_145_toggleControls']/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDIT_LIVE_DELETE</td>
 	<td>//li/a[@title='Delete']</td>
 	<td></td>

@@ -65,9 +65,7 @@ public class FormatSourceTask extends JavaExec {
 		List<String> args = new ArrayList<>();
 
 		args.add("source.auto.fix=" + isAutoFix());
-		args.add(
-			"source.copyright.file=" +
-				FileUtil.getAbsolutePath(getCopyrightFile()));
+		args.add("source.copyright.file=" + getCopyrightFileName());
 		args.add("source.print.errors=" + isPrintErrors());
 		args.add("source.throw.exception=" + isThrowException());
 		args.add("source.use.properties=" + isUseProperties());
@@ -75,8 +73,10 @@ public class FormatSourceTask extends JavaExec {
 		FileCollection fileCollection = getFiles();
 
 		if (fileCollection.isEmpty()) {
+			Project project = getProject();
+
 			args.add(
-				"source.base.dir=" + FileUtil.getAbsolutePath(getBaseDir()));
+				"source.base.dir=" + project.relativePath(getBaseDir()) + "/");
 		}
 		else {
 			args.add("source.files=" + _merge(fileCollection));
@@ -97,10 +97,8 @@ public class FormatSourceTask extends JavaExec {
 			getProject(), SourceFormatterPlugin.CONFIGURATION_NAME);
 	}
 
-	public File getCopyrightFile() {
-		Project project = getProject();
-
-		return project.file(_sourceFormatterArgs.getCopyrightFileName());
+	public String getCopyrightFileName() {
+		return _sourceFormatterArgs.getCopyrightFileName();
 	}
 
 	public FileCollection getFiles() {
@@ -170,6 +168,8 @@ public class FormatSourceTask extends JavaExec {
 	private String _merge(Iterable<File> files) {
 		StringBuilder sb = new StringBuilder();
 
+		Project project = getProject();
+
 		int i = 0;
 
 		for (File file : files) {
@@ -177,7 +177,7 @@ public class FormatSourceTask extends JavaExec {
 				sb.append(",");
 			}
 
-			sb.append(FileUtil.getAbsolutePath(file));
+			sb.append(project.relativePath(file));
 
 			i++;
 		}

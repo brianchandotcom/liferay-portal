@@ -161,6 +161,11 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	@Override
+	public int getFileEntriesCount(long folderId) throws PortalException {
+		return _repository.getFileEntriesCount(folderId);
+	}
+
+	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
 		return _repository.getFileEntry(fileEntryId);
 	}

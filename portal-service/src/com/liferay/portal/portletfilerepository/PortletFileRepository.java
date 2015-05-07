@@ -118,7 +118,8 @@ public interface PortletFileRepository {
 			long groupId, long folderId, OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
-	public int getPortletFileEntriesCount(long groupId, long folderId);
+	public int getPortletFileEntriesCount(long groupId, long folderId)
+		throws PortalException;
 
 	public int getPortletFileEntriesCount(
 		long groupId, long folderId, int status);

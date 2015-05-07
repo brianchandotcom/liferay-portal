@@ -176,6 +176,11 @@ public class LocalRepositoryProxyBean
 	}
 
 	@Override
+	public int getFileEntriesCount(long folderId) throws PortalException {
+		return _localRepository.getFileEntriesCount(folderId);
+	}
+
+	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
 		FileEntry fileEntry = _localRepository.getFileEntry(fileEntryId);
 

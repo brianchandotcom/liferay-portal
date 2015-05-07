@@ -14,9 +14,9 @@
 
 package com.liferay.osgi.service.tracker.map;
 
-import org.osgi.framework.ServiceReference;
-
 import java.util.Comparator;
+
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés
@@ -68,7 +68,8 @@ public class ServiceReferenceComparators {
 			return -(propertyValueComparable1.compareTo(propertyValue2));
 		}
 
-		private String _propertyKey;
+		private final String _propertyKey;
 
 	}
+
 }

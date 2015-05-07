@@ -15,8 +15,13 @@
 package com.liferay.registry.dependency;
 
 import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.internal.TrackedOne;
+import com.liferay.registry.internal.TrackedTwo;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,6 +49,7 @@ public class ServiceDependencyManagerTest {
 			new ServiceDependencyManager();
 
 		serviceDependencyManager.addServiceDependencyListener(
+
 			new ServiceDependencyListener() {
 
 			@Override
@@ -69,6 +75,7 @@ public class ServiceDependencyManagerTest {
 			new ServiceDependencyManager();
 
 		serviceDependencyManager.addServiceDependencyListener(
+
 			new ServiceDependencyListener() {
 
 				@Override
@@ -83,6 +90,259 @@ public class ServiceDependencyManagerTest {
 			});
 
 		serviceDependencyManager.registerDependencies(TestInterface2.class);
+	}
+
+	@Test
+	public void testRegisterClassDependencies() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		final AtomicBoolean dependenciesSatisfied = new AtomicBoolean(false);
+
+		serviceDependencyManager.addServiceDependencyListener(
+
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					dependenciesSatisfied.set(true);
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			});
+
+		serviceDependencyManager.registerDependencies(
+			TrackedOne.class, TrackedTwo.class);
+
+		registry.registerService(TrackedOne.class, new TrackedOne());
+
+		registry.registerService(
+			TrackedTwo.class, new TrackedTwo(new TrackedOne()));
+
+		try {
+			Thread.sleep(100);
+		}
+		catch (InterruptedException e) {
+			Assert.fail(e.toString());
+		}
+
+		Assert.assertTrue(dependenciesSatisfied.get());
+	}
+
+	@Test
+	public void testRegisterFilterAndClassDependencies() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		final AtomicBoolean dependenciesSatisfied = new AtomicBoolean(false);
+
+		serviceDependencyManager.addServiceDependencyListener(
+
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					dependenciesSatisfied.set(true);
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			});
+
+		Filter filter1 = registry.getFilter(
+			"(objectClass=" + TrackedOne.class.getName() + ")");
+
+		serviceDependencyManager.registerDependencies(
+			new Class[] { TrackedTwo.class }, new Filter[] { filter1 });
+
+		registry.registerService(TrackedOne.class, new TrackedOne());
+
+		registry.registerService(
+			TrackedTwo.class, new TrackedTwo(new TrackedOne()));
+
+		try {
+			Thread.sleep(100);
+		}
+		catch (InterruptedException e) {
+			Assert.fail(e.toString());
+		}
+
+		Assert.assertTrue(dependenciesSatisfied.get());
+	}
+
+	@Test
+	public void testRegisterFilterDependencies() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		final AtomicBoolean dependenciesSatisfied = new AtomicBoolean(false);
+
+		serviceDependencyManager.addServiceDependencyListener(
+
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					dependenciesSatisfied.set(true);
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			});
+
+		Filter filter1 = registry.getFilter(
+			"(objectClass=" + TrackedOne.class.getName() + ")");
+		Filter filter2 = registry.getFilter(
+			"(objectClass=" + TrackedTwo.class.getName() + ")");
+
+		serviceDependencyManager.registerDependencies(filter1, filter2);
+
+		registry.registerService(TrackedOne.class, new TrackedOne());
+
+		registry.registerService(
+			TrackedTwo.class, new TrackedTwo(new TrackedOne()));
+
+		try {
+			Thread.sleep(100);
+		}
+		catch (InterruptedException e) {
+			Assert.fail(e.toString());
+		}
+
+		Assert.assertTrue(dependenciesSatisfied.get());
+	}
+
+	@Test
+	public void testWaitForDependencies() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		final ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		final AtomicBoolean dependenciesSatisfied = new AtomicBoolean(false);
+
+		serviceDependencyManager.addServiceDependencyListener(
+
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					dependenciesSatisfied.set(true);
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			});
+
+		Filter filter1 = registry.getFilter(
+			"(objectClass=" + TrackedOne.class.getName() + ")");
+		Filter filter2 = registry.getFilter(
+			"(objectClass=" + TrackedTwo.class.getName() + ")");
+
+		serviceDependencyManager.registerDependencies(filter1, filter2);
+
+		registry.registerService(TrackedOne.class, new TrackedOne());
+
+		registry.registerService(
+			TrackedTwo.class, new TrackedTwo(new TrackedOne()));
+
+		Thread dependencyWaiter = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				serviceDependencyManager.waitForDependencies(100);
+			}
+		});
+
+		dependencyWaiter.setDaemon(true);
+
+		dependencyWaiter.start();
+
+		try {
+			Thread.sleep(250);
+
+			if (dependencyWaiter.isAlive()) {
+				Assert.fail("Dependencies should have been fulfilled");
+			}
+
+			Assert.assertTrue(dependenciesSatisfied.get());
+		}
+		catch (InterruptedException e) {
+		}
+	}
+
+	@Test
+	public void testWaitForDependenciesUnfilled() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		final ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		final AtomicBoolean dependenciesSatisfied = new AtomicBoolean(false);
+
+		serviceDependencyManager.addServiceDependencyListener(
+
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					dependenciesSatisfied.set(true);
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			});
+
+		Filter filter1 = registry.getFilter(
+			"(objectClass=" + TrackedOne.class.getName() + ")");
+		Filter filter2 = registry.getFilter(
+			"(objectClass=" + TrackedTwo.class.getName() + ")");
+
+		serviceDependencyManager.registerDependencies(filter1, filter2);
+
+		registry.registerService(TrackedOne.class, new TrackedOne());
+
+		Thread dependencyWaiter = new Thread(
+			new Runnable() {
+
+				@Override
+				public void run() {
+					serviceDependencyManager.waitForDependencies(100);
+				}
+
+			});
+
+		dependencyWaiter.setDaemon(true);
+
+		dependencyWaiter.start();
+
+		try {
+			Thread.sleep(250);
+
+			if (dependencyWaiter.isAlive()) {
+				Assert.fail("Dependencies should have timed out");
+			}
+
+			Assert.assertFalse(dependenciesSatisfied.get());
+		}
+		catch (InterruptedException e) {
+		}
 	}
 
 	private class TestInstance1 implements TestInterface1 {

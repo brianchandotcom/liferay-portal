@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
@@ -47,6 +48,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -179,6 +181,11 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	@Override
 	public String getFileName() {
 		return DLUtil.getSanitizedFileName(getTitle(), getExtension());
+	}
+
+	@Override
+	public List<FileShortcut> getFileShortcuts() {
+		return Collections.emptyList();
 	}
 
 	@Override

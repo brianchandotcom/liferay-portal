@@ -2,12 +2,11 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_DDL_DDLRecordSetService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:cmp-ns="http://model.dynamicdatalists.portlet.liferay.com" qname="ns:ArrayOf_tns2_DDLRecordSetSoap" type="java:com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap[]" innerType="cmp-ns:DDLRecordSetSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:cmp-ns="http://model.dynamicdatalists.portlet.liferay.com" qname="ns:ArrayOf_tns3_DDLRecordSetSoap" type="java:com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap[]" innerType="cmp-ns:DDLRecordSetSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.dynamicdatalists.portlet.liferay.com" qname="ns:DDLRecordSetSoap" type="java:com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
-		<typeMapping xmlns:ns="http://model.portal.liferay.com" qname="ns:PortletPreferencesIds" type="java:com.liferay.portal.model.PortletPreferencesIds" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://service.portal.liferay.com" qname="ns:ServiceContext" type="java:com.liferay.portal.service.ServiceContext" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://theme.portal.liferay.com" qname="ns:PortletDisplay" type="java:com.liferay.portal.theme.PortletDisplay" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://theme.portal.liferay.com" qname="ns:ThemeDisplay" type="java:com.liferay.portal.theme.ThemeDisplay" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
@@ -33,7 +32,7 @@
 		<operation xmlns:operNS="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:rtns="http://model.dynamicdatalists.portlet.liferay.com" name="getRecordSet" qname="operNS:getRecordSet" returnQName="getRecordSetReturn" returnType="rtns:DDLRecordSetSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="recordSetId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:rtns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:tns2="http://model.dynamicdatalists.portlet.liferay.com" name="getRecordSets" qname="operNS:getRecordSets" returnQName="getRecordSetsReturn" returnType="rtns:ArrayOf_tns2_DDLRecordSetSoap" returnItemType="tns2:DDLRecordSetSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:rtns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:tns2="http://model.dynamicdatalists.portlet.liferay.com" name="getRecordSets" qname="operNS:getRecordSets" returnQName="getRecordSetsReturn" returnType="rtns:ArrayOf_tns3_DDLRecordSetSoap" returnItemType="tns2:DDLRecordSetSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.dynamicdatalists.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="searchCount" qname="operNS:searchCount" returnQName="searchCountReturn" returnType="rtns:int" soapAction="">
@@ -50,7 +49,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="scope" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="andOperator" type="tns:boolean"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:rtns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:tns2="http://model.dynamicdatalists.portlet.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns2_DDLRecordSetSoap" returnItemType="tns2:DDLRecordSetSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:rtns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:tns2="http://model.dynamicdatalists.portlet.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns3_DDLRecordSetSoap" returnItemType="tns2:DDLRecordSetSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="keywords" type="tns:string"></parameter>
@@ -59,7 +58,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="orderByComparator" type="tns:OrderByComparator"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:rtns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:tns2="http://model.dynamicdatalists.portlet.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns2_DDLRecordSetSoap" returnItemType="tns2:DDLRecordSetSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:rtns="urn:http.service.dynamicdatalists.portlet.liferay.com" xmlns:tns2="http://model.dynamicdatalists.portlet.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns3_DDLRecordSetSoap" returnItemType="tns2:DDLRecordSetSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
@@ -98,7 +97,7 @@
 		</operation>
 		<parameter name="allowedMethods" value="addRecordSet deleteRecordSet getRecordSet getRecordSets search searchCount updateMinDisplayRows updateRecordSet" />
 		<parameter name="className" value="com.liferay.portlet.dynamicdatalists.service.http.DDLRecordSetServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.dynamicdatalists.portlet.liferay.com,http://model.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.dynamicdatalists.portlet.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://model.dynamicdatalists.portlet.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.dynamicdatalists.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="DDLRecordSetServiceSoap" />
 		<parameter name="wsdlServiceElement" value="DDLRecordSetServiceSoapService" />

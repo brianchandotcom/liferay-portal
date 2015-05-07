@@ -23,7 +23,7 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "version-history");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-DLFileShortcut fileShortcut = (DLFileShortcut)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
+FileShortcut fileShortcut = (FileShortcut)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
 
 long fileShortcutId = BeanParamUtil.getLong(fileShortcut, request, "fileShortcutId");
 
@@ -118,7 +118,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 		<c:if test="<%= fileShortcut == null %>">
 			<aui:field-wrapper label="permissions">
 				<liferay-ui:input-permissions
-					modelName="<%= DLFileShortcut.class.getName() %>"
+					modelName="<%= DLFileShortcutConstants.getClassName() %>"
 				/>
 			</aui:field-wrapper>
 		</c:if>

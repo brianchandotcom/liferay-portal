@@ -566,69 +566,6 @@ public class CalEventUtil {
 	}
 
 	/**
-	* Returns all the cal events that the user has permission to view where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByGroupId(long groupId) {
-		return getPersistence().filterFindByGroupId(groupId);
-	}
-
-	/**
-	* Returns a range of all the cal events that the user has permission to view where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @return the range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByGroupId(long groupId, int start,
-		int end) {
-		return getPersistence().filterFindByGroupId(groupId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the cal events that the user has permissions to view where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator<CalEvent> orderByComparator) {
-		return getPersistence()
-				   .filterFindByGroupId(groupId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the cal events before and after the current cal event in the ordered set of cal events that the user has permission to view where groupId = &#63;.
-	*
-	* @param eventId the primary key of the current cal event
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
-	*/
-	public static CalEvent[] filterFindByGroupId_PrevAndNext(long eventId,
-		long groupId, OrderByComparator<CalEvent> orderByComparator)
-		throws com.liferay.portlet.calendar.NoSuchEventException {
-		return getPersistence()
-				   .filterFindByGroupId_PrevAndNext(eventId, groupId,
-			orderByComparator);
-	}
-
-	/**
 	* Removes all the cal events where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -645,16 +582,6 @@ public class CalEventUtil {
 	*/
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching cal events that the user has permission to view
-	*/
-	public static int filterCountByGroupId(long groupId) {
-		return getPersistence().filterCountByGroupId(groupId);
 	}
 
 	/**
@@ -1058,128 +985,6 @@ public class CalEventUtil {
 	}
 
 	/**
-	* Returns all the cal events that the user has permission to view where groupId = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @return the matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T(long groupId,
-		java.lang.String type) {
-		return getPersistence().filterFindByG_T(groupId, type);
-	}
-
-	/**
-	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @return the range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T(long groupId,
-		java.lang.String type, int start, int end) {
-		return getPersistence().filterFindByG_T(groupId, type, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the cal events that the user has permissions to view where groupId = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T(long groupId,
-		java.lang.String type, int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_T(groupId, type, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the cal events before and after the current cal event in the ordered set of cal events that the user has permission to view where groupId = &#63; and type = &#63;.
-	*
-	* @param eventId the primary key of the current cal event
-	* @param groupId the group ID
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
-	*/
-	public static CalEvent[] filterFindByG_T_PrevAndNext(long eventId,
-		long groupId, java.lang.String type,
-		OrderByComparator<CalEvent> orderByComparator)
-		throws com.liferay.portlet.calendar.NoSuchEventException {
-		return getPersistence()
-				   .filterFindByG_T_PrevAndNext(eventId, groupId, type,
-			orderByComparator);
-	}
-
-	/**
-	* Returns all the cal events that the user has permission to view where groupId = &#63; and type = any &#63;.
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @return the matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T(long groupId,
-		java.lang.String[] types) {
-		return getPersistence().filterFindByG_T(groupId, types);
-	}
-
-	/**
-	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and type = any &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @return the range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T(long groupId,
-		java.lang.String[] types, int start, int end) {
-		return getPersistence().filterFindByG_T(groupId, types, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the cal events that the user has permission to view where groupId = &#63; and type = any &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T(long groupId,
-		java.lang.String[] types, int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_T(groupId, types, start, end,
-			orderByComparator);
-	}
-
-	/**
 	* Returns all the cal events where groupId = &#63; and type = any &#63;.
 	*
 	* <p>
@@ -1264,28 +1069,6 @@ public class CalEventUtil {
 	*/
 	public static int countByG_T(long groupId, java.lang.String[] types) {
 		return getPersistence().countByG_T(groupId, types);
-	}
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63; and type = &#63;.
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @return the number of matching cal events that the user has permission to view
-	*/
-	public static int filterCountByG_T(long groupId, java.lang.String type) {
-		return getPersistence().filterCountByG_T(groupId, type);
-	}
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63; and type = any &#63;.
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @return the number of matching cal events that the user has permission to view
-	*/
-	public static int filterCountByG_T(long groupId, java.lang.String[] types) {
-		return getPersistence().filterCountByG_T(groupId, types);
 	}
 
 	/**
@@ -1416,76 +1199,6 @@ public class CalEventUtil {
 	}
 
 	/**
-	* Returns all the cal events that the user has permission to view where groupId = &#63; and repeating = &#63;.
-	*
-	* @param groupId the group ID
-	* @param repeating the repeating
-	* @return the matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_R(long groupId, boolean repeating) {
-		return getPersistence().filterFindByG_R(groupId, repeating);
-	}
-
-	/**
-	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and repeating = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param repeating the repeating
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @return the range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_R(long groupId,
-		boolean repeating, int start, int end) {
-		return getPersistence().filterFindByG_R(groupId, repeating, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the cal events that the user has permissions to view where groupId = &#63; and repeating = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param repeating the repeating
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_R(long groupId,
-		boolean repeating, int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_R(groupId, repeating, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the cal events before and after the current cal event in the ordered set of cal events that the user has permission to view where groupId = &#63; and repeating = &#63;.
-	*
-	* @param eventId the primary key of the current cal event
-	* @param groupId the group ID
-	* @param repeating the repeating
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
-	*/
-	public static CalEvent[] filterFindByG_R_PrevAndNext(long eventId,
-		long groupId, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator)
-		throws com.liferay.portlet.calendar.NoSuchEventException {
-		return getPersistence()
-				   .filterFindByG_R_PrevAndNext(eventId, groupId, repeating,
-			orderByComparator);
-	}
-
-	/**
 	* Removes all the cal events where groupId = &#63; and repeating = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1504,17 +1217,6 @@ public class CalEventUtil {
 	*/
 	public static int countByG_R(long groupId, boolean repeating) {
 		return getPersistence().countByG_R(groupId, repeating);
-	}
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63; and repeating = &#63;.
-	*
-	* @param groupId the group ID
-	* @param repeating the repeating
-	* @return the number of matching cal events that the user has permission to view
-	*/
-	public static int filterCountByG_R(long groupId, boolean repeating) {
-		return getPersistence().filterCountByG_R(groupId, repeating);
 	}
 
 	/**
@@ -1664,138 +1366,6 @@ public class CalEventUtil {
 	}
 
 	/**
-	* Returns all the cal events that the user has permission to view where groupId = &#63; and type = &#63; and repeating = &#63;.
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @param repeating the repeating
-	* @return the matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T_R(long groupId,
-		java.lang.String type, boolean repeating) {
-		return getPersistence().filterFindByG_T_R(groupId, type, repeating);
-	}
-
-	/**
-	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and type = &#63; and repeating = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @param repeating the repeating
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @return the range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T_R(long groupId,
-		java.lang.String type, boolean repeating, int start, int end) {
-		return getPersistence()
-				   .filterFindByG_T_R(groupId, type, repeating, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the cal events that the user has permissions to view where groupId = &#63; and type = &#63; and repeating = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @param repeating the repeating
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T_R(long groupId,
-		java.lang.String type, boolean repeating, int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_T_R(groupId, type, repeating, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the cal events before and after the current cal event in the ordered set of cal events that the user has permission to view where groupId = &#63; and type = &#63; and repeating = &#63;.
-	*
-	* @param eventId the primary key of the current cal event
-	* @param groupId the group ID
-	* @param type the type
-	* @param repeating the repeating
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next cal event
-	* @throws NoSuchEventException if a cal event with the primary key could not be found
-	*/
-	public static CalEvent[] filterFindByG_T_R_PrevAndNext(long eventId,
-		long groupId, java.lang.String type, boolean repeating,
-		OrderByComparator<CalEvent> orderByComparator)
-		throws com.liferay.portlet.calendar.NoSuchEventException {
-		return getPersistence()
-				   .filterFindByG_T_R_PrevAndNext(eventId, groupId, type,
-			repeating, orderByComparator);
-	}
-
-	/**
-	* Returns all the cal events that the user has permission to view where groupId = &#63; and type = any &#63; and repeating = &#63;.
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param repeating the repeating
-	* @return the matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T_R(long groupId,
-		java.lang.String[] types, boolean repeating) {
-		return getPersistence().filterFindByG_T_R(groupId, types, repeating);
-	}
-
-	/**
-	* Returns a range of all the cal events that the user has permission to view where groupId = &#63; and type = any &#63; and repeating = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param repeating the repeating
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @return the range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T_R(long groupId,
-		java.lang.String[] types, boolean repeating, int start, int end) {
-		return getPersistence()
-				   .filterFindByG_T_R(groupId, types, repeating, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the cal events that the user has permission to view where groupId = &#63; and type = any &#63; and repeating = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param repeating the repeating
-	* @param start the lower bound of the range of cal events
-	* @param end the upper bound of the range of cal events (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching cal events that the user has permission to view
-	*/
-	public static List<CalEvent> filterFindByG_T_R(long groupId,
-		java.lang.String[] types, boolean repeating, int start, int end,
-		OrderByComparator<CalEvent> orderByComparator) {
-		return getPersistence()
-				   .filterFindByG_T_R(groupId, types, repeating, start, end,
-			orderByComparator);
-	}
-
-	/**
 	* Returns all the cal events where groupId = &#63; and type = any &#63; and repeating = &#63;.
 	*
 	* <p>
@@ -1891,32 +1461,6 @@ public class CalEventUtil {
 	public static int countByG_T_R(long groupId, java.lang.String[] types,
 		boolean repeating) {
 		return getPersistence().countByG_T_R(groupId, types, repeating);
-	}
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63; and type = &#63; and repeating = &#63;.
-	*
-	* @param groupId the group ID
-	* @param type the type
-	* @param repeating the repeating
-	* @return the number of matching cal events that the user has permission to view
-	*/
-	public static int filterCountByG_T_R(long groupId, java.lang.String type,
-		boolean repeating) {
-		return getPersistence().filterCountByG_T_R(groupId, type, repeating);
-	}
-
-	/**
-	* Returns the number of cal events that the user has permission to view where groupId = &#63; and type = any &#63; and repeating = &#63;.
-	*
-	* @param groupId the group ID
-	* @param types the types
-	* @param repeating the repeating
-	* @return the number of matching cal events that the user has permission to view
-	*/
-	public static int filterCountByG_T_R(long groupId,
-		java.lang.String[] types, boolean repeating) {
-		return getPersistence().filterCountByG_T_R(groupId, types, repeating);
 	}
 
 	/**

@@ -602,8 +602,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_exportImportConfiguration.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -790,7 +789,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ExportImportConfiguration> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.ExportImportConfiguration> toCacheModel() {
 		return _exportImportConfiguration.toCacheModel();
 	}
 

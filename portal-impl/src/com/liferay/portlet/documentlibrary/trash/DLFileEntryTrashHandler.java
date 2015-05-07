@@ -355,7 +355,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		throws PortalException {
 
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			0, classPK, 0);
+			0, classPK, 0, 0);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			return null;
@@ -368,7 +368,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 	protected DLFileEntry getDLFileEntry(long classPK) throws PortalException {
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			0, classPK, 0);
+			0, classPK, 0, 0);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
@@ -384,7 +384,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	@Override
 	protected Repository getRepository(long classPK) throws PortalException {
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			0, classPK, 0);
+			0, classPK, 0, 0);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(

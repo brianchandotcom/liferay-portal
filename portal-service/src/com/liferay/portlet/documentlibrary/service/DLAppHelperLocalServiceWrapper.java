@@ -189,31 +189,31 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
+	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
 		long userId,
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut,
+		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut,
 		long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.moveFileShortcutFromTrash(userId,
-			dlFileShortcut, newFolderId, serviceContext);
+			fileShortcut, newFolderId, serviceContext);
 	}
 
 	/**
 	* Moves the file shortcut to the recycle bin.
 	*
 	* @param userId the primary key of the user moving the file shortcut
-	* @param dlFileShortcut the file shortcut to be moved
+	* @param fileShortcut the file shortcut to be moved
 	* @return the moved file shortcut
 	* @throws PortalException if a user with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutToTrash(
+	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
 		long userId,
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
+		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.moveFileShortcutToTrash(userId,
-			dlFileShortcut);
+			fileShortcut);
 	}
 
 	@Override
@@ -271,10 +271,10 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 
 	@Override
 	public void restoreFileShortcutFromTrash(long userId,
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
+		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.restoreFileShortcutFromTrash(userId,
-			dlFileShortcut);
+			fileShortcut);
 	}
 
 	@Override

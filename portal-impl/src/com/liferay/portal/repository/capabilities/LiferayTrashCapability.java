@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -113,6 +114,31 @@ public class LiferayTrashCapability
 	}
 
 	@Override
+	public FileShortcut moveFileShortcutFromTrash(
+			long userId, FileShortcut fileShortcut, Folder newFolder,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		long newFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (newFolder != null) {
+			newFolderId = newFolder.getFolderId();
+		}
+
+		return DLAppHelperLocalServiceUtil.moveFileShortcutFromTrash(
+			userId, fileShortcut, newFolderId, serviceContext);
+	}
+
+	@Override
+	public FileShortcut moveFileShortcutToTrash(
+			long userId, FileShortcut fileShortcut)
+		throws PortalException {
+
+		return DLAppHelperLocalServiceUtil.moveFileShortcutToTrash(
+			userId, fileShortcut);
+	}
+
+	@Override
 	public Folder moveFolderFromTrash(
 			long userId, Folder folder, Folder destinationFolder,
 			ServiceContext serviceContext)
@@ -156,6 +182,15 @@ public class LiferayTrashCapability
 
 		DLAppHelperLocalServiceUtil.restoreFileEntryFromTrash(
 			userId, fileEntry);
+	}
+
+	@Override
+	public void restoreFileShortcutFromTrash(
+			long userId, FileShortcut fileShortcut)
+		throws PortalException {
+
+		DLAppHelperLocalServiceUtil.restoreFileShortcutFromTrash(
+			userId, fileShortcut);
 	}
 
 	@Override

@@ -453,6 +453,11 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts() {
+		return _dlFileEntry.getFileShortcuts();
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getFileVersion();

@@ -316,8 +316,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_resourcePermission.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -424,7 +423,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ResourcePermission> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.ResourcePermission> toCacheModel() {
 		return _resourcePermission.toCacheModel();
 	}
 

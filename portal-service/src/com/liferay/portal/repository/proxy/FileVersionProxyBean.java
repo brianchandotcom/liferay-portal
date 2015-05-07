@@ -44,26 +44,7 @@ public class FileVersionProxyBean
 
 	@Override
 	public Object clone() {
-		FileVersionProxyBean fileVersionProxyBean = newFileVersionProxyBean(
-			_fileVersion);
-
-		fileVersionProxyBean.setCompanyId(getCompanyId());
-		fileVersionProxyBean.setCreateDate(getCreateDate());
-		fileVersionProxyBean.setGroupId(getGroupId());
-		fileVersionProxyBean.setModifiedDate(getModifiedDate());
-		fileVersionProxyBean.setPrimaryKeyObj(getPrimaryKeyObj());
-		fileVersionProxyBean.setUserId(getUserId());
-		fileVersionProxyBean.setUserName(getUserName());
-
-		try {
-			fileVersionProxyBean.setUserUuid(getUserUuid());
-		}
-		catch (SystemException se) {
-		}
-
-		fileVersionProxyBean.setUuid(getUuid());
-
-		return fileVersionProxyBean;
+		return newFileVersionProxyBean(_fileVersion);
 	}
 
 	@Override

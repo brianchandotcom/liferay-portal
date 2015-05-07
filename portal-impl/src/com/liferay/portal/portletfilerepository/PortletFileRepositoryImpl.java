@@ -295,7 +295,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			LocalRepository localRepository =
 				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
-					0, fileEntryId, 0);
+					0, fileEntryId, 0, 0);
 
 			localRepository.deleteFileEntry(fileEntryId);
 		}
@@ -335,7 +335,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			LocalRepository localRepository =
 				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
-					folderId, 0, 0);
+					folderId, 0, 0, 0);
 
 			localRepository.deleteFolder(folderId);
 		}
@@ -445,7 +445,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			LocalRepository localRepository =
 				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
-					0, fileEntryId, 0);
+					0, fileEntryId, 0, 0);
 
 			return localRepository.getFileEntry(fileEntryId);
 		}
@@ -534,7 +534,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			LocalRepository localRepository =
 				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
-					folderId, 0, 0);
+					folderId, 0, 0, 0);
 
 			return localRepository.getFolder(folderId);
 		}
@@ -572,7 +572,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			LocalRepository localRepository =
 				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
-					0, fileEntryId, 0);
+					0, fileEntryId, 0, 0);
 
 			return RepositoryTrashUtil.moveFileEntryToTrash(
 				userId, localRepository.getRepositoryId(), fileEntryId);
@@ -606,7 +606,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			LocalRepository localRepository =
 				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
-					0, fileEntryId, 0);
+					0, fileEntryId, 0, 0);
 
 			RepositoryTrashUtil.restoreFileEntryFromTrash(
 				userId, localRepository.getRepositoryId(), fileEntryId);

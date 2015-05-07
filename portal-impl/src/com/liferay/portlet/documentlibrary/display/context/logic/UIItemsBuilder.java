@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
@@ -52,7 +53,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.display.context.DLUIItemKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -73,11 +73,10 @@ public class UIItemsBuilder {
 
 	public UIItemsBuilder(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
+			FileShortcut fileShortcut)
 		throws PortalException {
 
-		this(
-			request, response, dlFileShortcut.getFileVersion(), dlFileShortcut);
+		this(request, response, fileShortcut.getFileVersion(), fileShortcut);
 	}
 
 	public UIItemsBuilder(
@@ -515,7 +514,7 @@ public class UIItemsBuilder {
 	}
 
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {
-		if (_dlFileShortcut == null) {
+		if (_fileShortcut == null) {
 			return;
 		}
 
@@ -524,7 +523,7 @@ public class UIItemsBuilder {
 
 		portletURL.setParameter("redirect", _getCurrentURL());
 		portletURL.setParameter(
-			"fileEntryId", String.valueOf(_dlFileShortcut.getToFileEntryId()));
+			"fileEntryId", String.valueOf(_fileShortcut.getToFileEntryId()));
 
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-search",
@@ -603,12 +602,12 @@ public class UIItemsBuilder {
 
 	private UIItemsBuilder(
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, DLFileShortcut dlFileShortcut) {
+		FileVersion fileVersion, FileShortcut fileShortcut) {
 
 		try {
 			_request = request;
 			_fileVersion = fileVersion;
-			_dlFileShortcut = dlFileShortcut;
+			_fileShortcut = fileShortcut;
 
 			FileEntry fileEntry = null;
 
@@ -759,9 +758,9 @@ public class UIItemsBuilder {
 	}
 
 	private String _currentURL;
-	private DLFileShortcut _dlFileShortcut;
 	private final FileEntry _fileEntry;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
+	private FileShortcut _fileShortcut;
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;

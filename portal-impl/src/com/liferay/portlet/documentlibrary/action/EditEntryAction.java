@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.action;
 import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -40,8 +41,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -247,8 +246,8 @@ public class EditEntryAction extends PortletAction {
 				Folder folder = DLAppServiceUtil.moveFolderToTrash(
 					deleteFolderId);
 
-				if (folder.getModel() instanceof DLFolder) {
-					trashedModels.add((DLFolder)folder.getModel());
+				if (folder.getModel() instanceof TrashedModel) {
+					trashedModels.add((TrashedModel)folder.getModel());
 				}
 			}
 			else {
@@ -265,11 +264,13 @@ public class EditEntryAction extends PortletAction {
 			long deleteFileShortcutId = deleteFileShortcutIds[i];
 
 			if (moveToTrash) {
-				DLFileShortcut fileShortcut =
+				FileShortcut fileShortcut =
 					DLAppServiceUtil.moveFileShortcutToTrash(
 						deleteFileShortcutId);
 
-				trashedModels.add(fileShortcut);
+				if (fileShortcut.getModel() instanceof TrashedModel) {
+					trashedModels.add((TrashedModel)fileShortcut.getModel());
+				}
 			}
 			else {
 				DLAppServiceUtil.deleteFileShortcut(deleteFileShortcutId);
@@ -284,8 +285,8 @@ public class EditEntryAction extends PortletAction {
 				FileEntry fileEntry = DLAppServiceUtil.moveFileEntryToTrash(
 					deleteFileEntryId);
 
-				if (fileEntry.getModel() instanceof DLFileEntry) {
-					trashedModels.add((DLFileEntry)fileEntry.getModel());
+				if (fileEntry.getModel() instanceof TrashedModel) {
+					trashedModels.add((TrashedModel)fileEntry.getModel());
 				}
 			}
 			else {
@@ -329,7 +330,7 @@ public class EditEntryAction extends PortletAction {
 				continue;
 			}
 
-			DLFileShortcut fileShortcut = DLAppServiceUtil.getFileShortcut(
+			FileShortcut fileShortcut = DLAppServiceUtil.getFileShortcut(
 				fileShortcutId);
 
 			DLAppServiceUtil.updateFileShortcut(

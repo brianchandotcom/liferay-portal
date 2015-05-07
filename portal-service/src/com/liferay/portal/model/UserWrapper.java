@@ -1625,8 +1625,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_user.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -2003,7 +2002,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.User> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.User> toCacheModel() {
 		return _user.toCacheModel();
 	}
 

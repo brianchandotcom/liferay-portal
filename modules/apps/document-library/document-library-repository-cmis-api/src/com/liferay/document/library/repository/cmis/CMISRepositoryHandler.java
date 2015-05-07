@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.BaseRepositoryImpl;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
@@ -58,6 +59,16 @@ public abstract class CMISRepositoryHandler
 		return _baseCmisRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
+	}
+
+	@Override
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _baseCmisRepository.addFileShortcut(
+			userId, folderId, toFileEntryId, serviceContext);
 	}
 
 	@Override
@@ -127,6 +138,16 @@ public abstract class CMISRepositoryHandler
 	@Override
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
 		_baseCmisRepository.deleteFileEntry(fileEntryId);
+	}
+
+	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		_baseCmisRepository.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		_baseCmisRepository.deleteFileShortcuts(toFileEntryId);
 	}
 
 	@Override
@@ -201,6 +222,13 @@ public abstract class CMISRepositoryHandler
 	@Override
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException {
 		return _baseCmisRepository.getFileEntryByUuid(uuid);
+	}
+
+	@Override
+	public FileShortcut getFileShortcut(long fileShortcutId)
+		throws PortalException {
+
+		return _baseCmisRepository.getFileShortcut(fileShortcutId);
 	}
 
 	@Override
@@ -528,6 +556,22 @@ public abstract class CMISRepositoryHandler
 		return _baseCmisRepository.updateFileEntry(
 			objectId, mimeType, properties, is, sourceFileName, size,
 			serviceContext);
+	}
+
+	@Override
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _baseCmisRepository.updateFileShortcut(
+			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
 	}
 
 	@Override

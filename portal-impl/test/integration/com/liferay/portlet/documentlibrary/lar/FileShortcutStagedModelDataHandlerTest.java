@@ -49,7 +49,7 @@ import org.junit.Rule;
 /**
  * @author Mate Thurzo
  */
-public class DLFileShortcutStagedModelDataHandlerTest
+public class FileShortcutStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule

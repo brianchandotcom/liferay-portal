@@ -443,8 +443,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_emailAddress.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -561,7 +560,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.EmailAddress> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.EmailAddress> toCacheModel() {
 		return _emailAddress.toCacheModel();
 	}
 

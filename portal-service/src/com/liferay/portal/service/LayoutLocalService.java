@@ -1636,6 +1636,7 @@ public interface LayoutLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
+	* @throws PortalException
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(

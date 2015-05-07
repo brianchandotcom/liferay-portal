@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
@@ -86,7 +87,7 @@ public class DLFolderFinderTest {
 			_group.getGroupId(), _folder.getFolderId(), "FE1.txt",
 			ContentTypes.TEXT_PLAIN);
 
-		_dlFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
+		_fileShortcut = DLAppLocalServiceUtil.addFileShortcut(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			fileEntry.getFolderId(), fileEntry.getFileEntryId(),
 			serviceContext);
@@ -297,11 +298,11 @@ public class DLFolderFinderTest {
 
 				Assert.assertEquals("FE1.txt", dlFileEntry.getTitle());
 			}
-			else if (result instanceof DLFileShortcut) {
-				DLFileShortcut fileShortcut = (DLFileShortcut)result;
+			else if (result instanceof FileShortcut) {
+				FileShortcut fileShortcut = (FileShortcut)result;
 
 				Assert.assertEquals(
-					_dlFileShortcut.getFileShortcutId(),
+					this._fileShortcut.getFileShortcutId(),
 					fileShortcut.getFileShortcutId());
 			}
 			else if (result instanceof DLFolder) {
@@ -325,7 +326,7 @@ public class DLFolderFinderTest {
 			mimeType, RandomTestUtil.randomBytes(), serviceContext);
 	}
 
-	private DLFileShortcut _dlFileShortcut;
+	private FileShortcut _fileShortcut;
 	private Folder _folder;
 	private Group _group;
 

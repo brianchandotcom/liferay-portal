@@ -2012,6 +2012,7 @@ public class LayoutLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
+	* @throws PortalException
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(

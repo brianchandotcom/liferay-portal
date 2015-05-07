@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -30,7 +32,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
@@ -157,23 +159,22 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 		Repository repository = getRepository(classPK);
 
-		List<Object> fileEntriesAndFileShortcuts =
+		List<RepositoryEntry> repositoryEntries =
 			repository.getFileEntriesAndFileShortcuts(
 				classPK, WorkflowConstants.STATUS_IN_TRASH, start, end);
 
-		for (Object fileEntryOrFileShortcut : fileEntriesAndFileShortcuts) {
+		for (RepositoryEntry repositoryEntry : repositoryEntries) {
 			String curClassName = StringPool.BLANK;
 			long curClassPK = 0;
 
-			if (fileEntryOrFileShortcut instanceof DLFileShortcut) {
-				DLFileShortcut dlFileShortcut =
-					(DLFileShortcut)fileEntryOrFileShortcut;
+			if (repositoryEntry instanceof FileShortcut) {
+				FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
 
-				curClassName = DLFileShortcut.class.getName();
-				curClassPK = dlFileShortcut.getPrimaryKey();
+				curClassName = DLFileShortcutConstants.getClassName();
+				curClassPK = fileShortcut.getPrimaryKey();
 			}
-			else if (fileEntryOrFileShortcut instanceof FileEntry) {
-				FileEntry fileEntry = (FileEntry)fileEntryOrFileShortcut;
+			else if (repositoryEntry instanceof FileEntry) {
+				FileEntry fileEntry = (FileEntry)repositoryEntry;
 
 				curClassName = DLFileEntry.class.getName();
 				curClassPK = fileEntry.getPrimaryKey();
@@ -243,7 +244,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 	protected DLFolder fetchDLFolder(long classPK) throws PortalException {
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			classPK, 0, 0);
+			classPK, 0, 0, 0);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			return null;
@@ -256,7 +257,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 	protected DLFolder getDLFolder(long classPK) throws PortalException {
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			classPK, 0, 0);
+			classPK, 0, 0, 0);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(

@@ -683,8 +683,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_role.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -882,7 +881,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Role> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.Role> toCacheModel() {
 		return _role.toCacheModel();
 	}
 

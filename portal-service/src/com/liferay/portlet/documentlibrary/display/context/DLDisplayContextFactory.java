@@ -16,9 +16,9 @@ package com.liferay.portlet.documentlibrary.display.context;
 
 import com.liferay.portal.kernel.display.context.DisplayContextFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +43,7 @@ public interface DLDisplayContextFactory extends DisplayContextFactory {
 			DLViewFileVersionDisplayContext
 				parentDLViewFileVersionDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut);
+			FileShortcut fileShortcut);
 
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(

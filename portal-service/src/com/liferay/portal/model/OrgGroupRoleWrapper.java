@@ -194,8 +194,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_orgGroupRole.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -273,7 +272,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.OrgGroupRole> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.OrgGroupRole> toCacheModel() {
 		return _orgGroupRole.toCacheModel();
 	}
 

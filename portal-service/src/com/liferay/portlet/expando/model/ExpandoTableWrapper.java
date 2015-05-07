@@ -129,7 +129,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _expandoTable.getExpandoBridge();
 	}
 
@@ -235,8 +235,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_expandoTable.setExpandoBridgeAttributes(expandoBridge);
 	}
 

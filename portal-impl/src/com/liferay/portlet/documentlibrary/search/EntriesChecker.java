@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -94,8 +95,8 @@ public class EntriesChecker extends RowChecker {
 		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {
 
-		DLFileShortcut dlFileShortcut = null;
 		FileEntry fileEntry = null;
+		FileShortcut fileShortcut = null;
 		Folder folder = null;
 
 		long entryId = GetterUtil.getLong(primaryKey);
@@ -108,7 +109,7 @@ public class EntriesChecker extends RowChecker {
 				e1 instanceof NoSuchRepositoryEntryException) {
 
 				try {
-					dlFileShortcut = DLAppServiceUtil.getFileShortcut(entryId);
+					fileShortcut = DLAppServiceUtil.getFileShortcut(entryId);
 				}
 				catch (Exception e2) {
 					if (e2 instanceof NoSuchFileShortcutException) {
@@ -148,16 +149,14 @@ public class EntriesChecker extends RowChecker {
 			catch (Exception e) {
 			}
 		}
-		else if (dlFileShortcut != null) {
+		else if (fileShortcut != null) {
 			name = DLFileShortcut.class.getSimpleName();
 
 			try {
 				if (DLFileShortcutPermission.contains(
-						_permissionChecker, dlFileShortcut,
-						ActionKeys.DELETE) ||
+						_permissionChecker, fileShortcut, ActionKeys.DELETE) ||
 					DLFileShortcutPermission.contains(
-						_permissionChecker, dlFileShortcut,
-						ActionKeys.UPDATE)) {
+						_permissionChecker, fileShortcut, ActionKeys.UPDATE)) {
 
 					showInput = true;
 				}

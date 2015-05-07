@@ -25,6 +25,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
@@ -60,6 +62,7 @@ public class LiferayRepositoryFactory implements RepositoryFactory {
 			_repositoryLocalService, _repositoryService,
 			_dlAppHelperLocalService, _dlFileEntryLocalService,
 			_dlFileEntryService, _dlFileEntryTypeLocalService,
+			_dlFileShortcutLocalService, _dlFileShortcutService,
 			_dlFileVersionLocalService, _dlFileVersionService,
 			_dlFolderLocalService, _dlFolderService, _resourceLocalService,
 			groupId, repositoryId, dlFolderId);
@@ -74,6 +77,7 @@ public class LiferayRepositoryFactory implements RepositoryFactory {
 			_repositoryLocalService, _repositoryService,
 			_dlAppHelperLocalService, _dlFileEntryLocalService,
 			_dlFileEntryService, _dlFileEntryTypeLocalService,
+			_dlFileShortcutLocalService, _dlFileShortcutService,
 			_dlFileVersionLocalService, _dlFileVersionService,
 			_dlFolderLocalService, _dlFolderService, _resourceLocalService,
 			groupId, repositoryId, dlFolderId);
@@ -108,6 +112,12 @@ public class LiferayRepositoryFactory implements RepositoryFactory {
 
 	@BeanReference(type = DLFileEntryTypeLocalService.class)
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@BeanReference(type = DLFileShortcutLocalService.class)
+	private DLFileShortcutLocalService _dlFileShortcutLocalService;
+
+	@BeanReference(type = DLFileShortcutService.class)
+	private DLFileShortcutService _dlFileShortcutService;
 
 	@BeanReference(type = DLFileVersionLocalService.class)
 	private DLFileVersionLocalService _dlFileVersionLocalService;

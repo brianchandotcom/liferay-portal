@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util.comparator;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -96,6 +97,11 @@ public class RepositoryModelNameComparator<T> extends OrderByComparator<T> {
 			FileEntry fileEntry = (FileEntry)obj;
 
 			return fileEntry.getTitle();
+		}
+		else if (obj instanceof FileShortcut) {
+			FileShortcut fileShortcut = (FileShortcut)obj;
+
+			return fileShortcut.getToTitle();
 		}
 		else {
 			Folder folder = (Folder)obj;

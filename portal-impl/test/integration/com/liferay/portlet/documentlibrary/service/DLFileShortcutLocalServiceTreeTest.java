@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -73,15 +74,16 @@ public class DLFileShortcutLocalServiceTreeTest {
 
 		FileEntry fileEntry = addFileEntry(folderA.getFolderId(), "Entry.txt");
 
-		DLFileShortcut dlFileShortcut = addDLFileShortcut(
+		FileShortcut fileShortcut = addFileShortcut(
 			fileEntry, TestPropsValues.getGroupId(), folderAA.getFolderId());
 
 		DLAppLocalServiceUtil.moveFolder(
 			TestPropsValues.getUserId(), folderAA.getFolderId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		dlFileShortcut = DLFileShortcutLocalServiceUtil.getDLFileShortcut(
-			dlFileShortcut.getFileShortcutId());
+		DLFileShortcut dlFileShortcut =
+			DLFileShortcutLocalServiceUtil.getDLFileShortcut(
+				fileShortcut.getFileShortcutId());
 
 		Assert.assertEquals(
 			dlFileShortcut.buildTreePath(), dlFileShortcut.getTreePath());
@@ -91,7 +93,11 @@ public class DLFileShortcutLocalServiceTreeTest {
 	public void testRebuildTree() throws Exception {
 		createTree();
 
-		for (DLFileShortcut dlFileShortcut : _dlFileShortcuts) {
+		for (FileShortcut fileShortcut : _fileShortcuts) {
+			DLFileShortcut dlFileShortcut =
+				DLFileShortcutLocalServiceUtil.getDLFileShortcut(
+					fileShortcut.getFileShortcutId());
+
 			dlFileShortcut.setTreePath(null);
 
 			DLFileShortcutLocalServiceUtil.updateDLFileShortcut(dlFileShortcut);
@@ -100,16 +106,17 @@ public class DLFileShortcutLocalServiceTreeTest {
 		DLFileShortcutLocalServiceUtil.rebuildTree(
 			TestPropsValues.getCompanyId());
 
-		for (DLFileShortcut dlFileShortcut : _dlFileShortcuts) {
-			dlFileShortcut = DLFileShortcutLocalServiceUtil.getDLFileShortcut(
-				dlFileShortcut.getFileShortcutId());
+		for (FileShortcut fileShortcut : _fileShortcuts) {
+			DLFileShortcut dlFileShortcut =
+				DLFileShortcutLocalServiceUtil.getDLFileShortcut(
+					fileShortcut.getFileShortcutId());
 
 			Assert.assertEquals(
 				dlFileShortcut.buildTreePath(), dlFileShortcut.getTreePath());
 		}
 	}
 
-	protected DLFileShortcut addDLFileShortcut(
+	protected FileShortcut addFileShortcut(
 			FileEntry fileEntry, long groupId, long folderId)
 		throws Exception {
 
@@ -139,11 +146,11 @@ public class DLFileShortcutLocalServiceTreeTest {
 		_fileEntry = addFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Entry A.txt");
 
-		DLFileShortcut dlFileShortcutA = addDLFileShortcut(
+		FileShortcut fileShortcutA = addFileShortcut(
 			_fileEntry, TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		_dlFileShortcuts.add(dlFileShortcutA);
+		_fileShortcuts.add(fileShortcutA);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -153,13 +160,13 @@ public class DLFileShortcutLocalServiceTreeTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Folder A", RandomTestUtil.randomString(), serviceContext);
 
-		DLFileShortcut dlFileShortcutAA = addDLFileShortcut(
+		FileShortcut fileShortcutAA = addFileShortcut(
 			_fileEntry, TestPropsValues.getGroupId(), _folder.getFolderId());
 
-		_dlFileShortcuts.add(dlFileShortcutAA);
+		_fileShortcuts.add(fileShortcutAA);
 	}
 
-	private final List<DLFileShortcut> _dlFileShortcuts = new ArrayList<>();
+	private final List<FileShortcut> _fileShortcuts = new ArrayList<>();
 	private FileEntry _fileEntry;
 	private Folder _folder;
 

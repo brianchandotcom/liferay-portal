@@ -206,8 +206,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_userGroupGroupRole.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -285,7 +284,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserGroupGroupRole> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.UserGroupGroupRole> toCacheModel() {
 		return _userGroupGroupRole.toCacheModel();
 	}
 

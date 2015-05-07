@@ -181,7 +181,7 @@ public class RepositoryServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
 		HttpPrincipal httpPrincipal, long folderId, long fileEntryId,
-		long fileVersionId)
+		long fileVersionId, long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
@@ -189,7 +189,7 @@ public class RepositoryServiceHttp {
 					_getLocalRepositoryImplParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					folderId, fileEntryId, fileVersionId);
+					folderId, fileEntryId, fileVersionId, fileShortcutId);
 
 			Object returnObj = null;
 
@@ -279,14 +279,14 @@ public class RepositoryServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 		HttpPrincipal httpPrincipal, long folderId, long fileEntryId,
-		long fileVersionId)
+		long fileVersionId, long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RepositoryServiceUtil.class,
 					"getRepositoryImpl", _getRepositoryImplParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					folderId, fileEntryId, fileVersionId);
+					folderId, fileEntryId, fileVersionId, fileShortcutId);
 
 			Object returnObj = null;
 
@@ -474,7 +474,7 @@ public class RepositoryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getLocalRepositoryImplParameterTypes4 = new Class[] {
-			long.class, long.class, long.class
+			long.class, long.class, long.class, long.class
 		};
 	private static final Class<?>[] _getRepositoryParameterTypes5 = new Class[] {
 			long.class
@@ -483,7 +483,7 @@ public class RepositoryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getRepositoryImplParameterTypes7 = new Class[] {
-			long.class, long.class, long.class
+			long.class, long.class, long.class, long.class
 		};
 	private static final Class<?>[] _getSupportedConfigurationsParameterTypes8 = new Class[] {
 			long.class

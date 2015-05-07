@@ -32,6 +32,13 @@ public class BaseRepositoryModelOperation implements RepositoryModelOperation {
 	 * @throws PortalException
 	 */
 	@Override
+	public void execute(FileShortcut shortcut) throws PortalException {
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
 	public void execute(FileVersion fileVersion) throws PortalException {
 	}
 

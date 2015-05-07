@@ -15,8 +15,8 @@
 package com.liferay.portlet.imagegallerydisplay.display.context;
 
 import com.liferay.portal.kernel.display.context.DisplayContextProvider;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +29,7 @@ public interface IGDisplayContextProvider extends DisplayContextProvider {
 	public IGViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut);
+			FileShortcut fileShortcut);
 
 	public IGViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(

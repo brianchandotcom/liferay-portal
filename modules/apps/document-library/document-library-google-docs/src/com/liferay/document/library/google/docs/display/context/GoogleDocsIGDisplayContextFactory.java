@@ -18,8 +18,8 @@ import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
@@ -46,10 +46,10 @@ public class GoogleDocsIGDisplayContextFactory
 	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		DLFileShortcut dlFileShortcut) {
+		FileShortcut fileShortcut) {
 
 		try {
-			long fileEntryId = dlFileShortcut.getToFileEntryId();
+			long fileEntryId = fileShortcut.getToFileEntryId();
 
 			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
@@ -62,7 +62,7 @@ public class GoogleDocsIGDisplayContextFactory
 		catch (PortalException pe) {
 			throw new SystemException(
 				"Unable to build GoogleDocsDLViewFileVersionDisplayContext " +
-					"for shortcut " + dlFileShortcut.getToTitle(), pe);
+					"for shortcut " + fileShortcut.getPrimaryKey(), pe);
 		}
 	}
 

@@ -342,8 +342,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_webDAVProps.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -425,7 +424,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.WebDAVProps> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.WebDAVProps> toCacheModel() {
 		return _webDAVProps.toCacheModel();
 	}
 

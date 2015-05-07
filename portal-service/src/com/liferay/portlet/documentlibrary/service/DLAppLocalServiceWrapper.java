@@ -215,7 +215,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	found, or if the file shortcut's information was invalid
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
 		long userId, long repositoryId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -306,14 +306,14 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* Deletes the file shortcut. This method is only supported by the Liferay
 	* repository.
 	*
-	* @param dlFileShortcut the file shortcut
+	* @param fileShortcut the file shortcut
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	@Override
 	public void deleteFileShortcut(
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
+		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.deleteFileShortcut(dlFileShortcut);
+		_dlAppLocalService.deleteFileShortcut(fileShortcut);
 	}
 
 	/**
@@ -433,7 +433,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.getFileShortcut(fileShortcutId);
@@ -845,7 +845,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	not be found
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
 		long userId, long fileShortcutId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -857,13 +857,25 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* Updates all file shortcuts to the existing file entry to the new file
 	* entry. This method is only supported by the Liferay repository.
 	*
-	* @param toRepositoryId the primary key of the repository
 	* @param oldToFileEntryId the primary key of the old file entry pointed to
 	* @param newToFileEntryId the primary key of the new file entry to point to
 	*/
 	@Override
+	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.updateFileShortcuts(oldToFileEntryId,
+			newToFileEntryId);
+	}
+
+	/**
+	* Deprecated as of 7.0.0, replaced by {@link #updateFileShortcuts(long,
+	*            long)}
+	*/
+	@Deprecated
+	@Override
 	public void updateFileShortcuts(long toRepositoryId, long oldToFileEntryId,
-		long newToFileEntryId) {
+		long newToFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppLocalService.updateFileShortcuts(toRepositoryId,
 			oldToFileEntryId, newToFileEntryId);
 	}

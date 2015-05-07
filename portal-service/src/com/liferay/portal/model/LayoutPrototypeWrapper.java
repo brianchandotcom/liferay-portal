@@ -616,8 +616,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_layoutPrototype.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -795,7 +794,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.LayoutPrototype> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.LayoutPrototype> toCacheModel() {
 		return _layoutPrototype.toCacheModel();
 	}
 

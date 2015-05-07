@@ -217,8 +217,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_browserTracker.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -285,7 +284,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.BrowserTracker> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.BrowserTracker> toCacheModel() {
 		return _browserTracker.toCacheModel();
 	}
 

@@ -240,8 +240,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_passwordPolicyRel.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -308,7 +307,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PasswordPolicyRel> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.PasswordPolicyRel> toCacheModel() {
 		return _passwordPolicyRel.toCacheModel();
 	}
 

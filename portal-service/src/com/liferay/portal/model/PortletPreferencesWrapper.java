@@ -239,8 +239,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_portletPreferences.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -347,7 +346,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PortletPreferences> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.PortletPreferences> toCacheModel() {
 		return _portletPreferences.toCacheModel();
 	}
 

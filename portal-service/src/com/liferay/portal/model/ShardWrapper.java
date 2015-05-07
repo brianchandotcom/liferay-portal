@@ -238,8 +238,7 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_shard.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -306,7 +305,7 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Shard> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.Shard> toCacheModel() {
 		return _shard.toCacheModel();
 	}
 

@@ -203,7 +203,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @throws PortalException if the parent folder or file entry could not be
 	found, or if the file shortcut's information was invalid
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
 		long userId, long repositoryId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -269,11 +269,11 @@ public interface DLAppLocalService extends BaseLocalService {
 	* Deletes the file shortcut. This method is only supported by the Liferay
 	* repository.
 	*
-	* @param dlFileShortcut the file shortcut
+	* @param fileShortcut the file shortcut
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	public void deleteFileShortcut(
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
+		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
 		throws PortalException;
 
 	/**
@@ -370,7 +370,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
 		long fileShortcutId) throws PortalException;
 
 	/**
@@ -705,7 +705,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	* @throws PortalException if the file shortcut, folder, or file entry could
 	not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
 		long userId, long fileShortcutId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -714,12 +714,19 @@ public interface DLAppLocalService extends BaseLocalService {
 	* Updates all file shortcuts to the existing file entry to the new file
 	* entry. This method is only supported by the Liferay repository.
 	*
-	* @param toRepositoryId the primary key of the repository
 	* @param oldToFileEntryId the primary key of the old file entry pointed to
 	* @param newToFileEntryId the primary key of the new file entry to point to
 	*/
+	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException;
+
+	/**
+	* Deprecated as of 7.0.0, replaced by {@link #updateFileShortcuts(long,
+	*            long)}
+	*/
+	@java.lang.Deprecated
 	public void updateFileShortcuts(long toRepositoryId, long oldToFileEntryId,
-		long newToFileEntryId);
+		long newToFileEntryId) throws PortalException;
 
 	/**
 	* Updates the folder.

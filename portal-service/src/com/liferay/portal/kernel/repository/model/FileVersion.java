@@ -24,7 +24,8 @@ import java.util.Date;
 /**
  * @author Alexander Chow
  */
-public interface FileVersion extends RepositoryModel<FileVersion> {
+public interface FileVersion
+	extends RepositoryEntry, RepositoryModel<FileVersion> {
 
 	public String getChangeLog();
 

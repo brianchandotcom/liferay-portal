@@ -14,8 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util.comparator;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -96,15 +95,10 @@ public class RepositoryModelModifiedDateComparator<T>
 
 			return dlFolder.getModifiedDate();
 		}
-		else if (obj instanceof FileEntry) {
-			FileEntry fileEntry = (FileEntry)obj;
-
-			return fileEntry.getModifiedDate();
-		}
 		else {
-			Folder folder = (Folder)obj;
+			RepositoryEntry repositoryEntry = (RepositoryEntry)obj;
 
-			return folder.getModifiedDate();
+			return repositoryEntry.getModifiedDate();
 		}
 	}
 

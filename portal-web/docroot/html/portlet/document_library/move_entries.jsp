@@ -68,12 +68,12 @@ for (FileEntry curFileEntry : fileEntries) {
 	}
 }
 
-List<DLFileShortcut> fileShortcuts = (List<DLFileShortcut>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS);
+List<FileShortcut> fileShortcuts = (List<FileShortcut>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS);
 
-List<DLFileShortcut> invalidShortcutEntries = new ArrayList<DLFileShortcut>();
-List<DLFileShortcut> validShortcutEntries = new ArrayList<DLFileShortcut>();
+List<FileShortcut> invalidShortcutEntries = new ArrayList<FileShortcut>();
+List<FileShortcut> validShortcutEntries = new ArrayList<FileShortcut>();
 
-for (DLFileShortcut curFileShortcut : fileShortcuts) {
+for (FileShortcut curFileShortcut : fileShortcuts) {
 	boolean movePermission = DLFileShortcutPermission.contains(permissionChecker, curFileShortcut, ActionKeys.UPDATE);
 
 	if (movePermission) {
@@ -278,7 +278,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 			<ul class="list-unstyled">
 
 				<%
-				for (DLFileShortcut fileShortcut : validShortcutEntries) {
+				for (FileShortcut fileShortcut : validShortcutEntries) {
 				%>
 
 					<li class="move-file">
@@ -304,7 +304,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 			<ul class="list-unstyled">
 
 				<%
-				for (DLFileShortcut fileShortcut : invalidShortcutEntries) {
+				for (FileShortcut fileShortcut : invalidShortcutEntries) {
 				%>
 
 					<li class="move-error move-file">

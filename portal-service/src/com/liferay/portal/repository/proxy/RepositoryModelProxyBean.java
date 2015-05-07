@@ -17,8 +17,10 @@ package com.liferay.portal.repository.proxy;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -44,6 +46,19 @@ public abstract class RepositoryModelProxyBean {
 			fileEntry, FileEntry.class);
 
 		return new FileEntryProxyBean(fileEntryProxy, _classLoader);
+	}
+
+	protected FileShortcutProxyBean newFileShortcutProxyBean(
+		FileShortcut fileShortcut) {
+
+		if (fileShortcut == null) {
+			return null;
+		}
+
+		FileShortcut fileShortcutProxy = (FileShortcut)newProxyInstance(
+			fileShortcut, FileShortcut.class);
+
+		return new FileShortcutProxyBean(fileShortcutProxy, _classLoader);
 	}
 
 	protected FileVersionProxyBean newFileVersionProxyBean(
@@ -164,15 +179,17 @@ public abstract class RepositoryModelProxyBean {
 		return folderProxyBeans;
 	}
 
-	protected List<Object> toObjectProxyBeans(List<Object> objects) {
+	protected List<RepositoryEntry> toObjectProxyBeans(
+		List<RepositoryEntry> objects) {
+
 		if ((objects == null) || objects.isEmpty()) {
 			return objects;
 		}
 
-		List<Object> objectProxyBeans = new ArrayList<>();
+		List<RepositoryEntry> objectProxyBeans = new ArrayList<>();
 
 		for (Object object : objects) {
-			objectProxyBeans.add(newProxyBean(object));
+			objectProxyBeans.add((RepositoryEntry)newProxyBean(object));
 		}
 
 		if (ListUtil.isUnmodifiableList(objects)) {

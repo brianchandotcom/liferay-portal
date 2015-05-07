@@ -15,11 +15,13 @@
 package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 
 /**
@@ -33,6 +35,16 @@ public class DLFileShortcutPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, dlFileShortcut, actionId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, FileShortcut fileShortcut,
+			String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, fileShortcut, actionId)) {
 			throw new PrincipalException();
 		}
 	}
@@ -53,15 +65,17 @@ public class DLFileShortcutPermission {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, dlFileShortcut.getGroupId(),
-			DLFileShortcut.class.getName(), dlFileShortcut.getFileShortcutId(),
-			PortletKeys.DOCUMENT_LIBRARY, actionId);
+			DLFileShortcutConstants.getClassName(),
+			dlFileShortcut.getFileShortcutId(), PortletKeys.DOCUMENT_LIBRARY,
+			actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				dlFileShortcut.getCompanyId(), DLFileShortcut.class.getName(),
+				dlFileShortcut.getCompanyId(),
+				DLFileShortcutConstants.getClassName(),
 				dlFileShortcut.getFileShortcutId(), dlFileShortcut.getUserId(),
 				actionId)) {
 
@@ -69,8 +83,16 @@ public class DLFileShortcutPermission {
 		}
 
 		return permissionChecker.hasPermission(
-			dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			dlFileShortcut.getGroupId(), DLFileShortcutConstants.getClassName(),
 			dlFileShortcut.getFileShortcutId(), actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, FileShortcut fileShortcut,
+			String actionId)
+		throws PortalException {
+
+		return fileShortcut.containsPermission(permissionChecker, actionId);
 	}
 
 	public static boolean contains(

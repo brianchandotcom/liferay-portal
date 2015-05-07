@@ -388,8 +388,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_lock.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -526,7 +525,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Lock> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.Lock> toCacheModel() {
 		return _lock.toCacheModel();
 	}
 

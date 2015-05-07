@@ -1199,8 +1199,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_group.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -1454,7 +1453,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Group> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.Group> toCacheModel() {
 		return _group.toCacheModel();
 	}
 

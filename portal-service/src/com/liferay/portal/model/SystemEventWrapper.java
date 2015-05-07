@@ -455,8 +455,7 @@ public class SystemEventWrapper implements SystemEvent,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_systemEvent.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -608,7 +607,7 @@ public class SystemEventWrapper implements SystemEvent,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.SystemEvent> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.SystemEvent> toCacheModel() {
 		return _systemEvent.toCacheModel();
 	}
 

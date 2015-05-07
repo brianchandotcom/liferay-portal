@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -123,6 +125,18 @@ public class BaseRepositoryProxyBean
 				getUserId(),
 			folderId, sourceFileName, mimeType, title, description, changeLog,
 			is, size, serviceContext);
+	}
+
+	@Override
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileShortcut fileShortcut = _baseRepository.addFileShortcut(
+			userId, folderId, toFileEntryId, serviceContext);
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	@Override
@@ -287,6 +301,16 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		_baseRepository.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		_baseRepository.deleteFileShortcuts(toFileEntryId);
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 
@@ -346,14 +370,15 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
-	public List<Object> getFileEntriesAndFileShortcuts(
+	public List<RepositoryEntry> getFileEntriesAndFileShortcuts(
 			long folderId, int status, int start, int end)
 		throws PortalException {
 
-		List<Object> objects = _baseRepository.getFileEntriesAndFileShortcuts(
-			folderId, status, start, end);
+		List<RepositoryEntry> fileEntriesAndFileShortcuts =
+			_baseRepository.getFileEntriesAndFileShortcuts(
+				folderId, status, start, end);
 
-		return toObjectProxyBeans(objects);
+		return toObjectProxyBeans(fileEntriesAndFileShortcuts);
 	}
 
 	@Override
@@ -416,6 +441,16 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
+	public FileShortcut getFileShortcut(long fileShortcutId)
+		throws PortalException {
+
+		FileShortcut fileShortcut = _baseRepository.getFileShortcut(
+			fileShortcutId);
+
+		return newFileShortcutProxyBean(fileShortcut);
+	}
+
+	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 
@@ -465,12 +500,12 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
 			int end, OrderByComparator<?> obc)
 		throws PortalException {
 
-		List<Object> objects =
+		List<RepositoryEntry> objects =
 			_baseRepository.getFoldersAndFileEntriesAndFileShortcuts(
 				folderId, status, includeMountFolders, start, end, obc);
 
@@ -478,13 +513,13 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator<?> obc)
 		throws PortalException {
 
-		List<Object> objects =
+		List<RepositoryEntry> objects =
 			_baseRepository.getFoldersAndFileEntriesAndFileShortcuts(
 				folderId, status, mimeTypes, includeMountFolders, start, end,
 				obc);
@@ -972,6 +1007,24 @@ public class BaseRepositoryProxyBean
 			changeLog, majorVersion, is, size, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
+	}
+
+	@Override
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileShortcut fileShortcut = _baseRepository.updateFileShortcut(
+			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
+
+		return newFileShortcutProxyBean(fileShortcut);
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
 	}
 
 	@Override

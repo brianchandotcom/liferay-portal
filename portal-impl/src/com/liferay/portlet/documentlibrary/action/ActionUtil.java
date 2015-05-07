@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Constants;
@@ -32,7 +33,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
@@ -141,7 +141,7 @@ public class ActionUtil {
 
 		long fileShortcutId = ParamUtil.getLong(request, "fileShortcutId");
 
-		DLFileShortcut fileShortcut = null;
+		FileShortcut fileShortcut = null;
 
 		if (fileShortcutId > 0) {
 			fileShortcut = DLAppServiceUtil.getFileShortcut(fileShortcutId);
@@ -166,7 +166,7 @@ public class ActionUtil {
 		long[] fileShortcutIds = StringUtil.split(
 			ParamUtil.getString(request, "fileShortcutIds"), 0L);
 
-		List<DLFileShortcut> fileShortcuts = new ArrayList<>();
+		List<FileShortcut> fileShortcuts = new ArrayList<>();
 
 		for (long fileShortcutId : fileShortcutIds) {
 			if (fileShortcutId > 0) {

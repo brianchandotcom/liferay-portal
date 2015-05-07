@@ -430,8 +430,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_orgLabor.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -648,7 +647,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.OrgLabor> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.OrgLabor> toCacheModel() {
 		return _orgLabor.toCacheModel();
 	}
 

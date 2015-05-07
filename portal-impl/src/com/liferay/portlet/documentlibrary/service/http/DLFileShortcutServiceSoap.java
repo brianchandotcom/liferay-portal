@@ -66,13 +66,13 @@ import java.rmi.RemoteException;
 @ProviderType
 public class DLFileShortcutServiceSoap {
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcutSoap addFileShortcut(
-		long groupId, long folderId, long toFileEntryId,
+		long groupId, long repositoryId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.documentlibrary.model.DLFileShortcut returnValue =
-				DLFileShortcutServiceUtil.addFileShortcut(groupId, folderId,
-					toFileEntryId, serviceContext);
+				DLFileShortcutServiceUtil.addFileShortcut(groupId,
+					repositoryId, folderId, toFileEntryId, serviceContext);
 
 			return com.liferay.portlet.documentlibrary.model.DLFileShortcutSoap.toSoapModel(returnValue);
 		}
@@ -111,15 +111,29 @@ public class DLFileShortcutServiceSoap {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcutSoap updateFileShortcut(
-		long fileShortcutId, long folderId, long toFileEntryId,
+		long fileShortcutId, long repositoryId, long folderId,
+		long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.documentlibrary.model.DLFileShortcut returnValue =
 				DLFileShortcutServiceUtil.updateFileShortcut(fileShortcutId,
-					folderId, toFileEntryId, serviceContext);
+					repositoryId, folderId, toFileEntryId, serviceContext);
 
 			return com.liferay.portlet.documentlibrary.model.DLFileShortcutSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateFileShortcuts(long oldToFileEntryId,
+		long newToFileEntryId) throws RemoteException {
+		try {
+			DLFileShortcutServiceUtil.updateFileShortcuts(oldToFileEntryId,
+				newToFileEntryId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

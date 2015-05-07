@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.display.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -31,7 +32,6 @@ import com.liferay.portlet.documentlibrary.display.context.logic.UIItemsBuilder;
 import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 import com.liferay.portlet.documentlibrary.display.context.util.JSPRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -57,11 +57,10 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	public DefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
+			FileShortcut fileShortcut)
 		throws PortalException {
 
-		this(
-			request, response, dlFileShortcut.getFileVersion(), dlFileShortcut);
+		this(request, response, fileShortcut.getFileVersion(), fileShortcut);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
@@ -198,7 +197,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	private DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, DLFileShortcut dlFileShortcut) {
+		FileVersion fileVersion, FileShortcut fileShortcut) {
 
 		try {
 			_fileVersion = fileVersion;
@@ -217,13 +216,13 @@ public class DefaultDLViewFileVersionDisplayContext
 			_fileVersionDisplayContextHelper =
 				new FileVersionDisplayContextHelper(fileVersion);
 
-			if (dlFileShortcut == null) {
+			if (fileShortcut == null) {
 				_uiItemsBuilder = new UIItemsBuilder(
 					request, response, fileVersion);
 			}
 			else {
 				_uiItemsBuilder = new UIItemsBuilder(
-					request, response, dlFileShortcut);
+					request, response, fileShortcut);
 			}
 		}
 		catch (PortalException pe) {

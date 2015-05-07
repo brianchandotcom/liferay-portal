@@ -60,7 +60,8 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut);
 
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
-		long userId, long groupId, long folderId, long toFileEntryId,
+		long userId, long groupId, long repositoryId, long folderId,
+		long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -317,6 +318,10 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
+		long toFileEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileShortcutsCount(long groupId, long folderId,
 		boolean active, int status);
 
@@ -353,7 +358,8 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut);
 
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateFileShortcut(
-		long userId, long fileShortcutId, long folderId, long toFileEntryId,
+		long userId, long fileShortcutId, long repositoryId, long folderId,
+		long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

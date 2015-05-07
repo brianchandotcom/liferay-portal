@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.service.ServiceContext;
 
@@ -38,6 +39,15 @@ public interface TrashCapability extends Capability {
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException;
 
+	public FileShortcut moveFileShortcutFromTrash(
+			long userId, FileShortcut fileShortcut, Folder newFolder,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileShortcut moveFileShortcutToTrash(
+			long userId, FileShortcut fileShortcut)
+		throws PortalException;
+
 	public Folder moveFolderFromTrash(
 			long userId, Folder folder, Folder destinationFolder,
 			ServiceContext serviceContext)
@@ -47,6 +57,10 @@ public interface TrashCapability extends Capability {
 		throws PortalException;
 
 	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
+		throws PortalException;
+
+	public void restoreFileShortcutFromTrash(
+			long userId, FileShortcut fileShortcut)
 		throws PortalException;
 
 	public void restoreFolderFromTrash(long userId, Folder folder)

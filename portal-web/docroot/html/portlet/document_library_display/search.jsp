@@ -156,7 +156,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				<c:when test="<%= fileEntry != null %>">
 
 					<%
-					request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
+					request.setAttribute("search.jsp-fileEntry", fileEntry);
 					%>
 
 					<portlet:renderURL var="rowURL">

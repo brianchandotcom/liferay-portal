@@ -143,9 +143,9 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
+	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
 		long userId,
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut,
+		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut,
 		long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -154,13 +154,13 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	* Moves the file shortcut to the recycle bin.
 	*
 	* @param userId the primary key of the user moving the file shortcut
-	* @param dlFileShortcut the file shortcut to be moved
+	* @param fileShortcut the file shortcut to be moved
 	* @return the moved file shortcut
 	* @throws PortalException if a user with the primary key could not be found
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutToTrash(
+	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
 		long userId,
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
+		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
 		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
@@ -199,7 +199,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public void restoreFileShortcutFromTrash(long userId,
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
+		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
 		throws PortalException;
 
 	public void restoreFolderFromTrash(long userId,

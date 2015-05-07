@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util.comparator;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -78,26 +79,41 @@ public class RepositoryModelReadCountComparator<T>
 		return _ascending;
 	}
 
+	protected long getFileShortcutReadCount(Object obj) {
+		long toFileEntryId = 0;
+
+		if (obj instanceof FileShortcut) {
+			FileShortcut fileShortcut = (FileShortcut)obj;
+
+			toFileEntryId = fileShortcut.getToFileEntryId();
+		}
+		else {
+			DLFileShortcut fileShortcut = (DLFileShortcut)obj;
+
+			toFileEntryId = fileShortcut.getToFileEntryId();
+		}
+
+		try {
+			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+				toFileEntryId);
+
+			return dlFileEntry.getReadCount();
+		}
+		catch (Exception e) {
+			return 0;
+		}
+	}
+
 	protected long getReadCount(Object obj) {
 		if (obj instanceof DLFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
 			return dlFileEntry.getReadCount();
 		}
-		else if (obj instanceof DLFileShortcut) {
-			DLFileShortcut dlFileShortcut = (DLFileShortcut)obj;
+		else if ((obj instanceof FileShortcut) ||
+				 (obj instanceof DLFileShortcut)) {
 
-			long toFileEntryId = dlFileShortcut.getToFileEntryId();
-
-			try {
-				DLFileEntry dlFileEntry =
-					DLFileEntryLocalServiceUtil.getFileEntry(toFileEntryId);
-
-				return dlFileEntry.getReadCount();
-			}
-			catch (Exception e) {
-				return 0;
-			}
+			return getFileShortcutReadCount(obj);
 		}
 		else if ((obj instanceof DLFolder) || (obj instanceof Folder)) {
 			return 0;

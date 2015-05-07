@@ -269,7 +269,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 			>
 
 				<%
-				DLFileShortcut fileShortcut = null;
+				FileShortcut fileShortcut = null;
 
 				String rowHREF = null;
 

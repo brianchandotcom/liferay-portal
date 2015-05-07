@@ -420,8 +420,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_userGroup.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -548,7 +547,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.UserGroup> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.UserGroup> toCacheModel() {
 		return _userGroup.toCacheModel();
 	}
 

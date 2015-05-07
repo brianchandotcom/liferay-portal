@@ -205,8 +205,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_portalPreferences.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -293,7 +292,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.PortalPreferences> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.PortalPreferences> toCacheModel() {
 		return _portalPreferences.toCacheModel();
 	}
 

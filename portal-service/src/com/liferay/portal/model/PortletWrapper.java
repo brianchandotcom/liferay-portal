@@ -2458,8 +2458,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_portlet.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -3485,7 +3484,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Portlet> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.Portlet> toCacheModel() {
 		return _portlet.toCacheModel();
 	}
 

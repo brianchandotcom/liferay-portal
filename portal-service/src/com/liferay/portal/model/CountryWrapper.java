@@ -341,8 +341,7 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_country.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -434,7 +433,7 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Country> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.Country> toCacheModel() {
 		return _country.toCacheModel();
 	}
 

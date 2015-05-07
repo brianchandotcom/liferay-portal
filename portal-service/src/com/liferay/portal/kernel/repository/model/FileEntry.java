@@ -32,8 +32,7 @@ import java.util.List;
  */
 @JSON
 @ProviderType
-public interface FileEntry extends RepositoryModel<FileEntry> {
-
+public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 	public static final Accessor<FileEntry, Long> FILE_ENTRY_ID_ACCESSOR =
 
 		new Accessor<FileEntry, Long>() {
@@ -87,6 +86,8 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public long getFileEntryId();
 
 	public String getFileName();
+
+	public List<FileShortcut> getFileShortcuts();
 
 	/**
 	 * Returns the current file version. The workflow state of the latest file

@@ -194,8 +194,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
 		_className.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -252,7 +251,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.ClassName> toCacheModel() {
+	public CacheModel<com.liferay.portal.model.ClassName> toCacheModel() {
 		return _className.toCacheModel();
 	}
 

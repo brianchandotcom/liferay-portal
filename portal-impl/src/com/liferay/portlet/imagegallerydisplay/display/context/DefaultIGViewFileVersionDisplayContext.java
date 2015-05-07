@@ -15,11 +15,11 @@
 package com.liferay.portlet.imagegallerydisplay.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.portlet.documentlibrary.display.context.logic.UIItemsBuilder;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.imagegallerydisplay.display.context.util.IGRequestHelper;
 
 import java.util.ArrayList;
@@ -37,11 +37,10 @@ public class DefaultIGViewFileVersionDisplayContext
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut)
+			FileShortcut fileShortcut)
 		throws PortalException {
 
-		this(
-			request, response, dlFileShortcut.getFileVersion(), dlFileShortcut);
+		this(request, response, fileShortcut.getFileVersion(), fileShortcut);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
@@ -54,7 +53,7 @@ public class DefaultIGViewFileVersionDisplayContext
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion, DLFileShortcut dlFileShortcut)
+			FileVersion fileVersion, FileShortcut fileShortcut)
 		throws PortalException {
 
 		_igRequestHelper = new IGRequestHelper(request);
@@ -62,13 +61,13 @@ public class DefaultIGViewFileVersionDisplayContext
 		_dlPorletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_igRequestHelper);
 
-		if (dlFileShortcut == null) {
+		if (fileShortcut == null) {
 			_uiItemsBuilder = new UIItemsBuilder(
 				request, response, fileVersion);
 		}
 		else {
 			_uiItemsBuilder = new UIItemsBuilder(
-				request, response, dlFileShortcut);
+				request, response, fileShortcut);
 		}
 	}
 

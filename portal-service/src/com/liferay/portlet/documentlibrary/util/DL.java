@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
@@ -60,12 +61,12 @@ public interface DL {
 	public static final String WEBDAV_CHECK_IN_MODE = "webDAVCheckInMode";
 
 	public void addPortletBreadcrumbEntries(
-			DLFileShortcut dlFileShortcut, HttpServletRequest request,
+			FileEntry fileEntry, HttpServletRequest request,
 			RenderResponse renderResponse)
 		throws Exception;
 
 	public void addPortletBreadcrumbEntries(
-			FileEntry fileEntry, HttpServletRequest request,
+			FileShortcut dlFileShortcut, HttpServletRequest request,
 			RenderResponse renderResponse)
 		throws Exception;
 

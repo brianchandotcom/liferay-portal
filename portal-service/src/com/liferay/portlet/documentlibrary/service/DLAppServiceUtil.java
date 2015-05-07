@@ -187,7 +187,7 @@ public class DLAppServiceUtil {
 	* @throws PortalException if the parent folder or file entry could not be
 	found, or if the file shortcut's information was invalid
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
+	public static com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
 		long repositoryId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -868,7 +868,7 @@ public class DLAppServiceUtil {
 	* @return the file shortcut with the primary key
 	* @throws PortalException if the file shortcut could not be found
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
+	public static com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFileShortcut(fileShortcutId);
@@ -1765,7 +1765,7 @@ public class DLAppServiceUtil {
 	* @throws PortalException if the file entry or the new folder could not be
 	found
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
+	public static com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
 		long fileShortcutId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1781,7 +1781,7 @@ public class DLAppServiceUtil {
 	* @return the file shortcut
 	* @throws PortalException if the file shortcut could not be found
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutToTrash(
+	public static com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveFileShortcutToTrash(fileShortcutId);
@@ -2249,7 +2249,7 @@ public class DLAppServiceUtil {
 	* @throws PortalException if the file shortcut, folder, or file entry could
 	not be found
 	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut updateFileShortcut(
+	public static com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
 		long fileShortcutId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

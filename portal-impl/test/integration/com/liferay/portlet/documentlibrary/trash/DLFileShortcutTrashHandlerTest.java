@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -151,8 +152,11 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt", "Text.txt",
 			true, serviceContext);
 
-		return DLAppServiceUtil.addFileShortcut(
-			groupId, folderId, fileEntry.getFileEntryId(), serviceContext);
+		FileShortcut fileShortcut = DLAppServiceUtil.addFileShortcut(
+			groupId, folderId, fileEntry.getFileEntryId(),
+			serviceContext);
+
+		return (BaseModel<?>)fileShortcut.getModel();
 	}
 
 	@Override

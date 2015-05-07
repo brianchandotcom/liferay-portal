@@ -17,7 +17,7 @@
 <%
 Folder curFolder = null;
 FileEntry fileEntry = null;
-DLFileShortcut fileShortcut = null;
+FileShortcut fileShortcut = null;
 
 if (result instanceof AssetEntry) {
 	AssetEntry assetEntry = (AssetEntry)result;
@@ -47,8 +47,8 @@ else if (result instanceof FileEntry) {
 
 	fileEntry = fileEntry.toEscapedModel();
 }
-else {
-	fileShortcut = (DLFileShortcut)result;
+else if (result instanceof FileShortcut) {
+	fileShortcut = (FileShortcut)result;
 
 	fileShortcut = fileShortcut.toEscapedModel();
 

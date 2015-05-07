@@ -182,7 +182,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	found, or if the file shortcut's information was invalid
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
 		long repositoryId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -884,7 +884,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFileShortcut(fileShortcutId);
@@ -1807,7 +1807,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	found
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
+	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
 		long fileShortcutId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1823,7 +1823,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutToTrash(
+	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.moveFileShortcutToTrash(fileShortcutId);
@@ -2310,7 +2310,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	not be found
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
 		long fileShortcutId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

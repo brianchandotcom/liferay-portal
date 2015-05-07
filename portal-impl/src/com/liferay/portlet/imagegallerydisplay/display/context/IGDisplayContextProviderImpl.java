@@ -17,8 +17,8 @@ package com.liferay.portlet.imagegallerydisplay.display.context;
 import com.liferay.portal.kernel.display.context.BaseDisplayContextProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,14 +38,14 @@ public class IGDisplayContextProviderImpl
 	public IGViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut) {
+			FileShortcut fileShortcut) {
 
 		try {
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
-					request, response, dlFileShortcut);
+					request, response, fileShortcut);
 
-			if (dlFileShortcut == null) {
+			if (fileShortcut == null) {
 				return igViewFileVersionDisplayContext;
 			}
 
@@ -55,7 +55,7 @@ public class IGDisplayContextProviderImpl
 				igViewFileVersionDisplayContext =
 					igDisplayContextFactory.getIGViewFileVersionDisplayContext(
 						igViewFileVersionDisplayContext, request, response,
-						dlFileShortcut);
+						fileShortcut);
 			}
 
 			return igViewFileVersionDisplayContext;

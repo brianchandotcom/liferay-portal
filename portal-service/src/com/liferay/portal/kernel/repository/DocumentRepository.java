@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.repository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -44,6 +45,11 @@ public interface DocumentRepository extends CapabilityProvider {
 			long size, ServiceContext serviceContext)
 		throws PortalException;
 
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public Folder addFolder(
 			long userId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
@@ -68,6 +74,10 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public void deleteFileEntry(long fileEntryId) throws PortalException;
 
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException;
+
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException;
+
 	public void deleteFolder(long folderId) throws PortalException;
 
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
@@ -76,6 +86,9 @@ public interface DocumentRepository extends CapabilityProvider {
 		throws PortalException;
 
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException;
+
+	public FileShortcut getFileShortcut(long fileShortcutId)
+		throws PortalException;
 
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException;
@@ -118,6 +131,15 @@ public interface DocumentRepository extends CapabilityProvider {
 			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, InputStream is, long size,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
 		throws PortalException;
 
 	public Folder updateFolder(

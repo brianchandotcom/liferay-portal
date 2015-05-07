@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.display.context.BaseDisplayContextProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,14 +82,14 @@ public class DLDisplayContextProviderImpl
 	public DLViewFileVersionDisplayContext
 		getDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			DLFileShortcut dlFileShortcut) {
+			FileShortcut fileShortcut) {
 
 		try {
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
-					request, response, dlFileShortcut);
+					request, response, fileShortcut);
 
-			if (dlFileShortcut == null) {
+			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
 			}
 
@@ -99,7 +99,7 @@ public class DLDisplayContextProviderImpl
 				dlViewFileVersionDisplayContext =
 					dlDisplayContextFactory.getDLViewFileVersionDisplayContext(
 						dlViewFileVersionDisplayContext, request, response,
-						dlFileShortcut);
+						fileShortcut);
 			}
 
 			return dlViewFileVersionDisplayContext;

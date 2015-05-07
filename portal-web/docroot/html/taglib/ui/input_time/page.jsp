@@ -48,7 +48,7 @@ String hourParamId = namespace + HtmlUtil.getAUICompatibleId(hourParam);
 String minuteParamId = namespace + HtmlUtil.getAUICompatibleId(minuteParam);
 String nameId = namespace + HtmlUtil.getAUICompatibleId(name);
 
-Calendar calendar = CalendarFactoryUtil.getCalendar(1970, 0, 1, hourOfDayValue, minuteValue);
+Calendar calendar = CalendarFactoryUtil.getCalendar(1970, 0, 1, hourOfDayValue, minuteValue, 0, 0, timeZone);
 
 String simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_ISO;
 
@@ -65,7 +65,7 @@ if (!DateUtil.isFormatAmPm(locale)) {
 	placeholder = _PLACEHOLDER_ISO;
 }
 
-Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
+Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale, timeZone);
 %>
 
 <span class="lfr-input-time <%= cssClass %>" id="<%= randomNamespace %>displayTime">
@@ -132,16 +132,15 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 				var container = instance.get('container');
 
-				var dateVal = container.one('#<%= dateParamId %>').val();
+				var amPm = A.Lang.toInt(container.one('#<%= amPmParamId %>').val());
+				var hours = A.Lang.toInt(container.one('#<%= hourParamId %>').val());
+				var minutes = container.one('#<%= minuteParamId %>').val();
 
-				var time = A.Date.parse(dateVal);
-
-				if (!time) {
-					var hours = container.one('#<%= hourParamId %>').val();
-					var minutes = container.one('#<%= minuteParamId %>').val();
-
-					time = A.Date.parse(A.Date.aggregates.T, hours + ':' + minutes + ':0');
+				if (amPm) {
+					hours += 12;
 				}
+
+				var time = A.Date.parse(A.Date.aggregates.T, hours + ':' + minutes + ':0');
 
 				return time;
 			};

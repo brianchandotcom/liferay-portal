@@ -66,10 +66,10 @@ public class CacheResponseData implements Serializable {
 		_attributes.put(name, value);
 	}
 
-	private final Map<String, Object> _attributes = new HashMap<>();
+	private Map<String, Object> _attributes = new HashMap<>();
 	private transient ByteBuffer _byteBuffer;
-	private final byte[] _content;
-	private final String _contentType;
-	private final Map<String, Set<Header>> _headers;
+	private byte[] _content;
+	private String _contentType;
+	private Map<String, Set<Header>> _headers;
 
 }

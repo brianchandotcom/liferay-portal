@@ -432,7 +432,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		}
 
 		Transformer transformer = TransformerHolder.getTransformer();
-		
+
 		return transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(), language,
 			unsyncStringWriter);
@@ -499,13 +499,14 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		PortletDisplayTemplateImpl.class);
 
 	private static class TransformerHolder {
-		
+
 		public static Transformer getTransformer() {
 			return _TRANSFORMER;
 		}
-		
+
 		private static final Transformer _TRANSFORMER = new Transformer(
 			PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true);
+
 	}
 
 }

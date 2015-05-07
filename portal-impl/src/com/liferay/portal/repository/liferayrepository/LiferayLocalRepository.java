@@ -227,9 +227,8 @@ public class LiferayLocalRepository
 
 	@Override
 	public List<FileEntry> getFileEntries(
-			long folderId, int status, int start, int end,
-			OrderByComparator<FileEntry> obc)
-		throws PortalException {
+		long folderId, int status, int start, int end,
+		OrderByComparator<FileEntry> obc) {
 
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryLocalService.getFileEntries(
@@ -241,8 +240,7 @@ public class LiferayLocalRepository
 
 	@Override
 	public List<FileEntry> getFileEntries(
-			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
-		throws PortalException {
+		long folderId, int start, int end, OrderByComparator<FileEntry> obc) {
 
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryLocalService.getFileEntries(
@@ -253,15 +251,13 @@ public class LiferayLocalRepository
 	}
 
 	@Override
-	public int getFileEntriesCount(long folderId) throws PortalException {
+	public int getFileEntriesCount(long folderId) {
 		return dlFileEntryLocalService.getFileEntriesCount(
 			getGroupId(), toFolderId(folderId));
 	}
 
 	@Override
-	public int getFileEntriesCount(long folderId, int status)
-		throws PortalException {
-
+	public int getFileEntriesCount(long folderId, int status) {
 		return dlFileEntryLocalService.getFileEntriesCount(
 			getGroupId(), toFolderId(folderId), status);
 	}

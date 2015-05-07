@@ -563,6 +563,11 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		return new File(getWebAppDir(project), "WEB-INF/lib");
 	}
 
+	@Override
+	protected File getServiceBaseDir(Project project) {
+		return new File(getWebAppDir(project), "WEB-INF");
+	}
+
 	protected File getWebAppDir(Project project) {
 		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
 			project, WarPluginConvention.class);

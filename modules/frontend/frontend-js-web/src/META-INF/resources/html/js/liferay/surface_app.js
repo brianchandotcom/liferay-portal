@@ -17,14 +17,7 @@ AUI.add(
 					}
 				);
 
-				var newResources = AArray.dedupe(
-					AArray.map(
-						frag.all('[data-outputkey]').getDOMNodes(),
-						function(node) {
-							return node.getAttribute('data-outputkey');
-						}
-					)
-				);
+				var newResources = AArray.dedupe(frag.all('[data-outputkey]').getData('outputkey'));
 
 				Liferay.Data.sharedResources = Liferay.Data.sharedResources.concat(newResources);
 

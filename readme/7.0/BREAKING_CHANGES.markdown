@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `5996ef5`.*
+*This document has been reviewed through commit `205a27d`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1455,39 +1455,39 @@ sections to access to their own utils and services.
 
 ---------------------------------------
 
-### Removed the type settings breadcrumbShowParentGroups from groups
+### Removed the Type Setting `breadcrumbShowParentGroups` from Groups
 - **Date:** 2015-Apr-21
 - **JIRA Ticket:** LPS-54791
 
 #### What changed?
 
-The type settings breadcrumbShowParentGroups was removed from groups, it is
-no longer available in site configuration. Now it is only available in the
+The type setting `breadcrumbShowParentGroups` was removed from groups and is
+no longer available in the site configuration. Now, it is only available in the
 breadcrumb configuration.
 
 #### Who is affected?
 
-This affects all site administrators that have set the showParentGroups 
-preference in the site administration.
+This affects all site administrators that have set the `showParentGroups`
+preference in Site Administration.
 
 #### How should I update my code?
 
-There is no need to change the code. This should be updated at the portlet
-instance level. 
+There are no code updates required. This should only be updated at the portlet
+instance level.
 
 #### Why was this change made?
 
-This change was introduced to support the new settings API. 
+This change was introduced to support the new Settings API.
 
 ---------------------------------------
 
-### Changed the method `getText` of editors' window API.
+### Changed Return Value of the Method `getText` of the Editor's Window API
 - **Date:** 2015-Apr-28
 - **JIRA Ticket:** LPS-52698
 
 #### What changed?
 
-The method `getText` now returns the editor's content without any html markup.
+The method `getText` now returns the editor's content, without any HTML markup.
 
 #### Who is affected?
 
@@ -1497,13 +1497,13 @@ window API.
 #### How should I update my code?
 
 To continue using the editor the same way you did before this change was
-implemented, you'll need to change your calls to `getText` method and use
-the `getHTML` method instead.
+implemented, you should change calls to the `getText` method to instead call the
+`getHTML` method.
 
 #### Why was this change made?
 
-This change was made to have a properly `getText` method in the editor's window
-API that returns just the editor's content without any html markup. This is used
-for blog's abstract field.
+This change was made in the editor's window API to provide a proper `getText`
+method that returns just the editor's content, without any HTML markup. This
+change is used for the blog abstract field.
 
 ---------------------------------------

@@ -1433,6 +1433,15 @@ The following portal properties (and the equivalent `PropsKeys` and
 - `sites.form.update.main`
 - `sites.form.update.miscellaneous`
 - `sites.form.update.seo`
+- `users.form.add.identification`
+- `users.form.add.main`
+- `users.form.add.miscellaneous`
+- `users.form.my.account.identification`
+- `users.form.my.account.main`
+- `users.form.my.account.miscellaneous`
+- `users.form.update.identification`
+- `users.form.update.main`
+- `users.form.update.miscellaneous`
 
 The sections and categories of form navigators are now OSGi components.
 

@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_NEW</td>
-	<td>//a[contains(.,'Add New')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_PAGE</td>
 	<td>//button[contains(.,'Add Page')]</td>
 	<td></td>

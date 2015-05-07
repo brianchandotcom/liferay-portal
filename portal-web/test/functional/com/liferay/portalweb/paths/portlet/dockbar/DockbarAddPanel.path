@@ -8,6 +8,16 @@
 <tr><td rowspan="1" colspan="3">DockbarAddPanel</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>ADD_NEW_DROPDOWN</td>
+	<td>//a[contains(.,'Add New')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_TITLE</td>

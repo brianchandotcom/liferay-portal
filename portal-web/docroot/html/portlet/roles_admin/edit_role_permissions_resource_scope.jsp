@@ -91,16 +91,16 @@ List groupNames = (List)objArray[8];
 							title: '<liferay-ui:message arguments="site" key="select-x" />',
 
 							<%
-							PortletURL selectCommunityURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
+							PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
 
-							selectCommunityURL.setParameter("includeCompany", Boolean.TRUE.toString());
-							selectCommunityURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
-							selectCommunityURL.setParameter("includeUserPersonalSite", Boolean.TRUE.toString());
-							selectCommunityURL.setParameter("target", target);
-							selectCommunityURL.setWindowState(LiferayWindowState.POP_UP);
+							groupSelectorURL.setParameter("includeCompany", Boolean.TRUE.toString());
+							groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
+							groupSelectorURL.setParameter("includeUserPersonalSite", Boolean.TRUE.toString());
+							groupSelectorURL.setParameter("target", target);
+							groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
 							%>
 
-							uri: '<%= selectCommunityURL.toString() %>'
+							uri: '<%= groupSelectorURL.toString() %>'
 						}
 					);
 				}

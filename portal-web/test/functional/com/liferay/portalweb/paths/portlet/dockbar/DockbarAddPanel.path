@@ -1,33 +1,13 @@
 <html>
 <head>
-<title>DockbarAddPanelContent</title>
+<title>DockbarAddPanel</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">DockbarAddPanelContent</td></tr>
+<tr><td rowspan="1" colspan="3">DockbarAddPanel</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>Dockbar</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_TITLE</td>
-	<td>//div[contains(@class,'add-content-details')]/div[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>CONTENT_TAB</td>
 	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Content')]</td>
@@ -69,7 +49,17 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--POPOVER-->
+<!--CONTENT-->
+<tr>
+	<td>CONTENT_TITLE</td>
+	<td>//div[contains(@class,'add-content-details')]/div[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_MENULIST</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'${key_assetType}')]/span</td>
+	<td></td>
+</tr>
 <tr>
 	<td>POPOVER_ADD_BUTTON</td>
 	<td>//button[contains(.,'Add')]</td>
@@ -85,10 +75,15 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ADD_NEW_MENULIST-->
+<!--APPLICATIONS-->
 <tr>
-	<td>ADD_NEW_MENULIST</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'${key_assetType}')]/span</td>
+	<td>COLLAPSED_CATEGORY</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PORTLET_LINK</td>
+	<td>//span[contains(@data-search,'-${portletName}') and contains(@class,'add-content-item')]</td>
 	<td></td>
 </tr>
 </tbody>

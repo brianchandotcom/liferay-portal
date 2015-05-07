@@ -1789,7 +1789,6 @@
 		<property name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateLinkImpl" table="DDMTemplateLink">
-		<cache usage="read-write" />
 		<id name="templateLinkId" type="long">
 			<generator class="assigned" />
 		</id>

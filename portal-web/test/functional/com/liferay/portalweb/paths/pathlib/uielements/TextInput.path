@@ -104,6 +104,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETUP_XML_URL</td>
+	<td>//input[contains(@id,'xmlUrl')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_XSL_URL</td>
+	<td>//input[contains(@id,'xslUrl')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBJECT</td>
 	<td>//input[contains(@id,'subject')]</td>
 	<td></td>

@@ -13,6 +13,11 @@
 	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LAYOUT_2_COLUMNS</td>
+	<td>//input[contains(@id,'layoutTemplateId2')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

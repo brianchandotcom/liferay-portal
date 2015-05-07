@@ -118,6 +118,8 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		jsonObject.put("required", ddmFormField.isRequired());
 		jsonObject.put("showLabel", ddmFormField.isShowLabel());
 		jsonObject.put("type", ddmFormField.getType());
+		jsonObject.put(
+			"visibilityExpression", ddmFormField.getVisibilityExpression());
 	}
 
 	protected JSONArray toJSONArray(DDMFormFieldOptions ddmFormFieldOptions) {

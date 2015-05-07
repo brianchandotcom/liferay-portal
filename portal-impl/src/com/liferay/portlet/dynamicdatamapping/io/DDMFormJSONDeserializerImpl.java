@@ -104,6 +104,8 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 		ddmFormField.setRepeatable(jsonObject.getBoolean("repeatable"));
 		ddmFormField.setRequired(jsonObject.getBoolean("required"));
 		ddmFormField.setShowLabel(jsonObject.getBoolean("showLabel", true));
+		ddmFormField.setVisibilityExpression(
+			jsonObject.getString("visibilityExpression", "true"));
 
 		setDDMFormFieldLocalizedValue(
 			jsonObject.getJSONObject("label"), ddmFormField.getLabel());

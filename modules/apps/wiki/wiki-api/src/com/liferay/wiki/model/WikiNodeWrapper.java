@@ -236,7 +236,8 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles() {
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNode.getDeletedAttachmentsFiles();
 	}
 

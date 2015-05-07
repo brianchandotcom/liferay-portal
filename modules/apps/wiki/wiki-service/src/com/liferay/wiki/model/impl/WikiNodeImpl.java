@@ -97,7 +97,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 	}
 
 	@Override
-	public List<FileEntry> getDeletedAttachmentsFiles() {
+	public List<FileEntry> getDeletedAttachmentsFiles() throws PortalException {
 		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
 			getNodeId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 

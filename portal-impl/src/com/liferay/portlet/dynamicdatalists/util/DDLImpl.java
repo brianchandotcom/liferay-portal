@@ -356,12 +356,9 @@ public class DDLImpl implements DDL {
 		templateManager.addContextObjects(
 			contextObjects, templateHandler.getCustomContextObjects());
 
-		if (_transformer == null) {
-			_transformer = new Transformer(
-				PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true);
-		}
-
-		return _transformer.transform(
+		Transformer transformer = TransformerHolder.getTransformer();
+				
+		return transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(),
 			ddmTemplate.getLanguage(), new UnsyncStringWriter());
 	}
@@ -483,6 +480,14 @@ public class DDLImpl implements DDL {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLImpl.class);
 
-	private Transformer _transformer;
+	private static class TransformerHolder {
+		
+		public static Transformer getTransformer() {
+			return _TRANSFORMER;
+		}
+		
+		private static final Transformer _TRANSFORMER = new Transformer(
+			PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true);
+	}
 
 }

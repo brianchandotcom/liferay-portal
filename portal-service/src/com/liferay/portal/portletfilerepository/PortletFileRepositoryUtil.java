@@ -209,7 +209,8 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static int getPortletFileEntriesCount(
-		long groupId, long folderId, int status) {
+			long groupId, long folderId, int status)
+		throws PortalException {
 
 		return getPortletFileRepository().getPortletFileEntriesCount(
 			groupId, folderId, status);

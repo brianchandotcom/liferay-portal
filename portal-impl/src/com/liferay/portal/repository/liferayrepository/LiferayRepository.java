@@ -503,6 +503,12 @@ public class LiferayRepository
 	}
 
 	@Override
+	public int getFileEntriesCount(long folderId, int status) {
+		return dlFileEntryService.getFileEntriesCount(
+			getGroupId(), toFolderId(folderId), status);
+	}
+
+	@Override
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId) {
 		return dlFileEntryService.getFileEntriesCount(
 			getGroupId(), toFolderId(folderId), fileEntryTypeId);

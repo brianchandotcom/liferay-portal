@@ -159,6 +159,9 @@ public interface Repository extends DocumentRepository {
 
 	public int getFileEntriesCount(long folderId) throws PortalException;
 
+	public int getFileEntriesCount(long folderId, int status)
+		throws PortalException;
+
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId)
 		throws PortalException;
 

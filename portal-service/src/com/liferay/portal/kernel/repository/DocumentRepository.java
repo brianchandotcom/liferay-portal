@@ -91,6 +91,9 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public int getFileEntriesCount(long folderId) throws PortalException;
 
+	public int getFileEntriesCount(long folderId, int status)
+		throws PortalException;
+
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
 
 	public FileEntry getFileEntry(long folderId, String title)

@@ -259,6 +259,14 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public int getFileEntriesCount(long folderId, int status)
+		throws PortalException {
+
+		return dlFileEntryLocalService.getFileEntriesCount(
+			getGroupId(), toFolderId(folderId), status);
+	}
+
+	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 			fileEntryId);

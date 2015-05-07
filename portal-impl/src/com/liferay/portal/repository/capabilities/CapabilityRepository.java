@@ -518,6 +518,13 @@ public class CapabilityRepository
 	}
 
 	@Override
+	public int getFileEntriesCount(long folderId, int status)
+		throws PortalException {
+
+		return getRepository().getFileEntriesCount(folderId, status);
+	}
+
+	@Override
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId)
 		throws PortalException {
 

@@ -377,6 +377,13 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
+	public int getFileEntriesCount(long folderId, int status)
+		throws PortalException {
+
+		return _repository.getFileEntriesCount(folderId, status);
+	}
+
+	@Override
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId)
 		throws PortalException {
 

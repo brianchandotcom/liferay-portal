@@ -416,6 +416,13 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
+	public int getFileEntriesCount(long folderId, int status)
+		throws PortalException {
+
+		return _baseRepository.getFileEntriesCount(folderId, status);
+	}
+
+	@Override
 	public int getFileEntriesCount(long folderId, long documentTypeId)
 		throws PortalException {
 

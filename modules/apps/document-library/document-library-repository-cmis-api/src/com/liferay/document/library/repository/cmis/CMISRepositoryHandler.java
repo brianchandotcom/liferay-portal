@@ -203,6 +203,13 @@ public abstract class CMISRepositoryHandler
 	}
 
 	@Override
+	public int getFileEntriesCount(long folderId, int status)
+		throws PortalException {
+
+		return _baseCmisRepository.getFileEntriesCount(folderId, status);
+	}
+
+	@Override
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId)
 		throws PortalException {
 

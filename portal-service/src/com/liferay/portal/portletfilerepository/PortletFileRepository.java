@@ -122,7 +122,8 @@ public interface PortletFileRepository {
 		throws PortalException;
 
 	public int getPortletFileEntriesCount(
-		long groupId, long folderId, int status);
+			long groupId, long folderId, int status)
+		throws PortalException;
 
 	public FileEntry getPortletFileEntry(long fileEntryId)
 		throws PortalException;

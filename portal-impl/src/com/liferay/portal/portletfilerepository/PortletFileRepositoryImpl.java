@@ -54,7 +54,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -449,10 +448,13 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public int getPortletFileEntriesCount(
-		long groupId, long folderId, int status) {
+			long groupId, long folderId, int status)
+		throws PortalException {
 
-		return DLFileEntryLocalServiceUtil.getFileEntriesCount(
-			groupId, folderId, status);
+		LocalRepository localRepository =
+			RepositoryLocalServiceUtil.getLocalRepositoryImpl(groupId);
+
+		return localRepository.getFileEntriesCount(folderId, status);
 	}
 
 	@Override

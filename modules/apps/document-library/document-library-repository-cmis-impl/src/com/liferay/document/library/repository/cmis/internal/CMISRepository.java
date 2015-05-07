@@ -518,6 +518,13 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	@Override
+	public int getFileEntriesCount(long folderId, int status) {
+		List<FileEntry> fileEntries = getFileEntries(folderId);
+
+		return fileEntries.size();
+	}
+
+	@Override
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId) {
 		List<FileEntry> fileEntries = getFileEntries(folderId, fileEntryTypeId);
 

@@ -1,0 +1,160 @@
+.diff-version-comparator {
+	.taglib-diff-html {
+		.diff-html-changed {
+			border-bottom: 2px dotted transparent;
+		}
+	}
+
+	.diff-version-head {
+		border-bottom: 1px solid transparent;
+		margin-bottom: 40px;
+		padding-bottom: 10px;
+
+		.diff-selector-version {
+			margin-bottom: 0;
+			margin-top: 0;
+			position: static;
+			vertical-align: baseline;
+
+			a .lfr-icon-menu-icon {
+				display: none;
+			}
+
+			.caret {
+				margin-top: -4px;
+			}
+		}
+
+		.diff-source-selector {
+			padding-right: 20px;
+
+			.diff-selector {
+				overflow: hidden;
+			}
+
+			.diff-selector-version-info {
+				margin-right: 16px;
+			}
+		}
+
+		.diff-target-selector {
+			border-left: 1px solid transparent;
+			padding-left: 40px;
+		}
+
+		.diff-source-selector, .diff-target-selector {
+			padding-bottom: 20px;
+		}
+	}
+
+	.search-container-column {
+		padding-left: 10px;
+
+		.language-selector .form-group {
+			margin-bottom: 10px;
+		}
+
+		.search-panels {
+			padding: 0;
+			position: relative;
+
+			.search-panels-bar {
+				.form-group {
+					margin-bottom: 10px;
+				}
+
+				.search-panel-icon {
+					height: 18px;
+					left: 8px;
+					position: absolute;
+					top: 8px;
+					width: 27px;
+				}
+
+				input {
+					padding-left: 40px;
+				}
+			}
+		}
+
+		.version-item {
+			border-bottom: 1px solid transparent;
+			cursor: pointer;
+			margin-top: 10px;
+			overflow: hidden;
+			padding: 10px;
+
+			&.last {
+				border-width: 0;
+			}
+
+			.version-avatar {
+				padding-right: 5px;
+
+				.avatar {
+					width: 45px;
+				}
+			}
+
+			.version-title {
+				display: block;
+				margin-bottom: 5px;
+			}
+
+			.version-info {
+				margin-top: 14px;
+
+				.user-info {
+					display: block;
+					line-height: 13px;
+				}
+			}
+		}
+	}
+
+	.diff-container-column {
+		border: 1px solid transparent;
+		padding: 25px;
+
+		.diff-container {
+			border: 1px solid transparent;
+			border-bottom-width: 0;
+			min-height: 400px;
+			padding: 25px 20px;
+			position: relative;
+		}
+
+		.diff-version-filter {
+			border: 1px solid transparent;
+			border-bottom-width: 0;
+			padding: 10px 15px;
+
+			.close-version-filter {
+				cursor: pointer;
+			}
+
+			.user-name {
+				margin-right: 5px;
+			}
+		}
+
+		.legend-info {
+			border: 1px solid transparent;
+			border-top-width: 0;
+			padding: 20px;
+
+			.legend-item {
+				margin-right: 15px;
+
+				&.diff-html-changed {
+					border-bottom: 2px dotted transparent;
+				}
+			}
+		}
+	}
+
+	.diff-version-title {
+		display: block;
+		margin-bottom: 10px;
+	}
+}

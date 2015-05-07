@@ -28,6 +28,7 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.sass.compiler.api.jar" />
 	<classpathentry kind="lib" path="lib/jna.jar" />
 	<classpathentry kind="lib" path="lib/jnaerator-runtime.jar" />
 	<classpathentry kind="lib" path="lib/ochafik-util.jar" />

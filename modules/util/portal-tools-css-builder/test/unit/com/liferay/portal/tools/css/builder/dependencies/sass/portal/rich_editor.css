@@ -1,0 +1,14 @@
+textarea.lfr-editor-textarea {
+	height: 100%;
+	min-height: 8em;
+	min-width: 10em;
+	padding: 0;
+	width: 100%;
+}
+
+.lfr-rich-editor.ace_editor {
+	border: 1px solid transparent;
+	height: 400px;
+	position: relative;
+	width: 100%;
+}

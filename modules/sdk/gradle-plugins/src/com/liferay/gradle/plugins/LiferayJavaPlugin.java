@@ -16,8 +16,8 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
+import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
-import com.liferay.gradle.plugins.tasks.FormatSourceTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
@@ -65,8 +65,6 @@ import org.gradle.api.tasks.SourceSet;
 public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
-
-	public static final String FORMAT_SOURCE_TASK_NAME = "formatSource";
 
 	public static final String FORMAT_WSDL_TASK_NAME = "formatWSDL";
 
@@ -158,16 +156,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return buildCssTask;
 	}
 
-	protected FormatSourceTask addTaskFormatSource(Project project) {
-		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
-
-		formatSourceTask.setDescription(
-			"Runs Liferay Source Formatter to format files.");
-
-		return formatSourceTask;
-	}
-
 	protected FormatXMLTask addTaskFormatWSDL(Project project) {
 		FormatXMLTask formatXMLTask = GradleUtil.addTask(
 			project, FORMAT_WSDL_TASK_NAME, FormatXMLTask.class);
@@ -203,7 +191,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		addTaskBuildCss(project);
-		addTaskFormatSource(project);
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
@@ -229,6 +216,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
+		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WSDLBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);

@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>IFrame</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">IFrame</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CONFIGURATION</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'portlet_configuration')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

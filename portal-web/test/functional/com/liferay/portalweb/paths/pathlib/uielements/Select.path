@@ -9,13 +9,48 @@
 </thead>
 <tbody>
 <tr>
+	<td>BULLET_STYLE</td>
+	<td>//div[label[contains(.,'Bullet Style')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE</td>
+	<td>//div[label[contains(.,'Display Style')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER</td>
+	<td>//div[label[contains(.,'Header')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INCLUDED_PAGES</td>
+	<td>//div[label[contains(.,'Included Pages')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LANGUAGE</td>
 	<td>//div[label[contains(.,'Language')]]/select</td>
 	<td></td>
 </tr>
 <tr>
+	<td>NESTED_CHILDREN</td>
+	<td>//div[label[contains(.,'Nested Children')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTION</td>
 	<td>//div[label[contains(.,'Question')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROOT_PAGE</td>
+	<td>//div[label[contains(.,'Root Page')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROOT_PAGE_LEVEL</td>
+	<td>//div[label[contains(.,'Root Page Level')]]/select</td>
 	<td></td>
 </tr>
 </tbody>

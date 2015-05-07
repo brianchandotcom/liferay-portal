@@ -105,6 +105,7 @@ page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLImpl" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@

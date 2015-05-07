@@ -896,6 +896,12 @@
 		</while>
 	</command>
 
+	<command name="viewNoRSS">
+		<execute function="Open" locator1="${rssURL}" />
+
+		<execute function="AssertTextEquals" locator1="CalendarConfiguration#ERROR_HEADER"  value1="Not Found" />
+	</command>
+
 	<command name="viewOtherCalendarMenulist">
 		<execute macro="Calendar#chooseOtherCalendarMenulistOption">
 			<var name="calendarName" value="${calendarName}" />
@@ -1035,6 +1041,16 @@
 
 		<execute function="AssertElementPresent" locator1="PGCalendar#VIEW_${viewUppercase}_BUTTON_ACTIVE" />
 		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendar#SCHEDULER_VIEW_${viewUppercase}" />
+	</command>
+
+	<command name="viewSiteCalendarNoMenulistOption">
+		<execute macro="Calendar#gotoSiteCalendarMenulistCmd">
+			<var name="calendarName" value="${calendarName}" />
+		</execute>
+
+		<var name="key_menuListOption" value="${menuListOption}" />
+
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#CALENDAR_MENULIST_OPTION" />
 	</command>
 
 	<command name="viewWeekCountViaMonthView">

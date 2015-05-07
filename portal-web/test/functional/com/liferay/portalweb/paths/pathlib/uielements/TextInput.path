@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>NAME</td>
-	<td>//input[contains(@id,'name')]</td>
+	<td>//div[label[contains(.,'Name')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

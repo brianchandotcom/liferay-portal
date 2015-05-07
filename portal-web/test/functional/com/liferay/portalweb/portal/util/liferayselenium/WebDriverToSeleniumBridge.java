@@ -1519,7 +1519,7 @@ public class WebDriverToSeleniumBridge
 			i = specialCharIndex + 1;
 		}
 
-		webElement.sendKeys(value.substring(i));
+		webElement.sendKeys(value.substring(i, value.length()));
 	}
 
 	@Override
@@ -1636,8 +1636,6 @@ public class WebDriverToSeleniumBridge
 		}
 
 		for (String specialChar : _keysSpecialChars.keySet()) {
-			specialChar = "\\" + specialChar;
-
 			while (value.contains(specialChar)) {
 				specialCharIndexes.add(value.indexOf(specialChar));
 

@@ -1466,66 +1466,38 @@ public class LiferaySeleniumHelper {
 	public static void typeAceEditor(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
-		int x = 0;
-		int y = value.indexOf("${line.separator}");
+		liferaySelenium.typeKeys(locator, "");
 
-		String line = value;
+		Pattern pattern = Pattern.compile("\\(|\\$\\{line\\.separator\\}");
 
-		if (y != -1) {
-			line = value.substring(x, y);
-		}
-
-		if (line.contains("(")) {
-			typeParenthesis(liferaySelenium, locator, line);
-		}
-		else {
-			liferaySelenium.typeKeys(locator, line.trim());
-		}
-
-		liferaySelenium.keyPress(locator, "\\RETURN");
-
-		while (y != -1) {
-			x = value.indexOf("}", x) + 1;
-			y = value.indexOf("${line.separator}", x);
-
-			if (y != -1) {
-				line = value.substring(x, y);
-
-				if (line.contains("(")) {
-					typeParenthesis(liferaySelenium, locator, line);
-				}
-				else {
-					liferaySelenium.typeKeys(locator, line.trim());
-				}
-			}
-			else {
-				line = value.substring(x, value.length());
-
-				liferaySelenium.typeKeys(locator, line.trim());
-			}
-
-			liferaySelenium.keyPress(locator, "\\RETURN");
-		}
-	}
-
-	protected static void typeParenthesis(
-		LiferaySelenium liferaySelenium, String locator, String line) {
+		Matcher matcher = pattern.matcher(value);
 
 		int x = 0;
 
-		while (line.contains("(")) {
-			_screen.type(line.substring(x, line.indexOf("(")));
+		while (matcher.find()) {
+			int y = matcher.start();
 
-			_screen.type("9", Key.SHIFT);
+			String line = value.substring(x, y);
 
-			x = line.indexOf("(");
+			_screen.type(line.trim());
 
-			line = StringUtil.replaceFirst(line, "(", "");
+			String specialCharacter = matcher.group();
+
+			if (specialCharacter.equals("(")) {
+				_screen.type("9", Key.SHIFT);
+			}
+			else if (specialCharacter.equals("${line.separator}")) {
+				liferaySelenium.keyPress(locator, "\\ESCAPE");
+				liferaySelenium.keyPress(locator, "\\RETURN");
+			}
+
+			x = y + specialCharacter.length();
 		}
 
-		_screen.type(line.substring(x).trim());
-	}
+		String line = value.substring(x);
 
+		_screen.type(line.trim());
+	}
 
 	public static void typeFrame(
 		LiferaySelenium liferaySelenium, String locator, String value) {

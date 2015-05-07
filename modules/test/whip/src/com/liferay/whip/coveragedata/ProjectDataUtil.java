@@ -44,9 +44,7 @@ public class ProjectDataUtil {
 				FileLock fileLock = fileChannel.lock();
 
 				try {
-					File dataFile = new File(
-						System.getProperty(
-							"net.sourceforge.cobertura.datafile"));
+					File dataFile = InstrumentationAgent.getDataFile();
 
 					if (dataFile.exists()) {
 						_projectData.merge(_readProjectData(dataFile));

@@ -87,8 +87,6 @@ public class InstrumentationAgent {
 			}
 		}
 		finally {
-			System.clearProperty("junit.code.coverage");
-
 			_dynamicallyInstrumented = false;
 
 			if (_originalClassDefinitions != null) {
@@ -138,7 +136,7 @@ public class InstrumentationAgent {
 			excludes = _excludes;
 		}
 
-		String agentLine = System.getProperty("junit.whip.agent");
+		String agentLine = System.getProperty("whip.agent");
 
 		int index = agentLine.indexOf('=');
 
@@ -167,7 +165,7 @@ public class InstrumentationAgent {
 				sb.setLength(sb.length() - 1);
 			}
 
-			System.setProperty("junit.whip.agent", sb.toString());
+			System.setProperty("whip.agent", sb.toString());
 		}
 
 		if (_whipClassFileTransformer == null) {
@@ -198,8 +196,10 @@ public class InstrumentationAgent {
 
 		_dynamicallyInstrumented = true;
 		_originalClassDefinitions = null;
+	}
 
-		System.setProperty("junit.code.coverage", "true");
+	public static File getDataFile() {
+		return _dataFile;
 	}
 
 	public static File getLockFile() {
@@ -214,7 +214,7 @@ public class InstrumentationAgent {
 		String[] includes = arguments[0].split(",");
 		String[] excludes = arguments[1].split(",");
 
-		if (Boolean.getBoolean("junit.code.coverage")) {
+		if (Boolean.getBoolean("whip.static.instrument")) {
 			final WhipClassFileTransformer whipClassFileTransformer =
 				new WhipClassFileTransformer(includes, excludes);
 
@@ -242,10 +242,7 @@ public class InstrumentationAgent {
 			// Forcibly clear the data file to make sure that the coverage
 			// assert is based on the current test
 
-			File dataFile = new File(
-				System.getProperty("net.sourceforge.cobertura.datafile"));
-
-			dataFile.delete();
+			_dataFile.delete();
 		}
 		else {
 			StringBuilder sb = new StringBuilder();
@@ -340,6 +337,7 @@ public class InstrumentationAgent {
 		System.out.printf("[Whip] %s is fully covered.%n", classData.getName());
 	}
 
+	private static final File _dataFile;
 	private static boolean _dynamicallyInstrumented;
 	private static String[] _excludes;
 	private static String[] _includes;
@@ -349,10 +347,9 @@ public class InstrumentationAgent {
 	private static WhipClassFileTransformer _whipClassFileTransformer;
 
 	static {
-		File dataFile = new File(
-			System.getProperty("net.sourceforge.cobertura.datafile"));
+		_dataFile = new File(System.getProperty("whip.datafile"));
 
-		File parentFolder = dataFile.getParentFile();
+		File parentFolder = _dataFile.getParentFile();
 
 		if (!parentFolder.exists()) {
 			parentFolder.mkdirs();

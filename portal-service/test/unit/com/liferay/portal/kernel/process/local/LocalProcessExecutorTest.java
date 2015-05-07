@@ -1411,13 +1411,10 @@ public class LocalProcessExecutorTest {
 
 		arguments.add(
 			"-D" + SystemProperties.SYSTEM_PROPERTIES_QUIET + "=true");
+		arguments.add("-Dwhip.static.instrument=true");
 
-		if (Boolean.getBoolean("junit.code.coverage")) {
-			arguments.add("-Djunit.code.coverage=true");
-		}
-
-		if (Boolean.getBoolean("junit.code.coverage.dump")) {
-			arguments.add("-Djunit.code.coverage.dump=true");
+		if (Boolean.getBoolean("whip.instrument.dump")) {
+			arguments.add("-Dwhip.instrument.dump=true");
 		}
 
 		if (Boolean.getBoolean("junit.debug")) {
@@ -1425,18 +1422,17 @@ public class LocalProcessExecutorTest {
 			arguments.add("-Djunit.debug=true");
 		}
 
-		String junitWhipAgentLine = System.getProperty("junit.whip.agent");
+		String whipAgentLine = System.getProperty("whip.agent");
 
-		if (Validator.isNotNull(junitWhipAgentLine)) {
-			arguments.add(junitWhipAgentLine);
-			arguments.add("-Djunit.whip.agent=" + junitWhipAgentLine);
+		if (Validator.isNotNull(whipAgentLine)) {
+			arguments.add(whipAgentLine);
+			arguments.add("-Dwhip.agent=" + whipAgentLine);
 		}
 
-		String fileName = System.getProperty(
-			"net.sourceforge.cobertura.datafile");
+		String fileName = System.getProperty("whip.datafile");
 
 		if (fileName != null) {
-			arguments.add("-Dnet.sourceforge.cobertura.datafile=" + fileName);
+			arguments.add("-Dwhip.datafile=" + fileName);
 		}
 
 		return arguments;

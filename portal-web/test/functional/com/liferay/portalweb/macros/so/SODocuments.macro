@@ -352,11 +352,11 @@
 					<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_VERSION" value1="Version PWC" />
 					<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_WORKFLOW" value1="Status: Draft" />
 				</then>
-				<else>
-					<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_VERSION" value1="Version ${dmDocumentVersionNumber}" />
-					<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_WORKFLOW" value1="Status: Approved" />
-				</else>
 			</elseif>
+			<else>
+				<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_VERSION" value1="Version ${dmDocumentVersionNumber}" />
+				<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_WORKFLOW" value1="Status: Approved" />
+			</else>
 		</if>
 
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_UPLOADER" value1="Last Updated by ${dmDocumentUploader}" />

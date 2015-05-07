@@ -65,16 +65,23 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 		}
 
 		long allModelAdditionCountersTotal = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.
+					ALL_MODEL_ADDITION_COUNTERS_TOTAL));
 		long allPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.ALL_PORTLET_ADDITION_COUNTER));
 		long currentModelAdditionCountersTotal = GetterUtil.getLong(
 			backgroundTaskStatus.getAttribute(
-				"currentModelAdditionCountersTotal"));
+				StagingBackgroundTaskConstants.
+					CURRENT_MODEL_ADDITION_COUNTERS_TOTAL));
 		long currentPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.
+					CURRENT_PORTLET_ADDITION_COUNTER));
 		String phase = GetterUtil.getString(
-			backgroundTaskStatus.getAttribute("phase"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.PHASE));
 
 		_allProgressBarCountersTotal =
 			allModelAdditionCountersTotal + allPortletAdditionCounter;
@@ -86,9 +93,11 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 		setPercentage(percentage);
 
 		_stagedModelName = GetterUtil.getString(
-			backgroundTaskStatus.getAttribute("stagedModelName"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.STAGED_MODEL_NAME));
 		_stagedModelType = GetterUtil.getString(
-			backgroundTaskStatus.getAttribute("stagedModelType"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.STAGED_MODEL_TYPE));
 
 		String message = processMessage(locale);
 

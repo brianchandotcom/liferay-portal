@@ -128,6 +128,10 @@ public class DDMTemplateVersionPersistenceTest {
 
 		newDDMTemplateVersion.setCreateDate(RandomTestUtil.nextDate());
 
+		newDDMTemplateVersion.setClassNameId(RandomTestUtil.nextLong());
+
+		newDDMTemplateVersion.setClassPK(RandomTestUtil.nextLong());
+
 		newDDMTemplateVersion.setTemplateId(RandomTestUtil.nextLong());
 
 		newDDMTemplateVersion.setVersion(RandomTestUtil.randomString());
@@ -157,6 +161,10 @@ public class DDMTemplateVersionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMTemplateVersion.getCreateDate()),
 			Time.getShortTimestamp(newDDMTemplateVersion.getCreateDate()));
+		Assert.assertEquals(existingDDMTemplateVersion.getClassNameId(),
+			newDDMTemplateVersion.getClassNameId());
+		Assert.assertEquals(existingDDMTemplateVersion.getClassPK(),
+			newDDMTemplateVersion.getClassPK());
 		Assert.assertEquals(existingDDMTemplateVersion.getTemplateId(),
 			newDDMTemplateVersion.getTemplateId());
 		Assert.assertEquals(existingDDMTemplateVersion.getVersion(),
@@ -219,9 +227,10 @@ public class DDMTemplateVersionPersistenceTest {
 	protected OrderByComparator<DDMTemplateVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMTemplateVersion",
 			"templateVersionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true, "templateId",
-			true, "version", true, "name", true, "description", true,
-			"language", true, "script", true);
+			"userId", true, "userName", true, "createDate", true,
+			"classNameId", true, "classPK", true, "templateId", true,
+			"version", true, "name", true, "description", true, "language",
+			true, "script", true);
 	}
 
 	@Test
@@ -456,6 +465,10 @@ public class DDMTemplateVersionPersistenceTest {
 		ddmTemplateVersion.setUserName(RandomTestUtil.randomString());
 
 		ddmTemplateVersion.setCreateDate(RandomTestUtil.nextDate());
+
+		ddmTemplateVersion.setClassNameId(RandomTestUtil.nextLong());
+
+		ddmTemplateVersion.setClassPK(RandomTestUtil.nextLong());
 
 		ddmTemplateVersion.setTemplateId(RandomTestUtil.nextLong());
 

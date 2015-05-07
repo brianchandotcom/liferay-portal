@@ -277,8 +277,10 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 			addTemplateVersion(
 				increment(), groupId, companyId, getDefaultUserId(companyId),
-				StringPool.BLANK, now, ddmTemplateId, localizedName,
-				localizedDescription, TemplateConstants.LANG_TYPE_FTL, script);
+				StringPool.BLANK, now,
+				PortalUtil.getClassNameId(DDMStructure.class), ddmStructureId,
+				ddmTemplateId, localizedName, localizedDescription,
+				TemplateConstants.LANG_TYPE_FTL, script);
 
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				DDMTemplate.class.getName());

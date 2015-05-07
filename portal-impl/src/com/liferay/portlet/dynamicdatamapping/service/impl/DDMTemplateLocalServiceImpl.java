@@ -1360,6 +1360,8 @@ public class DDMTemplateLocalServiceImpl
 		templateVersion.setUserId(template.getUserId());
 		templateVersion.setUserName(template.getUserName());
 		templateVersion.setCreateDate(template.getModifiedDate());
+		templateVersion.setClassNameId(template.getClassNameId());
+		templateVersion.setClassPK(template.getClassPK());
 		templateVersion.setTemplateId(template.getTemplateId());
 		templateVersion.setVersion(version);
 		templateVersion.setName(template.getName());

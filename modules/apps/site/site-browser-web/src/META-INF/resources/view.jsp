@@ -36,13 +36,22 @@ if (types.length == 0) {
 	types = new String[] {type};
 }
 
+String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 String filter = ParamUtil.getString(request, "filter");
 boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
+boolean includeCurrentGroup = ParamUtil.getBoolean(request, "includeCurrentGroup", true);
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
+boolean manualMembership = ParamUtil.getBoolean(request, "manualMembership");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectSite");
 String target = ParamUtil.getString(request, "target");
 
 PortletURL portletURL = renderResponse.createRenderURL();
+
+User selUser = PortalUtil.getSelectedUser(request);
+
+if (selUser != null) {
+	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
+}
 
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
@@ -97,24 +106,8 @@ portletURL.setParameter("target", target);
 			<%
 			results.clear();
 
-			int additionalSites = 0;
-
-			if (includeCompany) {
-				if (searchContainer.getStart() == 0) {
-					results.add(company.getGroup());
-				}
-
-				additionalSites++;
-			}
-
-			if (includeUserPersonalSite) {
-				if (searchContainer.getStart() == 0) {
-					Group userPersonalSite = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
-
-					results.add(userPersonalSite);
-				}
-
-				additionalSites++;
+			if (manualMembership) {
+				groupParams.put("manualMembership", Boolean.TRUE);
 			}
 
 			if (type.equals("child-sites")) {
@@ -131,6 +124,41 @@ portletURL.setParameter("target", target);
 			}
 
 			groupParams.put("site", Boolean.TRUE);
+
+			int additionalSites = 0;
+
+			if (includeCompany) {
+				if (searchContainer.getStart() == 0) {
+					results.add(company.getGroup());
+				}
+
+				additionalSites++;
+			}
+
+			if (!includeCurrentGroup && (groupId > 0)) {
+				List<Long> excludedGroupIds = new ArrayList<Long>();
+
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				if (group.isStagingGroup()) {
+					excludedGroupIds.add(group.getLiveGroupId());
+				}
+				else {
+					excludedGroupIds.add(groupId);
+				}
+
+				groupParams.put("excludedGroupIds", excludedGroupIds);
+			}
+
+			if (includeUserPersonalSite) {
+				if (searchContainer.getStart() == 0) {
+					Group userPersonalSite = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
+
+					results.add(userPersonalSite);
+				}
+
+				additionalSites++;
+			}
 
 			if (type.equals("layoutScopes")) {
 				total = GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), Layout.class.getName(), groupId);
@@ -208,16 +236,31 @@ portletURL.setParameter("target", target);
 			/>
 
 			<liferay-ui:search-container-column-text>
+				<c:if test="<%= ((Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()))) %>">
 
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
+					<%
+					Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("groupdescriptivename", group.getDescriptiveName(locale));
-				data.put("groupid", group.getGroupId());
-				data.put("target", target);
-				%>
+					data.put("groupdescriptivename", group.getDescriptiveName(locale));
+					data.put("groupid", group.getGroupId());
+					data.put("grouptype", LanguageUtil.get(request, group.getTypeLabel()));
+					data.put("target", target);
 
-				<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) %>" value="choose" />
+					boolean disabled = false;
+
+					if (selUser != null) {
+						for (long curGroupId : selUser.getGroupIds()) {
+							if (curGroupId == group.getGroupId()) {
+								disabled = true;
+
+								break;
+							}
+						}
+					}
+					%>
+
+					<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) || disabled %>" value="choose" />
+				</c:if>
 			</liferay-ui:search-container-column-text>
 
 		</liferay-ui:search-container-row>
@@ -241,5 +284,16 @@ private List<Group> _filterGroups(List<Group> groups, String filter) throws Exce
 %>
 
 <aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectSiteFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	var Util = Liferay.Util;
+
+	var openingLiferay = Util.getOpener().Liferay;
+
+	openingLiferay.fire(
+		'<portlet:namespace />enableRemovedSites',
+		{
+			selectors: A.all('.selector-button:disabled')
+		}
+	);
+
+	Util.selectEntityHandler('#<portlet:namespace />selectGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>', <%= selUser != null %>);
 </aui:script>

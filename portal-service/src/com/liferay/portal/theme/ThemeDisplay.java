@@ -461,30 +461,6 @@ public class ThemeDisplay
 		return _mdrRuleGroupInstance;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroup}
-	 */
-	@Deprecated
-	public Group getParentGroup() {
-		return getSiteGroup();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId}
-	 */
-	@Deprecated
-	public long getParentGroupId() {
-		return getSiteGroupId();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupName}
-	 */
-	@Deprecated
-	public String getParentGroupName() throws PortalException {
-		return getSiteGroupName();
-	}
-
 	public String getPathApplet() {
 		return _pathApplet;
 	}
@@ -585,14 +561,6 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getPathThemeImages}
-	 */
-	@Deprecated
-	public String getPathThemeImage() {
-		return getPathThemeImages();
-	}
-
-	/**
 	 * Returns the URL for the theme's images.
 	 *
 	 * @return the URL for the theme's images
@@ -667,14 +635,6 @@ public class ThemeDisplay
 	@JSON(include = false)
 	public PortletDisplay getPortletDisplay() {
 		return _portletDisplay;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getScopeGroupId}
-	 */
-	@Deprecated
-	public long getPortletGroupId() {
-		return getScopeGroupId();
 	}
 
 	public String getPpid() {
@@ -753,14 +713,6 @@ public class ThemeDisplay
 	 */
 	public long getScopeGroupId() {
 		return _scopeGroupId;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupIdOrLiveGroupId}
-	 */
-	@Deprecated
-	public long getScopeGroupIdOrLiveGroupId() {
-		return getSiteGroupIdOrLiveGroupId();
 	}
 
 	/**
@@ -951,15 +903,6 @@ public class ThemeDisplay
 		return _urlLayoutTemplates;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getURLSiteAdministration()}
-	 */
-	@Deprecated
-	@JSON(include = false)
-	public PortletURL getURLManageSiteMemberships() {
-		return _urlManageSiteMemberships;
-	}
-
 	@JSON(include = false)
 	public PortletURL getURLMyAccount() {
 		return _urlMyAccount;
@@ -989,33 +932,6 @@ public class ThemeDisplay
 
 	public String getURLSiteAdministration() {
 		return _urlSiteAdministration;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getURLSiteAdministration()}
-	 */
-	@Deprecated
-	public String getURLSiteContent() {
-		return getURLSiteAdministration();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #isShowSiteAdministrationIcon()}
-	 */
-	@Deprecated
-	@JSON(include = false)
-	public PortletURL getURLSiteMapSettings() {
-		return _urlSiteMapSettings;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getURLSiteAdministration()}
-	 */
-	@Deprecated
-	@JSON(include = false)
-	public PortletURL getURLSiteSettings() {
-		return _urlSiteSettings;
 	}
 
 	@JSON(include = false)
@@ -1482,14 +1398,6 @@ public class ThemeDisplay
 		_mdrRuleGroupInstance = mdrRuleGroupInstance;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0 renamed to {@link #setSiteGroupId(long)}
-	 */
-	@Deprecated
-	public void setParentGroupId(long parentGroupId) {
-		setSiteGroupId(parentGroupId);
-	}
-
 	public void setPathApplet(String pathApplet) {
 		_pathApplet = pathApplet;
 	}
@@ -1701,15 +1609,6 @@ public class ThemeDisplay
 		_showSiteAdministrationIcon = showSiteAdministrationIcon;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #setShowSiteAdministrationIcon(boolean)}
-	 */
-	@Deprecated
-	public void setShowSiteContentIcon(boolean showSiteContentIcon) {
-		setShowSiteAdministrationIcon(showSiteContentIcon);
-	}
-
 	public void setShowSiteMapSettingsIcon(boolean showSiteMapSettingsIcon) {
 		_showSiteMapSettingsIcon = showSiteMapSettingsIcon;
 	}
@@ -1815,12 +1714,6 @@ public class ThemeDisplay
 		_urlLayoutTemplates = urlLayoutTemplates;
 	}
 
-	public void setURLManageSiteMemberships(
-		PortletURL urlManageSiteMemberships) {
-
-		_urlManageSiteMemberships = urlManageSiteMemberships;
-	}
-
 	public void setURLMyAccount(PortletURL urlMyAccount) {
 		_urlMyAccount = urlMyAccount;
 	}
@@ -1847,23 +1740,6 @@ public class ThemeDisplay
 
 	public void setURLSiteAdministration(String urlSiteAdministration) {
 		_urlSiteAdministration = urlSiteAdministration;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #setURLSiteAdministration(String)}
-	 */
-	@Deprecated
-	public void setURLSiteContent(String urlSiteContent) {
-		setURLSiteAdministration(urlSiteContent);
-	}
-
-	public void setURLSiteMapSettings(PortletURL urlSiteMapSettings) {
-		_urlSiteMapSettings = urlSiteMapSettings;
-	}
-
-	public void setURLSiteSettings(PortletURL urlSiteSettings) {
-		_urlSiteSettings = urlSiteSettings;
 	}
 
 	public void setURLUpdateManager(PortletURL urlUpdateManager) {
@@ -2003,7 +1879,6 @@ public class ThemeDisplay
 	private String _urlCurrent = StringPool.BLANK;
 	private String _urlHome = StringPool.BLANK;
 	private String _urlLayoutTemplates = StringPool.BLANK;
-	private transient PortletURL _urlManageSiteMemberships = null;
 	private transient PortletURL _urlMyAccount = null;
 	private transient PortletURL _urlPageSettings = null;
 	private String _urlPortal = StringPool.BLANK;
@@ -2011,8 +1886,6 @@ public class ThemeDisplay
 	private String _urlSignIn = StringPool.BLANK;
 	private String _urlSignOut = StringPool.BLANK;
 	private String _urlSiteAdministration = StringPool.BLANK;
-	private transient PortletURL _urlSiteMapSettings = null;
-	private transient PortletURL _urlSiteSettings = null;
 	private transient PortletURL _urlUpdateManager = null;
 	private User _user;
 	private boolean _widget;

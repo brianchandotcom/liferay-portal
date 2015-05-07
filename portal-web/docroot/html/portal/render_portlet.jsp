@@ -339,7 +339,7 @@ if (siteGroup.isStagingGroup()) {
 }
 
 if (siteGroup.isStaged() && !siteGroup.isStagedRemotely() && !siteGroup.isStagedPortlet(portletId)) {
-	themeDisplay.setParentGroupId(siteGroup.getGroupId());
+	themeDisplay.setSiteGroupId(siteGroup.getGroupId());
 }
 
 portletDisplay.recycle();

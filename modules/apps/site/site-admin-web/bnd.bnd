@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Site Admin Web
+Bundle-SymbolicName: com.liferay.site.admin.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/PKParser.class
+Web-ContextPath: /sites-admin-web

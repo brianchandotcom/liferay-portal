@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
@@ -62,7 +60,6 @@ import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Theme;
@@ -1058,43 +1055,6 @@ public class ServicePreAction extends Action {
 						ActionKeys.ASSIGN_MEMBERS)) {
 
 					themeDisplay.setShowManageSiteMembershipsIcon(true);
-
-					String portletId = PortletProviderUtil.getPortletId(
-						MembershipRequest.class.getName(),
-						PortletProvider.Action.VIEW);
-
-					LiferayPortletURL manageSiteMembershipsURL =
-						new PortletURLImpl(
-							request, portletId, controlPanelPlid,
-							PortletRequest.RENDER_PHASE);
-
-					manageSiteMembershipsURL.setDoAsGroupId(scopeGroupId);
-					manageSiteMembershipsURL.setParameter(
-						"groupId", String.valueOf(scopeGroupId));
-					manageSiteMembershipsURL.setParameter(
-						"selPlid", String.valueOf(plid));
-					manageSiteMembershipsURL.setPortletMode(PortletMode.VIEW);
-
-					if (PropsValues.
-							DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
-
-						manageSiteMembershipsURL.setControlPanelCategory(
-							PortletCategoryKeys.PORTLET);
-						manageSiteMembershipsURL.setWindowState(
-							LiferayWindowState.POP_UP);
-					}
-					else {
-						manageSiteMembershipsURL.setParameter(
-							"redirect", themeDisplay.getURLHome());
-						manageSiteMembershipsURL.setParameter(
-							"showBackURL", Boolean.FALSE.toString());
-						manageSiteMembershipsURL.setPlid(plid);
-						manageSiteMembershipsURL.setWindowState(
-							WindowState.MAXIMIZED);
-					}
-
-					themeDisplay.setURLManageSiteMemberships(
-						manageSiteMembershipsURL);
 				}
 				else {
 					themeDisplay.setShowManageSiteMembershipsIcon(false);
@@ -1122,35 +1082,6 @@ public class ServicePreAction extends Action {
 				hasUpdateGroupPermission) {
 
 				themeDisplay.setShowSiteSettingsIcon(true);
-
-				LiferayPortletURL siteSettingsURL = new PortletURLImpl(
-					request, PortletKeys.SITE_SETTINGS, controlPanelPlid,
-					PortletRequest.RENDER_PHASE);
-
-				siteSettingsURL.setDoAsGroupId(scopeGroupId);
-				siteSettingsURL.setParameter(
-					"struts_action", "/sites_admin/edit_site");
-				siteSettingsURL.setParameter(
-					"groupId", String.valueOf(scopeGroupId));
-				siteSettingsURL.setParameter(
-					"showBackURL", Boolean.FALSE.toString());
-				siteSettingsURL.setPortletMode(PortletMode.VIEW);
-
-				if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
-					siteSettingsURL.setControlPanelCategory(
-						PortletCategoryKeys.PORTLET);
-					siteSettingsURL.setParameter("closeRedirect", currentURL);
-					siteSettingsURL.setWindowState(LiferayWindowState.POP_UP);
-				}
-				else {
-					siteSettingsURL.setParameter(
-						"redirect", themeDisplay.getURLHome());
-					siteSettingsURL.setPlid(plid);
-					siteSettingsURL.setWindowState(
-						LiferayWindowState.MAXIMIZED);
-				}
-
-				themeDisplay.setURLSiteSettings(siteSettingsURL);
 			}
 
 			if (!group.isLayoutPrototype() &&
@@ -1158,43 +1089,6 @@ public class ServicePreAction extends Action {
 				 hasManageLayoutsGroupPermission || hasUpdateGroupPermission)) {
 
 				themeDisplay.setShowSiteMapSettingsIcon(true);
-
-				LiferayPortletURL siteMapSettingsURL = new PortletURLImpl(
-					request, PortletKeys.GROUP_PAGES, controlPanelPlid,
-					PortletRequest.RENDER_PHASE);
-
-				siteMapSettingsURL.setDoAsGroupId(scopeGroupId);
-				siteMapSettingsURL.setParameter(
-					"struts_action", "/group_pages/edit_layouts");
-
-				if (layout.isPrivateLayout()) {
-					siteMapSettingsURL.setParameter("tabs1", "private-pages");
-				}
-				else {
-					siteMapSettingsURL.setParameter("tabs1", "public-pages");
-				}
-
-				siteMapSettingsURL.setParameter(
-					"groupId", String.valueOf(scopeGroupId));
-				siteMapSettingsURL.setPortletMode(PortletMode.VIEW);
-
-				if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
-					siteMapSettingsURL.setControlPanelCategory(
-						PortletCategoryKeys.PORTLET);
-					siteMapSettingsURL.setParameter(
-						"closeRedirect", currentURL);
-					siteMapSettingsURL.setWindowState(
-						LiferayWindowState.POP_UP);
-				}
-				else {
-					siteMapSettingsURL.setParameter(
-						"redirect", themeDisplay.getURLHome());
-					siteMapSettingsURL.setPlid(plid);
-					siteMapSettingsURL.setWindowState(
-						LiferayWindowState.MAXIMIZED);
-				}
-
-				themeDisplay.setURLSiteMapSettings(siteMapSettingsURL);
 			}
 
 			if (group.hasStagingGroup() && !group.isStagingGroup()) {

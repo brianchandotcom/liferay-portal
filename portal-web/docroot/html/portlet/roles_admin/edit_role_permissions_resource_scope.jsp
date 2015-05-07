@@ -90,14 +90,17 @@ List groupNames = (List)objArray[8];
 							id: '<portlet:namespace />selectGroup<%= HtmlUtil.escapeJS(targetId) %>',
 							title: '<liferay-ui:message arguments="site" key="select-x" />',
 
-							<portlet:renderURL var="selectCommunityURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-								<portlet:param name="struts_action" value="/roles_admin/select_site" />
-								<portlet:param name="includeCompany" value="<%= Boolean.TRUE.toString() %>" />
-								<portlet:param name="includeUserPersonalSite" value="<%= Boolean.TRUE.toString() %>" />
-								<portlet:param name="target" value="<%= target %>" />
-							</portlet:renderURL>
+							<%
+							PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
 
-							uri: '<%= selectCommunityURL.toString() %>'
+							groupSelectorURL.setParameter("includeCompany", Boolean.TRUE.toString());
+							groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
+							groupSelectorURL.setParameter("includeUserPersonalSite", Boolean.TRUE.toString());
+							groupSelectorURL.setParameter("target", target);
+							groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
+							%>
+
+							uri: '<%= groupSelectorURL.toString() %>'
 						}
 					);
 				}

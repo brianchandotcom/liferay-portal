@@ -138,6 +138,8 @@ public class ServiceDependencyManager {
 				}
 			}
 
+			_serviceDependencies.notify();
+
 			for (ServiceDependencyListener serviceDependencyListener :
 					_serviceDependencyListeners) {
 
@@ -145,6 +147,30 @@ public class ServiceDependencyManager {
 			}
 
 			destroy();
+		}
+	}
+
+	public void waitForDependencies() {
+		waitForDependencies(0);
+	}
+
+	public void waitForDependencies(long timeout) {
+		synchronized (_serviceDependencies) {
+			if (_serviceDependencies.isEmpty()) {
+				return;
+			}
+
+			for (ServiceDependency serviceDependency : _serviceDependencies) {
+				if (!serviceDependency.isFulfilled()) {
+					break;
+				}
+			}
+
+			try {
+				_serviceDependencies.wait(timeout);
+			}
+			catch (InterruptedException e) {
+			}
 		}
 	}
 

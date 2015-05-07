@@ -17,41 +17,27 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String randomId = StringPool.BLANK;
+String randomId = displayContext.getWorkflowTaskRandomId();
 
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-WorkflowTask workflowTask = null;
+WorkflowTask workflowTask = displayContext.getWorkflowTask();
 
-if (row != null) {
-	randomId = StringUtil.randomId();
-
-	workflowTask = (WorkflowTask)row.getParameter("workflowTask");
-}
-else {
-	workflowTask = (WorkflowTask)request.getAttribute(WebKeys.WORKFLOW_TASK);
-}
-
-long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getCompanyId(), workflowTask.getWorkflowTaskId());
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= (row == null) %>" showWhenSingleIcon="<%= (row == null) %>">
-	<c:if test="<%= !workflowTask.isCompleted() && _isAssignedToUser(workflowTask, user) %>">
+	<c:if test="<%= !workflowTask.isCompleted() && displayContext.isAssignedToUser(workflowTask) %>">
 
 		<%
-		List<String> transitionNames = WorkflowTaskManagerUtil.getNextTransitionNames(company.getCompanyId(), user.getUserId(), workflowTask.getWorkflowTaskId());
+		List<String> transitionNames = displayContext.getTransitionNames(workflowTask);
 
 		for (String transitionName : transitionNames) {
-			String message = "proceed";
-
-			if (Validator.isNotNull(transitionName)) {
-				message = HtmlUtil.escape(transitionName);
-			}
+			String message = displayContext.getTransitionMessage(transitionName);
 		%>
 
-			<liferay-portlet:actionURL name="completeTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="editURL">
+			<liferay-portlet:actionURL name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="editURL">
 				<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -78,8 +64,8 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 
 	</c:if>
 
-	<c:if test="<%= !workflowTask.isCompleted() && !_isAssignedToUser(workflowTask, user) %>">
-		<liferay-portlet:actionURL name="assignTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="assignToMeURL">
+	<c:if test="<%= !workflowTask.isCompleted() && !displayContext.isAssignedToUser(workflowTask) %>">
+		<liferay-portlet:actionURL name="assignWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="assignToMeURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -97,8 +83,8 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 		/>
 	</c:if>
 
-	<c:if test="<%= _hasOtherAssignees(pooledActorsIds, workflowTask, user) %>">
-		<liferay-portlet:actionURL name="assignTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="assignURL">
+	<c:if test="<%= displayContext.hasOtherAssignees(workflowTask) %>">
+		<liferay-portlet:actionURL name="assignWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="assignURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -116,7 +102,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 	</c:if>
 
 	<c:if test="<%= !workflowTask.isCompleted() %>">
-		<liferay-portlet:actionURL name="updateTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="updateDueDateURL">
+		<liferay-portlet:actionURL name="updateWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="updateDueDateURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
@@ -134,17 +120,14 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 </liferay-ui:icon-menu>
 
 <div class="hide" id="<%= randomId %>updateAsignee">
-	<c:if test="<%= _hasOtherAssignees(pooledActorsIds, workflowTask, user) %>">
+	<c:if test="<%= displayContext.hasOtherAssignees(workflowTask) %>">
 		<aui:select label="assign-to" name="assigneeUserId">
 
 			<%
-			for (long pooledActorId : pooledActorsIds) {
-				if (pooledActorId == user.getUserId()) {
-					continue;
-				}
+			for (long pooledActorId : displayContext.getActorsIds(workflowTask)) {
 			%>
 
-				<aui:option label="<%= HtmlUtil.escape(PortalUtil.getUserName(pooledActorId, StringPool.BLANK)) %>" selected="<%= workflowTask.getAssigneeUserId() == pooledActorId %>" value="<%= String.valueOf(pooledActorId) %>" />
+				<aui:option label="<%= displayContext.getActorName(pooledActorId) %>" selected="<%= workflowTask.getAssigneeUserId() == pooledActorId %>" value="<%= String.valueOf(pooledActorId) %>" />
 
 			<%
 			}
@@ -169,17 +152,13 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 <aui:script use="liferay-workflow-tasks">
 	var onTaskClickFn = A.rbind('onTaskClick', Liferay.WorkflowTasks, '<%= randomId %>');
 
-	<c:if test="<%= !workflowTask.isCompleted() && _isAssignedToUser(workflowTask, user) %>">
+	<c:if test="<%= !workflowTask.isCompleted() && displayContext.isAssignedToUser(workflowTask) %>">
 
 		<%
-		List<String> transitionNames = WorkflowTaskManagerUtil.getNextTransitionNames(company.getCompanyId(), user.getUserId(), workflowTask.getWorkflowTaskId());
+		List<String> transitionNames = displayContext.getTransitionNames(workflowTask);
 
 		for (String transitionName : transitionNames) {
-			String message = "proceed";
-
-			if (Validator.isNotNull(transitionName)) {
-				message = transitionName;
-			}
+			String message = displayContext.getTransitionMessage(transitionName);
 		%>
 
 			Liferay.delegateClick('<portlet:namespace /><%= randomId + HtmlUtil.escapeJS(transitionName) %>taskChangeStatusLink', onTaskClickFn);

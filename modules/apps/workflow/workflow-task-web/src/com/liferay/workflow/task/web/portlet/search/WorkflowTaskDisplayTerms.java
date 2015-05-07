@@ -14,25 +14,22 @@
 
 package com.liferay.workflow.task.web.portlet.search;
 
+import javax.portlet.PortletRequest;
+
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;
-
-import javax.portlet.PortletRequest;
+import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
 
 /**
  * @author Marcellus Tavares
  */
 public class WorkflowTaskDisplayTerms extends DisplayTerms {
 
-	public static final String NAME = "name";
-
-	public static final String TYPE = "type";
-
 	public WorkflowTaskDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
-		name = ParamUtil.getString(portletRequest, NAME);
-		type = ParamUtil.getString(portletRequest, TYPE);
+		name = ParamUtil.getString(portletRequest, WorkflowTaskConstants.NAME);
+		type = ParamUtil.getString(portletRequest, WorkflowTaskConstants.TYPE);
 	}
 
 	public String getName() {

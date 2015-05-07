@@ -14,27 +14,21 @@
 
 package com.liferay.workflow.task.web.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
-import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
+
+import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
 
 /**
  * @author Leonardo Barros
@@ -42,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=updateTask",
+		"action.command.name=updateWorkflowTask",
 		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASKS
 	},
 	service = ActionCommand.class
@@ -54,85 +48,43 @@ public class UpdateTaskActionCommand extends WorkflowTaskBaseActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		long workflowTaskId = ParamUtil.getLong(
+			portletRequest, WorkflowTaskConstants.WORKFLOW_TASK_ID);
 
-			long workflowTaskId = ParamUtil.getLong(
-				portletRequest, ActionUtil.WORKFLOW_TASK_ID);
+		String comment = ParamUtil.getString(portletRequest, 
+			WorkflowTaskConstants.COMMENT);
 
-			String comment = ParamUtil.getString(portletRequest, _COMMENT);
+		int dueDateMonth = ParamUtil.getInteger(
+			portletRequest, WorkflowTaskConstants.DUE_DATE_MONTH);
 
-			int dueDateMonth = ParamUtil.getInteger(
-				portletRequest, _DUE_DATE_MONTH);
+		int dueDateDay = ParamUtil.getInteger(
+			portletRequest, WorkflowTaskConstants.DUE_DATE_DAY);
 
-			int dueDateDay = ParamUtil.getInteger(
-				portletRequest, _DUE_DATE_DAY);
+		int dueDateYear = ParamUtil.getInteger(
+			portletRequest, WorkflowTaskConstants.DUE_DATE_YEAR);
 
-			int dueDateYear = ParamUtil.getInteger(
-				portletRequest, _DUE_DATE_YEAR);
+		int dueDateHour = ParamUtil.getInteger(
+			portletRequest, WorkflowTaskConstants.DUE_DATE_HOUR);
 
-			int dueDateHour = ParamUtil.getInteger(
-				portletRequest, _DUE_DATE_HOUR);
+		int dueDateMinute = ParamUtil.getInteger(
+			portletRequest, WorkflowTaskConstants.DUE_DATE_MINUTE);
 
-			int dueDateMinute = ParamUtil.getInteger(
-				portletRequest, _DUE_DATE_MINUTE);
+		int dueDateAmPm = ParamUtil.getInteger(
+			portletRequest, WorkflowTaskConstants.DUE_DATE_AM_PM);
 
-			int dueDateAmPm = ParamUtil.getInteger(
-				portletRequest, _DUE_DATE_AM_PM);
-
-			if (dueDateAmPm == Calendar.PM) {
-				dueDateHour += 12;
-			}
-
-			Date dueDate = PortalUtil.getDate(
-				dueDateMonth, dueDateDay, dueDateYear, dueDateHour,
-				dueDateMinute, WorkflowTaskDueDateException.class);
-
-			WorkflowTaskManagerUtil.updateDueDate(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				workflowTaskId, comment, dueDate);
-
-			super.doProcessCommand(portletRequest, portletResponse);
+		if (dueDateAmPm == Calendar.PM) {
+			dueDateHour += 12;
 		}
-		catch (Exception e) {
-			if (e instanceof WorkflowTaskDueDateException) {
-				SessionErrors.add(portletRequest, e.getClass());
-			}
-			else if (e instanceof PrincipalException ||
-					 e instanceof WorkflowException) {
 
-				SessionErrors.add(portletRequest, e.getClass());
+		Date dueDate = PortalUtil.getDate(
+			dueDateMonth, dueDateDay, dueDateYear, dueDateHour,
+			dueDateMinute, WorkflowTaskDueDateException.class);
 
-				PortletSession portletSession =
-					portletRequest.getPortletSession();
+		WorkflowTaskManagerUtil.updateDueDate(
+			getCompanyId(portletRequest), getUserId(portletRequest),
+			workflowTaskId, comment, dueDate);
 
-				PortletContext portletContext =
-					portletSession.getPortletContext();
-
-				portletContext.getRequestDispatcher(
-						portletResponse.encodeURL("/error.jsp")).include(
-							portletRequest, portletResponse);
-			}
-			else {
-				throw e;
-			}
-		}
+		super.doProcessCommand(portletRequest, portletResponse);
 	}
-
-	private static final String _COMMENT = "comment";
-
-	private static final String _DUE_DATE_AM_PM = "dueDateAmPm";
-
-	private static final String _DUE_DATE_DAY = "dueDateDay";
-
-	private static final String _DUE_DATE_HOUR = "dueDateHour";
-
-	private static final String _DUE_DATE_MINUTE = "dueDateMinute";
-
-	private static final String _DUE_DATE_MONTH = "dueDateMonth";
-
-	private static final String _DUE_DATE_YEAR = "dueDateYear";
 
 }

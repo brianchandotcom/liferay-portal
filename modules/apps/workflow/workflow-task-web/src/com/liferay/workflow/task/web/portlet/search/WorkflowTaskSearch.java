@@ -14,12 +14,6 @@
 
 package com.liferay.workflow.task.web.portlet.search;
 
-import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.workflow.WorkflowTask;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +21,13 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
 
 /**
  * @author Marcellus Tavares
@@ -37,14 +38,16 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 	public static Map<String, String> orderableHeaders = new HashMap<>();
 
 	static {
-		headerNames.add("task");
-		headerNames.add("asset-title");
-		headerNames.add("last-activity-date");
-		headerNames.add("due-date");
-		headerNames.add("state");
+		headerNames.add(WorkflowTaskConstants.TASK);
+		headerNames.add(WorkflowTaskConstants.ASSET_TITLE);
+		headerNames.add(WorkflowTaskConstants.LAST_ACTIVITY_DATE);
+		headerNames.add(WorkflowTaskConstants.DUE_DATE);
+		headerNames.add(WorkflowTaskConstants.STATE);
 
-		orderableHeaders.put("task", "task");
-		orderableHeaders.put("due-date", "due-date");
+		orderableHeaders.put(WorkflowTaskConstants.TASK, 
+			WorkflowTaskConstants.TASK);
+		orderableHeaders.put(WorkflowTaskConstants.DUE_DATE, 
+			WorkflowTaskConstants.DUE_DATE);
 	}
 
 	public WorkflowTaskSearch(
@@ -66,12 +69,15 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 			(WorkflowTaskDisplayTerms)getDisplayTerms();
 
 		iteratorURL.setParameter(
-			WorkflowTaskDisplayTerms.NAME, displayTerms.getName());
+			WorkflowTaskConstants.NAME, displayTerms.getName());
 		iteratorURL.setParameter(
-			WorkflowTaskDisplayTerms.TYPE, displayTerms.getType());
+			WorkflowTaskConstants.TYPE, displayTerms.getType());
 
-		String orderByCol = ParamUtil.getString(portletRequest, "orderByCol");
-		String orderByType = ParamUtil.getString(portletRequest, "orderByType");
+		String orderByCol = ParamUtil.getString(
+			portletRequest, WorkflowTaskConstants.ORDER_BY_COL);
+		
+		String orderByType = ParamUtil.getString(
+				portletRequest, WorkflowTaskConstants.ORDER_BY_TYPE);
 
 		OrderByComparator<WorkflowTask> orderByComparator =
 			getOrderByComparator(orderByCol, orderByType);
@@ -87,13 +93,13 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 
 		boolean orderByAsc = false;
 
-		if (orderByType.equals("asc")) {
+		if (orderByType.equals(WorkflowTaskConstants.ASC)) {
 			orderByAsc = true;
 		}
 
 		OrderByComparator<WorkflowTask> orderByComparator = null;
 
-		if (orderByCol.equals("name")) {
+		if (orderByCol.equals(WorkflowTaskConstants.NAME)) {
 			orderByComparator =
 				WorkflowComparatorFactoryUtil.getTaskNameComparator(orderByAsc);
 		}

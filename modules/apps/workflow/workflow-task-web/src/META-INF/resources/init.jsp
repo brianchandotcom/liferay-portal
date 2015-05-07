@@ -67,9 +67,10 @@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
-page import="com.liferay.workflow.task.web.portlet.context.WorkflowTaskViewDisplayContext" %><%@
+page import="com.liferay.workflow.task.web.portlet.context.WorkflowTaskDisplayContext" %><%@
 page import="com.liferay.workflow.task.web.portlet.search.WorkflowTaskDisplayTerms" %><%@
-page import="com.liferay.workflow.task.web.portlet.search.WorkflowTaskSearch" %>
+page import="com.liferay.workflow.task.web.portlet.search.WorkflowTaskSearch" %><%@
+page import="com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -87,40 +88,8 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
-WindowState windowState = liferayPortletRequest.getWindowState();
+WorkflowTaskDisplayContext displayContext = (WorkflowTaskDisplayContext)request.getAttribute(WebKeys.DISPLAY_CONTEXT);
+String currentURL = displayContext.getCurrentURL();
 %>
 
 <%@ include file="/init-ext.jsp" %>
-
-<%!
-private boolean _hasOtherAssignees(long[] pooledActorsIds, WorkflowTask workflowTask, User user) {
-	if (pooledActorsIds.length == 0) {
-		return false;
-	}
-
-	if (workflowTask.isCompleted()) {
-		return false;
-	}
-
-	if ((pooledActorsIds.length == 1) && (pooledActorsIds[0] == user.getUserId())) {
-		return false;
-	}
-
-	return true;
-}
-
-private boolean _isAssignedToUser(WorkflowTask workflowTask, User user) {
-	if (workflowTask.getAssigneeUserId() == user.getUserId()) {
-		return true;
-	}
-
-	return false;
-}
-%>

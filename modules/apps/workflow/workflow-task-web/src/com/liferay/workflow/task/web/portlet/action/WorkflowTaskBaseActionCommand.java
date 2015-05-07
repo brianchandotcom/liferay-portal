@@ -14,16 +14,18 @@
 
 package com.liferay.workflow.task.web.portlet.action;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
 
 /**
  * @author Leonardo Barros
@@ -35,13 +37,15 @@ public abstract class WorkflowTaskBaseActionCommand extends BaseActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(portletRequest, _REDIRECT);
+		String redirect = ParamUtil.getString(portletRequest, 
+			WorkflowTaskConstants.REDIRECT);
+		
 		String closeRedirect = ParamUtil.getString(
-			portletRequest, _CLOSE_REDIRECT);
+			portletRequest, WorkflowTaskConstants.CLOSE_REDIRECT);
 
 		if (Validator.isNotNull(closeRedirect)) {
 			redirect = HttpUtil.setParameter(
-				redirect, _CLOSE_REDIRECT, closeRedirect);
+				redirect, WorkflowTaskConstants.CLOSE_REDIRECT, closeRedirect);
 
 			SessionMessages.add(
 				portletRequest, PortalUtil.getPortletId(portletRequest) +
@@ -50,9 +54,18 @@ public abstract class WorkflowTaskBaseActionCommand extends BaseActionCommand {
 
 		portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
+	
+	protected ThemeDisplay getThemeDisplay(PortletRequest portletRequest) {
+		return (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+	
+	protected long getCompanyId(PortletRequest portletRequest) {
+		return getThemeDisplay(portletRequest).getCompanyId();
+	}
 
-	private static final String _CLOSE_REDIRECT = "closeRedirect";
-
-	private static final String _REDIRECT = "redirect";
+	protected long getUserId(PortletRequest portletRequest) {
+		return getThemeDisplay(portletRequest).getUserId();
+	}
 
 }

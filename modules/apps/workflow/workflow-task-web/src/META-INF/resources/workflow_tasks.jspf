@@ -24,7 +24,7 @@
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowTask"
 		modelVar="workflowTask"
-		stringKey="<%= Boolean.TRUE %>"
+		stringKey="<%= true %>"
 	>
 		<liferay-ui:search-container-row-parameter
 			name="workflowTask"
@@ -67,7 +67,7 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="due-date"
-			orderable="<%= Boolean.TRUE %>"
+			orderable="<%= true %>"
 			value="<%= displayContext.getDueDate(workflowTask) %>"
 		/>
 

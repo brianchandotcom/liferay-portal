@@ -70,9 +70,9 @@ String backgroundTaskStatusMessage = backgroundTask.getStatusMessage();
 				%>
 
 					<li>
-						<%= messageListItemJSONArray.getString("itemMessage") %>:
+						<%= messageListItemJSONArray.getString("errorMessage") %>:
 
-						<strong><%= HtmlUtil.escape(messageListItemJSONArray.getString("strongItemMessage")) %></strong>
+						<strong><%= HtmlUtil.escape(messageListItemJSONArray.getString("errorStrongMessage")) %></strong>
 
 						<c:if test="<%= Validator.isNotNull(info) %>">
 							<span class="error-info">(<%= HtmlUtil.escape(info) %>)</span>

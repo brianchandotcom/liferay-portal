@@ -1,7 +1,31 @@
 AUI.add(
 	'liferay-surface-app',
 	function(A) {
+		var AArray = A.Array;
 		var Surface = Liferay.Surface;
+
+		var addContentFn = A.Surface.prototype.addContent;
+
+		A.Surface.prototype.addContent = function(screenId, content) {
+			if (content) {
+				var frag = A.Node.create(content);
+
+				AArray.each(
+					Liferay.Data.sharedResources,
+					function(outputKey) {
+						frag.all('[data-outputkey="' + outputKey + '"]').remove();
+					}
+				);
+
+				var newResources = AArray.dedupe(frag.all('[data-outputkey]').getData('outputkey'));
+
+				Liferay.Data.sharedResources = Liferay.Data.sharedResources.concat(newResources);
+
+				content = frag;
+			}
+
+			return addContentFn.call(this, screenId, content);
+		};
 
 		A.ready(
 			function() {

@@ -112,7 +112,9 @@
 							toggleText: false
 						}
 					</c:if>
-				]
+				],
+
+				sharedResources: []
 			},
 
 			PortletKeys: {

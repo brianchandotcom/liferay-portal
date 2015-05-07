@@ -17,11 +17,13 @@ package com.liferay.taglib.util;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Shuyang Zhou
@@ -44,11 +46,30 @@ public class OutputTag extends PositionTagSupport {
 	public int doEndTag() throws JspException {
 		try {
 			if (_output) {
-				OutputData outputData = _getOutputData(
-					pageContext.getRequest());
+				if (isPositionInLine()) {
+					StringBundler replaceSb = new StringBundler(3);
 
-				outputData.addData(
-					_outputKey, _webKey, getBodyContentAsStringBundler());
+					replaceSb.append("<script data-outputkey=\"");
+					replaceSb.append(_outputKey);
+					replaceSb.append("\" ");
+
+					String bodyContentString =
+						getBodyContentAsStringBundler().toString();
+
+					bodyContentString = StringUtil.replace(
+						bodyContentString, "<script", replaceSb.toString());
+
+					JspWriter jspWriter = pageContext.getOut();
+
+					jspWriter.write(bodyContentString);
+				}
+				else {
+					OutputData outputData = _getOutputData(
+						pageContext.getRequest());
+
+					outputData.addData(
+						_outputKey, _webKey, getBodyContentAsStringBundler());
+				}
 			}
 
 			return EVAL_PAGE;
@@ -73,12 +94,6 @@ public class OutputTag extends PositionTagSupport {
 
 				return SKIP_BODY;
 			}
-		}
-
-		if (isPositionInLine()) {
-			_output = false;
-
-			return EVAL_BODY_INCLUDE;
 		}
 
 		_output = true;

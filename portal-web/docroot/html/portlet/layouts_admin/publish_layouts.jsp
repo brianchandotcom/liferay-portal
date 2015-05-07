@@ -86,10 +86,10 @@ if (liveGroup.isStaged()) {
 
 treeId = treeId + liveGroupId;
 
-String publishActionKey = "copy";
+String publishActionKey = "publish-to-live";
 
-if (liveGroup.isStaged() || cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-	publishActionKey = "publish";
+if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+	publishActionKey = "publish-to-remote-live";
 }
 
 long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -267,7 +267,7 @@ else if (!quickPublish) {
 					<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
 					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
 					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
-					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>"  />
+					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
 					<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
 
 					<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />

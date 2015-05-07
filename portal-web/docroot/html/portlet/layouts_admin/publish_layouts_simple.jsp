@@ -24,11 +24,11 @@ long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("expo
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
 String cmd = Constants.PUBLISH_TO_LIVE;
-String submitLanguageKey = "publish-to-live";
+String publishActionKey = "publish-to-live";
 
 if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE) {
 	cmd = Constants.PUBLISH_TO_REMOTE;
-	submitLanguageKey = "publish-to-remote-live";
+	publishActionKey = "publish-to-remote-live";
 }
 %>
 
@@ -137,9 +137,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 			</aui:fieldset>
 
 			<aui:button-row>
-				<aui:button type="submit" value="<%= LanguageUtil.get(request, submitLanguageKey) %>" />
-
-				<aui:button type="cancel" />
+				<aui:button type="submit" value="<%= LanguageUtil.get(request, publishActionKey) %>" />
 			</aui:button-row>
 		</ul>
 	</div>

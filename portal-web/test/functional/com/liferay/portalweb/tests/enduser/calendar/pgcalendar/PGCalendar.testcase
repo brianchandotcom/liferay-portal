@@ -1114,8 +1114,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="2:00 AM" />
-			<var name="startDateTime" value="1:00 AM" />
+			<var name="endDateTime" value="02:00 AM" />
+			<var name="startDateTime" value="01:00 AM" />
 		</execute>
 
 		<execute macro="CalendarEvent#setRepeating">
@@ -1870,8 +1870,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="2:00 AM" />
-			<var name="startDateTime" value="1:00 AM" />
+			<var name="endDateTime" value="02:00 AM" />
+			<var name="startDateTime" value="01:00 AM" />
 		</execute>
 
 		<execute macro="CalendarEvent#setRepeating">

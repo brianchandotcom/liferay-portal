@@ -56,7 +56,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
-import com.liferay.portlet.documentlibrary.util.comparator.DLFileEntryOrderByComparator;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
@@ -275,13 +274,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long groupId, long folderId, int status)
 		throws PortalException {
 
-		List<DLFileEntry> dlFileEntries =
-			DLFileEntryLocalServiceUtil.getFileEntries(
-				groupId, folderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+		LocalRepository localRepository =
+			RepositoryLocalServiceUtil.getLocalRepositoryImpl(groupId);
 
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			deletePortletFileEntry(dlFileEntry.getFileEntryId());
+		List<FileEntry> fileEntries = localRepository.getFileEntries(
+			folderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (FileEntry fileEntry : fileEntries) {
+			deletePortletFileEntry(fileEntry.getFileEntryId());
 		}
 	}
 
@@ -404,7 +404,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, int status) {
+			long groupId, long folderId, int status)
+		throws PortalException {
 
 		return getPortletFileEntries(
 			groupId, folderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -413,13 +414,15 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator<FileEntry> obc) {
+			long groupId, long folderId, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
 
-		return toFileEntries(
-			DLFileEntryLocalServiceUtil.getFileEntries(
-				groupId, folderId, status, start, end,
-				DLFileEntryOrderByComparator.getOrderByComparator(obc)));
+		LocalRepository localRepository =
+			RepositoryLocalServiceUtil.getLocalRepositoryImpl(groupId);
+
+		return localRepository.getFileEntries(
+			folderId, status, start, end, obc);
 	}
 
 	@Override

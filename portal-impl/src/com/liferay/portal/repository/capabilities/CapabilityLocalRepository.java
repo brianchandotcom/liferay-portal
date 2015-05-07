@@ -237,6 +237,16 @@ public class CapabilityLocalRepository
 
 	@Override
 	public List<FileEntry> getFileEntries(
+			long folderId, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		return getRepository().getFileEntries(
+			folderId, status, start, end, obc);
+	}
+
+	@Override
+	public List<FileEntry> getFileEntries(
 			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException {
 

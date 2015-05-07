@@ -106,11 +106,13 @@ public interface PortletFileRepository {
 		throws PortalException;
 
 	public List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, int status);
+			long groupId, long folderId, int status)
+		throws PortalException;
 
 	public List<FileEntry> getPortletFileEntries(
-		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator<FileEntry> obc);
+			long groupId, long folderId, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException;
 
 	public List<FileEntry> getPortletFileEntries(
 			long groupId, long folderId, OrderByComparator<FileEntry> obc)

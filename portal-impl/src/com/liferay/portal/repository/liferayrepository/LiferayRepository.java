@@ -417,6 +417,19 @@ public class LiferayRepository
 
 	@Override
 	public List<FileEntry> getFileEntries(
+			long folderId, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		List<DLFileEntry> dlFileEntries = dlFileEntryService.getFileEntries(
+			getGroupId(), toFolderId(folderId), status, start, end,
+			DLFileEntryOrderByComparator.getOrderByComparator(obc));
+
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
+	}
+
+	@Override
+	public List<FileEntry> getFileEntries(
 			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException {
 

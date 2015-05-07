@@ -336,6 +336,18 @@ public class BaseRepositoryProxyBean
 
 	@Override
 	public List<FileEntry> getFileEntries(
+			long folderId, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		List<FileEntry> fileEntries = _baseRepository.getFileEntries(
+			folderId, status, start, end, obc);
+
+		return toFileEntryProxyBeans(fileEntries);
+	}
+
+	@Override
+	public List<FileEntry> getFileEntries(
 			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException {
 

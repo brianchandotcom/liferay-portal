@@ -45,6 +45,8 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassType;
 import com.liferay.portlet.asset.model.ClassTypeField;
 import com.liferay.portlet.asset.model.ClassTypeReader;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
@@ -535,6 +537,32 @@ public class AssetPublisherDisplayContext {
 		return _socialBookmarksDisplayStyle;
 	}
 
+	public AssetEntry incrementViewCounter(AssetEntry assetEntry)
+		throws PortalException {
+
+		// Dynamically created asset entries are never persisted so incrementing
+		// the view counter breaks
+
+		if ((assetEntry == null) || assetEntry.isNew() ||
+			!assetEntry.isVisible() ||!isEnableViewCountIncrement()) {
+
+			return assetEntry;
+		}
+
+		if (isEnablePermissions()) {
+			return AssetEntryServiceUtil.incrementViewCounter(
+				assetEntry.getClassName(), assetEntry.getClassPK());
+		}
+		else {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			return AssetEntryLocalServiceUtil.incrementViewCounter(
+				themeDisplay.getUserId(), assetEntry.getClassName(),
+				assetEntry.getClassPK());
+		}
+	}
+
 	public Boolean isAnyAssetType() {
 		if (_anyAssetType == null) {
 			_anyAssetType = GetterUtil.getBoolean(
@@ -690,6 +718,18 @@ public class AssetPublisherDisplayContext {
 		return _enableTagBasedNavigation;
 	}
 
+	public boolean isEnableViewCountIncrement() {
+		if (_enableViewCountIncrement != null) {
+			return _enableViewCountIncrement;
+		}
+
+		_enableViewCountIncrement = GetterUtil.getBoolean(
+			_portletPreferences.getValue("enableViewCountIncrement", null),
+			PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED);
+
+		return _enableViewCountIncrement;
+	}
+
 	public boolean isExcludeZeroViewCount() {
 		if (_excludeZeroViewCount == null) {
 			_excludeZeroViewCount = GetterUtil.getBoolean(
@@ -830,6 +870,22 @@ public class AssetPublisherDisplayContext {
 		if (_showContextLink == null) {
 			_showContextLink = GetterUtil.getBoolean(
 				_portletPreferences.getValue("showContextLink", null), true);
+		}
+
+		return _showContextLink;
+	}
+
+	public Boolean isShowContextLink(long groupId, String portletId)
+		throws PortalException {
+
+		if (_showContextLink == null) {
+			_showContextLink = isShowContextLink();
+
+			if (_showContextLink) {
+				if (PortalUtil.getPlidFromPortletId(groupId, portletId) == 0) {
+					_showContextLink = false;
+				}
+			}
 		}
 
 		return _showContextLink;
@@ -1062,6 +1118,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _enableRSS;
 	private Boolean _enableSocialBookmarks;
 	private Boolean _enableTagBasedNavigation;
+	private Boolean _enableViewCountIncrement;
 	private Boolean _excludeZeroViewCount;
 	private String[] _extensions;
 	private long[] _groupIds;

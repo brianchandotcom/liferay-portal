@@ -49,6 +49,8 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 request.setAttribute("view.jsp-fullContentRedirect", currentURL);
 request.setAttribute("view.jsp-showIconLabel", true);
+
+assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 %>
 
 <c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
@@ -97,30 +99,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	</c:if>
 
 	<%
-
-	// Dynamically created asset entries are never persisted so incrementing the view counter breaks
-
-	if (!assetEntry.isNew() && assetEntry.isVisible()) {
-		AssetEntry incrementAssetEntry = null;
-
-		if (assetPublisherDisplayContext.isEnablePermissions()) {
-			incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(assetEntry.getClassName(), assetEntry.getClassPK());
-		}
-		else {
-			incrementAssetEntry = AssetEntryLocalServiceUtil.incrementViewCounter(user.getUserId(), assetEntry.getClassName(), assetEntry.getClassPK());
-		}
-
-		if (incrementAssetEntry != null) {
-			assetEntry = incrementAssetEntry;
-		}
-	}
-
-	if (assetPublisherDisplayContext.isShowContextLink()) {
-		if (PortalUtil.getPlidFromPortletId(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) == 0) {
-			assetPublisherDisplayContext.setShowContextLink(false);
-		}
-	}
-
 	PortletURL viewFullContentURL = renderResponse.createRenderURL();
 
 	viewFullContentURL.setParameter("mvcPath", "/view_content.jsp");
@@ -134,10 +112,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 	}
-
-	String viewFullContentURLString = viewFullContentURL.toString();
-
-	viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
 
 	String socialBookmarksDisplayPosition = assetPublisherDisplayContext.getSocialBookmarksDisplayPosition();
 	%>
@@ -189,9 +163,9 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			</div>
 		</c:if>
 
-		<c:if test="<%= assetPublisherDisplayContext.isShowContextLink() && !print && assetEntry.isVisible() %>">
+		<c:if test="<%= assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible() %>">
 			<div class="asset-more">
-				<a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString) %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
+				<a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL)) %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
 			</div>
 		</c:if>
 

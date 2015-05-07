@@ -357,16 +357,14 @@ public final class XMLLoggerHandler {
 			sb.append(_getLineItemText("misc", "&gt;"));
 		}
 
+		lineContainerLoggerElement.setText(sb.toString());
+
 		String elementName = element.getName();
 
-		if (elementName.equals("execute") && !elements.isEmpty())  {
-			LoggerElement parameterContainerLoggerElement =
-				_getParameterContainerLoggerElement(element);
-
-			sb.append(parameterContainerLoggerElement.toString());
+		if (elementName.equals("execute") && !elements.isEmpty()) {
+			lineContainerLoggerElement.addChildLoggerElement(
+				_getParameterContainerLoggerElement(element));
 		}
-
-		lineContainerLoggerElement.setText(sb.toString());
 
 		return lineContainerLoggerElement;
 	}
@@ -406,13 +404,19 @@ public final class XMLLoggerHandler {
 		return loggerElement.toString();
 	}
 
-	private static String _getLineNumberItemText(String lineNumber) {
+	private static LoggerElement _getLineNumberItem(String lineNumber) {
 		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setClassName("line-number");
 		loggerElement.setID(null);
 		loggerElement.setName("div");
 		loggerElement.setText(lineNumber);
+
+		return loggerElement;
+	}
+
+	private static String _getLineNumberItemText(String lineNumber) {
+		LoggerElement loggerElement = _getLineNumberItem(lineNumber);
 
 		return loggerElement.toString();
 	}
@@ -468,22 +472,15 @@ public final class XMLLoggerHandler {
 		loggerElement.setID(null);
 		loggerElement.setName("div");
 
-		StringBuilder sb = new StringBuilder();
-
 		List<Element> childElements = element.elements();
 
 		for (Element childElement : childElements) {
-			sb.append(
-				_getLineNumberItemText(
-					childElement.attributeValue("line-number")));
+			loggerElement.addChildLoggerElement(
+				_getLineNumberItem(childElement.attributeValue("line-number")));
 
-			LoggerElement lineContainerLoggerElement =
-				_getLineContainerLoggerElement(childElement);
-
-			sb.append(lineContainerLoggerElement.toString());
+			loggerElement.addChildLoggerElement(
+				_getLineContainerLoggerElement(childElement));
 		}
-
-		loggerElement.setText(sb.toString());
 
 		return loggerElement;
 	}

@@ -394,6 +394,22 @@ public class LayoutsTreeUtil {
 			_childLayoutTreeNodes = childLayoutTreeNodes;
 		}
 
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(StringPool.OPEN_CURLY_BRACE);
+
+			sb.append("childLayoutTreeNodes=");
+			sb.append(_childLayoutTreeNodes);
+			sb.append(", layout=");
+			sb.append(_layout);
+
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			return sb.toString();
+		}
+
 		private LayoutTreeNodes _childLayoutTreeNodes = new LayoutTreeNodes();
 		private final Layout _layout;
 
@@ -430,6 +446,22 @@ public class LayoutsTreeUtil {
 		@Override
 		public Iterator<LayoutTreeNode> iterator() {
 			return _layoutTreeNodesList.iterator();
+		}
+
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(StringPool.OPEN_CURLY_BRACE);
+
+			sb.append("layoutTreeNodesList=");
+			sb.append(_layoutTreeNodesList);
+			sb.append(", total=");
+			sb.append(_total);
+
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			return sb.toString();
 		}
 
 		private final List<LayoutTreeNode> _layoutTreeNodesList;

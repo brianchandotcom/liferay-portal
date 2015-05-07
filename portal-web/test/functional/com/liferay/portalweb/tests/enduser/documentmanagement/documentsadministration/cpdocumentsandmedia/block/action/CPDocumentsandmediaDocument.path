@@ -106,6 +106,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_URL_LINK</td>
+	<td>//div[@class='asset-details-content']//span/a[@class='show-url-file']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_URL_ADDRESS</td>
+	<td>//div/input[@id='_199_url']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

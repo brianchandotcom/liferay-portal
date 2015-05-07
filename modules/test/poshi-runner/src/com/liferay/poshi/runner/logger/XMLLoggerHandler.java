@@ -520,4 +520,12 @@ public final class XMLLoggerHandler {
 		return false;
 	}
 
+	private static final LoggerElement _xmlLogLoggerElement = new LoggerElement(
+		"xmlLogContainer");
+
+	static {
+		_xmlLogLoggerElement.setClassName("xml-log-container");
+		_xmlLogLoggerElement.setName("ul");
+	}
+
 }

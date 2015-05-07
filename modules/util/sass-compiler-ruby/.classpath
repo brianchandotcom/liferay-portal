@@ -35,6 +35,7 @@
 	<classpathentry kind="lib" path="lib/asm.jar" />
 	<classpathentry kind="lib" path="lib/bytelist.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.ruby.gems.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.sass.compiler.api.jar" />
 	<classpathentry kind="lib" path="lib/invokebinder.jar" />
 	<classpathentry kind="lib" path="lib/jcodings.jar" />
 	<classpathentry kind="lib" path="lib/jffi.jar" />
@@ -46,11 +47,9 @@
 	<classpathentry kind="lib" path="lib/jnr-unixsocket.jar" />
 	<classpathentry kind="lib" path="lib/jnr-x86asm.jar" />
 	<classpathentry kind="lib" path="lib/joda-time.jar" />
-	<classpathentry kind="lib" path="lib/jodd-core.jar" />
 	<classpathentry kind="lib" path="lib/joni.jar" />
 	<classpathentry kind="lib" path="lib/jruby-core.jar" />
 	<classpathentry kind="lib" path="lib/jruby-stdlib.jar" />
-	<classpathentry kind="lib" path="lib/jruby.jar" />
 	<classpathentry kind="lib" path="lib/jzlib.jar" />
 	<classpathentry kind="lib" path="lib/nailgun-server.jar" />
 	<classpathentry kind="lib" path="lib/options.jar" />

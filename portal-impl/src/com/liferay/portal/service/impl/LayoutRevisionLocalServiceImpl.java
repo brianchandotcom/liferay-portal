@@ -170,18 +170,9 @@ public class LayoutRevisionLocalServiceImpl
 			}
 		}
 
-		User user = userPersistence.fetchByPrimaryKey(
-			layoutRevision.getUserId());
-
-		boolean isDefaultUser = true;
-
-		if (user == null) {
-			isDefaultUser = false;
-		}
-
 		StagingUtil.deleteRecentLayoutRevisionId(
 			layoutRevision.getUserId(), layoutRevision.getLayoutSetBranchId(),
-			layoutRevision.getPlid(), isDefaultUser);
+			layoutRevision.getPlid());
 
 		if (layoutRevision.isPending()) {
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(

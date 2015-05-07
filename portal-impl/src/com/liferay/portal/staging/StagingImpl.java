@@ -433,21 +433,23 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void deleteRecentLayoutRevisionId(
-		long userId, long layoutSetBranchId, long plid, boolean isDefaultUser) {
+		long userId, long layoutSetBranchId, long plid) {
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				userId, isDefaultUser);
+		User user = UserLocalServiceUtil.fetchUser(userId);
 
-		deleteRecentLayoutRevisionId(
-			portalPreferences, layoutSetBranchId, plid);
+		if (user != null) {
+			deleteRecentLayoutRevisionId(user, layoutSetBranchId, plid);
+		}
+		else {
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					userId, false);
+
+			deleteRecentLayoutRevisionId(
+				portalPreferences, layoutSetBranchId, plid);
+		}
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 * #deleteRecentLayoutRevisionId(long, long, long, boolean)}
-	 */
-	@Deprecated
 	@Override
 	public void deleteRecentLayoutRevisionId(
 		User user, long layoutSetBranchId, long plid) {
@@ -2016,11 +2018,8 @@ public class StagingImpl implements Staging {
 	protected PortalPreferences getPortalPreferences(User user) {
 		boolean signedIn = !user.isDefaultUser();
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				user.getUserId(), signedIn);
-
-		return portalPreferences;
+		return PortletPreferencesFactoryUtil.getPortalPreferences(
+			user.getUserId(), signedIn);
 	}
 
 	protected long getRecentLayoutBranchId(

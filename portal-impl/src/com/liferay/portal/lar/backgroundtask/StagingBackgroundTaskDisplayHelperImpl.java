@@ -130,22 +130,22 @@ public class StagingBackgroundTaskDisplayHelperImpl
 			}
 
 			errorMessageJSONObject.put(
-				"itemStrongMessage", missingReferenceDisplayName);
+				"errorStrongMessage", missingReferenceDisplayName);
 
 			Group group = GroupLocalServiceUtil.fetchGroup(
 				missingReference.getGroupId());
 
-			String itemMessage = ResourceActionsUtil.getModelResource(
+			String errorMessage = ResourceActionsUtil.getModelResource(
 				locale, missingReference.getClassName());
 
 			if (group != null) {
-				itemMessage += StringPool.SPACE +
+				errorMessage += StringPool.SPACE +
 					LanguageUtil.format(
 						locale, "in-site-x", missingReference.getGroupId(),
 						false);
 			}
 
-			errorMessageJSONObject.put("itemMessage", itemMessage);
+			errorMessageJSONObject.put("errorMessage", errorMessage);
 
 			errorMessagesJSONArray.put(errorMessageJSONObject);
 		}
@@ -269,13 +269,13 @@ public class StagingBackgroundTaskDisplayHelperImpl
 					(String)missingLayoutPrototype.getObject(2);
 
 				errorMessageJSONObject.put(
-					"itemStrongMessage", layoutPrototypeName);
+					"errorStrongMessage", layoutPrototypeName);
 
 				String layoutPrototypeClassName =
 					(String)missingLayoutPrototype.getObject(0);
 
 				errorMessageJSONObject.put(
-					"itemMessage",
+					"errorMessage",
 					ResourceActionsUtil.getModelResource(
 						locale, layoutPrototypeClassName));
 
@@ -458,9 +458,9 @@ public class StagingBackgroundTaskDisplayHelperImpl
 						false));
 			}
 
-			errorMessageJSONObject.put("itemStrongMessage", referrers.size());
+			errorMessageJSONObject.put("errorStrongMessage", referrers.size());
 			errorMessageJSONObject.put(
-				"itemMessage",
+				"errorMessage",
 				ResourceActionsUtil.getModelResource(
 					locale, missingReferenceReferrerClassName));
 

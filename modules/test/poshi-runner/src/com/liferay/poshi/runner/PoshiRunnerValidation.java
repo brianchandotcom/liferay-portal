@@ -872,11 +872,11 @@ public class PoshiRunnerValidation {
 		List<String> conditionTags = Arrays.asList(
 			"and", "condition", "contains", "equals", "isset", "not", "or");
 
-		int i = 0;
-
 		List<Element> childElements = element.elements();
 
-		for (Element childElement : childElements) {
+		for (int i = 0; i < childElements.size(); i++) {
+			Element childElement = childElements.get(i);
+
 			String childElementName = childElement.getName();
 
 			if (conditionTags.contains(childElementName) && (i == 0)) {
@@ -893,8 +893,6 @@ public class PoshiRunnerValidation {
 					"Invalid " + childElementName + " element\n" + filePath +
 						":" + childElement.attributeValue("line-number"));
 			}
-
-			i++;
 		}
 	}
 

@@ -19,13 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DIALOG</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td>DDL</td>
+	<td>//iframe[contains(@src,'dynamic_data_mapping')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DDL</td>
-	<td>//iframe[contains(@src,'dynamic_data_mapping')]</td>
+	<td>DIALOG</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
 	<td></td>
 </tr>
 <tr>

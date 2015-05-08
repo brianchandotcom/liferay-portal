@@ -9,13 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>RSS</td>
-	<td>//a/span[contains(@class,'taglib-text') and contains(.,'RSS')]</td>
+	<td>READ_MORE</td>
+	<td>//a[contains(.,'Read More')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>READ_MORE</td>
-	<td>//a[contains(.,'Read More')]</td>
+	<td>RSS</td>
+	<td>//a/span[contains(@class,'taglib-text') and contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <tr>

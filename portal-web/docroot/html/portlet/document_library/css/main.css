@@ -287,7 +287,7 @@
 		}
 
 		.document-type .lfr-panel-content {
-				min-height: 35px;
+			min-height: 35px;
 		}
 
 		.document-type-fields {
@@ -297,7 +297,7 @@
 
 		.document-type-selector, .tagselector {
 			.btn-group {
-				&, & .btn {
+				&, .btn {
 					max-width: 100%;
 					overflow: hidden;
 					white-space: normal;

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMUNICATION</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Communication')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT</td>
 	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Content')]</td>
 	<td></td>
@@ -21,6 +26,26 @@
 <tr>
 	<td>PAGE</td>
 	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARING</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
 	<td></td>
 </tr>
 </tbody>

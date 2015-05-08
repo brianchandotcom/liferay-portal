@@ -219,6 +219,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GLOBAL</td>
+	<td>//a[@role='menuitem' and contains(.,'Global')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMPERSONATE_USER</td>
 	<td>//a[@role='menuitem' and contains(.,'Impersonate User')]</td>
 	<td></td>
@@ -251,6 +256,11 @@
 <tr>
 	<td>LOOK_AND_FEEL</td>
 	<td>//a[@role='menuitem' and contains(.,'Look and Feel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHER_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Other Site...')]</td>
 	<td></td>
 </tr>
 <tr>

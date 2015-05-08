@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>NavTab</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">NavTab</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SUBSCRIPTIONS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Subscriptions')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUPPORTED_CLIENTS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Supported Clients')]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

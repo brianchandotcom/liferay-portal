@@ -28,6 +28,7 @@ page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
+page import="com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration" %><%@
 page import="com.liferay.site.navigation.language.web.context.LanguageDisplayContext" %>
 
 <%@ page import="java.util.ArrayList" %><%@
@@ -39,7 +40,9 @@ page import="java.util.Set" %>
 <portlet:defineObjects />
 
 <%
-LanguageDisplayContext languageDisplayContext = new LanguageDisplayContext(request, portletPreferences);
+LanguagePortletInstanceConfiguration languagePortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(LanguagePortletInstanceConfiguration.class);
+
+LanguageDisplayContext languageDisplayContext = new LanguageDisplayContext(request, languagePortletInstanceConfiguration);
 %>
 
 <%@ include file="/init-ext.jsp" %>

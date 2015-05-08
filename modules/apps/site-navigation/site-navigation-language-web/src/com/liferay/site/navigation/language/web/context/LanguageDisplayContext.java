@@ -15,15 +15,14 @@
 package com.liferay.site.navigation.language.web.context;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
-
-import javax.portlet.PortletPreferences;
+import com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,10 +32,12 @@ import javax.servlet.http.HttpServletRequest;
 public class LanguageDisplayContext {
 
 	public LanguageDisplayContext(
-		HttpServletRequest request, PortletPreferences portletPreferences) {
+		HttpServletRequest request, LanguagePortletInstanceConfiguration
+			languagePortletInstanceConfiguration) {
 
 		_request = request;
-		_portletPreferences = portletPreferences;
+		_languagePortletInstanceConfiguration =
+			languagePortletInstanceConfiguration;
 	}
 
 	public String[] getAvailableLanguageIds() {
@@ -73,8 +74,9 @@ public class LanguageDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = PrefsParamUtil.getString(
-			_portletPreferences, _request, "displayStyle");
+		_displayStyle = ParamUtil.getString(
+			_request, "displayStyle",
+			_languagePortletInstanceConfiguration.displayStyle());
 
 		return _displayStyle;
 	}
@@ -87,9 +89,10 @@ public class LanguageDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_displayStyleGroupId = PrefsParamUtil.getLong(
-			_portletPreferences, _request, "displayStyleGroupId",
-			themeDisplay.getSiteGroupId());
+		_displayStyleGroupId = ParamUtil.getLong(
+			_request, "displayStyleGroupId",
+			_languagePortletInstanceConfiguration.displayStyleGroupId(
+				themeDisplay.getSiteGroupId()));
 
 		return _displayStyleGroupId;
 	}
@@ -100,8 +103,11 @@ public class LanguageDisplayContext {
 		}
 
 		_languageIds = StringUtil.split(
-			_portletPreferences.getValue(
-				"languageIds", StringUtil.merge(getAvailableLanguageIds())));
+			_languagePortletInstanceConfiguration.languageIds());
+
+		if (ArrayUtil.isEmpty(_languageIds)) {
+			_languageIds = getAvailableLanguageIds();
+		}
 
 		return _languageIds;
 	}
@@ -111,8 +117,9 @@ public class LanguageDisplayContext {
 			return _displayCurrentLocale;
 		}
 
-		_displayCurrentLocale = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayCurrentLocale", null), true);
+		_displayCurrentLocale = ParamUtil.getBoolean(
+			_request, "displayCurrentLocale",
+			_languagePortletInstanceConfiguration.displayCurrentLocale());
 
 		return _displayCurrentLocale;
 	}
@@ -123,7 +130,8 @@ public class LanguageDisplayContext {
 	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private String[] _languageIds;
-	private final PortletPreferences _portletPreferences;
+	private final LanguagePortletInstanceConfiguration
+		_languagePortletInstanceConfiguration;
 	private final HttpServletRequest _request;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.site.navigation.language.web.portlet.template;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.site.navigation.language.web.configuration.LanguageWebConfiguration;
 import com.liferay.site.navigation.language.web.configuration.LanguageWebConfigurationValues;
 import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 
@@ -30,13 +33,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.site.navigation.language.web.configuration.LanguageWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {"javax.portlet.name="+ LanguagePortletKeys.LANGUAGE},
 	service = TemplateHandler.class
 )
@@ -50,7 +57,7 @@ public class LanguagePortletDisplayTemplateHandler
 
 	@Override
 	public String getDefaultTemplateKey() {
-		return LanguageWebConfigurationValues.DDM_TEMPLATE_KEY_DEFAULT;
+		return _languageWebConfiguration.ddmTemplateKey();
 	}
 
 	@Override
@@ -90,9 +97,18 @@ public class LanguagePortletDisplayTemplateHandler
 		return templateVariableGroups;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_languageWebConfiguration = Configurable.createConfigurable(
+			LanguageWebConfiguration.class, properties);
+	}
+
 	@Override
 	protected String getTemplatesConfigPath() {
 		return LanguageWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
+
+	private volatile LanguageWebConfiguration _languageWebConfiguration;
 
 }

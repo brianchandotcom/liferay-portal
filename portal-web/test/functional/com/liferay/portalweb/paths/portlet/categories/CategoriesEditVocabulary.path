@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>VocabulariesEdit</title>
+<title>CategoriesEditVocabulary</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">VocabulariesEdit</td></tr>
+<tr><td rowspan="1" colspan="3">CategoriesEditVocabulary</td></tr>
 </thead>
 <tbody>
 <tr>

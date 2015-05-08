@@ -8,7 +8,6 @@
 <tr><td rowspan="1" colspan="3">Configuration</td></tr>
 </thead>
 <tbody>
-<tr>
 <!--SETUP-->
 <tr>
 	<td>ARCHIVE_RESTORE</td>

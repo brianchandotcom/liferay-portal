@@ -117,6 +117,7 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.ResourceConstants;
@@ -4657,13 +4658,14 @@ public class PortalImpl implements Portal {
 		PortletConfig portletConfig = PortletConfigFactoryUtil.update(portlet);
 
 		return getPortletTitle(
-			portlet.getRootPortletId(),
-			portletConfig.getResourceBundle(locale));
+			portletId, portletConfig.getResourceBundle(locale));
 	}
 
 	@Override
 	public String getPortletTitle(
 		String portletId, ResourceBundle resourceBundle) {
+
+		portletId = PortletConstants.getRootPortletId(portletId);
 
 		String portletTitle = LanguageUtil.get(
 			resourceBundle,

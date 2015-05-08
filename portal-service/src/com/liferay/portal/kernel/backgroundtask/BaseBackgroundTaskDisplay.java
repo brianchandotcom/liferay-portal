@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
@@ -87,6 +89,29 @@ public class BaseBackgroundTaskDisplay implements BackgroundTaskDisplay {
 		}
 
 		return false;
+	}
+
+	protected void addDetailItem(
+		JSONArray detailItems, String message, JSONArray itemsList) {
+
+		JSONObject detailItem = JSONFactoryUtil.createJSONObject();
+
+		detailItem.put("message", message);
+		detailItem.put("itemsList", itemsList);
+
+		detailItems.put(detailItem);
+	}
+
+	protected JSONObject createDetailsJSON(
+		String detailHeader, JSONArray detailItems, int status) {
+
+		JSONObject detailsJSON = JSONFactoryUtil.createJSONObject();
+
+		detailsJSON.put("detailHeader", detailHeader);
+		detailsJSON.put("detailItems", detailItems);
+		detailsJSON.put("status", status);
+
+		return detailsJSON;
 	}
 
 	protected BackgroundTaskStatus getBackgroundTaskStatus() {

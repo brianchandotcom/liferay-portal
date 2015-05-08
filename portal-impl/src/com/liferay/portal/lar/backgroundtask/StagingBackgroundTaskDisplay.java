@@ -45,16 +45,16 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 
 		super(backgroundTask, locale);
 
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		_cmd = (String)taskContextMap.get(Constants.CMD);
+
 		JSONObject details = createDetailsJSON(locale, backgroundTask);
 
 		setDetails(details);
 
 		BackgroundTaskStatus backgroundTaskStatus = getBackgroundTaskStatus();
-
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
-		_cmd = (String)taskContextMap.get(Constants.CMD);
 
 		if (backgroundTaskStatus == null) {
 			_allProgressBarCountersTotal = 0;
@@ -99,7 +99,7 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 			backgroundTaskStatus.getAttribute(
 				StagingBackgroundTaskConstants.STAGED_MODEL_TYPE));
 
-		String message = processMessage(locale);
+		String message = createMessage(locale);
 
 		setMessage(message);
 	}
@@ -228,28 +228,7 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 		return detailsJSON;
 	}
 
-	protected boolean hasRemoteMessage() {
-		if (Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE) &&
-			(getPercentage() == _MAX_PERCENTAGE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean hasStagedModelMessage() {
-		if (Validator.isNotNull(_stagedModelName) &&
-			Validator.isNotNull(_stagedModelType)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected String processMessage(Locale locale) {
-
+	protected String createMessage(Locale locale) {
 		String message = StringPool.BLANK;
 
 		if (hasRemoteMessage()) {
@@ -285,6 +264,26 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 		}
 
 		return message;
+	}
+
+	protected boolean hasRemoteMessage() {
+		if (Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE) &&
+			(getPercentage() == _MAX_PERCENTAGE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean hasStagedModelMessage() {
+		if (Validator.isNotNull(_stagedModelName) &&
+			Validator.isNotNull(_stagedModelType)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final int _EXPORT_PHASE_MAX_PERCENTAGE = 50;

@@ -36,6 +36,7 @@ import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
 import java.io.IOException;
@@ -287,7 +288,7 @@ public class EditDiscussionAction extends PortletAction {
 			actionRequest, "parentMessageId");
 
 		if ((threadId == 0) && (parentMessageId != 0)) {
-			MBMessage parentMessage = MBMessageServiceUtil.getMessage(
+			MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
 				parentMessageId);
 
 			threadId = parentMessage.getThreadId();

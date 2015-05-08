@@ -904,35 +904,42 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a UI element to display all the tags associated with any given asset such as a blog, wiki, or message-board message.</description>
 		<name>asset-tags-summary</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsSummaryTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>An array of all the asset tag names.</description>
 			<name>assetTagNames</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The Java class for the associated asset.</description>
 			<name>className</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The Java class primary key for the associated asset. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>classPK</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The message to display before all the tag lables. A standard example is <![CDATA[<code>tags</code>]]>. This will be displayed as <![CDATA[<code>Tags:</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The parameter name for tags. The default value is <![CDATA[<code>tag</code>]]> when no value is set.</description>
 			<name>paramName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The url of the portlet containing the tags.</description>
 			<name>portletURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

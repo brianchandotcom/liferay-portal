@@ -537,7 +537,6 @@ AUI.add(
 									dialog: {
 										bodyContent: rangeNode,
 										centered: true,
-										height: 375,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -560,8 +559,7 @@ AUI.add(
 													}
 												}
 											]
-										},
-										width: 400
+										}
 									},
 									title: Liferay.Language.get('date-range')
 								}

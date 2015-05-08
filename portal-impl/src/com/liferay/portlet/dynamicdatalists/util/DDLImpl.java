@@ -203,7 +203,8 @@ public class DDLImpl implements DDL {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"DDL record index is stale and contains record " +
-							recordId);
+							recordId,
+						nsre);
 				}
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(

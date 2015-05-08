@@ -31,10 +31,15 @@ import org.dom4j.Element;
 public final class XMLLoggerHandler {
 
 	public static void generateXMLLog(String classCommandName) {
-		LoggerElement loggerElement = new LoggerElement();
+		_xmlLogLoggerElement = new LoggerElement("xmlLogContainer");
 
-		loggerElement.setClassName("header");
-		loggerElement.setName("li");
+		_xmlLogLoggerElement.setClassName("xml-log-container");
+		_xmlLogLoggerElement.setName("ul");
+
+		LoggerElement headerLoggerElement = new LoggerElement();
+
+		headerLoggerElement.setClassName("header");
+		headerLoggerElement.setName("li");
 
 		LoggerElement lineContainerLoggerElement = new LoggerElement();
 
@@ -51,7 +56,7 @@ public final class XMLLoggerHandler {
 
 		lineContainerLoggerElement.addChildLoggerElement(lineLoggerElement);
 
-		loggerElement.addChildLoggerElement(lineContainerLoggerElement);
+		headerLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
 
 		LoggerElement childContainerLoggerElement = new LoggerElement();
 
@@ -84,9 +89,9 @@ public final class XMLLoggerHandler {
 				_getLoggerElementFromElement(tearDownElement));
 		}
 
-		loggerElement.addChildLoggerElement(childContainerLoggerElement);
+		headerLoggerElement.addChildLoggerElement(childContainerLoggerElement);
 
-		_xmlLogLoggerElement.addChildLoggerElement(loggerElement);
+		_xmlLogLoggerElement.addChildLoggerElement(headerLoggerElement);
 	}
 
 	public static String getXMLLogText() {
@@ -547,12 +552,6 @@ public final class XMLLoggerHandler {
 		return false;
 	}
 
-	private static final LoggerElement _xmlLogLoggerElement = new LoggerElement(
-		"xmlLogContainer");
-
-	static {
-		_xmlLogLoggerElement.setClassName("xml-log-container");
-		_xmlLogLoggerElement.setName("ul");
-	}
+	private static LoggerElement _xmlLogLoggerElement = null;
 
 }

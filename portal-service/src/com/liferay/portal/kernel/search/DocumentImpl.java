@@ -380,6 +380,20 @@ public class DocumentImpl implements Document {
 	}
 
 	@Override
+	public void addKeywordSortable(String name, String value) {
+		createKeywordField(name, value, false);
+
+		createSortableTextField(name, value);
+	}
+
+	@Override
+	public void addKeywordSortable(String name, String[] values) {
+		createField(name, values);
+
+		createSortableTextField(name, values);
+	}
+
+	@Override
 	public void addLocalizedKeyword(String name, Map<Locale, String> values) {
 		addLocalizedKeyword(name, values, false);
 	}

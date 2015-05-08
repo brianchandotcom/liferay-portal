@@ -301,10 +301,13 @@ public final class LoggerUtil {
 
 		_javascriptExecutor = (JavascriptExecutor)_webDriver;
 
-		String cssContent = _readResource(
-			"META-INF/resources/css/main_rtl.css");
+		String cssContent = _readResource("META-INF/resources/css/main.css");
 
 		FileUtil.write(_CURRENT_DIR + "/test-results/css/main.css", cssContent);
+
+		String jsContent = _readResource("META-INF/resources/js/main.js");
+
+		FileUtil.write(_CURRENT_DIR + "/test-results/js/main.js", jsContent);
 
 		String htmlContent = _readResource(
 			"META-INF/resources/html/index.html");
@@ -321,10 +324,15 @@ public final class LoggerUtil {
 	public static void stopLogger() throws Exception {
 		if (!PropsValues.SELENIUM_LOGGER_ENABLED) {
 			String cssContent = _readResource(
-				"META-INF/resources/css/main_rtl.css");
+				"META-INF/resources/css/main.css");
 
 			FileUtil.write(
 				_CURRENT_DIR + "/test-results/css/main.css", cssContent);
+
+			String jsContent = _readResource("META-INF/resources/js/main.js");
+
+			FileUtil.write(
+				_CURRENT_DIR + "/test-results/js/main.js", jsContent);
 		}
 
 		String htmlContent = _readResource(

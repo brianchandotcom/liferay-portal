@@ -1,0 +1,279 @@
+/* ---------- XML log ---------- */
+
+.collapse, .header > .btn-container {
+	display: none;
+}
+
+.xml-log {
+	color: $xml-log-default-text-color;
+	display: block;
+	position: relative;
+	width: 80%;
+}
+
+.command-logger .xml-log {
+	width: 60%;
+}
+
+.minimized-sidebar .xml-log {
+	width: 100%;
+}
+
+.xml-log-container {
+	border-width: 0;
+	height: 100%;
+	padding-left: 100px;
+}
+
+.line-container {
+	padding: 5px 3px;
+}
+
+.function > .line-container, .macro > .line-container:nth-of-type(2) {
+	cursor: pointer;
+}
+
+.macro > .child-container {
+	background-color: $macro-child-container-bg-color;
+	box-shadow: $macro-child-container-box-shadow;
+}
+
+.child-container {
+	border-left: 1px solid $child-container-left-border-color;
+	height: 0;
+	list-style-type: none;
+	overflow: visible;
+	padding: 1px 0 1px 20px;
+
+	&.root-container {
+		border-width: 0;
+		overflow: visible;
+	}
+
+	&.transitioning {
+		overflow: hidden;
+	}
+}
+
+.header > .child-container {
+	height: auto;
+}
+
+.btn-container {
+	left: 0;
+	position: absolute;
+}
+
+.parameter-container {
+	border: 1px dashed $parameter-container-border-color;
+	border-right-width: 0;
+	border-top-width: 0;
+	height: 0;
+	margin-left: 35px;
+	overflow: hidden;
+
+	.line-container {
+		padding: 5px 10px;
+	}
+
+	.line-number {
+		left: 0;
+		position: absolute;
+	}
+}
+
+.line-number {
+	border-width: 0;
+	color: $line-number-text-color;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 10px;
+	margin-left: 5px;
+	min-width: 26px;
+	opacity: 0.2;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+/* ---------- Command-logger mode ---------- */
+
+.command-logger {
+	.pass {
+		&.conditional-failed > .line-container {
+			background: transparent;
+		}
+
+		> .line-container {
+			background-color: $passed-line-bg-color;
+			margin-top: 1px;
+			padding-right: 2%;
+			width: 102%;
+		}
+	}
+
+	.pending > .line-container {
+		background-color: $pending-border-bg-color;
+		border: 3px dotted $pending-border-color;
+		padding: 4px;
+	}
+
+	.hover {
+		&.pass {
+			&.function {
+				background: transparent;
+				outline-width: 0;
+			}
+
+			&, &.pending {
+				> .line-container {
+					background-color: $logger-mode-hover-line-bg-color;
+				}
+			}
+		}
+	}
+
+	.function.pass .line-container:hover {
+		background-color: $passed-function-hover-bg-color;
+		border: 1px solid $passed-function-hover-border-color;
+		border-right-width: 0;
+		padding: 4px 2% 4px 2px;
+	}
+
+	.current-scope.pass.function {
+		background: transparent;
+		outline-width: 0;
+	}
+
+	.current-scope {
+		&.pass, &.pending {
+			> .line-container {
+				background-color: $logger-mode-scoped-line-bg-color;
+			}
+		}
+	}
+
+	.running .pending.function {
+		> .line-container {
+			background-color: $running-line-bg-color;
+		}
+	}
+}
+
+.fail {
+	.btn-container {
+		margin-top: 1px;
+	}
+
+	.line-number {
+		color: #FF2600;
+		font-weight: bold;
+	}
+
+	.line-container {
+		background-color: #E2604C;
+		border: 1px solid #FFA191;
+		position: relative;
+
+		&:before {
+			background-color: #FFF;
+			content: '';
+			height: 100%;
+			position: absolute;
+			right: 0;
+			top: 0;
+			transition: all 0.2s ease;
+			width: 100vw;
+			z-index: -1;
+		}
+	}
+}
+
+.collapse .fail:after, .transitioning .fail:after, .transitioning .fail .line-container:before {
+	opacity: 0;
+}
+
+.console, .screenshots {
+	border: 6px solid $error-panel-border-color;
+	color: $error-panel-text-color;
+	left: 50%;
+	max-height: 1000px;
+	overflow-Y: auto;
+	position: absolute;
+	width: 94%;
+	z-index: 2;
+
+	&.toggle {
+		border-width: 0;
+		max-height: 0;
+		overflow: hidden;
+		padding: 0;
+		transition: max-height 0.3s ease, padding 0.1s ease 0.2s, width 0.2s ease 0.3s, border-width 0.1s 0.7s;
+		width: 0;
+	}
+}
+
+.console {
+	background-color: $console-error-bg-color;
+	font-size: 12px;
+	margin-top: 25px;
+	padding: 10px 10px 50px;
+	word-wrap: break-word;
+}
+
+.screenshots {
+	background-color: $screenshot-error-bg-color;
+	margin-top: -25px;
+	padding: 30px 10px;
+	text-align: center;
+
+	div {
+		display: inline-block;
+		min-width: 600px;
+		width: 49%;
+	}
+
+	img {
+		border: 3px solid $screenshot-img-border-color;
+		height: auto;
+		max-width: 100%;
+	}
+
+	span {
+		display: block;
+		padding: 5px 10px;
+		text-align: left;
+	}
+}
+
+.fullscreen-image {
+	height: 100%;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 9999;
+
+	&:before {
+		background: #111;
+		content: '';
+		height: 100%;
+		position: absolute;
+		width: 100%;
+	}
+
+	img {
+		height: 95%;
+		left: 0;
+		left: 50%;
+		position: absolute;
+		right: 0;
+		top: 50%;
+	}
+
+	&.toggle {
+		&, img {
+			height: 0;
+		}
+	}
+}

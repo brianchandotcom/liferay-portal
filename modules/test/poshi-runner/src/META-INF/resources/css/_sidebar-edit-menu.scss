@@ -1,0 +1,70 @@
+/* ---------- Sidebar ---------- */
+
+.command-logger .sidebar {
+	width: 40%;
+}
+
+.minimized-sidebar .sidebar {
+	transform: translateX(100%);
+}
+
+.sidebar {
+	background-color: $sidebar-bg-color;
+	box-shadow: -7px 0 0 0 $sidebar-box-shadow-color;
+	color: $sidebar-default-text-color;
+	display: inline-block;
+	font-family: $sidebar-font;
+	height: 100%;
+	position: fixed;
+	right: 0;
+	transform: translateX(0%);
+	transition: all 0.6s ease-out;
+	width: 20%;
+	z-index: 2;
+
+	.title {
+		display: block;
+		font-size: 32px;
+		font-weight: 500;
+		margin: 30px 0 10px 17px;
+		position: relative;
+	}
+
+	.scope-type {
+		margin-bottom: 60px;
+	}
+
+	.scope-name {
+		background-color: $sidebar-bg-color;
+		display: block;
+		float: right;
+		font-size: 15px;
+		font-weight: 100;
+		max-width: 100%;
+		min-width: 100%;
+		overflow: hidden;
+		padding: 9px 0 9px 20px;
+		position: relative;
+		text-overflow: ellipsis;
+		transition: all 0.8s ease-in-out;
+		white-space: nowrap;
+		width: auto;
+
+		&:hover {
+			box-shadow: -5px 7px 0 0 $sidebar-box-shadow-color;
+			max-width: 300%;
+			padding-right: 20px;
+		}
+	}
+
+	.parameter-name {
+		font-size: 12px;
+		font-weight: 500;
+		margin: 15px 20px 0;
+	}
+
+	.parameter-value {
+		font-size: 11px;
+		margin: 10px 30px;
+	}
+}

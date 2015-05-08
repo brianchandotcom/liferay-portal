@@ -92,7 +92,7 @@ AUI.add(
 					_onInputFileChanged: function(event) {
 						var instance = this;
 
-						instance._previewFile(event.currentTarget.getDOMNode().files[0])
+						instance._previewFile(event.currentTarget.getDOMNode().files[0]);
 					},
 
 					_previewFile: function(file) {
@@ -126,8 +126,8 @@ AUI.add(
 							Lang.sub(
 								UPLOAD_ITEM_LINK_TPL,
 								{
-									title: file.name,
-									preview: preview
+									preview: preview,
+									title: file.name
 								}
 							)
 						);

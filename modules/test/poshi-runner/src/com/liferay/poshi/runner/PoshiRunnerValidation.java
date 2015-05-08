@@ -739,31 +739,38 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateRequiredChildElementName(
+			Element element, String requiredElementName, String filePath)
+		throws Exception {
+
+		boolean found = false;
+
+		List<Element> childElements = element.elements();
+
+		for (Element childElement : childElements) {
+			if (StringUtils.equals(
+					childElement.getName(), requiredElementName)) {
+
+				found = true;
+
+				break;
+			}
+		}
+
+		if (!found) {
+			throw new Exception(
+				"Missing required " + requiredElementName + " child element\n" +
+					filePath + ":" + element.attributeValue("line-number"));
+		}
+	}
+
 	private static void _validateRequiredChildElementNames(
 			Element element, List<String> requiredElementNames, String filePath)
 		throws Exception {
 
-		int counter = 0;
-
-		List<Element> childElements = element.elements();
-
 		for (String requiredElementName : requiredElementNames) {
-			for (Element childElement : childElements) {
-				if (StringUtils.equals(
-						childElement.getName(), requiredElementName)) {
-
-					counter++;
-
-					break;
-				}
-			}
-		}
-
-		if (counter != requiredElementNames.size()) {
-			throw new Exception(
-				"Missing required " + requiredElementNames +
-					" child elements\n" + filePath + ":" +
-						element.attributeValue("line-number"));
+			_validateRequiredChildElementName(
+				element, requiredElementName, filePath);
 		}
 	}
 

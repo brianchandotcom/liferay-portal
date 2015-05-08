@@ -309,6 +309,10 @@ public final class LoggerUtil {
 		String htmlContent = _readResource(
 			"META-INF/resources/html/index.html");
 
+		htmlContent = htmlContent.replace(
+			"<ul class=\"xml-log-container\" id=\"xmlLogContainer\" />",
+			XMLLoggerHandler.getXMLLogText());
+
 		FileUtil.write(_getHtmlFilePath(), htmlContent);
 
 		_webDriver.get("file://" + _getHtmlFilePath());
@@ -330,6 +334,10 @@ public final class LoggerUtil {
 			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">" +
 				"</ul>",
 			CommandLoggerHandler.getCommandLogText());
+
+		htmlContent = htmlContent.replace(
+			"<ul class=\"xml-log-container\" id=\"xmlLogContainer\" />",
+			XMLLoggerHandler.getXMLLogText());
 
 		FileUtil.write(_getHtmlFilePath(), htmlContent);
 

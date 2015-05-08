@@ -31,39 +31,71 @@ import org.dom4j.Element;
 public final class XMLLoggerHandler {
 
 	public static void generateXMLLog(String classCommandName) {
-		LoggerElement xmlLoggerElement = new LoggerElement();
+		_xmlLogLoggerElement = new LoggerElement("xmlLogContainer");
 
-		xmlLoggerElement.setClassName("header");
-		xmlLoggerElement.setName("li");
+		_xmlLogLoggerElement.setClassName("xml-log-container");
+		_xmlLogLoggerElement.setName("ul");
 
-		LoggerElement btnContainerLoggerElement = new LoggerElement();
+		LoggerElement headerLoggerElement = new LoggerElement();
 
-		btnContainerLoggerElement.setClassName("btn-container");
-		btnContainerLoggerElement.setName("div");
-
-		LoggerElement btnLoggerElement = new LoggerElement();
-
-		btnLoggerElement.setClassName("btn btn-collapse");
-		btnLoggerElement.setName("button");
-
-		btnContainerLoggerElement.addChildLoggerElement(btnLoggerElement);
-
-		xmlLoggerElement.addChildLoggerElement(btnContainerLoggerElement);
+		headerLoggerElement.setClassName("header");
+		headerLoggerElement.setName("li");
 
 		LoggerElement lineContainerLoggerElement = new LoggerElement();
 
 		lineContainerLoggerElement.setClassName("line-container");
+		lineContainerLoggerElement.setID(null);
 		lineContainerLoggerElement.setName("div");
 
 		LoggerElement lineLoggerElement = new LoggerElement();
 
 		lineLoggerElement.setClassName("test-case-command");
+		lineLoggerElement.setID(null);
 		lineLoggerElement.setName("h3");
 		lineLoggerElement.setText(classCommandName);
 
 		lineContainerLoggerElement.addChildLoggerElement(lineLoggerElement);
 
-		xmlLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
+		headerLoggerElement.addChildLoggerElement(lineContainerLoggerElement);
+
+		LoggerElement childContainerLoggerElement = new LoggerElement();
+
+		childContainerLoggerElement.setClassName("child-container");
+		childContainerLoggerElement.setID(null);
+		childContainerLoggerElement.setName("ul");
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		Element setUpElement = PoshiRunnerContext.getTestCaseCommandElement(
+			className + "#set-up");
+
+		if (setUpElement != null) {
+			childContainerLoggerElement.addChildLoggerElement(
+				_getLoggerElementFromElement(setUpElement));
+		}
+
+		childContainerLoggerElement.addChildLoggerElement(
+			_getLoggerElementFromElement(
+				PoshiRunnerContext.getTestCaseCommandElement(
+					classCommandName)));
+
+		Element tearDownElement = PoshiRunnerContext.getTestCaseCommandElement(
+			className + "#tear-down");
+
+		if (tearDownElement != null) {
+			childContainerLoggerElement.addChildLoggerElement(
+				_getLoggerElementFromElement(tearDownElement));
+		}
+
+		headerLoggerElement.addChildLoggerElement(childContainerLoggerElement);
+
+		_xmlLogLoggerElement.addChildLoggerElement(headerLoggerElement);
+	}
+
+	public static String getXMLLogText() {
+		return _xmlLogLoggerElement.toString();
 	}
 
 	private static LoggerElement _getBtnContainerLoggerElement(
@@ -519,5 +551,7 @@ public final class XMLLoggerHandler {
 
 		return false;
 	}
+
+	private static LoggerElement _xmlLogLoggerElement = null;
 
 }

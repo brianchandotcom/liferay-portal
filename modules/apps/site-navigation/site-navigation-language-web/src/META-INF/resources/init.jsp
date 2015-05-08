@@ -28,7 +28,7 @@ page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
-page import="com.liferay.site.navigation.language.web.context.LanguageDisplayContext" %>
+page import="com.liferay.site.navigation.language.web.display.context.LanguageDisplayContext" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@

@@ -19,11 +19,10 @@ import com.liferay.util.SerializableUtil;
 
 import java.nio.ByteBuffer;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import org.testng.Assert;
 
 /**
  * @author Alberto Montero
@@ -62,42 +61,42 @@ public class CacheResponseDataTest {
 				serializedCacheResponseData);
 
 		Assert.assertEquals(
-			deserializedCacheResponseData.getContentType(),
+			"ContentType not correctly recreated",
 			cacheResponseData.getContentType(),
-			"ContentType not correctly recreated");
+			deserializedCacheResponseData.getContentType());
 
 		Assert.assertEquals(
-			deserializedCacheResponseData.getHeaders(),
-			cacheResponseData.getHeaders(), "Headers not correctly recreated");
+			"Headers not correctly recreated", cacheResponseData.getHeaders(),
+			deserializedCacheResponseData.getHeaders());
 
 		Assert.assertEquals(
-			deserializedCacheResponseData.getAttribute("a1"),
+			"Attribute a1 not correctly recreated",
 			cacheResponseData.getAttribute("a1"),
-			"Attribute a1 not correctly recreated");
+			deserializedCacheResponseData.getAttribute("a1"));
 
 		Assert.assertEquals(
-			deserializedCacheResponseData.getAttribute("a2"),
+			"Attribute a2 not correctly recreated",
 			cacheResponseData.getAttribute("a2"),
-			"Attribute a2 not correctly recreated");
+			deserializedCacheResponseData.getAttribute("a2"));
 
 		ByteBuffer deserializedByteBuffer =
 			deserializedCacheResponseData.getByteBuffer();
 
-		Assert.assertEquals(
-			deserializedByteBuffer.array(), byteBuffer.array(),
-			"ByteBuffer data not correctly recreated");
+		Assert.assertArrayEquals(
+			"ByteBuffer data not correctly recreated", byteBuffer.array(),
+			deserializedByteBuffer.array());
 
 		Assert.assertEquals(
-			deserializedByteBuffer.capacity(), byteBuffer.capacity(),
-			"ByteBuffer.capacity() not correctly recreated");
+			"ByteBuffer.capacity() not correctly recreated",
+			byteBuffer.capacity(), deserializedByteBuffer.capacity());
 
 		Assert.assertEquals(
-			deserializedByteBuffer.limit(), byteBuffer.limit(),
-			"ByteBuffer.limit() not correctly recreated");
+			"ByteBuffer.limit() not correctly recreated", byteBuffer.limit(),
+			deserializedByteBuffer.limit());
 
 		Assert.assertEquals(
-			deserializedByteBuffer.position(), byteBuffer.position(),
-			"ByteBuffer.position() not correctly recreated");
+			"ByteBuffer.position() not correctly recreated",
+			byteBuffer.position(), deserializedByteBuffer.position());
 	}
 
 }

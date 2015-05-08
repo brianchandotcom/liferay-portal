@@ -16,15 +16,37 @@ package com.liferay.layout.item.selector.web;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 
+import java.net.URL;
+
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Roberto Díaz
  */
 public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 
-	protected LayoutItemSelectorCriterion(Set<Class<?>> availableReturnTypes) {
-		super(availableReturnTypes);
+	public LayoutItemSelectorCriterion() {
+		super(_AVAILABLE_RETURN_TYPES);
 	}
+
+	public LayoutItemSelectorCriterion(long groupId) {
+		super(_AVAILABLE_RETURN_TYPES);
+
+		_groupId = groupId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
+		getInmutableSet(URL.class, UUID.class);
+
+	private long _groupId;
 
 }

@@ -1489,6 +1489,7 @@ public class LocalProcessExecutorTest {
 		}
 
 		arguments.add("-Dwhip.static.instrument=true");
+		arguments.add("-Dwhip.static.instrument.use.data.file=true");
 
 		return arguments;
 	}

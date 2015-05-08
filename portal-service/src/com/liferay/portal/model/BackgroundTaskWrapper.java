@@ -193,18 +193,21 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries() {
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _backgroundTask.getAttachmentsFileEntries();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
-		int start, int end) {
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _backgroundTask.getAttachmentsFileEntries(start, end);
 	}
 
 	@Override
-	public int getAttachmentsFileEntriesCount() {
+	public int getAttachmentsFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _backgroundTask.getAttachmentsFileEntriesCount();
 	}
 

@@ -226,6 +226,43 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public List<FileEntry> getFileEntries(
+		long folderId, int status, int start, int end,
+		OrderByComparator<FileEntry> obc) {
+
+		List<DLFileEntry> dlFileEntries =
+			dlFileEntryLocalService.getFileEntries(
+				getGroupId(), toFolderId(folderId), status, start, end,
+				DLFileEntryOrderByComparator.getOrderByComparator(obc));
+
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
+	}
+
+	@Override
+	public List<FileEntry> getFileEntries(
+		long folderId, int start, int end, OrderByComparator<FileEntry> obc) {
+
+		List<DLFileEntry> dlFileEntries =
+			dlFileEntryLocalService.getFileEntries(
+				getGroupId(), toFolderId(folderId), start, end,
+				DLFileEntryOrderByComparator.getOrderByComparator(obc));
+
+		return RepositoryModelUtil.toFileEntries(dlFileEntries);
+	}
+
+	@Override
+	public int getFileEntriesCount(long folderId) {
+		return dlFileEntryLocalService.getFileEntriesCount(
+			getGroupId(), toFolderId(folderId));
+	}
+
+	@Override
+	public int getFileEntriesCount(long folderId, int status) {
+		return dlFileEntryLocalService.getFileEntriesCount(
+			getGroupId(), toFolderId(folderId), status);
+	}
+
+	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 			fileEntryId);

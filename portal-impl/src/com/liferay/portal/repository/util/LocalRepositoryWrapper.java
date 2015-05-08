@@ -143,6 +143,36 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	@Override
+	public List<FileEntry> getFileEntries(
+			long folderId, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		return _localRepository.getFileEntries(
+			folderId, status, start, end, obc);
+	}
+
+	@Override
+	public List<FileEntry> getFileEntries(
+			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		return _localRepository.getFileEntries(folderId, start, end, obc);
+	}
+
+	@Override
+	public int getFileEntriesCount(long folderId) throws PortalException {
+		return _localRepository.getFileEntriesCount(folderId);
+	}
+
+	@Override
+	public int getFileEntriesCount(long folderId, int status)
+		throws PortalException {
+
+		return _localRepository.getFileEntriesCount(folderId, status);
+	}
+
+	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
 		return _localRepository.getFileEntry(fileEntryId);
 	}

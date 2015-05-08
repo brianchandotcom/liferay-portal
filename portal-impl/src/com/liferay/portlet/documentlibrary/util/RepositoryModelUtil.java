@@ -41,9 +41,6 @@ import java.util.List;
  */
 public class RepositoryModelUtil {
 
-	/**
-	 * @see com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl#toFileEntries
-	 */
 	public static List<FileEntry> toFileEntries(
 		List<DLFileEntry> dlFileEntries) {
 

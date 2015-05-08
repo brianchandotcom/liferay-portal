@@ -311,6 +311,15 @@ public class RepositoryWrapper implements Repository {
 
 	@Override
 	public List<FileEntry> getFileEntries(
+			long folderId, int status, int start, int end,
+			OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
+		return _repository.getFileEntries(folderId, status, start, end, obc);
+	}
+
+	@Override
+	public List<FileEntry> getFileEntries(
 			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
@@ -365,6 +374,13 @@ public class RepositoryWrapper implements Repository {
 	@Override
 	public int getFileEntriesCount(long folderId) throws PortalException {
 		return _repository.getFileEntriesCount(folderId);
+	}
+
+	@Override
+	public int getFileEntriesCount(long folderId, int status)
+		throws PortalException {
+
+		return _repository.getFileEntriesCount(folderId, status);
 	}
 
 	@Override

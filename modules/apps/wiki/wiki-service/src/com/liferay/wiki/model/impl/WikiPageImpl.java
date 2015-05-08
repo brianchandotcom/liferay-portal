@@ -94,12 +94,14 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
-	public List<FileEntry> getAttachmentsFileEntries() {
+	public List<FileEntry> getAttachmentsFileEntries() throws PortalException {
 		return getAttachmentsFileEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
-	public List<FileEntry> getAttachmentsFileEntries(int start, int end) {
+	public List<FileEntry> getAttachmentsFileEntries(int start, int end)
+		throws PortalException {
+
 		List<FileEntry> fileEntries = new ArrayList<>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
@@ -114,7 +116,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
-	public int getAttachmentsFileEntriesCount() {
+	public int getAttachmentsFileEntriesCount() throws PortalException {
 		int attachmentsFileEntriesCount = 0;
 
 		long attachmentsFolderId = getAttachmentsFolderId();
@@ -182,14 +184,16 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
-	public List<FileEntry> getDeletedAttachmentsFileEntries() {
+	public List<FileEntry> getDeletedAttachmentsFileEntries()
+		throws PortalException {
+
 		return getDeletedAttachmentsFileEntries(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
-	public List<FileEntry> getDeletedAttachmentsFileEntries(
-		int start, int end) {
+	public List<FileEntry> getDeletedAttachmentsFileEntries(int start, int end)
+		throws PortalException {
 
 		List<FileEntry> fileEntries = new ArrayList<>();
 
@@ -205,7 +209,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
-	public int getDeletedAttachmentsFileEntriesCount() {
+	public int getDeletedAttachmentsFileEntriesCount() throws PortalException {
 		int deletedAttachmentsFileEntriesCount = 0;
 
 		long attachmentsFolderId = getAttachmentsFolderId();

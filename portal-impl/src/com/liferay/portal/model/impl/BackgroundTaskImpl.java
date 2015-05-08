@@ -67,12 +67,14 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 	}
 
 	@Override
-	public List<FileEntry> getAttachmentsFileEntries() {
+	public List<FileEntry> getAttachmentsFileEntries() throws PortalException {
 		return getAttachmentsFileEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
-	public List<FileEntry> getAttachmentsFileEntries(int start, int end) {
+	public List<FileEntry> getAttachmentsFileEntries(int start, int end)
+		throws PortalException {
+
 		List<FileEntry> fileEntries = new ArrayList<>();
 
 		long attachmentsFolderId = getAttachmentsFolderId();
@@ -87,7 +89,7 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 	}
 
 	@Override
-	public int getAttachmentsFileEntriesCount() {
+	public int getAttachmentsFileEntriesCount() throws PortalException {
 		int attachmentsFileEntriesCount = 0;
 
 		long attachmentsFolderId = getAttachmentsFolderId();

@@ -93,6 +93,9 @@ public class PoshiRunnerValidation {
 			String filePath)
 		throws Exception {
 
+		_validateHasPrimaryAttributeName(
+			element, primaryAttributeNames, filePath);
+
 		for (String primaryAttributeName : primaryAttributeNames) {
 			if (Validator.isNotNull(
 					element.attributeValue(primaryAttributeName))) {
@@ -207,9 +210,6 @@ public class PoshiRunnerValidation {
 		else if (elementName.equals("condition")) {
 			List<String> primaryAttributeNames = Arrays.asList(
 				"function", "selenium");
-
-			_validateHasPrimaryAttributeName(
-				element, primaryAttributeNames, filePath);
 
 			String primaryAttributeName = _getPrimaryAttributeName(
 				element, primaryAttributeNames, filePath);
@@ -382,9 +382,6 @@ public class PoshiRunnerValidation {
 		List<String> primaryAttributeNames = Arrays.asList(
 			"function", "macro", "macro-desktop", "macro-mobile", "selenium",
 			"test-case");
-
-		_validateHasPrimaryAttributeName(
-			element, primaryAttributeNames, filePath);
 
 		String primaryAttributeName = _getPrimaryAttributeName(
 			element, primaryAttributeNames, filePath);

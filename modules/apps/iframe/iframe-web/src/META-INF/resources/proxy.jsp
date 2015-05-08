@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<String> hiddenVariablesList = ListUtil.toList(StringUtil.split(hiddenVariables, CharPool.SEMICOLON));
+List<String> hiddenVariablesList = ListUtil.toList(StringUtil.split(iFrameDisplayContext.getHiddenVariables(), CharPool.SEMICOLON));
 
 hiddenVariablesList.addAll(iframeVariables);
 %>
@@ -32,7 +32,7 @@ hiddenVariablesList.addAll(iframeVariables);
 
 <body onLoad="setTimeout('document.fm.submit()', 100);">
 
-<form action="<%= HtmlUtil.escapeAttribute(src) %>" method="<%= HtmlUtil.escapeAttribute(formMethod) %>" name="fm">
+<form action="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getSrc()) %>" method="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getFormMethod()) %>" name="fm">
 
 <%
 for (String hiddenVariable : hiddenVariablesList) {
@@ -52,13 +52,13 @@ for (String hiddenVariable : hiddenVariablesList) {
 <%
 }
 
-if (Validator.isNull(userNameField)) {
+if (Validator.isNull(iFrameDisplayContext.getUserNameField())) {
 	int pos = userName.indexOf(StringPool.EQUAL);
 
 	if (pos != -1) {
 		String fieldValuePair = userName;
 
-		userNameField = fieldValuePair.substring(0, pos);
+		String userNameField = fieldValuePair.substring(0, pos);
 		userName = fieldValuePair.substring(pos + 1);
 
 		portletPreferences.setValue("userName", userName);
@@ -68,21 +68,21 @@ if (Validator.isNull(userNameField)) {
 	}
 }
 
-if (Validator.isNotNull(userNameField)) {
+if (Validator.isNotNull(iFrameDisplayContext.getUserNameField())) {
 	userName = IFrameUtil.getUserName(renderRequest, userName);
 }
 %>
 
-<input name="<%= HtmlUtil.escapeAttribute(userNameField) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(userName) %>" />
+<input name="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getUserNameField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(userName) %>" />
 
 <%
-if (Validator.isNull(passwordField)) {
+if (Validator.isNull(iFrameDisplayContext.getPasswordField())) {
 	int pos = password.indexOf(StringPool.EQUAL);
 
 	if (pos != -1) {
 		String fieldValuePair = password;
 
-		passwordField = fieldValuePair.substring(0, pos);
+		String passwordField = fieldValuePair.substring(0, pos);
 		password = fieldValuePair.substring(pos + 1);
 
 		portletPreferences.setValue("password", password);
@@ -92,12 +92,12 @@ if (Validator.isNull(passwordField)) {
 	}
 }
 
-if (Validator.isNotNull(passwordField)) {
+if (Validator.isNotNull(iFrameDisplayContext.getPasswordField())) {
 	password = IFrameUtil.getPassword(renderRequest, password);
 }
 %>
 
-<input name="<%= HtmlUtil.escapeAttribute(passwordField) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(password) %>" />
+<input name="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getPasswordField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(password) %>" />
 
 </form>
 

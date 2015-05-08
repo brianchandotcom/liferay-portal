@@ -205,6 +205,10 @@ public class DDMImpl implements DDM {
 					ddmForm.getDefaultLocale());
 			}
 			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to deserialize script", pe);
+				}
+
 				return null;
 			}
 		}
@@ -217,6 +221,10 @@ public class DDMImpl implements DDM {
 				ddmForm.getDefaultLocale());
 		}
 		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to deserialize script", pe);
+			}
+
 			DDMForm ddmForm = ddmStructure.getDDMForm();
 
 			return getDDMFormFieldsJSONArray(

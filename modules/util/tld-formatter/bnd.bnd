@@ -1,0 +1,5 @@
+Bundle-Name: Liferay TLD Formatter
+Bundle-SymbolicName: com.liferay.tld.formatter
+Bundle-Version: 1.0.0
+Include-Resource: classes
+Main-Class: com.liferay.tld.formatter.TLDFormatter

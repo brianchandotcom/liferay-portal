@@ -578,18 +578,22 @@ public class PoshiRunnerExecutor {
 			}
 		}
 
-		String replacedVar = PoshiRunnerVariablesUtil.replaceCommandVars(
+		String replacedVarValue = PoshiRunnerVariablesUtil.replaceCommandVars(
 			varValue);
 
-		Matcher matcher = _pattern.matcher(replacedVar);
+		Matcher matcher = _pattern.matcher(replacedVarValue);
 
-		if (!(matcher.matches() && replacedVar.equals(varValue))) {
-			if (commandVar) {
-				PoshiRunnerVariablesUtil.putIntoCommandMap(varName, varValue);
-			}
-			else {
-				PoshiRunnerVariablesUtil.putIntoExecuteMap(varName, varValue);
-			}
+		if (matcher.matches() && replacedVarValue.equals(varValue)) {
+			return;
+		}
+
+		if (commandVar) {
+			PoshiRunnerVariablesUtil.putIntoCommandMap(
+				varName, replacedVarValue);
+		}
+		else {
+			PoshiRunnerVariablesUtil.putIntoExecuteMap(
+				varName, replacedVarValue);
 		}
 	}
 
@@ -619,8 +623,7 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
-	private static Object _returnObject;
-
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
+	private static Object _returnObject;
 
 }

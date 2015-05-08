@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -31,9 +32,8 @@ import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.dependency.ServiceDependencyListener;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.lang.reflect.Method;
 
@@ -49,12 +49,29 @@ public abstract class AbstractMessagingConfigurator
 	implements MessagingConfigurator {
 
 	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
+		final ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
 
-		_serviceTracker = registry.trackServices(
-			MessageBus.class, new MessageBusServiceTrackerCustomizer());
+		serviceDependencyManager.addServiceDependencyListener(
 
-		_serviceTracker.open();
+			new ServiceDependencyListener() {
+				@Override
+				public void dependenciesFulfilled() {
+					Registry registry = RegistryUtil.getRegistry();
+
+					_messageBus = registry.getService(MessageBus.class);
+
+					initialize();
+				}
+
+				@Override
+				public void destroy() {
+				}
+			}
+		);
+
+		serviceDependencyManager.registerDependencies(
+			DestinationFactory.class, MessageBus.class);
 	}
 
 	@Override
@@ -158,8 +175,6 @@ public abstract class AbstractMessagingConfigurator
 
 		MessagingConfiguratorRegistry.unregisterMessagingConfigurator(
 			servletContextName, this);
-
-		_serviceTracker.close();
 	}
 
 	@Override
@@ -329,38 +344,5 @@ public abstract class AbstractMessagingConfigurator
 		new HashMap<>();
 	private boolean _portalMessagingConfigurator;
 	private List<Destination> _replacementDestinations = new ArrayList<>();
-	private ServiceTracker<MessageBus, MessageBus> _serviceTracker;
-
-	private class MessageBusServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<MessageBus, MessageBus> {
-
-		@Override
-		public MessageBus addingService(
-			ServiceReference<MessageBus> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			_messageBus = registry.getService(serviceReference);
-
-			initialize();
-
-			return _messageBus;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<MessageBus> serviceReference,
-			MessageBus messageBus) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<MessageBus> serviceReference,
-			MessageBus messageBus) {
-
-			_messageBus = null;
-		}
-
-	}
 
 }

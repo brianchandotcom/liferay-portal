@@ -14,22 +14,14 @@
 
 package com.liferay.portal.messaging.internal;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.ParallelDestination;
 import com.liferay.portal.messaging.DestinationPrototype;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = {"type=parallel"},
-	service = DestinationPrototype.class
-)
 public class ParallelDestinationPrototype implements DestinationPrototype {
 
 	@Override
@@ -52,11 +44,6 @@ public class ParallelDestinationPrototype implements DestinationPrototype {
 		parallelDestination.afterPropertiesSet();
 
 		return parallelDestination;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalExecutorManager(
-		PortalExecutorManager portalExecutorManager) {
 	}
 
 }

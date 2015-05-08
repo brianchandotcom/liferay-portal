@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
@@ -31,17 +32,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -51,21 +47,7 @@ public class DefaultMessageBus implements MessageBus {
 
 	@Override
 	public synchronized void addDestination(Destination destination) {
-		Class<?> clazz = destination.getClass();
-
-		if (SPIUtil.isSPI() &&
-			!clazz.equals(IntrabandBridgeDestination.class)) {
-
-			destination = new IntrabandBridgeDestination(destination);
-		}
-
-		_destinations.put(destination.getName(), destination);
-
-		for (MessageBusEventListener messageBusEventListener :
-				_messageBusEventListeners) {
-
-			messageBusEventListener.destinationAdded(destination);
-		}
+		doAddDestination(destination);
 	}
 
 	@Override
@@ -137,20 +119,22 @@ public class DefaultMessageBus implements MessageBus {
 
 		Destination destination = _destinations.remove(destinationName);
 
-		if (destination != null) {
-			if (closeOnRemove) {
-				destination.close(true);
-			}
+		if (destination == null) {
+			return null;
+		}
 
-			destination.removeDestinationEventListeners();
+		if (closeOnRemove) {
+			destination.close(true);
+		}
 
-			destination.unregisterMessageListeners();
+		destination.removeDestinationEventListeners();
 
-			for (MessageBusEventListener messageBusEventListener :
-					_messageBusEventListeners) {
+		destination.unregisterMessageListeners();
 
-				messageBusEventListener.destinationRemoved(destination);
-			}
+		for (MessageBusEventListener messageBusEventListener :
+				_messageBusEventListeners) {
+
+			messageBusEventListener.destinationRemoved(destination);
 		}
 
 		return destination;
@@ -177,11 +161,9 @@ public class DefaultMessageBus implements MessageBus {
 
 		removeDestination(oldDestination.getName(), closeOnRemove);
 
-		addDestination(destination);
+		doAddDestination(destination);
 
-		if (closeOnRemove) {
-			destination.open();
-		}
+		destination.open();
 	}
 
 	@Override
@@ -227,17 +209,6 @@ public class DefaultMessageBus implements MessageBus {
 		return destination.unregister(messageListener);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext, Destination.class,
-			new DestinationServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -247,25 +218,11 @@ public class DefaultMessageBus implements MessageBus {
 	protected synchronized void addDestination(
 		Destination destination, Map<String, Object> properties) {
 
-		Class<?> clazz = destination.getClass();
-
-		if (SPIUtil.isSPI() &&
-			!clazz.equals(IntrabandBridgeDestination.class)) {
-
-			destination = new IntrabandBridgeDestination(destination);
-		}
-
 		if (_destinations.containsKey(destination.getName())) {
 			replace(destination);
 		}
 		else {
-			_destinations.put(destination.getName(), destination);
-		}
-
-		for (MessageBusEventListener messageBusEventListener :
-				_messageBusEventListeners) {
-
-			messageBusEventListener.destinationAdded(destination);
+			doAddDestination(destination);
 		}
 	}
 
@@ -279,11 +236,53 @@ public class DefaultMessageBus implements MessageBus {
 
 		_messageBusEventListeners.clear();
 
-		_serviceTracker.close();
+		_destinations.clear();
+	}
 
-		_serviceTracker = null;
+	protected void doAddDestination(Destination destination) {
+		Class<?> clazz = destination.getClass();
 
-		_bundleContext = null;
+		if (SPIUtil.isSPI() &&
+			!clazz.equals(IntrabandBridgeDestination.class)) {
+
+			destination = new IntrabandBridgeDestination(destination);
+		}
+
+		_destinations.put(destination.getName(), destination);
+
+		for (MessageBusEventListener messageBusEventListener :
+				_messageBusEventListeners) {
+
+			messageBusEventListener.destinationAdded(destination);
+		}
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(destination.name=*)"
+	)
+	protected synchronized void registerDestinationEventListener(
+		DestinationEventListener destinationEventListener,
+		Map<String, Object> properties) {
+
+		String destinationName = MapUtil.getString(
+			properties, "destination.name");
+
+		Destination destination = _destinations.get(destinationName);
+
+		if (destination == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Cannot remove DestinationEventListener for : " +
+						destinationName + ". No destination found.");
+			}
+
+			return;
+		}
+
+		destination.addDestinationEventListener(destinationEventListener);
 	}
 
 	@Reference(
@@ -330,6 +329,30 @@ public class DefaultMessageBus implements MessageBus {
 		Destination destination, Map<String, Object> properties) {
 
 		removeDestination(destination.getName());
+
+		destination.destroy();
+	}
+
+	protected void unregisterDestinationEventListener(
+		DestinationEventListener destinationEventListener,
+		Map<String, Object> properties) {
+
+		String destinationName = MapUtil.getString(
+			properties, "destination.name");
+
+		Destination destination = _destinations.get(destinationName);
+
+		if (destination == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Cannot remove DestinationEventListener for : " +
+						destinationName + ". No destination found.");
+			}
+
+			return;
+		}
+
+		destination.removeDestinationEventListener(destinationEventListener);
 	}
 
 	protected void unregisterMessageBusEventListener(
@@ -350,36 +373,8 @@ public class DefaultMessageBus implements MessageBus {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultMessageBus.class);
 
-	private BundleContext _bundleContext;
 	private final Map<String, Destination> _destinations = new HashMap<>();
 	private final Set<MessageBusEventListener> _messageBusEventListeners =
 		new ConcurrentHashSet<>();
-	private ServiceTracker<Destination, Destination> _serviceTracker;
-
-	private class DestinationServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Destination, Destination> {
-
-		@Override
-		public Destination addingService(
-			ServiceReference<Destination> serviceReference) {
-
-			return _bundleContext.getService(serviceReference);
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Destination> serviceReference,
-			Destination destination) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Destination> serviceReference,
-			Destination destination) {
-
-			destination.destroy();
-		}
-
-	}
 
 }

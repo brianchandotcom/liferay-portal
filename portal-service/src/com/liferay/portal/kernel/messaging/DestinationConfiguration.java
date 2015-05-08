@@ -24,22 +24,31 @@ import java.io.Serializable;
  */
 public class DestinationConfiguration implements Serializable {
 
+	public static final String DESTINATION_TYPE_PARALLEL = "parallel";
+
+	public static final String DESTINATION_TYPE_SERIAL = "serial";
+
+	public static final String DESTINATION_TYPE_SYNCHRONOUS = "synchronous";
+
 	public static DestinationConfiguration
 		createParallelDestinationConfiguration(String destinationName) {
 
-		return new DestinationConfiguration("parallel", destinationName);
+		return new DestinationConfiguration(
+			DESTINATION_TYPE_PARALLEL, destinationName);
 	}
 
 	public static DestinationConfiguration createSerialDestinationConfiguration(
 		String destinationName) {
 
-		return new DestinationConfiguration("serial", destinationName);
+		return new DestinationConfiguration(
+			DESTINATION_TYPE_SERIAL, destinationName);
 	}
 
 	public static DestinationConfiguration
 		createSynchronousDestinationConfiguration(String destinationName) {
 
-		return new DestinationConfiguration("synchronous", destinationName);
+		return new DestinationConfiguration(
+			DESTINATION_TYPE_SYNCHRONOUS, destinationName);
 	}
 
 	public DestinationConfiguration(

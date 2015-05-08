@@ -19,15 +19,9 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.messaging.DestinationPrototype;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = {"type=synchronous"},
-	service = DestinationPrototype.class
-)
 public class SynchronousDestinationPrototype implements DestinationPrototype {
 
 	@Override

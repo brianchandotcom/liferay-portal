@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.lucene.internal;
 
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.search.AbstractSearchEngineConfigurator;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
@@ -23,7 +21,6 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -53,40 +50,6 @@ public class LuceneSearchEngineConfigurator
 	@Activate
 	protected void activate() {
 		setSearchEngines(_searchEngines);
-	}
-
-	@Override
-	protected Destination createSearchReaderDestination(
-		String searchReaderDestinationName) {
-
-		if (!PortalRunMode.isTestMode()) {
-			return super.createSearchReaderDestination(
-				searchReaderDestinationName);
-		}
-
-		SynchronousDestination synchronousDestination =
-			new SynchronousDestination();
-
-		synchronousDestination.setName(searchReaderDestinationName);
-
-		return synchronousDestination;
-	}
-
-	@Override
-	protected Destination createSearchWriterDestination(
-		String searchWriterDestinationName) {
-
-		if (!PortalRunMode.isTestMode()) {
-			return super.createSearchReaderDestination(
-				searchWriterDestinationName);
-		}
-
-		SynchronousDestination synchronousDestination =
-			new SynchronousDestination();
-
-		synchronousDestination.setName(searchWriterDestinationName);
-
-		return synchronousDestination;
 	}
 
 	@Override

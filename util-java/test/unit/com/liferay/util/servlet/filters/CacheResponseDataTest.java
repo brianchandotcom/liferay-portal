@@ -50,18 +50,6 @@ public class CacheResponseDataTest {
 			byteBuffer.put(i, (byte)i);
 		}
 
-		Assert.assertEquals(byteBuffer.get(2), 2, "ByteBuffer uninitialized");
-		Assert.assertEquals(
-			byteBuffer.limit(), 7, "ByteBuffer.limit() not correctly set");
-
-		try {
-			Assert.assertEquals(
-				byteBuffer.get(8), 0, "ByteBuffer written beyond limit");
-			Assert.fail("ByteBuffer allowed to read beyond the limit");
-		}
-		catch (IndexOutOfBoundsException ioob) {
-		}
-
 		bufferCacheServletResponse.setByteBuffer(byteBuffer);
 
 		CacheResponseData cacheResponseData = new CacheResponseData(

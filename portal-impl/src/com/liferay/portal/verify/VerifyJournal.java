@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -42,8 +43,7 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -214,16 +214,16 @@ public class VerifyJournal extends VerifyProcess {
 		long folderId = GetterUtil.getLong(pathArray[3]);
 		String title = HttpUtil.decodeURL(HtmlUtil.escape(pathArray[4]));
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchFileEntry(
-			groupId, folderId, title);
+		try {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				groupId, folderId, title);
 
-		if (dlFileEntry == null) {
-			return;
+			Node node = dynamicContentElement.node(0);
+
+			node.setText(path + StringPool.SLASH + fileEntry.getUuid());
 		}
-
-		Node node = dynamicContentElement.node(0);
-
-		node.setText(path + StringPool.SLASH + dlFileEntry.getUuid());
+		catch (PortalException pe) {
+		}
 	}
 
 	protected void updateDynamicElements(JournalArticle article)

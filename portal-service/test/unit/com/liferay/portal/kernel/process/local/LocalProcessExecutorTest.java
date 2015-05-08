@@ -1223,7 +1223,11 @@ public class LocalProcessExecutorTest {
 			Future<Serializable> interruptFuture = processChannel.write(
 				new InterruptProcessCallable());
 
-			Assert.assertNull(interruptFuture.get());
+			try {
+				Assert.assertNull(interruptFuture.get());
+			}
+			catch (CancellationException ce) {
+			}
 		}
 		finally {
 			System.setErr(oldErrPrintStream);

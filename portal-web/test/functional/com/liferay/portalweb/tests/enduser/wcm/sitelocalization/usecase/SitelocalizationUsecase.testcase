@@ -197,7 +197,7 @@
 		</execute>
 	</command>
 
-	<command name="NoLocalePrependedWhenLocaleMatchMyPreferredLocalization" priority="3">
+	<command known-issues="LPS-55444" name="NoLocalePrependedWhenLocaleMatchMyPreferredLocalization" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

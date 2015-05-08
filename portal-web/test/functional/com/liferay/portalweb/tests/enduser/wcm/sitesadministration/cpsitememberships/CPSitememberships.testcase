@@ -308,7 +308,7 @@
 		</execute>
 	</command>
 
-	<command name="LimitMembershipParentSite" priority="5">
+	<command known-issues="LPS-55444" name="LimitMembershipParentSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -344,6 +344,11 @@
 	<td>//input[@name='_156_endDate']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!-- VALIDATION -->
 <tr>
 	<td>VALIDATION_ERROR_MESSAGE_HEADER</td>
@@ -353,11 +358,6 @@
 <tr>
 	<td>VALIDATION_ERROR_MESSAGE</td>
 	<td>//span[@class='error-message']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

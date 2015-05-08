@@ -798,6 +798,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a liferay-ui:error to display tag related error messages.</description>
 		<name>asset-tags-error</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsErrorTag</tag-class>
 		<body-content>JSP</body-content>

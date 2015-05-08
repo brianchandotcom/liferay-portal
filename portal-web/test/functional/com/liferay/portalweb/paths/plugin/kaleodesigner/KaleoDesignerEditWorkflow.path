@@ -368,11 +368,6 @@
 	<td>xpath=(//div[contains(@id,'portlet_editorWrapper')]//div[contains(@class,'ace_text')]/div[@class='ace_line_group'])[${key_line}]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

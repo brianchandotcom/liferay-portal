@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FILTER_SELECT</td>
 	<td>//div/select[contains(.,'Tags') and contains(.,'Categories')]</td>
 	<td></td>

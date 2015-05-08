@@ -20,11 +20,6 @@
 	<td>//span[contains(@class,'social-bookmark')]//span[contains(.,'${key_socialBookmarkSite}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ARCHIVED_SETUPS_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_archiveName}')]/td[1]</td>
 	<td></td>

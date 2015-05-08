@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETTING_CHECKBOX</td>
 	<td>//div[contains(@class,'form-group')]/label[contains(.,'${key_configurationSetting}')]/input</td>
 	<td></td>

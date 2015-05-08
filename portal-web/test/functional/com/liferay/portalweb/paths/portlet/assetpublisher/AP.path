@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_NEW_DROPDOWN</td>
 	<td>//div[contains(@class,'add-asset-selector') and contains(@class,'lfr-meta-actions')]//ul/li/a</td>
 	<td></td>
@@ -259,11 +254,6 @@
 <tr>
 	<td>METADATA_VIEW_COUNT</td>
 	<td>//span[@class='metadata-entry metadata-view-count']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

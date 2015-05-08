@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_MAP_PAGE_DISPLAY</td>
 	<td>//div[@class='portlet-content']//h3[contains(.,'${pageName}')]</td>
 	<td></td>

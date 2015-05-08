@@ -75,11 +75,6 @@
 	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//div[contains(@class,'entry-content')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

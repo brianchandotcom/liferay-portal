@@ -479,11 +479,6 @@
 	<td>//button[contains(@class,'btn close')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

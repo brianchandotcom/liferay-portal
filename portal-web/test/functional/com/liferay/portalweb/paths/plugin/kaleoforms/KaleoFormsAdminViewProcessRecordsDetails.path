@@ -24,11 +24,6 @@
 	<td>//label[contains(.,'${key_fieldName}')]/../../div[contains(.,'${key_fieldName}') and contains(.,'${key_kfProcessFieldData}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

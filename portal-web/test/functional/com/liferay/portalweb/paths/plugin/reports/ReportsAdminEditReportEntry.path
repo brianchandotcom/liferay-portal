@@ -33,11 +33,6 @@
 	<td>//button[contains(.,'Generate')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

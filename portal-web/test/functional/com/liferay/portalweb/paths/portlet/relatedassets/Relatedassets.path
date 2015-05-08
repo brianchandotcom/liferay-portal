@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_TITLE_IMAGE</td>
 	<td>//ul[@class='title-list']/li/span/a[contains(.,'${key_assetTitle}')]/i</td>
 	<td></td>

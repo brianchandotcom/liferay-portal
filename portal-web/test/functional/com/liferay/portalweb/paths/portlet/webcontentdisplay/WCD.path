@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDIT_WEB_CONTENT</td>
 	<td>//i[@class='icon-pencil']</td>
 	<td></td>
@@ -109,11 +104,6 @@
 <tr>
 	<td>ADD_MENU_WEB_CONTENT_STRUCTURE</td>
 	<td>//li[contains(@class,'lfr-icon-action')]/a[contains(.,'${key_selectStructureName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

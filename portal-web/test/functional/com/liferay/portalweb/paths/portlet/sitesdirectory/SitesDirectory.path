@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>PORTLET_NAME</td>
 	<td>//header[@class='portlet-topper']/h1/span[2]</td>
 	<td></td>

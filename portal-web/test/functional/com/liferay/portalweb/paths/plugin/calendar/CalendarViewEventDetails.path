@@ -272,11 +272,6 @@
 	<td>//div[@class='entry-tags']//span[contains(@class,'tag') and contains(.,'Tags: ${key_tagText}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

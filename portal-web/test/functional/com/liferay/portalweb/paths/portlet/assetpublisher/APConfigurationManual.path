@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT</td>
 	<td>//span[contains(.,'Asset Entries')]/../..//a[@title='Select']/span</td>
 	<td></td>

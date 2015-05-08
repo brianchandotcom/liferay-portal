@@ -34,7 +34,6 @@ import com.liferay.portal.service.persistence.RegionPersistence;
 import com.liferay.portal.service.persistence.RegionUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -374,10 +373,6 @@ public class RegionPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			return;
-		}
-
 		Region newRegion = addRegion();
 
 		_persistence.clearCache();

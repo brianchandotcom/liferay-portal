@@ -178,14 +178,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				}
 			}
 
-			DB db = DBFactoryUtil.getDB();
-
-			String dbType = db.getType();
-
-			if (dbType.equals(DB.TYPE_HYPERSONIC)) {
-				//configuration.setProperty("hibernate.jdbc.batch_size", "0");
-			}
-
 			if (_mvccEnabled) {
 				EventListeners eventListeners =
 					configuration.getEventListeners();
@@ -242,7 +234,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				configurationString.getBytes());
 		}
 
-		configuration = configuration.addInputStream(inputStream);
+		configuration.addInputStream(inputStream);
 
 		inputStream.close();
 	}

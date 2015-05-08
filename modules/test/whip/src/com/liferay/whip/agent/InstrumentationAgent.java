@@ -47,7 +47,8 @@ public class InstrumentationAgent {
 		_whipClassFileTransformer = null;
 
 		try {
-			ProjectData projectData = ProjectDataUtil.captureProjectData(false);
+			ProjectData projectData = ProjectDataUtil.captureProjectData(
+				false, false);
 
 			List<AssertionError> assertionErrors = new ArrayList<>();
 
@@ -227,7 +228,10 @@ public class InstrumentationAgent {
 
 					@Override
 					public void run() {
-						ProjectDataUtil.captureProjectData(true);
+						ProjectDataUtil.captureProjectData(
+							true,
+							Boolean.getBoolean(
+								"whip.static.instrument.use.data.file"));
 					}
 
 				});

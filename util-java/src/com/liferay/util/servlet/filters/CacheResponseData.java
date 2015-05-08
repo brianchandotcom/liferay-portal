@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import java.nio.ByteBuffer;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -37,7 +38,10 @@ public class CacheResponseData implements Serializable {
 		throws IOException {
 
 		_byteBuffer = bufferCacheServletResponse.getByteBuffer();
-		_content = _byteBuffer.array();
+		_content = Arrays.copyOfRange(
+			_byteBuffer.array(),
+			_byteBuffer.arrayOffset() + _byteBuffer.position(),
+			_byteBuffer.arrayOffset() + _byteBuffer.limit());
 		_contentType = bufferCacheServletResponse.getContentType();
 		_headers = bufferCacheServletResponse.getHeaders();
 	}

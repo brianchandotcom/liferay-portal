@@ -543,8 +543,9 @@ public class ServletResponseUtil {
 		}
 		else {
 			write(
-				response, byteBuffer.array(), byteBuffer.position(),
-				byteBuffer.limit());
+				response, byteBuffer.array(),
+				byteBuffer.arrayOffset() + byteBuffer.position(),
+				byteBuffer.arrayOffset() + byteBuffer.limit());
 		}
 	}
 

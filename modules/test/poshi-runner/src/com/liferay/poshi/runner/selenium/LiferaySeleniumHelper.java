@@ -1424,7 +1424,7 @@ public class LiferaySeleniumHelper {
 				keyboard.type("(");
 			}
 			else if (specialCharacter.equals("${line.separator}")) {
-				liferaySelenium.keyPress(locator, "\\ESCAPE");
+				liferaySelenium.keyPress(locator, "\\SPACE");
 				liferaySelenium.keyPress(locator, "\\RETURN");
 			}
 

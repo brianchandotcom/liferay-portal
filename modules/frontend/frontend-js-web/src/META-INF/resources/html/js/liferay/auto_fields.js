@@ -75,7 +75,7 @@ AUI.add(
 						var input = clone.one('input[type=text], input[type=password], textarea');
 
 						if (input) {
-							Liferay.Util.focusFormField();
+							Liferay.Util.focusFormField(input);
 						}
 
 						instance.fire(

@@ -104,6 +104,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLOGS_ENTRY</td>
+	<td>//a[@role='menuitem' and contains(.,'Blogs Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CALENDAR_EVENT</td>
+	<td>//a[@role='menuitem' and contains(.,'Calendar Event')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL_CHECKOUT</td>
 	<td>//a[@role='menuitem' and contains(.,'Cancel Checkout')]</td>
 	<td></td>
@@ -366,6 +376,11 @@
 <tr>
 	<td>REGULAR_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Remove')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_LOCALIZED</td>
+	<td>//input[contains(@id,'title')]/../div[contains(.,'${key_languageName} Translation')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPLOAD_FILE</td>
 	<td>//input[contains(@class,'field') and (@type='file')]</td>
 	<td></td>

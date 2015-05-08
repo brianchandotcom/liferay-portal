@@ -48,32 +48,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_SETUP</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Setup')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_PERMISSIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SHARING</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SCOPE</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--WEB_CONTENT_TABLE-->
 <tr>
 	<td>WEB_CONTENT_TABLE_TITLE</td>

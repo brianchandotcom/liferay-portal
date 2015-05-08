@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_FIELD_IFRAME</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'select_structure_field')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_FILTER_RADIO_BUTTON</td>
 	<td>//tr[contains(.,'${key_fieldName}')]/td/input</td>
 	<td></td>

@@ -8,56 +8,6 @@
 <tr><td rowspan="1" colspan="3">APConfiguration</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIGURATION_IFRAME</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@id,'_configurationIframeDialog_iframe_')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETUP_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li[contains(.,'Setup')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li[contains(.,'Permissions')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMUNICATION_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li[contains(.,'Communication')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHARING_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li[contains(.,'Sharing')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_SELECTION_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Asset Selection')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_SETTINGS_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Display Settings')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBSCRIPTIONS_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li[contains(.,'Subscriptions')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSET_SELECTION-->
 <tr>
 	<td>ASSET_SELECTION_DYNAMIC</td>

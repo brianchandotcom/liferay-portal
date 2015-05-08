@@ -66,51 +66,6 @@
 </tr>
 <!--ADD_NEW-->
 <tr>
-	<td>ADD_NEW_BLOGS_ENTRY</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Blogs Entry')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_BOOKMARKS_ENTRY</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Bookmarks Entry')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_CALENDAR_EVENT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Calendar Event')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_BASIC_DOCUMENT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Basic Document')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_CONTRACT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Contract')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_MARKETING_BANNER</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Marketing Banner')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_ONLINE_TRAINING</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Online Training')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_SALES_PRESENTATION</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Sales Presentation')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_NEW_BASIC_WEB_CONTENT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Basic Web Content')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_NEW_2_BASIC_WEB_CONTENT</td>
 	<td>xpath=(//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Basic Web Content')])[2]</td>
 	<td></td>
@@ -169,16 +124,6 @@
 <tr>
 	<td>ASSET_ABSTRACT_VIEW</td>
 	<td>//h4[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ABSTRACT_COMMENTS_BE_THE_FIRST</td>
-	<td>//fieldset[contains(@class,'add-comment')]/div/a[contains(.,'Be the first.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_ABSTRACT_COMMENTS_SUBCRIBE_TO_COMMENTS</td>
-	<td>//fieldset[contains(@class,'add-comment')]/div/span[@class='subscribe-link']</td>
 	<td></td>
 </tr>
 <tr>

@@ -113,9 +113,9 @@ if (!draggableImage.equals("none")) {
 <aui:script use="<%= modules %>">
 	var imageSelector = new Liferay.ImageSelector(
 		{
-			itemSelectorURL: '<%= itemSelectorURL.toString() %>',
 			errorNode: '#<%= randomNamespace + "errorAlert" %>',
 			fileEntryImageNode: '#<%= randomNamespace %>image',
+			itemSelectorURL: '<%= itemSelectorURL.toString() %>',
 			maxFileSize: <%= maxFileSize %>,
 			namespace: '<%= randomNamespace %>',
 			paramName: '<portlet:namespace /><%= paramName %>',

@@ -122,7 +122,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 							<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
 						</div>
 
-						<div class="text-default status">
+						<div class="status text-default">
 							<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" />
 						</div>
 					</div>
@@ -142,8 +142,10 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 </div>
 
 <aui:script use="liferay-item-selector-browser">
-	new Liferay.ItemSelectorBrowser({
-		closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
-		rootNode: '#<%= idPrefix %>ItemSelectorContainer'
-	});
+	new Liferay.ItemSelectorBrowser(
+		{
+			closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
+			rootNode: '#<%= idPrefix %>ItemSelectorContainer'
+		}
+	);
 </aui:script>

@@ -1,0 +1,67 @@
+/* ---------- Syntax highlight ---------- */
+
+/* ---------- Sidebar ---------- */
+
+.command-name {
+	color: $command-name-color;
+}
+
+.current-scope .command-name {
+	color: $scoped-command-name-color;
+}
+
+.param-type {
+	color: $param-type-color;
+}
+
+.failed {
+	.command-name {
+		color: $failed-command-name-color;
+	}
+
+	.param-type {
+		color: $failed-param-type-color;
+	}
+
+	.param-value {
+		color: $failed-param-value-color;
+	}
+}
+
+.command-log .child-container {
+	.command-name {
+		color: $sub-command-name-color;
+	}
+
+	.param-value {
+		color: $sub-param-value-color;
+	}
+
+	.error-line .command-name {
+		color: $sub-failed-command-name-color;
+	}
+}
+
+.action-type, .misc, .tag-type {
+	margin: 2px;
+}
+
+/* ---------- XML log ---------- */
+
+.name {
+	color: $xml-name-color;
+}
+
+.current-scope.pass .name {
+	color: $xml-scoped-name-color;
+}
+
+.tag-type {
+	color: $xml-tag-type-color;
+}
+
+.function, .macro {
+	> div .name {
+		color: $xml-selectable-name-color;
+	}
+}

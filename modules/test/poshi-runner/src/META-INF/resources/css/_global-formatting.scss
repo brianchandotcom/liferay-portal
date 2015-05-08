@@ -1,0 +1,24 @@
+/* ---------- Global ---------- */
+
+body {
+	background-color: $body-bg-color;
+	font-family: $xml-log-font;
+	font-size: $body-font-size;
+	line-height: 1.75em;
+	margin: 0;
+	overflow-x: hidden;
+	padding: 0;
+	word-wrap: break-word;
+}
+
+h3 {
+	font-size: 13px;
+	font-weight: normal;
+	margin: 0;
+	padding: 5px 0;
+}
+
+li {
+	display: block;
+	padding: 1px;
+}

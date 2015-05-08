@@ -1,0 +1,126 @@
+/* ---------- Command log ---------- */
+
+.command-log {
+	font-family: $command-log-font;
+	height: 100%;
+	overflow-y: scroll;
+	padding: 0;
+	transition: all 0.5s ease-in-out;
+
+	.status div {
+		display: inline;
+	}
+
+	.current-scope {
+		background-color: $scoped-command-bg-color;
+		border: $scoped-command-border;
+		color: $scoped-command-text-color;
+		outline-width: 0;
+
+		&.linkable:hover {
+			background-color: $scoped-command-hover-bg-color;
+			color: $scoped-command-hover-text-color;
+		}
+
+		.expand-toggle {
+			color: $scoped-command-expand-toggle-color;
+		}
+	}
+
+	&.collapse {
+		display: block;
+		height: 0;
+	}
+
+	&.toggle {
+		height: 100%;
+	}
+
+	.line-container {
+		margin-left: 20px;
+	}
+
+	.linkable {
+		cursor: pointer;
+		transition: all 0.3s ease;
+
+		&:hover {
+			background: $command-hover-bg-color;
+			color: $command-hover-text-color;
+			outline: 1px solid $command-hover-outline-color;
+		}
+	}
+
+	.divider-line {
+		background: $command-log-divider-bg-color;
+		color: $command-log-divider-text-color;
+		font-size: 12px;
+		font-weight: bold;
+		height: auto;
+		padding: 10px;
+	}
+
+	.line-group {
+		padding-bottom: 1px;
+		position: relative;
+	}
+
+	.child-container {
+		border: 1px dashed $command-child-container-border-color;
+		border-right-width: 0;
+		border-top-width: 0;
+		color: $command-child-container-text-color;
+		margin: 0 0 9px 24px;
+		overflow: hidden;
+
+		.run-line:last-child {
+			padding-bottom: 11px;
+		}
+	}
+
+	.expand-toggle {
+		background: transparent;
+		border-width: 0;
+		color: $command-log-expand-toggle-hover-color;
+		cursor: pointer;
+		height: 20px;
+		line-height: inherit;
+		margin: 6px 0 0 0;
+		padding: 0;
+		position: absolute;
+		text-align: center;
+		width: 20px;
+
+		&:hover {
+			color: $command-log-expand-toggle-color;
+		}
+
+		&:before {
+			content: '\f105';
+			font-family: 'FontAwesome';
+			font-size: 14px;
+			height: 10px;
+			width: 10px;
+		}
+	}
+
+	.failed {
+		background-color: $failed-command-bg-color;
+
+		&.current-scope {
+			background-color: $failed-command-scoped-bg-color;
+		}
+
+		&:hover {
+			background-color: $failed-command-hover-bg-color;
+		}
+
+		.expand-toggle {
+			color: $failed-expand-toggle-color;
+		}
+	}
+
+	.title-line {
+		display: none;
+	}
+}

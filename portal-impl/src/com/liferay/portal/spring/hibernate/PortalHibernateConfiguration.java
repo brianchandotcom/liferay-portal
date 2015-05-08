@@ -146,7 +146,8 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 			Class<?> clazz = dialect.getClass();
 
-			properties.setProperty("hibernate.dialect", clazz.getName());
+			properties.setProperty(
+				PropsKeys.HIBERNATE_DIALECT, clazz.getName());
 		}
 
 		if (_shardEnabled) {
@@ -155,10 +156,11 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				ShardSpringSessionContext.class.getName());
 		}
 
-		properties.setProperty("hibernate.cache.use_query_cache", "false");
 		properties.setProperty(
-			"hibernate.cache.use_second_level_cache", "false");
-		properties.remove("hibernate.cache.region.factory_class");
+			_HIBERNATE_CACHE_USE_QUERY_CACHE, Boolean.FALSE.toString());
+		properties.setProperty(
+			_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE, Boolean.FALSE.toString());
+		properties.remove(_HIBERNATE_CACHE_REGION_FACTORY_CLASS);
 
 		configuration.setProperties(properties);
 
@@ -277,6 +279,13 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 	protected void setDB(Dialect dialect) {
 		DBFactoryUtil.setDB(dialect);
 	}
+
+	private static final String _HIBERNATE_CACHE_REGION_FACTORY_CLASS =
+		"hibernate.cache.region.factory_class";
+	private static final String _HIBERNATE_CACHE_USE_QUERY_CACHE =
+		"hibernate.cache.use_query_cache";
+	private static final String _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE =
+		"hibernate.cache.use_second_level_cache";
 
 	private static final String[] _PRELOAD_CLASS_NAMES =
 		PropsValues.SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES;

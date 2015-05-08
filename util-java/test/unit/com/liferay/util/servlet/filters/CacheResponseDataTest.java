@@ -20,6 +20,7 @@ import com.liferay.util.SerializableUtil;
 import java.nio.ByteBuffer;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,6 +29,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Alberto Montero
+ * @author Shuyang Zhou
  */
 public class CacheResponseDataTest {
 
@@ -36,13 +38,13 @@ public class CacheResponseDataTest {
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(new MockHttpServletResponse());
 
-		ByteBuffer byteBuffer = ByteBuffer.allocate(10);
+		byte[] data = new byte[10];
 
-		byteBuffer.limit(7);
+		Random random = new Random();
 
-		for (byte i = 0; i < 7; i++) {
-			byteBuffer.put(i, i);
-		}
+		random.nextBytes(data);
+
+		ByteBuffer byteBuffer = ByteBuffer.wrap(data, 2, 5);
 
 		bufferCacheServletResponse.setByteBuffer(byteBuffer);
 

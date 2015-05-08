@@ -839,65 +839,81 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a Liferay.AssetTagsSelector component to select existing tags and create and add new tags to an asset such as a blog, bookmark, or wiki.</description>
 		<name>asset-tags-selector</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The function to be called when a tag is added.</description>
 			<name>addCallback</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to allow new tags to be added to the list of tags. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>allowAddEntry</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether to automatically focus the tag input field. Default is false. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The Java class for the asset associated with the tags.</description>
 			<name>className</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The Java class primary key for the asset associated with the tags. This is a Java <![CDATA[<code>long</code>]]>.</description>
 			<name>classPK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The callback used to get tag suggestions based on the asset content.</description>
 			<name>contentCallback</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The current selected tags.</description>
 			<name>curTags</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The group IDs of the asset tags.</description>
 			<name>groupIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The name of the hidden input used to pass in the current tags</description>
 			<name>hiddenInput</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The id of the component.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to ignore the request value of the hidden input. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>ignoreRequestValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>The function to be called when a tag is removed.</description>
 			<name>removeCallback</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

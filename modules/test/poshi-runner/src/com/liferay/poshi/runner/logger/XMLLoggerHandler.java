@@ -361,6 +361,13 @@ public final class XMLLoggerHandler {
 
 		lineContainerLoggerElement.setText(sb.toString());
 
+		String elementName = element.getName();
+
+		if (elementName.equals("execute") && !elements.isEmpty()) {
+			lineContainerLoggerElement.addChildLoggerElement(
+				_getParameterContainerLoggerElement(element));
+		}
+
 		return lineContainerLoggerElement;
 	}
 
@@ -399,13 +406,19 @@ public final class XMLLoggerHandler {
 		return loggerElement.toString();
 	}
 
-	private static String _getLineNumberItemText(String lineNumber) {
+	private static LoggerElement _getLineNumberItem(String lineNumber) {
 		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setClassName("line-number");
 		loggerElement.setID(null);
 		loggerElement.setName("div");
 		loggerElement.setText(lineNumber);
+
+		return loggerElement;
+	}
+
+	private static String _getLineNumberItemText(String lineNumber) {
+		LoggerElement loggerElement = _getLineNumberItem(lineNumber);
 
 		return loggerElement.toString();
 	}
@@ -448,6 +461,28 @@ public final class XMLLoggerHandler {
 			_getMacroCommandLoggerElement(classCommandName));
 		loggerElement.addChildLoggerElement(
 			_getClosingLineContainerLoggerElement(executeElement));
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getParameterContainerLoggerElement(
+		Element element) {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("collapsible parameter-container collapse");
+		loggerElement.setID(null);
+		loggerElement.setName("div");
+
+		List<Element> childElements = element.elements();
+
+		for (Element childElement : childElements) {
+			loggerElement.addChildLoggerElement(
+				_getLineNumberItem(childElement.attributeValue("line-number")));
+
+			loggerElement.addChildLoggerElement(
+				_getLineContainerLoggerElement(childElement));
+		}
 
 		return loggerElement;
 	}

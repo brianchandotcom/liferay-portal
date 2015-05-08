@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -109,17 +111,15 @@ public class EditRecordSetAction extends PortletAction {
 			// Let this slide because the user can manually input an record set
 			// key for a new record set that does not yet exist
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsrse, nsrse);
+			}
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
+		catch (PrincipalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
 
-				return actionMapping.findForward(
-					"portlet.dynamic_data_lists.error");
-			}
-			else {
-				throw e;
-			}
+			return actionMapping.findForward(
+				"portlet.dynamic_data_lists.error");
 		}
 
 		return actionMapping.findForward(
@@ -193,5 +193,8 @@ public class EditRecordSetAction extends PortletAction {
 
 		return recordSet;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditRecordSetAction.class);
 
 }

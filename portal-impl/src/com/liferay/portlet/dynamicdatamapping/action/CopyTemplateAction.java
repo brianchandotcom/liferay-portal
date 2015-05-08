@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -112,17 +114,15 @@ public class CopyTemplateAction extends PortletAction {
 			// Let this slide because the user can manually input a template key
 			// for a new template that does not yet exist
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(nste, nste);
+			}
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
+		catch (PrincipalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
 
-				return actionMapping.findForward(
-					"portlet.dynamic_data_mapping.error");
-			}
-			else {
-				throw e;
-			}
+			return actionMapping.findForward(
+				"portlet.dynamic_data_mapping.error");
 		}
 
 		return actionMapping.findForward(
@@ -167,5 +167,8 @@ public class CopyTemplateAction extends PortletAction {
 
 		return portletURL.toString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CopyTemplateAction.class);
 
 }

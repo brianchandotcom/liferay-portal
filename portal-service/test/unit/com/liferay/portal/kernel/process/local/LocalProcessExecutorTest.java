@@ -1241,9 +1241,7 @@ public class LocalProcessExecutorTest {
 			processChannel.getProcessNoticeableFuture();
 
 		try {
-			processFuture.get();
-
-			Assert.fail();
+			Assert.fail(processFuture.get());
 		}
 		catch (ExecutionException ee) {
 			Throwable throwable = ee.getCause();

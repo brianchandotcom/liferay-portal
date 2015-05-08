@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -36,7 +34,6 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.File;
@@ -204,38 +201,13 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long destFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = getFileEntry(fileEntryId);
+		DLFolderPermission.check(
+			getPermissionChecker(), groupId, destFolderId,
+			ActionKeys.ADD_DOCUMENT);
 
-		String sourceFileName = "A";
-
-		String extension = dlFileEntry.getExtension();
-
-		if (Validator.isNotNull(extension)) {
-			sourceFileName = sourceFileName.concat(StringPool.PERIOD).concat(
-				extension);
-		}
-
-		InputStream inputStream = DLStoreUtil.getFileAsStream(
-			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName());
-
-		DLFileEntry newDlFileEntry = addFileEntry(
-			groupId, repositoryId, destFolderId, sourceFileName,
-			dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
-			dlFileEntry.getDescription(), null,
-			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,
-			dlFileEntry.getSize(), serviceContext);
-
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-		DLFileVersion newDlFileVersion = newDlFileEntry.getFileVersion();
-
-		dlFileEntryLocalService.copyFileEntryMetadata(
-			dlFileVersion.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
-			fileEntryId, newDlFileVersion.getFileVersionId(),
-			dlFileVersion.getFileVersionId(), serviceContext);
-
-		return newDlFileEntry;
+		return dlFileEntryLocalService.copyFileEntry(
+			getUserId(), groupId, repositoryId, fileEntryId, destFolderId,
+			serviceContext);
 	}
 
 	@Override

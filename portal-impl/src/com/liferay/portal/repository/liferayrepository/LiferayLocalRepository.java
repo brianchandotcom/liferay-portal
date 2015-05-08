@@ -174,26 +174,34 @@ public class LiferayLocalRepository
 
 	@Override
 	public void checkInFileEntry(
-		long userId, long fileEntryId, boolean major, String changeLog,
-		ServiceContext serviceContext) {
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		dlFileEntryLocalService.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
 	}
 
 	@Override
 	public void checkInFileEntry(
-		long userId, long fileEntryId, String lockUuid,
-		ServiceContext serviceContext) {
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		dlFileEntryLocalService.checkInFileEntry(
+			userId, fileEntryId, lockUuid, serviceContext);
 	}
 
 	@Override
 	public FileEntry copyFileEntry(
 		long userId, long groupId, long fileEntryId, long destFolderId,
-		ServiceContext serviceContext) {
+		ServiceContext serviceContext) throws PortalException {
 
-		throw new UnsupportedOperationException();
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.copyFileEntry(
+			userId, groupId, getRepositoryId(), fileEntryId, destFolderId,
+			serviceContext);
+
+		return new LiferayFileEntry(dlFileEntry);
 	}
 
 	@Override
@@ -368,10 +376,12 @@ public class LiferayLocalRepository
 
 	@Override
 	public void revertFileEntry(
-		long userId, long fileEntryId, String version,
-		ServiceContext serviceContext) {
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		dlFileEntryLocalService.revertFileEntry(
+			userId, fileEntryId, version, serviceContext);
 	}
 
 	/**

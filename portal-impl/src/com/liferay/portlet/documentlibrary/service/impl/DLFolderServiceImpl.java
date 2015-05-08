@@ -518,6 +518,24 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		dlFolderLocalService.unlockFolder(folderId, lockUuid);
 	}
 
+	@Override
+	public DLFolder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			int restrictionType, ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFolderPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(), folderId,
+			ActionKeys.UPDATE);
+
+		serviceContext.setUserId(getUserId());
+
+		return dlFolderLocalService.updateFolder(
+			folderId, parentFolderId, name, description, defaultFileEntryTypeId,
+			fileEntryTypeIds, restrictionType, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by more general {@link
 	 *             #updateFolder(long, String, String, long, List, int,

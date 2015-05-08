@@ -1086,10 +1086,23 @@ public class LiferayRepository
 
 	@Override
 	public Folder updateFolder(
-		long folderId, long parentFolderId, String name, String description,
-		ServiceContext serviceContext) {
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		long defaultFileEntryTypeId = ParamUtil.getLong(
+			serviceContext, "defaultFileEntryTypeId");
+		SortedArrayList<Long> fileEntryTypeIds = getLongList(
+			serviceContext, "dlFileEntryTypesSearchContainerPrimaryKeys");
+		int restrictionType = ParamUtil.getInteger(
+			serviceContext, "restrictionType");
+
+		DLFolder dlFolder = dlFolderLocalService.updateFolder(
+			toFolderId(folderId), toFolderId(parentFolderId), name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
+			serviceContext);
+
+		return new LiferayFolder(dlFolder);
 	}
 
 	@Override

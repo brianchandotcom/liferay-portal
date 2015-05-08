@@ -2860,9 +2860,11 @@ public class DataFactory {
 		resourcePermissionModel.setName(name);
 		resourcePermissionModel.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
 		resourcePermissionModel.setPrimKey(primKey);
+		resourcePermissionModel.setPrimKeyId(GetterUtil.getLong(primKey));
 		resourcePermissionModel.setRoleId(roleId);
 		resourcePermissionModel.setOwnerId(ownerId);
 		resourcePermissionModel.setActionIds(1);
+		resourcePermissionModel.setViewPermission(true);
 
 		return resourcePermissionModel;
 	}

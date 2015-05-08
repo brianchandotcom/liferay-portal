@@ -217,7 +217,7 @@
 	<#local resourcePermissionModels = dataFactory.newResourcePermissionModels(_entry)>
 
 	<#list resourcePermissionModels as resourcePermissionModel>
-		insert into ResourcePermission values (${resourcePermissionModel.mvccVersion}, ${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds});
+		insert into ResourcePermission values (${resourcePermissionModel.mvccVersion}, ${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.primKeyId}, ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds}, ${resourcePermissionModel.viewPermission?string("true", "false")});
 	</#list>
 </#macro>
 

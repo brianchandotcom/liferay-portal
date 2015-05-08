@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.GroupedModel;
@@ -1195,6 +1196,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			resourcePermission.setPrimKey(newPrimKey);
+			resourcePermission.setPrimKeyId(GetterUtil.getLong(newPrimKey));
 
 			resourcePermissionPersistence.update(resourcePermission);
 		}

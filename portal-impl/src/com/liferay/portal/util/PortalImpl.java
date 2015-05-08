@@ -4656,12 +4656,19 @@ public class PortalImpl implements Portal {
 
 		PortletConfig portletConfig = PortletConfigFactoryUtil.update(portlet);
 
-		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+		return getPortletTitle(
+			portlet.getRootPortletId(),
+			portletConfig.getResourceBundle(locale));
+	}
 
-		String portletTitle = ResourceBundleUtil.getString(
+	@Override
+	public String getPortletTitle(
+		String portletId, ResourceBundle resourceBundle) {
+
+		String portletTitle = LanguageUtil.get(
 			resourceBundle,
 			JavaConstants.JAVAX_PORTLET_TITLE.concat(StringPool.PERIOD).concat(
-				portlet.getRootPortletId()));
+				portletId));
 
 		if (Validator.isNull(portletTitle)) {
 			portletTitle = ResourceBundleUtil.getString(
@@ -4669,16 +4676,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return portletTitle;
-	}
-
-	@Override
-	public String getPortletTitle(
-		String portletId, ResourceBundle resourceBundle) {
-
-		return LanguageUtil.get(
-			resourceBundle,
-			JavaConstants.JAVAX_PORTLET_TITLE.concat(StringPool.PERIOD).concat(
-				portletId));
 	}
 
 	@Override

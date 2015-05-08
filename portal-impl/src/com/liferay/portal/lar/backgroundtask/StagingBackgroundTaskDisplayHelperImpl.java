@@ -79,20 +79,17 @@ public class StagingBackgroundTaskDisplayHelperImpl
 			MissingReference missingReference = missingReferences.get(
 				missingReferenceDisplayName);
 
-			JSONObject errorMessageJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
 			String className = missingReference.getClassName();
 			Map<String, String> referrers = missingReference.getReferrers();
 
+			String info = StringPool.BLANK;
+
 			if (className.equals(StagedTheme.class.getName())) {
-				errorMessageJSONObject.put(
-					"info",
-					LanguageUtil.format(
+				info = LanguageUtil.format(
 						locale,
 						"the-referenced-theme-x-is-not-deployed-in-the-" +
 							"current-environment",
-						missingReference.getClassPK(), false));
+						missingReference.getClassPK(), false);
 			}
 			else if (referrers.size() == 1) {
 				Set<Map.Entry<String, String>> referrerDisplayNames =
@@ -111,26 +108,18 @@ public class StagingBackgroundTaskDisplayHelperImpl
 						referrerDisplayName, locale);
 				}
 
-				errorMessageJSONObject.put(
-					"info",
-					LanguageUtil.format(
+				info = LanguageUtil.format(
 						locale, "referenced-by-a-x-x",
 						new String[] {
 							ResourceActionsUtil.getModelResource(
 								locale, referrerClassName),
 							referrerDisplayName
-						}, false));
+						}, false);
 			}
 			else {
-				errorMessageJSONObject.put(
-					"info",
-					LanguageUtil.format(
-						locale, "referenced-by-x-elements", referrers.size(),
-						true));
+				info = LanguageUtil.format(
+					locale, "referenced-by-x-elements", referrers.size(), true);
 			}
-
-			errorMessageJSONObject.put(
-				"errorStrongMessage", missingReferenceDisplayName);
 
 			Group group = GroupLocalServiceUtil.fetchGroup(
 				missingReference.getGroupId());
@@ -145,7 +134,8 @@ public class StagingBackgroundTaskDisplayHelperImpl
 						false);
 			}
 
-			errorMessageJSONObject.put("errorMessage", errorMessage);
+			JSONObject errorMessageJSONObject = createErrorJSONObject(
+				info, errorMessage, missingReferenceDisplayName);
 
 			errorMessagesJSONArray.put(errorMessageJSONObject);
 		}
@@ -257,27 +247,20 @@ public class StagingBackgroundTaskDisplayHelperImpl
 				lpe.getMissingLayoutPrototypes();
 
 			for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
-				JSONObject errorMessageJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
 				String layoutPrototypeUuid =
 					(String)missingLayoutPrototype.getObject(1);
-
-				errorMessageJSONObject.put("info", layoutPrototypeUuid);
 
 				String layoutPrototypeName =
 					(String)missingLayoutPrototype.getObject(2);
 
-				errorMessageJSONObject.put(
-					"errorStrongMessage", layoutPrototypeName);
-
 				String layoutPrototypeClassName =
 					(String)missingLayoutPrototype.getObject(0);
 
-				errorMessageJSONObject.put(
-					"errorMessage",
-					ResourceActionsUtil.getModelResource(
-						locale, layoutPrototypeClassName));
+				String modelResource = ResourceActionsUtil.getModelResource(
+					locale, layoutPrototypeClassName);
+
+				JSONObject errorMessageJSONObject = createErrorJSONObject(
+					layoutPrototypeUuid, modelResource, layoutPrototypeName);
 
 				errorMessagesJSONArray.put(errorMessageJSONObject);
 			}
@@ -443,31 +426,40 @@ public class StagingBackgroundTaskDisplayHelperImpl
 
 			Map<String, String> referrers = missingReference.getReferrers();
 
-			JSONObject errorMessageJSONObject =
-				JSONFactoryUtil.createJSONObject();
+			String info = StringPool.BLANK;
 
 			if (Validator.isNotNull(missingReference.getClassName())) {
-				errorMessageJSONObject.put(
-					"info",
-					LanguageUtil.format(
-						locale,
-						"the-original-x-does-not-exist-in-the-current-" +
-							"environment",
-						ResourceActionsUtil.getModelResource(
-							locale, missingReference.getClassName()),
-						false));
+				info = LanguageUtil.format(
+					locale,
+					"the-original-x-does-not-exist-in-the-current-" +
+						"environment",
+					ResourceActionsUtil.getModelResource(
+						locale, missingReference.getClassName()),
+					false);
 			}
 
-			errorMessageJSONObject.put("errorStrongMessage", referrers.size());
-			errorMessageJSONObject.put(
-				"errorMessage",
-				ResourceActionsUtil.getModelResource(
-					locale, missingReferenceReferrerClassName));
+			String errorMessage = ResourceActionsUtil.getModelResource(
+				locale, missingReferenceReferrerClassName);
+
+			JSONObject errorMessageJSONObject = createErrorJSONObject(
+				info, errorMessage, String.valueOf(referrers.size()));
 
 			warningMessagesJSONArray.put(errorMessageJSONObject);
 		}
 
 		return warningMessagesJSONArray;
+	}
+
+	protected JSONObject createErrorJSONObject(
+		String info, String errorMessage, String errorStrongMessage) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("info", info);
+		jsonObject.put("errorMessage", errorMessage);
+		jsonObject.put("errorStrongMessage", errorStrongMessage);
+
+		return jsonObject;
 	}
 
 }

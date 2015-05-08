@@ -188,13 +188,9 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 			"messageListItems");
 
 		if (errorMessagesJSONArray != null) {
-			JSONObject errorDetails = JSONFactoryUtil.createJSONObject();
+			String message = backgroundTaskJSON.getString("message");
 
-			errorDetails.put(
-				"message", backgroundTaskJSON.getString("message"));
-			errorDetails.put("itemsList", errorMessagesJSONArray);
-
-			detailItems.put(errorDetails);
+			addDetailItem(detailItems, message, errorMessagesJSONArray);
 		}
 
 		JSONArray warningMessagesJSONArray = backgroundTaskJSON.getJSONArray(
@@ -211,21 +207,12 @@ public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 						"published-either";
 			}
 
-			JSONObject warningDetails = JSONFactoryUtil.createJSONObject();
-
-			warningDetails.put("message", message);
-			warningDetails.put("itemsList", warningMessagesJSONArray);
-
-			detailItems.put(warningDetails);
+			addDetailItem(detailItems, message, warningMessagesJSONArray);
 		}
 
-		JSONObject detailsJSON = JSONFactoryUtil.createJSONObject();
+		int status = backgroundTaskJSON.getInt("status");
 
-		detailsJSON.put("detailHeader", detailHeader);
-		detailsJSON.put("detailItems", detailItems);
-		detailsJSON.put("status", backgroundTaskJSON.getInt("status"));
-
-		return detailsJSON;
+		return createDetailsJSON(detailHeader, detailItems, status);
 	}
 
 	protected String createMessage(Locale locale) {

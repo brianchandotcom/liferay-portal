@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatalists.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -42,17 +41,16 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 		DDMStructure ddmStructure = getDDMStructure();
 
 		if (formDDMTemplateId > 0) {
-			try {
-				DDMTemplate ddmTemplate =
-					DDMTemplateLocalServiceUtil.getTemplate(formDDMTemplateId);
+			DDMTemplate ddmTemplate =
+				DDMTemplateLocalServiceUtil.fetchDDMTemplate(formDDMTemplateId);
+
+			if (ddmTemplate != null) {
 
 				// Clone ddmStructure to make sure changes are never persisted
 
 				ddmStructure = (DDMStructure)ddmStructure.clone();
 
 				ddmStructure.setDefinition(ddmTemplate.getScript());
-			}
-			catch (NoSuchTemplateException nste) {
 			}
 		}
 

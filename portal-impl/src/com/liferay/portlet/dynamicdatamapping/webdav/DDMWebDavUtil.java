@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
-import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
@@ -169,48 +167,38 @@ public class DDMWebDavUtil {
 				String typeId = pathArray[3];
 
 				if (type.equals(TYPE_STRUCTURES)) {
-					try {
-						DDMStructure structure = null;
+					DDMStructure structure =
+						DDMStructureLocalServiceUtil.fetchStructure(
+							GetterUtil.getLong(typeId));
 
-						try {
-							structure =
-								DDMStructureLocalServiceUtil.getStructure(
-									GetterUtil.getLong(typeId));
-						}
-						catch (NumberFormatException nfe) {
-							structure =
-								DDMStructureLocalServiceUtil.getStructure(
-									webDAVRequest.getGroupId(), classNameId,
-									typeId);
-						}
-
-						return DDMWebDavUtil.toResource(
-							webDAVRequest, structure, rootPath, false);
+					if (structure == null) {
+						structure = DDMStructureLocalServiceUtil.fetchStructure(
+							webDAVRequest.getGroupId(), classNameId, typeId);
 					}
-					catch (NoSuchStructureException nsse) {
+
+					if (structure == null) {
 						return null;
 					}
+
+					return DDMWebDavUtil.toResource(
+						webDAVRequest, structure, rootPath, false);
 				}
 				else if (type.equals(TYPE_TEMPLATES)) {
-					try {
-						DDMTemplate template = null;
+					DDMTemplate template =
+						DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+							GetterUtil.getLong(typeId));
 
-						try {
-							template = DDMTemplateLocalServiceUtil.getTemplate(
-								GetterUtil.getLong(typeId));
-						}
-						catch (NumberFormatException nfe) {
-							template = DDMTemplateLocalServiceUtil.getTemplate(
-								webDAVRequest.getGroupId(), classNameId,
-								typeId);
-						}
-
-						return DDMWebDavUtil.toResource(
-							webDAVRequest, template, rootPath, false);
+					if (template == null) {
+						template = DDMTemplateLocalServiceUtil.fetchTemplate(
+							webDAVRequest.getGroupId(), classNameId, typeId);
 					}
-					catch (NoSuchTemplateException nste) {
+
+					if (template == null) {
 						return null;
 					}
+
+					return DDMWebDavUtil.toResource(
+						webDAVRequest, template, rootPath, false);
 				}
 			}
 

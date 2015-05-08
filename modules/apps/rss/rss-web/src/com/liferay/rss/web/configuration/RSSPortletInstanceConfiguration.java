@@ -29,59 +29,37 @@ public interface RSSPortletInstanceConfiguration {
 	 * ddmTemplate_rss-navigation-ftl) to use as the display
 	 * style.
 	 */
-	@Meta.AD(
-		deflt = "", required = false
-	)
+	@Meta.AD(deflt = "", required = false)
 	public String displayStyle();
 
-	@Meta.AD(
-		deflt = "0", required = false
-	)
+	@Meta.AD(deflt = "0", required = false)
 	public long displayStyleGroupId(long defaultDisplayStyleGroupId);
 
-	@Meta.AD(
-		deflt = "4", required = false
-	)
+	@Meta.AD(deflt = "4", required = false)
 	public int entriesPerFeed();
 
-	@Meta.AD(
-		deflt = "8", required = false
-	)
+	@Meta.AD(deflt = "8", required = false)
 	public int expandedEntriesPerFeed();
 
-	@Meta.AD(
-		deflt = "right", required = false
-	)
+	@Meta.AD(deflt = "right", required = false)
 	public String feedImageAlignment();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean showFeedDescription();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean showFeedImage();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean showFeedItemAuthor();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean showFeedPublishedDate();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean showFeedTitle();
 
-	@Meta.AD(
-		deflt = "", required = false
-	)
+	@Meta.AD(deflt = "", required = false)
 	public String[] titles();
 
 	@Meta.AD(

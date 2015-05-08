@@ -394,13 +394,24 @@ public class ComboServlet extends HttpServlet {
 		HttpURLConnection urlConnection =
 			(HttpURLConnection)url.openConnection();
 
-		if (urlConnection.getResponseCode() == HttpServletResponse.SC_OK) {
-			return url;
-		}
+		try {
+			if (urlConnection.getResponseCode() == HttpServletResponse.SC_OK) {
+				return url;
+			}
 
-		throw new ServletException(
-			"Resource " + resourcePath + " does not exist in " +
-				portlet.getContextPath());
+			throw new ServletException(
+				"Resource " + resourcePath + " does not exist in " +
+					portlet.getContextPath());
+		}
+		finally {
+			try {
+				InputStream inputStream = urlConnection.getInputStream();
+
+				inputStream.close();
+			}
+			catch (IOException ioe) {
+			}
+		}
 	}
 
 	protected String translate(

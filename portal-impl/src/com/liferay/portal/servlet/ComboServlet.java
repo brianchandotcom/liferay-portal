@@ -20,19 +20,20 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.RequestDispatcherUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.AggregateResourceBundle;
 import com.liferay.portal.language.LanguageResources;
@@ -51,9 +52,6 @@ import com.liferay.portlet.PortletConfigFactoryUtil;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -65,6 +63,7 @@ import java.util.Set;
 
 import javax.portlet.PortletConfig;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -212,9 +211,11 @@ public class ComboServlet extends HttpServlet {
 				byte[] bytes = new byte[0];
 
 				if (Validator.isNotNull(modulePath)) {
-					URL url = getResourceURL(request, modulePath);
+					RequestDispatcher requestDispatcher =
+						getResourceRequestDispatcher(
+							request, response, modulePath);
 
-					if (url == null) {
+					if (requestDispatcher == null) {
 						response.setHeader(
 							HttpHeaders.CACHE_CONTROL,
 							HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
@@ -224,7 +225,8 @@ public class ComboServlet extends HttpServlet {
 					}
 
 					bytes = getResourceContent(
-						request, response, url, modulePath, minifierType);
+						request, response, requestDispatcher, modulePath,
+						minifierType);
 				}
 
 				bytesArray[i] = bytes;
@@ -250,8 +252,9 @@ public class ComboServlet extends HttpServlet {
 
 	protected byte[] getResourceContent(
 			HttpServletRequest request, HttpServletResponse response,
-			URL resourceURL, String modulePath, String minifierType)
-		throws IOException {
+			RequestDispatcher requestDispatcher, String modulePath,
+			String minifierType)
+		throws Exception {
 
 		String resourcePath = getResourcePath(modulePath);
 
@@ -277,10 +280,11 @@ public class ComboServlet extends HttpServlet {
 			long elapsedTime =
 				System.currentTimeMillis() - fileContentBag._lastModified;
 
-			if ((resourceURL != null) &&
+			if ((requestDispatcher != null) &&
 				(elapsedTime <= PropsValues.COMBO_CHECK_TIMESTAMP_INTERVAL) &&
-				(URLUtil.getLastModifiedTime(resourceURL) ==
-					fileContentBag._lastModified)) {
+				(RequestDispatcherUtil.getLastModifiedTime(
+					requestDispatcher, request, response) ==
+						fileContentBag._lastModified)) {
 
 				return fileContentBag._fileContent;
 			}
@@ -288,12 +292,15 @@ public class ComboServlet extends HttpServlet {
 			_fileContentBagPortalCache.remove(fileContentKey);
 		}
 
-		if (resourceURL == null) {
+		if (requestDispatcher == null) {
 			fileContentBag = _EMPTY_FILE_CONTENT_BAG;
 		}
 		else {
-			String stringFileContent = StringUtil.read(
-				resourceURL.openStream());
+			ObjectValuePair<String, Long> objectValuePair =
+				RequestDispatcherUtil.getContentAndLastModifiedTime(
+					requestDispatcher, request, response);
+
+			String stringFileContent = objectValuePair.getKey();
 
 			if (!StringUtil.endsWith(resourcePath, _CSS_MINIFIED_SUFFIX) &&
 				!StringUtil.endsWith(
@@ -307,8 +314,7 @@ public class ComboServlet extends HttpServlet {
 					}
 					catch (Exception e) {
 						_log.error(
-							"Unable to parse SASS on CSS " +
-								resourceURL.getPath(), e);
+							"Unable to parse SASS on CSS " + resourcePath, e);
 
 						if (_log.isDebugEnabled()) {
 							_log.debug(stringFileContent);
@@ -344,7 +350,7 @@ public class ComboServlet extends HttpServlet {
 
 			fileContentBag = new FileContentBag(
 				stringFileContent.getBytes(StringPool.UTF8),
-				URLUtil.getLastModifiedTime(resourceURL));
+				objectValuePair.getValue());
 		}
 
 		if (PropsValues.COMBO_CHECK_TIMESTAMP) {
@@ -358,7 +364,9 @@ public class ComboServlet extends HttpServlet {
 		return fileContentBag._fileContent;
 	}
 
-	protected URL getResourceURL(HttpServletRequest request, String modulePath)
+	protected RequestDispatcher getResourceRequestDispatcher(
+			HttpServletRequest request, HttpServletResponse response,
+			String modulePath)
 		throws Exception {
 
 		String portletId = getModulePortletId(modulePath);
@@ -373,45 +381,7 @@ public class ComboServlet extends HttpServlet {
 
 		ServletContext servletContext = portletApp.getServletContext();
 
-		String resourcePath = getResourcePath(modulePath);
-
-		String contextPath = servletContext.getContextPath();
-
-		if (resourcePath.startsWith(contextPath)) {
-			resourcePath = resourcePath.substring(contextPath.length());
-		}
-
-		URL url = servletContext.getResource(resourcePath);
-
-		if (url != null) {
-			return url;
-		}
-
-		url = new URL(
-			request.getScheme(), request.getLocalAddr(), request.getLocalPort(),
-			contextPath + resourcePath);
-
-		HttpURLConnection urlConnection =
-			(HttpURLConnection)url.openConnection();
-
-		try {
-			if (urlConnection.getResponseCode() == HttpServletResponse.SC_OK) {
-				return url;
-			}
-
-			throw new ServletException(
-				"Resource " + resourcePath + " does not exist in " +
-					portlet.getContextPath());
-		}
-		finally {
-			try {
-				InputStream inputStream = urlConnection.getInputStream();
-
-				inputStream.close();
-			}
-			catch (IOException ioe) {
-			}
-		}
+		return servletContext.getRequestDispatcher(getResourcePath(modulePath));
 	}
 
 	protected String translate(

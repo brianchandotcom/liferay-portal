@@ -34,13 +34,13 @@ public class UserSocialNetworkFormNavigatorEntry
 	public String getKey() {
 		return "social-network";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

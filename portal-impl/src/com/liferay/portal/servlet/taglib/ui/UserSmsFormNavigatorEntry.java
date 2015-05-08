@@ -33,13 +33,13 @@ public class UserSmsFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 	public String getKey() {
 		return "sms";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

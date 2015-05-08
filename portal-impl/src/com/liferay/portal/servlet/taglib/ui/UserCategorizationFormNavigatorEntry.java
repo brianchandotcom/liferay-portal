@@ -34,13 +34,13 @@ public class UserCategorizationFormNavigatorEntry
 	public String getKey() {
 		return "categorization";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

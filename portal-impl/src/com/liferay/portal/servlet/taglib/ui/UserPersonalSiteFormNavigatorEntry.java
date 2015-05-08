@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet.taglib.ui;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.User;
@@ -23,6 +21,8 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pei-Jung Lan
@@ -40,21 +40,21 @@ public class UserPersonalSiteFormNavigatorEntry
 	public String getKey() {
 		return "personal-site";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		HttpServletRequest request =
-				ServiceContextThreadLocal.getServiceContext().getRequest();
-		
-		ThemeDisplay themeDisplay =
-				(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-		
+			ServiceContextThreadLocal.getServiceContext().getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String portletName = themeDisplay.getPortletDisplay().getPortletName();
 
-		if (selUser != null && portletName.equals(PortletKeys.MY_ACCOUNT)) {
+		if ((selUser != null) && portletName.equals(PortletKeys.MY_ACCOUNT)) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

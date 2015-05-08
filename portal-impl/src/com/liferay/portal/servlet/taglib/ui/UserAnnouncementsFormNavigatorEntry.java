@@ -22,7 +22,7 @@ import com.liferay.portal.model.User;
  * @author Pei-Jung Lan
  */
 @OSGiBeanProperties(property = {"service.ranking:Integer=40"})
-public class UserAnnouncementsFormNavigatorEntry 
+public class UserAnnouncementsFormNavigatorEntry
 	extends BaseUserFormNavigatorEntry {
 
 	@Override
@@ -34,13 +34,13 @@ public class UserAnnouncementsFormNavigatorEntry
 	public String getKey() {
 		return "announcements";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.servlet.taglib.ui;
 
-import java.util.Locale;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.model.User;
+
+import java.util.Locale;
 
 /**
  * @author Pei-Jung Lan
@@ -30,7 +30,7 @@ public abstract class BaseUserFormNavigatorEntry
 	public String getFormNavigatorId() {
 		return FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS;
 	}
-	
+
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, getKey());

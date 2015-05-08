@@ -22,8 +22,7 @@ import com.liferay.portal.model.User;
  * @author Pei-Jung Lan
  */
 @OSGiBeanProperties(property = {"service.ranking:Integer=70"})
-public class UserPasswordFormNavigatorEntry
-	extends BaseUserFormNavigatorEntry {
+public class UserPasswordFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -34,13 +33,13 @@ public class UserPasswordFormNavigatorEntry
 	public String getKey() {
 		return "password";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

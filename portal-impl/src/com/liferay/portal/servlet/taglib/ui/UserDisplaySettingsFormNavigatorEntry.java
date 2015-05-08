@@ -34,13 +34,13 @@ public class UserDisplaySettingsFormNavigatorEntry
 	public String getKey() {
 		return "display-settings";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

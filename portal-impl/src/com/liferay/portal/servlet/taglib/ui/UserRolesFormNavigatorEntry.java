@@ -39,10 +39,10 @@ public class UserRolesFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	@Override
 	protected String getJspPath() {
 		return "/html/portlet/users_admin/user/roles.jsp";

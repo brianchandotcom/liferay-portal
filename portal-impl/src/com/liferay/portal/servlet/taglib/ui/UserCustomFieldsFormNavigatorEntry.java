@@ -34,13 +34,13 @@ public class UserCustomFieldsFormNavigatorEntry
 	public String getKey() {
 		return "custom-fields";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

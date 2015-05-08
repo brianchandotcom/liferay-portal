@@ -22,8 +22,7 @@ import com.liferay.portal.model.User;
  * @author Pei-Jung Lan
  */
 @OSGiBeanProperties(property = {"service.ranking:Integer=20"})
-public class UserCommentsFormNavigatorEntry
-	extends BaseUserFormNavigatorEntry {
+public class UserCommentsFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -34,13 +33,13 @@ public class UserCommentsFormNavigatorEntry
 	public String getKey() {
 		return "comments";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

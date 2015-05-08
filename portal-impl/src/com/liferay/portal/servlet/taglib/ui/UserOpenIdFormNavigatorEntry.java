@@ -22,8 +22,7 @@ import com.liferay.portal.model.User;
  * @author Pei-Jung Lan
  */
 @OSGiBeanProperties(property = {"service.ranking:Integer=10"})
-public class UserOpenIdFormNavigatorEntry
-	extends BaseUserFormNavigatorEntry {
+public class UserOpenIdFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
@@ -34,13 +33,13 @@ public class UserOpenIdFormNavigatorEntry
 	public String getKey() {
 		return "open-id";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

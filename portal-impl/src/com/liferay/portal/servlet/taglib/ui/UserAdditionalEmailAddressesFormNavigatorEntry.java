@@ -34,13 +34,13 @@ public class UserAdditionalEmailAddressesFormNavigatorEntry
 	public String getKey() {
 		return "additional-email-addresses";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

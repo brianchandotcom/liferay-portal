@@ -33,13 +33,13 @@ public class UserSitesFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 	public String getKey() {
 		return "sites";
 	}
-	
+
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		if (selUser == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 

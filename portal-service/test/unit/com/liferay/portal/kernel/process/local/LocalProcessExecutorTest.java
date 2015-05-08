@@ -1125,6 +1125,60 @@ public class LocalProcessExecutorTest {
 	}
 
 	@Test
+	public void testNonProcessCallablePipingBackProcessCallable()
+		throws Exception {
+
+		NonProcessCallablePipingBackProcessCallable
+			nonProcessCallablePipingBackProcessCallable =
+				new NonProcessCallablePipingBackProcessCallable();
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.INFO)) {
+
+			ProcessChannel<Serializable> processChannel =
+				_localProcessExecutor.execute(
+					_createJPDAProcessConfig(_JPDA_OPTIONS1),
+					nonProcessCallablePipingBackProcessCallable);
+
+			NoticeableFuture<Serializable> noticeableFuture =
+				processChannel.getProcessNoticeableFuture();
+
+			noticeableFuture.get();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Received a non-ProcessCallable piping back String " +
+					"piping back object",
+				logRecord.getMessage());
+		}
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocalProcessExecutor.class.getName(), Level.OFF)) {
+
+			ProcessChannel<Serializable> processChannel =
+				_localProcessExecutor.execute(
+					_createJPDAProcessConfig(_JPDA_OPTIONS1),
+					nonProcessCallablePipingBackProcessCallable);
+
+			NoticeableFuture<Serializable> noticeableFuture =
+				processChannel.getProcessNoticeableFuture();
+
+			noticeableFuture.get();
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.isEmpty());
+		}
+	}
+
+	@Test
 	public void testProcessChannelPiping() throws Exception {
 		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
 			new ReturnWithoutExitProcessCallable("Premature return value");
@@ -1461,6 +1515,29 @@ public class LocalProcessExecutorTest {
 		else {
 			return heartbeatThreadReference.get();
 		}
+	}
+
+	private static byte[] _toHeadlessSerializationData(
+			Serializable serializable)
+		throws IOException {
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream) {
+
+					@Override
+					protected void writeStreamHeader() {
+					}
+
+				}) {
+
+			objectOutputStream.reset();
+			objectOutputStream.writeUnshared(serializable);
+		}
+
+		return unsyncByteArrayOutputStream.toByteArray();
 	}
 
 	private static void _waitForSignalFile(
@@ -2222,6 +2299,34 @@ public class LocalProcessExecutorTest {
 
 		private final String _logMessage;
 		private final File _signalFile;
+
+	}
+
+	private static class NonProcessCallablePipingBackProcessCallable
+		implements ProcessCallable<Serializable> {
+
+		@Override
+		public Serializable call() throws ProcessException {
+			try {
+				synchronized (System.out) {
+					System.out.flush();
+
+					OutputStream outputStream = new FileOutputStream(
+						FileDescriptor.out);
+
+					outputStream.write(
+						_toHeadlessSerializationData(
+							"String piping back object"));
+				}
+			}
+			catch (IOException ioe) {
+				throw new ProcessException(ioe);
+			}
+
+			return null;
+		}
+
+		private static final long serialVersionUID = 1L;
 
 	}
 

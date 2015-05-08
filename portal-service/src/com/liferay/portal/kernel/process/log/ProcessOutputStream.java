@@ -60,6 +60,11 @@ public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 
 			reset();
 		}
+		else {
+			_objectOutputStream.flush();
+		}
+
+		_objectOutputStream.reset();
 	}
 
 	public void setLogPrefix(byte[] logPrefix) {

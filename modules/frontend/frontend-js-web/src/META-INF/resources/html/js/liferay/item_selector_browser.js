@@ -59,11 +59,13 @@ AUI.add(
 
 						var inputFileNode = instance.one('input[type="file"]');
 
+						var rootNode = instance.rootNode;
+
 						instance._eventHandles = [
 							inputFileNode.on('change', A.bind(instance._onInputFileChanged, instance)),
-							instance.rootNode.on('dragover', instance._ddEventHandler, instance),
-							instance.rootNode.on('dragleave', instance._ddEventHandler, instance),
-							instance.rootNode.on('drop', instance._ddEventHandler, instance)
+							rootNode.on('dragover', instance._ddEventHandler, instance),
+							rootNode.on('dragleave', instance._ddEventHandler, instance),
+							rootNode.on('drop', instance._ddEventHandler, instance)
 						];
 					},
 
@@ -73,19 +75,21 @@ AUI.add(
 						event.stopPropagation();
 						event.preventDefault();
 
-						switch (event.type) {
-							case 'dragover':
-								instance.rootNode.addClass(CSS_DROP_ACTIVE);
-								break;
+						var type = event.type;
 
-							case 'dragleave':
-								instance.rootNode.removeClass(CSS_DROP_ACTIVE);
-								break;
+						var eventDrop = type === 'drop';
 
-							case 'drop':
-								instance.rootNode.removeClass(CSS_DROP_ACTIVE);
+						var rootNode = instance.rootNode;
+
+						if (type === 'dragover') {
+							rootNode.addClass(CSS_DROP_ACTIVE);
+						}
+						else if (type === 'dragleave' || eventDrop) {
+							rootNode.removeClass(CSS_DROP_ACTIVE);
+
+							if (eventDrop) {
 								instance._previewFile(event._event.dataTransfer.files[0]);
-								break;
+							}
 						}
 					},
 
@@ -115,8 +119,10 @@ AUI.add(
 					_renderUI: function() {
 						var instance = this;
 
-						instance._itemViewer.render(instance.rootNode);
-						instance._uploadItemViewer.render(instance.rootNode);
+						var rootNode = instance.rootNode;
+
+						instance._itemViewer.render(rootNode);
+						instance._uploadItemViewer.render(rootNode);
 					},
 
 					_showFile: function(file, preview) {

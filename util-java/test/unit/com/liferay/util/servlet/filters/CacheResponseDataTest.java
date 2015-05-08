@@ -15,11 +15,7 @@
 package com.liferay.util.servlet.filters;
 
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.liferay.util.SerializableUtil;
 
 import java.nio.ByteBuffer;
 
@@ -46,8 +42,8 @@ public class CacheResponseDataTest {
 
 		byteBuffer.limit(7);
 
-		for (int i = 0; i < 7; i++) {
-			byteBuffer.put(i, (byte)i);
+		for (byte b = 0; b < 7; b++) {
+			byteBuffer.put(b, b);
 		}
 
 		bufferCacheServletResponse.setByteBuffer(byteBuffer);
@@ -58,17 +54,12 @@ public class CacheResponseDataTest {
 		cacheResponseData.setAttribute("a1", "v1");
 		cacheResponseData.setAttribute("b1", "v2");
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(baos);
-		oos.writeObject(cacheResponseData);
-		oos.close();
+		byte[] serializedCacheResponseData = SerializableUtil.serialize(
+			cacheResponseData);
 
-		ByteArrayInputStream bais = new ByteArrayInputStream(
-			baos.toByteArray());
-		ObjectInputStream ois = new ObjectInputStream(bais);
-		Object o = ois.readObject();
-
-		CacheResponseData deserializedCacheResponseData = (CacheResponseData)o;
+		CacheResponseData deserializedCacheResponseData =
+			(CacheResponseData)SerializableUtil.deserialize(
+				serializedCacheResponseData);
 
 		Assert.assertEquals(
 			deserializedCacheResponseData.getContentType(),

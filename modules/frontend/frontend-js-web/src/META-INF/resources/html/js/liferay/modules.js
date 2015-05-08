@@ -1,6 +1,6 @@
 ;(function() {
-	var LiferayAUI = Liferay.AUI;
 	var Browser = Liferay.Browser;
+	var LiferayAUI = Liferay.AUI;
 
 	var COMBINE = LiferayAUI.getCombine();
 
@@ -12,17 +12,17 @@
 
 	var PATH_EDITORS = LiferayAUI.getEditorsPath();
 
-	var SUPPORTS_INPUT_SELECTION = ((typeof INPUT_EL.selectionStart === 'number') && (typeof INPUT_EL.selectionEnd === 'number'));
+	var SUPPORTS_INPUT_SELECTION = typeof INPUT_EL.selectionStart === 'number' && typeof INPUT_EL.selectionEnd === 'number';
 
 	var testHistory = function(A) {
 		var WIN = A.config.win;
 
 		var HISTORY = WIN.history;
 
-		return (HISTORY &&
+		return HISTORY &&
 				HISTORY.pushState &&
 				HISTORY.replaceState &&
-				('onpopstate' in WIN || A.UA.gecko >= 2));
+				('onpopstate' in WIN || A.UA.gecko >= 2);
 	};
 
 	var filterConfig = null;
@@ -201,7 +201,7 @@
 						condition: {
 							name: 'liferay-autocomplete-input-caretoffset-sel',
 							test: function(A) {
-								return (A.UA.ie && A.UA.ie < 9);
+								return A.UA.ie && A.UA.ie < 9;
 							},
 							trigger: 'liferay-autocomplete-textarea'
 						},

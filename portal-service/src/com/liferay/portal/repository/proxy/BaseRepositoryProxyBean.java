@@ -1042,7 +1042,10 @@ public class BaseRepositoryProxyBean
 
 	@Override
 	public void updateFileShortcuts(
-		long oldToFileEntryId, long newToFileEntryId) {
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
+
+		_baseRepository.updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
 	}
 
 	@Override

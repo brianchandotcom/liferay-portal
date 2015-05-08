@@ -3968,6 +3968,11 @@ public class PortletImpl extends PortletBaseImpl {
 		_xmlRpcMethodClass = xmlRpcMethodClass;
 	}
 
+	@Override
+	public void unsetReady() {
+		_readyMap.remove(getRootPortletId());
+	}
+
 	/**
 	 * Log instance for this class.
 	 */

@@ -81,13 +81,17 @@ public final class XMLLoggerHandler {
 
 		List<Element> childElements = element.elements();
 
-		boolean executingMacro = _isExecutingMacro(element);
+		String elementName = element.getName();
 
-		if (!childElements.isEmpty() || executingMacro) {
+		if ((!childElements.isEmpty() && !_isExecutingFunction(element)) ||
+			_isExecutingMacro(element)) {
+
 			sb.append(_getBtnItemText("btn-collapse"));
 		}
 
-		if (!childElements.isEmpty() && executingMacro) {
+		if (!childElements.isEmpty() &&
+			(_isExecutingFunction(element) || _isExecutingMacro(element))) {
+
 			sb.append(_getBtnItemText("btn-var"));
 		}
 
@@ -463,6 +467,14 @@ public final class XMLLoggerHandler {
 			_getClosingLineContainerLoggerElement(element));
 
 		return loggerElement;
+	}
+
+	private static boolean _isExecutingFunction(Element element) {
+		if (element.attributeValue("function") != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _isExecutingMacro(Element element) {

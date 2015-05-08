@@ -2022,9 +2022,11 @@
 		<column name="name" type="String" />
 		<column name="scope" type="int" />
 		<column name="primKey" type="String" />
+		<column name="primKeyId" type="long" />
 		<column name="roleId" type="long" />
 		<column name="ownerId" type="long" />
 		<column name="actionIds" type="long" />
+		<column name="viewPermission" type="boolean" />
 
 		<!-- Finder methods -->
 
@@ -2055,6 +2057,14 @@
 			<finder-column name="scope" />
 			<finder-column name="primKey" />
 			<finder-column name="roleId" arrayable-operator="OR" />
+		</finder>
+		<finder name="C_N_S_PI_R_V" return-type="Collection" unique="false" db-index="true">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+			<finder-column name="scope" />
+			<finder-column name="primKeyId" />
+			<finder-column name="roleId" arrayable-operator="OR" />
+			<finder-column name="viewPermission" />
 		</finder>
 
 		<!-- References -->

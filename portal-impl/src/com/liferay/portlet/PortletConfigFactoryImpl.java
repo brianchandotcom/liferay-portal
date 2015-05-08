@@ -70,6 +70,22 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 	}
 
 	@Override
+	public PortletConfig get(Portlet portlet) {
+		return get(portlet.getPortletId());
+	}
+
+	@Override
+	public PortletConfig get(String portletId) {
+		Map<String, PortletConfig> portletConfigs = _pool.get(portletId);
+
+		if (portletConfigs == null) {
+			return null;
+		}
+
+		return portletConfigs.get(portletId);
+	}
+
+	@Override
 	public PortletConfig update(Portlet portlet) {
 		Map<String, PortletConfig> portletConfigs = _pool.get(
 			portlet.getRootPortletId());

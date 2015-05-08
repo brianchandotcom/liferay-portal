@@ -7,6 +7,8 @@ AUI.add(
 
 		var NAME = 'assetaddonentryselector';
 
+		var STR_ASSET_ADDON_ENTRIES = 'assetAddonEntries';
+
 		var STR_BLANK = '';
 
 		var STR_CHECKED = 'checked';
@@ -14,8 +16,6 @@ AUI.add(
 		var STR_CLICK = 'click';
 
 		var STR_DATA_KEY = 'data-key';
-
-		var STR_ENTRIES = 'entries';
 
 		var STR_INPUT = 'input';
 
@@ -57,7 +57,7 @@ AUI.add(
 						value: Liferay.Language.get('select-entries')
 					},
 
-					entries: {
+					assetAddonEntries: {
 						setter: '_setEntries',
 						validator: Lang.isArray
 					},
@@ -132,10 +132,10 @@ AUI.add(
 						var selectedEntries = instance.get(STR_SELECTED_ENTRIES);
 
 						var entriesContent = AArray.reduce(
-							instance.get(STR_ENTRIES),
+							instance.get(STR_ASSET_ADDON_ENTRIES),
 							STR_BLANK,
 							function(previousValue, currentValue) {
-								currentValue.checked = (selectedEntries.indexOf(currentValue.key) !== -1) ? STR_CHECKED : STR_BLANK;
+								currentValue.checked = selectedEntries.indexOf(currentValue.key) !== -1 ? STR_CHECKED : STR_BLANK;
 
 								return previousValue + Lang.sub(TPL_SELECT_ENTRY, currentValue);
 							}
@@ -226,7 +226,7 @@ AUI.add(
 					_syncUI: function() {
 						var instance = this;
 
-						var entries = instance.get(STR_ENTRIES);
+						var entries = instance.get(STR_ASSET_ADDON_ENTRIES);
 
 						var selectedEntries = instance.get(STR_SELECTED_ENTRIES);
 

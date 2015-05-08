@@ -15,6 +15,8 @@
 package com.liferay.portlet.dynamicdatamapping.webdav;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -137,6 +139,10 @@ public class DDMWebDavUtil {
 			}
 		}
 		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return HttpServletResponse.SC_FORBIDDEN;
 		}
 		catch (Exception e) {
@@ -268,6 +274,10 @@ public class DDMWebDavUtil {
 			}
 		}
 		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return HttpServletResponse.SC_FORBIDDEN;
 		}
 		catch (Exception e) {
@@ -331,5 +341,7 @@ public class DDMWebDavUtil {
 
 		return DDMFormXSDDeserializerUtil.deserialize(definition);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(DDMWebDavUtil.class);
 
 }

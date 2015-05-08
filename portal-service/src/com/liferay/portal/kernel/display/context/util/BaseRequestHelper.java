@@ -14,15 +14,25 @@
 
 package com.liferay.portal.kernel.display.context.util;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.PortletURLUtil;
 
 import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,6 +65,17 @@ public abstract class BaseRequestHelper {
 		return _companyId;
 	}
 
+	public String getCurrentURL() {
+		if (_currentURL == null) {
+			PortletURL portletURL = PortletURLUtil.getCurrent(
+				getLiferayPortletRequest(), getLiferayPortletResponse());
+
+			_currentURL = portletURL.toString();
+		}
+
+		return _currentURL;
+	}
+
 	public Layout getLayout() {
 		if (_layout == null) {
 			ThemeDisplay themeDisplay = getThemeDisplay();
@@ -63,6 +84,32 @@ public abstract class BaseRequestHelper {
 		}
 
 		return _layout;
+	}
+
+	public LiferayPortletRequest getLiferayPortletRequest() {
+		if (_liferayPortletRequest == null) {
+			PortletRequest portletRequest =
+				(PortletRequest) _request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
+
+			_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+				portletRequest);
+		}
+
+		return _liferayPortletRequest;
+	}
+
+	public LiferayPortletResponse getLiferayPortletResponse() {
+		if (_liferayPortletResponse == null) {
+			PortletResponse portletResponse =
+				(PortletResponse) _request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+			_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+				portletResponse);
+		}
+
+		return _liferayPortletResponse;
 	}
 
 	public Locale getLocale() {
@@ -198,9 +245,22 @@ public abstract class BaseRequestHelper {
 		return _themeDisplay;
 	}
 
+	public User getUser() {
+		if (_user == null) {
+			ThemeDisplay themeDisplay = getThemeDisplay();
+
+			_user = themeDisplay.getUser();
+		}
+
+		return _user;
+	}
+
 	private Company _company;
 	private Long _companyId;
+	private String _currentURL;
 	private Layout _layout;
+	private LiferayPortletRequest _liferayPortletRequest;
+	private LiferayPortletResponse _liferayPortletResponse;
 	private Locale _locale;
 	private PermissionChecker _permissionChecker;
 	private PortletDisplay _portletDisplay;
@@ -214,5 +274,6 @@ public abstract class BaseRequestHelper {
 	private Long _scopeGroupId;
 	private Long _siteGroupId;
 	private ThemeDisplay _themeDisplay;
+	private User _user;
 
 }

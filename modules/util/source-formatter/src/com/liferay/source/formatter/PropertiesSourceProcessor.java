@@ -257,7 +257,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		Properties properties = new Properties();
 
-		InputStream inputStream = new FileInputStream(fileName);
+		InputStream inputStream = new FileInputStream(
+			sourceFormatterArgs.getBaseDirName() + fileName);
 
 		properties.load(inputStream);
 
@@ -287,7 +288,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 					propertyFileName = propertyFileName.substring(0, pos);
 				}
 
-				File file = new File(path + propertyFileName);
+				File file = new File(
+					sourceFormatterArgs.getBaseDirName() + path +
+						propertyFileName);
 
 				if (!file.exists()) {
 					processErrorMessage(

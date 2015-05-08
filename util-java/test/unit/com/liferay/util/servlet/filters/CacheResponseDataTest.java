@@ -24,13 +24,16 @@ import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 
 import org.junit.Test;
+
 import org.springframework.mock.web.MockHttpServletResponse;
+
 import org.testng.Assert;
 
 /**
  * @author Alberto Montero
  */
 public class CacheResponseDataTest {
+
 	@Test
 	public void testReconstructFromSerialialization() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
@@ -40,6 +43,7 @@ public class CacheResponseDataTest {
 			new BufferCacheServletResponse(mockHttpServletResponse);
 
 		ByteBuffer byteBuffer = ByteBuffer.allocate(10);
+
 		byteBuffer.limit(7);
 
 		for (int i = 0; i < 7; i++) {
@@ -49,6 +53,7 @@ public class CacheResponseDataTest {
 		Assert.assertEquals(byteBuffer.get(2), 2, "ByteBuffer uninitialized");
 		Assert.assertEquals(
 			byteBuffer.limit(), 7, "ByteBuffer.limit() not correctly set");
+
 		try {
 			Assert.assertEquals(
 				byteBuffer.get(8), 0, "ByteBuffer written beyond limit");
@@ -62,11 +67,8 @@ public class CacheResponseDataTest {
 		CacheResponseData cacheResponseData = new CacheResponseData(
 			bufferCacheServletResponse);
 
-		String attributeValue1 = "v1";
-		String attributeValue2 = "v2";
-
-		cacheResponseData.setAttribute("a1", attributeValue1);
-		cacheResponseData.setAttribute("b1", attributeValue2);
+		cacheResponseData.setAttribute("a1", "v1");
+		cacheResponseData.setAttribute("b1", "v2");
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(baos);
@@ -78,43 +80,45 @@ public class CacheResponseDataTest {
 		ObjectInputStream ois = new ObjectInputStream(bais);
 		Object o = ois.readObject();
 
-		CacheResponseData returnedResponseData = (CacheResponseData)o;
+		CacheResponseData deserializedCacheResponseData = (CacheResponseData)o;
 
 		Assert.assertEquals(
-			returnedResponseData.getContentType(),
+			deserializedCacheResponseData.getContentType(),
 			cacheResponseData.getContentType(),
 			"ContentType not correctly recreated");
 
 		Assert.assertEquals(
-			returnedResponseData.getHeaders(), cacheResponseData.getHeaders(),
-			"Headers not correctly recreated");
+			deserializedCacheResponseData.getHeaders(),
+			cacheResponseData.getHeaders(), "Headers not correctly recreated");
 
 		Assert.assertEquals(
-			returnedResponseData.getAttribute("a1"),
+			deserializedCacheResponseData.getAttribute("a1"),
 			cacheResponseData.getAttribute("a1"),
 			"Attribute a1 not correctly recreated");
 
 		Assert.assertEquals(
-			returnedResponseData.getAttribute("a2"),
+			deserializedCacheResponseData.getAttribute("a2"),
 			cacheResponseData.getAttribute("a2"),
 			"Attribute a2 not correctly recreated");
 
-		ByteBuffer returnedByteBuffer = returnedResponseData.getByteBuffer();
+		ByteBuffer deserializedByteBuffer =
+			deserializedCacheResponseData.getByteBuffer();
 
 		Assert.assertEquals(
-			returnedByteBuffer.array(), byteBuffer.array(),
+			deserializedByteBuffer.array(), byteBuffer.array(),
 			"ByteBuffer data not correctly recreated");
 
 		Assert.assertEquals(
-			returnedByteBuffer.capacity(), byteBuffer.capacity(),
+			deserializedByteBuffer.capacity(), byteBuffer.capacity(),
 			"ByteBuffer.capacity() not correctly recreated");
 
 		Assert.assertEquals(
-			returnedByteBuffer.limit(), byteBuffer.limit(),
+			deserializedByteBuffer.limit(), byteBuffer.limit(),
 			"ByteBuffer.limit() not correctly recreated");
 
 		Assert.assertEquals(
-			returnedByteBuffer.position(), byteBuffer.position(),
+			deserializedByteBuffer.position(), byteBuffer.position(),
 			"ByteBuffer.position() not correctly recreated");
 	}
+
 }

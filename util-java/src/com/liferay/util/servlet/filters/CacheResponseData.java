@@ -16,14 +16,14 @@ package com.liferay.util.servlet.filters;
 
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.Header;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Externalizable;
 import java.io.IOException;
+import java.io.Serializable;
+
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import java.nio.ByteBuffer;
 
 import java.util.HashMap;
@@ -34,7 +34,7 @@ import java.util.Set;
  * @author Michael Young
  * @author Shuyang Zhou
  */
-public class CacheResponseData implements Externalizable {
+public class CacheResponseData implements Externalizable, Serializable {
 
 	public CacheResponseData() {};
 
@@ -69,46 +69,39 @@ public class CacheResponseData implements Externalizable {
 	}
 
 	public void readExternal(ObjectInput in)
-		throws ClassNotFoundException, IOException {
+		throws IOException, ClassNotFoundException {
 
 		_attributes = (Map<String, Object>)in.readObject();
 
 		int capacity = in.readInt();
-		int limit = in.readInt();
-		int position = in.readInt();
-
 		byte[] content = new byte[capacity];
-
 		in.read(content);
-
 		_byteBuffer = ByteBuffer.wrap(content);
+
+		int limit = in.readInt();
 		_byteBuffer.limit(limit);
+
+		int position = in.readInt();
 		_byteBuffer.position(position);
 
 		_contentType = in.readUTF();
 
 		_headers = (Map<String, Set<Header>>)in.readObject();
 	}
-
 	public void setAttribute(String name, Object value) {
 		_attributes.put(name, value);
 	}
 
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeObject(_attributes);
-
 		out.writeInt(_byteBuffer.capacity());
+		out.write(_byteBuffer.array());
 		out.writeInt(_byteBuffer.limit());
 		out.writeInt(_byteBuffer.position());
-
-		out.write(_byteBuffer.array());
-
 		if (Validator.isNull(_contentType)) {
-			_contentType = StringPool.BLANK;
+			_contentType = "";
 		}
-
 		out.writeUTF(_contentType);
-
 		out.writeObject(_headers);
 	}
 

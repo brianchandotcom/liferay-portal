@@ -19,6 +19,8 @@ import com.liferay.util.SerializableUtil;
 
 import java.nio.ByteBuffer;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -74,17 +76,17 @@ public class CacheResponseDataTest {
 			deserializedCacheResponseData.getByteBuffer();
 
 		Assert.assertArrayEquals(
-			"ByteBuffer data not correctly recreated", byteBuffer.array(),
-			deserializedByteBuffer.array());
-		Assert.assertEquals(
-			"ByteBuffer.capacity() not correctly recreated",
-			byteBuffer.capacity(), deserializedByteBuffer.capacity());
-		Assert.assertEquals(
-			"ByteBuffer.limit() not correctly recreated", byteBuffer.limit(),
-			deserializedByteBuffer.limit());
-		Assert.assertEquals(
-			"ByteBuffer.position() not correctly recreated",
-			byteBuffer.position(), deserializedByteBuffer.position());
+			"ByteBuffer data not correctly recreated",
+			Arrays.copyOfRange(
+				byteBuffer.array(),
+				byteBuffer.arrayOffset() + byteBuffer.position(),
+				byteBuffer.arrayOffset() + byteBuffer.limit()),
+			Arrays.copyOfRange(
+				deserializedByteBuffer.array(),
+				deserializedByteBuffer.arrayOffset() +
+					deserializedByteBuffer.position(),
+				deserializedByteBuffer.arrayOffset() +
+					deserializedByteBuffer.limit()));
 	}
 
 }

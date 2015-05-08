@@ -44,21 +44,24 @@ public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 
 	@Override
 	public void flush() throws IOException {
-		if (index > 0) {
-			byte[] bytes = toByteArray();
+		synchronized (System.out) {
+			if (index > 0) {
+				byte[] bytes = toByteArray();
 
-			byte[] logData = new byte[_logPrefix.length + bytes.length];
+				reset();
 
-			System.arraycopy(_logPrefix, 0, logData, 0, _logPrefix.length);
-			System.arraycopy(
-				bytes, 0, logData, _logPrefix.length, bytes.length);
+				byte[] logData = new byte[_logPrefix.length + bytes.length];
 
-			LoggingProcessCallable loggingProcessCallable =
-				new LoggingProcessCallable(logData, _error);
+				System.arraycopy(_logPrefix, 0, logData, 0, _logPrefix.length);
+				System.arraycopy(
+					bytes, 0, logData, _logPrefix.length, bytes.length);
 
-			writeProcessCallable(loggingProcessCallable);
+				_objectOutputStream.writeObject(
+					new LoggingProcessCallable(logData, _error));
+			}
 
-			reset();
+			_objectOutputStream.flush();
+			_objectOutputStream.reset();
 		}
 	}
 
@@ -69,7 +72,7 @@ public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 	public void writeProcessCallable(ProcessCallable<?> processCallable)
 		throws IOException {
 
-		synchronized (_objectOutputStream) {
+		synchronized (System.out) {
 			try {
 				_objectOutputStream.writeObject(processCallable);
 			}

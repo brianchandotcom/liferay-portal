@@ -646,6 +646,20 @@ public class UserServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.UserSoap getCurrentUser()
+		throws RemoteException {
+		try {
+			com.liferay.portal.model.User returnValue = UserServiceUtil.getCurrentUser();
+
+			return com.liferay.portal.model.UserSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the group.
 	*

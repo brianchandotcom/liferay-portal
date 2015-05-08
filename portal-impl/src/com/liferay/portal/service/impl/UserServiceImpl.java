@@ -735,6 +735,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userPersistence.countByCompanyId(companyId);
 	}
 
+	@Override
+	public User getCurrentUser() throws PortalException {
+		return getUser();
+	}
+
 	/**
 	 * Returns the primary keys of all the users belonging to the group.
 	 *

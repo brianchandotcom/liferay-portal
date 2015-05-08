@@ -497,6 +497,12 @@ public class UserServiceWrapper implements UserService,
 		return _userService.getCompanyUsersCount(companyId);
 	}
 
+	@Override
+	public com.liferay.portal.model.User getCurrentUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getCurrentUser();
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the group.
 	*

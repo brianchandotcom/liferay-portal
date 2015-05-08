@@ -547,9 +547,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		StringBundler sb = new StringBundler(9);
 
-		sb.append("((InlineSQLResourcePermission.primKey = CAST_TEXT(");
+		sb.append("((ResourcePermission.primKeyId = ");
 		sb.append(classPKField);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		if (Validator.isNotNull(groupIdField) && (groupIds.length > 0)) {
 			sb.append(") AND (");

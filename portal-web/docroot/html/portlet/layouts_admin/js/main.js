@@ -508,7 +508,7 @@ AUI.add(
 													}
 												}
 											]
-										},
+										}
 									},
 									title: Liferay.Language.get('pages')
 								}

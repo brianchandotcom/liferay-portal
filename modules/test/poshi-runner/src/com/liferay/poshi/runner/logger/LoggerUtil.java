@@ -305,6 +305,10 @@ public final class LoggerUtil {
 
 		FileUtil.write(_CURRENT_DIR + "/test-results/css/main.css", cssContent);
 
+		String jsContent = _readResource("META-INF/resources/js/main.js");
+
+		FileUtil.write(_CURRENT_DIR + "/test-results/js/main.js", jsContent);
+
 		String htmlContent = _readResource(
 			"META-INF/resources/html/index.html");
 
@@ -320,6 +324,11 @@ public final class LoggerUtil {
 
 			FileUtil.write(
 				_CURRENT_DIR + "/test-results/css/main.css", cssContent);
+
+			String jsContent = _readResource("META-INF/resources/js/main.js");
+
+			FileUtil.write(
+				_CURRENT_DIR + "/test-results/js/main.js", jsContent);
 		}
 
 		String htmlContent = _readResource(

@@ -101,13 +101,13 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(BuildWSDDTask buildWSDDTask) {
-					configureBuildWSDLTask(buildWSDDTask);
+					configureBuildWSDDTask(buildWSDDTask);
 				}
 
 			});
 	}
 
-	protected void configureBuildWSDLTask(BuildWSDDTask buildWSDDTask) {
+	protected void configureBuildWSDDTask(BuildWSDDTask buildWSDDTask) {
 		if (Validator.isNotNull(buildWSDDTask.getBuilderClasspath())) {
 			return;
 		}

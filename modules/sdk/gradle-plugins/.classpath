@@ -18,6 +18,7 @@
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.javadoc.formatter.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.service.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.source.formatter.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.wsdd.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.wsdl.builder.jar" />

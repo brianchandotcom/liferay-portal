@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>H2_HEADER</td>
-	<td>//h2[@class='header-title']/span</td>
+	<td>//h2</td>
 	<td></td>
 </tr>
 <tr>

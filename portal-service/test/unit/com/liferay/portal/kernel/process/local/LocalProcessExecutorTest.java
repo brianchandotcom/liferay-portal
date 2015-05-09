@@ -72,8 +72,10 @@ import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
@@ -1125,11 +1127,11 @@ public class LocalProcessExecutorTest {
 	}
 
 	@Test
-	public void testNonpocessCallablePipingBackProcessCallable()
+	public void testNonprocessCallablePipingBackProcessCallable()
 		throws Exception {
 
 		NonprocessCallablePipingBackProcessCallable
-			nonProcessCallablePipingBackProcessCallable =
+			nonprocessCallablePipingBackProcessCallable =
 				new NonprocessCallablePipingBackProcessCallable();
 
 		try (CaptureHandler captureHandler =
@@ -1139,7 +1141,7 @@ public class LocalProcessExecutorTest {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					nonProcessCallablePipingBackProcessCallable);
+					nonprocessCallablePipingBackProcessCallable);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();
@@ -1165,7 +1167,7 @@ public class LocalProcessExecutorTest {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					nonProcessCallablePipingBackProcessCallable);
+					nonprocessCallablePipingBackProcessCallable);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();
@@ -1322,7 +1324,9 @@ public class LocalProcessExecutorTest {
 				JDKLoggerTestUtil.configureJDKLogger(
 					LocalProcessExecutor.class.getName(), Level.OFF)) {
 
-			_localProcessExecutor.destroy();
+			Set<Process> processes = _localProcessExecutor.destroy();
+
+			Assert.assertEquals(1, processes.size());
 
 			try {
 				future.get();
@@ -1333,6 +1337,12 @@ public class LocalProcessExecutorTest {
 				Assert.assertTrue(future.isCancelled());
 				Assert.assertTrue(future.isDone());
 			}
+
+			Iterator<Process> iterator = processes.iterator();
+
+			Process process = iterator.next();
+
+			Assert.assertTrue(process.waitFor() > 0);
 		}
 	}
 

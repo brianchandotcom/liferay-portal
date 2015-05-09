@@ -106,6 +106,8 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
 		<execute macro="WebContent#addTagPGViaWCD">
 			<var name="tagName" value="european" />
 		</execute>

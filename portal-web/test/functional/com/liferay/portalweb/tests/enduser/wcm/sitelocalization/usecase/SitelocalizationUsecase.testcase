@@ -462,9 +462,12 @@
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="availableLanguages" value="true" />
 			<var name="webContentContent" value="Web Content1 Content" />
-			<var name="webContentTitle" value="Web Content1 Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
+		<execute macro="WebContent#viewAvailableLanguagesPGViaWCD">
 			<var name="webContentTranslationLanguage1" value="alemán (Alemania)" />
 			<var name="webContentTranslationLanguage2" value="inglés (Estados Unidos)" />
 		</execute>

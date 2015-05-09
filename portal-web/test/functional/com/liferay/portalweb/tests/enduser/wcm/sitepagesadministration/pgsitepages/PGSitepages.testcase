@@ -12,14 +12,6 @@
 	</tear-down>
 
 	<command known-issues="LPS-53993" name="AddEmbeddedPortlet" priority="5">
-		<var name="fieldKey" value="EMBEDDED_PORTLETS_PANEL_TOGGLE" />
-		<var name="fieldLabel" value="embeddedPortlets" />
-		<var name="fieldName" value="Embedded Portlets" />
-		<var name="webContentContent"><![CDATA[<runtime-portlet name="11" />]]></var>
-		<var name="webContentContentEdit"><![CDATA[<runtime-portlet name="16" />]]></var>
-		<var name="webContentJavascript" value="true" />
-		<var name="webContentTitle" value="Embedded Portlets" />
-
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Embedded Portlet Page" />
 		</execute>
@@ -40,9 +32,9 @@
 
 		<execute macro="WebContent#addPGViaWCD">
 			<var name="embeddedPortletTitle" value="Portal Directory" />
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentJavascript" value="${webContentJavascript}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent"><![CDATA[<runtime-portlet name="11" />]]></var>
+			<var name="webContentJavascript" value="true" />
+			<var name="webContentTitle" value="Embedded Portlets" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -52,16 +44,18 @@
 		<execute macro="EmbeddedPortlets#viewPG">
 			<var name="embeddedPortletId" value="11" />
 			<var name="embeddedPortletTitle" value="Portal Directory" />
-			<var name="fieldKey" value="${fieldKey}" />
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldKey" value="EMBEDDED_PORTLETS_PANEL_TOGGLE" />
+			<var name="fieldLabel" value="embeddedPortlets" />
+			<var name="fieldName" value="Embedded Portlets" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 		<execute macro="WebContent#editPGViaWCD">
 			<var name="embeddedPortletTitle" value="Currency Converter" />
-			<var name="webContentContentEdit" value="${webContentContentEdit}" />
-			<var name="webContentJavascript" value="${webContentJavascript}" />
-			<var name="webContentTitleEdit" value="${webContentTitle}" />
+			<var name="webContentContentEdit"><![CDATA[<runtime-portlet name="16" />]]></var>
+			<var name="webContentJavascript" value="true" />
+			<var name="webContentTitleEdit" value="Embedded Portlets" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -71,9 +65,9 @@
 		<execute macro="EmbeddedPortlets#viewPG">
 			<var name="embeddedPortletId" value="11" />
 			<var name="embeddedPortletTitle" value="Portal Directory" />
-			<var name="fieldKey" value="${fieldKey}" />
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldKey" value="EMBEDDED_PORTLETS_PANEL_TOGGLE" />
+			<var name="fieldLabel" value="embeddedPortlets" />
+			<var name="fieldName" value="Embedded Portlets" />
 			<var name="viewNumber" value="1" />
 		</execute>
 
@@ -84,9 +78,9 @@
 		<execute macro="EmbeddedPortlets#viewPG">
 			<var name="embeddedPortletId" value="16" />
 			<var name="embeddedPortletTitle" value="Currency Converter" />
-			<var name="fieldKey" value="${fieldKey}" />
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldKey" value="EMBEDDED_PORTLETS_PANEL_TOGGLE" />
+			<var name="fieldLabel" value="embeddedPortlets" />
+			<var name="fieldName" value="Embedded Portlets" />
 			<var name="viewNumber" value="2" />
 		</execute>
 
@@ -99,9 +93,9 @@
 		</execute>
 
 		<execute macro="EmbeddedPortlets#removeReferencePG">
-			<var name="fieldKey" value="${fieldKey}" />
-			<var name="fieldLabel" value="${fieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldKey" value="EMBEDDED_PORTLETS_PANEL_TOGGLE" />
+			<var name="fieldLabel" value="embeddedPortlets" />
+			<var name="fieldName" value="Embedded Portlets" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

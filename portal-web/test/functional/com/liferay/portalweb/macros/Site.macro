@@ -489,7 +489,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Type" locator1="CPSitesettingsSiteURL#SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLEdit}" />
+		<execute function="Type#mouseOverFocusType" locator1="CPSitesettingsSiteURL#SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLEdit}" />
 		<execute function="AssertClick" locator1="CPSitesettingsSiteURL#SAVE_BUTTON" value1="Save" />
 
 		<if>

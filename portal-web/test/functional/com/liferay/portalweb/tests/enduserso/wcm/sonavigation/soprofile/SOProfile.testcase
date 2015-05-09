@@ -45,7 +45,7 @@
 		<execute function="AssertTextEquals" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 	</command>
 
-	<command known-issues="LIFERAYQA-11550" name="ViewProfileLocalized" priority="4">
+	<command name="ViewProfileLocalized" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />

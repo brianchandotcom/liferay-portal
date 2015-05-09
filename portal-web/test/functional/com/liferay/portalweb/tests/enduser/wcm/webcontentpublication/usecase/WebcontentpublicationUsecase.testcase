@@ -330,6 +330,8 @@
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
 		<execute macro="WebContent#addCategoryPGViaWCD">
 			<var name="categoryName" value="Vocabulary1 Category" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -350,6 +352,8 @@
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
 		<execute macro="WebContent#addTranslationPGViaWCD">
 			<var name="lowercaseLanguageCode" value="de" />
 			<var name="webContentContent" value="Web Content1 Content" />
@@ -358,6 +362,8 @@
 			<var name="webContentTranslationLanguage" value="German (Germany)" />
 			<var name="webContentTranslationTitle" value="Netz Content1 Titel" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 		<execute macro="WebContent#addTranslationPGViaWCD">
 			<var name="lowercaseLanguageCode" value="fr" />
@@ -1556,7 +1562,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#gotoEditCP">
+		<execute macro="WebContentNavigator#gotoEditCP">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 

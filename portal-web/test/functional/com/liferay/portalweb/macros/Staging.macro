@@ -721,6 +721,7 @@
 		<execute function="Click" locator1="PGStaging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 
 		<execute function="SelectFrame" locator1="StagingPublishtolivenow#PUBLISH_TO_LIVE_IFRAME" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
 		<execute function="Check" locator1="StagingPublishtolivenow#CONTENT_CHOOSE_CONTENT_RADIO" />
 		<execute function="Click" locator1="StagingPublishtolivenow#CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" />
 

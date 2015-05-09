@@ -50,7 +50,7 @@
 		</execute>
 	</set-up>
 
-	<command name="ApprovePageRevisionPG" priority="5">
+	<command known-issues="LPS-55440" name="ApprovePageRevisionPG" priority="5">
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#addWithWorkflowPG">
@@ -141,7 +141,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectPageRevisionPG" priority="5">
+	<command known-issues="LPS-55440" name="RejectPageRevisionPG" priority="5">
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#addWithWorkflowPG">

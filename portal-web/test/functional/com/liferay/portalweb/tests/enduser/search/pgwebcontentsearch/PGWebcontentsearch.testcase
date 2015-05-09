@@ -164,6 +164,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
 		<execute macro="WebContent#addCategoryPGViaWCD">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
@@ -247,6 +249,8 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 		<execute macro="WebContent#addCategoryPGViaWCD">
 			<var name="categoryName" value="${categoryName}" />
@@ -449,6 +453,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
 		<execute macro="WebContent#addTagPGViaWCD">
 			<var name="tagName" value="${tagName}" />
 		</execute>
@@ -517,6 +523,8 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 		<execute macro="WebContent#addTagPGViaWCD">
 			<var name="tagName" value="${tagName}" />

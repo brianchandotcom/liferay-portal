@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>SITE_URL_FRIENDLY_URL_FIELD</td>
-	<td>//input[@name='_165_friendlyURL']</td>
+	<td>//input[contains(@name,'friendlyURL')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1459,7 +1459,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-11088" name="SendMessageNonUser" priority="4">
+	<command name="SendMessageNonUser" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />

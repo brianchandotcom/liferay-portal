@@ -13,39 +13,30 @@
 	</tear-down>
 
 	<command name="AddPageMultiplePagesToSite" priority="4">
-		<var name="pageName1" value="Site Page 1" />
-		<var name="pageName2" value="Site Page 2" />
-		<var name="pageName3" value="Site Page 3" />
-
 		<execute macro="Page#openURL" />
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Site Page 1" />
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Site Page 2" />
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName3}" />
+			<var name="pageName" value="Site Page 3" />
 		</execute>
 
 		<execute macro="SitePage#deleteSitepagesPG" />
 	</command>
 
 	<command name="AddPageWithMultipleChildPagesToSite" priority="4">
-		<var name="childPageCount" value="3" />
-		<var name="siteChildPageNameList" value="Site Child Page 1,Site Child Page 2,Site Child Page 3" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -53,47 +44,40 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
-		<for list="${siteChildPageNameList}" param="childPageName" >
+		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName" >
 			<execute macro="Page#gotoCP">
 				<var name="portletName" value="Sites" />
 			</execute>
 
 			<execute macro="SitePage#addChildCP">
 				<var name="siteChildPageName" value="${childPageName}" />
-				<var name="siteName" value="${siteName}" />
-				<var name="sitePageName" value="${sitePageName}" />
+				<var name="siteName" value="Site Name" />
+				<var name="sitePageName" value="Site Page" />
 				<var name="sitePagePrivacy" value="Public" />
 			</execute>
 		</for>
 
 		<execute macro="SitePage#viewChildPG">
-			<var name="childPageCount" value="${childPageCount}" />
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="childPageCount" value="3" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 			<var name="siteURL" value="true" />
 		</execute>
 	</command>
 
 	<command name="AddSitePrivateChildPage" priority="5">
-		<var name="childPageCount" value="1" />
-		<var name="siteChildPageName" value="Site Child Page" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-		<var name="sitePagePrivacy" value="Private" />
-		<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-child-page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -101,9 +85,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -111,36 +95,31 @@
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteChildPageName" value="Site Child Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="SitePage#viewChildPG">
-			<var name="childPageCount" value="${childPageCount}" />
+			<var name="childPageCount" value="1" />
 			<var name="pageAccess" value="Private" />
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteChildPageName" value="Site Child Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-child-page" />
 			<var name="siteURL" value="true" />
 		</execute>
 	</command>
 
 	<command name="AddSitePrivatePage" priority="5">
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-		<var name="sitePagePrivacy" value="Private" />
-		<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -148,35 +127,29 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="SitePage#viewPG">
 			<var name="pageAccess" value="Private" />
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
 			<var name="siteURL" value="true" />
 		</execute>
 	</command>
 
 	<command known-issues="LPS-51696" name="AddSitePrivatePagePortlet" priority="5">
-		<var name="pageName" value="Blogs Page" />
-		<var name="portletName" value="Blogs" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-		<var name="sitePagePrivacy" value="Private" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -184,41 +157,34 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#addPG">
 			<var name="pageAccess" value="Private" />
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Blogs Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="pageAccess" value="Private" />
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Blogs Page" />
+			<var name="portletName" value="Blogs" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 	</command>
 
 	<command name="AddSitePublicChildPage" priority="5">
-		<var name="childPageCount" value="1" />
-		<var name="siteChildPageName" value="Site Child Page" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-child-page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -226,9 +192,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -236,35 +202,30 @@
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteChildPageName" value="Site Child Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="SitePage#viewChildPG">
-			<var name="childPageCount" value="${childPageCount}" />
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteChildPageName" value="${siteChildPageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="childPageCount" value="1" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteChildPageName" value="Site Child Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-child-page" />
 			<var name="siteURL" value="true" />
 		</execute>
 	</command>
 
 	<command known-issues="LPS-51696" name="AddSitePublicPage" priority="5">
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-		<var name="sitePagePrivacy" value="Public" />
-		<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -272,33 +233,27 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="SitePage#viewPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageURL" value="${sitePageURL}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-page" />
 			<var name="siteURL" value="true" />
 		</execute>
 	</command>
 
 	<command name="AddSitePublicPagePortlet" priority="5">
-		<var name="pageName" value="Blogs Page" />
-		<var name="portletName" value="Blogs" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-		<var name="sitePagePrivacy" value="Public" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -306,25 +261,25 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Blogs Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Blogs Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 	</command>
 
@@ -351,17 +306,12 @@
 	</command>
 
 	<command known-issues="LPS-51696" name="CopyApplicationsFromPageToPage" priority="4">
-		<var name="pageName" value="Blog Page" />
-		<var name="portletName" value="Blogs" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -369,53 +319,48 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Blog Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Blog Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="SitePage#copyApplicationsFromPageToPagePG">
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePageName" value="Site Page" />
 		</execute>
 	</command>
 
 	<command name="DeleteSitePages" priority="4">
-		<var name="portletName" value="Site Pages" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageNameList" value="Site Page 1,Site Page 2,Site Page 3" />
-		<var name="sitePagePrivacy" value="Public" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="${sitePageNameList}" param="sitePageName">
+		<for list="Site Page 1,Site Page 2,Site Page 3" param="sitePageName">
 			<execute macro="Page#gotoCP">
 				<var name="portletName" value="Sites" />
 			</execute>
 
 			<execute macro="SitePage#addCP">
-				<var name="siteName" value="${siteName}" />
+				<var name="siteName" value="Site Name" />
 				<var name="sitePageName" value="${sitePageName}" />
 				<var name="sitePagePrivacy" value="Public" />
 			</execute>
@@ -423,11 +368,11 @@
 
 		<execute macro="Page#gotoPagesCP" >
 			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="${siteName}" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePage#deleteSitepagesCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="${sitePageName2}" />
 		</execute>
 	</command>
@@ -466,15 +411,12 @@
 	</command>
 
 	<command name="SaveEmbeddedPageType" priority="4">
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -482,14 +424,14 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -497,16 +439,12 @@
 	</command>
 
 	<command known-issues="LPS-51696" name="SavePortletPageType" priority="4">
-		<var name="pageType" value="Blog" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -514,15 +452,15 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="pageTemplateName" value="${pageType}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="pageTemplateName" value="Blog" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 

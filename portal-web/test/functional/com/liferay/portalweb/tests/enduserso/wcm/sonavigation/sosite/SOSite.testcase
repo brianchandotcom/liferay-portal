@@ -52,7 +52,7 @@
 		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />
 	</command>
 
-	<command known-issues="LIFERAYQA-11550" name="ViewSOSiteLocalized" priority="4">
+	<command name="ViewSOSiteLocalized" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />

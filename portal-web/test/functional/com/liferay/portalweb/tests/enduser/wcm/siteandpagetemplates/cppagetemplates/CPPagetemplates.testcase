@@ -11,32 +11,24 @@
 	</tear-down>
 
 	<command known-issues="LPS-51156" name="AddPageTemplate" priority="5">
-		<var name="pageTemplateActive" value="Yes" />
-		<var name="pageTemplateName" value="Page Template Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="${pageTemplateActive}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 	</command>
 
 	<command name="AddSitePageTemplate" priority="4">
-		<var name="pageTemplateActive" value="Yes" />
-		<var name="pageTemplateName" value="Page Template Name" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="${pageTemplateActive}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -44,7 +36,7 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -52,32 +44,30 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
+			<var name="pageTemplateName" value="Page Template Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SitePage#viewPageTemplatePG" >
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 	</command>
 
 	<command known-issues="LPS-51156" name="DeletePageTemplate" priority="5">
-		<var name="pageTemplateName" value="Page Template Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
 			<var name="pageTemplateActive" value="Yes" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -85,7 +75,7 @@
 		</execute>
 
 		<execute macro="PageTemplate#deleteCP">
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -93,31 +83,27 @@
 		</execute>
 
 		<execute macro="PageTemplate#viewDefaultCP">
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 	</command>
 
 	<command name="EditPageTemplate" priority="5">
-		<var name="pageTemplateName" value="Page Template Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
 			<var name="pageTemplateActive" value="Yes" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
 		<execute macro="PageTemplate#editCP">
 			<var name="pageTemplateActive" value="No" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 	</command>
 
 	<command known-issues="LPS-51156" name="LocalizeDefaultPageTemplates" priority="5">
-		<var name="pageTemplateName" value="Page Template Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
@@ -173,21 +159,21 @@
 
 		<execute macro="PageTemplate#addCP">
 			<var name="pageTemplateActive" value="Yes" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		<var name="key_pageTemplateName" value="Page Template Name" />
 
-		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="Page Template Name" />
 
 		<execute function="AssertClick" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 
-		<execute function="SelectWindow" locator1="title=${pageTemplateName} - Liferay" />
+		<execute function="SelectWindow" locator1="title=Page Template Name - Liferay" />
 
-		<var name="key_pageName" value="${pageTemplateName}" />
+		<var name="key_pageName" value="Page Template Name" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${pageTemplateName}" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="Page Template Name" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Page Template Name" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
@@ -195,20 +181,20 @@
 
 		<execute macro="PageTemplate#editCP">
 			<var name="pageTemplateActive" value="Yes" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		<var name="key_pageTemplateName" value="Page Template Name" />
 
-		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
+		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="Page Template Name Edit" />
 
 		<execute function="AssertClick" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 
-		<execute function="SelectWindow" locator1="title=${pageTemplateName} Edit - Liferay" />
+		<execute function="SelectWindow" locator1="title=Page Template Name Edit - Liferay" />
 
-		<var name="key_pageName" value="${pageTemplateName}" />
+		<var name="key_pageName" value="Page Template Name" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${pageTemplateName} Edit" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${pageTemplateName} Edit" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="Page Template Name Edit" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Page Template Name Edit" />
 	</command>
 </definition>

@@ -597,7 +597,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#gotoEditCP">
+		<execute macro="WebContentNavigator#gotoEditCP">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
@@ -610,7 +610,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#gotoEditCP">
+		<execute macro="WebContentNavigator#gotoEditCP">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -644,7 +644,7 @@
 				<var name="portletName" value="Web Content" />
 			</execute>
 
-			<execute macro="WebContent#gotoEditCP">
+			<execute macro="WebContentNavigator#gotoEditCP">
 				<var name="webContentTitle" value="Web Content Title Multiple Categories" />
 			</execute>
 
@@ -831,7 +831,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="WebContent#gotoEditCP">
+		<execute macro="WebContentNavigator#gotoEditCP">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
@@ -1262,7 +1262,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55119" name="ViewCannotAddDuplicateSubCategory" priority="5">
+	<command name="ViewCannotAddDuplicateSubCategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

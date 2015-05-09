@@ -10,8 +10,6 @@
 	</tear-down>
 
 	<command name="AddTag" priority="5">
-		<var name="tagName" value="tag name" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -22,10 +20,6 @@
 	</command>
 
 	<command name="AddTags" priority="5">
-		<var name="tagName1" value="tag name 1" />
-		<var name="tagName2" value="tag name 2" />
-		<var name="tagName3" value="tag name 3" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>

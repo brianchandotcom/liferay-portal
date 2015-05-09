@@ -14,7 +14,7 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LIFERAYQA-8933" name="ViewResourceActionsCP" priority="5">
+	<command name="ViewResourceActionsCP" priority="5">
 		<property name="custom.properties" value="audit.message.com.liferay.portal.model.Layout.VIEW=true${line.separator}com.liferay.portal.servlet.filters.audit.AuditFilter=true" />
 
 		<var name="resourceAction1" value="Login" />

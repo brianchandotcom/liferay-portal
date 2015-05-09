@@ -20,24 +20,13 @@
 	</tear-down>
 
 	<command name="AddOrganizationSitesAndDeactivate" priority="5">
-		<var name="allowManualMembershipManagement" value="true" />
-		<var name="membershipType" value="Open" />
-		<var name="org1Name" value="Organization Name 1" />
-		<var name="org2Name" value="Organization Name 2" />
-		<var name="orgType" value="Regular Organization" />
-		<var name="selectMembershipType" value="true" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addCP">
-			<var name="orgName" value="${org1Name}" />
-			<var name="orgType" value="${orgType}" />
+			<var name="orgName" value="Organization Name 1" />
+			<var name="orgType" value="Regular Organization" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -46,7 +35,7 @@
 
 		<execute macro="Organization#addSiteCP">
 			<var name="organizationSite" value="Community Site" />
-			<var name="orgName" value="${org1Name}" />
+			<var name="orgName" value="Organization Name 1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -54,10 +43,10 @@
 		</execute>
 
 		<execute macro="Organization#manageMembershipOptionsInSites">
-			<var name="allowManualMembershipManagement" value="${allowManualMembershipManagement}" />
-			<var name="membershipType" value="${membershipType}" />
-			<var name="orgName" value="${org1Name}" />
-			<var name="selectMembershipType" value="${selectMembershipType}" />
+			<var name="allowManualMembershipManagement" value="true" />
+			<var name="membershipType" value="Open" />
+			<var name="orgName" value="Organization Name 1" />
+			<var name="selectMembershipType" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -66,7 +55,7 @@
 
 		<execute macro="Site#viewCP">
 			<var name="siteMember" value="Organization" />
-			<var name="siteName" value="${org1Name}" />
+			<var name="siteName" value="Organization Name 1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -74,8 +63,8 @@
 		</execute>
 
 		<execute macro="Organization#addCP">
-			<var name="orgName" value="${org2Name}" />
-			<var name="orgType" value="${orgType}" />
+			<var name="orgName" value="Organization Name 2" />
+			<var name="orgType" value="Regular Organization" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -84,7 +73,7 @@
 
 		<execute macro="Organization#addSiteCP">
 			<var name="organizationSite" value="Intranet Site" />
-			<var name="orgName" value="${org2Name}" />
+			<var name="orgName" value="Organization Name 2" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -92,10 +81,10 @@
 		</execute>
 
 		<execute macro="Organization#manageMembershipOptionsInSites">
-			<var name="allowManualMembershipManagement" value="${allowManualMembershipManagement}" />
-			<var name="membershipType" value="${membershipType}" />
-			<var name="orgName" value="${org2Name}" />
-			<var name="selectMembershipType" value="${selectMembershipType}" />
+			<var name="allowManualMembershipManagement" value="true" />
+			<var name="membershipType" value="Open" />
+			<var name="orgName" value="Organization Name 2" />
+			<var name="selectMembershipType" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -104,7 +93,7 @@
 
 		<execute macro="Site#viewCP">
 			<var name="siteMember" value="Organization" />
-			<var name="siteName" value="${org2Name}" />
+			<var name="siteName" value="Organization Name 2" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -112,10 +101,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -123,8 +112,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -132,8 +121,8 @@
 		</execute>
 
 		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="${org1Name}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="siteName" value="Organization Name 1" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -141,8 +130,8 @@
 		</execute>
 
 		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="${org2Name}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="siteName" value="Organization Name 2" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -151,31 +140,31 @@
 
 		<execute macro="Role#assignRegRoleCP">
 			<var name="roleName" value="Administrator" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="SitePage#viewDefaultSiteTemplatePagesPG">
-			<var name="siteName" value="${org1Name}" />
+			<var name="siteName" value="Organization Name 1" />
 			<var name="siteTemplate" value="Community" />
 		</execute>
 
 		<execute macro="SitePage#viewDefaultSiteTemplatePagesPG">
-			<var name="siteName" value="${org2Name}" />
+			<var name="siteName" value="Organization Name 2" />
 			<var name="siteTemplate" value="Intranet" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
-			<var name="siteName" value="${org2Name}" />
+			<var name="siteName" value="Organization Name 2" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Site#deactivateCP">
-			<var name="siteName" value="${org2Name}" />
+			<var name="siteName" value="Organization Name 2" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -188,22 +177,22 @@
 		</execute>
 
 		<execute macro="Site#deactivateCP">
-			<var name="siteName" value="${org2Name}" />
+			<var name="siteName" value="Organization Name 2" />
 			<var name="successMessage" value="true" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
 			<var name="organizationSite" value="true" />
-			<var name="siteName" value="${org2Name}" />
+			<var name="siteName" value="Organization Name 2" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="siteName" value="${org2Name}" />
+			<var name="siteName" value="Organization Name 2" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -218,24 +207,17 @@
 	<command known-issues="LPS-54025" name="ApplicationAdapter" priority="5">
 		<property name="hook.plugins.includes" value="sample-application-adapter-hook" />
 
-		<var name="site1Name" value="Site A" />
-		<var name="site1PageName" value="Test Page A" />
-		<var name="site1PagePrivacy" value="Public" />
-		<var name="site2Name" value="Site B" />
-		<var name="site2PageName" value="Test Page B" />
-		<var name="site2PagePrivacy" value="Public" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${site1Name}" />
+			<var name="siteName" value="Site A" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="${site1Name}" />
+			<var name="siteScopeName" value="Site A" />
 		</execute>
 
 		<execute function="Select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
@@ -246,14 +228,14 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${site1Name}" />
-			<var name="sitePageName" value="${site1PageName}" />
-			<var name="sitePagePrivacy" value="${site1PagePrivacy}" />
+			<var name="siteName" value="Site A" />
+			<var name="sitePageName" value="Test Page A" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${site1PageName}" />
-			<var name="siteName" value="${site1Name}" />
+			<var name="pageName" value="Test Page A" />
+			<var name="siteName" value="Site A" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -270,7 +252,7 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${site2Name}" />
+			<var name="siteName" value="Site B" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -278,14 +260,14 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${site2Name}" />
-			<var name="sitePageName" value="${site2PageName}" />
-			<var name="sitePagePrivacy" value="${site2PagePrivacy}" />
+			<var name="siteName" value="Site B" />
+			<var name="sitePageName" value="Test Page B" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${site2PageName}" />
-			<var name="siteName" value="${site2Name}" />
+			<var name="pageName" value="Test Page B" />
+			<var name="siteName" value="Site B" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -299,15 +281,15 @@
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="${site2Name}" />
+			<var name="siteScopeName" value="Site B" />
 		</execute>
 
 		<execute function="Select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
 		<execute function="AssertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${site2PageName}" />
-			<var name="siteName" value="${site2Name}" />
+			<var name="pageName" value="Test Page B" />
+			<var name="siteName" value="Site B" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -317,15 +299,15 @@
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="${site2Name}" />
+			<var name="siteScopeName" value="Site B" />
 		</execute>
 
 		<execute function="Select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="None" />
 		<execute function="AssertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${site2PageName}" />
-			<var name="siteName" value="${site2Name}" />
+			<var name="pageName" value="Test Page B" />
+			<var name="siteName" value="Site B" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -335,9 +317,7 @@
 	</command>
 
 	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="4">
-		<var name="siteNameLists" value="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" />
-
-		<for list="${siteNameLists}" param="siteNameListsCount" >
+		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount" >
 
 			<execute macro="Page#gotoCP">
 				<var name="portletName" value="Sites" />
@@ -1190,27 +1170,12 @@
 	</command>
 
 	<command name="SiteTeams" priority="4">
-		<var name="siteName" value="Site Name" />
-		<var name="siteScopeName" value="Site Name" />
-		<var name="teamDescription" value="Site Team Description" />
-		<var name="teamName" value="Site Team Name" />
-		<var name="userEmailAddress1" value="userea1@liferay.com" />
-		<var name="userEmailAddress2" value="userea2@liferay.com" />
-		<var name="userFirstName1" value="userfn1" />
-		<var name="userFirstName2" value="userfn2" />
-		<var name="userGroupName1" value="UG UserGroup1 Name" />
-		<var name="userGroupName2" value="UG UserGroup2 Name" />
-		<var name="userLastName1" value="userln1" />
-		<var name="userLastName2" value="userln2" />
-		<var name="userScreenName1" value="usersn1" />
-		<var name="userScreenName2" value="usersn2" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1218,17 +1183,17 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
-			<var name="userFirstName" value="${userFirstName1}" />
-			<var name="userLastName" value="${userLastName1}" />
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
-			<var name="userFirstName" value="${userFirstName2}" />
-			<var name="userLastName" value="${userLastName2}" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1236,11 +1201,11 @@
 		</execute>
 
 		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="${userGroupName1}" />
+			<var name="userGroupName" value="UG UserGroup1 Name" />
 		</execute>
 
 		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="${userGroupName2}" />
+			<var name="userGroupName" value="UG UserGroup2 Name" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1249,17 +1214,17 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteScopeName" value="${siteName}" />
-			<var name="userFirstName" value="${userFirstName1}" />
-			<var name="userLastName" value="${userLastName1}" />
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Site#addMemberUserGroupCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="siteScopeName" value="${siteName}" />
-			<var name="userGroupName" value="${userGroupName1}" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
+			<var name="userGroupName" value="UG UserGroup1 Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1267,8 +1232,8 @@
 		</execute>
 
 		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="${userGroupName1}" />
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userGroupName" value="UG UserGroup1 Name" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1276,8 +1241,8 @@
 		</execute>
 
 		<execute macro="UserGroup#assignMemberCP">
-			<var name="userGroupName" value="${userGroupName2}" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userGroupName" value="UG UserGroup2 Name" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1286,8 +1251,8 @@
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="teamDescription" value="${teamDescription}" />
-			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1296,7 +1261,7 @@
 		</execute>
 
 		<execute macro="Team#assignMembersCP">
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1306,7 +1271,7 @@
 
 		<execute macro="Team#assignMembersCP">
 			<var name="userNameIsNotFound" value="true" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1315,7 +1280,7 @@
 		</execute>
 
 		<execute macro="Team#assignUserGroups">
-			<var name="userGroupName" value="${userGroupName1}" />
+			<var name="userGroupName" value="UG UserGroup1 Name" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1324,7 +1289,7 @@
 		</execute>
 
 		<execute macro="Team#assignUserGroups">
-			<var name="userGroupName" value="${userGroupName2}" />
+			<var name="userGroupName" value="UG UserGroup2 Name" />
 			<var name="userGroupsNameIsNotAvailable" value="true" />
 		</execute>
 	</command>
@@ -1351,10 +1316,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
-			<var name="userFirstName" value="${userFirstName1}" />
-			<var name="userLastName" value="${userLastName1}" />
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1362,8 +1327,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1372,7 +1337,7 @@
 
 		<execute macro="User#editUserSiteCP">
 			<var name="siteName" value="Liferay" />
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1380,10 +1345,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
-			<var name="userFirstName" value="${userFirstName2}" />
-			<var name="userLastName" value="${userLastName2}" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1391,8 +1356,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1401,7 +1366,7 @@
 
 		<execute macro="User#editUserSiteCP">
 			<var name="siteName" value="Liferay" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1409,8 +1374,8 @@
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="teamDescription" value="${teamDescription}" />
-			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1418,7 +1383,7 @@
 		</execute>
 
 		<execute macro="Team#assignMembersCP">
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -1426,7 +1391,7 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
@@ -1435,28 +1400,28 @@
 		</execute>
 
 		<execute macro="Team#viewDefaultCP">
-			<var name="teamName" value="${teamName}" />
+			<var name="teamName" value="Site Team Name" />
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blog Page Template" />
 			<var name="pageTemplateName" value="Blog" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoPagePG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="roleName" value="Guest" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoPagePG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
-		<for list="${permissionInLineUncheckLists}" param="permissionsInLineUncheckListsCount" >
+		<for list="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount" >
 
 			<execute macro="Role#removePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
@@ -1465,24 +1430,24 @@
 		</for>
 
 		<execute macro="PermissionsInline#gotoPagePG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
-		<for list="${permissionInLineCheckLists}" param="permissionsInLineCheckListsCount" >
+		<for list="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" param="permissionsInLineCheckListsCount" >
 
 			<execute macro="Team#definePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineCheckListsCount}" />
-				<var name="teamName" value="${teamName}" />
+				<var name="teamName" value="Site Team Name" />
 			</execute>
 		</for>
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
 		<execute macro="PageTemplate#viewDefaultPortletPG">
@@ -1491,11 +1456,11 @@
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE_2" />

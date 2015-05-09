@@ -738,6 +738,10 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
 		<execute macro="WebContent#viewCP">
 			<var name="webContentContent"><![CDATA[<script>alert("web content article")</script>]]></var>
 			<var name="webContentTitle" value="WC WebContent Title" />

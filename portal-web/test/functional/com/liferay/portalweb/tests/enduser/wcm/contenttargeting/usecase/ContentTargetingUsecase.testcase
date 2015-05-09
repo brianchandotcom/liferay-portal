@@ -931,7 +931,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-13031" name="ClusteringWithContentTargeting" priority="5">
+	<command name="ClusteringWithContentTargeting" priority="5">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
 
@@ -1666,6 +1666,10 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Import Site" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

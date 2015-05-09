@@ -10,20 +10,12 @@
 	</tear-down>
 
 	<command name="DisplayStyleOptions" priority="5">
-		<var name="childSiteName1" value="Child SiteName 1" />
-		<var name="childSiteName2" value="Child SiteName 2" />
-		<var name="childSiteName3" value="Child SiteName 3" />
-		<var name="portletName" value="Sites Directory" />
-		<var name="siteName" value="Site Name" />
-		<var name="sitePageName" value="Site Page" />
-		<var name="sitePagePrivacy" value="Public" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -31,19 +23,19 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Sites Directory" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -51,8 +43,8 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="${siteName}" />
-			<var name="siteName" value="${childSiteName1}" />
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child SiteName 1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -60,9 +52,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${childSiteName1}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Child SiteName 1" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -70,8 +62,8 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="${siteName}" />
-			<var name="siteName" value="${childSiteName2}" />
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child SiteName 2" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -79,9 +71,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${childSiteName2}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Child SiteName 2" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -89,8 +81,8 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="${siteName}" />
-			<var name="siteName" value="${childSiteName3}" />
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child SiteName 3" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -98,22 +90,22 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="siteName" value="${childSiteName3}" />
-			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Child SiteName 3" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SitesDirectory#viewDefaultConfigurationPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -122,7 +114,7 @@
 		</execute>
 
 		<execute macro="SitesDirectory#viewDescriptivePG">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="SitesDirectory#configureSetupPG">
@@ -130,8 +122,8 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
@@ -143,17 +135,17 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SitesDirectory#viewListHierarchyPG">
 			<var name="availableSiteName" value="Liferay" />
-			<var name="childSiteName1" value="${childSiteName1}" />
-			<var name="childSiteName2" value="${childSiteName2}" />
-			<var name="childSiteName3" value="${childSiteName3}" />
-			<var name="currentSiteName" value="${siteName}" />
+			<var name="childSiteName1" value="Child SiteName 1" />
+			<var name="childSiteName2" value="Child SiteName 2" />
+			<var name="childSiteName3" value="Child SiteName 3" />
+			<var name="currentSiteName" value="Site Name" />
 		</execute>
 	</command>
 </definition>

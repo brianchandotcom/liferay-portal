@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SWITCH_TO_ADVANCED</td>
+	<td>//span[contains(.,'Switch to Advanced Publication')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

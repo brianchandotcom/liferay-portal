@@ -1,10 +1,6 @@
 <definition component-name="portal-wcm">
 	<property name="testray.main.component.name" value="Site and Page Templates" />
 
-	<var name="portletName" value="Site Templates" />
-	<var name="siteName" value="Site Name" />
-	<var name="siteTemplateName" value="Site Template Name" />
-
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
@@ -19,12 +15,12 @@
 		<var name="siteTemplateActive" value="Yes" />
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="${siteTemplateActive}" />
-			<var name="siteTemplateName" value="${siteTemplateName}" />
+			<var name="siteTemplateActive" value="Yes" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -32,7 +28,7 @@
 		</execute>
 
 		<execute macro="Site#addSiteTemplateCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 	</command>
 
@@ -43,7 +39,7 @@
 
 		<execute macro="SiteTemplates#addCP">
 			<var name="siteTemplateActive" value="Yes" />
-			<var name="siteTemplateName" value="${siteTemplateName}" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -51,7 +47,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#deleteCP">
-			<var name="siteTemplateName" value="${siteTemplateName}" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -64,16 +60,13 @@
 	</command>
 
 	<command name="EditSiteTemplateStatus" priority="5">
-		<var name="siteTemplateActive" value="Yes" />
-		<var name="siteTemplateActiveEdit" value="No" />
-
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#addCP">
-			<var name="siteTemplateActive" value="${siteTemplateActive}" />
-			<var name="siteTemplateName" value="${siteTemplateName}" />
+			<var name="siteTemplateActive" value="Yes" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -81,25 +74,25 @@
 		</execute>
 
 		<execute macro="Site#addSiteTemplateCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#editTemplateStatusCP">
-			<var name="siteTemplateActiveEdit" value="${siteTemplateActiveEdit}" />
-			<var name="siteTemplateName" value="${siteTemplateName}" />
+			<var name="siteTemplateActiveEdit" value="No" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#viewTemplateStatusCP">
-			<var name="siteTemplateActiveEdit" value="${siteTemplateActiveEdit}" />
-			<var name="siteTemplateName" value="${siteTemplateName}" />
+			<var name="siteTemplateActiveEdit" value="No" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 	</command>
 

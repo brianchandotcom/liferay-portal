@@ -36,7 +36,7 @@
 		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_TASKS" value1="Tasks" />
 	</command>
 
-	<command known-issues="LIFERAYQA-11550" name="ViewDashboardLocalized" priority="4">
+	<command name="ViewDashboardLocalized" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />

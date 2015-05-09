@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<target name="deploy">
+		<deploy
+			module.dir="${basedir}"
+		/>
+
+		<copy file="${plugin.file}" tofile="../../../lib/development/${plugin.name}.jar" />
+	</target>
+</project>

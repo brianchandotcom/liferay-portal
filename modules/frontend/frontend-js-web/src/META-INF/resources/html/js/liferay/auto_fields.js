@@ -97,7 +97,7 @@ AUI.add(
 
 						var visibleRows = instance._contentBox.all('.lfr-form-row:visible').size();
 
-						var deleteRow = (visibleRows > 1);
+						var deleteRow = visibleRows > 1;
 
 						if (visibleRows == 1) {
 							instance.addRow(node);
@@ -192,12 +192,12 @@ AUI.add(
 					render: function() {
 						var instance = this;
 
-						var config = instance.config;
+						var baseContainer = A.Node.create('<div class="lfr-form-row"><div class="row-fields"></div></div>');
 
+						var config = instance.config;
 						var contentBox = A.one(config.contentBox);
 
 						var baseRows = contentBox.all(config.baseRows || '.lfr-form-row');
-						var baseContainer = A.Node.create('<div class="lfr-form-row"><div class="row-fields"></div></div>');
 
 						instance._contentBox = contentBox;
 						instance._guid = baseRows.size();
@@ -223,6 +223,7 @@ AUI.add(
 							'click',
 							function(event) {
 								var link = event.currentTarget;
+
 								var currentRow = link.ancestor('.lfr-form-row');
 
 								if (link.hasClass('add-row')) {
@@ -239,8 +240,8 @@ AUI.add(
 
 						baseRows.each(
 							function(item, index) {
-								var formRow;
 								var firstChild;
+								var formRow;
 
 								if (item.hasClass('lfr-form-row')) {
 									formRow = item;
@@ -327,6 +328,7 @@ AUI.add(
 							visibleRows.each(
 								function(item, index) {
 									var formField = item.one('input, textarea, select');
+
 									var fieldId = formField.attr('id');
 
 									if (!fieldId) {
@@ -366,8 +368,9 @@ AUI.add(
 					_clearForm: function(node) {
 						node.all('input, select, textarea').each(
 							function(item, index) {
-								var type = item.getAttribute('type');
 								var tag = item.get('nodeName').toLowerCase();
+
+								var type = item.getAttribute('type');
 
 								if (type == 'text' || type == 'password' || tag == 'textarea') {
 									item.val('');
@@ -407,12 +410,14 @@ AUI.add(
 						var instance = this;
 
 						var currentRow = node;
+
 						var clone = currentRow.clone();
-						var guid = (++instance._guid);
+
+						var clonedRow;
 
 						var formValidator = instance._getFormValidator(node);
 
-						var clonedRow;
+						var guid = ++instance._guid;
 
 						if (instance.url) {
 							clonedRow = instance._createCloneFromURL(clone, guid);
@@ -435,11 +440,14 @@ AUI.add(
 
 						node.all('input, select, textarea, span').each(
 							function(item, index) {
-								var oldName = item.attr('name') || item.attr('id');
-								var originalName = oldName.replace(/([0-9]+)$/, '');
-								var newName = originalName + guid;
-								var inputType = item.attr('type');
 								var inputNodeName = item.attr('nodeName');
+								var inputType = item.attr('type');
+
+								var oldName = item.attr('name') || item.attr('id');
+
+								var originalName = oldName.replace(/([0-9]+)$/, '');
+
+								var newName = originalName + guid;
 
 								if (inputType == 'radio') {
 									oldName = item.attr('id');

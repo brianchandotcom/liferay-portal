@@ -50,17 +50,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SITE_PAGES_VARIATIONS_TABLE_ACTIONS_MENULIST-->
-<tr>
-	<td>SITE_PAGES_VARIATIONS_TABLE_ACTIONS_MENULIST_MERGE</td>
-	<td>//a[@role='menuitem' and contains(.,'Merge')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADD_SITE_PAGES_VARIATION-->
 <tr>
 	<td>MANAGE_VARIATION</td>
@@ -81,11 +70,6 @@
 <tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_170_description']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_SITE_PAGES_VARIATION_UPDATE_BUTTON</td>
-	<td>//button[contains(.,'Update')]</td>
 	<td></td>
 </tr>
 <tr>

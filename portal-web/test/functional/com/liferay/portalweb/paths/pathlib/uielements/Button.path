@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PAGE_VARIATION</td>
+	<td>//button[contains(.,'Add Page Variation')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_TAGS</td>
 	<td>//button[contains(.,'Add Tags')]</td>
 	<td></td>
@@ -311,6 +316,11 @@
 <tr>
 	<td>UNLOCK</td>
 	<td>//button[contains(.,'Unlock')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE</td>
+	<td>//button[contains(.,'Update')]</td>
 	<td></td>
 </tr>
 <tr>

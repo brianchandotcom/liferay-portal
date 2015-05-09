@@ -143,11 +143,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON</td>
-	<td>//button[contains(.,'OK')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

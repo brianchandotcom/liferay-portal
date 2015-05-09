@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGES_SELECT_PAGES_BUTTON</td>
-	<td>//button[contains(.,'Select Pages')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
 	<td>//input[@id='_88_DELETE_MISSING_LAYOUTS']</td>
 	<td></td>

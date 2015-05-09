@@ -319,6 +319,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MERGE</td>
+	<td>//a[@role='menuitem' and contains(.,'Merge')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METADATA_SETS</td>
 	<td>//a[@role='menuitem' and contains(.,'Metadata Sets')]</td>
 	<td></td>

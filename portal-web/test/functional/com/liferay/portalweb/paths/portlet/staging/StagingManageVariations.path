@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">StagingManageVariations</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SITE_VARIATION-->
 <tr>
 	<td>MANAGE_SITE_PAGES_VARIATIONS_IFRAME</td>
@@ -129,11 +124,6 @@
 <tr>
 	<td>PAGE_VARIATIONS_TABLE_ACTIONS_MENULIST_DELETE</td>
 	<td>//a[@id='_170_layoutRevisionsSearchContainer_2_menu_delete']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

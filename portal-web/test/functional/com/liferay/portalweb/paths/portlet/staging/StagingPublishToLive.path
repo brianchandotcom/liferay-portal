@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SWITCH_TO_ADVANCED_PUBLICATION</td>
 	<td>//a[contains(., 'Switch to Advanced Publication')]/span</td>
 	<td></td>
@@ -278,11 +273,6 @@
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_UNDO_BUTTON</td>
 	<td>//a[@id='_182_undo']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

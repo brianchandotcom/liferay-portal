@@ -502,7 +502,7 @@ public final class XMLLoggerHandler {
 
 		LoggerElement loggerElement = new LoggerElement();
 
-		loggerElement.setClassName("collapsible parameter-container collapse");
+		loggerElement.setClassName("child-container collapse parameter-container");
 		loggerElement.setID(null);
 		loggerElement.setName("div");
 

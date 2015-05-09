@@ -15,21 +15,29 @@
 package com.liferay.tld.formatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.xml.SAXReaderFactory;
+import com.liferay.util.xml.XMLFormatter;
 
-import java.io.File;
+import java.io.IOException;
 
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.tools.ant.DirectoryScanner;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,89 +45,116 @@ import org.apache.tools.ant.DirectoryScanner;
 public class TLDFormatter {
 
 	public static void main(String[] args) {
-		try {
-			ToolDependencies.wireBasic();
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-			_formatTLD();
+		String baseDirName = GetterUtil.getString(
+			arguments.get("tld.base.dir"), _BASE_DIR_NAME);
+		boolean plugin = GetterUtil.getBoolean(
+			arguments.get("tld.plugin"), true);
+
+		try {
+			new TLDFormatter(baseDirName, plugin);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static void _formatTLD() throws Exception {
-		String basedir = "./util-taglib/src/META-INF/";
+	public TLDFormatter(String baseDirName, boolean plugin) throws Exception {
+		_plugin = plugin;
 
-		if (!FileUtil.exists(basedir)) {
-			return;
+		Files.walkFileTree(
+			Paths.get(baseDirName),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path file, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path fileNamePath = file.getFileName();
+					String fileName = fileNamePath.toString();
+
+					if (!fileName.endsWith(".tld") ||
+						(!_plugin &&
+						 fileName.equals("liferay-portlet-ext.tld"))) {
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					try {
+						_formatTLD(file);
+					}
+					catch (IOException ioe) {
+						throw ioe;
+					}
+					catch (Exception e) {
+						throw new IOException(e);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	private void _formatTLD(Path file) throws Exception {
+		String content = new String(
+			Files.readAllBytes(file), StandardCharsets.UTF_8);
+
+		if (!_plugin) {
+			content = StringUtil.replace(
+				content, "xml/ns/j2ee/web-jsptaglibrary_2_0.xsd",
+				"dtd/web-jsptaglibrary_1_2.dtd");
 		}
 
-		List<String> list = new ArrayList<>();
+		SAXReader saxReader = _getSAXReader();
 
-		DirectoryScanner ds = new DirectoryScanner();
+		Document document = saxReader.read(new UnsyncStringReader(content));
 
-		ds.setBasedir(basedir);
-		ds.setExcludes(new String[] {"**\\liferay-portlet-ext.tld"});
-		ds.setIncludes(new String[] {"**\\*.tld"});
+		Element root = document.getRootElement();
 
-		ds.scan();
+		_sortElements(root, "tag", "name");
 
-		list.addAll(ListUtil.fromArray(ds.getIncludedFiles()));
+		List<Element> tagEls = root.elements("tag");
 
-		String[] files = list.toArray(new String[list.size()]);
+		for (Element tagEl : tagEls) {
+			_sortElements(tagEl, "attribute", "name");
 
-		for (int i = 0; i < files.length; i++) {
-			File file = new File(basedir + files[i]);
+			Element dynamicAttributesEl = tagEl.element("dynamic-attributes");
 
-			String content = FileUtil.read(file);
+			if (dynamicAttributesEl != null) {
+				dynamicAttributesEl.detach();
 
-			Document document = SAXReaderUtil.read(
-				new UnsyncStringReader(
-					StringUtil.replace(
-						content, "xml/ns/j2ee/web-jsptaglibrary_2_0.xsd",
-						"dtd/web-jsptaglibrary_1_2.dtd")));
-
-			Element root = document.getRootElement();
-
-			_sortElements(root, "tag", "name");
-
-			List<Element> tagEls = root.elements("tag");
-
-			for (Element tagEl : tagEls) {
-				_sortElements(tagEl, "attribute", "name");
-
-				Element dynamicAttributesEl = tagEl.element(
-					"dynamic-attributes");
-
-				if (dynamicAttributesEl != null) {
-					dynamicAttributesEl.detach();
-
-					tagEl.add(dynamicAttributesEl);
-				}
+				tagEl.add(dynamicAttributesEl);
 			}
+		}
 
-			String newContent = document.formattedString();
+		String newContent = XMLFormatter.toString(document);
 
-			int x = newContent.indexOf("<tlib-version");
-			int y = newContent.indexOf("</taglib>");
+		int x = newContent.indexOf("<tlib-version");
+		int y = newContent.indexOf("</taglib>");
 
-			newContent = newContent.substring(x, y);
+		newContent = newContent.substring(x, y);
 
-			x = content.indexOf("<tlib-version");
-			y = content.indexOf("</taglib>");
+		x = content.indexOf("<tlib-version");
+		y = content.indexOf("</taglib>");
 
-			newContent =
-				content.substring(0, x) + newContent + content.substring(y);
+		newContent =
+			content.substring(0, x) + newContent + content.substring(y);
 
-			if (!content.equals(newContent)) {
-				FileUtil.write(file, newContent);
+		if (!content.equals(newContent)) {
+			Files.write(file, newContent.getBytes(StandardCharsets.UTF_8));
 
-				System.out.println(file);
-			}
+			System.out.println(file);
 		}
 	}
 
-	private static void _sortElements(
+	private SAXReader _getSAXReader() {
+		return SAXReaderFactory.getSAXReader(null, false, false);
+	}
+
+	private void _sortElements(
 		Element parentElement, String name, String sortBy) {
 
 		Map<String, Element> map = new TreeMap<>();
@@ -138,5 +173,9 @@ public class TLDFormatter {
 			parentElement.add(element);
 		}
 	}
+
+	private static final String _BASE_DIR_NAME = "./";
+
+	private final boolean _plugin;
 
 }

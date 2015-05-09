@@ -4,9 +4,9 @@
 	default-destroy-method="destroy"
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
->
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<!-- Advice -->
 
@@ -61,10 +61,17 @@
 
 	<!-- Messaging -->
 
-	<bean id="destination.device_recognition_provider" class="com.liferay.portal.kernel.messaging.ParallelDestination">
-		<property name="name" value="liferay/device_recognition_provider" />
-	</bean>
 	<bean id="messagingConfigurator.device_recognition" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
+		<property name="destinationConfigurations">
+			<util:set>
+				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration" >
+					<constructor-arg name="destinationName" value="liferay/device_recognition_provider" />
+					<constructor-arg name="destinationType">
+						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
+					</constructor-arg>
+				</bean>
+			</util:set>
+		</property>
 		<property name="destinationEventListeners">
 			<map>
 				<entry key="liferay/device_recognition_provider">
@@ -76,11 +83,6 @@
 					</list>
 				</entry>
 			</map>
-		</property>
-		<property name="destinations">
-			<list>
-				<ref bean="destination.device_recognition_provider" />
-			</list>
 		</property>
 	</bean>
 </beans>

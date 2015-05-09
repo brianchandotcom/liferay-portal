@@ -30,6 +30,10 @@ import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCa
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +101,46 @@ public class SynchronousDestinationTestCallback
 			if (_sync == null) {
 				return;
 			}
+
+			ServiceDependencyManager serviceDependencyManager =
+				new ServiceDependencyManager();
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			Filter asyncFilter = registry.getFilter(
+				"(&(destination.name=" +
+					DestinationNames.ASYNC_SERVICE +
+					")(objectClass=" + Destination.class.getName() + "))");
+
+			Filter backgroundTaskFilter = registry.getFilter(
+				"(&(destination.name=" +
+					DestinationNames.BACKGROUND_TASK +
+					")(objectClass=" + Destination.class.getName() + "))");
+
+			Filter mailFilter = registry.getFilter(
+				"(&(destination.name=" + DestinationNames.MAIL +
+					")(objectClass=" + Destination.class.getName() + "))");
+
+			Filter pdfProcessorFilter = registry.getFilter(
+				"(&(destination.name=" +
+					DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR +
+					")(objectClass=" + Destination.class.getName() + "))");
+
+			Filter rawMetaDataProcessorFilter = registry.getFilter(
+				"(&(destination.name=" +
+					DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR +
+					")(objectClass=" + Destination.class.getName() + "))");
+
+			Filter subscrpitionSenderFilter = registry.getFilter(
+				"(&(destination.name=" + DestinationNames.SUBSCRIPTION_SENDER +
+					")(objectClass=" + Destination.class.getName() + "))");
+
+			serviceDependencyManager.registerDependencies(
+				asyncFilter, backgroundTaskFilter, mailFilter,
+				pdfProcessorFilter, rawMetaDataProcessorFilter,
+				subscrpitionSenderFilter);
+
+			serviceDependencyManager.waitForDependencies();
 
 			ProxyModeThreadLocal.setForceSync(true);
 

@@ -4,9 +4,9 @@
 	default-destroy-method="destroy"
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
->
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<!-- Message bus -->
 
@@ -15,19 +15,18 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil" class="com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil" />
 
-	<!-- Destinations -->
-
-	<bean id="destination.message_bus_default_response" class="com.liferay.portal.kernel.messaging.SynchronousDestination">
-		<property name="name" value="liferay/message_bus/default_response" />
-	</bean>
-
 	<!-- Configurator -->
 
 	<bean id="messagingConfigurator.core" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
-		<property name="destinations">
-			<list>
-				<ref bean="destination.message_bus_default_response" />
-			</list>
+		<property name="destinationConfigurations">
+			<util:set>
+				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration" >
+					<constructor-arg name="destinationName" value="liferay/message_bus/default_response" />
+					<constructor-arg name="destinationType">
+						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS" />
+					</constructor-arg>
+				</bean>
+			</util:set>
 		</property>
 	</bean>
 </beans>

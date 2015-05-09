@@ -29,6 +29,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_FIELD_TEXT_FIELD</td>
+	<td>//span[contains(.,'Wiki Custom Field Here')]/../..//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_OF_THE_CHANGES_FIELD</td>
+	<td>//label[contains(.,'Description of the Changes')]/../..//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_LINK</td>
 	<td>//div[@class='wiki-body']//a</td>
 	<td></td>
@@ -102,7 +112,7 @@
 </tr>
 <tr>
 	<td>ALL_PAGES_TABLE_WIKI_PAGE_TITLE</td>
-	<td>//a[contains(.,"${key_wikiPageTitle}")]</td>
+	<td>//a[contains(.,'${key_wikiPageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -180,6 +190,11 @@
 <tr>
 	<td>CHILD_PAGE_GENERIC</td>
 	<td>//div[@class='child-pages']/ul/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--COMMENTS-->

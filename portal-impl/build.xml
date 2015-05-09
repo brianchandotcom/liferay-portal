@@ -1082,13 +1082,14 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-tld">
 		<java
-			classname="com.liferay.portal.tools.TLDFormatter"
+			classname="com.liferay.tld.formatter.TLDFormatter"
 			classpathref="project.classpath"
 			dir="${project.dir}"
 			fork="true"
 			newenvironment="true"
 		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg value="tld.base.dir=./util-taglib/src/META-INF/" />
+			<arg value="tld.plugin=false" />
 		</java>
 
 		<delete file="ServiceBuilder.temp" />

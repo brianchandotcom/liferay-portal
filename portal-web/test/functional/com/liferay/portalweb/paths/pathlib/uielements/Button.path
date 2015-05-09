@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>ADD_WIKI</td>
-	<td>//a[contains(@id,'addNodeButton')]</td>
+	<td>//a[contains(@id,'addNodeButton') and contains(.,'Add Wiki')]</td>
 	<td></td>
 </tr>
 <tr>

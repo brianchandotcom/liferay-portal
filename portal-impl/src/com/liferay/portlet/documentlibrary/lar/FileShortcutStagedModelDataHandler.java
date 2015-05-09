@@ -48,8 +48,10 @@ import java.util.Map;
 public class FileShortcutStagedModelDataHandler
 	extends BaseStagedModelDataHandler<FileShortcut> {
 
-	public static final String[] CLASS_NAMES =
-		{DLFileShortcutConstants.getClassName()};
+	public static final String[] CLASS_NAMES = {
+		DLFileShortcutConstants.getClassName(), FileShortcut.class.getName(),
+		LiferayFileShortcut.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(

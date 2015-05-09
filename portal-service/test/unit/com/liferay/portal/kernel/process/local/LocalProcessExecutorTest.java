@@ -1125,11 +1125,11 @@ public class LocalProcessExecutorTest {
 	}
 
 	@Test
-	public void testNonpocessCallablePipingBackProcessCallable()
+	public void testNonprocessCallablePipingBackProcessCallable()
 		throws Exception {
 
 		NonprocessCallablePipingBackProcessCallable
-			nonProcessCallablePipingBackProcessCallable =
+			nonprocessCallablePipingBackProcessCallable =
 				new NonprocessCallablePipingBackProcessCallable();
 
 		try (CaptureHandler captureHandler =
@@ -1139,7 +1139,7 @@ public class LocalProcessExecutorTest {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					nonProcessCallablePipingBackProcessCallable);
+					nonprocessCallablePipingBackProcessCallable);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();
@@ -1165,7 +1165,7 @@ public class LocalProcessExecutorTest {
 			ProcessChannel<Serializable> processChannel =
 				_localProcessExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS1),
-					nonProcessCallablePipingBackProcessCallable);
+					nonprocessCallablePipingBackProcessCallable);
 
 			NoticeableFuture<Serializable> noticeableFuture =
 				processChannel.getProcessNoticeableFuture();

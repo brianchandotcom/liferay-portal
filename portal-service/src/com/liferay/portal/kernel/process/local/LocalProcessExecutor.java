@@ -304,11 +304,10 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				}
 
 				while (true) {
-					ProcessCallable<?> processCallable = null;
+					Object obj = null;
 
 					try {
-						processCallable =
-							(ProcessCallable<?>)objectInputStream.readObject();
+						obj = objectInputStream.readObject();
 					}
 					catch (WriteAbortedException wae) {
 						if (_log.isWarnEnabled()) {
@@ -317,6 +316,19 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 						continue;
 					}
+
+					if (!(obj instanceof ProcessCallable)) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Received a non-ProcessCallable piping back " +
+									obj);
+						}
+
+						continue;
+					}
+
+					ProcessCallable<?> processCallable =
+						(ProcessCallable<?>)obj;
 
 					if ((processCallable instanceof ExceptionProcessCallable) ||
 						(processCallable instanceof ReturnProcessCallable<?>)) {

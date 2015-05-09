@@ -16,7 +16,6 @@ package com.liferay.tld.formatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.XMLFormatter;
@@ -101,12 +100,6 @@ public class TLDFormatter {
 	private void _formatTLD(Path file) throws Exception {
 		String content = new String(
 			Files.readAllBytes(file), StandardCharsets.UTF_8);
-
-		if (!_plugin) {
-			content = StringUtil.replace(
-				content, "xml/ns/j2ee/web-jsptaglibrary_2_0.xsd",
-				"dtd/web-jsptaglibrary_1_2.dtd");
-		}
 
 		SAXReader saxReader = _getSAXReader();
 

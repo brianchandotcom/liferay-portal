@@ -26,7 +26,6 @@ import java.net.URLClassLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.rules.TestRule;
@@ -94,8 +93,6 @@ public class CodeCoverageAssertor implements TestRule {
 
 		appendAssertClasses(assertClasses);
 
-		_purgeSyntheticClasses(assertClasses);
-
 		try {
 			_ASSERT_COVERAGE_METHOD.invoke(
 				null, _includeInnerClasses,
@@ -135,18 +132,6 @@ public class CodeCoverageAssertor implements TestRule {
 		return clazz.getClassLoader();
 	}
 
-	private static void _purgeSyntheticClasses(List<Class<?>> assertClasses) {
-		Iterator<Class<?>> iterator = assertClasses.iterator();
-
-		while (iterator.hasNext()) {
-			Class<?> assertClass = iterator.next();
-
-			if (assertClass.isSynthetic()) {
-				iterator.remove();
-			}
-		}
-	}
-
 	private String[] _generateIncludes(String mainClassName) throws Exception {
 		List<Class<?>> assertClasses = new ArrayList<>();
 
@@ -181,8 +166,6 @@ public class CodeCoverageAssertor implements TestRule {
 
 			appendAssertClassesMethod.invoke(reloadedObject, assertClasses);
 		}
-
-		_purgeSyntheticClasses(assertClasses);
 
 		String[] includes = new String[assertClasses.size()];
 

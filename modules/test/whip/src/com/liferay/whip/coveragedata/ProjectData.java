@@ -21,7 +21,14 @@ public class ProjectData
 	extends CoverageDataContainer<String, ClassData, ProjectData> {
 
 	public ClassData getClassData(String className) {
-		return children.get(className);
+		ClassData classData = children.get(className);
+
+		if (classData == null) {
+			throw new IllegalStateException(
+				"No instrument data for class " + className);
+		}
+
+		return classData;
 	}
 
 	public ClassData getOrCreateClassData(String className) {

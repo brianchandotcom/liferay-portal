@@ -12,14 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging.jmx;
+package com.liferay.portal.messaging.internal.jmx;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-public interface DestinationManagerMBean {
+public interface DestinationStatisticsManagerMBean {
 
-	public int getListenerCount();
+	public int getActiveThreadCount();
+
+	public int getCurrentThreadCount();
+
+	public int getLargestThreadCount();
+
+	public String getLastRefresh();
+
+	public int getMaxThreadPoolSize();
+
+	public int getMinThreadPoolSize();
+
+	public long getPendingMessageCount();
+
+	public long getSentMessageCount();
+
+	public boolean isAutoRefresh();
+
+	public void refresh();
+
+	public void setAutoRefresh(boolean autoRefresh);
 
 }

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Groovy Scripting Executor
+Bundle-SymbolicName: com.liferay.portal.scripting.groovy
+Bundle-Version: 1.0.0
+Include-Resource: \
+	classes,\
+	@lib/groovy.jar

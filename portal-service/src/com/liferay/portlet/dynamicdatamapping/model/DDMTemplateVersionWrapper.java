@@ -59,6 +59,8 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("templateId", getTemplateId());
 		attributes.put("version", getVersion());
 		attributes.put("name", getName());
@@ -105,6 +107,18 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		Long templateId = (Long)attributes.get("templateId");
@@ -158,6 +172,36 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	@Override
 	public java.lang.String[] getAvailableLanguageIds() {
 		return _ddmTemplateVersion.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the fully qualified class name of this d d m template version.
+	*
+	* @return the fully qualified class name of this d d m template version
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _ddmTemplateVersion.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this d d m template version.
+	*
+	* @return the class name ID of this d d m template version
+	*/
+	@Override
+	public long getClassNameId() {
+		return _ddmTemplateVersion.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this d d m template version.
+	*
+	* @return the class p k of this d d m template version
+	*/
+	@Override
+	public long getClassPK() {
+		return _ddmTemplateVersion.getClassPK();
 	}
 
 	/**
@@ -491,6 +535,31 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_ddmTemplateVersion.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_ddmTemplateVersion.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this d d m template version.
+	*
+	* @param classNameId the class name ID of this d d m template version
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_ddmTemplateVersion.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class p k of this d d m template version.
+	*
+	* @param classPK the class p k of this d d m template version
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_ddmTemplateVersion.setClassPK(classPK);
 	}
 
 	/**

@@ -554,6 +554,8 @@ create table DDMTemplateVersion (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
+	classNameId LONG,
+	classPK LONG,
 	templateId LONG,
 	version VARCHAR(75) null,
 	name STRING null,

@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.trash;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.TrashedModel;
@@ -277,6 +279,8 @@ public interface TrashHandler {
 
 	public long getDestinationContainerModelId(
 		long classPK, long destinationContainerModelId);
+
+	public Query getExcludeQuery(SearchContext searchContext);
 
 	/**
 	 * Returns the parent container model of the model entity with the primary

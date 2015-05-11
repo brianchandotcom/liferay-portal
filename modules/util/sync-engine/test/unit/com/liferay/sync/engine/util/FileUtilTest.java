@@ -18,6 +18,7 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -144,6 +145,24 @@ public class FileUtilTest {
 
 		Assert.assertTrue(Files.notExists(sourceFilePath));
 		Assert.assertTrue(Files.exists(targetFilePath));
+	}
+
+	@Test
+	public void testRenameFile() throws Exception {
+		Path sourceFilePath = Files.createTempFile("test", null);
+
+		String sourceFilePathName = sourceFilePath.toString();
+
+		Path targetFilePath = Paths.get(sourceFilePathName.toUpperCase());
+
+		FileUtil.moveFile(sourceFilePath, targetFilePath);
+
+		Path realFilePath = sourceFilePath.toRealPath();
+
+		Path realFilePathFileName = realFilePath.getFileName();
+
+		Assert.assertFalse(sourceFilePath.endsWith(realFilePathFileName));
+		Assert.assertTrue(targetFilePath.endsWith(realFilePathFileName));
 	}
 
 	@Test

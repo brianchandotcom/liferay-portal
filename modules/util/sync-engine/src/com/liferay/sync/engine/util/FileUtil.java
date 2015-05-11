@@ -485,7 +485,7 @@ public class FileUtil {
 
 		try {
 			Files.move(
-				sourceFilePath, targetFilePath,
+				sourceFilePath, targetFilePath, StandardCopyOption.ATOMIC_MOVE,
 				StandardCopyOption.REPLACE_EXISTING);
 		}
 		catch (Exception e) {
@@ -503,6 +503,7 @@ public class FileUtil {
 					if (fileTime.toMillis() <= getStartTime()) {
 						Files.move(
 							sourceFilePath, targetFilePath,
+							StandardCopyOption.ATOMIC_MOVE,
 							StandardCopyOption.REPLACE_EXISTING);
 					}
 					else {

@@ -230,6 +230,19 @@
 							'plugin'
 						]
 					},
+					'liferay-control-panel': {
+						path: 'control_panel.js',
+						requires: [
+							'aui-live-search-deprecated',
+							'aui-overlay-context-panel-deprecated',
+							'event-mouseenter',
+							'liferay-message',
+							'liferay-panel-search',
+							'liferay-store',
+							'node-focusmanager',
+							'transition'
+						]
+					},
 					'liferay-crop-region': {
 						path: 'crop_region.js',
 						requires: [

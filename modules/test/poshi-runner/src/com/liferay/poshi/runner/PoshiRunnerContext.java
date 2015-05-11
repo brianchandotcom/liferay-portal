@@ -249,13 +249,19 @@ public class PoshiRunnerContext {
 		return relatedClassCommandNames;
 	}
 
-	private static void _readPathFile(String filePath, String className)
+	private static void _readPathFile(
+			String filePath, String className, String extendedClassName)
 		throws Exception {
 
 		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
 			filePath);
 
-		_rootElements.put("path#" + className, rootElement);
+		if (extendedClassName != null) {
+			_rootElements.put("path#" + extendedClassName, rootElement);
+		}
+		else {
+			_rootElements.put("path#" + className, rootElement);
+		}
 
 		Element bodyElement = rootElement.element("body");
 
@@ -287,7 +293,10 @@ public class PoshiRunnerContext {
 					if (extendFilePath.endsWith(expectedExtendedPath)) {
 						extendFilePath = _BASE_DIR + "/" + extendFilePath;
 
-						_readPathFile(extendFilePath, className);
+						_readPathFile(
+							extendFilePath, className,
+							PoshiRunnerGetterUtil.getClassNameFromFilePath(
+								extendFilePath));
 
 						break;
 					}
@@ -411,7 +420,7 @@ public class PoshiRunnerContext {
 				}
 			}
 			else if (classType.equals("path")) {
-				_readPathFile(filePath, className);
+				_readPathFile(filePath, className, null);
 			}
 		}
 	}

@@ -124,15 +124,10 @@ public class IFramePortlet extends MVCPortlet {
 			_iFrameConfiguration,
 			PortalUtil.getHttpServletRequest(renderRequest));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String src = ParamUtil.getString(
 			renderRequest, "src", iFrameDisplayContext.getSrc());
 
-		boolean auth = iFrameDisplayContext.isAuth();
-
-		if (!auth) {
+		if (!iFrameDisplayContext.isAuth()) {
 			return src;
 		}
 
@@ -152,6 +147,9 @@ public class IFramePortlet extends MVCPortlet {
 			src = protocol + userName + ":" + password + "@" + url;
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			String portletId = PortalUtil.getPortletId(renderRequest);
 
 			src =

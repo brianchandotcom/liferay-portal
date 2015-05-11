@@ -184,6 +184,18 @@ public class RoleServiceUtil {
 		return getService().getRole(roleId);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Role> getRoles(
+		long companyId, int[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRoles(companyId, types);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Role> getRoles(
+		int type, java.lang.String subtype)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRoles(type, subtype);
+	}
+
 	/**
 	* Returns all the user's roles within the user group.
 	*

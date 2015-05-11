@@ -238,6 +238,20 @@ public class UserGroupServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.UserGroupSoap[] getUserGroups(
+		long companyId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.model.UserGroup> returnValue = UserGroupServiceUtil.getUserGroups(companyId);
+
+			return com.liferay.portal.model.UserGroupSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns all the user groups to which the user belongs.
 	*

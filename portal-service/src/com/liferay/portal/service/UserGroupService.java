@@ -156,6 +156,10 @@ public interface UserGroupService extends BaseService {
 	public com.liferay.portal.model.UserGroup getUserGroup(long userGroupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
+		long companyId) throws PortalException;
+
 	/**
 	* Returns all the user groups to which the user belongs.
 	*

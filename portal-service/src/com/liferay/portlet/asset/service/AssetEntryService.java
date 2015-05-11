@@ -47,6 +47,9 @@ public interface AssetEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetEntryServiceUtil} to access the asset entry remote service. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long entryId)
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.

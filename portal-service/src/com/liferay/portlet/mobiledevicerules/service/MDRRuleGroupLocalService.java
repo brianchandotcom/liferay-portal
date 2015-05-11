@@ -310,7 +310,14 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 		long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRuleGroupsCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRuleGroupsCount(long[] groupIds);
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #search(long, String,

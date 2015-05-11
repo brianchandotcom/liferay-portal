@@ -215,6 +215,59 @@ public class MDRRuleGroupServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> getRuleGroups(
+		HttpPrincipal httpPrincipal, long[] groupIds, int start, int end) {
+		try {
+			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class,
+					"getRuleGroups", _getRuleGroupsParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					groupIds, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getRuleGroupsCount(HttpPrincipal httpPrincipal,
+		long[] groupIds) {
+		try {
+			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class,
+					"getRuleGroupsCount", _getRuleGroupsCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupIds);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateRuleGroup(
 		HttpPrincipal httpPrincipal, long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -223,7 +276,7 @@ public class MDRRuleGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MDRRuleGroupServiceUtil.class,
-					"updateRuleGroup", _updateRuleGroupParameterTypes5);
+					"updateRuleGroup", _updateRuleGroupParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					ruleGroupId, nameMap, descriptionMap, serviceContext);
@@ -268,7 +321,13 @@ public class MDRRuleGroupServiceHttp {
 	private static final Class<?>[] _getRuleGroupParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateRuleGroupParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getRuleGroupsParameterTypes5 = new Class[] {
+			long[].class, int.class, int.class
+		};
+	private static final Class<?>[] _getRuleGroupsCountParameterTypes6 = new Class[] {
+			long[].class
+		};
+	private static final Class<?>[] _updateRuleGroupParameterTypes7 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			com.liferay.portal.service.ServiceContext.class
 		};

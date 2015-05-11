@@ -356,8 +356,17 @@ public class MDRRuleGroupLocalServiceUtil {
 		return getService().getRuleGroups(groupId, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+		return getService().getRuleGroups(groupIds, start, end);
+	}
+
 	public static int getRuleGroupsCount(long groupId) {
 		return getService().getRuleGroupsCount(groupId);
+	}
+
+	public static int getRuleGroupsCount(long[] groupIds) {
+		return getService().getRuleGroupsCount(groupIds);
 	}
 
 	/**

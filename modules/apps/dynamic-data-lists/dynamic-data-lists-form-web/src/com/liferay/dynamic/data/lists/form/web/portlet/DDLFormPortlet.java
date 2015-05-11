@@ -90,8 +90,8 @@ public class DDLFormPortlet extends MVCPortlet {
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
 				}
 
 				hideDefaultErrorMessage(renderRequest);

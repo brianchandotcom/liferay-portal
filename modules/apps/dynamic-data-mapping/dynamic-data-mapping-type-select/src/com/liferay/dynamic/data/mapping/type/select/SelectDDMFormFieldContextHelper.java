@@ -43,8 +43,8 @@ public class SelectDDMFormFieldContextHelper {
 		LocalizedValue predefinedValue, Locale locale) {
 
 		_ddmFormFieldOptions = ddmFormFieldOptions;
-		_selectedValues = toArray(value);
-		_predefinedValues = toArray(predefinedValue.getString(locale));
+		_selectedValues = toStringArray(value);
+		_predefinedValues = toStringArray(predefinedValue.getString(locale));
 		_locale = locale;
 	}
 
@@ -81,7 +81,7 @@ public class SelectDDMFormFieldContextHelper {
 		return false;
 	}
 
-	protected String[] toArray(String value) {
+	protected String[] toStringArray(String value) {
 		if (Validator.isNull(value)) {
 			return GetterUtil.DEFAULT_STRING_VALUES;
 		}

@@ -14,6 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.type.radio;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
@@ -35,8 +40,8 @@ public class RadioDDMFormFieldContextHelper {
 		LocalizedValue predefinedValue, Locale locale) {
 
 		_ddmFormFieldOptions = ddmFormFieldOptions;
-		_selectedValue = value;
-		_predefinedValue = predefinedValue.getString(locale);
+		_selectedValue = toString(value);
+		_predefinedValue = toString(predefinedValue.getString(locale));
 		_locale = locale;
 	}
 
@@ -52,7 +57,7 @@ public class RadioDDMFormFieldContextHelper {
 			optionMap.put("label", optionLabel.getString(_locale));
 			optionMap.put(
 				"status",
-				isSelected(optionValue) ? "checked" : StringPool.BLANK);
+				isChecked(optionValue) ? "checked" : StringPool.BLANK);
 			optionMap.put("value", optionValue);
 
 			options.add(optionMap);
@@ -61,13 +66,33 @@ public class RadioDDMFormFieldContextHelper {
 		return options;
 	}
 
-	protected boolean isSelected(String optionValue) {
+	protected boolean isChecked(String optionValue) {
 		if (Validator.isNull(_selectedValue)) {
 			return Validator.equals(_predefinedValue, optionValue);
 		}
 
 		return Validator.equals(_selectedValue, optionValue);
 	}
+
+	protected String toString(String value) {
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(value);
+
+			return jsonArray.getString(0);
+		}
+		catch (JSONException jsone) {
+			_log.error("Unable to parse JSON array", jsone);
+
+			return StringPool.BLANK;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RadioDDMFormFieldContextHelper.class);
 
 	private final DDMFormFieldOptions _ddmFormFieldOptions;
 	private final Locale _locale;

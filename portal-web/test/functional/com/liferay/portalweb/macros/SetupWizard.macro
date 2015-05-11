@@ -1,4 +1,8 @@
 <definition>
+	<command name="changeDatabase">
+		<execute function="AssertClick" locator1="Setupwizard#DATABASE_CHANGE_LINK" value1="(Change)" />
+	</command>
+
 	<command name="configureAdministratorUserPG">
 		<execute function="Type" locator1="Setupwizard#ADMINISTRATOR_USER_FIRST_NAME_FIELD" value1="${administratorFirstName}" />
 		<execute function="Type" locator1="Setupwizard#ADMINISTRATOR_USER_LAST_NAME_FIELD" value1="${administratorLastName}" />
@@ -71,6 +75,10 @@
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server -Ddelete.liferay.home=false" />
 
+		<execute macro="SetupWizard#viewConfiguredDatabaseInConsole">
+			<var name="databaseType" value="${databaseType}" />
+		</execute>
+
 		<execute macro="User#firstLoginPG" />
 	</command>
 
@@ -87,11 +95,65 @@
 		<execute function="AssertClick" locator1="Setupwizard#FINISH_CONFIGURATION_BUTTON" value1="Finish Configuration" />
 	</command>
 
+	<command name="populateDatabaseConfiguration">
+		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_JDBC_URL_FIELD" value1="${jdbcURL}" />
+		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD" value1="${jdbcDriverClassName}" />
+		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_USER_NAME_FIELD" value1="${userName}" />
+		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_PASSWORD_FIELD" value1="${password}" />
+	</command>
+
+	<command name="selectDatabase">
+		<execute function="Select" locator1="Setupwizard#DATABASE_CHANGE_DATABASE_TYPE_SELECT" value1="${databaseType}" />
+	</command>
+
 	<command name="viewConfigurationSavedPG">
 		<execute function="AssertTextEquals" locator1="SetupwizardFinishconfiguration#SUCCESS_MESSAGE" value1="Your configuration was saved successfully." />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SetupwizardFinishconfiguration#CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
 		<execute function="AssertTextEquals" locator1="SetupwizardFinishconfiguration#CONFIGURATION_STATUS_MESSAGE" value1="Changes will take effect once the portal is restarted. Please restart the portal now." />
+	</command>
+
+	<command name="viewConfiguredDatabaseInConsole">
+		<if>
+			<equals arg1="${databaseType}" arg2="DB2" />
+			<then>
+				<execute function="AssertConsoleTextPresent" value1="Using dialect com.liferay.portal.dao.orm.hibernate.DB2Dialect" />
+			</then>
+			<elseif>
+				<equals arg1="${databaseType}" arg2="HSQL" />
+				<then>
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for HSQL Database Engine 2" />
+					<execute function="AssertConsoleTextPresent" value1="Found dialect org.hibernate.dialect.HSQLDialect" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${databaseType}" arg2="MySQL" />
+				<then>
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for MySQL 5" />
+					<execute function="AssertConsoleTextPresent" value1="Found dialect org.hibernate.dialect.MySQLDialect" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${databaseType}" arg2="Oracle" />
+				<then>
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for Oracle 11" />
+					<execute function="AssertConsoleTextPresent" value1="Found dialect org.hibernate.dialect.Oracle10gDialect" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${databaseType}" arg2="PostgreSQL" />
+				<then>
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for PostgreSQL 9" />
+					<execute function="AssertConsoleTextPresent" value1="Found dialect org.hibernate.dialect.PostgreSQLDialect" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${databaseType}" arg2="Sybase" />
+				<then>
+					<execute function="AssertConsoleTextPresent" value1="Using dialect org.hibernate.dialect.SybaseDialect" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="viewDefaultAdministratorUserPG">
@@ -123,5 +185,10 @@
 
 	<command name="viewDefaultPortalNamePG">
 		<execute function="AssertTextEquals#assertValue" locator1="Setupwizard#PORTAL_PORTAL_NAME_FIELD" value1="Liferay" />
+	</command>
+
+	<command name="viewSampleDataAddedInConsole">
+		<execute function="AssertConsoleTextPresent" value1="SetupWizardSampleDataUtil" />
+		<execute function="AssertConsoleTextPresent" value1="Adding sample data" />
 	</command>
 </definition>

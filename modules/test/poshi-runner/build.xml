@@ -7,6 +7,12 @@
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<target name="prepare-poshi-runner" depends="jar">
+		<copy
+			file="src/META-INF/resources/css/.sass-cache/_main.css"
+			overwrite="true"
+			tofile="src/META-INF/resources/css/main.css"
+		/>
+
 		<echo file="classes/poshi-runner-ext.properties">
 			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
 

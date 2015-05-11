@@ -43,6 +43,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 <liferay-ui:search-container
 	curParam="organizationsCur"
+	emptyResultsMessage="no-organizations-were-found"
 	headerNames="name,type,roles,null"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= organizations.size() %>"

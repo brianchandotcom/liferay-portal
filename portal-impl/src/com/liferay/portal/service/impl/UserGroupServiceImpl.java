@@ -196,6 +196,13 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 		return userGroup;
 	}
 
+	@Override
+	public List<UserGroup> getUserGroups(long companyId)
+		throws PortalException {
+
+		return filterUserGroups(userGroupLocalService.getUserGroups(companyId));
+	}
+
 	/**
 	 * Returns all the user groups to which the user belongs.
 	 *

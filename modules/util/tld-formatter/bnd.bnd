@@ -1,6 +1,9 @@
 Bundle-Name: Liferay TLD Formatter
 Bundle-SymbolicName: com.liferay.tld.formatter
 Bundle-Version: 1.0.0
+Import-Package:\
+	!org.apache.tools.ant.*,\
+	*
 Include-Resource:\
 	classes,\
 	@../../../lib/portal/xercesImpl.jar!/org/apache/xerces/xni/XNIException.class,\

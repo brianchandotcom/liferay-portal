@@ -21,6 +21,9 @@ public class TLDFormatterArgs {
 
 	public static final String BASE_DIR_NAME = "./";
 
+	public static final String OUTPUT_KEY_MODIFIED_FILES =
+		"tld.formatter.modified.files";
+
 	public static final boolean PLUGIN = true;
 
 	public String getBaseDirName() {

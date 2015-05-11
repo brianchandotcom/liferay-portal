@@ -5,15 +5,6 @@ AUI.add(
 
 		var body = A.getBody();
 
-		var portletId = '';
-		var visible = false;
-
-		var sessionKey = 'show-portlet-description-' + portletId;
-
-		var trim = A.Lang.trim;
-
-		var CSS_DISPLAY_PANEL_COLUMNS = 'display-panel-columns';
-
 		var CSS_PANELS_MINIMIZED = 'panels-minimized';
 
 		var CSS_SEARCH_PANEL_ACTIVE = 'search-panel-active';
@@ -117,8 +108,6 @@ AUI.add(
 								instance._searchPanelInput.val('').focus();
 
 								searchNodes.show();
-
-								instance._searchActive = false;
 							}
 						);
 					},
@@ -288,9 +277,7 @@ AUI.add(
 
 							instance._controlPanelTools.on('click', instance._toggleHidden, instance);
 						}
-					},
-					_searchActive: false,
-					_searchValue: ''
+					}
 				}
 			}
 		);

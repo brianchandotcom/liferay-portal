@@ -12,14 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.action;
+package com.liferay.dynamic.data.mapping.web.portlet.action;
 
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+
+import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
@@ -28,69 +41,71 @@ import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryUtil;
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContext;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Bruno Basto
+ * @author Leonardo Barros
  */
-public class RenderStructureFieldAction extends Action {
+@Component(
+	immediate = true,
+	property = {
+		"action.command.name=ddmRenderStructureField",
+		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
+	},
+	service = { ActionCommand.class }
+)
+public class DDMRenderStructureFieldActionCommand extends BaseActionCommand {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+	protected void doProcessCommand(PortletRequest portletRequest,
+			PortletResponse portletResponse) throws Exception {
+		
+		HttpServletResponse httpServletResponse = 
+			PortalUtil.getHttpServletResponse(portletResponse);
+		
+		HttpServletRequest httpServletRequest = 
+			PortalUtil.getHttpServletRequest(portletRequest);
 
-		try {
-			DDMFormField ddmFormField = getDDMFormField(request);
+		DDMFormField ddmFormField = getDDMFormField(httpServletRequest);
 
-			DDMFormFieldRenderer ddmFormFieldRenderer =
-				DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(
-					ddmFormField.getType());
+		DDMFormFieldRenderer ddmFormFieldRenderer =
+			DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(
+				ddmFormField.getType());
 
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-				createDDMFormFieldRenderingContext(request, response);
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			createDDMFormFieldRenderingContext(
+				httpServletRequest, httpServletResponse);
 
-			String ddmFormFieldHTML = ddmFormFieldRenderer.render(
-				ddmFormField, ddmFormFieldRenderingContext);
+		String ddmFormFieldHTML = ddmFormFieldRenderer.render(
+			ddmFormField, ddmFormFieldRenderingContext);
+		
+		httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
 
-			response.setContentType(ContentTypes.TEXT_HTML);
+		ServletResponseUtil.write(httpServletResponse, ddmFormFieldHTML);
 
-			ServletResponseUtil.write(response, ddmFormFieldHTML);
-
-			return null;
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, request, response);
-
-			return null;
-		}
 	}
-
+	
 	protected DDMFormFieldRenderingContext createDDMFormFieldRenderingContext(
 		HttpServletRequest request, HttpServletResponse response) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String mode = ParamUtil.getString(request, "mode");
-		String namespace = ParamUtil.getString(request, "namespace");
+		String mode = ParamUtil.getString(request, DDMConstants.MODE);
+		
+		String namespace = ParamUtil.getString(
+			request, DDMConstants.NAMESPACE);
+		
 		String portletNamespace = ParamUtil.getString(
-			request, "portletNamespace");
-		boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
+			request, DDMConstants.PORTLET_NAMESPACE);
+		
+		boolean readOnly = ParamUtil.getBoolean(
+			request, DDMConstants.READ_ONLY);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		request.setAttribute("aui:form:portletNamespace", portletNamespace);
+		request.setAttribute(
+			DDMConstants.AUI_FORM_PORTLET_NAMESPACE, portletNamespace);
 
 		ddmFormFieldRenderingContext.setHttpServletRequest(request);
 		ddmFormFieldRenderingContext.setHttpServletResponse(response);
@@ -106,8 +121,11 @@ public class RenderStructureFieldAction extends Action {
 	protected DDMFormField getDDMFormField(HttpServletRequest request)
 		throws PortalException {
 
-		String definition = ParamUtil.getString(request, "definition");
-		String fieldName = ParamUtil.getString(request, "fieldName");
+		String definition = ParamUtil.getString(
+			request, DDMConstants.DEFINITION);
+		
+		String fieldName = ParamUtil.getString(
+			request, DDMConstants.FIELD_NAME);
 
 		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(definition);
 

@@ -49,9 +49,9 @@ public class TLDFormatter {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String baseDirName = GetterUtil.getString(
-			arguments.get("tld.base.dir"), "./");
+			arguments.get("tld.base.dir"), TLDFormatterArgs.BASE_DIR_NAME);
 		boolean plugin = GetterUtil.getBoolean(
-			arguments.get("tld.plugin"), true);
+			arguments.get("tld.plugin"), TLDFormatterArgs.PLUGIN);
 
 		try {
 			new TLDFormatter(baseDirName, plugin);

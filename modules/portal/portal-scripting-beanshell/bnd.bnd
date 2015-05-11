@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Scripting Groovy
+Bundle-SymbolicName: com.liferay.portal.scripting.beanshell
+Bundle-Version: 1.0.0
+Import-Package:\
+	!org.apache.bsf.*,\
+	*
+Include-Resource: \
+	classes,\
+	@lib/bsh.jar

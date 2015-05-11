@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.wiki.display.context;
+package com.liferay.wiki.web.display.context;
 
-import com.liferay.portal.kernel.display.context.DisplayContextFactory;
-import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.display.context.WikiViewPageDisplayContext;
 import com.liferay.wiki.model.WikiPage;
+
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,22 +25,20 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public interface WikiDisplayContextFactory extends DisplayContextFactory {
+public class DefaultWikiViewPageDisplayContext
+	implements WikiViewPageDisplayContext {
 
-	public WikiEditPageDisplayContext getWikiEditPageDisplayContext(
-		WikiEditPageDisplayContext parentWikiEditPageDisplayContext,
+	public DefaultWikiViewPageDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		WikiPage wikiPage);
+		WikiPage wikiPage) {
+	}
 
-	public WikiListPagesDisplayContext getWikiListPagesDisplayContext(
-		WikiListPagesDisplayContext parentWikiListPagesDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		WikiNode wikiNode);
+	@Override
+	public UUID getUuid() {
+		return _UUID;
+	}
 
-	public WikiViewPageDisplayContext getWikiViewPageDisplayContext(
-		WikiViewPageDisplayContext
-			parentWikiViewPageDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		WikiPage wikiPage);
+	private static final UUID _UUID = UUID.fromString(
+		"6666DA6E-4647-472D-B66A-DF4B9037D5D4");
 
 }

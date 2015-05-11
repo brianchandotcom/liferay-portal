@@ -20,6 +20,7 @@
 page import="com.liferay.wiki.constants.WikiConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
+page import="com.liferay.wiki.display.context.WikiListPagesDisplayContext" %><%@
 page import="com.liferay.wiki.exception.DuplicateNodeNameException" %><%@
 page import="com.liferay.wiki.exception.DuplicatePageException" %><%@
 page import="com.liferay.wiki.exception.ImportFilesException" %><%@
@@ -53,6 +54,7 @@ page import="com.liferay.wiki.util.WikiCacheUtil" %><%@
 page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@
 page import="com.liferay.wiki.util.WikiUtil" %><%@
 page import="com.liferay.wiki.util.comparator.PageVersionComparator" %><%@
+page import="com.liferay.wiki.web.display.context.WikiDisplayContextProvider" %><%@
 page import="com.liferay.wiki.web.display.context.logic.MailTemplatesHelper" %><%@
 page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.wiki.web.display.context.logic.WikiVisualizationHelper" %><%@
@@ -70,6 +72,8 @@ WikiGroupServiceSettings wikiGroupServiceSettings = wikiRequestHelper.getWikiGro
 WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);
 
 WikiWebComponentProvider wikiWebComponentProvider = WikiWebComponentProvider.getWikiWebComponentProvider();
+
+WikiDisplayContextProvider wikiDisplayContextProvider = wikiWebComponentProvider.getWikiDisplayContextProvider();
 
 WikiGroupServiceConfiguration wikiGroupServiceConfiguration = wikiWebComponentProvider.getWikiGroupServiceConfiguration();
 

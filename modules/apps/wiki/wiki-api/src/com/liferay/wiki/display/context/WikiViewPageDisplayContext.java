@@ -14,23 +14,10 @@
 
 package com.liferay.wiki.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portlet.documentlibrary.display.context.DLDisplayContext;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
 
 /**
  * @author Iván Zaera
  */
 public interface WikiViewPageDisplayContext extends DLDisplayContext {
-
-
 }

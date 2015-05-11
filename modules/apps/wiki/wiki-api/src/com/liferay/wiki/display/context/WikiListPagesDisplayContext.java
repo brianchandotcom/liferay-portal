@@ -16,7 +16,6 @@ package com.liferay.wiki.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portlet.documentlibrary.display.context.DLDisplayContext;
 import com.liferay.wiki.model.WikiPage;
@@ -28,8 +27,8 @@ import java.util.List;
  */
 public interface WikiListPagesDisplayContext extends DLDisplayContext {
 
-	public List<ToolbarItem> getToolbarItems() throws PortalException;
-
 	public Menu getMenu(WikiPage wikiPage) throws PortalException;
+
+	public List<ToolbarItem> getToolbarItems() throws PortalException;
 
 }

@@ -330,6 +330,14 @@
 	#wikiCommentsPanelContainer {
 		border-width: 0;
 	}
+
+	.wiki-page-toolbar {
+		margin: 0;
+	}
+
+	.app-view-taglib .lfr-header-row-content .form-group {
+		margin: 0;
+	}
 }
 
 .trash-restore-popup {

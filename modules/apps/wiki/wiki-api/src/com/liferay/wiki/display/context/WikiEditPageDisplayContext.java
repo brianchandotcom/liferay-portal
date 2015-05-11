@@ -14,15 +14,10 @@
 
 package com.liferay.wiki.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.documentlibrary.display.context.DLDisplayContext;
-import com.liferay.portlet.documentlibrary.display.context.DLFilePicker;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 /**
  * @author Iván Zaera
  */
 public interface WikiEditPageDisplayContext extends DLDisplayContext {
-
-
 }

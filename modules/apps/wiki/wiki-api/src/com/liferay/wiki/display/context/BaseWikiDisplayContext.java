@@ -17,9 +17,10 @@ package com.liferay.wiki.display.context;
 import com.liferay.portal.kernel.display.context.BaseDisplayContext;
 import com.liferay.portlet.documentlibrary.display.context.DLDisplayContext;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
 
 /**
  * @author Iván Zaera

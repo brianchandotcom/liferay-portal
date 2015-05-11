@@ -1,6 +1,12 @@
 Bundle-Name: Liferay Portal Groovy Scripting Executor
 Bundle-SymbolicName: com.liferay.portal.scripting.groovy
 Bundle-Version: 1.0.0
+Import-Package:\
+	!antlr.*,\
+	!com.thoughtworks.xstream.*,\
+	!org.apache.ivy.*,\
+	!org.fusesource.jansi.*,\
+	*
 Include-Resource: \
 	classes,\
 	@lib/groovy.jar

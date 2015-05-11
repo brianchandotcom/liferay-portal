@@ -84,6 +84,16 @@ public final class CommandLoggerHandler {
 		_commandLogLoggerElement.addChildLoggerElement(_lineGroupLoggerElement);
 	}
 
+	public static void startRunning() throws Exception {
+		_xmlLogLoggerElement.addClassName("running");
+	}
+
+	public static void stopRunning() throws Exception {
+		_commandLogLoggerElement.addClassName("collapse");
+
+		_xmlLogLoggerElement.removeClassName("running");
+	}
+
 	private static void _failLineGroupLoggerElement(
 			LoggerElement lineGroupLoggerElement)
 		throws Exception {
@@ -454,6 +464,8 @@ public final class CommandLoggerHandler {
 		new LoggerElement("commandLog");
 	private static int _errorLinkId;
 	private static LoggerElement _lineGroupLoggerElement;
+	private static final LoggerElement _xmlLogLoggerElement = new LoggerElement(
+		"xml-log");
 
 	static {
 		_commandLogLoggerElement.setAttribute("data-logid", "01");

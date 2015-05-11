@@ -25,7 +25,7 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS) && !workflowTask.isCompleted() && !_isAssignedToUser(workflowTask, user) %>">
+	<c:if test="<%= portletName.equals(PortletKeys.WORKFLOW_DEFINITION) && !workflowTask.isCompleted() && !_isAssignedToUser(workflowTask, user) %>">
 		<portlet:actionURL var="assignToMeURL">
 			<portlet:param name="struts_action" value="/workflow_instances/edit_workflow_instance_task" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />

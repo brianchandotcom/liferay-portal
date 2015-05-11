@@ -30,8 +30,10 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.dom4j.Document;
@@ -98,6 +100,10 @@ public class TLDFormatter {
 			});
 	}
 
+	public Set<String> getModifiedFileNames() {
+		return _modifiedFileNames;
+	}
+
 	private void _formatTLD(Path file) throws Exception {
 		String content = new String(
 			Files.readAllBytes(file), StandardCharsets.UTF_8);
@@ -141,6 +147,8 @@ public class TLDFormatter {
 		if (!content.equals(newContent)) {
 			Files.write(file, newContent.getBytes(StandardCharsets.UTF_8));
 
+			_modifiedFileNames.add(file.toString());
+
 			System.out.println(file);
 		}
 	}
@@ -169,6 +177,7 @@ public class TLDFormatter {
 		}
 	}
 
+	private final Set<String> _modifiedFileNames = new HashSet<>();
 	private final boolean _plugin;
 
 }

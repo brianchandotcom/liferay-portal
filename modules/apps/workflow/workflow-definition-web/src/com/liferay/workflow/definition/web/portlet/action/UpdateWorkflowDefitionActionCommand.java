@@ -31,7 +31,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.workflow.definition.web.portlet.constants.WorkflowDefinitionConstants;
 
 import java.io.File;
 
@@ -50,7 +49,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"action.command.name=updateWorkflowDefinition",
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITIONS
+		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION
 	},
 	service = ActionCommand.class
 )
@@ -67,45 +66,41 @@ public class UpdateWorkflowDefitionActionCommand extends BaseActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String name = ParamUtil.getString(portletRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, WorkflowDefinitionConstants.TITLE);
+			portletRequest, "title");
+		int version = ParamUtil.getInteger(portletRequest, "version");
 
-		File file = uploadPortletRequest.getFile(
-			WorkflowDefinitionConstants.FILE);
+		File file = uploadPortletRequest.getFile("file");
 
 		WorkflowDefinition workflowDefinition = null;
 
-		String name = ParamUtil.getString(
-			portletRequest, WorkflowDefinitionConstants.NAME);
-		int version = ParamUtil.getInteger(
-			portletRequest, WorkflowDefinitionConstants.VERSION);
-
-		if (Validator.isNotNull(name)) {
-			workflowDefinition =
-				WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-					themeDisplay.getCompanyId(), name, version);
-
-			WorkflowDefinitionManagerUtil.updateTitle(
+		if (file == null) {
+			workflowDefinition = WorkflowDefinitionManagerUtil.updateTitle(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
 				version, getTitle(titleMap));
 		}
 		else {
-			if (file.length() == 0) {
-				throw new WorkflowDefinitionFileException();
-			}
-
 			workflowDefinition =
 				WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					getTitle(titleMap), FileUtil.getBytes(file));
+					getTitle(titleMap), getFileBytes(file));
 		}
 
 		portletRequest.setAttribute(
 			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
 	}
 
+	protected byte[] getFileBytes(File file) throws Exception {
+		if (file.length() == 0) {
+			throw new WorkflowDefinitionFileException();
+		}
+
+		return FileUtil.getBytes(file);
+	}
+
 	protected String getTitle(Map<Locale, String> titleMap) {
-		if (Validator.isNull(titleMap)) {
+		if (titleMap == null) {
 			return null;
 		}
 
@@ -117,12 +112,11 @@ public class UpdateWorkflowDefitionActionCommand extends BaseActionCommand {
 
 			if (Validator.isNotNull(title)) {
 				value = LocalizationUtil.updateLocalization(
-					value, WorkflowDefinitionConstants.TITLE2, title,
-					languageId);
+					value, "Title", title, languageId);
 			}
 			else {
 				value = LocalizationUtil.removeLocalization(
-					value, WorkflowDefinitionConstants.TITLE2, languageId);
+					value, "Title", languageId);
 			}
 		}
 

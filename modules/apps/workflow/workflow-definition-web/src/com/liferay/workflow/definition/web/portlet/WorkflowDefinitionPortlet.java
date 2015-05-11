@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.workflow.definition.web.portlet.constants.WorkflowDefinitionConstants;
 
 import java.io.IOException;
 
@@ -61,34 +61,42 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITIONS,
+		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = { WorkflowDefinitionPortlet.class, Portlet.class }
+	service = Portlet.class
 )
 public class WorkflowDefinitionPortlet extends MVCPortlet {
 
 	@Override
-	public void render(RenderRequest request, RenderResponse response)
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
 		try {
-			setWorkflowDefinitionRenderRequestAttribute(request);
+			String path = getPath(renderRequest);
+
+			if (Validator.equals(path, "/edit_workflow_definition.jsp")) {
+				setWorkflowDefinitionRenderRequestAttribute(renderRequest);
+			}
+			else {
+				setWorkflowDefinitionsRenderRequestAttribute(renderRequest);
+			}
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
-				hideDefaultErrorMessage(request);
+				hideDefaultErrorMessage(renderRequest);
 
-				SessionErrors.add(request, e.getClass());
+				SessionErrors.add(renderRequest, e.getClass());
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		super.render(request, response);
+		super.render(renderRequest, renderResponse);
 	}
 
 	@Override
@@ -99,35 +107,19 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, WorkflowException.class.getName())) {
 
-			hideDefaultErrorMessage(renderRequest);
-
 			include("/error.jsp", renderRequest, renderResponse);
 		}
-		else if (SessionErrors.contains(
-					renderRequest,
-					RequiredWorkflowDefinitionException.class.getName())) {
-
-			hideDefaultErrorMessage(renderRequest);
-
-			include("/view.jsp", renderRequest, renderResponse);
-		}
 		else {
-			if (SessionErrors.contains(
-					renderRequest,
-					WorkflowDefinitionFileException.class.getName())) {
-
-				hideDefaultErrorMessage(renderRequest);
-			}
-
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof WorkflowException ||
+		if (cause instanceof PrincipalException ||
+			cause instanceof RequiredWorkflowDefinitionException ||
 			cause instanceof WorkflowDefinitionFileException ||
-			cause instanceof RequiredWorkflowDefinitionException) {
+			cause instanceof WorkflowException) {
 
 			return true;
 		}
@@ -139,32 +131,30 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 			RenderRequest renderRequest)
 		throws PortalException {
 
-		Object workflowDefinitionAttr = renderRequest.getAttribute(
-			WebKeys.WORKFLOW_DEFINITION);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (Validator.isNull(workflowDefinitionAttr)) {
-			String name = ParamUtil.getString(
-				renderRequest, WorkflowDefinitionConstants.NAME);
-			int version = ParamUtil.getInteger(
-				renderRequest, WorkflowDefinitionConstants.VERSION);
+		String name = ParamUtil.getString(renderRequest, "name");
+		int version = ParamUtil.getInteger(renderRequest, "version");
 
-			List<WorkflowDefinition> workflowDefinitions =
-				WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
-					themeDisplay.getCompanyId(), name, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
-
-			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-				if (version == workflowDefinition.getVersion()) {
-					renderRequest.setAttribute(
-						WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
-
-					break;
-				}
-			}
+		if (Validator.isNull(name)) {
+			return;
 		}
+
+		WorkflowDefinition workflowDefinition =
+			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+				themeDisplay.getCompanyId(), name, version);
+
+		renderRequest.setAttribute(
+			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
+	}
+
+	protected void setWorkflowDefinitionsRenderRequestAttribute(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		List<WorkflowDefinition> workflowDefinitions =
 			WorkflowDefinitionManagerUtil.getWorkflowDefinitions(

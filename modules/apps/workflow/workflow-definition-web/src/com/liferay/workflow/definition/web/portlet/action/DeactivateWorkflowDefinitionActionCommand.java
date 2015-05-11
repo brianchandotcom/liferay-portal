@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"action.command.name=deactivateWorkflowDefinition",
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITIONS
+		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION
 	},
 	service = ActionCommand.class
 )

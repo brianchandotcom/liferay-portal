@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.workflow.definition.web.portlet.constants.WorkflowDefinitionConstants;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -35,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"action.command.name=deleteWorkflowDefinition",
-		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITIONS
+		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION
 	},
 	service = ActionCommand.class
 )
@@ -49,10 +48,8 @@ public class DeleteWorkflowDefinitionActionCommand extends BaseActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String name = ParamUtil.getString(
-			portletRequest, WorkflowDefinitionConstants.NAME);
-		int version = ParamUtil.getInteger(
-			portletRequest, WorkflowDefinitionConstants.VERSION);
+		String name = ParamUtil.getString(portletRequest, "name");
+		int version = ParamUtil.getInteger(portletRequest, "version");
 
 		WorkflowDefinitionManagerUtil.undeployWorkflowDefinition(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,

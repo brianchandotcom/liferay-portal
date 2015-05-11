@@ -188,7 +188,7 @@ public class PortletKeys {
 
 	public static final String USERS_ADMIN = "125";
 
-	public static final String WORKFLOW_DEFINITIONS = 
+	public static final String WORKFLOW_DEFINITION =
 		"com_liferay_workflow_definition_web_portlet_WorkflowDefinitionPortlet";
 
 	public static final String WORKFLOW_INSTANCES = "157";

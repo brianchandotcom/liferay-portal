@@ -83,7 +83,7 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
 		if (className.equals(WorkflowInstance.class.getName())) {
 			return permissionChecker.hasPermission(
-				message.getGroupId(), PortletKeys.WORKFLOW_DEFINITIONS,
+				message.getGroupId(), PortletKeys.WORKFLOW_DEFINITION,
 				message.getGroupId(), ActionKeys.VIEW);
 		}
 

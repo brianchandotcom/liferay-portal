@@ -40,6 +40,11 @@ public class AssetEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.asset.model.AssetEntry fetchEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchEntry(entryId);
+	}
 
 	/**
 	* Returns the Spring bean ID for this bean.

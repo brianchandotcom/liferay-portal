@@ -84,6 +84,15 @@ public class MDRRuleGroupServiceUtil {
 		return getService().getRuleGroup(ruleGroupId);
 	}
 
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+		return getService().getRuleGroups(groupIds, start, end);
+	}
+
+	public static int getRuleGroupsCount(long[] groupIds) {
+		return getService().getRuleGroupsCount(groupIds);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

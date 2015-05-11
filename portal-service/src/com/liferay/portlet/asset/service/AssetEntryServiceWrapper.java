@@ -32,6 +32,12 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 		_assetEntryService = assetEntryService;
 	}
 
+	@Override
+	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryService.fetchEntry(entryId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

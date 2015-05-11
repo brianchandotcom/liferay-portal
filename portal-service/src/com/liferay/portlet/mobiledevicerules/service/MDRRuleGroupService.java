@@ -76,6 +76,13 @@ public interface MDRRuleGroupService extends BaseService {
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getRuleGroup(
 		long ruleGroupId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRuleGroupsCount(long[] groupIds);
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

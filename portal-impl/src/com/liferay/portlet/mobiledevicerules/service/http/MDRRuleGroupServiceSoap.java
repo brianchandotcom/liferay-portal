@@ -155,6 +155,35 @@ public class MDRRuleGroupServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap[] getRuleGroups(
+		long[] groupIds, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> returnValue =
+				MDRRuleGroupServiceUtil.getRuleGroups(groupIds, start, end);
+
+			return com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getRuleGroupsCount(long[] groupIds)
+		throws RemoteException {
+		try {
+			int returnValue = MDRRuleGroupServiceUtil.getRuleGroupsCount(groupIds);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap updateRuleGroup(
 		long ruleGroupId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,

@@ -82,6 +82,17 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 		return _mdrRuleGroupService.getRuleGroup(ruleGroupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+		return _mdrRuleGroupService.getRuleGroups(groupIds, start, end);
+	}
+
+	@Override
+	public int getRuleGroupsCount(long[] groupIds) {
+		return _mdrRuleGroupService.getRuleGroupsCount(groupIds);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

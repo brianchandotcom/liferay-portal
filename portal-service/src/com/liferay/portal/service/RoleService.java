@@ -172,6 +172,14 @@ public interface RoleService extends BaseService {
 	public com.liferay.portal.model.Role getRole(long roleId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getRoles(
+		long companyId, int[] types) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getRoles(int type,
+		java.lang.String subtype) throws PortalException;
+
 	/**
 	* Returns all the user's roles within the user group.
 	*

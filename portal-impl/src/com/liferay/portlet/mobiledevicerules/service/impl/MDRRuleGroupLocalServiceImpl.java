@@ -183,8 +183,20 @@ public class MDRRuleGroupLocalServiceImpl
 	}
 
 	@Override
+	public List<MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+
+		return mdrRuleGroupPersistence.findByGroupId(groupIds, start, end);
+	}
+
+	@Override
 	public int getRuleGroupsCount(long groupId) {
 		return mdrRuleGroupPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getRuleGroupsCount(long[] groupIds) {
+		return mdrRuleGroupPersistence.countByGroupId(groupIds);
 	}
 
 	/**

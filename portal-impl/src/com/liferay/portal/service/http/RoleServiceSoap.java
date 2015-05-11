@@ -274,6 +274,36 @@ public class RoleServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.RoleSoap[] getRoles(int type,
+		java.lang.String subtype) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.model.Role> returnValue = RoleServiceUtil.getRoles(type,
+					subtype);
+
+			return com.liferay.portal.model.RoleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.model.RoleSoap[] getRoles(long companyId,
+		int[] types) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.model.Role> returnValue = RoleServiceUtil.getRoles(companyId,
+					types);
+
+			return com.liferay.portal.model.RoleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns all the user's roles within the user group.
 	*

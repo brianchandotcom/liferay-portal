@@ -65,6 +65,20 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class AssetEntryServiceSoap {
+	public static com.liferay.portlet.asset.model.AssetEntrySoap fetchEntry(
+		long entryId) throws RemoteException {
+		try {
+			com.liferay.portlet.asset.model.AssetEntry returnValue = AssetEntryServiceUtil.fetchEntry(entryId);
+
+			return com.liferay.portlet.asset.model.AssetEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.asset.model.AssetEntrySoap[] getCompanyEntries(
 		long companyId, int start, int end) throws RemoteException {
 		try {

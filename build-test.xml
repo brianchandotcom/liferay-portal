@@ -3367,6 +3367,18 @@ include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="setup.wizard.initial.database.type" />
+
+		<if>
+			<equals arg1="${setup.wizard.initial.database.type}" arg2="hsql" />
+			<then>
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.driverClassName=${database.driver}" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.password=${database.password}" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.url=${database.url}" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.username=${database.username}" value="" />
+			</then>
+		</if>
+
 		<echo file="portal-impl/src/portal-ext.properties" append="true">
 
 hot.deploy.dependency.management.enabled=false</echo>

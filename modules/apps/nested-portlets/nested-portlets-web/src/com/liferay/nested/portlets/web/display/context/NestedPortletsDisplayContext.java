@@ -43,16 +43,17 @@ public class NestedPortletsDisplayContext {
 		throws SettingsException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		_request = request;
+
+		_nestedPortletsConfiguration = nestedPortletsConfiguration;
 
 		_nestedPortletsPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				NestedPortletsPortletInstanceConfiguration.class);
-
-		_request = request;
-		_nestedPortletsConfiguration = nestedPortletsConfiguration;
 	}
 
 	public String getLayoutTemplateId() {
@@ -73,7 +74,7 @@ public class NestedPortletsDisplayContext {
 
 	public List<LayoutTemplate> getLayoutTemplates() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		List<LayoutTemplate> layoutTemplates =
 			LayoutTemplateLocalServiceUtil.getLayoutTemplates(
@@ -82,22 +83,19 @@ public class NestedPortletsDisplayContext {
 		layoutTemplates = PluginUtil.restrictPlugins(
 			layoutTemplates, themeDisplay.getUser());
 
+		final List<String> unSupportedLayoutTemplateIds =
+			getUnsupportedLayoutTemplateIds();
+
 		return ListUtil.filter(
 			layoutTemplates, new PredicateFilter<LayoutTemplate>() {
 
 				@Override
 				public boolean filter(LayoutTemplate layoutTemplate) {
-					return !(
-						getUnsupportedLayoutTemplates()).contains(
-							layoutTemplate.getLayoutTemplateId());
+					return !(unSupportedLayoutTemplateIds.contains(
+						layoutTemplate.getLayoutTemplateId()));
 				}
 
 		});
-	}
-
-	public List<String> getUnsupportedLayoutTemplates() {
-		return ListUtil.fromArray(
-			_nestedPortletsConfiguration.layoutTemplatesUnsupported());
 	}
 
 	public boolean isPortletSetupShowBorders() {
@@ -120,6 +118,11 @@ public class NestedPortletsDisplayContext {
 		}
 
 		return _portletSetupShowBorders;
+	}
+
+	protected List<String> getUnsupportedLayoutTemplateIds() {
+		return ListUtil.fromArray(
+			_nestedPortletsConfiguration.layoutTemplatesUnsupported());
 	}
 
 	private String _layoutTemplateId;

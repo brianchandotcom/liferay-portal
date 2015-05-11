@@ -304,6 +304,8 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	@Override
 	public void updateFileShortcuts(
 		long oldToFileEntryId, long newToFileEntryId) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

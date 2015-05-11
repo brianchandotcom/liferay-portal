@@ -285,6 +285,9 @@ public class PoshiRunnerGetterUtil {
 			Integer[] integers = new Integer[parameters.length];
 
 			for (int i = 0; i < parameters.length; i++) {
+				parameters[i] = parameters[i].replaceAll("\"", "");
+				parameters[i] = parameters[i].replaceAll("'", "");
+
 				integers[i] = Integer.parseInt(parameters[i].trim());
 			}
 

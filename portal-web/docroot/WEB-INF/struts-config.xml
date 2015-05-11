@@ -292,10 +292,6 @@
 
 		<action path="/control_panel_home/view" forward="portlet.control_panel_home.view" />
 
-		<!-- Control Panel Menu -->
-
-		<action path="/control_panel_menu/view" forward="portlet.control_panel_menu.view" />
-
 		<!-- Directory -->
 
 		<action path="/directory/find_user" type="com.liferay.portlet.usersadmin.action.FindUserAction" />

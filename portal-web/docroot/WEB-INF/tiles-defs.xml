@@ -224,16 +224,6 @@
 		<put name="portlet_content" value="/portlet/control_panel_home/view.jsp" />
 	</definition>
 
-	<!-- Control Panel Menu -->
-
-	<definition name="portlet.control_panel_menu" extends="portlet">
-		<put name="portlet_decorate" value="false" />
-	</definition>
-
-	<definition name="portlet.control_panel_menu.view" extends="portlet.control_panel_menu">
-		<put name="portlet_content" value="/portlet/control_panel_menu/view.jsp" />
-	</definition>
-
 	<!-- Directory -->
 
 	<definition name="portlet.directory" extends="portlet" />

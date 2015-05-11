@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting.beanshell;
+package com.liferay.portal.scripting.beanshell.internal;
 
 import bsh.Interpreter;
 

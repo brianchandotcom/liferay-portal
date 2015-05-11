@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -33,6 +32,28 @@ public class FullNameDefinitionFactory {
 
 	public static FullNameDefinition getInstance(Locale locale) {
 		return _instance._getInstance(locale);
+	}
+
+	private static String[] prependMissingRequiredFieldNames(
+		String[] fieldNames, String[] requiredFieldNames) {
+
+		List<String> fieldNamesList = ListUtil.toList(fieldNames);
+
+		int i;
+
+		for (i = 0; i < ArrayUtil.getLength(requiredFieldNames); i++) {
+			String requiredFieldName = requiredFieldNames[i];
+
+			if (!fieldNamesList.contains(requiredFieldName)) {
+				fieldNamesList.add(i, requiredFieldName);
+			}
+		}
+
+		if (!fieldNamesList.contains("first-name")) {
+			fieldNamesList.add(0, "first-name");
+		}
+
+		return fieldNamesList.toArray(new String[fieldNamesList.size()]);
 	}
 
 	private FullNameDefinitionFactory() {
@@ -82,28 +103,6 @@ public class FullNameDefinitionFactory {
 		_fullNameDefinitions.put(locale, fullNameDefinition);
 
 		return fullNameDefinition;
-	}
-
-	private static String[] prependMissingRequiredFieldNames(
-		String[] fieldNames, String[] requiredFieldNames) {
-
-		List<String> fieldNamesList = ListUtil.toList(fieldNames);
-
-		int i;
-
-		for (i = 0; i < ArrayUtil.getLength(requiredFieldNames); i++) {
-			String requiredFieldName = requiredFieldNames[i];
-
-			if (!fieldNamesList.contains(requiredFieldName)) {
-				fieldNamesList.add(i, requiredFieldName);
-			}
-		}
-
-		if (!fieldNamesList.contains("first-name")) {
-			fieldNamesList.add(0, "first-name");
-		}
-
-		return fieldNamesList.toArray(new String[fieldNamesList.size()]);
 	}
 
 	private static final FullNameDefinitionFactory _instance =

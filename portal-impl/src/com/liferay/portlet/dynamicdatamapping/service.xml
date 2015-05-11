@@ -144,7 +144,6 @@
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureVersion" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
-		<reference package-path="com.liferay.portlet.journal" entity="JournalFolder" />
 	</entity>
 	<entity name="DDMStructureLayout" uuid="true" local-service="true" remote-service="false">
 

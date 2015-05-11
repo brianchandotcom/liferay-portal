@@ -3111,6 +3111,18 @@ ${custom.properties}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="delete.jdbc.portal.ext.properties" />
+
+		<if>
+			<equals arg1="${delete.jdbc.portal.ext.properties}" arg2="true" />
+			<then>
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.driverClassName=${database.driver}" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.password=${database.password}" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.url=${database.url}" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.username=${database.username}" value="" />
+			</then>
+		</if>
+
 		<if>
 			<equals arg1="${java.security}" arg2="true" />
 			<then>

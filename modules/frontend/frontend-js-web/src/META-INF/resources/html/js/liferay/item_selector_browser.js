@@ -1,6 +1,7 @@
 AUI.add(
 	'liferay-item-selector-browser',
 	function(A) {
+		var AArray = A.Array;
 		var Lang = A.Lang;
 
 		var CSS_DROP_ACTIVE = 'drop-active';
@@ -72,23 +73,30 @@ AUI.add(
 					_ddEventHandler: function(event) {
 						var instance = this;
 
-						event.stopPropagation();
-						event.preventDefault();
+						var dataTransfer = event._event.dataTransfer;
 
-						var type = event.type;
+						if (dataTransfer && dataTransfer.types) {
+							var dataTransferTypes = dataTransfer.types || [];
 
-						var eventDrop = type === 'drop';
+							if (AArray.indexOf(dataTransferTypes, 'Files') > -1 && AArray.indexOf(dataTransferTypes, 'text/html') === -1) {
+								event.halt();
 
-						var rootNode = instance.rootNode;
+								var type = event.type;
 
-						if (type === 'dragover') {
-							rootNode.addClass(CSS_DROP_ACTIVE);
-						}
-						else if (type === 'dragleave' || eventDrop) {
-							rootNode.removeClass(CSS_DROP_ACTIVE);
+								var eventDrop = type === 'drop';
 
-							if (eventDrop) {
-								instance._previewFile(event._event.dataTransfer.files[0]);
+								var rootNode = instance.rootNode;
+
+								if (type === 'dragover') {
+									rootNode.addClass(CSS_DROP_ACTIVE);
+								}
+								else if (type === 'dragleave' || eventDrop) {
+									rootNode.removeClass(CSS_DROP_ACTIVE);
+
+									if (eventDrop) {
+										instance._previewFile(dataTransfer.files[0]);
+									}
+								}
 							}
 						}
 					},

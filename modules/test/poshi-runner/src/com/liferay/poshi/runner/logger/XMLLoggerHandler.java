@@ -454,6 +454,8 @@ public final class XMLLoggerHandler {
 		_btnLinkCollapseId++;
 		_btnLinkVarId++;
 
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
 		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setClassName("line-group");

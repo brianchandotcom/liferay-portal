@@ -23,6 +23,7 @@ import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupServiceBas
 import com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil;
 import com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -98,6 +99,19 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 			getPermissionChecker(), ruleGroup, ActionKeys.VIEW);
 
 		return ruleGroup;
+	}
+
+	@Override
+	public List<MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+
+		return mdrRuleGroupPersistence.filterFindByGroupId(
+			groupIds, start, end);
+	}
+
+	@Override
+	public int getRuleGroupsCount(long[] groupIds) {
+		return mdrRuleGroupPersistence.filterCountByGroupId(groupIds);
 	}
 
 	@Override

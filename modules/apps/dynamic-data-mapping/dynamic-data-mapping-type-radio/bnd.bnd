@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Dynamic Data Mapping Type Radio
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.type.radio
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /ddm-type-radio

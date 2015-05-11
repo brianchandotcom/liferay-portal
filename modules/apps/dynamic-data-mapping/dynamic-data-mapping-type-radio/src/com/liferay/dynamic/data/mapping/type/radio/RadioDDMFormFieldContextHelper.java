@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.select;
+package com.liferay.dynamic.data.mapping.type.radio;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
@@ -33,18 +31,17 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Bruno Basto
  * @author Marcellus Tavares
  */
-public class SelectDDMFormFieldContextHelper {
+public class RadioDDMFormFieldContextHelper {
 
-	public SelectDDMFormFieldContextHelper(
+	public RadioDDMFormFieldContextHelper(
 		DDMFormFieldOptions ddmFormFieldOptions, String value,
 		LocalizedValue predefinedValue, Locale locale) {
 
 		_ddmFormFieldOptions = ddmFormFieldOptions;
-		_selectedValues = toStringArray(value);
-		_predefinedValues = toStringArray(predefinedValue.getString(locale));
+		_selectedValue = toString(value);
+		_predefinedValue = toString(predefinedValue.getString(locale));
 		_locale = locale;
 	}
 
@@ -60,7 +57,7 @@ public class SelectDDMFormFieldContextHelper {
 			optionMap.put("label", optionLabel.getString(_locale));
 			optionMap.put(
 				"status",
-				isSelected(optionValue) ? "selected" : StringPool.BLANK);
+				isChecked(optionValue) ? "checked" : StringPool.BLANK);
 			optionMap.put("value", optionValue);
 
 			options.add(optionMap);
@@ -69,41 +66,37 @@ public class SelectDDMFormFieldContextHelper {
 		return options;
 	}
 
-	protected boolean isSelected(String optionValue) {
-		if (ArrayUtil.isEmpty(_selectedValues)) {
-			return ArrayUtil.contains(_predefinedValues, optionValue);
+	protected boolean isChecked(String optionValue) {
+		if (Validator.isNull(_selectedValue)) {
+			return Validator.equals(_predefinedValue, optionValue);
 		}
 
-		if (ArrayUtil.contains(_selectedValues, optionValue)) {
-			return true;
-		}
-
-		return false;
+		return Validator.equals(_selectedValue, optionValue);
 	}
 
-	protected String[] toStringArray(String value) {
+	protected String toString(String value) {
 		if (Validator.isNull(value)) {
-			return GetterUtil.DEFAULT_STRING_VALUES;
+			return StringPool.BLANK;
 		}
 
 		try {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(value);
 
-			return ArrayUtil.toStringArray(jsonArray);
+			return jsonArray.getString(0);
 		}
 		catch (JSONException jsone) {
 			_log.error("Unable to parse JSON array", jsone);
 
-			return GetterUtil.DEFAULT_STRING_VALUES;
+			return StringPool.BLANK;
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SelectDDMFormFieldContextHelper.class);
+		RadioDDMFormFieldContextHelper.class);
 
 	private final DDMFormFieldOptions _ddmFormFieldOptions;
 	private final Locale _locale;
-	private final String[] _predefinedValues;
-	private final String[] _selectedValues;
+	private final String _predefinedValue;
+	private final String _selectedValue;
 
 }

@@ -1,0 +1,28 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form radio field.
+ *
+ * @param childElementsHTML
+ * @param dir
+ * @param label
+ * @param name
+ * @param options
+ */
+{template .radio}
+	<div class="form-group field-wrapper" data-fieldname="{$name}">
+		<span class="control-label">{$label}</span>
+
+		{foreach $option in $options}
+			<div class="radio">
+				<label for="{$option.value}">
+					<input class="field" dir="{$dir}" id="{$option.value}" name="{$name}" {$option.status} type="radio" value="{$option.value}" />
+
+					{$option.label}
+				</label>
+			</div>
+		{/foreach}
+
+		{$childElementsHTML|noAutoescape}
+	</div>
+{/template}

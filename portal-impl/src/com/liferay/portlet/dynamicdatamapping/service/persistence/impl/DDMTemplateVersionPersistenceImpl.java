@@ -1161,6 +1161,8 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		ddmTemplateVersionImpl.setUserId(ddmTemplateVersion.getUserId());
 		ddmTemplateVersionImpl.setUserName(ddmTemplateVersion.getUserName());
 		ddmTemplateVersionImpl.setCreateDate(ddmTemplateVersion.getCreateDate());
+		ddmTemplateVersionImpl.setClassNameId(ddmTemplateVersion.getClassNameId());
+		ddmTemplateVersionImpl.setClassPK(ddmTemplateVersion.getClassPK());
 		ddmTemplateVersionImpl.setTemplateId(ddmTemplateVersion.getTemplateId());
 		ddmTemplateVersionImpl.setVersion(ddmTemplateVersion.getVersion());
 		ddmTemplateVersionImpl.setName(ddmTemplateVersion.getName());

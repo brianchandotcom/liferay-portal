@@ -15,10 +15,11 @@
 package com.liferay.marketplace.web.messaging;
 
 import com.liferay.marketplace.model.App;
-import com.liferay.marketplace.service.AppLocalServiceUtil;
-import com.liferay.marketplace.service.ModuleLocalServiceUtil;
+import com.liferay.marketplace.service.AppLocalService;
+import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,10 +28,17 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Properties;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Ryan Park
  * @author Joan Kim
  */
+@Component(
+	immediate = true, property = {"destination.name=liferay/marketplace"},
+	service = MessageListener.class
+)
 public class MarketplaceMessageListener extends BaseMessageListener {
 
 	@Override
@@ -57,7 +65,7 @@ public class MarketplaceMessageListener extends BaseMessageListener {
 		String category = properties.getProperty("category");
 		String iconURL = properties.getProperty("icon-url");
 
-		App app = AppLocalServiceUtil.updateApp(
+		App app = _appLocalService.updateApp(
 			0, remoteAppId, title, description, category, iconURL, version,
 			null);
 
@@ -70,7 +78,7 @@ public class MarketplaceMessageListener extends BaseMessageListener {
 			String bundleVersion = bundleParts[1];
 			String contextName = bundleParts[2];
 
-			ModuleLocalServiceUtil.addModule(
+			_moduleLocalService.addModule(
 				0, app.getAppId(), bundleSymbolicName, bundleVersion,
 				contextName);
 		}
@@ -79,12 +87,27 @@ public class MarketplaceMessageListener extends BaseMessageListener {
 			properties.getProperty("context-names"));
 
 		for (String contextName : contextNames) {
-			ModuleLocalServiceUtil.addModule(
+			_moduleLocalService.addModule(
 				0, app.getAppId(), StringPool.BLANK, StringPool.BLANK,
 				contextName);
 		}
 
-		AppLocalServiceUtil.processMarketplaceProperties(properties);
+		_appLocalService.processMarketplaceProperties(properties);
 	}
+
+	@Reference(unbind = "-")
+	protected void setAppLocalService(AppLocalService appLocalService) {
+		_appLocalService = appLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setModuleLocalService(
+		ModuleLocalService moduleLocalService) {
+
+		_moduleLocalService = moduleLocalService;
+	}
+
+	private AppLocalService _appLocalService;
+	private ModuleLocalService _moduleLocalService;
 
 }

@@ -14,18 +14,33 @@
 
 package com.liferay.marketplace.web.messaging;
 
-import com.liferay.marketplace.service.AppLocalServiceUtil;
+import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
  */
+@Component(
+	immediate = true, property = {"destination.name=liferay/hot_deploy"},
+	service = MessageListener.class
+)
 public class HotDeployMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		AppLocalServiceUtil.clearInstalledAppsCache();
+		_appLocalService.clearInstalledAppsCache();
 	}
+
+	@Reference(unbind = "-")
+	protected void setAppLocalService(AppLocalService appLocalService) {
+		_appLocalService = appLocalService;
+	}
+
+	private AppLocalService _appLocalService;
 
 }

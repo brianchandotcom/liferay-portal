@@ -19,6 +19,7 @@ import bsh.Interpreter;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -27,9 +28,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Shuyang Zhou
  */
+@Component(
+	immediate = true,
+	property = {"scripting.language=" + BeanShellExecutor.LANGUAGE},
+	service = ScriptingExecutor.class
+)
 public class BeanShellExecutor extends BaseScriptingExecutor {
 
 	public static final String LANGUAGE = "beanshell";

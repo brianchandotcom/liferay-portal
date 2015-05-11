@@ -437,17 +437,19 @@ public class StagingImpl implements Staging {
 
 		User user = UserLocalServiceUtil.fetchUser(userId);
 
+		PortalPreferences portalPreferences = null;
+
 		if (user != null) {
-			deleteRecentLayoutRevisionId(user, layoutSetBranchId, plid);
+			portalPreferences = getPortalPreferences(user);
 		}
 		else {
-			PortalPreferences portalPreferences =
+			portalPreferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					userId, false);
-
-			deleteRecentLayoutRevisionId(
-				portalPreferences, layoutSetBranchId, plid);
 		}
+
+		deleteRecentLayoutRevisionId(
+			portalPreferences, layoutSetBranchId, plid);
 	}
 
 	@Override

@@ -356,7 +356,6 @@
 				<classpath mode="compile">lib/portal/bcprov.jar</classpath>
 				<classpath mode="compile">lib/portal/bnd.jar</classpath>
 				<classpath mode="compile">lib/portal/boilerpipe.jar</classpath>
-				<classpath mode="compile">lib/portal/bsh.jar</classpath>
 				<classpath mode="compile">lib/portal/bsf.jar</classpath>
 				<classpath mode="compile">lib/portal/c3p0.jar</classpath>
 				<classpath mode="compile">lib/portal/ccpp-ri.jar</classpath>

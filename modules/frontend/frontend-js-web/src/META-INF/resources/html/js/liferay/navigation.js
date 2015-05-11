@@ -268,6 +268,14 @@ AUI.add(
 						).show();
 					},
 
+					_handleKeyDown: function(event) {
+						var instance = this;
+
+						if (event.isKey('DELETE') && !event.currentTarget.ancestor('li.selected')) {
+							instance._removePage(event);
+						}
+					},
+
 					_hoverNavItem: function(event) {
 						var instance = this;
 
@@ -292,6 +300,12 @@ AUI.add(
 								['click', 'touchstart'],
 								A.bind('_removePage', instance),
 								'.delete-tab'
+							);
+
+							navBlock.delegate(
+								'keydown',
+								A.bind('_handleKeyDown', instance),
+								navItemSelector
 							);
 
 							navBlock.delegate(['mouseenter', 'mouseleave'], instance._hoverNavItem, '.lfr-nav-deletable', instance);

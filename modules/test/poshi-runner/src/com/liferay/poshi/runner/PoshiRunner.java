@@ -93,6 +93,8 @@ public class PoshiRunner {
 	@Test
 	public void test() throws Exception {
 		try {
+			CommandLoggerHandler.startRunning();
+
 			_runSetUp();
 
 			_runCommand();
@@ -173,6 +175,8 @@ public class PoshiRunner {
 			throw e;
 		}
 		finally {
+			CommandLoggerHandler.stopRunning();
+
 			LoggerUtil.stopLogger();
 
 			SeleniumUtil.stopSelenium();

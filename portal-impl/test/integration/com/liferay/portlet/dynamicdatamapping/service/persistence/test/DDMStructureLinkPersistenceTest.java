@@ -135,24 +135,26 @@ public class DDMStructureLinkPersistenceTest {
 	}
 
 	@Test
-	public void testCountByClassNameId() throws Exception {
-		_persistence.countByClassNameId(RandomTestUtil.nextLong());
-
-		_persistence.countByClassNameId(0L);
-	}
-
-	@Test
-	public void testCountByClassPK() throws Exception {
-		_persistence.countByClassPK(RandomTestUtil.nextLong());
-
-		_persistence.countByClassPK(0L);
-	}
-
-	@Test
 	public void testCountByStructureId() throws Exception {
 		_persistence.countByStructureId(RandomTestUtil.nextLong());
 
 		_persistence.countByStructureId(0L);
+	}
+
+	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_C_S() throws Exception {
+		_persistence.countByC_C_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_C_S(0L, 0L, 0L);
 	}
 
 	@Test
@@ -387,9 +389,15 @@ public class DDMStructureLinkPersistenceTest {
 
 		DDMStructureLink existingDDMStructureLink = _persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
 
+		Assert.assertEquals(existingDDMStructureLink.getClassNameId(),
+			ReflectionTestUtil.invoke(existingDDMStructureLink,
+				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(existingDDMStructureLink.getClassPK(),
 			ReflectionTestUtil.invoke(existingDDMStructureLink,
 				"getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(existingDDMStructureLink.getStructureId(),
+			ReflectionTestUtil.invoke(existingDDMStructureLink,
+				"getOriginalStructureId", new Class<?>[0]));
 	}
 
 	protected DDMStructureLink addDDMStructureLink() throws Exception {

@@ -40,26 +40,6 @@ public class JournalFolderLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.journal.service.impl.JournalFolderLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addDDMStructureJournalFolder(long structureId,
-		long folderId) {
-		getService().addDDMStructureJournalFolder(structureId, folderId);
-	}
-
-	public static void addDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
-		getService().addDDMStructureJournalFolder(structureId, journalFolder);
-	}
-
-	public static void addDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders) {
-		getService().addDDMStructureJournalFolders(structureId, JournalFolders);
-	}
-
-	public static void addDDMStructureJournalFolders(long structureId,
-		long[] folderIds) {
-		getService().addDDMStructureJournalFolders(structureId, folderIds);
-	}
-
 	public static com.liferay.portlet.journal.model.JournalFolder addFolder(
 		long userId, long groupId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
@@ -81,10 +61,6 @@ public class JournalFolderLocalServiceUtil {
 		return getService().addJournalFolder(journalFolder);
 	}
 
-	public static void clearDDMStructureJournalFolders(long structureId) {
-		getService().clearDDMStructureJournalFolders(structureId);
-	}
-
 	/**
 	* Creates a new journal folder with the primary key. Does not add the journal folder to the database.
 	*
@@ -94,27 +70,6 @@ public class JournalFolderLocalServiceUtil {
 	public static com.liferay.portlet.journal.model.JournalFolder createJournalFolder(
 		long folderId) {
 		return getService().createJournalFolder(folderId);
-	}
-
-	public static void deleteDDMStructureJournalFolder(long structureId,
-		long folderId) {
-		getService().deleteDDMStructureJournalFolder(structureId, folderId);
-	}
-
-	public static void deleteDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
-		getService().deleteDDMStructureJournalFolder(structureId, journalFolder);
-	}
-
-	public static void deleteDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders) {
-		getService()
-			.deleteDDMStructureJournalFolders(structureId, JournalFolders);
-	}
-
-	public static void deleteDDMStructureJournalFolders(long structureId,
-		long[] folderIds) {
-		getService().deleteDDMStructureJournalFolders(structureId, folderIds);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolder deleteFolder(
@@ -312,39 +267,6 @@ public class JournalFolderLocalServiceUtil {
 		return getService().getCompanyFoldersCount(companyId);
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId) {
-		return getService().getDDMStructureJournalFolders(structureId);
-	}
-
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId, int start, int end) {
-		return getService()
-				   .getDDMStructureJournalFolders(structureId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFolder> orderByComparator) {
-		return getService()
-				   .getDDMStructureJournalFolders(structureId, start, end,
-			orderByComparator);
-	}
-
-	public static int getDDMStructureJournalFoldersCount(long structureId) {
-		return getService().getDDMStructureJournalFoldersCount(structureId);
-	}
-
-	/**
-	* Returns the structureIds of the d d m structures associated with the journal folder.
-	*
-	* @param folderId the folderId of the journal folder
-	* @return long[] the structureIds of d d m structures associated with the journal folder
-	*/
-	public static long[] getDDMStructurePrimaryKeys(long folderId) {
-		return getService().getDDMStructurePrimaryKeys(folderId);
-	}
-
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
 		long[] groupIds, long folderId, int restrictionType)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -536,15 +458,6 @@ public class JournalFolderLocalServiceUtil {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
 	}
 
-	public static boolean hasDDMStructureJournalFolder(long structureId,
-		long folderId) {
-		return getService().hasDDMStructureJournalFolder(structureId, folderId);
-	}
-
-	public static boolean hasDDMStructureJournalFolders(long structureId) {
-		return getService().hasDDMStructureJournalFolders(structureId);
-	}
-
 	public static com.liferay.portlet.journal.model.JournalFolder moveFolder(
 		long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -593,11 +506,6 @@ public class JournalFolderLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void setDDMStructureJournalFolders(long structureId,
-		long[] folderIds) {
-		getService().setDDMStructureJournalFolders(structureId, folderIds);
-	}
-
 	public static void subscribe(long userId, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().subscribe(userId, groupId, folderId);
@@ -644,7 +552,8 @@ public class JournalFolderLocalServiceUtil {
 
 	public static void updateFolderDDMStructures(
 		com.liferay.portlet.journal.model.JournalFolder folder,
-		long[] ddmStructureIdsArray) {
+		long[] ddmStructureIdsArray)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateFolderDDMStructures(folder, ddmStructureIdsArray);
 	}
 

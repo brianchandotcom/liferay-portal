@@ -189,18 +189,6 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.DLFileEntryTypes_DDMStructures"),
 			true);
-	public static final String MAPPING_TABLE_JOURNALFOLDERS_DDMSTRUCTURES_NAME = "JournalFolders_DDMStructures";
-	public static final Object[][] MAPPING_TABLE_JOURNALFOLDERS_DDMSTRUCTURES_COLUMNS =
-		{
-			{ "structureId", Types.BIGINT },
-			{ "folderId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_JOURNALFOLDERS_DDMSTRUCTURES_SQL_CREATE =
-		"create table JournalFolders_DDMStructures (structureId LONG not null,folderId LONG not null,primary key (structureId, folderId))";
-	public static final boolean FINDER_CACHE_ENABLED_JOURNALFOLDERS_DDMSTRUCTURES =
-		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.JournalFolders_DDMStructures"),
-			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.dynamicdatamapping.model.DDMStructure"));
 

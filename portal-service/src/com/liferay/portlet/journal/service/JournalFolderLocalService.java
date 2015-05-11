@@ -48,16 +48,6 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFolderLocalServiceUtil} to access the journal folder local service. Add custom service methods to {@link com.liferay.portlet.journal.service.impl.JournalFolderLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addDDMStructureJournalFolder(long structureId, long folderId);
-
-	public void addDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder);
-
-	public void addDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders);
-
-	public void addDDMStructureJournalFolders(long structureId, long[] folderIds);
-
 	public com.liferay.portlet.journal.model.JournalFolder addFolder(
 		long userId, long groupId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
@@ -74,8 +64,6 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public com.liferay.portlet.journal.model.JournalFolder addJournalFolder(
 		com.liferay.portlet.journal.model.JournalFolder journalFolder);
 
-	public void clearDDMStructureJournalFolders(long structureId);
-
 	/**
 	* Creates a new journal folder with the primary key. Does not add the journal folder to the database.
 	*
@@ -84,17 +72,6 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder createJournalFolder(
 		long folderId);
-
-	public void deleteDDMStructureJournalFolder(long structureId, long folderId);
-
-	public void deleteDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder);
-
-	public void deleteDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders);
-
-	public void deleteDDMStructureJournalFolders(long structureId,
-		long[] folderIds);
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
@@ -257,31 +234,6 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public int getCompanyFoldersCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalFolder> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDDMStructureJournalFoldersCount(long structureId);
-
-	/**
-	* Returns the structureIds of the d d m structures associated with the journal folder.
-	*
-	* @param folderId the folderId of the journal folder
-	* @return long[] the structureIds of d d m structures associated with the journal folder
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getDDMStructurePrimaryKeys(long folderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
 		long[] groupIds, long folderId, int restrictionType)
 		throws PortalException;
@@ -436,12 +388,6 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDDMStructureJournalFolder(long structureId, long folderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDDMStructureJournalFolders(long structureId);
-
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.journal.model.JournalFolder moveFolder(
 		long folderId, long parentFolderId,
@@ -471,8 +417,6 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	public void setDDMStructureJournalFolders(long structureId, long[] folderIds);
 
 	public void subscribe(long userId, long groupId, long folderId)
 		throws PortalException;
@@ -504,7 +448,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 
 	public void updateFolderDDMStructures(
 		com.liferay.portlet.journal.model.JournalFolder folder,
-		long[] ddmStructureIdsArray);
+		long[] ddmStructureIdsArray) throws PortalException;
 
 	/**
 	* Updates the journal folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

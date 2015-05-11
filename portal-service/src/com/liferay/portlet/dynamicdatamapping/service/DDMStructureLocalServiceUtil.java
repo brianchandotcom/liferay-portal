@@ -75,26 +75,6 @@ public class DDMStructureLocalServiceUtil {
 			.addDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
 	}
 
-	public static void addJournalFolderDDMStructure(long folderId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		getService().addJournalFolderDDMStructure(folderId, ddmStructure);
-	}
-
-	public static void addJournalFolderDDMStructure(long folderId,
-		long structureId) {
-		getService().addJournalFolderDDMStructure(folderId, structureId);
-	}
-
-	public static void addJournalFolderDDMStructures(long folderId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures) {
-		getService().addJournalFolderDDMStructures(folderId, DDMStructures);
-	}
-
-	public static void addJournalFolderDDMStructures(long folderId,
-		long[] structureIds) {
-		getService().addJournalFolderDDMStructures(folderId, structureIds);
-	}
-
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -307,10 +287,6 @@ public class DDMStructureLocalServiceUtil {
 		getService().clearDLFileEntryTypeDDMStructures(fileEntryTypeId);
 	}
 
-	public static void clearJournalFolderDDMStructures(long folderId) {
-		getService().clearJournalFolderDDMStructures(folderId);
-	}
-
 	/**
 	* Copies a structure, creating a new structure with all the values
 	* extracted from the original one. The new structure supports a new name
@@ -403,26 +379,6 @@ public class DDMStructureLocalServiceUtil {
 		long fileEntryTypeId, long[] structureIds) {
 		getService()
 			.deleteDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
-	}
-
-	public static void deleteJournalFolderDDMStructure(long folderId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		getService().deleteJournalFolderDDMStructure(folderId, ddmStructure);
-	}
-
-	public static void deleteJournalFolderDDMStructure(long folderId,
-		long structureId) {
-		getService().deleteJournalFolderDDMStructure(folderId, structureId);
-	}
-
-	public static void deleteJournalFolderDDMStructures(long folderId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures) {
-		getService().deleteJournalFolderDDMStructures(folderId, DDMStructures);
-	}
-
-	public static void deleteJournalFolderDDMStructures(long folderId,
-		long[] structureIds) {
-		getService().deleteJournalFolderDDMStructures(folderId, structureIds);
 	}
 
 	/**
@@ -867,38 +823,6 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderDDMStructures(
-		long folderId) {
-		return getService().getJournalFolderDDMStructures(folderId);
-	}
-
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderDDMStructures(
-		long folderId, int start, int end) {
-		return getService().getJournalFolderDDMStructures(folderId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderDDMStructures(
-		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
-		return getService()
-				   .getJournalFolderDDMStructures(folderId, start, end,
-			orderByComparator);
-	}
-
-	public static int getJournalFolderDDMStructuresCount(long folderId) {
-		return getService().getJournalFolderDDMStructuresCount(folderId);
-	}
-
-	/**
-	* Returns the folderIds of the journal folders associated with the d d m structure.
-	*
-	* @param structureId the structureId of the d d m structure
-	* @return long[] the folderIds of journal folders associated with the d d m structure
-	*/
-	public static long[] getJournalFolderPrimaryKeys(long structureId) {
-		return getService().getJournalFolderPrimaryKeys(structureId);
-	}
-
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1197,15 +1121,6 @@ public class DDMStructureLocalServiceUtil {
 		return getService().hasDLFileEntryTypeDDMStructures(fileEntryTypeId);
 	}
 
-	public static boolean hasJournalFolderDDMStructure(long folderId,
-		long structureId) {
-		return getService().hasJournalFolderDDMStructure(folderId, structureId);
-	}
-
-	public static boolean hasJournalFolderDDMStructures(long folderId) {
-		return getService().hasJournalFolderDDMStructures(folderId);
-	}
-
 	/**
 	* Returns an ordered range of all the structures matching the groups and
 	* class name IDs, and matching the keywords in the structure names and
@@ -1344,11 +1259,6 @@ public class DDMStructureLocalServiceUtil {
 		long[] structureIds) {
 		getService()
 			.setDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
-	}
-
-	public static void setJournalFolderDDMStructures(long folderId,
-		long[] structureIds) {
-		getService().setJournalFolderDDMStructures(folderId, structureIds);
 	}
 
 	/**

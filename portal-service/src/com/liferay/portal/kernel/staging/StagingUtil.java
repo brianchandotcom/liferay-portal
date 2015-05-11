@@ -181,6 +181,11 @@ public class StagingUtil {
 			userId, layoutSetBranchId, plid);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #deleteRecentLayoutRevisionId(long, long, long)}
+	 */
+	@Deprecated
 	public static void deleteRecentLayoutRevisionId(
 		User user, long layoutSetBranchId, long plid) {
 

@@ -106,7 +106,7 @@ public class DDLRecordSetLocalServiceImpl
 			DDLRecordSet.class);
 
 		ddmStructureLinkLocalService.addStructureLink(
-			classNameId, recordSetId, ddmStructureId, serviceContext);
+			classNameId, recordSetId, ddmStructureId);
 
 		return recordSet;
 	}
@@ -159,7 +159,8 @@ public class DDLRecordSetLocalServiceImpl
 
 		// Dynamic data mapping structure link
 
-		ddmStructureLinkLocalService.deleteClassStructureLink(
+		ddmStructureLinkLocalService.deleteStructureLinks(
+			classNameLocalService.getClassNameId(DDLRecordSet.class),
 			recordSet.getRecordSetId());
 
 		// Workflow
@@ -341,12 +342,12 @@ public class DDLRecordSetLocalServiceImpl
 
 			// Dynamic data mapping structure link
 
-			DDMStructureLink ddmStructureLink =
-				ddmStructureLinkLocalService.getClassStructureLink(
-					recordSet.getRecordSetId());
-
 			long classNameId = classNameLocalService.getClassNameId(
 				DDLRecordSet.class);
+
+			DDMStructureLink ddmStructureLink =
+				ddmStructureLinkLocalService.getUniqueStructureLink(
+					classNameId, recordSet.getRecordSetId());
 
 			ddmStructureLinkLocalService.updateStructureLink(
 				ddmStructureLink.getStructureLinkId(), classNameId,

@@ -171,7 +171,6 @@
 	<classpathentry kind="lib" path="lib/portal/fontbox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/freshcookies-security.jar"/>
 	<classpathentry kind="lib" path="lib/portal/gif89.jar"/>
-	<classpathentry kind="lib" path="lib/portal/groovy.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hessian.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hibernate-commons-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hibernate-core.jar"/>

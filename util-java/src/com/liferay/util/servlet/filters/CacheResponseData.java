@@ -22,7 +22,6 @@ import java.io.Serializable;
 
 import java.nio.ByteBuffer;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -38,10 +37,9 @@ public class CacheResponseData implements Serializable {
 		throws IOException {
 
 		_byteBuffer = bufferCacheServletResponse.getByteBuffer();
-		_content = Arrays.copyOfRange(
-			_byteBuffer.array(),
-			_byteBuffer.arrayOffset() + _byteBuffer.position(),
-			_byteBuffer.arrayOffset() + _byteBuffer.limit());
+		_content = _byteBuffer.array();
+		_offset = _byteBuffer.arrayOffset() + _byteBuffer.position();
+		_length = _byteBuffer.remaining();
 		_contentType = bufferCacheServletResponse.getContentType();
 		_headers = bufferCacheServletResponse.getHeaders();
 	}
@@ -52,7 +50,7 @@ public class CacheResponseData implements Serializable {
 
 	public ByteBuffer getByteBuffer() {
 		if (_byteBuffer == null) {
-			_byteBuffer = ByteBuffer.wrap(_content);
+			_byteBuffer = ByteBuffer.wrap(_content, _offset, _length);
 		}
 
 		return _byteBuffer;
@@ -75,5 +73,7 @@ public class CacheResponseData implements Serializable {
 	private final byte[] _content;
 	private final String _contentType;
 	private final Map<String, Set<Header>> _headers;
+	private final int _length;
+	private final int _offset;
 
 }

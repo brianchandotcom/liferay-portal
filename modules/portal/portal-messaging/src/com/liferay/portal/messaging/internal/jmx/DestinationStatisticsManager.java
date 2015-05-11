@@ -12,31 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging.jmx;
+package com.liferay.portal.messaging.internal.jmx;
 
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationStatistics;
 
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
+import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
 public class DestinationStatisticsManager
-	implements DestinationStatisticsManagerMBean {
+	extends StandardMBean implements DestinationStatisticsManagerMBean {
 
-	public static ObjectName createObjectName(String destinationName) {
-		try {
-			return new ObjectName(_OBJECT_NAME_PREFIX + destinationName);
-		}
-		catch (MalformedObjectNameException mone) {
-			throw new IllegalStateException(mone);
-		}
-	}
+	public DestinationStatisticsManager(Destination destination)
+		throws NotCompliantMBeanException {
 
-	public DestinationStatisticsManager(Destination destination) {
+		super(DestinationStatisticsManagerMBean.class);
+
 		_destination = destination;
 	}
 
@@ -90,6 +85,14 @@ public class DestinationStatisticsManager
 		return _destinationStatistics.getMinThreadPoolSize();
 	}
 
+	public String getObjectName() {
+		return _OBJECT_NAME_PREFIX + _destination.getName();
+	}
+
+	public String getObjectNameCacheKey() {
+		return _OBJECT_NAME_CACHE_KEY_PREFIX + _destination.getName();
+	}
+
 	@Override
 	public long getPendingMessageCount() {
 		if (_autoRefresh || (_destinationStatistics == null)) {
@@ -126,8 +129,12 @@ public class DestinationStatisticsManager
 		_autoRefresh = autoRefresh;
 	}
 
+	private static final String _OBJECT_NAME_CACHE_KEY_PREFIX =
+		"MessagingDestinationStatistics-";
+
 	private static final String _OBJECT_NAME_PREFIX =
-		"Liferay:product=Portal,type=MessagingDestinationStatistics,name=";
+		"com.liferay.portal.messaging:classification=messaging_destination," +
+			"name=MessagingDestinationStatistics-";
 
 	private boolean _autoRefresh;
 	private final Destination _destination;

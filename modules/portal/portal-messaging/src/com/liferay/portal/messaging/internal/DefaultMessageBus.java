@@ -153,7 +153,9 @@ public class DefaultMessageBus implements MessageBus {
 	}
 
 	@Override
-	public void replace(Destination destination, boolean closeOnRemove) {
+	public synchronized void replace(
+		Destination destination, boolean closeOnRemove) {
+
 		Destination oldDestination = _destinations.get(destination.getName());
 
 		oldDestination.copyDestinationEventListeners(destination);
@@ -333,7 +335,7 @@ public class DefaultMessageBus implements MessageBus {
 		destination.destroy();
 	}
 
-	protected void unregisterDestinationEventListener(
+	protected synchronized void unregisterDestinationEventListener(
 		DestinationEventListener destinationEventListener,
 		Map<String, Object> properties) {
 
@@ -361,7 +363,7 @@ public class DefaultMessageBus implements MessageBus {
 		removeMessageBusEventListener(messageBusEventListener);
 	}
 
-	protected void unregisterMessageListener(
+	protected synchronized void unregisterMessageListener(
 		MessageListener messageListener, Map<String, Object> properties) {
 
 		String destinationName = MapUtil.getString(

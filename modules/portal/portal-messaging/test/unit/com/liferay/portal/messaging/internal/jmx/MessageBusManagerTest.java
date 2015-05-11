@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging.jmx;
+package com.liferay.portal.messaging.internal.jmx;
 
 import com.liferay.portal.kernel.messaging.MessageBus;
 
 import java.lang.management.ManagementFactory;
 
 import javax.management.MBeanServer;
+import javax.management.ObjectName;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,12 +46,17 @@ public class MessageBusManagerTest {
 
 	@Test
 	public void testRegisterMBean() throws Exception {
-		_mBeanServer.registerMBean(
-			new MessageBusManager(_messageBus),
-			MessageBusManager.createObjectName());
+		MessageBusManager messageBusManager = new MessageBusManager();
 
-		Assert.assertTrue(
-			_mBeanServer.isRegistered(MessageBusManager.createObjectName()));
+		messageBusManager.setMessageBus(_messageBus);
+
+		ObjectName objectName = new ObjectName(
+			"com.liferay.portal.messaging:classification=message_bus," +
+				"name=MessageBusManager");
+
+		_mBeanServer.registerMBean(messageBusManager, objectName);
+
+		Assert.assertTrue(_mBeanServer.isRegistered(objectName));
 	}
 
 	private MBeanServer _mBeanServer;

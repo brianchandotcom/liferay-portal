@@ -23,7 +23,216 @@
 		<execute macro="Workflow#tearDownPortalWorkflow" />
 
 		<execute macro="Workflow#tearDownSiteWorkflow" />
+
+		<execute macro="Workflow#tearDownSpecificWorkflowDefinition">
+			<var name="workflowDefinitionTitle" value="Join Xor" />
+		</execute>
 	</tear-down>
+
+	<command name="ApproveBlogsEntriesCPJoinXORNodeWorkflowDefinition" priority="5">
+		<description message="This is a use case for LPS-35577." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#uploadDefinition">
+			<var name="workflowDefinitionFile" value="business_productivity_join_xor_workflow_definition.xml" />
+			<var name="workflowDefinitionTitle" value="Join Xor" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Join Xor (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="Blogs Entry 1" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="task1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="Blogs Entry 1" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinitionTitle" value="Join Xor" />
+			<var name="workflowTask" value="task1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="Blogs Entry 2" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="task2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="Blogs Entry 2" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinitionTitle" value="Join Xor" />
+			<var name="workflowTask" value="task2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry 3 Content" />
+			<var name="entryTitle" value="Blogs Entry 3" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithWorkflowCP">
+			<var name="entryContent" value="Blogs Entry 3 Content" />
+			<var name="entryTitle" value="Blogs Entry 3" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="Blogs Entry 3" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="task1" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="Blogs Entry 3" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinitionTitle" value="Join Xor" />
+			<var name="workflowTask" value="task1" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="Blogs Entry 3" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="task2" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="Blogs Entry 3" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinitionTitle" value="Join Xor" />
+			<var name="workflowTask" value="task2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="entryContent" value="Blogs Entry 3 Content" />
+			<var name="entryTitle" value="Blogs Entry 3" />
+		</execute>
+	</command>
 
 	<command known-issues="LRQA-12687" name="ApproveBlogsEntryCP" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -123,7 +332,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>

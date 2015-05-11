@@ -228,7 +228,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>

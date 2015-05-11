@@ -172,13 +172,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasksCP">
+		<execute macro="Workflow#viewCompletedTasks">
 			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasksCP">
+		<execute macro="Workflow#viewCompletedTasks">
 			<var name="workflowAssetTitle" value="Blogs Entry Title - Site Name" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
@@ -253,7 +253,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasksCP">
+		<execute macro="Workflow#viewCompletedTasks">
 			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
@@ -642,13 +642,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewAssignedToMyRolesTasksCP">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="Web Content Article" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Workflow#viewAssignedToMyRolesTasksCP">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />

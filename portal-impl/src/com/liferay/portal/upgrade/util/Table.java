@@ -361,6 +361,13 @@ public class Table {
 		else if (t == Types.BIT) {
 			value = GetterUtil.getBoolean(rs.getBoolean(name));
 		}
+		else if ((t == Types.BLOB) || (t == Types.LONGVARBINARY)) {
+			value = rs.getBytes(name);
+
+			if (value == null) {
+				value = new byte[0];
+			}
+		}
 		else if (t == Types.BOOLEAN) {
 			value = GetterUtil.getBoolean(rs.getBoolean(name));
 		}
@@ -406,9 +413,6 @@ public class Table {
 		}
 		else if (t == Types.INTEGER) {
 			value = GetterUtil.getInteger(rs.getInt(name));
-		}
-		else if (t == Types.LONGVARBINARY) {
-			value = rs.getBytes(name);
 		}
 		else if (t == Types.LONGVARCHAR) {
 			value = GetterUtil.getString(rs.getString(name));
@@ -565,6 +569,9 @@ public class Table {
 		if (t == Types.BIGINT) {
 			ps.setLong(paramIndex, GetterUtil.getLong(value));
 		}
+		else if ((t == Types.BLOB) || (t == Types.LONGVARBINARY)) {
+			ps.setBytes(paramIndex, Base64.decode(value));
+		}
 		else if (t == Types.BOOLEAN) {
 			ps.setBoolean(paramIndex, GetterUtil.getBoolean(value));
 		}
@@ -584,9 +591,6 @@ public class Table {
 		}
 		else if (t == Types.INTEGER) {
 			ps.setInt(paramIndex, GetterUtil.getInteger(value));
-		}
-		else if (t == Types.LONGVARBINARY) {
-			ps.setBytes(paramIndex, Base64.decode(value));
 		}
 		else if (t == Types.SMALLINT) {
 			ps.setShort(paramIndex, GetterUtil.getShort(value));

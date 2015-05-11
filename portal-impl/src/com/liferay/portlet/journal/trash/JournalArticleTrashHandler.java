@@ -15,6 +15,11 @@
 package com.liferay.portlet.journal.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -93,6 +98,19 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
+	}
+
+	@Override
+	public Query getExcludeQuery(SearchContext searchContext) {
+		BooleanQuery excludeJournalArticleVersionsQuery =
+			BooleanQueryFactoryUtil.create(searchContext);
+
+		excludeJournalArticleVersionsQuery.addRequiredTerm(
+			Field.ENTRY_CLASS_NAME, JournalArticle.class.getName());
+
+		excludeJournalArticleVersionsQuery.addRequiredTerm("head", false);
+
+		return excludeJournalArticleVersionsQuery;
 	}
 
 	@Override

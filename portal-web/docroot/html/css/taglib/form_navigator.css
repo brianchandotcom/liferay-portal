@@ -6,11 +6,14 @@
 	}
 
 	> .form-steps {
+		display: table;
 		position: relative;
+		width: 100%;
 
 		> ul.form-navigator.list-group {
 			border-width: 0;
 			clear: both;
+			display: table-header-group;
 			float: none;
 			overflow: visible;
 			padding: 0;

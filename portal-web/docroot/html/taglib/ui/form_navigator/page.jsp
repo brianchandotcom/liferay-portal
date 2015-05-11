@@ -95,10 +95,22 @@ if (Validator.isNotNull(historyKey)) {
 				</liferay-util:buffer>
 
 				<%
+				String contentCssClass = "form-navigator-content";
+
+				if (!displayStyle.equals("steps")) {
+					contentCssClass += " col-md-8";
+				}
+				%>
+
+				<div class="<%= contentCssClass %>">
+					<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
+				</div>
+
+				<%
 				String listGroupCssClass = "form-navigator list-group nav";
 
 				if (!displayStyle.equals("steps")) {
-					listGroupCssClass += " col-md-4 col-md-push-8";
+					listGroupCssClass += " col-md-4";
 				}
 				%>
 
@@ -202,18 +214,6 @@ if (Validator.isNotNull(historyKey)) {
 					</c:if>
 				</ul>
 
-				<%
-				String contentCssClass = "form-navigator-content";
-
-				if (!displayStyle.equals("steps")) {
-					contentCssClass += " col-md-8 col-md-pull-4";
-				}
-				%>
-
-				<div class="<%= contentCssClass %>">
-					<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
-				</div>
-
 				<c:if test='<%= displayStyle.equals("steps") %>'>
 					<%= formNavigatorBottom %>
 				</c:if>
@@ -250,7 +250,7 @@ if (Validator.isNotNull(historyKey)) {
 
 									var scrollLeft = listNode.get('scrollLeft');
 
-									return (activeTabNode.getX() + scrollLeft) - listNode.getX();
+									return activeTabNode.getX() + scrollLeft - listNode.getX();
 								}
 							}
 						}
@@ -266,7 +266,7 @@ if (Validator.isNotNull(historyKey)) {
 
 					var tabIndex = tabview.indexOf(tab);
 
-					if (tab && (tabIndex > -1)) {
+					if (tab && tabIndex > -1) {
 						tabview.selectChild(tabIndex);
 					}
 
@@ -281,7 +281,7 @@ if (Validator.isNotNull(historyKey)) {
 					</c:if>
 
 					Liferay.fire('formNavigator:reveal' + sectionId);
-				};
+				}
 
 				function updateSectionError() {
 					var tabNode = tabview.get('selection').get('boundingBox');
@@ -328,7 +328,7 @@ if (Validator.isNotNull(historyKey)) {
 				tabview.after(
 					'selectionChange',
 					function(event) {
-						var tab = event.newVal
+						var tab = event.newVal;
 
 						var boundingBox = tab.get('boundingBox');
 
@@ -395,12 +395,14 @@ if (Validator.isNotNull(historyKey)) {
 					String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
 					%>
 
+					var focusField;
+
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(focusField) %>">
-							var focusField = formNode.one('#<portlet:namespace /><%= focusField %>');
+							focusField = formNode.one('#<portlet:namespace /><%= focusField %>');
 						</c:when>
 						<c:otherwise>
-							var focusField = formNode.one('.form-section.active input:not([type="hidden"]).field');
+							focusField = formNode.one('.form-section.active input:not([type="hidden"]).field');
 						</c:otherwise>
 					</c:choose>
 

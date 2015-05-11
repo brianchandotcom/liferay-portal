@@ -32,6 +32,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionModel;
@@ -82,6 +83,8 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
 			{ "templateId", Types.BIGINT },
 			{ "version", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
@@ -89,7 +92,7 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 			{ "language", Types.VARCHAR },
 			{ "script", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplateVersion (templateVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,templateId LONG,version VARCHAR(75) null,name STRING null,description STRING null,language VARCHAR(75) null,script TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplateVersion (templateVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name STRING null,description STRING null,language VARCHAR(75) null,script TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplateVersion.templateVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMTemplateVersion.templateVersionId ASC";
@@ -128,6 +131,8 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
 		model.setTemplateId(soapModel.getTemplateId());
 		model.setVersion(soapModel.getVersion());
 		model.setName(soapModel.getName());
@@ -205,6 +210,8 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("templateId", getTemplateId());
 		attributes.put("version", getVersion());
 		attributes.put("name", getName());
@@ -254,6 +261,18 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		Long templateId = (Long)attributes.get("templateId");
@@ -378,6 +397,48 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+	}
+
+	@Override
+	public String getClassName() {
+		if (getClassNameId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		return PortalUtil.getClassName(getClassNameId());
+	}
+
+	@Override
+	public void setClassName(String className) {
+		long classNameId = 0;
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
+
+		setClassNameId(classNameId);
+	}
+
+	@JSON
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
+	}
+
+	@JSON
+	@Override
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	@Override
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	@JSON
@@ -782,6 +843,8 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		ddmTemplateVersionImpl.setUserId(getUserId());
 		ddmTemplateVersionImpl.setUserName(getUserName());
 		ddmTemplateVersionImpl.setCreateDate(getCreateDate());
+		ddmTemplateVersionImpl.setClassNameId(getClassNameId());
+		ddmTemplateVersionImpl.setClassPK(getClassPK());
 		ddmTemplateVersionImpl.setTemplateId(getTemplateId());
 		ddmTemplateVersionImpl.setVersion(getVersion());
 		ddmTemplateVersionImpl.setName(getName());
@@ -888,6 +951,10 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 			ddmTemplateVersionCacheModel.createDate = Long.MIN_VALUE;
 		}
 
+		ddmTemplateVersionCacheModel.classNameId = getClassNameId();
+
+		ddmTemplateVersionCacheModel.classPK = getClassPK();
+
 		ddmTemplateVersionCacheModel.templateId = getTemplateId();
 
 		ddmTemplateVersionCacheModel.version = getVersion();
@@ -935,7 +1002,7 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{templateVersionId=");
 		sb.append(getTemplateVersionId());
@@ -949,6 +1016,10 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		sb.append(getUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
+		sb.append(", classNameId=");
+		sb.append(getClassNameId());
+		sb.append(", classPK=");
+		sb.append(getClassPK());
 		sb.append(", templateId=");
 		sb.append(getTemplateId());
 		sb.append(", version=");
@@ -968,7 +1039,7 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -998,6 +1069,14 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
+		sb.append(getClassNameId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>classPK</column-name><column-value><![CDATA[");
+		sb.append(getClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>templateId</column-name><column-value><![CDATA[");
@@ -1039,6 +1118,8 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
+	private long _classNameId;
+	private long _classPK;
 	private long _templateId;
 	private long _originalTemplateId;
 	private boolean _setOriginalTemplateId;

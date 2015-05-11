@@ -30,18 +30,13 @@
 		<%
 		int CELLS_PER_ROW = 4;
 
-		String layoutTemplateId = portletPreferences.getValue("layoutTemplateId", nestedPortletsConfiguration.layoutTemplateDefault());
+		String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
 
-		List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(theme.getThemeId());
-
-		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
-
-		List<String> unsupportedLayoutTemplates = ListUtil.fromArray(nestedPortletsConfiguration.layoutTemplatesUnsupported());
+		List<LayoutTemplate> layoutTemplates = nestedPortletsDisplayContext.getLayoutTemplates();
 
 		int i = 0;
 
 		for (LayoutTemplate layoutTemplate : layoutTemplates) {
-			if (!unsupportedLayoutTemplates.contains(layoutTemplate.getLayoutTemplateId())) {
 		%>
 
 				<c:if test="<%= (i % CELLS_PER_ROW) == 0 %>">
@@ -60,21 +55,14 @@
 
 		<%
 				i++;
-			}
 		}
 		%>
 
 		</table>
 	</aui:fieldset>
 
-	<%
-	boolean portletDecorateDefault = GetterUtil.getBoolean(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), true);
-
-	boolean portletSetupShowBorders = GetterUtil.getBoolean(portletPreferences.getValue("portletSetupShowBorders", String.valueOf(portletDecorateDefault)));
-	%>
-
 	<aui:fieldset label="display-settings">
-		<aui:input label="show-borders" name="preferences--portletSetupShowBorders--" type="checkbox" value="<%= portletSetupShowBorders %>" />
+		<aui:input label="show-borders" name="preferences--portletSetupShowBorders--" type="checkbox" value="<%= nestedPortletsDisplayContext.isPortletSetupShowBorders() %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

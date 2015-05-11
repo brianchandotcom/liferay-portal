@@ -403,6 +403,8 @@ public class PoshiRunnerExecutor {
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 				classCommandName);
 
+		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
+
 		Element rootElement = PoshiRunnerContext.getMacroRootElement(className);
 
 		List<Element> rootVarElements = rootElement.elements("var");
@@ -416,8 +418,6 @@ public class PoshiRunnerExecutor {
 		for (Element executeVarElement : executeVarElements) {
 			runVarElement(executeVarElement, false);
 		}
-
-		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
 
 		SummaryLoggerHandler.startSummary(executeElement);
 

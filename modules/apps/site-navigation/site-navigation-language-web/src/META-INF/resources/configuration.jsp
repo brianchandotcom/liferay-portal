@@ -27,39 +27,13 @@
 	<aui:fieldset label="languages">
 		<aui:input name="preferences--languageIds--" type="hidden" />
 
-		<%
-		Set<String> availableLanguageIdsSet = SetUtil.fromArray(languageDisplayContext.getAvailableLanguageIds());
-
-		// Left list
-
-		List leftList = new ArrayList();
-
-		for (String languageId : languageDisplayContext.getLanguageIds()) {
-			leftList.add(new KeyValuePair(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
-		}
-
-		// Right list
-
-		List rightList = new ArrayList();
-
-		Arrays.sort(languageDisplayContext.getLanguageIds());
-
-		for (String languageId : availableLanguageIdsSet) {
-			if (Arrays.binarySearch(languageDisplayContext.getLanguageIds(), languageId) < 0) {
-				rightList.add(new KeyValuePair(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
-			}
-		}
-
-		rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-		%>
-
 		<liferay-ui:input-move-boxes
 			leftBoxName="currentLanguageIds"
-			leftList="<%= leftList %>"
+			leftList="<%= languageDisplayContext.getCurrentLanguageList() %>"
 			leftReorder="true"
 			leftTitle="current"
 			rightBoxName="availableLanguageIds"
-			rightList="<%= rightList %>"
+			rightList="<%= languageDisplayContext.getAvailableLanguageList() %>"
 			rightTitle="available"
 		/>
 	</aui:fieldset>

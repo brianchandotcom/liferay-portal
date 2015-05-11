@@ -17,13 +17,21 @@ package com.liferay.site.navigation.language.web.display.context;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.KeyValuePairComparator;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,7 +52,7 @@ public class LanguageDisplayContext {
 			portletDisplay.getPortletInstanceConfiguration(
 				LanguagePortletInstanceConfiguration.class);
 
-		_request = request;
+		_themeDisplay = themeDisplay;
 	}
 
 	public String[] getAvailableLanguageIds() {
@@ -52,13 +60,53 @@ public class LanguageDisplayContext {
 			return _availableLanguageIds;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_availableLanguageIds = LocaleUtil.toLanguageIds(
-			LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()));
+			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()));
 
 		return _availableLanguageIds;
+	}
+
+	public List<KeyValuePair> getAvailableLanguageList() {
+		Set<String> availableLanguageIdsSet = SetUtil.fromArray(
+			getAvailableLanguageIds());
+
+		String[] languageIds = getLanguageIds();
+
+		Arrays.sort(languageIds);
+
+		List<KeyValuePair> availableLanguageList = new ArrayList<>();
+
+		for (String languageId : availableLanguageIdsSet) {
+			if (Arrays.binarySearch(languageIds, languageId) < 0) {
+				availableLanguageList.add(
+					new KeyValuePair(
+						languageId,
+						LocaleUtil.fromLanguageId(
+							languageId).getDisplayName(
+								_themeDisplay.getLocale())));
+			}
+		}
+
+		availableLanguageList = ListUtil.sort(
+			availableLanguageList, new KeyValuePairComparator(false, true));
+
+		return availableLanguageList;
+	}
+
+	public List<KeyValuePair> getCurrentLanguageList() {
+		List<KeyValuePair> currentLanguageList = new ArrayList<>();
+
+		String[] languageIds = getLanguageIds();
+
+		for (String languageId : languageIds) {
+			currentLanguageList.add(
+				new KeyValuePair(
+					languageId,
+					LocaleUtil.fromLanguageId(
+						languageId).getDisplayName(_themeDisplay.getLocale())));
+		}
+
+		return currentLanguageList;
 	}
 
 	public String getDDMTemplateKey() {
@@ -95,10 +143,7 @@ public class LanguageDisplayContext {
 			_languagePortletInstanceConfiguration.displayStyleGroupId();
 
 		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			_displayStyleGroupId = themeDisplay.getSiteGroupId();
+			_displayStyleGroupId = _themeDisplay.getSiteGroupId();
 		}
 
 		return _displayStyleGroupId;
@@ -138,6 +183,6 @@ public class LanguageDisplayContext {
 	private String[] _languageIds;
 	private final LanguagePortletInstanceConfiguration
 		_languagePortletInstanceConfiguration;
-	private final HttpServletRequest _request;
+	private final ThemeDisplay _themeDisplay;
 
 }

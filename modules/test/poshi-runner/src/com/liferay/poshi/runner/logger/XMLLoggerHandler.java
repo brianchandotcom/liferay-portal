@@ -21,7 +21,9 @@ import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -470,6 +472,9 @@ public final class XMLLoggerHandler {
 		loggerElement.addChildLoggerElement(
 			_getLineContainerLoggerElement(element));
 
+		_stackTraceToLoggerElement.put(
+			PoshiRunnerStackTraceUtil.getSimpleStackTrace(), loggerElement);
+
 		return loggerElement;
 	}
 
@@ -613,6 +618,8 @@ public final class XMLLoggerHandler {
 
 	private static int _btnLinkCollapseId;
 	private static int _btnLinkVarId;
+	private static final Map<String, LoggerElement> _stackTraceToLoggerElement =
+		new HashMap<>();
 	private static LoggerElement _xmlLogLoggerElement = null;
 
 }

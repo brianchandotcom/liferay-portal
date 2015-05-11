@@ -1039,7 +1039,7 @@ public class ThreadPoolExecutorTest {
 
 			threadPoolExecutor.execute(markerBlockingJob);
 
-			Thread.sleep(10);
+			markerBlockingJob.waitUntilEnded();
 
 			Assert.assertTrue(markerBlockingJob.isEnded());
 		}

@@ -61,7 +61,7 @@
 			}
 		%>
 
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="list-unstyled panel-page-category" extended="<%= true %>" iconCssClass="<%= iconCssClass %>" id="<%= panelPageCategoryId %>" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(request, "category." + siteAdministrationCategory) %>'>
+			<liferay-ui:panel collapsible="<%= true %>" cssClass="list-unstyled panel-page-category" extended="<%= true %>" iconCssClass="<%= iconCssClass %>" id="<%= panelPageCategoryId %>" parentId="controlPanelMenuAddContentPanelContainer" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(request, "category." + siteAdministrationCategory) %>'>
 				<c:if test="<%= siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
 
 					<%

@@ -189,4 +189,18 @@
 		%>
 
 	</liferay-ui:panel-container>
+
+	<c:if test="<%= !themeDisplay.isStatePopUp() %>">
+		<aui:script use="liferay-control-panel">
+			<%
+			String controlPanelMenuPortletId = PortletProviderUtil.getPortletId(PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME, PortletProvider.Action.VIEW);
+			%>
+
+			new Liferay.ControlPanel(
+				{
+					portletId: '_<%= controlPanelMenuPortletId %>_'
+				}
+			);
+		</aui:script>
+	</c:if>
 </div>

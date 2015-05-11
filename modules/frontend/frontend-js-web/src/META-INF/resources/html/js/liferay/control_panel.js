@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-control-panel',
 	function(A) {
+		var Lang = A.Lang;
+
 		var body = A.getBody();
 
 		var portletId = '';
@@ -32,6 +34,12 @@ AUI.add(
 
 		var ControlPanel = A.Component.create(
 			{
+				ATTRS: {
+					portletId: {
+						validator: Lang.isString
+					}
+				},
+
 				EXTENDS: A.Base,
 
 				NAME: 'liferay-control-panel',
@@ -153,7 +161,7 @@ AUI.add(
 								inputNode: instance._searchPanelInput,
 								nodeList: '#controlPanelMenuAddContentPanelContainer',
 								nodeSelector: 'li',
-								togglerId: '_160_controlPanelMenuAddContentPanelContainer'
+								togglerId: instance.get('portletId') + '_controlPanelMenuAddContentPanelContainer'
 							}
 						);
 					},
@@ -165,7 +173,9 @@ AUI.add(
 					},
 
 					_panelHolderAccordionDisable: function() {
-						var component = Liferay.component('_160_controlPanelMenuAddContentPanelContainer');
+						var instance = this;
+
+						var component = Liferay.component(instance.get('portletId') + 'controlPanelMenuAddContentPanelContainer');
 
 						var handler = A.on(
 							function(e) {
@@ -232,7 +242,7 @@ AUI.add(
 						}
 
 						if (searchPanelHolder) {
-							var searchPanelInput = searchPanelHolder.one('#_160_searchPanel');
+							var searchPanelInput = searchPanelHolder.one('#' + instance.get('portletId') + 'searchPanel');
 
 							searchPanelInput.attr('autocomplete', 'off');
 

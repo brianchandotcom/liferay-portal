@@ -22,6 +22,8 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
@@ -34,6 +36,7 @@ page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletCategoryKeys" %><%@
+page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %><%@
 page import="com.liferay.portlet.PortletConfigFactoryUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

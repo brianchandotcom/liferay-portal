@@ -7,7 +7,7 @@
 	}
 }
 
-// List Group Heading
+/* ---------- List group heading ---------- */
 
 .list-group-heading {
 	@extend .list-group-item;
@@ -16,7 +16,7 @@
 	font-weight: bold;
 }
 
-// Collapsible List Group
+/* ---------- Collapsible list group ---------- */
 
 .list-group {
 	.collapse, .collapsing {
@@ -62,7 +62,7 @@
 	}
 }
 
-// Tabular List Group
+/* ---------- Tabular list group ---------- */
 
 .tabular-list-group {
 	border-collapse: separate;
@@ -191,9 +191,7 @@
 	}
 }
 
-// min width 992px
-
-@media (min-width: $screen-md-min) {
+@include md {
 	.tabular-list-group {
 		.list-group-item-content, .list-group-item-field {
 			padding: 1em 0.8em;

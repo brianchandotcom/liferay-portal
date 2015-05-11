@@ -75,21 +75,36 @@ public final class XMLLoggerHandler {
 			className + "#set-up");
 
 		if (setUpElement != null) {
+			PoshiRunnerStackTraceUtil.startStackTrace(
+				className + "#set-up", "test-case");
+
 			childContainerLoggerElement.addChildLoggerElement(
 				_getLoggerElementFromElement(setUpElement));
+
+			PoshiRunnerStackTraceUtil.emptyStackTrace();
 		}
+
+		PoshiRunnerStackTraceUtil.startStackTrace(
+			classCommandName, "test-case");
 
 		childContainerLoggerElement.addChildLoggerElement(
 			_getLoggerElementFromElement(
 				PoshiRunnerContext.getTestCaseCommandElement(
 					classCommandName)));
 
+		PoshiRunnerStackTraceUtil.emptyStackTrace();
+
 		Element tearDownElement = PoshiRunnerContext.getTestCaseCommandElement(
 			className + "#tear-down");
 
 		if (tearDownElement != null) {
+			PoshiRunnerStackTraceUtil.startStackTrace(
+				className + "#tear-down", "test-case");
+
 			childContainerLoggerElement.addChildLoggerElement(
 				_getLoggerElementFromElement(tearDownElement));
+
+			PoshiRunnerStackTraceUtil.emptyStackTrace();
 		}
 
 		headerLoggerElement.addChildLoggerElement(childContainerLoggerElement);

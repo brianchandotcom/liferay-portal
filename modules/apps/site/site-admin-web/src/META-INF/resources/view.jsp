@@ -82,7 +82,7 @@ String searchURLString = searchURL.toString();
 			form.fm('redirect').val(form.fm('sitesRedirect').val());
 			form.fm('deleteGroupIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="deleteSites" />');
+			submitForm(form, '<portlet:actionURL name="deleteGroups" />');
 		}
 	}
 </aui:script>

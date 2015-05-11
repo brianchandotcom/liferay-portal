@@ -275,8 +275,10 @@ public class LayoutAction extends Action {
 
 			String portletId = ParamUtil.getString(request, "p_p_id");
 
-			if (resetLayout && (previousLayout != null) &&
-				(layout.getPlid() != previousLayout.getPlid())) {
+			if (resetLayout &&
+				(Validator.isNull(portletId) ||
+				 ((previousLayout != null) &&
+				  (layout.getPlid() != previousLayout.getPlid())))) {
 
 				// Always clear render parameters on a layout url, but do not
 				// clear on portlet urls invoked on the same layout

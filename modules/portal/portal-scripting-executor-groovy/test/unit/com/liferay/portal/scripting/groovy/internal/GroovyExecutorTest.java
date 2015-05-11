@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import com.liferay.portal.scripting.groovy.internal.GroovyExecutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

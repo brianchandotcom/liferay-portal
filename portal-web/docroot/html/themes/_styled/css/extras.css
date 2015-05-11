@@ -601,7 +601,7 @@ input.switch {
 	}
 }
 
-/* -------- Image Selector ---------- */
+/* -------- Image selector ---------- */
 
 .taglib-image-selector {
 	.glyphicon-ok {
@@ -615,7 +615,7 @@ input.switch {
 	}
 }
 
-/* -------- Drop Here Info ---------- */
+/* -------- Drop here info ---------- */
 
 .drop-here-info {
 	@include transition(all 0.2s ease-in-out);

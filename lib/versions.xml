@@ -1833,18 +1833,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/groovy.jar</file-name>
-				<version>2.2.2</version>
-				<project-name>Groovy</project-name>
-				<project-url>http://groovy.codehaus.org</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/hessian.jar</file-name>
 				<version>4.0.3</version>
 				<project-name>Hessian</project-name>

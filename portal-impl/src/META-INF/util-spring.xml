@@ -290,9 +290,6 @@
 						<entry key="beanshell">
 							<bean class="com.liferay.portal.scripting.beanshell.BeanShellExecutor" />
 						</entry>
-						<entry key="groovy">
-							<bean class="com.liferay.portal.scripting.groovy.GroovyExecutor" />
-						</entry>
 						<entry key="javascript">
 							<bean class="com.liferay.portal.scripting.javascript.JavaScriptExecutor" />
 						</entry>

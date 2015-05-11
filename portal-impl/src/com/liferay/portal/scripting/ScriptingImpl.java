@@ -26,6 +26,11 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
@@ -54,6 +59,16 @@ public class ScriptingImpl implements Scripting {
 		_scriptingExecutors.put(language, scriptingExecutor);
 	}
 
+	public void afterPropertiesSet() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			ScriptingExecutor.class,
+			new ScriptingExecutorServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
 	@Override
 	public void clearCache(String language) throws ScriptingException {
 		ScriptingExecutor scriptingExecutor = _scriptingExecutors.get(language);
@@ -63,6 +78,12 @@ public class ScriptingImpl implements Scripting {
 		}
 
 		scriptingExecutor.clearCache();
+	}
+
+	public void destroy() {
+		_serviceTracker.close();
+
+		_serviceTracker = null;
 	}
 
 	@Override
@@ -195,5 +216,46 @@ public class ScriptingImpl implements Scripting {
 
 	private final Map<String, ScriptingExecutor> _scriptingExecutors =
 		new ConcurrentHashMap<>();
+	private ServiceTracker<ScriptingExecutor, ScriptingExecutor>
+		_serviceTracker;
+
+	private class ScriptingExecutorServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ScriptingExecutor, ScriptingExecutor> {
+
+		@Override
+		public ScriptingExecutor addingService(
+			ServiceReference<ScriptingExecutor> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			ScriptingExecutor scriptingExecutor = registry.getService(
+				serviceReference);
+
+			_scriptingExecutors.put(
+				scriptingExecutor.getLanguage(), scriptingExecutor);
+
+			return scriptingExecutor;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ScriptingExecutor> serviceReference,
+			ScriptingExecutor scriptingExecutor) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ScriptingExecutor> serviceReference,
+			ScriptingExecutor scriptingExecutor) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_scriptingExecutors.remove(scriptingExecutor.getLanguage());
+		}
+
+	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting.groovy;
+package com.liferay.portal.scripting.groovy.internal;
 
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.scripting.ScriptingExecutorTestCase;

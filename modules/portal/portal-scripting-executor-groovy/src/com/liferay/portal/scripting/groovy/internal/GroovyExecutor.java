@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.scripting.groovy;
+package com.liferay.portal.scripting.groovy.internal;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
@@ -32,11 +33,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alberto Montero
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = { "scripting.language=" + GroovyExecutor.LANGUAGE },
+	service = ScriptingExecutor.class
+)
 public class GroovyExecutor extends BaseScriptingExecutor {
+
+	public static final String LANGUAGE = "groovy";
 
 	@Override
 	public Map<String, Object> eval(
@@ -74,7 +84,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 	@Override
 	public String getLanguage() {
-		return _LANGUAGE;
+		return LANGUAGE;
 	}
 
 	protected GroovyShell getGroovyShell(ClassLoader[] classLoaders) {
@@ -92,7 +102,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 		ClassLoader aggregateClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(
-				ClassLoaderUtil.getPortalClassLoader(), classLoaders);
+				PortalClassLoaderUtil.getClassLoader(), classLoaders);
 
 		GroovyShell groovyShell = _groovyShells.get(aggregateClassLoader);
 
@@ -109,8 +119,6 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 		return groovyShell;
 	}
-
-	private static final String _LANGUAGE = "groovy";
 
 	private volatile GroovyShell _groovyShell = new GroovyShell();
 	private final ConcurrentMap<ClassLoader, GroovyShell> _groovyShells =

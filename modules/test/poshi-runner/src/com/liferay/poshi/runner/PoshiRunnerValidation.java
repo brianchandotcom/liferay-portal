@@ -322,9 +322,7 @@ public class PoshiRunnerValidation {
 			Element element, List<String> possibleElementNames, String filePath)
 		throws Exception {
 
-		String elementName = element.getName();
-
-		if (!possibleElementNames.contains(elementName)) {
+		if (!possibleElementNames.contains(element.getName())) {
 			throw new Exception(
 				"Missing " + possibleElementNames + " element\n" + filePath +
 					":" + element.attributeValue("line-number"));

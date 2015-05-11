@@ -361,7 +361,7 @@ public class Table {
 		else if (t == Types.BIT) {
 			value = GetterUtil.getBoolean(rs.getBoolean(name));
 		}
-		else if (t == Types.BLOB || t == Types.LONGVARBINARY) {
+		else if ((t == Types.BLOB) || (t == Types.LONGVARBINARY)) {
 			value = rs.getBytes(name);
 
 			if (value == null) {

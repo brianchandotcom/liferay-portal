@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -52,7 +53,8 @@ public class PanelAppRegistry {
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
 			bundleContext, PanelApp.class, "(panel.category.key=*)",
-			new PanelCategoryServiceReferenceMapper());
+			new PanelCategoryServiceReferenceMapper(),
+			new AscendingServiceRankingServiceReferenceComparator());
 
 		_serviceTrackerMap.open();
 	}
@@ -63,5 +65,23 @@ public class PanelAppRegistry {
 	}
 
 	private ServiceTrackerMap<String, List<PanelApp>> _serviceTrackerMap;
+
+	private static class AscendingServiceRankingServiceReferenceComparator
+		extends ServiceTrackerMapFactory.
+			PropertyServiceReferenceComparator<PanelApp> {
+
+		public AscendingServiceRankingServiceReferenceComparator() {
+			super("service.ranking");
+		}
+
+		@Override
+		public int compare(
+			ServiceReference<PanelApp> serviceReference1,
+			ServiceReference<PanelApp> serviceReference2) {
+
+			return -(super.compare(serviceReference1, serviceReference2));
+		}
+
+	}
 
 }

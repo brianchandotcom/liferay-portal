@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import com.liferay.portalweb.util.RuntimeVariables;
 import com.liferay.portalweb.util.TestPropsUtil;
+import com.liferay.portalweb.util.TestPropsValues;
 import com.liferay.portalweb.util.block.macro.BaseMacro;
 
 <#assign rootElement = seleniumBuilderContext.getMacroRootElement(macroName)>

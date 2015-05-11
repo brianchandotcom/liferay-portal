@@ -224,6 +224,20 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		return role;
 	}
 
+	@Override
+	public List<Role> getRoles(int type, String subtype)
+		throws PortalException {
+
+		return filterRoles(roleLocalService.getRoles(type, subtype));
+	}
+
+	@Override
+	public List<Role> getRoles(long companyId, int[] types)
+		throws PortalException {
+
+		return filterRoles(roleLocalService.getRoles(companyId, types));
+	}
+
 	/**
 	 * Returns all the user's roles within the user group.
 	 *

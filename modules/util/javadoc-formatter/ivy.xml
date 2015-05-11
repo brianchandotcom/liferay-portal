@@ -22,5 +22,6 @@
 		<dependency conf="default->master" name="commons-io" org="commons-io" rev="2.1" />
 		<dependency conf="default->master" name="dom4j" org="dom4j" rev="1.6.1" />
 		<dependency conf="default->master" name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" />
+		<dependency conf="provided->master" name="maven-plugin-api" org="org.apache.maven" rev="3.0.4" />
 	</dependencies>
 </ivy-module>

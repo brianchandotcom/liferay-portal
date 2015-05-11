@@ -15,7 +15,6 @@
 package com.liferay.wiki.display.context;
 
 import com.liferay.portal.kernel.display.context.BaseDisplayContext;
-import com.liferay.portlet.documentlibrary.display.context.DLDisplayContext;
 
 import java.util.UUID;
 
@@ -25,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public abstract class BaseWikiDisplayContext<T extends DLDisplayContext>
+public abstract class BaseWikiDisplayContext<T extends WikiDisplayContext>
 	extends BaseDisplayContext<T> implements WikiDisplayContext {
 
 	public BaseWikiDisplayContext(

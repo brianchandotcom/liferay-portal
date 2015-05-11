@@ -14,10 +14,8 @@
 
 package com.liferay.wiki.display.context;
 
-import com.liferay.portlet.documentlibrary.display.context.DLDisplayContext;
-
 /**
  * @author Iván Zaera
  */
-public interface WikiEditPageDisplayContext extends DLDisplayContext {
+public interface WikiEditPageDisplayContext extends WikiDisplayContext {
 }

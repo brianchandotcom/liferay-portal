@@ -182,11 +182,35 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Test
+	public void testOrderByDDMRadioField() throws Exception {
+		TestOrderHelper testOrderHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		testOrderHelper.testOrderByDDMRadioField();
+	}
+
+	@Test
+	public void testOrderByDDMRadioFieldKeyword() throws Exception {
+		TestOrderHelper testOrderHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		testOrderHelper.testOrderByDDMRadioFieldKeyword();
+	}
+
+	@Test
 	public void testOrderByDDMTextField() throws Exception {
 		TestOrderHelper testOrderHelper =
 			new JournalArticleSearchTestOrderHelper(group);
 
 		testOrderHelper.testOrderByDDMTextField();
+	}
+
+	@Test
+	public void testOrderByDDMTextFieldKeyword() throws Exception {
+		TestOrderHelper testOrderHelper =
+			new JournalArticleSearchTestOrderHelper(group);
+
+		testOrderHelper.testOrderByDDMTextFieldKeyword();
 	}
 
 	@Test

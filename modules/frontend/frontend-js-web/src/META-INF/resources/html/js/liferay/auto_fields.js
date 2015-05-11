@@ -413,11 +413,11 @@ AUI.add(
 
 						var clone = currentRow.clone();
 
-						var clonedRow;
+						var guid = ++instance._guid;
 
 						var formValidator = instance._getFormValidator(node);
 
-						var guid = ++instance._guid;
+						var clonedRow;
 
 						if (instance.url) {
 							clonedRow = instance._createCloneFromURL(clone, guid);

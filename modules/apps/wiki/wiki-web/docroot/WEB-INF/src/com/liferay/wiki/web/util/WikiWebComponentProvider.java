@@ -57,6 +57,11 @@ public class WikiWebComponentProvider {
 		_wikiWebComponentProvider = null;
 	}
 
+	@Reference
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
 	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
@@ -73,11 +78,6 @@ public class WikiWebComponentProvider {
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
 		_wikiGroupServiceConfiguration = null;
-	}
-
-	@Reference
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
 	}
 
 	private static WikiWebComponentProvider _wikiWebComponentProvider;

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtilAdvice;
 import com.liferay.portal.kernel.util.ThreadUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -151,8 +152,12 @@ public class MailboxUtilTest {
 
 		overdueMailQueue.offer(createReceiptStub());
 
-		reaperThread.join(1000);
+		reaperThread.join(10 * Time.MINUTE);
 
+		Assert.assertFalse(
+			"Reaper thread " + reaperThread +
+				" failed to join back after waiting for 10 mins",
+			reaperThread.isAlive());
 		Assert.assertSame(
 			reaperThread, RecorderUncaughtExceptionHandler._thread);
 

@@ -54,8 +54,8 @@ public class GroupPermissionImpl
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Group.class.getName(),
-				groupId, actionId);
+				permissionChecker.getUserId(), Group.class.getName(), groupId,
+				actionId);
 		}
 	}
 

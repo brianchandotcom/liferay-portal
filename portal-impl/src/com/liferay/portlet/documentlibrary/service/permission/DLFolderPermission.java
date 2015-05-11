@@ -70,8 +70,8 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, groupId, folderId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Folder.class.getName(),
-				folderId, actionId);
+				permissionChecker.getUserId(), Folder.class.getName(), folderId,
+				actionId);
 		}
 	}
 

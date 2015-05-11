@@ -90,8 +90,8 @@ public class LayoutPermissionImpl
 				actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Layout.class.getName(),
-				layoutId, actionId);
+				permissionChecker.getUserId(), Layout.class.getName(), layoutId,
+				actionId);
 		}
 	}
 

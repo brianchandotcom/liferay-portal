@@ -36,8 +36,9 @@ public class AnnouncementsEntryPermission {
 
 		if (!contains(permissionChecker, entry, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AnnouncementsEntry.class.getName(),
-				entry.getEntryId(), actionId);
+				permissionChecker.getUserId(),
+				AnnouncementsEntry.class.getName(), entry.getEntryId(),
+				actionId);
 		}
 	}
 
@@ -48,8 +49,8 @@ public class AnnouncementsEntryPermission {
 
 		if (!contains(permissionChecker, layout, name, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AnnouncementsEntry.class.getName(),
-				name, actionId);
+				permissionChecker.getUserId(),
+				AnnouncementsEntry.class.getName(), name, actionId);
 		}
 	}
 
@@ -59,8 +60,8 @@ public class AnnouncementsEntryPermission {
 
 		if (!contains(permissionChecker, entryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AnnouncementsEntry.class.getName(),
-				entryId, actionId);
+				permissionChecker.getUserId(),
+				AnnouncementsEntry.class.getName(), entryId, actionId);
 		}
 	}
 
@@ -71,8 +72,8 @@ public class AnnouncementsEntryPermission {
 
 		if (!contains(permissionChecker, plid, name, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AnnouncementsEntry.class.getName(),
-				name, actionId);
+				permissionChecker.getUserId(),
+				AnnouncementsEntry.class.getName(), name, actionId);
 		}
 	}
 

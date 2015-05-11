@@ -2333,7 +2333,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 					ActionKeys.ASSIGN_MEMBERS)) {
 
 				throw new PrincipalException.MustHavePermission(
-					getPermissionChecker().getUserId(), 
+					getPermissionChecker().getUserId(),
 					Organization.class.getName(), 0, ActionKeys.ADD_USER,
 					ActionKeys.ASSIGN_MEMBERS);
 			}
@@ -2756,8 +2756,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			if (!allowed) {
 				throw new PrincipalException.MustHavePermission(
-					permissionChecker.getUserId(),
-					Organization.class.getName(), 0, ActionKeys.MANAGE_USERS);
+					permissionChecker.getUserId(), Organization.class.getName(),
+					0, ActionKeys.MANAGE_USERS);
 			}
 		}
 	}

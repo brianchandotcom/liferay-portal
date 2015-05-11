@@ -33,8 +33,8 @@ public class TeamPermissionImpl implements TeamPermission {
 
 		if (!contains(permissionChecker, teamId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Team.class.getName(),
-				teamId, actionId);
+				permissionChecker.getUserId(), Team.class.getName(), teamId,
+				actionId);
 		}
 	}
 

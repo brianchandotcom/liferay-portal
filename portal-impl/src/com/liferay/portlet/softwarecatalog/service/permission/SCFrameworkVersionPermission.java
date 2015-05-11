@@ -42,8 +42,9 @@ public class SCFrameworkVersionPermission
 
 		if (!contains(permissionChecker, frameworkVersionId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), SCFrameworkVersion.class.getName(),
-				frameworkVersionId, actionId);
+				permissionChecker.getUserId(),
+				SCFrameworkVersion.class.getName(), frameworkVersionId,
+				actionId);
 		}
 	}
 
@@ -54,7 +55,8 @@ public class SCFrameworkVersionPermission
 
 		if (!contains(permissionChecker, frameworkVersion, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), SCFrameworkVersion.class.getName(),
+				permissionChecker.getUserId(),
+				SCFrameworkVersion.class.getName(),
 				frameworkVersion.getFrameworkVersionId(), actionId);
 		}
 	}

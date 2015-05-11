@@ -1740,7 +1740,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return new KeyValuePair(name, password);
 		}
 		else {
-			throw new PrincipalException.MustBeAuthenticated(String.valueOf(userId));
+			throw new PrincipalException.MustBeAuthenticated(
+				String.valueOf(userId));
 		}
 	}
 

@@ -963,8 +963,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 							ActionKeys.VIEW)) {
 
 						throw new PrincipalException.MustHavePermission(
-							permissionChecker.getUserId(), Portlet.class.getName(),
-							portlet.getPortletId(), ActionKeys.VIEW);
+							permissionChecker.getUserId(),
+							Portlet.class.getName(), portlet.getPortletId(),
+							ActionKeys.VIEW);
 					}
 				}
 				else if ((portlet != null) && !portlet.isActive()) {

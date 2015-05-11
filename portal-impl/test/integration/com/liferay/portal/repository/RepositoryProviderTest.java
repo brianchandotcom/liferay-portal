@@ -179,7 +179,7 @@ public class RepositoryProviderTest {
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			PermissionChecker permissionChecker = 
+			PermissionChecker permissionChecker =
 				new SimplePermissionChecker() {
 
 					@Override

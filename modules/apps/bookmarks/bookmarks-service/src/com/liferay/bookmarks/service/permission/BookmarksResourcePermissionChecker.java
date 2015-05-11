@@ -41,7 +41,8 @@ public class BookmarksResourcePermissionChecker
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), RESOURCE_NAME, groupId, actionId);
+				permissionChecker.getUserId(), RESOURCE_NAME, groupId,
+				actionId);
 		}
 	}
 

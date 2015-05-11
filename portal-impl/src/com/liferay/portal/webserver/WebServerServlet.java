@@ -911,7 +911,8 @@ public class WebServerServlet extends HttpServlet {
 
 				throw new PrincipalException.MustHavePermission(
 					permissionChecker.getUserId(), FileEntry.class.getName(),
-					fileEntry.getFileEntryId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
+					fileEntry.getFileEntryId(),
+					ActionKeys.ACCESS_IN_CONTROL_PANEL);
 			}
 		}
 

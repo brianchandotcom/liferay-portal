@@ -47,7 +47,8 @@ public class BookmarksFolderPermissionChecker
 
 		if (!contains(permissionChecker, folder, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), BookmarksFolder.class.getName(), folder.getFolderId(), actionId);
+				permissionChecker.getUserId(), BookmarksFolder.class.getName(),
+				folder.getFolderId(), actionId);
 		}
 	}
 
@@ -58,7 +59,8 @@ public class BookmarksFolderPermissionChecker
 
 		if (!contains(permissionChecker, groupId, folderId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), BookmarksFolder.class.getName(), folderId, actionId);
+				permissionChecker.getUserId(), BookmarksFolder.class.getName(),
+				folderId, actionId);
 		}
 	}
 

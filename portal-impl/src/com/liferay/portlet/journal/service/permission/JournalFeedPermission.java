@@ -54,8 +54,8 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, id, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), JournalFeed.class.getName(),
-				id, actionId);
+				permissionChecker.getUserId(), JournalFeed.class.getName(), id,
+				actionId);
 		}
 	}
 

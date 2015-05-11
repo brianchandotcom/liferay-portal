@@ -42,8 +42,8 @@ public class AssetTagPermission {
 
 		if (!contains(permissionChecker, tagId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AssetTag.class.getName(),
-				tagId, actionId);
+				permissionChecker.getUserId(), AssetTag.class.getName(), tagId,
+				actionId);
 		}
 	}
 

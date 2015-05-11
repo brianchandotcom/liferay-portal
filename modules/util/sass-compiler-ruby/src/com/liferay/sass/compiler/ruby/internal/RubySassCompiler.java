@@ -37,11 +37,15 @@ import org.jruby.embed.internal.LocalContextProvider;
 public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 	public RubySassCompiler() throws Exception {
-		this(_COMPILE_MODE_JIT, _COMPILE_DEFAULT_THRESHOLD);
+		this(COMPILE_MODE_JIT, COMPILE_DEFAULT_THRESHOLD,
+			System.getProperty("java.io.tmpdir"));
 	}
 
-	public RubySassCompiler(String compileMode, int compilerThreshold)
+	public RubySassCompiler(
+			String compileMode, int compilerThreshold, String tmpDir)
 		throws Exception {
+
+		_tmpDir = tmpDir;
 
 		_scriptingContainer = new ScriptingContainer(
 			LocalContextScope.THREADSAFE);
@@ -52,11 +56,11 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 		RubyInstanceConfig rubyInstanceConfig =
 			localContextProvider.getRubyInstanceConfig();
 
-		if (_COMPILE_MODE_FORCE.equals(compileMode)) {
+		if (COMPILE_MODE_FORCE.equals(compileMode)) {
 			rubyInstanceConfig.setCompileMode(
 				RubyInstanceConfig.CompileMode.FORCE);
 		}
-		else if (_COMPILE_MODE_JIT.equals(compileMode)) {
+		else if (COMPILE_MODE_JIT.equals(compileMode)) {
 			rubyInstanceConfig.setCompileMode(
 				RubyInstanceConfig.CompileMode.JIT);
 		}
@@ -128,7 +132,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 		try {
 			return _scriptingContainer.callMethod(
 				_scriptObject, "process",
-				new Object[] {input, includeDirName, _TMP_DIR, false},
+				new Object[] {input, includeDirName, _tmpDir, false},
 				String.class);
 		}
 		catch (Exception e) {
@@ -136,15 +140,14 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 		}
 	}
 
-	private static final int _COMPILE_DEFAULT_THRESHOLD = 5;
+	public static final int COMPILE_DEFAULT_THRESHOLD = 5;
 
-	private static final String _COMPILE_MODE_FORCE = "force";
+	public static final String COMPILE_MODE_FORCE = "force";
 
-	private static final String _COMPILE_MODE_JIT = "jit";
-
-	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
+	public static final String COMPILE_MODE_JIT = "jit";
 
 	private final ScriptingContainer _scriptingContainer;
 	private final Object _scriptObject;
+	private final String _tmpDir;
 
 }

@@ -506,49 +506,6 @@
 			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
 		</action>
 
-		<!-- Dynamic Data Mapping -->
-
-		<action path="/dynamic_data_mapping/copy_structure" type="com.liferay.portlet.dynamicdatamapping.action.CopyStructureAction">
-			<forward name="portlet.dynamic_data_mapping.copy_structure" path="portlet.dynamic_data_mapping.copy_structure" />
-			<forward name="portlet.dynamic_data_mapping.error" path="portlet.dynamic_data_mapping.error" />
-		</action>
-
-		<action path="/dynamic_data_mapping/copy_template" type="com.liferay.portlet.dynamicdatamapping.action.CopyTemplateAction">
-			<forward name="portlet.dynamic_data_mapping.copy_template" path="portlet.dynamic_data_mapping.copy_template" />
-			<forward name="portlet.dynamic_data_mapping.error" path="portlet.dynamic_data_mapping.error" />
-		</action>
-
-		<action path="/dynamic_data_mapping/edit_structure" type="com.liferay.portlet.dynamicdatamapping.action.EditStructureAction">
-			<forward name="portlet.dynamic_data_mapping.edit_structure" path="portlet.dynamic_data_mapping.edit_structure" />
-			<forward name="portlet.dynamic_data_mapping.error" path="portlet.dynamic_data_mapping.error" />
-		</action>
-
-		<action path="/dynamic_data_mapping/edit_template" type="com.liferay.portlet.dynamicdatamapping.action.EditTemplateAction">
-			<forward name="portlet.dynamic_data_mapping.edit_template" path="portlet.dynamic_data_mapping.edit_template" />
-			<forward name="portlet.dynamic_data_mapping.error" path="portlet.dynamic_data_mapping.error" />
-		</action>
-
-		<action path="/dynamic_data_mapping/edit_template_display" forward="portlet.dynamicdatamapping.edit_template_display" />
-
-		<action path="/dynamic_data_mapping/get_structure" type="com.liferay.portlet.dynamicdatamapping.action.GetStructureAction" />
-
-		<action path="/dynamic_data_mapping/get_template" type="com.liferay.portlet.dynamicdatamapping.action.GetTemplateAction" />
-
-		<action path="/dynamic_data_mapping/render_structure_field" type="com.liferay.portlet.dynamicdatamapping.action.RenderStructureFieldAction" />
-
-		<action path="/dynamic_data_mapping/select_document_library" type="com.liferay.portlet.documentlibrary.action.ViewAction">
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-			<forward name="portlet.document_library.view" path="portlet.dynamic_data_mapping.select_document_library" />
-		</action>
-
-		<action path="/dynamic_data_mapping/select_structure" forward="portlet.dynamic_data_mapping.select_structure" />
-
-		<action path="/dynamic_data_mapping/select_template" forward="portlet.dynamic_data_mapping.select_template" />
-
-		<action path="/dynamic_data_mapping/view" forward="portlet.dynamic_data_mapping.view" />
-
-		<action path="/dynamic_data_mapping/view_template" forward="portlet.dynamic_data_mapping.view_template" />
-
 		<!-- Expando -->
 
 		<action path="/expando/edit_expando" type="com.liferay.portlet.expando.action.EditExpandoAction">

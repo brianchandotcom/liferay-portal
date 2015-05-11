@@ -192,13 +192,16 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ClassNameId" return-type="Collection">
-			<finder-column name="classNameId" />
+		<finder name="StructureId" return-type="Collection">
+			<finder-column name="structureId" />
 		</finder>
-		<finder name="ClassPK" return-type="DDMStorageLink" unique="true">
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="StructureId" return-type="Collection">
+		<finder name="C_C_S" return-type="DDMStructureLink" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 			<finder-column name="structureId" />
 		</finder>
 	</entity>

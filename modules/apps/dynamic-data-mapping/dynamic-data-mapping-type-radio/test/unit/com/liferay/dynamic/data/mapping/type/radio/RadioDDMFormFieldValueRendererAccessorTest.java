@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.type.radio;
 
-import com.liferay.dynamic.data.mapping.type.radio.RadioDDMFormFieldValueAccessor;
-import com.liferay.dynamic.data.mapping.type.radio.RadioDDMFormFieldValueRendererAccessor;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
@@ -27,7 +27,6 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 
 import java.util.Locale;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,41 +39,38 @@ public class RadioDDMFormFieldValueRendererAccessorTest {
 
 	@Before
 	public void setUp() {
-		availableLocales = DDMFormTestUtil.createAvailableLocales(
-			LocaleUtil.US);
-		defaultLocale = LocaleUtil.US;
+		setUpJSONFactoryUtil();
 	}
 
 	@Test
 	public void testGetRadioRenderedValue() {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			availableLocales, defaultLocale);
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
 			"Radio", "Radio", "radio", "string", false, false, false);
 
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
 
-		ddmFormFieldOptions.addOption("value 1");
 		ddmFormFieldOptions.addOptionLabel(
-			"value 1", defaultLocale, "option 1");
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+			"value 1", LocaleUtil.US, "option 1");
+		ddmFormFieldOptions.addOptionLabel(
+			"value 2", LocaleUtil.US, "option 2");
 
 		ddmForm.addDDMFormField(ddmFormField);
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm, availableLocales, defaultLocale);
+			ddmForm);
 
 		DDMFormFieldValue ddmFormFieldValue =
-				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					"Radio", new UnlocalizedValue("value 1"));
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"Radio", new UnlocalizedValue("[\"value 1\"]"));
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		RadioDDMFormFieldValueRendererAccessor
 			radioDDMFormFieldValueRendererAccessor =
-				createRadioDDMFormFieldValueRendererAccessor(defaultLocale);
+				createRadioDDMFormFieldValueRendererAccessor(LocaleUtil.US);
 
 		Assert.assertEquals(
 			"option 1",
@@ -91,7 +87,10 @@ public class RadioDDMFormFieldValueRendererAccessorTest {
 			radioDDMFormFieldValueAccessor);
 	}
 
-	protected Set<Locale> availableLocales;
-	protected Locale defaultLocale;
+	protected void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
 
 }

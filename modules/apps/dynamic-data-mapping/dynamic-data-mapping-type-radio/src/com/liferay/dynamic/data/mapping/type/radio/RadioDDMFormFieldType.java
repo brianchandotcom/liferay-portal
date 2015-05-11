@@ -14,12 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.type.radio;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueParameterSerializer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueRendererAccessor;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,6 +46,28 @@ public class RadioDDMFormFieldType implements DDMFormFieldType {
 		Locale locale) {
 
 		return new RadioDDMFormFieldValueAccessor(locale);
+	}
+
+	@Override
+	public DDMFormFieldValueParameterSerializer
+		getDDMFormFieldValueParameterSerializer() {
+
+		return new DDMFormFieldValueParameterSerializer() {
+
+			@Override
+			public String getParameterValue(
+				HttpServletRequest httpServletRequest,
+				String ddmFormFieldParameterName,
+				String defaultDDMFormFieldParameterValue) {
+
+				String[] parameterValues = ParamUtil.getParameterValues(
+					httpServletRequest, ddmFormFieldParameterName,
+					GetterUtil.DEFAULT_STRING_VALUES);
+
+				return JSONFactoryUtil.serialize(parameterValues);
+			}
+
+		};
 	}
 
 	@Override

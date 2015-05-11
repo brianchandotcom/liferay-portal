@@ -14,6 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.type.radio;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
@@ -32,14 +38,27 @@ public class RadioDDMFormFieldValueAccessor
 
 	@Override
 	public String get(DDMFormFieldValue ddmFormFieldValue) {
-		Value value = ddmFormFieldValue.getValue();
+		try {
+			Value value = ddmFormFieldValue.getValue();
 
-		return value.getString(locale);
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				value.getString(locale));
+
+			return jsonArray.getString(0);
+		}
+		catch (JSONException jsone) {
+			_log.error("Unable to parse JSON array", jsone);
+
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public Class<String> getAttributeClass() {
 		return String.class;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RadioDDMFormFieldValueAccessor.class);
 
 }

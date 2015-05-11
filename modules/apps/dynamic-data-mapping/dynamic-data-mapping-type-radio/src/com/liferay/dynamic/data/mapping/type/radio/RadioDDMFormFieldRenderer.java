@@ -14,15 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.type.radio;
 
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portlet.dynamicdatamapping.registry.BaseDDMFormFieldWithOptionsRenderer;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.registry.BaseDDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
+import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContext;
 
-import java.net.URL;
-
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -33,12 +34,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true, property = {"templatePath=/META-INF/resources/radio.soy"},
-	service = {
-		RadioDDMFormFieldRenderer.class, DDMFormFieldRenderer.class
-	}
+	service = {RadioDDMFormFieldRenderer.class, DDMFormFieldRenderer.class}
 )
-public class RadioDDMFormFieldRenderer
-	extends BaseDDMFormFieldWithOptionsRenderer {
+public class RadioDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 	@Override
 	public String getTemplateLanguage() {
@@ -52,31 +50,41 @@ public class RadioDDMFormFieldRenderer
 
 	@Override
 	public TemplateResource getTemplateResource() {
-		String templatePath = MapUtil.getString(_properties, "templatePath");
-
-		return getTemplateResource(templatePath);
+		return _templateResource;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_properties = properties;
+		String templatePath = MapUtil.getString(properties, "templatePath");
+
+		_templateResource = getTemplateResource(templatePath);
 	}
 
-	@Override
-	protected String getActiveOptionText() {
-		return "checked";
+	protected List<Object> getOptions(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		RadioDDMFormFieldContextHelper selectDDMFormFieldContextHelper =
+			new RadioDDMFormFieldContextHelper(
+				ddmFormField.getDDMFormFieldOptions(),
+				ddmFormFieldRenderingContext.getValue(),
+				ddmFormField.getPredefinedValue(),
+				ddmFormFieldRenderingContext.getLocale());
+
+		return selectDDMFormFieldContextHelper.getOptions();
 	}
 
-	protected TemplateResource getTemplateResource(String templatePath) {
-		Class<?> clazz = getClass();
+	protected void populateRequiredContext(
+		Template template, DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		ClassLoader classLoader = clazz.getClassLoader();
+		super.populateRequiredContext(
+			template, ddmFormField, ddmFormFieldRenderingContext);
 
-		URL templateURL = classLoader.getResource(templatePath);
-
-		return new URLTemplateResource(templateURL.getPath(), templateURL);
+		template.put(
+			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
 	}
 
-	private Map<String, Object> _properties;
+	private TemplateResource _templateResource;
 
 }

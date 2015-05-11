@@ -469,12 +469,12 @@ for (int i = 0; i < results.size(); i++) {
 
 					var rowIdsSize = rowIds.length;
 
-					if ((rowIdsSize == 0) || (rowIdsSize == 2)) {
-						if (rowIdsSize == 0) {
+					if (rowIdsSize === 0 || rowIdsSize === 2) {
+						if (rowIdsSize === 0) {
 							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=<%= latestWikiPage.getVersion() %>', uri);
 							uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=<%= wikiPage.getVersion() %>', uri);
 						}
-						else if (rowIdsSize == 2) {
+						else if (rowIdsSize === 2) {
 							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds.eq(1).val(), uri);
 							uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds.eq(0).val(), uri);
 						}

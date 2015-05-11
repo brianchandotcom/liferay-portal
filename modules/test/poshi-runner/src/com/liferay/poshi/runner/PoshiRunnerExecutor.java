@@ -585,7 +585,7 @@ public class PoshiRunnerExecutor {
 				String method = matcher.group(2);
 				String variable = matcher.group(1);
 
-				if (method.startsWith("length")) {
+				if (method.equals("length()")) {
 					if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(
 							variable)) {
 
@@ -598,6 +598,9 @@ public class PoshiRunnerExecutor {
 					}
 
 					varValue = String.valueOf(variable.length());
+				}
+				else {
+					throw new Exception("No such method " + method);
 				}
 			}
 		}

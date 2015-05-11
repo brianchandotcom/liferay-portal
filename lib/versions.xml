@@ -116,6 +116,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/bsh.jar</file-name>
+				<version>2.0 B4</version>
+				<project-name>BeanShell</project-name>
+				<project-url>http://www.beanshell.org</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/catalina.jar</file-name>
 				<version>7.0.42</version>
 				<project-name>Tomcat</project-name>
@@ -1273,18 +1285,6 @@
 				<comments>
 					Removed org.cyberneko.* because it conflicts with nekohtml.jar.
 				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/bsh.jar</file-name>
-				<version>2.0 B4</version>
-				<project-name>BeanShell</project-name>
-				<project-url>http://www.beanshell.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/bsf.jar</file-name>

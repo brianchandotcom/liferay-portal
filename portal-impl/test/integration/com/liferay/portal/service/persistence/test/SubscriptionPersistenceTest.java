@@ -220,18 +220,11 @@ public class SubscriptionPersistenceTest {
 		Assert.assertEquals(existingSubscription, newSubscription);
 	}
 
-	@Test
+	@Test(expected = NoSuchSubscriptionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchSubscriptionException");
-		}
-		catch (NoSuchSubscriptionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

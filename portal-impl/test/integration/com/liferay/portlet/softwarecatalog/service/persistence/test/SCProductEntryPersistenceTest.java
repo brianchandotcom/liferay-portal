@@ -227,18 +227,11 @@ public class SCProductEntryPersistenceTest {
 		Assert.assertEquals(existingSCProductEntry, newSCProductEntry);
 	}
 
-	@Test
+	@Test(expected = NoSuchProductEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchProductEntryException");
-		}
-		catch (NoSuchProductEntryException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

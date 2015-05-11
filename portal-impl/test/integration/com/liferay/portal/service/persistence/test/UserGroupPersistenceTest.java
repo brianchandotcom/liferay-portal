@@ -219,17 +219,11 @@ public class UserGroupPersistenceTest {
 		Assert.assertEquals(existingUserGroup, newUserGroup);
 	}
 
-	@Test
+	@Test(expected = NoSuchUserGroupException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchUserGroupException");
-		}
-		catch (NoSuchUserGroupException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

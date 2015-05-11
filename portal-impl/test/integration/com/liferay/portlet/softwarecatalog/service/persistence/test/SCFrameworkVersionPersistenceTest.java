@@ -195,18 +195,11 @@ public class SCFrameworkVersionPersistenceTest {
 		Assert.assertEquals(existingSCFrameworkVersion, newSCFrameworkVersion);
 	}
 
-	@Test
+	@Test(expected = NoSuchFrameworkVersionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchFrameworkVersionException");
-		}
-		catch (NoSuchFrameworkVersionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -270,17 +270,11 @@ public class RolePersistenceTest {
 		Assert.assertEquals(existingRole, newRole);
 	}
 
-	@Test
+	@Test(expected = NoSuchRoleException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchRoleException");
-		}
-		catch (NoSuchRoleException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -307,17 +307,11 @@ public class ShoppingItemPersistenceTest {
 		Assert.assertEquals(existingShoppingItem, newShoppingItem);
 	}
 
-	@Test
+	@Test(expected = NoSuchItemException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchItemException");
-		}
-		catch (NoSuchItemException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

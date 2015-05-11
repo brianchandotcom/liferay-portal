@@ -276,17 +276,11 @@ public class SocialActivityPersistenceTest {
 		Assert.assertEquals(existingSocialActivity, newSocialActivity);
 	}
 
-	@Test
+	@Test(expected = NoSuchActivityException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchActivityException");
-		}
-		catch (NoSuchActivityException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

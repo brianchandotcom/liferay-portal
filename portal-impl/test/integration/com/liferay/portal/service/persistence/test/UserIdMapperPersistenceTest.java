@@ -177,18 +177,11 @@ public class UserIdMapperPersistenceTest {
 		Assert.assertEquals(existingUserIdMapper, newUserIdMapper);
 	}
 
-	@Test
+	@Test(expected = NoSuchUserIdMapperException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchUserIdMapperException");
-		}
-		catch (NoSuchUserIdMapperException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

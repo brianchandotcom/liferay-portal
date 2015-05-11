@@ -168,18 +168,11 @@ public class WikiPageResourcePersistenceTest {
 		Assert.assertEquals(existingWikiPageResource, newWikiPageResource);
 	}
 
-	@Test
+	@Test(expected = NoSuchPageResourceException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchPageResourceException");
-		}
-		catch (NoSuchPageResourceException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -278,18 +278,11 @@ public class MBMailingListPersistenceTest {
 		Assert.assertEquals(existingMBMailingList, newMBMailingList);
 	}
 
-	@Test
+	@Test(expected = NoSuchMailingListException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchMailingListException");
-		}
-		catch (NoSuchMailingListException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

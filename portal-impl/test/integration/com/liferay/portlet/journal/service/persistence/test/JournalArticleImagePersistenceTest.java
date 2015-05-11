@@ -199,18 +199,11 @@ public class JournalArticleImagePersistenceTest {
 		Assert.assertEquals(existingJournalArticleImage, newJournalArticleImage);
 	}
 
-	@Test
+	@Test(expected = NoSuchArticleImageException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchArticleImageException");
-		}
-		catch (NoSuchArticleImageException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

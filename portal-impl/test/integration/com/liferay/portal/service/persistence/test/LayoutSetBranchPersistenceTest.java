@@ -251,18 +251,11 @@ public class LayoutSetBranchPersistenceTest {
 		Assert.assertEquals(existingLayoutSetBranch, newLayoutSetBranch);
 	}
 
-	@Test
+	@Test(expected = NoSuchLayoutSetBranchException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchLayoutSetBranchException");
-		}
-		catch (NoSuchLayoutSetBranchException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

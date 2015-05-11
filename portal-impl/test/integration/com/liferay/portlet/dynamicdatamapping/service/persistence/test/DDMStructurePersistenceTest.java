@@ -312,17 +312,11 @@ public class DDMStructurePersistenceTest {
 		Assert.assertEquals(existingDDMStructure, newDDMStructure);
 	}
 
-	@Test
+	@Test(expected = NoSuchStructureException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchStructureException");
-		}
-		catch (NoSuchStructureException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -230,17 +230,11 @@ public class PollsVotePersistenceTest {
 		Assert.assertEquals(existingPollsVote, newPollsVote);
 	}
 
-	@Test
+	@Test(expected = NoSuchVoteException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchVoteException");
-		}
-		catch (NoSuchVoteException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

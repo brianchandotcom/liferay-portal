@@ -189,17 +189,11 @@ public class CountryPersistenceTest {
 		Assert.assertEquals(existingCountry, newCountry);
 	}
 
-	@Test
+	@Test(expected = NoSuchCountryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchCountryException");
-		}
-		catch (NoSuchCountryException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

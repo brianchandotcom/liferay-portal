@@ -244,18 +244,11 @@ public class AssetVocabularyPersistenceTest {
 		Assert.assertEquals(existingAssetVocabulary, newAssetVocabulary);
 	}
 
-	@Test
+	@Test(expected = NoSuchVocabularyException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchVocabularyException");
-		}
-		catch (NoSuchVocabularyException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

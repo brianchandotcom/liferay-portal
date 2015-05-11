@@ -229,18 +229,11 @@ public class PortletPreferencesPersistenceTest {
 		Assert.assertEquals(existingPortletPreferences, newPortletPreferences);
 	}
 
-	@Test
+	@Test(expected = NoSuchPortletPreferencesException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchPortletPreferencesException");
-		}
-		catch (NoSuchPortletPreferencesException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -164,17 +164,11 @@ public class AnnouncementsFlagPersistenceTest {
 		Assert.assertEquals(existingAnnouncementsFlag, newAnnouncementsFlag);
 	}
 
-	@Test
+	@Test(expected = NoSuchFlagException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchFlagException");
-		}
-		catch (NoSuchFlagException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

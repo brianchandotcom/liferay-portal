@@ -195,17 +195,11 @@ public class DLFileRankPersistenceTest {
 		Assert.assertEquals(existingDLFileRank, newDLFileRank);
 	}
 
-	@Test
+	@Test(expected = NoSuchFileRankException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchFileRankException");
-		}
-		catch (NoSuchFileRankException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

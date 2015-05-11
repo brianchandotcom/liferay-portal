@@ -234,17 +234,11 @@ public class WebsitePersistenceTest {
 		Assert.assertEquals(existingWebsite, newWebsite);
 	}
 
-	@Test
+	@Test(expected = NoSuchWebsiteException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchWebsiteException");
-		}
-		catch (NoSuchWebsiteException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

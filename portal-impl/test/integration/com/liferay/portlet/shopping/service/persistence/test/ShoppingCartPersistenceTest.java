@@ -196,17 +196,11 @@ public class ShoppingCartPersistenceTest {
 		Assert.assertEquals(existingShoppingCart, newShoppingCart);
 	}
 
-	@Test
+	@Test(expected = NoSuchCartException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchCartException");
-		}
-		catch (NoSuchCartException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

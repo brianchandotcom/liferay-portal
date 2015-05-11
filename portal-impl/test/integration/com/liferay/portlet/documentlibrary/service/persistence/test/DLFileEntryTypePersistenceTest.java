@@ -224,18 +224,11 @@ public class DLFileEntryTypePersistenceTest {
 		Assert.assertEquals(existingDLFileEntryType, newDLFileEntryType);
 	}
 
-	@Test
+	@Test(expected = NoSuchFileEntryTypeException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchFileEntryTypeException");
-		}
-		catch (NoSuchFileEntryTypeException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

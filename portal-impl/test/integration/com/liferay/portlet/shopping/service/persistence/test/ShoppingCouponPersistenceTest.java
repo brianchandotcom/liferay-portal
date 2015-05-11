@@ -223,17 +223,11 @@ public class ShoppingCouponPersistenceTest {
 		Assert.assertEquals(existingShoppingCoupon, newShoppingCoupon);
 	}
 
-	@Test
+	@Test(expected = NoSuchCouponException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchCouponException");
-		}
-		catch (NoSuchCouponException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -269,18 +269,11 @@ public class OrganizationPersistenceTest {
 		Assert.assertEquals(existingOrganization, newOrganization);
 	}
 
-	@Test
+	@Test(expected = NoSuchOrganizationException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchOrganizationException");
-		}
-		catch (NoSuchOrganizationException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

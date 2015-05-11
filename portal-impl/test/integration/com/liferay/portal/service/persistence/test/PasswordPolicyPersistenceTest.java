@@ -313,18 +313,11 @@ public class PasswordPolicyPersistenceTest {
 		Assert.assertEquals(existingPasswordPolicy, newPasswordPolicy);
 	}
 
-	@Test
+	@Test(expected = NoSuchPasswordPolicyException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchPasswordPolicyException");
-		}
-		catch (NoSuchPasswordPolicyException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

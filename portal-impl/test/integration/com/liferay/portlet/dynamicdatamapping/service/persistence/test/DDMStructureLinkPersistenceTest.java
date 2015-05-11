@@ -164,18 +164,11 @@ public class DDMStructureLinkPersistenceTest {
 		Assert.assertEquals(existingDDMStructureLink, newDDMStructureLink);
 	}
 
-	@Test
+	@Test(expected = NoSuchStructureLinkException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchStructureLinkException");
-		}
-		catch (NoSuchStructureLinkException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

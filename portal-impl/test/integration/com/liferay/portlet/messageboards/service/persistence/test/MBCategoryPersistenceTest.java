@@ -328,17 +328,11 @@ public class MBCategoryPersistenceTest {
 		Assert.assertEquals(existingMBCategory, newMBCategory);
 	}
 
-	@Test
+	@Test(expected = NoSuchCategoryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchCategoryException");
-		}
-		catch (NoSuchCategoryException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

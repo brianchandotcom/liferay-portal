@@ -219,17 +219,11 @@ public class AppPersistenceTest {
 		Assert.assertEquals(existingApp, newApp);
 	}
 
-	@Test
+	@Test(expected = NoSuchAppException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchAppException");
-		}
-		catch (NoSuchAppException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

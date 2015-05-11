@@ -162,17 +162,11 @@ public class ShardPersistenceTest {
 		Assert.assertEquals(existingShard, newShard);
 	}
 
-	@Test
+	@Test(expected = NoSuchShardException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchShardException");
-		}
-		catch (NoSuchShardException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

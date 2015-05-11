@@ -283,18 +283,11 @@ public class UserNotificationEventPersistenceTest {
 			newUserNotificationEvent);
 	}
 
-	@Test
+	@Test(expected = NoSuchUserNotificationEventException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchUserNotificationEventException");
-		}
-		catch (NoSuchUserNotificationEventException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

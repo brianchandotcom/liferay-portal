@@ -318,17 +318,11 @@ public class CalEventPersistenceTest {
 		Assert.assertEquals(existingCalEvent, newCalEvent);
 	}
 
-	@Test
+	@Test(expected = NoSuchEventException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchEventException");
-		}
-		catch (NoSuchEventException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

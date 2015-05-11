@@ -180,17 +180,11 @@ public class TeamPersistenceTest {
 		Assert.assertEquals(existingTeam, newTeam);
 	}
 
-	@Test
+	@Test(expected = NoSuchTeamException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchTeamException");
-		}
-		catch (NoSuchTeamException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

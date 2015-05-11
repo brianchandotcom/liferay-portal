@@ -185,18 +185,11 @@ public class ResourceBlockPersistenceTest {
 		Assert.assertEquals(existingResourceBlock, newResourceBlock);
 	}
 
-	@Test
+	@Test(expected = NoSuchResourceBlockException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchResourceBlockException");
-		}
-		catch (NoSuchResourceBlockException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

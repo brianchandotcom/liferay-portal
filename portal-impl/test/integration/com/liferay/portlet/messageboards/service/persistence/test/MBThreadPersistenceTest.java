@@ -359,17 +359,11 @@ public class MBThreadPersistenceTest {
 		Assert.assertEquals(existingMBThread, newMBThread);
 	}
 
-	@Test
+	@Test(expected = NoSuchThreadException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchThreadException");
-		}
-		catch (NoSuchThreadException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

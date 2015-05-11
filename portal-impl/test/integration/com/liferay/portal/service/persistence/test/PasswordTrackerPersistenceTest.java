@@ -154,18 +154,11 @@ public class PasswordTrackerPersistenceTest {
 		Assert.assertEquals(existingPasswordTracker, newPasswordTracker);
 	}
 
-	@Test
+	@Test(expected = NoSuchPasswordTrackerException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchPasswordTrackerException");
-		}
-		catch (NoSuchPasswordTrackerException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

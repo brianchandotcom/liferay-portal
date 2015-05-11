@@ -219,18 +219,11 @@ public class SystemEventPersistenceTest {
 		Assert.assertEquals(existingSystemEvent, newSystemEvent);
 	}
 
-	@Test
+	@Test(expected = NoSuchSystemEventException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchSystemEventException");
-		}
-		catch (NoSuchSystemEventException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

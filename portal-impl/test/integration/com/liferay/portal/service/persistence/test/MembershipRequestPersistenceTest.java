@@ -202,18 +202,11 @@ public class MembershipRequestPersistenceTest {
 		Assert.assertEquals(existingMembershipRequest, newMembershipRequest);
 	}
 
-	@Test
+	@Test(expected = NoSuchMembershipRequestException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchMembershipRequestException");
-		}
-		catch (NoSuchMembershipRequestException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

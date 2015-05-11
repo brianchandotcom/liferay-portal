@@ -165,18 +165,11 @@ public class VirtualHostPersistenceTest {
 		Assert.assertEquals(existingVirtualHost, newVirtualHost);
 	}
 
-	@Test
+	@Test(expected = NoSuchVirtualHostException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchVirtualHostException");
-		}
-		catch (NoSuchVirtualHostException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

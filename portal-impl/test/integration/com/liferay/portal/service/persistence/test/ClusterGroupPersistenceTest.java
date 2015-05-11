@@ -145,18 +145,11 @@ public class ClusterGroupPersistenceTest {
 		Assert.assertEquals(existingClusterGroup, newClusterGroup);
 	}
 
-	@Test
+	@Test(expected = NoSuchClusterGroupException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchClusterGroupException");
-		}
-		catch (NoSuchClusterGroupException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

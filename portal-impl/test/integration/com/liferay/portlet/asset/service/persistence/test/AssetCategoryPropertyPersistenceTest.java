@@ -202,18 +202,11 @@ public class AssetCategoryPropertyPersistenceTest {
 			newAssetCategoryProperty);
 	}
 
-	@Test
+	@Test(expected = NoSuchCategoryPropertyException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchCategoryPropertyException");
-		}
-		catch (NoSuchCategoryPropertyException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

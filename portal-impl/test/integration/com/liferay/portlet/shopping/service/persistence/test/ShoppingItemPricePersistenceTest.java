@@ -174,17 +174,11 @@ public class ShoppingItemPricePersistenceTest {
 		Assert.assertEquals(existingShoppingItemPrice, newShoppingItemPrice);
 	}
 
-	@Test
+	@Test(expected = NoSuchItemPriceException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchItemPriceException");
-		}
-		catch (NoSuchItemPriceException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

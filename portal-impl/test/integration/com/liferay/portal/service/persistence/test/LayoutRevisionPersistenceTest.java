@@ -340,18 +340,11 @@ public class LayoutRevisionPersistenceTest {
 		Assert.assertEquals(existingLayoutRevision, newLayoutRevision);
 	}
 
-	@Test
+	@Test(expected = NoSuchLayoutRevisionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchLayoutRevisionException");
-		}
-		catch (NoSuchLayoutRevisionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

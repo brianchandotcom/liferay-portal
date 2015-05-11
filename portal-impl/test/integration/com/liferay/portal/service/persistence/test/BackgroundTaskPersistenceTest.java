@@ -321,18 +321,11 @@ public class BackgroundTaskPersistenceTest {
 		Assert.assertEquals(existingBackgroundTask, newBackgroundTask);
 	}
 
-	@Test
+	@Test(expected = NoSuchBackgroundTaskException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchBackgroundTaskException");
-		}
-		catch (NoSuchBackgroundTaskException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

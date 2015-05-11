@@ -171,17 +171,11 @@ public class ExpandoRowPersistenceTest {
 		Assert.assertEquals(existingExpandoRow, newExpandoRow);
 	}
 
-	@Test
+	@Test(expected = NoSuchRowException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchRowException");
-		}
-		catch (NoSuchRowException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

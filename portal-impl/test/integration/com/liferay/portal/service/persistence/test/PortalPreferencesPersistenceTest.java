@@ -154,18 +154,11 @@ public class PortalPreferencesPersistenceTest {
 		Assert.assertEquals(existingPortalPreferences, newPortalPreferences);
 	}
 
-	@Test
+	@Test(expected = NoSuchPreferencesException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchPreferencesException");
-		}
-		catch (NoSuchPreferencesException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

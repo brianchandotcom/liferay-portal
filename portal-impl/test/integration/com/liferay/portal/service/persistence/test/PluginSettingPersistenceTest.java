@@ -173,18 +173,11 @@ public class PluginSettingPersistenceTest {
 		Assert.assertEquals(existingPluginSetting, newPluginSetting);
 	}
 
-	@Test
+	@Test(expected = NoSuchPluginSettingException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchPluginSettingException");
-		}
-		catch (NoSuchPluginSettingException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

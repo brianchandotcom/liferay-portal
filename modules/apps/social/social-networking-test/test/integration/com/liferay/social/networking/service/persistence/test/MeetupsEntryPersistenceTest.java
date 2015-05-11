@@ -207,18 +207,11 @@ public class MeetupsEntryPersistenceTest {
 		Assert.assertEquals(existingMeetupsEntry, newMeetupsEntry);
 	}
 
-	@Test
+	@Test(expected = NoSuchMeetupsEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchMeetupsEntryException");
-		}
-		catch (NoSuchMeetupsEntryException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

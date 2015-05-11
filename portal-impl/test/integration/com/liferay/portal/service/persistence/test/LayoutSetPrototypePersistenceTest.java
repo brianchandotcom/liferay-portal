@@ -210,18 +210,11 @@ public class LayoutSetPrototypePersistenceTest {
 		Assert.assertEquals(existingLayoutSetPrototype, newLayoutSetPrototype);
 	}
 
-	@Test
+	@Test(expected = NoSuchLayoutSetPrototypeException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchLayoutSetPrototypeException");
-		}
-		catch (NoSuchLayoutSetPrototypeException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

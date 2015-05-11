@@ -153,17 +153,11 @@ public class ShoppingItemFieldPersistenceTest {
 		Assert.assertEquals(existingShoppingItemField, newShoppingItemField);
 	}
 
-	@Test
+	@Test(expected = NoSuchItemFieldException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchItemFieldException");
-		}
-		catch (NoSuchItemFieldException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

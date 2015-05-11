@@ -149,18 +149,11 @@ public class BrowserTrackerPersistenceTest {
 		Assert.assertEquals(existingBrowserTracker, newBrowserTracker);
 	}
 
-	@Test
+	@Test(expected = NoSuchBrowserTrackerException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchBrowserTrackerException");
-		}
-		catch (NoSuchBrowserTrackerException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

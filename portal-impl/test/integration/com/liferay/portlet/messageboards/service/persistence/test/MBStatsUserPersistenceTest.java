@@ -179,17 +179,11 @@ public class MBStatsUserPersistenceTest {
 		Assert.assertEquals(existingMBStatsUser, newMBStatsUser);
 	}
 
-	@Test
+	@Test(expected = NoSuchStatsUserException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchStatsUserException");
-		}
-		catch (NoSuchStatsUserException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

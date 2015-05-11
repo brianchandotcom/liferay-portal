@@ -239,18 +239,11 @@ public class JournalContentSearchPersistenceTest {
 			newJournalContentSearch);
 	}
 
-	@Test
+	@Test(expected = NoSuchContentSearchException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchContentSearchException");
-		}
-		catch (NoSuchContentSearchException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

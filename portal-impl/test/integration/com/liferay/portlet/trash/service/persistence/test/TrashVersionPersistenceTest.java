@@ -174,17 +174,11 @@ public class TrashVersionPersistenceTest {
 		Assert.assertEquals(existingTrashVersion, newTrashVersion);
 	}
 
-	@Test
+	@Test(expected = NoSuchVersionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchVersionException");
-		}
-		catch (NoSuchVersionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

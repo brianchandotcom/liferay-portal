@@ -148,19 +148,12 @@ public class OrgGroupRolePersistenceTest {
 		Assert.assertEquals(existingOrgGroupRole, newOrgGroupRole);
 	}
 
-	@Test
+	@Test(expected = NoSuchOrgGroupRoleException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		OrgGroupRolePK pk = new OrgGroupRolePK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchOrgGroupRoleException");
-		}
-		catch (NoSuchOrgGroupRoleException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

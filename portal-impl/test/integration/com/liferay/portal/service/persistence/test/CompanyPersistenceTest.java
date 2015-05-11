@@ -198,17 +198,11 @@ public class CompanyPersistenceTest {
 		Assert.assertEquals(existingCompany, newCompany);
 	}
 
-	@Test
+	@Test(expected = NoSuchCompanyException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchCompanyException");
-		}
-		catch (NoSuchCompanyException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

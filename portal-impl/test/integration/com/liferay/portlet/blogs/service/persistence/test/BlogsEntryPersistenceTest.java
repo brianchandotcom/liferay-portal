@@ -450,17 +450,11 @@ public class BlogsEntryPersistenceTest {
 		Assert.assertEquals(existingBlogsEntry, newBlogsEntry);
 	}
 
-	@Test
+	@Test(expected = NoSuchEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchEntryException");
-		}
-		catch (NoSuchEntryException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

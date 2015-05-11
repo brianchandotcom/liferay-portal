@@ -204,17 +204,11 @@ public class LockPersistenceTest {
 		Assert.assertEquals(existingLock, newLock);
 	}
 
-	@Test
+	@Test(expected = NoSuchLockException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchLockException");
-		}
-		catch (NoSuchLockException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

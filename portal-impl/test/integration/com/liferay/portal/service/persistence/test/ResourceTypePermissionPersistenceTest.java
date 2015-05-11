@@ -186,18 +186,11 @@ public class ResourceTypePermissionPersistenceTest {
 			newResourceTypePermission);
 	}
 
-	@Test
+	@Test(expected = NoSuchResourceTypePermissionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchResourceTypePermissionException");
-		}
-		catch (NoSuchResourceTypePermissionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -204,17 +204,11 @@ public class OrgLaborPersistenceTest {
 		Assert.assertEquals(existingOrgLabor, newOrgLabor);
 	}
 
-	@Test
+	@Test(expected = NoSuchOrgLaborException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchOrgLaborException");
-		}
-		catch (NoSuchOrgLaborException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

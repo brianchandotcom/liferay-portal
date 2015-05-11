@@ -169,18 +169,11 @@ public class WebDAVPropsPersistenceTest {
 		Assert.assertEquals(existingWebDAVProps, newWebDAVProps);
 	}
 
-	@Test
+	@Test(expected = NoSuchWebDAVPropsException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchWebDAVPropsException");
-		}
-		catch (NoSuchWebDAVPropsException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -223,17 +223,11 @@ public class MDRActionPersistenceTest {
 		Assert.assertEquals(existingMDRAction, newMDRAction);
 	}
 
-	@Test
+	@Test(expected = NoSuchActionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchActionException");
-		}
-		catch (NoSuchActionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

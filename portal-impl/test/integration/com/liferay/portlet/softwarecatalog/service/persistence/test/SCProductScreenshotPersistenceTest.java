@@ -184,18 +184,11 @@ public class SCProductScreenshotPersistenceTest {
 		Assert.assertEquals(existingSCProductScreenshot, newSCProductScreenshot);
 	}
 
-	@Test
+	@Test(expected = NoSuchProductScreenshotException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchProductScreenshotException");
-		}
-		catch (NoSuchProductScreenshotException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

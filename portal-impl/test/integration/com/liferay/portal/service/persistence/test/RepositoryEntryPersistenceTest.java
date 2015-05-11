@@ -222,18 +222,11 @@ public class RepositoryEntryPersistenceTest {
 		Assert.assertEquals(existingRepositoryEntry, newRepositoryEntry);
 	}
 
-	@Test
+	@Test(expected = NoSuchRepositoryEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchRepositoryEntryException");
-		}
-		catch (NoSuchRepositoryEntryException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

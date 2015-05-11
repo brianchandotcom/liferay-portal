@@ -149,17 +149,11 @@ public class ClassNamePersistenceTest {
 		Assert.assertEquals(existingClassName, newClassName);
 	}
 
-	@Test
+	@Test(expected = NoSuchClassNameException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchClassNameException");
-		}
-		catch (NoSuchClassNameException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

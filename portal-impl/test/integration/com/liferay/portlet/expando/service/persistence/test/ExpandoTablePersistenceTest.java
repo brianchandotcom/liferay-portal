@@ -163,17 +163,11 @@ public class ExpandoTablePersistenceTest {
 		Assert.assertEquals(existingExpandoTable, newExpandoTable);
 	}
 
-	@Test
+	@Test(expected = NoSuchTableException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchTableException");
-		}
-		catch (NoSuchTableException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -209,17 +209,11 @@ public class SACPEntryPersistenceTest {
 		Assert.assertEquals(existingSACPEntry, newSACPEntry);
 	}
 
-	@Test
+	@Test(expected = NoSuchEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchEntryException");
-		}
-		catch (NoSuchEntryException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

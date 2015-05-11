@@ -221,17 +221,11 @@ public class PollsQuestionPersistenceTest {
 		Assert.assertEquals(existingPollsQuestion, newPollsQuestion);
 	}
 
-	@Test
+	@Test(expected = NoSuchQuestionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchQuestionException");
-		}
-		catch (NoSuchQuestionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

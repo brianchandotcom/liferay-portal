@@ -627,17 +627,11 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(existingJournalArticle, newJournalArticle);
 	}
 
-	@Test
+	@Test(expected = NoSuchArticleException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchArticleException");
-		}
-		catch (NoSuchArticleException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

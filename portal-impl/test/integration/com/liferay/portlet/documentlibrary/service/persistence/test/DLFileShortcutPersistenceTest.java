@@ -275,18 +275,11 @@ public class DLFileShortcutPersistenceTest {
 		Assert.assertEquals(existingDLFileShortcut, newDLFileShortcut);
 	}
 
-	@Test
+	@Test(expected = NoSuchFileShortcutException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchFileShortcutException");
-		}
-		catch (NoSuchFileShortcutException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

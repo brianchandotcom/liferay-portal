@@ -263,17 +263,11 @@ public class JournalFeedPersistenceTest {
 		Assert.assertEquals(existingJournalFeed, newJournalFeed);
 	}
 
-	@Test
+	@Test(expected = NoSuchFeedException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchFeedException");
-		}
-		catch (NoSuchFeedException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -161,17 +161,11 @@ public class DLSyncEventPersistenceTest {
 		Assert.assertEquals(existingDLSyncEvent, newDLSyncEvent);
 	}
 
-	@Test
+	@Test(expected = NoSuchSyncEventException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchSyncEventException");
-		}
-		catch (NoSuchSyncEventException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

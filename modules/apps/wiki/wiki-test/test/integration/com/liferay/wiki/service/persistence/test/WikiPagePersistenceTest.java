@@ -553,17 +553,11 @@ public class WikiPagePersistenceTest {
 		Assert.assertEquals(existingWikiPage, newWikiPage);
 	}
 
-	@Test
+	@Test(expected = NoSuchPageException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchPageException");
-		}
-		catch (NoSuchPageException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

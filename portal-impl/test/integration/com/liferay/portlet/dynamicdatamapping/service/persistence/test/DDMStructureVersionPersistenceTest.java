@@ -199,18 +199,11 @@ public class DDMStructureVersionPersistenceTest {
 		Assert.assertEquals(existingDDMStructureVersion, newDDMStructureVersion);
 	}
 
-	@Test
+	@Test(expected = NoSuchStructureVersionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchStructureVersionException");
-		}
-		catch (NoSuchStructureVersionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

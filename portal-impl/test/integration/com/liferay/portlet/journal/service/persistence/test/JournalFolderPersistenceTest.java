@@ -302,17 +302,11 @@ public class JournalFolderPersistenceTest {
 		Assert.assertEquals(existingJournalFolder, newJournalFolder);
 	}
 
-	@Test
+	@Test(expected = NoSuchFolderException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchFolderException");
-		}
-		catch (NoSuchFolderException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

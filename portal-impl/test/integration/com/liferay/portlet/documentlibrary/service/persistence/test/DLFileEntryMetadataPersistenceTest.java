@@ -183,18 +183,11 @@ public class DLFileEntryMetadataPersistenceTest {
 		Assert.assertEquals(existingDLFileEntryMetadata, newDLFileEntryMetadata);
 	}
 
-	@Test
+	@Test(expected = NoSuchFileEntryMetadataException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchFileEntryMetadataException");
-		}
-		catch (NoSuchFileEntryMetadataException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

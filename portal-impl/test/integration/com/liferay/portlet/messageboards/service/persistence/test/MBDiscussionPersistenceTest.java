@@ -225,18 +225,11 @@ public class MBDiscussionPersistenceTest {
 		Assert.assertEquals(existingMBDiscussion, newMBDiscussion);
 	}
 
-	@Test
+	@Test(expected = NoSuchDiscussionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchDiscussionException");
-		}
-		catch (NoSuchDiscussionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

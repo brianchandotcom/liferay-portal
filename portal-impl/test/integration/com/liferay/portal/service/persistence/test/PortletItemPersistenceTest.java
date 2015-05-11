@@ -203,18 +203,11 @@ public class PortletItemPersistenceTest {
 		Assert.assertEquals(existingPortletItem, newPortletItem);
 	}
 
-	@Test
+	@Test(expected = NoSuchPortletItemException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchPortletItemException");
-		}
-		catch (NoSuchPortletItemException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

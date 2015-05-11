@@ -219,17 +219,11 @@ public class MBBanPersistenceTest {
 		Assert.assertEquals(existingMBBan, newMBBan);
 	}
 
-	@Test
+	@Test(expected = NoSuchBanException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchBanException");
-		}
-		catch (NoSuchBanException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -182,17 +182,11 @@ public class ExpandoColumnPersistenceTest {
 		Assert.assertEquals(existingExpandoColumn, newExpandoColumn);
 	}
 
-	@Test
+	@Test(expected = NoSuchColumnException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchColumnException");
-		}
-		catch (NoSuchColumnException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

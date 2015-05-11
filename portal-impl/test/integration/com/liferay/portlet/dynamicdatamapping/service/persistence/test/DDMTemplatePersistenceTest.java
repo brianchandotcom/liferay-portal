@@ -378,17 +378,11 @@ public class DDMTemplatePersistenceTest {
 		Assert.assertEquals(existingDDMTemplate, newDDMTemplate);
 	}
 
-	@Test
+	@Test(expected = NoSuchTemplateException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchTemplateException");
-		}
-		catch (NoSuchTemplateException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

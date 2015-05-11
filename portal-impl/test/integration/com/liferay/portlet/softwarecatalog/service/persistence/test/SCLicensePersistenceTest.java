@@ -164,17 +164,11 @@ public class SCLicensePersistenceTest {
 		Assert.assertEquals(existingSCLicense, newSCLicense);
 	}
 
-	@Test
+	@Test(expected = NoSuchLicenseException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchLicenseException");
-		}
-		catch (NoSuchLicenseException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

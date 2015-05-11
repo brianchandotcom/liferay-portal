@@ -209,18 +209,11 @@ public class SocialActivityAchievementPersistenceTest {
 			newSocialActivityAchievement);
 	}
 
-	@Test
+	@Test(expected = NoSuchActivityAchievementException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchActivityAchievementException");
-		}
-		catch (NoSuchActivityAchievementException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -242,17 +242,11 @@ public class SocialRelationPersistenceTest {
 		Assert.assertEquals(existingSocialRelation, newSocialRelation);
 	}
 
-	@Test
+	@Test(expected = NoSuchRelationException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchRelationException");
-		}
-		catch (NoSuchRelationException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -212,17 +212,11 @@ public class DLContentPersistenceTest {
 		Assert.assertEquals(existingDLContent, newDLContent);
 	}
 
-	@Test
+	@Test(expected = NoSuchContentException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchContentException");
-		}
-		catch (NoSuchContentException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

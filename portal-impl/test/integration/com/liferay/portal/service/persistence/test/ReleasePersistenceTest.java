@@ -180,17 +180,11 @@ public class ReleasePersistenceTest {
 		Assert.assertEquals(existingRelease, newRelease);
 	}
 
-	@Test
+	@Test(expected = NoSuchReleaseException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchReleaseException");
-		}
-		catch (NoSuchReleaseException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

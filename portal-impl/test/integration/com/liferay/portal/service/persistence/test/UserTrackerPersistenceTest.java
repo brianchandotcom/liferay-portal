@@ -187,18 +187,11 @@ public class UserTrackerPersistenceTest {
 		Assert.assertEquals(existingUserTracker, newUserTracker);
 	}
 
-	@Test
+	@Test(expected = NoSuchUserTrackerException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchUserTrackerException");
-		}
-		catch (NoSuchUserTrackerException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -174,19 +174,12 @@ public class UserGroupRolePersistenceTest {
 		Assert.assertEquals(existingUserGroupRole, newUserGroupRole);
 	}
 
-	@Test
+	@Test(expected = NoSuchUserGroupRoleException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		UserGroupRolePK pk = new UserGroupRolePK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchUserGroupRoleException");
-		}
-		catch (NoSuchUserGroupRoleException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

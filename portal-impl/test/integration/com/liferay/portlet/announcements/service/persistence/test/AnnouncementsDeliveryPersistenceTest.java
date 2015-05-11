@@ -175,17 +175,11 @@ public class AnnouncementsDeliveryPersistenceTest {
 			newAnnouncementsDelivery);
 	}
 
-	@Test
+	@Test(expected = NoSuchDeliveryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchDeliveryException");
-		}
-		catch (NoSuchDeliveryException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

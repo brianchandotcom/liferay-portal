@@ -170,18 +170,11 @@ public class ServiceComponentPersistenceTest {
 		Assert.assertEquals(existingServiceComponent, newServiceComponent);
 	}
 
-	@Test
+	@Test(expected = NoSuchServiceComponentException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchServiceComponentException");
-		}
-		catch (NoSuchServiceComponentException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

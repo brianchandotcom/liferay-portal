@@ -206,18 +206,11 @@ public class DDMStructureLayoutPersistenceTest {
 		Assert.assertEquals(existingDDMStructureLayout, newDDMStructureLayout);
 	}
 
-	@Test
+	@Test(expected = NoSuchStructureLayoutException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchStructureLayoutException");
-		}
-		catch (NoSuchStructureLayoutException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

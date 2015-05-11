@@ -462,17 +462,11 @@ public class MBMessagePersistenceTest {
 		Assert.assertEquals(existingMBMessage, newMBMessage);
 	}
 
-	@Test
+	@Test(expected = NoSuchMessageException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchMessageException");
-		}
-		catch (NoSuchMessageException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

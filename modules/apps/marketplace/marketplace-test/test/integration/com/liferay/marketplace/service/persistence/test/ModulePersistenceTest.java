@@ -209,17 +209,11 @@ public class ModulePersistenceTest {
 		Assert.assertEquals(existingModule, newModule);
 	}
 
-	@Test
+	@Test(expected = NoSuchModuleException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchModuleException");
-		}
-		catch (NoSuchModuleException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

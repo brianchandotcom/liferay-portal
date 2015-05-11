@@ -202,17 +202,11 @@ public class AssetTagPersistenceTest {
 		Assert.assertEquals(existingAssetTag, newAssetTag);
 	}
 
-	@Test
+	@Test(expected = NoSuchTagException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchTagException");
-		}
-		catch (NoSuchTagException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

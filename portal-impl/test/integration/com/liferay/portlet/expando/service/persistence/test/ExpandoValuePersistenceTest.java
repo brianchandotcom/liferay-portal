@@ -239,17 +239,11 @@ public class ExpandoValuePersistenceTest {
 		Assert.assertEquals(existingExpandoValue, newExpandoValue);
 	}
 
-	@Test
+	@Test(expected = NoSuchValueException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchValueException");
-		}
-		catch (NoSuchValueException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -178,17 +178,11 @@ public class RegionPersistenceTest {
 		Assert.assertEquals(existingRegion, newRegion);
 	}
 
-	@Test
+	@Test(expected = NoSuchRegionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchRegionException");
-		}
-		catch (NoSuchRegionException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

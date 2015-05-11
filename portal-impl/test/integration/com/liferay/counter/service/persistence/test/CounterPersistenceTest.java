@@ -130,17 +130,11 @@ public class CounterPersistenceTest {
 		Assert.assertEquals(existingCounter, newCounter);
 	}
 
-	@Test
+	@Test(expected = NoSuchCounterException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		String pk = RandomTestUtil.randomString();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchCounterException");
-		}
-		catch (NoSuchCounterException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

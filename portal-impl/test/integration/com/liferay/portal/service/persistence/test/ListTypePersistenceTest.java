@@ -160,17 +160,11 @@ public class ListTypePersistenceTest {
 		Assert.assertEquals(existingListType, newListType);
 	}
 
-	@Test
+	@Test(expected = NoSuchListTypeException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw NoSuchListTypeException");
-		}
-		catch (NoSuchListTypeException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

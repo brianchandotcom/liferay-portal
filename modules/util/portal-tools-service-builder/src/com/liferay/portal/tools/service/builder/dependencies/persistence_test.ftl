@@ -411,7 +411,7 @@ public class ${entity.name}PersistenceTest {
 		Assert.assertEquals(existing${entity.name}, new${entity.name});
 	}
 
-	@Test
+	@Test(expected = ${noSuchEntity}Exception.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		<#if entity.hasCompoundPK()>
 			${entity.PKClassName} pk = new ${entity.PKClassName}(
@@ -447,13 +447,7 @@ public class ${entity.name}PersistenceTest {
 			;
 		</#if>
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail("Missing entity did not throw ${noSuchEntity}Exception");
-		}
-		catch (${noSuchEntity}Exception nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	<#if !entity.hasCompoundPK()>

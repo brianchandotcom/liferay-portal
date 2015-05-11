@@ -165,18 +165,11 @@ public class DDMTemplateLinkPersistenceTest {
 		Assert.assertEquals(existingDDMTemplateLink, newDDMTemplateLink);
 	}
 
-	@Test
+	@Test(expected = NoSuchTemplateLinkException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		try {
-			_persistence.findByPrimaryKey(pk);
-
-			Assert.fail(
-				"Missing entity did not throw NoSuchTemplateLinkException");
-		}
-		catch (NoSuchTemplateLinkException nsee) {
-		}
+		_persistence.findByPrimaryKey(pk);
 	}
 
 	@Test

@@ -32,7 +32,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, property = {"panel.category.key=" + PanelCategoryKeys.MY},
+	immediate = true,
+	property = {
+		"panel.category.key=" + PanelCategoryKeys.MY, "service.ranking=300"
+	},
 	service = PanelApp.class
 )
 public class MyWorkflowTasksPanelApp implements PanelApp {

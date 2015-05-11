@@ -40,7 +40,6 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

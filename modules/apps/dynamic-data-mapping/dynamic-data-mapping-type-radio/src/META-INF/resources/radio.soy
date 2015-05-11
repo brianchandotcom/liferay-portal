@@ -15,14 +15,14 @@
 
 		{foreach $option in $options}
 			<div class="radio">
-				<label for="{$option.id}">
-					<input class="field" dir="{$dir}" id="{$option.id}" name="{$name}" {$option.status} type="radio" value="{$option.value}" />
+				<label for="{$option.value}">
+					<input class="field" dir="{$dir}" id="{$option.value}" name="{$name}" {$option.status} type="radio" value="{$option.value}" />
 
 					{$option.label}
 				</label>
 			</div>
 		{/foreach}
 
-		{$childElementsHTML}
+		{$childElementsHTML|noAutoescape}
 	</div>
 {/template}

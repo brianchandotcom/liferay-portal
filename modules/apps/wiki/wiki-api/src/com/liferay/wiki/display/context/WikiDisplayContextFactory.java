@@ -37,8 +37,7 @@ public interface WikiDisplayContextFactory extends DisplayContextFactory {
 		WikiNode wikiNode);
 
 	public WikiViewPageDisplayContext getWikiViewPageDisplayContext(
-		WikiViewPageDisplayContext
-			parentWikiViewPageDisplayContext,
+		WikiViewPageDisplayContext parentWikiViewPageDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		WikiPage wikiPage);
 

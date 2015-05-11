@@ -16,6 +16,7 @@ package com.liferay.portal.tools.service.builder;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ModelHintsUtil;
 
@@ -359,6 +360,11 @@ public class ServiceBuilderTest {
 		});
 
 		String output = ubaos.toString();
+
+		output = StringUtil.replace(
+			output, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+		synopsis = StringUtil.replace(
+			synopsis, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 
 		Assert.assertEquals(synopsis, output);
 	}

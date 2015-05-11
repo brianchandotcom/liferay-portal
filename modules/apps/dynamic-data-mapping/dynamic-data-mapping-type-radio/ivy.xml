@@ -17,9 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="org.eclipse.osgi.services" org="org.eclipse.osgi" rev="3.5.0-SNAPSHOT" />
-		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
+		<dependency name="soy" org="com.google.template" rev="2012-12-21" />
 		<dependency conf="test->default" name="junit" org="junit" rev="4.11" />
 	</dependencies>
 </ivy-module>

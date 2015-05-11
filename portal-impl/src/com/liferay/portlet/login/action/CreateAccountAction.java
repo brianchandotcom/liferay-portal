@@ -19,9 +19,7 @@ import com.liferay.portal.AddressStreetException;
 import com.liferay.portal.AddressZipException;
 import com.liferay.portal.CompanyMaxUsersException;
 import com.liferay.portal.ContactBirthdayException;
-import com.liferay.portal.ContactFirstNameException;
-import com.liferay.portal.ContactFullNameException;
-import com.liferay.portal.ContactLastNameException;
+import com.liferay.portal.ContactNameException;
 import com.liferay.portal.DuplicateOpenIdException;
 import com.liferay.portal.EmailAddressException;
 import com.liferay.portal.GroupFriendlyURLException;
@@ -134,9 +132,7 @@ public class CreateAccountAction extends PortletAction {
 				e instanceof CaptchaTextException ||
 				e instanceof CompanyMaxUsersException ||
 				e instanceof ContactBirthdayException ||
-				e instanceof ContactFirstNameException ||
-				e instanceof ContactFullNameException ||
-				e instanceof ContactLastNameException ||
+				e instanceof ContactNameException ||
 				e instanceof DuplicateOpenIdException ||
 				e instanceof EmailAddressException ||
 				e instanceof GroupFriendlyURLException ||

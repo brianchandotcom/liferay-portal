@@ -16,9 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.CompanyMaxUsersException;
 import com.liferay.portal.ContactBirthdayException;
-import com.liferay.portal.ContactFirstNameException;
-import com.liferay.portal.ContactFullNameException;
-import com.liferay.portal.ContactLastNameException;
+import com.liferay.portal.ContactNameException;
 import com.liferay.portal.DuplicateOpenIdException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.ModelListenerException;
@@ -6633,14 +6631,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(firstName)) {
-			throw new ContactFirstNameException();
+			throw new ContactNameException.MustHaveFirstName();
 		}
 		else if (Validator.isNull(lastName) &&
 				 PrefsPropsUtil.getBoolean(
 					 companyId, PropsKeys.USERS_LAST_NAME_REQUIRED,
 					 PropsValues.USERS_LAST_NAME_REQUIRED)) {
 
-			throw new ContactLastNameException();
+			throw new ContactNameException.MustHaveLastName();
 		}
 
 		FullNameValidator fullNameValidator =
@@ -6649,7 +6647,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if (!fullNameValidator.validate(
 				companyId, firstName, middleName, lastName)) {
 
-			throw new ContactFullNameException();
+			throw new ContactNameException.MustHaveValidFullName(
+				fullNameValidator);
 		}
 	}
 

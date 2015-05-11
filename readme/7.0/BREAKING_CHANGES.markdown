@@ -1507,3 +1507,25 @@ method that returns just the editor's content, without any HTML markup. This
 change is used for the blog abstract field.
 
 ---------------------------------------
+
+### Moved Contact*NameException classes to inner classes of ContactNameException
+- **Date:** 2015-May-5
+- **JIRA Ticket:** LPS-55364
+
+#### What changed?
+
+The use of ContactFirstNameException, ContactFullNameException, and ContactLastNameException has been moved to inner classes in a new class called ContactNameException.
+
+#### Who is affected?
+
+This affects developers who may have included one of the three classes above in their code.
+
+#### How should I update my code?
+
+While the old classes have been kept for backwards-compatibility, they are being deprecated.  You are encouraged to use the new pattern of inner classes for exceptions wherever possible (example: ContactFirstNameExeception now becomes ContactNameException.MustHaveFirstName).
+
+#### Why was this change made?
+
+This change was made in accordance with the new exceptions pattern being applied throughout portal. It also allows the new localized user name configuration feature to be thoroughly covered by exceptions for different configurations. 
+
+---------------------------------------

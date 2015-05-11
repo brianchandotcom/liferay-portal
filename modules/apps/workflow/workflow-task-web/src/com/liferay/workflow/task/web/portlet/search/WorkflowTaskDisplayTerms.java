@@ -14,11 +14,11 @@
 
 package com.liferay.workflow.task.web.portlet.search;
 
-import javax.portlet.PortletRequest;
-
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Marcellus Tavares

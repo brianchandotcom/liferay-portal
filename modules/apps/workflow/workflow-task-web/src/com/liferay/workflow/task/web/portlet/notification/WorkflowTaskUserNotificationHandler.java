@@ -14,8 +14,6 @@
 
 package com.liferay.workflow.task.web.portlet.notification;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
@@ -31,6 +29,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jonathan Lee
@@ -71,8 +71,8 @@ public class WorkflowTaskUserNotificationHandler
 			return null;
 		}
 
-		return HtmlUtil.escape(jsonObject.getString(
-			WorkflowTaskConstants.NOTIFICATION_MESSAGE));
+		return HtmlUtil.escape(
+			jsonObject.getString(WorkflowTaskConstants.NOTIFICATION_MESSAGE));
 	}
 
 	@Override

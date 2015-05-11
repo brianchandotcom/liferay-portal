@@ -14,17 +14,6 @@
 
 package com.liferay.workflow.task.web.portlet;
 
-import java.io.IOException;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -39,6 +28,17 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
 import com.liferay.workflow.task.web.portlet.context.WorkflowTaskDisplayContext;
+
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
@@ -71,15 +71,30 @@ import com.liferay.workflow.task.web.portlet.context.WorkflowTaskDisplayContext;
 public class MyWorkflowTaskPortlet extends MVCPortlet {
 
 	@Override
+	public void processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException, PortletException {
+
+		super.processAction(actionRequest, actionResponse);
+
+		String actionName = ParamUtil.getString(
+			actionRequest, ActionRequest.ACTION_NAME);
+
+		if (StringUtil.equalsIgnoreCase(
+				actionName, WorkflowTaskConstants.DISCUSSION_ACTION)) {
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	@Override
 	public void render(RenderRequest request, RenderResponse response)
 		throws IOException, PortletException {
 
 		try {
-			
 			setWorkflowTaskRenderRequestAttribute(request);
 
 			setDisplayContextRenderRequestAttribute(request, response);
-			
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -94,23 +109,13 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 
 		super.render(request, response);
 	}
-	
-	@Override
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
 
-		super.processAction(actionRequest, actionResponse);
-		
-		String actionName = ParamUtil.getString(
-			actionRequest, ActionRequest.ACTION_NAME);
+	protected WorkflowTaskDisplayContext createWorkflowTaskDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		if (StringUtil.equalsIgnoreCase(
-			actionName, WorkflowTaskConstants.DISCUSSION_ACTION)) {
-			hideDefaultSuccessMessage(actionRequest);
-		}
+		return new WorkflowTaskDisplayContext(renderRequest, renderResponse);
 	}
-	
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -129,50 +134,43 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
-	
+
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof WorkflowException ||
 			cause instanceof PrincipalException) {
 
 			return true;
-		} 
+		}
 
 		return false;
 	}
-	
-	protected WorkflowTaskDisplayContext createWorkflowTaskDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-	
-		return new WorkflowTaskDisplayContext(renderRequest, renderResponse);
-	}
-	
+
 	protected void setDisplayContextRenderRequestAttribute(
-		RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
-		
+
 		renderRequest.setAttribute(
-			WebKeys.DISPLAY_CONTEXT, createWorkflowTaskDisplayContext(
-				renderRequest, renderResponse));
+			WebKeys.DISPLAY_CONTEXT,
+			createWorkflowTaskDisplayContext(renderRequest, renderResponse));
 	}
 
 	protected void setWorkflowTaskRenderRequestAttribute(
-		RenderRequest renderRequest)
+			RenderRequest renderRequest)
 		throws PortalException {
-		
+
 		long workflowTaskId = ParamUtil.getLong(
 			renderRequest, WorkflowTaskConstants.WORKFLOW_TASK_ID);
-		
+
 		if (workflowTaskId > 0) {
-		
-			ThemeDisplay themeDisplay = 
+			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	
+
 			WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
 				themeDisplay.getCompanyId(), workflowTaskId);
-	
-			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
 
+			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
 		}
 	}
+
 }

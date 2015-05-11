@@ -11,12 +11,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.workflow.task.web.portlet.context.util;
 
-import javax.portlet.RenderRequest;
+package com.liferay.workflow.task.web.portlet.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.util.PortalUtil;
+
+import javax.portlet.RenderRequest;
 
 /**
  * @author Leonardo Barros
@@ -26,5 +27,5 @@ public class WorkflowTaskRequestHelper extends BaseRequestHelper {
 	public WorkflowTaskRequestHelper(RenderRequest renderRequest) {
 		super(PortalUtil.getHttpServletRequest(renderRequest));
 	}
-	
+
 }

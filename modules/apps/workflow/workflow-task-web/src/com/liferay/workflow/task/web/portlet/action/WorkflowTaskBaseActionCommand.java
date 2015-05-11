@@ -14,9 +14,6 @@
 
 package com.liferay.workflow.task.web.portlet.action;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -26,6 +23,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Leonardo Barros
@@ -37,9 +37,9 @@ public abstract class WorkflowTaskBaseActionCommand extends BaseActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(portletRequest, 
-			WorkflowTaskConstants.REDIRECT);
-		
+		String redirect = ParamUtil.getString(
+			portletRequest, WorkflowTaskConstants.REDIRECT);
+
 		String closeRedirect = ParamUtil.getString(
 			portletRequest, WorkflowTaskConstants.CLOSE_REDIRECT);
 
@@ -54,14 +54,13 @@ public abstract class WorkflowTaskBaseActionCommand extends BaseActionCommand {
 
 		portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
-	
-	protected ThemeDisplay getThemeDisplay(PortletRequest portletRequest) {
-		return (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-	
+
 	protected long getCompanyId(PortletRequest portletRequest) {
 		return getThemeDisplay(portletRequest).getCompanyId();
+	}
+
+	protected ThemeDisplay getThemeDisplay(PortletRequest portletRequest) {
+		return (ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 	}
 
 	protected long getUserId(PortletRequest portletRequest) {

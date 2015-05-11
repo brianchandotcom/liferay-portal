@@ -14,6 +14,13 @@
 
 package com.liferay.workflow.task.web.portlet.search;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,13 +28,6 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-
-import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.workflow.WorkflowTask;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
-import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
 
 /**
  * @author Marcellus Tavares
@@ -44,10 +44,10 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 		headerNames.add(WorkflowTaskConstants.DUE_DATE);
 		headerNames.add(WorkflowTaskConstants.STATE);
 
-		orderableHeaders.put(WorkflowTaskConstants.TASK, 
-			WorkflowTaskConstants.TASK);
-		orderableHeaders.put(WorkflowTaskConstants.DUE_DATE, 
-			WorkflowTaskConstants.DUE_DATE);
+		orderableHeaders.put(
+			WorkflowTaskConstants.TASK, WorkflowTaskConstants.TASK);
+		orderableHeaders.put(
+			WorkflowTaskConstants.DUE_DATE, WorkflowTaskConstants.DUE_DATE);
 	}
 
 	public WorkflowTaskSearch(
@@ -75,9 +75,9 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 
 		String orderByCol = ParamUtil.getString(
 			portletRequest, WorkflowTaskConstants.ORDER_BY_COL);
-		
+
 		String orderByType = ParamUtil.getString(
-				portletRequest, WorkflowTaskConstants.ORDER_BY_TYPE);
+			portletRequest, WorkflowTaskConstants.ORDER_BY_TYPE);
 
 		OrderByComparator<WorkflowTask> orderByComparator =
 			getOrderByComparator(orderByCol, orderByType);

@@ -14,16 +14,16 @@
 
 package com.liferay.workflow.task.web.portlet.action;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
@@ -49,12 +49,12 @@ public class CompleteTaskActionCommand extends WorkflowTaskBaseActionCommand {
 		String transitionName = ParamUtil.getString(
 			portletRequest, WorkflowTaskConstants.TRANSITION_NAME);
 
-		String comment = ParamUtil.getString(portletRequest, 
-			WorkflowTaskConstants.COMMENT);
+		String comment = ParamUtil.getString(
+			portletRequest, WorkflowTaskConstants.COMMENT);
 
 		WorkflowTaskManagerUtil.completeWorkflowTask(
-				getCompanyId(portletRequest), getUserId(portletRequest),
-				workflowTaskId, transitionName, comment, null);
+			getCompanyId(portletRequest), getUserId(portletRequest),
+			workflowTaskId, transitionName, comment, null);
 
 		super.doProcessCommand(portletRequest, portletResponse);
 	}

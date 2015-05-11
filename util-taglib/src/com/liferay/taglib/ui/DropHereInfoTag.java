@@ -17,7 +17,6 @@ package com.liferay.taglib.ui;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
-
 public class DropHereInfoTag extends IncludeTag {
 
 	public void setMessage(String message) {
@@ -43,4 +42,5 @@ public class DropHereInfoTag extends IncludeTag {
 		"/html/taglib/ui/drop_here_info/page.jsp";
 
 	private String _message;
+
 }

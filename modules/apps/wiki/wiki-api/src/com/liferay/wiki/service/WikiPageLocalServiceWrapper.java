@@ -487,6 +487,11 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery getDynamicQuery() {
+		return _wikiPageLocalService.getDynamicQuery();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _wikiPageLocalService.getExportActionableDynamicQuery(portletDataContext);

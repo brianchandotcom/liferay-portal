@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class BeanShellExecutor extends BaseScriptingExecutor {
 			if (ArrayUtil.isNotEmpty(classLoaders)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
-						ClassLoaderUtil.getPortalClassLoader(), classLoaders);
+						PortalClassLoaderUtil.getClassLoader(), classLoaders);
 
 				interpreter.setClassLoader(aggregateClassLoader);
 			}

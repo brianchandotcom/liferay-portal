@@ -1,11 +1,5 @@
 <definition>
-	<command name="configurationCP">
-		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="Click" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-	</command>
-
-	<command name="configureDisplaySettingsPG">
+	<command name="configureDisplaySettings">
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
 
 		<for list="${uncheckSetting}" param="SettingName">
@@ -33,6 +27,12 @@
 		<execute function="AssertClick" locator1="PGWikidisplayConfiguration#SAVE_BUTTON" value1="Save" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="gotoConfiguration">
+		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="Click" locator1="Icon#COG" />
+		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 	</command>
 
 	<command name="subscribeToNodeCP">
@@ -88,7 +88,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="viewDisplaySettingsPG">
+	<command name="viewDisplaySettings">
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
 
 		<for list="${uncheckedSetting}" param="SettingName">

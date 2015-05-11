@@ -46,7 +46,7 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiPortlet#configurationCP" />
+		<execute macro="WikiPortlet#gotoConfiguration" />
 
 		<execute macro="WikiPortlet#viewConfigurationTabs">
 			<var name="isNotPresent" value="SETUP_DISPLAY_SETTINGS" />

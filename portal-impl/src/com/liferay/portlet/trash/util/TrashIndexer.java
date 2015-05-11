@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
@@ -28,10 +29,9 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.trash.model.TrashEntry;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -71,27 +71,16 @@ public class TrashIndexer extends BaseIndexer {
 			contextQuery.addRequiredTerm(
 				Field.COMPANY_ID, searchContext.getCompanyId());
 
-			BooleanQuery excludeAttachmentsQuery =
-				BooleanQueryFactoryUtil.create(searchContext);
+			List<TrashHandler> trashHandlers =
+				TrashHandlerRegistryUtil.getTrashHandlers();
 
-			excludeAttachmentsQuery.addRequiredTerm(
-				Field.ENTRY_CLASS_NAME, DLFileEntryConstants.getClassName());
-			excludeAttachmentsQuery.addRequiredTerm(Field.HIDDEN, true);
+			for (TrashHandler trashHandler : trashHandlers) {
+				Query query = trashHandler.getExcludeQuery(searchContext);
 
-			contextQuery.add(
-				excludeAttachmentsQuery, BooleanClauseOccur.MUST_NOT);
-
-			BooleanQuery excludeJournalArticleVersionsQuery =
-				BooleanQueryFactoryUtil.create(searchContext);
-
-			excludeJournalArticleVersionsQuery.addRequiredTerm(
-				Field.ENTRY_CLASS_NAME, JournalArticle.class.getName());
-
-			excludeJournalArticleVersionsQuery.addRequiredTerm("head", false);
-
-			contextQuery.add(
-				excludeJournalArticleVersionsQuery,
-				BooleanClauseOccur.MUST_NOT);
+				if (query != null) {
+					contextQuery.add(query, BooleanClauseOccur.MUST_NOT);
+				}
+			}
 
 			BooleanQuery groupQuery = BooleanQueryFactoryUtil.create(
 				searchContext);

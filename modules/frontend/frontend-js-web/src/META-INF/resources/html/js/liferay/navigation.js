@@ -271,7 +271,9 @@ AUI.add(
 					_handleKeyDown: function(event) {
 						var instance = this;
 
-						if (event.isKey('DELETE') && !event.currentTarget.ancestor('li.selected')) {
+						var currentTarget = event.currentTarget;
+
+						if (event.isKey('DELETE') && !currentTarget.hasClass('selected') && !currentTarget.ancestor('li.selected')) {
 							instance._removePage(event);
 						}
 					},

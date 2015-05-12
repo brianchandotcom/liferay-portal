@@ -18,7 +18,11 @@ import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
 import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;
+import com.liferay.xsl.content.web.util.XSLContentUtil;
+
+import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,17 +31,38 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class XSLContentDisplayContext {
 
-	public XSLContentDisplayContext(HttpServletRequest request)
+	public XSLContentDisplayContext(
+			HttpServletRequest request,
+			XSLContentConfiguration xslContentConfiguration)
 		throws SettingsException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		_xslContentConfiguration = xslContentConfiguration;
+
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		_xslContentPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				XSLContentPortletInstanceConfiguration.class);
+	}
+
+	public String getContent() throws Exception {
+		if (_content != null) {
+			return _content;
+		}
+
+		String xmlUrl = XSLContentUtil.replaceUrlTokens(
+			_themeDisplay, getXMLUrl());
+
+		String xslUrl = XSLContentUtil.replaceUrlTokens(
+			_themeDisplay, getXSLUrl());
+
+		_content = XSLContentUtil.transform(
+			_xslContentConfiguration, new URL(xmlUrl), new URL(xslUrl));
+
+		return _content;
 	}
 
 	public String getXMLUrl() {
@@ -60,7 +85,10 @@ public class XSLContentDisplayContext {
 		return _xslUrl;
 	}
 
+	private String _content;
+	private final ThemeDisplay _themeDisplay;
 	private String _xmlUrl;
+	private final XSLContentConfiguration _xslContentConfiguration;
 	private final XSLContentPortletInstanceConfiguration
 		_xslContentPortletInstanceConfiguration;
 	private String _xslUrl;

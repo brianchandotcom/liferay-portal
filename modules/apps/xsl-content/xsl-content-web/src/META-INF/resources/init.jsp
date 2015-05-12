@@ -26,10 +26,7 @@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.xsl.content.web.configuration.XSLContentConfiguration" %><%@
-page import="com.liferay.xsl.content.web.display.context.XSLContentDisplayContext" %><%@
-page import="com.liferay.xsl.content.web.util.XSLContentUtil" %>
-
-<%@ page import="java.net.URL" %>
+page import="com.liferay.xsl.content.web.display.context.XSLContentDisplayContext" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
@@ -37,7 +34,7 @@ page import="com.liferay.xsl.content.web.util.XSLContentUtil" %>
 <%
 XSLContentConfiguration xslContentConfiguration = (XSLContentConfiguration)request.getAttribute(XSLContentConfiguration.class.getName());
 
-XSLContentDisplayContext xslContentDisplayContext = new XSLContentDisplayContext(request);
+XSLContentDisplayContext xslContentDisplayContext = new XSLContentDisplayContext(request, xslContentConfiguration);
 %>
 
 <%@ include file="/init-ext.jsp" %>

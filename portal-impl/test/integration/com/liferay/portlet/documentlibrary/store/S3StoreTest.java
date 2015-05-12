@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
 import org.junit.Assume;
 import org.junit.BeforeClass;

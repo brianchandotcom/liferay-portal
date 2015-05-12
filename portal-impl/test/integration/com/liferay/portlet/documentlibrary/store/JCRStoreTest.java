@@ -18,6 +18,7 @@ import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

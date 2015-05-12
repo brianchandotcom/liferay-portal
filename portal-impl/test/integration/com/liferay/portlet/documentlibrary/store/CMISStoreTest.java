@@ -31,6 +31,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
 import java.util.Calendar;
 

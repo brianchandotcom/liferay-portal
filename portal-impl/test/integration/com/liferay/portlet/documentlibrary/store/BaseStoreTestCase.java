@@ -158,13 +158,6 @@ public abstract class BaseStoreTestCase {
 		store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
 
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, fileName1, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
-
 		store.deleteDirectory(companyId, repositoryId, directory);
 
 		Assert.assertFalse(
@@ -187,13 +180,6 @@ public abstract class BaseStoreTestCase {
 		store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
 
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, fileName1, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, fileName2, Store.VERSION_DEFAULT));
-
 		store.deleteDirectory(companyId, repositoryId, directory);
 
 		Assert.assertFalse(
@@ -207,12 +193,6 @@ public abstract class BaseStoreTestCase {
 	@Test
 	public void testDeleteFile() throws Exception {
 		String fileName = addFile(1);
-
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			store.hasFile(companyId, repositoryId, fileName, "1.1"));
 
 		store.deleteFile(companyId, repositoryId, fileName);
 
@@ -230,10 +210,6 @@ public abstract class BaseStoreTestCase {
 
 		String fileName = addFile(1);
 
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-
 		store.deleteFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
 
@@ -242,9 +218,6 @@ public abstract class BaseStoreTestCase {
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		// 1.1
-
-		Assert.assertTrue(
-			store.hasFile(companyId, repositoryId, fileName, "1.1"));
 
 		store.deleteFile(companyId, repositoryId, fileName, "1.1");
 

@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.social.networking.exception.NoSuchWallEntryException;
@@ -40,6 +42,7 @@ import com.liferay.social.networking.service.persistence.WallEntryPersistence;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1734,6 +1737,28 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		boolean isNew = wallEntry.isNew();
 
 		WallEntryModelImpl wallEntryModelImpl = (WallEntryModelImpl)wallEntry;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (wallEntry.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				wallEntry.setCreateDate(now);
+			}
+			else {
+				wallEntry.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!wallEntryModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				wallEntry.setModifiedDate(now);
+			}
+			else {
+				wallEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

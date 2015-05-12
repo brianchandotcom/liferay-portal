@@ -348,8 +348,14 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -560,6 +566,8 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 
 		meetupsEntryModelImpl._setOriginalUserId = false;
 
+		meetupsEntryModelImpl._setModifiedDate = false;
+
 		meetupsEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -765,6 +773,7 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _title;
 	private String _description;
 	private Date _startDate;

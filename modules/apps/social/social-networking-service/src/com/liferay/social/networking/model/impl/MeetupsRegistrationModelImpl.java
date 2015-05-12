@@ -298,8 +298,14 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
@@ -471,6 +477,8 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 
 		meetupsRegistrationModelImpl._setOriginalUserId = false;
 
+		meetupsRegistrationModelImpl._setModifiedDate = false;
+
 		meetupsRegistrationModelImpl._originalMeetupsEntryId = meetupsRegistrationModelImpl._meetupsEntryId;
 
 		meetupsRegistrationModelImpl._setOriginalMeetupsEntryId = false;
@@ -622,6 +630,7 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _meetupsEntryId;
 	private long _originalMeetupsEntryId;
 	private boolean _setOriginalMeetupsEntryId;

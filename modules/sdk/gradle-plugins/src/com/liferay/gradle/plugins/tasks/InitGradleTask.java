@@ -242,6 +242,12 @@ public class InitGradleTask extends DefaultTask {
 	protected List<String> getBuildGradleLiferay() {
 		List<String> contents = new ArrayList<>();
 
+		String autoDeployDir = getBuildXmlProperty("auto.deploy.dir");
+
+		if (Validator.isNotNull(autoDeployDir)) {
+			contents.add(wrapPropertyFile("deployDir", autoDeployDir));
+		}
+
 		if (_liferayExtension instanceof LiferayThemeExtension) {
 			String themeParent = getBuildXmlProperty("theme.parent");
 
@@ -387,6 +393,18 @@ public class InitGradleTask extends DefaultTask {
 		sb.append(" = \"");
 		sb.append(value);
 		sb.append("\"");
+
+		return sb.toString();
+	}
+
+	protected String wrapPropertyFile(String name, String value) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append('\t');
+		sb.append(name);
+		sb.append(" = file(\"");
+		sb.append(value);
+		sb.append("\")");
 
 		return sb.toString();
 	}

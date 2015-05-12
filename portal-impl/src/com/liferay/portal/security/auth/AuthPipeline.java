@@ -14,19 +14,14 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceReferenceMapper;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.util.StringPlus;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,23 +117,49 @@ public class AuthPipeline {
 	}
 
 	private AuthPipeline() {
-		Registry registry = RegistryUtil.getRegistry();
+		_authFailures = ServiceTrackerCollections.multiValueMap(
+			AuthFailure.class, "(key=*)",
+			new ServiceReferenceMapper<String, AuthFailure>() {
 
-		Filter authFailureFilter = registry.getFilter(
-			"(&(key=*)(objectClass=" + AuthFailure.class.getName() + "))");
+				@Override
+				public void map(
+					ServiceReference<AuthFailure> serviceReference,
+					ServiceReferenceMapper.Emitter<String> emitter) {
 
-		_authFailureServiceTracker = registry.trackServices(
-			authFailureFilter, new AuthFailureServiceTrackerCustomizer());
+					List<String> keys = StringPlus.asList(
+						serviceReference.getProperty("key"));
 
-		_authFailureServiceTracker.open();
+					for (String key : keys) {
+						emitter.emit(key);
+					}
+				}
 
-		Filter authenticatorFilter = registry.getFilter(
-			"(&(key=*)(objectClass=" + Authenticator.class.getName() + "))");
+			}
+		);
 
-		_authenticatorServiceTracker = registry.trackServices(
-			authenticatorFilter, new AuthenticatorServiceTrackerCustomizer());
+		_authFailures.open();
 
-		_authenticatorServiceTracker.open();
+		_authenticators = ServiceTrackerCollections.multiValueMap(
+			Authenticator.class, "(key=*)",
+			new ServiceReferenceMapper<String, Authenticator>() {
+
+				@Override
+				public void map(
+					ServiceReference<Authenticator> serviceReference,
+					ServiceReferenceMapper.Emitter<String> emitter) {
+
+					List<String> keys = StringPlus.asList(
+						serviceReference.getProperty("key"));
+
+					for (String key : keys) {
+						emitter.emit(key);
+					}
+				}
+
+			}
+		);
+
+		_authenticators.open();
 	}
 
 	private int _authenticate(
@@ -149,9 +170,9 @@ public class AuthPipeline {
 
 		boolean skipLiferayCheck = false;
 
-		Authenticator[] authenticators = _authenticators.get(key);
+		List<Authenticator> authenticators = _authenticators.getService(key);
 
-		if (ArrayUtil.isEmpty(authenticators)) {
+		if (authenticators.isEmpty()) {
 			return Authenticator.SUCCESS;
 		}
 
@@ -201,9 +222,9 @@ public class AuthPipeline {
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap)
 		throws AuthException {
 
-		AuthFailure[] authFailures = _authFailures.get(key);
+		List<AuthFailure> authFailures = _authFailures.getService(key);
 
-		if (ArrayUtil.isEmpty(authFailures)) {
+		if (authFailures.isEmpty()) {
 			return;
 		}
 
@@ -235,165 +256,8 @@ public class AuthPipeline {
 
 	private static final AuthPipeline _instance = new AuthPipeline();
 
-	private final Map<String, Authenticator[]> _authenticators =
-		new HashMap<>();
-	private final ServiceTracker<Authenticator, Authenticator>
-		_authenticatorServiceTracker;
-	private final Map<String, AuthFailure[]> _authFailures = new HashMap<>();
-	private final ServiceTracker<AuthFailure, AuthFailure>
-		_authFailureServiceTracker;
-
-	private class AuthenticatorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Authenticator, Authenticator> {
-
-		@Override
-		public Authenticator addingService(
-			ServiceReference<Authenticator> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			Authenticator authenticator = registry.getService(serviceReference);
-
-			List<String> keys = StringPlus.asList(
-				serviceReference.getProperty("key"));
-
-			boolean added = false;
-
-			for (String key : keys) {
-				Authenticator[] authenticators = _authenticators.get(key);
-
-				if (authenticators == null) {
-					continue;
-				}
-
-				added = true;
-
-				authenticators = ArrayUtil.append(
-					authenticators, authenticator);
-
-				_authenticators.put(key, authenticators);
-			}
-
-			if (!added) {
-				return null;
-			}
-
-			return authenticator;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Authenticator> serviceReference,
-			Authenticator authenticator) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Authenticator> serviceReference,
-			Authenticator authenticator) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			List<String> keys = StringPlus.asList(
-				serviceReference.getProperty("key"));
-
-			for (String key : keys) {
-				Authenticator[] authenticators = _authenticators.get(key);
-
-				if (authenticators == null) {
-					continue;
-				}
-
-				List<Authenticator> authenticatorsList = ListUtil.toList(
-					authenticators);
-
-				if (authenticatorsList.remove(authenticator)) {
-					_authenticators.put(
-						key,
-						authenticatorsList.toArray(
-							new Authenticator[authenticatorsList.size()]));
-				}
-			}
-		}
-
-	}
-
-	private class AuthFailureServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<AuthFailure, AuthFailure> {
-
-		@Override
-		public AuthFailure addingService(
-			ServiceReference<AuthFailure> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			AuthFailure authFailure = registry.getService(serviceReference);
-
-			List<String> keys = StringPlus.asList(
-				serviceReference.getProperty("key"));
-
-			boolean added = false;
-
-			for (String key : keys) {
-				AuthFailure[] authFailures = _authFailures.get(key);
-
-				if (authFailures == null) {
-					continue;
-				}
-
-				added = true;
-
-				authFailures = ArrayUtil.append(authFailures, authFailure);
-
-				_authFailures.put(key, authFailures);
-			}
-
-			if (!added) {
-				return null;
-			}
-
-			return authFailure;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<AuthFailure> serviceReference,
-			AuthFailure authFailure) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<AuthFailure> serviceReference,
-			AuthFailure authFailure) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			List<String> keys = StringPlus.asList(
-				serviceReference.getProperty("key"));
-
-			for (String key : keys) {
-				AuthFailure[] authFailures = _authFailures.get(key);
-
-				if (authFailures == null) {
-					continue;
-				}
-
-				List<AuthFailure> authFailuresList = ListUtil.fromArray(
-					authFailures);
-
-				if (authFailuresList.remove(authFailure)) {
-					_authFailures.put(
-						key,
-						authFailuresList.toArray(
-							new AuthFailure[authFailuresList.size()]));
-				}
-			}
-		}
-
-	}
+	private final ServiceTrackerMap<String, List<Authenticator>>
+		_authenticators;
+	private final ServiceTrackerMap<String, List<AuthFailure>> _authFailures;
 
 }

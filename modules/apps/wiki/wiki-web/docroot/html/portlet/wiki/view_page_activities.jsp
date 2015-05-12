@@ -67,7 +67,11 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 		>
 
 			<%
-			User socialActivityUser = UserLocalServiceUtil.getUserById(socialActivity.getUserId());
+			User socialActivityUser = UserLocalServiceUtil.fetchUserById(socialActivity.getUserId());
+
+			if (socialActivityUser == null) {
+				socialActivityUser = UserLocalServiceUtil.getDefaultUser(socialActivity.getCompanyId());
+			}
 
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(socialActivity.getExtraData());
 

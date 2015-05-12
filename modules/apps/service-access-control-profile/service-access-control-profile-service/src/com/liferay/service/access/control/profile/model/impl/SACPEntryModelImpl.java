@@ -337,8 +337,14 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -656,6 +662,8 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 
 		sacpEntryModelImpl._setOriginalCompanyId = false;
 
+		sacpEntryModelImpl._setModifiedDate = false;
+
 		sacpEntryModelImpl._originalName = sacpEntryModelImpl._name;
 
 		sacpEntryModelImpl._columnBitmask = 0;
@@ -829,6 +837,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _allowedServices;
 	private String _name;
 	private String _originalName;

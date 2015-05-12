@@ -45,10 +45,9 @@
 	<bean id="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService" class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService">
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.dao.orm.DynamicQueryFactory" class="com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil" class="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil">
-		<property name="dynamicQueryFactory">
-			<bean class="com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl" />
-		</property>
+		<property name="dynamicQueryFactory" ref="com.liferay.portal.kernel.dao.orm.DynamicQueryFactory" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.OrderFactoryUtil" class="com.liferay.portal.kernel.dao.orm.OrderFactoryUtil">
 		<property name="orderFactory">

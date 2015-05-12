@@ -32,6 +32,26 @@ public final class PoshiRunnerStackTraceUtil {
 		}
 	}
 
+	public static String getSimpleStackTrace() {
+		StringBuilder sb = new StringBuilder();
+
+		for (String filePath : _stackTrace) {
+			if (filePath.contains(".function")) {
+				continue;
+			}
+
+			sb.append(PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath));
+		}
+
+		sb.append(
+			PoshiRunnerGetterUtil.getFileNameFromFilePath(_filePaths.peek()));
+
+		sb.append(":");
+		sb.append(_currentElement.attributeValue("line-number"));
+
+		return sb.toString();
+	}
+
 	public static String getStackTrace() {
 		return getStackTrace(null);
 	}

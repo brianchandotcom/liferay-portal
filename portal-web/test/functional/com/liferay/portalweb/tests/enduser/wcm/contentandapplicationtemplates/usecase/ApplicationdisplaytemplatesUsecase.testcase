@@ -3,6 +3,15 @@
 
 	<var name="siteName" value="Test Site Name" />
 
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
@@ -25,14 +34,82 @@
 		</execute>
 	</set-up>
 
-	<tear-down>
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
+	<command name="AddRSSADTWithCorruptScript" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="RSS" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="RSS" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addPG">
+			<var name="adtFile" value="adt_rss_navigation_corrupt.ftl" />
+			<var name="adtType" value="RSS" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute function="RefreshNoError" />
+
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+			<var name="adtType" value="RSS" />
+		</execute>
+
+		<execute macro="RSS#viewCorruptScriptConsoleError" />
+	</command>
+
+	<command name="AddRSSADTWithScript" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="RSS" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="RSS" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addPG">
+			<var name="adtFile" value="adt_rss_navigation.ftl" />
+			<var name="adtType" value="RSS" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+			<var name="adtType" value="RSS" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
+			<execute macro="RSS#viewNavigationDisplayFeedTitle">
+				<var name="feedTitle" value="${feedTitle}" />
+				<var name="navigationNullADT" value="true" />
+			</execute>
+		</for>
+	</command>
 
 	<command known-issues="LPS-51696" name="ADTAssetPublisher" priority="3">
 		<var name="siteName" value="${siteName}" />
@@ -78,7 +155,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="portlet_display_template_rich_summary.ftl" />
+			<var name="adtFile" value="adt_asset_publisher_rich_summary.ftl" />
 			<var name="adtType" value="Asset Publisher" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -137,6 +214,37 @@
 		</execute>
 	</command>
 
+	<command name="ADTBreadcrumb" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewADTApplied">
+			<var name="breadcrumbADTType" value="horizontal" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Breadcrumb" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="selectADTType" value="Arrows" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewADTApplied">
+			<var name="breadcrumbADTType" value="arrows" />
+		</execute>
+	</command>
+
 	<command name="ADTCategoriesNavigation" priority="3">
 		<var name="siteName" value="${siteName}" />
 
@@ -183,7 +291,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="portlet_display_template_multi_column_layout.ftl" />
+			<var name="adtFile" value="adt_categories_navigation_multi_column.ftl" />
 			<var name="adtType" value="Categories Navigation" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -323,7 +431,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="portlet_display_template_carousel.ftl" />
+			<var name="adtFile" value="adt_media_gallery_carousel.ftl" />
 			<var name="adtType" value="Documents and Media" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -427,7 +535,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="portlet_sitemap_display_template_multi_column_layout.ftl" />
+			<var name="adtFile" value="adt_sitemap_multi_column.ftl" />
 			<var name="adtType" value="Site Map" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -578,7 +686,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="portlet_display_template_color_by_popularity.ftl" />
+			<var name="adtFile" value="adt_tags_color.ftl" />
 			<var name="adtType" value="Tags Navigation" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -689,7 +797,7 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addCP">
-			<var name="adtFile" value="portlet_display_template_social.ftl" />
+			<var name="adtFile" value="adt_wiki_social.ftl" />
 			<var name="adtType" value="Wiki" />
 		</execute>
 

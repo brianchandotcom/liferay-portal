@@ -33,6 +33,11 @@
 	<td>//label[contains(.,'${key_checkSetupName}')]/input</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_ADT</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

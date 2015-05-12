@@ -170,6 +170,15 @@
 
 				<execute function="AssertClick" locator1="BasePortlet#SPECIFIC_PORTLET_OPTIONS_ICON" value1="Options" />
 			</then>
+			<elseif>
+				<isset var="portletNameBorderless" />
+				<then>
+					<var name="key_portletName" value="${portletNameBorderless}" />
+
+					<execute function="MakeVisible" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_BAR" />
+					<execute function="Click" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_OPTIONS_ICON" />
+				</then>
+			</elseif>
 			<else>
 				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
 			</else>

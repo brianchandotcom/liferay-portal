@@ -86,7 +86,7 @@ public class CommentManagerImpl implements CommentManager {
 	public long addComment(
 			long groupId, String className, long classPK,
 			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long parentMessageId, String subject,
+			long permissionOwnerId, long parentCommentId, String subject,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
@@ -95,7 +95,7 @@ public class CommentManagerImpl implements CommentManager {
 
 		return commentManager.addComment(
 			groupId, className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, parentMessageId, subject, body,
+			permissionOwnerId, parentCommentId, subject, body,
 			serviceContextFunction);
 	}
 

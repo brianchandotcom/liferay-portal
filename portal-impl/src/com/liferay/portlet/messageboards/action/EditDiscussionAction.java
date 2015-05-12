@@ -72,7 +72,7 @@ public class EditDiscussionAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				long messageId = updateMessage(actionRequest);
+				long commentId = updateMessage(actionRequest);
 
 				boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
@@ -82,7 +82,7 @@ public class EditDiscussionAction extends PortletAction {
 
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-					jsonObject.put("messageId", messageId);
+					jsonObject.put("commentId", commentId);
 					jsonObject.put("randomNamespace", randomNamespace);
 
 					writeJSON(actionRequest, actionResponse, jsonObject);
@@ -198,11 +198,11 @@ public class EditDiscussionAction extends PortletAction {
 		long permissionOwnerId = ParamUtil.getLong(
 			actionRequest, "permissionOwnerId");
 
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+		long commentId = ParamUtil.getLong(actionRequest, "commentId");
 
 		CommentManagerUtil.deleteComment(
 			groupId, className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, messageId);
+			permissionOwnerId, commentId);
 	}
 
 	@Override
@@ -244,10 +244,10 @@ public class EditDiscussionAction extends PortletAction {
 		long permissionOwnerId = ParamUtil.getLong(
 			actionRequest, "permissionOwnerId");
 
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+		long commentId = ParamUtil.getLong(actionRequest, "commentId");
 
-		long parentMessageId = ParamUtil.getLong(
-			actionRequest, "parentMessageId");
+		long parentCommentId = ParamUtil.getLong(
+			actionRequest, "parentCommentId");
 
 		String subject = ParamUtil.getString(actionRequest, "subject");
 		String body = ParamUtil.getString(actionRequest, "body");
@@ -255,7 +255,7 @@ public class EditDiscussionAction extends PortletAction {
 		Function<String, ServiceContext> serviceContextFunction =
 			new ServiceContextFunction(actionRequest);
 
-		if (messageId <= 0) {
+		if (commentId <= 0) {
 
 			// Add message
 
@@ -283,10 +283,10 @@ public class EditDiscussionAction extends PortletAction {
 			PrincipalThreadLocal.setName(user.getUserId());
 
 			try {
-				messageId = CommentManagerUtil.addComment(
+				commentId = CommentManagerUtil.addComment(
 					themeDisplay.getScopeGroupId(), className, classPK,
 					permissionClassName, permissionClassPK, permissionOwnerId,
-					parentMessageId, subject, body, serviceContextFunction);
+					parentCommentId, subject, body, serviceContextFunction);
 			}
 			finally {
 				PrincipalThreadLocal.setName(name);
@@ -296,9 +296,9 @@ public class EditDiscussionAction extends PortletAction {
 
 			// Update message
 
-			messageId = CommentManagerUtil.updateComment(
+			commentId = CommentManagerUtil.updateComment(
 				className, classPK, permissionClassName, permissionClassPK,
-				permissionOwnerId, messageId, subject, body,
+				permissionOwnerId, commentId, subject, body,
 				serviceContextFunction);
 		}
 
@@ -312,7 +312,7 @@ public class EditDiscussionAction extends PortletAction {
 				className, classPK);
 		}
 
-		return messageId;
+		return commentId;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

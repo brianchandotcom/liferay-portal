@@ -52,8 +52,8 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				<aui:input name="permissionClassName" type="hidden" value="<%= discussionTaglibHelper.getPermissionClassName() %>" />
 				<aui:input name="permissionClassPK" type="hidden" value="<%= discussionTaglibHelper.getPermissionClassPK() %>" />
 				<aui:input name="permissionOwnerId" type="hidden" value="<%= String.valueOf(discussionTaglibHelper.getUserId()) %>" />
-				<aui:input name="messageId" type="hidden" />
-				<aui:input name="parentMessageId" type="hidden" />
+				<aui:input name="commentId" type="hidden" />
+				<aui:input name="parentCommentId" type="hidden" />
 				<aui:input name="body" type="hidden" />
 				<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 				<aui:input name="ajax" type="hidden" value="<%= true %>" />
@@ -66,8 +66,8 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 							<div id="<%= randomNamespace %>messageScroll<%= rootComment.getCommentId() %>">
-								<aui:input name="messageId0" type="hidden" value="<%= rootComment.getCommentId() %>" />
-								<aui:input name="parentMessageId0" type="hidden" value="<%= rootComment.getCommentId() %>" />
+								<aui:input name="commentId0" type="hidden" value="<%= rootComment.getCommentId() %>" />
+								<aui:input name="parentCommentId0" type="hidden" value="<%= rootComment.getCommentId() %>" />
 							</div>
 						</c:if>
 
@@ -212,10 +212,10 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 			function <%= randomNamespace %>deleteMessage(i) {
 				var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
 
-				var messageId = form.fm('messageId' + i).val();
+				var commentId = form.fm('commentId' + i).val();
 
 				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-				form.fm('messageId').val(messageId);
+				form.fm('commentId').val(commentId);
 
 				<portlet:namespace />sendMessage(form);
 			}
@@ -238,7 +238,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 					function(event) {
 						<portlet:namespace />showStatusMessage('success', '<%= UnicodeLanguageUtil.get(request, "your-request-processed-successfully") %>');
 
-						location.hash = '#' + AUI.$('#<portlet:namespace />randomNamespace').val() + 'message_' + response.messageId;
+						location.hash = '#' + AUI.$('#<portlet:namespace />randomNamespace').val() + 'message_' + response.commentId;
 					}
 				);
 
@@ -255,10 +255,10 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 				var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i];
 
-				var parentMessageId = form.fm('parentMessageId' + i).val();
+				var parentCommentId = form.fm('parentCommentId' + i).val();
 
 				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
-				form.fm('parentMessageId').val(parentMessageId);
+				form.fm('parentCommentId').val(parentCommentId);
 				form.fm('body').val(editorInstance.getHTML());
 
 				if (!themeDisplay.isSignedIn()) {
@@ -284,8 +284,8 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				}
 			}
 
-			function <%= randomNamespace %>scrollIntoView(messageId) {
-				document.getElementById('<%= randomNamespace %>messageScroll' + messageId).scrollIntoView();
+			function <%= randomNamespace %>scrollIntoView(commentId) {
+				document.getElementById('<%= randomNamespace %>messageScroll' + commentId).scrollIntoView();
 			}
 
 			function <portlet:namespace />sendMessage(form, refreshPage) {
@@ -390,14 +390,14 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 				var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i];
 
-				var messageId = form.fm('messageId' + i).val();
+				var commentId = form.fm('commentId' + i).val();
 
 				if (pending) {
 					form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
 				}
 
 				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
-				form.fm('messageId').val(messageId);
+				form.fm('commentId').val(commentId);
 				form.fm('body').val(editorInstance.getHTML());
 
 				<portlet:namespace />sendMessage(form);

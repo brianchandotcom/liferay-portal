@@ -117,13 +117,13 @@ public class MBCommentManagerImpl implements CommentManager {
 	public long addComment(
 			long groupId, String className, long classPK,
 			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long parentMessageId, String subject,
+			long permissionOwnerId, long parentCommentId, String subject,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
-			parentMessageId);
+			parentCommentId);
 
 		long threadId = parentMessage.getThreadId();
 
@@ -133,7 +133,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		MBMessage message = MBMessageServiceUtil.addDiscussionMessage(
 			serviceContext.getScopeGroupId(), className, classPK,
 			permissionClassName, permissionClassPK, permissionOwnerId, threadId,
-			parentMessageId, subject, body, serviceContext);
+			parentCommentId, subject, body, serviceContext);
 
 		return message.getMessageId();
 	}

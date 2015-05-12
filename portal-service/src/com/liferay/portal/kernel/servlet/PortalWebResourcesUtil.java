@@ -62,7 +62,7 @@ public class PortalWebResourcesUtil {
 
 	public static URL getServletContextResource(String resourceName) {
 		for (PortalWebResources portalWebResources :
-				_instance._getPortalWebResourcesList() ) {
+				_instance._getPortalWebResourcesList()) {
 
 			String contextPath = portalWebResources.getContextPath();
 
@@ -99,7 +99,7 @@ public class PortalWebResourcesUtil {
 
 	public static boolean isResourceContextPath(String requestURI) {
 		for (PortalWebResources portalWebResources :
-				_instance._getPortalWebResourcesList() ) {
+				_instance._getPortalWebResourcesList()) {
 
 			if (requestURI.startsWith(portalWebResources.getContextPath())) {
 				return true;

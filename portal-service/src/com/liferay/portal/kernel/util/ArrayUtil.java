@@ -2165,16 +2165,6 @@ public class ArrayUtil {
 		return toArray(set.toArray(new Long[set.size()]));
 	}
 
-	public static String[] unique(String[] array) {
-		Set<String> set = new LinkedHashSet<>();
-
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
-		}
-
-		return toArray(set.toArray(new String[set.size()]));
-	}
-
 	public static short[] unique(short[] array) {
 		Set<Short> set = new LinkedHashSet<>();
 
@@ -2183,6 +2173,16 @@ public class ArrayUtil {
 		}
 
 		return toArray(set.toArray(new Short[set.size()]));
+	}
+
+	public static String[] unique(String[] array) {
+		Set<String> set = new LinkedHashSet<>();
+
+		for (int i = 0; i < array.length; i++) {
+			set.add(array[i]);
+		}
+
+		return toArray(set.toArray(new String[set.size()]));
 	}
 
 }

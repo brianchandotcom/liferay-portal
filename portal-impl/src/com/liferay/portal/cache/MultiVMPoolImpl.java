@@ -17,7 +17,14 @@ package com.liferay.portal.cache;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.resiliency.spi.cache.SPIPortalCacheManagerConfigurator;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.io.Serializable;
 
@@ -27,6 +34,34 @@ import java.io.Serializable;
  */
 @DoPrivileged
 public class MultiVMPoolImpl implements MultiVMPool {
+
+	public MultiVMPoolImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(portal.cache.manager._name=" +
+				PortalCacheManagerNames.MULTI_VM +
+					")(portal.cache.manager.type=" +
+						PropsValues.PORTAL_CACHE_MANAGER_TYPE_MULTI_VM +
+							")(objectClass=" +
+								PortalCacheManager.class.getName()+"))");
+
+		ServiceTracker<PortalCacheManager<? extends Serializable,
+				? extends Serializable>,
+			PortalCacheManager<? extends Serializable, ? extends Serializable>>
+				serviceTracker = registry.trackServices(filter);
+
+		serviceTracker.open();
+
+		try {
+			_portalCacheManager =
+				SPIPortalCacheManagerConfigurator.createSPIPortalCacheManager(
+					serviceTracker.waitForService(0));
+		}
+		catch (Exception e) {
+			throw new IllegalStateException("Cannot initialize MultiVMPool", e);
+		}
+	}
 
 	@Override
 	public void clear() {
@@ -59,14 +94,8 @@ public class MultiVMPoolImpl implements MultiVMPool {
 		_portalCacheManager.removeCache(name);
 	}
 
-	public void setPortalCacheManager(
+	private final
 		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager) {
-
-		_portalCacheManager = portalCacheManager;
-	}
-
-	private PortalCacheManager<? extends Serializable, ? extends Serializable>
-		_portalCacheManager;
+			_portalCacheManager;
 
 }

@@ -1336,6 +1336,10 @@ public class PropsValues {
 
 	public static final String POP_SERVER_SUBDOMAIN = PropsUtil.get(PropsKeys.POP_SERVER_SUBDOMAIN);
 
+	public static final String PORTAL_CACHE_MANAGER_TYPE_MULTI_VM = PropsUtil.get(PropsKeys.PORTAL_CACHE_MANAGER_TYPE_MULTI_VM);
+
+	public static final String PORTAL_CACHE_MANAGER_TYPE_SINGLE_VM = PropsUtil.get(PropsKeys.PORTAL_CACHE_MANAGER_TYPE_SINGLE_VM);
+
 	public static final String PORTAL_FABRIC_AGENT_SELECTOR_CLASS = PropsUtil.get(PropsKeys.PORTAL_FABRIC_AGENT_SELECTOR_CLASS);
 
 	public static final boolean PORTAL_FABRIC_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTAL_FABRIC_ENABLED));

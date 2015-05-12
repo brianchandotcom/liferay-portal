@@ -14,13 +14,11 @@
 
 package com.liferay.portal.template;
 
-import com.liferay.portal.cache.SingleVMPoolImpl;
-import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
+import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -57,15 +55,7 @@ public class TemplatePortletPreferencesTest {
 		secureXMLFactoryProviderUtil.setSecureXMLFactoryProvider(
 			new SecureXMLFactoryProviderImpl());
 
-		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();
-
-		singleVMPoolImpl.setPortalCacheManager(
-			MemoryPortalCacheManager.createMemoryPortalCacheManager(
-				TemplatePortletPreferencesTest.class.getName()));
-
-		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
-
-		singleVMPoolUtil.setSingleVMPool(singleVMPoolImpl);
+		ToolDependencies.wireCaches();
 
 		PortletPreferencesFactoryUtil portletPreferencesFactoryUtil =
 			new PortletPreferencesFactoryUtil();

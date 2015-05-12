@@ -16,6 +16,7 @@ package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.cache.AbstractPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.log.Log;
@@ -66,7 +67,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	@Override
 	public void reconfigureCaches(URL configurationURL) {
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
-			configurationURL, clusterAware, _usingDefault);
+			configurationURL, isClusterAware(), _usingDefault);
 
 		reconfigEhcache(_configurationPair.getKey());
 
@@ -161,6 +162,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	protected String getType() {
+		return PortalCacheManagerTypes.EHCACHE;
+	}
+
+	@Override
 	protected void initPortalCacheManager() {
 		if (Validator.isNull(_configFile)) {
 			_configFile = _defaultConfigFile;
@@ -170,11 +176,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
 			EhcacheConfigurationHelperUtil.class.getResource(_configFile),
-			clusterAware, _usingDefault);
+			isClusterAware(), _usingDefault);
 
 		_cacheManager = new CacheManager(_configurationPair.getKey());
 
-		_cacheManager.setName(name);
+		_cacheManager.setName(getName());
 
 		if (_stopCacheManagerTimer) {
 			FailSafeTimer failSafeTimer = _cacheManager.getTimer();

@@ -45,12 +45,6 @@
 			<bean class="com.liferay.portal.bean.ConstantsBeanFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.cache.MultiVMPool" class="com.liferay.portal.cache.MultiVMPoolImpl">
-		<property name="portalCacheManager" ref="com.liferay.portal.kernel.cache.MultiVMPortalCacheManager" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.cache.MultiVMPoolUtil" class="com.liferay.portal.kernel.cache.MultiVMPoolUtil">
-		<property name="multiVMPool" ref="com.liferay.portal.kernel.cache.MultiVMPool" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.cache.MultiVMPortalCacheManager" class="com.liferay.portal.resiliency.spi.cache.SPIPortalCacheManagerConfigurator" factory-method="createSPIPortalCacheManager">
 		<constructor-arg name="portalCacheManager">
 			<bean class="com.liferay.portal.cache.ehcache.EhcachePortalCacheManager">
@@ -66,11 +60,9 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean id="com.liferay.portal.kernel.cache.SingleVMPool" class="com.liferay.portal.cache.SingleVMPoolImpl">
-		<property name="portalCacheManager" ref="com.liferay.portal.kernel.cache.SingleVMPortalCacheManager" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.cache.SingleVMPoolUtil" class="com.liferay.portal.kernel.cache.SingleVMPoolUtil">
-		<property name="singleVMPool" ref="com.liferay.portal.kernel.cache.SingleVMPool" />
+	<bean id="com.liferay.portal.kernel.cache.MultiVMPool" class="com.liferay.portal.cache.MultiVMPoolImpl" />
+	<bean id="com.liferay.portal.kernel.cache.MultiVMPoolUtil" class="com.liferay.portal.kernel.cache.MultiVMPoolUtil">
+		<property name="multiVMPool" ref="com.liferay.portal.kernel.cache.MultiVMPool" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.cache.SingleVMPortalCacheManager" class="com.liferay.portal.cache.ehcache.EhcachePortalCacheManager">
 		<property name="configFile">
@@ -80,6 +72,10 @@
 		<property name="name">
 			<util:constant static-field="com.liferay.portal.kernel.cache.PortalCacheManagerNames.SINGLE_VM" />
 		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.cache.SingleVMPool" class="com.liferay.portal.cache.SingleVMPoolImpl" />
+	<bean id="com.liferay.portal.kernel.cache.SingleVMPoolUtil" class="com.liferay.portal.kernel.cache.SingleVMPoolUtil">
+		<property name="singleVMPool" ref="com.liferay.portal.kernel.cache.SingleVMPool" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" class="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil">
 		<property name="cacheKeyGenerators">

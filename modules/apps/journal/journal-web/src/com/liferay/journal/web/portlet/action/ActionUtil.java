@@ -391,7 +391,7 @@ public class ActionUtil {
 
 		Locale locale = LanguageUtil.getLocale(defaultLanguageId);
 
-		Map<String, byte[]> images = getImages(content, fields, locale);
+		Map<String, byte[]> images = getImages(content, fields);
 
 		return new Object[] {content, images};
 	}
@@ -558,7 +558,7 @@ public class ActionUtil {
 	}
 
 	protected static Map<String, byte[]> getImages(
-			String content, Fields fields, Locale locale)
+			String content, Fields fields)
 		throws Exception {
 
 		Map<String, byte[]> images = new HashMap<>();
@@ -570,34 +570,38 @@ public class ActionUtil {
 				continue;
 			}
 
-			List<Serializable> values = field.getValues(locale);
+			Map<Locale, List<Serializable>> valuesMap = field.getValuesMap();
 
-			for (int i = 0; i < values.size(); i++) {
-				StringBundler sb = new StringBundler(6);
+			for (Locale locale : valuesMap.keySet()) {
+				List<Serializable> values = valuesMap.get(locale);
 
-				sb.append(getElementInstanceId(content, field.getName(), i));
-				sb.append(StringPool.UNDERLINE);
-				sb.append(field.getName());
-				sb.append(StringPool.UNDERLINE);
-				sb.append(i);
-				sb.append(StringPool.UNDERLINE);
-				sb.append(LanguageUtil.getLanguageId(locale));
+				for (int i = 0; i < values.size(); i++) {
+					StringBundler sb = new StringBundler(6);
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					(String)values.get(i));
+					sb.append(
+						getElementInstanceId(content, field.getName(), i));
+					sb.append(StringPool.UNDERLINE);
+					sb.append(field.getName());
+					sb.append(StringPool.UNDERLINE);
+					sb.append(i);
+					sb.append(StringPool.UNDERLINE);
+					sb.append(LanguageUtil.getLanguageId(locale));
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						(String)values.get(i));
 
-				String uuid = jsonObject.getString("uuid");
-				long groupId = jsonObject.getLong("groupId");
+					String uuid = jsonObject.getString("uuid");
+					long groupId = jsonObject.getLong("groupId");
 
-				if (Validator.isNotNull(uuid) && (groupId > 0)) {
-					FileEntry fileEntry =
-						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-							uuid, groupId);
+					if (Validator.isNotNull(uuid) && (groupId > 0)) {
+						FileEntry fileEntry =
+							DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+								uuid, groupId);
 
-					byte[] bytes = FileUtil.getBytes(
-						fileEntry.getContentStream());
+						byte[] bytes = FileUtil.getBytes(
+							fileEntry.getContentStream());
 
-					images.put(sb.toString(), bytes);
+						images.put(sb.toString(), bytes);
+					}
 				}
 			}
 		}

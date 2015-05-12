@@ -238,6 +238,7 @@
 							'event-mouseenter',
 							'liferay-message',
 							'liferay-panel-search',
+							'liferay-portlet-base',
 							'liferay-store',
 							'node-focusmanager',
 							'transition'

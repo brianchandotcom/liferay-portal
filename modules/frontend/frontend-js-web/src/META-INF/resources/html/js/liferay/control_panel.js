@@ -25,11 +25,7 @@ AUI.add(
 
 		var ControlPanel = A.Component.create(
 			{
-				ATTRS: {
-					portletId: {
-						validator: Lang.isString
-					}
-				},
+				AUGMENTS: [Liferay.PortletBase],
 
 				EXTENDS: A.Base,
 
@@ -150,7 +146,7 @@ AUI.add(
 								inputNode: instance._searchPanelInput,
 								nodeList: '#controlPanelMenuAddContentPanelContainer',
 								nodeSelector: 'li',
-								togglerId: instance.get('portletId') + '_controlPanelMenuAddContentPanelContainer'
+								togglerId: instance.ns('controlPanelMenuAddContentPanelContainer')
 							}
 						);
 					},
@@ -164,7 +160,7 @@ AUI.add(
 					_panelHolderAccordionDisable: function() {
 						var instance = this;
 
-						var component = Liferay.component(instance.get('portletId') + 'controlPanelMenuAddContentPanelContainer');
+						var component = Liferay.component(instance.ns('controlPanelMenuAddContentPanelContainer'));
 
 						var handler = A.on(
 							function(e) {
@@ -231,7 +227,7 @@ AUI.add(
 						}
 
 						if (searchPanelHolder) {
-							var searchPanelInput = searchPanelHolder.one('#' + instance.get('portletId') + 'searchPanel');
+							var searchPanelInput = instance.one('#searchPanel');
 
 							searchPanelInput.attr('autocomplete', 'off');
 
@@ -286,7 +282,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-live-search-deprecated', 'aui-overlay-context-panel-deprecated', 'event-mouseenter', 'liferay-message', 'liferay-panel-search',
-		'liferay-store', 'node-focusmanager', 'transition']
+		requires: ['aui-live-search-deprecated', 'aui-overlay-context-panel-deprecated', 'event-mouseenter', 'liferay-message', 'liferay-panel-search', 'liferay-portlet-base', 'liferay-store', 'node-focusmanager', 'transition']
 	}
 );

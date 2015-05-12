@@ -198,7 +198,7 @@
 
 			new Liferay.ControlPanel(
 				{
-					portletId: '_<%= controlPanelMenuPortletId %>_'
+					namespace: '_<%= controlPanelMenuPortletId %>_'
 				}
 			);
 		</aui:script>

@@ -63,7 +63,9 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.bundling.Jar;
 
 /**
  * @author Andrea Di Giorgi
@@ -71,6 +73,8 @@ import org.gradle.api.tasks.SourceSet;
 public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
+
+	public static final String DEPLOY_TASK_NAME = "deploy";
 
 	public static final String FORMAT_WSDL_TASK_NAME = "formatWSDL";
 
@@ -163,6 +167,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return buildCssTask;
 	}
 
+	protected Copy addTaskDeploy(Project project) {
+		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
+
+		copy.setDescription("Assembles the project and deploys it to Liferay.");
+
+		return copy;
+	}
+
 	protected FormatXMLTask addTaskFormatWSDL(Project project) {
 		FormatXMLTask formatXMLTask = GradleUtil.addTask(
 			project, FORMAT_WSDL_TASK_NAME, FormatXMLTask.class);
@@ -198,6 +210,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		addTaskBuildCss(project);
+		addTaskDeploy(project);
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
@@ -721,6 +734,28 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				true, BasePlugin.CLEAN_TASK_NAME));
 	}
 
+	protected void configureTaskDeploy(
+		Project project, LiferayExtension liferayExtension) {
+
+		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+
+		configureTaskDeployFrom(copy);
+		configureTaskDeployInto(copy, liferayExtension);
+	}
+
+	protected void configureTaskDeployFrom(Copy deployTask) {
+		Jar jar = (Jar)GradleUtil.getTask(
+			deployTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+
+		deployTask.from(jar.getOutputs());
+	}
+
+	protected void configureTaskDeployInto(
+		Copy deployTask, LiferayExtension liferayExtension) {
+
+		deployTask.into(liferayExtension.getDeployDir());
+	}
+
 	protected void configureTaskFormatWSDL(Project project) {
 		FormatXMLTask formatXMLTask = (FormatXMLTask)GradleUtil.getTask(
 			project, FORMAT_WSDL_TASK_NAME);
@@ -770,6 +805,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildLang(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);
+		configureTaskDeploy(project, liferayExtension);
 		configureTaskFormatWSDL(project);
 		configureTaskFormatXSD(project);
 	}

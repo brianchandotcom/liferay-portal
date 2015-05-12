@@ -73,8 +73,6 @@ import org.gradle.api.tasks.compile.JavaCompile;
  */
 public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
-	public static final String DEPLOY_TASK_NAME = "deploy";
-
 	public static final String DIRECT_DEPLOY_TASK_NAME = "directDeploy";
 
 	protected Task addTaskBuildServiceCompile(
@@ -154,13 +152,10 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		buildServiceTask.finalizedBy(buildServiceJarTask);
 	}
 
+	@Override
 	protected Copy addTaskDeploy(Project project) {
-		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
+		Copy copy = super.addTaskDeploy(project);
 
-		copy.dependsOn(WarPlugin.WAR_TASK_NAME);
-
-		copy.setDescription(
-			"Assembles the project into a WAR file and deploys it to Liferay.");
 		copy.setGroup(WarPlugin.WEB_APP_GROUP);
 
 		return copy;
@@ -186,7 +181,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		super.addTasks(project, liferayExtension);
 
-		addTaskDeploy(project);
 		addTaskDirectDeploy(project);
 	}
 
@@ -333,15 +327,12 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		buildXSDTask.setInputDir(inputDir);
 	}
 
-	protected void configureTaskDeploy(
-		Project project, LiferayExtension liferayExtension) {
+	@Override
+	protected void configureTaskDeployFrom(Copy deployTask) {
+		War war = (War)GradleUtil.getTask(
+			deployTask.getProject(), WarPlugin.WAR_TASK_NAME);
 
-		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
-
-		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
-
-		copy.from(war.getArchivePath());
-		copy.into(liferayExtension.getDeployDir());
+		deployTask.from(war.getOutputs());
 	}
 
 	protected void configureTaskDirectDeploy(
@@ -427,7 +418,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		super.configureTasks(project, liferayExtension);
 
-		configureTaskDeploy(project, liferayExtension);
 		configureTaskDirectDeploy(project, liferayExtension);
 		configureTaskWar(project, liferayExtension);
 

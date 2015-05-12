@@ -88,6 +88,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 		long userId, long groupId, String className, long classPK) {
 	}
 
+	@Override
+	public void unsubscribeDiscussion(
+		long userId, String className, long classPK) {
+	}
+
 	private static final Discussion _discussion = new Discussion() {
 
 		@Override

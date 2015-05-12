@@ -65,4 +65,8 @@ public interface CommentManager {
 			long userId, long groupId, String className, long classPK)
 		throws PortalException;
 
+	public void unsubscribeDiscussion(
+			long userId, String className, long classPK)
+		throws PortalException;
+
 }

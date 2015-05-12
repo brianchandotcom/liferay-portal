@@ -108,6 +108,13 @@ public class CommentManagerUtil {
 			userId, groupId, className, classPK);
 	}
 
+	public static void unsubscribeDiscussion(
+			long userId, String className, long classPK)
+		throws PortalException {
+
+		getCommentManager().unsubscribeDiscussion(userId, className, classPK);
+	}
+
 	public void setCommentManager(CommentManager commentManager) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

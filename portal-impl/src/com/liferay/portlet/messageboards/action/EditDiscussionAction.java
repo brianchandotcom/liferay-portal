@@ -261,7 +261,7 @@ public class EditDiscussionAction extends PortletAction {
 				className, classPK);
 		}
 		else {
-			MBDiscussionLocalServiceUtil.unsubscribeDiscussion(
+			CommentManagerUtil.unsubscribeDiscussion(
 				themeDisplay.getUserId(), className, classPK);
 		}
 	}

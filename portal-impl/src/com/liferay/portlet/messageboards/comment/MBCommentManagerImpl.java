@@ -226,6 +226,15 @@ public class MBCommentManagerImpl implements CommentManager {
 			userId, groupId, className, classPK);
 	}
 
+	@Override
+	public void unsubscribeDiscussion(
+			long userId, String className, long classPK)
+		throws PortalException {
+
+		_mbDiscussionLocalService.unsubscribeDiscussion(
+			userId, className, classPK);
+	}
+
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBMessageService _mbMessageService;

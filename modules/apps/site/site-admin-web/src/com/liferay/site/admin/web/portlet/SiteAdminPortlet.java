@@ -181,64 +181,60 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	public void editGroup(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws Throwable {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Callable<Group> groupCallable = new GroupCallable(actionRequest);
 
-		try {
-			Group group = TransactionHandlerUtil.invoke(
-				_transactionAttribute, groupCallable);
+		Group group = TransactionHandlerUtil.invoke(
+			_transactionAttribute, groupCallable);
 
-			String redirect = StringPool.BLANK;
+		String redirect = StringPool.BLANK;
 
-			long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
-			if (liveGroupId <= 0) {
-				themeDisplay.setScopeGroupId(group.getGroupId());
+		if (liveGroupId <= 0) {
+			themeDisplay.setScopeGroupId(group.getGroupId());
 
-				PortletURL siteAdministrationURL =
-					PortalUtil.getSiteAdministrationURL(
-						actionResponse, themeDisplay,
-						SiteAdminPortletKeys.SITE_SETTINGS);
+			PortletURL siteAdministrationURL =
+				PortalUtil.getSiteAdministrationURL(
+					actionResponse, themeDisplay,
+					SiteAdminPortletKeys.SITE_SETTINGS);
 
-				String controlPanelURL = HttpUtil.setParameter(
-					themeDisplay.getURLControlPanel(), "p_p_id",
-					SiteAdminPortletKeys.SITE_ADMIN);
+			String controlPanelURL = HttpUtil.setParameter(
+				themeDisplay.getURLControlPanel(), "p_p_id",
+				SiteAdminPortletKeys.SITE_ADMIN);
 
-				controlPanelURL = HttpUtil.setParameter(
-					controlPanelURL, "controlPanelCategory",
-					themeDisplay.getControlPanelCategory());
+			controlPanelURL = HttpUtil.setParameter(
+				controlPanelURL, "controlPanelCategory",
+				themeDisplay.getControlPanelCategory());
 
-				siteAdministrationURL.setParameter("redirect", controlPanelURL);
+			siteAdministrationURL.setParameter("redirect", controlPanelURL);
 
-				redirect = siteAdministrationURL.toString();
+			redirect = siteAdministrationURL.toString();
 
-				hideDefaultSuccessMessage(actionRequest);
+			hideDefaultSuccessMessage(actionRequest);
 
-				MultiSessionMessages.add(
-					actionRequest,
-					SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed");
+			MultiSessionMessages.add(
+				actionRequest,
+				SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed");
 
-				actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 
-				sendRedirect(actionRequest, actionResponse);
-			}
-			else {
-				long newRefererPlid = getRefererPlid(
-					group, themeDisplay.getScopeGroupId(), redirect);
-
-				redirect = HttpUtil.setParameter(
-					redirect, "doAsGroupId", group.getGroupId());
-				redirect = HttpUtil.setParameter(
-					redirect, "refererPlid", newRefererPlid);
-
-				actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-			}
+			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Throwable throwable) {
+		else {
+			long newRefererPlid = getRefererPlid(
+				group, themeDisplay.getScopeGroupId(), redirect);
+
+			redirect = HttpUtil.setParameter(
+				redirect, "doAsGroupId", group.getGroupId());
+			redirect = HttpUtil.setParameter(
+				redirect, "refererPlid", newRefererPlid);
+
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
 	}
 

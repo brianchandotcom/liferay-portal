@@ -1069,6 +1069,12 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-55491, temporary workaround until Michael Han fixes it
+
+		if (line.contains("failure in bulk execution")) {
+			return true;
+		}
+
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

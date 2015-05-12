@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceRegistrar;
 
 import java.io.Serializable;
 
@@ -62,7 +62,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void destroy() {
-		_serviceRegistration.unregister();
+		_serviceRegistrar.destroy();
 
 		portalCaches.clear();
 
@@ -239,12 +239,16 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 		Registry registry = RegistryUtil.getRegistry();
 
+		_serviceRegistrar = registry.getServiceRegistrar(
+			(Class<PortalCacheManager<K, V>>)(Class<?>)
+				PortalCacheManager.class);
+
 		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("portal.cache.manager._name", _name);
 		properties.put("portal.cache.manager.type", getType());
 
-		_serviceRegistration = registry.registerService(
+		_serviceRegistrar.registerService(
 			(Class<PortalCacheManager<K, V>>)(Class<?>)PortalCacheManager.class,
 			this, properties);
 	}
@@ -315,7 +319,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				callbackConfiguration.getCallbackFactory();
 
 			CacheListener<K, V> cacheListener =
-				(CacheListener<K, V>)callbackFactory.createCacheListener(
+				callbackFactory.createCacheListener(
 					callbackConfiguration.getProperties());
 
 			portalCache.registerCacheListener(cacheListener, entry.getValue());
@@ -326,6 +330,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	private boolean _mpiOnly;
 	private String _name;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
-	private ServiceRegistration<PortalCacheManager<K, V>> _serviceRegistration;
+	private ServiceRegistrar<PortalCacheManager<K, V>> _serviceRegistrar;
 
 }

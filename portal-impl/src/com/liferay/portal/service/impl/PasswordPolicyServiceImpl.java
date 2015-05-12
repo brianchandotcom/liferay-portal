@@ -96,10 +96,15 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 	public PasswordPolicy fetchPasswordPolicy(long passwordPolicyId)
 		throws PortalException {
 
-		PasswordPolicyPermissionUtil.check(
-			getPermissionChecker(), passwordPolicyId, ActionKeys.VIEW);
+		PasswordPolicy passwordPolicy =
+			passwordPolicyLocalService.fetchPasswordPolicy(passwordPolicyId);
 
-		return passwordPolicyLocalService.fetchPasswordPolicy(passwordPolicyId);
+		if (passwordPolicy != null) {
+			PasswordPolicyPermissionUtil.check(
+				getPermissionChecker(), passwordPolicyId, ActionKeys.VIEW);
+		}
+
+		return passwordPolicy;
 	}
 
 	/**

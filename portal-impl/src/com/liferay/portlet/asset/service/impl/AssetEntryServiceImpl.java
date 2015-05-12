@@ -53,14 +53,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		AssetEntry entry = assetEntryLocalService.fetchEntry(entryId);
 
 		if (entry != null) {
-			if (AssetEntryPermission.contains(
-					getPermissionChecker(), entry, ActionKeys.VIEW)) {
-
-				return entry;
-			}
+			AssetEntryPermission.check(
+				getPermissionChecker(), entry, ActionKeys.VIEW);
 		}
 
-		return null;
+		return entry;
 	}
 
 	@Override

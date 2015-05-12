@@ -428,10 +428,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public JournalArticle fetchArticle(long groupId, String articleId)
 		throws PortalException {
 
-		JournalArticlePermission.check(
-			getPermissionChecker(), groupId, articleId, ActionKeys.VIEW);
+		JournalArticle article = journalArticleLocalService.fetchArticle(
+			groupId, articleId);
 
-		return journalArticleLocalService.fetchArticle(groupId, articleId);
+		if (article != null) {
+			JournalArticlePermission.check(
+				getPermissionChecker(), article, ActionKeys.VIEW);
+		}
+
+		return article;
 	}
 
 	/**
